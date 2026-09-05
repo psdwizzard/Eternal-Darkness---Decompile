@@ -40,7 +40,7 @@ int fn_8009F664(register State8009F664* state)
         state->entries[index].field_02 = 1;
         result = 1;
         state->entries[index].field_03 = 1;
-        *(u32*)(owner + 0x20) &= ~0x2000;
+        *(u32*)(owner + 0x20) &= ~0x2000u;
     }
     return result;
 }

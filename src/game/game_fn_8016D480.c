@@ -4,11 +4,12 @@ extern void fn_80163BB4(void*, const char*, ...);
 extern void fn_8020104C(int, void*, void*, int, float);
 extern const char lbl_8024FF54[];
 
+#pragma opt_propagation off
 int fn_8016D480(void* state)
 {
-    void* context;
     int count;
     int x;
+    void* context;
     unsigned int flags;
     int y;
     float z;
@@ -33,3 +34,4 @@ int fn_8016D480(void* state)
     }
     return 0;
 }
+#pragma opt_propagation reset

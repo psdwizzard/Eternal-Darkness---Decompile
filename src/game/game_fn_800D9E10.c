@@ -19,21 +19,22 @@ typedef struct Vec {
     float z;
 } Vec;
 
-extern void *fn_801A7498(void *);
-extern void *fn_80201814();
+extern u32 fn_801A7498(void *);
+extern void *fn_80201814(u32);
 extern Actor *fn_800A1D28(void *);
 extern ShortVec *fn_8017FDE4(void *);
 extern void fn_801A75C0(Vec *, void *, int, Vec *);
 extern void fn_801A7560(void *, int);
 
-int fn_800D9E10(void *unused, void *object)
+int fn_800D9E10(void *unused, u32 context)
 {
-    int i;
-    u32 target = (u32)object;
-    Actor *actor = fn_800A1D28(fn_80201814(fn_801A7498((void *)target)));
+    void *target = (void *)context;
+    Actor *actor = fn_800A1D28(fn_80201814(fn_801A7498(target)));
 
     (void)unused;
     {
+        int i;
+
         for (i = 0; i < 4; i++) {
             void *effect = actor->effects[i % 3];
             if (effect != 0) {
@@ -43,10 +44,10 @@ int fn_800D9E10(void *unused, void *object)
                 input.x = offset->x;
                 input.y = offset->y;
                 input.z = offset->z + 20;
-                fn_801A75C0(&output, (void *)target, i, &input);
+                fn_801A75C0(&output, target, i, &input);
             }
         }
     }
-    fn_801A7560((void *)target, 0x4000);
+    fn_801A7560(target, 0x4000);
     return 1;
 }

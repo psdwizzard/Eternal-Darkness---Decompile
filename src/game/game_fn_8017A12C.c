@@ -1,5 +1,6 @@
 extern float fn_80179F20(float angle);
 
+#pragma opt_propagation off
 void fn_8017A12C(float* out, float current, float target)
 {
     float wrapped;
@@ -20,3 +21,4 @@ void fn_8017A12C(float* out, float current, float target)
     difference_magnitude = difference < 0.0f ? -difference : difference;
     *out = difference_magnitude < wrapped_magnitude ? difference : wrapped;
 }
+#pragma opt_propagation reset

@@ -40,6 +40,7 @@ extern void* memset(void*, int, u32);
 void fn_801AA6D0(int mode, int arg, int allocate, int value)
 {
     u32 size1;
+    u32 alternate_size;
     u32 size2;
     u32 size3;
     char* src1;
@@ -60,19 +61,19 @@ void fn_801AA6D0(int mode, int arg, int allocate, int value)
         lbl_8064D2B4 = fn_801FEA8C(lbl_8064D2A8, 1, lbl_80251650, 0x113);
 
         size2 = fn_8015D630(lbl_8023E8A0);
-        size1 = fn_8015D630(lbl_8023E910);
+        alternate_size = fn_8015D630(lbl_8023E910);
         size3 = fn_8015D630(lbl_8023E980);
-        size2 = (size2 > size1 ? size2 : size1) > size3
-                    ? (size2 > size1 ? size2 : size1)
+        size2 = (size2 > alternate_size ? size2 : alternate_size) > size3
+                    ? (size2 > alternate_size ? size2 : alternate_size)
                     : size3;
         lbl_8064D2AC = (size2 + 31) & ~31;
         lbl_8064D2B8 = fn_801FEA8C(lbl_8064D2AC, 1, lbl_80251650, 0x11C);
 
         size2 = fn_8015D630(lbl_8023E8BC);
-        size1 = fn_8015D630(lbl_8023E92C);
+        alternate_size = fn_8015D630(lbl_8023E92C);
         size3 = fn_8015D630(lbl_8023E99C);
-        size2 = (size2 > size1 ? size2 : size1) > size3
-                    ? (size2 > size1 ? size2 : size1)
+        size2 = (size2 > alternate_size ? size2 : alternate_size) > size3
+                    ? (size2 > alternate_size ? size2 : alternate_size)
                     : size3;
         lbl_8064D2B0 = (size2 + 31) & ~31;
         lbl_8064D2BC = fn_801FEA8C(lbl_8064D2B0, 1, lbl_80251650, 0x125);

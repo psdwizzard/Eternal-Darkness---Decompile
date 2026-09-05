@@ -1,8 +1,7 @@
 extern int fn_80128EE4(void *);
 extern void fn_80129190(void *, int);
 
-/* NonMatching: size-exact honest C at 83.26923% (104/104 bytes). Control flow
- * and calls agree; declaration-sensitive allocation rotates r29-r31. */
+#pragma opt_propagation off
 int fn_800C3A74(void *object, void *alternate)
 {
     void *saved_object;
@@ -21,3 +20,4 @@ int fn_800C3A74(void *object, void *alternate)
     }
     return 1;
 }
+#pragma opt_propagation reset

@@ -1,0 +1,55 @@
+{
+  "recovery_id": "2af813e367cb8fec-6",
+  "attempt": 1,
+  "scope": "Integration halt recovery only; no frontier advancement or unrelated function matching.",
+  "status": "superseded-incomplete-recovery",
+  "correction_notice": "Attempt 1 correctly reconciled the two committed histories on the isolated agent branch, but incorrectly reported the scheduler halt as recovered. The subsequent integration failure states that the canonical repository still has MERGE_HEAD and one unmerged progress.json. A new commit on this branch cannot conclude or abort that already-running merge. All remaining attempt-1 fields are retained as historical branch-side evidence; use the attempt-2 report for the authoritative diagnosis and integration instruction.",
+  "diagnosis": {
+    "scheduler_reason": "Integration merge failed; scheduler halted for integration recovery and will not dispatch another decomp task.",
+    "actual_failure_class": "Two-sided committed progress.json divergence between the session-1778 branch and checkpoint history.",
+    "conflict_reproduction_command": "base=$(git merge-base cc39e0632 96bd12ea5); git merge-tree $base 96bd12ea5 cc39e0632 | rg -n 'changed in both|progress\\.json|<<<<<<<|>>>>>>>' | head -12",
+    "conflict_reproduction_raw_output": "19:changed in both\n49:changed in both\n50:  base   100644 b2c4071a36ae423a5feb196e58cf39545ac90521 eternal-darkness-decomp/reports/GEDE01/progress.json\n51:  our    100644 179ff3ee4d09967776d54755e5d574d18a4a11ce eternal-darkness-decomp/reports/GEDE01/progress.json\n52:  their  100644 d48fc9cef4d358a5e068f4dca6cff76e2d21feb5 eternal-darkness-decomp/reports/GEDE01/progress.json\n56:+<<<<<<< .our\n80:+>>>>>>> .their\n86:+<<<<<<< .our\n90:+>>>>>>> .their\n115:+<<<<<<< .our\n126:+>>>>>>> .their",
+    "smallest_correction": "Merge checkpoint commit 96bd12ea5 into the session branch and resolve only progress.json by retaining the checkpoint's externally authored credit plus session 1778's one matching object, one matching function, 44 matching and linked code bytes, 20 matching data bytes, 236 game-code total bytes, open-item evidence, NonMatching debt, and frontier 0x801CE15C. configure.py merged automatically and retains both sides.",
+    "founder_choice_required": false
+  },
+  "merge": {
+    "command": "git show -s --format='merge_commit=%H%nmerge_parents=%P%nsubject=%s' 51a3d8fb6",
+    "raw_output": "merge_commit=51a3d8fb6f14642f902eb484199dcfbdd699951d\nmerge_parents=cc39e0632173b6782135fe2d1469c0d79afab5ca 96bd12ea5879070747220160e973d80d86ea9b18\nsubject=Reconcile session 1778 integration conflict",
+    "resolution": "The recovery is a two-parent merge, so the scheduler can integrate this branch without recreating the original conflict. No gate was weakened or bypassed."
+  },
+  "authored_change_preservation": {
+    "command": "For each parent, git merge-base --is-ancestor parent 51a3d8fb6; git diff --quiet cc39e0632 51a3d8fb6 over the ten session-1778 payload paths excluding intentionally reconciled progress.json; enumerate checkpoint paths from git diff --name-only merge-base..96bd12ea5, exclude the two overlapping files configure.py and progress.json, and run git diff --quiet 96bd12ea5 51a3d8fb6 for each; inspect the merge delta in configure.py for the two session registrations.",
+    "raw_output": "parent_cc39e0632173b6782135fe2d1469c0d79afab5ca_preserved_exit=0\nparent_96bd12ea5879070747220160e973d80d86ea9b18_preserved_exit=0\nsession_payload_unchanged_exit=0\ncheckpoint_nonoverlap_payload_mismatch_count=0\n+            Object(Matching, 'game/game_fn_801CE070.c', mw_version='GC/1.2.5n', extra_cflags=['-Cpp_exceptions on', '-fp_contract off']),\n+            Object(NonMatching, 'game/game_fn_801CE09C.c', mw_version='GC/1.2.5n', extra_cflags=['-Cpp_exceptions on', '-fp_contract off']),",
+    "conclusion": "Both histories are ancestors. Every non-overlapping checkpoint payload is byte-identical to the checkpoint parent, every listed session-1778 payload is byte-identical to the session parent, and the automatically merged configuration contains both new session registrations alongside the checkpoint changes."
+  },
+  "progress_reconciliation": {
+    "command": "Read progress.json from cc39e0632 and 96bd12ea5 with git show, then read the merged worktree file; jq prints next_target and the six headline counters.",
+    "raw_output": "session_parent next_target=0x801CE15C matching_objects=4742 matching_functions=4509 matching_code_bytes=688900 matching_data_bytes=38290 linked_code_bytes=688744 linked_data_bytes=37422\ncheckpoint_parent next_target=0x801CE070 matching_objects=4968 matching_functions=4735 matching_code_bytes=742688 matching_data_bytes=38426 linked_code_bytes=742532 linked_data_bytes=37650\nmerged next_target=0x801CE15C matching_objects=4969 matching_functions=4736 matching_code_bytes=742732 matching_data_bytes=38446 linked_code_bytes=742576 linked_data_bytes=37650",
+    "arithmetic": "Relative to the checkpoint parent, the merged result adds exactly session 1778's one matching object, one matching function, 44 matching code bytes, 44 linked code bytes, and 20 matching data bytes. It preserves the checkpoint's linked-data count and advances only to the already accepted session frontier 0x801CE15C.",
+    "next_target_before_recovery": "0x801CE15C",
+    "next_target_after_recovery": "0x801CE15C"
+  },
+  "build": {
+    "command": ".tools/bin/ninja",
+    "exit_code": 0,
+    "raw_output": "[6033/6038] REPORT\n INFO Loading project .\n INFO Generating report for 6137 units (using 8 threads)\n INFO Report generated in 0.180s\n INFO Writing to build/GEDE01/report.json\n[6034/6038] LINK build/GEDE01/main.elf\n[6035/6038] DOL build/GEDE01/main.dol\n[6036/6038] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[6037/6038] PROGRESS\nProgress:\n  All: 46.48% fuzzy, 32.28% matched, 32.28% linked (4969 / 6137 files)\n    Code: 742732 / 2300692 bytes (4736 / 8216 functions)\n    Data: 38446 / 4305642 bytes (0.89%)\n  Game Code: 89.45% fuzzy, 62.05% matched, 62.03% linked (4951 / 5696 files)\n    Code: 739704 / 1192156 bytes (4674 / 5417 functions)\n    Data: 38222 / 40154 bytes (95.19%)\n  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\n    Code: 3028 / 3028 bytes (62 / 62 functions)\n    Data: 224 / 224 bytes (100.00%)"
+  },
+  "objdiff": {
+    "canonical_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty; build/tools/objdiff-cli diff -p . -u main/game/game_fn_ADDRESS -o build/GEDE01/halt-recovery-2af813e367cb8fec-6-attempt-1-fn_ADDRESS-canonical.json --format json for ADDRESS in 801CE070 801CE09C",
+    "canonical_raw_output": "matching_objects=4969 total_objects=6137 matching_functions=4736 total_functions=8216 matching_code_bytes=742732 total_code_bytes=2300692 matching_data_bytes=38446 total_data_bytes=4305642 linked_code_bytes=742576 linked_data_bytes=37650\nmode=canonical function=fn_801CE070 retail_text_bytes=44 generated_text_bytes=44 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=canonical function=fn_801CE09C retail_text_bytes=192 generated_text_bytes=192 match_percent=85.166664 retail_relocations=30 generated_relocations=30",
+    "relocation_strict_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/halt-recovery-2af813e367cb8fec-6-attempt-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address; build/tools/objdiff-cli diff -p . -u main/game/game_fn_ADDRESS -o build/GEDE01/halt-recovery-2af813e367cb8fec-6-attempt-1-fn_ADDRESS-reloc-strict.json --format json -c function_reloc_diffs=name_address for ADDRESS in 801CE070 801CE09C",
+    "relocation_strict_raw_output": "matching_objects=4969 total_objects=6137 matching_functions=4729 total_functions=8216 matching_code_bytes=740924 total_code_bytes=2300692 matching_data_bytes=38446 total_data_bytes=4305642 linked_code_bytes=742576 linked_data_bytes=37650\nmode=reloc-strict function=fn_801CE070 retail_text_bytes=44 generated_text_bytes=44 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=reloc-strict function=fn_801CE09C retail_text_bytes=192 generated_text_bytes=192 match_percent=85.166664 retail_relocations=30 generated_relocations=30",
+    "conclusion": "The full canonical and relocation-strict reports cover all 6137 rebuilt units. Direct affected-frontier diffs confirm fn_801CE070 remains byte-identical and fn_801CE09C remains an honest size-exact NonMatching reconstruction with unchanged canonical and relocation-strict score and relocation counts."
+  },
+  "retail_and_dol": {
+    "retail_source": "orig/GEDE01/sys/main.dol",
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo dol_cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (10417 tracked project files inspected)"
+  },
+  "gate_changes": "None. Exact-build, relocation, legal-audit, and DOL SHA-1 gates are unchanged and pass."
+}

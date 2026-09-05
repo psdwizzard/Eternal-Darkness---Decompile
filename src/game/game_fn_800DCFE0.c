@@ -8,11 +8,12 @@ extern void fn_800DB150(void *);
 
 int fn_800DCFE0(void *object, void *mode)
 {
+    register unsigned long object_r = (unsigned long)object;
     void *saved_mode;
     void *saved_object;
 
-    fn_80155DB4(object);
-    saved_object = object;
+    fn_80155DB4((void *)object_r);
+    saved_object = (void *)object_r;
     saved_mode = mode;
     fn_800DAFCC(saved_object);
     fn_800DB874(saved_object);

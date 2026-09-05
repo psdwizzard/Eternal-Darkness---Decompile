@@ -58,8 +58,8 @@ void fn_8008F064(void* object, void* actor, void* owner, void* distance_ctx,
             int a;
             int b;
             int c;
-            c = lbl_806519C8;
             lbl_8064C56C = 1;
+            c = lbl_806519C8;
             b = lbl_8064EC3C;
             a = lbl_8064EC40;
             fn_8012C62C(actor, 15, &a, &b, &c, 4);

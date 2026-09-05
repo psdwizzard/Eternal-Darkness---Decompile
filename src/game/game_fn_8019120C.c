@@ -24,17 +24,18 @@ extern void fn_80191F04(void*, u8, int);
 
 void fn_8019120C(State* object, int index)
 {
-    Entry* entry = (Entry*)(*(u8**)((u8*)object + 0x4C) + index * 0x38);
+    State* state = object;
+    Entry* entry = (Entry*)(*(u8**)((u8*)state + 0x4C) + index * 0x38);
 
     entry->alpha = (entry->alpha / -4) * -4;
     fn_8018E230(entry, &entry->alpha, 1, entry->alpha, -4, 0);
 
-    object = (State*)((u8*)object + 0x8C);
-    entry->velocity[0] = (s16)((float)entry->position[0] - object->position[0]);
-    entry->velocity[1] = (s16)((float)entry->position[1] - object->position[1]);
-    entry->velocity[2] = (int)((float)entry->position[2] - object->position[2]) >> 1;
+    state = (State*)((u8*)state + 0x8C);
+    entry->velocity[0] = (s16)((float)entry->position[0] - state->position[0]);
+    entry->velocity[1] = (s16)((float)entry->position[1] - state->position[1]);
+    entry->velocity[2] = (int)((float)entry->position[2] - state->position[2]) >> 1;
 
     fn_80179904(entry->velocity, (s16)((fn_800FBFB0() & 7) + 16));
     fn_8018F014(entry->velocity, 2);
-    fn_80191F04(object, (u8)index, 17);
+    fn_80191F04(state, (u8)index, 17);
 }

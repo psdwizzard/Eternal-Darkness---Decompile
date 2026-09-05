@@ -6,8 +6,7 @@ extern unsigned int fn_800FBFB0(void);
 extern s32 fn_800460EC(void);
 extern void fn_8012965C(void *object, s32 a, s32 b, s32 c);
 
-/* NonMatching: behavior-complete activation gate. The remaining differences
- * are the equivalent r30/r31 assignment and save scheduling. */
+#pragma opt_propagation off
 s32 fn_800781E8(void *object, s32 enabled)
 {
     void *target;
@@ -27,3 +26,4 @@ s32 fn_800781E8(void *object, s32 enabled)
     }
     return result;
 }
+#pragma opt_propagation reset

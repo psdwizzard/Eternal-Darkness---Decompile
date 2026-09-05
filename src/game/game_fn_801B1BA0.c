@@ -122,10 +122,8 @@ void fn_801B1BA0(void)
         fn_801B2348(0);
         break;
     case 6: {
-        u32 value = entry->value;
-        u32 compare = value;
-        compare -= 0x00000000;
-        if (compare == 0xFFFF) {
+        int value = entry->value;
+        if (value == 0xFFFF) {
             value = lbl_8064D18C;
         }
         lbl_8064D360 = value;

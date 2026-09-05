@@ -36,7 +36,7 @@ void fn_8010F9D8(int direction)
         }
         handles = lbl_80331738;
         previous = fn_801E8D34(handles[2]);
-        fn_801E8B6C(handles[2], (short)direction > 0 ? 1 : -1);
+        fn_801E8B6C(handles[2], (short)((short)direction > 0 ? 1 : -1));
         if (previous != fn_801E8D24(handles[2])) {
             if (fn_801E8D24(handles[2]) < previous) {
                 lbl_8064CD04 = -120;

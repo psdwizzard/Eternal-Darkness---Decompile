@@ -13,11 +13,11 @@ typedef struct RuntimeState {
 } RuntimeState;
 
 extern const Vec3f lbl_80239934;
-extern float lbl_8064F340;
+extern const float lbl_8064F340;
 extern int lbl_8064D18C;
-extern void *fn_80201B8C();
-extern void *fn_80201BC8();
-extern void fn_8011F114();
+extern void *fn_80201B8C(void *);
+extern Vec3f *fn_80201BC8(void *);
+extern void fn_8011F114(Vec3f *, Vec3f *);
 extern void fn_801AAE68(int, int, int, Vec3f *, int, int, int, u16, int,
                        float);
 
@@ -26,7 +26,7 @@ void fn_800CF598(void *object)
     RuntimeState *state;
     int effect;
     Vec3f position;
-    void *source;
+    Vec3f *source;
 
     if (object == 0) {
         return;
@@ -39,17 +39,31 @@ void fn_800CF598(void *object)
         fn_8011F114(&position, source);
     }
     switch (state->kind) {
-    case 4:
-        effect = 620;
+    case 3:
+    case 10:
+    case 11:
+    case 22:
+    case 24:
+    case 37:
+    case 38:
+    case 39:
+    case 41:
+        effect = 622;
         break;
     case 5:
         effect = 621;
         break;
     case 6:
+        effect = 620;
+        break;
+    case 4:
         effect = 624;
         break;
     case 7:
         effect = 625;
+        break;
+    case 8:
+        effect = 622;
         break;
     case 12:
         effect = 624;

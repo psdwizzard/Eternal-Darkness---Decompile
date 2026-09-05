@@ -1,0 +1,53 @@
+{
+  "session": "1778-remediation-1",
+  "scope": "Review remediation only; no frontier advancement or unrelated matching work.",
+  "status": "verified-complete",
+  "remediation": {
+    "artifact": "eternal-darkness-decomp/reports/GEDE01/halt-recovery-2af813e367cb8fec-6-attempt-3.json",
+    "operator_command_guard": "The committed operator command uses && through git merge --abort, the ancestry precondition, and git merge --ff-only.",
+    "historical_field_correction": "The stale reason_not_executed field was renamed reason_not_executed_by_revere because the canonical operator action was subsequently executed by Smith."
+  },
+  "scheduler_gate": {
+    "command": "jq '{state,assigned_target,accepted_frontier,merged_commit,updated_at,recovery_reason,transitions:(.transitions[-8:] // [])}' .darkfoundry/decomp-chain-state.json",
+    "raw_output": "{\n  \"state\": \"WORKING\",\n  \"assigned_target\": \"0x801CE070\",\n  \"accepted_frontier\": \"0x801CDF50\",\n  \"merged_commit\": \"ac0cd61ca8403fb67887df834bb037b366df2c32\",\n  \"updated_at\": \"2026-09-05T19:01:48.765Z\",\n  \"recovery_reason\": \"legacy in-flight task adopted\",\n  \"transitions\": [\n    {\n      \"from\": \"REVIEW_CORRECTION\",\n      \"to\": \"MERGE_RECOVERY\",\n      \"at\": \"2026-09-05T11:06:29.317Z\"\n    },\n    {\n      \"from\": \"MERGE_RECOVERY\",\n      \"to\": \"READY\",\n      \"at\": \"2026-09-05T11:29:07.762Z\"\n    },\n    {\n      \"from\": \"READY\",\n      \"to\": \"DISPATCHED\",\n      \"at\": \"2026-09-05T11:30:44.679Z\"\n    },\n    {\n      \"from\": \"DISPATCHED\",\n      \"to\": \"WORKING\",\n      \"at\": \"2026-09-05T11:31:17.724Z\"\n    },\n    {\n      \"from\": \"WORKING\",\n      \"to\": \"MERGE_RECOVERY\",\n      \"at\": \"2026-09-05T11:46:27.756Z\"\n    },\n    {\n      \"from\": \"MERGE_RECOVERY\",\n      \"to\": \"READY\",\n      \"at\": \"2026-09-05T18:58:55.923Z\"\n    },\n    {\n      \"from\": \"READY\",\n      \"to\": \"DISPATCHED\",\n      \"at\": \"2026-09-05T19:01:48.765Z\"\n    },\n    {\n      \"from\": \"DISPATCHED\",\n      \"to\": \"WORKING\",\n      \"at\": \"2026-09-05T19:01:48.765Z\"\n    }\n  ]\n}"
+  },
+  "affected_object_selection": {
+    "command": "git diff --name-only 96bd12ea5..HEAD -- eternal-darkness-decomp/src eternal-darkness-decomp/config/GEDE01/splits.txt eternal-darkness-decomp/configure.py",
+    "raw_output": "eternal-darkness-decomp/config/GEDE01/splits.txt\neternal-darkness-decomp/src/game/game_fn_801CE070.c\neternal-darkness-decomp/src/game/game_fn_801CE09C.c",
+    "objdiff_units": [
+      "main/game/game_fn_801CE070",
+      "main/game/game_fn_801CE09C"
+    ]
+  },
+  "rebuild": {
+    "command": ".tools/bin/ninja -t clean 2>&1 | tee build/GEDE01/session-1778-remediation-1-clean.log; .tools/bin/ninja 2>&1 | tee build/GEDE01/session-1778-remediation-1-build.log",
+    "clean_raw_output": "Cleaning... ninja: error: remove(build/binutils): Directory not empty\n6045 files.",
+    "build_exit_code": 0,
+    "build_tail_command": "tail -n 17 build/GEDE01/session-1778-remediation-1-build.log",
+    "build_tail_raw_output": "#   Section '.ignored' is unknown. Section ignored.\r\n### mwldeppc.exe Linker Warning:\r\n#   Section '.ignored' is unknown. Section ignored.\r\n[6043/6047] DOL build/GEDE01/main.dol\n[6044/6047] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[6045/6047] PROGRESS\nProgress:\n  All: 46.48% fuzzy, 32.28% matched, 32.28% linked (4969 / 6137 files)\n    Code: 742732 / 2300692 bytes (4736 / 8216 functions)\n    Data: 38446 / 4305642 bytes (0.89%)\n  Game Code: 89.45% fuzzy, 62.05% matched, 62.03% linked (4951 / 5696 files)\n    Code: 739704 / 1192156 bytes (4674 / 5417 functions)\n    Data: 38222 / 40154 bytes (95.19%)\n  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\n    Code: 3028 / 3028 bytes (62 / 62 functions)\n    Data: 224 / 224 bytes (100.00%)"
+  },
+  "objdiff": {
+    "generate_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/session-1778-remediation-1-canonical.json --format json-pretty; build/tools/objdiff-cli report generate -p . -o build/GEDE01/session-1778-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address; for addr in 801CE070 801CE09C; do build/tools/objdiff-cli diff -p . -u main/game/game_fn_${addr} -o build/GEDE01/session-1778-remediation-1-fn_${addr}-canonical.json --format json; build/tools/objdiff-cli diff -p . -u main/game/game_fn_${addr} -o build/GEDE01/session-1778-remediation-1-fn_${addr}-reloc-strict.json --format json -c function_reloc_diffs=name_address; done",
+    "generate_raw_output": " INFO Loading project .\n INFO Generating report for 6137 units (using 8 threads)\n INFO Report generated in 0.149s\n INFO Writing to build/GEDE01/session-1778-remediation-1-canonical.json\n INFO Loading project .\n INFO Generating report for 6137 units (using 8 threads)\n INFO Report generated in 0.150s\n INFO Writing to build/GEDE01/session-1778-remediation-1-reloc-strict.json\n INFO Writing to build/GEDE01/session-1778-remediation-1-fn_801CE070-canonical.json\n INFO Writing to build/GEDE01/session-1778-remediation-1-fn_801CE070-reloc-strict.json\n INFO Writing to build/GEDE01/session-1778-remediation-1-fn_801CE09C-canonical.json\n INFO Writing to build/GEDE01/session-1778-remediation-1-fn_801CE09C-reloc-strict.json",
+    "measure_command": "jq -r '.measures | \"matching_objects=\\(.complete_units) total_objects=\\(.total_units) matching_functions=\\(.matched_functions) total_functions=\\(.total_functions) matching_code_bytes=\\(.matched_code) total_code_bytes=\\(.total_code) matching_data_bytes=\\(.matched_data) total_data_bytes=\\(.total_data) linked_code_bytes=\\(.complete_code) linked_data_bytes=\\(.complete_data)\"' build/GEDE01/session-1778-remediation-1-canonical.json build/GEDE01/session-1778-remediation-1-reloc-strict.json",
+    "measure_raw_output": "matching_objects=4969 total_objects=6137 matching_functions=4736 total_functions=8216 matching_code_bytes=742732 total_code_bytes=2300692 matching_data_bytes=38446 total_data_bytes=4305642 linked_code_bytes=742576 linked_data_bytes=37650\nmatching_objects=4969 total_objects=6137 matching_functions=4729 total_functions=8216 matching_code_bytes=740924 total_code_bytes=2300692 matching_data_bytes=38446 total_data_bytes=4305642 linked_code_bytes=742576 linked_data_bytes=37650",
+    "direct_measure_command": "for mode in canonical reloc-strict; do for addr in 801CE070 801CE09C; do f=build/GEDE01/session-1778-remediation-1-fn_${addr}-${mode}.json; jq -r --arg mode $mode --arg fn fn_$addr '(.left.symbols[] | select(.name==$fn)) as $l | (.right.symbols[] | select(.name==$fn)) as $r | \"mode=\\($mode) function=\\($fn) retail_text_bytes=\\($l.size) generated_text_bytes=\\($r.size) match_percent=\\($l.match_percent) retail_relocations=\\([$l.instructions[] | select(.instruction.relocation != null)] | length) generated_relocations=\\([$r.instructions[] | select(.instruction.relocation != null)] | length)\"' $f; done; done",
+    "direct_measure_raw_output": "mode=canonical function=fn_801CE070 retail_text_bytes=44 generated_text_bytes=44 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=canonical function=fn_801CE09C retail_text_bytes=192 generated_text_bytes=192 match_percent=85.166664 retail_relocations=30 generated_relocations=30\nmode=reloc-strict function=fn_801CE070 retail_text_bytes=44 generated_text_bytes=44 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=reloc-strict function=fn_801CE09C retail_text_bytes=192 generated_text_bytes=192 match_percent=85.166664 retail_relocations=30 generated_relocations=30"
+  },
+  "retail_and_dol": {
+    "retail_source": "orig/GEDE01/sys/main.dol",
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo dol_cmp_exit=$?; sha1sum -c config/GEDE01/build.sha1",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0\nbuild/GEDE01/main.dol: OK"
+  },
+  "progress_gate": {
+    "command": "jq -r '\"next_target=\\(.next_target) matching_objects=\\(.matching_objects) total_objects=\\(.total_objects) matching_functions=\\(.matching_functions) total_functions=\\(.total_functions) matching_code_bytes=\\(.matching_code_bytes) total_code_bytes=\\(.total_code_bytes) matching_data_bytes=\\(.matching_data_bytes) total_data_bytes=\\(.total_data_bytes) linked_code_bytes=\\(.linked_code_bytes) linked_data_bytes=\\(.linked_data_bytes)\"' reports/GEDE01/progress.json",
+    "raw_output": "next_target=0x801CE15C matching_objects=4969 total_objects=6137 matching_functions=4736 total_functions=8216 matching_code_bytes=742732 total_code_bytes=2300692 matching_data_bytes=38446 total_data_bytes=4305642 linked_code_bytes=742576 linked_data_bytes=37650",
+    "frontier_changed": false
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (10421 tracked project files inspected)"
+  },
+  "gate_changes": "None. Exact-build, relocation, legal-audit, DOL SHA-1, source, configuration, split, symbol, and progress gates were not weakened, bypassed, or edited."
+}

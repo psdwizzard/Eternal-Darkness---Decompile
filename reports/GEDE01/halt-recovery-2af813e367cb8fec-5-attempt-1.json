@@ -1,0 +1,10 @@
+{
+  "recovery_id": "2af813e367cb8fec-5",
+  "attempt": 1,
+  "status": "superseded-invalid-evidence",
+  "correction_notice": "This attempt originally misdiagnosed the integration halt as a dirty-worktree guard failure and gave a stale instruction to preserve a nonexistent local progress.json before retrying the merge. Those claims were unsupported and contradicted the scheduler record. Do not use the original diagnosis or integration instruction.",
+  "actual_failure_class": "A real two-sided content conflict in eternal-darkness-decomp/reports/GEDE01/progress.json. Checkpoint parent 2c556797e contained external PR accounting that session parent 022c12ed4 lacked, while the session parent contained the advanced frontier and session-1777 accounting that the checkpoint parent lacked. Selecting either parent wholesale would lose authored accounting.",
+  "actual_recovery": "Merge 431420bb5 reconciled both committed parents before this attempt-1 report was committed. The authoritative verification and corrected guidance are in reports/GEDE01/halt-recovery-2af813e367cb8fec-5-attempt-2.json.",
+  "integration_instruction": "No retry is required. Do not recreate a dirty progress.json or repeat merge 431420bb5. Treat the merged progress shape at 431420bb5 as the already-landed reconciliation, while preserving next_target 0x801CE070.",
+  "gate_changes": "None. This correction changes recovery evidence only."
+}

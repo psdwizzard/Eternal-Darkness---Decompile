@@ -24,8 +24,8 @@ void fn_80196784(u8* object, void* arg, int value, u8* config)
     u8 count;
     u8 total;
     u8* data;
-    u8* entry;
     u8 i;
+    u8* entry;
     u32 first;
     u32 second;
     struct {

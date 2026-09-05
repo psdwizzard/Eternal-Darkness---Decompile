@@ -11,7 +11,8 @@ extern void *fn_80201814();
 extern void *fn_80201B8C();
 extern int fn_8003BD48(void *, void *);
 
-int fn_800D9FE0(register void *context, void *object)
+#pragma opt_propagation off
+int fn_800D9FE0(void *context, void *object)
 {
     void *saved_context = context;
     Actor *actor;
@@ -25,3 +26,4 @@ int fn_800D9FE0(register void *context, void *object)
     }
     return 1;
 }
+#pragma opt_propagation reset

@@ -16,7 +16,7 @@ void fn_800DAFCC(void *context)
     void *active_object = active != 0 ? *active : 0;
     int i;
 
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 12; i++) {
         Entry *entry = entries[i];
         if (entry != 0 && entry->owner == owner && entry->object != active_object) {
             fn_801FD534(entry->object);

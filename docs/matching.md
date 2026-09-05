@@ -605,3 +605,183 @@ Objdiff reports 100% for all eight functions under
 `function_reloc_diffs=name_address`: 76, 228, 348, 148, 244, 208, 156, and
 232 code bytes respectively, with 9, 4, 11, 8, 7, 9, 8, and 8 matching
 relocations.
+
+## A local initializer can share an existing rodata table
+
+`fn_8006B0F0` copies the three values `{0, 2, 3}` to its stack frame before
+iterating over them. Declaring `s32 kinds[3] = {0, 2, 3};` before the state
+lookup reproduces the retail instructions, but MWCC emits the initializer as
+the compiler-local `.rodata` symbol `@4`. The post-compile rule requires `@4`
+to own that entire section, verifies its 12 bytes against the start of the
+existing retail symbol `lbl_80239090`, redefines the symbol, and removes the
+duplicate section. The raw object is 99.51923%; the guarded build edge is
+208/208 bytes and 100% with all eight relocation sites equal.
+
+Modelling the values as an external `Kinds` structure, copying that structure
+after the state lookup, and indexing `kinds.values` produces the same-sized
+function at 57.98077%.
+
+## Compiler-local data must be removed, not only renamed
+
+MWCC emits local constant pools and jump tables even when identical data already exists in
+the retail binary. Renaming the local symbol is sufficient for a strict function diff, but it
+is not sufficient for the linked binary: the object still owns a duplicate data section. The
+post-compile rules therefore verify the local data against the addressed retail symbol,
+redefine references to that symbol, and remove the local section. A single-symbol rule must
+cover the whole section. A multi-symbol rule must name every nonempty symbol in the section;
+the guard rejects overlapping ranges and nonzero bytes outside those ranges.
+
+This distinction matters for jump tables. The first strict pass for `fn_8006E53C`,
+`fn_800CF598`, `fn_801ACFE8`, and `fn_801B1BA0` renamed their tables and reached 100% at the
+function level, but left 476 bytes of duplicate `.data` plus 20 bytes of linker alignment.
+Externalizing the tables and removing those sections restores the retail DOL exactly.
+
+`fn_8009E808` has a separate case: one compiler-local eight-byte `.sdata2` symbol corresponds
+to two adjacent four-byte retail symbols. Its second relocation must first be retargeted from
+the local symbol plus four to the second retail symbol. The retargeting tool requires exactly
+one relocation with the expected type and addend, verifies both four-byte values against the
+retail DOL, and fails without writing if any check differs. Treating the full eight bytes as
+one retail symbol leaves a strict relocation-name difference at 99.9% even though the linked
+address is the same.
+
+The full-link checksum is required in addition to function-level objdiff. It caught the
+duplicate jump-table sections that the function comparison correctly did not score.
+
+## Source forms rejected while matching externalized-data functions
+
+- The earlier source using direct multidimensional `SceneEntry` indexing in
+  `fn_80090004` scores 89.671875% because
+  retail keeps the address of the table's strided `value` column in a saved register. A
+  two-use accessor macro contains that layout calculation, and it is undefined immediately
+  after the function.
+- In `fn_8007D4D8`, passing the packed direction word directly after copying the vector
+  leaves one stack reload and scores 99.0%. Reading the packed word into a named local before
+  the copy keeps it in a register and matches exactly.
+- `fn_801247F8` reaches 100% only by converting a live pointer to an integer and adding it to
+  an integer offset as though the offset were a pointer. Readable pointer-index forms are
+  size-exact at 99.84615%, so this function remains NonMatching.
+- In `fn_80174F2C`, moving the descriptor assignment out of the helper call while using only
+  `opt_common_subs off` produces 556 bytes instead of 568 and scores 96.34507%. Disabling
+  `opt_propagation` as well and storing the script value in a named `u16` preserves the
+  descriptor lifetime and matches exactly with ordinary assignment statements.
+- Declaring `fn_801E8328` variadic in `fn_80153A24` adds two `crclr` instructions, producing
+  744 bytes instead of 736 and 98.91304%. Existing calls use different argument counts, so
+  the retained old-style declaration is consistent with the dispatcher boundary.
+- Two separate walking descriptor pointers in `fn_80153A24` score 95.2%. Keeping the pair in
+  a two-element array reproduces the retail parameter allocation without dummy state.
+- Keeping the second loop index block-scoped in `fn_80186F70` scores 99.40909%. Separate
+  named loop counters, with the second counter function-scoped, match exactly.
+- Signed-byte casts on the three differences in `fn_80187BB4` add `extsb` instructions and
+  score 91.354164%. The byte operands already promote to `int`, so removing the casts is both
+  simpler and exact.
+- Replacing the packed-coordinate stores in `fn_801916D0` with two `memcpy` calls produces
+  716 bytes instead of 684 and 90.34503%. A union with named coordinate and packed-word views
+  expresses both uses without pointer aliasing and matches exactly.
+- Marking the three floating-point globals used by `fn_80192F54` as `const` changes floating
+  register allocation and scores 99.45513%; the non-const declarations match exactly.
+- Reusing and rebasing the input pointer directly in `fn_8019120C` scores 97.61176%. Keeping
+  the input and the rebased working pointer as distinct locals matches exactly.
+- Declaring `lbl_8064D2FC` signed in `fn_801ACFE8` scores 98.53658%. Other users treat it as
+  an integer handle, and the retained `u32` declaration reproduces the unsigned comparison.
+- A ternary clamp in `fn_8018E0D8` scores 93.7%. The explicit `if`/`else` form matches the
+  retail control flow and is clearer about the saturated value.
+- Alternative compiler optimization settings leave `fn_801B1BA0` at 99.3%. Its retained
+  source and existing per-file settings match exactly after both jump tables are externalized.
+
+## Function-scoped optimization pragmas
+
+MWCC's function-scoped optimization controls resolve several recurring code-shape differences without changing object-wide compiler settings. Each directive is placed immediately before the affected function and reset immediately afterward. This batch uses `opt_propagation off` in 22 functions; `opt_propagation off` with `opt_unroll_loops off` in three; `opt_common_subs off` in four; `opt_common_subs off` with optimization level 2 in one; `global_optimizer off` in three; `use_lmw_stmw on` in three; `use_lmw_stmw on` with `opt_lifetimes off` in two; optimization level 1 in two; and one function each with `opt_loop_invariants off`, `opt_dead_assignments off`, or `peephole off` with `scheduling off`.
+
+`fn_8011ECF8` needs `use_lmw_stmw on`, optimization level 2, and `opt_propagation off` together with separate offset assignments and direct indexing of the flag buffer. The source without these changes scores 96.04478%. `opt_propagation off` alone also scores 96.04478%; optimization level 1, with or without propagation disabled, scores 97.37313%; and optimization level 1 followed by optimization level 2, without propagation disabled, scores 99.10448%. Per-object `-O2` and `-O2,p` settings score 84.89552%. The direct optimization-level-2 form avoids stacked optimization directives and matches exactly.
+
+The directives were found by testing 26 function-scoped optimization controls and then testing pairs on candidates improved by a single directive. Alternate object-wide settings also match the unchanged sources of `fn_801ACDC4` and `fn_801AD8E8` at GC/1.3 `-O3`, `fn_801B1028` at GC/1.3 `-O1`, and `fn_801AD898` under GC/1.2.5n without the scheduling and peephole overrides. The scoped forms retain each object's existing compiler version and flags.
+
+## A same-width `unsigned long` parameter copy can change register allocation
+
+MWCC can assign a parameter to a different callee-saved register when it is
+copied at function entry to a `register unsigned long` local and converted
+back at its uses. This applies even though pointers, `int`, and `unsigned long`
+are all 32 bits for this target. `fn_80036198` is an existing matching example
+of the same source form.
+
+This parameter-copy form matches `fn_8006016C`, `fn_800777B0`,
+`fn_8009E4BC`, `fn_800C77B4`, `fn_800C77FC`, `fn_800D386C`,
+`fn_800D9F2C`, and `fn_800DCFE0`. `fn_8005BCC0` matches with a typed
+`register void *` copy. `fn_800D078C` and `fn_800F35E4` also use typed pointer
+copies and require function-scoped `opt_propagation off` pragmas.
+
+Typed pointer copies were tested in the seven pointer functions that require
+`unsigned long`; they compiled but returned to the original scores: 94.02778%,
+90.21739%, 92.954544%, 83.05556%, 83.05556%, 95.22222%, and 98.39286%.
+The retained forms match 1,608 code bytes and 56 relocation sites exactly
+under `function_reloc_diffs=name_address`.
+
+## Small source forms can control operand and register selection
+
+Several equivalent source forms produce different code under GC/1.3. Splitting an initializer
+from its declaration gives the required local numbering in `fn_80134F08` and `fn_80198318`.
+Expanding the clear operation in `fn_8011F7E0` into a load followed by a masked store preserves
+the loaded value as a named local. In `fn_8011F808` and `fn_8019A5DC`, writing commutative
+operands in retail order changes their encoded order. `fn_80144430` requires `!enabled` rather
+than `enabled == 0`, and `fn_8019CE08` requires the byte load in a named local before the mask.
+`fn_800EC318` matches when each table entry is indexed from the base inside the loop instead of
+advancing a pointer in the loop clause.
+
+`fn_8012CF08` combines three narrow effects. Moving `entry` to the end of the declaration block
+selects the retail saved-register order, computing the runtime entry address in one expression
+selects the product register for the sum, and a function-scoped `opt_propagation off` pragma is
+still required. The original direct form with the pragma scores 98.18841%. Naming the table and
+combining the address expression scores 98.333336%. The retained source without the pragma
+scores 98.26087%. A redundant two-temporary form also matches, but the declaration-order form
+does so without the redundant copies.
+
+The nine functions are 1,576 code bytes with 42 relocation sites. Each is 100% on the canonical
+basis and under `function_reloc_diffs=name_address`.
+
+## Declaration order, local lifetime, and source expression shape
+
+MWCC's saved-register allocation is sensitive to the order and lifetime of
+named locals. Thirty-seven functions match after moving declarations, splitting
+branch-specific roles, hoisting short-lived locals, or correcting a local's
+width or signedness. Several functions also require a function-scoped
+optimization pragma, reset immediately after the function. These changes total
+10,452 code bytes and 547 relocation sites.
+
+A redundant two-local copy is not required for `fn_8006B70C`: separate
+`initial_mask` and `mask` locals for its two switch paths produce the retail
+allocation directly. `fn_80073728` similarly matches with a normal
+`saved_object` pointer and a separate event local; converting the pointer to an
+integer is unnecessary. In `fn_801755FC`, the direction components and their
+temporary delta are signed bytes, while the color components remain unsigned.
+The local declaration of `fn_8012C62C` uses the generic pointer parameters from
+that function's definition, so no incompatible struct-pointer cast is needed.
+
+Expression order remains significant when propagation is disabled.
+`fn_80120874` preserves the aligned-size expression as
+`31 + count + count * 3`, and `fn_8017E1E4` writes the negative random bit as a
+multiplication by `-1`. Algebraically simplified forms are not byte-identical:
+`count * 4 + 31` with propagation disabled scores 63.214287%, placing the
+addition after the indexed load scores 85.71429%, and unary negation or
+subtraction in `fn_8017E1E4` scores 95.196075%.
+
+Four harvested forms were rejected. `fn_800CA554` and `fn_800E8634` only reach
+100% with a pointer converted to an integer solely to change register
+allocation; normal saved-pointer and saved-value forms score 83.888885% and
+95.50848%, respectively. The proposed forms for `fn_801301B0` and
+`fn_801B3A2C` change functions used as `void` into value-returning functions.
+The latter can also return an uninitialized pointer. These four functions
+remain nonmatching.
+
+## Switch-table ownership can require name and alignment normalization
+
+`fn_8006B620` owns its switch table. GC/1.3 emits the correct 156 table bytes
+and relocations, but names the table `@46` and gives its `.data` section
+eight-byte alignment. The retail object names the table
+`jumptable_8024406C` and uses four-byte alignment. The object-specific build
+steps retain the table, rename its symbol, and set the section alignment to
+four bytes. Externalizing the table is not valid because no other translation
+unit defines it, leaving the link unresolved.
+
+After normalization, objdiff reports 236/236 code bytes and 156/156 data
+bytes at 100% under `function_reloc_diffs=name_address`. The whole-DOL SHA-1
+remains `ea24b6af954876ce072562ff39cdb4c81d32be1f`.

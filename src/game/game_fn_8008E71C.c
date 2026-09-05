@@ -14,18 +14,13 @@ extern void fn_80201D1C(void*, int);
 extern unsigned long long fn_8020123C();
 extern void fn_8008DF64(void*, void*, void*, void*);
 
-/* NonMatching: behavior-complete frontier reconstruction; the remaining
- * differences are condition lowering and declaration-sensitive scheduling. */
 void fn_8008E71C(void* object, int object_id, EffectState* state,
                  void* resource, void* arg5, void* arg6)
 {
-    unsigned int flags = fn_80036D5C(object);
-    int target = state->primary;
-    if (target == 0) {
-        target = state->secondary;
-    }
+    unsigned int masked = fn_80036D5C(object) & 0x00100000;
+    int target = state->primary != 0 ? state->primary : state->secondary;
 
-    if ((flags & 0x00100000) != 0) {
+    if (masked != 0) {
         void* linked = fn_80201814(state->secondary);
         fn_8012B344(resource);
         fn_80201D34(object, 73);

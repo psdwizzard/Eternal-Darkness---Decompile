@@ -3,7 +3,8 @@ extern int fn_800A30AC(void *);
 extern void fn_801296F8(void *, int);
 extern void fn_800A270C(void *, void *, int);
 
-int fn_800DA05C(register void *context, void *object)
+#pragma opt_propagation off
+int fn_800DA05C(void *context, void *object)
 {
     void *saved_context = context;
     void *saved_object = object;
@@ -14,3 +15,4 @@ int fn_800DA05C(register void *context, void *object)
     }
     return 1;
 }
+#pragma opt_propagation reset

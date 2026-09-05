@@ -4,15 +4,16 @@ typedef struct Runtime80095D10 {
     int* values;
 } Runtime80095D10;
 
-extern void *fn_80201BC8();
-extern void *fn_80201B8C();
-extern void* fn_80201B3C();
+extern void *fn_80201BC8(void *);
+extern void *fn_80201B8C(void *);
+extern void* fn_80201B3C(void);
 extern int fn_80128EAC(void*);
 extern int fn_80038308(void*, int, short*);
 extern int fn_80038464(void*, int, short*);
 extern int fn_80201B64(void*);
 extern const float lbl_8064ECD4;
 
+#pragma global_optimizer off
 int fn_80095D10(register void* object)
 {
     register void* owner;
@@ -52,3 +53,4 @@ int fn_80095D10(register void* object)
     }
     return 4;
 }
+#pragma global_optimizer reset

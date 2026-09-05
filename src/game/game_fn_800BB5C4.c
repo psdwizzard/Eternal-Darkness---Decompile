@@ -17,24 +17,21 @@ typedef struct Owner {
 } Owner;
 
 extern void *memcpy(void *, const void *, unsigned int);
-extern int fn_80201B54();
-extern float fn_80200534(void *, int, int);
+extern int fn_80201B54(void *);
+extern float fn_80200534(int, int, int);
 extern int fn_80117E58(void);
 extern float fn_80200BDC(void);
-extern void *fn_80201B8C();
+extern Owner *fn_80201B8C(void *);
 
 unsigned short fn_800BB5C4(void *output, void *object)
 {
     Output result;
-    float tick;
     float time;
 
-    time = fn_80200534(((void *)fn_80201B54(object)), -1, 0x39);
-    tick = fn_80117E58();
-
-    time += fn_80200BDC() - tick;
+    time = fn_80200534(fn_80201B54(object), -1, 0x39);
+    time += fn_80200BDC() - fn_80117E58();
     if (time >= 0.0f) {
-        Source *source = ((Owner *)fn_80201B8C(object))->source;
+        Source *source = fn_80201B8C(object)->source;
         result.second = source->second;
         result.first = source->first;
     }

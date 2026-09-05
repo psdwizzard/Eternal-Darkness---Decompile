@@ -33,15 +33,14 @@ typedef struct Value8008D31C {
     short timer;
 } Value8008D31C;
 
-/* NonMatching: behavior-complete, size-exact C; register allocation differs. */
 int fn_8008D31C(void* object, void* target, int value, Data8008D31C* data,
                 void* resource, void* argument, int parameter)
 {
+    int result = 0;
     void* created;
+    int callback;
     void* nested;
     void* effect;
-    int callback;
-    int result = 0;
 
     created = fn_801294DC(resource, (int)argument, 0, 6);
     if (created != 0) {

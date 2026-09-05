@@ -12,10 +12,10 @@ extern Entry lbl_805FAA60[10];
 
 void fn_8016ADF0(s16 id, s16 value2, s16 value4)
 {
+    int i;
     int selected = -1;
-    int i = 0;
 
-    do {
+    for (i = 0; i < 10; i++) {
         if (lbl_805FAA60[i].id == id) {
             selected = i;
             break;
@@ -23,8 +23,7 @@ void fn_8016ADF0(s16 id, s16 value2, s16 value4)
         if (selected == -1 && lbl_805FAA60[i].id == 0) {
             selected = i;
         }
-        i++;
-    } while (i < 10);
+    }
 
     lbl_805FAA60[selected].id = id;
     if (value2 >= 0) {

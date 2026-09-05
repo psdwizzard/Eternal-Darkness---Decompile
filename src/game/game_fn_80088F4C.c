@@ -15,8 +15,8 @@ typedef struct Vector {
 
 extern void *fn_80201B9C();
 extern void* fn_80204844(void*, int);
-extern State* fn_8006D444(void);
-extern void *fn_80201814();
+extern State* fn_8006D444(void*);
+extern void *fn_80201814(void*);
 extern int fn_80038308(void*, int, s16*);
 extern int fn_80038464(void*, int, s16*);
 extern int fn_800460EC(void);
@@ -28,22 +28,24 @@ extern void fn_801FA66C(int, int, float);
 extern void fn_801FA748(int, Vector*);
 extern unsigned int lbl_8064C920;
 extern int lbl_8064D18C;
-extern float lbl_8064EB7C;
+extern const float lbl_8064EB7C;
 extern const Vector lbl_8023953C;
 
 void fn_80088F4C(void)
 {
     State* state;
+    void* resource;
     void* object;
     int enabled;
     int valid;
     s16 maximum;
     s16 current;
 
-    if (fn_80204844(fn_80201B9C(), 0x20) == 0) {
+    resource = fn_80204844(fn_80201B9C(), 0x20);
+    if (resource == 0) {
         return;
     }
-    state = fn_8006D444();
+    state = fn_8006D444(resource);
     if (state == 0) {
         return;
     }

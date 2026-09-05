@@ -19,8 +19,8 @@ void fn_8017E1E4(Vec3s* current, Vec3s* base, s16 radius, s16 z_offset)
     current->y += radius - (fn_800FBFB0() & mask) + base->y;
 
     if (z_offset >= 0) {
-        current->z += z_offset + (fn_800FBFB0() & 1) + base->z;
+        current->z += (fn_800FBFB0() & 1) + base->z + z_offset;
     } else {
-        current->z += z_offset + -(fn_800FBFB0() & 1) + base->z;
+        current->z += base->z + (fn_800FBFB0() & 1) * -1 + z_offset;
     }
 }

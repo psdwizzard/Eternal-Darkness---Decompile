@@ -18,7 +18,7 @@ u8* fn_80129A00(void* owner, int value, int flags, float a, float b)
         }
         fn_80129CE8(owner, entry, value, flags, 5);
         fn_80129BA4(entry, a, b);
-        fn_80129DE0(owner, entry, (flags & 0x10000) == 0, 1);
+        fn_80129DE0(owner, entry, !(flags & 0x10000), 1);
     } else {
         entry = 0;
     }

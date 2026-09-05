@@ -10,6 +10,7 @@ extern void fn_80149E28(void*);
 extern void fn_8014FCF4(Vec3Words*, s16, u16, u32, u32*);
 extern void fn_8014F9D4(Vec3Words*, s16, u16, u32, u32*, float);
 
+#pragma opt_propagation off
 void fn_8014FFE0(u8* instance)
 {
     if (*(int*)(instance + 0x1324) != lbl_8064D18C) {
@@ -64,3 +65,4 @@ void fn_8014FFE0(u8* instance)
         break;
     }
 }
+#pragma opt_propagation reset

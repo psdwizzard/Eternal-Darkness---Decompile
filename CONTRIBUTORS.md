@@ -13,7 +13,7 @@ commits are not visible here. This file is the durable record of who did what.
 
 ## Andrew ([@ateich](https://github.com/ateich))
 
-**57 functions, 19,616 matched code bytes.**
+**284 functions, 73,448 matched code bytes.**
 
 ### Script handlers and narrowed values ([#1](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/1), [#2](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/2), [#3](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/3)) — 6 functions, 7,488 bytes
 
@@ -170,3 +170,114 @@ to 4,426 functions and 4,630 to 4,659 objects. Each was built and measured
 separately on both the canonical and the `function_reloc_diffs=name_address`
 basis; `build/GEDE01/main.dol` still hashes to
 `ea24b6af954876ce072562ff39cdb4c81d32be1f`.
+
+### September 5, 2026 — six PRs, 227 functions, 53,832 bytes
+
+PRs [#11](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/11) through [#16](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/16), landed together. This single day moved
+the tree from 29.937601% to 32.277420% matched code, 4,506 to 4,733 functions and
+4,739 to 4,966 objects — the largest contribution the project has received.
+
+Each PR was applied, built and measured separately. The aggregate function delta
+of +227 equals the sum of the six per-PR claims exactly, and the tree was then
+rebuilt from an empty build directory with zero failures and an unchanged DOL
+SHA-1.
+
+Two of these also improved the build's own honesty rather than just its numbers.
+`tools/retarget_elf_relocation.py` (new in [#11](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/11)) reads the retail DOL and
+refuses to rebind a relocation whose compiler-side bytes disagree with the retail
+value, and `--require-section-symbols` in `tools/externalize_elf_symbol.py`
+forces every nonempty symbol in a discarded section to be named and verified,
+failing on any unverified nonzero byte. Together they close a real gap: an
+unguarded externalization could previously report 100% on a constant that
+differed from retail. That change makes past work more trustworthy, not just
+future work.
+
+### Guarded compiler-local data externalization ([#11](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/11)) — 34 functions, 13,164 bytes
+
+Rebinds a compiler-local constant onto its retail symbol only after the compiler's own bytes are checked against the retail DOL.
+
+| Function | Bytes |
+| --- | ---: |
+| `fn_801B1BA0` | 1,960 |
+| `fn_80153A24` | 736 |
+| `fn_801926EC` | 696 |
+| `fn_801916D0` | 684 |
+| `fn_8018D400` | 648 |
+| `fn_80192F54` | 624 |
+| `fn_80187BB4` | 576 |
+| `fn_80174F2C` | 568 |
+| _26 more_ | 6,672 |
+
+### Function-scoped compiler pragmas ([#12](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/12)) — 44 functions, 6,836 bytes
+
+MWCC optimization controls set immediately before a function and reset immediately after, so no object-wide flags change.
+
+| Function | Bytes |
+| --- | ---: |
+| `fn_8016BA4C` | 704 |
+| `fn_801A0284` | 460 |
+| `fn_8014FE64` | 380 |
+| `fn_8014FFE0` | 376 |
+| `fn_800CFCD4` | 288 |
+| `fn_800E8524` | 272 |
+| `fn_8011ECF8` | 268 |
+| `fn_801ACB0C` | 260 |
+| _36 more_ | 3,828 |
+
+### Extern qualifiers and parameter copies ([#13](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/13)) — 17 functions, 2,536 bytes
+
+| Function | Bytes |
+| --- | ---: |
+| `fn_8015DD94` | 304 |
+| `fn_8009E4BC` | 264 |
+| `fn_8005BCC0` | 228 |
+| `fn_800F35E4` | 188 |
+| `fn_800D9F2C` | 180 |
+| `fn_8012B8A8` | 172 |
+| `fn_800D078C` | 160 |
+| `fn_8006016C` | 144 |
+| _9 more_ | 896 |
+
+### Declarations, expressions and indexing ([#14](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/14)) — 9 functions, 1,576 bytes
+
+| Function | Bytes |
+| --- | ---: |
+| `fn_8019A5DC` | 488 |
+| `fn_8012CF08` | 276 |
+| `fn_80198318` | 264 |
+| `fn_800EC318` | 172 |
+| `fn_8011F808` | 136 |
+| `fn_80134F08` | 116 |
+| `fn_80144430` | 64 |
+| `fn_8011F7E0` | 40 |
+| _1 more_ | 20 |
+
+### Declaration order and local lifetimes ([#15](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/15)) — 37 functions, 10,452 bytes
+
+| Function | Bytes |
+| --- | ---: |
+| `fn_801AA6D0` | 808 |
+| `fn_800A0DE4` | 636 |
+| `fn_801755FC` | 576 |
+| `fn_8019C06C` | 512 |
+| `fn_800E2150` | 500 |
+| `fn_8015D7D4` | 500 |
+| `fn_80067EB8` | 444 |
+| `fn_8008D31C` | 408 |
+| _29 more_ | 6,068 |
+
+### Structural reconstruction ([#16](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/16)) — 86 functions, 19,268 bytes
+
+The largest single batch landed on this project.
+
+| Function | Bytes |
+| --- | ---: |
+| `fn_8014DB5C` | 1,188 |
+| `fn_80096A44` | 788 |
+| `fn_8008ABD4` | 620 |
+| `fn_8007C354` | 584 |
+| `fn_800D88DC` | 508 |
+| `fn_8019A8C4` | 496 |
+| `fn_8019F320` | 488 |
+| `fn_8008F064` | 448 |
+| _78 more_ | 14,148 |

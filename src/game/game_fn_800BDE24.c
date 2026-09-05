@@ -27,8 +27,8 @@ void fn_800BDE24(void)
     fn_8020D3F4(lbl_805E2B1C, -0x6B5, 1);
     fn_8020D318(lbl_805E2B7C, 0, 1);
 
-    slot = lbl_80320DF0;
-    for (i = 0; i < 20; i++, slot++) {
+    for (i = 0; i < 20; i++) {
+        slot = &lbl_80320DF0[i];
         if ((slot->flags & 1) != 0 && (slot->flags & 0xE) != 0 && lbl_8064B708 != 0) {
             fn_800BD0F0(i, slot->object);
         }

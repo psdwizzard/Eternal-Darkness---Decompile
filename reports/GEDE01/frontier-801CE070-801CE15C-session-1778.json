@@ -1,0 +1,14 @@
+{
+  "session_id": "session-1778",
+  "range_start": "0x801CE070",
+  "range_end": "0x801CE15C",
+  "next_target": "0x801CE15C",
+  "range_bytes": 236,
+  "matched_bytes": 44,
+  "nonmatching_bytes": 192,
+  "functions": [
+    {"name": "fn_801CE070", "start": "0x801CE070", "end": "0x801CE09C", "size": 44, "status": "Matching", "canonical_percent": 100.0, "relocation_strict_percent": 100.0},
+    {"name": "fn_801CE09C", "start": "0x801CE09C", "end": "0x801CE15C", "size": 192, "status": "NonMatching", "best_percent": 85.166664, "divergence": "GC/1.2.5n schedules the three high-address loads and selects the temporary state-base register differently from retail; both sides contain 48 instructions and 192 bytes."}
+  ],
+  "accounting": "All 236 retail text bytes in the declared range are owned by independent per-function translation units: 44 matched and 192 honest-C NonMatching, with no gap, assembly, shared reconstruction, or unaccounted span."
+}

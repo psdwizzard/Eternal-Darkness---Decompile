@@ -19,14 +19,13 @@ extern Slot* lbl_8064CF88;
 extern int lbl_8064CF98;
 extern int lbl_8064CFAC;
 
-/* NonMatching: behavior- and size-exact owner/version lookup. Retail and
- * GC/1.3 both emit 116 bytes; remaining differences are register allocation. */
 Slot* fn_80134F08(Object* object)
 {
+    int i;
     Slot* slot = lbl_8064CF88;
     Slot* result = 0;
     int count = lbl_8064CFAC;
-    int i = 0;
+    i = 0;
 
     while (result == 0 && i < count) {
         if (slot->owner == object) {

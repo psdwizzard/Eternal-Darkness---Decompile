@@ -7,6 +7,7 @@ extern s32 fn_8005099C(void);
 extern u16 fn_80050B08(s32, s32, s32, u8*, s32, s32, s32);
 extern int fn_801ACACC(u16, u8, u32, u32);
 
+#pragma opt_propagation off
 int fn_801ACB0C(u32 arg, u32 object_id)
 {
     u32 object;
@@ -27,3 +28,4 @@ int fn_801ACB0C(u32 arg, u32 object_id)
     }
     return 1;
 }
+#pragma opt_propagation reset

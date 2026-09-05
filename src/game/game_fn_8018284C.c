@@ -25,6 +25,7 @@ extern void fn_801851A0(void*, void*);
 
 void fn_8018284C(u8* self, int index)
 {
+    u8* config2;
     u8* config = self + 0x8C;
     u8* item = *(u8**)(self + 0x4C) + index * 0x38;
     Vec3s position;
@@ -47,7 +48,9 @@ void fn_8018284C(u8* self, int index)
     item[0x21] = config[0x34];
 
     if (config[0x38] != 0) {
-        effect = *(void**)((config = config + index * 4) + 0x3C);
+        config2 = config;
+        config2 = config2 + index * 4;
+        effect = *(void**)(config2 + 0x3C);
         fn_80185108(effect);
         fn_801851A0(effect, self + 0x10);
     }

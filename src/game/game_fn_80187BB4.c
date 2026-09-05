@@ -1,4 +1,3 @@
-typedef signed char s8;
 typedef signed short s16;
 typedef unsigned char u8;
 typedef unsigned short u16;
@@ -23,11 +22,11 @@ void fn_80187BB4(u8* self, u8* desc)
 
     if (*(int*)(desc + 0x20) != 0) {
         *(float*)(self + 0xAC) =
-            (s8)(desc[0x34] - desc[0x30]) / (float)*(u16*)(desc + 0x2A);
+            (desc[0x34] - desc[0x30]) / (float)*(u16*)(desc + 0x2A);
         *(float*)(self + 0xB0) =
-            (s8)(desc[0x35] - desc[0x31]) / (float)*(u16*)(desc + 0x2A);
+            (desc[0x35] - desc[0x31]) / (float)*(u16*)(desc + 0x2A);
         *(float*)(self + 0xB4) =
-            (s8)(desc[0x36] - desc[0x32]) / (float)*(u16*)(desc + 0x2A);
+            (desc[0x36] - desc[0x32]) / (float)*(u16*)(desc + 0x2A);
         *(float*)(self + 0xB8) = desc[0x30];
         *(float*)(self + 0xBC) = desc[0x31];
         *(float*)(self + 0xC0) = desc[0x32];

@@ -35,6 +35,7 @@ extern void fn_800D0584(void);
 extern void fn_800D05FC(void);
 extern void fn_800D06DC(void);
 
+#pragma use_lmw_stmw on
 void fn_800CFCD4(Context *ctx)
 {
     ctx->field264 = lbl_80248A60;
@@ -58,3 +59,4 @@ void fn_800CFCD4(Context *ctx)
     ctx->callbacks->slots[17] = fn_800D06DC;
     ctx->callbacks->slots[18] = fn_800D3374;
 }
+#pragma use_lmw_stmw reset

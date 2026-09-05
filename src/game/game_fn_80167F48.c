@@ -1,6 +1,7 @@
 extern unsigned int fn_80167DC8(void*, void*);
 extern void fn_80167E58(void*, void*, void*, unsigned int);
 
+#pragma use_lmw_stmw on
 void fn_80167F48(void* object, unsigned char* destination, int count,
                  unsigned int size, void* input, int reverse)
 {
@@ -20,3 +21,4 @@ void fn_80167F48(void* object, unsigned char* destination, int count,
         fn_80167E58(object, input, destination, count * size);
     }
 }
+#pragma use_lmw_stmw reset

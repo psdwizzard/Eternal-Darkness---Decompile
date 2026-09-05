@@ -19,7 +19,7 @@ typedef struct Data8C {
 extern void *fn_80201BC8();
 extern void *fn_80201B8C();
 extern int fn_80201B54();
-extern int fn_8015C910(void);
+extern unsigned int fn_8015C910(void);
 extern int fn_80204180(void*, void*);
 extern void *fn_801294DC(void *, int, int, int);
 extern void* fn_801A717C(void);
@@ -57,11 +57,11 @@ int fn_8008ABD4(void* object, void* other, int unused, int forced)
     int distance;
 
     if (object == 0 || other == 0)
-        return 0;
+        goto fail;
     objectPosition = fn_80201BC8(object);
     otherPosition = fn_80201BC8(other);
     if (objectPosition == 0 || otherPosition == 0)
-        return 0;
+        goto fail;
     info = ((Info*)fn_80201B8C(object));
     owner = ((void*)fn_80201B54(object));
     otherOwner = other != 0 ? ((void*)fn_80201B54(other)) : 0;
@@ -69,10 +69,10 @@ int fn_8008ABD4(void* object, void* other, int unused, int forced)
         return 0;
     distance = fn_80204180(object, other);
     if (!forced && distance > 500)
-        return 0;
+        goto fail;
     effect = fn_801294DC(objectPosition, 4, 0, 6);
     if (effect == 0)
-        return 0;
+        goto fail;
     config = fn_801A717C();
     fn_801A7460(config, 4);
     fn_801A74A0(config, owner);
@@ -109,4 +109,6 @@ int fn_8008ABD4(void* object, void* other, int unused, int forced)
     ((Data8C*)info->field8C)->timer = (fn_800FBFB0() & 0x7F) + 600;
     *((u8*)info->field48 + 4) = 1;
     return 1;
+fail:
+    return 0;
 }

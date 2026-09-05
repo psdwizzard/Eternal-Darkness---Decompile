@@ -21,8 +21,7 @@ int fn_800FD018(int index)
     }
     if (handler == 0) {
         exit(0);
-    } else {
-        handler(index);
     }
+    handler(index);
     return 0;
 }

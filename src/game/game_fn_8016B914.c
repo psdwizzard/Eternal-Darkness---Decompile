@@ -10,8 +10,7 @@ void fn_8016B914(int checkpoint)
     int i;
 
     for (i = 0; i < 1536; i++) {
-        int value = lbl_805FAAD8[i];
-        total += value < 0 ? -value : value;
+        total += __abs(lbl_805FAAD8[i]);
     }
 
     if (checkpoint == -1) {

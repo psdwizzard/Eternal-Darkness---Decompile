@@ -23,15 +23,15 @@ void fn_801947F4(u8* output, const u8* input)
 
     if ((*(const u32*)(input + 0x38) & 0x20) != 0) {
         output[0x8C] += input[0x17];
-        output[0x92] = 0;
-        output[0x93] = 0;
-        output[0x94] = input[0x16];
-        output[0x95] = 0;
-        output[0x96] = 0;
-        output[0x97] = input[0x17];
-        output[0x99] = input[0x1A];
-        output[0x9A] = input[0x1B];
     }
+    output[0x92] = 0;
+    output[0x93] = 0;
+    output[0x94] = input[0x16];
+    output[0x95] = 0;
+    output[0x96] = 0;
+    output[0x97] = input[0x17];
+    output[0x99] = input[0x1A];
+    output[0x9A] = input[0x1B];
 
     *(u16*)(output + 0xB2) = input[0x17] + ((int)fn_800FBFB0() % count);
     *(u16*)(output + 0xAE) = 0;

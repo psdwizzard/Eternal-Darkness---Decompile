@@ -12,6 +12,7 @@ extern void fn_8020104C(int, void*, void*, int, float);
 #define fn_8020104C(a,b,c,d,e) fn_8020104C((a),(void*)(c),(void*)(d),(int)(e),(b))
 extern float lbl_8064F460;
 
+#pragma opt_common_subs off
 void fn_800DC2B8(int owner, int kind, int level, float amount)
 {
     void *context = fn_80201814(owner);
@@ -32,3 +33,4 @@ void fn_800DC2B8(int owner, int kind, int level, float amount)
     fn_802006D4(owner, owner, -1, 0x4b, 0);
     fn_8020104C(0x4b, amount, owner, owner, 0);
 }
+#pragma opt_common_subs reset

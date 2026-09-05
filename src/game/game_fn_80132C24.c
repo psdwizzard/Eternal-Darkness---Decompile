@@ -11,15 +11,16 @@ extern void fn_801FD534(void*);
 void fn_80132C24(void)
 {
     int zero = 0;
-    Slot* slot = &lbl_8030F540;
+    Slot* slot;
     int i = 0;
     do {
-        void* resource = fn_801FD6F4(slot->handle);
+        void* resource;
+        slot = &lbl_8030F540 + i;
+        resource = fn_801FD6F4(slot->handle);
         if (resource != 0) {
             fn_801FD534(*(void**)resource);
             slot->handle = zero;
         }
         i++;
-        slot++;
     } while (i < 3);
 }

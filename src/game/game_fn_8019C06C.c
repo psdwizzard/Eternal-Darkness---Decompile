@@ -10,11 +10,12 @@ extern u8 fn_8018E26C(void*, void*);
 extern void fn_8018E230(void*, void*, int, u8, u8, int);
 extern void fn_801B05E8(int, int, int, int, int, int, int, int);
 
+#pragma opt_propagation off
 int fn_8019C06C(u8* object)
 {
     u8* cursor;
-    s16 frame;
-    u8 count;
+    int frame;
+    u16 count;
     u8* slot;
     u8* base;
     u8* source;
@@ -71,3 +72,4 @@ int fn_8019C06C(u8* object)
     }
     return 0;
 }
+#pragma opt_propagation reset

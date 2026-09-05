@@ -4,22 +4,32 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-typedef struct ShortCoord3 {
+typedef struct ShortCoordComponents {
     s16 x;
     s16 y;
     s16 z;
+} ShortCoordComponents;
+
+typedef struct PackedShortCoord {
+    u32 word;
+    u16 half;
+} PackedShortCoord;
+
+typedef union ShortCoord3 {
+    ShortCoordComponents components;
+    PackedShortCoord packed;
 } ShortCoord3;
 
 extern u32 lbl_80651DA0;
 extern u16 lbl_80651DA4;
 extern u32 lbl_80650B28;
-extern float lbl_80650B20;
-extern float lbl_80650B2C;
+extern const float lbl_80650B20;
+extern const float lbl_80650B2C;
 extern void* lbl_8064D224;
-extern float lbl_80650B30;
-extern double lbl_80650B38;
-extern double lbl_80650B18;
-extern float lbl_80650B34;
+extern const float lbl_80650B30;
+extern const double lbl_80650B38;
+extern const double lbl_80650B18;
+extern const float lbl_80650B34;
 extern u8 lbl_802FC5BC[];
 extern u8 lbl_80607120[];
 extern u8 lbl_80606318[];
@@ -41,15 +51,17 @@ void fn_801916D0(u8* object, ShortCoord3* first, ShortCoord3* second,
                  u8* config)
 {
     ShortCoord3 zero;
-    u32 effect = lbl_80650B28;
-    u8* entry;
-    u8 count;
+    u32 effect;
     u32 i;
+    u8 count;
+    u8* entry;
     ShortCoord3 position;
     void* source;
+    float scale;
 
-    *(u32*)&zero = lbl_80651DA0;
-    *(u16*)((u8*)&zero + 4) = lbl_80651DA4;
+    zero.packed.word = lbl_80651DA0;
+    zero.packed.half = lbl_80651DA4;
+    effect = lbl_80650B28;
     entry = *(u8**)(object + 0x4C);
     count = config[0];
     fn_801804AC(object, first, second, &zero);
@@ -60,8 +72,8 @@ void fn_801916D0(u8* object, ShortCoord3* first, ShortCoord3* second,
     object[4] = config[3];
     *(s16*)(object + 0xE) = *(s16*)(config + 4);
     *(u16*)(object + 0xC) = *(u16*)(config + 6);
-    *(u16*)(object + 0xA) = 0;
     *(void**)(object + 0x68) = lbl_8064D224;
+    *(u16*)(object + 0xA) = 0;
     *(u32*)(object + 0x38) = *(u32*)(config + 0x30);
     *(u32*)(object + 0x44) = 0;
     *(float*)(object + 0x3C) = lbl_80650B20;
@@ -70,16 +82,19 @@ void fn_801916D0(u8* object, ShortCoord3* first, ShortCoord3* second,
         *(u32*)(object + 0x5C) = effect;
     }
     memset(object + 0x24, 0, 0x10);
+    scale = lbl_80650B30;
 
     for (i = 0; (u8)i < count; i++) {
-        float angle = lbl_80650B30 * (float)(u8)i / (float)count;
-        position.x = (s16)((float)*(s16*)(config + 0x28) *
-                           fn_80048C2C(angle) + *(float*)(config + 0x34));
-        position.y = (s16)((float)*(s16*)(config + 0x28) *
-                           fn_80048C50(angle) + *(float*)(config + 0x38));
-        position.z = (s16)*(float*)(config + 0x3C);
+        float angle = scale * (float)(u8)i / (float)count;
+        position.components.x =
+            (s16)((float)*(s16*)(config + 0x28) * fn_80048C2C(angle) +
+                  *(float*)(config + 0x34));
+        position.components.y =
+            (s16)((float)*(s16*)(config + 0x28) * fn_80048C50(angle) +
+                  *(float*)(config + 0x38));
+        position.components.z = (s16)*(float*)(config + 0x3C);
         fn_80180554(entry, &position, second, &zero, 0,
-                    (signed char)config[0x1B]);
+                    *(signed char*)(config + 0x1B));
         if (config[0x1A] == 0) {
             fn_80180518(object + 0x24, i, 1);
             source = lbl_802FC5BC + 0xC;

@@ -2,6 +2,7 @@ typedef signed char s8;
 typedef unsigned char u8;
 typedef unsigned short u16;
 
+#pragma opt_common_subs off
 void fn_801869F8(u8* self, int index, u16 limit)
 {
     u8* selected;
@@ -20,3 +21,4 @@ void fn_801869F8(u8* self, int index, u16 limit)
         *(u16*)(selected + 0xE) = limit;
     }
 }
+#pragma opt_common_subs reset

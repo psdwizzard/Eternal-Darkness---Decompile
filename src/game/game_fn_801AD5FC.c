@@ -22,17 +22,15 @@ extern void* memset(void*, int, unsigned long);
 int fn_801AD5FC(int index, int force)
 {
     int result = 0;
-    EffectSlot* slot;
 
     if (lbl_8064D300 == 3) {
-        slot = &lbl_8060B204[index];
-        if (force != 0 || slot->active == 0) {
-            slot->active = 1;
-            slot->object_id = lbl_8064C2D0;
-            slot->handle = fn_801AD848(index);
-            slot->handle = fn_801AD7C0(slot->handle, 3);
-            slot->resource = lbl_8064D2FC;
-            fn_801AD46C(&slot->x, &slot->y);
+        if (force != 0 || lbl_8060B204[index].active == 0) {
+            lbl_8060B204[index].active = 1;
+            lbl_8060B204[index].object_id = lbl_8064C2D0;
+            lbl_8060B204[index].handle = fn_801AD848(index);
+            lbl_8060B204[index].handle = fn_801AD7C0(lbl_8060B204[index].handle, 3);
+            lbl_8060B204[index].resource = lbl_8064D2FC;
+            fn_801AD46C(&lbl_8060B204[index].x, &lbl_8060B204[index].y);
         }
         result = 1;
     } else {

@@ -1,26 +1,31 @@
+typedef signed char s8;
 typedef unsigned char u8;
 
 typedef struct Color {
     u8 r, g, b, a;
 } Color;
 
+typedef struct ColorStep {
+    s8 r, g, b, a;
+} ColorStep;
+
 extern int fn_8016A598(void*);
 extern double fn_8016A694(void*, int);
 extern void fn_80163BB4(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
-extern void* fn_8012C62C(void*, int, Color*, Color*, Color*, int);
+extern void* fn_8012C62C(void*, int, void*, void*, void*, int);
 extern const char lbl_8024FF00[];
 
 int fn_801755FC(void* state)
 {
     Color first;
     Color second;
-    Color directions;
+    ColorStep directions;
     Color call_first;
-    Color call_directions;
+    ColorStep call_directions;
     Color call_second;
-    int delta;
+    s8 delta;
     int index;
     void* runtime;
     void* object;

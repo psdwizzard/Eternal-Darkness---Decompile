@@ -21,8 +21,8 @@ int fn_800EC318(int value, State *state, void *output)
     int result = 3;
 
     fn_800F9D4C(output, (const char *)lbl_8024A59C + 0x28, value, state);
-    entry = lbl_8024A368;
-    for (i = 0; i < 13; i++, entry++) {
+    for (i = 0; i < 13; i++) {
+        entry = &lbl_8024A368[i];
         if (state->flags & (1 << i)) {
             fn_800FD39C(output, entry);
             result = entry->value;

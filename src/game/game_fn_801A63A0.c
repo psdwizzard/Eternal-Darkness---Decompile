@@ -3,6 +3,7 @@ typedef struct Bucket {
     int count;
 } Bucket;
 
+#pragma opt_propagation off
 int fn_801A63A0(Bucket* buckets)
 {
     int state;
@@ -32,3 +33,4 @@ int fn_801A63A0(Bucket* buckets)
     }
     return state;
 }
+#pragma opt_propagation reset

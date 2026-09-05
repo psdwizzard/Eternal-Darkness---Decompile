@@ -1,0 +1,15 @@
+{
+  "session_id": "session-1777",
+  "range_start": "0x801CDF50",
+  "range_end": "0x801CE070",
+  "next_target": "0x801CE070",
+  "range_bytes": 288,
+  "matched_bytes": 84,
+  "nonmatching_bytes": 204,
+  "functions": [
+    {"name": "fn_801CDF50", "start": "0x801CDF50", "end": "0x801CE01C", "size": 204, "status": "NonMatching", "best_percent": 95.196075, "measurement_command": "jq -r '(.left.symbols[] | select(.name==\"fn_801CDF50\")) as $left | (.right.symbols[] | select(.name==$left.name)) as $right | \"function=\\($left.name) retail_text_bytes=\\($left.size) generated_text_bytes=\\($right.size) match_percent=\\($left.match_percent)\"' reports/GEDE01/session-1777-remediation-1-fn_801CDF50-reloc-strict.json", "measurement_raw_output": "function=fn_801CDF50 retail_text_bytes=204 generated_text_bytes=204 match_percent=95.196075", "divergence": "After correcting fn_8021A044 to its retail-evidenced one-pointer ABI, GC/1.2.5n emits size-exact code. It still chooses r4 and r0 for the repeated zero and one values and schedules callback-state stores around callback address formation differently from retail's r0 and r4 arrangement. The physical-to-cached address conversion is expressed through unsigned integer arithmetic and retains retail's addis instruction."},
+    {"name": "fn_801CE01C", "start": "0x801CE01C", "end": "0x801CE03C", "size": 32, "status": "Matching", "canonical_percent": 100.0, "relocation_strict_percent": 100.0},
+    {"name": "fn_801CE03C", "start": "0x801CE03C", "end": "0x801CE070", "size": 52, "status": "Matching", "canonical_percent": 100.0, "relocation_strict_percent": 100.0}
+  ],
+  "accounting": "All 288 retail text bytes in the declared range are owned by independent per-function translation units: 84 matched and 204 honest-C NonMatching, with no gap, assembly, shared reconstruction, or unaccounted span."
+}

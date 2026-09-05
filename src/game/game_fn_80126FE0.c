@@ -1,3 +1,4 @@
+#pragma use_lmw_stmw on
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
@@ -29,7 +30,10 @@ int fn_80126FE0(Entry* entries, u16 count, RangeState* state, int direction,
     int current_value;
     int previous_value;
     int delta;
+    int span;
+    Entry* end;
 
+    end = entries;
     result = 0;
     done = 0;
     step = -1;
@@ -39,7 +43,7 @@ int fn_80126FE0(Entry* entries, u16 count, RangeState* state, int direction,
         step = 1;
     }
     if (step == 1) {
-        entries += count - 1;
+        end += count - 1;
     }
     stride = step * 12;
     while (done == 0) {
@@ -47,6 +51,7 @@ int fn_80126FE0(Entry* entries, u16 count, RangeState* state, int direction,
         if ((step >= 0 && value <= current_value) ||
             (step < 0 && current_value <= value)) {
             previous_value = fn_801285C0(previous);
+            done = 1;
             state->previous = previous;
             state->current = current;
             delta = value - previous_value;
@@ -54,13 +59,12 @@ int fn_80126FE0(Entry* entries, u16 count, RangeState* state, int direction,
                 delta = 0U - (u32)delta;
             }
             state->distance = delta;
-            delta = current_value - previous_value;
-            if (delta < 0) {
-                delta = 0U - (u32)delta;
+            span = current_value - previous_value;
+            if (span < 0) {
+                span = 0U - (u32)span;
             }
-            state->span = delta;
-            done = 1;
-        } else if (current == entries) {
+            state->span = span;
+        } else if (current == end) {
             done = 2;
             result = 1;
         } else {
@@ -70,3 +74,4 @@ int fn_80126FE0(Entry* entries, u16 count, RangeState* state, int direction,
     }
     return result;
 }
+#pragma use_lmw_stmw off

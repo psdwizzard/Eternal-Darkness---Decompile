@@ -16,6 +16,7 @@ extern void fn_80226AB4(int, int, u16);
 extern void fn_80188578(u16), fn_8018856C(u16), fn_80188560(u16);
 extern void fn_8018855C(void);
 
+#pragma opt_lifetimes off
 void fn_8018BAE0(u8* object)
 {
     u16 offset;
@@ -25,10 +26,10 @@ void fn_8018BAE0(u8* object)
     u8* vertex_data;
     u8* index_data;
     u8* color_data;
-    u8* object_data;
-    u8* color;
     int saved;
     int i;
+    u8* object_data;
+    u8* color;
 
     offset = *(u16*)(lbl_80607130 + 2);
     vertex_size = *(u16*)(lbl_80607130 + 0xA);
@@ -69,3 +70,4 @@ void fn_8018BAE0(u8* object)
     fn_8018855C();
     fn_801ED57C(saved);
 }
+#pragma opt_lifetimes reset

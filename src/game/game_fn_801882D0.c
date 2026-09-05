@@ -13,22 +13,22 @@ extern void fn_8018812C(void*);
 
 void fn_801882D0(void)
 {
-    void** cursor;
+    int i;
     u8* object;
     s32 total = 0;
     u32 weight;
 
     fn_800FBE38(lbl_80606460, lbl_8064D248, 4, fn_80188288);
-    cursor = lbl_80606460;
+    i = 0;
     while (lbl_8064D248 > 0) {
-        object = *cursor;
+        object = lbl_80606460[i];
         weight = object[6];
         total += weight;
         if (total < lbl_8064D244 || weight >= 200) {
             fn_80226D28(0);
             fn_8018812C(object);
         }
-        ++cursor;
+        ++i;
         --lbl_8064D248;
     }
     fn_80226D28(1);

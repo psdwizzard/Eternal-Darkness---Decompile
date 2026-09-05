@@ -10,16 +10,18 @@ int fn_8013C7BC(const Vec3* first, const Vec3* second,
     float second_value;
     int first_side;
     int second_side;
+    int result;
 
     first_value = -fn_80211B44(first, direction);
     second_value = -fn_80211B44(second, direction);
-    first_side = first_value - offset - lbl_80650324 < limit;
-    second_side = second_value + offset + lbl_80650324 < limit;
+    first_side = first_value - offset - lbl_80650324 > limit;
+    second_side = second_value + offset + lbl_80650324 > limit;
     if (first_side != second_side) {
-        if (first_side == 0) {
-            return 2;
+        result = 2;
+        if (first_side != 0) {
+            result = 3;
         }
-        return 3;
+        return result;
     }
     return first_side == 0;
 }

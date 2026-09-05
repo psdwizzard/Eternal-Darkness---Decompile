@@ -10,9 +10,9 @@ extern Entry lbl_805ADE20[15];
 
 Entry* fn_80137EFC(int id)
 {
-    Entry* result;
-    Entry* entry;
     int i;
+    Entry* entry;
+    Entry* result;
 
     result = 0;
     entry = lbl_805ADE20;

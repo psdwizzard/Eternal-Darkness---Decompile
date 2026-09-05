@@ -16,12 +16,12 @@ extern void fn_80036C40(void*, int, s16);
 extern unsigned long long fn_8020123C();
 extern int lbl_8064C544;
 
+#pragma opt_propagation off
 int fn_800A57D4(int* timer, Runtime800A57D4* runtime)
 {
     int result = 0;
-    int old_timer;
     int zero_mask;
-    int decremented;
+    int old_timer;
     void* object;
     s16 value;
 
@@ -29,10 +29,9 @@ int fn_800A57D4(int* timer, Runtime800A57D4* runtime)
         object = fn_80201ADC();
         old_timer = *timer;
         zero_mask = -old_timer;
-        decremented = old_timer - 1;
         zero_mask = old_timer | ~zero_mask;
         zero_mask >>= 31;
-        *timer = decremented & ~zero_mask;
+        *timer = (old_timer - 1) & ~zero_mask;
         if (*timer <= 0) {
             switch (runtime->state) {
             case 3:
@@ -60,3 +59,4 @@ int fn_800A57D4(int* timer, Runtime800A57D4* runtime)
     }
     return result;
 }
+#pragma opt_propagation reset

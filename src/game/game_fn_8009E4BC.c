@@ -41,13 +41,14 @@ extern const float lbl_8064EDC0;
 
 int fn_8009E4BC(register State8009E4BC* state)
 {
+    register unsigned long state_r = (unsigned long)state;
     int index;
     Context8009E4BC* context;
     int result;
     int i;
 
     result = 0;
-    context = fn_8006ED3C(state, 0x16, &index);
+    context = fn_8006ED3C((State8009E4BC*)state_r, 0x16, &index);
 
     if (context != 0) {
         if (context->counter == 0) {
@@ -56,11 +57,11 @@ int fn_8009E4BC(register State8009E4BC* state)
         context->counter++;
         if (context->counter >= 50) {
             for (i = 0; i < 3; i++) {
-                state->entries[index].field_00 = i;
-                fn_8006DEF8(state, 0x16, 0, 0, 0);
+                ((State8009E4BC*)state_r)->entries[index].field_00 = i;
+                fn_8006DEF8((State8009E4BC*)state_r, 0x16, 0, 0, 0);
             }
             {
-                void* object = fn_80201814(*(void**)((u8*)state + 0x38));
+                void* object = fn_80201814(*(void**)((u8*)state_r + 0x38));
                 fn_8020104C(0x51, 0, ((Global8009E4BC*)fn_80201B8C())->inner->object, 0, lbl_8064EDC0);
                 fn_802020B4(fn_80201814(*(void**)((u8*)fn_80036D38(object) + 0x44)), 0);
             }

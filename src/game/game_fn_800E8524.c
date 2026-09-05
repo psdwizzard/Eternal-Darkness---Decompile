@@ -8,6 +8,7 @@ extern void fn_801291F0(void *, int, unsigned char);
 extern void *fn_801294DC(void *, int, int, int);
 extern void fn_80129FD0(void *, int, int);
 
+#pragma opt_propagation off
 void fn_800E8524(void *object, int enabled)
 {
     void *state = fn_80201BC8(object);
@@ -37,3 +38,4 @@ void fn_800E8524(void *object, int enabled)
         }
     }
 }
+#pragma opt_propagation reset

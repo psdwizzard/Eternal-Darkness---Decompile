@@ -1,0 +1,56 @@
+{
+  "recovery_id": "2af813e367cb8fec-6",
+  "attempt": 2,
+  "scope": "Integration halt diagnosis and branch-side verification only; no frontier advancement or unrelated matching work.",
+  "status": "blocked-by-canonical-merge-control-state",
+  "diagnosis": {
+    "scheduler_reason": "Integration merge failed; scheduler halted for integration recovery and will not dispatch another decomp task.",
+    "exact_integration_failure": "An in-progress merge is present in the canonical repository with MERGE_HEAD and one unmerged file: eternal-darkness-decomp/reports/GEDE01/progress.json.",
+    "scheduler_evidence_command": "jq selected state fields and the last twelve transitions from .darkfoundry/decomp-chain-state.json",
+    "scheduler_evidence_raw_output": "state=MERGE_RECOVERY assigned_target=0x801CE070 accepted_frontier=0x801CDF50 merged_commit=96bd12ea5879070747220160e973d80d86ea9b18 updated_at=2026-09-05T11:46:27.756Z recovery_reason=integration-recovery: Worktree merge failed while merging the agent branch into the canonical repository",
+    "isolated_worktree_command": "git status --short --branch; git diff --name-status --diff-filter=U; git ls-files -u",
+    "isolated_worktree_raw_output": "## agent/8f1c3278-8547-4bb9-b1a3-8f74c2df5aeb...origin/agent/8f1c3278-8547-4bb9-b1a3-8f74c2df5aeb [ahead 301]\n(no unmerged paths or index stages)",
+    "actual_failure_class": "The committed content conflict is reconciled on the agent branch, but the canonical repository retains the earlier in-progress merge. MERGE_HEAD is per-worktree operational state and cannot be cleared by another commit on this isolated branch.",
+    "smallest_correction": "Preserve merge 51a3d8fb6. In the canonical repository, resolve the existing progress.json conflict to the exact reconciled content from 51a3d8fb6 and commit the in-progress merge after confirming all staged paths preserve both sides. If its recorded parents differ, abort it and retry this now-pre-reconciled branch. The workspace constraint forbids reading or modifying the canonical repository, so that operational step cannot truthfully be claimed here.",
+    "founder_choice_required": false,
+    "operator_action_required": true
+  },
+  "branch_reconciliation": {
+    "command": "git show merge 51a3d8fb6; verify cc39e0632 and 96bd12ea5 are ancestors of HEAD; reproduce their merge with git merge-tree",
+    "raw_output": "merge_commit=51a3d8fb6f14642f902eb484199dcfbdd699951d\nmerge_parents=cc39e0632173b6782135fe2d1469c0d79afab5ca 96bd12ea5879070747220160e973d80d86ea9b18\nsubject=Reconcile session 1778 integration conflict\nsession_parent_ancestor_exit=0\ncheckpoint_parent_ancestor_exit=0\nmerge_base=d3cdd6aff63682900c194d532182a5ff49e8d1d8\nprogress.json base=b2c4071a36ae423a5feb196e58cf39545ac90521 checkpoint=179ff3ee4d09967776d54755e5d574d18a4a11ce session=d48fc9cef4d358a5e068f4dca6cff76e2d21feb5",
+    "preservation_command": "Compare session-1778 non-overlap payloads byte-for-byte against cc39e0632; compare checkpoint non-overlap payloads byte-for-byte against 96bd12ea5; inspect configure.py for both session registrations.",
+    "preservation_raw_output": "session_nonoverlap_payload_mismatch_count=0\ncheckpoint_nonoverlap_payload_mismatch_count=0\nfn_801CE070 registration=Matching GC/1.2.5n\nfn_801CE09C registration=NonMatching GC/1.2.5n",
+    "conclusion": "Both histories remain ancestors. Their non-overlapping payloads are preserved, configure.py retains both session registrations alongside checkpoint changes, and progress.json is the sole intentional semantic reconciliation."
+  },
+  "progress_gate": {
+    "command": "jq -r selected next_target and headline counters from reports/GEDE01/progress.json",
+    "raw_output": "next_target=0x801CE15C matching_objects=4969 matching_functions=4736 matching_code_bytes=742732 matching_data_bytes=38446",
+    "next_target_before_attempt": "0x801CE15C",
+    "next_target_after_attempt": "0x801CE15C",
+    "next_target_changed": false
+  },
+  "build": {
+    "command": ".tools/bin/ninja",
+    "exit_code": 0,
+    "raw_output": "[651/653] DOL build/GEDE01/main.dol\n[652/653] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[653/653] PROGRESS\nAll: 46.48% fuzzy, 32.28% matched, 32.28% linked (4969 / 6137 files)\nCode: 742732 / 2300692 bytes (4736 / 8216 functions)\nData: 38446 / 4305642 bytes (0.89%)\nGame Code: 739704 / 1192156 code bytes; 38222 / 40154 data bytes\nSDK/Runtime: 3028 / 3028 code bytes; 224 / 224 data bytes"
+  },
+  "objdiff": {
+    "canonical_command": "Generate a full canonical report, then direct diffs for main/game/game_fn_801CE070 and main/game/game_fn_801CE09C.",
+    "canonical_raw_output": "matching_objects=4969 total_objects=6137 matching_functions=4736 total_functions=8216 matching_code_bytes=742732 total_code_bytes=2300692 matching_data_bytes=38446 total_data_bytes=4305642 linked_code_bytes=742576 linked_data_bytes=37650\nmode=canonical function=fn_801CE070 retail_text_bytes=44 generated_text_bytes=44 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=canonical function=fn_801CE09C retail_text_bytes=192 generated_text_bytes=192 match_percent=85.166664 retail_relocations=30 generated_relocations=30",
+    "relocation_strict_command": "Generate a full report and both direct diffs with function_reloc_diffs=name_address.",
+    "relocation_strict_raw_output": "matching_objects=4969 total_objects=6137 matching_functions=4729 total_functions=8216 matching_code_bytes=740924 total_code_bytes=2300692 matching_data_bytes=38446 total_data_bytes=4305642 linked_code_bytes=742576 linked_data_bytes=37650\nmode=reloc-strict function=fn_801CE070 retail_text_bytes=44 generated_text_bytes=44 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=reloc-strict function=fn_801CE09C retail_text_bytes=192 generated_text_bytes=192 match_percent=85.166664 retail_relocations=30 generated_relocations=30",
+    "conclusion": "All 6137 units have fresh canonical and relocation-strict reports. fn_801CE070 remains byte-identical; fn_801CE09C remains honest size-exact NonMatching debt with unchanged score and relocation counts."
+  },
+  "retail_and_dol": {
+    "retail_source": "orig/GEDE01/sys/main.dol",
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo dol_cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (10419 tracked project files inspected)"
+  },
+  "gate_changes": "None. Exact-build, relocation, legal-audit, DOL SHA-1, source, configuration, split, symbol, and progress gates are unchanged and pass.",
+  "integration_instruction": "Do not start another merge while canonical MERGE_HEAD exists. Resolve or abort that canonical merge after inspecting its parents and staged paths. Use progress.json from 51a3d8fb6 as the proven union; do not take either parent wholesale. Repeat all gates in the canonical repository before clearing MERGE_RECOVERY."
+}

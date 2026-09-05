@@ -7,6 +7,7 @@ int fn_8013C9C4(const Vec3s* value, const Vec3* point, int axis)
     int second_value;
     int first_point;
     int second_point;
+    int result;
 
     switch (axis) {
     case 0:
@@ -31,12 +32,16 @@ int fn_8013C9C4(const Vec3s* value, const Vec3* point, int axis)
 
     if (first_value < first_point) {
         if (second_value < second_point) {
-            return 2;
+            result = 2;
+        } else {
+            result = 1;
         }
-        return 1;
+    } else {
+        if (second_value < second_point) {
+            result = 3;
+        } else {
+            result = 0;
+        }
     }
-    if (second_value < second_point) {
-        return 3;
-    }
-    return 0;
+    return result;
 }

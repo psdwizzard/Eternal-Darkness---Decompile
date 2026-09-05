@@ -2,8 +2,8 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-extern float lbl_80650D1C;
-extern double lbl_80650D20;
+extern const float lbl_80650D1C;
+extern const double lbl_80650D20;
 
 void fn_801A2A54(u8* object, int value)
 {

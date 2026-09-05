@@ -3,8 +3,6 @@ typedef unsigned short u16;
 typedef signed short s16;
 typedef unsigned int u32;
 
-#pragma use_lmw_stmw on
-
 extern float lbl_80650CA4;
 extern int lbl_8064D18C;
 extern int fn_80180430(void*, u8);
@@ -16,11 +14,13 @@ extern void fn_80180518(void*, u8, u32);
 extern void fn_8018E230(void*, void*, u32, u8, u8, u32);
 extern int fn_80180454(void*);
 
-int fn_801A0284(void* object_)
+#pragma use_lmw_stmw on
+#pragma opt_lifetimes off
+int fn_801A0284(void* object_arg)
 {
     float a[3];
     float b[3];
-    u8* object = object_;
+    u8* object = object_arg;
     u8* entry;
     int count;
     u8* entries;
@@ -42,11 +42,13 @@ int fn_801A0284(void* object_)
                                  *(float*)(object + 0x94));
             fn_80179B64(a, entry + 0xA);
             fn_80179B64(b, entry + 0x10);
-            if (*(s16*)(entry + 0xE) < -5000)
+            if (*(s16*)(entry + 0xE) < -5000) {
                 *(u16*)(object + 0x22) = 8;
+            }
             if (entry[0] != 0) {
-                if (!fn_8018E26C(entry, entry + 0x2B))
+                if (!fn_8018E26C(entry, entry + 0x2B)) {
                     fn_80180518(object + 0x24, (u8)index, 0);
+                }
             } else if ((result & 1) && entry[0] == 0) {
                 fn_8018E230(entry, entry + 0x2B, 1, entry[0x2B], object[4], 0);
             }
@@ -56,14 +58,19 @@ int fn_801A0284(void* object_)
         entry = entries;
         index -= index;
         for (; index < count; entry += 0x38, index++) {
-            if (fn_80180430(object + 0x24, (u8)index) && entry[0] == 0)
+            if (fn_80180430(object + 0x24, (u8)index) && entry[0] == 0) {
                 fn_8018E230(entry, entry + 0x2B, 1, entry[0x2B], object[4], 0);
+            }
         }
     }
     *(u16*)(object + 0xA) = *(u16*)(object + 0xA) + 1;
-    if (fn_80180454(object + 0x24))
+    if (fn_80180454(object + 0x24)) {
         *(u16*)(object + 0x22) = 8;
-    if (lbl_8064D18C != *(int*)(object + 0x38))
+    }
+    if (lbl_8064D18C != *(int*)(object + 0x38)) {
         *(u16*)(object + 0x22) = 8;
+    }
     return 0;
 }
+#pragma opt_lifetimes reset
+#pragma use_lmw_stmw reset

@@ -1,6 +1,6 @@
-extern float lbl_80650DBC;
-extern float lbl_80650DC0;
-extern float lbl_80650DC4;
+extern const float lbl_80650DBC;
+extern const float lbl_80650DC0;
+extern const float lbl_80650DC4;
 
 float fn_801A657C(int value)
 {

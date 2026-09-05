@@ -29,11 +29,12 @@ typedef struct MotionSource {
 
 extern int fn_80126FE0(void*, u16, RangeState*, int, int);
 
+#pragma use_lmw_stmw on
 int fn_80126E80(MotionSource* source, MotionState* state, int amount)
 {
-    int delta;
     int first_done;
     int second_done;
+    int delta;
     int result;
     RangeState* first;
     RangeState* second;
@@ -75,3 +76,4 @@ int fn_80126E80(MotionSource* source, MotionState* state, int amount)
     }
     return result;
 }
+#pragma use_lmw_stmw off

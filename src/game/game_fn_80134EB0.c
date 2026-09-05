@@ -15,14 +15,13 @@ typedef struct Slot {
 extern Slot* lbl_8064CF88;
 extern int lbl_8064CFAC;
 
-/* NonMatching: behavior- and size-exact free-slot search. Retail and GC/1.3
- * both emit 88 bytes; remaining differences are volatile-register allocation. */
 Slot* fn_80134EB0(u32 required)
 {
+    int i;
     Slot* slot = lbl_8064CF88;
     Slot* result = 0;
     int count = lbl_8064CFAC;
-    int i = 0;
+    i = 0;
 
     while (result == 0 && i < count) {
         if (slot->owner == 0 && slot->capacity >= required) {

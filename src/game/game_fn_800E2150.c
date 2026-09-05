@@ -59,8 +59,8 @@ void fn_800E2150(void *context, void *source, EventData *data, void *transform)
     void *owner;
     void *object;
     void *transform_copy;
-    void *source_callback;
     int slot;
+    void *source_callback;
     Quat *owner_rotation;
 
     transform_copy = transform;

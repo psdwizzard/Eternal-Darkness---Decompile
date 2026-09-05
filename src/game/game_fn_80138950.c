@@ -21,7 +21,7 @@ Entry* fn_80138950(Header* header, u16 id)
     for (i = 0; i < header->count; i++, entry++) {
         if (entry->id == id) {
             result = entry;
-            return result;
+            break;
         }
     }
     return result;

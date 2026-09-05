@@ -51,12 +51,12 @@ extern void fn_800A18AC(int);
 extern void* lbl_8064C4E0;
 extern int lbl_8064D18C;
 
-/* NonMatching: initial behavior-complete honest-C teardown reconstruction. */
+#pragma opt_lifetimes off
 int fn_800A0DE4(void* state)
 {
     Context* context;
-    void* object;
     Work* work;
+    void* object;
     void* transform;
     void* linked;
     void* indexed;
@@ -115,3 +115,4 @@ int fn_800A0DE4(void* state)
     fn_800A18AC(lbl_8064D18C);
     return 0;
 }
+#pragma opt_lifetimes reset

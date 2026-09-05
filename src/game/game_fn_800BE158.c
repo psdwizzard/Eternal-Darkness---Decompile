@@ -22,14 +22,11 @@ extern void *memset(void *, int, unsigned long);
 
 int fn_800BE158(void *object, RuntimeState *runtime)
 {
-    Pool *pool;
-
     if (fn_800BE1F4(object, runtime) == 0) {
         lbl_80320DF0[runtime->slot_index].state = -1;
-        pool = &lbl_80320FD0[runtime->pool_index];
-        pool->cursor[0] = 0;
-        pool->cursor[1] = 0;
-        memset(pool->values, 0, 0x320);
+        lbl_80320FD0[runtime->pool_index].cursor[0] = 0;
+        lbl_80320FD0[runtime->pool_index].cursor[1] = 0;
+        memset(lbl_80320FD0[runtime->pool_index].values, 0, 0x320);
         return 1;
     }
     return 0;

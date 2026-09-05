@@ -24,6 +24,6 @@ void fn_80067BAC(void *object)
 
     if (slot->active == -1) {
         slot->active = lbl_8064C548;
-        lbl_8064C548 = lbl_8064C548 < 2 ? lbl_8064C548 + 1 : 0;
+        lbl_8064C548 = (lbl_8064C548 >= 2) ? 0 : lbl_8064C548 + 1;
     }
 }

@@ -4,8 +4,9 @@ typedef unsigned int u32;
 
 typedef struct Child {
     u32 value;
-    u8 pad[0x760];
-    u32 counter_and_flag;
+    u8 pad[0x763];
+    u8 other_bits : 7;
+    u8 flag : 1;
 } Child;
 
 typedef struct Header {
@@ -31,20 +32,18 @@ typedef struct Owner {
     Child* child;
 } Owner;
 
-/* NonMatching: honest reconstruction of owner/work-buffer teardown and the
- * per-list-entry reset. Retail is 216 bytes; GC/1.3 emits 224 bytes and scores
- * 89.44444%. Remaining differences are fixed-slot unrolling and loop register
- * allocation; no inline assembly or register binding is used. */
 void fn_80125DE0(Owner* owner)
 {
     int i;
 
-    if (owner == 0 || owner->child == 0)
+    if (owner == 0)
+        return;
+    if (owner->child == 0)
         return;
     owner->child->value = 0;
     owner->field_23C = 0;
     owner->field_240 = 0;
-    owner->child->counter_and_flag &= ~1;
+    owner->child->flag = 0;
     owner->child = 0;
     for (i = 0; i < 24; i++)
         owner->slots[i][0] = 0;

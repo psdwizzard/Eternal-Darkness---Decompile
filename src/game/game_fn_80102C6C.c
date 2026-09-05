@@ -30,7 +30,7 @@ s16 fn_80102C6C(BitReader* reader)
             reader->mask = 0x80;
         }
         bit = reader->current & reader->mask;
-        reader->mask /= 2;
+        reader->mask >>= 1;
         if ((u8)bit != 0) {
             node = tree->right[node];
         } else {

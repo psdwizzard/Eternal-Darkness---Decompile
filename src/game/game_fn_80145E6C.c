@@ -5,6 +5,7 @@ typedef struct StreamContext {
     unsigned char bytes[0x2AD8];
 } StreamContext;
 
+#pragma use_lmw_stmw on
 void fn_80145E6C(StreamContext* context, void* write_callback, void* read_callback,
                  int callback_arg, int limit)
 {
@@ -17,3 +18,4 @@ void fn_80145E6C(StreamContext* context, void* write_callback, void* read_callba
     fn_80145E60(context, write_callback, read_callback);
     *(int*)&context->bytes[0x2ACC] = callback_arg;
 }
+#pragma use_lmw_stmw reset

@@ -17,8 +17,8 @@ void fn_800D8EC4(void *unused, void *object, void *argument)
     u32 first;
     u32 second;
     u32 third;
-    u32 shared;
     u32 other;
+    u32 shared;
 
     (void)unused;
     call_value = lbl_8064F42C;

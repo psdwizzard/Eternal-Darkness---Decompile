@@ -9,10 +9,11 @@ typedef struct Item {
     State* state;
 } Item;
 
+#pragma opt_propagation off
 int fn_8012356C(const Item* first, const Item* second)
 {
-    State* first_state = first->state;
     State* second_state = *(State* const volatile*)&second->state;
+    State* first_state = first->state;
     int first_mode = first_state->mode;
     float first_value = *(const volatile float*)&first->value;
     float second_value = *(const volatile float*)&second->value;
@@ -37,3 +38,4 @@ int fn_8012356C(const Item* first, const Item* second)
     }
     return result;
 }
+#pragma opt_propagation reset

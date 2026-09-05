@@ -1,3 +1,4 @@
+#pragma use_lmw_stmw on
 typedef signed char s8;
 typedef unsigned short u16;
 typedef unsigned int u32;
@@ -8,11 +9,11 @@ typedef struct RequestState {
     char pad120[0x10];
     void* value130;
     char pad134[4];
-    u32 field138;
-    u32 field13C;
-    char pad140[3];
+    char data138[0x8000];
+    u32 field8138;
+    u32 field813C;
+    char pad8140[3];
     s8 loaded;
-    char pad144[0x7FFC];
 } RequestState;
 
 typedef struct SourceInfo {
@@ -28,7 +29,7 @@ typedef struct RequestGlobals {
 } RequestGlobals;
 
 extern volatile RequestGlobals lbl_805B6FE0;
-extern SourceInfo* lbl_8064D170[];
+extern SourceInfo* lbl_8064D170[2];
 extern int lbl_8064D704;
 extern void fn_8015DA70(void*, void*, s8*);
 extern void fn_801EA7B4(void*, RequestState*);
@@ -39,13 +40,13 @@ void fn_80159088(int slot)
 {
     RequestState* state = lbl_805B6FE0.states[slot];
 
-    if (state->loaded == 0) {
+    if (lbl_805B6FE0.states[slot]->loaded == 0) {
         SourceInfo* info = lbl_8064D170[slot];
-        state->field13C = 0;
-        fn_8015DA70(&state->field13C, (char*)lbl_8064D170[slot] + info->work_offset,
-                    &state->loaded);
+        state->field813C = 0;
+        fn_8015DA70(&state->field813C, (char*)lbl_8064D170[slot] + info->work_offset,
+                    &lbl_805B6FE0.states[slot]->loaded);
         fn_801EA7B4((char*)lbl_8064D170[slot] + info->data_offset, state);
-        state->loaded = 1;
+        lbl_805B6FE0.states[slot]->loaded = 1;
         if (state->queue != 0 && *(u32*)((char*)state->queue + 8) < (u32)state->queue) {
             fn_8015DAB0(state->queue);
         }
@@ -53,6 +54,7 @@ void fn_80159088(int slot)
         }
     }
     lbl_8064D704 = 0;
-    state->field138 = 0;
+    state->field8138 = 0;
     state->value130 = 0;
 }
+#pragma use_lmw_stmw off

@@ -12,8 +12,7 @@ void fn_8013C460(Vec3* position, const Vec3* direction,
     amount = limit + fn_80211B44(position, direction);
     amount = -amount;
     if (amount > -(lbl_80650324 + radius)) {
-        amount += radius;
-        amount = lbl_80650328 + amount;
+        amount = lbl_80650328 + (amount + radius);
         position->x += amount * direction->x;
         position->y += amount * direction->y;
         position->z += amount * direction->z;

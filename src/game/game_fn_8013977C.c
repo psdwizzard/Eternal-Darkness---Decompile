@@ -25,18 +25,20 @@ typedef struct Object {
 extern Object* fn_80134F08(int);
 extern void fn_801354A0(Object*);
 
+#pragma opt_propagation off
+#pragma optimization_level 1
 int fn_8013977C(Slot* slot)
 {
-    int offset;
-    Slot* saved;
-    int result;
     int zero;
+    int offset;
     int i;
+    int result;
+    Slot* saved;
 
     offset = 0;
     saved = slot;
-    result = 0;
     zero = offset;
+    result = 0;
     i = 0;
     while (i < saved->resource->count) {
         Object* object = fn_80134F08(*(int*)((char*)saved->children + offset + 4));
@@ -50,3 +52,5 @@ int fn_8013977C(Slot* slot)
     }
     return result;
 }
+#pragma opt_propagation reset
+#pragma optimization_level reset

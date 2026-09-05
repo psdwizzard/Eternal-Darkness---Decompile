@@ -25,7 +25,7 @@ extern void fn_80160848(void*, void*, int, int);
 void fn_80168AE8(void* output, char* input, int value, int extra)
 {
     Owner* owner = *(Owner**)(input - 8);
-    volatile Inner* inner = *(Inner**)owner->first;
+    Inner* inner = *(Inner**)owner->first;
     char* current = *(char**)owner->second;
     char* base = inner->base;
     void* context = inner->context;

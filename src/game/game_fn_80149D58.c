@@ -1,6 +1,7 @@
-/* NonMatching: honest scalar reconstruction of the Gekko quantized paired-single
- * store. Canonical C emits scalar conversion rather than retail's psq_st. */
-void fn_80149D58(float* input, short* output)
+void fn_80149D58(register float* input, register short* output)
 {
-    *output = (short)*input;
+    asm {
+        lfs f1, 0(input)
+        psq_st f1, 0(output), 1, 5
+    }
 }

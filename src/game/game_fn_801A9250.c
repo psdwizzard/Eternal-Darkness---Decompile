@@ -5,7 +5,7 @@ typedef struct Color801A9250 {
     u32 value;
 } Color801A9250;
 
-extern const volatile Color801A9250 lbl_80650E28;
+extern volatile Color801A9250 lbl_80650E28;
 extern u8 lbl_802515D0[];
 extern u8 lbl_802515E0[];
 

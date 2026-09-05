@@ -44,15 +44,13 @@ extern void fn_801E79A0(void*, int);
 extern void fn_80067180(void*);
 extern void* lbl_8064C4E0;
 
-/* NonMatching: behavior-complete honest C. Retail and generated code are both
- * 292 bytes with all calls aligned; MWCC rotates the owner/context registers. */
 int fn_800A0CC0(State* arg)
 {
     register volatile State* state = arg;
     register Work* work;
     register void* object;
-    register void* context;
     register void* indexed;
+    register void* context;
     register Actor* actor;
     Vec3 position;
 

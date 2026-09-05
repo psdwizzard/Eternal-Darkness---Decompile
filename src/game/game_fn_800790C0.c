@@ -1,3 +1,4 @@
+#pragma use_lmw_stmw on
 typedef struct Vec3 {
     float x, y, z;
 } Vec3;
@@ -14,8 +15,6 @@ extern void fn_800BDEE4(void *object, void *value);
 extern void fn_80201D2C(void *, int);
 extern void fn_80201D14(void *, int);
 
-/* NonMatching: behavior-complete activation path; remaining differences are
- * local lifetime/register allocation and two redundant retail calls/moves. */
 int fn_800790C0(void *object, void *actor, int unused, int flags, int mask)
 {
     void *entry = fn_80201B94(object);
@@ -36,3 +35,4 @@ int fn_800790C0(void *object, void *actor, int unused, int flags, int mask)
     }
     return 0;
 }
+#pragma use_lmw_stmw off

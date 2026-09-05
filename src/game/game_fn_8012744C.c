@@ -31,15 +31,22 @@ extern void fn_80128108(void*, PackedVec3*);
 
 void fn_8012744C(Owner* owner, int index, RangeState* state, int flags)
 {
-    Vec3f* source;
+    register Vec3f* source;
+    register s16* packed;
+    register float first;
+    register float second;
 
     if ((flags & 2) != 0) {
         source = &owner->vectors[index];
+        packed = &state->vector.x;
         fn_801285D8(&state->kind, 1);
         fn_801252D8(4);
-        state->vector.x = source->x;
-        state->vector.y = source->y;
-        state->vector.z = source->z;
+        asm {
+            psq_l first, 0(source), 0, 0
+            psq_lu second, 8(source), 1, 0
+            psq_st first, 0(packed), 0, 2
+            psq_stu second, 4(packed), 1, 2
+        }
     } else if ((flags & 1) != 0) {
         fn_801285D8(&state->kind, 2);
         fn_80128108((u8*)owner->packed_vectors + index * 0x10,

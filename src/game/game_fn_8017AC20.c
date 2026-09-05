@@ -5,10 +5,10 @@ extern void fn_800F8BAC(const char*, const char*, int);
 
 int fn_8017AC20(int scale, unsigned int bits, float value)
 {
-    int result = (int)(value * (1 << scale));
     const char* messages = lbl_80250D00;
-    /* Deliberately relies on MWCC's negative-left-shift behavior for retail codegen. */
-    unsigned int mask = bits == 32 ? -1 : -1 << bits;
+    float scaled = (float)(1 << scale);
+    unsigned int mask = bits == 32 ? ~0U : ~0U << bits;
+    int result = (int)(value * scaled);
 
     if (result != 0) {
         if (value < lbl_80650860) {

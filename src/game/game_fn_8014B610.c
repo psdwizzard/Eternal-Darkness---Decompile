@@ -19,27 +19,17 @@ extern RuntimeNode* lbl_8064D094;
 extern u32 lbl_8064BA10;
 extern int fn_8015E4E8(void);
 extern int fn_8015C628(void*);
-extern void* fn_8015C910(void);
+extern unsigned int fn_8015C910(void);
 
-/* Honest reconstruction of the global runtime-node pacing pass. */
 void fn_8014B610(void)
 {
     RuntimeNode* node = lbl_8064D094;
     int special = fn_8015E4E8();
 
     while (node != 0) {
-        int process = 0;
-        if (special != 0 && (node->flags & 0x80) != 0) {
-            process = 1;
-        } else if (special == 0) {
-            if ((node->flags & 5) != 0 || fn_8015C628(node->state) != 0) {
-                if (fn_8015C910() == 0 || (node->flags & 8) == 0) {
-                    process = 1;
-                }
-            }
-        }
-
-        if (process != 0) {
+        if ((special != 0 && (node->flags & 0x80) != 0) ||
+            (special == 0 && ((node->flags & 5) != 0 || fn_8015C628(node->state) != 0) &&
+             (fn_8015C910() == 0 || (node->flags & 8) == 0))) {
             u32 target;
             if (node->timer == 0 && node->completed != 0) {
                 node->completed = 0;

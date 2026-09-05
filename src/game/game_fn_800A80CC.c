@@ -22,12 +22,12 @@ extern void fn_80201D14(void *, int);
 
 void fn_800A80CC(int index, void* object, void* source, EffectState* state)
 {
+    int tag;
     void* handle;
     CallbackEntry* entries;
     int count;
     int i;
     int found;
-    int tag;
 
     handle = fn_801294DC(source, state->kind == 2 ? 0x4D : 0x4F, 0x20, 6);
     if (handle != 0) {

@@ -13,13 +13,11 @@ extern void *fn_80201B8C();
 extern void fn_80128BE4(void *);
 extern unsigned long long fn_8020123C();
 
-/* NonMatching: behavior-complete paired-object activation handler. Retail and
- * base are equal-sized with identical relocations; MWCC assigns the two
- * callee-saved registers in the opposite order. */
+#pragma global_optimizer off
 int fn_800747CC(void *object, void *link)
 {
-    register void *object_r = object;
-    register void *resolved = link;
+    void *object_r = object;
+    void *resolved = link;
     State *state;
     int type;
 
@@ -34,3 +32,4 @@ int fn_800747CC(void *object, void *link)
     }
     return 1;
 }
+#pragma global_optimizer reset

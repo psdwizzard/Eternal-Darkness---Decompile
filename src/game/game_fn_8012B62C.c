@@ -8,7 +8,13 @@ void fn_8012B62C(u8* owner, int slot, int id)
     u8** output = *(u8***)(owner + 0x288);
     int count;
 
-    if (header == 0 || entry == 0 || output == 0) {
+    if (header == 0) {
+        return;
+    }
+    if (entry == 0) {
+        return;
+    }
+    if (output == 0) {
         return;
     }
     if (slot < *(u16*)(owner + 0x2D6)) {

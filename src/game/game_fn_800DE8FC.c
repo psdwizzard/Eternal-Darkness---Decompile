@@ -27,6 +27,7 @@ extern float lbl_8064F550;
 extern float lbl_8064F554;
 extern float lbl_8064F558;
 
+#pragma opt_propagation off
 int fn_800DE8FC(int type, Vec3 *position)
 {
     float x;
@@ -35,72 +36,72 @@ int fn_800DE8FC(int type, Vec3 *position)
 
     switch (type) {
     case 0xED:
-        y = lbl_8064F508;
         x = lbl_8064F504;
+        y = lbl_8064F508;
         position->x = x;
         x = lbl_8064F50C;
         position->y = y;
         position->z = x;
         break;
     case 0xEE:
-        y = lbl_8064F514;
         x = lbl_8064F510;
+        y = lbl_8064F514;
         position->x = x;
         x = lbl_8064F518;
         position->y = y;
         position->z = x;
         break;
     case 0xF5:
-        y = lbl_8064F520;
         x = lbl_8064F51C;
+        y = lbl_8064F520;
         position->x = x;
         x = lbl_8064F524;
         position->y = y;
         position->z = x;
         break;
     case 0xF6:
-        y = lbl_8064F52C;
         x = lbl_8064F528;
+        y = lbl_8064F52C;
         position->x = x;
         x = lbl_8064F530;
         position->y = y;
         position->z = x;
         break;
     case 0xF4:
-        y = lbl_8064F538;
         x = lbl_8064F534;
+        y = lbl_8064F538;
         position->x = x;
         x = lbl_8064F50C;
         position->y = y;
         position->z = x;
         break;
     case 0xF2:
-        y = lbl_8064F540;
         x = lbl_8064F53C;
+        y = lbl_8064F540;
         position->x = x;
         x = lbl_8064F530;
         position->y = y;
         position->z = x;
         break;
     case 0xF1:
-        y = lbl_8064F548;
         x = lbl_8064F544;
+        y = lbl_8064F548;
         position->x = x;
         x = lbl_8064F50C;
         position->y = y;
         position->z = x;
         break;
     case 0xF7:
-        y = lbl_8064F550;
         x = lbl_8064F54C;
+        y = lbl_8064F550;
         position->x = x;
         x = lbl_8064F50C;
         position->y = y;
         position->z = x;
         break;
     case 0xF8:
-        y = lbl_8064F558;
         x = lbl_8064F554;
+        y = lbl_8064F558;
         position->x = x;
         x = lbl_8064F530;
         position->y = y;
@@ -116,3 +117,4 @@ int fn_800DE8FC(int type, Vec3 *position)
 
     return result;
 }
+#pragma opt_propagation reset

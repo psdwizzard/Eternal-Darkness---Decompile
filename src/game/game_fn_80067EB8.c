@@ -8,7 +8,7 @@ typedef struct RuntimeObject {
     u8 state;
     u16 pad2;
     u16 mode;
-    u8 pad6[8];
+    u8 pad6[14];
     u32 flags14;
     u32 flags18;
     u32 flags1C;
@@ -63,11 +63,11 @@ void fn_80067EB8(void *object)
 {
     ObjectState *state = fn_80201B8C(object);
     RuntimeObject **installed = state != 0 ? state->installed : 0;
+    Component *component;
+    RuntimeObject *runtime;
 
     if (installed != 0) {
         s32 object_state = (s32)fn_80201BC8(object);
-        RuntimeObject *runtime;
-        Component *component;
         s32 value;
         s32 second;
         s32 third;

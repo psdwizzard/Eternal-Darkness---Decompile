@@ -14,8 +14,8 @@ void fn_8015D7D4(void* output, void* file, int offset, unsigned int remaining,
                  unsigned char* buffers)
 {
     int message;
-    unsigned int buffer_index = 0;
-    unsigned int chunk;
+    int buffer_index = 0;
+    int chunk;
     unsigned char* next_buffer;
 
     while (fn_8020D318(lbl_805E295C, &message, 0)) {

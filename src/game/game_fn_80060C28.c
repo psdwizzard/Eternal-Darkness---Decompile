@@ -38,12 +38,7 @@ void fn_80060C28(void *owner, void *resource, void *target)
             lbl_8064C890 = 0;
         }
         fn_80128B10(resource, values[lbl_8064C890]);
-        {
-            s32 index = lbl_8064C890;
-            s32 next = index + 1;
-            s32 mask = -(index >= 2);
-            lbl_8064C890 = next & ~mask;
-        }
+        lbl_8064C890 = (lbl_8064C890 >= 2) ? 0 : lbl_8064C890 + 1;
     }
 
     ((u8 *)*(void **)((u8 *)target + 8))[0x89] |= 2;

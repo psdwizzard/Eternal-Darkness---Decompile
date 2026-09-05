@@ -19,25 +19,25 @@ void fn_8018D400(u8* self, void* context, Callback callback)
 {
     Vec3 input;
     Vec3 output;
-    int half_width;
-    int half_height;
     int x_radius;
     int y_radius;
     unsigned int location;
-    u8* self_local;
+    u8* state;
     u8* coordinates;
-    void* context_local;
-    Callback callback_local;
+    int half_height;
+    int half_width;
+    void* callback_context;
+    Callback draw;
 
-    self_local = self;
-    coordinates = self_local + 0x10;
-    context_local = context;
-    callback_local = callback;
+    state = self;
+    coordinates = state + 0x10;
+    callback_context = context;
+    draw = callback;
     fn_80179B08(coordinates, &input);
     fn_8017ACE0(lbl_8063C068, &input, &output);
 
-    half_width = *(u16*)(self_local + 0xDC) >> 1;
-    half_height = *(u16*)(self_local + 0xDE) >> 1;
+    half_width = *(u16*)(state + 0xDC) >> 1;
+    half_height = *(u16*)(state + 0xDE) >> 1;
     location = fn_801F6D90(*(s16*)(coordinates + 0),
                            *(s16*)(coordinates + 2),
                            *(s16*)(coordinates + 4));
@@ -74,8 +74,7 @@ void fn_8018D400(u8* self, void* context, Callback callback)
         y_radius = 0;
     }
 
-    callback_local(context_local, output.x - (float)x_radius,
-                   output.y + (float)y_radius,
-                   output.x + (float)x_radius,
-                   output.y - (float)y_radius, output.z);
+    draw(callback_context, output.x - (float)x_radius,
+         output.y + (float)y_radius, output.x + (float)x_radius,
+         output.y - (float)y_radius, output.z);
 }

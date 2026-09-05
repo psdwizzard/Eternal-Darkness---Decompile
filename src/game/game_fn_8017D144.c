@@ -22,11 +22,13 @@ typedef struct Manager {
 
 extern Entry* fn_8017D064(Entry*, Entry*);
 
+#pragma opt_propagation off
+#pragma optimization_level 1
 void fn_8017D144(Manager* manager)
 {
-    int offset;
     int state;
-    u16 count;
+    int offset;
+    u32 count;
     u32 i;
     int was_empty = 0;
 
@@ -49,3 +51,5 @@ void fn_8017D144(Manager* manager)
         offset += sizeof(Entry);
     }
 }
+#pragma opt_propagation reset
+#pragma optimization_level reset

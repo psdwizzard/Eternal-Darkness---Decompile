@@ -20,19 +20,10 @@ int fn_80106AC0(ImageHeader* header)
     int sampled_area;
     int full_area;
 
-    if (header->horizontal_sampling == 2) {
-        sampled_width = width >> 1;
-    } else {
-        sampled_width = width;
-    }
+    sampled_width = header->horizontal_sampling == 2 ? width >> 1 : width;
     raw_height = header->height;
     height = raw_height / 4;
-    if (header->vertical_sampling == 2) {
-        sampled_height = height >> 1;
-    } else {
-        sampled_height = height;
-    }
-
+    sampled_height = header->vertical_sampling == 2 ? height >> 1 : height;
     sampled_area = (sampled_width + 2) * (sampled_height + 2);
     full_area = (width + 2) * (height + 2);
     return 0x3CD0 + 2 * (full_area + 2 * sampled_area);

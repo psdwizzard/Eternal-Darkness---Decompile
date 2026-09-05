@@ -42,5 +42,7 @@ void fn_800D4214(void *object, State *state)
     case 2:
         state->effect = fn_80155330(3, controller, 2, 14, &position, 250);
         break;
+    case 3:
+        break;
     }
 }

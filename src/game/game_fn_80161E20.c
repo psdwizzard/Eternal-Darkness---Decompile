@@ -28,6 +28,7 @@ extern char lbl_8064BA88;
 extern void fn_80161D58(Collection*, Argument*);
 extern void* fn_8016B5CC(Collection*, Node*, unsigned int, char*, int);
 
+#pragma opt_loop_invariants off
 void fn_80161E20(Collection* collection)
 {
     Argument argument;
@@ -48,3 +49,4 @@ void fn_80161E20(Collection* collection)
         index--;
     }
 }
+#pragma opt_loop_invariants reset

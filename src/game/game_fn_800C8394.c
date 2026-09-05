@@ -14,9 +14,11 @@ extern u32 lbl_80651A6C;
 void fn_800C8394(void *object, u8 alpha)
 {
     Color source;
-    Color first;
-    Color second;
     Color third;
+    Color second_copy;
+    Color second;
+    Color first_copy;
+    Color first;
 
     fn_8012DBE8(object, 0xF, &source);
     first.value = lbl_80651A6C;
@@ -25,6 +27,8 @@ void fn_800C8394(void *object, u8 alpha)
     first.channel[1] = source.channel[1];
     first.channel[2] = source.channel[2];
     second.channel[3] = alpha;
+    first_copy = first;
+    second_copy = second;
     third = source;
-    fn_8012C62C(object, 0xF, &third, &second, &first, 6);
+    fn_8012C62C(object, 0xF, &third, &second_copy, &first_copy, 6);
 }

@@ -4,7 +4,7 @@ extern int fn_800F8D2C(int);
 extern const double lbl_8023A900[17];
 
 #pragma use_lmw_stmw on
-
+#pragma opt_lifetimes off
 double fn_8016BA4C(signed char* text, signed char** end)
 {
     int sign;
@@ -89,3 +89,5 @@ double fn_8016BA4C(signed char* text, signed char** end)
     }
     return value * sign;
 }
+#pragma opt_lifetimes reset
+#pragma use_lmw_stmw reset

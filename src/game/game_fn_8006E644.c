@@ -35,12 +35,10 @@ void fn_8006E644(int index, Owner *owner)
         state = (u32 *)owner->state;
         if (index >= 0x20) {
             mask = 1 << (index - 0x20);
-            value = *(volatile int *)&state[4];
-            state[4] = value & ~mask;
+            state[4] &= ~mask;
         } else {
             mask = 1 << index;
-            value = *(volatile int *)&state[3];
-            state[3] = value & ~mask;
+            state[3] &= ~mask;
         }
         fn_8006C9D4(entry, 1);
         entry->second = 0;

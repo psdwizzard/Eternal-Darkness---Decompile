@@ -20,24 +20,34 @@ extern void fn_80211A6C();
 extern void fn_80211A90(Vec800A40C4*, Vec800A40C4*, float);
 extern void fn_800A1C50(Vec800A40C4*, Vec800A40C4*, void*, void*);
 
+typedef struct HitResult800A40C4 {
+    unsigned char pad00[8];
+    Vec800A40C4 position;
+    Vec800A40C4 normal;
+    unsigned char pad20[0x10];
+} HitResult800A40C4;
+
 void fn_800A40C4(void* object, Context800A40C4* context, void* value,
                  void* runtime)
 {
-    Vec800A40C4 initial;
-    Vec800A40C4 position;
-    Vec800A40C4 direction;
+    HitResult800A40C4 hit;
     Vec800A40C4 scaled;
-    Vec800A40C4 result;
-    unsigned char work[0x24];
+    Vec800A40C4 direction;
+    Vec800A40C4 position;
+    Vec800A40C4 offset;
+    Vec800A40C4 delta;
+    Vec800A40C4 initial;
+    int kind;
 
     fn_801A7744(&initial, runtime);
     position = initial;
 
-    if (fn_8011F6A4(object, 0, fn_801A7770(runtime), -1, work, 1) != -1) {
+    kind = fn_801A7770(runtime);
+    if (fn_8011F6A4(object, 0, kind, -1, &hit, 1) != -1) {
         fn_8003B0BC(fn_801A7778(runtime), &direction, &scaled, runtime, 0, 0);
-        fn_80211A6C(&result, &direction, &initial);
-        fn_80211A90(&initial, &initial, lbl_8064EED0);
-        fn_80211A6C(&result, &initial, &scaled);
-        fn_800A1C50(&position, &scaled, value, &context->field19C);
+        fn_80211A6C(&hit.position, &direction, &delta);
+        fn_80211A90(&delta, &delta, lbl_8064EED0);
+        fn_80211A6C(&hit.position, &delta, &offset);
+        fn_800A1C50(&position, &offset, value, &context->field19C);
     }
 }

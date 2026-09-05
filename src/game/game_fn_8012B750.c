@@ -15,5 +15,5 @@ float fn_8012B750(void* object)
         output = value[0];
     }
     value[0] = output;
-    return value[0];
+    return output;
 }

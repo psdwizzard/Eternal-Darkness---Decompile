@@ -18,9 +18,7 @@ unsigned int fn_80157360(unsigned int (*callback)(void*, Object*), Object* objec
     unsigned int ignore_result;
     unsigned int descend;
 
-    if (object == 0) {
-        object = fn_80155EF4();
-    }
+    object = object != 0 ? object : fn_80155EF4();
 
     include_removed = flags & 2;
     ignore_result = flags & 4;

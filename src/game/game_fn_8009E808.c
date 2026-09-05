@@ -9,7 +9,7 @@ typedef struct Context8009E808 {
     u32 flags;
 } Context8009E808;
 
-extern void *fn_8006ED3C();
+extern Context8009E808 *fn_8006ED3C(void *, int, int *);
 extern void fn_801E7974(void*, int);
 extern void* fn_8006D488(void*);
 extern void fn_802020B4(void*, int);
@@ -17,15 +17,16 @@ extern void fn_801A5C30(int);
 extern void fn_80052424(int, int, int, int);
 extern void* lbl_8064C4E0;
 
-int fn_8009E808(void* state)
+#pragma opt_propagation off
+int fn_8009E808(void* event)
 {
-    int index;
     s16 sounds[4] = { 101, 102, 103, 104 };
+    int index;
     Context8009E808* context;
     register void* owner;
     int sound_index;
 
-    owner = state;
+    owner = event;
     context = fn_8006ED3C(owner, 0xC, &index);
     sound_index = context->counter % 4;
     fn_801E7974(lbl_8064C4E0, 0x3BF);
@@ -38,3 +39,4 @@ int fn_8009E808(void* state)
     }
     return 1;
 }
+#pragma opt_propagation reset

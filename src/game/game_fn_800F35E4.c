@@ -1,9 +1,12 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
+#pragma opt_propagation off
+
 void fn_800F35E4(void *destination, int value, u32 length)
 {
-    u8 *cursor = (u8 *)destination - 1;
+    register void *destination_r = destination;
+    u8 *cursor = (u8 *)destination_r - 1;
     u32 fill = (u8)value;
 
     if (length >= 32) {
@@ -18,25 +21,25 @@ void fn_800F35E4(void *destination, int value, u32 length)
         if (fill != 0)
             fill = (fill << 24) | (fill << 16) | (fill << 8) | fill;
 
-        destination = cursor - 3;
+        destination_r = cursor - 3;
         value = length >> 5;
         if (value != 0) do {
-            ((u32 *)destination)[1] = fill;
-            ((u32 *)destination)[2] = fill;
-            ((u32 *)destination)[3] = fill;
-            ((u32 *)destination)[4] = fill;
-            ((u32 *)destination)[5] = fill;
-            ((u32 *)destination)[6] = fill;
-            ((u32 *)destination)[7] = fill;
-            destination = (u32 *)destination + 8;
-            *(u32 *)destination = fill;
+            ((u32 *)destination_r)[1] = fill;
+            ((u32 *)destination_r)[2] = fill;
+            ((u32 *)destination_r)[3] = fill;
+            ((u32 *)destination_r)[4] = fill;
+            ((u32 *)destination_r)[5] = fill;
+            ((u32 *)destination_r)[6] = fill;
+            ((u32 *)destination_r)[7] = fill;
+            destination_r = (u32 *)destination_r + 8;
+            *(u32 *)destination_r = fill;
         } while (--value != 0);
         value = (length >> 2) & 7;
         if (value != 0) do {
-            destination = (u32 *)destination + 1;
-            *(u32 *)destination = fill;
+            destination_r = (u32 *)destination_r + 1;
+            *(u32 *)destination_r = fill;
         } while (--value != 0);
-        cursor = (u8 *)destination + 3;
+        cursor = (u8 *)destination_r + 3;
         length &= 3;
     }
 
@@ -44,3 +47,5 @@ void fn_800F35E4(void *destination, int value, u32 length)
         *++cursor = fill;
     } while (--length != 0);
 }
+
+#pragma opt_propagation reset

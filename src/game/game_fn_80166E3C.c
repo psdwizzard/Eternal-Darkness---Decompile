@@ -29,13 +29,15 @@ extern void* fn_8016B5CC(LuaState*, void*, int, const char*, int);
 extern void fn_80166DD4(LuaState*, TableState*, StringNode*, unsigned int);
 extern const char lbl_8024FA38[];
 
+#pragma opt_propagation off
+#pragma opt_lifetimes off
 StringNode* fn_80166E3C(LuaState* state, const char* string, unsigned int length)
 {
     int allocsize;
     StringNode* node;
     unsigned int bucket;
-    unsigned int len = length;
     unsigned int hash = fn_80166BD4(string, length);
+    unsigned int len = length;
     bucket = hash & (state->strt.size - 1);
     node = state->strt.hash[bucket];
 
@@ -61,3 +63,5 @@ StringNode* fn_80166E3C(LuaState* state, const char* string, unsigned int length
     fn_80166DD4(state, &state->strt, node, bucket);
     return node;
 }
+#pragma opt_propagation reset
+#pragma opt_lifetimes reset

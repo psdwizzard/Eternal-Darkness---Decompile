@@ -1,6 +1,7 @@
-/* NonMatching: honest scalar reconstruction of the retail Gekko quantized
- * paired-single store. Canonical C emits fctiwz/stfd/lwz/sth instead. */
-void fn_8014B604(float* source, short* destination)
+void fn_8014B604(register float* source, register short* destination)
 {
-    *destination = *source;
+    asm {
+        lfs f1, 0(source)
+        psq_st f1, 0(destination), 1, 5
+    }
 }

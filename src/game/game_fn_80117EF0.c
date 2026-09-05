@@ -5,11 +5,9 @@ extern void fn_80157360(int (*)(void *, void *), void *, int, int);
 
 void fn_80117EF0(void)
 {
-    void *value;
     int (*callback)(void *, void *);
 
     fn_80155D9C(1);
-    value = fn_80155D78();
     callback = fn_80117EC8;
-    fn_80157360(callback, value, 0, 4);
+    fn_80157360(callback, fn_80155D78(), 0, 4);
 }

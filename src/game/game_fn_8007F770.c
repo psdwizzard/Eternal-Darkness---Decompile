@@ -16,6 +16,6 @@ s32 fn_8007F770(void *script)
         return 0;
     }
 
-    fn_8016A830(script, (double)*(u32 *)(lbl_8031CD84 + 0x444 + lbl_8064C8F0 * 8));
+    fn_8016A830(script, (double)((u32 *)(lbl_8031CD84 + 0x444))[lbl_8064C8F0 * 2]);
     return 1;
 }

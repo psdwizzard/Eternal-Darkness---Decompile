@@ -20,7 +20,7 @@ typedef struct State {
     u8 pad44[0x10];
 } State;
 
-extern State lbl_805BB1E0;
+extern volatile State lbl_805BB1E0;
 extern u8 lbl_8030F540[];
 extern u8 lbl_805E2600[];
 extern u32 lbl_8064D5A8;

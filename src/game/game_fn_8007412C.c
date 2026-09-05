@@ -18,9 +18,6 @@ extern void *fn_80201B8C();
 extern void *fn_80201C48(void *);
 extern unsigned long long fn_8020123C();
 
-/* NonMatching: behavior-complete paired-object event setup. The remaining
- * difference is the retail compiler's redundant low-word mask on the u64
- * event result. */
 void fn_8007412C(void *object, int mode)
 {
     void *first;
@@ -39,7 +36,7 @@ void fn_8007412C(void *object, int mode)
         node->value = value;
     }
     result = fn_8020123C(0x6B, second, value, mode);
-    if ((u32)result == 0) {
+    if ((u32)(result & 0xFFFFFFFF) == 0) {
         fn_8020123C(0x74, second, second, 0);
     }
 }

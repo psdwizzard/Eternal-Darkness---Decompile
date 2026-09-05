@@ -12,6 +12,8 @@ typedef struct InstanceList {
     void* instances[1];
 } InstanceList;
 
+#pragma opt_propagation off
+#pragma opt_common_subs off
 void fn_80148730(void* object)
 {
     unsigned char* current;
@@ -33,6 +35,8 @@ void fn_80148730(void* object)
             if (fn_801800F8(*(void**)(current + 0x88)))
                 fn_80188268(*(void**)(current + 0x88));
         }
-        bit = current_bit << 1;
+        bit = (current_bit & 0x7FFF) << 1;
     }
 }
+#pragma opt_propagation reset
+#pragma opt_common_subs reset

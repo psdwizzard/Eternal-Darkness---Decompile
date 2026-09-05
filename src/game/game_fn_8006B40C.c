@@ -4,7 +4,7 @@ typedef struct Descriptor {
     s32 words[5];
 } Descriptor;
 
-extern const Descriptor lbl_802390A0;
+extern Descriptor lbl_802390A0;
 extern void *lbl_8064C8D0;
 extern void fn_8006BE84(void *object, s32 value);
 extern void fn_8006BEE4(void *object, void *callback);

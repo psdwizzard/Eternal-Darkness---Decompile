@@ -1,3 +1,4 @@
+typedef unsigned char u8;
 typedef struct SceneEntry {
     int mode;
     void* value;
@@ -7,23 +8,28 @@ typedef struct SceneEntry {
     short amount;
 } SceneEntry;
 
+#define SCENE_VALUE_AT(value_column, scene, row, column)                   \
+    (*(void**)((value_column) + (scene) * sizeof(SceneEntry) * 8 +        \
+               (row) * sizeof(SceneEntry) * 4 +                          \
+               (column) * sizeof(SceneEntry)))
+
 extern SceneEntry lbl_8031D3F8[][2][4];
 extern int lbl_8064C560;
 extern int lbl_8064C564;
 extern int lbl_8064C578;
-extern float lbl_8064EC24;
+extern const float lbl_8064EC24;
 
 extern void* fn_8008F224(void*, int, int);
-extern void *fn_80201814();
-extern void *fn_80201B8C();
-extern int fn_80201B44();
+extern void *fn_80201814(void *);
+extern void *fn_80201B8C(void *);
+extern int fn_80201B44(void);
 extern void fn_801ACACC(int, int, void*, int);
 extern void fn_800DE4D8(void*, int);
-extern void *fn_80201BC8();
+extern void *fn_80201BC8(void *);
 extern unsigned int fn_8011FA8C(void*, int, int);
 extern int fn_80036D5C(void*);
 extern void fn_80036DA4(void*, int);
-extern int fn_80201EB8();
+extern int fn_80201EB8(void *);
 extern void fn_80201D34(void*, int);
 extern void fn_80201D1C(void*, int);
 extern void fn_8008F860(void*);
@@ -38,11 +44,14 @@ void fn_80090004(void* object, void* actor, void* target, void* unused4,
                  void* unused5, void* unused6, void* unused7, void* unused8,
                  void* resource)
 {
-    SceneEntry* entry = &lbl_8031D3F8[lbl_8064C578][lbl_8064C560][lbl_8064C564];
-    void* owner = fn_8008F224(entry->value, 1, 1);
-    void* state = fn_80201814(owner);
+    u8* value_column = (u8*)&lbl_8031D3F8[0][0][0].value;
+    void* state;
+    void* owner = fn_8008F224(
+        SCENE_VALUE_AT(value_column, lbl_8064C578, lbl_8064C560, lbl_8064C564),
+        1, 1);
     int next;
 
+    state = fn_80201814(owner);
     fn_80201B8C(state);
     fn_801ACACC(0xC1, 0x4B, ((void*)fn_80201B44()), 0x82);
     fn_800DE4D8(owner, 2);
@@ -68,6 +77,9 @@ void fn_80090004(void* object, void* actor, void* target, void* unused4,
         short amount = lbl_8031D3F8[lbl_8064C578][next][0].amount;
         fn_8008F860(target);
         fn_8020104C(23, target, target, -1, (float)amount);
-        fn_8011FB54(actor, lbl_8031D3F8[lbl_8064C578][lbl_8064C560][lbl_8064C564].value);
+        fn_8011FB54(actor, SCENE_VALUE_AT(value_column, lbl_8064C578,
+                                         lbl_8064C560, lbl_8064C564));
     }
 }
+
+#undef SCENE_VALUE_AT

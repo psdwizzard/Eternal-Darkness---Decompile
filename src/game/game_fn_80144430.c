@@ -4,7 +4,7 @@ extern void fn_801443F4(void);
 void fn_80144430(int mask, int enabled)
 {
     int flags;
-    if (enabled == 0)
+    if (!enabled)
         flags = lbl_8064D040 & ~mask;
     else
         flags = lbl_8064D040 | mask;

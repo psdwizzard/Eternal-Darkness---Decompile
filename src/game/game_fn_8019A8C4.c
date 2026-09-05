@@ -37,16 +37,16 @@ extern void fn_801F5A04(void*, s16, void*, void*);
 
 void fn_8019A8C4(u8* object, void* first, void* second, u8* config)
 {
-    u32 effect;
-    ShortCoord3 random;
-    s16 fixed_z;
     SixBytes setup;
+    ShortCoord3 random;
+    ShortCoord3 table;
+    u32 effect;
     u8 count;
-    u8 random_mask;
-    u32 width;
     u8* entry;
     u32 i;
-    void* table;
+    u8 random_mask;
+    u32 width;
+    u32 mask;
 
     setup.word = lbl_80651DE0;
     setup.half = lbl_80651DE4;
@@ -69,12 +69,13 @@ void fn_8019A8C4(u8* object, void* first, void* second, u8* config)
     random_mask = config[1] - 1;
     width = *(u32*)(config + 0x14);
     entry = *(u8**)(object + 0x4C);
+    mask = width * 2 - 1;
     memcpy(&table, second, 6);
-    fixed_z = *(s16*)((u8*)first + 4);
+    random.z = *(s16*)((u8*)first + 4);
     for (i = 0; (u8)i < count; i++) {
-        random.x = *(s16*)first + width - ((width * 2 - 1) & fn_800FBFB0());
-        random.y = *(s16*)((u8*)first + 2) + width - ((width * 2 - 1) & fn_800FBFB0());
-        random.z = *(s16*)((u8*)second + 4) + (fn_800FBFB0() & 3);
+        random.x = *(s16*)first + width - (mask & fn_800FBFB0());
+        random.y = *(s16*)((u8*)first + 2) + width - (mask & fn_800FBFB0());
+        table.z = *(s16*)((u8*)second + 4) + (fn_800FBFB0() & 3);
         fn_80180554(entry, &random, &table, &setup,
                     *(u16*)(config + 8) + (fn_800FBFB0() & 7), 0);
         fn_801805E0(entry + 0x20, 4,

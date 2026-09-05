@@ -16,6 +16,7 @@ extern unsigned int lbl_8064F498;
 extern unsigned int lbl_8064F49C;
 extern unsigned int lbl_8064F4A0;
 
+#pragma opt_common_subs off
 void fn_800DB430(void *context)
 {
     void *object;
@@ -37,3 +38,4 @@ void fn_800DB430(void *context)
         fn_8012C62C(object, 15, &second.z, &second.y, &second.x, 4);
     }
 }
+#pragma opt_common_subs reset

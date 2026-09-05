@@ -31,15 +31,14 @@ int fn_8009E2E8(register State8009E2E8* state)
 
     if (state != 0 && fn_8006D2C8(state, 0xD) != 0 &&
         (state->work->flags & 4) != 0) {
-        void* first;
         void* value;
         result = 1;
         fn_800A1580(0xD);
         if (fn_80070CD8() == 0) {
             value = fn_80204844(fn_80201B9C(), 0x20);
             result = 0;
-            first = ((void*)fn_80201B54(value));
-            fn_8020123C(0x52, ((void*)fn_80201B54(value)), first, 0);
+            fn_8020123C(0x52, (void*)fn_80201B54(value),
+                        (void*)fn_80201B54(value), 0);
         }
     }
     return result;

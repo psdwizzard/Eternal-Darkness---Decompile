@@ -1,0 +1,36 @@
+{
+  "session_id": "session-1777-remediation-1",
+  "scope": "Review remediation only; no frontier advancement or unrelated reconstruction.",
+  "source_corrections": {
+    "fn_8021A044": {
+      "command": "jq -r '(.left.symbols[] | select(.name==\"fn_8021A044\") | .instructions[]) | select(.instruction != null) | .instruction.formatted' build/GEDE01/fndiff_fn_8021A044.json",
+      "raw_output": "mflr r0\nstw r0, 0x4(r1)\nstwu r1, -0x18(r1)\nstw r31, 0x14(r1)\nstw r30, 0x10(r1)\nmr r30, r3\nlwz r31, lbl_8064DADC@sda21\nbl OSDisableInterrupts\nstw r30, lbl_8064DADC@sda21\nbl OSRestoreInterrupts\nmr r3, r31\nlwz r0, 0x1c(r1)\nlwz r31, 0x14(r1)\nlwz r30, 0x10(r1)\naddi r1, r1, 0x18\nmtlr r0\nblr ",
+      "conclusion": "Retail consumes only the pointer in r3, swaps it with lbl_8064DADC, and returns the previous pointer in r3. Both affected translation units now declare the same one-pointer, pointer-returning signature."
+    },
+    "cached_address_conversion": "fn_801CDF50 converts through u32 before adding the cached-segment bit, avoiding overflowing arithmetic on an already-cached C pointer while retaining the retail addis lowering."
+  },
+  "build": {
+    "command": ".tools/bin/ninja",
+    "result": "PASS"
+  },
+  "canonical_report": {
+    "command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty; jq -r headline extraction from build/GEDE01/report.json",
+    "raw_output": "matching_objects=4741 total_objects=6137 matching_functions=4508 total_functions=8216 matching_code_bytes=688856 total_code_bytes=2300692 matching_data_bytes=38270 total_data_bytes=4305642 linked_code_bytes=688700 linked_data_bytes=37422"
+  },
+  "relocation_strict_report": {
+    "command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/session-1777-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address; jq -r headline extraction from build/GEDE01/session-1777-remediation-1-reloc-strict.json",
+    "raw_output": "matching_objects=4741 total_objects=6137 matching_functions=4501 total_functions=8216 matching_code_bytes=687048 total_code_bytes=2300692 matching_data_bytes=38270 total_data_bytes=4305642 linked_code_bytes=688700 linked_data_bytes=37422"
+  },
+  "affected_objects": {
+    "command": "for evidence_file in reports/GEDE01/session-1777-remediation-1-fn_*.json; do jq -r --arg file \"$evidence_file\" '(.left.symbols[] | select(.name|startswith(\"fn_\"))) as $left | (.right.symbols[] | select(.name==$left.name)) as $right | \"file=\\($file) function=\\($left.name) retail_text_bytes=\\($left.size) generated_text_bytes=\\($right.size) match_percent=\\($left.match_percent)\"' \"$evidence_file\"; done",
+    "raw_output": "file=reports/GEDE01/session-1777-remediation-1-fn_801CDF50-canonical.json function=fn_801CDF50 retail_text_bytes=204 generated_text_bytes=204 match_percent=95.196075\nfile=reports/GEDE01/session-1777-remediation-1-fn_801CDF50-reloc-strict.json function=fn_801CDF50 retail_text_bytes=204 generated_text_bytes=204 match_percent=95.196075\nfile=reports/GEDE01/session-1777-remediation-1-fn_801CE03C-canonical.json function=fn_801CE03C retail_text_bytes=52 generated_text_bytes=52 match_percent=100.0\nfile=reports/GEDE01/session-1777-remediation-1-fn_801CE03C-reloc-strict.json function=fn_801CE03C retail_text_bytes=52 generated_text_bytes=52 match_percent=100.0"
+  },
+  "dol": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "frontier_and_registry": {
+    "command": "jq -r '\"next_target=\\(.next_target) registry_present=\\(.nonmatching_attempts|has(\"fn_801CDF50\")) registry_score=\\(.nonmatching_attempts.fn_801CDF50.best_match_percent)\"' reports/GEDE01/progress.json",
+    "raw_output": "next_target=0x801CE070 registry_present=true registry_score=95.196075"
+  }
+}

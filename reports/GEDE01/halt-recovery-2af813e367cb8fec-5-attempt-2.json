@@ -1,0 +1,59 @@
+{
+  "recovery_id": "2af813e367cb8fec-5",
+  "attempt": 2,
+  "scope": "Integration halt recovery evidence correction only; no frontier advancement or unrelated matching work.",
+  "status": "recovered-before-attempt-1-report",
+  "diagnosis": {
+    "scheduler_reason": "merge conflicts outside generated files: eternal-darkness-decomp/reports/GEDE01/progress.json",
+    "actual_failure_class": "Two-sided committed content divergence in progress.json, not an uncommitted-file guard failure.",
+    "evidence": "The checkpoint parent carried external PR #11-#16 accounting and next_target 0x801CDF50. The session parent carried session-1777 changes and next_target 0x801CE070, but its headline counters were regenerated without those PR changes. Git records progress.json as materially different between the parents. Either parent selected wholesale would discard valid accounting from the other side.",
+    "unsupported_claim_removed": "Attempt 1's failed_merge_raw_output and dirty canonical-worktree classification had no backing in the scheduler evidence and have been replaced with an explicit superseded-invalid-evidence notice.",
+    "smallest_correction": "Record merge 431420bb5 as the actor that already resolved the halt, preserve its two-parent reconciliation, and correct the stale attempt-1 artifact. No source, config, split, symbol, progress, build, objdiff, relocation, legal, or SHA-1 gate was edited.",
+    "founder_choice_required": false
+  },
+  "timeline": {
+    "command": "git show -s --format='merge_commit=%H%nmerge_parents=%P%ncommit_time=%cI%nsubject=%s' 431420bb5; git show -s --format='attempt1_commit=%H%ncommit_time=%cI%nsubject=%s' 11421ec1f",
+    "raw_output": "merge_commit=431420bb5e62e2e99a31ad3a17f0cd758bf6c5cb\nmerge_parents=2c556797e8d8ec02176b317bd666f79272755942 022c12ed49c44205532a38d45b3089fd2e5e54df\ncommit_time=2026-09-05T07:08:17-04:00\nsubject=Merge agent/8f1c3278-8547-4bb9-b1a3-8f74c2df5aeb into refs/heads/checkpoint/foundry-runtime-2026-07-17\nattempt1_commit=11421ec1fc9773bb71041305d18f4c29e22b5fe9\ncommit_time=2026-09-05T07:12:17-04:00\nsubject=Record integration halt recovery evidence",
+    "interpretation": "The reconciliation merge was committed four minutes before the attempt-1 evidence commit. Attempt 1 did not perform the recovery and must not claim credit for it."
+  },
+  "two_sided_progress_evidence": {
+    "command": "git show 2c556797e:eternal-darkness-decomp/reports/GEDE01/progress.json | jq -r '\"checkpoint next_target=\\(.next_target) matching_objects=\\(.matching_objects) matching_functions=\\(.matching_functions) matching_code_bytes=\\(.matching_code_bytes) matching_data_bytes=\\(.matching_data_bytes)\"'; git show 022c12ed4:eternal-darkness-decomp/reports/GEDE01/progress.json | jq -r '\"session_branch next_target=\\(.next_target) matching_objects=\\(.matching_objects) matching_functions=\\(.matching_functions) matching_code_bytes=\\(.matching_code_bytes) matching_data_bytes=\\(.matching_data_bytes)\"'; git show 431420bb5:eternal-darkness-decomp/reports/GEDE01/progress.json | jq -r '\"merged next_target=\\(.next_target) matching_objects=\\(.matching_objects) matching_functions=\\(.matching_functions) matching_code_bytes=\\(.matching_code_bytes) matching_data_bytes=\\(.matching_data_bytes)\"'; git diff --numstat 2c556797e 022c12ed4 -- eternal-darkness-decomp/reports/GEDE01/progress.json",
+    "raw_output": "checkpoint next_target=0x801CDF50 matching_objects=4966 matching_functions=4733 matching_code_bytes=742604 matching_data_bytes=38366\nsession_branch next_target=0x801CE070 matching_objects=4741 matching_functions=4508 matching_code_bytes=688856 matching_data_bytes=38270\nmerged next_target=0x801CE070 matching_objects=4968 matching_functions=4735 matching_code_bytes=742688 matching_data_bytes=38426\n34\t69\teternal-darkness-decomp/reports/GEDE01/progress.json",
+    "reconciliation": "The merged result preserves the checkpoint's external-PR credit and adds session 1777's two matching objects, two matching functions, 84 matching code bytes, 60 matching data bytes, advanced frontier, remediation record, and NonMatching debt. This is a merge-specific historical measurement read directly from commit 431420bb5; it is not substituted into this pre-PR branch's progress.json."
+  },
+  "authored_change_preservation": {
+    "command": "git merge-base --is-ancestor 2c556797e 431420bb5; echo checkpoint_parent_preserved_exit=$?; git merge-base --is-ancestor 022c12ed4 431420bb5; echo session_parent_preserved_exit=$?; git diff --quiet 022c12ed4 431420bb5 -- eternal-darkness-decomp/src/game/game_fn_801CDF50.c eternal-darkness-decomp/src/game/game_fn_801CE01C.c eternal-darkness-decomp/src/game/game_fn_801CE03C.c eternal-darkness-decomp/reports/GEDE01/frontier-801CDF50-801CE070-session-1777.json eternal-darkness-decomp/reports/GEDE01/session-1777-verification.json eternal-darkness-decomp/reports/GEDE01/session-1777-remediation-1-verification.json; echo session_payload_unchanged_exit=$?",
+    "raw_output": "checkpoint_parent_preserved_exit=0\nsession_parent_preserved_exit=0\nsession_payload_unchanged_exit=0",
+    "conclusion": "Both histories are parents of the merge, and the session's three source TUs plus its frontier and verification artifacts are byte-identical between the session parent and merged result. The intentionally resolved progress.json is the only session artifact excluded from the byte-identity check.",
+    "integration_instruction": "No merge retry is pending. Preserve merge 431420bb5 and do not take either parent version of progress.json wholesale."
+  },
+  "build": {
+    "command": ".tools/bin/ninja",
+    "exit_code": 0,
+    "raw_output": "[583/587] REPORT\n INFO Loading project .\n INFO Generating report for 6137 units (using 8 threads)\n INFO Report generated in 0.160s\n INFO Writing to build/GEDE01/report.json\n[584/587] LINK build/GEDE01/main.elf\n[585/587] DOL build/GEDE01/main.dol\n[586/587] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[587/587] PROGRESS\nProgress:\n  All: 46.24% fuzzy, 29.94% matched, 29.93% linked (4741 / 6137 files)\n    Code: 688856 / 2300692 bytes (4508 / 8216 functions)\n    Data: 38270 / 4305642 bytes (0.89%)"
+  },
+  "affected_objects": {
+    "scope": "All three session-1777 translation units were rebuilt and checked in canonical and relocation-strict modes. fn_801CDF50 remains the declared NonMatching object and receives no match credit.",
+    "canonical_command": "for addr in 801CDF50 801CE01C 801CE03C; do build/tools/objdiff-cli diff -p . -u main/game/game_fn_${addr} -o build/GEDE01/halt-recovery-2af813e367cb8fec-5-attempt-2-fn_${addr}-canonical.json --format json; done",
+    "relocation_strict_command": "for addr in 801CDF50 801CE01C 801CE03C; do build/tools/objdiff-cli diff -p . -u main/game/game_fn_${addr} -o build/GEDE01/halt-recovery-2af813e367cb8fec-5-attempt-2-fn_${addr}-reloc-strict.json --format json -c function_reloc_diffs=name_address; done",
+    "measurement_command": "For each generated report, jq selects left and right symbols by fn_ADDRESS, reads size and match_percent, and counts instructions whose instruction.relocation is non-null.",
+    "raw_output": "mode=canonical function=fn_801CDF50 retail_text_bytes=204 generated_text_bytes=204 match_percent=95.196075 retail_relocations=20 generated_relocations=20\nmode=canonical function=fn_801CE01C retail_text_bytes=32 generated_text_bytes=32 match_percent=100.0 retail_relocations=1 generated_relocations=1\nmode=canonical function=fn_801CE03C retail_text_bytes=52 generated_text_bytes=52 match_percent=100.0 retail_relocations=4 generated_relocations=4\nmode=reloc-strict function=fn_801CDF50 retail_text_bytes=204 generated_text_bytes=204 match_percent=95.196075 retail_relocations=20 generated_relocations=20\nmode=reloc-strict function=fn_801CE01C retail_text_bytes=32 generated_text_bytes=32 match_percent=100.0 retail_relocations=1 generated_relocations=1\nmode=reloc-strict function=fn_801CE03C retail_text_bytes=52 generated_text_bytes=52 match_percent=100.0 retail_relocations=4 generated_relocations=4",
+    "conclusion": "fn_801CE01C and fn_801CE03C remain byte-identical under canonical and relocation-strict comparison. fn_801CDF50 remains an honest size-exact NonMatching reconstruction at the same measured score in both modes."
+  },
+  "retail_and_dol": {
+    "retail_source": "orig/GEDE01/sys/main.dol",
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo dol_cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+  },
+  "progress_gate": {
+    "command": "jq -r '\"next_target=\\(.next_target) matching_objects=\\(.matching_objects) matching_functions=\\(.matching_functions) matching_code_bytes=\\(.matching_code_bytes)\"' reports/GEDE01/progress.json",
+    "raw_output": "next_target=0x801CE070 matching_objects=4741 matching_functions=4508 matching_code_bytes=688856",
+    "next_target_changed": false
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (10407 tracked project files inspected)"
+  },
+  "gate_changes": "None. No exact-build, relocation, legal-audit, DOL SHA-1, source, configuration, split, symbol, or progress gate was weakened, bypassed, or edited."
+}

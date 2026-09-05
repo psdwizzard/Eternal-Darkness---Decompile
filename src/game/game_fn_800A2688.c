@@ -1,13 +1,6 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
 
-/*
- * Honest NonMatching reconstruction: objdiff 86.51515%, target and compiled
- * sizes are both 132 bytes and all relocations agree. The remaining
- * differences are a consistent r29/r30/r31 allocation rotation plus the
- * corresponding callee-save scheduling around the first call.
- */
-
 typedef struct State800A2688 {
     u8 pad000[0x194];
     u16 current;
@@ -25,6 +18,7 @@ extern int fn_800A30C0(State800A2688*);
 extern void fn_800A3C4C(void*, Context800A2688*, int, int);
 extern void fn_800A3104(State800A2688*, int);
 
+#pragma opt_propagation off
 int fn_800A2688(void* object, void* source)
 {
     void* current;
@@ -42,3 +36,4 @@ int fn_800A2688(void* object, void* source)
     }
     return 1;
 }
+#pragma opt_propagation reset

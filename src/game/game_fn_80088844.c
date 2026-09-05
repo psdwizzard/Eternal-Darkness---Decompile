@@ -4,7 +4,7 @@ typedef struct Vec3 {
     float z;
 } Vec3;
 
-extern const volatile Vec3 lbl_80239530;
+extern volatile Vec3 lbl_80239530;
 extern void fn_801FA748(int, Vec3*);
 
 int fn_80088844(int unused)

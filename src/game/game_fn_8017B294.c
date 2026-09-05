@@ -15,13 +15,15 @@ extern GlobalState lbl_8064A580;
 extern SmallConfig lbl_8064A6C8[];
 extern int fn_80221828(SmallConfig*);
 
+#pragma opt_propagation off
 int fn_8017B294(int value)
 {
     int result = 0;
+    u8 is_active;
 
     if (lbl_8064A580.states[value] == 1) {
         u8* active = (u8*)&lbl_8064A580 + value;
-        int is_active = active[0x40];
+        is_active = active[0x40];
         active += 0x40;
         if (is_active != 0) {
             result = fn_80221828(&lbl_8064A6C8[value]);
@@ -34,3 +36,4 @@ int fn_8017B294(int value)
     }
     return result;
 }
+#pragma opt_propagation reset

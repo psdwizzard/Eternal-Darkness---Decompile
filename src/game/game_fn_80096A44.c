@@ -22,8 +22,8 @@ extern void *fn_801294DC(void *, int, int, int);
 extern void fn_8011FE5C(void*, int);
 extern void fn_80201D2C(void *, int);
 extern void fn_80201D14(void *, int);
-extern void* fn_80095D10(void*);
-extern int fn_80095E64(void*, void*);
+extern int fn_80095D10(void*);
+extern int fn_80095E64(void*, unsigned int);
 extern void fn_8012B324(void*);
 extern void fn_80201D34(void*, int);
 extern void fn_80201D1C(void*, int);
@@ -42,6 +42,8 @@ int fn_80096A44(register void* object, register int event,
     register State80096A44* state;
     register void* action_owner;
     register void* linked;
+    register int ok;
+    register int found;
 
     kind = fn_80200C10(resource);
     action_owner = fn_80201BC8(object);
@@ -60,8 +62,9 @@ int fn_80096A44(register void* object, register int event,
             return 1;
         }
         if (kind == 0x93) {
-            linked = fn_80095D10(object);
-            if (fn_80095E64(object, linked) != 0 && linked != 0) {
+            found = fn_80095D10(object);
+            ok = fn_80095E64(object, found);
+            if (found != 0 && ok != 0) {
                 if (fn_80200C38(resource) == 1) {
                     state->value28 = fn_80200C20(resource);
                     fn_80201D2C(object, 0x47);
@@ -86,47 +89,44 @@ int fn_80096A44(register void* object, register int event,
             fn_801E8328(2, object);
             return 1;
         }
-        return 0;
-    }
-    if (event == 1) {
+    } else if (event == 1) {
         if (kind == 3) {
             fn_80094DD0(object, action_owner, resource);
             return 1;
         }
+    } else if (event == 0x47) {
+        if (kind == 1) {
+            fn_80095FDC(object, action_owner, linked, state, 0);
+            return 1;
+        }
+        if (kind == 3) {
+            fn_80096208(object, action_owner, linked, state, 0);
+            return 1;
+        }
+        if (kind == 0x5B) {
+            fn_80096348(object, action_owner, linked, state, resource);
+            return 1;
+        }
+        if (kind == 0x5C) {
+            fn_801B05B0(lbl_8064C4F0, 0);
+            return 1;
+        }
+        if (kind == 6) {
+            fn_80201D2C(object, 1);
+            fn_80201D14(object, 1);
+            return 1;
+        }
+        if (kind == 2) {
+            fn_8020123C(0x5C, linked, state->value28, 0);
+            state->value28 = 0;
+            state->flags &= ~2u;
+            return 1;
+        }
+        if (kind == 0x93) {
+            return 1;
+        }
+    } else {
         return 0;
-    }
-    if (event != 0x47) {
-        return 0;
-    }
-    if (kind == 1) {
-        fn_80095FDC(object, action_owner, linked, state, 0);
-        return 1;
-    }
-    if (kind == 3) {
-        fn_80096208(object, action_owner, linked, state, 0);
-        return 1;
-    }
-    if (kind == 0x5B) {
-        fn_80096348(object, action_owner, linked, state, resource);
-        return 1;
-    }
-    if (kind == 0x5C) {
-        fn_801B05B0(lbl_8064C4F0, 0);
-        return 1;
-    }
-    if (kind == 6) {
-        fn_80201D2C(object, 1);
-        fn_80201D14(object, 1);
-        return 1;
-    }
-    if (kind == 2) {
-        fn_8020123C(0x5C, linked, state->value28, 0);
-        state->value28 = 0;
-        state->flags &= ~2;
-        return 1;
-    }
-    if (kind == 0x93) {
-        return 1;
     }
     return 0;
 }

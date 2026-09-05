@@ -18,8 +18,8 @@ void* fn_801A717C(void)
         entry = fn_801A7098();
     }
     if (entry != 0) {
-        fn_801A7354(entry);
         found = 0;
+        fn_801A7354(entry);
         lbl_8064D270++;
         for (i = 0; i < 40 && !found; i++) {
             if (lbl_80607C10[i] == 0) {

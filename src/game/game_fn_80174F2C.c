@@ -44,18 +44,16 @@ extern const char lbl_8024FF00[];
 extern const float lbl_806506B8;
 extern const float lbl_80650700;
 
-static inline void set_value00(CommandDescriptor* descriptor, double value)
-{
-    descriptor->value00 = (u16)value;
-}
-
+#pragma opt_common_subs off
+#pragma opt_propagation off
 int fn_80174F2C(void* state)
 {
     ResourceRef resource;
     Vec3s* source;
     int resource_id;
-    register CommandDescriptor* descriptor;
+    CommandDescriptor* descriptor;
     CommandDescriptor command;
+    u16 value00;
 
     if (fn_8016A598(state) != 10) {
         fn_80163BB4(state, lbl_8024FF00, 10, fn_8016A598(state));
@@ -70,7 +68,9 @@ int fn_80174F2C(void* state)
     command.bytes24[3] = fn_8016A694(state, 5);
     resource_id = fn_8016A694(state, 6);
     command.value28 = fn_8016A694(state, 7);
-    set_value00(descriptor = &command, fn_8016A694(state, 8));
+    value00 = fn_8016A694(state, 8);
+    descriptor = &command;
+    descriptor->value00 = value00;
     descriptor->value08 = fn_8016A694(state, 9);
     descriptor->value0C = fn_8016A694(state, 10);
     command.byte34 = 2;
@@ -84,3 +84,5 @@ int fn_80174F2C(void* state)
     fn_8014C37C(0, &resource);
     return 0;
 }
+#pragma opt_propagation reset
+#pragma opt_common_subs reset

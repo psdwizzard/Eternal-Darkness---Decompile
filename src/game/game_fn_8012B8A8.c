@@ -6,7 +6,7 @@ typedef struct Vec8012B8A8 {
     float z;
 } Vec8012B8A8;
 
-extern const volatile Vec8012B8A8 lbl_8023A6D8;
+extern volatile Vec8012B8A8 lbl_8023A6D8;
 extern const float lbl_806501D4;
 
 extern void* fn_8011F130(void*);

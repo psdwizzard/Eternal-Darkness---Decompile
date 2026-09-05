@@ -3,7 +3,9 @@ extern void fn_80201D14(void *, int);
 
 int fn_800C77B4(int unused, void *object)
 {
-    fn_80201D2C(object, 1);
-    fn_80201D14(object, 1);
+    register unsigned long object_r = (unsigned long)object;
+
+    fn_80201D2C((void *)object_r, 1);
+    fn_80201D14((void *)object_r, 1);
     return 1;
 }

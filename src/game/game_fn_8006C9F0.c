@@ -31,9 +31,9 @@ extern void fn_8006C9D4(Node *node, u16 state);
 
 void fn_8006C9F0(Owner *owner)
 {
-    State *state;
     s32 index;
     u32 mask;
+    State *state;
 
     state = owner->state;
     index = owner->node->index;

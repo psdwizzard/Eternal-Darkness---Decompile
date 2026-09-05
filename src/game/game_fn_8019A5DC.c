@@ -45,7 +45,7 @@ s32 fn_8019A5DC(u8* object)
                 *(u16*)(entry + 0x12) = 4 - (fn_800FBFB0() & 7);
                 *(u16*)(entry + 0x14) = 4 - (fn_800FBFB0() & 3);
                 *(u16*)(entry + 8) = *(u16*)(object + 0xA) +
-                                     (fn_800FBFB0() & 7) + 7;
+                                     7 + (fn_800FBFB0() & 7);
                 fn_8018E230(entry, entry + 0x2B, 1, 0, 0x33, 0xFF);
             }
         }

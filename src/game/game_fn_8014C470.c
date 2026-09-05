@@ -14,7 +14,7 @@ extern Resource* fn_801FD6F4(void);
 extern void* fn_80201ADC(void);
 extern void *fn_80201BC8();
 extern int fn_801FE25C(void*);
-extern int fn_8015C910(void);
+extern unsigned int fn_8015C910(void);
 extern int fn_80047178(void);
 extern int fn_8012FA54(void*, int);
 extern int fn_8015E4E8(void);
@@ -26,19 +26,21 @@ extern void fn_80156FF4(void*);
 
 int fn_8014C470(void* object, void* unused, int active)
 {
-    int result = 0;
     void* runtime;
     Resource* resource;
     void* owner;
+    int result = 0;
 
     if (active == 0)
         return 0;
     runtime = fn_80156938(object);
     resource = fn_801FD6F4();
     if (resource != 0) {
-        owner = fn_80201ADC();
-        if (owner != 0)
-            owner = fn_80201BC8(owner);
+        if (fn_80201ADC() != 0) {
+            owner = fn_80201BC8(fn_80201ADC());
+        } else {
+            owner = 0;
+        }
         if (fn_801FE25C(runtime) != 0 && resource->owner != 0) {
             if (fn_8015C910() == 0 || !(resource->flags & 1)) {
                 if ((fn_80047178() != 0 && fn_8012FA54(owner, 15) != 0) ||

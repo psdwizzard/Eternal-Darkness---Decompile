@@ -14,6 +14,7 @@ typedef struct RuntimeState {
 extern int lbl_8064D738;
 extern void *fn_80201B8C();
 
+#pragma opt_propagation off
 void fn_800CE698(void *object)
 {
     Data *data = ((RuntimeState *)fn_80201B8C(object))->data;
@@ -30,3 +31,4 @@ void fn_800CE698(void *object)
     output[14] = data->value;
     output[15] = data->value;
 }
+#pragma opt_propagation reset

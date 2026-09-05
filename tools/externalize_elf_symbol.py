@@ -6,12 +6,30 @@ import struct
 import sys
 from pathlib import Path
 
-require_whole_section = sys.argv[-1:] == ["--require-whole-section"]
-args = sys.argv[:-1] if require_whole_section else sys.argv
+require_whole_section = False
+required_section_symbols = None
+args = [sys.argv[0]]
+for arg in sys.argv[1:]:
+    if arg == "--require-whole-section":
+        require_whole_section = True
+    elif arg.startswith("--require-section-symbols="):
+        if required_section_symbols is not None:
+            raise SystemExit("--require-section-symbols may be specified only once")
+        required_section_symbols = arg.split("=", 1)[1].split(",")
+        if not all(required_section_symbols) or len(set(required_section_symbols)) != len(
+            required_section_symbols
+        ):
+            raise SystemExit("--require-section-symbols needs unique symbol names")
+    else:
+        args.append(arg)
+if require_whole_section and required_section_symbols is not None:
+    raise SystemExit(
+        "--require-whole-section and --require-section-symbols are mutually exclusive"
+    )
 if len(args) not in (3, 5):
     raise SystemExit(
         f"usage: {sys.argv[0]} OBJECT LOCAL_SYMBOL [RETAIL_SYMBOL RETAIL_DOL] "
-        "[--require-whole-section]"
+        "[--require-whole-section | --require-section-symbols=SYMBOL,...]"
     )
 path = Path(args[1])
 target = args[2]
@@ -55,20 +73,20 @@ for section_index in range(section_count):
         continue
 
     symbol_offset = struct.unpack_from(">I", data, header + 0x10)[0]
-    symbol_size = struct.unpack_from(">I", data, header + 0x14)[0]
+    symbol_table_size = struct.unpack_from(">I", data, header + 0x14)[0]
     string_index = struct.unpack_from(">I", data, header + 0x18)[0]
     entry_size = struct.unpack_from(">I", data, header + 0x24)[0]
     string_header = section_offset + string_index * section_size
     string_offset = struct.unpack_from(">I", data, string_header + 0x10)[0]
 
-    for entry in range(symbol_offset, symbol_offset + symbol_size, entry_size):
+    for entry in range(symbol_offset, symbol_offset + symbol_table_size, entry_size):
         name_offset = struct.unpack_from(">I", data, entry)[0]
         name_start = string_offset + name_offset
         name_end = data.index(0, name_start)
         if data[name_start:name_end].decode("ascii") == target:
             symbol_value, symbol_size = struct.unpack_from(">II", data, entry + 4)
             symbol_section = struct.unpack_from(">H", data, entry + 0x0E)[0]
-            if retail_target or require_whole_section:
+            if retail_target or require_whole_section or required_section_symbols:
                 if symbol_size == 0 or symbol_section == 0 or symbol_section >= section_count:
                     raise SystemExit(f"{path}: {target} has no file-backed value")
                 section_header = section_offset + symbol_section * section_size
@@ -85,6 +103,71 @@ for section_index in range(section_count):
                         f"[0x{symbol_value:X}, 0x{symbol_value + symbol_size:X}), "
                         f"section size is 0x{value_section_size:X}"
                     )
+                if required_section_symbols is not None:
+                    required = set(required_section_symbols)
+                    ranges = []
+                    defined_section_symbols = set()
+                    for candidate in range(
+                        symbol_offset, symbol_offset + symbol_table_size, entry_size
+                    ):
+                        candidate_name_offset = struct.unpack_from(">I", data, candidate)[0]
+                        candidate_name_start = string_offset + candidate_name_offset
+                        candidate_name_end = data.index(0, candidate_name_start)
+                        candidate_name = data[
+                            candidate_name_start:candidate_name_end
+                        ].decode("ascii")
+                        candidate_value, candidate_size = struct.unpack_from(
+                            ">II", data, candidate + 4
+                        )
+                        candidate_section = struct.unpack_from(
+                            ">H", data, candidate + 0x0E
+                        )[0]
+                        if candidate_section == symbol_section and candidate_size != 0:
+                            defined_section_symbols.add(candidate_name)
+                        if candidate_name not in required:
+                            continue
+                        if candidate_section != symbol_section or candidate_size == 0:
+                            raise SystemExit(
+                                f"{path}: {candidate_name} is not a nonempty symbol "
+                                f"in {target}'s section"
+                            )
+                        ranges.append(
+                            (candidate_value, candidate_value + candidate_size, candidate_name)
+                        )
+                    found = {name for _, _, name in ranges}
+                    if found != required:
+                        missing = ", ".join(sorted(required - found))
+                        raise SystemExit(f"{path}: required section symbols not found: {missing}")
+                    unexpected = defined_section_symbols - required
+                    if unexpected:
+                        names = ", ".join(sorted(unexpected))
+                        raise SystemExit(
+                            f"{path}: unlisted symbols in removed section: {names}"
+                        )
+                    cursor = 0
+                    for start, end, name in sorted(ranges):
+                        if start < cursor or end <= start:
+                            raise SystemExit(
+                                f"{path}: {name} overlaps another required symbol"
+                            )
+                        padding = data[
+                            value_section_offset + cursor:value_section_offset + start
+                        ]
+                        if any(padding):
+                            raise SystemExit(
+                                f"{path}: nonzero unverified section bytes from "
+                                f"0x{cursor:X} to 0x{start:X}"
+                            )
+                        cursor = end
+                    padding = data[
+                        value_section_offset + cursor:
+                        value_section_offset + value_section_size
+                    ]
+                    if any(padding):
+                        raise SystemExit(
+                            f"{path}: nonzero unverified section bytes from "
+                            f"0x{cursor:X} to 0x{value_section_size:X}"
+                        )
             if retail_target:
                 address_match = re.fullmatch(r".*_([0-9A-Fa-f]{8})", retail_target)
                 if not address_match:

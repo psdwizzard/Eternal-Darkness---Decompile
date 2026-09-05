@@ -16,21 +16,21 @@ extern int fn_8008D31C(void*, void*, int, void*, void*, int, Vec3*);
 extern Vec3 lbl_80239630;
 extern float lbl_8064EC20;
 
-/* NonMatching: behavior-complete, size-exact C; register allocation differs. */
+#pragma optimization_level 1
 int fn_8008D4B4(void* object, void* resource)
 {
     Vec3 source;
     Vec3 position;
     Vec3 mode_position;
     Vec3 fallback;
-    void* target;
     void* runtime;
     void* data;
+    int result = 0;
+    void* target;
     int value;
     void* mode;
     Vec3* selected;
     int distance;
-    int result = 0;
 
     fn_8011F114(&position);
     target = ((void*)fn_80201B54(object));
@@ -54,3 +54,4 @@ int fn_8008D4B4(void* object, void* resource)
     (void)runtime;
     return result;
 }
+#pragma optimization_level reset

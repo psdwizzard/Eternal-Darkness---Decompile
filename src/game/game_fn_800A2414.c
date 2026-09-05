@@ -16,7 +16,7 @@ typedef struct Object800A2414 {
 
 void fn_800A2414(Object800A2414* object)
 {
-    if (object->state == 1) {
+    if ((int)object->state == 1) {
         object->count--;
     }
 }

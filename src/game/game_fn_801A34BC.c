@@ -1,6 +1,6 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
-typedef unsigned long u32;
+typedef unsigned int u32;
 
 typedef struct ShortCoord3 {
     u32 word;
@@ -19,7 +19,7 @@ extern const double lbl_80650D20;
 void fn_801A34BC(u8* object, u8* descriptor)
 {
     u8* cursor;
-    u8 count;
+    int count;
     int i;
     u8* entry;
     ShortCoord3 second;

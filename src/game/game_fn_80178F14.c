@@ -1,3 +1,4 @@
+#pragma global_optimizer off
 unsigned int fn_80178F14(int x1, int y1, int z1, int x2, int y2, int z2)
 {
     int low;
@@ -27,3 +28,4 @@ unsigned int fn_80178F14(int x1, int y1, int z1, int x2, int y2, int z2)
 
     return y + ((low + high) >> 2);
 }
+#pragma global_optimizer reset
