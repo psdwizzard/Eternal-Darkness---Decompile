@@ -1,0 +1,17 @@
+{
+  "session_id": "session-1772",
+  "range_start": "0x801CD7C8",
+  "range_end": "0x801CDA24",
+  "next_target": "0x801CDA24",
+  "matched_bytes": 60,
+  "nonmatching_bytes": 544,
+  "unaccounted_spans": [],
+  "functions": [
+    {"name":"fn_801CD7C8","start":"0x801CD7C8","end":"0x801CD7E0","size":24,"match_percent":100.0,"instructions_equal":6,"instructions_total":6,"relocations_equal":true,"status":"Matching"},
+    {"name":"fn_801CD7E0","start":"0x801CD7E0","end":"0x801CDA00","size":544,"generated_size":536,"match_percent":94.84559,"retail_instructions":136,"generated_instructions":136,"retail_relocations":21,"generated_relocations":20,"status":"NonMatching","divergence":"GC/1.2.5n keeps the repeated zero in callee-saved r31 and assigns queue/start/allocation to r30/r29/r28, while retail reloads zero into r0 and reserves r31/r30/r29/r28 for queue/completion/allocation/start. This shifts the saved-register frame and omits retail's separate completion-pointer addi."},
+    {"name":"fn_801CDA00","start":"0x801CDA00","end":"0x801CDA04","size":4,"match_percent":100.0,"instructions_equal":1,"instructions_total":1,"relocations_equal":true,"status":"Matching"},
+    {"name":"fn_801CDA04","start":"0x801CDA04","end":"0x801CDA24","size":32,"match_percent":100.0,"instructions_equal":8,"instructions_total":8,"relocations_equal":true,"status":"Matching"}
+  ],
+  "accounting": "Every byte in 0x801CD7C8-0x801CDA24 belongs to one of four independent honest-C translation units: 60 matched bytes and 544 NonMatching bytes. There is no gap, fallback jump, shared reconstruction, assembly, or unaccounted span."
+}
+

@@ -1,0 +1,87 @@
+{
+  "recovery_id": "0d0ee6f7fe72b5a9-3",
+  "attempt": 1,
+  "status": "recovered",
+  "scope": "Repair the existing GEDE01 DOL hash halt without advancing the decompilation frontier or matching unrelated functions.",
+  "halt": {
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "observed_dol_sha1": "e014ab274b3ebf82004454fc41955d6251862772",
+    "scheduler_evidence": "The handoff reported generated e014ab274b3ebf82004454fc41955d6251862772 versus retail ea24b6af954876ce072562ff39cdb4c81d32be1f; reports/GEDE01/progress.json retained the same failed measurement at task start."
+  },
+  "inspection": {
+    "git_status_command": "git status --porcelain=v2",
+    "git_status_raw_output": "",
+    "head_command": "git rev-parse HEAD",
+    "head_raw_output": "1dc2bdbc131a8a0c39fdd09aa608c24430ac9a58",
+    "initial_current_hash_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'cmp_exit=%s\\n' \"$?\"",
+    "initial_current_hash_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0",
+    "merge_state": "No MERGE_HEAD and no unresolved or modified paths were present."
+  },
+  "diagnosis": {
+    "cause": "The unreferenced 4-byte fn_801CDBF0 leaf had been dead-stripped by MWLD, shifting all later linked text and section placement. Commit 1dc2bdbc131a8a0c39fdd09aa608c24430ac9a58 had already applied the minimal source correction before this recovery began by wrapping only fn_801CDBF0 in #pragma force_active on/reset. The remaining live inconsistency was reports/GEDE01/progress.json, which still described the whole-DOL hash gate as failed even though the committed correction and built DOL passed it.",
+    "retail_layout_evidence": "config/GEDE01/symbols.txt defines fn_801CDBF0 at 0x801CDBF0 and fn_801CDBF4 at 0x801CDBF4.",
+    "current_source_correction": "src/game/game_fn_801CDBF0.c retains the exact 4-byte leaf with #pragma force_active on/reset; no build, linker, hash, relocation, legal-audit, or acceptance gate was changed.",
+    "recovery_correction": "Synchronize only progress.json's DOL hash measurement and next-gate text with fresh exact-build evidence. progress.next_target remains unchanged."
+  },
+  "affected_object": {
+    "unit": "main/game/game_fn_801CDBF0",
+    "path": "build/GEDE01/src/game/game_fn_801CDBF0.o",
+    "clean_and_build_command": ".tools/bin/ninja -t clean build/GEDE01/src/game/game_fn_801CDBF0.o && .tools/bin/ninja build/GEDE01/src/game/game_fn_801CDBF0.o",
+    "clean_and_build_raw_output": "Cleaning... 2 files.\n[1/2] TOOL build/tools/sjiswrap.exe\nDownloading https://github.com/encounter/sjiswrap/releases/download/v1.2.2/sjiswrap-windows-x86.exe to build/tools/sjiswrap.exe\n[2/2] MWCC build/GEDE01/src/game/game_fn_801CDBF0.o\n### mwcceppc.exe Usage Warning:\n#   Specified directory 'include' not found",
+    "object_sha1_command": "sha1sum build/GEDE01/src/game/game_fn_801CDBF0.o",
+    "object_sha1_raw_output": "e1adaaf0e077d1796af71393eaf0291031285252  build/GEDE01/src/game/game_fn_801CDBF0.o"
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801CDBF0 -o build/GEDE01/halt-recovery-3-fn_801CDBF0.json",
+    "raw_output": "INFO Writing to build/GEDE01/halt-recovery-3-fn_801CDBF0.json",
+    "measure_command": "jq extraction of left/right .text sizes, fn_801CDBF0 match_percent, and relocation-bearing instruction counts from build/GEDE01/halt-recovery-3-fn_801CDBF0.json",
+    "measure_raw_output": "target_size=4 base_size=4 match_percent=100.0 target_relocations=0 base_relocations=0 relocations_equal=true"
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801CDBF0 -o build/GEDE01/halt-recovery-3-fn_801CDBF0-reloc-strict.json -c function_reloc_diffs=name_address",
+    "raw_output": "INFO Writing to build/GEDE01/halt-recovery-3-fn_801CDBF0-reloc-strict.json",
+    "measure_command": "jq extraction of left/right .text sizes, fn_801CDBF0 match_percent, and relocation-bearing instruction counts from build/GEDE01/halt-recovery-3-fn_801CDBF0-reloc-strict.json",
+    "measure_raw_output": "target_size=4 base_size=4 match_percent=100.0 target_relocations=0 base_relocations=0 relocations_equal=true"
+  },
+  "exact_build": {
+    "command": ".tools/bin/ninja build/GEDE01/main.dol",
+    "raw_output_excerpt": "[1/584] MWCC build/GEDE01/src/game/game_fn_800099D8.o\n...\n[584/584] DOL build/GEDE01/main.dol",
+    "exit_code": 0,
+    "note": "Cleaning the affected object also removed the downloaded sjiswrap tool. That invalidated compiler-dependent edges, so the first post-clean main.dol invocation rebuilt the complete 5035-edge graph and ended with [5035/5035] DOL build/GEDE01/main.dol. A final independent exact-build invocation rebuilt 584 required edges and ended with [584/584] DOL build/GEDE01/main.dol. Both exited zero."
+  },
+  "link_layout": {
+    "command": "readelf -sW build/GEDE01/main.elf | rg 'fn_801CDBF0|fn_801CDBF4'",
+    "raw_output": "6667: 00000000     0 FILE    LOCAL  DEFAULT  ABS game_fn_801CDBF0.c\n21519: 801cdbf0     4 FUNC    GLOBAL DEFAULT    4 fn_801CDBF0\n21520: 801cdbf4   268 FUNC    GLOBAL DEFAULT    4 fn_801CDBF4"
+  },
+  "canonical_report": {
+    "generate_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+    "generate_raw_output": "INFO Loading project .\nINFO Generating report for 6135 units (using 8 threads)\nINFO Report generated in 0.163s\nINFO Writing to build/GEDE01/report.json",
+    "measure_command": "jq -r canonical headline fields from build/GEDE01/report.json",
+    "measure_raw_output": "matching_objects=4734 total_objects=6135 matching_functions=4501 total_functions=8216 matching_code_bytes=688164 total_code_bytes=2300692 matching_data_bytes=38170 total_data_bytes=4305642 linked_code_bytes=688008 linked_data_bytes=37342"
+  },
+  "relocation_strict_report": {
+    "generate_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/halt-recovery-3-reloc-strict-report.json --format json-pretty -c function_reloc_diffs=name_address",
+    "generate_raw_output": "INFO Loading project .\nINFO Generating report for 6135 units (using 8 threads)\nINFO Report generated in 0.155s\nINFO Writing to build/GEDE01/halt-recovery-3-reloc-strict-report.json",
+    "measure_command": "jq -r relocation-strict headline fields from build/GEDE01/halt-recovery-3-reloc-strict-report.json",
+    "measure_raw_output": "matching_objects=4734 total_objects=6135 matching_functions=4494 total_functions=8216 matching_code_bytes=686356 total_code_bytes=2300692 matching_data_bytes=38170 total_data_bytes=4305642 linked_code_bytes=688008 linked_data_bytes=37342"
+  },
+  "dol_verification": {
+    "hash_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "hash_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+    "byte_compare_command": "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'cmp_exit=%s\\n' \"$?\"",
+    "byte_compare_raw_output": "cmp_exit=0",
+    "equal": true
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (10362 tracked project files inspected)"
+  },
+  "frontier": {
+    "progress_file": "reports/GEDE01/progress.json",
+    "command": "jq -r .next_target reports/GEDE01/progress.json",
+    "before_raw_output": "0x801CDBF4",
+    "after_raw_output": "0x801CDBF4",
+    "unchanged": true,
+    "matched_frontier_advanced": false
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "session_id": "session-1770",
+  "scope": "Consolidation only; no new function reconstruction and no frontier advance.",
+  "starting_target": "0x801CD5D0",
+  "ending_next_target": "0x801CD5D0",
+  "enumeration": {
+    "method": "Python AST traversal selected every Object call whose first positional argument is NonMatching, including multiline calls, then mapped each source path to the freshly generated canonical objdiff unit and selected fuzzy_match_percent == 100.0.",
+    "baseline": {
+      "registrations": 967,
+      "mapped": 967,
+      "unmapped": 0,
+      "code_bytes": 505108,
+      "data_bytes": 2896,
+      "functions": 968,
+      "canonical_100_percent_candidates": 3
+    },
+    "candidates": [
+      {
+        "unit": "main/game/game_fn_801C0ED8",
+        "retail_code_bytes": 104,
+        "retail_data_bytes": 0,
+        "functions": 1,
+        "canonical_fuzzy_match_percent": 100.0,
+        "relocation_strict_match_percent": 99.42308,
+        "disposition": "Remains NonMatching because three SDA21 relocations name different retail globals despite address-equal canonical instructions.",
+        "evidence": "reports/GEDE01/session-1770-game_fn_801C0ED8-strict.json"
+      },
+      {
+        "unit": "main/game/game_fn_801C8F50",
+        "retail_code_bytes": 296,
+        "retail_data_bytes": 20,
+        "functions": 1,
+        "canonical_fuzzy_match_percent": 100.0,
+        "relocation_strict_match_percent": 100.0,
+        "disposition": "Promoted to Matching after the standard guarded externalization converted compiler-local @18 to retail lbl_80650FB8; text, extab, extabindex, and relocations match.",
+        "evidence": "reports/GEDE01/session-1770-game_fn_801C8F50-strict.json"
+      },
+      {
+        "unit": "main/game/game_fn_801CD404",
+        "retail_code_bytes": 20,
+        "retail_data_bytes": 0,
+        "functions": 1,
+        "canonical_fuzzy_match_percent": 100.0,
+        "relocation_strict_match_percent": 99.0,
+        "disposition": "Remains NonMatching because retail uses lbl_8064D4E0 for the second store while generated code uses lbl_8064D4DC+4.",
+        "evidence": "reports/GEDE01/session-1770-game_fn_801CD404-strict.json"
+      }
+    ],
+    "remaining": {
+      "registrations": 966,
+      "mapped": 966,
+      "unmapped": 0,
+      "code_bytes": 504812,
+      "data_bytes": 2876,
+      "functions": 967,
+      "canonical_100_percent_candidates": 2
+    }
+  },
+  "reclaimed": {
+    "objects": 1,
+    "newly_matched_functions": 0,
+    "newly_scored_matched_code_bytes": 0,
+    "newly_scored_matched_data_bytes": 0,
+    "newly_linked_code_bytes": 296,
+    "newly_linked_data_bytes": 20,
+    "nonmatching_objects_removed": 1,
+    "nonmatching_functions_removed": 1,
+    "nonmatching_code_bytes_removed": 296,
+    "nonmatching_data_bytes_removed": 20
+  },
+  "canonical_accounting": {
+    "command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+    "raw_output": "matching_objects=4728 total_objects=6132 matching_functions=4495 total_functions=8216 matching_code_bytes=687572 total_code_bytes=2300692 matching_data_bytes=38102 total_data_bytes=4305642 linked_code_bytes=687416 linked_data_bytes=37302"
+  },
+  "relocation_strict_accounting": {
+    "command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1770-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_output": "matching_objects=4728 total_objects=6132 matching_functions=4488 total_functions=8216 matching_code_bytes=685764 total_code_bytes=2300692 matching_data_bytes=38102 total_data_bytes=4305642 linked_code_bytes=687416 linked_data_bytes=37302"
+  },
+  "dol_gate": {
+    "build_command": "python3 configure.py && .tools/bin/ninja",
+    "sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol && cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "build_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "cmp_exit": 0
+  }
+}

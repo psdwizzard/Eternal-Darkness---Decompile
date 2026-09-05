@@ -1,0 +1,14 @@
+{
+  "session_id": "session-1773",
+  "range_start": "0x801CDA24",
+  "range_end": "0x801CDB2C",
+  "next_target": "0x801CDB2C",
+  "matched_bytes": 24,
+  "nonmatching_bytes": 240,
+  "unaccounted_spans": [],
+  "functions": [
+    {"name":"fn_801CDA24","start":"0x801CDA24","end":"0x801CDB14","size":240,"generated_size":240,"match_percent":96.333336,"retail_instructions":60,"generated_instructions":60,"retail_relocations":14,"generated_relocations":14,"status":"NonMatching","divergence":"GC/1.2.5n loads the configured chunk maximum through r0, moves it to r31, and emits an inverted conditional, while retail loads it directly into r31 and retains a two-branch discriminator."},
+    {"name":"fn_801CDB14","start":"0x801CDB14","end":"0x801CDB2C","size":24,"match_percent":100.0,"instructions_equal":6,"instructions_total":6,"relocations_equal":true,"status":"Matching"}
+  ],
+  "accounting": "Every byte in 0x801CDA24-0x801CDB2C belongs to one of two independent honest-C translation units: 24 matched bytes and 240 NonMatching bytes. There is no gap, assembly, shared reconstruction, fallback jump, or unaccounted span."
+}
