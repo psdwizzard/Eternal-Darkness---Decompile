@@ -1,0 +1,39 @@
+{
+  "session_id": "session-1785",
+  "starting_target": "0x801CECB4",
+  "ending_next_target": "0x801CEF74",
+  "function_commit": "8329c7d7838db8b1e5b8a3f098e19963bf5e2852",
+  "build": {
+    "command": ".tools/bin/ninja",
+    "result": "success; build/GEDE01/main.dol: OK",
+    "log": "build/GEDE01/session-1785-build.log"
+  },
+  "direct_objdiff": {
+    "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801CECB4 fn_801CECB4 -o reports/GEDE01/objdiff-fn_801CECB4-session-1785.json --format json-pretty",
+    "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801CECB4 fn_801CECB4 -o reports/GEDE01/objdiff-fn_801CECB4-session-1785-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_output": "canonical retail_bytes=704 generated_bytes=704 match=100.0 target_relocations=0 base_relocations=0 differing_rows=0; relocation-strict retail_bytes=704 generated_bytes=704 match=100.0 target_relocations=0 base_relocations=0 differing_rows=0"
+  },
+  "canonical_report": {
+    "command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+    "raw_output": "matching_objects=4989 total_objects=6148 matching_functions=4756 total_functions=8216 matching_code_bytes=745240 total_code_bytes=2300692 matching_data_bytes=38646 total_data_bytes=4305642 linked_code_bytes=745084 linked_data_bytes=37850"
+  },
+  "relocation_strict_report": {
+    "command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1785-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_output": "matching_objects=4989 total_objects=6148 matching_functions=4749 total_functions=8216 matching_code_bytes=743432 total_code_bytes=2300692 matching_data_bytes=38646 total_data_bytes=4305642 linked_code_bytes=745084 linked_data_bytes=37850"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f build/GEDE01/main.dol; ea24b6af954876ce072562ff39cdb4c81d32be1f orig/GEDE01/sys/main.dol; cmp_exit=0"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (10498 tracked project files inspected)"
+  },
+  "accounting": {
+    "matched_functions": 1,
+    "matched_bytes": 704,
+    "nonmatching_functions": 0,
+    "nonmatching_bytes": 0,
+    "unaccounted_spans": []
+  }
+}

@@ -1,0 +1,837 @@
+{
+  "left": {
+    "sections": [
+      {
+        "name": ".text",
+        "kind": "SECTION_CODE",
+        "size": "52",
+        "match_percent": 100.0
+      },
+      {
+        "name": ".rela.text",
+        "size": "60"
+      },
+      {
+        "name": ".symtab",
+        "size": "96"
+      },
+      {
+        "name": ".strtab",
+        "size": "58"
+      },
+      {
+        "name": ".shstrtab",
+        "size": "38"
+      }
+    ],
+    "symbols": [
+      {
+        "name": "fn_801D0CA4",
+        "size": "52",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 100.0,
+        "instructions": [
+          {
+            "instruction": {
+              "size": 4,
+              "formatted": "cmplwi r3, 0x0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "cmplwi",
+                    "opcode": 259
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "unsigned": "0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "4",
+              "size": 4,
+              "formatted": "beqlr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "beqlr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "8",
+              "size": 4,
+              "formatted": "lwz r4, lbl_8064D540@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lwz",
+                    "opcode": 439
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "12",
+              "size": 4,
+              "formatted": "cmplwi r4, 0x0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "cmplwi",
+                    "opcode": 259
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "unsigned": "0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "16",
+              "size": 4,
+              "formatted": "beq 0x28",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "beq",
+                    "opcode": 265
+                  }
+                },
+                {
+                  "arg": {
+                    "branch_dest": "40"
+                  }
+                }
+              ],
+              "branch_dest": "40"
+            }
+          },
+          {
+            "instruction": {
+              "address": "20",
+              "size": 4,
+              "formatted": "stw r3, 0x14(r4)",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "20"
+                  }
+                },
+                {
+                  "basic": "("
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "basic": ")"
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "24",
+              "size": 4,
+              "formatted": "lwz r0, lbl_8064D540@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lwz",
+                    "opcode": 439
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "28",
+              "size": 4,
+              "formatted": "stw r0, 0x18(r3)",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "24"
+                  }
+                },
+                {
+                  "basic": "("
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "basic": ")"
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "32",
+              "size": 4,
+              "formatted": "stw r3, lbl_8064D540@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "36",
+              "size": 4,
+              "formatted": "blr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "blr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "40",
+              "size": 4,
+              "formatted": "stw r3, lbl_8064D540@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "44",
+              "size": 4,
+              "formatted": "stw r3, lbl_8064D544@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 3
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "48",
+              "size": 4,
+              "formatted": "blr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "blr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "right": {
+    "sections": [
+      {
+        "name": ".text",
+        "kind": "SECTION_CODE",
+        "size": "52"
+      },
+      {
+        "name": ".rela.text",
+        "size": "60"
+      },
+      {
+        "name": ".symtab",
+        "size": "96"
+      },
+      {
+        "name": ".strtab",
+        "size": "58"
+      },
+      {
+        "name": ".shstrtab",
+        "size": "53"
+      },
+      {
+        "name": ".comment",
+        "size": "92"
+      }
+    ],
+    "symbols": [
+      {
+        "name": "fn_801D0CA4",
+        "size": "52",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 100.0,
+        "instructions": [
+          {
+            "instruction": {
+              "size": 4,
+              "formatted": "cmplwi r3, 0x0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "cmplwi",
+                    "opcode": 259
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "unsigned": "0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "4",
+              "size": 4,
+              "formatted": "beqlr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "beqlr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "8",
+              "size": 4,
+              "formatted": "lwz r4, lbl_8064D540@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lwz",
+                    "opcode": 439
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "12",
+              "size": 4,
+              "formatted": "cmplwi r4, 0x0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "cmplwi",
+                    "opcode": 259
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "unsigned": "0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "16",
+              "size": 4,
+              "formatted": "beq 0x28",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "beq",
+                    "opcode": 265
+                  }
+                },
+                {
+                  "arg": {
+                    "branch_dest": "40"
+                  }
+                }
+              ],
+              "branch_dest": "40"
+            }
+          },
+          {
+            "instruction": {
+              "address": "20",
+              "size": 4,
+              "formatted": "stw r3, 0x14(r4)",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "20"
+                  }
+                },
+                {
+                  "basic": "("
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "basic": ")"
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "24",
+              "size": 4,
+              "formatted": "lwz r0, lbl_8064D540@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lwz",
+                    "opcode": 439
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "28",
+              "size": 4,
+              "formatted": "stw r0, 0x18(r3)",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "24"
+                  }
+                },
+                {
+                  "basic": "("
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "basic": ")"
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "32",
+              "size": 4,
+              "formatted": "stw r3, lbl_8064D540@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "36",
+              "size": 4,
+              "formatted": "blr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "blr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "40",
+              "size": 4,
+              "formatted": "stw r3, lbl_8064D540@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "44",
+              "size": 4,
+              "formatted": "stw r3, lbl_8064D544@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 3
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "48",
+              "size": 4,
+              "formatted": "blr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "blr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
