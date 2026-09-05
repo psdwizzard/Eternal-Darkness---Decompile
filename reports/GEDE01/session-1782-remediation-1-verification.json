@@ -1,0 +1,42 @@
+{
+  "session_id": "session-1782-remediation-1",
+  "scope": "Review remediation only; the frontier was not advanced.",
+  "compiler_ab": {
+    "build_command": "python3 configure.py && .tools/bin/ninja build/GEDE01/src/game/game_fn_801CE384.o build/GEDE01/src/game/game_fn_801CE594.o",
+    "build_raw_output": "[1/1] RUN configure.py\n[1/3] MWCC build/GEDE01/src/game/game_fn_801CE594.o\n### mwcceppc.exe Usage Warning:\n#   Specified directory 'include' not found\n[2/3] MWCC build/GEDE01/src/game/game_fn_801CE384.o\n### mwcceppc.exe Usage Warning:\n#   Specified directory 'include' not found",
+    "measurement_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801CE384 fn_801CE384 -o build/GEDE01/session-1782-remediation-ab-384.json --format json && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801CE594 fn_801CE594 -o build/GEDE01/session-1782-remediation-ab-594.json --format json && jq -r '(.left.symbols[] | select(.name==\"fn_801CE384\")) as $l | (.right.symbols[] | select(.name==$l.name)) as $r | \"compiler=GC/1.2.5n function=\\($l.name) retail_text_bytes=\\($l.size) generated_text_bytes=\\($r.size) match_percent=\\($l.match_percent)\"' build/GEDE01/session-1782-remediation-ab-384.json && jq -r '(.left.symbols[] | select(.name==\"fn_801CE594\")) as $l | (.right.symbols[] | select(.name==$l.name)) as $r | \"compiler=GC/1.2.5n function=\\($l.name) retail_text_bytes=\\($l.size) generated_text_bytes=\\($r.size) match_percent=\\($l.match_percent)\"' build/GEDE01/session-1782-remediation-ab-594.json",
+    "measurement_raw_output": " INFO Writing to build/GEDE01/session-1782-remediation-ab-384.json\n INFO Writing to build/GEDE01/session-1782-remediation-ab-594.json\ncompiler=GC/1.2.5n function=fn_801CE384 retail_text_bytes=528 generated_text_bytes=476 match_percent=39.71212\ncompiler=GC/1.2.5n function=fn_801CE594 retail_text_bytes=396 generated_text_bytes=392 match_percent=14.909091",
+    "selected_configuration": "mw_version='GC/1.3', extra_cflags=['-use_lmw_stmw on']",
+    "reason": "GC/1.3 restores size parity and the higher direct score for fn_801CE384 while preserving fn_801CE594 as byte-matching."
+  },
+  "full_build": {
+    "command": "set -o pipefail; .tools/bin/ninja build/GEDE01/main.dol 2>&1 | tail -n 2; build_status=${PIPESTATUS[0]}; printf 'build_exit=%d\\n' \"$build_status\"; exit \"$build_status\"",
+    "raw_output": "#   Section '.ignored' is unknown. Section ignored.\n[652/652] DOL build/GEDE01/main.dol\nbuild_exit=0"
+  },
+  "objdiff_generation": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801CE384 fn_801CE384 -o reports/GEDE01/objdiff-fn_801CE384-session-1782-canonical.json --format json-pretty && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801CE384 fn_801CE384 -o reports/GEDE01/objdiff-fn_801CE384-session-1782-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801CE594 fn_801CE594 -o reports/GEDE01/objdiff-fn_801CE594-session-1782-canonical.json --format json-pretty && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801CE594 fn_801CE594 -o reports/GEDE01/objdiff-fn_801CE594-session-1782-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address; printf 'objdiff_generation_exit=%d\\n' \"$?\"",
+    "raw_output": "INFO Writing to reports/GEDE01/objdiff-fn_801CE384-session-1782-canonical.json\nINFO Writing to reports/GEDE01/objdiff-fn_801CE384-session-1782-reloc-strict.json\nINFO Writing to reports/GEDE01/objdiff-fn_801CE594-session-1782-canonical.json\nINFO Writing to reports/GEDE01/objdiff-fn_801CE594-session-1782-reloc-strict.json\nobjdiff_generation_exit=0"
+  },
+  "objdiff_measurement": {
+    "command": "for report in reports/GEDE01/objdiff-fn_801CE384-session-1782-canonical.json reports/GEDE01/objdiff-fn_801CE384-session-1782-reloc-strict.json reports/GEDE01/objdiff-fn_801CE594-session-1782-canonical.json reports/GEDE01/objdiff-fn_801CE594-session-1782-reloc-strict.json; do jq -r --arg report \"$report\" '(.left.symbols[] | select(.name | startswith(\"fn_801CE\"))) as $l | (.right.symbols[] | select(.name==$l.name)) as $r | \"report=\\($report) function=\\($l.name) retail_text_bytes=\\($l.size) generated_text_bytes=\\($r.size) match_percent=\\($l.match_percent)\"' \"$report\"; done",
+    "raw_output": "report=reports/GEDE01/objdiff-fn_801CE384-session-1782-canonical.json function=fn_801CE384 retail_text_bytes=528 generated_text_bytes=528 match_percent=98.295456\nreport=reports/GEDE01/objdiff-fn_801CE384-session-1782-reloc-strict.json function=fn_801CE384 retail_text_bytes=528 generated_text_bytes=528 match_percent=98.295456\nreport=reports/GEDE01/objdiff-fn_801CE594-session-1782-canonical.json function=fn_801CE594 retail_text_bytes=396 generated_text_bytes=396 match_percent=100.0\nreport=reports/GEDE01/objdiff-fn_801CE594-session-1782-reloc-strict.json function=fn_801CE594 retail_text_bytes=396 generated_text_bytes=396 match_percent=100.0"
+  },
+  "history_repair": {
+    "command": "git log --format='%h %s' -3; git show HEAD~2:eternal-darkness-decomp/configure.py | rg 'game_fn_801CE384'",
+    "raw_output": "85786c158 Report session 1782 frontier\n1ce3b680d Match fn_801CE594\ncd96fb304 Reconstruct fn_801CE384 as NonMatching\n            Object(NonMatching, \"game/game_fn_801CE384.c\", mw_version=\"GC/1.2.5n\", extra_cflags=[\"-Cpp_exceptions on\", \"-fp_contract off\"]),"
+  },
+  "progress_registry": {
+    "command": "jq -e . reports/GEDE01/progress.json reports/GEDE01/frontier-801CE384-801CE720-session-1782.json >/dev/null; printf 'json_validation_exit=%d\\n' \"$?\"; jq -r '\"next_target=\\(.next_target) registry_function=fn_801CE384 registry_score=\\(.nonmatching_attempts.fn_801CE384.best_match_percent) registry_retail_bytes=\\(.nonmatching_attempts.fn_801CE384.retail_bytes)\"' reports/GEDE01/progress.json",
+    "raw_output": "json_validation_exit=0\nnext_target=0x801CE720 registry_function=fn_801CE384 registry_score=98.295456 registry_retail_bytes=528"
+  },
+  "range_accounting": {
+    "symbol_command": "rg -n '^fn_801CE(384|594|720)' config/GEDE01/symbols.txt",
+    "symbol_raw_output": "6948:fn_801CE384 = .text:0x801CE384; // type:function size:0x210\n6949:fn_801CE594 = .text:0x801CE594; // type:function size:0x18C\n6950:fn_801CE720 = .text:0x801CE720; // type:function size:0x24",
+    "arithmetic_command": "jq -r '\"accounted_bytes=\\([.functions[].size]|add) matched_bytes=\\(.functions[1].size) nonmatching_bytes=\\(.functions[0].size) function_entries=\\(.functions|length) gaps=\\(.gaps|length) next_target=\\(.next_target)\"' reports/GEDE01/frontier-801CE384-801CE720-session-1782.json",
+    "arithmetic_raw_output": "accounted_bytes=924 matched_bytes=396 nonmatching_bytes=528 function_entries=2 gaps=0 next_target=0x801CE720"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'dol_cmp_exit=%d\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+  }
+}

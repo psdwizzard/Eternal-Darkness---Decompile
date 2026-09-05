@@ -1,0 +1,20 @@
+{
+  "session_id": "session-1784",
+  "starting_target": "0x801CEA8C",
+  "ending_next_target": "0x801CECB4",
+  "source_commits": ["90c98f508", "838423fd5", "a1d04831b", "7cec31062", "17c665873"],
+  "build": {"command":".tools/bin/ninja","result":"completed successfully; build/GEDE01/main.dol: OK"},
+  "canonical_report": {"command":"build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty","matching_objects":4988,"total_objects":6147,"matching_functions":4755,"total_functions":8216,"matching_code_bytes":744536,"total_code_bytes":2300692,"matching_data_bytes":38646,"total_data_bytes":4305642,"linked_code_bytes":744380,"linked_data_bytes":37850},
+  "relocation_strict_report": {"command":"build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1784-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address","matching_objects":4988,"matching_functions":4748,"matching_code_bytes":742728,"linked_code_bytes":744380},
+  "per_function": [
+    {"name":"fn_801CEA8C","split_bytes":80,"objdiff_bytes":80,"match_percent":100.0,"relocations_equal":true,"relocations":"5/5"},
+    {"name":"fn_801CEADC","split_bytes":80,"objdiff_bytes":80,"match_percent":100.0,"relocations_equal":true,"relocations":"5/5"},
+    {"name":"fn_801CEB2C","split_bytes":104,"objdiff_bytes":104,"match_percent":100.0,"relocations_equal":true,"relocations":"0/0"},
+    {"name":"fn_801CEB94","split_bytes":48,"objdiff_bytes":48,"match_percent":100.0,"relocations_equal":true,"relocations":"3/3"},
+    {"name":"fn_801CEBC4","split_bytes":240,"objdiff_bytes":240,"match_percent":100.0,"relocations_equal":true,"relocations":"8/8"}
+  ],
+  "matched_bytes_total": 552,
+  "nonmatching_bytes_total": 0,
+  "legal_audit": {"command":"python3 tools/legal_audit.py","raw_output":"legal audit passed (10492 tracked project files inspected)"},
+  "dol_sha1": {"command":"sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo cmp_exit=$?","raw_output":"ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"}
+}

@@ -3,7 +3,7 @@ typedef signed short s16;
 typedef unsigned int u32;
 
 extern void fn_801A68C4(void*);
-extern void fn_801A7780(void*);
+extern void* fn_801A7780(void*);
 extern void fn_801A6ADC(void*);
 extern u32 fn_80157C80(void*);
 

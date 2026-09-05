@@ -1,0 +1,15 @@
+{
+  "session_id": "session-1783",
+  "range_start": "0x801CE720",
+  "range_end": "0x801CEA8C",
+  "next_target": "0x801CEA8C",
+  "range_bytes": 876,
+  "matched_bytes": 304,
+  "nonmatching_bytes": 572,
+  "functions": [
+    {"name":"fn_801CE720","start":"0x801CE720","end":"0x801CE744","size":36,"canonical_percent":100.0,"relocation_strict_percent":100.0,"relocations_equal":true},
+    {"name":"fn_801CE744","start":"0x801CE744","end":"0x801CE980","size":572,"status":"NonMatching","best_percent":97.132866,"best_generated_size":576,"current_percent":96.993004,"current_generated_size":572,"retail_size":572,"divergence":"The size-exact honest-C reconstruction retains retail control flow and 144 instructions, but GC/1.3 assigns the persistent value, type, position, index, parameter, and output arguments to r21/r26/r22/r25/r24/r23 instead of retail r24/r23/r25/r22/r21/r26. It also hoists the per-iteration null object initialization while retail schedules li r20,0 immediately before the position copy. These are ordinary-C register-allocation and scheduling divergences, so assembly is not justified."},
+    {"name":"fn_801CE980","start":"0x801CE980","end":"0x801CEA8C","size":268,"canonical_percent":100.0,"relocation_strict_percent":100.0,"relocations_equal":true}
+  ],
+  "accounting": "All 876 retail text bytes are accounted contiguously by three independent translation units: 304 matched bytes and 572 honest-C NonMatching bytes. There is no gap, assembly, shared reconstruction, fallback jump, or unaccounted span."
+}

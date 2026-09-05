@@ -87,6 +87,16 @@ config.asflags = ["-mgekko", "--strip-local-absolute", "-I include", f"-I build/
 config.ldflags = ["-fp hardware", "-nodefaults"]
 config.custom_build_rules = [
     {
+        "name": "externalize_game_801CE594_signed_bias",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @8 lbl_80651050 orig/GEDE01/sys/main.dol && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@8=lbl_80651050 --remove-section=.sdata2 "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    },
+    {
         "name": "externalize_game_801C8F50_unsigned_bias",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @18 lbl_80650FB8 orig/GEDE01/sys/main.dol && "
@@ -2485,6 +2495,11 @@ for rule in config.custom_build_rules:
 guarded_externalize_rules.add("externalize_string_pool_80250588")
 config.custom_build_steps = {
     "post-compile": [
+        {
+            "outputs": [f"build/{VERSION}/src/game/game_fn_801CE594.externalized"],
+            "rule": "externalize_game_801CE594_signed_bias",
+            "inputs": [f"build/{VERSION}/src/game/game_fn_801CE594.o"],
+        },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801C8F50.externalized"],
             "rule": "externalize_game_801C8F50_unsigned_bias",
@@ -10378,6 +10393,21 @@ config.libs = [
             Object(Matching, "game/game_fn_801CE250.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
             Object(Matching, "game/game_fn_801CE27C.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
             Object(Matching, "game/game_fn_801CE280.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
+            Object(Matching, "game/game_fn_801CE2B8.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
+            Object(Matching, "game/game_fn_801CE2F0.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
+            Object(Matching, "game/game_fn_801CE310.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
+            Object(Matching, "game/game_fn_801CE330.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
+            Object(Matching, "game/game_fn_801CE358.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
+            Object(NonMatching, "game/game_fn_801CE384.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801CE594.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801CE720.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(NonMatching, "game/game_fn_801CE744.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801CE980.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801CEA8C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801CEADC.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801CEB2C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801CEB94.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801CEBC4.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
         ],
     },
     {

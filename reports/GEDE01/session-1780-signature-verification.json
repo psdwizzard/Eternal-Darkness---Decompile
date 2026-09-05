@@ -1,0 +1,58 @@
+{
+  "session_id": "session-1780",
+  "scope": "signature consolidation only; no frontier matching",
+  "starting_target": "0x801CE2B8",
+  "ending_next_target": "0x801CE2B8",
+  "accounting": {
+    "matched_bytes_added": 0,
+    "nonmatching_bytes_added": 0,
+    "match_counts_revised": false
+  },
+  "applied_corrections": [
+    {
+      "symbol": "fn_801A7780",
+      "owned_definition_evidence": "void* fn_801A7780(Data*) at src/game/game_fn_801A7780.c:13",
+      "edited_declaration": "src/game/game_fn_801A66C4.c:6",
+      "affected_translation_units": 8,
+      "edited_translation_units": 1,
+      "safety_gates": "one GPR parameter unchanged; return corrected from none to GPR:r3; no unspecified prototype, callback/cast use, caller-compatibility cast, or unavailable return type"
+    }
+  ],
+  "scope_decision": "fn_801A7780 was the deliberately selected bounded correction; all remaining eligible candidates are unstarted pending work and all ineligible contradictions remain deferred in the shadow report.",
+  "contradiction_accounting": {
+    "return_register_contradictions": 599,
+    "return_register_deferred": 423,
+    "return_register_pending": 176,
+    "abi_divergent": 368,
+    "abi_divergent_deferred": 367,
+    "abi_divergent_applied": 1,
+    "cosmetic": 752,
+    "evidence": "reports/GEDE01/signature-shadow-session-1780.json",
+    "interpretation": "Every deferred entry carries its affected-TU count, variants, evidence, confidence, disposition, and reason in the shadow report; pending entries are eligible unstarted work rather than steady-state deferrals."
+  },
+  "build": {
+    "command": ".tools/bin/ninja",
+    "status": "passed"
+  },
+  "affected_objects": [
+    {
+      "name": "main/game/game_fn_801A66C4",
+      "report_command": "jq unit measures from build/GEDE01/report.json",
+      "raw_output": "complete=true matched_code_percent=100.0 complete_code_percent=100.0",
+      "canonical_objdiff": "reports/GEDE01/objdiff-game_fn_801A66C4-session-1780.json",
+      "relocation_strict_objdiff": "reports/GEDE01/objdiff-game_fn_801A66C4-session-1780-reloc-strict.json",
+      "objdiff_raw_output": "canonical code=100.0; relocation-strict code=100.0"
+    }
+  ],
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "unchanged": true
+  },
+  "progress_invariants": {
+    "next_target": "0x801CE2B8",
+    "next_gate_rewritten": false,
+    "headline_match_counts_rewritten": false
+  }
+}

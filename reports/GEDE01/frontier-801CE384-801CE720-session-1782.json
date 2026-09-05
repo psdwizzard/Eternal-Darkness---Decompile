@@ -1,0 +1,21 @@
+{
+  "session_id": "session-1782",
+  "range_start": "0x801CE384",
+  "range_end": "0x801CE720",
+  "accounted_bytes": 924,
+  "matched_bytes": 396,
+  "nonmatching_bytes": 528,
+  "functions": [
+    {"name": "fn_801CE384", "start": "0x801CE384", "end": "0x801CE594", "size": 528, "status": "NonMatching", "best_percent": 98.295456, "measurement_command": "jq -r '(.left.symbols[] | select(.name==\"fn_801CE384\")) as $l | (.right.symbols[] | select(.name==$l.name)) as $r | \"compiler=GC/1.3 function=\\($l.name) retail_text_bytes=\\($l.size) generated_text_bytes=\\($r.size) match_percent=\\($l.match_percent)\"' reports/GEDE01/objdiff-fn_801CE384-session-1782-canonical.json", "measurement_raw_output": "compiler=GC/1.3 function=fn_801CE384 retail_text_bytes=528 generated_text_bytes=528 match_percent=98.295456", "divergence": "GC/1.3 preserves the exact instruction shape but rotates persistent argument and loop-state registers across r23 through r30 relative to retail."},
+    {"name": "fn_801CE594", "start": "0x801CE594", "end": "0x801CE720", "size": 396, "status": "Matching", "canonical_percent": 100.0, "relocation_strict_percent": 100.0}
+  ],
+  "gaps": [],
+  "asm_functions": [],
+  "shared_reconstructions": [],
+  "compiler_ab": {
+    "command": "configure both objects with mw_version='GC/1.2.5n' and extra_cflags=['-Cpp_exceptions on', '-fp_contract off']; python3 configure.py && .tools/bin/ninja build/GEDE01/src/game/game_fn_801CE384.o build/GEDE01/src/game/game_fn_801CE594.o; generate direct canonical objdiff JSON in build/GEDE01 and extract both symbols with jq",
+    "raw_output": "compiler=GC/1.2.5n function=fn_801CE384 retail_text_bytes=528 generated_text_bytes=476 match_percent=39.71212\ncompiler=GC/1.2.5n function=fn_801CE594 retail_text_bytes=396 generated_text_bytes=392 match_percent=14.909091",
+    "disposition": "Retain the object-local GC/1.3 plus -use_lmw_stmw on configuration: it gives fn_801CE384 size parity and the higher score while keeping fn_801CE594 byte-matching."
+  },
+  "next_target": "0x801CE720"
+}
