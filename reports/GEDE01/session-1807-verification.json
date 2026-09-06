@@ -1,0 +1,15 @@
+{
+  "session_id": "session-1807",
+  "commits": ["d95b244d5642cc5595412afd227366be014e15b4","4c91cf28348a79c903bcf9ace84810c7cf2a8ea2"],
+  "build": {"command":".tools/bin/ninja -j8 --quiet","result":"completed successfully"},
+  "canonical_report": {"command":"build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty","matching_objects":5042,"total_objects":6212,"matching_functions":4809,"total_functions":8216,"matching_code_bytes":752508,"linked_code_bytes":752352},
+  "relocation_strict_report": {"command":"build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1807-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address","matching_functions":4802,"matching_code_bytes":750700},
+  "per_function": [
+    {"name":"fn_801D3E0C","retail_bytes":5604,"generated_bytes":292,"match_percent":5.182727,"matched_bytes_credited":0,"status":"NonMatching","evidence":"reports/GEDE01/session-1807-fn_801D3E0C.json"},
+    {"name":"fn_801D53F0","retail_bytes":300,"generated_bytes":300,"match_percent":100.0,"relocations_equal":true,"matched_bytes_credited":300,"evidence":"reports/GEDE01/session-1807-fn_801D53F0.json"}
+  ],
+  "dol_sha1": {"command":"sha1sum build/GEDE01/main.dol","raw_output":"ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"},
+  "matched_bytes_total": 300,
+  "nonmatching_bytes_total": 5604,
+  "next_target": "0x801D551C"
+}

@@ -1,0 +1,16 @@
+{
+  "session_id": "session-1806",
+  "starting_target": "0x801D3CAC",
+  "ending_next_target": "0x801D3E0C",
+  "matched_bytes": 352,
+  "nonmatching_bytes": 0,
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+  "canonical_counters": {"matching_functions":4808,"matching_objects":5041,"matching_code_bytes":752208,"linked_code_bytes":752052,"total_code_bytes":2300692,"code_percent":32.69486},
+  "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1806-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+  "relocation_strict_counters": {"matching_functions":4801,"matching_code_bytes":750400,"total_code_bytes":2300692,"code_percent":32.616272},
+  "matched_byte_arithmetic": "128+224=352",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_cmp_exit": 0,
+  "relocations": {"fn_801D3CAC":"9/9 equal","fn_801D3D2C":"3/3 equal"}
+}
