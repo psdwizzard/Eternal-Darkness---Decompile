@@ -1,0 +1,95 @@
+{
+  "session_id": "session-1810",
+  "remediation": "review remediation 1",
+  "starting_target": "0x801D5EE8",
+  "ending_next_target": "0x801D5EE8",
+  "frontier_changed": false,
+  "corrected_method": {
+    "finding": "A fuzzy-score equality prefilter is unsound: link-equivalent base-plus-addend spellings may score below full equality, while genuinely permuted relocation targets may score at full equality.",
+    "future_enumeration_basis": "Enumerate live NonMatching registrations and compare link-resolved bytes and section ownership. Use fuzzy scores only as diagnostics.",
+    "acceptance_gate": "Require fresh relocation-aware objdiff and an exact whole-DOL comparison."
+  },
+  "inventory_after": {
+    "nonmatching_registrations": 757,
+    "measurement": {
+      "command": "python3 -c 'import ast; p=ast.parse(open(\"configure.py\").read()); calls=[n for n in ast.walk(p) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id==\"Object\" and len(n.args)>=2 and isinstance(n.args[0],ast.Name) and n.args[0].id==\"NonMatching\" and isinstance(n.args[1],ast.Constant)]; print(f\"nonmatching_registrations={len(set(n.args[1].value for n in calls))}\")'",
+      "raw_output": "nonmatching_registrations=757"
+    }
+  },
+  "candidates": [
+    {
+      "object": "game/game_fn_801CD404.c",
+      "status_before": "NonMatching",
+      "status_after": "Matching",
+      "retail_text_bytes": 20,
+      "fresh_relocation_aware_match_percent": 100.0,
+      "measurement": {
+        "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801CD404 -o reports/GEDE01/objdiff-consolidation-game_fn_801CD404-session-1810.json --format json-pretty -c function_reloc_diffs=name_address fn_801CD404 >/dev/null && jq -r '.left.symbols[] | select(.name==\"fn_801CD404\") | \"size=\\(.size) match_percent=\\(.match_percent) instructions=\\(.instructions|length)\"' reports/GEDE01/objdiff-consolidation-game_fn_801CD404-session-1810.json",
+        "raw_output": "size=20 match_percent=100.0 instructions=5"
+      },
+      "relocation_measurement": {
+        "command": "build/binutils/powerpc-eabi-readelf -Wr build/GEDE01/src/game/game_fn_801CD404.o",
+        "raw_output": "Relocation section '.rela.text' at offset 0x138 contains 2 entries:\n0000000a R_PPC_EMB_SDA21 lbl_8064D4DC + 0\n0000000e R_PPC_EMB_SDA21 lbl_8064D4E0 + 0"
+      },
+      "correction": "Preserved the aggregate Pair assignment and split its compiled undefined symbol at ELF granularity, retargeting exactly one relocation from lbl_8064D4DC+4 to the same address expressed as lbl_8064D4E0+0.",
+      "evidence": "reports/GEDE01/objdiff-consolidation-game_fn_801CD404-session-1810.json",
+      "evidence_sha256": "4b574a1f36616a65ac340c4266411df2a7b44d1ec83ed19cd3ccd5a5fae906c5"
+    },
+    {
+      "object": "game/game_fn_801C0ED8.c",
+      "status_before": "NonMatching",
+      "status_after": "NonMatching",
+      "retail_text_bytes": 104,
+      "fresh_relocation_aware_match_percent": 99.42308,
+      "measurement": {
+        "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801C0ED8 -o reports/GEDE01/objdiff-consolidation-game_fn_801C0ED8-session-1810.json --format json-pretty -c function_reloc_diffs=name_address fn_801C0ED8 >/dev/null && jq -r '.left.symbols[] | select(.name==\"fn_801C0ED8\") | \"size=\\(.size) match_percent=\\(.match_percent) instructions=\\(.instructions|length)\"' reports/GEDE01/objdiff-consolidation-game_fn_801C0ED8-session-1810.json",
+        "raw_output": "size=104 match_percent=99.42308 instructions=26"
+      },
+      "report_scoring_measurement": {
+        "command": "jq -r '.units[] | select(.name==\"main/game/game_fn_801C0ED8\" or .name==\"main/game/game_fn_801CD404\") | \"\\(.name) metadata_complete=\\(.metadata.complete) complete_units=\\(.measures.complete_units) total_code=\\(.measures.total_code) complete_code=\\(.measures.complete_code) unit_fuzzy_match_percent=\\(.measures.fuzzy_match_percent) function_fuzzy_match_percent=\\(.functions[0].fuzzy_match_percent)\"' build/GEDE01/report.json",
+        "raw_output": "main/game/game_fn_801C0ED8 metadata_complete=false complete_units=null total_code=104 complete_code=null unit_fuzzy_match_percent=100.0 function_fuzzy_match_percent=100.0\nmain/game/game_fn_801CD404 metadata_complete=true complete_units=1 total_code=20 complete_code=20 unit_fuzzy_match_percent=100.0 function_fuzzy_match_percent=100.0"
+      },
+      "relocation_divergence_measurement": {
+        "command": "python3 tools/fndiff.py game/game_fn_801C0ED8.c fn_801C0ED8 | sed -n '1,14p'",
+        "raw_output": "target 104 bytes  base 104 bytes  match 99.42308\n* 0x0010 stw r7, lbl_8064D43C@sda21 | stw r7, lbl_8064D448@sda21\n* 0x001c stw r7, lbl_8064D440@sda21 | stw r7, lbl_8064D43C@sda21\n* 0x0024 stw r7, lbl_8064D448@sda21 | stw r7, lbl_8064D440@sda21"
+      },
+      "reason_not_reclaimed": "Fresh relocation-aware per-function objdiff exposes genuinely permuted store targets, even though report.json assigns this function a full fuzzy score.",
+      "evidence": "reports/GEDE01/objdiff-consolidation-game_fn_801C0ED8-session-1810.json",
+      "evidence_sha256": "2095c7ca576353cd3e0c6afdd14c1216bb756bd8a6db873408ed0c75571d6117"
+    }
+  ],
+  "accounting_after": {
+    "matching_objects": 5046,
+    "total_objects": 6215,
+    "matching_functions": 4812,
+    "total_functions": 8216,
+    "matching_code_bytes": 755016,
+    "total_code_bytes": 2300692,
+    "linked_code_bytes": 754880,
+    "game_code_matching_bytes": 751988,
+    "game_code_linked_bytes": 751852,
+    "game_code_score_link_gap": 136,
+    "measurement": {
+      "command": "jq -r '.measures | \"matching_objects=\\(.complete_units) total_objects=\\(.total_units) matching_functions=\\(.matched_functions) total_functions=\\(.total_functions) matching_code_bytes=\\(.matched_code) total_code_bytes=\\(.total_code) matching_data_bytes=\\(.matched_data) total_data_bytes=\\(.total_data) code_percent=\\(.matched_code_percent) function_percent=\\(.matched_functions_percent)\"' build/GEDE01/report.json",
+      "raw_output": "matching_objects=5046 total_objects=6215 matching_functions=4812 total_functions=8216 matching_code_bytes=755016 total_code_bytes=2300692 matching_data_bytes=38646 total_data_bytes=4305642 code_percent=32.816906 function_percent=58.568645"
+    },
+    "linked_measurement": {
+      "command": "jq -r '. as $r | $r.measures as $m | ($r.categories[] | select(.id==\"game\")) as $g | ($r.categories[] | select(.id==\"sdk\")) as $s | \"linked_code_bytes=\\($m.complete_code) linked_data_bytes=\\($m.complete_data) game_code_matching_bytes=\\($g.measures.matched_code) game_code_total_bytes=\\($g.measures.total_code) game_code_linked_bytes=\\($g.measures.complete_code) game_code_score_link_gap=\\(($g.measures.matched_code|tonumber)-($g.measures.complete_code|tonumber)) sdk_code_matching_bytes=\\($s.measures.matched_code) sdk_code_total_bytes=\\($s.measures.total_code) sdk_objects_complete=\\($s.measures.complete_units) sdk_objects_total=\\($s.measures.total_units)\"' build/GEDE01/report.json",
+      "raw_output": "linked_code_bytes=754880 linked_data_bytes=37850 game_code_matching_bytes=751988 game_code_total_bytes=1224296 game_code_linked_bytes=751852 game_code_score_link_gap=136 sdk_code_matching_bytes=3028 sdk_code_total_bytes=3028 sdk_objects_complete=18 sdk_objects_total=18"
+    },
+    "scorer_integrity": "The remaining score-versus-link gap includes the freshly proven 104-byte fn_801C0ED8 false-positive. Canonical totals are retained as raw scorer output; linked coverage is the exact-build measure."
+  },
+  "verification": {
+    "report_sha256": "60d2cc2996be8e13436d72b321d00f8d5f4602ae26ab9f2cd2dad4875842c1b6",
+    "report_hash_measurement": {
+      "command": "sha256sum build/GEDE01/report.json",
+      "raw_output": "60d2cc2996be8e13436d72b321d00f8d5f4602ae26ab9f2cd2dad4875842c1b6  build/GEDE01/report.json"
+    },
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_identical": true,
+    "dol_measurement": {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo cmp_exit=$?",
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+    }
+  }
+}

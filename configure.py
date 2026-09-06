@@ -2475,6 +2475,22 @@ config.custom_build_rules.append(
     }
 )
 
+config.custom_build_rules.append(
+    {
+        "name": "split_game_801CD404_sbss_symbols",
+        "command": (
+            "touch -r $in $out && (build/binutils/powerpc-eabi-readelf -Ws $in | "
+            "awk '$$NF == \"lbl_8064D4E0\" { found=1 } END { exit !found }' || "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--add-symbol=lbl_8064D4E0=.text:0,global,object $in) && "
+            "python3 tools/retarget_undefined_elf_relocation.py $in "
+            "lbl_8064D4DC 4 lbl_8064D4E0 0x8064D4E0 0 R_PPC_EMB_SDA21 "
+            f"config/{VERSION}/symbols.txt && touch -r $out $in && touch $out"
+        ),
+        "description": "SPLIT SBSS SYMBOL $in",
+    }
+)
+
 # A renamed compiler-local symbol must contain the retail value it claims to
 # represent whenever it has a complete, relocation-free file-backed value.
 # Every invocation must map to a retail symbol and DOL. The externalizer rejects
@@ -2520,6 +2536,11 @@ for rule in config.custom_build_rules:
 guarded_externalize_rules.add("externalize_string_pool_80250588")
 config.custom_build_steps = {
     "post-compile": [
+        {
+            "outputs": [f"build/{VERSION}/src/game/game_fn_801CD404.symbols-split"],
+            "rule": "split_game_801CD404_sbss_symbols",
+            "inputs": [f"build/{VERSION}/src/game/game_fn_801CD404.o"],
+        },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801D3988.externalized"],
             "rule": "externalize_game_801D3988_jumptable",
@@ -10395,7 +10416,7 @@ config.libs = [
             Object(Matching, "game/game_fn_801CD35C.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
             Object(Matching, "game/game_fn_801CD3E0.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
             Object(Matching, "game/game_fn_801CD400.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
-            Object(NonMatching, "game/game_fn_801CD404.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
+            Object(Matching, "game/game_fn_801CD404.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
             Object(Matching, "game/game_fn_801CD418.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
             Object(Matching, "game/game_fn_801CD424.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
             Object(Matching, "game/game_fn_801CD44C.c", mw_version="GC/1.2.5n", extra_cflags=["-Cpp_exceptions on", "-fp_contract off"]),
@@ -10511,6 +10532,16 @@ config.libs = [
             Object(Matching, "game/game_fn_801D551C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801D5898.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801D5BC8.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801D5EE8.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801D62D0.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801D6724.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(NonMatching, "game/game_fn_801D6B44.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801D6F34.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801D6FEC.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801D70B0.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801D71A4.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801D72D0.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801D7380.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
         ],
     },
     {
