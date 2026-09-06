@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "session_id": "session-1800-remediation-1",
+  "session_kind": "declaration-drift-review-remediation",
+  "scope": "Correct the session-1800 owned-definition grounding defect without advancing the frontier.",
+  "starting_target": "0x801D2440",
+  "ending_next_target": "0x801D2440",
+  "frontier_changed": false,
+  "owned_definition_grounding": {
+    "command": "python3 - <<'PY'\nimport sys\nfrom pathlib import Path\nroot=Path('.').resolve()\nsys.path.insert(0,str(root/'tools'))\nimport signature_audit\nfor rel in ('src/game/game_fn_8011F114.c','src/game/game_fn_80156938.c'):\n d=signature_audit.definition_in(root/rel)\n print((d.symbol,d.signature,f'{d.path}:{d.line}'))\nPY",
+    "raw_output": "('fn_8011F114', 'void fn_8011F114(Vec3*, Vec3*)', 'src/game/game_fn_8011F114.c:7')\n('fn_80156938', 'void* fn_80156938(Object*)', 'src/game/game_fn_80156938.c:6')"
+  },
+  "fresh_measurement_summary": {
+    "command": "python3 tools/declaration_drift_proposal.py --baseline-ref f83be86f893cace69ba04fc50ab7caa1840bbcf4 --facts --facts-output build/session-1800-remediation-1-declaration-drift-facts.txt; rg '^(AUDIT|SYMBOL|CONFIDENCE) ' build/session-1800-remediation-1-declaration-drift-facts.txt",
+    "raw_output": "AUDIT declarations=19926 symbols=4871\nSYMBOL rank=1 name=fn_80201814 declarations=416 affected_tus=421 blast_radius_tus=29 confidence=low resolution=resolved\nCONFIDENCE name=fn_80201814 return_shape=low parameters=low\nSYMBOL rank=2 name=fn_80201BC8 declarations=365 affected_tus=372 blast_radius_tus=16 confidence=low resolution=resolved\nCONFIDENCE name=fn_80201BC8 return_shape=low parameters=low\nSYMBOL rank=3 name=fn_80201B8C declarations=323 affected_tus=329 blast_radius_tus=9 confidence=low resolution=resolved\nCONFIDENCE name=fn_80201B8C return_shape=low parameters=low\nSYMBOL rank=4 name=fn_80201B54 declarations=292 affected_tus=299 blast_radius_tus=7 confidence=low resolution=resolved\nCONFIDENCE name=fn_80201B54 return_shape=low parameters=low\nSYMBOL rank=5 name=fn_8020123C declarations=179 affected_tus=185 blast_radius_tus=5 confidence=low resolution=resolved\nCONFIDENCE name=fn_8020123C return_shape=high parameters=low\nSYMBOL rank=6 name=fn_80201B44 declarations=119 affected_tus=122 blast_radius_tus=1 confidence=low resolution=resolved\nCONFIDENCE name=fn_80201B44 return_shape=low parameters=low\nSYMBOL rank=7 name=fn_8011F114 declarations=109 affected_tus=116 blast_radius_tus=108 confidence=high resolution=resolved\nCONFIDENCE name=fn_8011F114 return_shape=high parameters=high\nSYMBOL rank=8 name=fn_80201B9C declarations=100 affected_tus=104 blast_radius_tus=6 confidence=low resolution=resolved\nCONFIDENCE name=fn_80201B9C return_shape=low parameters=low\nSYMBOL rank=9 name=fn_80156938 declarations=93 affected_tus=93 blast_radius_tus=93 confidence=high resolution=resolved\nCONFIDENCE name=fn_80156938 return_shape=high parameters=high\nSYMBOL rank=10 name=fn_80201EB8 declarations=93 affected_tus=97 blast_radius_tus=5 confidence=low resolution=resolved\nCONFIDENCE name=fn_80201EB8 return_shape=low parameters=low"
+  },
+  "rewrite_disposition": {
+    "rule": "Apply only a high-confidence definition-accurate correction whose complete disagreeing-translation-unit set is within the proposal's rewrite cap.",
+    "result": "pass-no-eligible-rewrites",
+    "reason": "The owned definitions make both readings high confidence, but fresh measurement places each complete definition-accurate rewrite set above the configured cap. Editing only the old minority sets would replace definition-accurate declarations with unprototyped or void-pointer declarations, so no game source was changed."
+  },
+  "rewrite_gate_evidence": {
+    "command": "jq -r '.symbols[] | select(.symbol==\"fn_8011F114\" or .symbol==\"fn_80156938\") | \"symbol=\\(.symbol) confidence=\\(.confidence) declaration=\\(.believed_correct_reading.declaration) blast_radius_tus=\\(.estimated_blast_radius_tus) cap=\\($cap) disposition=\\(.disposition) source=\\(.believed_correct_reading.basis.parameters.source) reason=\\(.disposition_reason)\"' --argjson cap \"$(jq '.rewrite_tu_cap' reports/GEDE01/declaration-drift-proposal-session-1800.json)\" reports/GEDE01/declaration-drift-proposal-session-1800.json",
+    "raw_output": "symbol=fn_8011F114 confidence=high declaration=void fn_8011F114(Vec3*, Vec3*) blast_radius_tus=108 cap=12 disposition=proposal-only source=src/game/game_fn_8011F114.c:7 reason=Proposal only: the high-confidence candidate has a measured blast radius of 108 TUs, exceeding the 12-TU rewrite ceiling.\nsymbol=fn_80156938 confidence=high declaration=void* fn_80156938(Object*) blast_radius_tus=93 cap=12 disposition=proposal-only source=src/game/game_fn_80156938.c:6 reason=Proposal only: the high-confidence candidate has a measured blast radius of 93 TUs, exceeding the 12-TU rewrite ceiling.",
+    "result": "pass-no-eligible-rewrites"
+  },
+  "fresh_rebuild": {
+    "command": "touch src/game/game_fn_8011F114.c src/game/game_fn_80156938.c; set -o pipefail; .tools/bin/ninja build/GEDE01/src/game/game_fn_8011F114.o build/GEDE01/src/game/game_fn_80156938.o build/GEDE01/main.dol 2>&1 | tr -d '\\r' | tail -n 4",
+    "raw_output": "#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n[658/658] DOL build/GEDE01/main.dol",
+    "result": "pass"
+  },
+  "owned_definition_objdiff_generation": {
+    "command": "{ build/tools/objdiff-cli diff -p . -u main/game/game_fn_8011F114 -o build/session-1800-remediation-1-fn_8011F114-canonical.json --format json fn_8011F114; build/tools/objdiff-cli diff -p . -u main/game/game_fn_8011F114 -o build/session-1800-remediation-1-fn_8011F114-reloc-strict.json --format json -c function_reloc_diffs=name_address fn_8011F114; build/tools/objdiff-cli diff -p . -u main/game/game_fn_80156938 -o build/session-1800-remediation-1-fn_80156938-canonical.json --format json fn_80156938; build/tools/objdiff-cli diff -p . -u main/game/game_fn_80156938 -o build/session-1800-remediation-1-fn_80156938-reloc-strict.json --format json -c function_reloc_diffs=name_address fn_80156938; } 2>&1 | sed 's/^ //'",
+    "raw_output": "INFO Writing to build/session-1800-remediation-1-fn_8011F114-canonical.json\nINFO Writing to build/session-1800-remediation-1-fn_8011F114-reloc-strict.json\nINFO Writing to build/session-1800-remediation-1-fn_80156938-canonical.json\nINFO Writing to build/session-1800-remediation-1-fn_80156938-reloc-strict.json",
+    "result": "pass"
+  },
+  "owned_definition_objdiff": {
+    "command": "for symbol in fn_8011F114 fn_80156938; do for basis in canonical reloc-strict; do jq -r --arg symbol \"$symbol\" --arg basis \"$basis\" '(.left.symbols[] | select(.name==$symbol)) as $l | (.right.symbols[] | select(.name==$symbol)) as $r | \"symbol=\\($symbol) basis=\\($basis) match_percent=\\($l.match_percent) retail_bytes=\\($l.size) generated_bytes=\\($r.size) retail_instructions=\\([$l.instructions[]|select(.instruction!=null)]|length) generated_instructions=\\([$r.instructions[]|select(.instruction!=null)]|length) retail_relocations=\\([$l.instructions[]|select(.instruction.relocation!=null)]|length) generated_relocations=\\([$r.instructions[]|select(.instruction.relocation!=null)]|length)\"' \"build/session-1800-remediation-1-${symbol}-${basis}.json\"; done; done",
+    "raw_output": "symbol=fn_8011F114 basis=canonical match_percent=100.0 retail_bytes=28 generated_bytes=28 retail_instructions=7 generated_instructions=7 retail_relocations=0 generated_relocations=0\nsymbol=fn_8011F114 basis=reloc-strict match_percent=100.0 retail_bytes=28 generated_bytes=28 retail_instructions=7 generated_instructions=7 retail_relocations=0 generated_relocations=0\nsymbol=fn_80156938 basis=canonical match_percent=100.0 retail_bytes=8 generated_bytes=8 retail_instructions=2 generated_instructions=2 retail_relocations=0 generated_relocations=0\nsymbol=fn_80156938 basis=reloc-strict match_percent=100.0 retail_bytes=8 generated_bytes=8 retail_instructions=2 generated_instructions=2 retail_relocations=0 generated_relocations=0",
+    "result": "pass"
+  },
+  "proposal_validator": {
+    "command": "python3 tools/validate_declaration_drift_report.py --report reports/GEDE01/declaration-drift-proposal-session-1800.json",
+    "raw_output": "AUDIT declarations=19926 symbols=4871\nSYMBOL name=fn_80201814 declarations=416 affected_tus=421 variants=8 variant_call_sites=515 believed_correct_call_sites=514 status=valid\nSYMBOL name=fn_80201BC8 declarations=365 affected_tus=372 variants=6 variant_call_sites=427 believed_correct_call_sites=427 status=valid\nSYMBOL name=fn_80201B8C declarations=323 affected_tus=329 variants=4 variant_call_sites=360 believed_correct_call_sites=360 status=valid\nSYMBOL name=fn_80201B54 declarations=292 affected_tus=299 variants=4 variant_call_sites=359 believed_correct_call_sites=359 status=valid\nSYMBOL name=fn_8020123C declarations=179 affected_tus=185 variants=5 variant_call_sites=336 believed_correct_call_sites=336 status=valid\nSYMBOL name=fn_80201B44 declarations=119 affected_tus=122 variants=2 variant_call_sites=165 believed_correct_call_sites=161 status=valid\nSYMBOL name=fn_8011F114 declarations=109 affected_tus=116 variants=6 variant_call_sites=131 believed_correct_call_sites=131 status=valid\nSYMBOL name=fn_80201B9C declarations=100 affected_tus=104 variants=2 variant_call_sites=101 believed_correct_call_sites=101 status=valid\nSYMBOL name=fn_80156938 declarations=93 affected_tus=93 variants=2 variant_call_sites=128 believed_correct_call_sites=126 status=valid\nSYMBOL name=fn_80201EB8 declarations=93 affected_tus=97 variants=3 variant_call_sites=113 believed_correct_call_sites=112 status=valid\nTOTAL symbols=10 variants=42 declaration_sites=2089 variant_call_sites=2635 believed_correct_call_sites=2627 invalid_call_sites=0 source_rewrites=0",
+    "result": "pass"
+  },
+  "source_progress_and_frontier": {
+    "command": "printf 'source_or_progress_diff_begin\\n'; git diff --name-only HEAD -- src reports/GEDE01/progress.json; printf 'source_or_progress_diff_end\\n'; jq -c '{next_target,dol_sha1}' reports/GEDE01/progress.json; jq -c '{state,assigned_target,accepted_frontier,candidate_frontier,review_verdict}' ../.darkfoundry/decomp-chain-state.json",
+    "raw_output": "source_or_progress_diff_begin\nsource_or_progress_diff_end\n{\"next_target\":\"0x801D2440\",\"dol_sha1\":\"ea24b6af954876ce072562ff39cdb4c81d32be1f\"}\n{\"state\":\"WORKING\",\"assigned_target\":\"0x801D2440\",\"accepted_frontier\":\"0x801D1F78\",\"candidate_frontier\":\"0x801D2440\",\"review_verdict\":\"REQUEST_CHANGES\"}",
+    "result": "pass-unchanged"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'dol_cmp_exit=%s\\n' \"$?\"; sha1sum -c config/GEDE01/build.sha1",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0\nbuild/GEDE01/main.dol: OK",
+    "result": "pass"
+  }
+}

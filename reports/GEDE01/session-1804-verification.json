@@ -1,0 +1,16 @@
+{
+  "session_id": "session-1804",
+  "starting_target": "0x801D38BC",
+  "ending_next_target": "0x801D3A6C",
+  "matched_bytes": 416,
+  "nonmatching_bytes": 16,
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+  "canonical_counters": {"matching_functions":4803,"matching_objects":5036,"matching_code_bytes":751280,"linked_code_bytes":751124,"total_code_bytes":2300692,"code_percent":32.654526},
+  "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1804-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+  "relocation_strict_counters": {"matching_functions":4796,"matching_code_bytes":749472,"total_code_bytes":2300692,"code_percent":32.57594},
+  "matched_byte_arithmetic": "44+92+48+20+88+20+48+56=416; fn_801D3A24 contributes zero matched-byte credit.",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_cmp_exit": 0,
+  "relocations": {"fn_801D38BC":"6/6 equal","fn_801D38E8":"0/0 equal","fn_801D3944":"4/4 equal","fn_801D3974":"3/3 equal","fn_801D3988":"9/9 equal after guarded retail-verified jump-table externalization","fn_801D39E0":"3/3 equal","fn_801D39F4":"4/4 equal","fn_801D3A24":"0/0 equal but instructions differ","fn_801D3A34":"1/1 equal"}
+}

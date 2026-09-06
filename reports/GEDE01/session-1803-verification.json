@@ -1,0 +1,59 @@
+{
+  "session_id": "session-1803",
+  "starting_target": "0x801D31E0",
+  "ending_next_target": "0x801D38BC",
+  "implementation_commits": [
+    "e271d242ada94009bdc2f9109fd7705bc2a44ee2",
+    "7e6b31fb28ce87ff1dc2b17ed2fcef6f25179f7e"
+  ],
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+  "canonical_counters": {
+    "matching_functions": 4795,
+    "matching_objects": 5028,
+    "matching_code_bytes": 750864,
+    "linked_code_bytes": 750708,
+    "total_code_bytes": 2300692,
+    "code_percent": 32.636444
+  },
+  "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1803-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+  "relocation_strict_counters": {
+    "matching_functions": 4788,
+    "matching_code_bytes": 749056,
+    "total_code_bytes": 2300692,
+    "code_percent": 32.557858
+  },
+  "function_measurements": [
+    {
+      "name": "fn_801D31E0",
+      "retail_range": "0x801D31E0..0x801D324C",
+      "split_bytes": 108,
+      "report_retail_bytes": 108,
+      "generated_bytes": 108,
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "retail_relocations": 4,
+      "generated_relocations": 4,
+      "relocations_equal": true
+    },
+    {
+      "name": "fn_801D324C",
+      "retail_range": "0x801D324C..0x801D38BC",
+      "split_bytes": 1648,
+      "report_retail_bytes": 1648,
+      "generated_bytes": 72,
+      "canonical_percent": 3.9004855,
+      "relocation_strict_percent": 3.9004855,
+      "relocations_equal": false
+    }
+  ],
+  "matched_byte_arithmetic": "0x6C = 108 matched bytes; fn_801D324C contributes zero matched-byte credit.",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_cmp_exit": 0,
+  "direct_report_sha256": {
+    "fn_801D31E0_canonical": "c22e52eb58e23dc3c2716dd6c82e9e973d074c6c6db2c4b446184e7fda3b49da",
+    "fn_801D31E0_relocation_strict": "c22e52eb58e23dc3c2716dd6c82e9e973d074c6c6db2c4b446184e7fda3b49da",
+    "fn_801D324C_canonical": "a1dc7cfba89a9c920641b4dab7847d6e9ba168142c8a305501c0cffca1ec86ce",
+    "fn_801D324C_relocation_strict": "a1dc7cfba89a9c920641b4dab7847d6e9ba168142c8a305501c0cffca1ec86ce"
+  }
+}

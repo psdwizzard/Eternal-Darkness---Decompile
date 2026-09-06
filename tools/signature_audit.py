@@ -424,6 +424,28 @@ def audit(
             symbol_translation_units[symbol].add(relative_path)
 
     retail_evidence = load_retail_evidence(retail_evidence_path)
+    ground_truth_by_symbol: dict[str, dict[str, object]] = {
+        symbol: {
+            "kind": "definition",
+            "declaration": definition.signature,
+            "return_type": definition.return_type,
+            "return_value_kind": return_value_kind(definition.return_type),
+            "return_shape": definition.return_shape,
+            "parameter_types": list(definition.parameters),
+            "parameter_shapes": list(definition.parameter_shapes),
+            "variadic": definition.variadic,
+            "unspecified_parameters": definition.unspecified_parameters,
+            "source": f"{definition.path}:{definition.line}",
+        }
+        for symbol, definition in definitions.items()
+    }
+    for symbol, evidence in retail_evidence.items():
+        ground_truth_by_symbol.setdefault(symbol, {
+            "kind": "retail-epilogue",
+            "return_shape": evidence["return_shape"],
+            "source": evidence["source"],
+            "detail": evidence.get("detail", ""),
+        })
 
     categories: dict[str, list[dict[str, object]]] = {
         "return_register_contradictions": [],
@@ -481,38 +503,13 @@ def audit(
     ground_truth_contradictions: list[dict[str, object]] = []
     for symbol, declarations in sorted(grouped.items()):
         definition = definitions.get(symbol)
-        evidence = retail_evidence.get(symbol)
-        if definition is not None:
-            expected_shape = definition.return_shape
-            disagreeing = [
-                item for item in declarations
-                if item.return_shape != expected_shape
-            ]
-            truth = {
-                "kind": "definition",
-                "declaration": definition.signature,
-                "return_type": definition.return_type,
-                "return_value_kind": return_value_kind(definition.return_type),
-                "return_shape": definition.return_shape,
-                "parameter_types": list(definition.parameters),
-                "parameter_shapes": list(definition.parameter_shapes),
-                "variadic": definition.variadic,
-                "unspecified_parameters": definition.unspecified_parameters,
-                "source": f"{definition.path}:{definition.line}",
-            }
-        elif evidence is not None:
-            expected_shape = evidence["return_shape"]
-            disagreeing = [
-                item for item in declarations if item.return_shape != expected_shape
-            ]
-            truth = {
-                "kind": "retail-epilogue",
-                "return_shape": expected_shape,
-                "source": evidence["source"],
-                "detail": evidence.get("detail", ""),
-            }
-        else:
+        truth = ground_truth_by_symbol.get(symbol)
+        if truth is None:
             continue
+        expected_shape = str(truth["return_shape"])
+        disagreeing = [
+            item for item in declarations if item.return_shape != expected_shape
+        ]
         if not disagreeing:
             continue
         variants = Counter(item.signature for item in disagreeing)
@@ -856,6 +853,7 @@ def audit(
         "declarations": sum(len(items) for items in grouped.values()),
         "symbols": len(grouped),
         "definitions": len(definitions),
+        "ground_truth_by_symbol": ground_truth_by_symbol,
         "retail_evidence_symbols": len(retail_evidence),
         "applied_corrections": applied_corrections,
         "ground_truth_contradictions": ground_truth_contradictions,

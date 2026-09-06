@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "session_id": "session-1800",
+  "session_kind": "declaration-drift-consolidation",
+  "starting_target": "0x801D2440",
+  "ending_next_target": "0x801D2440",
+  "frontier_changed": false,
+  "accounting": {
+    "matched_bytes_added": 0,
+    "nonmatching_bytes_added": 0,
+    "matching_code_bytes_unchanged": 750348,
+    "game_code_matching_bytes_unchanged": 747320,
+    "sdk_code_matching_bytes_unchanged": 3028,
+    "recorded_nonmatching_attempts_unchanged": 37,
+    "recorded_nonmatching_retail_bytes_unchanged": 23364
+  },
+  "checks": [
+    {
+      "name": "fresh_build",
+      "command": ".tools/bin/ninja build/GEDE01/main.dol",
+      "result": "pass",
+      "raw_output_tail": "[656/656] DOL build/GEDE01/main.dol"
+    },
+    {
+      "name": "dol_sha1",
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "result": "pass",
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+    },
+    {
+      "name": "rewrite_gate",
+      "command": "inspect confidence and estimated_blast_radius_tus for all ten ranked symbols",
+      "result": "pass-no-eligible-rewrites",
+      "raw_output": "All ten ranked symbols have low overall confidence. fn_8020123C has high return-shape confidence from retail evidence but low parameter confidence, so the full declaration reading remains low under the required grounding rule. No translation unit was rewritten and there are no affected objects requiring per-object objdiff verification."
+    },
+    {
+      "name": "source_and_progress_unchanged",
+      "command": "git diff --name-only HEAD -- eternal-darkness-decomp/src eternal-darkness-decomp/reports/GEDE01/progress.json",
+      "result": "pass",
+      "raw_output": ""
+    },
+    {
+      "name": "frontier_and_progress",
+      "command": "jq -c '{next_target,dol_sha1,matching_code_bytes,game_code_matching_bytes,sdk_code_matching_bytes,matching_functions,total_functions,matching_objects,total_objects}' reports/GEDE01/progress.json",
+      "result": "pass",
+      "raw_output": "{\"next_target\":\"0x801D2440\",\"dol_sha1\":\"ea24b6af954876ce072562ff39cdb4c81d32be1f\",\"matching_code_bytes\":750348,\"game_code_matching_bytes\":747320,\"sdk_code_matching_bytes\":3028,\"matching_functions\":4790,\"total_functions\":8216,\"matching_objects\":5023,\"total_objects\":6188}"
+    },
+    {
+      "name": "proposal_validator",
+      "command": "python3 tools/validate_declaration_drift_report.py --report reports/GEDE01/declaration-drift-proposal-session-1800.json",
+      "result": "pass",
+      "raw_output": "AUDIT declarations=19926 symbols=4871\nSYMBOL name=fn_80201814 declarations=416 affected_tus=421 variants=8 variant_call_sites=515 believed_correct_call_sites=514 status=valid\nSYMBOL name=fn_80201BC8 declarations=365 affected_tus=372 variants=6 variant_call_sites=427 believed_correct_call_sites=427 status=valid\nSYMBOL name=fn_80201B8C declarations=323 affected_tus=329 variants=4 variant_call_sites=360 believed_correct_call_sites=360 status=valid\nSYMBOL name=fn_80201B54 declarations=292 affected_tus=299 variants=4 variant_call_sites=359 believed_correct_call_sites=359 status=valid\nSYMBOL name=fn_8020123C declarations=179 affected_tus=185 variants=5 variant_call_sites=336 believed_correct_call_sites=336 status=valid\nSYMBOL name=fn_80201B44 declarations=119 affected_tus=122 variants=2 variant_call_sites=165 believed_correct_call_sites=161 status=valid\nSYMBOL name=fn_8011F114 declarations=109 affected_tus=116 variants=6 variant_call_sites=131 believed_correct_call_sites=131 status=valid\nSYMBOL name=fn_80201B9C declarations=100 affected_tus=104 variants=2 variant_call_sites=101 believed_correct_call_sites=101 status=valid\nSYMBOL name=fn_80156938 declarations=93 affected_tus=93 variants=2 variant_call_sites=128 believed_correct_call_sites=126 status=valid\nSYMBOL name=fn_80201EB8 declarations=93 affected_tus=97 variants=3 variant_call_sites=113 believed_correct_call_sites=112 status=valid\nTOTAL symbols=10 variants=42 declaration_sites=2089 variant_call_sites=2635 believed_correct_call_sites=2627 invalid_call_sites=0 source_rewrites=0"
+    }
+  ]
+}

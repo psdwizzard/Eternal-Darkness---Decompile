@@ -1,0 +1,25 @@
+{
+  "session_id": "session-1802",
+  "starting_target": "0x801D3024",
+  "ending_next_target": "0x801D31E0",
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+  "canonical_counters": {"matching_functions":4794,"matching_objects":5027,"matching_code_bytes":750756,"linked_code_bytes":750600,"total_code_bytes":2300692,"code_percent":32.631744},
+  "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1802-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+  "relocation_strict_counters": {"matching_functions":4787,"matching_code_bytes":748948,"total_code_bytes":2300692,"code_percent":32.55316},
+  "function_measurements": [
+    {"name":"fn_801D3024","retail_range":"0x801D3024..0x801D3088","split_bytes":100,"report_retail_bytes":100,"generated_bytes":100,"canonical_percent":100.0,"relocation_strict_percent":100.0,"relocations_equal":true},
+    {"name":"fn_801D3088","retail_range":"0x801D3088..0x801D30FC","split_bytes":116,"report_retail_bytes":116,"generated_bytes":116,"canonical_percent":100.0,"relocation_strict_percent":100.0,"relocations_equal":true},
+    {"name":"fn_801D30FC","retail_range":"0x801D30FC..0x801D313C","split_bytes":64,"report_retail_bytes":64,"generated_bytes":64,"canonical_percent":100.0,"relocation_strict_percent":100.0,"relocations_equal":true},
+    {"name":"fn_801D313C","retail_range":"0x801D313C..0x801D31E0","split_bytes":164,"report_retail_bytes":164,"generated_bytes":164,"canonical_percent":65.85366,"relocation_strict_percent":65.85366,"relocations_equal":false}
+  ],
+  "matched_byte_arithmetic": "0x64 + 0x74 + 0x40 = 0x118 = 280 matched bytes; fn_801D313C contributes zero matched-byte credit.",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_cmp_exit": 0,
+  "direct_report_sha256": {
+    "fn_801D3024":"b8707e98e67758ba2ae63f163b837f598e3180e6e6dbb01d6f211cbd33ee8649",
+    "fn_801D3088":"a2e9a6daa63c04961ebc279cb19557c316df0af857b1d970df2630c09d254175",
+    "fn_801D30FC":"cf01cf6441a900f30ffb49ceb89c49101f85c33846298d0e034baffadc3e1025",
+    "fn_801D313C":"8873da94b989b16144be9647b6a0ef39a8cc0820cb8fab44c6b5089a53107c6d"
+  }
+}

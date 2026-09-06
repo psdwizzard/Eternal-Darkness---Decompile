@@ -1,0 +1,52 @@
+{
+  "session_id": "session-1801",
+  "starting_target": "0x801D2440",
+  "ending_next_target": "0x801D3024",
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+  "canonical_counters": {
+    "matching_functions": 4791,
+    "matching_objects": 5024,
+    "matching_code_bytes": 750476,
+    "linked_code_bytes": 750320,
+    "total_code_bytes": 2300692,
+    "code_percent": 32.61958
+  },
+  "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1801-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+  "relocation_strict_counters": {
+    "matching_functions": 4784,
+    "matching_code_bytes": 748668,
+    "total_code_bytes": 2300692,
+    "code_percent": 32.540993
+  },
+  "function_measurements": [
+    {
+      "name": "fn_801D2440",
+      "retail_range": "0x801D2440..0x801D2FA4",
+      "split_bytes": 2916,
+      "report_retail_bytes": 2916,
+      "generated_bytes": 264,
+      "canonical_percent": 7.8230453,
+      "relocation_strict_percent": 7.8230453
+    },
+    {
+      "name": "fn_801D2FA4",
+      "retail_range": "0x801D2FA4..0x801D3024",
+      "split_bytes": 128,
+      "report_retail_bytes": 128,
+      "generated_bytes": 128,
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "relocations_equal": true
+    }
+  ],
+  "matched_byte_arithmetic": "0x801D3024 - 0x801D2FA4 = 0x80 = 128 bytes; the sole matched function therefore contributes exactly 128 session bytes.",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_cmp_exit": 0,
+  "direct_report_sha256": {
+    "fn_801D2440_canonical": "5b66ad538df23c14805607af4aba5bc1525fcf5702e2166b7e4d4c93ff0a40f0",
+    "fn_801D2440_relocation_strict": "5b66ad538df23c14805607af4aba5bc1525fcf5702e2166b7e4d4c93ff0a40f0",
+    "fn_801D2FA4_canonical": "be988c8b249c11b395d4348616b6570882f8a043fb7d055825f967309b7d5ff0",
+    "fn_801D2FA4_relocation_strict": "be988c8b249c11b395d4348616b6570882f8a043fb7d055825f967309b7d5ff0"
+  }
+}

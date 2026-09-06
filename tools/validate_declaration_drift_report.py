@@ -36,10 +36,7 @@ def main() -> int:
     assert [item["symbol"] for item in report["symbols"]] == [
         item["symbol"] for item in eligible[:declaration_drift_proposal.TOP_SYMBOLS]
     ]
-    truths = {
-        item["symbol"]: item["ground_truth"]
-        for item in audit["ground_truth_contradictions"]
-    }
+    truths = audit["ground_truth_by_symbol"]
     print(f"AUDIT declarations={audit['declarations']} symbols={audit['symbols']}")
 
     variant_total = 0
@@ -62,15 +59,16 @@ def main() -> int:
         assert item["confidence"] in {"high", "low"}
         assert set(item["confidence_by_component"]) == {"return_shape", "parameters"}
         assert set(item["confidence_by_component"].values()) <= {"high", "low"}
-        definition_absent = (
-            truth is not None
-            and truth.get("kind") == "definition"
-            and truth["declaration"] not in measured_signatures
+        definition_grounded = (
+            truth is not None and truth.get("kind") == "definition"
         )
-        if definition_absent:
+        if definition_grounded:
             assert reading["status"] == "resolved"
             assert reading["declaration"] == truth["declaration"]
             assert item["confidence"] == "high"
+            assert item["confidence_by_component"] == {
+                "return_shape": "high", "parameters": "high"
+            }
         else:
             if reading["declaration"] is None:
                 assert truth is not None

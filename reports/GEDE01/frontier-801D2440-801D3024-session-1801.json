@@ -1,0 +1,33 @@
+{
+  "session_id": "session-1801",
+  "range_start": "0x801D2440",
+  "range_end": "0x801D3024",
+  "range_bytes": 3044,
+  "matched_bytes": 128,
+  "nonmatching_bytes": 2916,
+  "unaccounted_spans": [],
+  "next_target": "0x801D3024",
+  "functions": [
+    {
+      "name": "fn_801D2440",
+      "range": "0x801D2440..0x801D2FA4",
+      "status": "NonMatching",
+      "retail_bytes": 2916,
+      "generated_bytes": 264,
+      "canonical_percent": 7.8230453,
+      "relocation_strict_percent": 7.8230453,
+      "divergence": "The opening actor path is reconstructed, but most state-dispatch branches, event payload construction, and retail's persistent r23-r31 register schedule remain incomplete."
+    },
+    {
+      "name": "fn_801D2FA4",
+      "range": "0x801D2FA4..0x801D3024",
+      "status": "Matching",
+      "retail_bytes": 128,
+      "generated_bytes": 128,
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "relocations_equal": true
+    }
+  ],
+  "accounting": "2916 NonMatching bytes plus 128 Matching bytes equals the complete 3044-byte declared range; no gap, assembly, shared reconstruction, fallback jump, or unaccounted span exists."
+}

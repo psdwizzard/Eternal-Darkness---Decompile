@@ -126,10 +126,11 @@ def collect(ref: str) -> dict[str, object]:
         entries.extend(audit["abi_divergent"])
         entries.sort(key=lambda item: (-int(item["declarations"]), str(item["symbol"])))
         selected = entries[:TOP_SYMBOLS]
-        truths = {
-            item["symbol"]: item["ground_truth"]
-            for item in audit["ground_truth_contradictions"]
-        }
+        # The ranked drift list includes parameter-only disagreements.  Those
+        # do not appear in ground_truth_contradictions when every declaration
+        # uses the definition's return register, so consume the audit's full
+        # owned-definition/retail index rather than its return-conflict subset.
+        truths = audit["ground_truth_by_symbol"]
         result_symbols: list[dict[str, object]] = []
         for rank, entry in enumerate(selected, 1):
             symbol = str(entry["symbol"])
