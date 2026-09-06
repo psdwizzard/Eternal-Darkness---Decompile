@@ -1,0 +1,24 @@
+{
+  "session_id": "session-1815",
+  "range_start": "0x801D73D0",
+  "observed_range_end": "0x801D7C24",
+  "next_target": "0x801D76A8",
+  "retained_nonmatching_bytes": 728,
+  "retained_matching_bytes": 172,
+  "unattempted_bytes": 1232,
+  "range_measurement": {
+    "command": "printf 'retained_nonmatching_bytes=%d retained_matching_bytes=%d removed_unattempted_bytes=%d next_target=0x%X\\n' \"$((0x801D76A8-0x801D73D0))\" \"$((0x801D7C24-0x801D7B78))\" \"$((0x801D7B78-0x801D76A8))\" \"$((0x801D76A8))\"",
+    "raw_output": "retained_nonmatching_bytes=728 retained_matching_bytes=172 removed_unattempted_bytes=1232 next_target=0x801D76A8"
+  },
+  "unattempted_spans": [
+    {"start":"0x801D76A8","end":"0x801D7B78","bytes":1232,"status":"Unattempted","reason":"The session's two short placeholder bodies were removed from source, configure.py, and splits.txt; they do not own retail address space."}
+  ],
+  "functions": [
+    {"name":"fn_801D73D0","start":"0x801D73D0","end":"0x801D76A8","bytes":728,"status":"NonMatching","canonical_percent":71.65385,"strict_percent":71.65385,"generated_bytes":720,"retail_instructions":182,"generated_instructions":180,"retail_relocations":22,"generated_relocations":22,"blocker":"The recovered control flow is eight bytes short. GC/1.3 assigns the long-lived object, source id, current time, damage, and endpoint pointers across different r24-r31 registers and schedules integer-to-float conversion and the sound call differently."},
+    {"name":"fn_801D7B78","start":"0x801D7B78","end":"0x801D7C24","bytes":172,"status":"Matching","canonical_percent":100.0,"strict_percent":100.0,"retail_instructions":43,"generated_instructions":43,"retail_relocations":3,"generated_relocations":3,"layout_caution":"The byte-identical body uses mixed table strides and evaluates memcmp before the recovered count bound. Treat the current element layout as provisional, not a settled struct reference."}
+  ],
+  "direct_measurement": {
+    "command": "for f in 801D73D0 801D7B78; do jq -r --arg s fn_$f '(.left.symbols[]|select(.name==$s)) as $l | (.right.symbols[]|select(.name==$s)) as $r | \"function=\\($s) retail_bytes=\\($l.size) generated_bytes=\\($r.size) retail_instructions=\\([$l.instructions[]|select(.instruction)]|length) generated_instructions=\\([$r.instructions[]|select(.instruction)]|length) match_percent=\\($l.match_percent) retail_relocations=\\([$l.instructions[].instruction|select(.relocation != null)]|length) generated_relocations=\\([$r.instructions[].instruction|select(.relocation != null)]|length)\"' reports/GEDE01/objdiff-game_fn_$f-session-1815-remediation-1-reloc-strict.json; done",
+    "raw_output": "function=fn_801D73D0 retail_bytes=728 generated_bytes=720 retail_instructions=182 generated_instructions=180 match_percent=71.65385 retail_relocations=22 generated_relocations=22\nfunction=fn_801D7B78 retail_bytes=172 generated_bytes=172 retail_instructions=43 generated_instructions=43 match_percent=100.0 retail_relocations=3 generated_relocations=3"
+  }
+}
