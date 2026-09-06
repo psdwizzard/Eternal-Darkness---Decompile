@@ -24,7 +24,7 @@ int fn_80095894(register void* object, void* unused,
 
     runtime = ((Runtime80095894*)fn_80201B8C(object));
     timer = context->timer;
-    context->timer = (timer - 1) & ((-timer & ~timer) >> 31);
+    context->timer = timer > 0 ? timer - 1 : 0;
     if (fn_800931D0(object, state, context) ||
         fn_80092C30(object, runtime->target) || context->timer == 0) {
         fn_80201D2C(object, 1);

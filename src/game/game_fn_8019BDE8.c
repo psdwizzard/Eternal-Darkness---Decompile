@@ -26,12 +26,13 @@ void fn_8019BDE8(u8* object, void* first, void* second, u8* config)
 {
     u8 count;
     u8* entry;
+    s16 mode;
     int i;
+    u8 base[8];
     struct {
         u32 word;
         u16 half;
     } setup;
-    u8 base[8];
     u8 current[8];
     u8 work[8];
 
@@ -61,7 +62,8 @@ void fn_8019BDE8(u8* object, void* first, void* second, u8* config)
         memcpy(current, base, 6);
         memcpy(work, first, 6);
         *(s16*)(current + 4) = -32;
-        fn_8018EFB0(work, *(u16*)(config + 0x16), 0);
+        mode = *(u16*)(config + 0x16);
+        fn_8018EFB0(work, mode, 0);
         fn_8018EFB0(work, *(u16*)(config + 0x16), 1);
         fn_80180554(entry, work, current, &setup,
                     *(u16*)(config + 8), 1);

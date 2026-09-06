@@ -1,9 +1,14 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
+typedef struct Owner800A509C {
+    u8 pad0[0xBC];
+    void* previous;
+} Owner800A509C;
+
 typedef struct Runtime800A509C {
     u8 pad0[0x8C];
-    void* owner;
+    Owner800A509C* owner;
     u8 pad90[0xE];
     u8 state;
     u8 active;
@@ -14,9 +19,10 @@ typedef struct Local800A509C {
     float scale;
     u32 kind;
     u32 mode;
-    u8 pad18[0x14];
+    u8 pad18[0x10];
     u32 count;
     int value;
+    u8 pad30[4];
 } Local800A509C;
 
 extern int lbl_8064C4E4;
@@ -64,12 +70,12 @@ extern void fn_801A7864(int);
 void fn_800A509C(int mode)
 {
     Local800A509C local;
-    int original = fn_80201B44();
     void* object;
     void* context;
     Runtime800A509C* runtime;
     void* created;
     void* createdContext;
+    int original = fn_80201B44();
     void* callback;
     int handle;
 
@@ -115,9 +121,8 @@ void fn_800A509C(int mode)
     fn_80201D54(created, local.value);
     fn_80201D3C(created, 0);
     runtime->state = 1;
-    runtime->owner = (void*)original;
-    ((void*)fn_80201B54(created));
-    fn_80201AF8((int)created);
+    runtime->owner->previous = (void*)original;
+    fn_80201AF8(fn_80201B54(created));
     fn_802015A4(created);
 
     callback = fn_80156DA0(3, &local);

@@ -11,9 +11,9 @@ extern int fn_800EF86C(TRKBuffer *, u8 *);
 extern int fn_800EF6EC(TRKBuffer *, u32 *);
 extern int fn_800EFC9C(TRKBuffer *, int);
 extern int fn_800EF2A0(TRKBuffer *);
-extern int fn_800F3C98(u8);
+extern int fn_800F3C98(u8, u32, u32);
 
-static void append(TRKBuffer *buffer, u8 value)
+static inline void append(TRKBuffer *buffer, u8 value)
 {
     if (buffer->position < 0x880) {
         buffer->data[buffer->position++] = value;
@@ -25,8 +25,8 @@ void fn_800F0CC4(TRKBuffer *buffer)
 {
     u32 start;
     u32 end;
-    u8 unused;
-    u8 command;
+    u8 message_command;
+    u8 options;
     int result;
     int retry;
 
@@ -44,8 +44,8 @@ void fn_800F0CC4(TRKBuffer *buffer)
     }
 
     fn_800EFC6C(buffer, 0);
-    result = fn_800EF86C(buffer, &unused);
-    if (result == 0) result = fn_800EF86C(buffer, &command);
+    result = fn_800EF86C(buffer, &message_command);
+    if (result == 0) result = fn_800EF86C(buffer, &options);
     if (result == 0) result = fn_800EF6EC(buffer, &start);
     if (result == 0) result = fn_800EF6EC(buffer, &end);
 
@@ -63,7 +63,7 @@ void fn_800F0CC4(TRKBuffer *buffer)
     }
 
     if (result == 0)
-        result = fn_800F3C98(command);
+        result = fn_800F3C98(options, start, end);
 
     if (result == 0) {
         fn_800EFC9C(buffer, 1);

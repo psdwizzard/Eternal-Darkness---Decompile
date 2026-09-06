@@ -6,8 +6,8 @@ extern void* memcpy(void*, const void*, unsigned long);
 
 u32 fn_801A81FC(u8* source, u16 count, u8* output)
 {
-    u16 limit = count;
     u8* record = output;
+    int limit = count;
     u32 size = 0;
     int index = 0;
 

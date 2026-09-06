@@ -16,7 +16,7 @@ extern s16 lbl_80606360[];
 void fn_8018163C(Entry* dst, const Coord* src, s16 angle, int scale)
 {
     register int x;
-    register s16 index;
+    register int index;
     index = angle;
     x = src->x;
     dst->position.x = x + ((lbl_80606360[index] * scale) >> 7);

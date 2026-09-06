@@ -58,7 +58,7 @@ extern int fn_80130718(void);
 extern void fn_80144C4C(void* object);
 extern u8 fn_8013017C(void* object);
 extern void fn_80130434(void* object, u32 value);
-extern void fn_801301B0(void* object, u32 first, u32 second);
+extern int fn_801301B0(void* object, u32 first, u32 second);
 extern void fn_800C2474(void* object, u32 value);
 
 extern int fn_80048A60(void);

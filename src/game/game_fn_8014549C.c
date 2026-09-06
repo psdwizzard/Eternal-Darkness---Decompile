@@ -1,3 +1,4 @@
+#pragma use_lmw_stmw on
 typedef signed short s16;
 typedef unsigned int u32;
 
@@ -5,11 +6,11 @@ extern s16 fn_80144A2C(u32, s16, s16, int);
 
 u32 fn_8014549C(int index, float scale)
 {
+    int result = 0;
     s16 x = fn_80144A2C(0x30000, 0, 0x7FFF, index);
     s16 y = fn_80144A2C(0xC0000, 0, 0x7FFF, index);
     s16 z = fn_80144A2C(0x300000, 0, 0x7FFF, index);
     s16 w = fn_80144A2C(0xC00000, 0, 0x7FFF, index);
-    u32 result = 0;
     float limit = (float)x * scale;
     if (limit < 0.0f)
         limit = -limit;

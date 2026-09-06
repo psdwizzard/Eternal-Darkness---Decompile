@@ -10,12 +10,12 @@ void fn_80185F10(u8* state, u8* self, u16 count, void* setup)
     void* local_setup = setup;
     register u16 local_count;
     int i;
-    int limit = self[1];
+    u16 limit = self[1];
     u8* entry = *(u8**)(self + 0x4C);
 
     local_count = count;
     *(u16*)(state + 0xE) = local_count;
-    for (limit -= 1, i = 0; i < limit; i++) {
+    for (i = 0; i < limit - 1; i++) {
         fn_8018163C(entry, local_setup,
                     (int)(i * *(float*)(local_state + 0x30)) & 0x3F,
                     local_count);

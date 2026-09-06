@@ -31,7 +31,8 @@ int fn_800A197C(void)
     void* object;
 
     fn_80204844(fn_80201B9C(), 0x20);
-    transform = (Transform800A197C*)fn_8006D444();
+    context = fn_8006D444();
+    transform = (Transform800A197C*)context;
     context = (Context800A197C*)transform;
     fn_80201814(context->resource);
     object = fn_80201BC8();

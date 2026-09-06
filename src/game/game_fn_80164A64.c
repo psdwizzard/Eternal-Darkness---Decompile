@@ -33,15 +33,13 @@ extern void fn_8015F988(ParserState*, int);
 extern int fn_8015EC10(ParserState*);
 extern void* fn_8016B5CC(void*, void*, unsigned int, char*, int);
 extern void fn_8016437C(Parser*, int);
-extern void fn_80161244(void*, RuntimeObject*, int, int, int*, int);
+extern void fn_80161244(void*, RuntimeObject*, int);
 
 void fn_80164A64(Parser* parser)
 {
     void* allocator = parser->allocator;
     ParserState* state = parser->state;
     RuntimeObject* object = state->object;
-    int index;
-    int* values;
 
     fn_8015F988(state, 0);
     fn_8015EC10(state);
@@ -59,11 +57,7 @@ void fn_80164A64(Parser* parser)
     object->values_2C = fn_8016B5CC(allocator, object->values_2C,
                                     (object->count_30 + 1) * 4,
                                     lbl_8024F8B0, 0x153);
-    index = object->count_30;
-    values = object->values_2C;
-    object->count_30 = index + 1;
-    values[index] = 0x7FFFFFFD;
-    fn_80161244(allocator, object, state->value_10, index,
-                values, 0x7FFFFFFD);
+    object->values_2C[object->count_30++] = 0x7FFFFFFD;
+    fn_80161244(allocator, object, state->value_10);
     parser->state = state->parent;
 }

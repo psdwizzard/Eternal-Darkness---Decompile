@@ -1,6 +1,8 @@
 typedef unsigned char u8;
 typedef signed char s8;
 
+#define SUB_CLAMP0(a, b) ((a) - (b) > 0 ? (a) - (b) : 0)
+
 extern void fn_8018E8B8(u8*, u8, int);
 
 u8 fn_8018E504(u8* state, u8* object)
@@ -59,16 +61,8 @@ u8 fn_8018E504(u8* state, u8* object)
                 state[0] = 0;
             } else {
                 if ((s8)state[5] > 0) {
-                    int amount = (s8)state[5];
-                    if (amount < 0) {
-                        amount = -amount;
-                    }
-                    state[2] = state[2] - amount > 0 ? state[2] - amount : 0;
-                    amount = (s8)state[5];
-                    if (amount < 0) {
-                        amount = -amount;
-                    }
-                    state[3] = state[3] - amount > 0 ? state[3] - amount : 0;
+                    state[2] = SUB_CLAMP0(state[2], __abs(*(s8*)(state + 5)));
+                    state[3] = SUB_CLAMP0(state[3], __abs(*(s8*)(state + 5)));
                     state[1] = state[3];
                 } else {
                     state[1] = state[2];

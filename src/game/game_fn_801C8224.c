@@ -73,8 +73,6 @@ void fn_801C8224(void)
     float distance;
     float best_distance;
     float delta[3];
-    double threshold;
-    float scale;
 
     fn_801C8160();
 
@@ -87,8 +85,6 @@ void fn_801C8224(void)
 
     if (count != 0) {
         target = lbl_8064D4C4;
-        scale = lbl_80650FC4;
-        threshold = lbl_80650FC8;
         while (target != 0) {
             if (target->channel == 0xFF) {
                 sample = lbl_8064D4C0;
@@ -160,7 +156,7 @@ void fn_801C8224(void)
 
                 target->mean_square_distance = distance;
                 target->fade = found ? 0x007F0000 : 0;
-                if (scale * (float)target->fade >= threshold) {
+                if (target->fade * 1.2014794e-07f >= 0.5) {
                     fn_801B9170(target->channel, 1, 0);
                 } else {
                     fn_801B9170(target->channel, 0, 0);
@@ -175,7 +171,7 @@ void fn_801C8224(void)
                         target->fade = 0x007F0000;
                         target->owner &= 0x7FFFFFFF;
                     }
-                    if (scale * (float)target->fade >= threshold) {
+                    if (target->fade * 1.2014794e-07f >= 0.5) {
                         fn_801B9170(target->channel, 1, 0);
                     } else {
                         fn_801B9170(target->channel, 0, 0);
@@ -187,7 +183,7 @@ void fn_801C8224(void)
                         target->fade = 0;
                         target->owner &= 0xBFFFFFFF;
                     }
-                    if (scale * (float)target->fade >= threshold) {
+                    if (target->fade * 1.2014794e-07f >= 0.5) {
                         fn_801B9170(target->channel, 1, 0);
                     } else {
                         fn_801B9170(target->channel, 0, 0);

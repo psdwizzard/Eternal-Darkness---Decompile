@@ -26,14 +26,14 @@ extern void fn_80161B0C(Collection*, int*);
 
 void fn_80161C30(Collection* collection, int preserve)
 {
+    int bucket_offset;
     int offset;
     int index;
 
     for (index = 0, offset = 0; index < collection->count; offset += 4, index++) {
         Node** link = (Node**)((char*)collection->lists + offset);
-        while (*link != 0) {
-            int bucket_offset;
-            Node* node = *link;
+        Node* node;
+        while ((node = *link) != 0) {
             if (node->state != 0 && preserve == 0) {
                 node->state = 0;
                 link = &node->next;

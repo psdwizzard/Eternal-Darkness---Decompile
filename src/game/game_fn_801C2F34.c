@@ -50,7 +50,8 @@ int fn_801C2F34(Envelope* envelope, u16* level, u16* delta)
                 envelope->value += envelope->step;
             } else {
                 envelope->secondary += envelope->step;
-                change = 193 - ((envelope->secondary + 0x8000) >> 16);
+                change = envelope->secondary + 0x8000;
+                change = 193 - (change >> 16);
                 if (change < 0) {
                     change = 0;
                 }

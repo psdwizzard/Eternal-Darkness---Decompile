@@ -1,13 +1,17 @@
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
-extern int fn_801B7F6C(int, int, int);
+extern u32 fn_801B7F6C(u32, u8, u16);
 
-int fn_801B8DE8(int arg0, int arg1, int arg2)
+u32 fn_801B8DE8(u32 voice_id, u8 control, u16 value)
 {
-    int result;
+    u32 result;
 
     fn_801CE2B8();
-    result = fn_801B7F6C(arg0, arg1, arg2);
+    result = fn_801B7F6C(voice_id, control, value);
     fn_801CE280();
     return result;
 }

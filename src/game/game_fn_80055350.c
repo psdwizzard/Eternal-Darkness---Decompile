@@ -12,7 +12,7 @@ extern void *fn_80201BC8();
 extern int fn_80201B54();
 extern void *fn_80201B8C();
 extern void fn_8011E174(s32 index, s32 value);
-extern void fn_801301B0(void *object, s32 set, s32 clear);
+extern int fn_801301B0(void *object, s32 set, s32 clear);
 extern void fn_801B05E8(s32, s32, s32, s32, s32, s32, s32, s32);
 extern s32 fn_800460EC(void);
 extern void fn_800073D8(s32 value);

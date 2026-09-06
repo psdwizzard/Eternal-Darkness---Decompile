@@ -22,7 +22,7 @@ typedef struct ObjectState {
 } ObjectState;
 
 extern s32 lbl_8064C548;
-extern u16 lbl_8064DC88[];
+extern u16 lbl_8064DC88[2];
 extern void *fn_80201B8C();
 #define FN_80201E78_RETURN void
 #define FN_80201E78_PARAMETERS Vec3 *out, void *object
@@ -34,8 +34,8 @@ void fn_80067C20(void *object)
 {
     ObjectState *state;
     RuntimeSlot **installed;
-    Vec3 source;
     Vec3 position;
+    Vec3 source;
     RuntimeSlot *slot;
 
     state = fn_80201B8C(object);
@@ -46,7 +46,7 @@ void fn_80067C20(void *object)
 
     if ((u32)(slot->sound + 0x10000) == 0xFFFF) {
         slot->active = lbl_8064C548;
-        lbl_8064C548 = lbl_8064C548 < 2 ? lbl_8064C548 + 1 : 0;
+        lbl_8064C548 = (lbl_8064C548 >= 2) ? 0 : lbl_8064C548 + 1;
     } else {
         fn_801AC980(slot->sound, 30);
         (*installed)->sound = 0;

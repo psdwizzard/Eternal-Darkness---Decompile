@@ -10,7 +10,7 @@ typedef struct QueryResult {
     float x;
     float y;
     float z;
-    unsigned char pad2[12];
+    unsigned char pad2[20];
 } QueryResult;
 
 extern int fn_8011F6A4(void*, void*, int, int, QueryResult*, int);

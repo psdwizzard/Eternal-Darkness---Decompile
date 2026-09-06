@@ -17,8 +17,8 @@ typedef struct State {
 } State;
 
 typedef struct Pair {
-    void* entries;
     u32 count;
+    void* entries;
 } Pair;
 
 #define FN_80128E30_RETURN Runtime*
@@ -28,17 +28,17 @@ extern void fn_80127128(void*, u32, State*, int, int*);
 
 void fn_80127178(Owner* owner, int index, int direction)
 {
-    void* entries;
+    u32 count;
     State* state;
-    volatile Pair* pair;
+    Pair* pair;
     Runtime* runtime;
 
     runtime = fn_80128E30(owner);
-    pair = (volatile Pair*)((u8*)*(void**)((u8*)runtime->table + 4) + index * 8 + 0x10);
-    entries = pair->entries;
-    if (entries != 0) {
+    pair = (Pair*)((u8*)*(void**)((u8*)runtime->table + 4) + index * 8 + 0x10);
+    count = pair->count;
+    if (count != 0) {
         state = (State*)((u8*)owner->states + index * 0x18);
-        fn_80127128(entries, pair->count, state, direction, (int*)state);
+        fn_80127128(pair->entries, count, state, direction, (int*)state);
     }
     state = (State*)((u8*)owner->states + index * 0x18);
     state->direction = direction;

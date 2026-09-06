@@ -1,14 +1,19 @@
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
-extern int fn_801B7DC8();
-extern unsigned char lbl_8061A4F4[];
+extern u32 fn_801B7DC8(u16, u8, u8, u8, u32);
+extern u8 lbl_8061A4F4[];
 
-int fn_801B8E88(int arg0, int arg1, int arg2, int arg3)
+u32 fn_801B8E88(u16 effect_id, u8 volume, u8 panning, u8 studio)
 {
-    int result;
+    u32 voice_id;
 
     fn_801CE2B8();
-    result = fn_801B7DC8(arg0, arg1, arg2, arg3, lbl_8061A4F4[(unsigned char)arg3 * 2 + 1]);
+    voice_id = fn_801B7DC8(effect_id, volume, panning, studio,
+                           lbl_8061A4F4[studio * 2 + 1]);
     fn_801CE280();
-    return result;
+    return voice_id;
 }

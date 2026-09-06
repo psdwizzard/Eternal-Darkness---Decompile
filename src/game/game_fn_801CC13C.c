@@ -1,7 +1,6 @@
 typedef unsigned char u8;
-typedef unsigned int u32;
 
-u32 fn_801CC13C(u32 value)
+u8 fn_801CC13C(u8 value)
 {
     switch ((u8)value) {
     case 0x80:

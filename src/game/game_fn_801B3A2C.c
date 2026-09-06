@@ -40,7 +40,7 @@ static inline u32 resolve_handle(u32 value)
     return -1;
 }
 
-void fn_801B3A2C(u32 handle, u16 value)
+u8* fn_801B3A2C(u32 handle, u16 value)
 {
     u8* base = (u8*)lbl_8060C020;
     u32 id = resolve_handle(handle);
@@ -57,4 +57,5 @@ void fn_801B3A2C(u32 handle, u16 value)
         entry[0x22DA] |= 0x20;
         *(u16*)(entry + 0x22D8) = value;
     }
+    return entry;
 }

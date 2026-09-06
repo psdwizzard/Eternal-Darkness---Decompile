@@ -19,7 +19,7 @@ void fn_801B9220(int arg0)
     int offset;
     u32 i;
 
-    for (offset = 0, i = 0; i < lbl_80619C20[0x210]; offset += 0x404, i++) {
+    for (i = 0, offset = 0; i < lbl_80619C20[0x210]; offset += 0x404, i++) {
         u8* entry = lbl_8064D3D0 + offset;
         if ((u8)arg0 == entry[0x11F]) {
             if (*(u32*)(entry + 0xF4) != (u32)-1) {
@@ -32,8 +32,9 @@ void fn_801B9220(int arg0)
 
     fn_801CE2B8();
     {
+        u32 word_offset;
         u8 index = (u8)arg0;
-        u32 word_offset = (u32)index * 4;
+        word_offset = (u32)index * 4;
         *(u32*)((u8*)lbl_8061A494 + word_offset) = 0;
         *(u32*)((u8*)lbl_8061A4D4 + word_offset) = 0;
         (&lbl_8064D3BC)[index] = 0xFF;

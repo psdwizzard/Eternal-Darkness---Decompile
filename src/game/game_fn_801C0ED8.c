@@ -27,9 +27,9 @@ void fn_801C0ED8(void)
 {
     u32 i;
 
-    lbl_8064D448 = 0;
     lbl_8064D43C = 0;
     lbl_8064D440 = 0;
+    lbl_8064D448 = 0;
 
     for (i = 0; i < lbl_80619C20.voice_count_210; i++) {
         lbl_8064D3D0[i].value_034 = 0;
