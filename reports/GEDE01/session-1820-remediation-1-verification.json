@@ -1,0 +1,66 @@
+{
+  "session_id": "session-1820-remediation-1",
+  "scope": "review remediation only; one signature correction; no frontier matching",
+  "starting_target": "0x801D8050",
+  "ending_next_target": "0x801D8050",
+  "selection_evidence": {
+    "audit_command": "jq -r '.return_register_contradictions[] | select(.symbol == \"fn_800A1580\") | \"symbol=\\(.symbol) confidence=\\(.confidence) disposition=\\(.disposition) affected_translation_units=\\(.affected_translation_units) translation_units=\\(.translation_units|join(\",\")) grounded_return_type=\\(.evidence[0].return_type) grounded_return_shape=\\(.evidence[0].return_shape) grounded_source=\\(.evidence[0].source) return_only_parameter_abi_matches=\\(.return_only_parameter_abi_matches)\"' reports/GEDE01/signature-shadow-session-1820.json",
+    "audit_raw_output": "symbol=fn_800A1580 confidence=high disposition=pending affected_translation_units=1 translation_units=src/game/game_fn_8009E2E8.c grounded_return_type=int grounded_return_shape=GPR:r3 grounded_source=src/game/game_fn_800A1580.c:1 return_only_parameter_abi_matches=true",
+    "baseline_command": "jq -r '.units[] | select(.name == \"main/game/game_fn_8009E2E8\") | \"name=\\(.name) complete=\\(.metadata.complete) matched_code_percent=\\(.measures.matched_code_percent) complete_code_percent=\\(.measures.complete_code_percent) matched_functions_percent=\\(.measures.matched_functions_percent) complete_units=\\(.measures.complete_units)\"' build/GEDE01/report.json",
+    "baseline_raw_output": "name=main/game/game_fn_8009E2E8 complete=true matched_code_percent=100.0 complete_code_percent=100.0 matched_functions_percent=100.0 complete_units=1"
+  },
+  "applied_correction": {
+    "symbol": "fn_800A1580",
+    "owned_definition_evidence": "int fn_800A1580(int) at src/game/game_fn_800A1580.c:1",
+    "edited_declaration": "src/game/game_fn_8009E2E8.c:21",
+    "change": "return type corrected from void to int; parameter ABI unchanged"
+  },
+  "baseline_blocked": {
+    "symbol": "fn_801D6724",
+    "disposition": "blocked_on_baseline",
+    "reason": "The owned pointer-return evidence remains eligible, but its affected object lacks the required complete baseline. This is a transient dependency rather than a steady-state deferral."
+  },
+  "build": {
+    "command": ".tools/bin/ninja 2>&1 | tail -14; echo ninja_exit=${PIPESTATUS[0]} tail_exit=${PIPESTATUS[1]}",
+    "raw_output": "[661/663] DOL build/GEDE01/main.dol\n[662/663] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[663/663] PROGRESS\nProgress:\n  All: 47.59% fuzzy, 33.07% matched, 33.07% linked (5061 / 6234 files)\n    Code: 760932 / 2300692 bytes (4827 / 8216 functions)\n    Data: 38646 / 4305642 bytes (0.90%)\n  Game Code: 88.57% fuzzy, 61.48% matched, 61.46% linked (5043 / 5804 files)\n    Code: 757904 / 1232848 bytes (4765 / 5525 functions)\n    Data: 38422 / 40354 bytes (95.21%)\n  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\n    Code: 3028 / 3028 bytes (62 / 62 functions)\n    Data: 224 / 224 bytes (100.00%)\nninja_exit=0 tail_exit=0"
+  },
+  "affected_object": {
+    "name": "main/game/game_fn_8009E2E8",
+    "report_command": "jq -r '.units[] | select(.name == \"main/game/game_fn_8009E2E8\") | \"name=\\(.name) complete=\\(.metadata.complete) matched_code_percent=\\(.measures.matched_code_percent) complete_code_percent=\\(.measures.complete_code_percent) matched_functions_percent=\\(.measures.matched_functions_percent) complete_units=\\(.measures.complete_units)\"' build/GEDE01/report.json",
+    "report_raw_output": "name=main/game/game_fn_8009E2E8 complete=true matched_code_percent=100.0 complete_code_percent=100.0 matched_functions_percent=100.0 complete_units=1",
+    "canonical_objdiff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8009E2E8 fn_8009E2E8 -o reports/GEDE01/objdiff-game_fn_8009E2E8-session-1820-remediation-1.json --format json-pretty 2>&1 | sed 's/^ //'; echo canonical_objdiff_exit=${PIPESTATUS[0]} sed_exit=${PIPESTATUS[1]}",
+    "canonical_objdiff_raw_output": "INFO Writing to reports/GEDE01/objdiff-game_fn_8009E2E8-session-1820-remediation-1.json\ncanonical_objdiff_exit=0 sed_exit=0",
+    "relocation_strict_objdiff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8009E2E8 fn_8009E2E8 -o reports/GEDE01/objdiff-game_fn_8009E2E8-session-1820-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address 2>&1 | sed 's/^ //'; echo relocation_strict_objdiff_exit=${PIPESTATUS[0]} sed_exit=${PIPESTATUS[1]}",
+    "relocation_strict_objdiff_raw_output": "INFO Writing to reports/GEDE01/objdiff-game_fn_8009E2E8-session-1820-remediation-1-reloc-strict.json\nrelocation_strict_objdiff_exit=0 sed_exit=0",
+    "report_generation_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json -f json 2>&1 | sed 's/^ //'; echo report_generate_exit=${PIPESTATUS[0]} sed_exit=${PIPESTATUS[1]}",
+    "report_generation_raw_output": "INFO Loading project .\nINFO Generating report for 6234 units (using 8 threads)\nINFO Report generated in 0.166s\nINFO Writing to build/GEDE01/report.json\nreport_generate_exit=0 sed_exit=0",
+    "measurement_command": "jq -r '(.left.symbols[] | select(.name == \"fn_8009E2E8\")) as $l | (.right.symbols[] | select(.name == \"fn_8009E2E8\")) as $r | \"retail symbol=\\($l.name) size=\\($l.size) match_percent=\\($l.match_percent) instruction_count=\\([$l.instructions[]?]|length) relocation_count=\\([$l.instructions[]?.instruction.relocation | select(. != null)]|length)\\nbuilt symbol=\\($r.name) size=\\($r.size) instruction_count=\\([$r.instructions[]?]|length) relocation_count=\\([$r.instructions[]?.instruction.relocation | select(. != null)]|length)\"' reports/GEDE01/objdiff-game_fn_8009E2E8-session-1820-remediation-1.json reports/GEDE01/objdiff-game_fn_8009E2E8-session-1820-remediation-1-reloc-strict.json",
+    "measurement_raw_output": "retail symbol=fn_8009E2E8 size=180 match_percent=100.0 instruction_count=45 relocation_count=8\nbuilt symbol=fn_8009E2E8 size=180 instruction_count=45 relocation_count=8\nretail symbol=fn_8009E2E8 size=180 match_percent=100.0 instruction_count=45 relocation_count=8\nbuilt symbol=fn_8009E2E8 size=180 instruction_count=45 relocation_count=8",
+    "relocation_command": "retail_relocations=$(readelf -rW build/GEDE01/obj/game/game_fn_8009E2E8.o | awk '/^0[0-9a-f]+/{n++} END{print n+0}'); built_relocations=$(readelf -rW build/GEDE01/src/game/game_fn_8009E2E8.o | awk '/^0[0-9a-f]+/{n++} END{print n+0}'); echo retail_relocations=$retail_relocations; echo built_relocations=$built_relocations; diff -u <(readelf -rW build/GEDE01/obj/game/game_fn_8009E2E8.o | awk '/^0[0-9a-f]+/{print $1,$3,$5,$7}') <(readelf -rW build/GEDE01/src/game/game_fn_8009E2E8.o | awk '/^0[0-9a-f]+/{print $1,$3,$5,$7}'); echo normalized_relocation_diff_exit=$?",
+    "relocation_raw_output": "retail_relocations=8\nbuilt_relocations=8\nnormalized_relocation_diff_exit=0"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "unchanged": true
+  },
+  "shadow_report": {
+    "generation_command": "python3 tools/signature_audit.py --json-output reports/GEDE01/signature-shadow-session-1820.json --session-id session-1820 --starting-target 0x801D8050 --ending-next-target 0x801D8050 --applied-symbol fn_800A1580 --baseline-blocked-symbol fn_801D6724 --correction-evidence fn_800A1580=reports/GEDE01/objdiff-game_fn_8009E2E8-session-1820-remediation-1.json --correction-evidence fn_800A1580=reports/GEDE01/objdiff-game_fn_8009E2E8-session-1820-remediation-1-reloc-strict.json --corrected-translation-unit fn_800A1580=src/game/game_fn_8009E2E8.c --evidence-report reports/GEDE01/session-1820-remediation-1-verification.json --dol-sha1 ea24b6af954876ce072562ff39cdb4c81d32be1f --build-report build/GEDE01/report.json --verified-object main/game/game_fn_8009E2E8 >/dev/null; echo signature_audit_exit=$?",
+    "generation_raw_output": "signature_audit_exit=0",
+    "accounting_command": "jq -r '\"return_register_contradictions=\\(.return_register_contradictions|length)\", (.return_register_contradictions | group_by(.disposition)[] | \"return_register_\\(.[0].disposition)=\\(length)\"), \"abi_divergent=\\(.abi_divergent|length)\", \"cosmetic=\\(.cosmetic|length)\", \"applied_corrections=\\(.applied_corrections|length)\"' reports/GEDE01/signature-shadow-session-1820.json",
+    "accounting_raw_output": "return_register_contradictions=618\nreturn_register_blocked_on_baseline=1\nreturn_register_deferred=434\nreturn_register_pending=183\nabi_divergent=369\ncosmetic=774\napplied_corrections=1",
+    "blocked_state_command": "jq -r '.return_register_contradictions[] | select(.symbol == \"fn_801D6724\") | \"symbol=\\(.symbol) disposition=\\(.disposition) affected_translation_units=\\(.affected_translation_units) reason=\\(.disposition_reason)\"' reports/GEDE01/signature-shadow-session-1820.json",
+    "blocked_state_raw_output": "symbol=fn_801D6724 disposition=blocked_on_baseline affected_translation_units=1 reason=The grounded correction remains eligible, but every affected object must first have a 100-percent baseline. This is a transient verification dependency, not a steady-state deferral.",
+    "applied_state_command": "jq -r '.applied_corrections[] | \"symbol=\\(.symbol) affected_translation_units=\\(.affected_translation_units) edited_translation_units=\\(.edited_translation_units|length) evidence=\\(.evidence.source) objdiff_artifacts=\\(.objdiff_artifacts|join(\",\"))\"' reports/GEDE01/signature-shadow-session-1820.json",
+    "applied_state_raw_output": "symbol=fn_800A1580 affected_translation_units=1 edited_translation_units=1 evidence=src/game/game_fn_800A1580.c:1 objdiff_artifacts=reports/GEDE01/objdiff-game_fn_8009E2E8-session-1820-remediation-1.json,reports/GEDE01/objdiff-game_fn_8009E2E8-session-1820-remediation-1-reloc-strict.json"
+  },
+  "accounting": {
+    "command": "jq -r '.session | \"session_id=\\(.session_id) starting_target=\\(.starting_target) ending_next_target=\\(.ending_next_target) matched_bytes_added=\\(.matched_bytes_added) nonmatching_bytes_added=\\(.nonmatching_bytes_added) match_counts_revised=\\(.match_counts_revised) dol_sha1=\\(.verification.dol_sha1) dol_byte_change=\\(.verification.dol_byte_change)\"' reports/GEDE01/signature-shadow-session-1820.json",
+    "raw_output": "session_id=session-1820 starting_target=0x801D8050 ending_next_target=0x801D8050 matched_bytes_added=0 nonmatching_bytes_added=0 match_counts_revised=false dol_sha1=ea24b6af954876ce072562ff39cdb4c81d32be1f dol_byte_change=false",
+    "matched_bytes_added": 0,
+    "nonmatching_bytes_added": 0,
+    "match_counts_revised": false,
+    "next_target": "0x801D8050"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "session_id": "session-1820",
+  "scope": "signature consolidation only; no frontier matching",
+  "starting_target": "0x801D8050",
+  "ending_next_target": "0x801D8050",
+  "accounting": {
+    "matched_bytes_added": 0,
+    "nonmatching_bytes_added": 0,
+    "match_counts_revised": false
+  },
+  "applied_corrections": [],
+  "trialed_and_reverted": [
+    {
+      "symbol": "fn_801D6724",
+      "owned_definition_evidence": "void* fn_801D6724(...) at src/game/game_fn_801D6724.c:19",
+      "trialed_declaration": "src/game/game_fn_800AA94C.c:5",
+      "affected_translation_units": 1,
+      "reason_reverted": "The sole affected object is not a 100% baseline object, so the required still-100% gate cannot be established. The source declaration was restored before closeout.",
+      "canonical_objdiff": "reports/GEDE01/objdiff-game_fn_800AA94C-session-1820-trial-reverted-canonical.json",
+      "relocation_strict_objdiff": "reports/GEDE01/objdiff-game_fn_800AA94C-session-1820-trial-reverted-reloc-strict.json",
+      "raw_output": "canonical size=364 match_percent=97.91209 instructions=91 relocations=0; relocation-strict size=364 match_percent=97.91209 instructions=91 relocations=0"
+    }
+  ],
+  "contradiction_accounting": {
+    "return_register_contradictions": 619,
+    "return_register_deferred": 435,
+    "return_register_pending": 184,
+    "abi_divergent": 369,
+    "cosmetic": 774,
+    "evidence": "reports/GEDE01/signature-shadow-session-1820.json",
+    "interpretation": "Every contradiction is recorded with competing signatures, affected-TU count, grounding evidence, confidence, and disposition. Pending entries are eligible but unstarted; deferred entries fail a stated safety gate."
+  },
+  "build": {
+    "command": ".tools/bin/ninja",
+    "status": "passed"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol && cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol; ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol; cmp_exit=0",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "unchanged": true
+  },
+  "progress_invariants": {
+    "next_target": "0x801D8050",
+    "next_gate_rewritten": false,
+    "headline_match_counts_rewritten": false,
+    "matching_code_bytes": 760932,
+    "matching_functions": 4827
+  }
+}

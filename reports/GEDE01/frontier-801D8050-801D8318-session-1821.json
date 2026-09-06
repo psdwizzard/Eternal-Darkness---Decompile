@@ -1,0 +1,37 @@
+{
+  "session_id": "session-1821",
+  "range_start": "0x801D8050",
+  "range_end": "0x801D8318",
+  "next_target": "0x801D8318",
+  "matched_bytes": 712,
+  "nonmatching_bytes": 0,
+  "range_measurement_command": "python3 - <<'PY'\nimport json\naddresses=('801D8050','801D8268')\nproject=json.load(open('objdiff.json'))\nunits={unit['name']:unit for unit in project['units']}\nmatched=0\nnonmatching=0\nfor address in addresses:\n    report=json.load(open(f'reports/GEDE01/objdiff-game_fn_{address}-session-1821-remediation-1-reloc-strict.json'))\n    symbol=next(symbol for symbol in report['left']['symbols'] if symbol['name']==f'fn_{address}')\n    if units[f'main/game/game_fn_{address}']['metadata']['complete']:\n        matched += int(symbol['size'])\n    else:\n        nonmatching += int(symbol['size'])\nprint(f'matched_bytes={matched} nonmatching_bytes={nonmatching}')\nPY",
+  "range_measurement_raw_output": "matched_bytes=712 nonmatching_bytes=0",
+  "unaccounted_spans": [],
+  "functions": [
+    {
+      "name": "fn_801D8050",
+      "range": "0x801D8050..0x801D8268",
+      "status": "Matching",
+      "bytes": 536,
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "relocations": "19/19 equal",
+      "measurement_command_reference": "reports/GEDE01/session-1821-remediation-1-verification.json direct_objdiff_measurement.command",
+      "measurement_raw_output": "fn_801D8050 canonical left_bytes=536 right_bytes=536 left_instructions=134 right_instructions=134 match_percent=100.0 left_relocations=19 right_relocations=19 differing_rows=0\nfn_801D8050 reloc-strict left_bytes=536 right_bytes=536 left_instructions=134 right_instructions=134 match_percent=100.0 left_relocations=19 right_relocations=19 differing_rows=0"
+    },
+    {
+      "name": "fn_801D8268",
+      "range": "0x801D8268..0x801D8318",
+      "status": "Matching",
+      "bytes": 176,
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "relocations": "10/10 equal",
+      "measurement_command_reference": "reports/GEDE01/session-1821-remediation-1-verification.json direct_objdiff_measurement.command",
+      "measurement_raw_output": "fn_801D8268 canonical left_bytes=176 right_bytes=176 left_instructions=44 right_instructions=44 match_percent=100.0 left_relocations=10 right_relocations=10 differing_rows=0\nfn_801D8268 reloc-strict left_bytes=176 right_bytes=176 left_instructions=44 right_instructions=44 match_percent=100.0 left_relocations=10 right_relocations=10 differing_rows=0"
+    }
+  ],
+  "assembly_added": false,
+  "shared_reconstruction": false
+}

@@ -1,0 +1,22 @@
+{
+  "session_id": "session-1821",
+  "starting_target": "0x801D8050",
+  "ending_next_target": "0x801D8318",
+  "canonical_direct_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D8050 -o reports/GEDE01/objdiff-game_fn_801D8050-session-1821-canonical.json --format json-pretty fn_801D8050",
+  "canonical_direct_raw_output": "fn_801D8050 size=536 match_percent=100.0",
+  "relocation_strict_direct_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D8050 -o reports/GEDE01/objdiff-game_fn_801D8050-session-1821-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_801D8050",
+  "relocation_strict_direct_raw_output": "fn_801D8050 size=536 match_percent=100.0 relocations=19/19 equal",
+  "nonmatching_direct_raw_output": "fn_801D8268 retail_bytes=176 generated_bytes=176 match_percent=99.77273 differing_slots=2",
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+  "canonical_report_raw_output": "matching_functions=4828 matching_objects=5062 matching_code_bytes=761468 linked_code_bytes=761332 total_code_bytes=2300692 code_percent=33.097347",
+  "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1821-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+  "relocation_strict_report_raw_output": "matching_functions=4822 matching_code_bytes=759680 total_code_bytes=2300692 code_percent=33.01963",
+  "build_command": ".tools/bin/ninja -j4",
+  "build_raw_output": "build/GEDE01/main.dol: OK",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "dol_cmp_command": "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_cmp_exit": 0,
+  "matched_bytes": 536,
+  "nonmatching_bytes": 176
+}

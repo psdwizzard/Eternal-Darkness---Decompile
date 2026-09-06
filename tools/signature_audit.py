@@ -387,6 +387,7 @@ def audit(
     retail_evidence_path: Path = DEFAULT_RETAIL_EVIDENCE,
     applied_symbols: set[str] | None = None,
     trialed_reverted_symbols: set[str] | None = None,
+    baseline_blocked_symbols: set[str] | None = None,
     corrected_translation_units: dict[str, set[str]] | None = None,
 ) -> dict[str, object]:
     grouped: dict[str, list[Declaration]] = defaultdict(list)
@@ -610,6 +611,7 @@ def audit(
         entries.sort(key=lambda item: (-int(item["declarations"]), str(item["symbol"])))
     applied_symbols = applied_symbols or set()
     trialed_reverted_symbols = trialed_reverted_symbols or set()
+    baseline_blocked_symbols = baseline_blocked_symbols or set()
     corrected_translation_units = corrected_translation_units or {}
     for category, entries in categories.items():
         for entry in entries:
@@ -700,10 +702,20 @@ def audit(
                     "The rebuild, objdiff, and DOL gates establish codegen safety and do "
                     "not independently prove the source-level return type."
                 )
-            elif symbol in trialed_reverted_symbols:
-                entry["disposition"] = "pending"
+            elif symbol in baseline_blocked_symbols:
+                entry["disposition"] = "blocked_on_baseline"
                 entry["disposition_reason"] = (
-                    "Trialed and reverted in session-1460. No trial objdiff artifact was retained, so build movement is unverified; the cited blocking object was not an edited translation unit. The symbol remains eligible for a future correction round."
+                    "The grounded correction remains eligible, but every affected "
+                    "object must first have a 100-percent baseline. This is a transient "
+                    "verification dependency, not a steady-state deferral."
+                )
+            elif symbol in trialed_reverted_symbols:
+                entry["disposition"] = "deferred"
+                entry["disposition_reason"] = (
+                    "Trialed and reverted in this consolidation session because the "
+                    "correction could not satisfy every required verification gate. "
+                    "No source correction is retained; reconsideration belongs on the "
+                    "signature sweep list."
                 )
             else:
                 entry["disposition"] = "deferred"
@@ -939,6 +951,10 @@ def main() -> int:
         help="symbol trialed and reverted without retained verification evidence",
     )
     parser.add_argument(
+        "--baseline-blocked-symbol", action="append", default=[],
+        help="eligible symbol blocked only because an affected object lacks a 100-percent baseline",
+    )
+    parser.add_argument(
         "--correction-evidence", action="append", default=[], metavar="SYMBOL=PATH",
         help="objdiff artifact for an applied correction (repeat per affected object)",
     )
@@ -973,6 +989,7 @@ def main() -> int:
         args.retail_evidence.resolve(),
         set(args.applied_symbol),
         set(args.trialed_reverted_symbol),
+        set(args.baseline_blocked_symbol),
         corrected_translation_units,
     )
     evidence_by_symbol: dict[str, list[str]] = defaultdict(list)

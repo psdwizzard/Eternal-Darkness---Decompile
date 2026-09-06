@@ -1,0 +1,52 @@
+{
+  "session_id": "session-1821-remediation-1",
+  "scope": "Review remediation only; frontier unchanged at 0x801D8318",
+  "source_correction": "fn_80201B54 is fully prototyped with one pointer parameter and its result is kept distinct from the field-loaded input so the source and MWCC live ranges describe retail behavior.",
+  "configuration_correction": "game_fn_801D8268 is registered Matching, and externalize_game_801D8050_signed_bias requires @18 to own the whole removed section.",
+  "direct_objdiff_generation": [
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D8268 fn_801D8268 -o reports/GEDE01/objdiff-game_fn_801D8268-session-1821-remediation-1-canonical.json --format json-pretty",
+      "raw_output": " INFO Writing to reports/GEDE01/objdiff-game_fn_801D8268-session-1821-remediation-1-canonical.json\nexit_code=0"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D8268 fn_801D8268 -o reports/GEDE01/objdiff-game_fn_801D8268-session-1821-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "raw_output": " INFO Writing to reports/GEDE01/objdiff-game_fn_801D8268-session-1821-remediation-1-reloc-strict.json\nexit_code=0"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D8050 fn_801D8050 -o reports/GEDE01/objdiff-game_fn_801D8050-session-1821-remediation-1-canonical.json --format json-pretty",
+      "raw_output": " INFO Writing to reports/GEDE01/objdiff-game_fn_801D8050-session-1821-remediation-1-canonical.json\nexit_code=0"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D8050 fn_801D8050 -o reports/GEDE01/objdiff-game_fn_801D8050-session-1821-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "raw_output": " INFO Writing to reports/GEDE01/objdiff-game_fn_801D8050-session-1821-remediation-1-reloc-strict.json\nexit_code=0"
+    }
+  ],
+  "direct_objdiff_measurement": {
+    "command": "python3 - <<'PY'\nimport json\nfrom pathlib import Path\nroot=Path('reports/GEDE01')\nfor addr in ('801D8050','801D8268'):\n    for mode in ('canonical','reloc-strict'):\n        p=root/f'objdiff-game_fn_{addr}-session-1821-remediation-1-{mode}.json'\n        d=json.loads(p.read_text())\n        ls=next(s for s in d['left']['symbols'] if s['name']==f'fn_{addr}')\n        rs=next(s for s in d['right']['symbols'] if s['name']==f'fn_{addr}')\n        lr=sum('relocation' in row.get('instruction',{}) for row in ls['instructions'])\n        rr=sum('relocation' in row.get('instruction',{}) for row in rs['instructions'])\n        diffs=sum(row.get('diff_kind') is not None for row in ls['instructions'])\n        print(f'fn_{addr} {mode} left_bytes={ls[\"size\"]} right_bytes={rs[\"size\"]} left_instructions={len(ls[\"instructions\"])} right_instructions={len(rs[\"instructions\"])} match_percent={ls[\"match_percent\"]} left_relocations={lr} right_relocations={rr} differing_rows={diffs}')\nPY",
+    "raw_output": "fn_801D8050 canonical left_bytes=536 right_bytes=536 left_instructions=134 right_instructions=134 match_percent=100.0 left_relocations=19 right_relocations=19 differing_rows=0\nfn_801D8050 reloc-strict left_bytes=536 right_bytes=536 left_instructions=134 right_instructions=134 match_percent=100.0 left_relocations=19 right_relocations=19 differing_rows=0\nfn_801D8268 canonical left_bytes=176 right_bytes=176 left_instructions=44 right_instructions=44 match_percent=100.0 left_relocations=10 right_relocations=10 differing_rows=0\nfn_801D8268 reloc-strict left_bytes=176 right_bytes=176 left_instructions=44 right_instructions=44 match_percent=100.0 left_relocations=10 right_relocations=10 differing_rows=0"
+  },
+  "range_measurement": {
+    "command": "python3 - <<'PY'\nimport json\naddresses=('801D8050','801D8268')\nproject=json.load(open('objdiff.json'))\nunits={unit['name']:unit for unit in project['units']}\nmatched=0\nnonmatching=0\nfor address in addresses:\n    report=json.load(open(f'reports/GEDE01/objdiff-game_fn_{address}-session-1821-remediation-1-reloc-strict.json'))\n    symbol=next(symbol for symbol in report['left']['symbols'] if symbol['name']==f'fn_{address}')\n    if units[f'main/game/game_fn_{address}']['metadata']['complete']:\n        matched += int(symbol['size'])\n    else:\n        nonmatching += int(symbol['size'])\nprint(f'matched_bytes={matched} nonmatching_bytes={nonmatching}')\nPY",
+    "raw_output": "matched_bytes=712 nonmatching_bytes=0"
+  },
+  "build": {
+    "command": "set -o pipefail\n.tools/bin/ninja -j4 build/GEDE01/main.dol 2>&1 | tail -1",
+    "raw_output": "[662/662] DOL build/GEDE01/main.dol"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "canonical_aggregate": {
+    "generate_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+    "generate_raw_output": " INFO Loading project .\n INFO Generating report for 6236 units (using 8 threads)\n INFO Report generated in 0.160s\n INFO Writing to build/GEDE01/report.json\nexit_code=0",
+    "measurement_command": "jq -r '.measures | \"matching_objects=\\(.complete_units) total_objects=\\(.total_units) matching_functions=\\(.matched_functions) total_functions=\\(.total_functions) matching_code_bytes=\\(.matched_code) total_code_bytes=\\(.total_code) matching_data_bytes=\\(.matched_data) total_data_bytes=\\(.total_data) code_percent=\\(.matched_code_percent) function_percent=\\(.matched_functions_percent) linked_code_bytes=\\(.complete_code) linked_data_bytes=\\(.complete_data)\"' build/GEDE01/report.json",
+    "measurement_raw_output": "matching_objects=5063 total_objects=6236 matching_functions=4829 total_functions=8216 matching_code_bytes=761644 total_code_bytes=2300692 matching_data_bytes=38646 total_data_bytes=4305642 code_percent=33.104996 function_percent=58.775562 linked_code_bytes=761508 linked_data_bytes=37850"
+  },
+  "relocation_strict_aggregate": {
+    "generate_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1821-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "generate_raw_output": " INFO Loading project .\n INFO Generating report for 6236 units (using 8 threads)\n INFO Report generated in 0.157s\n INFO Writing to reports/GEDE01/session-1821-remediation-1-reloc-strict.json\nexit_code=0",
+    "measurement_command": "jq -r '.measures | \"matching_functions=\\(.matched_functions) matching_code_bytes=\\(.matched_code) total_code_bytes=\\(.total_code) code_percent=\\(.matched_code_percent)\"' reports/GEDE01/session-1821-remediation-1-reloc-strict.json",
+    "measurement_raw_output": "matching_functions=4823 matching_code_bytes=759856 total_code_bytes=2300692 code_percent=33.02728"
+  }
+}

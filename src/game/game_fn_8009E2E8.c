@@ -18,7 +18,7 @@ typedef struct State8009E2E8 {
  */
 
 extern int fn_8006D2C8(State8009E2E8*, int);
-extern void fn_800A1580(int);
+extern int fn_800A1580(int);
 extern int fn_80070CD8(void);
 extern void *fn_80201B9C();
 extern void* fn_80204844(void*, int);
