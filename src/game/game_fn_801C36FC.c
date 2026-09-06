@@ -29,12 +29,14 @@ extern void fn_801C350C(StreamRequest*, u32);
 
 void fn_801C36FC(void)
 {
-    SoundState* sound = &lbl_80627D60;
-    u8* cursor = (u8*)sound;
+    SoundState* sound;
+    u8* cursor;
     u32 i;
-    u32 unused[1];
-    if (sound->callback == 0) return;
-    for (i = 0; i < 64; i++, cursor++) {
+    u32 count = sizeof(lbl_80627D60.map);
+    if (lbl_80627D60.callback == 0) return;
+    sound = &lbl_80627D60;
+    cursor = (u8*)sound;
+    for (i = 0; i < count; i++, cursor++) {
         u32 pos;
         StreamRequest* req;
         u32 target;

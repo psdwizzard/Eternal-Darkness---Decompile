@@ -32,29 +32,25 @@ extern void *fn_80201B8C();
 
 void fn_800CE524(void *object)
 {
-    int index;
     Data *data = ((RuntimeState *)fn_80201B8C(object))->data;
+    int index = lbl_8064D738;
     s16 span = data->span;
-    Entry *entry;
-    u8 *entries = (u8 *)data + 0x78;
+    Entry *entries = (Entry *)((u8 *)data + 0x78);
     s16 first;
     s16 second;
-
-    index = lbl_8064D738;
 
     data->cursor++;
     if (data->cursor > 480) {
         data->cursor = 0;
     }
-    entry = (Entry *)(entries + index * sizeof(Entry));
     first = data->cursor;
     second = first + span;
-    entry->first_a = first;
-    entry->neg_a = -1;
-    entry->first_b = first;
-    entry->neg_b = -1;
-    entry->second_a = second;
-    entry->neg_c = -1;
-    entry->second_b = second;
-    entry->neg_d = -1;
+    entries[index].first_a = first;
+    entries[index].neg_a = -1;
+    entries[index].first_b = first;
+    entries[index].neg_b = -1;
+    entries[index].second_a = second;
+    entries[index].neg_c = -1;
+    entries[index].second_b = second;
+    entries[index].neg_d = -1;
 }

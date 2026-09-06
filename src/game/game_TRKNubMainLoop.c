@@ -27,6 +27,8 @@ void TRKNubMainLoop(void)
         if (TRKGetNextEvent(&event)) {
             input = 0;
             switch (event.type) {
+            case 0:
+                break;
             case 2:
                 TRKDispatchMessage(TRKGetBuffer(event.buffer));
                 break;

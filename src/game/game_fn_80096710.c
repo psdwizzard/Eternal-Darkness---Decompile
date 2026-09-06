@@ -61,9 +61,8 @@ int fn_80096710(void* arg_object, int arg_index,
 
     owner = fn_801294DC(owner, 0xA7, 0x30, 6);
     if (owner != 0) {
-        int packed = index << 8;
-        fn_80128C44(owner, fn_80204810, packed | 7);
-        fn_80128C28(owner, fn_80204810, packed | 0xDB);
+        fn_80128C44(owner, fn_80204810, (index << 8) | 7);
+        fn_80128C28(owner, fn_80204810, (index << 8) | 0xDB);
         *(short*)(state_b->record + 0x30) = candidate->value;
         fn_80201D2C(object, 0x6D);
         fn_80201D14(object, 1);

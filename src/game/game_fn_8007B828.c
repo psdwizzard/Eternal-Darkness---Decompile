@@ -39,17 +39,15 @@ extern void fn_80179B64(Vec3 *, void *);
 extern void fn_8019FF5C(EffectParams *);
 extern void fn_801A0008(void);
 
-/* NonMatching: honest reconstruction of the paired directional effects,
- * randomized descriptor fields, and follow-up effect dispatch. */
 void fn_8007B828(Object *object)
 {
+    void (*callback)(void) = fn_801834F0;
     unsigned char descriptor[6] = { 0, 0, 0, 0, 0, 1 };
     Vec3 linked_direction;
     Vec3 direction;
     Vec3 effect_position;
     Vec3 follow_position;
     EffectParams params;
-    void (*callback)(void) = fn_801834F0;
     Vec3 *position = &object->position;
 
     fn_80211A6C(position, object, &direction);

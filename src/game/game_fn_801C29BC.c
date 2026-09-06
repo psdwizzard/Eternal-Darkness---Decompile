@@ -22,11 +22,11 @@ float fn_801C29BC(u32 target, u32 value)
         value = 0x40005622;
     }
     high = value >> 24;
-    if (target != high) {
-        if (high < target) {
-            amount = lbl_802525A8[target - high];
+    if ((u8)target != high) {
+        if (high < (u8)target) {
+            amount = lbl_802525A8[(u8)target - high];
         } else {
-            amount = lbl_802527A8[high - target];
+            amount = lbl_802527A8[high - (u8)target];
         }
         amount = (value & 0xFFFFFF) * amount;
     } else {

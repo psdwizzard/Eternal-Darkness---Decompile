@@ -37,6 +37,8 @@ void fn_8019D030(u8* object, void* first, void* second, u8* config)
 {
     SixBytes setup;
     int x_negative;
+    int bits;
+    int value;
     int y_negative;
     int z_negative;
     void* texture;
@@ -66,7 +68,8 @@ void fn_8019D030(u8* object, void* first, void* second, u8* config)
     fn_8017E958(entry + 0xA, object + 0x10, *(s16*)(config + 0x16),
                 lbl_80650C3C);
     texture = lbl_802FC5BC + 0xC;
-    fn_801805E0(entry + 0x20, 4, config[1], 0, lbl_80650C44, texture);
+    value = config[1];
+    fn_801805E0(entry + 0x20, 4, value, 0, lbl_80650C44, texture);
     fn_80180518(object + 0x24, 0, 1);
     fn_8018E230(entry, entry + 0x2B, 1, 0, (s8)config[0x14], config[0x15]);
 
@@ -78,10 +81,10 @@ void fn_8019D030(u8* object, void* first, void* second, u8* config)
                 config[0x15]);
 
     entry += 0x70;
-    x_negative = fn_800FBFB0();
-    y_negative = x_negative & 2;
-    z_negative = x_negative & 4;
-    x_negative &= 1;
+    bits = fn_800FBFB0();
+    x_negative = bits & 1;
+    y_negative = bits & 2;
+    z_negative = bits & 4;
     i = 2;
     for (; i < 5; i++, entry += 0x38) {
         int random;

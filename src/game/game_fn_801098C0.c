@@ -20,6 +20,7 @@ extern float lbl_8064FE64;
 #define U16(p, o) (*(u16*)((u8*)(p) + (o)))
 #define U32(p, o) (*(u32*)((u8*)(p) + (o)))
 
+#pragma opt_common_subs off
 int fn_801098C0(void* source, void* state)
 {
     u32 format;
@@ -64,7 +65,7 @@ int fn_801098C0(void* source, void* state)
         return 1;
     }
 
-    U32(state, 0x184) = (u32)(lbl_8064FE60 + (float)U32(state, 0x24) / lbl_8064FE64);
+    U32(state, 0x184) = (int)(lbl_8064FE60 + (float)U32(state, 0x24) / lbl_8064FE64);
     U32(state, 0x180) = 0;
     U16(state, 0x19C) = U16(state, 0xA4);
     U16(state, 0x19E) = U16(state, 0xA6);
@@ -78,3 +79,4 @@ int fn_801098C0(void* source, void* state)
     U32(state, 0x14C) = (u32)state + 0x12C;
     return 0;
 }
+#pragma opt_common_subs reset

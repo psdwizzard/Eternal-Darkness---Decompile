@@ -18,7 +18,6 @@ int fn_8010F8B0(int index)
         return 1;
     }
 
-    value = fn_801E8D34(lbl_80331738[2]);
-    value = fn_801E7B24(lbl_8024E388, 3, value);
+    value = fn_801E7B24(lbl_8024E388, 3, fn_801E8D34(lbl_80331738[2]));
     return fn_801E79FC((void *)lbl_8024E388[index], value);
 }

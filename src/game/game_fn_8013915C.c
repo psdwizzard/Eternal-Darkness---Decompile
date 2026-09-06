@@ -17,13 +17,11 @@ extern void fn_80139464(int);
 
 void fn_8013915C(void)
 {
-    int pending;
     State* state;
 
     state = &lbl_805AE020;
-    pending = state->pending;
-
-    if (pending != -1 && pending != state->slots[state->id].resource_id) {
+    if (state->pending != -1 &&
+        state->pending != state->slots[state->id].resource_id) {
         fn_80139464(state->current);
     }
 }

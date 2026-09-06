@@ -42,7 +42,7 @@ extern char fn_801390D4[];
 extern Entry* fn_80138950(void*, u16);
 extern void fn_80138FE4(int, u32);
 extern void fn_8013915C(void);
-extern void fn_801397F8(u32*, int, int, int);
+extern void* fn_801397F8(u32*, int, int, int);
 extern void fn_80139940(int);
 extern void fn_8015E9EC(u32, void*, u32);
 extern int fn_80213320(int, void*);

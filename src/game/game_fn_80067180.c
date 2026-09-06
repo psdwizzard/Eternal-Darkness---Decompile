@@ -5,7 +5,10 @@ typedef float f32;
 
 typedef struct Vec3 { f32 x, y, z; } Vec3;
 
-extern s32 lbl_80239044[4];
+typedef struct IndexTable {
+    s32 v[4];
+} IndexTable;
+extern IndexTable lbl_80239044;
 extern Vec3 lbl_80239054;
 extern u8 lbl_802FC5BC[];
 extern f32 lbl_8064E698;
@@ -30,7 +33,7 @@ extern s32 fn_80157FE0();
 extern void fn_80158038();
 extern void fn_8014CBE8();
 extern s32 fn_80067728();
-extern s32 fn_80205868();
+extern u32 fn_80205868();
 extern void fn_8012C5B0();
 extern int fn_80201B44();
 extern s32 fn_8015C910();
@@ -39,24 +42,20 @@ extern unsigned long long fn_8020123C();
 
 void fn_80067180(s32 context)
 {
-    s32 fallback_resource = *(s32 *)(lbl_802FC5BC + 0x18);
+    s32 query[8];
+    IndexTable indices = lbl_80239044;
+    Vec3 fallback_position;
+    Vec3 origin;
     Vec3 fallback_offset = lbl_80239054;
-    s32 indices[4];
+    Vec3 direction;
+    s32 fallback_resource = *(s32 *)(lbl_802FC5BC + 0x18);
     s32 owner_state;
     s32 object;
     s32 owner;
-    s32 actor;
+    u32 actor;
     s32 actor_type;
     s32 i;
-    Vec3 origin;
-    Vec3 direction;
-    Vec3 fallback_position;
-    s32 query[5];
 
-    indices[0] = lbl_80239044[0];
-    indices[1] = lbl_80239044[1];
-    indices[2] = lbl_80239044[2];
-    indices[3] = lbl_80239044[3];
     owner_state = (s32)fn_80201B8C(context);
     object = (s32)fn_80201BC8(context);
     fn_80072354(*(s32 *)(owner_state + 0x90));
@@ -66,10 +65,10 @@ void fn_80067180(s32 context)
     actor_type = fn_8011EB1C(object);
 
     for (i = 0; i < 4; i++) {
-        s32 index = indices[i];
+        s32 index = indices.v[i];
         Vec3 *position;
         s32 effect = -1;
-        s32 target = -1;
+        s32 target;
 
         if (!fn_80066D80(object, index))
             continue;
@@ -87,9 +86,13 @@ void fn_80067180(s32 context)
         fn_8014D478(object, position, &direction, 0x10, 1, &fallback_resource, 7);
 
         if (actor != 0 && (*(u32 *)(actor + 0xB8) & (1U << index))) {
-            if (index == 0) {
+            switch (index) {
+            case 0:
                 fn_801A977C(object, 0x19);
-            } else if (index > 0 && index < 4) {
+                break;
+            case 1:
+            case 2:
+            case 3:
                 fn_801A977C(object, 0x18);
                 if (actor_type == 1) {
                     effect = fn_80158598(fn_80201B54(context), 0);
@@ -102,12 +105,13 @@ void fn_80067180(s32 context)
                     if (target != -1)
                         fn_80158038(effect, target);
                 }
+                break;
             }
+            fn_8014CBE8(context, 0x14, index, lbl_802FC5BC + 0x18);
+            if (fn_80067728(*(u8 *)(owner_state + 0x9F)) &&
+                fn_80205868(object, index, &direction, 0x2000) == 0)
+                fn_8012C5B0(object, index);
         }
-        fn_8014CBE8(context, 0x14, index, lbl_802FC5BC + 0x18);
-        if (fn_80067728(*(u8 *)(owner_state + 0x9F)) &&
-            fn_80205868(object, index, &direction, 0x2000) == 0)
-            fn_8012C5B0(object, index);
     }
 
     if (owner == fn_80201B44()) {

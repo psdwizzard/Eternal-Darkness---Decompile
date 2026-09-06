@@ -31,8 +31,8 @@ void fn_8018B058(u8* object)
     u8* color_data;
     u8* color;
     int saved;
-    register u16 index;
-    register int i;
+    int index;
+    int i;
 
     offset = *(u16*)(lbl_80607130 + 2);
     vertex_size = *(u16*)(lbl_80607130 + 0xA);

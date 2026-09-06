@@ -54,12 +54,31 @@ Generated from `objdiff` build evidence (`reports/GEDE01/progress.json`), verifi
 
 | Metric | Matched | Total | Percent |
 | --- | ---: | ---: | ---: |
-| Code bytes | 762,680 | 2,300,692 | **33.15%** |
-| Functions | 4,835 | 8,216 | 58.85% |
-| Objects (TUs) | 5,069 | 6,245 | 81.17% |
+| Code bytes | 790,636 | 2,300,692 | **34.37%** |
+| Functions | 4,925 | 8,216 | 59.94% |
+| Objects (TUs) | 5,160 | 6,259 | 82.44% |
 
 Denominators are the whole retail `main.dol`. Percentages count only functions that `objdiff` reports at 100%, relocations included; reconstructions registered as documented `NonMatching` are not counted. Most matched objects are small, so the object percentage runs far ahead of the code percentage — **code bytes is the honest measure of how far along this is.**
 <!-- progress:end -->
+
+<!-- contributors:start -->
+## Thanks to our contributors
+
+Most of this tree is matched by an automated chain. The functions below were
+matched by people who chose to spend their own time on it and sent the work in
+from outside that chain. Every one was independently rebuilt and re-verified
+here before it landed — 100% in `objdiff` on both the canonical and
+relocation-strict bases, with the whole-DOL SHA-1 gate unchanged.
+
+| Contributor | Functions | Matched code bytes | Share of all matched code |
+| --- | ---: | ---: | ---: |
+| **Andrew** ([@ateich](https://github.com/ateich)) | 362 | 99,200 | 12.5% |
+
+That is **99,200 bytes of retail code** this project did not have to match on its own. Thank you.
+
+Per-function credit, with byte counts and the PR each batch came from, is in
+[`CONTRIBUTORS.md`](CONTRIBUTORS.md). If you send work in, you get a line there.
+<!-- contributors:end -->
 
 ## PC execution
 
@@ -67,12 +86,13 @@ Boot milestone (2026-08-11): **Eternal Darkness reaches the title screen on PC t
 
 The long-term goal is a PC port with a modern renderer, ray tracing, and upgraded textures, materials, and models while preserving the original gameplay logic. As matching coverage grows, recovered source functions are to progressively replace static-recompiled blocks under the gated host-replacement track defined in `docs/pc-execution.md`.
 
-## Contributors
+## Contributing
 
-Outside contributions are welcome and are credited in
-[`CONTRIBUTORS.md`](CONTRIBUTORS.md). They are rebuilt and re-verified here
-before landing, and they reach this repository through a squashing publish, so
-that file — not the commit log — is the record of who matched what.
+Outside contributions are welcome, and they are credited by name above and
+per-function in [`CONTRIBUTORS.md`](CONTRIBUTORS.md). Work is rebuilt and
+re-verified here before landing, and reaches this repository through a squashing
+publish, so those two places — not the commit log — are the record of who
+matched what.
 
 If you are picking a function to work on, note that an automated chain is
 continuously extending the frontier upward through the address space; check

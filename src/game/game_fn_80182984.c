@@ -17,7 +17,7 @@ extern u8 fn_8018E26C(void*, void*);
 extern void fn_8018284C(void*, int);
 extern void fn_80180518(void*, u8, int);
 extern void fn_8017D2B4(void*, void*, void*);
-extern void fn_8018E230();
+extern void fn_8018E230(void*, void*, int, int, s8, u8);
 
 int fn_80182984(u8* self)
 {
@@ -58,7 +58,8 @@ int fn_80182984(u8* self)
                     fn_8017D2B4(entry + 0xA, entry + 0x16, entry + 0x10);
                     index = i;
                     if (config->fields.counters[index] == *(u16*)(entry + 8)) {
-                        fn_8018E230(entry, entry + 0x2B, 1, self[2], self[4], 0);
+                        fn_8018E230(entry, entry + 0x2B, 1, self[2],
+                                    *(s8*)(self + 4), 0);
                     }
                     config->fields.counters[index]++;
                 }

@@ -92,7 +92,8 @@ int fn_801C2B00(Envelope* envelope)
             if (envelope->level != 0) {
                 envelope->state = 3;
                 envelope->secondary = (u32)envelope->level << 16;
-                index = 193 - ((int)(envelope->secondary + 0x8000) >> 16);
+                index = envelope->secondary + 0x8000;
+                index = 193 - ((int)index >> 16);
                 if ((int)index < 0) {
                     index = 0;
                 }

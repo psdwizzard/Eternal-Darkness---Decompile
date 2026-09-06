@@ -57,7 +57,7 @@ void fn_800DC3A0(EffectState *state, int owner, Position *position, int value,
         count = count_arg;
         state->duration = count * 100;
         state->update = fn_801FDC24;
-        state->sequence = sequence_arg;
+        state->sequence = (s16)sequence_arg;
         state->kind = 3;
         state->mode = 15;
         state->source = owner;

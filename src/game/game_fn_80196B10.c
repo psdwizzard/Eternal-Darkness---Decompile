@@ -48,7 +48,8 @@ int fn_80196B10(u8* object)
     }
 
     if ((tick & object[0x8e]) == 0) {
-        fn_80198420(object + 0x10, *(void**)(object + 0x4c), object[1], output,
+        int entry_count = object[1];
+        fn_80198420(object + 0x10, *(void**)(object + 0x4c), entry_count, output,
                      object[0x8c]);
         if ((tick & 1) == 0) {
             object[0x8c] += object[0xa1];

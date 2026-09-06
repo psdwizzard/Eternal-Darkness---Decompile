@@ -1,38 +1,39 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
-typedef int s32;
+typedef short s16;
 
-typedef struct SequenceInfo {
-    u8 pad0[2];
-    u16 flags;
-    u8 arg2;
-    u8 pitch;
+typedef struct FXTab {
+    u16 id;
+    u16 macro;
+    u8 max_voices;
+    u8 priority;
+    u8 volume;
+    u8 panning;
     u8 key;
-    u8 velocity;
-    u8 arg3;
-    u8 arg11;
-} SequenceInfo;
+    u8 volume_group;
+} FXTab;
 
-extern SequenceInfo* fn_801BD1EC(u32);
-extern s32 fn_801B64D0(u32, s32, u32, u32, u32, u32, u8, u8, u8, u16,
-                       u16, u8, short, u8, u32);
+extern FXTab* fn_801BD1EC(u16);
+extern u32 fn_801B64D0(u16, u8, u8, u8, u8, u8, u8, u8, u8, u16, u16,
+                       u8, s16, u8, u32);
 
-s32 fn_801B7DC8(u32 sequence, u32 key, u32 velocity, u8 arg13, u32 arg14)
+u32 fn_801B7DC8(u16 effect_id, u8 volume, u8 panning, u8 studio, u32 itd)
 {
-    s32 result = -1;
-    SequenceInfo* info = fn_801BD1EC(sequence);
+    u32 voice_id = -1;
+    FXTab* effect = fn_801BD1EC(effect_id);
 
-    if (info != 0) {
-        if ((u8)key == 0xFF) {
-            key = info->key;
+    if (effect != 0) {
+        if (volume == 0xFF) {
+            volume = effect->volume;
         }
-        if ((u8)velocity == 0xFF) {
-            velocity = info->velocity;
+        if (panning == 0xFF) {
+            panning = effect->panning;
         }
-        result = fn_801B64D0(info->flags, info->pitch, info->arg2,
-                             info->arg3 | 0x80, key, velocity, 0xFF, 0xFF,
-                             0, 0, 0xFF, info->arg11, 0, arg13, arg14);
+        voice_id = fn_801B64D0(effect->macro, effect->priority,
+                               effect->max_voices, effect->key | 0x80,
+                               volume, panning, 0xFF, 0xFF, 0, 0, 0xFF,
+                               effect->volume_group, 0, studio, itd);
     }
-    return result;
+    return voice_id;
 }

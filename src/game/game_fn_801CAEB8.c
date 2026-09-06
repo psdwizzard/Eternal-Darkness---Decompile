@@ -6,20 +6,20 @@ extern u8 lbl_8023B3D0[];
 extern u8 lbl_8062A2F0[];
 extern u8 lbl_8062E5F0[];
 extern void* memcpy(void*, const void*, u32);
-extern void fn_801CB470(int, int, int);
+extern void fn_801CB470(u8, u8, u8);
 
-void fn_801CAEB8(int channel, u32 layer, u32 copy_all)
+void fn_801CAEB8(u8 channel, u8 set, u32 cold_reset)
 {
-    u8* source = copy_all != 0 ? lbl_8023B348 : lbl_8023B3D0;
+    u8* source = cold_reset != 0 ? lbl_8023B348 : lbl_8023B3D0;
     u8* destination;
 
-    if ((u8)layer != 0xFF) {
-        destination = lbl_8062A2F0 + (u8)layer * 2144 + (u8)channel * 134;
+    if (set != 0xFF) {
+        destination = lbl_8062A2F0 + set * 2144 + channel * 134;
     } else {
-        destination = lbl_8062E5F0 + (u8)channel * 134;
+        destination = lbl_8062E5F0 + channel * 134;
     }
 
-    if (copy_all != 0) {
+    if (cold_reset != 0) {
         memcpy(destination, source, 134);
     } else {
         u32 i;
@@ -30,5 +30,5 @@ void fn_801CAEB8(int channel, u32 layer, u32 copy_all)
         }
     }
 
-    fn_801CB470(channel, layer, 0xFF);
+    fn_801CB470(channel, set, 0xFF);
 }

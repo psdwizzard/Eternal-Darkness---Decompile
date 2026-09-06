@@ -22,8 +22,8 @@ void fn_8010FB5C(int value)
         fn_801E8B6C(lbl_80331738[0], value);
         break;
     case 2:
-        selection = fn_801E7B24(lbl_8024E388, 3,
-                                fn_801E8D34(lbl_80331738[2]));
+        selection = fn_801E8D34(lbl_80331738[2]);
+        selection = fn_801E7B24(lbl_8024E388, 3, selection);
         if (fn_801E7AD0(lbl_8024E388, 3, selection) > 1 ||
             (fn_80201B44(), fn_80201814(), fn_8020216C() & 0x80000)) {
             fn_801E8B6C(lbl_8064CCF0, value);

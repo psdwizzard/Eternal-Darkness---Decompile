@@ -20,6 +20,7 @@ void fn_8018666C(u8* self)
     u8* data = lbl_80607120;
     u8 count = self[1];
     u16 size0 = *(u16*)(data + 2);
+    int i;
     u16 flush0 = *(u16*)(data + 0xA);
     u16 flush1 = *(u16*)(data + 0xE);
     u16 flush2 = *(u16*)(data + 0xC);
@@ -27,8 +28,8 @@ void fn_8018666C(u8* self)
     u8* buffer0 = *(u8**)(self + 0x50);
     u8* buffer1 = *(u8**)(self + 0x54);
     u8* buffer2 = *(u8**)(self + 0x58);
-    int i;
     u8* out;
+    u8* fill;
     int entry_index;
     int j;
     int saved;
@@ -49,11 +50,11 @@ void fn_8018666C(u8* self)
         entries += 0x38;
     }
 
-    out = buffer0 + (i << 1) * 6;
+    fill = buffer0 + (i << 1) * 6;
     for (; i < 0x40; i++) {
-        memcpy(out, buffer0, 6);
-        memcpy(out + 6, buffer0 + 6, 6);
-        out += 12;
+        memcpy(fill, buffer0, 6);
+        memcpy(fill + 6, buffer0 + 6, 6);
+        fill += 12;
     }
 
     DCFlushRange(buffer0, flush0);

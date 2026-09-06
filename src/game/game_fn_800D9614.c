@@ -32,8 +32,8 @@ int fn_800D9614(void *unused, void *object)
         if ((actor->flags & 8) == 0) {
             actor->flags |= 8;
             actor->handle = fn_801D5898(actor->position, actor->direction,
-                runtime->resource, 8, 0, 0, 6, 0x40, 0x20, 4, 16, 4, 1,
-                17, 10, 30, 4);
+                runtime->resource, 0, 0, 6, 0x40, 0x20, 16, 4, 1, 17, 10, 30, 4,
+                8, 0x30000);
         }
     }
     return 1;

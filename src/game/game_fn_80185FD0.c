@@ -25,7 +25,7 @@ extern void* lbl_8064D738;
 extern u32 lbl_80651D48;
 extern u16 lbl_80651D4C;
 extern float lbl_80650A1C;
-extern float lbl_80650A20;
+extern const float lbl_80650A20;
 
 extern void fn_8018D788(void*, void*, void**, u16);
 extern void fn_801869F8(void*, int, u16);
@@ -40,9 +40,11 @@ int fn_80185FD0(u8* self)
     Locals locals;
     float value;
     int changed = 0;
-    int vector_offset;
+    struct {
+        int offset;
+        int count;
+    } span;
     u8* self_local = self;
-    u8 count;
     u16 generation;
     int index;
     u8* state;
@@ -53,7 +55,7 @@ int fn_80185FD0(u8* self)
     locals.setup.half = lbl_80651D4C;
     generation = *(u16*)(self_local + 0xA);
     entry = *(u8**)(self_local + 0x4C);
-    count = self_local[1];
+    span.count = self_local[1];
     *(u16*)(self_local + 0xA) = generation + 1;
 
     fn_8018D788(lbl_8064D738, self_local, &locals.vectors,
@@ -61,8 +63,8 @@ int fn_80185FD0(u8* self)
     fn_801869F8(state, 0, *(u16*)(state + 8));
 
     index = 0;
-    vector_offset = 0;
-    for (; index < count; index++) {
+    span.offset = 0;
+    for (; index < span.count; index++) {
         if (entry[0] != 0) {
             fn_8018E26C(entry, entry + 0x2B);
             if (changed == 0 && (state[5] & 4) != 0) {
@@ -75,15 +77,15 @@ int fn_80185FD0(u8* self)
             }
         }
         fn_8018680C(state, entry,
-                    (Vec3*)((u8*)locals.vectors + vector_offset),
-                    index, &locals.setup, count);
+                    (Vec3*)((u8*)locals.vectors + span.offset),
+                    index, &locals.setup, span.count);
         if ((int)generation == (int)*(u16*)(entry + 8) &&
             (state[5] & 1) == 0) {
             fn_8018E230(entry, entry + 0x2B, 1, self_local[2],
                         self_local[4], 0);
         }
         entry += 0x38;
-        vector_offset += 0xC;
+        span.offset += 0xC;
     }
 
     fn_80211A48((Vec3*)(state + 0x60), (Vec3*)(state + 0x6C),

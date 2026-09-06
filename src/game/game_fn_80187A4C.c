@@ -31,6 +31,7 @@ void fn_80187A4C(u8* self, void* arg1, void* arg2, u8* desc)
 {
     SixBytes setup;
     u8* entry;
+    int value;
 
     setup.word = lbl_80651D60;
     setup.half = lbl_80651D64;
@@ -47,9 +48,13 @@ void fn_80187A4C(u8* self, void* arg1, void* arg2, u8* desc)
     memset(self + 0x24, 0, 0x10);
 
     fn_80180554(entry, arg1, arg2, &setup, 0, 0);
-    fn_801805E0(entry + 0x20, 4,
-                *(int*)(desc + 0x20) != 0 ? desc[1] >> 1 : desc[1], 0,
-                lbl_802FC5BC, lbl_80650A54);
+    if (*(int*)(desc + 0x20) != 0) {
+        value = (u8)(desc[1] >> 1);
+    } else {
+        value = desc[1];
+    }
+    fn_801805E0(entry + 0x20, 4, value, 0, lbl_802FC5BC,
+                lbl_80650A54);
     fn_8018E230(entry, entry + 0x2B, 1, 0, (s8)desc[0x24], desc[0x25]);
     fn_8018CB70(*(void**)(self + 0x54), 1, *(u16*)(lbl_80607130 + 2));
     fn_8018C540(*(void**)(self + 0x58), lbl_802FC5BC, 1, 4,

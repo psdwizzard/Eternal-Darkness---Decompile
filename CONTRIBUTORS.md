@@ -13,7 +13,7 @@ commits are not visible here. This file is the durable record of who did what.
 
 ## Andrew ([@ateich](https://github.com/ateich))
 
-**284 functions, 73,448 matched code bytes.**
+**362 functions, 99,200 matched code bytes.**
 
 ### Script handlers and narrowed values ([#1](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/1), [#2](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/2), [#3](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/3)) — 6 functions, 7,488 bytes
 
@@ -281,3 +281,22 @@ The largest single batch landed on this project.
 | `fn_8019F320` | 488 |
 | `fn_8008F064` | 448 |
 | _78 more_ | 14,148 |
+
+### Interface, layout, and declaration corrections ([#17](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/17)) — 78 functions, 25,752 bytes
+
+Six distinct causes in one batch: function interfaces proven from already-matching
+callers and callees, structure layouts and data models, declaration order and local
+lifetime, expression and control-flow shape, compiler-private literals that retail
+exposes as named `.sdata2` symbols, and per-object compiler settings.
+
+| Function | Bytes |
+| --- | ---: |
+| `fn_801C8224` | 988 |
+| `fn_8018E504` | 948 |
+| `fn_80067180` | 796 |
+| `fn_8019D030` | 796 |
+| `fn_800F0CC4` | 760 |
+| `fn_80196B10` | 724 |
+| `fn_8014549C` | 696 |
+| `fn_800A509C` | 660 |
+| _70 more_ | 19,384 |

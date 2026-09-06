@@ -5,6 +5,7 @@ typedef struct Slot {
     unsigned char pad04[0x3C];
     void* buffer;
     void* resource;
+    unsigned char pad48[8];
 } Slot;
 
 typedef struct State {
@@ -25,12 +26,13 @@ extern int OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(int);
 extern int fn_8020D318(void*, int, int);
 
-int fn_801397F8(u32* out_size, int kind, int owner, int wait)
+void* fn_801397F8(u32* out_size, int kind, int owner, int wait)
 {
     int other = lbl_805AE020.current ^ 1;
     int blocked = 0;
     int enabled = OSDisableInterrupts();
     u32 size;
+    void* buffer;
 
     if (wait != 1 && lbl_8064CFE8 != 0 && lbl_8064CFE4 != owner) {
         OSRestoreInterrupts(enabled);
@@ -58,13 +60,13 @@ int fn_801397F8(u32* out_size, int kind, int owner, int wait)
 
     if (kind == 2) {
         size = 0x19F0C0;
-        (void)lbl_8064CFD8;
+        buffer = lbl_8064CFD8;
     } else {
         size = lbl_805AE020.arena_size;
-        (void)lbl_805AE020.slots[other].buffer;
+        buffer = lbl_805AE020.slots[other].buffer;
     }
     if (out_size != 0) {
         *out_size = size;
     }
-    return 1;
+    return buffer;
 }

@@ -30,9 +30,10 @@ int fn_80093264(void)
         u16 second;
         u8 last;
     } types;
-    register int result = 0;
-    register u32 i;
-    register u8* type;
+    u8* type;
+    int result = 0;
+    u32 i;
+    int objectId;
 
     types.first = lbl_8064EC80;
     types.second = lbl_8064EC84;
@@ -42,8 +43,8 @@ int fn_80093264(void)
         void* object;
         fn_800DE354();
         object = fn_80201814();
-        i = fn_80201EB8();
-        if (object != 0 && (int)i == lbl_8064D18C) {
+        objectId = fn_80201EB8();
+        if (object != 0 && objectId == lbl_8064D18C) {
             if (!fn_8012DBE8(fn_80201BC8(object), 15, &info) ||
                 ((u8*)&info)[3] >= 25) {
                 return -1;
@@ -52,12 +53,12 @@ int fn_80093264(void)
     }
 
     type = (u8*)&types;
-    for (i = 0; i < 7 && result == 0; i++, type++) {
+    for (i = 0; i < 7 && result == 0; type++, i++) {
         result += fn_800CB098(2, (signed char)*type, -1,
                               lbl_8064D18C, 1, 0);
     }
 
-    ((void*)fn_80201B44());
+    fn_80201B44();
     if (fn_80201814() != 0) {
         switch (fn_80036E50()) {
         case 3:

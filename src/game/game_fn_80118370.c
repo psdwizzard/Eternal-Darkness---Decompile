@@ -8,8 +8,8 @@ extern unsigned char *lbl_8064C51C;
 extern unsigned char *lbl_8064C5CC;
 extern void fn_8015DAB0(void *);
 extern int lbl_8064D184;
-extern unsigned int lbl_8064CDE0;
-extern int lbl_8064CDA0;
+extern volatile unsigned int lbl_8064CDE0;
+extern volatile int lbl_8064CDA0;
 extern int lbl_8064CDA8;
 extern void *lbl_8064D158;
 extern unsigned int fn_801E7998(void *);
@@ -49,7 +49,8 @@ void fn_80118370(int value, void *resource)
         lbl_8064CDA8 = 1;
         if (lbl_8064D184 >= 0 &&
             (unsigned int)lbl_8064D184 < fn_801E7998(lbl_8064D158)) {
-            int entry = ((struct Entry *)lbl_8064CDE4)[lbl_8064D184].value;
+            struct Entry *slot = (struct Entry *)lbl_8064CDE4;
+            int entry = slot[lbl_8064D184].value;
             if (entry > 0 && entry < 16) {
                 fn_800F9D4C(name, (const char *)lbl_8024E3A4, entry);
                 lbl_8064CDE0 = (unsigned int)lbl_8064CD90 +
