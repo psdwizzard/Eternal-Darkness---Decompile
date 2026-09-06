@@ -1,0 +1,31 @@
+{
+  "session_id": "session-1798",
+  "range_start": "0x801D1F78",
+  "range_end": "0x801D2440",
+  "accounted_bytes": 1224,
+  "matched_bytes": 0,
+  "nonmatching_bytes": 1224,
+  "unaccounted_spans": [],
+  "functions": [
+    {
+      "name": "fn_801D1F78",
+      "range": "0x801D1F78..0x801D2440",
+      "status": "NonMatching",
+      "retail_bytes": 1224,
+      "generated_bytes": 1224,
+      "canonical_report_percent": 97.810455,
+      "relocation_strict_report_percent": 97.810455,
+      "retail_instructions": 306,
+      "generated_instructions": 306,
+      "retail_relocations": 12,
+      "generated_relocations": 12,
+      "relocations_equal": true,
+      "divergence": "Guarded externalization resolves both conversion-bias identities. The fresh canonical diff has 301 identical instruction slots and eight diff slots: three inserts, three deletes, one argument mismatch, and one replacement. Those slots contain five differing retail-side instructions: addi r26, r1, 0xc4; lfd f30, lbl_80651070@sda21; mr r28, r3; mr r29, r5; and li r27, 0x0.",
+      "remediation_1_measurement": {
+        "command": "jq direct-diff counts and rows from reports/GEDE01/fn_801D1F78-session-1798-canonical.json",
+        "raw_output": "match_percent=97.810455 left_bytes=1224 right_bytes=1224 left_instructions=306 right_instructions=306 identical_slots=301 diff_slots=8 DIFF_INSERT=3 DIFF_DELETE=3 DIFF_ARG_MISMATCH=1 DIFF_REPLACE=1 differing_left_instructions=5\nDIFF_INSERT\t<no-left-instruction>\nDIFF_INSERT\t<no-left-instruction>\nDIFF_DELETE\taddi r26, r1, 0xc4\nDIFF_DELETE\tlfd f30, lbl_80651070@sda21\nDIFF_ARG_MISMATCH\tmr r28, r3\nDIFF_DELETE\tmr r29, r5\nDIFF_REPLACE\tli r27, 0x0\nDIFF_INSERT\t<no-left-instruction>"
+      }
+    }
+  ],
+  "next_target": "0x801D1F78"
+}

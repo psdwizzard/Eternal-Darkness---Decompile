@@ -1,0 +1,40 @@
+{
+  "session_id": "session-1799-remediation-1-reissue-1",
+  "scope": "Verification-artifact reissue only. The committed remediation disposition is preserved, no source is changed, and no frontier function beyond fn_801D1F78 is reconstructed.",
+  "scheduler_disposition": {
+    "command": "jq -r '\"status=\\(.functions[0].status) next_target=\\(.next_target)\"' reports/GEDE01/frontier-801D1F78-801D2440-session-1799.json",
+    "raw_output": "status=NonMatching next_target=0x801D2440",
+    "conclusion": "fn_801D1F78 remains documented NonMatching and the machine-readable next target is fn_801D2440."
+  },
+  "variant_ledger_audit": {
+    "command": "jq -r '\"progress_next_target=\\(.next_target) ledger_entries=\\(.nonmatching_attempts.fn_801D1F78.variants|length)\", (.nonmatching_attempts.fn_801D1F78.variants[] | \"variant=\\(.name) recorded_percent=\\(.objdiff_percent)\")' reports/GEDE01/progress.json",
+    "raw_output": "progress_next_target=0x801D2440 ledger_entries=5\nvariant=explicit-circle-first recorded_percent=97.77778\nvariant=divide-circle-before-index recorded_percent=95.71568\nvariant=circle-declaration-initializer recorded_percent=97.77778\nvariant=projected-pointer-declaration-initializer recorded_percent=97.810455\nvariant=first-loop-init-before-for recorded_percent=97.810455",
+    "qualification": "This command audits the committed individually enumerated ledger. The reissue does not claim these as newly rerun variants; their original build commands and raw outputs remain in session-1799-remediation-1-verification.json."
+  },
+  "source_provenance": {
+    "command": "git log -1 --format='source_commit=%H %s' -- src/game/game_fn_801D1F78.c; git diff --exit-code HEAD -- src/game/game_fn_801D1F78.c; echo source_diff_exit=$?; sha256sum src/game/game_fn_801D1F78.c",
+    "raw_output": "source_commit=1aee33bc2b91c4472c1bc836d916fe66f3354af6 Reconstruct fn_801D1F78\nsource_diff_exit=0\n28e82657ee8928e6ff2affd83e9b5bea3748315ce2a7e62db4b4982c7359f983  src/game/game_fn_801D1F78.c"
+  },
+  "build_and_objdiff_generation": {
+    "command": "(.tools/bin/ninja build/GEDE01/src/game/game_fn_801D1F78.externalized build/GEDE01/main.dol >/dev/null); echo build_exit=$?; (build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1F78 -o build/session-1799-remediation-1-reissue-1-final-canonical.json --format json fn_801D1F78 >/dev/null); echo canonical_objdiff_exit=$?; (build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1F78 -o build/session-1799-remediation-1-reissue-1-final-reloc-strict.json --format json -c function_reloc_diffs=name_address fn_801D1F78 >/dev/null); echo relocation_strict_objdiff_exit=$?",
+    "raw_output": "build_exit=0\n INFO Writing to build/session-1799-remediation-1-reissue-1-final-canonical.json\ncanonical_objdiff_exit=0\n INFO Writing to build/session-1799-remediation-1-reissue-1-final-reloc-strict.json\nrelocation_strict_objdiff_exit=0"
+  },
+  "affected_object_objdiff": {
+    "command": "jq -r '(.left.symbols[] | select(.name==\"fn_801D1F78\")) as $l | (.right.symbols[] | select(.name==\"fn_801D1F78\")) as $r | \"basis=canonical match_percent=\\($l.match_percent) retail_bytes=\\($l.size) generated_bytes=\\($r.size) retail_instructions=\\([$l.instructions[]|select(.instruction!=null)]|length) generated_instructions=\\([$r.instructions[]|select(.instruction!=null)]|length) retail_relocations=\\([$l.instructions[]|select(.instruction.relocation!=null)]|length) generated_relocations=\\([$r.instructions[]|select(.instruction.relocation!=null)]|length)\"' build/session-1799-remediation-1-reissue-1-final-canonical.json; jq -r '(.left.symbols[] | select(.name==\"fn_801D1F78\")) as $l | (.right.symbols[] | select(.name==\"fn_801D1F78\")) as $r | \"basis=relocation-strict match_percent=\\($l.match_percent) retail_bytes=\\($l.size) generated_bytes=\\($r.size) retail_instructions=\\([$l.instructions[]|select(.instruction!=null)]|length) generated_instructions=\\([$r.instructions[]|select(.instruction!=null)]|length) retail_relocations=\\([$l.instructions[]|select(.instruction.relocation!=null)]|length) generated_relocations=\\([$r.instructions[]|select(.instruction.relocation!=null)]|length)\"' build/session-1799-remediation-1-reissue-1-final-reloc-strict.json",
+    "raw_output": "basis=canonical match_percent=97.810455 retail_bytes=1224 generated_bytes=1224 retail_instructions=306 generated_instructions=306 retail_relocations=12 generated_relocations=12\nbasis=relocation-strict match_percent=97.810455 retail_bytes=1224 generated_bytes=1224 retail_instructions=306 generated_instructions=306 retail_relocations=12 generated_relocations=12"
+  },
+  "literal_load_order_audit": {
+    "command": "jq -r '(.left.symbols[]|select(.name==\"fn_801D1F78\")|.instructions) as $l | (.right.symbols[]|select(.name==\"fn_801D1F78\")|.instructions) as $r | \"retail_entry=\" + ([$l[]|select(.instruction.address==\"56\" or .instruction.address==\"64\")|.instruction.formatted]|join(\" | \")) + \"\\ngenerated_entry=\" + ([$r[]|select(.instruction.address==\"56\" or .instruction.address==\"64\")|.instruction.formatted]|join(\" | \"))' build/session-1799-remediation-1-reissue-1-final-reloc-strict.json",
+    "raw_output": "retail_entry=lfs f29, lbl_8065107C@sda21 | lfd f30, lbl_80651070@sda21\ngenerated_entry=lfd f30, lbl_80651070@sda21 | lfs f29, lbl_8065107C@sda21",
+    "conclusion": "Retail consumes the real float literal before the integer-to-double bias, while the retained build loads the bias first. The committed explicit-circle-first ledger entries document the tested source-order lever."
+  },
+  "aggregate_report_deduplication": {
+    "command": "sha256sum reports/GEDE01/session-1798-reloc-strict.json; test ! -e reports/GEDE01/session-1799-reloc-strict.json; echo duplicate_session_1799_aggregate_absent_exit=$?",
+    "raw_output": "15acb31affff4c2e03aa57c9110394348aa6d35d340119924b0047a803295459  reports/GEDE01/session-1798-reloc-strict.json\nduplicate_session_1799_aggregate_absent_exit=0",
+    "conclusion": "The prior aggregate remains the retained reference and no duplicate session-1799 aggregate is recreated."
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo dol_cmp_exit=$?; sha1sum -c config/GEDE01/build.sha1",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0\nbuild/GEDE01/main.dol: OK"
+  }
+}

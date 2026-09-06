@@ -1,0 +1,27 @@
+{
+  "session_id": "session-1795",
+  "range_start": "0x801D1C34",
+  "range_end": "0x801D1F78",
+  "accounted_bytes": 836,
+  "matched_bytes": 0,
+  "nonmatching_bytes": 836,
+  "unaccounted_spans": [],
+  "functions": [
+    {
+      "name": "fn_801D1C34",
+      "range": "0x801D1C34..0x801D1F78",
+      "status": "NonMatching",
+      "retail_bytes": 836,
+      "generated_bytes": 836,
+      "canonical_report_percent": 96.02871,
+      "relocation_strict_report_percent": 96.02871,
+      "direct_objdiff_percent": 96.02871,
+      "divergence": "The recovered small-data read now correctly targets retail lbl_8064D18C and its relocation aligns. The remaining differences are only the initial default-record and caller-position aggregate-copy schedule in the relative 0x18..0x48 region; all later instructions align.",
+      "remediation_measurement": {
+        "command": "jq -r '(.left.symbols[] | select(.name == \"fn_801D1C34\")) as $l | (.right.symbols[] | select(.name == \"fn_801D1C34\")) as $r | \"retail_bytes=\\($l.size) generated_bytes=\\($r.size) retail_instructions=\\([$l.instructions[] | select(.instruction)] | length) generated_instructions=\\([$r.instructions[] | select(.instruction)] | length) match_percent=\\($l.match_percent)\"' reports/GEDE01/objdiff-fn_801D1C34-session-1795-reloc-strict.json",
+        "raw_output": "retail_bytes=836 generated_bytes=836 retail_instructions=209 generated_instructions=209 match_percent=96.02871"
+      }
+    }
+  ],
+  "next_target": "0x801D1F78"
+}

@@ -1,0 +1,41 @@
+{
+  "session_id": "session-1798-remediation-1",
+  "scope": "Review remediation for fn_801D1F78 only; the frontier remains fixed at 0x801D1F78.",
+  "build_verification": {
+    "command": "python3 configure.py && .tools/bin/ninja",
+    "raw_output": "build/GEDE01/main.dol: OK\nProgress:\n  All: 47.00% fuzzy, 32.61% matched, 32.61% linked (5023 / 6188 files)\n    Code: 750348 / 2300692 bytes (4790 / 8216 functions)\n    Data: 38646 / 4305642 bytes (0.90%)\n  Game Code: 89.17% fuzzy, 61.80% matched, 61.79% linked (5005 / 5758 files)\n    Code: 747320 / 1209280 bytes (4728 / 5479 functions)\n    Data: 38422 / 40354 bytes (95.21%)\n  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\n    Code: 3028 / 3028 bytes (62 / 62 functions)\n    Data: 224 / 224 bytes (100.00%)"
+  },
+  "affected_object_objdiff": {
+    "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1F78 -o reports/GEDE01/fn_801D1F78-session-1798-canonical.json --format json fn_801D1F78",
+    "canonical_raw_output": "INFO Writing to reports/GEDE01/fn_801D1F78-session-1798-canonical.json",
+    "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1F78 -o reports/GEDE01/fn_801D1F78-session-1798-reloc-strict.json --format json -c function_reloc_diffs=name_address fn_801D1F78",
+    "relocation_strict_raw_output": "INFO Writing to reports/GEDE01/fn_801D1F78-session-1798-reloc-strict.json",
+    "measurement_command": "jq direct-diff counts and rows from reports/GEDE01/fn_801D1F78-session-1798-canonical.json; jq relocation counts from reports/GEDE01/fn_801D1F78-session-1798-reloc-strict.json; cmp the two reports",
+    "measurement_raw_output": "match_percent=97.810455 left_bytes=1224 right_bytes=1224 left_instructions=306 right_instructions=306 identical_slots=301 diff_slots=8 DIFF_INSERT=3 DIFF_DELETE=3 DIFF_ARG_MISMATCH=1 DIFF_REPLACE=1 differing_left_instructions=5\nDIFF_INSERT\t<no-left-instruction>\nDIFF_INSERT\t<no-left-instruction>\nDIFF_DELETE\taddi r26, r1, 0xc4\nDIFF_DELETE\tlfd f30, lbl_80651070@sda21\nDIFF_ARG_MISMATCH\tmr r28, r3\nDIFF_DELETE\tmr r29, r5\nDIFF_REPLACE\tli r27, 0x0\nDIFF_INSERT\t<no-left-instruction>\nleft_relocations=12 right_relocations=12\ndirect_reports_cmp_exit=0"
+  },
+  "section_coverage_guard": {
+    "command": "sed -n '1963,1969p' build.ninja",
+    "raw_output": "rule externalize_game_801D1F78_constants\n  command = python3 tools/externalize_elf_symbol.py $in @67 lbl_80651070 $\n      orig/GEDE01/sys/main.dol --require-section-symbols=@67,@69 && python3 $\n      tools/externalize_elf_symbol.py $in @69 lbl_80651080 $\n      orig/GEDE01/sys/main.dol && build/binutils/powerpc-eabi-objcopy $\n      --redefine-sym=@67=lbl_80651070 --redefine-sym=@69=lbl_80651080 $\n      --remove-section=.sdata2 --rename-section=.comment=.ignored $in && $",
+    "conclusion": "The conversion biases use the table-driven multi-symbol section guard before .sdata2 removal."
+  },
+  "width_and_extern_signature_audit": {
+    "source_command": "sed -n '1,44p' src/game/game_fn_801D1F78.c",
+    "source_raw_output": "typedef signed char s8;\ntypedef unsigned char u8;\ntypedef signed short s16;\ntypedef signed int s32;\ntypedef float f32;\n\ntypedef struct Vec3 {\n    f32 x;\n    f32 y;\n    f32 z;\n} Vec3;\n\ntypedef struct ScreenPosition {\n    s32 x;\n    s32 y;\n    s32 z;\n} ScreenPosition;\n\ntypedef struct QueryResult {\n    s32 words[2];\n    Vec3 position;\n    s32 tail[5];\n} QueryResult;\n\ntypedef struct RingDefinition {\n    u8 count;\n    u8 pad;\n    s16 radius;\n    Vec3 center;\n} RingDefinition;\n\ntypedef struct RingOutput {\n    u8 pad[0x48];\n    s32 rank[32];\n} RingOutput;\n\nextern volatile f32 lbl_8065107C;\nextern f32 fn_80048C2C(f32);\nextern f32 fn_80048C50(f32);\nextern void fn_801F6B6C(Vec3*, ScreenPosition*, s32, s32);\nextern void* fn_80201814(s32);\nextern void* fn_80201BC8(void);\nextern s32 fn_8011F6A4(void*, s32, s32, s32, QueryResult*, s32);\n",
+    "retail_instruction_command": "jq selected retail instructions from reports/GEDE01/fn_801D1F78-session-1798-canonical.json",
+    "retail_instruction_raw_output": "48\tlbz r30, 0x0(r4)\n56\tlfs f29, lbl_8065107C@sda21\n120\tlfd f0, 0xf0(r1)\n124\tfmuls f1, f29, f1\n128\tfsubs f0, f0, f31\n132\tfdivs f28, f1, f0\n136\tfmr f1, f28\n140\tbl fn_80048C2C\n144\tlha r0, 0x2(r31)\n156\tlfs f0, 0x4(r31)\n172\tfmadds f0, f2, f1, f0\n176\tfmr f1, f28\n184\tbl fn_80048C50\n188\tlha r0, 0x2(r31)\n208\tlfs f0, 0x8(r31)\n216\tli r5, 0x0\n220\tli r6, 0x0\n232\tfmadds f0, f2, f1, f0\n240\tlfs f0, 0xc(r31)\n248\tbl fn_801F6B6C\n392\tmr r3, r29\n396\tbl fn_80201814\n400\tbl fn_80201BC8\n404\taddi r7, r1, 0x78\n412\tli r4, 0x15\n416\tli r5, 0xf\n420\tli r6, -0x1\n424\tli r8, 0x1\n428\tbl fn_8011F6A4\n432\tmr r3, r25\n436\taddi r7, r1, 0x50\n440\tli r4, 0x16\n444\tli r5, 0xf\n448\tli r6, -0x1\n452\tli r8, 0x1\n456\tbl fn_8011F6A4\n460\tlfs f5, 0x80(r1)\n468\tlfs f4, 0x84(r1)\n476\tlfs f3, 0x88(r1)\n484\tlfs f2, 0x58(r1)\n492\tlfs f1, 0x5c(r1)\n496\tlfs f0, 0x60(r1)\n524\tbl fn_801F6B6C\n544\tbl fn_801F6B6C",
+    "caller_command": "sed -n '2036,2040p' build/GEDE01/asm/auto_03_801D0CF0_text.s",
+    "caller_raw_output": "/* 801D28CC 001CE5EC  80 79 00 C0 */\tlwz r3, 0xc0(r25)\n/* 801D28D0 001CE5F0  80 B9 00 A8 */\tlwz r5, 0xa8(r25)\n/* 801D28D4 001CE5F4  4B FF F6 A5 */\tbl fn_801D1F78\n/* 801D28D8 001CE5F8  7F 24 CB 78 */\tmr r4, r25\n/* 801D28DC 001CE600  38 60 00 11 */\tli r3, 0x11",
+    "conclusion": "Retail byte, halfword, and float loads support the declared count, radius, and center widths and offsets; the query-position loads support the two-word prefix before Vec3. The trig calls consume and return f1, projection receives two pointers plus two integer zeros, the context factory returns r3 for the query calls, and both query calls receive six GPR arguments matching the declarations. fn_80201814 and fn_8011F6A4 return values are unused here, so their source return types are not established by this function and remain ABI-irrelevant to its generated call sequence. The caller supplies the first and third arguments in r3 and r5; r4 is live across the call, consistent with the pointer second argument. No source signature or width correction is justified by this evidence."
+  },
+  "aggregate_objdiff": {
+    "canonical_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+    "canonical_raw_output": "matching_objects=5023 total_objects=6188 matching_functions=4790 total_functions=8216 matching_code_bytes=750348 total_code_bytes=2300692 matching_data_bytes=38646 total_data_bytes=4305642 linked_code_bytes=750192 linked_data_bytes=37850",
+    "relocation_strict_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1798-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "relocation_strict_raw_output": "matching_objects=5023 total_objects=6188 matching_functions=4783 total_functions=8216 matching_code_bytes=748540 total_code_bytes=2300692 matching_data_bytes=38646 total_data_bytes=4305642 linked_code_bytes=750192 linked_data_bytes=37850"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "result": "The unsafe hand-written rule and stale relocation gate are corrected. The frontier remains at fn_801D1F78 with only entry scheduling unresolved; no matched-byte credit is claimed."
+}

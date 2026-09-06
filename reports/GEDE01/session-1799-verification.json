@@ -1,0 +1,30 @@
+{
+  "session_id": "session-1799",
+  "scope": "Retry 3 of fn_801D1F78 only; no contiguous advance.",
+  "result": "No function reached 100%; zero matched bytes claimed. The existing honest-C NonMatching function remains at its 97.810455% best with a sharper entry-scheduler diagnosis.",
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja",
+    "result": "success; build/GEDE01/main.dol: OK"
+  },
+  "direct_objdiff": {
+    "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1F78 -o reports/GEDE01/fn_801D1F78-session-1799-canonical.json --format json fn_801D1F78",
+    "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1F78 -o reports/GEDE01/fn_801D1F78-session-1799-reloc-strict.json --format json -c function_reloc_diffs=name_address fn_801D1F78",
+    "raw_output": "match_percent=97.810455 left_bytes=1224 right_bytes=1224 left_instructions=306 right_instructions=306 identical_slots=301 diff_slots=8 DIFF_INSERT=3 DIFF_DELETE=3 DIFF_ARG_MISMATCH=1 DIFF_REPLACE=1 left_relocations=12 right_relocations=12 direct_reports_cmp_exit=0"
+  },
+  "variant_audit": {
+    "tested": "declaration initializer placement; scalar declaration placement; projected-pointer and ring qualifiers; commutative multiply order; loop-initializer placement; -schedule off",
+    "conclusion": "No legal-C variant improved 97.810455%. Most reproduced the same entry schedule or regressed; -schedule off measured 58.640522%. The source was restored byte-for-byte to the committed version before final verification."
+  },
+  "aggregate_canonical": {
+    "command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+    "raw_output": "matching_objects=5023 total_objects=6188 matching_functions=4790 total_functions=8216 matching_code_bytes=750348 total_code_bytes=2300692 matching_data_bytes=38646 total_data_bytes=4305642 linked_code_bytes=750192 linked_data_bytes=37850"
+  },
+  "aggregate_relocation_strict": {
+    "command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1799-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_output": "matching_objects=5023 total_objects=6188 matching_functions=4783 total_functions=8216 matching_code_bytes=748540 total_code_bytes=2300692 matching_data_bytes=38646 total_data_bytes=4305642 linked_code_bytes=750192 linked_data_bytes=37850"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f for both files; cmp_exit=0"
+  }
+}

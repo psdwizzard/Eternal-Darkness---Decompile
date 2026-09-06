@@ -1,0 +1,31 @@
+{
+  "session_id": "session-1799-remediation-1",
+  "scope": "Review correction only; fn_801D1F78 remains NonMatching and no source or frontier function was reconstructed.",
+  "scheduler_disposition": {
+    "next_target": "0x801D2440",
+    "reason": "The retry budget for fn_801D1F78 is exhausted; the function is preserved as documented NonMatching."
+  },
+  "variant_measurement": {
+    "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801D1F78.externalized && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1F78 -o build/session-1799-remediation-1-variant-<name>.json --format json fn_801D1F78; jq the fn_801D1F78 left match_percent and both symbol sizes",
+    "raw_output": "variant=explicit-circle-first match_percent=97.77778 retail_bytes=1224 generated_bytes=1224\nvariant=divide-circle-before-index match_percent=95.71568 retail_bytes=1224 generated_bytes=1224\nvariant=circle-declaration-initializer match_percent=97.77778 retail_bytes=1224 generated_bytes=1224\nvariant=projected-pointer-declaration-initializer match_percent=97.810455 retail_bytes=1224 generated_bytes=1224\nvariant=first-loop-init-before-for match_percent=97.810455 retail_bytes=1224 generated_bytes=1224",
+    "conclusion": "The two forms that explicitly consume the real float literal before the integer conversions do not induce the retail entry schedule and regress. The source was restored byte-for-byte to the committed form."
+  },
+  "final_build": {
+    "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801D1F78.externalized && .tools/bin/ninja",
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "final_objdiff": {
+    "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1F78 -o build/session-1799-remediation-1-final-canonical.json --format json fn_801D1F78",
+    "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1F78 -o build/session-1799-remediation-1-final-reloc-strict.json --format json -c function_reloc_diffs=name_address fn_801D1F78",
+    "raw_output": "basis=canonical match_percent=97.810455 retail_bytes=1224 generated_bytes=1224 retail_instructions=306 generated_instructions=306 retail_relocations=12 generated_relocations=12\nbasis=relocation-strict match_percent=97.810455 retail_bytes=1224 generated_bytes=1224 retail_instructions=306 generated_instructions=306 retail_relocations=12 generated_relocations=12"
+  },
+  "aggregate_deduplication": {
+    "command": "cmp -s reports/GEDE01/session-1799-reloc-strict.json reports/GEDE01/session-1798-reloc-strict.json; echo aggregate_cmp_exit=$?; sha256sum reports/GEDE01/session-1799-reloc-strict.json reports/GEDE01/session-1798-reloc-strict.json",
+    "raw_output": "aggregate_cmp_exit=0\n15acb31affff4c2e03aa57c9110394348aa6d35d340119924b0047a803295459  reports/GEDE01/session-1799-reloc-strict.json\n15acb31affff4c2e03aa57c9110394348aa6d35d340119924b0047a803295459  reports/GEDE01/session-1798-reloc-strict.json",
+    "result": "The redundant session-1799 aggregate was removed; session-1798 is the retained identical artifact."
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo dol_cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+  }
+}

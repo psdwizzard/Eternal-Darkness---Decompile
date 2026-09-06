@@ -1,0 +1,55 @@
+{
+  "session_id": "session-1795-remediation-1",
+  "scope": "Review remediation only for the already-owned fn_801D1C34; no successor source, split, or build registration was added.",
+  "retail_symbol_check": {
+    "command": "rg -n '^lbl_8064D18C\\b|^lbl_8064A80C\\b' config/GEDE01/symbols.txt && rg -n 'lbl_8064D18C|lbl_8064A80C' src/game/game_fn_801D1C34.c",
+    "raw_output": "12256:lbl_8064D18C = .sbss:0x8064D18C; // type:object size:0x4 data:4byte\n14:extern s32 lbl_8064D18C;\n27:    record.words[8] = lbl_8064D18C;"
+  },
+  "affected_object_build": {
+    "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801D1C34.o",
+    "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801D1C34.o\n### mwcceppc.exe Usage Warning:\n#   Specified directory 'include' not found"
+  },
+  "direct_objdiff": {
+    "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1C34 fn_801D1C34 -o reports/GEDE01/objdiff-fn_801D1C34-session-1795.json --format json-pretty",
+    "canonical_raw_output": "INFO Writing to reports/GEDE01/objdiff-fn_801D1C34-session-1795.json",
+    "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1C34 fn_801D1C34 -o reports/GEDE01/objdiff-fn_801D1C34-session-1795-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "relocation_strict_raw_output": "INFO Writing to reports/GEDE01/objdiff-fn_801D1C34-session-1795-reloc-strict.json",
+    "measurement_command": "jq -r '(.left.symbols[] | select(.name == \"fn_801D1C34\")) as $l | (.right.symbols[] | select(.name == \"fn_801D1C34\")) as $r | \"retail_bytes=\\($l.size) generated_bytes=\\($r.size) retail_instructions=\\([$l.instructions[] | select(.instruction)] | length) generated_instructions=\\([$r.instructions[] | select(.instruction)] | length) match_percent=\\($l.match_percent)\"' reports/GEDE01/objdiff-fn_801D1C34-session-1795-reloc-strict.json",
+    "measurement_raw_output": "retail_bytes=836 generated_bytes=836 retail_instructions=209 generated_instructions=209 match_percent=96.02871",
+    "difference_count_command": "jq -r '(.left.symbols[] | select(.name == \"fn_801D1C34\").instructions) as $l | (.right.symbols[] | select(.name == \"fn_801D1C34\").instructions) as $r | [range(0; [$l|length,$r|length] | max) as $i | select(($l[$i].diff_kind // \"DIFF_NONE\") != \"DIFF_NONE\" or ($r[$i].diff_kind // \"DIFF_NONE\") != \"DIFF_NONE\")] | \"differing_alignment_rows=\\(length)\"' reports/GEDE01/objdiff-fn_801D1C34-session-1795-reloc-strict.json",
+    "difference_count_raw_output": "differing_alignment_rows=14",
+    "difference_offsets_command": "jq -r '(.left.symbols[] | select(.name == \"fn_801D1C34\").instructions) as $l | (.right.symbols[] | select(.name == \"fn_801D1C34\").instructions) as $r | ([range(0; [$l|length,$r|length] | max) as $i | select(($l[$i].diff_kind // \"DIFF_NONE\") != \"DIFF_NONE\" or ($r[$i].diff_kind // \"DIFF_NONE\") != \"DIFF_NONE\") | $l[$i].instruction.address // empty] | \"retail_diff_offsets=\\(join(\\\",\\\"))\"), ([range(0; [$l|length,$r|length] | max) as $i | select(($l[$i].diff_kind // \"DIFF_NONE\") != \"DIFF_NONE\" or ($r[$i].diff_kind // \"DIFF_NONE\") != \"DIFF_NONE\") | $r[$i].instruction.address // empty] | \"generated_diff_offsets=\\(join(\\\",\\\"))\")' reports/GEDE01/objdiff-fn_801D1C34-session-1795-reloc-strict.json",
+    "difference_offsets_raw_output": "retail_diff_offsets=32,36,40,44,48,52,56,60,64,68,72\ngenerated_diff_offsets=24,32,40,44,48,52,56,60,64,68,72"
+  },
+  "relocation_audit": {
+    "command": "readelf -rW build/GEDE01/obj/game/game_fn_801D1C34.o && readelf -rW build/GEDE01/src/game/game_fn_801D1C34.o",
+    "raw_output": "Relocation section '.rela.text' at offset 0x384 contains 8 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000406 R_PPC_ADDR16_HA        00000000   lbl_8023B570 + 0\n00000016  00000404 R_PPC_ADDR16_LO        00000000   lbl_8023B570 + 0\n0000006c  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064D18C + 0\n000000b0  0000060a R_PPC_REL24            00000000   fn_80201814 + 0\n000000bc  0000070a R_PPC_REL24            00000000   fn_80201C24 + 0\n000000c0  0000080a R_PPC_REL24            00000000   fn_8015821C + 0\n000001b4  0000096d R_PPC_EMB_SDA21        00000000   lbl_8064C4E0 + 0\n000001bc  00000a0a R_PPC_REL24            00000000   fn_801E7974 + 0\n\nRelocation section '.rela.text' at offset 0x378 contains 8 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000306 R_PPC_ADDR16_HA        00000000   lbl_8023B570 + 0\n00000016  00000304 R_PPC_ADDR16_LO        00000000   lbl_8023B570 + 0\n0000006c  0000046d R_PPC_EMB_SDA21        00000000   lbl_8064D18C + 0\n000000b0  0000060a R_PPC_REL24            00000000   fn_80201814 + 0\n000000bc  0000070a R_PPC_REL24            00000000   fn_80201C24 + 0\n000000c0  0000080a R_PPC_REL24            00000000   fn_8015821C + 0\n000001b4  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064C4E0 + 0\n000001bc  0000090a R_PPC_REL24            00000000   fn_801E7974 + 0"
+  },
+  "source_order_experiments": [
+    {
+      "source_variant": "Declare and initialize record in one statement, then overlay position and corrected global.",
+      "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801D1C34.o >/dev/null && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1C34 fn_801D1C34 -o - --format json -c function_reloc_diffs=name_address | jq -c '{text:(.left.sections[]|select(.name==\".text\")|{size,match_percent}),symbol:(.left.symbols[]|select(.name==\"fn_801D1C34\")|{size,match_percent})}'",
+      "raw_output": "{\"text\":{\"size\":\"836\",\"match_percent\":96.02871},\"symbol\":{\"size\":\"836\",\"match_percent\":96.02871}}"
+    },
+    {
+      "source_variant": "Copy the by-value position parameter into a callerPosition local declared before record, then overlay from that local.",
+      "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801D1C34.o >/dev/null && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1C34 fn_801D1C34 -o - --format json -c function_reloc_diffs=name_address | jq -c '{text:(.left.sections[]|select(.name==\".text\")|{size,match_percent}),symbol:(.left.symbols[]|select(.name==\"fn_801D1C34\")|{size,match_percent})}'",
+      "raw_output": "{\"text\":{\"size\":\"836\",\"match_percent\":96.02871},\"symbol\":{\"size\":\"836\",\"match_percent\":96.02871}}"
+    },
+    {
+      "source_variant": "Move the corrected global assignment before the caller-position overlay.",
+      "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801D1C34.o >/dev/null && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1C34 fn_801D1C34 -o - --format json -c function_reloc_diffs=name_address | jq -c '{text:(.left.sections[]|select(.name==\".text\")|{size,match_percent}),symbol:(.left.symbols[]|select(.name==\"fn_801D1C34\")|{size,match_percent})}'",
+      "raw_output": "{\"text\":{\"size\":\"836\",\"match_percent\":95.253586},\"symbol\":{\"size\":\"836\",\"match_percent\":95.253586}}"
+    }
+  ],
+  "retained_result": "The original declaration-plus-assignment aggregate spelling is retained with the corrected lbl_8064D18C read. The function remains honest-C NonMatching and earns no match credit. next_target is the immediate successor 0x801D1F78.",
+  "full_build": {
+    "command": "set -o pipefail; .tools/bin/ninja build/GEDE01/main.dol 2>&1 | tail -n 1; build_status=${PIPESTATUS[0]}; printf 'build_exit=%d\\n' \"$build_status\"; exit \"$build_status\"",
+    "raw_output": "[654/654] DOL build/GEDE01/main.dol\nbuild_exit=0"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'cmp_exit=%d\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0",
+    "nonmatching_link_note": "The DOL gate is preserved but does not validate this source because its NonMatching registration links the extracted retail object; correctness is established by the direct object and relocation evidence above."
+  }
+}
