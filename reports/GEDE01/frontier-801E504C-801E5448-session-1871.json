@@ -1,0 +1,36 @@
+{
+  "session_id": "session-1871",
+  "range_start": "0x801E504C",
+  "range_end": "0x801E5448",
+  "next_target": "0x801E5448",
+  "retail_bytes": 1020,
+  "matched_bytes": 24,
+  "nonmatching_bytes": 996,
+  "unaccounted_spans": [],
+  "functions": [
+    {
+      "name": "fn_801E504C",
+      "start": "0x801E504C",
+      "end": "0x801E5430",
+      "bytes": 996,
+      "status": "NonMatching",
+      "match_percent": 77.385544,
+      "generated_bytes": 880,
+      "retail_relocations": 60,
+      "generated_relocations": 53,
+      "relocations_equal": false,
+      "divergence": "Escape-command lowering and several command-specific alignment paths remain incomplete, changing the control-flow graph, r24-r31 and f30-f31 lifetimes, instruction scheduling, generated size, and relocation set."
+    },
+    {
+      "name": "fn_801E5430",
+      "start": "0x801E5430",
+      "end": "0x801E5448",
+      "bytes": 24,
+      "status": "Matching",
+      "match_percent": 100.0,
+      "relocations_equal": true,
+      "relocation_count": 4
+    }
+  ],
+  "accounting_check": "24 matched + 996 NonMatching = 1020 retail bytes; no gap"
+}

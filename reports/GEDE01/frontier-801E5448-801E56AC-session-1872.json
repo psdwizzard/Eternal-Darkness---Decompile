@@ -1,0 +1,43 @@
+{
+  "session_id": "session-1872",
+  "range_start": "0x801E5448",
+  "range_end": "0x801E56AC",
+  "next_target": "0x801E56AC",
+  "retail_bytes": 612,
+  "matched_bytes": 280,
+  "nonmatching_bytes": 332,
+  "unaccounted_spans": [],
+  "functions": [
+    {
+      "name": "fn_801E5448",
+      "range": "0x801E5448..0x801E5594",
+      "retail_bytes": 332,
+      "status": "NonMatching",
+      "best_canonical_percent": 85.12048,
+      "best_relocation_strict_percent": 85.12048,
+      "generated_bytes": 328,
+      "retail_instructions": 83,
+      "generated_instructions": 82,
+      "relocation_bearing_instructions": "11/11",
+      "divergence": "GC/1.3 assigns the local descriptor, format pointer, alignment byte, va-list control word, and formatter buffer across different persistent and volatile registers than retail; it schedules the va-list and descriptor field stores differently and emits one fewer instruction, leaving register allocation, scheduling, and branch destinations divergent.",
+      "canonical_evidence": "reports/GEDE01/fn_801E5448-session-1872-canonical.json",
+      "relocation_strict_evidence": "reports/GEDE01/fn_801E5448-session-1872-reloc-strict.json"
+    },
+    {
+      "name": "fn_801E5594",
+      "range": "0x801E5594..0x801E56AC",
+      "retail_bytes": 280,
+      "status": "Matching",
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "retail_instructions": 70,
+      "generated_instructions": 70,
+      "relocation_bearing_instructions": "12/12",
+      "canonical_evidence": "reports/GEDE01/fn_801E5594-session-1872-canonical.json",
+      "relocation_strict_evidence": "reports/GEDE01/fn_801E5594-session-1872-reloc-strict.json"
+    }
+  ],
+  "assembly_functions_added": [],
+  "shared_reconstructions": [],
+  "accounting": "332 NonMatching plus 280 Matching equals the complete 612-byte contiguous range."
+}

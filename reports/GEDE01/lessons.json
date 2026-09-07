@@ -2,10 +2,10 @@
   "schema_version": 2,
   "scope": "Distinct MWCC code-generation behaviors documented in reports/GEDE01/progress.json open_items and docs/matching.md",
   "source_snapshot": {
-    "repository_revision": "4f0c1d5b05cc1420ddd3f481d843f9479b3068ce",
-    "next_target": "0x801DA8CC",
+    "repository_revision": "fc0a0498b3013cb8d4a233391b0a9c1b86161c7a",
+    "next_target": "0x801E504C",
     "reports/GEDE01/progress.json": {
-      "sha256": "41703ad4f3d4aa61b4851b454d0d5383197d1878e18114c7781832022ceb97c8",
+      "sha256": "747da3aa84cf7faded93c40b377bbf0b380cf3ad4ba60eb0408b22315aa4a794",
       "scope": "whole_file"
     },
     "docs/matching.md": {
@@ -15,16 +15,16 @@
   "consolidation_audit": {
     "original_consolidation_commit": "86d029104eb5ed6ad01b6af03963ea2cf924d2a4",
     "comparison_base": "b6f963fbb8643a04ab4358a988239961639dd07e",
-    "latest_consolidation_session": "session-1830",
-    "scope": "Refreshed the categorized catalog through session-1829 without changing generated progress accounting or frontier prose. Added only MWCC code-generation behaviors explicitly stated in intervening progress open_items; incomplete recovery, signature maintenance, exact matches without a documented divergence, and verification-only facts were not promoted into lessons.",
-    "total_lessons": 586,
+    "latest_consolidation_session": "session-1870",
+    "scope": "Refreshed the categorized catalog through session-1869 without changing generated progress accounting or frontier prose. Added only MWCC code-generation behaviors explicitly stated in intervening progress open_items; incomplete recovery, signature maintenance, exact matches without a documented divergence, and verification-only facts were not promoted into lessons.",
+    "total_lessons": 602,
     "measurement_command": "jq -r '\"lessons=\" + ((.lessons|length)|tostring) + \" out_of_taxonomy=\" + ((.out_of_taxonomy|length)|tostring) + \" total_catalog_records=\" + (((.lessons|length)+(.out_of_taxonomy|length))|tostring)' reports/GEDE01/lessons.json",
-    "measurement_raw_output": "lessons=586 out_of_taxonomy=19 total_catalog_records=605",
-    "session_parent_commit": "4f0c1d5b05cc1420ddd3f481d843f9479b3068ce",
-    "session_delta_measurement_command": "jq -s -r '.[0] as $parent | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($parent.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($parent.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($parent.lessons|length)+($parent.out_of_taxonomy|length)))\"' <(git show 4f0c1d5b05cc1420ddd3f481d843f9479b3068ce:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
-    "session_delta_measurement_raw_output": "new_lessons=7 new_out_of_taxonomy=0 total_new_records=7",
+    "measurement_raw_output": "lessons=602 out_of_taxonomy=19 total_catalog_records=621",
+    "session_parent_commit": "fc0a0498b3013cb8d4a233391b0a9c1b86161c7a",
+    "session_delta_measurement_command": "jq -s -r '.[0] as $parent | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($parent.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($parent.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($parent.lessons|length)+($parent.out_of_taxonomy|length)))\"' <(git show fc0a0498b3013cb8d4a233391b0a9c1b86161c7a:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
+    "session_delta_measurement_raw_output": "new_lessons=16 new_out_of_taxonomy=0 total_new_records=16",
     "delta_measurement_command": "jq -s -r '.[0] as $base | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($base.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($base.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($base.lessons|length)+($base.out_of_taxonomy|length)))\"' <(git show b6f963fbb:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
-    "delta_measurement_raw_output": "new_lessons=153 new_out_of_taxonomy=17 total_new_records=170",
+    "delta_measurement_raw_output": "new_lessons=169 new_out_of_taxonomy=17 total_new_records=186",
     "added_out_of_taxonomy_categories": ["instruction-selection-lowering", "common-subexpression-elimination", "loop-unrolling", "dead-loop-elimination", "relocation-bearing-instruction-operands", "relocation-target-identity"]
   },
   "lessons": [
@@ -4132,6 +4132,118 @@
       "precise_divergence": "Incorrect recovered return or accessor prototypes change argument/result flow and the lifetime of values spanning calls, preventing retail code generation even when the surrounding control flow is correct.",
       "workaround": "Use fn_801CEB2C's corrected return type, fn_801D8268's corrected accessor prototype and argument flow, and preserve the documented persistent point-base or distinct input/result lifetimes.",
       "evidence": ["reports/GEDE01/progress.json: open_items entries for session-1817 remediation 1 and session-1821 remediation 1"]
+    },
+    {
+      "category": "register-allocation",
+      "functions": ["fn_801DA8CC", "fn_801DE8B4", "fn_801DF060", "fn_801E0088", "fn_801E2408", "fn_801E3020", "fn_801E3388", "fn_801E3A34", "fn_801E3B08", "fn_801E4314", "fn_801E47B8"],
+      "precise_divergence": "GC/1.3 assigns persistent object, work, resource, scalar, or floating-point lifetimes to a different callee-saved register cycle from retail; in smaller cases it reuses a live range, folds a move, or colors clamp temporaries into different volatile registers.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entries for sessions 1831, 1848, 1849, 1851, 1857, 1861, 1863, 1864, 1865, 1867, and 1869"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801DA8CC"],
+      "precise_divergence": "The current typed reconstruction schedules vector temporaries differently from retail alongside its different stack layout and r25-r31 lifetimes.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1831"]
+    },
+    {
+      "category": "inlining",
+      "functions": ["fn_801DB140"],
+      "precise_divergence": "Extracting the duplicated animation loops into a helper changes control flow, stack layout, function size, and r22-r31 allocation from retail.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1835"]
+    },
+    {
+      "category": "stack-slot-reuse",
+      "functions": ["fn_801DD200"],
+      "precise_divergence": "A straightforward aggregate copy selects floating-point loads and stores and different stack offsets, while retail preserves integer word-copy slots; an ordinary typed reconstruction does not share the scratch lifetimes in the retail pattern.",
+      "workaround": "Use the recorded lifetime-sharing scratch union to preserve the retail integer output-copy slots; keep the integer word-copy source form even when other divergences remain.",
+      "evidence": ["reports/GEDE01/progress.json: open_items entries for sessions 1843 remediation 2 and 1844 retry 2"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801DD71C"],
+      "precise_divergence": "GC/1.3 retains different table-base operand order and final-call argument scheduling after the flag and switch lowering are reconstructed.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1845"]
+    },
+    {
+      "category": "stack-slot-reuse",
+      "functions": ["fn_801DDB84"],
+      "precise_divergence": "The recovered source does not reproduce retail's fctiwz spill-slot reuse or 0x300-byte frame, and its aggregate-copy temporaries consequently schedule differently.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1846"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801DE5DC", "fn_801DE8B4"],
+      "precise_divergence": "GC/1.3 schedules packet-field and Vec3 aggregate stores differently from retail in effect-construction paths, with the generated frames and aggregate lowering also divergent.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entries for sessions 1847 and 1848"]
+    },
+    {
+      "category": "stack-slot-reuse",
+      "functions": ["fn_801DF060"],
+      "precise_divergence": "GC/1.3 emits a 0xD0 frame where retail uses 0x100 and assigns repeated Vec3 temporaries to different stack slots across the 26-argument effect paths.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1849"]
+    },
+    {
+      "category": "register-allocation",
+      "functions": ["fn_801E1BEC"],
+      "precise_divergence": "GC/1.3 retains two redundant return-value moves and chooses different registers for two conditional loads despite the reconstructed cleanup and timer-state control flow.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1853"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801E215C"],
+      "precise_divergence": "The final three-word payload uses a different stack layout and store schedule from retail after the effect-selection and packet-send paths are reconstructed.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1856"]
+    },
+    {
+      "category": "stack-slot-reuse",
+      "functions": ["fn_801E2408"],
+      "precise_divergence": "GC/1.3 changes effect-packet stack-slot ordering while hoisting the subject pointer and rotating object, work, subject, and id across r28-r31.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1857"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801E2A48"],
+      "precise_divergence": "Retail loads lbl_80651230 before packet stores, loads lbl_80651234 before final field stores, and forms object+4 immediately before the call; GC/1.3 delays both float loads and forms object+4 earlier.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1858 remediation 2"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801E2B28", "fn_801E2CF4"],
+      "precise_divergence": "GC/1.3 leaves float loads or a constructor store in a different local scheduling window from retail.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1859"]
+    },
+    {
+      "category": "register-allocation",
+      "functions": ["fn_801E2BF8"],
+      "precise_divergence": "GC/1.3 colors the integer-to-float conversion temporary into a different register from retail.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1859"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801E3388", "fn_801E47B8"],
+      "precise_divergence": "GC/1.3 schedules late float and stack-argument loads differently from retail; the larger text renderer also retains broader instruction-scheduling divergence after its represented rendering paths.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entries for sessions 1863 recovery attempt 1 and 1869"]
+    },
+    {
+      "category": "jump-table-strategy",
+      "functions": ["fn_801E41AC"],
+      "precise_divergence": "The matching switch emits two compiler-generated jump tables whose compiler-local ownership must be reconciled with the retail linked data identities.",
+      "workaround": "Externalize both tables only after validating their generated bytes against retail.",
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1866"]
     }
   ],
   "out_of_taxonomy": [
