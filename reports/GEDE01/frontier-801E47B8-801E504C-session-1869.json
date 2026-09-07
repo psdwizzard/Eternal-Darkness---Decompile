@@ -1,0 +1,36 @@
+{
+  "session_id": "session-1869",
+  "range_start": "0x801E47B8",
+  "range_end": "0x801E504C",
+  "next_target": "0x801E504C",
+  "retail_bytes": 2196,
+  "matched_bytes": 56,
+  "nonmatching_bytes": 2140,
+  "unaccounted_spans": [],
+  "functions": [
+    {
+      "name": "fn_801E47B8",
+      "start": "0x801E47B8",
+      "end": "0x801E5014",
+      "bytes": 2140,
+      "status": "NonMatching",
+      "match_percent": 62.779438,
+      "generated_bytes": 1904,
+      "retail_relocations": 127,
+      "generated_relocations": 99,
+      "relocations_equal": false,
+      "divergence": "Incomplete escape/control lowering and graphics-state details change the control-flow graph, frame, r23-r31 and f30-f31 lifetimes, instruction schedule, generated size, and relocation set."
+    },
+    {
+      "name": "fn_801E5014",
+      "start": "0x801E5014",
+      "end": "0x801E504C",
+      "bytes": 56,
+      "status": "Matching",
+      "match_percent": 100.0,
+      "relocations_equal": true,
+      "relocation_count": 5
+    }
+  ],
+  "accounting_check": "56 matched + 2140 NonMatching = 2196 retail bytes; no gap"
+}

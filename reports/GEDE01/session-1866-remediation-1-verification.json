@@ -1,0 +1,35 @@
+{
+  "session": "1866-remediation-1",
+  "scope": "Correct fn_801E41AC control-code semantics and require resolved-relocation retail comparison before externalizing its compiler-generated jump tables; frontier remains unchanged.",
+  "source_correction": "Removed case '|' from the silent return arm so it follows the retail default diagnostic arm.",
+  "table_guard_positive": {
+    "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801E41AC.o && cp build/GEDE01/src/game/game_fn_801E41AC.o build/remediation-1866/final-corrected.o && python3 tools/externalize_elf_symbol.py build/remediation-1866/final-corrected.o @36 jumptable_80264888 orig/GEDE01/sys/main.dol --require-relocation-match && python3 tools/externalize_elf_symbol.py build/remediation-1866/final-corrected.o @37 jumptable_80264848 orig/GEDE01/sys/main.dol --require-relocation-match && echo relocation_aware_table_verification=PASS",
+    "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801E41AC.o\nrelocation_aware_table_verification=PASS"
+  },
+  "table_guard_negative": {
+    "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801E41AC.o && cp build/GEDE01/src/game/game_fn_801E41AC.o build/remediation-1866/wrong-case.o && python3 tools/externalize_elf_symbol.py build/remediation-1866/wrong-case.o @37 jumptable_80264888 orig/GEDE01/sys/main.dol --require-relocation-match; echo wrong_case_verifier_exit=$?",
+    "setup": "The command was run after temporarily restoring the rejected case '|' source line; the correction was restored immediately afterward.",
+    "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801E41AC.o\nbuild/remediation-1866/wrong-case.o: @37 resolved value 801e42e0801e42f0801e42f0801e42f0801e42f0801e42d8801e42f0801e4220801e42f0801e42f0801e42d8801e42f0801e42f0801e41e4801e4228801e42f0801e42f0801e42f0801e42f0801e42f0801e42e8801e42f0801e42d0801e4274801e42f0801e42f0801e42f0801e42f0801e42f0801e42f0801e42f0801e42f0801e42e8801e42f0801e42e8 does not match jumptable_80264888 at 0x80264888: 801e42e0801e42f0801e42f0801e42f0801e42f0801e42d8801e42f0801e4220801e42f0801e42f0801e42d8801e42f0801e42f0801e41e4801e4228801e42f0801e42f0801e42f0801e42f0801e42f0801e42e8801e42f0801e42d0801e4274801e42f0801e42f0801e42f0801e42f0801e42f0801e42f0801e42f0801e42f0801e42f0801e42f0801e42e8\nwrong_case_verifier_exit=1"
+  },
+  "build": {
+    "command": ".tools/bin/ninja",
+    "raw_output": "[683/685] DOL build/GEDE01/main.dol\n[684/685] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[685/685] PROGRESS"
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E41AC fn_801E41AC -o build/remediation-1866/final-canonical-function.json --format json && jq -r '\"canonical symbol=\" + .left.symbols[0].name + \" left_size=\" + .left.symbols[0].size + \" right_size=\" + .right.symbols[0].size + \" match_percent=\" + (.left.symbols[0].match_percent|tostring) + \" left_relocations=\" + ([.left.symbols[0].instructions[]|select(.instruction.relocation!=null)]|length|tostring) + \" right_relocations=\" + ([.right.symbols[0].instructions[]|select(.instruction.relocation!=null)]|length|tostring)' build/remediation-1866/final-canonical-function.json",
+    "raw_output": "canonical symbol=fn_801E41AC left_size=360 right_size=360 match_percent=100.0 left_relocations=21 right_relocations=21"
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E41AC fn_801E41AC -o build/remediation-1866/final-strict-function.json --format json -c function_reloc_diffs=name_address && jq -r '\"relocation_strict symbol=\" + .left.symbols[0].name + \" left_size=\" + .left.symbols[0].size + \" right_size=\" + .right.symbols[0].size + \" match_percent=\" + (.left.symbols[0].match_percent|tostring) + \" left_relocations=\" + ([.left.symbols[0].instructions[]|select(.instruction.relocation!=null)]|length|tostring) + \" right_relocations=\" + ([.right.symbols[0].instructions[]|select(.instruction.relocation!=null)]|length|tostring)' build/remediation-1866/final-strict-function.json",
+    "raw_output": "relocation_strict symbol=fn_801E41AC left_size=360 right_size=360 match_percent=100.0 left_relocations=21 right_relocations=21"
+  },
+  "relocation_strict_aggregate": {
+    "command": "build/tools/objdiff-cli report generate -p . -o build/remediation-1866/final-reloc-strict.json -c function_reloc_diffs=name_address && jq -r '.measures | \"strict_matching_objects=\" + (.complete_units|tostring) + \" strict_total_objects=\" + (.total_units|tostring) + \" strict_matching_functions=\" + (.matched_functions|tostring) + \" strict_total_functions=\" + (.total_functions|tostring) + \" strict_matching_code_bytes=\" + .matched_code + \" strict_total_code_bytes=\" + .total_code + \" strict_code_percent=\" + (.matched_code_percent|tostring) + \" strict_linked_code_bytes=\" + .complete_code' build/remediation-1866/final-reloc-strict.json",
+    "raw_output": "strict_matching_objects=5207 strict_total_objects=6329 strict_matching_functions=4967 strict_total_functions=8216 strict_matching_code_bytes=797140 strict_total_code_bytes=2300692 strict_code_percent=34.64784 strict_linked_code_bytes=798824"
+  },
+  "dol": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol && cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo dol_cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+  },
+  "next_target": "0x801E4314"
+}

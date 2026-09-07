@@ -87,6 +87,17 @@ config.asflags = ["-mgekko", "--strip-local-absolute", "-I include", f"-I build/
 config.ldflags = ["-fp hardware", "-nodefaults"]
 config.custom_build_rules = [
     {
+        "name": "externalize_game_801E41AC_jumptables",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @36 jumptable_80264888 orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "python3 tools/externalize_elf_symbol.py $in @37 jumptable_80264848 orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@36=jumptable_80264888 --redefine-sym=@37=jumptable_80264848 "
+            "--remove-section=.data --rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    },
+    {
         "name": "externalize_game_801D9FE4_signed_bias",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @6 lbl_80651168 "
@@ -2661,6 +2672,11 @@ for rule in config.custom_build_rules:
 guarded_externalize_rules.add("externalize_string_pool_80250588")
 config.custom_build_steps = {
     "post-compile": [
+        {
+            "outputs": [f"build/{VERSION}/src/game/game_fn_801E41AC.externalized"],
+            "rule": "externalize_game_801E41AC_jumptables",
+            "inputs": [f"build/{VERSION}/src/game/game_fn_801E41AC.o"],
+        },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801D9FE4.externalized"],
             "rule": "externalize_game_801D9FE4_signed_bias",
@@ -10832,6 +10848,19 @@ config.libs = [
             Object(Matching, "game/game_fn_801E39A8.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/game_fn_801E3A34.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E3AA4.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            # Escape/control-sequence dispatcher reconstructed in C; the full
+            # command case set remains incomplete and therefore NonMatching.
+            Object(NonMatching, "game/game_fn_801E3B08.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801E4188.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801E418C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801E4198.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801E41AC.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(NonMatching, "game/game_fn_801E4314.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801E46E8.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801E46F8.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801E4704.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(NonMatching, "game/game_fn_801E47B8.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801E5014.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
         ],
     },
     {

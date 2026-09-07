@@ -1,0 +1,31 @@
+{
+  "session_id": "session-1865-remediation-1",
+  "scope": "Repair only the session-1865 full-link blocker, verify every affected object, annotate speculative NonMatching source, and preserve the frontier at 0x801E41AC.",
+  "diagnosis": {
+    "command": "build/binutils/powerpc-eabi-nm -a build/GEDE01/src/game/game_fn_801C2980.o | rg '(@3|lbl_80650F50)' && build/binutils/powerpc-eabi-nm -a build/GEDE01/src/game/game_fn_801B02F0.o | rg '(@59|jumptable_8025183C)' && python3 tools/externalize_elf_symbol.py build/GEDE01/src/game/game_fn_801C2980.o @3 lbl_80650F50 orig/GEDE01/sys/main.dol; a=$?; python3 tools/externalize_elf_symbol.py build/GEDE01/src/game/game_fn_801B02F0.o @59 jumptable_8025183C orig/GEDE01/sys/main.dol --require-whole-section; b=$?; printf 'game_fn_801C2980_idempotent_exit=%s game_fn_801B02F0_idempotent_exit=%s\\n' \"$a\" \"$b\"",
+    "raw_output": "         U lbl_80650F50\n         U jumptable_8025183C\ngame_fn_801C2980_idempotent_exit=0 game_fn_801B02F0_idempotent_exit=0",
+    "finding": "Both failed post-compile edges were rerunning against already externalized objects: the retail symbols were nonempty undefined symbols and the former MWCC-local names were absent. The externalizer now treats precisely that completed state as an idempotent success, allowing Ninja to recreate missing stamps without weakening first-pass retail-byte validation."
+  },
+  "full_link": {
+    "command": "set -o pipefail; .tools/bin/ninja build/GEDE01/main.dol > reports/GEDE01/.session-1865-remediation-1-final-build.log 2>&1; status=$?; tail -n 1 reports/GEDE01/.session-1865-remediation-1-final-build.log; printf 'ninja_exit=%s\\n' \"$status\"; exit \"$status\"",
+    "raw_output": "[680/680] DOL build/GEDE01/main.dol\nninja_exit=0"
+  },
+  "object_diff_commands": [
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801C2980 -o reports/GEDE01/game_fn_801C2980-session-1865-remediation-1-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801C2980 -o reports/GEDE01/game_fn_801C2980-session-1865-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801B02F0 -o reports/GEDE01/game_fn_801B02F0-session-1865-remediation-1-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801B02F0 -o reports/GEDE01/game_fn_801B02F0-session-1865-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E3B08 -o reports/GEDE01/game_fn_801E3B08-session-1865-remediation-1-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E3B08 -o reports/GEDE01/game_fn_801E3B08-session-1865-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address"
+  ],
+  "object_diff_measurement": {
+    "command": "jq -r '[input_filename, (.left.sections[]|select(.name==\".text\")|.size), (.right.sections[]|select(.name==\".text\")|.size), (.left.symbols[]|select(.flags==1)|.match_percent)] | @tsv' reports/GEDE01/game_fn_801C2980-session-1865-remediation-1-canonical.json reports/GEDE01/game_fn_801C2980-session-1865-remediation-1-reloc-strict.json reports/GEDE01/game_fn_801B02F0-session-1865-remediation-1-canonical.json reports/GEDE01/game_fn_801B02F0-session-1865-remediation-1-reloc-strict.json reports/GEDE01/game_fn_801E3B08-session-1865-remediation-1-canonical.json reports/GEDE01/game_fn_801E3B08-session-1865-remediation-1-reloc-strict.json",
+    "columns": ["report", "retail_text_bytes", "generated_text_bytes", "function_match_percent"],
+    "raw_output": "reports/GEDE01/game_fn_801C2980-session-1865-remediation-1-canonical.json\t60\t60\t100.0\nreports/GEDE01/game_fn_801C2980-session-1865-remediation-1-reloc-strict.json\t60\t60\t100.0\nreports/GEDE01/game_fn_801B02F0-session-1865-remediation-1-canonical.json\t704\t704\t100.0\nreports/GEDE01/game_fn_801B02F0-session-1865-remediation-1-reloc-strict.json\t704\t704\t100.0\nreports/GEDE01/game_fn_801E3B08-session-1865-remediation-1-canonical.json\t1664\t352\t14.701923\nreports/GEDE01/game_fn_801E3B08-session-1865-remediation-1-reloc-strict.json\t1664\t352\t14.701923"
+  },
+  "dol_gate": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp_status=$?; find build/GEDE01 -type f -name '*.o' -newer build/GEDE01/main.dol -print | wc -l; printf 'cmp_exit=%s\\n' \"$cmp_status\"; exit \"$cmp_status\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\n0\ncmp_exit=0"
+  },
+  "next_target": "0x801E41AC"
+}
