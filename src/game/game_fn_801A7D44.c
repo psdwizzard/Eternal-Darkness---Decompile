@@ -12,6 +12,9 @@ typedef struct Object801A7D44 {
     u16 count;
     u8 padB2[2];
     Entry801A7D44* entries;
+    u8 padB8[0x808A];
+    signed char enabled_8142;
+    signed char ready_8143;
 } Object801A7D44;
 
 extern Object801A7D44* fn_8015C28C(int);
@@ -19,14 +22,12 @@ extern Object801A7D44* fn_8015C28C(int);
 void fn_801A7D44(void)
 {
     Object801A7D44* object = fn_8015C28C(2);
-    if (object != 0 && *(signed char*)((u8*)object + 0x8142) != 0 &&
-        *(signed char*)((u8*)object + 0x8143) != 0) {
+    if (object != 0 && object->enabled_8142 != 0 && object->ready_8143 != 0) {
         u16 count = object->count;
         Entry801A7D44* entry = object->entries;
-        while (count > 0) {
+        int i;
+        for (i = 0; i < count; i++, entry++) {
             entry->value = 0;
-            entry++;
-            count--;
         }
     }
 }

@@ -3,17 +3,17 @@ typedef signed short s16;
 typedef unsigned short u16;
 typedef unsigned long u32;
 
-extern u32 lbl_80650F38;
-extern u16 lbl_80650F3C;
+extern u32 lbl_80651E80;
+extern u16 lbl_80651E84;
 extern u32 lbl_80650D48;
 extern u32 lbl_8064D224;
-extern u8 lbl_802FC5C8[];
+extern u8 lbl_802FC5BC[];
 extern u8 lbl_80607120[];
 extern u8 lbl_80606318[];
 extern u8 lbl_80606328[];
-extern float lbl_80650D44;
-extern float lbl_80650D4C;
-extern float lbl_80650D50;
+extern const float lbl_80650D44;
+extern const float lbl_80650D4C;
+extern const float lbl_80650D50;
 extern float lbl_80650D54;
 
 extern void fn_801804AC(void*, void*, void*, void*);
@@ -22,22 +22,26 @@ extern float fn_80048C2C(float);
 extern float fn_80048C50(float);
 extern void fn_80180554(void*, void*, void*, void*, int, int);
 extern void fn_80180518(void*, int, int);
-extern void fn_801805E0(void*, int, int, u8, int, float, void*);
-extern void fn_8018CEC0(void*, u8);
-extern void fn_8018C540(void*, void*, u8, int);
+extern void fn_801805E0(void*, int, u8, int, float, void*);
+extern void fn_8018CEC0(void*, int);
+extern void fn_8018C540(void*, void*, u8, int, u16);
 extern void fn_801F5A04(void*, s16, void*, void*);
 
 void fn_801A3A78(u8* object, void* coordinate, void* descriptor, u8* owner)
 {
     u8 color[6];
     s16 position[3];
-    u8 count = owner[0];
-    u8* entry = *(u8**)(object + 0x4C);
+    u8 count;
+    u8* entry;
     u8* texture;
+    u32 fallback;
     int i;
 
-    *(u32*)color = lbl_80650F38;
-    *(u16*)(color + 4) = lbl_80650F3C;
+    *(u32*)color = lbl_80651E80;
+    *(u16*)(color + 4) = lbl_80651E84;
+    fallback = lbl_80650D48;
+    count = owner[0];
+    entry = *(u8**)(object + 0x4C);
     fn_801804AC(object, coordinate, descriptor, color);
     object[0] = 0x80;
     object[1] = count;
@@ -51,7 +55,11 @@ void fn_801A3A78(u8* object, void* coordinate, void* descriptor, u8* owner)
     *(float*)(object + 0x3C) = lbl_80650D44;
     *(float*)(object + 0x40) = lbl_80650D4C;
 
-    texture = owner[0x3D] == 0 ? lbl_802FC5C8 + 0xC : descriptor;
+    if (owner[0x3D] == 0) {
+        texture = lbl_802FC5BC + 0xC;
+    } else {
+        texture = (u8*)&fallback;
+    }
     memset(object + 0x24, 0, 0x10);
     for (i = 0; (u8)i < count; i++) {
         float fraction = lbl_80650D50 * (float)(u8)i / (float)count;
@@ -63,11 +71,11 @@ void fn_801A3A78(u8* object, void* coordinate, void* descriptor, u8* owner)
         fn_80180554(entry, position, descriptor, color, 0, 0);
         if (owner[0x3D] == 0)
             fn_80180518(object + 0x24, i, 1);
-        fn_801805E0(entry + 0x20, 4, 0, owner[1], 0, lbl_80650D54, texture);
+        fn_801805E0(entry + 0x20, 4, owner[1], 0, lbl_80650D54, texture);
         entry += 0x38;
     }
     fn_8018CEC0(*(void**)(object + 0x54), count);
-    fn_8018C540(*(void**)(object + 0x58), lbl_802FC5C8 + 0xC, count, 4);
+    fn_8018C540(*(void**)(object + 0x58), lbl_802FC5BC + 0xC, count, 4, *(u16*)(lbl_80607120 + 2));
     if (*(s16*)(owner + 4) >= 0)
         fn_801F5A04(object + 0x6C, *(s16*)(owner + 4), lbl_80606328, lbl_80606318);
 }

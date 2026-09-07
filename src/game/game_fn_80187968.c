@@ -1,38 +1,51 @@
 typedef unsigned char u8;
+typedef signed char s8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
+extern const float lbl_80650A50;
 extern u8 lbl_802FC5BC[];
+
+typedef struct EffectConfig {
+    u8 pad00;
+    u8 field_01;
+    u8 field_02;
+    s8 field_03;
+    u16 field_04;
+    u8 pad06[0xE];
+    u32 field_14;
+    u32 field_18;
+    u32 field_1C;
+    u32 field_20;
+    u8 field_24;
+    u8 field_25;
+    u8 field_26;
+    u8 field_27;
+    u8 pad28[2];
+    u16 field_2A;
+    float field_2C;
+    u32 field_30;
+    u32 field_34;
+} EffectConfig;
 
 void fn_80187968(void* value)
 {
-    u8* p = (u8*)value;
-    u8 value20 = 0x20;
-    u16 six = 6;
-    u8 valueFC = 0xFC;
-    signed char minus4 = -4;
-    u32 zero = 0;
-    u8 five = 5;
-    u8 valueFF = 0xFF;
-    u8* base = lbl_802FC5BC;
-    u16 sixHundred = 0x258;
-    u8 value94 = 0x94;
-    u8 valueF0 = 0xF0;
+    EffectConfig* config = value;
 
-    p[1] = value20;
-    *(u16*)(p + 4) = six;
-    p[2] = valueFC;
-    p[3] = minus4;
-    *(u32*)(p + 0x14) = zero;
-    *(u32*)(p + 0x18) = zero;
-    *(u32*)(p + 0x1C) = zero;
-    p[0x24] = five;
-    p[0x25] = valueFF;
-    *(u32*)(p + 0x20) = zero;
-    *(u32*)(p + 0x30) = *(u32*)(base + 0xC);
-    *(u32*)(p + 0x34) = *(u32*)(base + 0xC);
-    *(u16*)(p + 0x2A) = sixHundred;
-    p[0x26] = value94;
-    *(float*)(p + 0x2C) = 1.0f;
-    p[0x27] = valueF0;
+    config->field_01 = 0x20;
+    config->field_04 = 6;
+    config->field_02 = 0xFC;
+    config->field_03 = -4;
+    config->field_14 = 0;
+    config->field_18 = 0;
+    config->field_1C = 0;
+    config->field_24 = 5;
+    config->field_25 = 0xFF;
+    config->field_20 = 0;
+    config->field_30 = *(u32*)(lbl_802FC5BC + 0xC);
+    config->field_34 = *(u32*)(lbl_802FC5BC + 0xC);
+    config->field_2A = 0x258;
+    config->field_26 = 0x94;
+    config->field_2C = lbl_80650A50;
+    config->field_27 = 0xF0;
 }

@@ -23,27 +23,32 @@ extern Group lbl_80628CB0[];
 
 void fn_801C7684(Entry* entry, u8 group)
 {
+    Group* groups = lbl_80628CB0;
+    Entry* next;
+
     if (entry->active != 0) {
         if (entry->previous != 0) {
             entry->previous->next = entry->next;
         } else {
-            lbl_80628CB0[entry->group].head = entry->next;
+            groups[entry->group].head = entry->next;
         }
 
         if (entry->next != 0) {
             entry->next->previous = entry->previous;
         }
 
-        entry->next = lbl_80628CB0[group].head;
-        if (entry->next != 0) {
+        next = groups[group].head;
+        entry->next = next;
+        if (next != 0) {
             entry->next->previous = entry;
         }
         entry->previous = 0;
-        lbl_80628CB0[group].head = entry;
+        groups[group].head = entry;
 
         if (entry->active == 2) {
-            entry->next_secondary = lbl_80628CB0[entry->group].secondary_head;
-            lbl_80628CB0[entry->group].secondary_head = entry;
+            u8* secondary = (u8*)&groups->secondary_head;
+            entry->next_secondary = *(Entry**)(secondary + entry->group * sizeof(Group));
+            *(Entry**)(secondary + entry->group * sizeof(Group)) = entry;
         }
     }
     entry->group = group;

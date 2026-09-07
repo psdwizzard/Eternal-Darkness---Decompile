@@ -16,7 +16,7 @@ struct Object {
     char pad24[0x14];
     void* callback_arg;
     char pad3c[8];
-    int flags;
+    unsigned int flags;
 };
 
 #pragma use_lmw_stmw on
@@ -30,7 +30,7 @@ int fn_80156480(Object* object, unsigned int events, unsigned int control)
     int set_mask;
     unsigned int result = 0;
     Child* child;
-    int flags;
+    unsigned int flags;
 
     clear_mask = (control & 0x80) != 0 ? 0x80 : 0x10;
     if ((control & 0x100) != 0) {

@@ -3,7 +3,6 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 
 extern int fn_8011EB04(void *);
-#define fn_8011EB04(a) fn_8011EB04((void *)(a))
 extern u16 fn_8012A244(int value);
 extern int fn_801A9EF4(int minimum, int maximum);
 
@@ -14,7 +13,7 @@ extern float lbl_8064E3CC;
 
 u16 fn_8004998C(int value, u8* intensity, u32* flags)
 {
-    int type = fn_8011EB04(value);
+    int type = fn_8011EB04((void*)value);
     int state = fn_8012A244(value);
     u16 result = 0xFFFF;
     float scale = lbl_8064E3C0;
@@ -61,6 +60,7 @@ u16 fn_8004998C(int value, u8* intensity, u32* flags)
         case 17:
         case 18:
         case 19:
+        default:
             result = fn_801A9EF4(0x57, 0x5D);
             scale = lbl_8064E3C4;
             break;
@@ -89,6 +89,16 @@ u16 fn_8004998C(int value, u8* intensity, u32* flags)
         case 13:
             result = fn_801A9EF4(0x1A7, 0x1AB);
             break;
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
         default:
             result = fn_801A9EF4(0x1A4, 0x1A6);
             break;
@@ -147,6 +157,11 @@ u16 fn_8004998C(int value, u8* intensity, u32* flags)
         case 14:
             result = fn_801A9EF4(0x4F, 0x52);
             break;
+        case 15:
+        case 16:
+        case 17:
+        case 18:
+        case 19:
         default:
             result = fn_801A9EF4(0x1A4, 0x1A6);
             break;

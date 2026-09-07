@@ -35,6 +35,7 @@ int fn_800B002C(void)
     unsigned char* buffer = lbl_8031F7C0;
     void* current;
     int oldValue;
+    int offset;
     void* object;
     Vec3 position;
     float scale;
@@ -50,8 +51,8 @@ int fn_800B002C(void)
         fn_8012B7A0(object, scale);
         memcpy(&value, buffer + 16, 4);
         fn_8011FB54(object, value);
-        object = (void*)(fn_800E507C(buffer + 20) + 20);
-        object = (void*)((u32)object + fn_801F4E94(buffer + (u16)(u32)object));
+        offset = fn_800E507C(buffer + 20) + 20;
+        offset += fn_801F4E94(buffer + (u16)offset);
         oldValue = lbl_8064D18C;
         if (oldValue != value) {
             lbl_8064CDC4 = 0;
@@ -60,15 +61,15 @@ int fn_800B002C(void)
         if (value != oldValue) {
             fn_80200EAC(lbl_8064F010, 62, 0, 0, value);
         }
-        object = (void*)((u32)object + fn_80028E0C(buffer + (u16)(u32)object));
-        object = (void*)((u32)object + fn_8016B21C(buffer + (u16)(u32)object));
-        object = (void*)((u32)object + fn_801FAD4C(buffer + (u16)(u32)object));
-        object = (void*)((u32)object + fn_801F6794(buffer + (u16)(u32)object));
-        object = (void*)((u32)object + fn_8012BB34(buffer + (u16)(u32)object));
-        object = (void*)((u32)object + fn_801E9068(buffer + (u16)(u32)object));
-        object = (void*)((u32)object + fn_801A8268(buffer + (u16)(u32)object));
-        object = (void*)((u32)object + fn_8011E98C(buffer + (u16)(u32)object));
-        fn_801A9A20(buffer + (u16)(u32)object);
+        offset += fn_80028E0C(buffer + (u16)offset);
+        offset += fn_8016B21C(buffer + (u16)offset);
+        offset += fn_801FAD4C(buffer + (u16)offset);
+        offset += fn_801F6794(buffer + (u16)offset);
+        offset += fn_8012BB34(buffer + (u16)offset);
+        offset += fn_801E9068(buffer + (u16)offset);
+        offset += fn_801A8268(buffer + (u16)offset);
+        offset += fn_8011E98C(buffer + (u16)offset);
+        fn_801A9A20(buffer + (u16)offset);
         return 1;
     }
     return 0;

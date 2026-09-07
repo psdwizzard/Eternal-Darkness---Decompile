@@ -8,20 +8,34 @@ typedef struct TransformData {
     float direction[3];
 } TransformData;
 
-/* Honest reconstruction; paired-single u16 conversion remains unmatched. */
+extern const float lbl_80650080;
+extern const float lbl_80650084;
+extern const float lbl_80650068;
+extern const float lbl_8065006C;
+
 void fn_8011F140(void* object, int index, TransformData* output)
 {
     u8* owner = *(u8**)((u8*)object + 60);
     u8* record = *(u8**)(owner + 188) + index * 28;
+    register float* direction = output->direction;
+    register u8* source = record + 14;
+    float scaled;
 
-    output->position[0] = (float)*(s16*)(record + 8) * 4.0f * 0.0625f;
-    output->position[1] = (float)*(s16*)(record + 10) * 4.0f * 0.0625f;
-    output->position[2] = (float)*(s16*)(record + 12) * 4.0f * 0.0625f;
-    output->direction[0] = (float)*(u16*)(record + 14);
-    output->direction[1] = (float)*(u16*)(record + 16);
-    output->direction[2] = (float)*(u16*)(record + 18);
-    if (output->direction[0] == 0.0f && output->direction[1] == 0.0f &&
-        output->direction[2] == 0.0f) {
-        output->direction[1] = 1.0f;
+    scaled = lbl_80650080 * (float)*(s16*)(record + 8);
+    output->position[0] = scaled * lbl_80650084;
+    scaled = lbl_80650080 * (float)*(s16*)(record + 10);
+    output->position[1] = scaled * lbl_80650084;
+    scaled = lbl_80650080 * (float)*(s16*)(record + 12);
+    output->position[2] = scaled * lbl_80650084;
+    /* Convert the packed u16 direction through the configured GQRs. */
+    asm {
+        psq_l f0, 0(source), 0, 7
+        psq_lu f1, 4(source), 1, 7
+        psq_st f0, 0(direction), 0, 0
+        psq_stu f1, 8(direction), 1, 0
+    }
+    if (lbl_80650068 == output->direction[0] && lbl_80650068 == output->direction[1] &&
+        lbl_80650068 == output->direction[2]) {
+        output->direction[1] = lbl_8065006C;
     }
 }

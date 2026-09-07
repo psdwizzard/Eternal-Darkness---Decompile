@@ -17,10 +17,14 @@ void fn_801A5910(int enabled)
 {
     int i;
 
-    for (i = 0; i < 6; i++) {
+    for (i = 0; i < 9; i++) {
         if (lbl_806079C0[i].callback == fn_801A5F40 ||
             lbl_806079C0[i].callback == fn_801A5F54) {
-            lbl_806079C0[i].value = enabled ? -72 : 72;
+            if (enabled) {
+                lbl_806079C0[i].value = -72;
+            } else {
+                lbl_806079C0[i].value = 72;
+            }
         }
     }
 }

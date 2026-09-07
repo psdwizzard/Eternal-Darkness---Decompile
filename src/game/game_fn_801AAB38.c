@@ -40,16 +40,13 @@ void fn_801AAB38(void)
     fourth = source_fourth;
     fn_801F68D4(&third);
 
-    first_ptr = &lbl_80608020.first;
-    first_ptr->x = first.x;
+    (first_ptr = &lbl_80608020.first)->x = first.x;
     lbl_80608020.first.y = first.y;
     lbl_80608020.first.z = first.z;
-    third_ptr = &lbl_80608020.third;
-    third_ptr->x = third.x;
+    (third_ptr = &lbl_80608020.third)->x = third.x;
     lbl_80608020.third.y = third.y;
     lbl_80608020.third.z = third.z;
-    fourth_ptr = &lbl_80608020.fourth;
-    fourth_ptr->x = fourth.x;
+    (fourth_ptr = &lbl_80608020.fourth)->x = fourth.x;
     lbl_80608020.fourth.y = fourth.y;
     lbl_80608020.fourth.z = fourth.z;
     fn_801C9510(&lbl_80608020, first_ptr, &lbl_80608020.second,

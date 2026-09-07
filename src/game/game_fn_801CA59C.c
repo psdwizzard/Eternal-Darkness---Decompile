@@ -2,12 +2,12 @@ extern float lbl_80651018;
 
 void fn_801CA59C(float* output, float* input)
 {
-    float inverse;
     float negative_inverse;
+    float inverse;
     float c0;
     float c1;
-    float c2;
     float determinant;
+    float c2;
 
     c0 = input[4] * input[8] - input[7] * input[5];
     c1 = -(input[3] * input[8] - input[6] * input[5]);

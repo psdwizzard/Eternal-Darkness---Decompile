@@ -7,9 +7,9 @@ typedef struct Entry {
 
 extern int lbl_8064B9E0;
 extern int lbl_8064B9E4;
-extern unsigned char lbl_8064D068[];
-extern unsigned char lbl_8064D070[];
-extern void* lbl_8064A65C;
+extern char lbl_8064B9E8[7];
+extern char lbl_8064B9F0[2];
+extern void* lbl_8064CFDC;
 extern unsigned char lbl_805AE780[];
 
 extern void* fn_8015D424(void*, int);
@@ -23,18 +23,19 @@ extern void fn_8015D44C(void);
 
 void fn_801391D4(short id, int value)
 {
-    unsigned char temp[64];
-    void* token = fn_8015D424(temp, 2);
+    unsigned char handle[60];
+    unsigned char slot[4];
+    void* token = fn_8015D424(slot, 2);
     Entry* entry;
 
     fn_801399CC(id);
-    fn_802136A4(lbl_8064D068);
-    fn_80213394(lbl_805AE780 + 6, temp + 4);
-    fn_802136A4(lbl_8064D070);
-    entry = fn_80138950(lbl_8064A65C, (u16)value);
-    fn_8015D7D4(0xEA5E40, temp + 4, entry->data, (entry->size + 31) & ~31, token);
+    fn_802136A4(lbl_8064B9E8);
+    fn_80213394(lbl_805AE780 + 6, handle);
+    fn_802136A4(lbl_8064B9F0);
+    entry = fn_80138950(lbl_8064CFDC, (u16)value);
+    fn_8015D7D4(0xEA5E40, handle, entry->data, (entry->size + 31) & ~31, token);
     lbl_8064B9E0 = value;
     lbl_8064B9E4 = id;
-    fn_8021345C(temp + 4);
+    fn_8021345C(handle);
     fn_8015D44C();
 }
