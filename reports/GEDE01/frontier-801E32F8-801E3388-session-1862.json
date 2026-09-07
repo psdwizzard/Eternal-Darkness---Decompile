@@ -1,0 +1,38 @@
+{
+  "session_id": "session-1862",
+  "range_start": "0x801E32F8",
+  "range_end": "0x801E3388",
+  "next_target": "0x801E3388",
+  "matched_bytes": 144,
+  "nonmatching_bytes": 0,
+  "unaccounted_spans": [],
+  "functions": [
+    {
+      "name": "fn_801E32F8",
+      "start": "0x801E32F8",
+      "end": "0x801E3314",
+      "bytes": 28,
+      "status": "Matching",
+      "canonical_score": 100.0,
+      "relocation_strict_score": 100.0,
+      "relocations": "0/0",
+      "canonical_evidence": "reports/GEDE01/fn_801E32F8-session-1862-canonical.json",
+      "relocation_strict_evidence": "reports/GEDE01/fn_801E32F8-session-1862-reloc-strict.json"
+    },
+    {
+      "name": "fn_801E3314",
+      "start": "0x801E3314",
+      "end": "0x801E3388",
+      "bytes": 116,
+      "status": "Matching",
+      "canonical_score": 100.0,
+      "relocation_strict_score": 100.0,
+      "relocations": "5/5",
+      "canonical_evidence": "reports/GEDE01/fn_801E3314-session-1862-canonical.json",
+      "relocation_strict_evidence": "reports/GEDE01/fn_801E3314-session-1862-reloc-strict.json"
+    }
+  ],
+  "accounting": "28 + 116 = 144 bytes; all 144 bytes matched; no NonMatching functions, gaps, assembly, shared reconstruction, fallback jump, or unaccounted span",
+  "accounting_command": "printf 'fn_801E32F8=%d fn_801E3314=%d matched_bytes=%d range_bytes=%d\\n' \"$((0x801E3314-0x801E32F8))\" \"$((0x801E3388-0x801E3314))\" \"$((0x801E3388-0x801E32F8))\" \"$((0x801E3388-0x801E32F8))\"",
+  "accounting_raw_output": "fn_801E32F8=28 fn_801E3314=116 matched_bytes=144 range_bytes=144"
+}

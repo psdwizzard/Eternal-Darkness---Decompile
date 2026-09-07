@@ -1,0 +1,16 @@
+{
+  "session_id": "session-1864",
+  "range_start": "0x801E39A8",
+  "range_end": "0x801E3B08",
+  "range_bytes": 352,
+  "matched_bytes": 240,
+  "nonmatching_bytes": 112,
+  "unaccounted_spans": [],
+  "functions": [
+    {"name":"fn_801E39A8","start":"0x801E39A8","end":"0x801E3A34","bytes":140,"status":"Matching","canonical_score":100.0,"relocation_strict_score":100.0,"relocations":"16/16","canonical_evidence":"reports/GEDE01/objdiff-fn_801E39A8-session-1864.json","strict_evidence":"reports/GEDE01/objdiff-fn_801E39A8-session-1864-reloc-strict.json"},
+    {"name":"fn_801E3A34","start":"0x801E3A34","end":"0x801E3AA4","bytes":112,"status":"NonMatching","canonical_score":95.35714,"relocation_strict_score":95.35714,"relocations":"6/6","divergence":"GC/1.3 selects r5/r0 rather than retail r0/r3 for the first clamp value and input word, then rotates r4/r0 rather than retail r0/r3 in the remaining byte clamps.","canonical_evidence":"reports/GEDE01/objdiff-fn_801E3A34-session-1864.json","strict_evidence":"reports/GEDE01/objdiff-fn_801E3A34-session-1864-reloc-strict.json"},
+    {"name":"fn_801E3AA4","start":"0x801E3AA4","end":"0x801E3B08","bytes":100,"status":"Matching","canonical_score":100.0,"relocation_strict_score":100.0,"relocations":"7/7","canonical_evidence":"reports/GEDE01/objdiff-fn_801E3AA4-session-1864.json","strict_evidence":"reports/GEDE01/objdiff-fn_801E3AA4-session-1864-reloc-strict.json"}
+  ],
+  "next_target": "0x801E3B08",
+  "accounting": "140 + 112 + 100 = 352 retail bytes; 240 matched plus 112 NonMatching equals the full declared range."
+}
