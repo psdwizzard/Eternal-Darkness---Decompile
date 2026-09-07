@@ -1,0 +1,22 @@
+{
+  "session_id": "session-1884",
+  "build_command": ".tools/bin/ninja build/GEDE01/main.dol",
+  "build_result": "success",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_cmp_command": "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_cmp_exit": 0,
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+  "canonical_measures": "matching_objects=5293 total_objects=6376 matching_functions=5058 total_functions=8216 matching_code_bytes=823980 total_code_bytes=2300692 code_percent=35.81444 linked_code_bytes=823980",
+  "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1884-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+  "relocation_strict_measures": "matching_objects=5293 total_objects=6376 matching_functions=5053 total_functions=8216 matching_code_bytes=822296 total_code_bytes=2300692 code_percent=35.741245 linked_code_bytes=823980",
+  "direct_objdiff_command_template": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_ADDRESS fn_ADDRESS -o reports/GEDE01/objdiff-game_fn_ADDRESS-session-1884[-reloc-strict].json --format json-pretty [-c function_reloc_diffs=name_address]",
+  "direct_measurements": [
+    "fn_801E717C retail=548 generated=548 match=100.0 instructions=137/137 relocations=55/55 diff_rows=0",
+    "fn_801E73A0 retail=124 generated=124 match=100.0 instructions=31/31 relocations=0/0 diff_rows=0",
+    "fn_801E741C retail=56 generated=56 match=100.0 instructions=14/14 relocations=2/2 diff_rows=0",
+    "fn_801E7454 retail=100 generated=100 match=100.0 instructions=25/25 relocations=1/1 diff_rows=0"
+  ],
+  "arithmetic_check": "548+124+56+100=828 matched bytes; range 0x801E74B8-0x801E717C=828 bytes",
+  "nonmatching_accounting": "zero new or retained NonMatching bytes in this session range"
+}

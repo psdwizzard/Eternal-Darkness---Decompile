@@ -30,11 +30,11 @@ extern u32 fn_80178F14(int, int, int, int, int, int);
 int fn_80158D38(Vec3* position, int key, u32 mask, Vec3* output)
 {
     int result;
-    register Record* best;
+    u32 best_distance;
+    Record* best;
     RecordSet* set;
-    register Record* record;
     int i;
-    register u32 best_distance;
+    Record* record;
 
     result = 0;
     best = 0;

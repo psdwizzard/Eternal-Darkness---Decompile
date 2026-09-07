@@ -23,20 +23,15 @@ extern void fn_801A5FB0(void);
 void fn_801A59CC(void* value)
 {
     void* object;
+    int i;
 
     fn_801A6CB4();
-    lbl_806079C0[0].value = value;
-    lbl_806079C0[1].value = value;
-    lbl_806079C0[2].value = value;
-    lbl_806079C0[3].value = value;
-    lbl_806079C0[4].value = value;
-    lbl_806079C0[5].value = value;
-    lbl_806079C0[6].value = value;
-    lbl_806079C0[7].value = value;
-    lbl_806079C0[8].value = value;
-    lbl_802512A4[0].value = value;
-    lbl_802512A4[1].value = value;
-    lbl_802512A4[2].value = value;
+    for (i = 0; i < 3; i++) {
+        lbl_802512A4[i].value = value;
+    }
+    for (i = 0; i < 9; i++) {
+        lbl_806079C0[i].value = value;
+    }
 
     object = fn_80144628(3, lbl_802512A4, 0);
     lbl_8064D26C = object;

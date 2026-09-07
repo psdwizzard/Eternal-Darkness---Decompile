@@ -9,8 +9,8 @@ extern u32 lbl_8064CFFC;
 extern u32 lbl_8064D000;
 extern unsigned char* lbl_8064D004;
 extern unsigned char* lbl_8064CFC0;
-extern u32 lbl_8064D00C;
-extern u32 lbl_8064D010;
+extern volatile u32 lbl_8064D00C;
+extern volatile u32 lbl_8064D010;
 
 extern void fn_80213394(void*, Status*);
 extern void fn_8021345C(Status*);
@@ -30,8 +30,8 @@ void* fn_80138B90(void* object, int mode, int alternate)
     } else if (mode == 3) {
         Status status;
         fn_80213394(object, &status);
-        available = 0x3D3100 - lbl_8064D010;
         address = lbl_8064CFC0 + 0x3D3100 - ((status.size + 31) & ~31);
+        available = 0x3D3100 - lbl_8064D010;
         fn_8021345C(&status);
     } else {
         address = lbl_8064CFC0 + lbl_8064D010;

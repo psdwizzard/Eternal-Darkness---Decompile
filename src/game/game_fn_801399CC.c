@@ -1,8 +1,7 @@
 typedef struct Header {
     int file;
-    short value;
     short id;
-    char name[12];
+    char name[14];
 } Header;
 
 typedef struct FileData {
@@ -12,46 +11,49 @@ typedef struct FileData {
 
 extern Header lbl_805AE780;
 extern unsigned char lbl_8024EF08[];
-extern void* lbl_8064A65C;
+extern char lbl_8064B9E8[7];
+extern char lbl_8064B9F0[2];
+extern void* lbl_8064CFDC;
 extern void fn_800F9D4C(char*, const char*, ...);
 extern void fn_80155BB0(const char*, const char*, ...);
 extern void fn_802136A4(void*);
 extern int fn_8021302C(const char*);
-extern int fn_80213320(int, Header*);
-extern int fn_802137F4(Header*, void*, int, int, int);
-extern void fn_8021345C(Header*);
+extern int fn_80213320(int, void*);
+extern int fn_802137F4(void*, void*, int, int, int);
+extern void fn_8021345C(void*);
 
 void fn_801399CC(short id)
 {
-    Header local;
+    unsigned char handle[60];
+    unsigned char* strings = lbl_8024EF08;
     char* name;
+    int code = id;
 
-    if (id == 119) {
-        id = 85;
-    } else if (id == 120) {
-        id = 121;
-    } else if (id == 122) {
-        id = 101;
+    if (code == 119) {
+        code = 85;
+    } else if (code == 120) {
+        code = 121;
+    } else if (code == 122) {
+        code = 101;
     }
 
     if (lbl_805AE780.id != id) {
         lbl_805AE780.id = -1;
         name = lbl_805AE780.name;
-        fn_800F9D4C(name, (char*)lbl_8024EF08 + 0x84);
-        fn_802136A4((void*)0x8064D068);
+        fn_800F9D4C(name, (char*)strings + 0x84, code);
+        fn_802136A4(lbl_8064B9E8);
         lbl_805AE780.file = fn_8021302C(name);
-        fn_802136A4((void*)0x8064D070);
+        fn_802136A4(lbl_8064B9F0);
         if (lbl_805AE780.file != -1) {
-            if (!fn_80213320(lbl_805AE780.file, &local)) {
-                fn_80155BB0((char*)lbl_8024EF08 + 0x94,
-                            (char*)lbl_8024EF08 + 0xAC,
-                            name, lbl_805AE780.file);
+            if (!fn_80213320(lbl_805AE780.file, handle)) {
+                fn_80155BB0((char*)strings + 0x94, (char*)strings + 0xAC, name,
+                            lbl_805AE780.file);
             } else {
-                while (fn_802137F4(&local, lbl_8064A65C, 1024, 0, 2) == -1) {
+                while (fn_802137F4(handle, lbl_8064CFDC, 1024, 0, 2) == -1) {
                 }
-                ((FileData*)lbl_8064A65C)->offset += (int)lbl_8064A65C;
+                ((FileData*)lbl_8064CFDC)->offset += (int)lbl_8064CFDC;
                 lbl_805AE780.id = id;
-                fn_8021345C(&local);
+                fn_8021345C(handle);
             }
         }
     }

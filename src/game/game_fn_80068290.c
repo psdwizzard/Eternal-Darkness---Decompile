@@ -28,15 +28,15 @@ extern void fn_80201D1C(void *object, s32 value);
 
 s32 fn_80068290(void *object, s32 event, s32 *result)
 {
-    s32 state;
-    ObjectState *object_state;
+    RuntimeObject **installed;
+    void *state;
     s32 owner_id;
     unsigned char local[8];
 
-    state = (s32)fn_80201BC8(object);
-    object_state = fn_80201B8C(object);
+    state = fn_80201BC8(object);
+    installed = ((ObjectState *)fn_80201B8C(object))->installed;
     owner_id = fn_80201B54(object);
-    fn_8011F114(local, (void *)state);
+    fn_8011F114(local, state);
     fn_80200C20(event);
 
     if ((fn_80036D5C(object) & 0x80) != 0) {
@@ -46,9 +46,9 @@ s32 fn_80068290(void *object, s32 event, s32 *result)
         return 0;
     }
 
-    if (fn_80066D04(object, 0) != 0 && object_state->installed != 0 &&
-        *object_state->installed != 0 && (*object_state->installed)->active == 0) {
-        void *action = fn_801294DC((void *)state, 0x2B, 0x24, 10);
+    if (fn_80066D04(object, 0) != 0 && installed != 0 && *installed != 0 &&
+        (*installed)->active == 0) {
+        void *action = fn_801294DC(state, 0x2B, 0x24, 10);
         if (action != 0) {
             fn_80128C28(action, (void *)fn_800683E4, owner_id);
             fn_80067BAC(object);
@@ -59,6 +59,10 @@ s32 fn_80068290(void *object, s32 event, s32 *result)
             }
             return 1;
         }
+        if (result != 0) {
+            *result = 0;
+        }
+        return 0;
     }
 
     if (result != 0) {

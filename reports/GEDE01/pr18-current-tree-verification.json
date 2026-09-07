@@ -1,0 +1,584 @@
+{
+  "schema": "pr18-current-tree-verification-v1",
+  "pr": 18,
+  "contributor": "ateich",
+  "pr_head": "ea310ad4a04f030424ec37085ef1d0ec04b6be2b",
+  "integration_base_head": "13bd4266d03cae906ab2f2b30d617d62a19f3476",
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json",
+  "per_function_command_template": "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_<fn>.o -2 build/GEDE01/src/game/game_<fn>.o -c function_reloc_diffs=name_address --format json -o <output> <fn>",
+  "strict_relocation_config": "function_reloc_diffs=name_address",
+  "baseline": {
+    "matched_functions": 4994,
+    "complete_units": 5229,
+    "matched_code": 801360,
+    "complete_code": 801360,
+    "total_functions": 8216,
+    "total_units": 6361,
+    "total_code": 2300692
+  },
+  "post_landing": {
+    "matched_functions": 5047,
+    "complete_units": 5282,
+    "matched_code": 822500,
+    "complete_code": 822500,
+    "total_functions": 8216,
+    "total_units": 6361,
+    "total_code": 2300692
+  },
+  "delta": {
+    "matched_functions": 53,
+    "complete_units": 53,
+    "matched_code": 21140,
+    "complete_code": 21140,
+    "total_functions": 0,
+    "total_units": 0,
+    "total_code": 0
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "next_target": "0x801E6814",
+  "summary": {
+    "claimed_functions": 53,
+    "measured_functions": 53,
+    "all_functions_100_percent": true,
+    "strict_name_address_relocations_equal_for_all": true,
+    "matched_code_bytes": 21140,
+    "relocation_bearing_instructions": 890,
+    "changed_units": 53,
+    "changed_units_exactly_claimed": true,
+    "regressions": [],
+    "no_object_regressed": true
+  },
+  "known_preexisting_relocation_note": "fn_801CA59C retains the project-wide raw R_PPC_EMB_SDA21 encoded-offset convention skew documented by the independent verifier; canonical strict name_address objdiff is 100 percent and the PR does not introduce this skew.",
+  "functions": [
+    {
+      "function": "fn_80049818",
+      "left_match_percent": 100.0,
+      "left_size": 372,
+      "left_relocations": 5,
+      "right_match_percent": 100.0,
+      "right_size": 372,
+      "right_relocations": 5,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8004998C",
+      "left_match_percent": 100.0,
+      "left_size": 1256,
+      "left_relocations": 55,
+      "right_match_percent": 100.0,
+      "right_size": 1256,
+      "right_relocations": 55,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80068290",
+      "left_match_percent": 100.0,
+      "left_size": 340,
+      "left_relocations": 14,
+      "right_match_percent": 100.0,
+      "right_size": 340,
+      "right_relocations": 14,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8006845C",
+      "left_match_percent": 100.0,
+      "left_size": 328,
+      "left_relocations": 4,
+      "right_match_percent": 100.0,
+      "right_size": 328,
+      "right_relocations": 4,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8006EA4C",
+      "left_match_percent": 100.0,
+      "left_size": 276,
+      "left_relocations": 13,
+      "right_match_percent": 100.0,
+      "right_size": 276,
+      "right_relocations": 13,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_800723A8",
+      "left_match_percent": 100.0,
+      "left_size": 244,
+      "left_relocations": 13,
+      "right_match_percent": 100.0,
+      "right_size": 244,
+      "right_relocations": 13,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80079AA4",
+      "left_match_percent": 100.0,
+      "left_size": 428,
+      "left_relocations": 17,
+      "right_match_percent": 100.0,
+      "right_size": 428,
+      "right_relocations": 17,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80087A24",
+      "left_match_percent": 100.0,
+      "left_size": 388,
+      "left_relocations": 22,
+      "right_match_percent": 100.0,
+      "right_size": 388,
+      "right_relocations": 22,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8008D6E4",
+      "left_match_percent": 100.0,
+      "left_size": 784,
+      "left_relocations": 41,
+      "right_match_percent": 100.0,
+      "right_size": 784,
+      "right_relocations": 41,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8008D9F4",
+      "left_match_percent": 100.0,
+      "left_size": 436,
+      "left_relocations": 18,
+      "right_match_percent": 100.0,
+      "right_size": 436,
+      "right_relocations": 18,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8008E110",
+      "left_match_percent": 100.0,
+      "left_size": 388,
+      "left_relocations": 11,
+      "right_match_percent": 100.0,
+      "right_size": 388,
+      "right_relocations": 11,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8008E294",
+      "left_match_percent": 100.0,
+      "left_size": 324,
+      "left_relocations": 15,
+      "right_match_percent": 100.0,
+      "right_size": 324,
+      "right_relocations": 15,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8008F224",
+      "left_match_percent": 100.0,
+      "left_size": 912,
+      "left_relocations": 40,
+      "right_match_percent": 100.0,
+      "right_size": 912,
+      "right_relocations": 40,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_800A3104",
+      "left_match_percent": 100.0,
+      "left_size": 124,
+      "left_relocations": 1,
+      "right_match_percent": 100.0,
+      "right_size": 124,
+      "right_relocations": 1,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_800AAD14",
+      "left_match_percent": 100.0,
+      "left_size": 276,
+      "left_relocations": 9,
+      "right_match_percent": 100.0,
+      "right_size": 276,
+      "right_relocations": 9,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_800AF230",
+      "left_match_percent": 100.0,
+      "left_size": 164,
+      "left_relocations": 10,
+      "right_match_percent": 100.0,
+      "right_size": 164,
+      "right_relocations": 10,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_800B002C",
+      "left_match_percent": 100.0,
+      "left_size": 428,
+      "left_relocations": 44,
+      "right_match_percent": 100.0,
+      "right_size": 428,
+      "right_relocations": 44,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_800B84DC",
+      "left_match_percent": 100.0,
+      "left_size": 388,
+      "left_relocations": 23,
+      "right_match_percent": 100.0,
+      "right_size": 388,
+      "right_relocations": 23,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_800C1D60",
+      "left_match_percent": 100.0,
+      "left_size": 500,
+      "left_relocations": 27,
+      "right_match_percent": 100.0,
+      "right_size": 500,
+      "right_relocations": 27,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_800DFD54",
+      "left_match_percent": 100.0,
+      "left_size": 348,
+      "left_relocations": 8,
+      "right_match_percent": 100.0,
+      "right_size": 348,
+      "right_relocations": 8,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8011F140",
+      "left_match_percent": 100.0,
+      "left_size": 224,
+      "left_relocations": 5,
+      "right_match_percent": 100.0,
+      "right_size": 224,
+      "right_relocations": 5,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8011F41C",
+      "left_match_percent": 100.0,
+      "left_size": 344,
+      "left_relocations": 10,
+      "right_match_percent": 100.0,
+      "right_size": 344,
+      "right_relocations": 10,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80125664",
+      "left_match_percent": 100.0,
+      "left_size": 292,
+      "left_relocations": 1,
+      "right_match_percent": 100.0,
+      "right_size": 292,
+      "right_relocations": 1,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8012C62C",
+      "left_match_percent": 100.0,
+      "left_size": 328,
+      "left_relocations": 7,
+      "right_match_percent": 100.0,
+      "right_size": 328,
+      "right_relocations": 7,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8012F7D4",
+      "left_match_percent": 100.0,
+      "left_size": 248,
+      "left_relocations": 3,
+      "right_match_percent": 100.0,
+      "right_size": 248,
+      "right_relocations": 3,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8013507C",
+      "left_match_percent": 100.0,
+      "left_size": 448,
+      "left_relocations": 2,
+      "right_match_percent": 100.0,
+      "right_size": 448,
+      "right_relocations": 2,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80138B90",
+      "left_match_percent": 100.0,
+      "left_size": 324,
+      "left_relocations": 19,
+      "right_match_percent": 100.0,
+      "right_size": 324,
+      "right_relocations": 19,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_801391D4",
+      "left_match_percent": 100.0,
+      "left_size": 196,
+      "left_relocations": 17,
+      "right_match_percent": 100.0,
+      "right_size": 196,
+      "right_relocations": 17,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_801399CC",
+      "left_match_percent": 100.0,
+      "left_size": 336,
+      "left_relocations": 34,
+      "right_match_percent": 100.0,
+      "right_size": 336,
+      "right_relocations": 34,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8013E714",
+      "left_match_percent": 100.0,
+      "left_size": 840,
+      "left_relocations": 19,
+      "right_match_percent": 100.0,
+      "right_size": 840,
+      "right_relocations": 19,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80140010",
+      "left_match_percent": 100.0,
+      "left_size": 584,
+      "left_relocations": 24,
+      "right_match_percent": 100.0,
+      "right_size": 584,
+      "right_relocations": 24,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80140408",
+      "left_match_percent": 100.0,
+      "left_size": 580,
+      "left_relocations": 27,
+      "right_match_percent": 100.0,
+      "right_size": 580,
+      "right_relocations": 27,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80144A2C",
+      "left_match_percent": 100.0,
+      "left_size": 532,
+      "left_relocations": 10,
+      "right_match_percent": 100.0,
+      "right_size": 532,
+      "right_relocations": 10,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8014CCB0",
+      "left_match_percent": 100.0,
+      "left_size": 488,
+      "left_relocations": 35,
+      "right_match_percent": 100.0,
+      "right_size": 488,
+      "right_relocations": 35,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80155158",
+      "left_match_percent": 100.0,
+      "left_size": 340,
+      "left_relocations": 14,
+      "right_match_percent": 100.0,
+      "right_size": 340,
+      "right_relocations": 14,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80156480",
+      "left_match_percent": 100.0,
+      "left_size": 352,
+      "left_relocations": 7,
+      "right_match_percent": 100.0,
+      "right_size": 352,
+      "right_relocations": 7,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80158D38",
+      "left_match_percent": 100.0,
+      "left_size": 324,
+      "left_relocations": 3,
+      "right_match_percent": 100.0,
+      "right_size": 324,
+      "right_relocations": 3,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80161798",
+      "left_match_percent": 100.0,
+      "left_size": 312,
+      "left_relocations": 7,
+      "right_match_percent": 100.0,
+      "right_size": 312,
+      "right_relocations": 7,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80167454",
+      "left_match_percent": 100.0,
+      "left_size": 260,
+      "left_relocations": 6,
+      "right_match_percent": 100.0,
+      "right_size": 260,
+      "right_relocations": 6,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_801816D4",
+      "left_match_percent": 100.0,
+      "left_size": 308,
+      "left_relocations": 12,
+      "right_match_percent": 100.0,
+      "right_size": 308,
+      "right_relocations": 12,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80187968",
+      "left_match_percent": 100.0,
+      "left_size": 128,
+      "left_relocations": 5,
+      "right_match_percent": 100.0,
+      "right_size": 128,
+      "right_relocations": 5,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_8018AEB0",
+      "left_match_percent": 100.0,
+      "left_size": 424,
+      "left_relocations": 30,
+      "right_match_percent": 100.0,
+      "right_size": 424,
+      "right_relocations": 30,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_801957EC",
+      "left_match_percent": 100.0,
+      "left_size": 372,
+      "left_relocations": 0,
+      "right_match_percent": 100.0,
+      "right_size": 372,
+      "right_relocations": 0,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_80199F10",
+      "left_match_percent": 100.0,
+      "left_size": 460,
+      "left_relocations": 28,
+      "right_match_percent": 100.0,
+      "right_size": 460,
+      "right_relocations": 28,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_801A3A78",
+      "left_match_percent": 100.0,
+      "left_size": 672,
+      "left_relocations": 35,
+      "right_match_percent": 100.0,
+      "right_size": 672,
+      "right_relocations": 35,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_801A5910",
+      "left_match_percent": 100.0,
+      "left_size": 188,
+      "left_relocations": 18,
+      "right_match_percent": 100.0,
+      "right_size": 188,
+      "right_relocations": 18,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_801A59CC",
+      "left_match_percent": 100.0,
+      "left_size": 212,
+      "left_relocations": 37,
+      "right_match_percent": 100.0,
+      "right_size": 212,
+      "right_relocations": 37,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_801A7D44",
+      "left_match_percent": 100.0,
+      "left_size": 168,
+      "left_relocations": 1,
+      "right_match_percent": 100.0,
+      "right_size": 168,
+      "right_relocations": 1,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_801AAB38",
+      "left_match_percent": 100.0,
+      "left_size": 216,
+      "left_relocations": 20,
+      "right_match_percent": 100.0,
+      "right_size": 216,
+      "right_relocations": 20,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_801AD08C",
+      "left_match_percent": 100.0,
+      "left_size": 888,
+      "left_relocations": 48,
+      "right_match_percent": 100.0,
+      "right_size": 888,
+      "right_relocations": 48,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_801BE874",
+      "left_match_percent": 100.0,
+      "left_size": 356,
+      "left_relocations": 6,
+      "right_match_percent": 100.0,
+      "right_size": 356,
+      "right_relocations": 6,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_801C7684",
+      "left_match_percent": 100.0,
+      "left_size": 184,
+      "left_relocations": 9,
+      "right_match_percent": 100.0,
+      "right_size": 184,
+      "right_relocations": 9,
+      "strict_name_address_relocations_equal": true
+    },
+    {
+      "function": "fn_801CA59C",
+      "left_match_percent": 100.0,
+      "left_size": 508,
+      "left_relocations": 1,
+      "right_match_percent": 100.0,
+      "right_size": 508,
+      "right_relocations": 1,
+      "strict_name_address_relocations_equal": true
+    }
+  ]
+}

@@ -29,27 +29,24 @@ void fn_80167454(HashTable* table, Value* value)
     HashNode* node;
     int index;
 
-    if (value->type == 2) {
-        return;
-    }
-    if (value->type == 3) {
-        if (*(unsigned int*)((char*)value->data.pointer + 8) > 30) {
-            goto find_key;
-        }
+    if (value->type == 2 ||
+        (value->type == 3 && *(unsigned int*)((char*)value->data.pointer + 8) <= 30)) {
         return;
     }
 
-find_key:
     node = fn_80167128(table, value);
     index = ((char*)node - (char*)table->nodes) / 40;
 
-    do {
+    while (fn_80167264(table, (double)index) != &lbl_8023A868) {
         if (index >= 0x7FFFFFFD - table->size) {
             return;
         }
         index += table->size;
-    } while (fn_80167264(table, (double)index) != &lbl_8023A868);
+    }
 
     value->type = 2;
     value->data.number = (double)index;
 }
+
+#pragma opt_propagation reset
+#pragma use_lmw_stmw off

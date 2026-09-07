@@ -9,15 +9,20 @@ typedef struct Owner {
     u16 value160;
 } Owner;
 
+typedef struct WorkEntry {
+    u8 mode;
+    u8 pad01;
+    u8 enabled_a;
+    u8 enabled_b;
+    u8 pad04[0x28];
+} WorkEntry;
+
 typedef struct Work {
     u8 pad18[0x18];
     u8 resource;
     u8 pad19[0x68 - 0x19];
-    u8 mode;
-    u8 pad69;
-    u8 enabled_a;
-    u8 enabled_b;
-    u8 pad6C[0xC4 - 0x6C];
+    WorkEntry entries[2];
+    u8 padC0[4];
     Owner* owner;
 } Work;
 
@@ -47,21 +52,21 @@ void fn_80087A24(Work* work)
 
     work->owner->state = 0;
     work->owner->value160 = 0;
-    ((u8*)work + index * 0x2C)[0x6A] = 1;
-    ((u8*)work + index * 0x2C)[0x6B] = 1;
-    ((u8*)work + index * 0x2C)[0x68] = 4;
+    work->entries[index].enabled_a = 1;
+    work->entries[index].enabled_b = 1;
+    work->entries[index].mode = 4;
     fn_8006DEF8(work, 6, fn_80087BA8, work, 1);
 
-    ((u8*)work + index * 0x2C)[0x68] = 0;
+    work->entries[index].mode = 0;
     fn_8006DEF8(work, 6, fn_80087D64, work, 1);
 
-    ((u8*)work + index * 0x2C)[0x68] = 1;
+    work->entries[index].mode = 1;
     fn_8006DEF8(work, 6, fn_80087EC4, work, 1);
 
-    ((u8*)work + index * 0x2C)[0x68] = 2;
+    work->entries[index].mode = 2;
     fn_8006DEF8(work, 6, fn_80088298, work, 1);
 
-    ((u8*)work + index * 0x2C)[0x68] = 0;
+    work->entries[index].mode = 0;
     lbl_8064C8C4 = 0;
     lbl_8064C91D = 3;
     fn_800FD40C(&work->resource, lbl_80245090);

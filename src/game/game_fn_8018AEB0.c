@@ -11,11 +11,11 @@ extern void DCFlushRange(void*, unsigned int);
 extern int fn_801ED57C(int);
 extern void fn_8018D0D0(void*, void*, s16);
 extern void fn_801ED468(int);
-extern u8 fn_8017FFB8(void), fn_8017FFB0(void), fn_8017FF98(void);
+extern int fn_8017FFB8(void), fn_8017FFB0(void), fn_8017FF98(void);
 extern void fn_80225F4C(int, void*, u8);
 extern void fn_8018D2E0(float);
 extern void fn_80226AB4(int, int, u16);
-extern void fn_80188578(u16), fn_8018856C(u16), fn_80188560(u16);
+extern void fn_80188578(int), fn_8018856C(int), fn_80188560(int);
 extern void fn_8018855C(void);
 
 void fn_8018AEB0(u8* object)

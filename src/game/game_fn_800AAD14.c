@@ -16,9 +16,6 @@ typedef struct ObjectState {
     EffectState* effect;
 } ObjectState;
 
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
-#define NONNEG(a) ((a) & (((-(a)) & ~(a)) >> 31))
-
 extern int fn_80201B54();
 extern void *fn_80201B8C();
 extern unsigned long long fn_8020123C();
@@ -26,6 +23,8 @@ extern Vec3i* fn_8011F130(void*);
 extern int* lbl_8064C5A8;
 extern int lbl_8023BA20[];
 extern void fn_800AA7F0(EffectState*, Vec3i*, int*, int, int, int);
+
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 int fn_800AAD14(void* object, void* position)
 {
@@ -44,12 +43,11 @@ int fn_800AAD14(void* object, void* position)
     if (effect->active == 1 && effect->dispatched == 0) {
         Vec3i* point = fn_8011F130(position);
         int value = *lbl_8064C5A8 - 1;
-        int mask = -value & ~value;
-        int color = value & (mask >> 31);
-        if (color > 2) {
+        int color;
+        if (MAX(value, 0) > 2) {
             color = 2;
         } else {
-            color = value & (mask >> 31);
+            color = MAX(value, 0);
         }
         fn_800AA7F0(effect, point, &lbl_8023BA20[color], 600, 0, owner);
         effect->dispatched = 1;

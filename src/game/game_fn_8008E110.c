@@ -18,8 +18,6 @@ extern void fn_80201D2C(void *, int);
 extern void fn_80201D14(void *, int);
 extern int fn_8008E078(void*, void*, void*);
 
-/* NonMatching: behavior-complete frontier reconstruction; remaining differences
- * are declaration/control-expression register allocation around two tests. */
 int fn_8008E110(void* object, void* resource, void* argument,
                 Data8008E110* data)
 {
@@ -29,12 +27,7 @@ int fn_8008E110(void* object, void* resource, void* argument,
     int object_id;
     void* spawned;
 
-    selected = data->primary;
-    if (selected == 0) goto use_fallback;
-    goto selected_ready;
-use_fallback:
-    selected = data->fallback;
-selected_ready:
+    selected = data->primary != 0 ? data->primary : data->fallback;
     object_id = fn_80201B54(object);
     loaded = fn_80201814(selected);
     if (loaded != 0) {
@@ -42,8 +35,9 @@ selected_ready:
     }
     if (loaded != 0 && created != 0) {
         u64 state = fn_8020123C(125, object_id, selected, 1);
-        if ((unsigned int)state == 1) {
-            if (fn_800DE3F8() == selected) {
+        if ((unsigned int)(state & 0xFFFFFFFF) == 1) {
+            int current = fn_800DE3F8();
+            if (current == selected) {
                 spawned = fn_800CCF60(loaded, 0, 0, object, 0, 0, 0, 0, 10,
                                       20, 0);
             } else {

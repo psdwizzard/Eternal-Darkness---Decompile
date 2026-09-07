@@ -2,14 +2,13 @@ typedef unsigned short u16;
 
 extern u16 fn_8012A244(int value);
 extern int fn_8011EB04(void *);
-#define fn_8011EB04(a) fn_8011EB04((void *)(a))
 extern int fn_801A9EF4(int minimum, int maximum);
 
 u16 fn_80049818(int value)
 {
     int state = fn_8012A244(value);
     u16 result = 0xFFFF;
-    int type = fn_8011EB04(value);
+    int type = fn_8011EB04((void*)value);
 
     if (state >= 21 || state < 0) {
         state = 0;
@@ -32,18 +31,46 @@ u16 fn_80049818(int value)
     case 0xE5:
     case 0xE6:
     case 0xE7:
-        if (state >= 10 && state < 12) {
+        switch (state) {
+        case 10:
+        case 11:
             result = fn_801A9EF4(0x1E9, 0x1EE);
-        } else {
+            break;
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        default:
             result = fn_801A9EF4(0x28, 0x32);
+            break;
         }
         break;
     case 0x70:
     case 0xE9:
-        if (state >= 10 && state < 12) {
+        switch (state) {
+        case 10:
+        case 11:
             result = fn_801A9EF4(0x2A2, 0x2A3);
-        } else {
+            break;
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        default:
             result = 0x2A5;
+            break;
         }
         break;
     }
