@@ -1,0 +1,30 @@
+{
+  "session_id": "session-1876-remediation-1",
+  "scope": "Correct only fn_801E5D94's descriptor layout and signed text-byte declaration, remeasure the affected object, and keep the frontier fixed at 0x801E5FE4.",
+  "source_correction": {
+    "finding": "Retail and the rebuilt object now both address text at 0x1a, width at 0x14, phase at 0x16, the byte fields at 0x18 and 0x19, and flags at 0x10. Explicit s8 text elements make the rebuilt occupancy tests emit extsb. like retail.",
+    "command": "for side in left right; do printf '%s\\n' \"$side\"; jq -r --arg side \"$side\" '.[$side].symbols[]|select(.name==\"fn_801E5D94\")|.instructions[]|select(.instruction != null)|.instruction.formatted // empty' reports/GEDE01/fn_801E5D94-session-1876-remediation-1-reloc-strict.json | rg '^(lbz r0, 0x1[ab]|extsb\\.|addi r3, r31, 0x1a|sth r(29|0), 0x1[46]|stb r2[56], 0x1[89]|stw r27, 0x10)' | sort -u; done",
+    "raw_output": "left\naddi r3, r31, 0x1a\nextsb. r0, r0\nlbz r0, 0x1a(r31)\nlbz r0, 0x1b(r31)\nstb r25, 0x19(r31)\nstb r26, 0x18(r31)\nsth r0, 0x14(r31)\nsth r29, 0x16(r31)\nstw r27, 0x10(r31)\nright\naddi r3, r31, 0x1a\nextsb. r0, r0\nlbz r0, 0x1a(r31)\nlbz r0, 0x1b(r31)\nstb r25, 0x19(r31)\nstb r26, 0x18(r31)\nsth r0, 0x14(r31)\nsth r29, 0x16(r31)\nstw r27, 0x10(r31)"
+  },
+  "object_diff_generation": {
+    "commands": [
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E5D94 fn_801E5D94 -o reports/GEDE01/objdiff-game_fn_801E5D94-session-1876-remediation-1.json --format json-pretty",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E5D94 fn_801E5D94 -o reports/GEDE01/fn_801E5D94-session-1876-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address"
+    ],
+    "raw_output": " INFO Writing to reports/GEDE01/objdiff-game_fn_801E5D94-session-1876-remediation-1.json\n INFO Writing to reports/GEDE01/fn_801E5D94-session-1876-remediation-1-reloc-strict.json"
+  },
+  "object_diff_measurement": {
+    "command": "jq -r '[input_filename, (.left.sections[]|select(.name==\".text\")|.size), (.right.sections[]|select(.name==\".text\")|.size), (.left.symbols[]|select(.name==\"fn_801E5D94\")|.match_percent), ([.left.symbols[]|select(.name==\"fn_801E5D94\")|.instructions[]|select(.instruction != null)]|length), ([.right.symbols[]|select(.name==\"fn_801E5D94\")|.instructions[]|select(.instruction != null)]|length), ([.left.symbols[]|select(.name==\"fn_801E5D94\")|.instructions[]|select(.instruction.relocation != null)]|length), ([.right.symbols[]|select(.name==\"fn_801E5D94\")|.instructions[]|select(.instruction.relocation != null)]|length)] | @tsv' reports/GEDE01/objdiff-game_fn_801E5D94-session-1876-remediation-1.json reports/GEDE01/fn_801E5D94-session-1876-remediation-1-reloc-strict.json",
+    "columns": ["report", "retail_text_bytes", "generated_text_bytes", "match_percent", "retail_instructions", "generated_instructions", "retail_relocations", "generated_relocations"],
+    "raw_output": "reports/GEDE01/objdiff-game_fn_801E5D94-session-1876-remediation-1.json\t540\t376\t63.8\t135\t94\t41\t29\nreports/GEDE01/fn_801E5D94-session-1876-remediation-1-reloc-strict.json\t540\t376\t63.8\t135\t94\t41\t29"
+  },
+  "full_link": {
+    "command": "set -o pipefail; .tools/bin/ninja build/GEDE01/main.dol > reports/GEDE01/.session-1876-remediation-1-build.tmp 2>&1; status=$?; tail -n 1 reports/GEDE01/.session-1876-remediation-1-build.tmp; printf 'ninja_exit=%s\\n' \"$status\"; exit \"$status\"",
+    "raw_output_final_line": "[682/682] DOL build/GEDE01/main.dol"
+  },
+  "dol_gate": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'cmp_exit=%s\\n' \"$?\"; find build/GEDE01 -type f -name '*.o' -newer build/GEDE01/main.dol -print | wc -l",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0\n0"
+  },
+  "next_target": "0x801E5FE4"
+}
