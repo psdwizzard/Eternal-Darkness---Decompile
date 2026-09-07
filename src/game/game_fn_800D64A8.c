@@ -1,6 +1,6 @@
 typedef void (*Callback)(void);
 
-extern void fn_801A7468(void *);
+extern unsigned int fn_801A7468(void *);
 extern void fn_801287C4(void *, Callback, void *, int);
 extern void fn_801296E8(void *, int);
 extern void fn_801A7560(void *, int);

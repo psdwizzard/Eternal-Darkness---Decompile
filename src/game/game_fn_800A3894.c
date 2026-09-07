@@ -19,7 +19,7 @@ extern void fn_80211AAC(Vec800A3894*, Vec800A3894*);
 extern void fn_80211A90(Vec800A3894*, Vec800A3894*, float);
 extern void fn_80211A48(void*, Vec800A3894*, Vec800A3894*);
 extern void* fn_801AC8AC(u16, int, int, Vec800A3894*);
-extern void fn_801AC908(void*, Vec800A3894*, int);
+extern int fn_801AC908(void*, Vec800A3894*, int);
 
 /*
  * Behavior-complete, size-equal reconstruction. Code differs only because the

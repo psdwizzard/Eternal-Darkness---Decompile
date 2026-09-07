@@ -1,0 +1,38 @@
+{
+  "session_id": "session-1843",
+  "range_start": "0x801DD200",
+  "range_end": "0x801DD71C",
+  "next_target": "0x801DD71C",
+  "deferred_resume_item": "fn_801DD200",
+  "accounting": {
+    "range_bytes": 1308,
+    "matched_bytes": 0,
+    "nonmatching_bytes": 1308,
+    "unaccounted_spans": [],
+    "command": "jq -r '(.left.symbols[]|select(.name==\"fn_801DD200\")) as $l|\"range_bytes=\\($l.size) matched_bytes=0 nonmatching_bytes=\\($l.size)\"' build/GEDE01/session-1843-remediation-1-canonical.json",
+    "raw_output": "range_bytes=1308 matched_bytes=0 nonmatching_bytes=1308"
+  },
+  "functions": [
+    {
+      "name": "fn_801DD200",
+      "range": "0x801DD200..0x801DD71C",
+      "retail_bytes": 1308,
+      "generated_bytes": 1328,
+      "canonical_match_percent": 88.33945,
+      "relocation_strict_match_percent": 88.33945,
+      "historical_best_match_percent": 88.81957,
+      "measurement_command": "for f in canonical reloc-strict; do jq -r --arg basis \"$f\" '(.left.symbols[]|select(.name==\"fn_801DD200\")) as $l|(.right.symbols[]|select(.name==\"fn_801DD200\")) as $r|\"basis=\\($basis) retail_bytes=\\($l.size) generated_bytes=\\($r.size) match_percent=\\($l.match_percent) retail_instructions=\\([$l.instructions[]|select(.instruction)]|length) generated_instructions=\\([$r.instructions[]|select(.instruction)]|length) differing_rows=\\([$l.instructions[]|select(.diff_kind)]|length) retail_relocations=\\([$l.instructions[]|select(.instruction.relocation)]|length) generated_relocations=\\([$r.instructions[]|select(.instruction.relocation)]|length)\"' build/GEDE01/session-1843-remediation-2-$f.json; done",
+      "measurement_raw_output": "basis=canonical retail_bytes=1308 generated_bytes=1328 match_percent=88.33945 retail_instructions=327 generated_instructions=332 differing_rows=81 retail_relocations=28 generated_relocations=28\nbasis=reloc-strict retail_bytes=1308 generated_bytes=1328 match_percent=88.33945 retail_instructions=327 generated_instructions=332 differing_rows=81 retail_relocations=28 generated_relocations=28",
+      "regression_comparison_command": "jq -r '(.left.symbols[]|select(.name==\"fn_801DD200\")) as $old | input as $current | ($current.left.symbols[]|select(.name==\"fn_801DD200\")) as $new | \"pre_match_percent=\\($old.match_percent) retained_match_percent=\\($new.match_percent) match_percent_delta=\\($new.match_percent-$old.match_percent) pre_differing_rows=\\([$old.instructions[]|select(.diff_kind)]|length) retained_differing_rows=\\([$new.instructions[]|select(.diff_kind)]|length) differing_rows_delta=\\(([$new.instructions[]|select(.diff_kind)]|length)-([$old.instructions[]|select(.diff_kind)]|length))\"' reports/GEDE01/objdiff-game_fn_801DD200-session-1843.json build/GEDE01/session-1843-remediation-2-canonical.json",
+      "regression_comparison_raw_output": "pre_match_percent=88.81957 retained_match_percent=88.33945 match_percent_delta=-0.48011999999999944 pre_differing_rows=80 retained_differing_rows=81 differing_rows_delta=1",
+      "retention_justification": "This is a deliberate aggregate-score-losing, opcode-shape-gaining tradeoff. The integer-preserving word copy is retained because retail uses lwz and stw at the aligned rows: the old candidate used lfs and stfs and produced replacements, while the retained candidate uses lwz and stw and leaves only stack-offset argument mismatches. The historical best remains recorded separately and is not overwritten by the lower current score. Typed call prototypes were tested and reverted; they are not part of the retained source.",
+      "diagnosis": "The remaining stack offsets differ, the table address add retains the known commutative operand-order mismatch, and retail's running li r29,0x820 followed by per-case ori remains unlike the candidate's constant-folded immediate loads. Reordering the commutative table-base expression produced no measurement change and was reverted. Full prototypes for fn_801B05E8, fn_801D0D78, and fn_801CE594 regressed the candidate and were reverted. These are deferred source-spelling and code-generation issues, not a blanket compiler-divergence diagnosis."
+    }
+  ],
+  "nonmatching_functions_added": 1,
+  "assembly_functions_added": 0,
+  "shared_reconstructions": 0,
+  "addition_accounting_command": "acct_nonmatching=$(git diff fb72d26a9^ fb72d26a9 -- eternal-darkness-decomp/configure.py | awk '/^\\+[[:space:]]*Object\\(NonMatching/{count++} END{print count+0}'); acct_assembly=$(git diff-tree --no-commit-id --name-only -r fb72d26a9 | awk '/(^|\\/)(asm|asm-functions)\\/|\\.[sS]$/{count++} END{print count+0}'); acct_shared=$(git diff-tree --no-commit-id --name-only -r fb72d26a9 | awk '/(^|\\/)shared\\//{count++} END{print count+0}'); echo \"nonmatching_functions_added=$acct_nonmatching assembly_functions_added=$acct_assembly shared_reconstructions=$acct_shared\"",
+  "addition_accounting_raw_output": "nonmatching_functions_added=1 assembly_functions_added=0 shared_reconstructions=0",
+  "fallback_disposition": "The original session did not use its authorized fallback. This remediation does not reconstruct fn_801DD71C because its scope forbids frontier matching; advancing the bookkeeping target prevents reopening owned NonMatching work."
+}

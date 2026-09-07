@@ -1,0 +1,40 @@
+{
+  "session_id": "session-1839",
+  "function_commit": "524c8ba31580f635257fe447d94ed4db0ad8dc94",
+  "build": {
+    "command": "./.tools/bin/ninja",
+    "exit_code": 0,
+    "result": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "build": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "cmp_exit": 0
+  },
+  "canonical_report": {
+    "command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+    "matching_objects": 5172,
+    "matching_functions": 4937,
+    "matching_code_bytes": 793932,
+    "linked_code_bytes": 793932
+  },
+  "relocation_strict_report": {
+    "command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1839-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "matching_functions": 4932,
+    "matching_code_bytes": 792248,
+    "code_percent": 34.435204
+  },
+  "direct_objdiff": {
+    "symbol": "fn_801DC49C",
+    "retail_bytes": 732,
+    "generated_bytes": 732,
+    "canonical_percent": 100.0,
+    "relocation_strict_percent": 100.0,
+    "retail_relocations": 29,
+    "generated_relocations": 29
+  },
+  "split_arithmetic": "0x801DC778 - 0x801DC49C = 0x2DC = 732 bytes",
+  "nonmatching_bytes": 0,
+  "asm_functions_added": 0
+}

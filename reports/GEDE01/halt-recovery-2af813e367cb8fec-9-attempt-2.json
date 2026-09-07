@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "recovery_id": "2af813e367cb8fec-9",
+  "attempt": 2,
+  "status": "canonical_repair_pending_integration",
+  "completed_at": "2026-09-06T13:06:15-04:00",
+  "scope": "Merge-resolution correction only. No decomp frontier advance, new function match, source edit, configure edit, split edit, symbol edit, retail edit, scheduler-state edit, or gate edit was made.",
+  "diagnosis": {
+    "summary": "Attempt 1 repaired only the isolated agent branch and did not clear the canonical repository's in-progress merge. Its blanket -X ours merge also selected the first-parent CONTRIBUTORS.md blob byte-for-byte, dropping the other parent's authored PR 17 table and six-cause explanation. The two progress parents contain different measurement vintages rather than independent decomp inputs; the current fresh post-PR aggregate supports the first-parent progress values. Both parents and the resolution retain next_target 0x801DA8CC.",
+    "scheduler_command": "jq '{state,session_id,assigned_target,accepted_frontier,candidate_frontier,agent_commit,merged_commit,review_verdict,review_complete,merge_complete,verification_complete,recovery_reason,updated_at}' .darkfoundry/decomp-chain-state.json",
+    "scheduler_raw_output": "{\n  \"state\": \"MERGE_RECOVERY\",\n  \"session_id\": \"78e1c575-1493-40a0-b32c-f6ac3bae263e\",\n  \"assigned_target\": \"0x801DA8CC\",\n  \"accepted_frontier\": \"0x801DA890\",\n  \"candidate_frontier\": null,\n  \"agent_commit\": null,\n  \"merged_commit\": \"7c7a6f97210210df8d1e12847a88d006384e0564\",\n  \"review_verdict\": null,\n  \"review_complete\": false,\n  \"merge_complete\": false,\n  \"verification_complete\": false,\n  \"recovery_reason\": \"integration-recovery: Worktree merge failed: Failed to merge worktree for agent 8f1c3278-8547-4bb9-b1a3-8f74c2df5aeb: Error: An in-progress merge is present in /home/rabbit/src/darkfoundry-new (MERGE_HEAD exists) with 2 unmerged file(s): eternal-darkness-decomp/\",\n  \"updated_at\": \"2026-09-06T16:49:27.751Z\"\n}",
+    "attempt_1_merge_command": "git show 4d5860f89:eternal-darkness-decomp/reports/GEDE01/halt-recovery-2af813e367cb8fec-9-attempt-1.json | jq -r '.merge_repair.command, .merge_repair.resolution_proof_raw_output'",
+    "attempt_1_merge_raw_output": "git merge --no-commit --no-ff -X ours checkpoint/foundry-runtime-2026-07-17; git commit -m 'Merge canonical runtime and resolve GEDE01 records'\nchosen_contributors_blob=b5e247345c04deac98333f5fc39301a63991716e\nold_head_contributors_blob=b5e247345c04deac98333f5fc39301a63991716e\nmerge_head_contributors_blob=2e3be1e502d7861db2e050fb8f2e587abb9181d4",
+    "canonical_limit": "The task's governing WORKSPACE CONSTRAINT permits reads and writes only inside this isolated worktree. The canonical worktree named in recovery_reason is outside it, so this attempt does not falsely claim that its MERGE_HEAD or index was modified. The corrected merge candidate is committed here for integration by the canonical repository owner. No founder choice about decomp content is required."
+  },
+  "merge_resolution": {
+    "method": "Explicit content resolution without a merge strategy flag. CONTRIBUTORS.md combines the first parent's retail-backed exact/linkable accounting with the second parent's PR 17 table and six-cause summary. progress.json remains the fresh post-PR first-parent measurement record because fresh aggregate objdiff reproduces its headline counters. No compiled decomp input differs between the merge parents.",
+    "preservation_command": "printf blob IDs for both parents, attempt 1, and the explicit resolution with git rev-parse and git hash-object; rg -n 'Focused structural and build-rule fixes|Six distinct causes|fn_801C8224|fn_801C0ED8|_70 more_' eternal-darkness-decomp/CONTRIBUTORS.md; count compiled paths differing between 9acd83dff parents",
+    "preservation_raw_output": "base_blob=b5e247345c04deac98333f5fc39301a63991716e\nrevere_blob=2e3be1e502d7861db2e050fb8f2e587abb9181d4\nattempt1_blob=b5e247345c04deac98333f5fc39301a63991716e\nresolved_worktree_blob=69b79a329b5f3e3c59b97c7bc564d90bee6e3b7e\n285:### Focused structural and build-rule fixes ([#17](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/17)) — 79 functions, 25,888 bytes\n295:`fn_801C0ED8` was already receiving erroneous fuzzy credit while its object was\n299:Six distinct causes account for the batch: function interfaces proven from\n307:`fn_801C0ED8`, whose 104 bytes were already in the scorer numerator but were not\n312:| `fn_801C8224` | 988 |\n320:| _70 more_ | 19,384 |\ncompiled_paths_between_merge_parents=0",
+    "accounting": "The heading credits 79 promoted exact/linkable units and 25,888 newly linked code bytes. The retained table describes the 78 newly scorer-matched functions and 25,752 scorer bytes. fn_801C0ED8 is the separately disclosed 79th promotion: its 104 code bytes were previously fuzzy-scored but its object was NonMatching. The remaining 32 linked bytes are fn_80008134, an already exact function in the previously incomplete two-function game_fn_80008014 translation unit. Therefore 25,752 + 104 + 32 = 25,888. Attempt 3 records fresh canonical and relocation-strict direct diffs for both accounting-affected objects.",
+    "affected_objects": "The merge parents differ in zero compiled decomp input paths, so the documentation resolution affects no build object. fn_801C0ED8 is nevertheless rebuilt and directly verified below because it is the evidentiary basis for the contributor-accounting resolution."
+  },
+  "frontier_preservation": {
+    "command": "read .next_target from both 9acd83dff progress parents and the resolved progress file",
+    "raw_output": "next_target_parent1=0x801DA8CC\nnext_target_parent2=0x801DA8CC\nnext_target_resolved=0x801DA8CC",
+    "next_target_before": "0x801DA8CC",
+    "next_target_after": "0x801DA8CC",
+    "accepted_frontier": "0x801DA890"
+  },
+  "build_verification": {
+    "command": "set -o pipefail; { python3 configure.py && .tools/bin/ninja; } 2>&1 | tee /tmp/revere-build-attempt2.log; report the pipeline exit",
+    "raw_output": "[681/683] DOL build/GEDE01/main.dol\n[682/683] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[683/683] PROGRESS\nProgress:\n  All: 47.97% fuzzy, 34.37% matched, 34.37% linked (5160 / 6259 files)\n    Code: 790636 / 2300692 bytes (4925 / 8216 functions)\n    Data: 38678 / 4305642 bytes (0.90%)\n  Game Code: 88.54% fuzzy, 63.35% matched, 63.35% linked (5142 / 5829 files)\n    Code: 787608 / 1243212 bytes (4863 / 5550 functions)\n    Data: 38454 / 40354 bytes (95.29%)\n  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\n    Code: 3028 / 3028 bytes (62 / 62 functions)\n    Data: 224 / 224 bytes (100.00%)\nbuild_pipeline_exit=0"
+  },
+  "objdiff_verification": {
+    "direct_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801C0ED8 -o build/GEDE01/halt-recovery-2af813e367cb8fec-9-attempt-2/game_fn_801C0ED8-canonical.json --format json; repeat with -c function_reloc_diffs=name_address for relocation-strict; jq symbol sizes, match percent, instruction counts, and relocation counts",
+    "direct_raw_output": "INFO Writing to build/GEDE01/halt-recovery-2af813e367cb8fec-9-attempt-2/game_fn_801C0ED8-canonical.json\nINFO Writing to build/GEDE01/halt-recovery-2af813e367cb8fec-9-attempt-2/game_fn_801C0ED8-reloc-strict.json\nmode=canonical left_bytes=104 right_bytes=104 match_percent=100.0 left_instructions=26 right_instructions=26 left_relocations=10 right_relocations=10\nmode=reloc-strict left_bytes=104 right_bytes=104 match_percent=100.0 left_instructions=26 right_instructions=26 left_relocations=10 right_relocations=10",
+    "aggregate_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/halt-recovery-2af813e367cb8fec-9-attempt-2/aggregate-canonical.json --format json-pretty; repeat with -c function_reloc_diffs=name_address for relocation-strict; jq aggregate measures",
+    "aggregate_raw_output": "mode=canonical matching_objects=5160 total_objects=6259 matching_functions=4925 total_functions=8216 matching_code_bytes=790636 total_code_bytes=2300692 linked_code_bytes=790636 code_percent=34.36514\nmode=reloc-strict matching_objects=5160 total_objects=6259 matching_functions=4920 total_functions=8216 matching_code_bytes=788952 total_code_bytes=2300692 linked_code_bytes=790636 code_percent=34.291943",
+    "note": "The pre-existing canonical-versus-relocation-strict aggregate scorer gap is unchanged. No relocation rule or gate was changed."
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'dol_cmp_exit=%s\\n' \"$?\"; sha1sum -c config/GEDE01/build.sha1",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0\nbuild/GEDE01/main.dol: OK",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "gate_integrity": {
+    "statement": "No source, configure entry, split, symbol, progress value, retail input, build rule, exact-build gate, relocation gate, legal-audit gate, scheduler state, or DOL SHA-1 gate was changed, weakened, or bypassed. No retail or generated binary is committed.",
+    "legal_audit_command": "git add CONTRIBUTORS.md reports/GEDE01/halt-recovery-2af813e367cb8fec-9-attempt-2.json; python3 tools/legal_audit.py",
+    "legal_audit_raw_output": "legal audit passed (10995 tracked project files inspected)"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "session_id": "session-1857",
+  "range_start": "0x801E237C",
+  "range_end": "0x801E2A48",
+  "matched_bytes": 140,
+  "nonmatching_bytes": 1600,
+  "unaccounted_spans": [],
+  "functions": [
+    {
+      "name": "fn_801E237C",
+      "start": "0x801E237C",
+      "end": "0x801E2408",
+      "retail_bytes": 140,
+      "generated_bytes": 140,
+      "status": "Matching",
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "retail_instructions": 35,
+      "generated_instructions": 35,
+      "retail_relocations": 8,
+      "generated_relocations": 8
+    },
+    {
+      "name": "fn_801E2408",
+      "start": "0x801E2408",
+      "end": "0x801E2A48",
+      "retail_bytes": 1600,
+      "generated_bytes": 1604,
+      "status": "NonMatching",
+      "canonical_percent": 92.2025,
+      "relocation_strict_percent": 92.2025,
+      "retail_instructions": 400,
+      "generated_instructions": 401,
+      "retail_relocations": 111,
+      "generated_relocations": 111,
+      "divergence": "The complete state dispatcher and all six independent effect-construction arms are reconstructed, but GC/1.3 hoists the subject pointer and rotates object, work, subject, and id across r29-r31/r28; effect-packet stack-slot ordering also diverges, producing 1604 rather than 1600 bytes."
+    }
+  ],
+  "next_target": "0x801E2A48"
+}

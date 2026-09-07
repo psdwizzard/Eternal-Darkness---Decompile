@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "recovery_id": "2af813e367cb8fec-9",
+  "attempt": 1,
+  "status": "repaired",
+  "completed_at": "2026-09-06T12:56:57-04:00",
+  "scope": "Integration-only recovery. No decomp frontier advance, new function match, source edit, configure edit, split edit, symbol edit, retail edit, or gate edit was made.",
+  "diagnosis": {
+    "summary": "The scheduler halt was caused by an unfinished canonical integration merge. Reproducing the merge from its two committed tips found exactly two content conflicts: CONTRIBUTORS.md and progress.json. Both conflicts combined the same PR 17 landing with independently authored canonical presentation/runtime work. The canonical CONTRIBUTORS side used headline counter deltas as contributor credit, while the Revere side retained the independently verified promoted-function accounting. The canonical progress side contained fresh top-level code counters but stale pre-PR raw measurement and category fields. The Revere side contained internally consistent fresh post-PR measurements. No compiled decomp input differed between the parents.",
+    "scheduler_command": "jq '{state,session_id,assigned_target,accepted_frontier,candidate_frontier,agent_commit,merged_commit,review_verdict,review_complete,merge_complete,verification_complete,recovery_reason,updated_at}' .darkfoundry/decomp-chain-state.json",
+    "scheduler_raw_output": "{\n  \"state\": \"MERGE_RECOVERY\",\n  \"session_id\": \"78e1c575-1493-40a0-b32c-f6ac3bae263e\",\n  \"assigned_target\": \"0x801DA8CC\",\n  \"accepted_frontier\": \"0x801DA890\",\n  \"candidate_frontier\": null,\n  \"agent_commit\": null,\n  \"merged_commit\": \"7c7a6f97210210df8d1e12847a88d006384e0564\",\n  \"review_verdict\": null,\n  \"review_complete\": false,\n  \"merge_complete\": false,\n  \"verification_complete\": false,\n  \"recovery_reason\": \"integration-recovery: Worktree merge failed: Failed to merge worktree for agent 8f1c3278-8547-4bb9-b1a3-8f74c2df5aeb: Error: An in-progress merge is present in /home/rabbit/src/darkfoundry-new (MERGE_HEAD exists) with 2 unmerged file(s): eternal-darkness-decomp/\",\n  \"updated_at\": \"2026-09-06T16:49:27.751Z\"\n}",
+    "merge_reproduction_command": "old_head=$(git rev-parse HEAD); merge_head=$(git rev-parse MERGE_HEAD); printf 'old_head=%s\\nmerge_head=%s\\nmerge_base=%s\\n' \"$old_head\" \"$merge_head\" \"$(git merge-base \"$old_head\" \"$merge_head\")\"; git merge-tree --write-tree \"$old_head\" \"$merge_head\" 2>&1 | sed -n '1,20p'",
+    "merge_reproduction_raw_output": "old_head=f684eacb258386ec15c528d92b2b3949aea1a563\nmerge_head=cf2c8bb6346b93cb1d46286bf464c27ef2d7002f\nmerge_base=445b07cd5ae62780c8c10536a95bc57d66297bec\nd180d4980a1840941e85786234c5a58bebd65874\n100644 1af73681266486c01443f0cb1493e15933d1084a 1\teternal-darkness-decomp/CONTRIBUTORS.md\n100644 b5e247345c04deac98333f5fc39301a63991716e 2\teternal-darkness-decomp/CONTRIBUTORS.md\n100644 2e3be1e502d7861db2e050fb8f2e587abb9181d4 3\teternal-darkness-decomp/CONTRIBUTORS.md\n100644 12a4f94960e09536db2d153a3b807c521545c4b1 1\teternal-darkness-decomp/reports/GEDE01/progress.json\n100644 8f9a3fe6e33ffb9c3f7a266ae9a8ab080e8eacaf 2\teternal-darkness-decomp/reports/GEDE01/progress.json\n100644 8a5291eaae7272c7b684160531a255be2778e0ac 3\teternal-darkness-decomp/reports/GEDE01/progress.json\n\nAuto-merging eternal-darkness-decomp/CONTRIBUTORS.md\nCONFLICT (content): Merge conflict in eternal-darkness-decomp/CONTRIBUTORS.md\nAuto-merging eternal-darkness-decomp/reports/GEDE01/progress.json\nCONFLICT (content): Merge conflict in eternal-darkness-decomp/reports/GEDE01/progress.json"
+  },
+  "merge_repair": {
+    "command": "git merge --no-commit --no-ff -X ours checkpoint/foundry-runtime-2026-07-17; git commit -m 'Merge canonical runtime and resolve GEDE01 records'",
+    "raw_output": "Auto-merging eternal-darkness-decomp/CONTRIBUTORS.md\nAuto-merging eternal-darkness-decomp/reports/GEDE01/progress.json\nAutomatic merge went well; stopped before committing as requested\n[agent/8f1c3278-8547-4bb9-b1a3-8f74c2df5aeb 9acd83dff] Merge canonical runtime and resolve GEDE01 records",
+    "merge_commit": "9acd83dff8703ebbc155b937f90183188eb51afb",
+    "parents_command": "git show -s --format='%H%n%P%n%s' 9acd83dff8703ebbc155b937f90183188eb51afb",
+    "parents_raw_output": "9acd83dff8703ebbc155b937f90183188eb51afb\nf684eacb258386ec15c528d92b2b3949aea1a563 cf2c8bb6346b93cb1d46286bf464c27ef2d7002f\nMerge canonical runtime and resolve GEDE01 records",
+    "resolution": "For the two conflicts only, retain the Revere-side contributor and progress facts. The merged progress file is semantically identical to the fresh verified Revere parent; canonical-only formatting is harmless. All canonical non-conflicting README, merge-progress, mirror, scheduler, idea-queue, and test changes are retained byte-for-byte.",
+    "resolution_proof_command": "printf contributor blobs with git hash-object and git rev-parse; normalize each progress JSON with jq -cS and hash it; git diff --cached --quiet MERGE_HEAD over the six canonical-only paths; git diff --quiet HEAD MERGE_HEAD over src, configure.py, and config/GEDE01; count compiled input paths changed by the merge",
+    "resolution_proof_raw_output": "chosen_contributors_blob=b5e247345c04deac98333f5fc39301a63991716e\nold_head_contributors_blob=b5e247345c04deac98333f5fc39301a63991716e\nmerge_head_contributors_blob=2e3be1e502d7861db2e050fb8f2e587abb9181d4\nchosen_progress_semantic_sha1=9cbfe49792ee52393bfa396b4189e292d7159065\nold_head_progress_semantic_sha1=9cbfe49792ee52393bfa396b4189e292d7159065\nmerge_head_progress_semantic_sha1=0d254219399ef4a84aae6bc1c5f7f8d858d289fb\ncanonical_nonconflict_paths_preserved_exit=0\ncompiled_inputs_equal_between_parents_exit=0\ncompiled_input_paths_changed_by_merge=0"
+  },
+  "frontier_preservation": {
+    "command": "for rev in HEAD MERGE_HEAD; do printf '%s_next_target=' \"$rev\"; git show \"$rev\":eternal-darkness-decomp/reports/GEDE01/progress.json | jq -r .next_target; done; printf 'resolved_next_target='; jq -r .next_target eternal-darkness-decomp/reports/GEDE01/progress.json; jq -r '\"next_target=\\(.next_target) matching_objects=\\(.matching_objects) total_objects=\\(.total_objects) matching_functions=\\(.matching_functions) total_functions=\\(.total_functions) matching_code_bytes=\\(.matching_code_bytes) total_code_bytes=\\(.total_code_bytes)\"' eternal-darkness-decomp/reports/GEDE01/progress.json",
+    "raw_output": "HEAD_next_target=0x801DA8CC\nMERGE_HEAD_next_target=0x801DA8CC\nresolved_next_target=0x801DA8CC\nnext_target=0x801DA8CC matching_objects=5160 total_objects=6259 matching_functions=4925 total_functions=8216 matching_code_bytes=790636 total_code_bytes=2300692",
+    "next_target_before": "0x801DA8CC",
+    "next_target_after": "0x801DA8CC",
+    "accepted_frontier": "0x801DA890"
+  },
+  "build_verification": {
+    "command": "python3 configure.py; .tools/bin/ninja",
+    "raw_output": "configure_exit=0\n[681/683] DOL build/GEDE01/main.dol\n[682/683] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[683/683] PROGRESS\nProgress:\n  All: 47.97% fuzzy, 34.37% matched, 34.37% linked (5160 / 6259 files)\n    Code: 790636 / 2300692 bytes (4925 / 8216 functions)\n    Data: 38678 / 4305642 bytes (0.90%)\n  Game Code: 88.54% fuzzy, 63.35% matched, 63.35% linked (5142 / 5829 files)\n    Code: 787608 / 1243212 bytes (4863 / 5550 functions)\n    Data: 38454 / 40354 bytes (95.29%)\n  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\n    Code: 3028 / 3028 bytes (62 / 62 functions)\n    Data: 224 / 224 bytes (100.00%)\nninja_exit=0"
+  },
+  "objdiff_verification": {
+    "scope": "The merge changes zero compiled decomp input paths, so there are no affected source objects. As a conservative retail-backed check, the last accepted frontier object was regenerated directly on canonical and relocation-strict bases, and both aggregate reports were regenerated.",
+    "direct_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801DA890 -o build/GEDE01/halt-recovery-2af813e367cb8fec-9-attempt-1/game_fn_801DA890-canonical.json --format json; build/tools/objdiff-cli diff -p . -u main/game/game_fn_801DA890 -o build/GEDE01/halt-recovery-2af813e367cb8fec-9-attempt-1/game_fn_801DA890-reloc-strict.json --format json -c function_reloc_diffs=name_address; jq the fn_801DA890 symbols from both reports",
+    "direct_raw_output": "INFO Writing to build/GEDE01/halt-recovery-2af813e367cb8fec-9-attempt-1/game_fn_801DA890-canonical.json\nINFO Writing to build/GEDE01/halt-recovery-2af813e367cb8fec-9-attempt-1/game_fn_801DA890-reloc-strict.json\ncanonical_exit=0\nstrict_exit=0\nmode=canonical left_bytes=60 right_bytes=60 match_percent=100.0 left_instructions=15 right_instructions=15 left_relocations=2 right_relocations=2\nmode=reloc-strict left_bytes=60 right_bytes=60 match_percent=100.0 left_instructions=15 right_instructions=15 left_relocations=2 right_relocations=2",
+    "aggregate_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/halt-recovery-2af813e367cb8fec-9-attempt-1-canonical.json --format json-pretty; build/tools/objdiff-cli report generate -p . -o build/GEDE01/halt-recovery-2af813e367cb8fec-9-attempt-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address; jq .measures from both reports",
+    "aggregate_raw_output": "canonical_exit=0\nstrict_exit=0\nmode=canonical matching_objects=5160 total_objects=6259 matching_functions=4925 total_functions=8216 matching_code_bytes=790636 total_code_bytes=2300692 matching_data_bytes=38678 total_data_bytes=4305642 linked_code_bytes=790636 linked_data_bytes=38218 code_percent=34.36514 function_percent=59.944008\nmode=reloc-strict matching_objects=5160 total_objects=6259 matching_functions=4920 total_functions=8216 matching_code_bytes=788952 total_code_bytes=2300692 matching_data_bytes=38678 total_data_bytes=4305642 linked_code_bytes=790636 linked_data_bytes=38218 code_percent=34.291943 function_percent=59.883152",
+    "note": "The existing canonical-versus-relocation-strict aggregate gap predates this recovery. No relocation gate was changed or weakened."
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'dol_cmp_exit=%s\\n' \"$?\"; sha1sum -c config/GEDE01/build.sha1",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0\nbuild/GEDE01/main.dol: OK",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "runtime_verification": {
+    "typescript_command": "npm run build",
+    "typescript_raw_output": "> darkfoundry@0.1.0 build\n> tsc\n\nexit_code=0",
+    "test_command": "npx vitest run tests/unit/idea-queue.test.ts",
+    "test_raw_output": "RUN v4.1.0\nTest Files 1 passed (1)\nTests 4 passed (4)\nDuration 454ms\nexit_code=0"
+  },
+  "gate_integrity": {
+    "statement": "No source, configure entry, split, symbol, progress frontier, retail input, build rule, exact-build gate, relocation gate, legal-audit gate, or DOL SHA-1 gate was changed, weakened, or bypassed. No retail or generated binary is committed.",
+    "legal_audit_command": "git add reports/GEDE01/halt-recovery-2af813e367cb8fec-9-attempt-1.json; python3 tools/legal_audit.py",
+    "legal_audit_raw_output": "legal audit passed (10994 tracked project files inspected)"
+  }
+}

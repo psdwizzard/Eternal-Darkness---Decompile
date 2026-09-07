@@ -1,0 +1,50 @@
+{
+  "session_id": "session-1843-remediation-2",
+  "scope": "Review correction only; no source or frontier reconstruction was performed.",
+  "build": {
+    "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801DD200.o build/GEDE01/main.dol 2>&1 | tail -8; echo ninja_exit=${PIPESTATUS[0]}",
+    "raw_output": "#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n[680/680] DOL build/GEDE01/main.dol\nninja_exit=0"
+  },
+  "affected_object": {
+    "unit": "main/game/game_fn_801DD200",
+    "canonical_generate_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801DD200 fn_801DD200 -o build/GEDE01/session-1843-remediation-2-canonical.json --format json-pretty >/dev/null; echo canonical_exit=$?",
+    "canonical_generate_raw_output": " INFO Writing to build/GEDE01/session-1843-remediation-2-canonical.json\ncanonical_exit=0",
+    "relocation_strict_generate_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801DD200 fn_801DD200 -o build/GEDE01/session-1843-remediation-2-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address >/dev/null; echo strict_exit=$?",
+    "relocation_strict_generate_raw_output": " INFO Writing to build/GEDE01/session-1843-remediation-2-reloc-strict.json\nstrict_exit=0",
+    "measurement_command": "for f in canonical reloc-strict; do jq -r --arg basis \"$f\" '(.left.symbols[]|select(.name==\"fn_801DD200\")) as $l|(.right.symbols[]|select(.name==\"fn_801DD200\")) as $r|\"basis=\\($basis) retail_bytes=\\($l.size) generated_bytes=\\($r.size) match_percent=\\($l.match_percent) retail_instructions=\\([$l.instructions[]|select(.instruction)]|length) generated_instructions=\\([$r.instructions[]|select(.instruction)]|length) differing_rows=\\([$l.instructions[]|select(.diff_kind)]|length) retail_relocations=\\([$l.instructions[]|select(.instruction.relocation)]|length) generated_relocations=\\([$r.instructions[]|select(.instruction.relocation)]|length)\"' build/GEDE01/session-1843-remediation-2-$f.json; done",
+    "measurement_raw_output": "basis=canonical retail_bytes=1308 generated_bytes=1328 match_percent=88.33945 retail_instructions=327 generated_instructions=332 differing_rows=81 retail_relocations=28 generated_relocations=28\nbasis=reloc-strict retail_bytes=1308 generated_bytes=1328 match_percent=88.33945 retail_instructions=327 generated_instructions=332 differing_rows=81 retail_relocations=28 generated_relocations=28"
+  },
+  "pre_remediation_measurement": {
+    "command": "jq -r '(.left.symbols[]|select(.name==\"fn_801DD200\")) as $l|(.right.symbols[]|select(.name==\"fn_801DD200\")) as $r|\"basis=pre_remediation retail_bytes=\\($l.size) generated_bytes=\\($r.size) match_percent=\\($l.match_percent) retail_instructions=\\([$l.instructions[]|select(.instruction)]|length) generated_instructions=\\([$r.instructions[]|select(.instruction)]|length) differing_rows=\\([$l.instructions[]|select(.diff_kind)]|length) retail_relocations=\\([$l.instructions[]|select(.instruction.relocation)]|length) generated_relocations=\\([$r.instructions[]|select(.instruction.relocation)]|length)\"' reports/GEDE01/objdiff-game_fn_801DD200-session-1843.json",
+    "raw_output": "basis=pre_remediation retail_bytes=1308 generated_bytes=1328 match_percent=88.81957 retail_instructions=327 generated_instructions=332 differing_rows=80 retail_relocations=28 generated_relocations=28"
+  },
+  "regression_disclosure": {
+    "command": "jq -r '(.left.symbols[]|select(.name==\"fn_801DD200\")) as $old | input as $current | ($current.left.symbols[]|select(.name==\"fn_801DD200\")) as $new | \"pre_match_percent=\\($old.match_percent) retained_match_percent=\\($new.match_percent) match_percent_delta=\\($new.match_percent-$old.match_percent) pre_differing_rows=\\([$old.instructions[]|select(.diff_kind)]|length) retained_differing_rows=\\([$new.instructions[]|select(.diff_kind)]|length) differing_rows_delta=\\(([$new.instructions[]|select(.diff_kind)]|length)-([$old.instructions[]|select(.diff_kind)]|length))\"' reports/GEDE01/objdiff-game_fn_801DD200-session-1843.json build/GEDE01/session-1843-remediation-2-canonical.json",
+    "raw_output": "pre_match_percent=88.81957 retained_match_percent=88.33945 match_percent_delta=-0.48011999999999944 pre_differing_rows=80 retained_differing_rows=81 differing_rows_delta=1",
+    "disposition": "Retained as a deliberate aggregate-score-losing, opcode-shape-gaining tradeoff. The historical best remains the standard best_match_percent; the lower retained result is separately recorded as current_match_percent."
+  },
+  "integer_copy_opcode_evidence": {
+    "command": "for f in reports/GEDE01/objdiff-game_fn_801DD200-session-1843.json build/GEDE01/session-1843-remediation-2-canonical.json; do label=pre_remediation; [ \"$f\" = build/GEDE01/session-1843-remediation-2-canonical.json ] && label=retained_current; jq -r --arg label \"$label\" '(.left.symbols[]|select(.name==\"fn_801DD200\")|.instructions) as $l | (.right.symbols[]|select(.name==\"fn_801DD200\")|.instructions) as $r | $r|to_entries[]|select((.value.instruction.address==\"1172\") or (.value.instruction.address==\"1180\"))|.key as $i|\"basis=\\($label) row=\\($i) retail_address=\\($l[$i].instruction.address) retail_instruction=\\($l[$i].instruction.formatted) candidate_address=\\($r[$i].instruction.address) candidate_instruction=\\($r[$i].instruction.formatted) diff_kind=\\($l[$i].diff_kind // $r[$i].diff_kind // \"equal\")\"' \"$f\"; done",
+    "raw_output": "basis=pre_remediation row=303 retail_address=1152 retail_instruction=lwz r0, 0x30(r1) candidate_address=1172 candidate_instruction=lfs f0, 0x2c(r1) diff_kind=DIFF_REPLACE\nbasis=pre_remediation row=305 retail_address=1160 retail_instruction=stw r0, 0x2c(r1) candidate_address=1180 candidate_instruction=stfs f0, 0x30(r1) diff_kind=DIFF_REPLACE\nbasis=retained_current row=303 retail_address=1152 retail_instruction=lwz r0, 0x30(r1) candidate_address=1172 candidate_instruction=lwz r0, 0x2c(r1) diff_kind=DIFF_ARG_MISMATCH\nbasis=retained_current row=305 retail_address=1160 retail_instruction=stw r0, 0x2c(r1) candidate_address=1180 candidate_instruction=stw r0, 0x30(r1) diff_kind=DIFF_ARG_MISMATCH"
+  },
+  "addition_accounting": {
+    "command": "acct_nonmatching=$(git diff fb72d26a9^ fb72d26a9 -- eternal-darkness-decomp/configure.py | awk '/^\\+[[:space:]]*Object\\(NonMatching/{count++} END{print count+0}'); acct_assembly=$(git diff-tree --no-commit-id --name-only -r fb72d26a9 | awk '/(^|\\/)(asm|asm-functions)\\/|\\.[sS]$/{count++} END{print count+0}'); acct_shared=$(git diff-tree --no-commit-id --name-only -r fb72d26a9 | awk '/(^|\\/)shared\\//{count++} END{print count+0}'); echo \"nonmatching_functions_added=$acct_nonmatching assembly_functions_added=$acct_assembly shared_reconstructions=$acct_shared\"",
+    "raw_output": "nonmatching_functions_added=1 assembly_functions_added=0 shared_reconstructions=0"
+  },
+  "progress_schema": {
+    "command": "jq -r '\"fn_best_match_percent=\\(.nonmatching_attempts.fn_801DD200.best_match_percent) fn_current_match_percent=\\(.nonmatching_attempts.fn_801DD200.current_match_percent) missing_standard_best_key_count=\\([.nonmatching_attempts|to_entries[]|select(.value|has(\"best_match_percent\")|not)]|length) total_nonmatching_attempt_entries=\\(.nonmatching_attempts|length)\"' reports/GEDE01/progress.json",
+    "raw_output": "fn_best_match_percent=88.81957 fn_current_match_percent=88.33945 missing_standard_best_key_count=0 total_nonmatching_attempt_entries=53"
+  },
+  "source_hash": {
+    "command": "git hash-object src/game/game_fn_801DD200.c",
+    "raw_output": "df727c7deb610c771512a4d635d1bb39f7facdd8"
+  },
+  "dol_gate": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "frontier": {
+    "command": "jq -r '\"next_target=\\(.next_target) deferred_resume_item=\\(.deferred_resume_item)\"' reports/GEDE01/frontier-801DD200-801DD71C-session-1843.json",
+    "raw_output": "next_target=0x801DD71C deferred_resume_item=fn_801DD200"
+  }
+}

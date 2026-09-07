@@ -1,0 +1,45 @@
+{
+  "session_id": "session-1843-remediation-1",
+  "scope": "Review correction only; no frontier reconstruction was performed.",
+  "build": {
+    "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801DD200.o build/GEDE01/main.dol 2>&1 | tail -5; echo ninja_exit=${PIPESTATUS[0]}",
+    "raw_output": "### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n[680/680] DOL build/GEDE01/main.dol\nninja_exit=0"
+  },
+  "affected_object": {
+    "unit": "main/game/game_fn_801DD200",
+    "canonical_generate_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801DD200 fn_801DD200 -o build/GEDE01/session-1843-remediation-1-canonical.json --format json-pretty >/dev/null; echo canonical_exit=$?",
+    "canonical_generate_raw_output": " INFO Writing to build/GEDE01/session-1843-remediation-1-canonical.json\ncanonical_exit=0",
+    "relocation_strict_generate_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801DD200 fn_801DD200 -o build/GEDE01/session-1843-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address >/dev/null; echo strict_exit=$?",
+    "relocation_strict_generate_raw_output": " INFO Writing to build/GEDE01/session-1843-remediation-1-reloc-strict.json\nstrict_exit=0",
+    "measurement_command": "for f in canonical reloc-strict; do jq -r --arg basis \"$f\" '(.left.symbols[]|select(.name==\"fn_801DD200\")) as $l|(.right.symbols[]|select(.name==\"fn_801DD200\")) as $r|\"basis=\\($basis) retail_bytes=\\($l.size) generated_bytes=\\($r.size) match_percent=\\($l.match_percent) retail_instructions=\\([$l.instructions[]|select(.instruction)]|length) generated_instructions=\\([$r.instructions[]|select(.instruction)]|length) differing_rows=\\([$l.instructions[]|select(.diff_kind)]|length) retail_relocations=\\([$l.instructions[]|select(.instruction.relocation)]|length) generated_relocations=\\([$r.instructions[]|select(.instruction.relocation)]|length)\"' build/GEDE01/session-1843-remediation-1-$f.json; done",
+    "measurement_raw_output": "basis=canonical retail_bytes=1308 generated_bytes=1328 match_percent=88.33945 retail_instructions=327 generated_instructions=332 differing_rows=81 retail_relocations=28 generated_relocations=28\nbasis=reloc-strict retail_bytes=1308 generated_bytes=1328 match_percent=88.33945 retail_instructions=327 generated_instructions=332 differing_rows=81 retail_relocations=28 generated_relocations=28"
+  },
+  "experiments": {
+    "typed_prototypes": {
+      "disposition": "rejected and reverted",
+      "command": "jq -r '(.left.symbols[]|select(.name==\"fn_801DD200\")) as $l|(.right.symbols[]|select(.name==\"fn_801DD200\")) as $r|\"retail_bytes=\\($l.size) generated_bytes=\\($r.size) match_percent=\\($l.match_percent) retail_instructions=\\([$l.instructions[]|select(.instruction)]|length) generated_instructions=\\([$r.instructions[]|select(.instruction)]|length) differing_rows=\\([$l.instructions[]|select(.diff_kind)]|length)\"' build/GEDE01/session-1843-remediation-1-canonical.json",
+      "raw_output": "retail_bytes=1308 generated_bytes=1332 match_percent=87.52905 retail_instructions=327 generated_instructions=333 differing_rows=113"
+    },
+    "commutative_table_expression": {
+      "disposition": "no measurement change; reverted",
+      "command": "jq -r '(.left.symbols[]|select(.name==\"fn_801DD200\")) as $l|(.right.symbols[]|select(.name==\"fn_801DD200\")) as $r|\"retail_bytes=\\($l.size) generated_bytes=\\($r.size) match_percent=\\($l.match_percent) retail_instructions=\\([$l.instructions[]|select(.instruction)]|length) generated_instructions=\\([$r.instructions[]|select(.instruction)]|length) differing_rows=\\([$l.instructions[]|select(.diff_kind)]|length)\"' build/GEDE01/session-1843-remediation-1-canonical.json",
+      "raw_output": "retail_bytes=1308 generated_bytes=1328 match_percent=88.33945 retail_instructions=327 generated_instructions=332 differing_rows=81"
+    }
+  },
+  "integer_copy_opcode_evidence": {
+    "command": "jq -r '.right.symbols[]|select(.name==\"fn_801DD200\")|.instructions[]|select((.instruction.formatted//\"\")|test(\"lwz r0, 0x|stw r0, 0x\"))|[.instruction.address,.instruction.formatted,(.diff_kind//\"equal\")]|@tsv' build/GEDE01/session-1843-remediation-1-canonical.json | tail -8",
+    "raw_output": "1144\tlwz r0, 0x28(r31)\tequal\n1148\tstw r0, 0x138(r28)\tequal\n1172\tlwz r0, 0x2c(r1)\tDIFF_ARG_MISMATCH\n1180\tstw r0, 0x30(r1)\tDIFF_ARG_MISMATCH\n1212\tstw r0, 0xc(r1)\tequal\n1228\tstw r0, 0x10(r1)\tDIFF_INSERT\n1264\tstw r0, 0x20(r1)\tequal\n1312\tlwz r0, 0x84(r1)\tequal"
+  },
+  "source_hash": {
+    "command": "git hash-object src/game/game_fn_801DD200.c",
+    "raw_output": "df727c7deb610c771512a4d635d1bb39f7facdd8"
+  },
+  "dol_gate": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "frontier": {
+    "next_target": "0x801DD71C",
+    "deferred_resume_item": "fn_801DD200"
+  }
+}

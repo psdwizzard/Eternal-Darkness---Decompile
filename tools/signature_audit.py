@@ -703,11 +703,10 @@ def audit(
                     "not independently prove the source-level return type."
                 )
             elif symbol in baseline_blocked_symbols:
-                entry["disposition"] = "blocked_on_baseline"
+                entry["disposition"] = "ineligible_baseline"
                 entry["disposition_reason"] = (
-                    "The grounded correction remains eligible, but every affected "
-                    "object must first have a 100-percent baseline. This is a transient "
-                    "verification dependency, not a steady-state deferral."
+                    "Ineligible: at least one affected object is not at a 100-percent "
+                    "baseline, so the correction has not been trialed or rejected."
                 )
             elif symbol in trialed_reverted_symbols:
                 entry["disposition"] = "deferred"
@@ -1010,6 +1009,33 @@ def main() -> int:
         build_report_path = args.build_report.resolve()
         build_report = json.loads(build_report_path.read_text(encoding="utf-8"))
         units = {item["name"]: item for item in build_report.get("units", [])}
+        for entry in report["return_register_contradictions"]:
+            if entry.get("disposition") not in {"pending", "ineligible_baseline"}:
+                continue
+            baseline_objects = []
+            for path in entry["disagreement_units"]:
+                name = "main/" + path.removeprefix("src/").removesuffix(".c")
+                unit = units.get(name)
+                measures = unit.get("measures", {}) if unit is not None else {}
+                percent = measures.get("fuzzy_match_percent")
+                baseline_objects.append({
+                    "name": name,
+                    "fuzzy_match_percent": percent,
+                    "raw_output": f"{name}\t{percent}",
+                })
+            entry["baseline_precondition"] = {
+                "build_report": str(build_report_path.relative_to(ROOT)),
+                "objects": baseline_objects,
+                "all_disagreement_objects_fuzzy_match_100": bool(baseline_objects)
+                and all(
+                    item["fuzzy_match_percent"] == 100.0
+                    for item in baseline_objects
+                ),
+                "evidence_report": (
+                    str(args.evidence_report.resolve().relative_to(ROOT))
+                    if args.evidence_report is not None else None
+                ),
+            }
         for name in args.verified_object:
             unit = units.get(name)
             if unit is None:

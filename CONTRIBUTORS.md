@@ -13,7 +13,7 @@ commits are not visible here. This file is the durable record of who did what.
 
 ## Andrew ([@ateich](https://github.com/ateich))
 
-**362 functions, 99,200 matched code bytes.**
+**363 functions, 99,304 matched code bytes.**
 
 ### Script handlers and narrowed values ([#1](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/1), [#2](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/2), [#3](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/3)) — 6 functions, 7,488 bytes
 
@@ -282,12 +282,30 @@ The largest single batch landed on this project.
 | `fn_8008F064` | 448 |
 | _78 more_ | 14,148 |
 
-### Interface, layout, and declaration corrections ([#17](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/17)) — 78 functions, 25,752 bytes
+### Interface, layout, and declaration corrections ([#17](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/17)) — 79 functions, 25,856 bytes
 
-Six distinct causes in one batch: function interfaces proven from already-matching
-callers and callees, structure layouts and data models, declaration order and local
-lifetime, expression and control-flow shape, compiler-private literals that retail
-exposes as named `.sdata2` symbols, and per-object compiler settings.
+The largest and most varied batch on this project. Six distinct causes in one
+submission: function interfaces proven from already-matching callers and callees,
+structure layouts and data models, declaration order and local lifetime,
+expression and control-flow shape, compiler-private literals that retail exposes
+as named `.sdata2` symbols, and per-object compiler settings. It also carries a
+guarded constant externalization, an exact `.data` alignment correction, and the
+MWCC settings required for the MetroTRK main loop. All 79 promoted translation
+units are byte-identical and linkable on the canonical and relocation-strict
+bases. Of the other ten touched sources, nine keep their existing exact status
+and `fn_801392A8` remains explicitly NonMatching and unclaimed.
+
+The canonical matched-function counter rose by 78 functions and 25,752 bytes
+rather than by the 79 and 25,856 credited here. The difference is `fn_801C0ED8`
+(104 bytes), which was already drawing fuzzy scorer credit while its object was
+NonMatching; PR #17 makes it genuinely relocation-aware exact and linkable,
+closing the scorer/link gap instead of adding a new count. Separately, the 79
+translation units contain 80 function bodies — `game_fn_80008014.c` holds both
+`fn_80008014` and `fn_80008134` — but `fn_80008134` (32 bytes) was already exact
+before this batch and is not credited to it. The two together close the full
+linked-code total for the batch: 25,752 + 104 + 32 = 25,888 linked bytes
+across 80 function bodies, of which 79 functions and 25,856 bytes are newly
+matched work and are what this entry credits.
 
 | Function | Bytes |
 | --- | ---: |
@@ -299,4 +317,4 @@ exposes as named `.sdata2` symbols, and per-object compiler settings.
 | `fn_80196B10` | 724 |
 | `fn_8014549C` | 696 |
 | `fn_800A509C` | 660 |
-| _70 more_ | 19,384 |
+| _71 more_ | 19,488 |

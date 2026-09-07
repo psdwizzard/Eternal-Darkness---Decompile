@@ -2,10 +2,10 @@
   "schema_version": 2,
   "scope": "Distinct MWCC code-generation behaviors documented in reports/GEDE01/progress.json open_items and docs/matching.md",
   "source_snapshot": {
-    "repository_revision": "7768bdf2be1df55ffdfa41da0b3f5daaf9bbffc0",
-    "next_target": "0x801D0E78",
+    "repository_revision": "4f0c1d5b05cc1420ddd3f481d843f9479b3068ce",
+    "next_target": "0x801DA8CC",
     "reports/GEDE01/progress.json": {
-      "sha256": "6c5fc614a46060d69da541a4722c6e1766d552b10b3e232f019509f4ffc318a1",
+      "sha256": "41703ad4f3d4aa61b4851b454d0d5383197d1878e18114c7781832022ceb97c8",
       "scope": "whole_file"
     },
     "docs/matching.md": {
@@ -15,16 +15,16 @@
   "consolidation_audit": {
     "original_consolidation_commit": "86d029104eb5ed6ad01b6af03963ea2cf924d2a4",
     "comparison_base": "b6f963fbb8643a04ab4358a988239961639dd07e",
-    "latest_consolidation_session": "session-1790",
-    "scope": "Refreshed the categorized catalog through session-1789 without changing generated progress accounting or frontier prose. Added only MWCC code-generation behaviors explicitly stated in intervening progress open_items; incomplete recovery, signature maintenance, exact matches without a documented divergence, and verification-only facts were not promoted into lessons.",
-    "total_lessons": 579,
+    "latest_consolidation_session": "session-1830",
+    "scope": "Refreshed the categorized catalog through session-1829 without changing generated progress accounting or frontier prose. Added only MWCC code-generation behaviors explicitly stated in intervening progress open_items; incomplete recovery, signature maintenance, exact matches without a documented divergence, and verification-only facts were not promoted into lessons.",
+    "total_lessons": 586,
     "measurement_command": "jq -r '\"lessons=\" + ((.lessons|length)|tostring) + \" out_of_taxonomy=\" + ((.out_of_taxonomy|length)|tostring) + \" total_catalog_records=\" + (((.lessons|length)+(.out_of_taxonomy|length))|tostring)' reports/GEDE01/lessons.json",
-    "measurement_raw_output": "lessons=579 out_of_taxonomy=19 total_catalog_records=598",
-    "session_parent_commit": "7768bdf2be1df55ffdfa41da0b3f5daaf9bbffc0",
-    "session_delta_measurement_command": "jq -s -r '.[0] as $parent | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($parent.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($parent.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($parent.lessons|length)+($parent.out_of_taxonomy|length)))\"' <(git show 7768bdf2be1df55ffdfa41da0b3f5daaf9bbffc0:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
-    "session_delta_measurement_raw_output": "new_lessons=4 new_out_of_taxonomy=0 total_new_records=4",
+    "measurement_raw_output": "lessons=586 out_of_taxonomy=19 total_catalog_records=605",
+    "session_parent_commit": "4f0c1d5b05cc1420ddd3f481d843f9479b3068ce",
+    "session_delta_measurement_command": "jq -s -r '.[0] as $parent | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($parent.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($parent.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($parent.lessons|length)+($parent.out_of_taxonomy|length)))\"' <(git show 4f0c1d5b05cc1420ddd3f481d843f9479b3068ce:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
+    "session_delta_measurement_raw_output": "new_lessons=7 new_out_of_taxonomy=0 total_new_records=7",
     "delta_measurement_command": "jq -s -r '.[0] as $base | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($base.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($base.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($base.lessons|length)+($base.out_of_taxonomy|length)))\"' <(git show b6f963fbb:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
-    "delta_measurement_raw_output": "new_lessons=146 new_out_of_taxonomy=17 total_new_records=163",
+    "delta_measurement_raw_output": "new_lessons=153 new_out_of_taxonomy=17 total_new_records=170",
     "added_out_of_taxonomy_categories": ["instruction-selection-lowering", "common-subexpression-elimination", "loop-unrolling", "dead-loop-elimination", "relocation-bearing-instruction-operands", "relocation-target-identity"]
   },
   "lessons": [
@@ -4083,6 +4083,55 @@
       "precise_divergence": "Split-TU compilation emits a compiler-local integer-to-floating conversion bias instead of retail's shared named constant: fn_801CD228 uses local @3 rather than lbl_80651030, and fn_801CE594 initially used local @8 rather than lbl_80651050.",
       "workaround": "When the instruction stream is otherwise exact, guard the generated constant bytes against retail and externalize the compiler-local symbol to the documented retail label; this is confirmed for fn_801CE594 and remains unresolved for fn_801CD228.",
       "evidence": ["reports/GEDE01/progress.json: open_items entries for sessions 1767 and 1782"]
+    },
+    {
+      "category": "register-allocation",
+      "functions": ["fn_801D6B44", "fn_801D73D0", "fn_801D76A8", "fn_801DA3B0"],
+      "precise_divergence": "GC/1.3 assigns equivalent persistent values or constants to a different volatile or callee-saved register cycle from retail: the documented cases include r4 instead of r6 for a 0x40 byte store, differing effect/kind/count/result lifetimes, and a rotated r23-r27 object/owner/option/output/alternate-form cycle.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entries for sessions 1813, 1815, 1816, and 1828"]
+    },
+    {
+      "category": "register-allocation",
+      "functions": ["fn_801D7C24", "fn_801D8268"],
+      "precise_divergence": "Shortening or combining source lifetimes changes retail's persistent-register flow: fn_801D7C24 requires its point base to remain live, while combining fn_801D8268's accessor input and result changes argument and result registers.",
+      "workaround": "Preserve fn_801D7C24's persistent point-base lifetime and use distinct input and result live ranges in fn_801D8268.",
+      "evidence": ["reports/GEDE01/progress.json: open_items entries for session-1817 remediation 1 and session-1821 remediation 1"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801D1B7C", "fn_801D1F78", "fn_801D313C", "fn_801D3A24", "fn_801D73D0", "fn_801D9D14", "fn_801DA3B0"],
+      "precise_divergence": "GC/1.3 schedules equivalent address formation, entry loads and moves, call arguments, arithmetic, or event-construction stores differently from retail. The recorded forms include folding row-base additions into float-load displacements, reassociating decrement-after-add, reordering final sound-call setup, and reordering three position stores.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entries for sessions 1794, 1797 through 1799, 1802, 1804, 1815, 1826, and 1828"]
+    },
+    {
+      "category": "float-constant-placement",
+      "functions": ["fn_801D1F78", "fn_801D7C24"],
+      "precise_divergence": "Split-TU GC/1.3 emits integer-to-floating conversion biases as compiler-local constants rather than using the retail named shared constants; fn_801D1F78 produces local @67 and @69 instead of lbl_80651070 and lbl_80651080, and fn_801D7C24 required the analogous signed-conversion-bias correction.",
+      "workaround": "After guarding the generated constant bytes against retail, externalize the compiler-local bias symbols to the recorded retail labels.",
+      "evidence": ["reports/GEDE01/progress.json: open_items entries for sessions 1797 through 1799 and session-1817 remediation 1"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801D1C34"],
+      "precise_divergence": "Qualifying the retail-owned default record lbl_8023B570 as const changes GC/1.3's aggregate-copy schedule even though the copied bytes and control flow are unchanged.",
+      "workaround": "Declare lbl_8023B570 consistently with its mutable owning definition.",
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1796"]
+    },
+    {
+      "category": "stack-slot-reuse",
+      "functions": ["fn_801D88D4"],
+      "precise_divergence": "GC/1.3 reuses four short-lived stack slots across switch arms and emits a 0x60-byte frame, while retail preserves distinct slots in a 0x70-byte frame; all affected stack offsets and nearby scheduling consequently differ.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: open_items entry for session-1823"]
+    },
+    {
+      "category": "calling-convention",
+      "functions": ["fn_801D7C24", "fn_801D8268", "fn_801CEB2C"],
+      "precise_divergence": "Incorrect recovered return or accessor prototypes change argument/result flow and the lifetime of values spanning calls, preventing retail code generation even when the surrounding control flow is correct.",
+      "workaround": "Use fn_801CEB2C's corrected return type, fn_801D8268's corrected accessor prototype and argument flow, and preserve the documented persistent point-base or distinct input/result lifetimes.",
+      "evidence": ["reports/GEDE01/progress.json: open_items entries for session-1817 remediation 1 and session-1821 remediation 1"]
     }
   ],
   "out_of_taxonomy": [

@@ -1,0 +1,42 @@
+{
+  "session_id": "session-1844",
+  "starting_target": "0x801DD200",
+  "ending_next_target": "0x801DD200",
+  "retry": "2 of 3",
+  "scope": "Only the existing fn_801DD200 honest-C reconstruction was improved; fn_801DD71C was not attempted.",
+  "function": {
+    "name": "fn_801DD200",
+    "range": "0x801DD200..0x801DD71C",
+    "retail_bytes": 1308,
+    "generated_bytes": 1336,
+    "canonical_match_percent": 93.70336,
+    "relocation_strict_match_percent": 93.70336,
+    "retail_instructions": 327,
+    "generated_instructions": 334,
+    "differing_rows": 51,
+    "retail_relocations": 28,
+    "generated_relocations": 28,
+    "previous_best_match_percent": 88.81957,
+    "improvement_points": 4.88379,
+    "matched_bytes_claimed": 0,
+    "nonmatching_bytes": 1308
+  },
+  "accounting": {
+    "new_nonmatching_functions": 0,
+    "new_assembly_functions": 0,
+    "shared_reconstructions": 0,
+    "fallbacks": 0,
+    "unaccounted_spans": []
+  },
+  "evidence": {
+    "canonical_direct": "reports/GEDE01/objdiff-game_fn_801DD200-session-1844.json",
+    "relocation_strict_direct": "reports/GEDE01/objdiff-game_fn_801DD200-session-1844-reloc-strict.json",
+    "canonical_aggregate": "build/GEDE01/report.json",
+    "relocation_strict_aggregate": "reports/GEDE01/session-1844-reloc-strict.json",
+    "canonical_headline": "matching_objects=5175 matching_functions=4940 matching_code_bytes=794340 linked_code_bytes=794340 code_percent=34.526134",
+    "relocation_strict_headline": "matching_functions=4935 matching_code_bytes=792656 code_percent=34.452938",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_cmp_exit": 0
+  },
+  "divergence": "The remaining seven generated instructions are two operations for opaque initial flags and five lis/or upper-half updates versus retail oris; table-base operand order and final-call scheduling also differ. Exact narrow externs were rejected because they add non-retail clrlwi truncations."
+}

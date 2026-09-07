@@ -1,0 +1,54 @@
+{
+  "session_id": "session-1860-remediation-1",
+  "source_session_id": "session-1860",
+  "scope": "review remediation only; declaration corrections and audit evidence; no frontier matching",
+  "starting_target": "0x801E2F04",
+  "ending_next_target": "0x801E2F04",
+  "corrected_symbols": [
+    "fn_8011EB14",
+    "fn_80157AB8",
+    "fn_8015AA0C",
+    "fn_801A7468",
+    "fn_801AC908"
+  ],
+  "baseline_evidence": {
+    "command": "jq -r '.units[] | select(.name==\"main/game/game_fn_801A7934\" or .name==\"main/game/game_fn_80118288\" or .name==\"main/game/game_fn_800A3894\" or .name==\"main/game/game_fn_800D64A8\" or .name==\"main/game/game_prefix_800068E0\") | [.name,.measures.fuzzy_match_percent,.measures.matched_code_percent,.measures.complete_code_percent,.metadata.complete] | @tsv' build/GEDE01/report.json",
+    "raw_output": "main/game/game_prefix_800068E0\t100.0\t100.0\t100.0\ttrue\nmain/game/game_fn_800A3894\t100.0\t100.0\t100.0\ttrue\nmain/game/game_fn_800D64A8\t100.0\t100.0\t100.0\ttrue\nmain/game/game_fn_80118288\t100.0\t100.0\t100.0\ttrue\nmain/game/game_fn_801A7934\t100.0\t100.0\t100.0\ttrue"
+  },
+  "objdiff_evidence": {
+    "commands": [
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801A7934 -o reports/GEDE01/objdiff-game_fn_801A7934-session-1860-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80118288 -o reports/GEDE01/objdiff-game_fn_80118288-session-1860-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A3894 -o reports/GEDE01/objdiff-game_fn_800A3894-session-1860-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800D64A8 -o reports/GEDE01/objdiff-game_fn_800D64A8-session-1860-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_prefix_800068E0 -o reports/GEDE01/objdiff-game_prefix_800068E0-session-1860-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address"
+    ],
+    "raw_output": "INFO Writing to reports/GEDE01/objdiff-game_fn_801A7934-session-1860-remediation-1-reloc-strict.json\nINFO Writing to reports/GEDE01/objdiff-game_fn_80118288-session-1860-remediation-1-reloc-strict.json\nINFO Writing to reports/GEDE01/objdiff-game_fn_800A3894-session-1860-remediation-1-reloc-strict.json\nINFO Writing to reports/GEDE01/objdiff-game_fn_800D64A8-session-1860-remediation-1-reloc-strict.json\nINFO Writing to reports/GEDE01/objdiff-game_prefix_800068E0-session-1860-remediation-1-reloc-strict.json",
+    "summary_command": "for artifact in reports/GEDE01/objdiff-game_fn_801A7934-session-1860-remediation-1-reloc-strict.json reports/GEDE01/objdiff-game_fn_80118288-session-1860-remediation-1-reloc-strict.json reports/GEDE01/objdiff-game_fn_800A3894-session-1860-remediation-1-reloc-strict.json reports/GEDE01/objdiff-game_fn_800D64A8-session-1860-remediation-1-reloc-strict.json reports/GEDE01/objdiff-game_prefix_800068E0-session-1860-remediation-1-reloc-strict.json; do jq -r --arg artifact \"$artifact\" '[.left.sections[] | select(.kind==\"SECTION_CODE\")] as $code | [$artifact,($code[0].size|tonumber),$code[0].match_percent,([.left.symbols[].match_percent // empty]|min),([.left.symbols[] | (.instructions // [])[] | select(.instruction.relocation != null)]|length),([.right.symbols[] | (.instructions // [])[] | select(.instruction.relocation != null)]|length)] | @tsv' \"$artifact\"; done",
+    "summary_columns": "artifact,code_bytes,code_match_percent,minimum_symbol_match_percent,left_relocations,right_relocations",
+    "summary_raw_output": "reports/GEDE01/objdiff-game_fn_801A7934-session-1860-remediation-1-reloc-strict.json\t36\t100.0\t100.0\t1\t1\nreports/GEDE01/objdiff-game_fn_80118288-session-1860-remediation-1-reloc-strict.json\t184\t100.0\t100.0\t21\t21\nreports/GEDE01/objdiff-game_fn_800A3894-session-1860-remediation-1-reloc-strict.json\t232\t100.0\t100.0\t8\t8\nreports/GEDE01/objdiff-game_fn_800D64A8-session-1860-remediation-1-reloc-strict.json\t224\t100.0\t100.0\t19\t19\nreports/GEDE01/objdiff-game_prefix_800068E0-session-1860-remediation-1-reloc-strict.json\t252\t100.0\t100.0\t27\t27"
+  },
+  "baseline_blocked": {
+    "symbol": "fn_801CE070",
+    "disposition": "ineligible: affected object not at 100% baseline",
+    "command": "jq -r '.units[] | select(.name==\"main/game/game_fn_801CC468\") | [.name,.measures.fuzzy_match_percent,.measures.matched_code_percent,.measures.complete_code_percent,.metadata.complete] | @tsv' build/GEDE01/report.json",
+    "raw_output": "main/game/game_fn_801CC468\t86.65934\t\t\tfalse",
+    "trial_status": "not tested because the prerequisite baseline gate was unsatisfied"
+  },
+  "build": {
+    "command": ".tools/bin/ninja",
+    "raw_output": "[681/683] DOL build/GEDE01/main.dol\n[682/683] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[683/683] PROGRESS\nProgress:\n  All: 48.91% fuzzy, 34.67% matched, 34.67% linked (5196 / 6313 files)\n    Code: 797668 / 2300692 bytes (4961 / 8216 functions)\n    Data: 38678 / 4305642 bytes (0.90%)\n  Game Code: 87.84% fuzzy, 62.20% matched, 62.20% linked (5178 / 5883 files)\n    Code: 794640 / 1277572 bytes (4899 / 5604 functions)\n    Data: 38454 / 40354 bytes (95.29%)\n  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\n    Code: 3028 / 3028 bytes (62 / 62 functions)\n    Data: 224 / 224 bytes (100.00%)"
+  },
+  "audit": {
+    "command": "python3 tools/signature_audit.py --session-id session-1860-remediation-1 --starting-target 0x801E2F04 --ending-next-target 0x801E2F04 --applied-symbol fn_8011EB14 --applied-symbol fn_80157AB8 --applied-symbol fn_8015AA0C --applied-symbol fn_801A7468 --applied-symbol fn_801AC908 --baseline-blocked-symbol fn_801CE070 --corrected-translation-unit fn_8011EB14=src/game/game_prefix_800068E0.c --corrected-translation-unit fn_80157AB8=src/game/game_fn_801A7934.c --corrected-translation-unit fn_8015AA0C=src/game/game_fn_80118288.c --corrected-translation-unit fn_801A7468=src/game/game_fn_800D64A8.c --corrected-translation-unit fn_801AC908=src/game/game_fn_800A3894.c --correction-evidence fn_8011EB14=reports/GEDE01/objdiff-game_prefix_800068E0-session-1860-remediation-1-reloc-strict.json --correction-evidence fn_80157AB8=reports/GEDE01/objdiff-game_fn_801A7934-session-1860-remediation-1-reloc-strict.json --correction-evidence fn_8015AA0C=reports/GEDE01/objdiff-game_fn_80118288-session-1860-remediation-1-reloc-strict.json --correction-evidence fn_801A7468=reports/GEDE01/objdiff-game_fn_800D64A8-session-1860-remediation-1-reloc-strict.json --correction-evidence fn_801AC908=reports/GEDE01/objdiff-game_fn_800A3894-session-1860-remediation-1-reloc-strict.json --evidence-report reports/GEDE01/session-1860-remediation-1-verification.json --dol-sha1 ea24b6af954876ce072562ff39cdb4c81d32be1f --build-report build/GEDE01/report.json --verified-object main/game/game_prefix_800068E0 --verified-object main/game/game_fn_801A7934 --verified-object main/game/game_fn_80118288 --verified-object main/game/game_fn_800D64A8 --verified-object main/game/game_fn_800A3894 --json-output reports/GEDE01/signature-shadow-session-1860.json --limit 1",
+    "raw_output": "Audited 20784 extern declarations for 4953 symbols under src/game"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'cmp_exit=%s\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "frontier": {
+    "next_target": "0x801E2F04",
+    "advanced": false
+  }
+}

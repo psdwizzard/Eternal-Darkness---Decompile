@@ -1,0 +1,70 @@
+{
+  "halt_id": "1d3536599ddf915a-7",
+  "attempt": 1,
+  "halt_reason": "PR #17 landing (ateich, 79 functions) — Smith, 2026-09-06",
+  "scope": "Land and verify only the already-authored PR #17 contribution; do not advance the contiguous GEDE01 frontier or match unrelated functions.",
+  "result": "recovered",
+  "diagnosis": {
+    "summary": "The scheduler paused before PR #17 had been imported. The isolated worktree was clean, had no MERGE_HEAD, and contained none of the PR #17 source edits. The smallest correction was to import the PR's source and build-configuration delta onto the later monorepo tree, refresh canonical counters without changing next_target, credit the contributor, and verify all affected objects and gates.",
+    "initial_git_command": "git status --short --branch; git rev-parse -q --verify MERGE_HEAD || true",
+    "initial_git_raw_output": "## agent/8f1c3278-8547-4bb9-b1a3-8f74c2df5aeb...origin/agent/8f1c3278-8547-4bb9-b1a3-8f74c2df5aeb [ahead 516]",
+    "scheduler_command": "jq '{state,session_id,assigned_target,accepted_frontier,candidate_frontier,agent_commit,merged_commit,recovery_reason,updated_at}' .darkfoundry/decomp-chain-state.json",
+    "scheduler_raw_output": "{\n  \"state\": \"WORKING\",\n  \"session_id\": \"4f32cb93-409b-44ec-a2b7-a0a17cb9b79f\",\n  \"assigned_target\": \"0x801DA890\",\n  \"accepted_frontier\": \"0x801DA890\",\n  \"candidate_frontier\": null,\n  \"agent_commit\": null,\n  \"merged_commit\": \"7528e4e654f37e30c8fc3db813218771947ff25e\",\n  \"recovery_reason\": null,\n  \"updated_at\": \"2026-09-06T11:20:28.013Z\"\n}",
+    "merge_state": "No merge was in progress in this worktree, so no merge was aborted, rewritten, or bypassed."
+  },
+  "upstream_evidence": {
+    "remote": "https://github.com/psdwizzard/Eternal-Darkness---Decompile.git",
+    "lookup_command": "git ls-remote https://github.com/psdwizzard/Eternal-Darkness---Decompile.git refs/pull/17/head refs/pull/17/merge",
+    "lookup_raw_output": "089fee7225258db9013a7948f590f05913eb8e55\trefs/pull/17/head\nce8a2fb2cf6d5f73320e3b4af3d62b2d9e206bf2\trefs/pull/17/merge",
+    "source_base": "712847d6fa050bb9b29c2168cc048295c9f8ca7e",
+    "source_head": "089fee7225258db9013a7948f590f05913eb8e55",
+    "source_commit_command": "git show --no-patch --pretty=fuller 089fee7225258db9013a7948f590f05913eb8e55; git diff --numstat 712847d6fa050bb9b29c2168cc048295c9f8ca7e..089fee7225258db9013a7948f590f05913eb8e55 -- src | awk '{a+=$1;d+=$2;n++} END{print \"source_files=\"n,\"insertions=\"a,\"deletions=\"d}'",
+    "source_commit_raw_output": "commit 089fee7225258db9013a7948f590f05913eb8e55\nAuthor: ateich <4775201+ateich@users.noreply.github.com>\nAuthorDate: Sun Sep 6 01:00:09 2026 -0400\nCommit: ateich <4775201+ateich@users.noreply.github.com>\nCommitDate: Sun Sep 6 01:04:01 2026 -0400\n\n    progress: 33.94% of code matched (4890/8216 functions, 5124/6215 objects)\nsource_files=89 insertions=676 deletions=625",
+    "preimage_command": "For each path from git diff --name-only 712847d6f..089fee722, compare git hash-object of the current file with git rev-parse of the PR base and head blobs, then count classifications.",
+    "preimage_raw_output": "clean_apply=89\ndiverged=1",
+    "preimage_note": "All 89 source files exactly equaled the PR base. Only configure.py diverged because later monorepo work had appended independent rules and frontier registrations; every PR hunk applied contextually and cleanly.",
+    "post_import_source_command": "For every PR source path, compare git hash-object eternal-darkness-decomp/$path with git rev-parse 089fee722:$path.",
+    "post_import_source_raw_output": "source_files_expected=89 source_files_mismatched=0"
+  },
+  "correction": {
+    "summary": "Imported the exact PR #17 source delta; integrated its guarded custom build rules and Matching declarations into the later configure.py without removing later work; refreshed progress counters; and added durable contributor credit. No split, symbol, frontier source, frontier evidence, gate, or retail file was changed.",
+    "frontier_before": "0x801DA8CC",
+    "frontier_after": "0x801DA8CC",
+    "frontier_command": "jq -r '.next_target' reports/GEDE01/progress.json",
+    "frontier_raw_output": "0x801DA8CC",
+    "counter_explanation": "PR #17 promotes 79 previously NonMatching translation units and their 79 functions. The canonical matched-function counter rises by 78 because fn_801C0ED8 was already falsely credited as a matched function by the documented scorer defect, despite its object being NonMatching and unlinked. The landing makes it genuinely exact and linkable; the complete-unit counter therefore rises by the full 79.",
+    "before_counter_command": "jq the headline fields from the committed pre-recovery reports/GEDE01/progress.json at 445b07cd5",
+    "before_counter_raw_output": "matching_objects=5081 matching_functions=4847 matching_code_bytes=764884 matching_data_bytes=38646 linked_code_bytes=764748 linked_data_bytes=37850 next_target=0x801DA8CC",
+    "after_counter_command": "jq -r '.measures | headline fields' build/GEDE01/halt-recovery-1d3536599ddf915a-7-attempt-1-canonical.json; jq -r '.next_target' reports/GEDE01/progress.json",
+    "after_counter_raw_output": "matching_objects=5160 total_objects=6259 matching_functions=4925 total_functions=8216 matching_code_bytes=790636 total_code_bytes=2300692 matching_data_bytes=38678 total_data_bytes=4305642 linked_code_bytes=790636 linked_data_bytes=38218\n0x801DA8CC",
+    "delta_command": "Subtract the recorded pre-recovery counters from the fresh canonical counters.",
+    "delta_raw_output": "matching_objects_delta=79 matching_functions_delta=78 matching_code_bytes_delta=25752 matching_data_bytes_delta=32 linked_code_bytes_delta=25888 linked_data_bytes_delta=368"
+  },
+  "build_verification": {
+    "command": "python3 configure.py; .tools/bin/ninja",
+    "raw_output": "[759/764] REPORT\n INFO Loading project .\n INFO Generating report for 6259 units (using 8 threads)\n INFO Report generated in 0.226s\n INFO Writing to build/GEDE01/report.json\n[760/764] LINK build/GEDE01/main.elf\n[761/764] DOL build/GEDE01/main.dol\n[762/764] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[763/764] PROGRESS\nProgress:\n  All: 47.97% fuzzy, 34.37% matched, 34.37% linked (5160 / 6259 files)\n    Code: 790636 / 2300692 bytes (4925 / 8216 functions)\n    Data: 38678 / 4305642 bytes (0.90%)\nexit_code=0"
+  },
+  "objdiff_verification": {
+    "scope": "Every one of the 89 source objects touched by PR #17, including the one source that remains intentionally NonMatching.",
+    "generate_command": "For each source path in the PR delta: build/tools/objdiff-cli diff -p . -u main/game/UNIT -o build/GEDE01/halt-recovery-1d3536599ddf915a-7-attempt-1/UNIT-canonical.json --format json; repeat with -c function_reloc_diffs=name_address and UNIT-reloc-strict.json. Then generate whole-project canonical and relocation-strict reports.",
+    "generate_raw_output": "canonical_direct_reports=89\nrelocation_strict_direct_reports=89\ncanonical_project_report_exit=0\nrelocation_strict_project_report_exit=0",
+    "affected_measurement_command": "Select the 89 affected unit names from each whole-project report and sum metadata.complete, matched_functions, total_functions, matched_code, and total_code.",
+    "affected_measurement_raw_output": "mode=canonical affected_units=89 complete_units=88 matched_functions=89 total_functions=90 matched_code=29780 total_code=30224\nmode=reloc-strict affected_units=89 complete_units=88 matched_functions=89 total_functions=90 matched_code=29780 total_code=30224",
+    "affected_measurement_note": "The 88 complete affected units comprise 79 newly promoted units and nine units that were already exact before PR #17. The remaining affected unit contains fn_801392A8, the sole 444-byte NonMatching function; it remains configured NonMatching and receives no credit. The other 89 functions across the affected objects are 100% on both bases.",
+    "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/halt-recovery-1d3536599ddf915a-7-attempt-1-canonical.json --format json-pretty; jq -r '.measures | headline fields' the generated report",
+    "canonical_report_raw_output": "INFO Loading project .\nINFO Generating report for 6259 units (using 8 threads)\nINFO Report generated in 0.365s\nINFO Writing to build/GEDE01/halt-recovery-1d3536599ddf915a-7-attempt-1-canonical.json\nmatching_objects=5160 total_objects=6259 matching_functions=4925 total_functions=8216 matching_code_bytes=790636 total_code_bytes=2300692 matching_data_bytes=38678 total_data_bytes=4305642 linked_code_bytes=790636 linked_data_bytes=38218",
+    "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/halt-recovery-1d3536599ddf915a-7-attempt-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address; jq -r '.measures | headline fields' the generated report",
+    "relocation_strict_report_raw_output": "INFO Loading project .\nINFO Generating report for 6259 units (using 8 threads)\nINFO Report generated in 0.328s\nINFO Writing to build/GEDE01/halt-recovery-1d3536599ddf915a-7-attempt-1-reloc-strict.json\nmatching_objects=5160 total_objects=6259 matching_functions=4920 total_functions=8216 matching_code_bytes=788952 total_code_bytes=2300692 matching_data_bytes=38678 total_data_bytes=4305642 linked_code_bytes=790636 linked_data_bytes=38218",
+    "aggregate_strict_note": "The five-function canonical-versus-strict aggregate gap predates PR #17. Direct relocation-strict evidence for all PR #17 promoted functions is exact; no gate was weakened to alter the aggregate."
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "gate_integrity": {
+    "statement": "No exact-build, relocation, legal-audit, provenance, or SHA-1 check was weakened, bypassed, or edited. New constant externalizations use the existing retail-byte validation tools and fail closed.",
+    "legal_audit_command": "git add the bounded correction; python3 tools/legal_audit.py",
+    "legal_audit_raw_output": "legal audit passed (10991 tracked project files inspected)"
+  }
+}

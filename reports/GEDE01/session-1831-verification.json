@@ -1,0 +1,17 @@
+{
+  "session_id": "4848fb0b-3a20-4241-8c3c-75a6ad446c99",
+  "session_label": "session-1831",
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+  "full_build": ".tools/bin/ninja -j4 completed all 691 scheduled steps; build/GEDE01/main.dol: OK",
+  "canonical_headline": "matching_objects=5161 total_objects=6261 matching_functions=4926 total_functions=8216 matching_code_bytes=790664 total_code_bytes=2300692 matching_data_bytes=38678 total_data_bytes=4305642 code_percent=34.366356 function_percent=59.95618 linked_code_bytes=790664 linked_data_bytes=38218",
+  "relocation_strict_headline": "matching_functions=4921 matching_code_bytes=788980 total_code_bytes=2300692 code_percent=34.29316",
+  "assigned_attempt": "fn_801DA8CC retail_size=816 generated_size=796 best_match=91.02941%; stack-frame, r25-r31 allocation, and vector-temporary scheduling diverge",
+  "direct_match": "fn_801DABFC=28 bytes at 100.0% canonical and relocation-strict objdiff; zero relocations on both sides",
+  "range_arithmetic": "0x801DAC18 - 0x801DA8CC = 0x34C = 844; 816 NonMatching + 28 Matching = 844; matched-byte sum = 28",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_cmp": "equal",
+  "matched_bytes": 28,
+  "nonmatching_bytes": 816,
+  "next_target": "0x801DAC18",
+  "worktree_note": "The session authored four content-history commits; the latter two revert and restore only the successor registration, leaving the intended net tree."
+}
