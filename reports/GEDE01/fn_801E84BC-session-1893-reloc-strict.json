@@ -1,0 +1,1463 @@
+{
+  "left": {
+    "sections": [
+      {
+        "name": ".text",
+        "kind": "SECTION_CODE",
+        "size": "84",
+        "match_percent": 100.0
+      },
+      {
+        "name": ".rela.text",
+        "size": "48"
+      },
+      {
+        "name": ".symtab",
+        "size": "80"
+      },
+      {
+        "name": ".strtab",
+        "size": "45"
+      },
+      {
+        "name": ".shstrtab",
+        "size": "38"
+      }
+    ],
+    "symbols": [
+      {
+        "name": "fn_801E84BC",
+        "size": "84",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 100.0,
+        "instructions": [
+          {
+            "instruction": {
+              "size": 4,
+              "formatted": "lis r3, lbl_80637C10@ha",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lis",
+                    "opcode": 264
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@ha"
+                }
+              ],
+              "relocation": {
+                "type": 6,
+                "type_name": "R_PPC_ADDR16_HA",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "4",
+              "size": 4,
+              "formatted": "li r0, 0x15e",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "li",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "350"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "8",
+              "size": 4,
+              "formatted": "addi r3, r3, lbl_80637C10@l",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@l"
+                }
+              ],
+              "relocation": {
+                "type": 4,
+                "type_name": "R_PPC_ADDR16_LO",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "12",
+              "size": 4,
+              "formatted": "li r4, 0x0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "li",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "16",
+              "size": 4,
+              "formatted": "mtctr r0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "mtctr",
+                    "opcode": 348
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "20",
+              "size": 4,
+              "formatted": "lhz r0, 0xe(r3)",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lhz",
+                    "opcode": 447
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "14"
+                  }
+                },
+                {
+                  "basic": "("
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "basic": ")"
+                }
+              ],
+              "relocation": {
+                "type_name": "R_PPC_NONE",
+                "target_symbol": 2,
+                "addend": "14"
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "24",
+              "size": 4,
+              "formatted": "clrlwi. r0, r0, 31",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "clrlwi.",
+                    "opcode": 283
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "31"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "28",
+              "size": 4,
+              "formatted": "bne 0x40",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "bne",
+                    "opcode": 265
+                  }
+                },
+                {
+                  "arg": {
+                    "branch_dest": "64"
+                  }
+                }
+              ],
+              "branch_dest": "64"
+            }
+          },
+          {
+            "instruction": {
+              "address": "32",
+              "size": 4,
+              "formatted": "lis r3, lbl_80637C10@ha",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lis",
+                    "opcode": 264
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@ha"
+                }
+              ],
+              "relocation": {
+                "type": 6,
+                "type_name": "R_PPC_ADDR16_HA",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "36",
+              "size": 4,
+              "formatted": "slwi r4, r4, 4",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "slwi",
+                    "opcode": 283
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "4"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "40",
+              "size": 4,
+              "formatted": "addi r0, r3, lbl_80637C10@l",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@l"
+                }
+              ],
+              "relocation": {
+                "type": 4,
+                "type_name": "R_PPC_ADDR16_LO",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "44",
+              "size": 4,
+              "formatted": "add r3, r0, r4",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "add",
+                    "opcode": 297
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                }
+              ],
+              "relocation": {
+                "type_name": "R_PPC_NONE",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "48",
+              "size": 4,
+              "formatted": "lhz r0, 0xe(r3)",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lhz",
+                    "opcode": 447
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "14"
+                  }
+                },
+                {
+                  "basic": "("
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "basic": ")"
+                }
+              ],
+              "relocation": {
+                "type_name": "R_PPC_NONE",
+                "target_symbol": 2,
+                "addend": "14"
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "52",
+              "size": 4,
+              "formatted": "ori r0, r0, 0x1",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "ori",
+                    "opcode": 285
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "unsigned": "1"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "56",
+              "size": 4,
+              "formatted": "sth r0, 0xe(r3)",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "sth",
+                    "opcode": 451
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "14"
+                  }
+                },
+                {
+                  "basic": "("
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "basic": ")"
+                }
+              ],
+              "relocation": {
+                "type_name": "R_PPC_NONE",
+                "target_symbol": 2,
+                "addend": "14"
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "60",
+              "size": 4,
+              "formatted": "blr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "blr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "64",
+              "size": 4,
+              "formatted": "addi r3, r3, 0x10",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "16"
+                  }
+                }
+              ],
+              "relocation": {
+                "type_name": "R_PPC_NONE",
+                "target_symbol": 2,
+                "addend": "16"
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "68",
+              "size": 4,
+              "formatted": "addi r4, r4, 0x1",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "1"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "72",
+              "size": 4,
+              "formatted": "bdnz 0x14",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "bdnz",
+                    "opcode": 265
+                  }
+                },
+                {
+                  "arg": {
+                    "branch_dest": "20"
+                  }
+                }
+              ],
+              "branch_dest": "20"
+            }
+          },
+          {
+            "instruction": {
+              "address": "76",
+              "size": 4,
+              "formatted": "li r3, 0x0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "li",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "80",
+              "size": 4,
+              "formatted": "blr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "blr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "right": {
+    "sections": [
+      {
+        "name": ".text",
+        "kind": "SECTION_CODE",
+        "size": "84"
+      },
+      {
+        "name": ".rela.text",
+        "size": "48"
+      },
+      {
+        "name": ".symtab",
+        "size": "80"
+      },
+      {
+        "name": ".strtab",
+        "size": "45"
+      },
+      {
+        "name": ".shstrtab",
+        "size": "53"
+      },
+      {
+        "name": ".comment",
+        "size": "84"
+      }
+    ],
+    "symbols": [
+      {
+        "name": "fn_801E84BC",
+        "size": "84",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 100.0,
+        "instructions": [
+          {
+            "instruction": {
+              "size": 4,
+              "formatted": "lis r3, lbl_80637C10@ha",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lis",
+                    "opcode": 264
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@ha"
+                }
+              ],
+              "relocation": {
+                "type": 6,
+                "type_name": "R_PPC_ADDR16_HA",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "4",
+              "size": 4,
+              "formatted": "li r0, 0x15e",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "li",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "350"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "8",
+              "size": 4,
+              "formatted": "addi r3, r3, lbl_80637C10@l",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@l"
+                }
+              ],
+              "relocation": {
+                "type": 4,
+                "type_name": "R_PPC_ADDR16_LO",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "12",
+              "size": 4,
+              "formatted": "li r4, 0x0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "li",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "16",
+              "size": 4,
+              "formatted": "mtctr r0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "mtctr",
+                    "opcode": 348
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "20",
+              "size": 4,
+              "formatted": "lhz r0, 0xe(r3)",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lhz",
+                    "opcode": 447
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "14"
+                  }
+                },
+                {
+                  "basic": "("
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "basic": ")"
+                }
+              ],
+              "relocation": {
+                "type_name": "R_PPC_NONE",
+                "target_symbol": 2,
+                "addend": "14"
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "24",
+              "size": 4,
+              "formatted": "clrlwi. r0, r0, 31",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "clrlwi.",
+                    "opcode": 283
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "31"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "28",
+              "size": 4,
+              "formatted": "bne 0x40",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "bne",
+                    "opcode": 265
+                  }
+                },
+                {
+                  "arg": {
+                    "branch_dest": "64"
+                  }
+                }
+              ],
+              "branch_dest": "64"
+            }
+          },
+          {
+            "instruction": {
+              "address": "32",
+              "size": 4,
+              "formatted": "lis r3, lbl_80637C10@ha",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lis",
+                    "opcode": 264
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@ha"
+                }
+              ],
+              "relocation": {
+                "type": 6,
+                "type_name": "R_PPC_ADDR16_HA",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "36",
+              "size": 4,
+              "formatted": "slwi r4, r4, 4",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "slwi",
+                    "opcode": 283
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "4"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "40",
+              "size": 4,
+              "formatted": "addi r0, r3, lbl_80637C10@l",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@l"
+                }
+              ],
+              "relocation": {
+                "type": 4,
+                "type_name": "R_PPC_ADDR16_LO",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "44",
+              "size": 4,
+              "formatted": "add r3, r0, r4",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "add",
+                    "opcode": 297
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                }
+              ],
+              "relocation": {
+                "type_name": "R_PPC_NONE",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "48",
+              "size": 4,
+              "formatted": "lhz r0, 0xe(r3)",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lhz",
+                    "opcode": 447
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "14"
+                  }
+                },
+                {
+                  "basic": "("
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "basic": ")"
+                }
+              ],
+              "relocation": {
+                "type_name": "R_PPC_NONE",
+                "target_symbol": 2,
+                "addend": "14"
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "52",
+              "size": 4,
+              "formatted": "ori r0, r0, 0x1",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "ori",
+                    "opcode": 285
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "unsigned": "1"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "56",
+              "size": 4,
+              "formatted": "sth r0, 0xe(r3)",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "sth",
+                    "opcode": 451
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "14"
+                  }
+                },
+                {
+                  "basic": "("
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "basic": ")"
+                }
+              ],
+              "relocation": {
+                "type_name": "R_PPC_NONE",
+                "target_symbol": 2,
+                "addend": "14"
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "60",
+              "size": 4,
+              "formatted": "blr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "blr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "64",
+              "size": 4,
+              "formatted": "addi r3, r3, 0x10",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "16"
+                  }
+                }
+              ],
+              "relocation": {
+                "type_name": "R_PPC_NONE",
+                "target_symbol": 2,
+                "addend": "16"
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "68",
+              "size": 4,
+              "formatted": "addi r4, r4, 0x1",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "1"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "72",
+              "size": 4,
+              "formatted": "bdnz 0x14",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "bdnz",
+                    "opcode": 265
+                  }
+                },
+                {
+                  "arg": {
+                    "branch_dest": "20"
+                  }
+                }
+              ],
+              "branch_dest": "20"
+            }
+          },
+          {
+            "instruction": {
+              "address": "76",
+              "size": 4,
+              "formatted": "li r3, 0x0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "li",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "80",
+              "size": 4,
+              "formatted": "blr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "blr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
