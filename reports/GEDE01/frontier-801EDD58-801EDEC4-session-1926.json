@@ -1,0 +1,17 @@
+{
+  "session_id": "session-1926",
+  "range_start": "0x801EDD58",
+  "range_end": "0x801EDEC4",
+  "next_target": "0x801EDE34",
+  "matched_bytes": 220,
+  "nonmatching_bytes": 144,
+  "unaccounted_spans": [],
+  "functions": [
+    {"name":"fn_801EDD58","start":"0x801EDD58","end":"0x801EDE34","size":220,"status":"Matching","canonical_match_percent":100.0,"relocation_strict_match_percent":100.0,"retail_relocations_equal":true,"evidence":"reports/GEDE01/objdiff-game_fn_801EDD58-session-1926.json","relocation_strict_evidence":"reports/GEDE01/objdiff-game_fn_801EDD58-session-1926-reloc-strict.json","source_note":"The volatile Entry cast on the generic-path type load is a codegen-forcing spelling; it remains accepted C with a canonical and relocation-strict match, but likely masks a slightly different original control-flow spelling."},
+    {"name":"fn_801EDE34","start":"0x801EDE34","end":"0x801EDEC4","size":144,"status":"NonMatching","canonical_match_percent":78.888885,"relocation_strict_match_percent":78.888885,"retail_relocations_equal":true,"evidence":"reports/GEDE01/objdiff-game_fn_801EDE34-session-1926.json","relocation_strict_evidence":"reports/GEDE01/objdiff-game_fn_801EDE34-session-1926-reloc-strict.json","verification":"reports/GEDE01/session-1926-remediation-2-verification.json","divergence":"The source now uses ordinary typed indexing from a StateRegion pointer rooted at lbl_80639260, with a separate values0 pointer and no register qualifiers or byte-offset casts. This spelling reproduces retail's saved-register range and scaled-index register. The remaining observed difference is addressing form: generated code combines the region base and scaled index before displacement loads and stores, whereas retail materializes field bases before indexed loads and stores. The generated body remains shorter than retail, so fn_801EDE34 remains the honest frontier target rather than a compiler-blocked function.","data_ownership":"symbols.txt declares lbl_80639260 too small to cover the retail field accesses rooted at that symbol. Retail evidence therefore indicates one TU-owned region spanning at least through the three arrays; the intervening BSS symbol split remains a map-ownership issue and was not changed by this source-only remediation."}
+  ],
+  "nonmatching_functions": ["fn_801EDE34"],
+  "asm_functions_added": [],
+  "shared_reconstructions": [],
+  "conclusion": "The exact-matched frontier ends at fn_801EDE34. The adjacent function remains an independently reconstructed honest-C NonMatching attempt, but it is still the next target because the typed-index source space is not exhausted. No gap, fallback jump, assembly, or shared reconstruction is claimed."
+}
