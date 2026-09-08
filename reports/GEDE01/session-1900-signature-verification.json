@@ -1,0 +1,47 @@
+{
+  "session_id": "session-1900",
+  "scope": "signature consolidation only; no frontier matching",
+  "starting_target": "0x801E995C",
+  "ending_next_target": "0x801E995C",
+  "accounting": {
+    "matched_bytes_added": 0,
+    "nonmatching_bytes_added": 0,
+    "match_counts_revised": false
+  },
+  "applied_correction": {
+    "symbol": "fn_800AFDA4",
+    "owned_definition_evidence": "int fn_800AFDA4(void) at src/game/game_fn_800AFDA4.c:8",
+    "edited_declaration": "src/game/game_fn_8001A6C4.c:21",
+    "affected_translation_units": 1,
+    "safety_gates": "zero parameters on both readings; no unspecified prototype, callback/cast use, or unavailable return type"
+  },
+  "baseline": {
+    "command": ".tools/bin/ninja; python3 tools/signature_audit.py with build/GEDE01/report.json baseline evidence",
+    "affected_object_raw_output": "main/game/game_fn_8001A6C4 fuzzy_match_percent=100.0",
+    "evidence": "build/GEDE01/signature-shadow-session-1900-baseline.json"
+  },
+  "build": {
+    "command": ".tools/bin/ninja",
+    "status": "passed",
+    "log": "build/GEDE01/session-1900-correction-build.log"
+  },
+  "affected_object": {
+    "name": "main/game/game_fn_8001A6C4",
+    "report_command": "jq unit measures from build/GEDE01/report.json",
+    "raw_output": "complete=true matched_code_percent=100.0 complete_code_percent=100.0",
+    "canonical_objdiff": "reports/GEDE01/objdiff-game_fn_8001A6C4-session-1900.json",
+    "relocation_strict_objdiff": "reports/GEDE01/objdiff-game_fn_8001A6C4-session-1900-reloc-strict.json",
+    "objdiff_raw_output": "fn_8001A6C4 size=780 match_percent=100.0; 89/89 relocation-bearing retail instructions represented identically under relocation-strict comparison"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "unchanged": true
+  },
+  "progress_invariants": {
+    "next_target": "0x801E995C",
+    "next_gate_rewritten": false,
+    "headline_match_counts_rewritten": false
+  }
+}
