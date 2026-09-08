@@ -87,6 +87,17 @@ config.asflags = ["-mgekko", "--strip-local-absolute", "-I include", f"-I build/
 config.ldflags = ["-fp hardware", "-nodefaults"]
 config.custom_build_rules = [
     {
+        "name": "externalize_game_801ECF50_jumptable",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @18 jumptable_80266224 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@18=jumptable_80266224 --remove-section=.data "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    },
+    {
         "name": "externalize_game_801EB09C_unsigned_bias",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @6 lbl_80651308 orig/GEDE01/sys/main.dol --require-whole-section && "
@@ -2799,6 +2810,11 @@ for rule in config.custom_build_rules:
 guarded_externalize_rules.add("externalize_string_pool_80250588")
 config.custom_build_steps = {
     "post-compile": [
+        {
+            "outputs": [f"build/{VERSION}/src/game/game_fn_801ECF50.externalized"],
+            "rule": "externalize_game_801ECF50_jumptable",
+            "inputs": [f"build/{VERSION}/src/game/game_fn_801ECF50.o"],
+        },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801EB09C.externalized"],
             "rule": "externalize_game_801EB09C_unsigned_bias",
@@ -11226,6 +11242,20 @@ config.libs = [
             Object(NonMatching, "game/game_fn_801ECD74.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801ECE7C.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801ECEC8.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801ECF50.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801ED3F4.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801ED434.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801ED468.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801ED494.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801ED510.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801ED56C.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801ED57C.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801ED58C.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801ED59C.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801ED5F4.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801EDA68.s"),
+            Object(Matching, "game/game_fn_801EDA74.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801ED118.c", mw_version="GC/1.3"),
         ],
     },
     {

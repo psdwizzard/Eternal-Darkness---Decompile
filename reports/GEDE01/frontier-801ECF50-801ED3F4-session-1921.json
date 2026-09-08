@@ -1,0 +1,37 @@
+{
+  "session_id": "session-1921",
+  "range_start": "0x801ECF50",
+  "range_end": "0x801ED3F4",
+  "next_target": "0x801ED3F4",
+  "matched_bytes": 456,
+  "nonmatching_bytes": 732,
+  "unaccounted_spans": [],
+  "functions": [
+    {
+      "name": "fn_801ECF50",
+      "start": "0x801ECF50",
+      "end": "0x801ED118",
+      "size": 456,
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "status": "Matching",
+      "canonical_evidence": "reports/GEDE01/objdiff-game_fn_801ECF50-session-1921.json",
+      "relocation_strict_evidence": "reports/GEDE01/session-1921-reloc-strict.json"
+    },
+    {
+      "name": "fn_801ED118",
+      "start": "0x801ED118",
+      "end": "0x801ED3F4",
+      "size": 732,
+      "candidate_size": 580,
+      "best_canonical_percent": 29.32787,
+      "best_relocation_strict_percent": 31.174864,
+      "status": "NonMatching honest C",
+      "canonical_evidence": "reports/GEDE01/objdiff-game_fn_801ED118-session-1921.json",
+      "relocation_strict_evidence": "reports/GEDE01/session-1921-reloc-strict.json",
+      "divergence": "The candidate expresses the initializer's array and record stores, but GC/1.3 emits 580 bytes rather than retail's 732: its loop organization does not reproduce retail's paired ten-way and eight-way store unrolling or the persistent r25-r31 base-pointer allocation."
+    }
+  ],
+  "accounting": "456 matched bytes plus 732 NonMatching bytes equals the complete 1188-byte range; there are no gaps.",
+  "conclusion": "One independent C TU matches exactly and one independent honest-C TU records the immediate contiguous blocker; no assembly, shared reconstruction, fallback jump, or unaccounted span was used."
+}
