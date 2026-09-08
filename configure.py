@@ -11204,6 +11204,12 @@ config.libs = [
             Object(Matching, "game/game_fn_801EBA58.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801EBC1C.c", mw_version="GC/1.3"),
             Object(NonMatching, "game/game_fn_801EBC6C.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801EBDDC.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801EBEDC.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801EC304.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801EC318.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801EC350.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801EC67C.c", mw_version="GC/1.3"),
         ],
     },
     {

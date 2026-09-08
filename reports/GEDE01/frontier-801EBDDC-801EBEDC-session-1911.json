@@ -1,0 +1,23 @@
+{
+  "session_id": "session-1911",
+  "range_start": "0x801EBDDC",
+  "range_end": "0x801EBEDC",
+  "next_target": "0x801EBEDC",
+  "matched_bytes": 0,
+  "nonmatching_bytes": 256,
+  "unaccounted_spans": [],
+  "functions": [{
+    "name": "fn_801EBDDC",
+    "start": "0x801EBDDC",
+    "end": "0x801EBEDC",
+    "size": 256,
+    "candidate_size": 256,
+    "canonical_percent": 97.421875,
+    "relocation_strict_percent": 97.421875,
+    "status": "NonMatching",
+    "codegen_divergence": "Retail assigns the loop offset to r6 and transient values to r4/r5; canonical GC/1.3 rotates the same live ranges through r4/r5/r6.",
+    "canonical_evidence": "reports/GEDE01/objdiff-fn_801EBDDC-session-1911.json",
+    "relocation_strict_evidence": "reports/GEDE01/objdiff-fn_801EBDDC-session-1911-reloc-strict.json"
+  }],
+  "conclusion": "The assigned 256-byte range is fully accounted by one independent honest-C NonMatching reconstruction. No function reached 100%, no matched-byte credit is claimed, and no assembly or shared reconstruction was added."
+}
