@@ -1,0 +1,89 @@
+{
+  "recovery_id": "6e85b3a02f267ec6-1",
+  "attempt": 1,
+  "status": "resolved",
+  "scope": "Recover the interrupted GEDE01 session-1936 closeout without advancing the decompilation frontier or matching unrelated functions.",
+  "halt": {
+    "reason": "Last session failed with a non-recoverable transport blocker: Reconnecting 2/5, unexpected HTTP status 525 from the Codex websocket.",
+    "scheduler_evidence_path": ".darkfoundry/decomp-chain-state.json",
+    "scheduler_evidence_raw_output": "state=WORKING session_id=e5484112-7d2e-4f13-868e-e3b43c3c340a assigned_target=0x801EFA68 accepted_frontier=0x801EFA68 candidate_frontier=null agent_commit=null review_complete=false merge_complete=false verification_complete=false",
+    "interpretation": "The scheduler state stopped before consuming the agent result, but the interrupted agent turn had already committed the complete session-1936 implementation and evidence locally. This recovery does not decide review, merge, or continuation policy; it only repairs and verifies the committed artifacts for scheduler consumption."
+  },
+  "inspection": {
+    "git_status_command": "git status --short --branch",
+    "git_status_raw_output": "## agent/8f1c3278-8547-4bb9-b1a3-8f74c2df5aeb...origin/agent/8f1c3278-8547-4bb9-b1a3-8f74c2df5aeb [ahead 1083]",
+    "head_command": "git log -3 --format='%H %s'",
+    "head_raw_output": "d71bbd23021536885ca1c566179e420ca9ab201c decomp: record session 1936 frontier evidence\neb34779ab67898cd2fa697c6de324971a4cf042a decomp: match fn_801EFDF4\n3fc11fad671d2ff633a96aee205ef04597d44d2f decomp: reconstruct fn_801EFA68",
+    "merge_state_command": "test ! -e .git/MERGE_HEAD && echo merge_state=none",
+    "merge_state_raw_output": "merge_state=none",
+    "committed_artifacts": [
+      "src/game/game_fn_801EFA68.c",
+      "src/game/game_fn_801EFDF4.c",
+      "reports/GEDE01/frontier-801EFA68-801EFE84-session-1936.json",
+      "reports/GEDE01/session-1936-fn_801EFA68-objdiff.json",
+      "reports/GEDE01/session-1936-fn_801EFA68-reloc-strict.json",
+      "reports/GEDE01/session-1936-fn_801EFDF4-objdiff.json",
+      "reports/GEDE01/session-1936-fn_801EFDF4-reloc-strict.json",
+      "reports/GEDE01/session-1936-reloc-strict.json",
+      "reports/GEDE01/progress.json"
+    ]
+  },
+  "diagnosis_and_correction": {
+    "cause": "The halt itself was an external websocket transport failure, not a compiler, objdiff, relocation, legal-audit, merge, or DOL gate failure. Inspection found one narrow evidence transcription defect left by the interrupted closeout: the canonical fn_801EFA68 raw objdiff reports 89.49339 percent, but the frontier and progress summaries stated 89.537445 percent.",
+    "evidence_command": "rg -n '89\\.537445|89\\.49339' reports/GEDE01/session-1936-fn_801EFA68-objdiff.json reports/GEDE01/session-1936-fn_801EFA68-reloc-strict.json reports/GEDE01/frontier-801EFA68-801EFE84-session-1936.json reports/GEDE01/progress.json",
+    "evidence_raw_output": "session-1936-fn_801EFA68-objdiff.json match_percent=89.49339; session-1936-fn_801EFA68-reloc-strict.json match_percent=89.49339; frontier/progress summary text contained stale canonical value 89.537445",
+    "correction": "Changed only the stale fn_801EFA68 summary score in frontier-801EFA68-801EFE84-session-1936.json and progress.json to the raw-evidence value 89.49339. No source, split, symbol, compiler, linker, objdiff, relocation, legal-audit, DOL, or acceptance gate was modified or weakened.",
+    "matched_claim_impact": "None. fn_801EFA68 remains explicitly NonMatching at retail size 908 and candidate size 912. fn_801EFDF4 remains the only 144-byte 100 percent match in the session."
+  },
+  "retail_and_range_evidence": {
+    "command": "jq selected range and function fields from reports/GEDE01/frontier-801EFA68-801EFE84-session-1936.json",
+    "raw_output": "range_start=0x801EFA68 range_end=0x801EFE84 next_target=0x801EFE84 matched_bytes=144 nonmatching_bytes=908 unaccounted_spans=[]; fn_801EFA68 retail_size=908 candidate_size=912; fn_801EFDF4 retail_size=144 candidate_size=144",
+    "retail_binary": "orig/GEDE01/sys/main.dol"
+  },
+  "build": {
+    "configure_and_build_command": "python3 configure.py && .tools/bin/ninja -f build.ninja build/GEDE01/src/game/game_fn_801EFA68.o build/GEDE01/src/game/game_fn_801EFDF4.o build/GEDE01/main.dol",
+    "exit_code": 0,
+    "raw_output_excerpt": "[1/712] MWCC build/GEDE01/src/game/game_fn_800096E0.o\n...\n[372/712] MWCC build/GEDE01/src/game/game_fn_801EF910.o\n...\n[711/712] LINK build/GEDE01/main.elf\n[712/712] DOL build/GEDE01/main.dol",
+    "affected_object_sha1_command": "sha1sum build/GEDE01/src/game/game_fn_801EFA68.o build/GEDE01/src/game/game_fn_801EFDF4.o",
+    "affected_object_sha1_raw_output": "a305cd9e2c82ebe637c0b6536780882bdb88da45  build/GEDE01/src/game/game_fn_801EFA68.o\n42e41a396399d99253fa52edc54a8507aaa1d093  build/GEDE01/src/game/game_fn_801EFDF4.o"
+  },
+  "affected_objdiff": {
+    "canonical_command_template": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_ADDRESS fn_ADDRESS -o build/GEDE01/halt-recovery-6e85b3a02f267ec6-1-fn_ADDRESS-canonical.json --format json-pretty",
+    "strict_command_template": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_ADDRESS fn_ADDRESS -o build/GEDE01/halt-recovery-6e85b3a02f267ec6-1-fn_ADDRESS-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "tool_raw_output": "INFO Writing to build/GEDE01/halt-recovery-6e85b3a02f267ec6-1-fn_801EFA68-canonical.json\nINFO Writing to build/GEDE01/halt-recovery-6e85b3a02f267ec6-1-fn_801EFA68-strict.json\nINFO Writing to build/GEDE01/halt-recovery-6e85b3a02f267ec6-1-fn_801EFDF4-canonical.json\nINFO Writing to build/GEDE01/halt-recovery-6e85b3a02f267ec6-1-fn_801EFDF4-strict.json",
+    "measure_command": "jq extracts each named left/right symbol size, left match_percent, and counts instructions whose instruction.relocation is non-null from each generated diff JSON",
+    "canonical_raw_output": "fn_801EFA68 canonical retail_size=908 candidate_size=912 match_percent=89.49339 retail_relocations=103 candidate_relocations=103\nfn_801EFDF4 canonical retail_size=144 candidate_size=144 match_percent=100.0 retail_relocations=5 candidate_relocations=5",
+    "strict_raw_output": "fn_801EFA68 strict retail_size=908 candidate_size=912 match_percent=89.49339 retail_relocations=103 candidate_relocations=103\nfn_801EFDF4 strict retail_size=144 candidate_size=144 match_percent=100.0 retail_relocations=5 candidate_relocations=5",
+    "conclusion": "The affected matching object fn_801EFDF4 remains byte-identical under canonical and name-address relocation-strict comparison. The affected fn_801EFA68 object remains honestly NonMatching with its exact fresh score and is not claimed as matched."
+  },
+  "project_objdiff_gates": {
+    "canonical_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/halt-recovery-6e85b3a02f267ec6-1-canonical-report.json --format json-pretty",
+    "canonical_tool_raw_output": "INFO Loading project .\nINFO Generating report for 6571 units (using 8 threads)\nINFO Report generated in 0.404s\nINFO Writing to build/GEDE01/halt-recovery-6e85b3a02f267ec6-1-canonical-report.json",
+    "canonical_measure_raw_output": "matching_objects=5453 total_objects=6571 matching_functions=5218 total_functions=8216 matching_code_bytes=840036 total_code_bytes=2300692 linked_code_bytes=840036 linked_data_bytes=38238",
+    "strict_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/halt-recovery-6e85b3a02f267ec6-1-strict-report.json --format json-pretty -c function_reloc_diffs=name_address",
+    "strict_tool_raw_output": "INFO Loading project .\nINFO Generating report for 6571 units (using 8 threads)\nINFO Report generated in 0.392s\nINFO Writing to build/GEDE01/halt-recovery-6e85b3a02f267ec6-1-strict-report.json",
+    "strict_measure_raw_output": "matching_objects=5453 total_objects=6571 matching_functions=5213 total_functions=8216 matching_code_bytes=838352 total_code_bytes=2300692 linked_code_bytes=840036 linked_data_bytes=38238"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'cmp_exit=%s\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0",
+    "equal": true
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (12241 tracked project files inspected)"
+  },
+  "frontier": {
+    "command": "jq -r .next_target reports/GEDE01/progress.json",
+    "before_raw_output": "0x801EFE84",
+    "after_raw_output": "0x801EFE84",
+    "unchanged": true,
+    "advanced": false
+  },
+  "format_gates": {
+    "json_command": "jq empty reports/GEDE01/frontier-801EFA68-801EFE84-session-1936.json reports/GEDE01/progress.json reports/GEDE01/halt-recovery-6e85b3a02f267ec6-1-attempt-1.json",
+    "json_raw_output": "json_parse_exit=0",
+    "whitespace_command": "git diff --check",
+    "whitespace_raw_output": "git_diff_check_exit=0"
+  }
+}

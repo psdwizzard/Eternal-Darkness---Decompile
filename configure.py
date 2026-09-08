@@ -87,6 +87,17 @@ config.asflags = ["-mgekko", "--strip-local-absolute", "-I include", f"-I build/
 config.ldflags = ["-fp hardware", "-nodefaults"]
 config.custom_build_rules = [
     {
+        "name": "externalize_game_801EF910_months",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @4 lbl_8023B768 "
+            "orig/GEDE01/sys/main.dol --require-whole-section && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@4=lbl_8023B768 --remove-section=.rodata "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    },
+    {
         "name": "externalize_game_801ECF50_jumptable",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @18 jumptable_80266224 "
@@ -2810,6 +2821,11 @@ for rule in config.custom_build_rules:
 guarded_externalize_rules.add("externalize_string_pool_80250588")
 config.custom_build_steps = {
     "post-compile": [
+        {
+            "outputs": [f"build/{VERSION}/src/game/game_fn_801EF910.externalized"],
+            "rule": "externalize_game_801EF910_months",
+            "inputs": [f"build/{VERSION}/src/game/game_fn_801EF910.o"],
+        },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801ECF50.externalized"],
             "rule": "externalize_game_801ECF50_jumptable",
@@ -11296,6 +11312,17 @@ config.libs = [
             Object(Matching, "game/game_fn_801EF840.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801EF89C.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801EF8F8.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801EF910.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801EFA68.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801EFDF4.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801EFE84.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801EFEC4.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801EFFE4.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F0044.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F0294.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F02A0.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801F02C4.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F03B8.c", mw_version="GC/1.3"),
             Object(NonMatching, "game/game_fn_801ED118.c", mw_version="GC/1.3"),
         ],
     },

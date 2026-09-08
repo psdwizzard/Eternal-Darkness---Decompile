@@ -1,0 +1,22 @@
+{
+  "session": "session-1937",
+  "range_start": "0x801EFE84",
+  "range_end": "0x801F0044",
+  "next_target": "0x801F0044",
+  "matched_bytes": 448,
+  "nonmatching_bytes": 0,
+  "unaccounted_spans": [],
+  "matched_functions": [
+    {"name":"fn_801EFE84","range":"0x801EFE84..0x801EFEC4","size":64,"canonical_percent":100.0,"relocation_strict_percent":100.0,"canonical_evidence":"reports/GEDE01/session-1937-fn_801EFE84-objdiff.json","strict_evidence":"reports/GEDE01/session-1937-fn_801EFE84-reloc-strict.json"},
+    {"name":"fn_801EFEC4","range":"0x801EFEC4..0x801EFFE4","size":288,"canonical_percent":100.0,"relocation_strict_percent":100.0,"canonical_evidence":"reports/GEDE01/session-1937-fn_801EFEC4-objdiff.json","strict_evidence":"reports/GEDE01/session-1937-fn_801EFEC4-reloc-strict.json"},
+    {"name":"fn_801EFFE4","range":"0x801EFFE4..0x801F0044","size":96,"canonical_percent":100.0,"relocation_strict_percent":100.0,"canonical_evidence":"reports/GEDE01/session-1937-fn_801EFFE4-objdiff.json","strict_evidence":"reports/GEDE01/session-1937-fn_801EFFE4-reloc-strict.json"}
+  ],
+  "nonmatching_functions": [],
+  "measurement": {
+    "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+    "strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1937-reloc-strict.json -c function_reloc_diffs=name_address",
+    "raw_output": "fn_801EFE84 size=64 canonical=100.0 strict=100.0; fn_801EFEC4 size=288 canonical=100.0 strict=100.0; fn_801EFFE4 size=96 canonical=100.0 strict=100.0; matched_bytes=448 nonmatching_bytes=0 accounted_bytes=448"
+  },
+  "build": {"command":".tools/bin/ninja build/GEDE01/main.dol","result":"build/GEDE01/main.dol: OK","dol_sha1":"ea24b6af954876ce072562ff39cdb4c81d32be1f","cmp_exit":0},
+  "conclusion": "The assigned function and two immediate successors independently match at 100.0% canonical and relocation-strict objdiff. The contiguous 448-byte range is fully accounted with no assembly, shared reconstruction, NonMatching code, or gap."
+}

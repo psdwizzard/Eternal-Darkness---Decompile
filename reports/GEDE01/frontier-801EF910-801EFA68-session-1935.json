@@ -1,0 +1,20 @@
+{
+  "session": "session-1935",
+  "range_start": "0x801EF910",
+  "range_end": "0x801EFA68",
+  "next_target": "0x801EFA68",
+  "matched_bytes": 344,
+  "nonmatching_bytes": 0,
+  "unaccounted_spans": [],
+  "matched_functions": [
+    {"name": "fn_801EF910", "range": "0x801EF910..0x801EFA68", "size": 344, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "canonical_evidence": "reports/GEDE01/session-1935-fn_801EF910-objdiff.json", "strict_evidence": "reports/GEDE01/session-1935-fn_801EF910-reloc-strict.json"}
+  ],
+  "nonmatching_functions": [],
+  "measurement": {
+    "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EF910 fn_801EF910 -o reports/GEDE01/session-1935-fn_801EF910-objdiff.json --format json-pretty",
+    "strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EF910 fn_801EF910 -o reports/GEDE01/session-1935-fn_801EF910-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_output": "fn_801EF910 size=344 match=100.0 strict=100.0; total=344"
+  },
+  "build": {"command": ".tools/bin/ninja", "result": "build/GEDE01/main.dol: OK", "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f", "cmp_exit": 0},
+  "conclusion": "Every byte in the contiguous 344-byte range is independently reconstructed in C and matches at 100.0% canonical and relocation-strict objdiff with no NonMatching code, assembly, shared reconstruction, fallback, gap, or unaccounted span."
+}

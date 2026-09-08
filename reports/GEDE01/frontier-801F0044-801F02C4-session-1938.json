@@ -1,0 +1,51 @@
+{
+  "session": "session-1938",
+  "range_start": "0x801F0044",
+  "range_end": "0x801F02C4",
+  "next_target": "0x801F02C4",
+  "matched_bytes": 640,
+  "nonmatching_bytes": 0,
+  "unaccounted_spans": [],
+  "matched_functions": [
+    {
+      "name": "fn_801F0044",
+      "range": "0x801F0044..0x801F0294",
+      "size": 592,
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "canonical_evidence": "reports/GEDE01/session-1938-fn_801F0044-objdiff.json",
+      "strict_evidence": "reports/GEDE01/session-1938-fn_801F0044-reloc-strict.json"
+    },
+    {
+      "name": "fn_801F0294",
+      "range": "0x801F0294..0x801F02A0",
+      "size": 12,
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "canonical_evidence": "reports/GEDE01/session-1938-fn_801F0294-objdiff.json",
+      "strict_evidence": "reports/GEDE01/session-1938-fn_801F0294-reloc-strict.json"
+    },
+    {
+      "name": "fn_801F02A0",
+      "range": "0x801F02A0..0x801F02C4",
+      "size": 36,
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "canonical_evidence": "reports/GEDE01/session-1938-fn_801F02A0-objdiff.json",
+      "strict_evidence": "reports/GEDE01/session-1938-fn_801F02A0-reloc-strict.json"
+    }
+  ],
+  "nonmatching_functions": [],
+  "measurement": {
+    "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+    "strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1938-reloc-strict.json -c function_reloc_diffs=name_address",
+    "raw_output": "fn_801F0044 size=592 canonical=100.0 strict=100.0; fn_801F0294 size=12 canonical=100.0 strict=100.0; fn_801F02A0 size=36 canonical=100.0 strict=100.0; matched_bytes=640 nonmatching_bytes=0 accounted_bytes=640"
+  },
+  "build": {
+    "command": ".tools/bin/ninja build/GEDE01/main.dol",
+    "result": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "cmp_exit": 0
+  },
+  "conclusion": "The assigned function and two immediate successors independently match at 100.0% canonical and relocation-strict objdiff. The contiguous 640-byte range is fully accounted with no assembly, shared reconstruction, NonMatching code, or gap."
+}

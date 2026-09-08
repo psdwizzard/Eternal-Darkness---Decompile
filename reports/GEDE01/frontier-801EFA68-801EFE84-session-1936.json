@@ -1,0 +1,24 @@
+{
+  "session": "session-1936",
+  "chain_session_id": "e5484112-7d2e-4f13-868e-e3b43c3c340a",
+  "range_start": "0x801EFA68",
+  "range_end": "0x801EFE84",
+  "next_target": "0x801EFE84",
+  "matched_bytes": 144,
+  "nonmatching_bytes": 908,
+  "unaccounted_spans": [],
+  "matched_functions": [
+    {"name": "fn_801EFDF4", "range": "0x801EFDF4..0x801EFE84", "size": 144, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "canonical_evidence": "reports/GEDE01/session-1936-fn_801EFDF4-objdiff.json", "strict_evidence": "reports/GEDE01/session-1936-fn_801EFDF4-reloc-strict.json"}
+  ],
+  "nonmatching_functions": [
+    {"name": "fn_801EFA68", "range": "0x801EFA68..0x801EFDF4", "size": 908, "candidate_size": 912, "canonical_percent": 89.49339, "relocation_strict_percent": 89.49339, "blocker": "GC/1.3 retains and reloads the startup word differently, coalesces the aligned arena endpoints into the opposite r28/r29 assignment, owns the unsigned-short conversion bias as a TU-local constant, and schedules several global loads and call arguments differently from retail.", "canonical_evidence": "reports/GEDE01/session-1936-fn_801EFA68-objdiff.json", "strict_evidence": "reports/GEDE01/session-1936-fn_801EFA68-reloc-strict.json"}
+  ],
+  "measurement": {
+    "canonical_report_command": "build/tools/objdiff-cli report generate -o build/GEDE01/report.json",
+    "canonical_diff_commands": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EFA68 fn_801EFA68 -o reports/GEDE01/session-1936-fn_801EFA68-objdiff.json --format json-pretty; build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EFDF4 fn_801EFDF4 -o reports/GEDE01/session-1936-fn_801EFDF4-objdiff.json --format json-pretty",
+    "strict_report_command": "build/tools/objdiff-cli report generate -o reports/GEDE01/session-1936-reloc-strict.json -c function_reloc_diffs=name_address",
+    "raw_output": "fn_801EFA68 retail_size=908 candidate_size=912 canonical=89.49339 strict=89.49339; fn_801EFDF4 size=144 canonical=100.0 strict=100.0; matched_bytes=144 nonmatching_bytes=908 accounted_bytes=1052"
+  },
+  "build": {"command": ".tools/bin/ninja build/GEDE01/main.dol", "result": "build/GEDE01/main.dol: OK", "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f", "cmp_exit": 0},
+  "conclusion": "The assigned 908-byte initializer is honestly preserved as independent NonMatching C after a documented 89.49339% canonical attempt. The immediate contiguous 144-byte controller-state function independently matches at 100.0% canonical and relocation-strict objdiff. The entire 1052-byte declared range is accounted with no assembly, shared reconstruction, or gap."
+}
