@@ -1,0 +1,54 @@
+{
+  "session_id": "session-1919-remediation-1",
+  "scope": "Metadata and evidence remediation only; no source or frontier change.",
+  "next_target": "0x801ECF50",
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja build/GEDE01/main.dol",
+    "result": "completed successfully",
+    "terminal_raw_output": "[708/708] DOL build/GEDE01/main.dol"
+  },
+  "affected_objdiff_generation": {
+    "commands": [
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801ECD74 fn_801ECD74 -o reports/GEDE01/objdiff-fn_801ECD74-session-1919.json --format json-pretty",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801ECD74 fn_801ECD74 -o reports/GEDE01/objdiff-fn_801ECD74-session-1919-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801ECE7C fn_801ECE7C -o reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919.json --format json-pretty",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801ECE7C fn_801ECE7C -o reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801ECEC8 fn_801ECEC8 -o reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919.json --format json-pretty",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801ECEC8 fn_801ECEC8 -o reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address"
+    ],
+    "raw_output": "INFO Writing to reports/GEDE01/objdiff-fn_801ECD74-session-1919.json\nINFO Writing to reports/GEDE01/objdiff-fn_801ECD74-session-1919-reloc-strict.json\nINFO Writing to reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919.json\nINFO Writing to reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919-reloc-strict.json\nINFO Writing to reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919.json\nINFO Writing to reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919-reloc-strict.json"
+  },
+  "aggregate_reports": {
+    "canonical_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+    "canonical_raw_output": "INFO Loading project .\nINFO Generating report for 6513 units (using 8 threads)\nINFO Report generated in 0.155s\nINFO Writing to build/GEDE01/report.json",
+    "strict_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1919-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "strict_raw_output": "INFO Loading project .\nINFO Generating report for 6513 units (using 8 threads)\nINFO Report generated in 0.160s\nINFO Writing to reports/GEDE01/session-1919-reloc-strict.json"
+  },
+  "affected_object_measurement": {
+    "command": "for f in reports/GEDE01/objdiff-fn_801ECD74-session-1919.json reports/GEDE01/objdiff-fn_801ECD74-session-1919-reloc-strict.json reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919.json reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919-reloc-strict.json reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919.json reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919-reloc-strict.json; do jq -r --arg f \"$f\" '(.left.symbols[] | select(.name | startswith(\"fn_\"))) as $l | (.right.symbols[] | select(.name == $l.name)) as $r | \"report=\\($f) symbol=\\($l.name) retail_bytes=\\($l.size) generated_bytes=\\($r.size) match_percent=\\($l.match_percent) retail_instructions=\\([$l.instructions[] | select(.instruction)] | length) generated_instructions=\\([$r.instructions[] | select(.instruction)] | length) differing_rows=\\([$l.instructions[] | select(.diff_kind)] | length) retail_relocations=\\([$l.instructions[] | select(.instruction.relocation)] | length) generated_relocations=\\([$r.instructions[] | select(.instruction.relocation)] | length)\"' \"$f\"; done",
+    "raw_output": "report=reports/GEDE01/objdiff-fn_801ECD74-session-1919.json symbol=fn_801ECD74 retail_bytes=264 generated_bytes=264 match_percent=96.969696 retail_instructions=66 generated_instructions=66 differing_rows=2 retail_relocations=10 generated_relocations=10\nreport=reports/GEDE01/objdiff-fn_801ECD74-session-1919-reloc-strict.json symbol=fn_801ECD74 retail_bytes=264 generated_bytes=264 match_percent=96.969696 retail_instructions=66 generated_instructions=66 differing_rows=2 retail_relocations=10 generated_relocations=10\nreport=reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919.json symbol=fn_801ECE7C retail_bytes=76 generated_bytes=76 match_percent=100.0 retail_instructions=19 generated_instructions=19 differing_rows=0 retail_relocations=5 generated_relocations=5\nreport=reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919-reloc-strict.json symbol=fn_801ECE7C retail_bytes=76 generated_bytes=76 match_percent=100.0 retail_instructions=19 generated_instructions=19 differing_rows=0 retail_relocations=5 generated_relocations=5\nreport=reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919.json symbol=fn_801ECEC8 retail_bytes=136 generated_bytes=136 match_percent=100.0 retail_instructions=34 generated_instructions=34 differing_rows=0 retail_relocations=7 generated_relocations=7\nreport=reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919-reloc-strict.json symbol=fn_801ECEC8 retail_bytes=136 generated_bytes=136 match_percent=100.0 retail_instructions=34 generated_instructions=34 differing_rows=0 retail_relocations=7 generated_relocations=7"
+  },
+  "strict_unit_measurement": {
+    "command": "for unit in main/game/game_fn_801ECD74 main/game/game_fn_801ECE7C main/game/game_fn_801ECEC8; do jq -r --arg unit \"$unit\" '.units[] | select(.name==$unit) | \"unit=\\(.name) strict_unit_percent=\\(.measures.fuzzy_match_percent) total_code=\\(.measures.total_code) matched_code=\\(.measures.matched_code // \"unset\") complete_code=\\(.measures.complete_code // \"unset\") function=\\(.functions[0].name) strict_function_percent=\\(.functions[0].fuzzy_match_percent)\"' reports/GEDE01/session-1919-reloc-strict.json; done",
+    "raw_output": "unit=main/game/game_fn_801ECD74 strict_unit_percent=96.969696 total_code=264 matched_code=unset complete_code=unset function=fn_801ECD74 strict_function_percent=96.969696\nunit=main/game/game_fn_801ECE7C strict_unit_percent=100.0 total_code=76 matched_code=76 complete_code=76 function=fn_801ECE7C strict_function_percent=100.0\nunit=main/game/game_fn_801ECEC8 strict_unit_percent=100.0 total_code=136 matched_code=136 complete_code=136 function=fn_801ECEC8 strict_function_percent=100.0"
+  },
+  "stale_report_diagnosis": {
+    "command": "printf 'committed_before_rebuild '; git show HEAD:eternal-darkness-decomp/reports/GEDE01/session-1919-reloc-strict.json | jq -r '.units[] | select(.name==\"main/game/game_fn_801ECD74\") | \"unit=\\(.name) strict_function_percent=\\(.functions[0].fuzzy_match_percent)\"'; printf 'fresh_after_configured_rebuild '; jq -r '.units[] | select(.name==\"main/game/game_fn_801ECD74\") | \"unit=\\(.name) strict_function_percent=\\(.functions[0].fuzzy_match_percent)\"' reports/GEDE01/session-1919-reloc-strict.json",
+    "raw_output": "committed_before_rebuild unit=main/game/game_fn_801ECD74 strict_function_percent=72.878784\nfresh_after_configured_rebuild unit=main/game/game_fn_801ECD74 strict_function_percent=96.969696",
+    "conclusion": "The committed aggregate was stale relative to configure.py's fn_801ECD74 .sdata2 externalization. Regenerating build.ninja, rebuilding the object, and regenerating the strict report resolves the discrepancy without a source change."
+  },
+  "relocation_evidence": {
+    "command": "jq -r '(.left.symbols[] | select(.name==\"fn_801ECD74\")) as $l | (.right.symbols[] | select(.name==\"fn_801ECD74\")) as $r | [range(0; ($l.instructions|length)) | {row:., retail:($l.instructions[.]|select(.instruction.relocation)|.instruction.formatted), generated:($r.instructions[.]|select(.instruction.relocation)|.instruction.formatted)} | select(.retail != null or .generated != null)][] | \"row=\\(.row) retail=\\(.retail // \\\"none\\\") generated=\\(.generated // \\\"none\\\")\"' reports/GEDE01/objdiff-fn_801ECD74-session-1919-reloc-strict.json",
+    "raw_output": "row=2 retail=lfs f0, lbl_8065131C@sda21 generated=lfs f0, lbl_8065131C@sda21\nrow=4 retail=lfs f2, lbl_8064D644@sda21 generated=lfs f2, lbl_8064D644@sda21\nrow=7 retail=lwz r0, lbl_8064D640@sda21 generated=lwz r0, lbl_8064D640@sda21\nrow=13 retail=lfd f1, lbl_80651320@sda21 generated=lfd f1, lbl_80651320@sda21\nrow=33 retail=lbz r0, lbl_8064D674@sda21 generated=lbz r0, lbl_8064D674@sda21\nrow=36 retail=li r5, lbl_8064D674@sda21 generated=li r5, lbl_8064D674@sda21\nrow=49 retail=stb r6, lbl_8064D674@sda21 generated=stb r6, lbl_8064D674@sda21\nrow=50 retail=li r5, lbl_8064D674@sda21 generated=li r5, lbl_8064D674@sda21\nrow=60 retail=lwz r0, lbl_8064D674@sda21 generated=lwz r0, lbl_8064D674@sda21\nrow=62 retail=bl fn_80229D8C generated=bl fn_80229D8C"
+  },
+  "direct_report_identity": {
+    "command": "for f in reports/GEDE01/objdiff-fn_801ECD74-session-1919.json reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919.json reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919.json; do strict=${f%.json}-reloc-strict.json; cmp -s \"$f\" \"$strict\"; printf 'canonical=%s strict=%s cmp_exit=%s\\n' \"$f\" \"$strict\" \"$?\"; done",
+    "raw_output": "canonical=reports/GEDE01/objdiff-fn_801ECD74-session-1919.json strict=reports/GEDE01/objdiff-fn_801ECD74-session-1919-reloc-strict.json cmp_exit=0\ncanonical=reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919.json strict=reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919-reloc-strict.json cmp_exit=0\ncanonical=reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919.json strict=reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919-reloc-strict.json cmp_exit=0",
+    "interpretation": "The direct configured files remain byte-identical to canonical and are retained only as diagnostics; strict percentages are sourced from the fresh aggregate report."
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'dol_cmp_exit=%s\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+  },
+  "conclusion": "No matched-byte credit or headline counter changes. fn_801ECD74 remains NonMatching, fn_801ECE7C and fn_801ECEC8 remain Matching, and the frontier remains at 0x801ECF50."
+}

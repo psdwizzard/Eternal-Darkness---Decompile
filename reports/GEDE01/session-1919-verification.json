@@ -1,0 +1,15 @@
+{
+  "session_id": "session-1919",
+  "build": {"command":"python3 configure.py && .tools/bin/ninja build/GEDE01/main.dol","result":"completed successfully"},
+  "canonical_report": {"command":"build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty","matching_objects":5403,"total_objects":6513,"matching_functions":5168,"total_functions":8216,"matching_code_bytes":835772,"total_code_bytes":2300692,"linked_code_bytes":835772},
+  "relocation_strict_report": {"command":"build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1919-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address","matching_objects":5403,"total_objects":6513,"matching_functions":5163,"total_functions":8216,"matching_code_bytes":834088,"total_code_bytes":2300692,"linked_code_bytes":835772},
+  "per_function": [
+    {"name":"fn_801ECD74","retail_bytes":264,"generated_bytes":264,"canonical_percent":96.969696,"relocation_strict_percent":96.969696,"status":"NonMatching","matched_bytes_credited":0},
+    {"name":"fn_801ECE7C","retail_bytes":76,"generated_bytes":76,"canonical_percent":100.0,"relocation_strict_percent":100.0,"status":"Matching","matched_bytes_credited":76},
+    {"name":"fn_801ECEC8","retail_bytes":136,"generated_bytes":136,"canonical_percent":100.0,"relocation_strict_percent":100.0,"status":"Matching","matched_bytes_credited":136}
+  ],
+  "dol_sha1": {"command":"sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol","value":"ea24b6af954876ce072562ff39cdb4c81d32be1f","cmp_exit":0},
+  "matched_bytes_total": 212,
+  "nonmatching_bytes_total": 264,
+  "next_target": "0x801ECF50"
+}

@@ -1,0 +1,62 @@
+{
+  "session_id": "session-1919",
+  "range_start": "0x801ECD74",
+  "range_end": "0x801ECF50",
+  "next_target": "0x801ECF50",
+  "matched_bytes": 212,
+  "nonmatching_bytes": 264,
+  "unaccounted_spans": [],
+  "accounting_measurement": {
+    "command": "jq -s -r '([.[0].left.symbols[] | select(.name==\"fn_801ECD74\") | (.size|tonumber)] | add) as $nm | ([.[1].left.symbols[] | select(.name==\"fn_801ECE7C\") | (.size|tonumber)] + [.[2].left.symbols[] | select(.name==\"fn_801ECEC8\") | (.size|tonumber)]) as $m | \"matched_bytes=\\($m|add) nonmatching_bytes=\\($nm) accounted_bytes=\\(($m|add)+$nm) matched_functions=\\($m|length) nonmatching_functions=1\"' reports/GEDE01/objdiff-fn_801ECD74-session-1919.json reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919.json reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919.json",
+    "raw_output": "matched_bytes=212 nonmatching_bytes=264 accounted_bytes=476 matched_functions=2 nonmatching_functions=1"
+  },
+  "strict_measurement": {
+    "command": "for unit in main/game/game_fn_801ECD74 main/game/game_fn_801ECE7C main/game/game_fn_801ECEC8; do jq -r --arg unit \"$unit\" '.units[] | select(.name==$unit) | \"unit=\\(.name) strict_unit_percent=\\(.measures.fuzzy_match_percent) total_code=\\(.measures.total_code) matched_code=\\(.measures.matched_code // \"unset\") complete_code=\\(.measures.complete_code // \"unset\") function=\\(.functions[0].name) strict_function_percent=\\(.functions[0].fuzzy_match_percent)\"' reports/GEDE01/session-1919-reloc-strict.json; done",
+    "raw_output": "unit=main/game/game_fn_801ECD74 strict_unit_percent=96.969696 total_code=264 matched_code=unset complete_code=unset function=fn_801ECD74 strict_function_percent=96.969696\nunit=main/game/game_fn_801ECE7C strict_unit_percent=100.0 total_code=76 matched_code=76 complete_code=76 function=fn_801ECE7C strict_function_percent=100.0\nunit=main/game/game_fn_801ECEC8 strict_unit_percent=100.0 total_code=136 matched_code=136 complete_code=136 function=fn_801ECEC8 strict_function_percent=100.0",
+    "authority": "Fresh aggregate report generated after configure.py and a full rebuild with function_reloc_diffs=name_address."
+  },
+  "functions": [
+    {
+      "name": "fn_801ECD74",
+      "start": "0x801ECD74",
+      "end": "0x801ECE7C",
+      "size": 264,
+      "best_candidate_size": 264,
+      "best_canonical_percent": 96.969696,
+      "best_relocation_strict_percent": 96.969696,
+      "status": "NonMatching honest C",
+      "canonical_evidence": "reports/GEDE01/objdiff-fn_801ECD74-session-1919.json",
+      "relocation_strict_evidence": "reports/GEDE01/session-1919-reloc-strict.json",
+      "direct_strict_diagnostic": "reports/GEDE01/objdiff-fn_801ECD74-session-1919-reloc-strict.json",
+      "direct_strict_diagnostic_independent": false,
+      "divergence": "All ten relocation-bearing instructions agree after the configured lbl_80651320 externalization. The remaining canonical and relocation-strict divergence is the same two-row representation of one independent scheduling swap: GC/1.3 materializes the stack address before the color-byte load while retail loads the byte first."
+    },
+    {
+      "name": "fn_801ECE7C",
+      "start": "0x801ECE7C",
+      "end": "0x801ECEC8",
+      "size": 76,
+      "candidate_size": 76,
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "status": "Matching",
+      "canonical_evidence": "reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919.json",
+      "relocation_strict_evidence": "reports/GEDE01/session-1919-reloc-strict.json",
+      "direct_strict_diagnostic": "reports/GEDE01/objdiff-game_fn_801ECE7C-session-1919-reloc-strict.json"
+    },
+    {
+      "name": "fn_801ECEC8",
+      "start": "0x801ECEC8",
+      "end": "0x801ECF50",
+      "size": 136,
+      "candidate_size": 136,
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "status": "Matching",
+      "canonical_evidence": "reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919.json",
+      "relocation_strict_evidence": "reports/GEDE01/session-1919-reloc-strict.json",
+      "direct_strict_diagnostic": "reports/GEDE01/objdiff-game_fn_801ECEC8-session-1919-reloc-strict.json"
+    }
+  ],
+  "conclusion": "Fresh configured-build evidence accounts for all 476 bytes in three independent C translation units: 212 bytes match exactly and 264 bytes remain honestly NonMatching. No assembly, shared reconstruction, fallback jump, or gap was used."
+}
