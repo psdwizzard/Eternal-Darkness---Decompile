@@ -1,0 +1,53 @@
+{
+  "session_id": "session-1948",
+  "range_start": "0x801F2370",
+  "range_end": "0x801F2BC8",
+  "next_target": "0x801F2BC8",
+  "matched_bytes": 132,
+  "nonmatching_bytes": 2004,
+  "unaccounted_spans": [],
+  "accounting_measurement_command": "jq -r '\"range=\\(.range_start)..\\(.range_end) matched_bytes=\\(.matched_bytes) nonmatching_bytes=\\(.nonmatching_bytes) accounted_bytes=\\([.functions[].size]|add) function_count=\\(.functions|length) next_target=\\(.next_target)\"' reports/GEDE01/frontier-801F2370-801F2BC8-session-1948.json",
+  "accounting_measurement_raw_output": "range=0x801F2370..0x801F2BC8 matched_bytes=132 nonmatching_bytes=2004 accounted_bytes=2136 function_count=2 next_target=0x801F2BC8",
+  "functions": [
+    {
+      "name": "fn_801F2370",
+      "start": "0x801F2370",
+      "end": "0x801F2B44",
+      "size": 2004,
+      "generated_size": 1948,
+      "status": "NonMatching",
+      "canonical_direct_match_percent": 46.752495,
+      "canonical_report_fuzzy_match_percent": 46.862274,
+      "relocation_strict_direct_match_percent": 46.752495,
+      "canonical_evidence": "reports/GEDE01/fn-801F2370-session-1948-canonical.json",
+      "relocation_strict_evidence": "reports/GEDE01/fn-801F2370-session-1948-reloc-strict.json",
+      "measurement_command": "jq -r '(.left.symbols[]|select(.name==\"fn_801F2370\")) as $l | (.right.symbols[]|select(.name==\"fn_801F2370\")) as $r | \"basis=direct-default function=fn_801F2370 retail_bytes=\\($l.size) generated_bytes=\\($r.size) match_percent=\\($l.match_percent) retail_prologue=\\([$l.instructions[0:8][]?.instruction.formatted // empty]|join(\" | \")) generated_prologue=\\([$r.instructions[0:8][]?.instruction.formatted // empty]|join(\" | \"))\"' reports/GEDE01/fn-801F2370-session-1948-canonical.json",
+      "measurement_raw_output": "basis=direct-default function=fn_801F2370 retail_bytes=2004 generated_bytes=1948 match_percent=46.752495 retail_prologue=stwu r1, -0x190(r1) | mflr r0 | lis r8, 0x4330 | lfd f5, lbl_80651360@sda21 | stw r0, 0x194(r1) | stmw r20, 0x160(r1) | mr r21, r4 generated_prologue=stwu r1, -0x170(r1) | mflr r0 | lfd f0, @140@sda21 | stw r0, 0x174(r1) | stmw r21, 0x144(r1) | mr r21, r3 | lis r3, 0x4330",
+      "canonical_report_measurement_command": "jq -r '.units[] | select(.name==\"main/game/game_fn_801F2370\") | \"basis=canonical-report unit=\\(.name) fuzzy_match_percent=\\(.measures.fuzzy_match_percent) retail_bytes=\\(.measures.total_code) function=\\(.functions[0].name) function_fuzzy_match_percent=\\(.functions[0].fuzzy_match_percent)\"' build/GEDE01/report.json",
+      "canonical_report_measurement_raw_output": "basis=canonical-report unit=main/game/game_fn_801F2370 fuzzy_match_percent=46.862274 retail_bytes=2004 function=fn_801F2370 function_fuzzy_match_percent=46.862274",
+      "divergence": "With -use_lmw_stmw on, GC/1.3 emits the retail save form, stmw, rather than a helper call. It still emits a 0x170-byte frame with stmw r21 at 0x144 versus retail's 0x190-byte frame with stmw r20 at 0x160; remaining color-interpolation lowering differs in control-flow shape, register allocation, and scheduling."
+    },
+    {
+      "name": "fn_801F2B44",
+      "start": "0x801F2B44",
+      "end": "0x801F2BC8",
+      "size": 132,
+      "status": "Matching",
+      "canonical_direct_match_percent": 100.0,
+      "relocation_strict_direct_match_percent": 100.0,
+      "canonical_evidence": "reports/GEDE01/fn-801F2B44-session-1948-canonical.json",
+      "relocation_strict_evidence": "reports/GEDE01/fn-801F2B44-session-1948-reloc-strict.json",
+      "relocations": "all relocation-bearing instructions equal under name_address"
+    }
+  ],
+  "canonical_report": "build/GEDE01/report.json",
+  "relocation_strict_report": "reports/GEDE01/session-1948-reloc-strict.json",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_cmp_exit": 0,
+  "full_relink": {
+    "attempted": true,
+    "succeeded": true,
+    "blocker": null
+  },
+  "conclusion": "The assigned 2004-byte function remains honest NonMatching C after enabling the established stmw/lmw build flag; the generated prologue now uses the retail save form, while frame layout, saved-register range, color-interpolation lowering, register allocation, and scheduling remain divergent. The immediate 132-byte function matches at 100% on direct-default and relocation-strict bases; the declared range has no interior gap."
+}
