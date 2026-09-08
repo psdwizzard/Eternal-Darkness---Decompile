@@ -1,0 +1,45 @@
+{
+  "session_id": "session-1940",
+  "scope": "signature consolidation only; no frontier matching",
+  "starting_target": "0x801F03F0",
+  "ending_next_target": "0x801F03F0",
+  "accounting": {
+    "matched_bytes_added": 0,
+    "nonmatching_bytes_added": 0,
+    "match_counts_revised": false,
+    "canonical_matching_code_bytes": 841180,
+    "canonical_nonmatching_code_bytes": 1459512,
+    "canonical_matching_objects": 5460,
+    "canonical_nonmatching_objects": 1119
+  },
+  "applied_correction": {
+    "symbol": "fn_801EF2BC",
+    "owned_definition_evidence": "int fn_801EF2BC(ValueSet*, int, int, int*, int*) at src/game/game_fn_801EF2BC.c:15",
+    "edited_declaration": "src/game/game_fn_8018B580.c:9",
+    "affected_translation_units": 1,
+    "safety_gates": "all five parameters retain one-GPR shapes; no unspecified prototype, callback/cast use, or unavailable return type"
+  },
+  "build": {
+    "command": ".tools/bin/ninja",
+    "status": "passed"
+  },
+  "affected_object": {
+    "name": "main/game/game_fn_8018B580",
+    "report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json; jq unit measures from build/GEDE01/report.json",
+    "raw_output": "complete=true matched_code_percent=100.0 complete_code_percent=100.0 fuzzy_match_percent=100.0 total_code=496 complete_code=496",
+    "canonical_objdiff": "reports/GEDE01/objdiff-game_fn_8018B580-session-1940.json",
+    "relocation_strict_objdiff": "reports/GEDE01/objdiff-game_fn_8018B580-session-1940-reloc-strict.json",
+    "objdiff_raw_output": "fn_8018B580 retail_size=496 generated_size=496 match_percent=100.0; 124/124 instructions equal under canonical and relocation-strict comparison"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "unchanged": true
+  },
+  "progress_invariants": {
+    "next_target": "0x801F03F0",
+    "next_gate_rewritten": false,
+    "headline_match_counts_rewritten": false
+  }
+}

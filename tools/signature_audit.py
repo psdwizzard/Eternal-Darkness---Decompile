@@ -954,6 +954,10 @@ def main() -> int:
         help="eligible symbol blocked only because an affected object lacks a 100-percent baseline",
     )
     parser.add_argument(
+        "--defer-pending", action="store_true",
+        help="mark otherwise eligible corrections deferred by the bounded session",
+    )
+    parser.add_argument(
         "--correction-evidence", action="append", default=[], metavar="SYMBOL=PATH",
         help="objdiff artifact for an applied correction (repeat per affected object)",
     )
@@ -991,6 +995,16 @@ def main() -> int:
         set(args.baseline_blocked_symbol),
         corrected_translation_units,
     )
+    if args.defer_pending:
+        deferred_reason = (
+            "Deferred to the signature sweep list because this bounded consolidation "
+            "session applied only its selected provable correction."
+        )
+        for key in ("return_register_contradictions", "ground_truth_contradictions"):
+            for entry in report[key]:
+                if entry.get("disposition") == "pending":
+                    entry["disposition"] = "deferred"
+                    entry["disposition_reason"] = deferred_reason
     evidence_by_symbol: dict[str, list[str]] = defaultdict(list)
     for value in args.correction_evidence:
         symbol, separator, artifact = value.partition("=")

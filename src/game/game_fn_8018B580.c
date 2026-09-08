@@ -6,7 +6,7 @@ extern u8 lbl_80607130[];
 extern int lbl_8064D738;
 extern int lbl_8064D790;
 extern float lbl_80650A68;
-extern void fn_801EF2BC(void*, int, int, int*, int*);
+extern int fn_801EF2BC(void*, int, int, int*, int*);
 extern void fn_80189390(void*, void*, void (*)(void*, float, float, float, float, float), int, int);
 extern void fn_8018D020(void*, float, float, float, float, float);
 extern void DCFlushRange(void*, unsigned int);
