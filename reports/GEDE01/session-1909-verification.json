@@ -1,0 +1,15 @@
+{
+  "session_id": "session-1909",
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+  "canonical_measures": {"matching_objects":5385,"total_objects":6492,"matching_functions":5150,"total_functions":8216,"matching_code_bytes":832636,"total_code_bytes":2300692,"linked_code_bytes":832636,"code_percent":36.190678},
+  "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-1909-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+  "relocation_strict_measures": {"matching_objects":5385,"total_objects":6492,"matching_functions":5145,"total_functions":8216,"matching_code_bytes":830952,"total_code_bytes":2300692,"linked_code_bytes":832636,"code_percent":36.11748},
+  "per_function_canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EBC6C fn_801EBC6C -o reports/GEDE01/objdiff-fn_801EBC6C-session-1909.json --format json-pretty",
+  "per_function_relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EBC6C fn_801EBC6C -o reports/GEDE01/objdiff-fn_801EBC6C-session-1909-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+  "matched_byte_arithmetic": "No functions reached 100%; 0 matched bytes claimed. fn_801EBC6C retail size 0x170 equals 368 bytes from symbols.txt and splits.txt.",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_hash_ok": true,
+  "nonmatching_added": 1,
+  "assembly_added": 0
+}

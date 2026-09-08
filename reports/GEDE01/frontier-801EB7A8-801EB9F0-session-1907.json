@@ -1,0 +1,19 @@
+{
+  "session_id": "session-1907",
+  "range_start": "0x801EB7A8",
+  "range_end": "0x801EB9F0",
+  "next_target": "0x801EB9F0",
+  "matched_bytes": 168,
+  "nonmatching_bytes": 416,
+  "unaccounted_spans": [],
+  "functions": [
+    {"name":"fn_801EB7A8","start":"0x801EB7A8","end":"0x801EB8AC","size":260,"canonical_percent":98.38461,"relocation_strict_percent":98.38461,"relocations_equal":true,"status":"NonMatching","divergence":"Canonical GC/1.3 materializes lbl_80639260 through volatile r0 and then moves it to r31, while retail writes the low-adjusted address directly to r31; all remaining instructions and relocations agree."},
+    {"name":"fn_801EB8AC","start":"0x801EB8AC","end":"0x801EB8E8","size":60,"canonical_percent":100.0,"relocation_strict_percent":100.0,"relocations_equal":true,"status":"Matching"},
+    {"name":"fn_801EB8E8","start":"0x801EB8E8","end":"0x801EB948","size":96,"canonical_percent":100.0,"relocation_strict_percent":100.0,"relocations_equal":true,"status":"Matching"},
+    {"name":"fn_801EB948","start":"0x801EB948","end":"0x801EB9E4","size":156,"canonical_percent":73.20513,"relocation_strict_percent":73.20513,"relocations_equal":true,"status":"NonMatching","divergence":"Canonical GC/1.3 emits a shorter 128-byte eight-way unrolled clearing loop with different induction setup and remainder discrimination, while retail is 156 bytes and uses count-minus-eight ceiling division plus separate bulk and remainder loops."},
+    {"name":"fn_801EB9E4","start":"0x801EB9E4","end":"0x801EB9F0","size":12,"canonical_percent":100.0,"relocation_strict_percent":100.0,"relocations_equal":true,"status":"Matching"}
+  ],
+  "canonical_report": "build/GEDE01/report.json",
+  "relocation_strict_report": "reports/GEDE01/session-1907-reloc-strict.json",
+  "conclusion": "Three independent functions match 168/168 bytes at 100% canonical and relocation-strict objdiff. The assigned function and intervening clear loop remain independent honest-C NonMatching reconstructions totaling 416 bytes. Every byte in the 584-byte range is accounted without assembly, shared reconstruction, fallback jump, or gaps."
+}
