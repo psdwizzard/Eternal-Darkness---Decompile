@@ -1,0 +1,71 @@
+{
+  "session_id": "5f0f9ad5-dac7-4d52-bdcc-536d85d378cb",
+  "scope": "Consolidation only; no new functions matched and no frontier advance.",
+  "starting_target": "0x801EF37C",
+  "ending_next_target": "0x801EF37C",
+  "enumeration": {
+    "method": "Parsed every Object(NonMatching, ...) registration in configure.py, mapped each source path to its main/<source path without extension> unit, rebuilt all stale candidates, and selected units whose fuzzy_match_percent was exactly 100.0 in freshly generated canonical and relocation-strict objdiff reports.",
+    "canonical_report_command": "python3 configure.py && .tools/bin/ninja build/GEDE01/report.json",
+    "canonical_report": "build/GEDE01/report.json",
+    "canonical_report_sha256": "947b15d2288442c602c5d08f8d243a750d8e2a710a5ea982109b17c03c672fe9",
+    "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/consolidation-5f0f9ad5-reloc-strict.json -c function_reloc_diffs=name_address",
+    "relocation_strict_report": "build/GEDE01/consolidation-5f0f9ad5-reloc-strict.json",
+    "relocation_strict_report_sha256": "80ba1bf73f371c3aa5b12613c3ea56188dbe3d5c743809338d27cbf67efd4d28",
+    "nonmatching_registrations": 683,
+    "mapped_units": 683,
+    "unmapped_registrations": 0,
+    "canonical_100_percent_candidates": [],
+    "canonical_100_percent_candidate_count": 0,
+    "relocation_strict_100_percent_candidates": [],
+    "relocation_strict_100_percent_candidate_count": 0,
+    "result": "No missed 100% object remained to reclaim; configure.py required no status changes."
+  },
+  "reclaimed": {
+    "objects": 0,
+    "functions_newly_matched": 0,
+    "matched_code_bytes_newly_scored": 0,
+    "matched_data_bytes_newly_scored": 0,
+    "linked_code_bytes_added": 0,
+    "linked_data_bytes_added": 0
+  },
+  "remaining_nonmatching": {
+    "objects": 683,
+    "functions": 683,
+    "code_bytes": 465184,
+    "data_bytes": 2340
+  },
+  "canonical_accounting": {
+    "fuzzy_match_percent": 50.70054,
+    "matched_code": 838640,
+    "total_code": 2300692,
+    "matched_code_percent": 36.45164,
+    "matched_data": 38690,
+    "total_data": 4305642,
+    "matched_functions": 5195,
+    "total_functions": 8216,
+    "complete_code": 838640,
+    "complete_data": 38238,
+    "complete_units": 5430,
+    "total_units": 6545
+  },
+  "relocation_strict_accounting": {
+    "fuzzy_match_percent": 50.69236,
+    "matched_code": 836956,
+    "total_code": 2300692,
+    "matched_code_percent": 36.378445,
+    "matched_data": 38690,
+    "total_data": 4305642,
+    "matched_functions": 5190,
+    "total_functions": 8216,
+    "complete_code": 838640,
+    "complete_data": 38238,
+    "complete_units": 5430,
+    "total_units": 6545
+  },
+  "dol_gate": {
+    "sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "build_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "cmp_exit": 0
+  }
+}

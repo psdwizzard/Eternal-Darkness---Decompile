@@ -1,0 +1,35 @@
+{
+  "session_id": "session-1933",
+  "range_start": "0x801EF580",
+  "range_end": "0x801EF814",
+  "next_target": "0x801EF814",
+  "accounted_bytes": 660,
+  "matched_bytes": 140,
+  "nonmatching_bytes": 520,
+  "matched_functions": {
+    "fn_801EF788": 56,
+    "fn_801EF7C0": 52,
+    "fn_801EF7F4": 12,
+    "fn_801EF800": 4,
+    "fn_801EF804": 4,
+    "fn_801EF808": 4,
+    "fn_801EF80C": 4,
+    "fn_801EF810": 4
+  },
+  "nonmatching_functions": {
+    "fn_801EF580": {
+      "bytes": 108,
+      "best_percent": 70.14815,
+      "divergence": "GC/1.3 conversion-bias constant-load and lhz/fmr instruction scheduling differs from retail."
+    },
+    "fn_801EF5EC": {
+      "bytes": 412,
+      "best_percent": 94.223305,
+      "divergence": "GC/1.3 global-load, unsigned-short conversion, and call-argument scheduling/register allocation differs from retail."
+    }
+  },
+  "canonical_report": "build/GEDE01/report.json",
+  "relocation_strict_report": "reports/GEDE01/session-1933-reloc-strict.json",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Every byte from 0x801EF580 through 0x801EF814 is owned by an independent translation unit: 140 bytes match at 100.0% canonical and relocation-strict objdiff, and 520 bytes remain explicit size-exact NonMatching C."
+}

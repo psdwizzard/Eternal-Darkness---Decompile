@@ -1,0 +1,28 @@
+{
+  "session": "session-1934",
+  "range_start": "0x801EF814",
+  "range_end": "0x801EF910",
+  "next_target": "0x801EF910",
+  "matched_bytes": 252,
+  "nonmatching_bytes": 0,
+  "unaccounted_spans": [],
+  "matched_functions": [
+    {"name": "fn_801EF814", "range": "0x801EF814..0x801EF840", "size": 44, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "canonical_evidence": "reports/GEDE01/session-1934-fn_801EF814-objdiff.json", "strict_evidence": "reports/GEDE01/session-1934-fn_801EF814-reloc-strict.json"},
+    {"name": "fn_801EF840", "range": "0x801EF840..0x801EF89C", "size": 92, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "canonical_evidence": "reports/GEDE01/session-1934-fn_801EF840-objdiff.json", "strict_evidence": "reports/GEDE01/session-1934-fn_801EF840-reloc-strict.json"},
+    {"name": "fn_801EF89C", "range": "0x801EF89C..0x801EF8F8", "size": 92, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "canonical_evidence": "reports/GEDE01/session-1934-fn_801EF89C-objdiff.json", "strict_evidence": "reports/GEDE01/session-1934-fn_801EF89C-reloc-strict.json"},
+    {"name": "fn_801EF8F8", "range": "0x801EF8F8..0x801EF910", "size": 24, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "canonical_evidence": "reports/GEDE01/session-1934-fn_801EF8F8-objdiff.json", "strict_evidence": "reports/GEDE01/session-1934-fn_801EF8F8-reloc-strict.json"}
+  ],
+  "nonmatching_functions": [],
+  "measurement": {
+    "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_ADDRESS fn_ADDRESS -o reports/GEDE01/session-1934-fn_ADDRESS-objdiff.json --format json-pretty",
+    "strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_ADDRESS fn_ADDRESS -o reports/GEDE01/session-1934-fn_ADDRESS-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_output": "fn_801EF814 size=44 match=100.0 strict=100.0; fn_801EF840 size=92 match=100.0 strict=100.0; fn_801EF89C size=92 match=100.0 strict=100.0; fn_801EF8F8 size=24 match=100.0 strict=100.0; total=252"
+  },
+  "build": {
+    "command": ".tools/bin/ninja",
+    "result": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "cmp_exit": 0
+  },
+  "conclusion": "Every byte in the contiguous 252-byte range is independently reconstructed in C and matches at 100.0% canonical and relocation-strict objdiff with no NonMatching code, assembly, shared reconstruction, fallback, gap, or unaccounted span."
+}

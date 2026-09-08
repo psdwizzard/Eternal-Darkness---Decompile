@@ -1,0 +1,25 @@
+{
+  "session_id": "session-1931",
+  "range_start": "0x801EF37C",
+  "range_end": "0x801EF400",
+  "next_target": "0x801EF400",
+  "matched_bytes": 132,
+  "nonmatching_bytes": 0,
+  "accounted_bytes": 132,
+  "unaccounted_spans": [],
+  "functions": [
+    {"name": "fn_801EF37C", "start": "0x801EF37C", "end": "0x801EF384", "size": 8, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "evidence": "reports/GEDE01/session-1931-fn_801EF37C-objdiff.json"},
+    {"name": "fn_801EF384", "start": "0x801EF384", "end": "0x801EF38C", "size": 8, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "evidence": "reports/GEDE01/session-1931-fn_801EF384-objdiff.json"},
+    {"name": "fn_801EF38C", "start": "0x801EF38C", "end": "0x801EF39C", "size": 16, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "evidence": "reports/GEDE01/session-1931-fn_801EF38C-objdiff.json"},
+    {"name": "fn_801EF39C", "start": "0x801EF39C", "end": "0x801EF3D0", "size": 52, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "evidence": "reports/GEDE01/session-1931-fn_801EF39C-objdiff.json"},
+    {"name": "fn_801EF3D0", "start": "0x801EF3D0", "end": "0x801EF3E0", "size": 16, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "evidence": "reports/GEDE01/session-1931-fn_801EF3D0-objdiff.json"},
+    {"name": "fn_801EF3E0", "start": "0x801EF3E0", "end": "0x801EF3EC", "size": 12, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "evidence": "reports/GEDE01/session-1931-fn_801EF3E0-objdiff.json"},
+    {"name": "fn_801EF3EC", "start": "0x801EF3EC", "end": "0x801EF400", "size": 20, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "evidence": "reports/GEDE01/session-1931-fn_801EF3EC-objdiff.json"}
+  ],
+  "measurement_command": "jq each session-1931 direct objdiff left symbol size and match_percent; sum sizes",
+  "measurement_raw_output": "fn_801EF37C 8 100.0; fn_801EF384 8 100.0; fn_801EF38C 16 100.0; fn_801EF39C 52 100.0; fn_801EF3D0 16 100.0; fn_801EF3E0 12 100.0; fn_801EF3EC 20 100.0; matched_bytes=132 nonmatching_bytes=0 accounted_bytes=132",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_cmp_exit": 0,
+  "asm_functions_added": [],
+  "conclusion": "All seven independent C translation units match canonically and with relocation name/address checks; the complete 132-byte frontier range is accounted with no gap."
+}
