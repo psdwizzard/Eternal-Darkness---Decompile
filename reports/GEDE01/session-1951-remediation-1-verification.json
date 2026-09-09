@@ -1,0 +1,37 @@
+{
+  "session_id": "session-1951-remediation-1",
+  "scope": "Review remediation only; no source reconstruction and no frontier advancement beyond the already covered range end.",
+  "build": {
+    "command": ".tools/bin/ninja build/GEDE01/main.dol",
+    "exit_code": 0,
+    "raw_output_tail": "[712/712] DOL build/GEDE01/main.dol"
+  },
+  "direct_objdiff_generation": {
+    "commands": [
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F1A38 fn_801F1A38 -o reports/GEDE01/.session-1951-remediation-1-tmp/fn_801F1A38.json --format json-pretty",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F2370 fn_801F2370 -o reports/GEDE01/.session-1951-remediation-1-tmp/fn_801F2370.json --format json-pretty",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F3158 fn_801F3158 -o reports/GEDE01/.session-1951-remediation-1-tmp/fn_801F3158.json --format json-pretty",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F3240 fn_801F3240 -o reports/GEDE01/.session-1951-remediation-1-tmp/fn_801F3240.json --format json-pretty",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F338C fn_801F338C -o reports/GEDE01/.session-1951-remediation-1-tmp/fn_801F338C.json --format json-pretty"
+    ],
+    "raw_output": "INFO Writing to reports/GEDE01/.session-1951-remediation-1-tmp/fn_801F1A38.json\nINFO Writing to reports/GEDE01/.session-1951-remediation-1-tmp/fn_801F2370.json\nINFO Writing to reports/GEDE01/.session-1951-remediation-1-tmp/fn_801F3158.json\nINFO Writing to reports/GEDE01/.session-1951-remediation-1-tmp/fn_801F3240.json\nINFO Writing to reports/GEDE01/.session-1951-remediation-1-tmp/fn_801F338C.json"
+  },
+  "direct_objdiff_measurement": {
+    "command": "for f in fn_801F1A38 fn_801F2370 fn_801F3158 fn_801F3240 fn_801F338C; do jq -r --arg fn \"$f\" '[$fn, (.left.sections[]|select(.name==\".text\")|.size), (.right.sections[]|select(.name==\".text\")|.size), (.left.sections[]|select(.name==\".text\")|.match_percent), ([.left.symbols[]?.instructions[]? | select(.instruction.relocation != null)]|length), ([.right.symbols[]?.instructions[]? | select(.instruction.relocation != null)]|length)] | \"function=\\(.[0]) retail_bytes=\\(.[1]) generated_bytes=\\(.[2]) match_percent=\\(.[3]) retail_relocations=\\(.[4]) generated_relocations=\\(.[5])\"' reports/GEDE01/.session-1951-remediation-1-tmp/$f.json; done",
+    "raw_output": "function=fn_801F1A38 retail_bytes=1796 generated_bytes=1768 match_percent=83.89087 retail_relocations=39 generated_relocations=39\nfunction=fn_801F2370 retail_bytes=2004 generated_bytes=1948 match_percent=46.752495 retail_relocations=19 generated_relocations=17\nfunction=fn_801F3158 retail_bytes=232 generated_bytes=232 match_percent=100.0 retail_relocations=9 generated_relocations=9\nfunction=fn_801F3240 retail_bytes=332 generated_bytes=332 match_percent=100.0 retail_relocations=27 generated_relocations=27\nfunction=fn_801F338C retail_bytes=92 generated_bytes=92 match_percent=75.78261 retail_relocations=12 generated_relocations=14"
+  },
+  "relocation_strict": {
+    "generate_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/.session-1951-remediation-1-tmp/reloc-strict.json -c function_reloc_diffs=name_address",
+    "measurement_command": "jq -r '\"strict matching_objects=\\(.measures.complete_units) total_objects=\\(.measures.total_units) matching_functions=\\(.measures.matched_functions) total_functions=\\(.measures.total_functions) matching_code_bytes=\\(.measures.matched_code) total_code_bytes=\\(.measures.total_code) matching_data_bytes=\\(.measures.matched_data) total_data_bytes=\\(.measures.total_data) code_percent=\\(.measures.matched_code_percent) function_percent=\\(.measures.matched_functions_percent) linked_code_bytes=\\(.measures.complete_code) linked_data_bytes=\\(.measures.complete_data)\"' reports/GEDE01/.session-1951-remediation-1-tmp/reloc-strict.json",
+    "raw_output": "strict matching_objects=5476 total_objects=6604 matching_functions=5236 total_functions=8216 matching_code_bytes=842964 total_code_bytes=2300692 matching_data_bytes=38690 total_data_bytes=4305642 code_percent=36.639587 function_percent=63.72931 linked_code_bytes=844648 linked_data_bytes=38238"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "verified": true
+  },
+  "metadata_invariants": {
+    "command": "jq -r '\"nonmatching_attempts=\\(.nonmatching_attempts|length) next_target=\\(.next_target) next_gate=\\(.next_gate)\"' reports/GEDE01/progress.json && jq -r '\"range_end=\\(.range_end) next_target=\\(.next_target)\"' reports/GEDE01/frontier-801F3158-801F33E8-session-1951.json",
+    "raw_output": "nonmatching_attempts=106 next_target=0x801F33E8 next_gate=Open the next contiguous reconstruction at fn_801F33E8. Retain fn_801F338C and fn_801F2370 as documented NonMatching honest-C debt alongside earlier frontier debts named by prior sessions.\nrange_end=0x801F33E8 next_target=0x801F33E8"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "session_id": "session-1951",
+  "range_start": "0x801F3158",
+  "range_end": "0x801F33E8",
+  "next_target": "0x801F33E8",
+  "matched_bytes": 564,
+  "nonmatching_bytes": 92,
+  "functions": [
+    {"name":"fn_801F3158","start":"0x801F3158","end":"0x801F3240","bytes":232,"status":"Matching","score":100.0,"relocations":"9/9 equal","evidence":"reports/GEDE01/objdiff-game_fn_801F3158-session-1951.json"},
+    {"name":"fn_801F3240","start":"0x801F3240","end":"0x801F338C","bytes":332,"status":"Matching","score":100.0,"relocations":"27/27 equal","evidence":"reports/GEDE01/objdiff-game_fn_801F3240-session-1951.json"},
+    {"name":"fn_801F338C","start":"0x801F338C","end":"0x801F33E8","bytes":92,"status":"NonMatching honest C","score":75.78261,"retail_bytes":92,"generated_bytes":92,"relocations":"12 retail / 14 generated","divergence":"GC/1.3 recomputes the lbl_8063BEA0 global base around memcpy while retail keeps that base live in r31 across both calls.","evidence":"reports/GEDE01/objdiff-game_fn_801F338C-session-1951.json"}
+  ],
+  "accounting": "Every byte in the declared 656-byte range belongs to one independent translation unit: 564 bytes match at 100%, and 92 bytes are preserved as one documented honest-C NonMatching attempt. There is no interior gap, shared reconstruction, fallback jump, or assembly.",
+  "canonical_report": "build/GEDE01/report.json",
+  "relocation_strict_report": "reports/GEDE01/session-1951-reloc-strict.json",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+}
