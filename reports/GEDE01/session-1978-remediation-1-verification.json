@@ -1,0 +1,41 @@
+{
+  "session_id": "session-1978-remediation-1",
+  "scope": "Review remediation only; the frontier was not advanced.",
+  "corrections": [
+    "Both state-array loops now cover twelve 0x88-byte entries.",
+    "The 0x68 entry field and fn_801F6ED0 parameters are pointer-typed, which reproduces retail comparison operand order.",
+    "The four translation units that access lbl_8063C6B8 share one complete record declaration.",
+    "The three reviewed users of lbl_8064C4E4 consistently declare it as void*.",
+    "fn_801F6DE4 and fn_801F6ED0 are registered Matching after fresh exact object diffs."
+  ],
+  "affected_objdiff": {
+    "command": "for sym in 801F6DE4 801F6ED0 801F6FD8 801F700C 801F7034 801F70B0 801F70C4; do build/tools/objdiff-cli diff -p . -u main/game/game_fn_$sym fn_$sym -o /tmp/session-1978-remediation-1-$sym-final.json --format json >/dev/null; jq -r --arg sym \"fn_$sym\" '[.left.symbols[],.right.symbols[]] | map(select(.name==$sym)) | \"symbol=\\($sym) retail_size=\\(.[0].size) candidate_size=\\(.[1].size) match_percent=\\(.[0].match_percent) retail_relocations=\\([.[0].instructions[].instruction|select(.relocation != null)]|length) candidate_relocations=\\([.[1].instructions[].instruction|select(.relocation != null)]|length)\"' /tmp/session-1978-remediation-1-$sym-final.json; done",
+    "raw_output": "INFO Writing to /tmp/session-1978-remediation-1-801F6DE4-final.json\nsymbol=fn_801F6DE4 retail_size=236 candidate_size=236 match_percent=100.0 retail_relocations=36 candidate_relocations=36\nINFO Writing to /tmp/session-1978-remediation-1-801F6ED0-final.json\nsymbol=fn_801F6ED0 retail_size=264 candidate_size=264 match_percent=100.0 retail_relocations=28 candidate_relocations=28\nINFO Writing to /tmp/session-1978-remediation-1-801F6FD8-final.json\nsymbol=fn_801F6FD8 retail_size=36 candidate_size=36 match_percent=50.555557 retail_relocations=5 candidate_relocations=5\nINFO Writing to /tmp/session-1978-remediation-1-801F700C-final.json\nsymbol=fn_801F700C retail_size=40 candidate_size=40 match_percent=100.0 retail_relocations=8 candidate_relocations=8\nINFO Writing to /tmp/session-1978-remediation-1-801F7034-final.json\nsymbol=fn_801F7034 retail_size=124 candidate_size=124 match_percent=90.29032 retail_relocations=7 candidate_relocations=7\nINFO Writing to /tmp/session-1978-remediation-1-801F70B0-final.json\nsymbol=fn_801F70B0 retail_size=20 candidate_size=20 match_percent=100.0 retail_relocations=1 candidate_relocations=1\nINFO Writing to /tmp/session-1978-remediation-1-801F70C4-final.json\nsymbol=fn_801F70C4 retail_size=20 candidate_size=20 match_percent=100.0 retail_relocations=1 candidate_relocations=1"
+  },
+  "relocation_record_gate": {
+    "command": "for sym in 801F6DE4 801F6ED0 801F6FD8 801F700C 801F7034 801F70B0 801F70C4; do jq -r --arg sym \"fn_$sym\" '([.left.symbols[]|select(.name==$sym)|.instructions|to_entries[]|select(.value.instruction.relocation!=null)|{index:.key,relocation:.value.instruction.relocation}]) as $retail | ([.right.symbols[]|select(.name==$sym)|.instructions|to_entries[]|select(.value.instruction.relocation!=null)|{index:.key,relocation:.value.instruction.relocation}]) as $candidate | \"symbol=\\($sym) relocation_records_equal=\\($retail==$candidate) records=\\($retail|length)\"' /tmp/session-1978-remediation-1-$sym-final.json; done",
+    "raw_output": "symbol=fn_801F6DE4 relocation_records_equal=true records=36\nsymbol=fn_801F6ED0 relocation_records_equal=true records=28\nsymbol=fn_801F6FD8 relocation_records_equal=true records=5\nsymbol=fn_801F700C relocation_records_equal=true records=8\nsymbol=fn_801F7034 relocation_records_equal=false records=7\nsymbol=fn_801F70B0 relocation_records_equal=true records=1\nsymbol=fn_801F70C4 relocation_records_equal=true records=1"
+  },
+  "full_report": {
+    "generation_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+    "generation_raw_output": "INFO Loading project .\nINFO Generating report for 6696 units (using 8 threads)\nINFO Report generated in 0.169s\nINFO Writing to build/GEDE01/report.json",
+    "measurement_command": "jq -r '\"matching_objects=\\(.measures.complete_units) total_objects=\\(.measures.total_units) matching_functions=\\(.measures.matched_functions) total_functions=\\(.measures.total_functions) matching_code_bytes=\\(.measures.matched_code) total_code_bytes=\\(.measures.total_code) matching_data_bytes=\\(.measures.matched_data) total_data_bytes=\\(.measures.total_data) code_percent=\\(.measures.matched_code_percent) function_percent=\\(.measures.matched_functions_percent) linked_code_bytes=\\(.measures.complete_code) linked_data_bytes=\\(.measures.complete_data)\"' build/GEDE01/report.json",
+    "measurement_raw_output": "matching_objects=5548 total_objects=6696 matching_functions=5313 total_functions=8216 matching_code_bytes=854868 total_code_bytes=2300692 matching_data_bytes=38690 total_data_bytes=4305642 code_percent=37.156994 function_percent=64.666504 linked_code_bytes=854868 linked_data_bytes=38238"
+  },
+  "range_accounting": {
+    "command": "python3 - <<'PY'\nstart = 0x801F6DE4\nend = 0x801F70D8\nmatched = 236 + 264 + 16 + 40 + 20 + 20\nnonmatching = 36 + 124\nprint(f'range_bytes={end - start} matched_bytes={matched} nonmatching_bytes={nonmatching} accounted_bytes={matched + nonmatching}')\nPY",
+    "raw_output": "range_bytes=756 matched_bytes=596 nonmatching_bytes=160 accounted_bytes=756"
+  },
+  "declaration_audit": {
+    "command": "rg -n 'extern (unsigned int|void\\*) lbl_8064C4E4' src/game/game_fn_801F7034.c src/game/game_fn_801F70B0.c src/game/game_fn_801F70C4.c; rg -n '#include \"game_state_8063C6B8.h\"|extern GameState8063C6B8Entry lbl_8063(C6B8|CD18)' src/game/game_fn_801F6DE4.c src/game/game_fn_801F6ED0.c src/game/game_fn_801F6FD8.c src/game/game_fn_801F700C.c include/game_state_8063C6B8.h",
+    "raw_output": "src/game/game_fn_801F70C4.c:1:extern void* lbl_8064C4E4;\nsrc/game/game_fn_801F70B0.c:1:extern void* lbl_8064C4E4;\nsrc/game/game_fn_801F7034.c:2:extern void* lbl_8064C4E4;\ninclude/game_state_8063C6B8.h:13:extern GameState8063C6B8Entry lbl_8063C6B8[];\ninclude/game_state_8063C6B8.h:14:extern GameState8063C6B8Entry lbl_8063CD18[];\nsrc/game/game_fn_801F6FD8.c:1:#include \"game_state_8063C6B8.h\"\nsrc/game/game_fn_801F6ED0.c:1:#include \"game_state_8063C6B8.h\"\nsrc/game/game_fn_801F6DE4.c:1:#include \"game_state_8063C6B8.h\"\nsrc/game/game_fn_801F700C.c:1:#include \"game_state_8063C6B8.h\""
+  },
+  "dol_gate": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "frontier": {
+    "command": "jq -r '\"next_target=\\(.next_target)\"' reports/GEDE01/progress.json",
+    "raw_output": "next_target=0x801F70D8"
+  }
+}

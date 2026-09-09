@@ -25,7 +25,7 @@ typedef struct Local800A509C {
     u8 pad30[4];
 } Local800A509C;
 
-extern int lbl_8064C4E4;
+extern void* lbl_8064C4E4;
 extern int lbl_8064C5B4;
 extern int lbl_8064D18C;
 extern const float lbl_8064EEF8;
@@ -62,7 +62,7 @@ extern void fn_801568C0(void*, void*);
 extern void fn_801568B8(void*, void*);
 extern void fn_8015690C(void*, void*);
 extern void fn_80156918(void*, void*);
-extern void fn_801F6ED0(int, int);
+extern void fn_801F6ED0(void*, void*);
 extern int fn_8004918C(void);
 extern void fn_8004948C(void*, int, int);
 extern void fn_801A7864(int);
@@ -133,8 +133,8 @@ void fn_800A509C(int mode)
     fn_801568B8(callback, fn_8002AC60);
     fn_8015690C(callback, fn_8002A4C8);
     fn_80156918(callback, created);
-    fn_801F6ED0(lbl_8064C4E4, (int)createdContext);
-    lbl_8064C4E4 = (int)createdContext;
+    fn_801F6ED0(lbl_8064C4E4, createdContext);
+    lbl_8064C4E4 = createdContext;
     lbl_8064C5B4 = (int)callback;
     handle = fn_8004918C();
     fn_8004948C(created, handle, 0);

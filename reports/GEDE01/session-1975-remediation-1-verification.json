@@ -1,0 +1,46 @@
+{
+  "session_id": "session-1975-remediation-1",
+  "scope": "Review remediation only; the frontier was not advanced.",
+  "full_build": {
+    "command": ".tools/bin/ninja build/GEDE01/main.dol >build/GEDE01/session-1975-remediation-1-final-build.raw 2>&1; echo full_build_exit=$?; tail -n 1 build/GEDE01/session-1975-remediation-1-final-build.raw",
+    "raw_output": "full_build_exit=0\n[714/714] DOL build/GEDE01/main.dol"
+  },
+  "affected_object_measurement": {
+    "command": "for f in 801F692C 801F6950 801F6974 801F6998 801F69BC 801F69E0; do canonical=$(jq -r --arg u \"main/game/game_fn_$f\" '.units[] | select(.name==$u) | .measures.fuzzy_match_percent' build/GEDE01/report.json); strict=$(jq -r --arg u \"main/game/game_fn_$f\" '.units[] | select(.name==$u) | .measures.fuzzy_match_percent' build/GEDE01/session-1975-remediation-1-reloc-strict.json); jq -r --arg f \"$f\" --arg canonical \"$canonical\" --arg strict \"$strict\" '\"function=fn_\\($f) retail_bytes=\\(.left.symbols[0].size) generated_bytes=\\(.right.symbols[0].size) canonical_percent=\\($canonical) relocation_strict_percent=\\($strict) direct_percent=\\(.left.symbols[0].match_percent) retail_relocations=\\([.left.symbols[0].instructions[]|select(.instruction.relocation != null)]|length) generated_relocations=\\([.right.symbols[0].instructions[]|select(.instruction.relocation != null)]|length)\"' build/GEDE01/remediation-1-final-fn_$f.json; done",
+    "raw_output": "function=fn_801F692C retail_bytes=36 generated_bytes=32 canonical_percent=56.444443 relocation_strict_percent=56.444443 direct_percent=45.333332 retail_relocations=5 generated_relocations=2\nfunction=fn_801F6950 retail_bytes=36 generated_bytes=36 canonical_percent=73.111115 relocation_strict_percent=73.111115 direct_percent=73.111115 retail_relocations=5 generated_relocations=5\nfunction=fn_801F6974 retail_bytes=36 generated_bytes=36 canonical_percent=100.0 relocation_strict_percent=100.0 direct_percent=100.0 retail_relocations=5 generated_relocations=5\nfunction=fn_801F6998 retail_bytes=36 generated_bytes=36 canonical_percent=73.111115 relocation_strict_percent=73.111115 direct_percent=73.111115 retail_relocations=5 generated_relocations=5\nfunction=fn_801F69BC retail_bytes=36 generated_bytes=36 canonical_percent=73.111115 relocation_strict_percent=73.111115 direct_percent=73.111115 retail_relocations=5 generated_relocations=5\nfunction=fn_801F69E0 retail_bytes=16 generated_bytes=16 canonical_percent=100.0 relocation_strict_percent=100.0 direct_percent=100.0 retail_relocations=3 generated_relocations=3"
+  },
+  "attempt_record": {
+    "spellings_tested_this_session": [
+      "local Vec3 temporary followed by aggregate assignment",
+      "explicit word temporaries declared x then y then z",
+      "volatile source-word view on the representative third-field setter",
+      "const-qualified source parameter"
+    ],
+    "retained_spelling": "const-qualified source parameter with explicit x/y/z word temporaries and explicit destination word stores",
+    "result": "All four setters remain NonMatching. The retained spelling hoists all source loads for the three size-exact setters, but register allocation and load order still differ. The offset-zero setter remains shorter because GC/1.3 folds destination base formation into stwu."
+  },
+  "nonmatching_attempt_registry": {
+    "command": "jq -r '. as $root | [\"fn_801F692C\",\"fn_801F6950\",\"fn_801F6998\",\"fn_801F69BC\"] as $symbols | \"nonmatching_attempts_count=\\($root.nonmatching_attempts|length) required_symbols_present=\\($symbols|all(.[]; . as $name | $root.nonmatching_attempts[$name] != null))\"' reports/GEDE01/progress.json",
+    "raw_output": "nonmatching_attempts_count=114 required_symbols_present=true"
+  },
+  "transform_declaration_audit": {
+    "command": "rg -n '^typedef struct (Vec3|Transform)' src/game/game_fn_801F69{2C,50,74,98,BC,E0}.c",
+    "raw_output": "src/game/game_fn_801F69E0.c:1:typedef struct Vec3 { float values[3]; } Vec3;\nsrc/game/game_fn_801F69E0.c:2:typedef struct Transform { Vec3 first, second, third, fourth; float scalar; } Transform;\nsrc/game/game_fn_801F6974.c:1:typedef struct Vec3 { float values[3]; } Vec3;\nsrc/game/game_fn_801F6974.c:2:typedef struct Transform { Vec3 first, second, third, fourth; float scalar; } Transform;\nsrc/game/game_fn_801F6950.c:1:typedef struct Vec3 { float values[3]; } Vec3;\nsrc/game/game_fn_801F6950.c:2:typedef struct Transform { Vec3 first, second, third, fourth; float scalar; } Transform;\nsrc/game/game_fn_801F69BC.c:1:typedef struct Vec3 { float values[3]; } Vec3;\nsrc/game/game_fn_801F69BC.c:2:typedef struct Transform { Vec3 first, second, third, fourth; float scalar; } Transform;\nsrc/game/game_fn_801F692C.c:1:typedef struct Vec3 { float values[3]; } Vec3;\nsrc/game/game_fn_801F692C.c:2:typedef struct Transform { Vec3 first, second, third, fourth; float scalar; } Transform;\nsrc/game/game_fn_801F6998.c:1:typedef struct Vec3 { float values[3]; } Vec3;\nsrc/game/game_fn_801F6998.c:2:typedef struct Transform { Vec3 first, second, third, fourth; float scalar; } Transform;"
+  },
+  "classification_audit": {
+    "command": "rg -n 'Object\\((Matching|NonMatching), \"game/game_fn_801F69(2C|50|74|98|BC|E0)\\.c\"' configure.py",
+    "raw_output": "11462:            Object(NonMatching, \"game/game_fn_801F692C.c\", mw_version=\"GC/1.3\"),\n11463:            Object(NonMatching, \"game/game_fn_801F6950.c\", mw_version=\"GC/1.3\"),\n11464:            Object(Matching, \"game/game_fn_801F6974.c\", mw_version=\"GC/1.3\"),\n11465:            Object(NonMatching, \"game/game_fn_801F6998.c\", mw_version=\"GC/1.3\"),\n11466:            Object(NonMatching, \"game/game_fn_801F69BC.c\", mw_version=\"GC/1.3\"),\n11467:            Object(Matching, \"game/game_fn_801F69E0.c\", mw_version=\"GC/1.3\"),"
+  },
+  "frontier_audit": {
+    "command": "jq -r '\"progress_next_target=\\(.next_target) frontier_next_target=\\(input.next_target)\"' reports/GEDE01/progress.json reports/GEDE01/frontier-801F692C-801F69F0-session-1975.json",
+    "raw_output": "progress_next_target=0x801F69F0 frontier_next_target=0x801F69F0"
+  },
+  "dol_gate": {
+    "command": "sha1sum build/GEDE01/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo retail_cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nretail_cmp_exit=0"
+  },
+  "history_audit": {
+    "command": "git log --format='%s' --reverse HEAD~9..HEAD",
+    "raw_output": "Reconstruct fn_801F692C\nReconstruct fn_801F6950\nMatch fn_801F6974\nReconstruct fn_801F6998\nReconstruct fn_801F69BC\nMatch fn_801F69E0\nClassify unmatched transform setters honestly\nRecord session 1975 verification\nRemediate session 1975 review findings"
+  }
+}

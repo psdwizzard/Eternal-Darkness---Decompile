@@ -8,7 +8,7 @@ extern int fn_8011EB14(u32 object);
 extern short fn_80050A20();
 extern short fn_800509DC();
 
-extern u32 lbl_8064C4E4;
+extern void* lbl_8064C4E4;
 extern int lbl_8064D5A8;
 extern int lbl_8064B4C8;
 extern int lbl_8064C838;
@@ -22,7 +22,7 @@ u16 fn_80049E74(u32 object, int mode, u8* out_level, u8* out_flags,
     u16 time = 0;
     u8 level = 0;
     u8 flags = 0;
-    u32 current = lbl_8064C4E4;
+    u32 current = (u32)lbl_8064C4E4;
     int base = lbl_8064D5A8;
 
     if (object == current) {
@@ -47,7 +47,7 @@ u16 fn_80049E74(u32 object, int mode, u8* out_level, u8* out_flags,
     type = fn_8011EB04(object);
     condition = fn_80050A20();
 
-    if (object == lbl_8064C4E4) {
+    if ((void*)object == lbl_8064C4E4) {
         lbl_8064C838 = base;
     }
 
