@@ -2762,6 +2762,20 @@ config.custom_build_rules.append(
 
 config.custom_build_rules.append(
     {
+        "name": "externalize_game_801F55A0_signed_bias",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @14 lbl_80651360 "
+            "orig/GEDE01/sys/main.dol --require-whole-section && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@14=lbl_80651360 --remove-section=.sdata2 "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    }
+)
+
+config.custom_build_rules.append(
+    {
         "name": "split_game_801CD404_sbss_symbols",
         "command": (
             "touch -r $in $out && (build/binutils/powerpc-eabi-readelf -Ws $in | "
@@ -4461,6 +4475,14 @@ config.custom_build_steps["post-compile"].append(
         "outputs": [f"build/{VERSION}/src/game/game_fn_8009E808.externalized"],
         "rule": "externalize_game_8009E808_sounds",
         "inputs": [f"build/{VERSION}/src/game/game_fn_8009E808.o"],
+    }
+)
+
+config.custom_build_steps["post-compile"].append(
+    {
+        "outputs": [f"build/{VERSION}/src/game/game_fn_801F55A0.externalized"],
+        "rule": "externalize_game_801F55A0_signed_bias",
+        "inputs": [f"build/{VERSION}/src/game/game_fn_801F55A0.o"],
     }
 )
 
@@ -11395,6 +11417,30 @@ config.libs = [
             Object(Matching, "game/game_fn_801F4E94.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801F4EF4.c", mw_version="GC/1.3"),
             Object(NonMatching, "game/game_fn_801F4FC8.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801F50EC.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801F5240.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801F53E8.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F550C.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F5598.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F55A0.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F58F8.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F5980.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F59A0.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F59CC.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801F5A04.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F5B60.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F5C74.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F5CFC.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F5D28.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F5D40.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F5DAC.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F5EFC.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F5F98.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F6034.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801F6054.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F60DC.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F60FC.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F612C.c", mw_version="GC/1.3"),
             Object(NonMatching, "game/game_fn_801ED118.c", mw_version="GC/1.3"),
         ],
     },
