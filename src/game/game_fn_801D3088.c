@@ -6,7 +6,7 @@ typedef struct Position {
 } Position;
 
 extern float lbl_806510A4;
-extern void fn_80156938(void);
+extern void* fn_80156938(void);
 extern void* fn_80201BC8(void);
 extern Position* fn_8011F130(void*);
 extern int fn_8011FCB0(void*);

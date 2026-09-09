@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "session": "session-1960-remediation-1",
+  "scope": "Review remediation only; no frontier reconstruction was opened.",
+  "baseline": {
+    "commit": "639687ec3fffdc06e2b10327a9f451663e9cd702",
+    "chain_state_command": "jq '{session_id,state,assigned_target,accepted_frontier,candidate_frontier,review_verdict,agent_commit}' .darkfoundry/decomp-chain-state.json",
+    "chain_state_raw_output": "{\n  \"session_id\": \"ac41b5c1-df5e-4aae-9c13-13f2ea50a89e\",\n  \"state\": \"WORKING\",\n  \"assigned_target\": \"0x801F4570\",\n  \"accepted_frontier\": \"0x801F4570\",\n  \"candidate_frontier\": \"0x801F4570\",\n  \"review_verdict\": \"REQUEST_CHANGES\",\n  \"agent_commit\": \"639687ec3fffdc06e2b10327a9f451663e9cd702\"\n}"
+  },
+  "proposal_provenance": {
+    "audit_invocation": "python3 tools/signature_audit.py --json-output build/GEDE01/signature-audit-session-1960-remediation-1-source.json --limit 10 --session-id session-1960 --starting-target 0x801F4570 --ending-next-target 0x801F4570 --defer-pending --dol-sha1 ea24b6af954876ce072562ff39cdb4c81d32be1f --build-report build/GEDE01/report.json",
+    "audit_invocation_status": "exit 0; the tool-native JSON was written to the ignored build path before the source correction; stdout was not retained verbatim and no figure below is derived from stdout",
+    "document_shape_command": "jq -c 'keys' build/GEDE01/signature-audit-session-1960-remediation-1-source.json && jq -c 'keys' reports/GEDE01/declaration-drift-proposal-session-1960.json",
+    "document_shape_raw_output": "[\"abi_divergent\",\"applied_corrections\",\"cosmetic\",\"declarations\",\"definitions\",\"ground_truth_by_symbol\",\"ground_truth_contradictions\",\"retail_evidence_symbols\",\"return_register_contradictions\",\"session\",\"source\",\"symbols\"]\n[\"schema_version\",\"scope\",\"session\",\"symbols\",\"verification\"]",
+    "derivation": "The proposal is a hand-derived narrowing of the tool-native audit document. The audit output and deliverable have intentionally different schemas; the audit never writes to the deliverable path.",
+    "cutoff_query_command": "jq -r '([.return_register_contradictions[] + {category:\"return_register_contradictions\"}, .abi_divergent[] + {category:\"abi_divergent\"}, .cosmetic[] + {category:\"cosmetic\"}] | sort_by(-(.declarations)) | unique_by(.symbol) | sort_by(-(.declarations)) | .[0:11])[] | [.symbol,.declarations,.category,.confidence,.disagreement_translation_units] | @tsv' build/GEDE01/signature-audit-session-1960-remediation-1-source.json",
+    "cutoff_query_raw_output": "fn_80201814\t463\treturn_register_contradictions\tlow\t463\nfn_80201BC8\t382\treturn_register_contradictions\tlow\t382\nfn_80201B8C\t349\tabi_divergent\tlow\t349\nfn_80201B54\t313\tabi_divergent\tlow\t313\nfn_8020123C\t208\treturn_register_contradictions\thigh\t31\nfn_800FBFB0\t144\tcosmetic\tlow\t144\nfn_80201B44\t120\tabi_divergent\tlow\t120\nfn_8011F114\t113\tabi_divergent\tlow\t113\nfn_80201B9C\t110\tabi_divergent\tlow\t110\nfn_80156938\t100\treturn_register_contradictions\thigh\t2\nfn_80201EB8\t100\tabi_divergent\tlow\t100",
+    "cutoff_tie_policy": "The original displayed rank is retained. At the tied cutoff, fn_80156938 is preferred over fn_80201EB8 because the former has high-confidence owned-definition evidence and the smaller disagreement rewrite set; the latter is low confidence.",
+    "fn_80156938_query_command": "jq -r '(.ground_truth_contradictions[] | select(.symbol==\"fn_80156938\")) | [.symbol,.declarations,.disagreeing_declarations,.disagreement_translation_units,.affected_translation_units,.confidence,.ground_truth.declaration,.ground_truth.source,(.disagreement_units|join(\",\"))] | @tsv' build/GEDE01/signature-audit-session-1960-remediation-1-source.json",
+    "fn_80156938_query_raw_output": "fn_80156938\t100\t2\t2\t100\thigh\tvoid* fn_80156938(Object*)\tsrc/game/game_fn_80156938.c:6\tsrc/game/game_fn_801D3024.c,src/game/game_fn_801D3088.c"
+  },
+  "source_correction": {
+    "description": "Changed only the return type at the two disagreeing no-argument declaration sites, from void to void*. The calls ignore the result, so the parameter declaration and call shape were not broadened.",
+    "command": "rg -n '^extern void\\* fn_80156938\\(void\\);$' src/game/game_fn_801D3024.c src/game/game_fn_801D3088.c",
+    "raw_output": "src/game/game_fn_801D3088.c:9:extern void* fn_80156938(void);\nsrc/game/game_fn_801D3024.c:1:extern void* fn_80156938(void);"
+  },
+  "build": {
+    "command": "set -o pipefail; .tools/bin/ninja | tail -n 13",
+    "exit_code": 0,
+    "raw_output": "[714/715] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[715/715] PROGRESS\nProgress:\n  All: 51.50% fuzzy, 36.80% matched, 36.80% linked (5493 / 6626 files)\n    Code: 846756 / 2300692 bytes (5258 / 8216 functions)\n    Data: 38690 / 4305642 bytes (0.90%)\n  Game Code: 87.61% fuzzy, 62.55% matched, 62.55% linked (5475 / 6196 files)\n    Code: 843728 / 1348848 bytes (5196 / 5917 functions)\n    Data: 38466 / 40354 bytes (95.32%)\n  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\n    Code: 3028 / 3028 bytes (62 / 62 functions)\n    Data: 224 / 224 bytes (100.00%)"
+  },
+  "affected_object_objdiff": {
+    "generation_command": "for sym in 801D3024 801D3088; do build/tools/objdiff-cli diff -p . -u main/game/game_fn_$sym fn_$sym -o build/GEDE01/session-1960-remediation-1-$sym-canonical.json --format json-pretty || exit; build/tools/objdiff-cli diff -p . -u main/game/game_fn_$sym fn_$sym -o build/GEDE01/session-1960-remediation-1-$sym-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address || exit; done",
+    "generation_raw_output": " INFO Writing to build/GEDE01/session-1960-remediation-1-801D3024-canonical.json\n INFO Writing to build/GEDE01/session-1960-remediation-1-801D3024-reloc-strict.json\n INFO Writing to build/GEDE01/session-1960-remediation-1-801D3088-canonical.json\n INFO Writing to build/GEDE01/session-1960-remediation-1-801D3088-reloc-strict.json",
+    "measurement_command": "for report in build/GEDE01/session-1960-remediation-1-*-canonical.json build/GEDE01/session-1960-remediation-1-*-reloc-strict.json; do jq -r --arg report \"$report\" '(.left.symbols[] | select(.name | startswith(\"fn_\"))) as $l | (.right.symbols[] | select(.name == $l.name)) as $r | \"report=\\($report) symbol=\\($l.name) retail_bytes=\\($l.size) generated_bytes=\\($r.size) match_percent=\\($l.match_percent) retail_instructions=\\([$l.instructions[] | select(.instruction)] | length) generated_instructions=\\([$r.instructions[] | select(.instruction)] | length) differing_rows=\\([$l.instructions[] | select(.diff_kind)] | length) retail_relocations=\\([$l.instructions[] | select(.instruction.relocation)] | length) generated_relocations=\\([$r.instructions[] | select(.instruction.relocation)] | length) relocation_sequences_equal=\\(([$l.instructions[] | .instruction? | select(.relocation) | .formatted]) == ([$r.instructions[] | .instruction? | select(.relocation) | .formatted]))\"' \"$report\"; done",
+    "measurement_raw_output": "report=build/GEDE01/session-1960-remediation-1-801D3024-canonical.json symbol=fn_801D3024 retail_bytes=100 generated_bytes=100 match_percent=100.0 retail_instructions=25 generated_instructions=25 differing_rows=0 retail_relocations=6 generated_relocations=6 relocation_sequences_equal=true\nreport=build/GEDE01/session-1960-remediation-1-801D3088-canonical.json symbol=fn_801D3088 retail_bytes=116 generated_bytes=116 match_percent=100.0 retail_instructions=29 generated_instructions=29 differing_rows=0 retail_relocations=8 generated_relocations=8 relocation_sequences_equal=true\nreport=build/GEDE01/session-1960-remediation-1-801D3024-reloc-strict.json symbol=fn_801D3024 retail_bytes=100 generated_bytes=100 match_percent=100.0 retail_instructions=25 generated_instructions=25 differing_rows=0 retail_relocations=6 generated_relocations=6 relocation_sequences_equal=true\nreport=build/GEDE01/session-1960-remediation-1-801D3088-reloc-strict.json symbol=fn_801D3088 retail_bytes=116 generated_bytes=116 match_percent=100.0 retail_instructions=29 generated_instructions=29 differing_rows=0 retail_relocations=8 generated_relocations=8 relocation_sequences_equal=true"
+  },
+  "post_repair_audit": {
+    "generation_command": "python3 tools/signature_audit.py --json-output build/GEDE01/signature-audit-session-1960-remediation-1-post.json --limit 0 > build/GEDE01/signature-audit-session-1960-remediation-1-post.stdout",
+    "generation_exit_code": 0,
+    "measurement_command": "jq -c '{symbol:\"fn_80156938\",ground_truth_contradiction_present:any(.ground_truth_contradictions[];.symbol==\"fn_80156938\"),return_register_contradiction_present:any(.return_register_contradictions[];.symbol==\"fn_80156938\")}' build/GEDE01/signature-audit-session-1960-remediation-1-post.json",
+    "measurement_raw_output": "{\"symbol\":\"fn_80156938\",\"ground_truth_contradiction_present\":false,\"return_register_contradiction_present\":false}"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "unchanged": true
+  },
+  "frontier": {
+    "command": "jq -r '.next_target' reports/GEDE01/progress.json && git diff --quiet -- reports/GEDE01/progress.json; printf 'progress_json_diff_exit=%s\\n' \"$?\"",
+    "raw_output": "0x801F4570\nprogress_json_diff_exit=0",
+    "progress_json_modified": false,
+    "next_target_unchanged": true
+  },
+  "conclusion": "The provenance command no longer targets the proposal deliverable. The high-confidence fn_80156938 return-register contradiction was corrected only in its measured disagreement rewrite set. Both affected objects remain exact in canonical and relocation-strict objdiff, the post-repair audit clears the contradiction, the DOL remains retail-identical, and the frontier is unchanged."
+}
