@@ -1,0 +1,56 @@
+{
+  "session_id": "session-1980",
+  "kind": "signature consolidation verification",
+  "starting_target": "0x801F7234",
+  "ending_next_target": "0x801F7234",
+  "accounting": {
+    "matched_bytes_added": 0,
+    "nonmatching_bytes_added": 0,
+    "match_counts_revised": false
+  },
+  "correction": {
+    "symbol": "fn_800B002C",
+    "grounding": "Owned definition int fn_800B002C(void) at src/game/game_fn_800B002C.c:33 establishes GPR:r3 return.",
+    "affected_translation_units": 1,
+    "edited_translation_units": [
+      "src/game/game_fn_800B9474.c"
+    ],
+    "safety_basis": "The caller discards the result, the parameter ABI remains empty, and no K&R prototype, callback cast, or source-level ABI-equivalence rewrite is involved."
+  },
+  "verification": [
+    {
+      "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_800B9474.o",
+      "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800B9474.o",
+      "status": "passed"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800B9474 fn_800B9474 -o reports/GEDE01/objdiff-game_fn_800B9474-session-1980.json --format json-pretty",
+      "raw_output": "canonical retail_bytes=260 generated_bytes=260 match_percent=100.0",
+      "status": "passed"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800B9474 fn_800B9474 -o reports/GEDE01/objdiff-game_fn_800B9474-session-1980-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "raw_output": "strict retail_bytes=260 generated_bytes=260 match_percent=100.0 relocation_diff_rows=0",
+      "status": "passed"
+    },
+    {
+      "command": ".tools/bin/ninja && build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+      "raw_output": "Build and 6700-unit report generation completed successfully; main/game/game_fn_800B9474 metadata.complete=true, matched_code_percent=100.0, complete_code_percent=100.0.",
+      "status": "passed"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f for both files; cmp_exit=0",
+      "status": "passed"
+    },
+    {
+      "command": "python3 tools/signature_audit.py --json-output reports/GEDE01/signature-shadow-session-1980.json --session-id session-1980 --starting-target 0x801F7234 --ending-next-target 0x801F7234 --applied-symbol fn_800B002C --corrected-translation-unit fn_800B002C=src/game/game_fn_800B9474.c --correction-evidence fn_800B002C=reports/GEDE01/objdiff-game_fn_800B9474-session-1980.json --correction-evidence fn_800B002C=reports/GEDE01/objdiff-game_fn_800B9474-session-1980-reloc-strict.json --evidence-report reports/GEDE01/session-1980-signature-verification.json --dol-sha1 ea24b6af954876ce072562ff39cdb4c81d32be1f --build-report build/GEDE01/report.json --verified-object main/game/game_fn_800B9474 --defer-pending --limit 0",
+      "raw_output": "650 return-register contradictions, 386 ABI-divergent contradictions, 838 cosmetic differences, 1 applied correction, 1036 unique deferred ABI contradictions, 0 pending.",
+      "status": "passed"
+    }
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_byte_change": false,
+  "progress_next_target": "0x801F7234",
+  "result": "passed"
+}

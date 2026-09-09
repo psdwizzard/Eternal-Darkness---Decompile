@@ -1,0 +1,34 @@
+{
+  "session_id": "session-1982-remediation-1",
+  "scope": "Review remediation only; the frontier was not advanced.",
+  "correction": "The declaration of fn_801F7510 in game_fn_801F74C8.c now agrees with the defining translation unit, and the existing callback slot conversion is explicit.",
+  "affected_objects": [
+    "main/game/game_fn_801F74C8",
+    "main/game/game_fn_801F74EC",
+    "main/game/game_fn_801F7510"
+  ],
+  "build_gate": {
+    "command": "set -o pipefail\n.tools/bin/ninja build/GEDE01/src/game/game_fn_801F74C8.o build/GEDE01/src/game/game_fn_801F74EC.o build/GEDE01/src/game/game_fn_801F7510.o build/GEDE01/main.dol >/dev/null 2>&1\nbuild_status=$?\nprintf 'build_exit=%s\\n' \"$build_status\"\nfor path in build/GEDE01/src/game/game_fn_801F74C8.o build/GEDE01/src/game/game_fn_801F74EC.o build/GEDE01/src/game/game_fn_801F7510.o build/GEDE01/main.dol; do test -f \"$path\"; printf '%s_exists_exit=%s\\n' \"$path\" \"$?\"; done\nexit \"$build_status\"",
+    "raw_output": "build_exit=0\nbuild/GEDE01/src/game/game_fn_801F74C8.o_exists_exit=0\nbuild/GEDE01/src/game/game_fn_801F74EC.o_exists_exit=0\nbuild/GEDE01/src/game/game_fn_801F7510.o_exists_exit=0\nbuild/GEDE01/main.dol_exists_exit=0"
+  },
+  "canonical_objdiff_gate": {
+    "command": "set -o pipefail\nfor sym in 801F74C8 801F74EC 801F7510; do\n  build/tools/objdiff-cli diff -p . -u main/game/game_fn_$sym fn_$sym -o build/GEDE01/session-1982-remediation-1-$sym-canonical.json --format json-pretty >/dev/null\n  jq -r --arg sym \"fn_$sym\" '(.left.symbols[]|select(.name==$sym)) as $l | (.right.symbols[]|select(.name==$sym)) as $r | \"basis=canonical symbol=\\($sym) retail_bytes=\\($l.size) candidate_bytes=\\($r.size) match_percent=\\($l.match_percent) retail_relocations=\\([$l.instructions[]?|select(.instruction.relocation != null)]|length) candidate_relocations=\\([$r.instructions[]?|select(.instruction.relocation != null)]|length)\"' build/GEDE01/session-1982-remediation-1-$sym-canonical.json\ndone",
+    "raw_output": " INFO Writing to build/GEDE01/session-1982-remediation-1-801F74C8-canonical.json\nbasis=canonical symbol=fn_801F74C8 retail_bytes=36 candidate_bytes=36 match_percent=100.0 retail_relocations=8 candidate_relocations=8\n INFO Writing to build/GEDE01/session-1982-remediation-1-801F74EC-canonical.json\nbasis=canonical symbol=fn_801F74EC retail_bytes=36 candidate_bytes=36 match_percent=100.0 retail_relocations=8 candidate_relocations=8\n INFO Writing to build/GEDE01/session-1982-remediation-1-801F7510-canonical.json\nbasis=canonical symbol=fn_801F7510 retail_bytes=236 candidate_bytes=236 match_percent=99.745766 retail_relocations=18 candidate_relocations=18"
+  },
+  "relocation_strict_objdiff_gate": {
+    "command": "set -o pipefail\nfor sym in 801F74C8 801F74EC 801F7510; do\n  build/tools/objdiff-cli diff -p . -u main/game/game_fn_$sym fn_$sym -o build/GEDE01/session-1982-remediation-1-$sym-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address >/dev/null\n  jq -r --arg sym \"fn_$sym\" '(.left.symbols[]|select(.name==$sym)) as $l | (.right.symbols[]|select(.name==$sym)) as $r | \"basis=relocation-strict symbol=\\($sym) retail_bytes=\\($l.size) candidate_bytes=\\($r.size) match_percent=\\($l.match_percent) retail_relocations=\\([$l.instructions[]?|select(.instruction.relocation != null)]|length) candidate_relocations=\\([$r.instructions[]?|select(.instruction.relocation != null)]|length) relocation_diff_rows=\\([$l.instructions[]?|select(.instruction.relocation != null and .diff_kind != null)]|length)\"' build/GEDE01/session-1982-remediation-1-$sym-reloc-strict.json\ndone",
+    "raw_output": " INFO Writing to build/GEDE01/session-1982-remediation-1-801F74C8-reloc-strict.json\nbasis=relocation-strict symbol=fn_801F74C8 retail_bytes=36 candidate_bytes=36 match_percent=100.0 retail_relocations=8 candidate_relocations=8 relocation_diff_rows=0\n INFO Writing to build/GEDE01/session-1982-remediation-1-801F74EC-reloc-strict.json\nbasis=relocation-strict symbol=fn_801F74EC retail_bytes=36 candidate_bytes=36 match_percent=100.0 retail_relocations=8 candidate_relocations=8 relocation_diff_rows=0\n INFO Writing to build/GEDE01/session-1982-remediation-1-801F7510-reloc-strict.json\nbasis=relocation-strict symbol=fn_801F7510 retail_bytes=236 candidate_bytes=236 match_percent=99.745766 retail_relocations=18 candidate_relocations=18 relocation_diff_rows=1"
+  },
+  "declaration_gate": {
+    "command": "rg -n 'void fn_801F7510\\(void\\* state\\)|\\(void \\(\\*\\)\\(void\\)\\)fn_801F7510' src/game/game_fn_801F74C8.c src/game/game_fn_801F7510.c",
+    "raw_output": "src/game/game_fn_801F7510.c:18:void fn_801F7510(void* state)\nsrc/game/game_fn_801F74C8.c:6:void fn_801F7510(void* state);\nsrc/game/game_fn_801F74C8.c:13:    *(void (**)(void))(lbl_8063D400 + 0x6C) = (void (*)(void))fn_801F7510;"
+  },
+  "dol_gate": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol\ncmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol\nprintf 'dol_cmp_exit=%s\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+  },
+  "frontier_gate": {
+    "command": "jq -r '\"next_target=\\(.next_target)\"' reports/GEDE01/progress.json\njq -r '\"frontier_next_target=\\(.next_target)\"' reports/GEDE01/frontier-801F74C8-801F75FC-session-1982.json",
+    "raw_output": "next_target=0x801F75FC\nfrontier_next_target=0x801F75FC"
+  }
+}

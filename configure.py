@@ -2697,6 +2697,7 @@ game_section_externalizations = {
             ("@45", "lbl_80651428"),
         ],
     ),
+    "801F76EC": (".sdata2", [("@11", "lbl_80651480")]),
 }
 
 game_jumptable_externalizations = {
@@ -11493,6 +11494,17 @@ config.libs = [
             Object(Matching, "game/game_fn_801F7208.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801F7210.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801F7218.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801F7234.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F743C.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F74C8.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F74EC.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801F7510.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F75FC.c", mw_version="GC/1.3"),
+            Object(NonMatching, "game/game_fn_801F7620.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F76D8.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F76EC.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F7804.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F7AD4.c", mw_version="GC/1.3"),
             Object(NonMatching, "game/game_fn_801ED118.c", mw_version="GC/1.3"),
         ],
     },

@@ -2,7 +2,7 @@ extern int lbl_8064CA04;
 extern int lbl_8064CA00;
 extern unsigned char lbl_803003AC[];
 extern void fn_800B035C(void);
-extern void fn_800B002C(void);
+extern int fn_800B002C(void);
 extern void fn_8015AC94(int, int);
 extern void fn_801AD490(void);
 extern void fn_80025A78(int);
