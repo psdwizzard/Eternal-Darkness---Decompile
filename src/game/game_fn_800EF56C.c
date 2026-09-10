@@ -11,16 +11,20 @@ typedef struct TRKBuffer {
 
 extern void fn_80003130(void *, const void *, u32);
 
+#pragma opt_propagation off
 int fn_800EF56C(TRKBuffer *buffer, u8 *out, int count)
 {
+    int read_err;
+    u32 amount;
     int i = 0;
     int err = 0;
 
     while (err == 0 && i < count) {
-        u32 amount = 1;
-        int read_err = 0;
-        u32 remaining = buffer->length - buffer->position;
+        u32 remaining;
 
+        amount = 1;
+        read_err = 0;
+        remaining = buffer->length - buffer->position;
         if (amount > remaining) {
             read_err = 0x302;
             amount = remaining;
@@ -32,3 +36,4 @@ int fn_800EF56C(TRKBuffer *buffer, u8 *out, int count)
     }
     return err;
 }
+#pragma opt_propagation reset

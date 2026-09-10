@@ -45,12 +45,7 @@ int fn_80180274(Object* object, void** config)
     object->source = lbl_8064D18C;
     object->count = 10;
     object->flags = 0x80;
-    result = 0;
-
-    if (object->entries != 0 && object->secondary != 0 &&
-        object->third != 0 && object->fourth != 0) {
-        result = 1;
-    }
+    result = object->entries != 0 && object->secondary != 0 && object->third != 0 && object->fourth != 0;
 
     if (result == 0) {
         fn_8017FD34(object);

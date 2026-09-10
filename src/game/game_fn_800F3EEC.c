@@ -1,32 +1,60 @@
-typedef struct TRKExceptionStatus {
-    unsigned int active;
-    unsigned char kind;
-    unsigned char pad[3];
-    unsigned int count;
-    unsigned int start;
-    unsigned int end;
-} TRKExceptionStatus;
+typedef unsigned int u32;
+typedef unsigned char u8;
+typedef int BOOL;
+typedef int DSError;
 
-extern unsigned char gTRKCPUState[];
-extern unsigned char gTRKState[];
-extern TRKExceptionStatus lbl_8024A874;
+typedef struct TRKStepStatus {
+    BOOL active;
+    u8 type;
+    u32 count;
+    u32 rangeStart;
+    u32 rangeEnd;
+} TRKStepStatus;
 
-int fn_800F3EEC(unsigned int start, unsigned int end, int invalid)
+extern u8 gTRKCPUState[];
+extern u8 gTRKState[];
+extern TRKStepStatus lbl_8024A874;
+#define gTRKStepStatus lbl_8024A874
+
+static inline void TRKTargetEnableTrace(BOOL enable)
 {
-    unsigned int kind = 1;
+    if (enable) {
+        *(u32*)(gTRKCPUState + 0x1F8) |= 0x400;
+    } else {
+        *(u32*)(gTRKCPUState + 0x1F8) &= ~0x400;
+    }
+}
 
-    if (invalid != 0) {
-        return 0x703;
+static inline void TRKTargetSetStopped(BOOL stopped)
+{
+    *(u32*)(gTRKState + 0x98) = stopped;
+}
+
+static inline DSError TRKTargetDoStep(void)
+{
+    gTRKStepStatus.active = 1;
+    TRKTargetEnableTrace(1);
+
+    if (gTRKStepStatus.type == 0 || gTRKStepStatus.type == 0x10) {
+        gTRKStepStatus.count--;
     }
 
-    lbl_8024A874.kind = kind;
-    *(unsigned int *)(gTRKCPUState + 0x1F8) |= 0x400;
-    lbl_8024A874.start = start;
-    lbl_8024A874.end = end;
-    lbl_8024A874.active = 1;
-    if (kind == 0 || kind == 0x10) {
-        lbl_8024A874.count--;
-    }
-    *(unsigned int *)(gTRKState + 0x98) = 0;
+    TRKTargetSetStopped(0);
     return 0;
+}
+
+DSError fn_800F3EEC(u32 rangeStart, u32 rangeEnd, BOOL stepOver)
+{
+    DSError error = 0;
+
+    if (stepOver) {
+        error = 0x703;
+    } else {
+        gTRKStepStatus.type = 1;
+        gTRKStepStatus.rangeStart = rangeStart;
+        gTRKStepStatus.rangeEnd = rangeEnd;
+        error = TRKTargetDoStep();
+    }
+
+    return error;
 }

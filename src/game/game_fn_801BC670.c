@@ -1,59 +1,54 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
+typedef unsigned int u32;
 
-typedef struct ResourceEntry8 {
+typedef struct FX_TAB {
     u16 id;
-    u16 count;
-    void* value;
-} ResourceEntry8;
+    u8 pad02[7];
+    u8 vGroup;
+} FX_TAB;
 
-typedef struct GroupEntry {
-    u16 id;
-    u16 state;
-    unsigned int base;
-    unsigned int resolved;
-    unsigned char link[0x14];
-} GroupEntry;
+typedef struct FX_GROUP {
+    u16 gid;
+    u16 fxNum;
+    FX_TAB* fxTab;
+} FX_GROUP;
 
-typedef struct RegistryEntry {
-    GroupEntry* entries;
-    unsigned int value;
-    u16 count;
-    u16 padding;
-} RegistryEntry;
+typedef struct SynthDataTables {
+    u8 pad0000[0xA200];
+    FX_GROUP fxGroup[128];
+} SynthDataTables;
 
-extern RegistryEntry lbl_8061C748[];
+extern u8 lbl_8061C748[];
 extern u16 lbl_8064D3FA;
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
 
-int fn_801BC670(u16 id, void* value, u16 count)
-{
-    u8* base = (u8*)lbl_8061C748;
-    int index;
-    ResourceEntry8* entry;
+#define dataSmpSDirs lbl_8061C748
+#define dataFXGroupNum lbl_8064D3FA
 
-    index = 0;
-    while (index < lbl_8064D3FA &&
-           ((ResourceEntry8*)(base + 0xA200))[index].id != id) {
-        index++;
+u32 fn_801BC670(u16 gid, FX_TAB* fx, u16 fxNum)
+{
+    long i;
+    FX_GROUP* g;
+    SynthDataTables* t = (SynthDataTables*)dataSmpSDirs;
+
+    g = t->fxGroup;
+    for (i = 0; i < dataFXGroupNum && gid != g[i].gid; ++i) {
     }
 
-    if (index == lbl_8064D3FA && (u16)lbl_8064D3FA < 0x80) {
+    if (i == dataFXGroupNum && dataFXGroupNum < 128) {
         fn_801CE2B8();
-        index = (u16)count;
-        entry = &((ResourceEntry8*)(base + 0xA200))[lbl_8064D3FA];
-        entry->id = id;
-        entry->count = count;
-        entry->value = value;
+        i = dataFXGroupNum;
+        t->fxGroup[i].gid = gid;
+        t->fxGroup[i].fxNum = fxNum;
+        t->fxGroup[i].fxTab = fx;
 
-        while (index > 0) {
-            ((u8*)value)[9] = 0x1F;
-            value = (u8*)value + 10;
-            index--;
+        for (i = 0; i < fxNum; ++i, ++fx) {
+            fx->vGroup = 31;
         }
 
-        lbl_8064D3FA++;
+        dataFXGroupNum++;
         fn_801CE280();
         return 1;
     }

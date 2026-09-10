@@ -18,12 +18,15 @@ extern int fn_800EF86C(TRKBuffer *, u8 *);
 
 int TRKDispatchMessage(TRKBuffer *buffer)
 {
-    int result = 0x500;
+    int error;
     u8 command;
 
+    error = 0x500;
     fn_800EFC6C(buffer, 0);
     fn_800EF86C(buffer, &command);
-    if (command < lbl_80329FD8)
-        result = lbl_8024A798[command](buffer);
-    return result;
+    command &= 0xFF;
+    if (command < lbl_80329FD8) {
+        error = lbl_8024A798[command](buffer);
+    }
+    return error;
 }

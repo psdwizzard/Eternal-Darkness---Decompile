@@ -22,8 +22,9 @@ int fn_801C970C(Voice* voice, Vec3* position, Vec3* velocity, Vec3* direction,
     float transform[12];
     if (lbl_8064D3A0 != 0) {
         fn_801CE2B8();
-        voice->previous = lbl_8064D4C0;
-        if (lbl_8064D4C0 != 0) lbl_8064D4C0->next = voice;
+        if ((voice->previous = lbl_8064D4C0) != 0) {
+            lbl_8064D4C0->next = voice;
+        }
         voice->next = 0;
         lbl_8064D4C0 = voice;
         voice->position = *position;

@@ -37,10 +37,3 @@ int fn_800BE70C(void *object, Vec3 *position, int type, float *delta_out,
     }
     return result;
 }
-
-/*
- * Honest-C boundary: this reconstruction is size-exact at 352 bytes with all
- * relocations equal. Retail schedules stfs/fmr before frsp/addi around the
- * fn_8017A12C call; canonical GC/1.3 schedules the same four argument-setup
- * instructions later. The remaining code and stack/register allocation match.
- */

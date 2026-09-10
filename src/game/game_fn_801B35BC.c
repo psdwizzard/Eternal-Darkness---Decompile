@@ -1,114 +1,123 @@
 typedef unsigned char u8;
+typedef unsigned short u16;
 typedef unsigned int u32;
+typedef int s32;
 
-typedef struct Link Link;
-struct Link {
-    Link* next;
-    Link* prev;
-    void* object;
+typedef struct NOTE NOTE;
+struct NOTE {
+    NOTE* next;
+    NOTE* prev;
+    u32 id;
+    s32 endTime;
+    u8 section;
+    u8 pad11[3];
 };
 
-typedef struct Owner Owner;
-struct Owner {
-    Owner* next;
-    Owner* prev;
+typedef struct SEQ_INSTANCE SEQ_INSTANCE;
+struct SEQ_INSTANCE {
+    SEQ_INSTANCE* next;
+    SEQ_INSTANCE* prev;
     u8 state;
-    u8 type;
+    u8 index;
     u8 pad0A[2];
-    u32 key;
-    u8 pad10[0xE54];
-    Link* lists[3];
-    u8 padE70[0x6A];
-    u8 flags;
-    u8 padEDB[0x98D];
+    u32 publicId;
+    u8 pad010[0xE64 - 0x10];
+    NOTE* noteUsed[2];
+    NOTE* noteKeyOff;
+    u8 padE70[0xEDA - 0xE70];
+    u8 syncCrossFlags;
+    u8 padEDB;
+    u32* syncSeqIdPtr;
+    u8 padEE0[0x1868 - 0xEE0];
 };
 
-extern Owner lbl_8060D420[];
-extern Owner* lbl_8064D398;
-extern Owner* lbl_8064D39C;
-extern void fn_801B244C(Owner*);
-extern void fn_801C21E8(void*);
+extern SEQ_INSTANCE* lbl_8064D39C;
+extern SEQ_INSTANCE* lbl_8064D398;
+extern SEQ_INSTANCE* lbl_8064D394;
+extern void fn_801C21E8(u32);
+extern void fn_801B244C(SEQ_INSTANCE*);
 
-static inline int resolve_handle(u32 value)
+#define seqActiveRoot lbl_8064D39C
+#define seqPausedRoot lbl_8064D398
+#define seqFreeRoot lbl_8064D394
+#define voiceKillSound fn_801C21E8
+#define ResetNotes fn_801B244C
+
+static SEQ_INSTANCE seqInstance[8];
+
+static inline u32 seqGetPrivateId(u32 seqId)
 {
-    u32 key = value & 0x7FFFFFFF;
-    Owner* first = lbl_8064D39C;
-    Owner* second;
-
-    while (first != 0) {
-        if (first->key == key) {
-            key = first->type;
-            return key | (value & 0x80000000U);
+    SEQ_INSTANCE* si;
+    for (si = seqActiveRoot; si != 0; si = si->next) {
+        if (si->publicId == (seqId & ~0x80000000)) {
+            return si->index | seqId & 0x80000000;
         }
-        first = first->next;
     }
-
-    second = lbl_8064D398;
-    while (second != 0) {
-        if (second->key == key) {
-            key = second->type;
-            return key | (value & 0x80000000U);
+    for (si = seqPausedRoot; si != 0; si = si->next) {
+        if (si->publicId == (seqId & ~0x80000000)) {
+            return si->index | seqId & 0x80000000;
         }
-        second = second->next;
     }
-
-    return -1;
+    return 0xffffffff;
 }
 
-void fn_801B35BC(u32 handle)
+static inline void KillNotes(SEQ_INSTANCE* seq)
 {
-    Owner* owner;
-    Owner* cursor;
-    Link* link;
+    NOTE* n;
     u32 i;
-    u32 id;
 
-    id = resolve_handle(handle);
+    for (i = 0; i < 2; i++) {
+        for (n = seq->noteUsed[i]; n != 0; n = n->next) {
+            voiceKillSound(n->id);
+        }
+    }
 
-    if (id == -1) {
+    for (n = seq->noteKeyOff; n != 0; n = n->next) {
+        voiceKillSound(n->id);
+    }
+}
+
+static inline void StartPause(SEQ_INSTANCE* si)
+{
+    if (si->prev != 0) {
+        si->prev->next = si->next;
+    } else {
+        seqActiveRoot = si->next;
+    }
+
+    if (si->next != 0) {
+        si->next->prev = si->prev;
+    }
+
+    if ((si->next = seqPausedRoot) != 0) {
+        seqPausedRoot->prev = si;
+    }
+
+    si->prev = 0;
+    seqPausedRoot = si;
+    si->state = 2;
+}
+
+void fn_801B35BC(u32 seqId)
+{
+    SEQ_INSTANCE* si;
+    seqId = seqGetPrivateId(seqId);
+
+    if (seqId == 0xffffffff) {
         return;
     }
-    if ((id & 0x80000000) == 0) {
-        owner = &lbl_8060D420[id];
-        if (owner->state != 1) {
-            return;
-        }
-        if (owner->prev != 0) {
-            owner->prev->next = owner->next;
-        } else {
-            lbl_8064D39C = owner->next;
-        }
-        if (owner->next != 0) {
-            owner->next->prev = owner->prev;
-        }
-        if ((owner->next = lbl_8064D398) != 0) {
-            lbl_8064D398->prev = owner;
-        }
-        owner->prev = 0;
-        lbl_8064D398 = owner;
-        owner->state = 2;
 
-        cursor = owner;
-        for (i = 0; i < 2; i++) {
-            link = cursor->lists[0];
-            while (link != 0) {
-                fn_801C21E8(link->object);
-                link = link->next;
-            }
-            cursor = (Owner*)((u8*)cursor + 4);
+    if ((seqId & 0x80000000) == 0) {
+        si = &seqInstance[seqId];
+        if (si->state == 1) {
+            StartPause(si);
+            KillNotes(si);
+            ResetNotes(si);
         }
-        link = owner->lists[2];
-        while (link != 0) {
-            fn_801C21E8(link->object);
-            link = link->next;
-        }
-        fn_801B244C(owner);
     } else {
-        owner = &lbl_8060D420[id & 0x7FFFFFFF];
-        if (owner->state != 0) {
-            u32 flags = owner->flags;
-            flags |= 8;
-            owner->flags = flags;
+        si = &seqInstance[seqId & ~0x80000000];
+        if (si->state != 0) {
+            si->syncCrossFlags |= 8;
         }
     }
 }

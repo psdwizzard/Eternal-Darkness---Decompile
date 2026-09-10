@@ -21,7 +21,7 @@ extern int lbl_8064D18C;
 extern float lbl_80650630;
 extern int lbl_8065063C;
 
-extern void fn_801F348C(int*);
+extern void fn_801F348C(int*, int);
 extern void fn_80159440(int, int);
 extern void fn_80180C94(void);
 extern void fn_80200EAC(int, int, int, float, int);
@@ -35,7 +35,7 @@ void fn_8015CA08(void)
         state->duration--;
         if (state->delay != 0 && --state->delay == 0) {
             int value = lbl_8065063C;
-            fn_801F348C(&value);
+            fn_801F348C(&value, state->duration);
         }
 
         state = &lbl_805B701C;

@@ -25,13 +25,13 @@ extern void fn_801F5A04(void*, s16, void*, void*);
 
 void fn_80184094(u8* self, void* arg1, void* arg2, u8* desc)
 {
+    u8* entry;
+    u8 count;
     SixBytes setup;
     SixBytes position;
     u32 color;
-    u8* entry;
     u8 transform;
     u8 shift;
-    u8 count;
     int i;
 
     setup.word = lbl_80651D20;
@@ -40,8 +40,7 @@ void fn_80184094(u8* self, void* arg1, void* arg2, u8* desc)
     transform = desc[0x16];
     shift = desc[0x17];
     fn_801804AC(self, arg1, arg2, &setup);
-    count = desc[0];
-    self[1] = count;
+    count = self[1] = desc[0];
     self[0] = 0x80;
     self[2] = desc[2];
     self[4] = desc[3];
@@ -52,7 +51,7 @@ void fn_80184094(u8* self, void* arg1, void* arg2, u8* desc)
     memset(self + 0x24, 0, 0x10);
     color = *(u32*)(desc + 0x1C);
     ((u8*)&color)[3] = 0;
-    for (i = 0; i < count; i++, entry += 0x38) {
+    for (i = 0; i < count; entry += 0x38, i++) {
         memcpy(&position, arg1, 6);
         fn_8018F014(&position, transform);
         fn_80180554(entry, &position, self + 0x16, &setup,

@@ -1,6 +1,11 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
+typedef union EndianTest {
+    u8 bytes[4];
+    u32 word;
+} EndianTest;
+
 extern int gTRKBigEndian;
 extern u8 *gTRKInputPendingPtr;
 
@@ -13,25 +18,33 @@ extern void TRKTargetSetInputPendingPtr(u8 *);
 extern int TRKInitializeSerialHandler(void);
 extern int TRKInitializeTarget(void);
 
+static inline int TRKInitializeEndian(void)
+{
+    EndianTest endian_test;
+    int err = 0;
+
+    gTRKBigEndian = 1;
+    endian_test.bytes[0] = 0x12;
+    endian_test.bytes[1] = 0x34;
+    endian_test.bytes[2] = 0x56;
+    endian_test.bytes[3] = 0x78;
+
+    if (endian_test.word == 0x12345678) {
+        gTRKBigEndian = 1;
+    } else if (endian_test.word == 0x78563412) {
+        gTRKBigEndian = 0;
+    } else {
+        err = 1;
+    }
+    return err;
+}
+
 int TRKInitializeNub(void)
 {
-    u8 endian[4];
-    register int err = 0;
+    int err;
     int uart_err;
-    register int one = 1;
 
-    endian[0] = 0x12;
-    endian[1] = 0x34;
-    endian[2] = 0x56;
-    endian[3] = 0x78;
-    gTRKBigEndian = one;
-
-    if (*(u32 *)endian == 0x12345678)
-        gTRKBigEndian = one;
-    else if (*(u32 *)endian == 0x78563412)
-        gTRKBigEndian = err;
-    else
-        err = one;
+    err = TRKInitializeEndian();
 
     if (err == 0)
         usr_put_initialize();

@@ -4,96 +4,129 @@ typedef signed int s32;
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
+typedef unsigned long long u64;
+typedef float f32;
 
-typedef struct StreamState {
+typedef struct ADSR_INFO {
+    union {
+        struct {
+            s32 atime;
+            s32 dtime;
+            u16 slevel;
+            u16 rtime;
+            s32 ascale;
+            s32 dscale;
+        } dls;
+        struct {
+            u16 atime;
+            u16 dtime;
+            u16 slevel;
+            u16 rtime;
+        } linear;
+    } data;
+} ADSR_INFO;
+
+typedef struct McmdAdsrData {
+    union {
+        struct {
+            s32 atime;
+            s32 dtime;
+            u16 slevel;
+            u16 rtime;
+        } dls;
+    };
+} McmdAdsrData;
+
+typedef struct ADSR_VARS {
+    u8 mode;
+    u8 state;
+    u32 cnt;
+    u32 currentVolume;
+    u32 currentIndex;
+    u32 currentDelta;
+    u32 aTime;
+    u32 dTime;
+    u16 sLevel;
+    u32 rTime;
+    u16 cutOff;
+    u8 aMode;
+} ADSR_VARS;
+
+#pragma pack(4)
+typedef struct SYNTH_VOICE {
     u8 pad_000[0x114];
-    u32 flags_114;
-    u8 pad_118[0x17];
-    u8 scale_12F;
+    u64 cflags;
+    u8 pad_11C[0x13];
+    u8 orgNote;
     u8 pad_130[0x28];
-    u32 scale_158;
+    u32 orgVolume;
     u8 pad_15C[0x80];
-    u8 active_1DC;
-    u8 pad_1DD[0x13];
-    u32 value_1F0;
-    u32 value_1F4;
-    u16 value_1F8;
-    u8 pad_1FA[2];
-    u32 value_1FC;
-    u8 pad_200[2];
-    u8 field_202;
-    u8 pad_203;
-    s16 pitch_204;
-} StreamState;
+    ADSR_VARS pitchADSR;
+    s16 pitchADSRRange;
+} SYNTH_VOICE;
+#pragma pack()
 
-typedef struct StreamCommand {
-    u32 resource;
-    u32 pitch;
-} StreamCommand;
+typedef struct MSTEP {
+    u32 para1;
+    u32 para2;
+} MSTEP;
 
-extern u8* fn_801BD08C(u16);
+extern ADSR_INFO* fn_801BD08C(u16);
 extern u32 fn_801C2AAC(u32);
-extern void fn_801C2D74(void*);
+extern void fn_801C2D74(ADSR_VARS*);
 extern u8 lbl_80252B2C[];
 
-static inline u32 load_be32(u8* value)
-{
-    return ((u32)value[0] << 24) | ((u32)value[1] << 16) |
-           ((u32)value[2] << 8) | value[3];
-}
+#define voiceAdsrDecayTable lbl_80252B2C
 
-static inline u16 swap16(u16 value)
+void fn_801BE0D4(SYNTH_VOICE* svoice, MSTEP* cstep)
 {
-    return (value >> 8) | (value << 8);
-}
+    McmdAdsrData adsr;
+    ADSR_INFO* adsr_ptr;
+    u32 sl;
+    s32 ascale;
+    s32 dscale;
 
-void fn_801BE0D4(StreamState* state, StreamCommand* command)
-{
-    u8* source = fn_801BD08C(command->resource >> 8);
-    u32 first;
-    u32 second;
-    u16 tableIndex;
-    u16 fourth;
-    s32 firstAdjust;
-    s32 secondAdjust;
-    s16 pitchAdjust;
-
-    if (source == 0) {
+    if ((adsr_ptr = fn_801BD08C(cstep->para1 >> 8)) == 0) {
         return;
     }
 
-    state->pitch_204 = (s8)command->pitch << 8;
-    pitchAdjust = (s8)(command->pitch >> 8) << 8;
-    if (state->pitch_204 >= 0) {
-        state->pitch_204 += pitchAdjust / 100;
+    svoice->pitchADSRRange = (s8)cstep->para2 << 8;
+
+    if (svoice->pitchADSRRange >= 0) {
+        svoice->pitchADSRRange += ((s16)(s8)(cstep->para2 >> 8) << 8) / 100;
     } else {
-        state->pitch_204 -= pitchAdjust / 100;
+        svoice->pitchADSRRange -= ((s16)(s8)(cstep->para2 >> 8) << 8) / 100;
     }
 
-    first = load_be32(source);
-    second = load_be32(source + 4);
-    tableIndex = swap16(*(u16*)(source + 8));
-    fourth = swap16(*(u16*)(source + 10));
-    firstAdjust = load_be32(source + 12);
-    secondAdjust = load_be32(source + 16);
+    adsr.dls.atime = ((u8*)&adsr_ptr->data.dls.atime)[0] << 0 | ((u8*)&adsr_ptr->data.dls.atime)[1] << 8 |
+                     ((u8*)&adsr_ptr->data.dls.atime)[2] << 16 | ((u8*)&adsr_ptr->data.dls.atime)[3] << 24;
+    adsr.dls.dtime = ((u8*)&adsr_ptr->data.dls.dtime)[0] << 0 | ((u8*)&adsr_ptr->data.dls.dtime)[1] << 8 |
+                     ((u8*)&adsr_ptr->data.dls.dtime)[2] << 16 | ((u8*)&adsr_ptr->data.dls.dtime)[3] << 24;
+    adsr.dls.slevel = adsr_ptr->data.dls.slevel >> 8 | adsr_ptr->data.dls.slevel << 8;
+    adsr.dls.rtime = adsr_ptr->data.dls.rtime >> 8 | adsr_ptr->data.dls.rtime << 8;
+    ascale = ((u8*)&adsr_ptr->data.dls.ascale)[0] << 0 | ((u8*)&adsr_ptr->data.dls.ascale)[1] << 8 |
+             ((u8*)&adsr_ptr->data.dls.ascale)[2] << 16 | ((u8*)&adsr_ptr->data.dls.ascale)[3] << 24;
+    dscale = ((u8*)&adsr_ptr->data.dls.dscale)[0] << 0 | ((u8*)&adsr_ptr->data.dls.dscale)[1] << 8 |
+             ((u8*)&adsr_ptr->data.dls.dscale)[2] << 16 | ((u8*)&adsr_ptr->data.dls.dscale)[3] << 24;
 
-    if (firstAdjust != (s32)0x80000000) {
-        first += (s32)(0.0000152587890625f * (float)firstAdjust * (float)state->scale_158);
+    if (ascale != 0x80000000) {
+        f32 prod = 1.1920928955078125e-7f * svoice->orgVolume;
+        adsr.dls.atime += (s32)(prod * ascale);
     }
-    if (secondAdjust != (s32)0x80000000) {
-        second += (s32)(0.00390625f * (float)secondAdjust * (float)state->scale_12F);
+    if (dscale != 0x80000000) {
+        f32 prod = 0.0078125f * svoice->orgNote;
+        adsr.dls.dtime += (s32)(prod * dscale);
     }
 
-    state->active_1DC = 1;
-    state->field_202 = 0;
-    state->value_1F0 = fn_801C2AAC(first);
-    state->value_1F4 = fn_801C2AAC(second);
-    tableIndex >>= 2;
-    if (tableIndex > 0x3FF) {
-        tableIndex = 0x3FF;
+    svoice->pitchADSR.mode = 1;
+    svoice->pitchADSR.aMode = 0;
+    svoice->pitchADSR.aTime = fn_801C2AAC(adsr.dls.atime);
+    svoice->pitchADSR.dTime = fn_801C2AAC(adsr.dls.dtime);
+    if ((sl = adsr.dls.slevel >> 2) > 0x3ff) {
+        sl = 0x3ff;
     }
-    state->value_1F8 = 0xC1 - lbl_80252B2C[tableIndex];
-    state->value_1FC = fourth;
-    fn_801C2D74(&state->active_1DC);
-    state->flags_114 |= 0x200;
+    svoice->pitchADSR.sLevel = 0xc1 - voiceAdsrDecayTable[sl];
+    svoice->pitchADSR.rTime = adsr.dls.rtime;
+    fn_801C2D74(&svoice->pitchADSR);
+    svoice->cflags |= 0x20000000000ULL;
 }

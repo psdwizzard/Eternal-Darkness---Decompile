@@ -2,7 +2,7 @@ extern void* lbl_8064D274;
 extern void* lbl_80607C10[];
 extern int lbl_8064D270;
 
-extern void fn_8017CE74(void*);
+extern void fn_8017CE74(void*, void*);
 
 void fn_801A7228(void* entry)
 {
@@ -15,7 +15,7 @@ void fn_801A7228(void* entry)
                 lbl_80607C10[i] = 0;
             }
         }
-        fn_8017CE74(lbl_8064D274);
+        fn_8017CE74(lbl_8064D274, target);
         lbl_8064D270--;
     }
 }

@@ -18,23 +18,15 @@ extern void fn_8011E918(void *);
 
 void fn_800CFC04(void *state, Entry *entries, void *stream)
 {
-    Entry *global;
-    Entry *entry;
     int i;
 
     memcpy(state, lbl_80300368, 0x44);
     memset(lbl_80300368, 0, 0x44);
-    entry = entries;
-    global = lbl_805FAA60;
-    i = 0;
-    while (i < 10) {
-        if (global->value6 == 0 && global->value4 == 0) {
-            memcpy(entry, global, sizeof(Entry));
-            memset(global, 0, sizeof(Entry));
+    for (i = 0; i < 10; i++) {
+        if (lbl_805FAA60[i].value6 == 0 && lbl_805FAA60[i].value4 == 0) {
+            memcpy(&entries[i], &lbl_805FAA60[i], sizeof(Entry));
+            memset(&lbl_805FAA60[i], 0, sizeof(Entry));
         }
-        i++;
-        entry++;
-        global++;
     }
     fn_8011E918(stream);
 }

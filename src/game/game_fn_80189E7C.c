@@ -17,6 +17,7 @@ extern void fn_8018855C(void), fn_80226D78(int);
 
 void fn_80189E7C(u8* self)
 {
+    u16 i;
     u8* data;
     u16 count;
     u16 flush0;
@@ -29,7 +30,6 @@ void fn_80189E7C(u8* self)
     u8* entries;
     u8* out;
     int saved;
-    u16 i;
     int j;
 
     object = self;
@@ -74,7 +74,7 @@ void fn_80189E7C(u8* self)
     }
     fn_80226AB4(0x80, 5, count);
     for (j = 0; (u16)j < count; j++) {
-        u16 index = (u16)j;
+        int index = (u16)j;
         fn_80188578(index);
         fn_8018856C(index);
         fn_80188560(index);

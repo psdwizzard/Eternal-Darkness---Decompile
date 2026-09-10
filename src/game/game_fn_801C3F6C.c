@@ -3,75 +3,79 @@ typedef signed short s16;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-typedef struct ResourceNode {
-    u32 next;
+typedef struct GROUP_DATA {
+    u32 nextOff;
     u16 id;
-    u16 flags;
-    u32 list0;
-    u32 list1;
-    u32 list4;
-    u32 list2;
-    u32 list3;
-    u32 extra;
-    u32 records0;
-    u32 records1;
-} ResourceNode;
+    u16 type;
+    u32 macroOff;
+    u32 sampleOff;
+    u32 curveOff;
+    u32 keymapOff;
+    u32 layerOff;
+    u32 normpageOff;
+    u32 drumpageOff;
+    u32 midiSetupOff;
+} GROUP_DATA;
 
-typedef struct ResourceLoad {
-    ResourceNode* node;
-    void* archive;
-    ResourceNode* base;
-} ResourceLoad;
+typedef struct GSTACK {
+    GROUP_DATA* gAddr;
+    void* sdirAddr;
+    void* prjAddr;
+} GSTACK;
 
-typedef struct ResourceRecord {
-    u16 id;
+typedef struct SynthMidiSetup {
+    u16 songId;
     u8 payload[0x52];
-} ResourceRecord;
+} SynthMidiSetup;
 
 extern s16 lbl_8064D470;
-extern ResourceLoad lbl_806286B0[];
-extern int fn_801B2980(void*, void*, ResourceRecord*, void*, void*, void*, u16);
+extern GSTACK lbl_806286B0[];
+extern u32 fn_801B2980(void*, void*, SynthMidiSetup*, void*, void*, void*, u16);
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
 
-int fn_801C3F6C(u16 resource_id, u16 record_id, void* arg2, void* arg3,
-                u8 unlocked, void* arg5)
+u32 fn_801C3F6C(u16 sgid, u16 sid, void* arrfile, void* para, u8 irq_call, void* studio)
 {
     int i;
+    GROUP_DATA* g;
+    void* norm;
+    void* drum;
+    SynthMidiSetup* midiSetup;
+    u32 seqId;
+    void* prj;
+    GSTACK* gsTab = lbl_806286B0;
 
-    for (i = 0; i < lbl_8064D470; i++) {
-        ResourceNode* node = lbl_806286B0[i].node;
-        if (node->id == resource_id) {
-            ResourceRecord* record;
-            ResourceNode* base;
-            void* list0;
-            void* list1;
+    for (i = 0; i < lbl_8064D470; ++i) {
+        if (gsTab[i].gAddr->id != sgid) {
+            continue;
+        }
 
-            if (node->flags != 0) {
-                return -1;
-            }
-            base = lbl_806286B0[i].base;
-            list0 = (u8*)base + node->extra;
-            list1 = (u8*)base + node->records0;
-            record = (ResourceRecord*)((u8*)base + node->records1);
-            while (record->id != 0xFFFF) {
-                if (record->id == record_id) {
-                    int result;
-                    if (unlocked) {
-                        result = fn_801B2980(list0, list1, record, arg2, arg3,
-                                             arg5, resource_id);
+        if (gsTab[i].gAddr->type == 0) {
+            g = gsTab[i].gAddr;
+            prj = gsTab[i].prjAddr;
+            norm = (u8*)prj + g->normpageOff;
+            drum = (u8*)prj + g->drumpageOff;
+            midiSetup = (SynthMidiSetup*)((u8*)prj + g->midiSetupOff);
+            while (midiSetup->songId != 0xFFFF) {
+                if (midiSetup->songId == sid) {
+                    if (irq_call != 0) {
+                        seqId = fn_801B2980(norm, drum, midiSetup, arrfile, para, studio, sgid);
                     } else {
                         fn_801CE2B8();
-                        result = fn_801B2980(list0, list1, record, arg2, arg3,
-                                             arg5, resource_id);
+                        seqId = fn_801B2980(norm, drum, midiSetup, arrfile, para, studio, sgid);
                         fn_801CE280();
                     }
-                    return result;
+                    return seqId;
                 }
-                record++;
+
+                ++midiSetup;
             }
-            return -1;
+
+            return 0xffffffff;
+        } else {
+            return 0xffffffff;
         }
     }
-    return -1;
+
+    return 0xffffffff;
 }

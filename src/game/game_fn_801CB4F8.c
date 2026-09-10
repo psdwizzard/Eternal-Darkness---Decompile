@@ -2,173 +2,222 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef signed short s16;
 typedef unsigned int u32;
-typedef int s32;
+typedef signed int s32;
 typedef unsigned long long u64;
 
-typedef struct ExpressionOp {
-    u8 selector;
-    u8 flags;
-    u8 pad[2];
+typedef struct McmdInputSource {
+    u8 midiCtrl;
+    u8 combine;
+    u8 pad02[2];
     s32 scale;
-} ExpressionOp;
+} McmdInputSource;
 
-typedef struct Expression {
-    ExpressionOp ops[4];
-    u16 result;
-    u8 count;
-} Expression;
+typedef struct McmdInputSlot {
+    McmdInputSource source[4];
+    u16 oldValue;
+    u8 numSource;
+    u8 pad23;
+} McmdInputSlot;
 
-extern s32 fn_801BEA3C(void*, int, u8);
-extern u16 fn_801CAFAC(int, u8, u8);
-extern u64 fn_800F6218(u32, u32, u32);
-extern u32 lbl_8064ED40;
-extern u32 lbl_8064ED44;
+typedef struct SYNTH_LFO {
+    u32 time;
+    u32 period;
+    s16 value;
+    u16 lastValue;
+} SYNTH_LFO;
 
-static s32 clamp_signed(s32 value)
+typedef struct SYNTH_VOICE {
+    u8 pad_000[0x90];
+    u64 macStartTime;
+    u8 pad_098[0x10];
+    u8 timeUsedByInput;
+    u8 pad_0A9[0x86];
+    u8 orgNote;
+    u8 pad_130[0x28];
+    u32 orgVolume;
+    u8 pad_15C[0x60];
+    SYNTH_LFO lfo[2];
+    u8 lfoUsedByInput[2];
+} SYNTH_VOICE;
+
+extern u64 lbl_8064D3E0;
+extern s16 fn_801BEA3C(SYNTH_VOICE*, u32, u8);
+extern u16 fn_801CAFAC(int, int, int);
+
+#define synthRealTime lbl_8064D3E0
+#define varGet fn_801BEA3C
+#define inpGetMidiCtrl fn_801CAFAC
+
+u16 fn_801CB4F8(SYNTH_VOICE* statePtr, McmdInputSlot* slotPtr, int midi, int midiSet)
 {
-    if (value < -0x2000)
-        value = -0x2000;
-    else if (value > 0x1FFF)
-        value = 0x1FFF;
-    return value;
-}
-
-u16 fn_801CB4F8(u8* state, Expression* expression, u8 channel, u8 layer)
-{
-    s32 accumulator = 0;
-    u32 signed_mode;
+    u32 sign;
     u32 i;
+    u32 value;
+    u32 ctrl;
+    s32 tmp;
+    s32 vtmp;
 
-    for (i = 0; i < expression->count; i++) {
-        ExpressionOp* op = &expression->ops[i];
-        s32 value;
-
-        if (op->flags & 0x10) {
-            value = state != 0 ? (s16)fn_801BEA3C(state, 0, op->selector) : 0;
-        } else if (op->selector == 0x80 || op->selector == 1 ||
-                   op->selector == 0xA || (u8)(op->selector - 0xA0) <= 1 ||
-                   op->selector == 0x83) {
-            if (op->selector == 0xA0 || op->selector == 0xA1) {
-                if (state != 0) {
-                    value = *(s16*)(state + op->selector * 12 - 0x5BC);
-                    state[op->selector + 0x134] = 1;
-                    value <<= 1;
+    for (value = 0, i = 0; i < slotPtr->numSource; ++i) {
+        if (slotPtr->source[i].combine & 0x10) {
+            tmp = (statePtr != 0 ? varGet(statePtr, 0, slotPtr->source[i].midiCtrl) : 0);
+            goto combine_signed;
+        }
+        ctrl = slotPtr->source[i].midiCtrl;
+        if (ctrl == 0x80 || ctrl == 1 || ctrl == 0xA || (u8)(ctrl - 0xA0) <= 1 || ctrl == 0x83) {
+            switch ((u8)ctrl) {
+            case 0xA0:
+            case 0xA1:
+                if (statePtr != 0) {
+                    tmp = statePtr->lfo[(u8)ctrl - 0xA0].value << 1;
+                    statePtr->lfoUsedByInput[(u8)ctrl - 0xA0] = 1;
                 } else {
-                    value = 0;
+                    tmp = 0;
                 }
-            } else {
-                value = (u16)fn_801CAFAC(op->selector, channel, layer) - 0x2000;
+                break;
+            default:
+                tmp = (inpGetMidiCtrl(ctrl, midi, midiSet) & 0xffff) - 0x2000;
+                break;
             }
-            value = (value * (op->scale >> 1)) >> 15;
-            value = clamp_signed(value);
-
-            switch (op->flags & 0xF) {
+        combine_signed:
+            tmp = (tmp * (slotPtr->source[i].scale >> 1)) >> 15;
+            if (tmp < -0x2000) {
+                tmp = -0x2000;
+            } else if (tmp > 0x1FFF) {
+                tmp = 0x1FFF;
+            }
+            switch (slotPtr->source[i].combine & 0xF) {
             case 0:
-                accumulator = value + 0x2000;
-                signed_mode = 1;
+                value = tmp + 0x2000;
+                sign = 1;
                 break;
             case 1:
-                if (signed_mode) {
-                    accumulator = clamp_signed(accumulator + value - 0x2000) + 0x2000;
+                if (sign != 0) {
+                    vtmp = (value + tmp);
+                    vtmp -= 0x2000;
+                    if (vtmp < -0x2000) {
+                        vtmp = -0x2000;
+                    } else if (vtmp > 0x1FFF) {
+                        vtmp = 0x1FFF;
+                    }
+                    value = vtmp + 0x2000;
                 } else {
-                    accumulator += value;
-                    if (accumulator > 0x3FFF)
-                        accumulator = 0x3FFF;
-                    else if (accumulator < 0)
-                        accumulator = 0;
+                    vtmp = value + tmp;
+                    value = (vtmp > 0x3FFF) ? 0x3FFF : (vtmp < 0) ? 0 : vtmp;
                 }
                 break;
             case 2:
-                if (signed_mode)
-                    value = ((accumulator - 0x2000) * value) >> 13;
-                else {
-                    value = (value * accumulator) >> 13;
-                    signed_mode = 1;
+                if (sign != 0) {
+                    vtmp = (s32)((value - 0x2000) * tmp) >> 13;
+                } else {
+                    vtmp = (tmp * value) >> 13;
+                    sign = 1;
                 }
-                accumulator = clamp_signed(value) + 0x2000;
+                if (vtmp < -0x2000) {
+                    vtmp = -0x2000;
+                } else if (vtmp > 0x1FFF) {
+                    vtmp = 0x1FFF;
+                }
+                value = vtmp + 0x2000;
                 break;
             case 3:
-                if (signed_mode)
-                    accumulator = clamp_signed(accumulator - 0x2000 - value) + 0x2000;
-                else {
-                    accumulator -= value;
-                    if (accumulator > 0x3FFF)
-                        accumulator = 0x3FFF;
-                    else if (accumulator < 0)
-                        accumulator = 0;
+                if (sign != 0) {
+                    vtmp = (value - 0x2000) - tmp;
+                    if (vtmp < -0x2000) {
+                        vtmp = -0x2000;
+                    } else if (vtmp > 0x1FFF) {
+                        vtmp = 0x1FFF;
+                    }
+                    value = vtmp + 0x2000;
+                } else {
+                    vtmp = value - tmp;
+                    value = (vtmp > 0x3FFF) ? 0x3FFF : (vtmp < 0) ? 0 : vtmp;
                 }
                 break;
             }
         } else {
-            u32 unsigned_value;
-
-            switch (op->selector) {
+            ctrl = slotPtr->source[i].midiCtrl;
+            switch (ctrl) {
             case 0xA2:
-                unsigned_value = state != 0 ? state[0x12F] << 7 : 0;
+                if (statePtr != 0) {
+                    tmp = statePtr->orgNote << 7;
+                } else {
+                    tmp = 0;
+                }
                 break;
             case 0xA3:
-                unsigned_value = state != 0 ? *(u32*)(state + 0x158) >> 9 : 0;
+                tmp = statePtr != 0 ? statePtr->orgVolume >> 9 : 0;
                 break;
             case 0xA4:
-                if (state != 0) {
-                    u64 delta = ((u64)lbl_8064ED40 << 32 | lbl_8064ED44) -
-                                *(u64*)(state + 0x90);
-                    unsigned_value = (u32)fn_800F6218((u32)(delta >> 32),
-                                                       (u32)delta, 8);
-                    if ((s32)unsigned_value > 0x3FFF)
-                        unsigned_value = 0x3FFF;
-                    state[0xA8] = 1;
+                if (statePtr != 0) {
+                    tmp = (synthRealTime - statePtr->macStartTime) >> 8;
+                    if (tmp > 0x3fff) {
+                        tmp = 0x3fff;
+                    }
+                    statePtr->timeUsedByInput = 1;
                 } else {
-                    unsigned_value = 0;
+                    tmp = 0;
                 }
                 break;
             default:
-                unsigned_value = fn_801CAFAC(op->selector, channel, layer);
+                tmp = inpGetMidiCtrl(ctrl, midi, midiSet) & 0xffff;
                 break;
             }
-
-            value = (unsigned_value * (op->scale >> 1)) >> 15;
-            if (value > 0x3FFF)
-                value = 0x3FFF;
-
-            switch (op->flags & 0xF) {
+            tmp = (tmp * (slotPtr->source[i].scale >> 1)) >> 15;
+            if (tmp > 0x3FFF) {
+                tmp = 0x3FFF;
+            }
+            switch (slotPtr->source[i].combine & 0xF) {
             case 0:
-                accumulator = value;
-                signed_mode = 0;
+                value = tmp;
+                sign = 0;
                 break;
             case 1:
-                if (signed_mode)
-                    accumulator = clamp_signed(accumulator + value - 0x2000) + 0x2000;
-                else {
-                    accumulator += value;
-                    if ((u32)accumulator > 0x3FFF)
-                        accumulator = 0x3FFF;
+                if (sign != 0) {
+                    vtmp = (value + tmp);
+                    vtmp -= 0x2000;
+                    if (vtmp < -0x2000) {
+                        vtmp = -0x2000;
+                    } else if (vtmp > 0x1FFF) {
+                        vtmp = 0x1FFF;
+                    }
+                    value = vtmp + 0x2000;
+                } else {
+                    value += tmp;
+                    value = (value > 0x3FFF) ? 0x3FFF : value;
                 }
                 break;
             case 2:
-                if (signed_mode) {
-                    value = (value * (accumulator - 0x2000)) >> 14;
-                    accumulator = clamp_signed(value) + 0x2000;
+                if (sign != 0) {
+                    vtmp = (s32)(tmp * (value - 0x2000)) >> 14;
+                    if (vtmp < -0x2000) {
+                        vtmp = -0x2000;
+                    } else if (vtmp > 0x1FFF) {
+                        vtmp = 0x1FFF;
+                    }
+                    value = vtmp + 0x2000;
                 } else {
-                    u32 product = accumulator * value;
-                    product >>= 14;
-                    accumulator = product > 0x3FFF ? 0x3FFF : product;
+                    value = ((value * tmp) >> 0xE);
+                    value = (value > 0x3FFF) ? 0x3FFF : value;
                 }
                 break;
             case 3:
-                if (signed_mode)
-                    accumulator = clamp_signed(accumulator - 0x2000 - value) + 0x2000;
-                else {
-                    accumulator -= value;
-                    if (accumulator > 0x3FFF)
-                        accumulator = 0x3FFF;
-                    else if (accumulator < 0)
-                        accumulator = 0;
+                if (sign != 0) {
+                    vtmp = (value - 0x2000) - tmp;
+                    if (vtmp < -0x2000) {
+                        vtmp = -0x2000;
+                    } else if (vtmp > 0x1FFF) {
+                        vtmp = 0x1FFF;
+                    }
+                    value = vtmp + 0x2000;
+                } else {
+                    vtmp = value - tmp;
+                    value = (vtmp > 0x3FFF) ? 0x3FFF : (vtmp < 0) ? 0 : vtmp;
                 }
                 break;
             }
         }
     }
-    expression->result = accumulator;
-    return (u16)accumulator;
+
+    *(u16*)&slotPtr->oldValue = value;
+    return value;
 }

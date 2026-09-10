@@ -35,9 +35,10 @@ Shape* fn_8013F980(Collection* collection, const Input* value, Result* out)
     Iterator second_set, first_set;
     Result candidate;
     unsigned int second_words[60], first_words[60];
-    Shape* result = 0;
-    Shape* shapes = collection->shapes;
+    unsigned int offset;
     Vec3* candidate_point;
+    Shape* shapes = collection->shapes;
+    Shape* result = 0;
 
     fn_801E8E54(&first_set, 60, first_words);
     fn_801E8E54(&second_set, 60, second_words);
@@ -58,9 +59,8 @@ Shape* fn_8013F980(Collection* collection, const Input* value, Result* out)
                 if (side == 2) {
                     float best = lbl_806503D8;
                     int i;
-                    unsigned int offset = 0;
                     int count = node->count;
-                    for (i = 0; i < count; i++, offset += 2) {
+                    for (i = 0, offset = 0; i < count; offset += 2, i++) {
                         shape = &shapes[*(unsigned short*)((unsigned char*)node->indices + offset)];
                         if (fn_8013E284(value, shape, collection->context, &candidate)) {
                             float distance = fn_80211D4C(candidate_point, value);

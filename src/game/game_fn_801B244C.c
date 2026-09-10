@@ -1,62 +1,51 @@
 typedef unsigned char u8;
+typedef unsigned int u32;
 
-typedef struct ListNode ListNode;
-struct ListNode {
-    ListNode* next;
-    ListNode* prev;
+typedef struct NOTE NOTE;
+struct NOTE {
+    NOTE* next;
+    NOTE* prev;
+    u8 pad08[0xC];
 };
 
-typedef struct Owner {
-    u8 pad[0xE64];
-    ListNode* lists[3];
-} Owner;
+typedef struct SEQ_INSTANCE {
+    u8 pad000[0xE64];
+    NOTE* noteUsed[2];
+    NOTE* noteKeyOff;
+} SEQ_INSTANCE;
 
-extern ListNode* lbl_8064D384;
+extern NOTE* lbl_8064D384;
+#define noteFree lbl_8064D384
 
-void fn_801B244C(Owner* owner)
+void fn_801B244C(SEQ_INSTANCE* seq)
 {
-    ListNode* node;
-    ListNode* next;
-    ListNode* null_node = 0;
-    Owner* second;
+    NOTE* n;
+    u32 i;
+    for (i = 0; i < 2; i++) {
+        if ((n = seq->noteUsed[i]) != 0) {
+            for (; n->next != 0; n = n->next) {
+            }
 
-    node = owner->lists[0];
-    if (node != 0) {
-        while ((next = node->next) != 0) {
-            node = next;
+            if (noteFree != 0) {
+                n->next = noteFree;
+                noteFree->prev = n;
+            }
+
+            noteFree = seq->noteUsed[i];
+            seq->noteUsed[i] = 0;
         }
-        if (lbl_8064D384 != 0) {
-            node->next = lbl_8064D384;
-            lbl_8064D384->prev = node;
-        }
-        lbl_8064D384 = owner->lists[0];
-        owner->lists[0] = null_node;
     }
 
-    second = (Owner*)((u8*)owner + 4);
-    node = second->lists[0];
-    if (node != 0) {
-        while ((next = node->next) != 0) {
-            node = next;
+    if ((n = seq->noteKeyOff) != 0) {
+        for (; n->next != 0; n = n->next) {
         }
-        if (lbl_8064D384 != 0) {
-            node->next = lbl_8064D384;
-            lbl_8064D384->prev = node;
-        }
-        lbl_8064D384 = second->lists[0];
-        second->lists[0] = null_node;
-    }
 
-    node = owner->lists[2];
-    if (node != 0) {
-        while ((next = node->next) != 0) {
-            node = next;
+        if (noteFree != 0) {
+            n->next = noteFree;
+            noteFree->prev = n;
         }
-        if (lbl_8064D384 != 0) {
-            node->next = lbl_8064D384;
-            lbl_8064D384->prev = node;
-        }
-        lbl_8064D384 = owner->lists[2];
-        owner->lists[2] = 0;
+
+        noteFree = seq->noteKeyOff;
+        seq->noteKeyOff = 0;
     }
 }

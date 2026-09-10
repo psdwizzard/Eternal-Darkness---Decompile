@@ -1,72 +1,67 @@
+typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
+typedef signed int s32;
 
-typedef struct StreamResource {
-    void* value;
+typedef struct SDIR_TAB {
+    u8 pad[12];
+} SDIR_TAB;
+
+typedef struct DATA_TAB {
+    void* data;
     u16 id;
-    u16 references;
-} StreamResource;
+    u16 refCount;
+} DATA_TAB;
 
-extern unsigned char lbl_8061C748[];
+typedef struct SynthDataTables {
+    SDIR_TAB sdir[128];
+    DATA_TAB curve[2048];
+} SynthDataTables;
+
+extern u8 lbl_8061C748[];
 extern u16 lbl_8064D3F2;
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
 
-int fn_801BBD58(u16 id, void* value)
+#define dataSmpSDirs lbl_8061C748
+#define dataCurveNum lbl_8064D3F2
+
+s32 fn_801BBD58(u16 cid, void* curvedata)
 {
-    unsigned char* selected;
-    unsigned char* base = lbl_8061C748;
-    int count;
-    int index;
-    int cursor;
+    long i;
+    long j;
+    SynthDataTables* t = (SynthDataTables*)dataSmpSDirs;
 
     fn_801CE2B8();
-    count = lbl_8064D3F2;
-    index = 0;
-    while (index < count && ((StreamResource*)(base + 0x600))[index].id < id) {
-        index++;
+
+    for (i = 0; i < dataCurveNum && ((DATA_TAB*)((u8*)t + 0x600))[i].id < cid; ++i)
+        ;
+
+    if (i < dataCurveNum) {
+        if (cid != t->curve[i].id) {
+            if (dataCurveNum < 2048) {
+                for (j = dataCurveNum - 1; j >= i; --j)
+                    ((DATA_TAB*)(t->sdir + 128))[j + 1] = ((DATA_TAB*)(t->sdir + 128))[j];
+                ++dataCurveNum;
+            } else {
+                fn_801CE280();
+                return 0;
+            }
+        } else {
+            fn_801CE280();
+            t->curve[i].refCount++;
+            return 0;
+        }
+    } else if (dataCurveNum < 2048) {
+        ++dataCurveNum;
+    } else {
+        fn_801CE280();
+        return 0;
     }
 
-    if (index >= count) {
-        goto append;
-    }
-
-    selected = base + index * sizeof(StreamResource);
-    if (id == ((StreamResource*)(selected + 0x600))->id) {
-        goto existing;
-    }
-    if ((u32)count >= 0x800) {
-        goto insert_full;
-    }
-    cursor = count - 1;
-    for (; cursor >= index; cursor--) {
-        ((StreamResource*)(base + 0x600))[cursor + 1] =
-            ((StreamResource*)(base + 0x600))[cursor];
-    }
-    lbl_8064D3F2++;
-    goto write;
-
-insert_full:
-    fn_801CE280();
-    return 0;
-
-existing:
-    fn_801CE280();
-    ((StreamResource*)(selected + 0x600))->references++;
-    return 0;
-
-append:
-    if ((u32)count < 0x800) {
-        lbl_8064D3F2++;
-        goto write;
-    }
-    fn_801CE280();
-    return 0;
-
-write:
-    ((StreamResource*)(base + 0x600))[index].id = id;
-    ((StreamResource*)(base + 0x600))[index].value = value;
-    ((StreamResource*)(base + 0x600))[index].references = 1;
+    t->curve[i].id = cid;
+    t->curve[i].data = curvedata;
+    t->curve[i].refCount = 1;
     fn_801CE280();
     return 1;
 }

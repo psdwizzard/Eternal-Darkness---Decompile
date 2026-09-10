@@ -45,14 +45,14 @@ extern int fn_8009A2B8(void*, void*, void*, State80092D90*, void*, int, int,
 extern void fn_80201D2C(void *, int);
 extern void fn_80201D14(void *, int);
 
-int fn_80092D90(register void* object, register void* arg2,
-                register void* arg3, register void* arg4,
-                register State80092D90* state)
+int fn_80092D90(void* object, void* arg2,
+                void* arg3, void* arg4,
+                State80092D90* state)
 {
-    register void* target;
-    register void* runtime;
-    register Entry80092D90* entry;
-    int lookup = -1;
+    void* target;
+    void* runtime;
+    Entry80092D90* entry;
+    int lookup;
     Vec3_80092D90 position;
     Vec3_80092D90 copied_position;
     int result = 0;
@@ -71,6 +71,7 @@ int fn_80092D90(register void* object, register void* arg2,
         fn_80093148(object, arg3);
     } else {
         QueryResult80092D90* found;
+        lookup = -1;
         entry = fn_800935CC(0, 0, state->entry_id, 4);
         if (entry != 0)
             found = fn_800BC100(0, &entry->position, &lookup, 2, 0, 0, 0);

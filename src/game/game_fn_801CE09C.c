@@ -21,10 +21,10 @@ typedef struct AudioState {
     unsigned char storage[1];
 } AudioState;
 
-extern AudioState lbl_80631340;
+static AudioState sDspTask;
 extern unsigned char lbl_80253BC0[];
-extern u16 lbl_8064D4F8;
-extern u32 lbl_8064D528;
+extern u16 lbl_8064C2F8;
+extern volatile u32 lbl_8064D528;
 extern void fn_801CDED8(void);
 extern void fn_801CDEE8(void);
 extern void fn_8021B8E0(void);
@@ -34,21 +34,21 @@ extern void fn_801CE2B8(void);
 
 u32 fn_801CE09C(u32 unused)
 {
-    lbl_80631340.data = lbl_80253BC0;
-    lbl_80631340.value10 = lbl_8064D4F8;
-    lbl_80631340.value14 = 0;
-    lbl_80631340.buffer = lbl_80631340.storage;
-    lbl_80631340.buffer_size = 0x2000;
-    lbl_80631340.value20 = 0;
-    lbl_80631340.value24 = 0x10;
-    lbl_80631340.value26 = 0x30;
-    lbl_80631340.callback28 = fn_801CDED8;
-    lbl_80631340.callback2C = fn_801CDEE8;
-    lbl_80631340.value30 = 0;
-    lbl_80631340.value34 = 0;
-    lbl_80631340.unk04 = 0;
+    sDspTask.data = lbl_80253BC0;
+    sDspTask.value10 = lbl_8064C2F8;
+    sDspTask.value14 = 0;
+    sDspTask.buffer = sDspTask.storage;
+    sDspTask.buffer_size = 0x2000;
+    sDspTask.value20 = 0;
+    sDspTask.value24 = 0x10;
+    sDspTask.value26 = 0x30;
+    sDspTask.callback28 = fn_801CDED8;
+    sDspTask.callback2C = fn_801CDEE8;
+    sDspTask.value30 = 0;
+    sDspTask.value34 = 0;
+    sDspTask.unk04 = 0;
     fn_8021B8E0();
-    fn_8021BA30(&lbl_80631340);
+    fn_8021BA30(&sDspTask);
     lbl_8064D528 = 0;
     fn_801CE280();
     while (lbl_8064D528 == 0) {

@@ -1,62 +1,63 @@
 typedef unsigned char u8;
+typedef int s32;
+typedef unsigned int u32;
 
-typedef struct Node Node;
-struct Node {
-    Node* next;
-    Node* prev;
-    void* object;
-    int value;
-    u8 type;
-    u8 list;
+typedef struct NOTE NOTE;
+struct NOTE {
+    NOTE* next;
+    NOTE* prev;
+    u32 id;
+    s32 endTime;
+    u8 section;
+    u8 pad11[3];
 };
 
-typedef struct TypeInfo {
-    unsigned char pad[0x150C];
-    int limits[2];
-} TypeInfo;
+typedef struct SECTION {
+    struct {
+        s32 high;
+        s32 low;
+    } time[2];
+    u8 pad10[0x38 - 0x10];
+} SECTION;
 
-typedef struct State {
-    unsigned char pad[0xE64];
-    Node* lists[3];
-} State;
+typedef struct SEQ_INSTANCE {
+    u8 pad000[0xE64];
+    NOTE* noteUsed[2];
+    NOTE* noteKeyOff;
+    u8 padE70[0x150C - 0xE70];
+    SECTION section[15];
+} SEQ_INSTANCE;
 
-extern State* lbl_8064D380;
-extern void fn_801B80D8(void*);
+extern SEQ_INSTANCE* lbl_8064D380;
+extern void fn_801B80D8(u32);
 
-int fn_801B261C(void)
+#define cseq lbl_8064D380
+#define synthSendKeyOff fn_801B80D8
+
+u32 fn_801B261C(void)
 {
-    unsigned int list_index;
-    unsigned int list_offset = 0;
-    unsigned int limit_offset = 0;
-    Node* node;
+    NOTE* note;
+    u32 i;
 
-    for (list_index = 0; list_index < 2; list_index++, list_offset += 4, limit_offset += 8) {
-        node = *(Node**)((unsigned char*)lbl_8064D380 + 0xE64 + list_offset);
-        if (node != 0) {
-            while (node->value <= *(int*)((unsigned char*)lbl_8064D380 +
-                                          node->type * 0x38 + 0x150C + limit_offset)) {
-                fn_801B80D8(node->object);
-                *(Node**)((unsigned char*)lbl_8064D380 + 0xE64 + list_offset) = node->next;
-                if (*(Node**)((unsigned char*)lbl_8064D380 + 0xE64 + list_offset) != 0) {
-                    (*(Node**)((unsigned char*)lbl_8064D380 + 0xE64 + list_offset))->prev = 0;
+    for (i = 0; i < 2; i++) {
+        if ((note = cseq->noteUsed[i]) != 0) {
+            while (note->endTime <= cseq->section[note->section].time[i].high) {
+                synthSendKeyOff(note->id);
+
+                if ((cseq->noteUsed[i] = note->next) != 0) {
+                    cseq->noteUsed[i]->prev = 0;
                 }
 
-                node->next = lbl_8064D380->lists[2];
-                if (lbl_8064D380->lists[2] != 0) {
-                    lbl_8064D380->lists[2]->prev = node;
+                if ((note->next = cseq->noteKeyOff) != 0) {
+                    cseq->noteKeyOff->prev = note;
                 }
-                lbl_8064D380->lists[2] = node;
-
-                node = *(Node**)((unsigned char*)lbl_8064D380 + 0xE64 + list_offset);
-                if (node == 0) {
+                cseq->noteKeyOff = note;
+                if ((note = cseq->noteUsed[i]) == 0) {
                     break;
                 }
             }
         }
     }
 
-    if (lbl_8064D380->lists[0] == 0 && lbl_8064D380->lists[1] == 0) {
-        return 0;
-    }
-    return 1;
+    return cseq->noteUsed[0] != 0 || cseq->noteUsed[1] != 0;
 }

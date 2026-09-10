@@ -14,19 +14,19 @@ extern void fn_800F34CC(void *);
 extern void fn_800F34C4(void *);
 extern void fn_800F34BC(void *);
 
+static inline void TRKSetBufferUsed(TRKBuffer* buffer, int used)
+{
+    buffer->in_use = used;
+}
+
 int TRKInitializeMessageBuffers(void)
 {
-    register TRKBuffer *buffer;
     int i;
-
-    i = 0;
-    buffer = &lbl_80328610[i];
-
-    for (i = 0; i < 3; i++, buffer++) {
-        fn_800F34CC(buffer);
-        fn_800F34C4(buffer);
-        buffer->in_use = 0;
-        fn_800F34BC(buffer);
+    for (i = 0; i < 3; i++) {
+        fn_800F34CC(&lbl_80328610[i]);
+        fn_800F34C4(&lbl_80328610[i]);
+        TRKSetBufferUsed(&lbl_80328610[i], 0);
+        fn_800F34BC(&lbl_80328610[i]);
     }
     return 0;
 }

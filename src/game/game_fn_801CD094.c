@@ -1,47 +1,53 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
-typedef struct Entry {
+typedef struct DSPvoice {
     u8 pad00[0x20];
-    u32 cursor;
+    u32 currentAddr;
     u8 pad24[0x54];
-    u32 base;
+    u32 smpAddr;
     u8 pad7C[0x14];
-    u8 mode;
+    u8 smpCompType;
     u8 pad91[0x5B];
     u8 state;
     u8 padED[7];
-} Entry;
+} DSPvoice;
 
-extern Entry* lbl_8064D4AC;
+extern DSPvoice* lbl_8064D4AC;
 
-u32 fn_801CD094(u32 index)
+#define dspVoice lbl_8064D4AC
+
+u32 fn_801CD094(u32 slot)
 {
-    Entry* entries = lbl_8064D4AC;
-    Entry* entry = &lbl_8064D4AC[index];
-    u32 offset = index * sizeof(Entry);
+    int mode;
+    u32 pos;
+    u32 lowBits;
+    int samplePos;
+    DSPvoice* voice;
 
-    if (entry->state != 2) {
+    voice = &dspVoice[slot];
+    if (voice->state != 2) {
         return 0;
     }
-
-    switch (entry->mode) {
+    mode = voice->smpCompType;
+    switch (mode) {
     case 0:
     case 1:
     case 4:
-    case 5: {
-        Entry* current = (Entry*)((u8*)entries + offset);
-        u32 result = (current->cursor - current->base * 2) >> 4;
-        u32 remainder = current->cursor & 0xF;
-        result *= 14;
-        if (remainder < 2) {
-            return result;
+    case 5:
+        pos = dspVoice[slot].currentAddr;
+        samplePos = ((pos - 2 * (u32)dspVoice[slot].smpAddr) >> 4) * 0xe;
+        lowBits = pos & 0xf;
+        if (lowBits < 2) {
+            return samplePos;
         }
-        return (remainder + result) - 2;
-    }
+        samplePos = lowBits + samplePos;
+        return samplePos - 2;
     case 3:
-        return entry->cursor - entry->base;
+        return (int)voice->currentAddr - (u32)voice->smpAddr;
     case 2:
-        return entry->cursor - (entry->base >> 1);
+        return (int)voice->currentAddr - ((u32)voice->smpAddr >> 1);
+    default:
+        return slot;
     }
 }

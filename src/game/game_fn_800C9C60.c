@@ -7,7 +7,7 @@ extern void *fn_80201BC8();
 extern int fn_80038308(void *, int, s16 *);
 extern int fn_80038464(void *, int, s16 *);
 extern int fn_80201B64(void *);
-extern float fn_80121104(void *);
+extern void fn_80121104(void *, float);
 extern float fn_8012110C(void *);
 
 float fn_800C9C60(void *object)
@@ -21,9 +21,7 @@ float fn_800C9C60(void *object)
         fn_80038308(object, 0, &first) != 0 &&
         fn_80038464(object, 0, &second) != 0) {
         int kind = fn_80201B64(object);
-        if (kind == 8 || kind == 9) {
-            result = fn_8012110C(runtime);
-        } else {
+        if (kind != 8 && kind != 9) {
             float ratio;
             if (second != 0) {
                 ratio = (float)first / (float)second;
@@ -31,7 +29,9 @@ float fn_800C9C60(void *object)
                 ratio = lbl_8064F29C;
             }
             result = ratio;
-            fn_80121104(runtime);
+            fn_80121104(runtime, result);
+        } else {
+            result = fn_8012110C(runtime);
         }
     }
     return result;

@@ -1,81 +1,103 @@
+typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
+typedef int s32;
 
-typedef struct Bucket {
-    u16 count;
-    u16 start;
-} Bucket;
+typedef struct SDIR_TAB {
+    void* data;
+    void* base;
+    u16 numSmp;
+    u16 res;
+} SDIR_TAB;
 
-typedef struct ResourceEntry8 {
-    void* value;
+typedef struct DATA_TAB {
+    void* addr;
     u16 id;
-    u16 references;
-} ResourceEntry8;
+    u16 refCount;
+} DATA_TAB;
 
-extern unsigned char lbl_8061C748[];
+typedef struct LAYER_TAB {
+    void* addr;
+    u16 id;
+    u16 refCount;
+    u32 numEntries;
+} LAYER_TAB;
+
+typedef struct MAC_MAINTAB {
+    u16 num;
+    u16 subTabIndex;
+} MAC_MAINTAB;
+
+typedef struct MAC_SUBTAB {
+    void* data;
+    u16 id;
+    u16 refCount;
+} MAC_SUBTAB;
+
+static SDIR_TAB dataSmpSDirs[128];
+static DATA_TAB dataCurveTable[2048];
+static DATA_TAB dataKeymapTable[256];
+static LAYER_TAB dataLayerTable[256];
+static MAC_MAINTAB dataMacroBucketTable[512];
+static MAC_SUBTAB dataMacroTable[2048];
+
 extern u16 lbl_8064D3F8;
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
 
-int fn_801BC8F4(u16 id, void* value)
+#define dataMacTotal lbl_8064D3F8
+#define sndBegin fn_801CE2B8
+#define sndEnd fn_801CE280
+
+s32 fn_801BC8F4(u16 mid, void* macroaddr)
 {
-    unsigned char* base = lbl_8061C748;
-    u16 bucket_count;
-    int bucket_start;
-    int index;
-    int insertion;
-    int cursor;
+    u32 main;
+    long pos;
+    long base;
+    long i;
 
-    fn_801CE2B8();
-    bucket_count = ((Bucket*)(base + 0x5A00))[id >> 6].count;
+    sndBegin();
 
-    if (bucket_count == 0) {
-        bucket_start = lbl_8064D3F8;
-        ((Bucket*)(base + 0x5A00))[id >> 6].start = bucket_start;
-        insertion = bucket_start;
+    main = mid >> 6;
+
+    if (dataMacroBucketTable[main].num == 0) {
+        pos = base = dataMacroBucketTable[main].subTabIndex = dataMacTotal;
     } else {
-        bucket_start = ((Bucket*)(base + 0x5A00))[id >> 6].start;
-        index = 0;
-        while (index < bucket_count &&
-               ((ResourceEntry8*)(base + 0x6200))[bucket_start + index].id < id) {
-            index++;
+        base = dataMacroBucketTable[main].subTabIndex;
+        for (i = 0; i < dataMacroBucketTable[main].num && dataMacroTable[base + i].id < mid; ++i) {
         }
-        if (index < bucket_count) {
-            insertion = bucket_start + index;
-            if (((ResourceEntry8*)(base + 0x6200))[insertion].id == id) {
-                ((ResourceEntry8*)(base + 0x6200))[insertion].references++;
-                fn_801CE280();
+
+        if (i < dataMacroBucketTable[main].num) {
+            pos = base + i;
+            if (mid == dataMacroTable[pos].id) {
+                dataMacroTable[pos].refCount++;
+                sndEnd();
                 return 0;
             }
         } else {
-            insertion = bucket_start + index;
+            pos = base + i;
         }
     }
 
-    if ((u32)lbl_8064D3F8 >= 0x800) {
-        goto full;
-    }
-
-    for (index = 0; index < 0x200; index++) {
-        if (((Bucket*)(base + 0x5A00))[index].start > bucket_start) {
-            ((Bucket*)(base + 0x5A00))[index].start++;
+    if (dataMacTotal < 2048) {
+        for (i = 0; i < 512; ++i) {
+            if (dataMacroBucketTable[i].subTabIndex > base) {
+                dataMacroBucketTable[i].subTabIndex++;
+            }
         }
+
+        for (i = dataMacTotal - 1; i >= pos; --i) {
+            dataMacroTable[i + 1] = dataMacroTable[i];
+        }
+
+        dataMacroTable[pos].id = mid;
+        dataMacroTable[pos].data = macroaddr;
+        dataMacroTable[pos].refCount = 1;
+        dataMacroBucketTable[main].num++;
+        dataMacTotal++;
+        sndEnd();
+        return 1;
     }
-
-    for (cursor = lbl_8064D3F8 - 1; cursor >= insertion; cursor--) {
-        ((ResourceEntry8*)(base + 0x6200))[cursor + 1] =
-            ((ResourceEntry8*)(base + 0x6200))[cursor];
-    }
-
-    ((ResourceEntry8*)(base + 0x6200))[insertion].id = id;
-    ((ResourceEntry8*)(base + 0x6200))[insertion].value = value;
-    ((ResourceEntry8*)(base + 0x6200))[insertion].references = 1;
-    ((Bucket*)(base + 0x5A00))[id >> 6].count++;
-    lbl_8064D3F8++;
-    fn_801CE280();
-    return 1;
-
-full:
-    fn_801CE280();
+    sndEnd();
     return 0;
 }

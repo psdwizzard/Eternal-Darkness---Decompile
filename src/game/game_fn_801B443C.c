@@ -2,126 +2,154 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-typedef struct ChannelEntry {
+typedef struct SynthTrackCommand {
     u32 value0;
     u8 pad04[4];
-    u16 type;
-    u16 index;
-} ChannelEntry;
+    u16 command;
+    u16 arg;
+} SynthTrackCommand;
 
-typedef struct Channel {
+typedef struct SynthTrackCursor {
     u8* base;
-    ChannelEntry* current;
-} Channel;
+    SynthTrackCommand* current;
+} SynthTrackCursor;
 
-typedef struct Decoder {
-    u32 position;
-    u32 base;
-    u8* current;
+typedef struct SynthTimedInput {
+    u32 nextTime;
+} SynthTimedInput;
+
+typedef struct SynthSequenceState {
+    u32 lastTime;
+    u32 baseTime;
+    u8* noteData;
     u8 pad0C[12];
-    u32 lower;
+    SynthTimedInput pitchBend;
     u8 pad1C[8];
-    u32 upper;
-} Decoder;
+    SynthTimedInput modulation;
+    u8 pad28[4];
+} SynthSequenceState;
 
-typedef struct Result {
+typedef struct SynthSequenceEvent {
     u8 pad00[8];
-    u32 value8;
-    u8* source;
-    Decoder* decoder;
+    u32 time;
+    u8* data;
+    SynthSequenceState* state;
     u8 type;
-    u8 channel;
+    u8 trackId;
     u8 pad16[2];
-} Result;
+} SynthSequenceEvent;
 
-extern u8* lbl_8064D380;
+typedef struct SynthSection {
+    u8 pad00[0x12];
+    u8 loopDisable;
+    u8 pad13[0x38 - 0x13];
+} SynthSection;
 
-Result* fn_801B443C(u8 channel_index)
+typedef struct SynthSequencer {
+    u8 pad000[0x124];
+    SynthTrackCursor track[0x48];
+    SynthSequenceState pattern[0x40];
+    u8 padE64[0x80];
+    SynthSequenceEvent channelEvents[0x40];
+    u8* keyGroupMap;
+    u8 pad14E8[0x150C - 0x14E8];
+    SynthSection section[1];
+} SynthSequencer;
+
+extern SynthSequencer* lbl_8064D380;
+#define cseq lbl_8064D380
+#define TRACK_CMD(t) ((t)->current)
+
+SynthSequenceEvent* fn_801B443C(u8 channel)
 {
-    u8* state = lbl_8064D380;
-    u8 index = channel_index;
-    Channel* channel = (Channel*)(state + 0x124 + index * 8);
-    Decoder* decoder = (Decoder*)(state + 0x364 + index * 0x2C);
-    Result* result;
+    u32 trackId;
+    SynthTrackCursor* track;
+    SynthSequenceEvent* ev;
+    SynthSequenceState* pattern;
+    u32 patternTime;
+    u32 pitchTime;
+    u32 modTime;
 
-    if (channel->current == 0)
-        goto no_result;
+    trackId = channel;
+    track = &cseq->track[channel];
+    pattern = &cseq->pattern[trackId];
 
-    result = (Result*)(state + 0xEE4 + index * 0x18);
-    result->channel = channel_index;
-    result->decoder = decoder;
+    if (track->current != 0) {
+        ev = &cseq->channelEvents[trackId];
+        ev->trackId = channel;
+        ev->state = pattern;
 
-retry:
-    if (decoder->current == 0) {
-direct:
-        if (channel->current->type == 0xFFFF) {
-            channel->current = 0;
-            return 0;
-        }
-        if (channel->current->type == 0xFFFE) {
-            u8* global_state = lbl_8064D380;
-            u8* table = *(u8**)(global_state + 0x14E4);
-            if (table == 0) {
-                if (global_state[0x151E] == 0)
-                    goto direct_result;
-                channel->current = 0;
-                return 0;
-            }
-            if (global_state[0x151E + table[index] * 0x38] != 0) {
-                channel->current = 0;
-                return 0;
-            }
-direct_result:
-            result->type = 3;
-            result->value8 = channel->current->value0;
-            channel->current = (ChannelEntry*)(channel->base + channel->current->index * 12);
-            return result;
-        }
-        result->type = 4;
-        result->value8 = channel->current->value0;
-        result->source = (u8*)channel->current;
-        channel->current = (ChannelEntry*)((u8*)channel->current + 12);
-        return result;
-    }
-
-    {
-        u32 lower = decoder->lower;
-        u32 upper = decoder->upper;
-        u8* current = decoder->current;
-        u32 position = *(u16*)current + decoder->position;
-        if (position < lower) {
-            if (position < upper) {
-                if (current[2] == 0xFF && current[3] == 0xFF) {
-                    decoder->current = 0;
-                    goto direct;
+        for (;;) {
+            if (pattern->noteData == 0) {
+            process_track_command:
+                if (TRACK_CMD(track)->command == 0xFFFF) {
+                    track->current = 0;
+                    return 0;
                 }
-                result->source = current;
-                decoder->position = position;
-                current = decoder->current;
-                if (current[2] & 0x80)
-                    decoder->current = current + 4;
-                else if ((current[2] | current[3]) == 0) {
-                    decoder->current = current + 4;
-                    goto retry;
-                } else
-                    decoder->current = current + 6;
-                result->type = 0;
-                result->value8 = position + decoder->base;
-            } else
-                goto upper_result;
-        } else {
-            if (lower < upper) {
-                result->value8 = lower + decoder->base;
-                result->type = 2;
-            } else {
-upper_result:
-                result->value8 = upper + decoder->base;
-                result->type = 1;
+
+                if (TRACK_CMD(track)->command == 0xFFFE) {
+                    if (cseq->keyGroupMap == 0) {
+                        if (cseq->section[0].loopDisable) {
+                            track->current = 0;
+                            return 0;
+                        }
+                    } else if (cseq->section[cseq->keyGroupMap[trackId]].loopDisable) {
+                        track->current = 0;
+                        return 0;
+                    }
+
+                    ev->type = 3;
+                    ev->time = TRACK_CMD(track)->value0;
+                    track->current = (SynthTrackCommand*)(track->base + TRACK_CMD(track)->arg * sizeof(SynthTrackCommand));
+                    return ev;
+                }
+
+                ev->type = 4;
+                ev->time = TRACK_CMD(track)->value0;
+                ev->data = (u8*)track->current;
+                track->current = TRACK_CMD(track) + 1;
+                return ev;
+            }
+
+            pitchTime = pattern->pitchBend.nextTime;
+            modTime = pattern->modulation.nextTime;
+
+            for (;;) {
+                patternTime = *(u16*)pattern->noteData + pattern->lastTime;
+                if (patternTime < pitchTime) {
+                    if (patternTime >= modTime) {
+                        goto modulation_event;
+                    }
+                    if (pattern->noteData[2] == 0xFF && pattern->noteData[3] == 0xFF) {
+                        pattern->noteData = 0;
+                        goto process_track_command;
+                    }
+
+                    ev->data = pattern->noteData;
+                    pattern->lastTime = patternTime;
+
+                    if ((pattern->noteData[2] & 0x80) != 0) {
+                        pattern->noteData += 4;
+                    } else if ((pattern->noteData[2] | pattern->noteData[3]) == 0) {
+                        pattern->noteData += 4;
+                        continue;
+                    } else {
+                        pattern->noteData += 6;
+                    }
+                    ev->type = 0;
+                    ev->time = patternTime + pattern->baseTime;
+                } else if (pitchTime < modTime) {
+                    ev->time = pitchTime + pattern->baseTime;
+                    ev->type = 2;
+                } else {
+                modulation_event:
+                    ev->time = modTime + pattern->baseTime;
+                    ev->type = 1;
+                }
+                return ev;
             }
         }
     }
-    return result;
 
-no_result:
     return 0;
 }

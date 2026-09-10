@@ -3,54 +3,74 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 
 typedef struct VoiceLink {
-    u8 previous;
+    u8 prev;
     u8 next;
-    u16 active;
+    u16 user;
 } VoiceLink;
 
-typedef struct VoiceState {
-    u8 pad_000[0x8C0];
-    VoiceLink links[64];
-    u8 heads[256];
-    u8 pad_AC0[0x400];
-    VoiceLink free_links[64];
-} VoiceState;
+typedef struct SynthRootListNode {
+    u16 next;
+    u16 prev;
+} SynthRootListNode;
 
-typedef struct Limits {
-    u8 pad_000[0x210];
-    u8 total;
-} Limits;
+typedef struct SynthInfo {
+    u8 pad000[0x210];
+    u8 voiceCount;
+} SynthInfo;
 
-extern Limits lbl_80619C20;
-extern VoiceState lbl_80626DA0;
+extern SynthInfo lbl_80619C20;
+static u8 vidLists[0x800];
+static u8 midiKeySlots[0x80];
+static u8 directSlots[0x40];
+static VoiceLink voicePriorityLinks[64];
+static u8 voicePriorityGroupHeads[256];
+static SynthRootListNode voicePrioritySortLinks[256];
+static VoiceLink voiceFreeListSlots[64];
 extern u16 lbl_8064D464;
 extern u8 lbl_8064D466;
 extern u8 lbl_8064D467;
 extern u8 lbl_8064D468;
 extern u8 lbl_8064D469;
 
-void fn_801C1CB0(void)
+#define synthInfo lbl_80619C20
+#define voicePrioSortedRoot lbl_8064D464
+#define voiceMusicRunning lbl_8064D466
+#define voiceFxRunning lbl_8064D467
+#define voiceFreeListTail lbl_8064D468
+#define voiceFreeListRoot lbl_8064D469
+
+static inline void voiceInitFreeList(void)
 {
     u32 i;
 
-    for (i = 0; i < lbl_80619C20.total; i++) {
-        lbl_80626DA0.free_links[i].previous = i - 1;
-        lbl_80626DA0.free_links[i].next = i + 1;
-        lbl_80626DA0.free_links[i].active = 1;
+    for (i = 0; i < synthInfo.voiceCount; i++) {
+        voiceFreeListSlots[i].prev = i - 1;
+        voiceFreeListSlots[i].next = i + 1;
+        voiceFreeListSlots[i].user = 1;
     }
-    lbl_80626DA0.free_links[0].previous = 0xFF;
-    lbl_80626DA0.free_links[lbl_80619C20.total - 1].next = 0xFF;
-    lbl_8064D469 = 0;
-    lbl_8064D468 = lbl_80619C20.total - 1;
+    voiceFreeListSlots[0].prev = 0xff;
+    voiceFreeListSlots[synthInfo.voiceCount - 1].next = 0xff;
+    voiceFreeListRoot = 0;
+    voiceFreeListTail = synthInfo.voiceCount - 1;
+}
 
-    for (i = 0; i < lbl_80619C20.total; i++) {
-        lbl_80626DA0.links[i].active = 0;
-    }
+static inline void voiceInitPrioSort(void)
+{
+    u32 i;
 
-    for (i = 0; i < 256; i++) {
-        lbl_80626DA0.heads[i] = 0xFF;
+    for (i = 0; i < synthInfo.voiceCount; i++) {
+        voicePriorityLinks[i].user = 0;
     }
-    lbl_8064D467 = 0;
-    lbl_8064D464 = 0xFFFF;
-    lbl_8064D466 = 0;
+    for (i = 0; i < 0x100; i++) {
+        voicePriorityGroupHeads[i] = 0xff;
+    }
+    voicePrioSortedRoot = 0xffff;
+}
+
+void fn_801C1CB0(void)
+{
+    voiceInitFreeList();
+    voiceInitPrioSort();
+    voiceFxRunning = 0;
+    voiceMusicRunning = 0;
 }

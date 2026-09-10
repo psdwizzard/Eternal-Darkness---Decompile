@@ -12,11 +12,20 @@ extern CacheEntry lbl_8061A9C4[8][4];
 extern CacheEntry lbl_8061A544[8][4];
 extern u32 lbl_80630770[8][16];
 
+static inline void inpResetGlobalMIDIDirtyFlags(void)
+{
+    u32 i;
+    u32 j;
+
+    for (i = 0; i < 8; ++i) {
+        for (j = 0; j < 16; ++j) {
+            lbl_80630770[i][j] = 0xff;
+        }
+    }
+}
+
 void fn_801CBE58(u8* voice)
 {
-    register s32 i;
-    register s32 j;
-
     if (voice != 0) {
         voice[0x218] = 7;
         voice[0x219] = 0;
@@ -69,16 +78,16 @@ void fn_801CBE58(u8* voice)
         voice[0x1D5] = 0;
         voice[0xA8] = 0;
     } else {
+        u32 i;
+        u32 j;
+
         for (i = 0; i < 8; i++) {
             for (j = 0; j < 4; j++) {
                 lbl_8061A9C4[i][j].state = 0;
                 lbl_8061A544[i][j].state = 0;
             }
         }
-        for (i = 0; i < 8; i++) {
-            for (j = 0; j < 16; j++) {
-                lbl_80630770[i][j] = 0xFF;
-            }
-        }
+
+        inpResetGlobalMIDIDirtyFlags();
     }
 }

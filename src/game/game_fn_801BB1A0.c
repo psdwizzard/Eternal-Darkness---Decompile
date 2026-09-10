@@ -1,72 +1,88 @@
 typedef unsigned char u8;
+typedef signed short s16;
+typedef unsigned short u16;
 typedef unsigned int u32;
 
-typedef struct StreamSlot {
-    u32 id;
+typedef struct SND_ADPCMSTREAM_INFO {
+    s16 coefTab[8][2];
+} SND_ADPCMSTREAM_INFO;
+
+typedef struct STREAM_INFO {
+    u32 stid;
     u32 flags;
     u8 state;
-    u8 pad09[0x13];
-    u32 active;
-    u8 pad20[0x28];
+    u8 type;
+    u8 pad0A[2];
+    u32 (*updateFunction)(void*, u32, void*, u32, u32);
+    s16* buffer;
+    u32 size;
+    u32 bytes;
+    u32 last;
+    u16 numCoef;
+    u8 pad22[6];
+    s16 coefTab[8][2];
     u32 voice;
-    u8 pad4C[8];
-    u8 channel;
-    u8 pad55[0xB];
-    u32 cache;
-} StreamSlot;
+    u32 user;
+    u32 frq;
+    u8 prio;
+    u8 vol;
+    u8 pan;
+    u8 span;
+    u8 auxa;
+    u8 auxb;
+    u8 origPan;
+    u8 origSPan;
+    u8 studio;
+    u8 hwStreamHandle;
+    u8 pad5E[2];
+    u32 nextStreamHandle;
+} STREAM_INFO;
 
-extern StreamSlot lbl_8061AE48[];
+static STREAM_INFO streamInfo[64];
+
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
-extern u32 fn_801C1FE0(u8);
 
-static inline u32 find_stream(StreamSlot* slots, u32 id)
+#define hwDisableIrq fn_801CE2B8
+#define hwEnableIrq fn_801CE280
+
+extern u32 fn_801C1FE0(u8);
+#define voiceBlock fn_801C1FE0
+
+
+static inline u32 GetPrivateIndex(u32 publicID)
 {
     u32 i;
-
-    for (i = 0; i < 64; i++) {
-        if (slots[i].state != 0 && slots[i].id == id) {
+    for (i = 0; i < 64; ++i) {
+        if (streamInfo[i].state != 0 && publicID == streamInfo[i].stid) {
             return i;
         }
     }
     return -1;
 }
 
-int fn_801BB1A0(u32 id)
+u32 fn_801BB1A0(u32 stid)
 {
-    register StreamSlot* slot;
-    StreamSlot* slots = lbl_8061AE48;
-    u32 index;
-    int result = 0;
-    u8* state;
-    u8* cache_base;
-    u32 cache;
-    u32 voice;
+    u32 i;
+    u32 ret = 0;
 
-    fn_801CE2B8();
-    index = find_stream(slots, id);
-    if (index != (u32)-1) {
-        id = index * sizeof(StreamSlot);
-        state = (u8*)slots + id + 8;
-        if (*state == 3) {
-            slot = (StreamSlot*)((u8*)slots + id);
-            voice = fn_801C1FE0(slot->channel);
-            slot->voice = voice;
-            if (voice == (u32)-1) {
-                fn_801CE280();
+    hwDisableIrq();
+    i = GetPrivateIndex(stid);
+    if (i != -1) {
+        if (streamInfo[i].state == 3) {
+            if ((streamInfo[i].voice = voiceBlock(streamInfo[i].prio)) == -1) {
+                hwEnableIrq();
                 return 0;
             }
-            slot->active = 0;
-            *state = 1;
+            streamInfo[i].last = 0;
+            streamInfo[i].state = 1;
         }
-        cache_base = (u8*)slots + 0x60;
-        cache = *(u32*)(cache_base + id);
-        if (cache != (u32)-1) {
-            result = fn_801BB1A0(*(u32*)(cache_base + index * sizeof(StreamSlot)));
+        if (streamInfo[i].nextStreamHandle != 0xffffffff) {
+            ret = fn_801BB1A0(streamInfo[i].nextStreamHandle);
         } else {
-            result = 1;
+            ret = 1;
         }
     }
-    fn_801CE280();
-    return result;
+    hwEnableIrq();
+    return ret;
 }

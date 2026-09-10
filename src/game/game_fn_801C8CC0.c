@@ -2,95 +2,78 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-typedef struct Command Command;
-typedef struct CommandList CommandList;
-typedef struct VoiceState VoiceState;
+typedef union ParameterData {
+    u16 value14;
+    u8 value7;
+} ParameterData;
 
-struct Command {
-    u8 command;
+typedef struct Parameter {
+    u8 ctrl;
     u8 pad01;
-    u16 value;
-};
+    ParameterData paraData;
+} Parameter;
 
-struct CommandList {
-    u8 count;
+typedef struct ParameterInfo {
+    u8 numPara;
     u8 pad01[3];
-    Command* commands;
-};
+    Parameter* paraArray;
+} ParameterInfo;
 
-struct VoiceState {
+typedef struct Emitter {
     char pad00[0xC];
-    CommandList* command_list;
+    ParameterInfo* paraInfo;
     u32 flags;
     char pad14[0x28];
-    u32 handle;
+    u32 vid;
     char pad40[0xC];
-    float gain;
-};
+    float fade;
+} Emitter;
 
-extern float lbl_80650FD0;
-extern float lbl_80650FD4;
-extern float lbl_80650FE4;
-extern float lbl_80650FE8;
+extern void fn_801B7E84(u32, u8, u8);
+extern void fn_801B7F6C(u32, u8, u16);
 
-extern void fn_801B7E84(u32, u32, u32);
-extern void fn_801B7F6C(u32, u32, u32);
-extern u32 fn_800F5C54(float);
-
-void fn_801C8CC0(VoiceState* state, float gain, float pan, float unused,
-                 float surround, float pitch)
+static inline u8 clip127(u8 value)
 {
-    u32 handle = state->handle;
-    int value;
-    u32 pitch_value;
+    if (value > 0x7f) {
+        return 0x7f;
+    }
+    return value;
+}
 
-    if ((state->flags & 0x00100000) != 0) {
-        value = (int)(lbl_80650FD0 * (state->gain * gain));
-        if ((u8)value > 0x7F) {
-            value = 0x7F;
-        }
-        fn_801B7E84(handle, 7, value);
+void fn_801C8CC0(Emitter* emitter, float vol, float xPan, float yPan, float zPan, float pitch)
+{
+    u32 handle;
+    u16 value14;
+    u8 i;
+    Parameter* ctrl;
+    handle = emitter->vid;
+    if ((emitter->flags & 0x00100000) != 0) {
+        fn_801B7E84(handle, 7, clip127(127.0f * (emitter->fade * vol)));
     } else {
-        value = (int)(lbl_80650FD0 * gain);
-        if ((u8)value > 0x7F) {
-            value = 0x7F;
-        }
-        fn_801B7E84(handle, 7, value);
+        fn_801B7E84(handle, 7, clip127(127.0f * vol));
     }
 
-    value = (int)(lbl_80650FE4 * (lbl_80650FD4 + pan));
-    if ((u8)value > 0x7F) {
-        value = 0x7F;
-    }
-    fn_801B7E84(handle, 10, value);
+    fn_801B7E84(handle, 10, clip127(64.0f * (1.0f + xPan)));
 
-    value = (int)(lbl_80650FE4 * (lbl_80650FD4 - surround));
-    if ((u8)value > 0x7F) {
-        value = 0x7F;
-    }
-    fn_801B7E84(handle, 0x83, value);
+    fn_801B7E84(handle, 0x83, clip127(64.0f * (1.0f - zPan)));
 
-    pitch = lbl_80650FE8 * pitch;
-    pitch_value = fn_800F5C54(pitch);
-    if (pitch_value > 0x3FFF) {
-        pitch_value = 0x3FFF;
+    pitch = 8192.0f * pitch;
+    if ((u32)pitch > 0x3fff) {
+        value14 = 0x3fff;
     } else {
-        pitch_value = (u16)fn_800F5C54(pitch);
+        value14 = (u16)(u32)pitch;
     }
-    fn_801B7F6C(handle, 0x84, pitch_value);
+    fn_801B7F6C(handle, 0x84, value14);
 
-    if (state->command_list != 0) {
-        u32 i = 0;
-        Command* command = state->command_list->commands;
-        while ((u8)i < state->command_list->count) {
-            if (command->command < 0x40 || command->command == 0x80 ||
-                command->command == 0x84) {
-                fn_801B7F6C(handle, command->command, command->value);
+    if (emitter->paraInfo != 0) {
+        ctrl = emitter->paraInfo->paraArray;
+        for (i = 0; i < emitter->paraInfo->numPara; i++) {
+            if (ctrl->ctrl < 0x40 || ctrl->ctrl == 0x80 || ctrl->ctrl == 0x84) {
+                fn_801B7F6C(handle, ctrl->ctrl, ctrl->paraData.value14);
             } else {
-                fn_801B7E84(handle, command->command, (u8)command->value);
+                fn_801B7E84(handle, ctrl->ctrl, ctrl->paraData.value7);
             }
-            command++;
-            i++;
+            ctrl++;
         }
     }
 }

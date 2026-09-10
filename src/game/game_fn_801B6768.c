@@ -6,216 +6,290 @@ typedef int s32;
 typedef unsigned int u32;
 typedef unsigned long long u64;
 
-extern u8* lbl_8064D3D0;
-extern u32 lbl_8064D3E0;
-extern u32 lbl_8064D3E4;
-extern s32 fn_801CC6DC(u32);
+typedef struct SynthLfo {
+    u32 time;
+    u32 period;
+    s16 value;
+    s16 lastValue;
+} SynthLfo;
+
+typedef struct McmdVoiceState {
+    u8 pad000[0x24];
+    u32 lastLowCallTimeHi;
+    u32 lastLowCallTimeLo;
+    u8 pad02C[0x34 - 0x2C];
+    u32 addr;
+    u8 pad038[0xA8 - 0x38];
+    u8 timeUsedByInput;
+    u8 pad0A9[0x114 - 0xA9];
+    u32 cFlagsHi;
+    u32 cFlagsLo;
+    u8 pad11C[5];
+    u8 midi;
+    u8 midiSet;
+    u8 pad123;
+    u32 sInfo;
+    u8 pad128[4];
+    u16 curNote;
+    s8 curDetune;
+    u8 orgNote;
+    u8 lastNote;
+    u8 portType;
+    u16 portLastCtrlState;
+    u32 portDuration;
+    u32 portCurPitch;
+    u32 portTime;
+    u8 vibKeyRange;
+    u8 vibCentRange;
+    u8 pad142[2];
+    u32 vibPeriod;
+    u32 vibCurTime;
+    s32 vibCurOffset;
+    s16 vibModAddScale;
+    u8 pad152[0x170 - 0x152];
+    u32 panning[2];
+    u32 panDelta[2];
+    u32 panTarget[2];
+    u32 panTime[2];
+    u8 pad190[0x1A0 - 0x190];
+    u32 sweepOff[2];
+    s32 sweepAdd[2];
+    s32 sweepCnt[2];
+    u8 sweepNum[2];
+    u8 pad1BA[2];
+    SynthLfo lfo[2];
+    u8 lfoUsedByInput[2];
+    u8 pbLowerKeyRange;
+    u8 pbUpperKeyRange;
+    u16 pbLast;
+    u8 pad1DA[2];
+    u8 pitchADSR[0x1E4 - 0x1DC];
+    s32 pitchADSRCurrentVolume;
+    u8 pad1E8[0x204 - 0x1E8];
+    s16 pitchADSRRange;
+    u16 curPitch;
+    u8 pad208[0x214 - 0x208];
+    u32 midiDirtyFlags;
+    u8 pad218[0x404 - 0x218];
+} McmdVoiceState;
+
+extern McmdVoiceState* lbl_8064D3D0;
+extern u64 lbl_8064D3E0;
+extern u32 fn_801CC6DC(u32);
 extern s16 fn_801CC304(u16);
-extern s32 fn_801C30D4(void*, u16*, u16*);
-extern u16 fn_801CBA58(void*);
-extern u32 fn_801CBAE8(void*);
-extern u16 fn_801CAFAC(s32, u8, u8);
+extern u32 fn_801C30D4(void*, u16*, u16*);
+extern u16 fn_801CBA58(McmdVoiceState*);
+extern u16 fn_801CBAE8(McmdVoiceState*);
+extern u16 fn_801CAFAC(u8, u8, u8);
 extern u16 fn_801C29BC(u8, u32);
 extern u16 fn_801C2980(u16);
-extern u16 fn_801CBAA0(void*);
-extern void fn_801CCB98(u32);
-extern void fn_801B775C(void*, u32, u32);
+extern u16 fn_801CBAA0(McmdVoiceState*);
+extern void fn_801CCB98(u32, u16);
+extern void fn_801B775C(void*, int, u32);
 
-#define U8(p, o)  (*(u8*)((p) + (o)))
-#define S8(p, o)  (*(s8*)((p) + (o)))
-#define U16(p, o) (*(u16*)((p) + (o)))
-#define S16(p, o) (*(s16*)((p) + (o)))
-#define U32(p, o) (*(u32*)((p) + (o)))
-#define S32(p, o) (*(s32*)((p) + (o)))
-#define U64(p, o) (*(u64*)((p) + (o)))
+#define synthVoice lbl_8064D3D0
+#define synthRealTime lbl_8064D3E0
+#define HWVOICE(i) (&synthVoice[i])
+#define HWVOICE_FLAGS(sv) (*(u64*)&(sv)->cFlagsHi)
+#define hwIsActive fn_801CC6DC
+#define sndSin fn_801CC304
+#define adsrHandleLowPrecision fn_801C30D4
+#define inpGetPitchBend fn_801CBA58
+#define inpGetModulation fn_801CBAE8
+#define inpGetMidiCtrl fn_801CAFAC
+#define voiceGetPitchRatio fn_801C29BC
+#define voiceScaleSampleRate fn_801C2980
+#define inpGetDoppler fn_801CBAA0
+#define hwSetPitch fn_801CCB98
+#define synthAddJob fn_801B775C
 
-void fn_801B6768(u32 index)
+static inline u32 apply_portamento(McmdVoiceState* svoice, u32 ccents, u32 deltaTime)
 {
-    u8* voice = lbl_8064D3D0 + index * 0x404;
-    u32 delta;
-    u32 i;
-    u32 pitch;
-    u32 value;
+    u32 old_portCurPitch;
 
-    if (fn_801CC6DC(index) || U32(voice, 0x34) != 0) {
-        delta = lbl_8064D3E4 - U32(voice, 0x28);
-        U32(voice, 0x28) = lbl_8064D3E4;
-        U32(voice, 0x24) = lbl_8064D3E0;
+    if ((HWVOICE_FLAGS(svoice) & 0x400) != 0 && (s32)((svoice->portDuration - svoice->portTime) >> 8) > 0) {
+        old_portCurPitch = svoice->portCurPitch;
+        svoice->portCurPitch += (s32)deltaTime * ((s32)(ccents - svoice->portCurPitch) >> 8) / (s32)((svoice->portDuration - svoice->portTime) >> 8);
+        if ((old_portCurPitch < ccents && svoice->portCurPitch < ccents) || (old_portCurPitch > ccents && svoice->portCurPitch > ccents)) {
+            ccents = svoice->portCurPitch;
+            svoice->portTime += deltaTime;
+        } else {
+            svoice->portTime = svoice->portDuration;
+        }
+    }
+    return ccents;
+}
 
-        for (i = 0; i < 2; i++) {
-            u8* timer = voice + i * 12;
-            if (U32(timer, 0x1C0) != 0) {
-                u32 period = U32(timer, 0x1C0);
-                U32(timer, 0x1BC) += delta;
-                U16(timer, 0x1C4) = fn_801CC304((u16)((U32(timer, 0x1BC) % period) * 16 / (period >> 8)));
-                if (S16(timer, 0x1C4) != S16(timer, 0x1C6)) {
-                    S16(timer, 0x1C6) = S16(timer, 0x1C4);
-                    if (U8(voice, 0x1D4 + i) != 0) {
-                        U8(voice, 0x1D4 + i) = 0;
-                        U32(voice, 0x214) |= 0x1FFF;
-                    }
+static inline u32 convert_cents(McmdVoiceState* svoice, u32 ccents)
+{
+    u32 curDetune;
+    u32 cpitch;
+
+    cpitch = voiceGetPitchRatio(ccents >> 16, svoice->sInfo) << 16;
+    if ((curDetune = ccents & 0xFFFF) != 0) {
+        cpitch += curDetune * ((u16)voiceScaleSampleRate(cpitch >> 16) - (cpitch >> 16));
+    }
+    return cpitch;
+}
+
+static inline void UpdateTimeMIDICtrl(McmdVoiceState* sv)
+{
+    if (sv->timeUsedByInput != 0) {
+        sv->timeUsedByInput = 0;
+        sv->midiDirtyFlags = 0x1FFF;
+    }
+}
+
+void fn_801B6768(int voice)
+{
+    u32 j;
+    s32 pbend;
+    u32 ccents;
+    u32 cpitch;
+    u16 Modulation;
+    u16 portamentoRaw;
+    u32 lowDeltaTime;
+    McmdVoiceState* sv;
+    u32 cntDelta;
+    u32 addFactor;
+    u16 adsr_start;
+    u16 adsr_delta;
+    s32 vrange;
+    s32 voff;
+    sv = HWVOICE(voice);
+    if (hwIsActive(voice) || sv->addr != 0) {
+        lowDeltaTime = (u32)(synthRealTime - *(u64*)&sv->lastLowCallTimeHi);
+        *(u64*)&sv->lastLowCallTimeHi = synthRealTime;
+
+        for (j = 0; j < 2; ++j) {
+            if (sv->lfo[j].period == 0) {
+                continue;
+            }
+            sv->lfo[j].time += lowDeltaTime;
+            sv->lfo[j].value = sndSin((u16)((sv->lfo[j].time % sv->lfo[j].period * 16) / (sv->lfo[j].period / 256)));
+            if (sv->lfo[j].value != sv->lfo[j].lastValue) {
+                sv->lfo[j].lastValue = sv->lfo[j].value;
+                if (sv->lfoUsedByInput[j]) {
+                    sv->lfoUsedByInput[j] = 0;
+                    sv->midiDirtyFlags |= 0x1FFF;
                 }
             }
         }
 
-        if (U64(voice, 0x114) & 0x2000ULL) {
-            u32 period = U32(voice, 0x144);
-            U32(voice, 0x148) += delta;
-            S32(voice, 0x14C) = (s16)fn_801CC304((u16)((U32(voice, 0x148) % period) * 16 / (period >> 8)));
+        if ((HWVOICE_FLAGS(sv) & 0x2000) != 0) {
+            sv->vibCurTime += lowDeltaTime;
+            sv->vibCurOffset = sndSin((u16)((sv->vibCurTime % sv->vibPeriod * 16) / (sv->vibPeriod / 256)));
         }
 
-        if (U8(voice, 0x1B8) || U8(voice, 0x1B9)) {
-            u32 whole = (delta & 0xFFFFFF) << 4;
-            u32 fraction = delta & 0xF;
-            u8* env = voice;
-            if (U8(env, 0x1B8)) {
-                U32(env, 0x1B0) -= whole;
-                if (S32(env, 0x1B0) <= 0) {
-                    U32(env, 0x1B0) = U8(env, 0x1B8) << 16;
-                    U32(env, 0x1A0) = 0;
-                } else {
-                    U32(env, 0x1A0) += (S32(env, 0x1A8) >> 12) * fraction;
+        if (sv->sweepNum[0] | sv->sweepNum[1]) {
+            cntDelta = (lowDeltaTime << 8) >> 4;
+            addFactor = (lowDeltaTime << 4) >> 4;
+            for (j = 0; j < 2; ++j) {
+                if (sv->sweepNum[j] == 0) {
+                    continue;
                 }
-            }
-            env = voice + 4;
-            if (U8(voice, 0x1B9)) {
-                U32(env, 0x1B0) -= whole;
-                if (S32(env, 0x1B0) <= 0) {
-                    U32(env, 0x1B0) = U8(voice, 0x1B9) << 16;
-                    U32(env, 0x1A0) = 0;
+                sv->sweepCnt[j] -= cntDelta;
+                if (sv->sweepCnt[j] <= 0) {
+                    sv->sweepCnt[j] = sv->sweepNum[j] << 16;
+                    sv->sweepOff[j] = 0;
                 } else {
-                    U32(env, 0x1A0) += (S32(env, 0x1A8) >> 12) * fraction;
+                    sv->sweepOff[j] += (sv->sweepAdd[j] >> 12) * addFactor;
                 }
             }
         }
 
-        if (U32(voice, 0x170) != U32(voice, 0x180)) {
-            U32(voice, 0x188) -= delta;
-            if (S32(voice, 0x188) <= 0) {
-                U32(voice, 0x170) = U32(voice, 0x180);
-                U32(voice, 0x188) = 0;
+        for (j = 0; j < 2; ++j) {
+            u32 panVal;
+            if (sv->panning[j] == sv->panTarget[j]) {
+                continue;
+            }
+            sv->panTime[j] -= lowDeltaTime;
+            if ((s32)sv->panTime[j] <= 0) {
+                sv->panning[j] = sv->panTarget[j];
+                sv->panTime[j] = 0;
             } else {
-                U32(voice, 0x170) = U32(voice, 0x180) - (U32(voice, 0x188) >> 8) * U32(voice, 0x178);
-                if (S32(voice, 0x170) < 0)
-                    U32(voice, 0x170) = 0;
-                else if (U32(voice, 0x170) > 0x7F0000)
-                    U32(voice, 0x170) = 0x7F0000;
+                sv->panning[j] = sv->panTarget[j] - (sv->panTime[j] / 256) * sv->panDelta[j];
+                panVal = sv->panning[j];
+                sv->panning[j] = (s32)panVal < 0 ? 0 : panVal > 0x7F0000 ? 0x7F0000 : panVal;
             }
-            U64(voice, 0x114) |= 0x200000000000ULL;
+            HWVOICE_FLAGS(sv) |= 0x200000000000ULL;
         }
-        if (U32(voice, 0x174) != U32(voice, 0x184)) {
-            u8* side = voice + 4;
-            U32(side, 0x188) -= delta;
-            if (S32(side, 0x188) <= 0) {
-                U32(side, 0x170) = U32(side, 0x180);
-                U32(side, 0x188) = 0;
+
+        if ((HWVOICE_FLAGS(sv) & 0x20000000000ULL) != 0 && adsrHandleLowPrecision(&sv->pitchADSR, &adsr_start, &adsr_delta)) {
+            HWVOICE_FLAGS(sv) &= ~0x20000000000ULL;
+        }
+
+        ccents = (sv->curNote << 16) + (sv->curDetune * 0x10000) / 100;
+        do {
+            if ((HWVOICE_FLAGS(sv) & 0x10010) != 0) {
+                if (sv->midi == 0xFF) {
+                    continue;
+                }
+                pbend = inpGetPitchBend(sv);
+                sv->pbLast = pbend;
             } else {
-                U32(side, 0x170) = U32(side, 0x180) - (U32(side, 0x188) >> 8) * U32(side, 0x178);
-                if (S32(side, 0x170) < 0)
-                    U32(side, 0x170) = 0;
-                else if (U32(side, 0x170) > 0x7F0000)
-                    U32(side, 0x170) = 0x7F0000;
+                pbend = sv->pbLast;
             }
-            U64(voice, 0x114) |= 0x200000000000ULL;
-        }
-
-        if (U64(voice, 0x114) & 0x20000000000ULL) {
-            u16 a, b;
-            if (fn_801C30D4(voice + 0x1DC, &a, &b))
-                U64(voice, 0x114) &= ~0x20000000000ULL;
-        }
-
-        pitch = (U16(voice, 0x12C) << 16) + (((s32)S8(voice, 0x12E) << 16) / 100);
-        if (U64(voice, 0x114) & 0x10010ULL) {
-            u16 bend;
-            if (U8(voice, 0x121) != 0xFF) {
-                bend = fn_801CBA58(voice);
-                U16(voice, 0x1D8) = bend;
-            } else {
-                bend = U16(voice, 0x1D8);
-            }
-            if (bend != 0x2000) {
-                s32 distance = bend - 0x2000;
-                if (distance < 0)
-                    pitch += U8(voice, 0x1D6) * distance * 8;
-                else
-                    pitch += U8(voice, 0x1D7) * distance * 8;
-            }
-        }
-
-        if (U64(voice, 0x114) & 0x2000ULL) {
-            u32 mod = fn_801CBAE8(voice);
-            s32 depth = (U8(voice, 0x141) << 8) / 100;
-            s32 amount = (U8(voice, 0x140) << 8) + depth;
-            if (S16(voice, 0x150) != 0)
-                amount += (S16(voice, 0x150) * ((mod >> 7) & 0x1FF)) >> 7;
-            if (U64(voice, 0x114) & 0x4000ULL)
-                depth = (S32(voice, 0x14C) * ((mod >> 7) & 0x1FF)) >> 7;
-            else
-                depth = S32(voice, 0x14C);
-            pitch += (amount * depth) >> 4;
-        }
-
-        if (U8(voice, 0x121) != 0xFF) {
-            u16 control = fn_801CAFAC(0x41, U8(voice, 0x121), U8(voice, 0x122));
-            if (control != U16(voice, 0x132) ||
-                (U64(voice, 0x114) & 0x21000ULL) == 0x20000ULL) {
-                if (control <= 0x1F80) {
-                    U64(voice, 0x114) &= ~0x400ULL;
+            if (pbend != 0x2000) {
+                if ((pbend -= 0x2000) < 0) {
+                    ccents += sv->pbLowerKeyRange * pbend * 8;
                 } else {
-                    if (!(U64(voice, 0x114) & 0x20400ULL)) {
-                        if (U8(voice, 0x131) == 1) {
-                            if (!(U64(voice, 0x114) & 0x1000ULL))
-                                U32(voice, 0x13C) = 0;
-                            else
-                                U32(voice, 0x13C) = U32(voice, 0x134);
-                        } else {
-                            U32(voice, 0x13C) = U32(voice, 0x134);
+                    ccents += sv->pbUpperKeyRange * pbend * 8;
+                }
+            }
+        } while (0);
+
+        if ((HWVOICE_FLAGS(sv) & 0x2000) != 0) {
+            Modulation = inpGetModulation(sv);
+            vrange = sv->vibKeyRange * 256 + (sv->vibCentRange * 256) / 100;
+            if (sv->vibModAddScale != 0) {
+                vrange += (sv->vibModAddScale * ((Modulation >> 7) & 0x1FF)) >> 7;
+            }
+            if ((HWVOICE_FLAGS(sv) & 0x4000) != 0) {
+                voff = (sv->vibCurOffset * ((Modulation >> 7) & 0x1FF)) >> 7;
+            } else {
+                voff = sv->vibCurOffset;
+            }
+            ccents += (vrange * voff) >> 4;
+        }
+
+        if (sv->midi != 0xFF) {
+            portamentoRaw = inpGetMidiCtrl(0x41, sv->midi, sv->midiSet);
+            if (portamentoRaw != sv->portLastCtrlState || (HWVOICE_FLAGS(sv) & 0x21000) == 0x20000) {
+                if (portamentoRaw <= 0x1F80) {
+                    HWVOICE_FLAGS(sv) &= ~0x400;
+                } else {
+                    if ((HWVOICE_FLAGS(sv) & 0x400) == 0) {
+                        if ((HWVOICE_FLAGS(sv) & 0x20000) == 0) {
+                            if (sv->portType == 1) {
+                                if ((HWVOICE_FLAGS(sv) & 0x1000) == 0) {
+                                    sv->portTime = 0;
+                                } else {
+                                    sv->portTime = sv->portDuration;
+                                }
+                            } else {
+                                sv->portTime = sv->portDuration;
+                            }
+                            sv->portCurPitch = sv->lastNote << 16;
                         }
-                        U32(voice, 0x138) = U8(voice, 0x130) << 16;
                     }
-                    U64(voice, 0x114) |= 0x400ULL;
+                    HWVOICE_FLAGS(sv) |= 0x400;
                 }
-                U64(voice, 0x114) |= 0x1000ULL;
-                U16(voice, 0x132) = control;
+                HWVOICE_FLAGS(sv) |= 0x1000;
+                sv->portLastCtrlState = portamentoRaw;
             }
         }
 
-        value = pitch;
-        if (U64(voice, 0x114) & 0x400ULL) {
-            u32 elapsed = U32(voice, 0x13C);
-            u32 duration = U32(voice, 0x134);
-            u32 steps = (duration - elapsed) >> 8;
-            if ((s32)steps > 0) {
-                u32 start = U32(voice, 0x138);
-                u32 next = start + (delta * ((s32)(pitch - start) >> 8)) / (s32)steps;
-                U32(voice, 0x138) = next;
-                if ((start < pitch && next < pitch) || (start > pitch && next > pitch)) {
-                    U32(voice, 0x13C) += delta;
-                    value = next;
-                } else {
-                    U32(voice, 0x13C) = duration;
-                }
-            }
+        ccents = apply_portamento(sv, ccents, lowDeltaTime);
+
+        if ((HWVOICE_FLAGS(sv) & 0x20000000000ULL) != 0) {
+            ccents += sv->pitchADSRRange * ((s32)sv->pitchADSRCurrentVolume >> 16) >> 7;
         }
 
-        if (U64(voice, 0x114) & 0x20000000000ULL)
-            value += (S16(voice, 0x204) * (S32(voice, 0x1E4) >> 16)) >> 7;
-
-        pitch = fn_801C29BC((u8)(value >> 16), U32(voice, 0x124)) << 16;
-        if ((value & 0xFFFF) != 0) {
-            u16 base = pitch >> 16;
-            pitch += (value & 0xFFFF) * (fn_801C2980(base) - base);
-        }
-        pitch += U32(voice, 0x1A4);
-        pitch += U32(voice, 0x1A0);
-        U16(voice, 0x206) = ((pitch >> 16) * fn_801CBAA0(voice)) >> 13;
-        fn_801CCB98(index);
-        fn_801B775C(voice, 0, 0xF00);
+        cpitch = convert_cents(sv, ccents);
+        cpitch += sv->sweepOff[0] + sv->sweepOff[1];
+        hwSetPitch(voice, sv->curPitch = ((cpitch >> 16) * inpGetDoppler(sv)) >> 13);
+        synthAddJob((void*)sv, 0, 0xF00);
     }
-
-    if (U8(voice, 0xA8) != 0) {
-        U8(voice, 0xA8) = 0;
-        U32(voice, 0x214) = 0x1FFF;
-    }
+    UpdateTimeMIDICtrl(sv);
 }

@@ -1,9 +1,23 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
+typedef unsigned long long u64;
+
+#pragma pack(4)
+typedef struct Voice {
+    u8 pad_000[0x114];
+    u64 flags_114;
+    u8 pad_11C[0x2E8];
+} Voice;
+#pragma pack()
+
+typedef struct AudioState {
+    u8 pad_000[0x210];
+    u8 voice_count;
+} AudioState;
 
 extern u32 lbl_8064D3CC;
-extern u8 *lbl_8064D3D0;
-extern u8 lbl_80619C20[];
+extern Voice *lbl_8064D3D0;
+extern AudioState lbl_80619C20;
 extern void fn_801CD418(void);
 extern void fn_801BA15C(void);
 
@@ -28,12 +42,14 @@ void fn_801B9078(int arg0)
         break;
     }
     if (old_flags != lbl_8064D3CC) {
-        u32 i = 0;
-        int offset = 0;
-        while (i < lbl_80619C20[0x210]) {
-            *(unsigned long long *)(lbl_8064D3D0 + offset + 0x114) |= 0x2000000000000000ULL;
-            i++;
+        int offset;
+        u32 i;
+        i = 0;
+        offset = 0;
+        while (i < lbl_80619C20.voice_count) {
+            ((Voice *)((u8 *)lbl_8064D3D0 + offset))->flags_114 |= 0x0000200000000000ULL;
             offset += 0x404;
+            i++;
         }
         fn_801BA15C();
     }

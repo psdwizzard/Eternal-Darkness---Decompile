@@ -1,30 +1,25 @@
-extern const unsigned char lbl_80239E68[32];
+typedef unsigned long size_t;
+typedef unsigned char char_map[32];
 
-unsigned long fn_800FD0C8(const char* string, const char* accept)
+#define set_char_map(map, ch) ((map)[((ch) & 0xff) >> 3] |= (1 << ((ch) & 7)))
+#define tst_char_map(map, ch) ((map)[((ch) & 0xff) >> 3] & (1 << ((ch) & 7)))
+
+size_t fn_800FD0C8(const char* str, const char* set)
 {
-    unsigned char map[32];
     const unsigned char* p;
-    unsigned char ch;
+    int c;
+    char_map map = {0};
 
-    *(unsigned long*)(map + 0) = *(const unsigned long*)(lbl_80239E68 + 0);
-    *(unsigned long*)(map + 4) = *(const unsigned long*)(lbl_80239E68 + 4);
-    *(unsigned long*)(map + 8) = *(const unsigned long*)(lbl_80239E68 + 8);
-    *(unsigned long*)(map + 12) = *(const unsigned long*)(lbl_80239E68 + 12);
-    *(unsigned long*)(map + 16) = *(const unsigned long*)(lbl_80239E68 + 16);
-    *(unsigned long*)(map + 20) = *(const unsigned long*)(lbl_80239E68 + 20);
-    *(unsigned long*)(map + 24) = *(const unsigned long*)(lbl_80239E68 + 24);
-    *(unsigned long*)(map + 28) = *(const unsigned long*)(lbl_80239E68 + 28);
+    p = (unsigned char*)set - 1;
 
-    p = (const unsigned char*)accept - 1;
-    while ((ch = *++p) != 0) {
-        map[ch >> 3] |= 1 << (ch & 7);
-    }
+    while (c = *++p)
+        set_char_map(map, c);
 
-    p = (const unsigned char*)string - 1;
-    while ((ch = *++p) != 0) {
-        if ((map[ch >> 3] & (1 << (ch & 7))) == 0) {
+    p = (unsigned char*)str - 1;
+
+    while (c = *++p)
+        if (tst_char_map(map, c))
             break;
-        }
-    }
-    return p - (const unsigned char*)string;
+
+    return (p - (unsigned char*)str);
 }

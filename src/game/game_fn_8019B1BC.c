@@ -32,7 +32,7 @@ extern float fn_80048C50(float);
 extern void fn_801804AC(void*, void*, void*, void*);
 extern void fn_80180554(void*, void*, void*, void*, int, int);
 extern void fn_801805E0(void*, int, u8, int, void*, float);
-extern void fn_8018E230(void*, void*, int, u8, u8, int);
+extern void fn_8018E230(void*, void*, int, u8, signed char, int);
 extern void fn_8018E260(void*, u8, u8);
 extern void fn_8018CB70(void*, u8, u16);
 extern void fn_8018C540(void*, void*, u8, int, u16);
@@ -79,15 +79,16 @@ void fn_8019B1BC(u8* object, ShortCoord3* first, void* second, u8* config)
 
         if (config[0x16] != 0) {
             fn_8018E230(entry, entry + 0x2B, 1, 0,
-                        (signed char)config[0x16], config[0x17]);
+                        config[0x16], config[0x17]);
         } else if (*(u16*)(config + 6) == 0 &&
                    *(int*)(config + 0x1C) == 0) {
             if (config[0x14] != config[0x15]) {
                 fn_8018E230(entry, entry + 0x2B, 3, config[0x14],
-                            config[0x19], config[0x15]);
+                            ((signed char*)config)[0x19], config[0x15]);
                 fn_8018E260(entry, config[0x14], config[0x15]);
             } else {
-                fn_8018E230(entry, entry + 0x2B, 1, config[2], config[3], 0);
+                fn_8018E230(entry, entry + 0x2B, 1, config[2],
+                            ((signed char*)config)[3], 0);
             }
         } else {
             entry[0x2B] = config[0x17];

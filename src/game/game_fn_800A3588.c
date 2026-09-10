@@ -14,9 +14,8 @@ typedef struct Object800A3588 {
 
 extern int fn_80201B54();
 extern int fn_800A1B90(void*, void*, void*);
-#define FN_80201E78_RETURN void
-#define FN_80201E78_PARAMETERS Vec800A3588*, void*
-extern FN_80201E78_RETURN fn_80201E78(FN_80201E78_PARAMETERS);extern void* fn_801A717C(void);
+extern void fn_80201E78(Vec800A3588*, void*);
+extern void* fn_801A717C(void);
 extern void fn_801A74D8(void*, int);
 extern void fn_801A74A0(void*, void*);
 extern void fn_801A7538(void*, int);
@@ -28,28 +27,25 @@ extern void fn_801A7470(void*, int);
 extern unsigned long long fn_8020123C();
 extern void fn_801A7228(void*);
 
-/*
- * Behavior-complete, size-equal reconstruction. MWCC assigns the seven live
- * values to a different callee-saved register sequence than retail.
- * Objdiff: 97.91209%, 364/364 bytes; all 16 relocations agree.
- */
 int fn_800A3588(Object800A3588* object, void* arg1, void* arg2, void* arg3,
                 int create)
 {
     Vec800A3588 position;
     Vec800A3588 source;
-    void* effect = 0;
+    int result = 0;
+    void* effect;
     void* converted;
+    void* target;
     int found;
 
     if (object->active != 0) {
-        converted = ((void*)fn_80201B54(arg1));
+        converted = (void*)fn_80201B54(arg1);
         found = fn_800A1B90(arg2, converted, arg3);
         if (create != 0 && found == 0 && object->enabled != 0) {
             fn_80201E78(&source, arg3);
             position = source;
             effect = fn_801A717C();
-            create = (int)((void*)fn_80201B54(arg3));
+            target = (void*)fn_80201B54(arg3);
             fn_801A74D8(effect, 0x100);
             fn_801A74A0(effect, converted);
             fn_801A7538(effect, 5);
@@ -61,11 +57,11 @@ int fn_800A3588(Object800A3588* object, void* arg1, void* arg2, void* arg3,
             } else {
                 fn_801A7470(effect, 11);
             }
-            fn_8020123C(0x27, converted, (void*)create, effect);
+            fn_8020123C(0x27, converted, target, effect);
             fn_801A7228(effect);
-            effect = (void*)1;
+            result = 1;
         }
         object->enabled = found;
     }
-    return (int)effect;
+    return result;
 }

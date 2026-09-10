@@ -14,17 +14,19 @@ typedef struct Entry {
 
 extern Entry lbl_80630A30;
 extern Entry lbl_80630CB4;
-
-void fn_801CD538(Request* request)
+static inline void complete_request(Entry* entries, Request* request)
 {
-    register u32 i;
-    Entry* entries;
-    entries = request->type == 1 ? &lbl_80630CB4 : &lbl_80630A30;
-
+    u32 i;
     for (i = 0; i < 16; i++) {
         if ((Entry*)request == &entries[i] && entries[i].callback != 0) {
             entries[i].callback(entries[i].argument);
         }
     }
     ((u8*)entries)[0x281]--;
+}
+
+void fn_801CD538(Request* request)
+{
+    complete_request(request->type == 1 ? &lbl_80630CB4 : &lbl_80630A30,
+                     request);
 }

@@ -6,8 +6,8 @@ typedef struct Entry {
 } Entry;
 
 typedef struct EntryList {
+    u32 count;
     Entry* entries;
-    int count;
 } EntryList;
 
 typedef struct SearchState {
@@ -15,8 +15,8 @@ typedef struct SearchState {
     int direction;
     int distance;
     int span;
-    Entry* previous;
     Entry* current;
+    Entry* previous;
 } SearchState;
 
 extern float lbl_80650188;
@@ -27,8 +27,8 @@ int fn_80126A00(EntryList* list, SearchState* state, int amount, float* output)
     int should_search;
     int movement;
     int result;
-    Entry* current;
     Entry* previous;
+    Entry* current;
     float value;
 
     value = lbl_80650188;
@@ -42,7 +42,7 @@ int fn_80126A00(EntryList* list, SearchState* state, int amount, float* output)
     state->distance += movement < 0 ? -movement : movement;
 
     should_search = 0;
-    if (list->entries != 0 && state->distance > state->span) {
+    if (list->count != 0 && state->distance > state->span) {
         should_search = 1;
     }
     if (should_search != 0) {
@@ -51,7 +51,7 @@ int fn_80126A00(EntryList* list, SearchState* state, int amount, float* output)
 
     previous = state->previous;
     current = state->current;
-    if (list->entries != 0 && result == 0) {
+    if (list->count != 0 && result == 0) {
         value = previous->value +
             ((float)state->distance / (float)state->span) *
                 (current->value - previous->value);

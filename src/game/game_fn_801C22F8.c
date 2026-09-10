@@ -1,68 +1,71 @@
 typedef unsigned char u8;
+typedef unsigned short u16;
 typedef unsigned int u32;
 typedef unsigned long long u64;
 
 #pragma pack(4)
-typedef struct Voice {
-    u8 pad_000[0x34];
-    u32 active;
-    u8 pad_038[0xD8];
-    u32 field_110;
-    u64 field_114;
-    u8 flag_11C;
-    u8 special_11D;
-    u8 pad_11E[0x2E6];
-} Voice;
+typedef struct McmdVoiceState {
+    u8 pad000[0x34];
+    u32 addr;
+    u8 pad038[0x102 - 0x38];
+    u16 macroId;
+    u8 pad104[0x110 - 0x104];
+    u32 age;
+    u32 cFlagsHi;
+    u32 cFlagsLo;
+    u8 block;
+    u8 fxFlag;
+    u8 pad11E[0x404 - 0x11E];
+} McmdVoiceState;
 #pragma pack()
 
-typedef struct AudioState {
-    u8 pad_000[0x210];
-    u8 voice_count;
-} AudioState;
+typedef struct SynthInfo {
+    u8 pad000[0x210];
+    u8 voiceNum;
+} SynthInfo;
 
-extern AudioState lbl_80619C20;
-extern Voice* lbl_8064D3D0;
-extern void fn_801C106C(Voice*);
-extern void fn_801C1BCC(Voice*);
+extern SynthInfo lbl_80619C20;
+extern McmdVoiceState* lbl_8064D3D0;
+extern void fn_801C106C(McmdVoiceState*);
+extern void fn_801C1BCC(McmdVoiceState*);
 extern void fn_801B9C98(u32);
 extern void fn_801CC8C4(u32);
 
-static inline void stop_voice(Voice* voice, u32 index)
+#define synthInfo lbl_80619C20
+#define synthVoice lbl_8064D3D0
+#define vidRemoveVoiceReferences fn_801C106C
+#define voiceFree fn_801C1BCC
+#define streamKill fn_801B9C98
+#define hwBreak fn_801CC8C4
+
+static inline void voiceKill(u32 voice)
 {
-    if (voice->active != 0) {
-        fn_801C106C(voice);
-        voice->field_114 &= 0xFFFFFFFFFFFFFFFCULL;
-        voice->field_110 = 0;
-        fn_801C1BCC(voice);
+    McmdVoiceState* voiceState = &synthVoice[voice];
+
+    if (voiceState->addr != 0) {
+        vidRemoveVoiceReferences(voiceState);
+        *(u64*)&voiceState->cFlagsHi &= ~3;
+        voiceState->age = 0;
+        voiceFree(voiceState);
     }
-    if (voice->flag_11C != 0) {
-        fn_801B9C98(index);
+    if (voiceState->block != 0) {
+        streamKill(voice);
     }
-    fn_801CC8C4(index);
+    hwBreak(voice);
 }
 
-void fn_801C22F8(u8 special_only)
+void fn_801C22F8(u8 musicOnly)
 {
-    u32 offset;
-    Voice* voice;
-    u32 index;
-    AudioState* state;
+    u32 i;
 
-    state = &lbl_80619C20;
-    index = 0;
-    offset = 0;
-
-    while (index < state->voice_count) {
-        voice = (Voice*)((u8*)lbl_8064D3D0 + offset);
-        if (voice->active != 0) {
-            if (special_only == 0 ||
-                (special_only != 0 && voice->special_11D == 0)) {
-                stop_voice(voice, index);
+    for (i = 0; i < synthInfo.voiceNum; ++i) {
+        McmdVoiceState* sv = &synthVoice[i];
+        if (sv->addr != 0) {
+            if (musicOnly == 0 || (musicOnly != 0 && sv->fxFlag == 0)) {
+                voiceKill(i);
             }
         } else {
-            stop_voice(voice, index);
+            voiceKill(i);
         }
-        offset += 0x404;
-        index++;
     }
 }

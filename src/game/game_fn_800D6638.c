@@ -17,23 +17,24 @@ extern float lbl_8064F3D8;
 extern int fn_80201B54();
 extern unsigned long long fn_8020123C();
 extern void fn_8020104C(int, void*, void*, int, float);
-#define fn_8020104C(a,b,c,d,e) fn_8020104C((int)(a),(void*)(b),(void*)(c),(int)(d),(float)(e))
 
 void fn_800D6638(Actor *actor, void *object, int action)
 {
-    if (action == 1) {
-        int object_id = fn_80201B54(object);
+    switch (action) {
+    case 1: {
         u32 i;
+        int object_id = fn_80201B54(object);
 
         for (i = 0; i < 4; i++) {
-            void *slot = actor->slots[i];
+            int slot = (int)actor->slots[i];
             if (slot != 0) {
                 fn_8020123C(8, object_id, slot, 0);
-                fn_8020104C(0x43, object_id, slot, 0, lbl_8064F3D8);
+                fn_8020104C(0x43, (void*)object_id, (void*)slot, 0, lbl_8064F3D8);
             }
         }
+        break;
     }
-
+    }
     switch (actor->kind) {
     case 0:
         actor->field_272 = 0x22;
@@ -46,6 +47,8 @@ void fn_800D6638(Actor *actor, void *object, int action)
     case 2:
         actor->field_284 = 0xd2;
         actor->field_260 = 0x14a;
+        break;
+    case 3:
         break;
     }
 }

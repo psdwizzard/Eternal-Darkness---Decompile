@@ -11,6 +11,7 @@ void fn_80194998(u8 width, u16 position, u8* output, u8* state)
     int row;
     u8 inner;
     u8 width8;
+    u8* second;
 
     row = ((int)position - *(u16*)(state + 0x26)) >> 1;
     width8 = width;
@@ -26,7 +27,9 @@ void fn_80194998(u8 width, u16 position, u8* output, u8* state)
         row = inner * 4;
         output += (row + 9) * 4;
         *(u32*)output = FILL_VALUE;
-        *(u32*)(output + inner * 16) = FILL_VALUE;
+        second = output;
+        second += inner * 16;
+        *(u32*)second = FILL_VALUE;
     }
 done:
         return;
