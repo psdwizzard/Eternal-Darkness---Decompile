@@ -1,0 +1,16 @@
+{
+  "session_id": "session-2045",
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+  "canonical": {"matching_objects": 5834, "total_objects": 6880, "matching_functions": 5599, "total_functions": 8214, "matching_code_bytes": 936732, "linked_code_bytes": 936732, "code_percent": 40.71523},
+  "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-2045-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+  "relocation_strict": {"matching_objects": 5834, "matching_functions": 5594, "matching_code_bytes": 935048, "linked_code_bytes": 936732},
+  "function_evidence": [
+    {"symbol": "fn_8020088C", "bytes": 660, "canonical": "reports/GEDE01/objdiff-fn_8020088C-session-2045.json", "relocation_strict": "reports/GEDE01/objdiff-fn_8020088C-session-2045-reloc-strict.json", "relocations": "13/13"},
+    {"symbol": "fn_80200B20", "bytes": 124, "canonical": "reports/GEDE01/objdiff-fn_80200B20-session-2045.json", "relocation_strict": "reports/GEDE01/objdiff-fn_80200B20-session-2045-reloc-strict.json", "relocations": "3/3"},
+    {"symbol": "fn_80200B9C", "bytes": 64, "canonical": "reports/GEDE01/objdiff-fn_80200B9C-session-2045.json", "relocation_strict": "reports/GEDE01/objdiff-fn_80200B9C-session-2045-reloc-strict.json", "relocations": "2/2"},
+    {"symbol": "fn_80200BDC", "bytes": 44, "canonical": "reports/GEDE01/objdiff-fn_80200BDC-session-2045.json", "relocation_strict": "reports/GEDE01/objdiff-fn_80200BDC-session-2045-reloc-strict.json", "relocations": "2/2"}
+  ],
+  "full_build_command": ".tools/bin/ninja build/GEDE01/main.dol",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "retail_cmp_exit": 0
+}

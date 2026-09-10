@@ -1,0 +1,14 @@
+{
+  "session_id": "b3d91601-f9c6-4b65-aff5-3bb21187028f",
+  "range_start": "0x801FEB54",
+  "range_end": "0x801FED48",
+  "next_target": "0x801FED48",
+  "matched_bytes": 196,
+  "nonmatching_bytes": 304,
+  "unaccounted_spans": [],
+  "functions": [
+    {"symbol": "fn_801FEB54", "range": "0x801FEB54..0x801FEC84", "retail_bytes": 304, "generated_bytes": 304, "canonical_percent": 95.32895, "relocation_strict_percent": 95.32895, "status": "NonMatching", "measurement_command": "jq -r '\"canonical_percent=\\(.left.sections[]|select(.name==\".text\")|.match_percent) retail_bytes=\\(.left.sections[]|select(.name==\".text\")|.size) generated_bytes=\\(.right.sections[]|select(.name==\".text\")|.size)\"' reports/GEDE01/session-2029-remediation-1-fn_801FEB54.json", "raw_output": "canonical_percent=95.32895 retail_bytes=304 generated_bytes=304"},
+    {"symbol": "fn_801FEC84", "range": "0x801FEC84..0x801FED48", "retail_bytes": 196, "generated_bytes": 196, "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "status": "Matching"}
+  ],
+  "accounting": "500 total bytes = 196 matching bytes + 304 NonMatching bytes; no gaps or unaccounted spans"
+}

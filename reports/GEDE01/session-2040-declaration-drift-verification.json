@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "session_id": "session-2040",
+  "session_kind": "declaration-drift-consolidation",
+  "frontier": {
+    "starting_target": "0x801FFD08",
+    "ending_next_target": "0x801FFD08",
+    "changed": false
+  },
+  "accounting": {
+    "matched_bytes_added": 0,
+    "nonmatching_bytes_added": 0,
+    "source_rewrites": 0,
+    "affected_objects_requiring_objdiff": 0,
+    "existing_matching_code_bytes": 934084,
+    "existing_matching_functions": 5583,
+    "existing_matching_objects": 5818,
+    "existing_nonmatching_attempts": 129,
+    "existing_nonmatching_retail_bytes": 101256,
+    "nonmatching_accounting_command": "jq -r '.nonmatching_attempts | \"attempts=\\(length) retail_size_entries=\\(map(select(has(\\\"retail_size\\\")))|length) retail_bytes_entries=\\(map(select(has(\\\"retail_bytes\\\")))|length) size_fallback_entries=\\(map(select((has(\\\"retail_size\\\") or has(\\\"retail_bytes\\\"))|not) | select(has(\\\"size\\\")))|length) missing_byte_field_entries=\\(map(select((has(\\\"retail_size\\\") or has(\\\"retail_bytes\\\") or has(\\\"size\\\"))|not))|length) nonmatching_retail_bytes=\\(map(.retail_size // .retail_bytes // .size // error(\\\"missing retail byte field\\\"))|add)\"' reports/GEDE01/progress.json",
+    "nonmatching_accounting_raw_output": "attempts=129 retail_size_entries=38 retail_bytes_entries=90 size_fallback_entries=1 missing_byte_field_entries=0 nonmatching_retail_bytes=101256",
+    "progress_match_counts_revised": false
+  },
+  "rewrite_gate": {
+    "eligible_symbols": [],
+    "reason": "No selected symbol is both high confidence and within the 12-TU rewrite ceiling. The high-confidence symbols fn_8011F114 and fn_80156938 affect 128 and 100 declaring TUs respectively. Every lower-blast-radius candidate is low confidence, so no source rewrite is authorized.",
+    "measurement_command": "rg '^(SYMBOL|CONFIDENCE)' build/GEDE01/declaration-drift-proposal-session-2040-facts.txt",
+    "measurement_raw_output": "SYMBOL rank=1 name=fn_80201814 declarations=463 affected_tus=468 blast_radius_tus=77 confidence=low resolution=resolved\nSYMBOL rank=2 name=fn_80201BC8 declarations=387 affected_tus=394 blast_radius_tus=39 confidence=low resolution=resolved\nSYMBOL rank=3 name=fn_80201B8C declarations=349 affected_tus=355 blast_radius_tus=35 confidence=low resolution=resolved\nSYMBOL rank=4 name=fn_80201B54 declarations=313 affected_tus=320 blast_radius_tus=28 confidence=low resolution=resolved\nSYMBOL rank=5 name=fn_8020123C declarations=208 affected_tus=214 blast_radius_tus=34 confidence=low resolution=resolved\nSYMBOL rank=6 name=fn_8011F114 declarations=121 affected_tus=128 blast_radius_tus=120 confidence=high resolution=resolved\nSYMBOL rank=7 name=fn_80201B44 declarations=120 affected_tus=123 blast_radius_tus=3 confidence=low resolution=resolved\nSYMBOL rank=8 name=fn_80201B9C declarations=111 affected_tus=115 blast_radius_tus=17 confidence=low resolution=resolved\nSYMBOL rank=9 name=fn_80201EB8 declarations=101 affected_tus=105 blast_radius_tus=13 confidence=low resolution=resolved\nSYMBOL rank=10 name=fn_80156938 declarations=100 affected_tus=100 blast_radius_tus=100 confidence=high resolution=resolved",
+    "affected_object_objdiff": "not applicable because no declaration was rewritten",
+    "excluded_displaced_symbol": {
+      "symbol": "fn_800FBFB0",
+      "reason": "The highest-declaration cosmetic-only disagreement is excluded by the stated ABI-equivalence rule and would otherwise displace fn_80156938 from the selected non-cosmetic proposal.",
+      "measurement_command": "jq -nr --slurpfile audit build/GEDE01/signature-audit-session-2040-remediation-1-raw.json --slurpfile proposal reports/GEDE01/declaration-drift-proposal-session-2040.json '(\u0024audit[0].cosmetic | sort_by(-.declarations, .symbol) | .[0]) as \u0024c | (\u0024proposal[0].symbols[-1]) as \u0024p | \"highest_cosmetic_symbol=\\(\u0024c.symbol) declarations=\\(\u0024c.declarations) return_shapes=\\(\u0024c.return_shapes|join(\\\",\\\")) variant_signatures=\\([\u0024c.variants[].signature]|join(\\\" | \\\")) selected_final_symbol=\\(\u0024p.symbol) selected_final_rank=\\(\u0024p.rank)\"'",
+      "measurement_raw_output": "highest_cosmetic_symbol=fn_800FBFB0 declarations=147 return_shapes=GPR:r3 variant_signatures=unsigned int fn_800FBFB0(void) | int fn_800FBFB0(void) | u32 fn_800FBFB0(void) | s32 fn_800FBFB0(void) | u8 fn_800FBFB0(void) selected_final_symbol=fn_80156938 selected_final_rank=10"
+    }
+  },
+  "evidence": {
+    "signature_audit_command": "python3 tools/signature_audit.py --json-output build/GEDE01/signature-audit-session-2040-raw.json --session-id session-2040 --starting-target 0x801FFD08 --ending-next-target 0x801FFD08 --dol-sha1 ea24b6af954876ce072562ff39cdb4c81d32be1f --build-report build/GEDE01/report.json",
+    "signature_audit_result": "22034 extern declarations across 5259 symbols audited successfully",
+    "proposal_facts_command": "python3 tools/declaration_drift_proposal.py --baseline-ref 9a86b015d --facts --facts-output build/GEDE01/declaration-drift-proposal-session-2040-facts.txt",
+    "proposal_validation_command": "python3 tools/validate_declaration_drift_report.py --report reports/GEDE01/declaration-drift-proposal-session-2040.json",
+    "proposal_validation_result": "passed: 10 symbols, 76 declaration variants, 2273 declaration sites, 2892 variant call sites, 2884 deduplicated believed-reading call sites, 0 invalid call sites, 0 source rewrites",
+    "build_command": ".tools/bin/ninja build/GEDE01/main.dol",
+    "build_result": "passed; 802-step rebuild completed and emitted build/GEDE01/main.dol",
+    "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+    "canonical_report_result": "matching_objects=5818 total_objects=6862 matching_functions=5583 total_functions=8214 matching_code_bytes=934084 total_code_bytes=2300692 matching_data_bytes=39286 total_data_bytes=4305642 code_percent=40.600132",
+    "protected_diff_working_directory": "eternal-darkness-decomp",
+    "protected_diff_command": "git diff --exit-code HEAD -- src/game reports/GEDE01/progress.json",
+    "protected_diff_exit": 0,
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_unchanged": true,
+    "dol_cmp_exit": 0,
+    "progress_next_target": "0x801FFD08",
+    "next_gate_unchanged": true
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "session_id": "session-2040-remediation-1",
+  "scope": "Review remediation only: correct the session-2040 NonMatching byte accounting, replace its vacuous protected-path gate, and disclose the cosmetic symbol displaced by the proposal selection rule without changing source, progress, or frontier.",
+  "corrected_artifacts": [
+    "reports/GEDE01/session-2040-declaration-drift-verification.json",
+    "reports/GEDE01/declaration-drift-proposal-session-2040.json"
+  ],
+  "nonmatching_accounting": {
+    "command": "jq -r '.nonmatching_attempts | \"attempts=\\(length) retail_size_entries=\\(map(select(has(\\\"retail_size\\\")))|length) retail_bytes_entries=\\(map(select(has(\\\"retail_bytes\\\")))|length) size_fallback_entries=\\(map(select((has(\\\"retail_size\\\") or has(\\\"retail_bytes\\\"))|not) | select(has(\\\"size\\\")))|length) missing_byte_field_entries=\\(map(select((has(\\\"retail_size\\\") or has(\\\"retail_bytes\\\") or has(\\\"size\\\"))|not))|length) nonmatching_retail_bytes=\\(map(.retail_size // .retail_bytes // .size // error(\\\"missing retail byte field\\\"))|add)\"' reports/GEDE01/progress.json",
+    "raw_output": "attempts=129 retail_size_entries=38 retail_bytes_entries=90 size_fallback_entries=1 missing_byte_field_entries=0 nonmatching_retail_bytes=101256"
+  },
+  "fresh_signature_audit": {
+    "command": "python3 tools/signature_audit.py --json-output build/GEDE01/signature-audit-session-2040-remediation-1-raw.json --session-id session-2040-remediation-1 --starting-target 0x801FFD08 --ending-next-target 0x801FFD08 --dol-sha1 ea24b6af954876ce072562ff39cdb4c81d32be1f --build-report build/GEDE01/report.json",
+    "raw_output_summary": "Audited 22034 extern declarations for 5259 symbols under src/game",
+    "full_raw_output_note": "The complete machine-readable audit produced by this command is build/GEDE01/signature-audit-session-2040-remediation-1-raw.json; build outputs are intentionally not committed."
+  },
+  "cosmetic_displacement": {
+    "command": "jq -nr --slurpfile audit build/GEDE01/signature-audit-session-2040-remediation-1-raw.json --slurpfile proposal reports/GEDE01/declaration-drift-proposal-session-2040.json '(\u0024audit[0].cosmetic | sort_by(-.declarations, .symbol) | .[0]) as \u0024c | (\u0024proposal[0].symbols[-1]) as \u0024p | \"highest_cosmetic_symbol=\\(\u0024c.symbol) declarations=\\(\u0024c.declarations) return_shapes=\\(\u0024c.return_shapes|join(\\\",\\\")) variant_signatures=\\([\u0024c.variants[].signature]|join(\\\" | \\\")) selected_final_symbol=\\(\u0024p.symbol) selected_final_rank=\\(\u0024p.rank)\"'",
+    "raw_output": "highest_cosmetic_symbol=fn_800FBFB0 declarations=147 return_shapes=GPR:r3 variant_signatures=unsigned int fn_800FBFB0(void) | int fn_800FBFB0(void) | u32 fn_800FBFB0(void) | s32 fn_800FBFB0(void) | u8 fn_800FBFB0(void) selected_final_symbol=fn_80156938 selected_final_rank=10",
+    "conclusion": "fn_800FBFB0 is the highest-declaration cosmetic-only disagreement. Its declarations share the retail GPR return shape, so the original ABI-equivalence exclusion remains valid; the proposal now names it as the symbol whose exclusion admits fn_80156938 as the final selected entry."
+  },
+  "build_verification": {
+    "command": "set -o pipefail; .tools/bin/ninja build/GEDE01/main.dol 2>&1 | tail -n 20",
+    "raw_output": "#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n[802/802] DOL build/GEDE01/main.dol"
+  },
+  "affected_object_objdiff": {
+    "inventory_command": "git diff --name-only HEAD -- src/game | awk 'END { print \"affected_source_files=\" NR; print \"affected_objects_requiring_objdiff=\" NR }'",
+    "inventory_raw_output": "affected_source_files=0\naffected_objects_requiring_objdiff=0",
+    "per_object_result": "No per-object objdiff invocation is applicable because the current-session source-diff inventory is empty.",
+    "canonical_generation_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/session-2040-remediation-1-canonical.json --format json-pretty; printf 'aggregate_canonical_exit=%s\\n' \"$?\"",
+    "canonical_generation_raw_output": " INFO Loading project .\n INFO Generating report for 6862 units (using 8 threads)\n INFO Report generated in 0.155s\n INFO Writing to build/GEDE01/session-2040-remediation-1-canonical.json\naggregate_canonical_exit=0",
+    "relocation_strict_generation_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/session-2040-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address; printf 'aggregate_reloc_strict_exit=%s\\n' \"$?\"",
+    "relocation_strict_generation_raw_output": " INFO Loading project .\n INFO Generating report for 6862 units (using 8 threads)\n INFO Report generated in 0.159s\n INFO Writing to build/GEDE01/session-2040-remediation-1-reloc-strict.json\naggregate_reloc_strict_exit=0",
+    "measurement_command": "for basis in canonical reloc-strict; do jq -r --arg basis \"$basis\" '.measures | \"basis=\\($basis) matching_objects=\\(.complete_units) total_objects=\\(.total_units) matching_functions=\\(.matched_functions) total_functions=\\(.total_functions) matching_code_bytes=\\(.matched_code) total_code_bytes=\\(.total_code) code_percent=\\(.matched_code_percent) linked_code_bytes=\\(.complete_code)\"' \"build/GEDE01/session-2040-remediation-1-${basis}.json\"; done",
+    "measurement_raw_output": "basis=canonical matching_objects=5818 total_objects=6862 matching_functions=5583 total_functions=8214 matching_code_bytes=934084 total_code_bytes=2300692 code_percent=40.600132 linked_code_bytes=934084\nbasis=reloc-strict matching_objects=5818 total_objects=6862 matching_functions=5578 total_functions=8214 matching_code_bytes=932400 total_code_bytes=2300692 code_percent=40.52694 linked_code_bytes=934084"
+  },
+  "protected_files": {
+    "working_directory": "eternal-darkness-decomp",
+    "command": "git diff --exit-code HEAD -- src/game reports/GEDE01/progress.json; printf 'protected_diff_exit=%s\\n' \"$?\"",
+    "raw_output": "protected_diff_exit=0"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'dol_cmp_exit=%s\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+  },
+  "frontier_and_progress": {
+    "command": "jq -r '\"next_target=\\(.next_target) matching_code_bytes=\\(.matching_code_bytes) matching_functions=\\(.matching_functions) matching_objects=\\(.matching_objects)\"' reports/GEDE01/progress.json",
+    "raw_output": "next_target=0x801FFD08 matching_code_bytes=934084 matching_functions=5583 matching_objects=5818",
+    "conclusion": "The frontier and generated progress are unchanged."
+  },
+  "conclusion": "The legacy-field fallback now accounts for every recorded NonMatching attempt, the protected-file gate uses pathspecs rooted at its declared working directory, and the narrowed selection explicitly identifies its displaced cosmetic symbol. Source and progress remain unchanged; fresh canonical and relocation-strict aggregate objdiff reports generated successfully, and the rebuilt DOL remains byte-identical to retail."
+}

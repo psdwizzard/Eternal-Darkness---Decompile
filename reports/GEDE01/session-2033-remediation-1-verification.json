@@ -1,0 +1,34 @@
+{
+  "session_id": "session-2033-remediation-1",
+  "scope": "Review remediation only; the frontier was not advanced and fn_801FF2F8 was not opened.",
+  "signature_reconciliation": {
+    "command": "rg -n '^extern (int|void\\*|void\\*\\*) fn_801FF2F8|^extern void fn_801FF23C|^void fn_801FF23C' src/game/game_fn_801FF008.c src/game/game_fn_801FF23C.c",
+    "raw_output": "src/game/game_fn_801FF23C.c:16:extern void** fn_801FF2F8(Context*, s16);\nsrc/game/game_fn_801FF23C.c:18:void fn_801FF23C(int count, Record* unused, Record* records)\nsrc/game/game_fn_801FF008.c:31:extern void** fn_801FF2F8(Context*, s16);\nsrc/game/game_fn_801FF008.c:36:extern void fn_801FF23C(int, Record*, Record*);",
+    "conclusion": "Both TUs now spell fn_801FF2F8 as returning void**, which is grounded by fn_801FF23C dereferencing the returned pointer. The null-only caller remains ABI-compatible. fn_801FF23C now consistently receives Record* for its unused second argument; the name records that the callee does not consume the live pointer supplied by fn_801FF008, without claiming that the argument is absent."
+  },
+  "build": {
+    "command": ".tools/bin/ninja",
+    "raw_output": "[805/807] DOL build/GEDE01/main.dol\n[806/807] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[807/807] PROGRESS",
+    "exit_code": 0
+  },
+  "objdiff_generation": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FF008 fn_801FF008 -o reports/GEDE01/objdiff-fn_801FF008-session-2033-remediation-1.json --format json-pretty >/dev/null && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FF008 fn_801FF008 -o reports/GEDE01/objdiff-fn_801FF008-session-2033-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address >/dev/null && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FF23C fn_801FF23C -o reports/GEDE01/objdiff-fn_801FF23C-session-2033-remediation-1.json --format json-pretty >/dev/null && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FF23C fn_801FF23C -o reports/GEDE01/objdiff-fn_801FF23C-session-2033-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address >/dev/null; printf 'objdiff_generation_exit=%s\\n' \"$?\"",
+    "raw_output": "objdiff_generation_exit=0"
+  },
+  "objdiff_measurement": {
+    "command": "for report in reports/GEDE01/objdiff-fn_801FF008-session-2033-remediation-1.json reports/GEDE01/objdiff-fn_801FF008-session-2033-remediation-1-reloc-strict.json reports/GEDE01/objdiff-fn_801FF23C-session-2033-remediation-1.json reports/GEDE01/objdiff-fn_801FF23C-session-2033-remediation-1-reloc-strict.json; do jq -r --arg report \"$report\" '(.left.symbols[] | select(.flags == 1)) as $l | (.right.symbols[] | select(.flags == 1)) as $r | \"report=\\($report) symbol=\\($l.name) retail_size=\\($l.size) generated_size=\\($r.size) match_percent=\\($l.match_percent) retail_instructions=\\([$l.instructions[] | select(.instruction)] | length) generated_instructions=\\([$r.instructions[] | select(.instruction)] | length) differing_rows=\\([$l.instructions[] | select(.diff_kind)] | length)\"' \"$report\"; done",
+    "raw_output": "report=reports/GEDE01/objdiff-fn_801FF008-session-2033-remediation-1.json symbol=fn_801FF008 retail_size=564 generated_size=564 match_percent=92.680855 retail_instructions=141 generated_instructions=141 differing_rows=47\nreport=reports/GEDE01/objdiff-fn_801FF008-session-2033-remediation-1-reloc-strict.json symbol=fn_801FF008 retail_size=564 generated_size=564 match_percent=92.680855 retail_instructions=141 generated_instructions=141 differing_rows=47\nreport=reports/GEDE01/objdiff-fn_801FF23C-session-2033-remediation-1.json symbol=fn_801FF23C retail_size=188 generated_size=188 match_percent=100.0 retail_instructions=47 generated_instructions=47 differing_rows=0\nreport=reports/GEDE01/objdiff-fn_801FF23C-session-2033-remediation-1-reloc-strict.json symbol=fn_801FF23C retail_size=188 generated_size=188 match_percent=100.0 retail_instructions=47 generated_instructions=47 differing_rows=0"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "retail_identity": {
+    "command": "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'retail_cmp_exit=%s\\n' \"$?\"",
+    "raw_output": "retail_cmp_exit=0"
+  },
+  "frontier_gate": {
+    "command": "jq -r '.next_target' reports/GEDE01/progress.json reports/GEDE01/frontier-801FF008-801FF2F8-session-2033.json",
+    "raw_output": "0x801FF2F8\n0x801FF2F8"
+  }
+}

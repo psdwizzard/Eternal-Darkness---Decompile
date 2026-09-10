@@ -1,0 +1,58 @@
+{
+  "session_id": "session-2030-remediation-1",
+  "scope": "Review remediation only. Correct the MWCC lesson catalog without changing compiled source, generated progress accounting, or the matching frontier.",
+  "corrections": [
+    "The fn_801F9CF4 record now identifies the repository-documented TU-local use_lmw_stmw workaround and cites docs/matching.md plus the session-1545 open_item.",
+    "The fn_801F9CF4 frame, nonvolatile-save, register-allocation, and scheduling observations are represented as one behavior with downstream consequences.",
+    "The session-2020 declaration correction is excluded under the catalog's MWCC code-generation scope."
+  ],
+  "checks": [
+    {
+      "command": ".tools/bin/ninja",
+      "status": "passed",
+      "raw_output_excerpt_verbatim": "build/GEDE01/main.dol: OK"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F9CF4 fn_801F9CF4 -o build/GEDE01/session-2030-remediation-1-fn_801F9CF4-canonical.json --format json-pretty",
+      "status": "passed",
+      "raw_output_verbatim": "INFO Writing to build/GEDE01/session-2030-remediation-1-fn_801F9CF4-canonical.json"
+    },
+    {
+      "command": "jq -r '[.left.symbols[] | select(.name==\"fn_801F9CF4\") | .size,.match_percent] as $l | [.right.symbols[] | select(.name==\"fn_801F9CF4\") | .size,.match_percent] as $r | \"symbol=fn_801F9CF4 retail_bytes=\\($l[0]) generated_bytes=\\($r[0]) retail_match_percent=\\($l[1]) generated_match_percent=\\($r[1])\"' build/GEDE01/session-2030-remediation-1-fn_801F9CF4-canonical.json",
+      "raw_output_verbatim": "symbol=fn_801F9CF4 retail_bytes=808 generated_bytes=800 retail_match_percent=82.678215 generated_match_percent=82.678215"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F9CF4 fn_801F9CF4 -o build/GEDE01/session-2030-remediation-1-fn_801F9CF4-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "status": "passed",
+      "raw_output_verbatim": "INFO Writing to build/GEDE01/session-2030-remediation-1-fn_801F9CF4-reloc-strict.json"
+    },
+    {
+      "command": "jq -r '[.left.symbols[] | select(.name==\"fn_801F9CF4\") | .size,.match_percent] as $l | [.right.symbols[] | select(.name==\"fn_801F9CF4\") | .size,.match_percent] as $r | \"symbol=fn_801F9CF4 retail_bytes=\\($l[0]) generated_bytes=\\($r[0]) retail_match_percent=\\($l[1]) generated_match_percent=\\($r[1])\"' build/GEDE01/session-2030-remediation-1-fn_801F9CF4-reloc-strict.json",
+      "raw_output_verbatim": "symbol=fn_801F9CF4 retail_bytes=808 generated_bytes=800 retail_match_percent=82.678215 generated_match_percent=82.678215"
+    },
+    {
+      "command": "cmp -s build/GEDE01/session-2030-remediation-1-fn_801F9CF4-canonical.json build/GEDE01/session-2030-remediation-1-fn_801F9CF4-reloc-strict.json; rc=$?; printf 'canonical_vs_reloc_strict_cmp_exit=%s\\n' \"$rc\"",
+      "raw_output_verbatim": "canonical_vs_reloc_strict_cmp_exit=0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; rc=$?; printf 'dol_cmp_exit=%s\\n' \"$rc\"",
+      "raw_output_verbatim": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+    },
+    {
+      "command": "jq -r '.next_target' reports/GEDE01/progress.json",
+      "raw_output_verbatim": "0x801FED48"
+    },
+    {
+      "command": "jq -r '\"lessons=\" + ((.lessons|length)|tostring) + \" out_of_taxonomy=\" + ((.out_of_taxonomy|length)|tostring) + \" total_catalog_records=\" + (((.lessons|length)+(.out_of_taxonomy|length))|tostring)' reports/GEDE01/lessons.json",
+      "raw_output_verbatim": "lessons=664 out_of_taxonomy=21 total_catalog_records=685"
+    },
+    {
+      "command": "jq -s -r '.[0] as $parent | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($parent.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($parent.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($parent.lessons|length)+($parent.out_of_taxonomy|length)))\"' <(git show c40a285655e5886f847281cb81203290c57182db:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
+      "raw_output_verbatim": "new_lessons=1 new_out_of_taxonomy=0 total_new_records=1"
+    },
+    {
+      "command": "jq -s -r '.[0] as $base | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($base.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($base.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($base.lessons|length)+($base.out_of_taxonomy|length)))\"' <(git show b6f963fbb:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
+      "raw_output_verbatim": "new_lessons=231 new_out_of_taxonomy=19 total_new_records=250"
+    }
+  ]
+}

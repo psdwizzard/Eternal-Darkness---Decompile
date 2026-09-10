@@ -1,0 +1,1935 @@
+{
+  "left": {
+    "sections": [
+      {
+        "name": ".text",
+        "kind": "SECTION_CODE",
+        "size": "116",
+        "match_percent": 100.0
+      },
+      {
+        "name": ".rela.text",
+        "size": "108"
+      },
+      {
+        "name": ".symtab",
+        "size": "112"
+      },
+      {
+        "name": ".strtab",
+        "size": "71"
+      },
+      {
+        "name": ".shstrtab",
+        "size": "38"
+      }
+    ],
+    "symbols": [
+      {
+        "name": "fn_8020034C",
+        "size": "116",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 100.0,
+        "instructions": [
+          {
+            "instruction": {
+              "size": 4,
+              "formatted": "subic. r6, r3, 0x6",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "subic.",
+                    "opcode": 262
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "6"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "4",
+              "size": 4,
+              "formatted": "bge 0xc",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "bge",
+                    "opcode": 265
+                  }
+                },
+                {
+                  "arg": {
+                    "branch_dest": "12"
+                  }
+                }
+              ],
+              "branch_dest": "12"
+            }
+          },
+          {
+            "instruction": {
+              "address": "8",
+              "size": 4,
+              "formatted": "addi r6, r6, 0x18",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "24"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "12",
+              "size": 4,
+              "formatted": "li r5, 0x0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "li",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r5"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "16",
+              "size": 4,
+              "formatted": "lis r3, lbl_802FC8C0@ha",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lis",
+                    "opcode": 264
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@ha"
+                }
+              ],
+              "relocation": {
+                "type": 6,
+                "type_name": "R_PPC_ADDR16_HA",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "20",
+              "size": 4,
+              "formatted": "stw r5, lbl_8064D864@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r5"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 3
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "24",
+              "size": 4,
+              "formatted": "addi r4, r3, lbl_802FC8C0@l",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@l"
+                }
+              ],
+              "relocation": {
+                "type": 4,
+                "type_name": "R_PPC_ADDR16_LO",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "28",
+              "size": 4,
+              "formatted": "stw r5, lbl_8064D860@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r5"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 4
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "32",
+              "size": 4,
+              "formatted": "mtctr r6",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "mtctr",
+                    "opcode": 348
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "36",
+              "size": 4,
+              "formatted": "cmpwi r6, 0x0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "cmpwi",
+                    "opcode": 260
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "40",
+              "size": 4,
+              "formatted": "beqlr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "beqlr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "44",
+              "size": 4,
+              "formatted": "lwz r6, lbl_8064D864@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lwz",
+                    "opcode": 439
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 3
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "48",
+              "size": 4,
+              "formatted": "lwz r3, lbl_8064D860@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lwz",
+                    "opcode": 439
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 4
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "52",
+              "size": 4,
+              "formatted": "slwi r0, r6, 2",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "slwi",
+                    "opcode": 283
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "2"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "56",
+              "size": 4,
+              "formatted": "lwzx r0, r4, r0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lwzx",
+                    "opcode": 338
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                }
+              ],
+              "relocation": {
+                "type_name": "R_PPC_NONE",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "60",
+              "size": 4,
+              "formatted": "addi r3, r3, 0x4650",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "18000"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "64",
+              "size": 4,
+              "formatted": "stw r3, lbl_8064D860@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 4
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "68",
+              "size": 4,
+              "formatted": "cmpw r3, r0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "cmpw",
+                    "opcode": 304
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "72",
+              "size": 4,
+              "formatted": "blt 0x6c",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "blt",
+                    "opcode": 265
+                  }
+                },
+                {
+                  "arg": {
+                    "branch_dest": "108"
+                  }
+                }
+              ],
+              "branch_dest": "108"
+            }
+          },
+          {
+            "instruction": {
+              "address": "76",
+              "size": 4,
+              "formatted": "addi r3, r6, 0x1",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "1"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "80",
+              "size": 4,
+              "formatted": "stw r5, lbl_8064D860@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r5"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 4
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "84",
+              "size": 4,
+              "formatted": "slwi r0, r3, 29",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "slwi",
+                    "opcode": 283
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "29"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "88",
+              "size": 4,
+              "formatted": "srwi r3, r3, 31",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "srwi",
+                    "opcode": 283
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "31"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "92",
+              "size": 4,
+              "formatted": "subf r0, r3, r0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "subf",
+                    "opcode": 379
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "96",
+              "size": 4,
+              "formatted": "rotlwi r0, r0, 3",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "rotlwi",
+                    "opcode": 283
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "3"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "100",
+              "size": 4,
+              "formatted": "add r0, r0, r3",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "add",
+                    "opcode": 297
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "104",
+              "size": 4,
+              "formatted": "stw r0, lbl_8064D864@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 3
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "108",
+              "size": 4,
+              "formatted": "bdnz 0x2c",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "bdnz",
+                    "opcode": 265
+                  }
+                },
+                {
+                  "arg": {
+                    "branch_dest": "44"
+                  }
+                }
+              ],
+              "branch_dest": "44"
+            }
+          },
+          {
+            "instruction": {
+              "address": "112",
+              "size": 4,
+              "formatted": "blr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "blr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "right": {
+    "sections": [
+      {
+        "name": ".text",
+        "kind": "SECTION_CODE",
+        "size": "116"
+      },
+      {
+        "name": ".rela.text",
+        "size": "108"
+      },
+      {
+        "name": ".symtab",
+        "size": "112"
+      },
+      {
+        "name": ".strtab",
+        "size": "71"
+      },
+      {
+        "name": ".shstrtab",
+        "size": "53"
+      },
+      {
+        "name": ".comment",
+        "size": "100"
+      }
+    ],
+    "symbols": [
+      {
+        "name": "fn_8020034C",
+        "size": "116",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 100.0,
+        "instructions": [
+          {
+            "instruction": {
+              "size": 4,
+              "formatted": "subic. r6, r3, 0x6",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "subic.",
+                    "opcode": 262
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "6"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "4",
+              "size": 4,
+              "formatted": "bge 0xc",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "bge",
+                    "opcode": 265
+                  }
+                },
+                {
+                  "arg": {
+                    "branch_dest": "12"
+                  }
+                }
+              ],
+              "branch_dest": "12"
+            }
+          },
+          {
+            "instruction": {
+              "address": "8",
+              "size": 4,
+              "formatted": "addi r6, r6, 0x18",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "24"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "12",
+              "size": 4,
+              "formatted": "li r5, 0x0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "li",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r5"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "16",
+              "size": 4,
+              "formatted": "lis r3, lbl_802FC8C0@ha",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lis",
+                    "opcode": 264
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@ha"
+                }
+              ],
+              "relocation": {
+                "type": 6,
+                "type_name": "R_PPC_ADDR16_HA",
+                "target_symbol": 4
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "20",
+              "size": 4,
+              "formatted": "stw r5, lbl_8064D864@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r5"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "24",
+              "size": 4,
+              "formatted": "addi r4, r3, lbl_802FC8C0@l",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@l"
+                }
+              ],
+              "relocation": {
+                "type": 4,
+                "type_name": "R_PPC_ADDR16_LO",
+                "target_symbol": 4
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "28",
+              "size": 4,
+              "formatted": "stw r5, lbl_8064D860@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r5"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 3
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "32",
+              "size": 4,
+              "formatted": "mtctr r6",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "mtctr",
+                    "opcode": 348
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "36",
+              "size": 4,
+              "formatted": "cmpwi r6, 0x0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "cmpwi",
+                    "opcode": 260
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "40",
+              "size": 4,
+              "formatted": "beqlr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "beqlr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "44",
+              "size": 4,
+              "formatted": "lwz r6, lbl_8064D864@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lwz",
+                    "opcode": 439
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "48",
+              "size": 4,
+              "formatted": "lwz r3, lbl_8064D860@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lwz",
+                    "opcode": 439
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 3
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "52",
+              "size": 4,
+              "formatted": "slwi r0, r6, 2",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "slwi",
+                    "opcode": 283
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "2"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "56",
+              "size": 4,
+              "formatted": "lwzx r0, r4, r0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "lwzx",
+                    "opcode": 338
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r4"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                }
+              ],
+              "relocation": {
+                "type_name": "R_PPC_NONE",
+                "target_symbol": 4
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "60",
+              "size": 4,
+              "formatted": "addi r3, r3, 0x4650",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "18000"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "64",
+              "size": 4,
+              "formatted": "stw r3, lbl_8064D860@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 3
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "68",
+              "size": 4,
+              "formatted": "cmpw r3, r0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "cmpw",
+                    "opcode": 304
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "72",
+              "size": 4,
+              "formatted": "blt 0x6c",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "blt",
+                    "opcode": 265
+                  }
+                },
+                {
+                  "arg": {
+                    "branch_dest": "108"
+                  }
+                }
+              ],
+              "branch_dest": "108"
+            }
+          },
+          {
+            "instruction": {
+              "address": "76",
+              "size": 4,
+              "formatted": "addi r3, r6, 0x1",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "addi",
+                    "opcode": 263
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r6"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "signed": "1"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "80",
+              "size": 4,
+              "formatted": "stw r5, lbl_8064D860@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r5"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 3
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "84",
+              "size": 4,
+              "formatted": "slwi r0, r3, 29",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "slwi",
+                    "opcode": 283
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "29"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "88",
+              "size": 4,
+              "formatted": "srwi r3, r3, 31",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "srwi",
+                    "opcode": 283
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "31"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "92",
+              "size": 4,
+              "formatted": "subf r0, r3, r0",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "subf",
+                    "opcode": 379
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "96",
+              "size": 4,
+              "formatted": "rotlwi r0, r0, 3",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "rotlwi",
+                    "opcode": 283
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "3"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "100",
+              "size": 4,
+              "formatted": "add r0, r0, r3",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "add",
+                    "opcode": 297
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "opaque": "r3"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "instruction": {
+              "address": "104",
+              "size": 4,
+              "formatted": "stw r0, lbl_8064D864@sda21",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "stw",
+                    "opcode": 443
+                  }
+                },
+                {
+                  "arg": {
+                    "opaque": "r0"
+                  }
+                },
+                {
+                  "separator": true
+                },
+                {
+                  "arg": {
+                    "reloc": true
+                  }
+                },
+                {
+                  "basic": "@sda21"
+                }
+              ],
+              "relocation": {
+                "type": 109,
+                "type_name": "R_PPC_EMB_SDA21",
+                "target_symbol": 2
+              }
+            }
+          },
+          {
+            "instruction": {
+              "address": "108",
+              "size": 4,
+              "formatted": "bdnz 0x2c",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "bdnz",
+                    "opcode": 265
+                  }
+                },
+                {
+                  "arg": {
+                    "branch_dest": "44"
+                  }
+                }
+              ],
+              "branch_dest": "44"
+            }
+          },
+          {
+            "instruction": {
+              "address": "112",
+              "size": 4,
+              "formatted": "blr ",
+              "parts": [
+                {
+                  "opcode": {
+                    "mnemonic": "blr",
+                    "opcode": 269
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -2,10 +2,10 @@
   "schema_version": 2,
   "scope": "Distinct MWCC code-generation behaviors documented in reports/GEDE01/progress.json open_items and docs/matching.md",
   "source_snapshot": {
-    "repository_revision": "0778dfdbcf2e3f9b6282949b3068248c0442667d",
-    "next_target": "0x801F8620",
+    "repository_revision": "c40a285655e5886f847281cb81203290c57182db",
+    "next_target": "0x801FED48",
     "reports/GEDE01/progress.json": {
-      "sha256": "08ddebd163cbe4c4cfac5f3d9ed4a2ce8e961f6dd88e1e1382c28dd69d6fbb2d",
+      "sha256": "3b50950327475178a54135023a5b3b6384e36caf16fabdb60aafb93a0f9a221b",
       "scope": "whole_file"
     },
     "docs/matching.md": {
@@ -15,16 +15,16 @@
   "consolidation_audit": {
     "original_consolidation_commit": "86d029104eb5ed6ad01b6af03963ea2cf924d2a4",
     "comparison_base": "b6f963fbb8643a04ab4358a988239961639dd07e",
-    "latest_consolidation_session": "session-1990",
-    "scope": "Refreshed the categorized catalog through the current progress snapshot without changing generated progress accounting or frontier prose. Promoted only concrete post-session-1950 MWCC behaviors documented by retained NonMatching attempts; exact matches, signature maintenance, and unretained experiments were not promoted.",
-    "total_lessons": 663,
+    "latest_consolidation_session": "session-2030-remediation-1",
+    "scope": "Refreshed the categorized catalog through the current progress open_items snapshot without changing generated progress accounting or frontier prose. Session-1998 contributes one distinct MWCC prologue and nonvolatile-save behavior; its downstream register-allocation and scheduling consequences are retained in that record rather than counted separately. Session-2020 signature maintenance is excluded because it does not document an MWCC code-generation behavior.",
+    "total_lessons": 664,
     "measurement_command": "jq -r '\"lessons=\" + ((.lessons|length)|tostring) + \" out_of_taxonomy=\" + ((.out_of_taxonomy|length)|tostring) + \" total_catalog_records=\" + (((.lessons|length)+(.out_of_taxonomy|length))|tostring)' reports/GEDE01/lessons.json",
-    "measurement_raw_output": "lessons=663 out_of_taxonomy=21 total_catalog_records=684",
-    "session_parent_commit": "0778dfdbcf2e3f9b6282949b3068248c0442667d",
-    "session_delta_measurement_command": "jq -s -r '.[0] as $parent | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($parent.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($parent.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($parent.lessons|length)+($parent.out_of_taxonomy|length)))\"' <(git show 0778dfdbcf2e3f9b6282949b3068248c0442667d:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
-    "session_delta_measurement_raw_output": "new_lessons=15 new_out_of_taxonomy=0 total_new_records=15",
+    "measurement_raw_output": "lessons=664 out_of_taxonomy=21 total_catalog_records=685",
+    "session_parent_commit": "c40a285655e5886f847281cb81203290c57182db",
+    "session_delta_measurement_command": "jq -s -r '.[0] as $parent | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($parent.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($parent.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($parent.lessons|length)+($parent.out_of_taxonomy|length)))\"' <(git show c40a285655e5886f847281cb81203290c57182db:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
+    "session_delta_measurement_raw_output": "new_lessons=1 new_out_of_taxonomy=0 total_new_records=1",
     "delta_measurement_command": "jq -s -r '.[0] as $base | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($base.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($base.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($base.lessons|length)+($base.out_of_taxonomy|length)))\"' <(git show b6f963fbb:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
-    "delta_measurement_raw_output": "new_lessons=215 new_out_of_taxonomy=19 total_new_records=234",
+    "delta_measurement_raw_output": "new_lessons=231 new_out_of_taxonomy=19 total_new_records=250",
     "added_out_of_taxonomy_categories": ["instruction-selection-lowering", "common-subexpression-elimination", "loop-unrolling", "dead-loop-elimination", "relocation-bearing-instruction-operands", "relocation-target-identity"]
   },
   "lessons": [
@@ -4671,6 +4671,18 @@
       "precise_divergence": "GC/1.3 emits one extra frsp after fn_8017AE0C, shifting the subsequent floating-point temporary stream from retail after otherwise structurally aligned code.",
       "workaround": null,
       "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F69F0"]
+    },
+    {
+      "category": "calling-convention",
+      "functions": ["fn_801F9CF4"],
+      "precise_divergence": "GC/1.3 selects a 0x60-byte frame with individual nonvolatile saves, while retail selects a 0x70-byte frame with stmw r26; that save strategy causes the recorded downstream register-allocation and instruction-scheduling divergence.",
+      "workaround": "Enable the TU-local use_lmw_stmw pragma; the function may retain separate frame-size and scheduling divergence",
+      "evidence": [
+        "reports/GEDE01/progress.json: open_items entry for session-1998",
+        "docs/matching.md:204,693",
+        "reports/GEDE01/progress.json: open_items entry for session-1545",
+        "reports/GEDE01/session-1545-reloc-strict.json"
+      ]
     }
   ],
   "out_of_taxonomy": [

@@ -1,0 +1,13 @@
+{
+  "session_id": "session-2037",
+  "canonical_report": {"command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json", "matching_objects": 5811, "total_objects": 6854, "matching_functions": 5576, "total_functions": 8214, "matching_code_bytes": 933616, "total_code_bytes": 2300692, "linked_code_bytes": 933616},
+  "relocation_strict_report": {"command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-2037-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address", "matching_objects": 5811, "matching_functions": 5571, "matching_code_bytes": 931932, "linked_code_bytes": 933616},
+  "per_function": [
+    {"symbol": "fn_801FF750", "range": "0x801FF750..0x801FF7D4", "retail_bytes": 132, "generated_bytes": 132, "match_percent": 100.0, "retail_relocations": 5, "generated_relocations": 5, "relocations_equal": true},
+    {"symbol": "fn_801FF7D4", "range": "0x801FF7D4..0x801FF838", "retail_bytes": 100, "generated_bytes": 100, "match_percent": 100.0, "retail_relocations": 1, "generated_relocations": 1, "relocations_equal": true}
+  ],
+  "matched_bytes_total": 232,
+  "nonmatching_bytes_total": 0,
+  "dol_sha1": {"command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol", "value": "ea24b6af954876ce072562ff39cdb4c81d32be1f", "cmp_exit": 0},
+  "next_target": "0x801FF838"
+}
