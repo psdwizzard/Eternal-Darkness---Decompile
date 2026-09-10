@@ -1,0 +1,13 @@
+{
+  "session_id": "session-1993",
+  "range_start": "0x801F89B4",
+  "range_end": "0x801F8FAC",
+  "next_target": "0x801F8FAC",
+  "retail_bytes": 1528,
+  "matched_bytes": 0,
+  "nonmatching_bytes": 1528,
+  "functions": [{"name":"fn_801F89B4","range":"0x801F89B4..0x801F8FAC","retail_size":1528,"generated_size":1564,"canonical_percent":92.33246,"relocation_strict_percent":92.33246,"status":"NonMatching honest C after focused -use_lmw_stmw on remediation","canonical_evidence":"reports/GEDE01/session-1993-remediation-1-verification.json","relocation_strict_evidence":"reports/GEDE01/session-1993-remediation-1-verification.json"}],
+  "unaccounted_spans": [],
+  "asm_functions_added": [],
+  "conclusion": "The focused per-TU -use_lmw_stmw on remediation replaces the generated out-of-line save/restore calls with inline stmw/lmw and improves the verified result, but does not produce a match. Generated code retains a larger stack frame than retail and other instruction differences remain. Measurements and raw command output are recorded in reports/GEDE01/session-1993-remediation-1-verification.json. No matched-byte credit is claimed, and next_target remains unchanged."
+}

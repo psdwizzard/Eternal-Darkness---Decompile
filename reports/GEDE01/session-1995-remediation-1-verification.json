@@ -1,0 +1,64 @@
+{
+  "session_id": "session-1995-remediation-1",
+  "scope": "Close the documented fn_801F89B4 attempt, hand the scheduler to the next unowned address, remove the dead source declaration, and verify all unchanged exact-build gates.",
+  "ending_next_target": "0x801F8FAC",
+  "checks": {
+    "affected_object_rebuild": {
+      "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801F89B4.o",
+      "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801F89B4.o",
+      "exit_status": "success"
+    },
+    "full_rebuild": {
+      "command": ".tools/bin/ninja",
+      "raw_output": "[721/724] REPORT\n INFO Loading project .\n INFO Generating report for 6730 units (using 8 threads)\n INFO Report generated in 0.171s\n INFO Writing to build/GEDE01/report.json\n[722/724] LINK build/GEDE01/main.elf\n[723/724] DOL build/GEDE01/main.dol\n[724/724] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK",
+      "exit_status": "success"
+    },
+    "canonical_affected_object_objdiff": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F89B4 fn_801F89B4 -o build/GEDE01/session-1995-remediation-1-fn_801F89B4-canonical.json --format json",
+      "raw_output": " INFO Writing to build/GEDE01/session-1995-remediation-1-fn_801F89B4-canonical.json",
+      "measurement_command": "jq -r '(.left.symbols[] | select(.name==\"fn_801F89B4\")) as $l | (.right.symbols[] | select(.name==\"fn_801F89B4\")) as $r | \"retail_bytes=\\($l.size) generated_bytes=\\($r.size) instructions=\\($l.instructions|length) differing_rows=\\([$l.instructions[] | select((.diff_kind // \\\"DIFF_NONE\\\") != \\\"DIFF_NONE\\\")]|length) match_percent=\\($l.match_percent) diff_kinds=\\([$l.instructions[] | select((.diff_kind // \\\"DIFF_NONE\\\") != \\\"DIFF_NONE\\\") | .diff_kind] | unique | join(\\\",\\\"))\"' build/GEDE01/session-1995-remediation-1-fn_801F89B4-canonical.json",
+      "measurement_raw_output": "retail_bytes=1528 generated_bytes=1528 instructions=382 differing_rows=11 match_percent=99.85602 diff_kinds=DIFF_ARG_MISMATCH"
+    },
+    "relocation_strict_affected_object_objdiff": {
+      "command": "build/tools/objdiff-cli diff -p . -c function_reloc_diffs=name_address -u main/game/game_fn_801F89B4 fn_801F89B4 -o build/GEDE01/session-1995-remediation-1-fn_801F89B4-reloc-strict.json --format json",
+      "raw_output": " INFO Writing to build/GEDE01/session-1995-remediation-1-fn_801F89B4-reloc-strict.json",
+      "measurement_command": "jq -r '(.left.symbols[] | select(.name==\"fn_801F89B4\")) as $l | (.right.symbols[] | select(.name==\"fn_801F89B4\")) as $r | \"retail_bytes=\\($l.size) generated_bytes=\\($r.size) instructions=\\($l.instructions|length) differing_rows=\\([$l.instructions[] | select((.diff_kind // \\\"DIFF_NONE\\\") != \\\"DIFF_NONE\\\")]|length) match_percent=\\($l.match_percent) diff_kinds=\\([$l.instructions[] | select((.diff_kind // \\\"DIFF_NONE\\\") != \\\"DIFF_NONE\\\") | .diff_kind] | unique | join(\\\",\\\"))\"' build/GEDE01/session-1995-remediation-1-fn_801F89B4-reloc-strict.json",
+      "measurement_raw_output": "retail_bytes=1528 generated_bytes=1528 instructions=382 differing_rows=11 match_percent=99.85602 diff_kinds=DIFF_ARG_MISMATCH"
+    },
+    "relocation_strict_aggregate": {
+      "command": "build/tools/objdiff-cli report generate -p . -c function_reloc_diffs=name_address -o build/GEDE01/session-1995-remediation-1-reloc-strict-aggregate.json",
+      "raw_output": " INFO Loading project .\n INFO Generating report for 6730 units (using 8 threads)\n INFO Report generated in 0.159s\n INFO Writing to build/GEDE01/session-1995-remediation-1-reloc-strict-aggregate.json",
+      "measurement_command": "jq -r '\"matching_functions=\\(.measures.matched_functions) total_functions=\\(.measures.total_functions) matching_code_bytes=\\(.measures.matched_code) total_code_bytes=\\(.measures.total_code) code_percent=\\(.measures.matched_code_percent) linked_code_bytes=\\(.measures.complete_code) linked_data_bytes=\\(.measures.complete_data)\"' build/GEDE01/session-1995-remediation-1-reloc-strict-aggregate.json",
+      "measurement_raw_output": "matching_functions=5332 total_functions=8216 matching_code_bytes=856684 total_code_bytes=2300692 code_percent=37.235928 linked_code_bytes=858368 linked_data_bytes=38238"
+    },
+    "canonical_headline": {
+      "command": "jq -r '\"matching_objects=\\(.measures.complete_units) total_objects=\\(.measures.total_units) matching_functions=\\(.measures.matched_functions) total_functions=\\(.measures.total_functions) matching_code_bytes=\\(.measures.matched_code) total_code_bytes=\\(.measures.total_code) linked_code_bytes=\\(.measures.complete_code) linked_data_bytes=\\(.measures.complete_data)\"' build/GEDE01/report.json",
+      "raw_output": "matching_objects=5572 total_objects=6730 matching_functions=5337 total_functions=8216 matching_code_bytes=858368 total_code_bytes=2300692 linked_code_bytes=858368 linked_data_bytes=38238"
+    },
+    "dol_sha1": {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    "dol_byte_identity": {
+      "command": "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'cmp_exit=%s\\n' \"$?\"",
+      "raw_output": "cmp_exit=0"
+    },
+    "retail_signed_conversion_bias": {
+      "command": "xxd -p -l 8 -s 0x302560 orig/GEDE01/sys/main.dol",
+      "raw_output": "4330000080000000"
+    },
+    "next_target_unowned": {
+      "command": "awk '$1 == \".text\" && $2 == \"start:0x801F8FAC\" {print}' config/GEDE01/splits.txt | wc -l",
+      "raw_output": "0"
+    },
+    "frontier_metadata": {
+      "command": "jq -e '.next_target == \"0x801F8FAC\" and (.next_gate | contains(\"unowned address 0x801F8FAC\")) and (.nonmatching_attempts.fn_801F89B4.status | contains(\"closed for now\"))' reports/GEDE01/progress.json; jq -e '.next_target == \"0x801F8FAC\"' reports/GEDE01/frontier-801F89B4-801F8FAC-session-1995.json",
+      "raw_output": "true\ntrue"
+    },
+    "dead_declaration": {
+      "command": "if rg -n 'extern const double lbl_80651480' src/game/game_fn_801F89B4.c; then exit 1; else printf 'dead_declaration_occurrences=0\\n'; fi",
+      "raw_output": "dead_declaration_occurrences=0"
+    }
+  },
+  "conclusion": "The documented compiler register-allocation divergence is closed for now, the scheduler handoff is the next unowned address, and the source cleanup preserves canonical objdiff, relocation-strict objdiff, retail constant identity, and whole-DOL byte identity."
+}

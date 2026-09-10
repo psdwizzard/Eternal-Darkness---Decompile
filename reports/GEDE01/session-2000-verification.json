@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "session_id": "session-2000",
+  "session_kind": "declaration-drift-consolidation",
+  "frontier": {
+    "starting_target": "0x801FA354",
+    "ending_next_target": "0x801FA354",
+    "changed": false
+  },
+  "accounting": {
+    "matched_bytes_added": 0,
+    "nonmatching_bytes_added": 0,
+    "source_rewrites": 0,
+    "affected_objects_requiring_objdiff": 0,
+    "existing_matching_code_bytes": 859760,
+    "existing_matching_functions": 5344,
+    "existing_matching_objects": 5579,
+    "existing_nonmatching_attempts": 123,
+    "existing_nonmatching_retail_bytes": 20124,
+    "progress_match_counts_revised": false
+  },
+  "rewrite_gate": {
+    "eligible_symbols": [],
+    "reason": "No selected symbol is both high confidence and within the 12-TU rewrite ceiling. The high-confidence symbols fn_8011F114 and fn_80156938 have measured total affected-TU counts of 126 and 100. Across all ten selected symbols, the minimum total affected-TU count is 100, so no selected symbol has a small blast radius.",
+    "measurement_command": "jq -r '([.symbols[].total_affected_tu_count] | min) as $min | .symbols[] | select(.confidence==\"high\") | \"symbol=\\(.symbol) confidence=\\(.confidence) total_affected_tus=\\(.total_affected_tu_count) selected_min_total_affected_tus=\\($min)\"' reports/GEDE01/declaration-drift-proposal-session-2000.json",
+    "measurement_raw_output": "symbol=fn_8011F114 confidence=high total_affected_tus=126 selected_min_total_affected_tus=100\nsymbol=fn_80156938 confidence=high total_affected_tus=100 selected_min_total_affected_tus=100",
+    "affected_object_objdiff": "not applicable because no declaration was rewritten"
+  },
+  "evidence": {
+    "signature_audit_command": "python3 tools/signature_audit.py --json-output build/GEDE01/signature-audit-session-2000-raw.json --session-id session-2000 --starting-target 0x801FA354 --ending-next-target 0x801FA354 --dol-sha1 ea24b6af954876ce072562ff39cdb4c81d32be1f --build-report build/GEDE01/report.json",
+    "signature_audit_result": "21786 extern declarations across 5193 symbols audited successfully",
+    "proposal_facts_command": "python3 tools/declaration_drift_proposal.py --baseline-ref a68d14b0010fce596a9b0ef7314bf9ec6d1a2427 --facts-output build/GEDE01/declaration-drift-proposal-session-2000-facts.txt --facts",
+    "proposal_validation_command": "python3 tools/validate_declaration_drift_report.py --report reports/GEDE01/declaration-drift-proposal-session-2000.json",
+    "proposal_validation_result": "passed: 10 symbols, 76 declaration variants, 2267 declaration sites, 2885 variant call sites, 2877 deduplicated believed-reading call sites, 0 invalid call sites, 0 source rewrites",
+    "build_command": ".tools/bin/ninja build/GEDE01/main.dol",
+    "build_result": "passed; 724-step rebuild completed and emitted build/GEDE01/main.dol",
+    "protected_diff_command": "git diff --exit-code HEAD -- eternal-darkness-decomp/src/game eternal-darkness-decomp/reports/GEDE01/progress.json",
+    "protected_diff_exit": 0,
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_unchanged": true,
+    "progress_next_target": "0x801FA354",
+    "next_gate_unchanged": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "session": "session-1997",
+  "canonical_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+  "canonical_raw_output": "matching_objects=5576 total_objects=6736 matching_functions=5341 total_functions=8216 matching_code_bytes=858688 total_code_bytes=2300692 matching_data_bytes=38690 total_data_bytes=4305642 code_percent=37.323032 function_percent=65.00731 linked_code_bytes=858688 linked_data_bytes=38238",
+  "relocation_strict_command": "build/tools/objdiff-cli report generate -p . -c function_reloc_diffs=name_address -o reports/GEDE01/session-1997-reloc-strict.json",
+  "relocation_strict_raw_output": "matching_functions=5336 matching_code_bytes=857004 total_code_bytes=2300692 code_percent=37.249836 linked_code_bytes=858688 linked_data_bytes=38238",
+  "per_function": [
+    {"symbol":"fn_801F92F8","retail_bytes":1728,"generated_bytes":1104,"canonical_percent":54.368057,"relocation_strict_percent":54.368057},
+    {"symbol":"fn_801F99C0","retail_bytes":120,"generated_bytes":120,"canonical_percent":100.0,"relocation_strict_percent":100.0},
+    {"symbol":"fn_801F9A38","retail_bytes":112,"generated_bytes":112,"canonical_percent":100.0,"relocation_strict_percent":100.0},
+    {"symbol":"fn_801F9AA8","retail_bytes":80,"generated_bytes":80,"canonical_percent":100.0,"relocation_strict_percent":100.0}
+  ],
+  "matched_byte_arithmetic": "120+112+80=312",
+  "range_accounting": "1728 NonMatching + 8 preexisting matched bridge + 312 newly matched = 2048 bytes = 0x801F9AF8-0x801F92F8",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f for both files; cmp_exit=0"
+}

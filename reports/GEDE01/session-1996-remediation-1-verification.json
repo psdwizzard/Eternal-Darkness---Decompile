@@ -1,0 +1,54 @@
+{
+  "session_id": "session-1996-remediation-1",
+  "scope": "review remediation only; accepted frontier corrected and not advanced",
+  "source_correction": {
+    "file": "src/game/game_fn_801F8FAC.c",
+    "change": "Corrected the definition to pointer-before-float parameter order used by both known callers.",
+    "command": "rg -n 'extern float fn_801F8FAC|float fn_801F8FAC|fn_801F8FAC\\(&' src/game/game_fn_801F7C04.c src/game/game_fn_801F8264.c src/game/game_fn_801F8FAC.c",
+    "raw_output": "src/game/game_fn_801F8FAC.c:37:float fn_801F8FAC(Vec3* output, MotionResource* resource, float time)\nsrc/game/game_fn_801F8264.c:56:extern float fn_801F8FAC(Vec3*, MotionResource*, float);\nsrc/game/game_fn_801F8264.c:85:        state->sample = fn_801F8FAC(&position, state->resource, state->linked->sample);\nsrc/game/game_fn_801F7C04.c:8:extern float fn_801F8FAC(Vec3*, void*, float);\nsrc/game/game_fn_801F7C04.c:15:        fn_801F8FAC(&position, *(void**)((unsigned char*)state + 0x7C), lbl_8064D7A0);",
+    "result": "The semantic prototype is now consistent. The pointer and float retain r4 and f1 under the PowerPC ABI, so this correction does not change generated code."
+  },
+  "build": {
+    "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801F8FAC.o build/GEDE01/src/game/game_fn_801F92F8.o build/GEDE01/src/game/game_fn_801F99B8.o build/GEDE01/main.dol >/tmp/session-1996-remediation-1-build.log 2>&1; printf 'build_exit=%s\\n' \"$?\"",
+    "raw_output": "build_exit=0",
+    "exit": 0
+  },
+  "canonical_objdiff": {
+    "command": "for mode in canonical; do for spec in 'game_fn_801F8FAC fn_801F8FAC' 'game_fn_801F92F8 fn_801F92F8' 'game_fn_801F99B8 fn_801F99B8'; do set -- $spec; build/tools/objdiff-cli diff -p . -u main/game/$1 $2 -o build/GEDE01/remediation-1996-$2-$mode.json --format json-pretty; rc=$?; jq -r --arg s \"$2\" --arg mode \"$mode\" --argjson rc \"$rc\" '(.left.symbols[] | select(.name==$s)) as $l | (.right.symbols[] | select(.name==$s)) as $r | \"\\($mode) symbol=\\($s) exit=\\($rc) retail_bytes=\\($l.size) generated_bytes=\\($r.size) byte_deficit=\\(($l.size|tonumber)-($r.size|tonumber)) match_percent=\\($l.match_percent)\"' build/GEDE01/remediation-1996-$2-$mode.json; done; done",
+    "raw_output": " INFO Writing to build/GEDE01/remediation-1996-fn_801F8FAC-canonical.json\ncanonical symbol=fn_801F8FAC exit=0 retail_bytes=844 generated_bytes=808 byte_deficit=36 match_percent=79.7346\n INFO Writing to build/GEDE01/remediation-1996-fn_801F92F8-canonical.json\ncanonical symbol=fn_801F92F8 exit=0 retail_bytes=1728 generated_bytes=1104 byte_deficit=624 match_percent=54.368057\n INFO Writing to build/GEDE01/remediation-1996-fn_801F99B8-canonical.json\ncanonical symbol=fn_801F99B8 exit=0 retail_bytes=8 generated_bytes=8 byte_deficit=0 match_percent=100.0",
+    "functions": [
+      {"name": "fn_801F8FAC", "retail_bytes": 844, "generated_bytes": 808, "byte_deficit": 36, "match_percent": 79.7346},
+      {"name": "fn_801F92F8", "retail_bytes": 1728, "generated_bytes": 1104, "byte_deficit": 624, "match_percent": 54.368057},
+      {"name": "fn_801F99B8", "retail_bytes": 8, "generated_bytes": 8, "byte_deficit": 0, "match_percent": 100.0}
+    ]
+  },
+  "relocation_strict_objdiff": {
+    "command": "for mode in relocation_strict; do for spec in 'game_fn_801F8FAC fn_801F8FAC' 'game_fn_801F92F8 fn_801F92F8' 'game_fn_801F99B8 fn_801F99B8'; do set -- $spec; build/tools/objdiff-cli diff -p . -u main/game/$1 $2 -o build/GEDE01/remediation-1996-$2-$mode.json --format json-pretty -c function_reloc_diffs=name_address; rc=$?; jq -r --arg s \"$2\" --arg mode \"$mode\" --argjson rc \"$rc\" '(.left.symbols[] | select(.name==$s)) as $l | (.right.symbols[] | select(.name==$s)) as $r | \"\\($mode) symbol=\\($s) exit=\\($rc) retail_bytes=\\($l.size) generated_bytes=\\($r.size) byte_deficit=\\(($l.size|tonumber)-($r.size|tonumber)) match_percent=\\($l.match_percent)\"' build/GEDE01/remediation-1996-$2-$mode.json; done; done",
+    "raw_output": " INFO Writing to build/GEDE01/remediation-1996-fn_801F8FAC-relocation_strict.json\nrelocation_strict symbol=fn_801F8FAC exit=0 retail_bytes=844 generated_bytes=808 byte_deficit=36 match_percent=79.7346\n INFO Writing to build/GEDE01/remediation-1996-fn_801F92F8-relocation_strict.json\nrelocation_strict symbol=fn_801F92F8 exit=0 retail_bytes=1728 generated_bytes=1104 byte_deficit=624 match_percent=54.368057\n INFO Writing to build/GEDE01/remediation-1996-fn_801F99B8-relocation_strict.json\nrelocation_strict symbol=fn_801F99B8 exit=0 retail_bytes=8 generated_bytes=8 byte_deficit=0 match_percent=100.0",
+    "functions": [
+      {"name": "fn_801F8FAC", "retail_bytes": 844, "generated_bytes": 808, "byte_deficit": 36, "match_percent": 79.7346},
+      {"name": "fn_801F92F8", "retail_bytes": 1728, "generated_bytes": 1104, "byte_deficit": 624, "match_percent": 54.368057},
+      {"name": "fn_801F99B8", "retail_bytes": 8, "generated_bytes": 8, "byte_deficit": 0, "match_percent": 100.0}
+    ]
+  },
+  "frame_evidence": {
+    "command": "jq -r '(.left.symbols[] | select(.name==\"fn_801F8FAC\") | .instructions[0].instruction.formatted), (.right.symbols[] | select(.name==\"fn_801F8FAC\") | .instructions[0].instruction.formatted)' build/GEDE01/remediation-1996-fn_801F8FAC-canonical.json",
+    "raw_output": "stwu r1, -0x80(r1)\nstwu r1, -0x70(r1)",
+    "conclusion": "The fresh size deficit and frame difference remain after correcting the prototype. They require further source reconstruction and are not explained as scheduling-only divergence."
+  },
+  "dol_gate": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'dol_cmp_exit=%s\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0",
+    "build_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "cmp_exit": 0
+  },
+  "result": {
+    "status": "frontier corrected without advancement",
+    "accepted_range": "0x801F8FAC..0x801F92F8",
+    "matched_bytes_credited": 0,
+    "next_target": "0x801F92F8",
+    "next_obligation": "Complete fn_801F92F8 before advancing the contiguous frontier.",
+    "conclusion": "The incomplete fn_801F92F8 reconstruction is no longer sealed below the frontier. The later preconstructed accessor remains verified but receives no credit in this remediated frontier range."
+  }
+}

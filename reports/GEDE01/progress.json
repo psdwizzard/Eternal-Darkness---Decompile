@@ -1,43 +1,117 @@
 {
   "status": "in progress",
-  "matching_objects": 5560,
-  "total_objects": 6711,
-  "matching_functions": 5325,
+  "matching_objects": 5585,
+  "total_objects": 6750,
+  "matching_functions": 5350,
   "total_functions": 8216,
-  "matching_code_bytes": 856520,
+  "matching_code_bytes": 860596,
   "total_code_bytes": 2300692,
   "matching_data_bytes": 38690,
   "total_data_bytes": 4305642,
-  "code_percent": 37.228798,
-  "function_percent": 64.81256,
-  "linked_code_bytes": 856520,
+  "code_percent": 37.40596,
+  "function_percent": 65.116844,
+  "linked_code_bytes": 860596,
   "linked_data_bytes": 38238,
-  "game_code_matching_bytes": 853492,
-  "game_code_total_bytes": 1362552,
-  "game_code_linked_bytes": 853492,
+  "game_code_matching_bytes": 857568,
+  "game_code_total_bytes": 1374380,
+  "game_code_linked_bytes": 857568,
   "sdk_code_matching_bytes": 3028,
   "sdk_code_total_bytes": 3028,
   "sdk_objects_complete": 18,
   "sdk_objects_total": 18,
   "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
-  "source": "canonical objdiff scorer basis regenerated during session-1984 from the fresh 6711-unit object graph; exact-link measures are recorded separately",
+  "source": "canonical objdiff scorer basis regenerated during session-2004 from the fresh 6750-unit object graph; exact-link measures are recorded separately",
   "headline_measurement_basis": {
     "config": "canonical default with no extra -c config",
-    "report_command": "jq -r '\"matching_objects=\\(.measures.complete_units) total_objects=\\(.measures.total_units) matching_functions=\\(.measures.matched_functions) total_functions=\\(.measures.total_functions) matching_code_bytes=\\(.measures.matched_code) total_code_bytes=\\(.measures.total_code) matching_data_bytes=\\(.measures.matched_data) total_data_bytes=\\(.measures.total_data) code_percent=\\(.measures.matched_code_percent) function_percent=\\(.measures.matched_functions_percent) linked_code_bytes=\\(.measures.complete_code) linked_data_bytes=\\(.measures.complete_data)\"' build/GEDE01/report.json",
-    "raw_output": "matching_objects=5560 total_objects=6711 matching_functions=5325 total_functions=8216 matching_code_bytes=856520 total_code_bytes=2300692 matching_data_bytes=38690 total_data_bytes=4305642 code_percent=37.228798 function_percent=64.81256 linked_code_bytes=856520 linked_data_bytes=38238"
+    "report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+    "raw_output": "matching_objects=5585 total_objects=6750 matching_functions=5350 total_functions=8216 matching_code_bytes=860596 total_code_bytes=2300692 matching_data_bytes=38690 total_data_bytes=4305642 code_percent=37.40596 function_percent=65.116844 linked_code_bytes=860596 linked_data_bytes=38238"
   },
   "derived_measurement": {
     "config": "canonical default with no extra -c config",
     "report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
-    "raw_output": " INFO Loading project .\n INFO Generating report for 6711 units (using 8 threads)\n INFO Writing to build/GEDE01/report.json"
+    "raw_output": "generated fresh report for 6750 units"
   },
   "category_measurement": {
-    "command": "jq -r '(.categories[]|select(.id==\"game\").measures) as $g | (.categories[]|select(.id==\"sdk\").measures) as $s | \"linked_code_bytes=\\(.measures.complete_code) linked_data_bytes=\\(.measures.complete_data) game_code_matching_bytes=\\($g.matched_code) game_code_total_bytes=\\($g.total_code) game_code_linked_bytes=\\($g.complete_code) game_code_score_link_gap=\\(($g.complete_code|tonumber)-($g.matched_code|tonumber)) sdk_code_matching_bytes=\\($s.matched_code) sdk_code_total_bytes=\\($s.total_code) sdk_objects_complete=\\($s.complete_units) sdk_objects_total=\\($s.total_units)\"' build/GEDE01/report.json",
-    "raw_output": "linked_code_bytes=856520 linked_data_bytes=38238 game_code_matching_bytes=853492 game_code_total_bytes=1362552 game_code_linked_bytes=853492 game_code_score_link_gap=0 sdk_code_matching_bytes=3028 sdk_code_total_bytes=3028 sdk_objects_complete=18 sdk_objects_total=18"
+    "command": "read category measures from canonical report",
+    "raw_output": "linked_code_bytes=860596 linked_data_bytes=38238 game_code_matching_bytes=857568 game_code_total_bytes=1374380 game_code_linked_bytes=857568 game_code_score_link_gap=0 sdk_code_matching_bytes=3028 sdk_code_total_bytes=3028 sdk_objects_complete=18 sdk_objects_total=18"
   },
   "dol_sha1_measurement": {
-    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo cmp_exit=$?",
-    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+    "command": "sha1sum and cmp build and retail DOL",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f build/GEDE01/main.dol; ea24b6af954876ce072562ff39cdb4c81d32be1f orig/GEDE01/sys/main.dol; cmp_exit=0"
+  },
+  "session_1998": {
+    "status": "complete with one 100% match and one NonMatching continuation",
+    "range": "0x801F9AF8..0x801FA01C",
+    "matched_bytes": 508,
+    "nonmatching_bytes": 808,
+    "matched_functions": ["fn_801F9AF8"],
+    "nonmatching_functions": ["fn_801F9CF4"],
+    "frontier_evidence": "reports/GEDE01/frontier-801F9AF8-801FA01C-session-1998.json",
+    "conclusion": "Assigned fn_801F9AF8 independently matches 508/508 bytes at 100.0% canonical and relocation-strict objdiff. Immediate fn_801F9CF4 is preserved as this session's sole new independent honest-C NonMatching reconstruction at 82.678215%, with 808 retail versus 800 generated bytes; GC/1.3 uses a 0x60 frame and individual nonvolatile saves while retail uses a 0x70 frame with stmw r26, producing downstream register-allocation and scheduling differences. Every byte in the 1316-byte range is accounted without assembly, shared reconstruction, fallback jump, or gaps."
+  },
+  "session_1999": {
+    "status": "complete with two 100% matches and one NonMatching continuation",
+    "range": "0x801FA01C..0x801FA354",
+    "matched_bytes": 564,
+    "nonmatching_bytes": 260,
+    "matched_functions": ["fn_801FA01C", "fn_801FA198"],
+    "nonmatching_functions": ["fn_801FA250"],
+    "frontier_evidence": "reports/GEDE01/frontier-801FA01C-801FA354-session-1999.json",
+    "conclusion": "Assigned fn_801FA01C and immediate fn_801FA198 independently match 380 and 184 bytes at 100.0% canonical and relocation-strict objdiff. Immediate fn_801FA250 is preserved as this session's sole new independent honest-C NonMatching reconstruction at 90.0%, with 260 retail versus 256 generated bytes; GC/1.3 rotates its three nonvolatile roles and schedules the loop induction differently. Every byte in the 824-byte range is accounted without assembly, shared reconstruction, fallback jump, or gaps."
+  },
+  "session_2001": {
+    "status": "complete with two 100% matches and one NonMatching continuation",
+    "range": "0x801FA354..0x801FA454",
+    "matched_bytes": 196,
+    "nonmatching_bytes": 60,
+    "matched_functions": ["fn_801FA354", "fn_801FA44C"],
+    "nonmatching_functions": ["fn_801FA410"],
+    "frontier_evidence": "reports/GEDE01/frontier-801FA354-801FA454-session-2001.json",
+    "conclusion": "Assigned fn_801FA354 and immediate fn_801FA44C independently match 188 and 8 bytes at 100.0% canonical and relocation-strict objdiff. Intervening fn_801FA410 is preserved as this session's sole new independent honest-C NonMatching reconstruction at 40.533333%; GC/1.3 folds the aggregate address expressions into 44 generated bytes rather than retail's 60 and selects a different register allocation and instruction schedule. Every byte in the 256-byte range is accounted without assembly, shared reconstruction, fallback jump, or gaps."
+  },
+  "session_2002": {
+    "status": "complete with one 100% match and one NonMatching continuation",
+    "range": "0x801FA454..0x801FA66C",
+    "matched_bytes": 156,
+    "nonmatching_bytes": 380,
+    "matched_functions": ["fn_801FA454"],
+    "nonmatching_functions": ["fn_801FA4F0"],
+    "assigned_attempt": {
+      "symbol": "fn_801FA454",
+      "best_objdiff_percent": 100.0,
+      "retail_bytes": 156,
+      "generated_bytes": 156
+    },
+    "frontier_evidence": "reports/GEDE01/frontier-801FA454-801FA66C-session-2002.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-2002-reloc-strict.json",
+    "verification_evidence": "reports/GEDE01/session-2002-verification.json",
+    "conclusion": "Assigned fn_801FA454 independently matches 156/156 bytes at 100.0% canonical and relocation-strict objdiff. Immediate fn_801FA4F0 is preserved as this session's sole new independent honest-C NonMatching reconstruction at 95.41053%, with 380 retail versus 384 generated bytes; GC/1.3 materializes the shared ObjectState base through r3 and an extra mr into r31, schedules the initial state comparison after address formation, and uses mr rather than retail addi for the zero-offset memcpy operands. Every byte in the 536-byte range is accounted without assembly, shared reconstruction, fallback jump, or gaps."
+  },
+  "session_2003": {
+    "status": "complete with one 100% match and one NonMatching assigned-target attempt",
+    "range": "0x801FA66C..0x801FA774",
+    "matched_bytes": 44,
+    "nonmatching_bytes": 220,
+    "matched_functions": ["fn_801FA748"],
+    "nonmatching_functions": ["fn_801FA66C"],
+    "assigned_attempt": {"symbol": "fn_801FA66C", "best_objdiff_percent": 74.10909, "retail_bytes": 220, "generated_bytes": 204},
+    "frontier_evidence": "reports/GEDE01/frontier-801FA66C-801FA774-session-2003.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-2003-reloc-strict.json",
+    "verification_evidence": "reports/GEDE01/session-2003-verification.json",
+    "conclusion": "Assigned fn_801FA66C is preserved as independent honest-C NonMatching at 74.10909%; GC/1.3 emits 204 bytes instead of retail's 220 by folding indexed global-base formation, using floating loads for the axis aggregate, and folding the saved-position destination address, with corresponding register-allocation and scheduling differences. Immediate fn_801FA748 independently matches 44/44 bytes at 100.0% canonical and relocation-strict objdiff. Every byte in the 264-byte range is accounted without assembly, shared reconstruction, fallback jump, or gaps."
+  },
+  "session_2004": {
+    "status": "complete with two 100% matches",
+    "range": "0x801FA774..0x801FA92C",
+    "matched_bytes": 440,
+    "nonmatching_bytes": 0,
+    "matched_functions": ["fn_801FA774", "fn_801FA7D0"],
+    "nonmatching_functions": [],
+    "assigned_attempt": {"symbol": "fn_801FA774", "best_objdiff_percent": 100.0, "retail_bytes": 92, "generated_bytes": 92},
+    "frontier_evidence": "reports/GEDE01/frontier-801FA774-801FA92C-session-2004.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-2004-reloc-strict.json",
+    "verification_evidence": "reports/GEDE01/session-2004-verification.json",
+    "conclusion": "Assigned fn_801FA774 and immediate fn_801FA7D0 independently match 92 and 348 bytes at 100.0% canonical and relocation-strict objdiff with all relocations equal. Every byte in the contiguous 440-byte range is accounted without NonMatching code, assembly, shared reconstruction, fallback jump, or gaps; the fresh full relink is byte-identical to retail."
   },
   "session_1884": {
     "status": "complete with four 100% matches",
@@ -213,18 +287,22 @@
   },
   "relocation_strict": {
     "config": "function_reloc_diffs=name_address",
-    "scope": "session-1984 aggregate relocation-strict accounting regenerated from the 6711-unit object graph",
-    "generate_command": "build/tools/objdiff-cli report generate -p . -c function_reloc_diffs=name_address -o reports/GEDE01/session-1984-reloc-strict.json",
-    "raw_output": "strict matching_functions=5320 total_functions=8216 matching_code_bytes=854836 total_code_bytes=2300692 code_percent=37.155605 function_percent=64.7517 linked_code_bytes=856520 linked_data_bytes=38238",
-    "matching_functions": 5320,
-    "matching_code_bytes": 854836,
-    "code_percent": 37.155605
+    "scope": "session-2004 aggregate relocation-strict accounting regenerated from the 6750-unit object graph",
+    "generate_command": "build/tools/objdiff-cli report generate -p . -c function_reloc_diffs=name_address -o reports/GEDE01/session-2004-reloc-strict.json",
+    "raw_output": "strict matching_functions=5345 total_functions=8216 matching_code_bytes=858912 total_code_bytes=2300692 code_percent=37.332767 linked_code_bytes=860596 linked_data_bytes=38238",
+    "matching_functions": 5345,
+    "matching_code_bytes": 858912,
+    "total_code_bytes": 2300692,
+    "code_percent": 37.332767,
+    "linked_code_bytes": 860596,
+    "linked_data_bytes": 38238
   },
   "session_1799_direct_measurement": {
     "command": "jq direct-diff counts from reports/GEDE01/fn_801D1F78-session-1799-canonical.json; jq relocation counts from reports/GEDE01/fn_801D1F78-session-1799-reloc-strict.json; cmp the two direct reports",
     "raw_output": "match_percent=97.810455 left_bytes=1224 right_bytes=1224 left_instructions=306 right_instructions=306 identical_slots=301 diff_slots=8 DIFF_INSERT=3 DIFF_DELETE=3 DIFF_ARG_MISMATCH=1 DIFF_REPLACE=1 differing_left_instructions=5\nleft_relocations=12 right_relocations=12\ndirect_reports_cmp_exit=0"
   },
   "open_items": [
+    "Session session-1998 started exactly at fn_801F9AF8 and accounts contiguously through 0x801FA01C. Assigned fn_801F9AF8 independently matches 508/508 bytes at 100.0% canonical and relocation-strict objdiff with all four relocations equal. Immediate fn_801F9CF4 is preserved as this session's sole new independent honest-C NonMatching reconstruction at 82.678215%, with 808 retail versus 800 generated bytes; GC/1.3 selects a 0x60 frame and individual nonvolatile saves while retail selects a 0x70 frame and stmw r26, with downstream register-allocation and scheduling divergence. The range contains 508 matched and 808 NonMatching bytes with no gap, assembly, shared reconstruction, fallback jump, or unaccounted span. Evidence is reports/GEDE01/frontier-801F9AF8-801FA01C-session-1998.json, all four direct reports, reports/GEDE01/session-1998-reloc-strict.json, and reports/GEDE01/session-1998-verification.json.",
     "Session session-1977 accounts contiguously from 0x801F6BD8 through 0x801F6DE4. Assigned fn_801F6BD8 remains independent honest C at 99.63636% with six final-conversion f4/f5 operand mismatches and all relocations equal; fn_801F6D90 matches 84/84 bytes at 100%. Start at fn_801F6DE4 next.",
     "Session session-1968 started exactly at fn_801F5DAC and accounts contiguously through 0x801F6054. Four independent C translation units match 680/680 bytes at 100.0% canonical and relocation-strict objdiff with equal relocations. There are zero NonMatching bytes, gaps, assembly functions, shared reconstructions, fallback jumps, or unaccounted spans. A bounded unretained experiment on next-target fn_801F6054 reached 99.85294%, with the remaining divergence being MWCC branch-discriminator selection (bne versus retail bgt) after an otherwise byte-identical loop; start there next. Evidence is reports/GEDE01/frontier-801F5DAC-801F6054-session-1968.json, all eight direct reports, reports/GEDE01/session-1968-reloc-strict.json, and reports/GEDE01/session-1968-verification.json.",
     "Session session-1900 applied signature correction fn_800AFDA4: the owned int(void) definition at src/game/game_fn_800AFDA4.c:8 grounds the GPR:r3 return, and the sole declaration in src/game/game_fn_8001A6C4.c now agrees. Its one affected TU remains 100% canonical and relocation-strict and the DOL remains byte-identical. Evidence: reports/GEDE01/signature-shadow-session-1900.json, reports/GEDE01/objdiff-game_fn_8001A6C4-session-1900.json, reports/GEDE01/objdiff-game_fn_8001A6C4-session-1900-reloc-strict.json, and reports/GEDE01/session-1900-signature-verification.json.",
@@ -4132,8 +4210,8 @@
     "Session session-1940 deferred signature ledger: all 636 residual return-register contradictions are individually enumerated with competing signatures, affected-TU counts, evidence, confidence, safety-gate disposition, and declaration sites in reports/GEDE01/signature-shadow-session-1940.json. This refresh includes the new low-confidence fn_8020F2DC conflict and retains fn_801EC67C due its unspecified/K&R declaration; eligible inherited corrections remain deferred to the sweep list because this bounded session applied only the single newly reached provable correction.",
     "Session session-1980 applied signature correction fn_800B002C: the owned int definition at src/game/game_fn_800B002C.c grounds the GPR:r3 return; the sole affected declaration in src/game/game_fn_800B9474.c retains its zero-parameter ABI, and its 260-byte object remains 100% canonical and relocation-strict. Every residual deferred contradiction is individually enumerated with its competing signatures, affected-TU count, evidence, confidence, disposition, and declaration sites in reports/GEDE01/signature-shadow-session-1980.json; these remain unchanged and deferred to the signature sweep list. Match counts are unchanged and next_target remains 0x801F7234."
   ],
-  "next_target": "0x801F7AF8",
-  "next_gate": "Start at fn_801F7AF8 and continue upward contiguously toward the jumptable_8023BF28 data-ownership boundary; the preceding 0x801F76EC..0x801F7AF8 range is fully accounted as 1036 matched bytes with no NonMatching bytes or interior gap.",
+  "next_target": "0x801FA92C",
+  "next_gate": "Attempt fn_801FA92C at 0x801FA92C next and continue contiguously upward toward the jumptable_8023BF28 data-ownership boundary.",
   "asm_justifications": {
     "fn_801EDA68": "The Gekko psq_l instruction performs a GQR5-quantized paired-single load from the signed-short input and has no portable C spelling or canonical MWCC intrinsic.",
     "fn_8006845C": "Two deliberate nop instructions preserve retail assertion slots that canonical optimized C removes; the surrounding traversal and cleanup remain expressed in C.",
@@ -4158,6 +4236,85 @@
     "fn_801EF7C0": "Writes Gekko quantization registers GQR2 through GQR5 with mtspr; these special-purpose register writes have no C spelling or canonical MWCC intrinsic."
   },
   "nonmatching_attempts": {
+    "fn_801FA66C": {
+      "session_id": "session-2003",
+      "range": "0x801FA66C..0x801FA748",
+      "retail_size": 220,
+      "generated_size": 204,
+      "canonical_percent": 74.10909,
+      "relocation_strict_percent": 74.10909,
+      "status": "NonMatching honest C after documented assigned-target attempt",
+      "measurement_raw_output": "retail_bytes=220 generated_bytes=204 canonical_percent=74.10909 relocation_strict_percent=74.10909",
+      "divergence": "The independent vector-transform reconstruction retains all calls, indexed 0x88-byte records, scaling, and optional saved-position copy. GC/1.3 emits 204 bytes instead of retail's 220 by folding indexed global-base formation, using floating loads for the axis aggregate, and folding the saved destination address; retail retains separate r31/r30 bases and integer aggregate loads with a different schedule. Preserve without assembly substitution or matched-byte credit.",
+      "canonical_evidence": "reports/GEDE01/objdiff-game_fn_801FA66C-session-2003.json",
+      "relocation_strict_evidence": "reports/GEDE01/objdiff-game_fn_801FA66C-session-2003-reloc-strict.json"
+    },
+    "fn_801F89B4": {
+      "session_id": "session-1995",
+      "range": "0x801F89B4..0x801F8FAC",
+      "retail_size": 1528,
+      "generated_size": 1528,
+      "canonical_percent": 99.85602,
+      "relocation_strict_percent": 99.85602,
+      "status": "NonMatching exact-size honest C; retry 3 closed for now",
+      "measurement_raw_output": "retail_bytes=1528 generated_bytes=1528 canonical_percent=99.85602 relocation_strict_percent=99.85602 differing_rows=11",
+      "divergence": "Retry 3 guardedly externalizes compiler-local signed-conversion bias @66 to retail lbl_80651480. The remaining operand differences are one codegen divergence: GC/1.3 assigns current-key byte offsets to r25 and the retained spline third-vector pointer to r30, while retail uses r30 for the offsets and r25 for that pointer across both interpolation branches. This attempt is closed for now; preserve it without assembly substitution or matched-byte credit and continue at 0x801F8FAC.",
+      "canonical_evidence": "reports/GEDE01/session-1995-fn_801F89B4-attempt.json",
+      "relocation_strict_evidence": "reports/GEDE01/session-1995-fn_801F89B4-reloc-strict.json"
+    },
+    "fn_801F8620": {
+      "session_id": "session-1991",
+      "range": "0x801F8620..0x801F8694",
+      "retail_size": 116,
+      "generated_size": 108,
+      "canonical_percent": 74.44827,
+      "canonical_report_percent": 74.62069,
+      "relocation_strict_percent": 74.44827,
+      "status": "NonMatching honest C after documented assigned-target attempt",
+      "measurement_raw_output": "direct retail_bytes=116 generated_bytes=108 canonical_percent=74.44827 relocation_strict_percent=74.44827; aggregate canonical report function_percent=74.62069",
+      "divergence": "The independent push-state reconstruction saves both live float values and handles plus the token returned by fn_801FA44C. GC/1.3 folds the three derived global-state pointers into one base register and emits 108 bytes instead of retail's 116 while retail preserves separate addi pointer materializations in r31, r3, and r4 and schedules the loads and stores differently. Preserve without assembly substitution or matched-byte credit.",
+      "canonical_evidence": "reports/GEDE01/objdiff-game_fn_801F8620-session-1991-canonical.json",
+      "relocation_strict_evidence": "reports/GEDE01/objdiff-game_fn_801F8620-session-1991-reloc-strict.json"
+    },
+    "fn_801F85A4": {
+      "session_id": "session-1989",
+      "range": "0x801F85A4..0x801F8620",
+      "retail_size": 124,
+      "generated_size": 116,
+      "canonical_percent": 73.90323,
+      "relocation_strict_percent": 73.90323,
+      "status": "NonMatching honest C after documented contiguous attempt",
+      "measurement_raw_output": "retail_bytes=124 generated_bytes=116 canonical_percent=73.90323 relocation_strict_percent=73.90323",
+      "divergence": "The independent pop-state reconstruction restores both live float values and handles and passes the saved token to fn_801FA410. GC/1.3 emits 116 bytes instead of retail's 124 by folding the three base-plus-offset pointers into one global-base register and schedules the saved-state loads and stores differently. Preserve without assembly substitution or matched-byte credit.",
+      "canonical_evidence": "reports/GEDE01/objdiff-game_fn_801F85A4-session-1989-canonical.json",
+      "relocation_strict_evidence": "reports/GEDE01/objdiff-game_fn_801F85A4-session-1989-reloc-strict.json"
+    },
+    "fn_801F7C78": {
+      "session_id": "session-1986",
+      "range": "0x801F7C78..0x801F7E40",
+      "retail_size": 456,
+      "generated_size": 456,
+      "canonical_percent": 76.92105,
+      "relocation_strict_percent": 76.92105,
+      "status": "NonMatching honest C after documented assigned-target attempt",
+      "measurement_raw_output": "retail_bytes=456 generated_bytes=456 canonical_percent=76.92105 relocation_strict_percent=76.92105",
+      "divergence": "The independent size-exact initialization reconstruction covers both special records, twelve paired records, callbacks, links, vectors, and globals. GC/1.3 reloads lbl_8063C6B8 around calls and selects different base registers and aggregate-copy scheduling where retail keeps r31 live and uses r25-r30 plus f31. Preserve without assembly substitution or matched-byte credit.",
+      "canonical_evidence": "reports/GEDE01/fn_801F7C78-session-1986-canonical.json",
+      "relocation_strict_evidence": "reports/GEDE01/fn_801F7C78-session-1986-reloc-strict.json"
+    },
+    "fn_801F7E40": {
+      "session_id": "session-1986",
+      "range": "0x801F7E40..0x801F7FBC",
+      "retail_size": 380,
+      "generated_size": 380,
+      "canonical_percent": 97.27368,
+      "relocation_strict_percent": 97.27368,
+      "status": "NonMatching honest C after documented contiguous attempt",
+      "measurement_raw_output": "retail_bytes=380 generated_bytes=380 canonical_percent=97.27368 relocation_strict_percent=97.27368",
+      "divergence": "The independent size-exact transform reconstruction reproduces both input branches, lookup calls, vector publication, and output transform. GC/1.3 assigns the local vectors and returned handle to different stack slots and registers and schedules the aggregate copies differently from retail. Preserve without assembly substitution or matched-byte credit.",
+      "canonical_evidence": "reports/GEDE01/fn_801F7E40-session-1986-canonical.json",
+      "relocation_strict_evidence": "reports/GEDE01/fn_801F7E40-session-1986-reloc-strict.json"
+    },
     "fn_801F7510": {
       "session_id": "session-1982",
       "range": "0x801F7510..0x801F75FC",
@@ -7079,8 +7236,18 @@
     "range": "0x801F6DE4..0x801F70D8",
     "matched_bytes": 596,
     "nonmatching_bytes": 160,
-    "matched_functions": ["fn_801F6DE4", "fn_801F6ED0", "fn_801F6FFC", "fn_801F700C", "fn_801F70B0", "fn_801F70C4"],
-    "nonmatching_functions": ["fn_801F6FD8", "fn_801F7034"],
+    "matched_functions": [
+      "fn_801F6DE4",
+      "fn_801F6ED0",
+      "fn_801F6FFC",
+      "fn_801F700C",
+      "fn_801F70B0",
+      "fn_801F70C4"
+    ],
+    "nonmatching_functions": [
+      "fn_801F6FD8",
+      "fn_801F7034"
+    ],
     "frontier_evidence": "reports/GEDE01/frontier-801F6DE4-801F70D8-session-1978.json",
     "relocation_strict_evidence": "reports/GEDE01/session-1978-reloc-strict.json",
     "verification_evidence": "reports/GEDE01/session-1978-remediation-2-verification.json",
@@ -7091,7 +7258,12 @@
     "range": "0x801F70D8..0x801F7234",
     "matched_bytes": 348,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801F70D8", "fn_801F7208", "fn_801F7210", "fn_801F7218"],
+    "matched_functions": [
+      "fn_801F70D8",
+      "fn_801F7208",
+      "fn_801F7210",
+      "fn_801F7218"
+    ],
     "nonmatching_functions": [],
     "frontier_evidence": "reports/GEDE01/frontier-801F70D8-801F7234-session-1979.json",
     "relocation_strict_evidence": "reports/GEDE01/session-1979-reloc-strict.json",
@@ -7103,8 +7275,12 @@
     "range": "0x801F7234..0x801F74C8",
     "matched_bytes": 140,
     "nonmatching_bytes": 520,
-    "matched_functions": ["fn_801F743C"],
-    "nonmatching_functions": ["fn_801F7234"],
+    "matched_functions": [
+      "fn_801F743C"
+    ],
+    "nonmatching_functions": [
+      "fn_801F7234"
+    ],
     "frontier_evidence": "reports/GEDE01/frontier-801F7234-801F74C8-session-1981.json",
     "relocation_strict_evidence": "reports/GEDE01/session-1981-reloc-strict.json",
     "verification_evidence": "reports/GEDE01/session-1981-verification.json",
@@ -7115,8 +7291,13 @@
     "range": "0x801F74C8..0x801F75FC",
     "matched_bytes": 72,
     "nonmatching_bytes": 236,
-    "matched_functions": ["fn_801F74C8", "fn_801F74EC"],
-    "nonmatching_functions": ["fn_801F7510"],
+    "matched_functions": [
+      "fn_801F74C8",
+      "fn_801F74EC"
+    ],
+    "nonmatching_functions": [
+      "fn_801F7510"
+    ],
     "frontier_evidence": "reports/GEDE01/frontier-801F74C8-801F75FC-session-1982.json",
     "relocation_strict_evidence": "reports/GEDE01/session-1982-reloc-strict.json",
     "verification_evidence": "reports/GEDE01/session-1982-verification.json",
@@ -7127,8 +7308,13 @@
     "range": "0x801F75FC..0x801F76EC",
     "matched_bytes": 56,
     "nonmatching_bytes": 184,
-    "matched_functions": ["fn_801F75FC", "fn_801F76D8"],
-    "nonmatching_functions": ["fn_801F7620"],
+    "matched_functions": [
+      "fn_801F75FC",
+      "fn_801F76D8"
+    ],
+    "nonmatching_functions": [
+      "fn_801F7620"
+    ],
     "frontier_evidence": "reports/GEDE01/frontier-801F75FC-801F76EC-session-1983.json",
     "relocation_strict_evidence": "reports/GEDE01/session-1983-reloc-strict.json",
     "verification_evidence": "reports/GEDE01/session-1983-verification.json",
@@ -7139,11 +7325,212 @@
     "range": "0x801F76EC..0x801F7AF8",
     "matched_bytes": 1036,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801F76EC", "fn_801F7804", "fn_801F7AD4"],
+    "matched_functions": [
+      "fn_801F76EC",
+      "fn_801F7804",
+      "fn_801F7AD4"
+    ],
     "nonmatching_functions": [],
     "frontier_evidence": "reports/GEDE01/frontier-801F76EC-801F7AF8-session-1984.json",
     "relocation_strict_evidence": "reports/GEDE01/session-1984-reloc-strict.json",
     "verification_evidence": "reports/GEDE01/session-1984-verification.json",
     "conclusion": "Assigned fn_801F76EC and immediate consecutive fn_801F7804 and fn_801F7AD4 independently match 280, 720, and 36 bytes at 100.0% canonical and relocation-strict objdiff with equal relocations, totaling 1036 matched bytes. Every byte in the contiguous 1036-byte range is accounted without NonMatching code, assembly, shared reconstruction, fallback, or gaps; the fresh full relink is byte-identical to retail."
+  },
+  "session_1985": {
+    "status": "complete with two 100% matches and one NonMatching assigned-target attempt",
+    "range": "0x801F7AF8..0x801F7C78",
+    "matched_bytes": 116,
+    "nonmatching_bytes": 268,
+    "matched_functions": [
+      "fn_801F7C04",
+      "fn_801F7C58"
+    ],
+    "nonmatching_functions": [
+      "fn_801F7AF8"
+    ],
+    "frontier_evidence": "reports/GEDE01/frontier-801F7AF8-801F7C78-session-1985.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-1985-reloc-strict.json",
+    "verification_evidence": "reports/GEDE01/session-1985-verification.json",
+    "conclusion": "Assigned fn_801F7AF8 is preserved as independent honest C at a best direct objdiff score of 71.970146% canonical and relocation-strict; GC/1.3 emits 260 bytes instead of 268 by folding base offsets, reloading lbl_8063C6B8, and retaining three pointer registers while retail preserves four and separate base-plus-offset instructions. Immediate fn_801F7C04 and fn_801F7C58 independently match 84 and 32 bytes at 100.0% canonical and relocation-strict objdiff with equal relocations. Every byte in the contiguous 384-byte range is accounted without assembly, shared reconstruction, fallback jump, or gaps; the fresh full relink is byte-identical to retail."
+  },
+  "session_1986": {
+    "status": "complete with one 100% match and two NonMatching attempts",
+    "range": "0x801F7C78..0x801F800C",
+    "matched_bytes": 80,
+    "nonmatching_bytes": 836,
+    "matched_functions": [
+      "fn_801F7FBC"
+    ],
+    "nonmatching_functions": [
+      "fn_801F7C78",
+      "fn_801F7E40"
+    ],
+    "frontier_evidence": "reports/GEDE01/frontier-801F7C78-801F800C-session-1986.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-1986-reloc-strict.json",
+    "verification_evidence": "reports/GEDE01/session-1986-verification.json",
+    "conclusion": "Assigned fn_801F7C78 is preserved as independent size-exact honest C at 76.92105% canonical and relocation-strict after a documented focused attempt; GC/1.3 reloads the global base and differs in register lifetime and aggregate scheduling. Immediate fn_801F7E40 is size-exact honest C at 97.27368%, and fn_801F7FBC independently matches 80/80 bytes at 100.0% canonical and relocation-strict objdiff. Every byte in the contiguous 916-byte range is accounted without assembly, shared reconstruction, fallback jump, or gaps; the fresh full relink is byte-identical to retail."
+  },
+  "session_1987": {
+    "status": "complete with three 100% matches",
+    "range": "0x801F800C..0x801F8264",
+    "matched_bytes": 600,
+    "nonmatching_bytes": 0,
+    "matched_functions": [
+      "fn_801F800C",
+      "fn_801F8184",
+      "fn_801F8234"
+    ],
+    "nonmatching_functions": [],
+    "frontier_evidence": "reports/GEDE01/frontier-801F800C-801F8264-session-1987.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-1987-reloc-strict.json",
+    "verification_evidence": "reports/GEDE01/session-1987-verification.json",
+    "conclusion": "Assigned fn_801F800C and immediate consecutive fn_801F8184 and fn_801F8234 independently match 376, 176, and 48 bytes at 100.0% canonical and relocation-strict objdiff with equal relocations, totaling 600 matched bytes. Every byte in the contiguous 600-byte range is accounted without NonMatching code, assembly, shared reconstruction, fallback, or gaps; the fresh full relink is byte-identical to retail."
+  },
+  "session_1988": {
+    "status": "complete with one 100% match",
+    "range": "0x801F8264..0x801F8598",
+    "matched_bytes": 820,
+    "nonmatching_bytes": 0,
+    "matched_functions": [
+      "fn_801F8264"
+    ],
+    "nonmatching_functions": [],
+    "frontier_evidence": "reports/GEDE01/frontier-801F8264-801F8598-session-1988.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-1988-reloc-strict.json",
+    "verification_evidence": "reports/GEDE01/session-1988-verification.json",
+    "conclusion": "Assigned fn_801F8264 independently matches 820/820 bytes at 100.0% canonical and relocation-strict objdiff with equal relocations after guarded rebinding of the compiler-generated signed-conversion bias. Every byte in the contiguous 820-byte range is accounted without NonMatching code, assembly, shared reconstruction, fallback, or gaps; the fresh full relink is byte-identical to retail."
+  },
+  "session_1989": {
+    "status": "complete with one 100% match and one NonMatching contiguous attempt",
+    "range": "0x801F8598..0x801F8620",
+    "matched_bytes": 12,
+    "nonmatching_bytes": 124,
+    "matched_functions": [
+      "fn_801F8598"
+    ],
+    "nonmatching_functions": [
+      "fn_801F85A4"
+    ],
+    "frontier_evidence": "reports/GEDE01/frontier-801F8598-801F8620-session-1989.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-1989-reloc-strict.json",
+    "verification_evidence": "reports/GEDE01/session-1989-verification.json",
+    "conclusion": "Assigned fn_801F8598 independently matches 12/12 bytes at 100.0% canonical and relocation-strict objdiff with its SDA21 relocation equal. Immediate fn_801F85A4 is preserved as independent honest C at 73.90323%; GC/1.3 folds three derived global-state pointers and emits 116 bytes instead of retail's 124 while also scheduling saved-state loads and stores differently. Every byte in the contiguous 136-byte retail range is accounted without assembly, shared reconstruction, fallback jump, or gaps; the fresh full relink is byte-identical to retail."
+  },
+  "session_1991": {
+    "status": "complete with two 100% matches and one NonMatching assigned-target attempt",
+    "range": "0x801F8620..0x801F8748",
+    "matched_bytes": 180,
+    "nonmatching_bytes": 116,
+    "matched_functions": [
+      "fn_801F8694",
+      "fn_801F86F4"
+    ],
+    "nonmatching_functions": [
+      "fn_801F8620"
+    ],
+    "frontier_evidence": "reports/GEDE01/frontier-801F8620-801F8748-session-1991.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-1991-reloc-strict.json",
+    "verification_evidence": "reports/GEDE01/session-1991-verification.json",
+    "conclusion": "Assigned fn_801F8620 is preserved as independent honest C at a best direct objdiff score of 74.44827%; GC/1.3 emits 108 bytes instead of retail's 116 by folding three derived global pointers and choosing different registers and scheduling. Immediate consecutive fn_801F8694 and fn_801F86F4 independently match 96 and 84 bytes at 100.0% canonical and relocation-strict objdiff with equal relocations. Every byte in the contiguous 296-byte range is accounted without assembly, shared reconstruction, fallback jump, or gaps; the fresh full relink is byte-identical to retail."
+  },
+  "session_1992": {
+    "status": "complete with two 100% matches and one NonMatching assigned-target attempt",
+    "range": "0x801F8748..0x801F89B4",
+    "matched_bytes": 40,
+    "nonmatching_bytes": 580,
+    "matched_functions": [
+      "fn_801F898C",
+      "fn_801F8994"
+    ],
+    "nonmatching_functions": [
+      "fn_801F8748"
+    ],
+    "frontier_evidence": "reports/GEDE01/frontier-801F8748-801F89B4-session-1992.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-1992-reloc-strict.json",
+    "verification_evidence": "reports/GEDE01/session-1992-verification.json",
+    "conclusion": "Assigned fn_801F8748 is preserved as independent honest C at 75.30345% canonical and relocation-strict, with 580 retail bytes versus 548 generated bytes; GC/1.3 selects a 0x70-byte frame and r26-r31 saves instead of retail's 0xB0-byte frame and r25-r31 saves, folds derived global pointers, inverts early-return layout, and contracts the final fneg/fmadds pair into fnmadds. Immediate fn_801F898C and fn_801F8994 independently match 8/8 and 32/32 bytes at 100.0% canonical and relocation-strict objdiff with relocations equal. Every byte in the contiguous 620-byte range is accounted without assembly, shared reconstruction, fallback jump, or gaps; the fresh full relink is byte-identical to retail."
+  },
+  "session_1993": {
+    "status": "complete with zero 100% matches and one NonMatching assigned-target attempt",
+    "range": "0x801F89B4..0x801F8FAC",
+    "matched_bytes": 0,
+    "nonmatching_bytes": 1528,
+    "matched_functions": [],
+    "nonmatching_functions": [
+      "fn_801F89B4"
+    ],
+    "frontier_evidence": "reports/GEDE01/frontier-801F89B4-801F8FAC-session-1993.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-1993-remediation-1-verification.json",
+    "verification_evidence": "reports/GEDE01/session-1993-remediation-1-verification.json",
+    "conclusion": "A focused per-TU -use_lmw_stmw on remediation was built and measured. It replaces the generated out-of-line save/restore calls with inline stmw/lmw and improves the verified result, but fn_801F89B4 remains NonMatching because the generated stack frame is still larger than retail and other instruction differences remain. Measurements and raw command output are recorded in the remediation verification evidence. No matched-byte credit is claimed, the frontier is unchanged, and the fresh full relink is byte-identical to retail."
+  },
+  "session_1994": {
+    "status": "retry 2 of 3 complete with zero 100% matches and an improved assigned-target attempt",
+    "range": "0x801F89B4..0x801F8FAC",
+    "matched_bytes": 0,
+    "nonmatching_bytes": 1528,
+    "matched_functions": [],
+    "nonmatching_functions": [
+      "fn_801F89B4"
+    ],
+    "frontier_evidence": "reports/GEDE01/frontier-801F89B4-801F8FAC-session-1994.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-1994-fn_801F89B4-reloc-strict.json",
+    "verification_evidence": "reports/GEDE01/session-1994-verification.json",
+    "conclusion": "The assigned large function improves from 92.33246% and 1564 generated bytes to an exact-size 1528-byte reconstruction at 99.73822% canonical and relocation-strict. Removing the erroneous fourth fallback store corrected the frame, while indexed predecessor-key spelling removed both extra address instructions. Remaining differences are six compiler-local signed-conversion constant identities and r25/r30 allocation between byte offsets and derived spline pointers. No function reached 100%, no matched-byte credit is claimed, no second function was attempted, and next_target stays at 0x801F89B4 for retry 3 of 3."
+  },
+  "session_1995": {
+    "status": "retry 3 closed for now; frontier handed to the next unowned address",
+    "range": "0x801F89B4..0x801F8FAC",
+    "matched_bytes": 0,
+    "nonmatching_bytes": 1528,
+    "matched_functions": [],
+    "nonmatching_functions": [
+      "fn_801F89B4"
+    ],
+    "frontier_evidence": "reports/GEDE01/frontier-801F89B4-801F8FAC-session-1995.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-1995-fn_801F89B4-reloc-strict.json",
+    "verification_evidence": "reports/GEDE01/session-1995-remediation-1-verification.json",
+    "conclusion": "The assigned function remains one independent exact-size honest-C NonMatching reconstruction with a documented r25/r30 allocation divergence. Its retry sequence is closed for now without matched-byte credit, new NonMatching registration, or assembly. The next session begins at the unowned address 0x801F8FAC."
+  },
+  "session_1996": {
+    "status": "remediated with frontier stopped before the incomplete reconstruction",
+    "range": "0x801F8FAC..0x801F92F8",
+    "matched_bytes": 0,
+    "nonmatching_bytes": 844,
+    "matched_functions": [],
+    "nonmatching_functions": [
+      "fn_801F8FAC"
+    ],
+    "assigned_attempt": {
+      "symbol": "fn_801F8FAC",
+      "best_objdiff_percent": 79.7346,
+      "divergence": "Fresh canonical and relocation-strict objdiff show a 36-byte generated-code deficit and a 0x70-byte generated frame versus the retail 0x80-byte frame. The corrected pointer-before-float parameter order is ABI-equivalent and leaves the object unchanged, so the remaining discrepancy is unrecovered source structure rather than scheduling alone."
+    },
+    "frontier_evidence": "reports/GEDE01/frontier-801F8FAC-801F99C0-session-1996.json",
+    "verification_evidence": "reports/GEDE01/session-1996-remediation-1-verification.json",
+    "revisit_obligation": "fn_801F92F8",
+    "conclusion": "The accepted contiguous range ends at 0x801F92F8. The incomplete fn_801F92F8 body and later preconstructed accessor receive no session frontier or matched-byte credit; fn_801F92F8 remains the explicit next target. Fresh measurements and exact-link evidence are recorded in the remediation verification report."
+  },
+  "session_1997": {
+    "status": "complete with three new 100% matches and one preexisting NonMatching assigned-target attempt",
+    "range": "0x801F92F8..0x801F9AF8",
+    "matched_bytes": 312,
+    "nonmatching_bytes": 1728,
+    "preexisting_matched_bridge_bytes": 8,
+    "matched_functions": ["fn_801F99C0", "fn_801F9A38", "fn_801F9AA8"],
+    "nonmatching_functions": ["fn_801F92F8"],
+    "assigned_attempt": {
+      "symbol": "fn_801F92F8",
+      "best_objdiff_percent": 54.368057,
+      "retail_bytes": 1728,
+      "generated_bytes": 1104,
+      "divergence": "GC/1.3 emits 624 fewer bytes because the retained honest-C reconstruction omits retail's full linear-key closest-point projection path: stack Vec3 construction, fn_8013C264, four fn_80211B44 dot products, ratio calculation, and time interpolation."
+    },
+    "new_nonmatching_functions": 0,
+    "unaccounted_spans": [],
+    "frontier_evidence": "reports/GEDE01/frontier-801F92F8-801F9AF8-session-1997.json",
+    "relocation_strict_evidence": "reports/GEDE01/session-1997-reloc-strict.json",
+    "verification_evidence": "reports/GEDE01/session-1997-verification.json",
+    "conclusion": "The assigned function was measured first and remains an existing honest-C NonMatching reconstruction at 54.368057%. The preexisting 8-byte fn_801F99B8 bridge receives no new-byte credit. Three immediate consecutive independent C translation units match 312/312 bytes at 100.0% canonical and relocation-strict objdiff. Every byte in the 2048-byte range is accounted without new NonMatching registration, assembly, shared reconstruction, or gaps; the fresh full relink is byte-identical to retail."
   }
 }

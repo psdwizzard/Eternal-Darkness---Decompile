@@ -2,10 +2,10 @@
   "schema_version": 2,
   "scope": "Distinct MWCC code-generation behaviors documented in reports/GEDE01/progress.json open_items and docs/matching.md",
   "source_snapshot": {
-    "repository_revision": "bc3867a0ae7d57065d3bb40591ad4b6abcf68444",
-    "next_target": "0x801F3158",
+    "repository_revision": "0778dfdbcf2e3f9b6282949b3068248c0442667d",
+    "next_target": "0x801F8620",
     "reports/GEDE01/progress.json": {
-      "sha256": "7660851742e761ff03f173edaa451c74e3ff8bff89155b31a15c346567781648",
+      "sha256": "08ddebd163cbe4c4cfac5f3d9ed4a2ce8e961f6dd88e1e1382c28dd69d6fbb2d",
       "scope": "whole_file"
     },
     "docs/matching.md": {
@@ -15,14 +15,14 @@
   "consolidation_audit": {
     "original_consolidation_commit": "86d029104eb5ed6ad01b6af03963ea2cf924d2a4",
     "comparison_base": "b6f963fbb8643a04ab4358a988239961639dd07e",
-    "latest_consolidation_session": "session-1950",
-    "scope": "Refreshed the categorized catalog through the current progress snapshot without changing generated progress accounting or frontier prose. Promoted only concrete post-session-1910 MWCC behaviors documented by completed NonMatching attempts; incomplete recovery, signature maintenance, exact matches without a divergence, and out-of-taxonomy lowering were not promoted.",
-    "total_lessons": 648,
+    "latest_consolidation_session": "session-1990",
+    "scope": "Refreshed the categorized catalog through the current progress snapshot without changing generated progress accounting or frontier prose. Promoted only concrete post-session-1950 MWCC behaviors documented by retained NonMatching attempts; exact matches, signature maintenance, and unretained experiments were not promoted.",
+    "total_lessons": 663,
     "measurement_command": "jq -r '\"lessons=\" + ((.lessons|length)|tostring) + \" out_of_taxonomy=\" + ((.out_of_taxonomy|length)|tostring) + \" total_catalog_records=\" + (((.lessons|length)+(.out_of_taxonomy|length))|tostring)' reports/GEDE01/lessons.json",
-    "measurement_raw_output": "lessons=648 out_of_taxonomy=21 total_catalog_records=669",
-    "session_parent_commit": "bc3867a0ae7d57065d3bb40591ad4b6abcf68444",
-    "session_delta_measurement_command": "jq -s -r '.[0] as $parent | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($parent.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($parent.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($parent.lessons|length)+($parent.out_of_taxonomy|length)))\"' <(git show bc3867a0ae7d57065d3bb40591ad4b6abcf68444:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
-    "session_delta_measurement_raw_output": "new_lessons=28 new_out_of_taxonomy=0 total_new_records=28",
+    "measurement_raw_output": "lessons=663 out_of_taxonomy=21 total_catalog_records=684",
+    "session_parent_commit": "0778dfdbcf2e3f9b6282949b3068248c0442667d",
+    "session_delta_measurement_command": "jq -s -r '.[0] as $parent | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($parent.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($parent.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($parent.lessons|length)+($parent.out_of_taxonomy|length)))\"' <(git show 0778dfdbcf2e3f9b6282949b3068248c0442667d:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
+    "session_delta_measurement_raw_output": "new_lessons=15 new_out_of_taxonomy=0 total_new_records=15",
     "delta_measurement_command": "jq -s -r '.[0] as $base | .[1] as $current | \"new_lessons=\\(($current.lessons|length)-($base.lessons|length)) new_out_of_taxonomy=\\(($current.out_of_taxonomy|length)-($base.out_of_taxonomy|length)) total_new_records=\\((($current.lessons|length)+($current.out_of_taxonomy|length))-(($base.lessons|length)+($base.out_of_taxonomy|length)))\"' <(git show b6f963fbb:eternal-darkness-decomp/reports/GEDE01/lessons.json) reports/GEDE01/lessons.json",
     "delta_measurement_raw_output": "new_lessons=215 new_out_of_taxonomy=19 total_new_records=234",
     "added_out_of_taxonomy_categories": ["instruction-selection-lowering", "common-subexpression-elimination", "loop-unrolling", "dead-loop-elimination", "relocation-bearing-instruction-operands", "relocation-target-identity"]
@@ -4566,6 +4566,111 @@
       "precise_divergence": "With use_lmw_stmw enabled, GC/1.3 emits stmw r21 at stack offset 0x144, while retail emits stmw r20 at 0x160.",
       "workaround": "Retain the use_lmw_stmw pragma; the remaining register-range and frame mismatch is unresolved.",
       "evidence": ["reports/GEDE01/progress.json: session_1948.conclusion"]
+    },
+    {
+      "category": "register-allocation",
+      "functions": ["fn_801F338C"],
+      "precise_divergence": "GC/1.3 recomputes the lbl_8063BEA0 global base around memcpy, while retail keeps that base live in r31 across both calls.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F338C"]
+    },
+    {
+      "category": "register-allocation",
+      "functions": ["fn_801F3528", "fn_801F35A8"],
+      "precise_divergence": "GC/1.3 assigns fn_801F3528's conversion constant, destination base, and component temporaries to different volatile registers from retail; fn_801F35A8 likewise retains different register lifetimes across interpolation, quantization, and rendering calls.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F3528", "reports/GEDE01/progress.json: nonmatching_attempts.fn_801F35A8"]
+    },
+    {
+      "category": "stack-slot-reuse",
+      "functions": ["fn_801F35A8"],
+      "precise_divergence": "GC/1.3 uses a 0xB0-byte frame and a different conversion-spill layout, while retail uses a 0xE0-byte frame; the generated function is 56 bytes shorter.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F35A8"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801F35A8", "fn_801F44DC"],
+      "precise_divergence": "GC/1.3 schedules fn_801F35A8's calls differently from retail and, in fn_801F44DC, delays the first constant load and repeated-argument fmr instructions until after the link-register store and projection-pointer setup instead of interleaving them earlier.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F35A8", "reports/GEDE01/progress.json: nonmatching_attempts.fn_801F44DC"]
+    },
+    {
+      "category": "register-allocation",
+      "functions": ["fn_801F692C", "fn_801F6950", "fn_801F6998", "fn_801F69BC"],
+      "precise_divergence": "For the four vector-copy helpers, GC/1.3 folds or retains the destination base differently from retail: fn_801F692C folds the destination low half into stwu, while the three size-exact helpers retain the destination base in r4 instead of retail r6.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F692C", "reports/GEDE01/progress.json: nonmatching_attempts.fn_801F6950", "reports/GEDE01/progress.json: nonmatching_attempts.fn_801F6998", "reports/GEDE01/progress.json: nonmatching_attempts.fn_801F69BC"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801F692C", "fn_801F6950", "fn_801F6998", "fn_801F69BC"],
+      "precise_divergence": "GC/1.3 schedules the source vector loads y/z/x; retail loads x first, forms the destination base, then loads y/z. Explicit word temporaries, declaration order, a local Vec3 copy, volatile source access, and a const-qualified source parameter did not recover retail order.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F692C", "reports/GEDE01/progress.json: nonmatching_attempts.fn_801F6950", "reports/GEDE01/progress.json: nonmatching_attempts.fn_801F6998", "reports/GEDE01/progress.json: nonmatching_attempts.fn_801F69BC"]
+    },
+    {
+      "category": "float-constant-placement",
+      "functions": ["fn_801F69F0", "fn_801F6BD8"],
+      "precise_divergence": "GC/1.3 assigns the integer-conversion constant and the accompanying scale constant to f4/f5 opposite retail: 2.0f is reversed in fn_801F69F0, and the 0.5f scale is reversed in fn_801F6BD8, producing operand-only mismatches that propagate through later floating-point operations.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F69F0", "reports/GEDE01/progress.json: nonmatching_attempts.fn_801F6BD8"]
+    },
+    {
+      "category": "register-allocation",
+      "functions": ["fn_801F7234", "fn_801F85A4"],
+      "precise_divergence": "GC/1.3 folds multiple field pointers into base-plus-offset addressing instead of retail's separately materialized pointers: five special-state pointers disappear in fn_801F7234, and three base-plus-offset pointers collapse into one global-base register in fn_801F85A4.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F7234", "reports/GEDE01/progress.json: nonmatching_attempts.fn_801F85A4"]
+    },
+    {
+      "category": "register-allocation",
+      "functions": ["fn_801F7510"],
+      "precise_divergence": "GC/1.3 commutes the final mask result through r5 instead of retail r3 for the and/subf pair.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F7510"]
+    },
+    {
+      "category": "float-constant-placement",
+      "functions": ["fn_801F7510"],
+      "precise_divergence": "GC/1.3 relocates the implicit signed-int-to-float conversion through compiler-local pool symbol @12 instead of retail lbl_80651480, despite retaining the retail function size.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F7510"]
+    },
+    {
+      "category": "register-allocation",
+      "functions": ["fn_801F7C78", "fn_801F7E40"],
+      "precise_divergence": "GC/1.3 reloads lbl_8063C6B8 around calls and selects different base registers in fn_801F7C78 instead of retail's live r31 and r25-r30 allocation; fn_801F7E40 assigns its local vectors and returned handle to different registers from retail.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F7C78", "reports/GEDE01/progress.json: nonmatching_attempts.fn_801F7E40"]
+    },
+    {
+      "category": "stack-slot-reuse",
+      "functions": ["fn_801F7E40"],
+      "precise_divergence": "GC/1.3 assigns the transform routine's local vectors to different stack slots from retail even though the generated function retains the exact 380-byte size.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F7E40"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801F7C78", "fn_801F7E40", "fn_801F85A4"],
+      "precise_divergence": "GC/1.3 schedules aggregate copies differently from retail in fn_801F7C78 and fn_801F7E40, and schedules the saved-state loads and stores differently in fn_801F85A4.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F7C78", "reports/GEDE01/progress.json: nonmatching_attempts.fn_801F7E40", "reports/GEDE01/progress.json: nonmatching_attempts.fn_801F85A4"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801F6054"],
+      "precise_divergence": "After an otherwise byte-identical loop, GC/1.3 emits bne for the count-versus-zero continuation test while retail emits bgt.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F6054"]
+    },
+    {
+      "category": "instruction-scheduling",
+      "functions": ["fn_801F69F0"],
+      "precise_divergence": "GC/1.3 emits one extra frsp after fn_8017AE0C, shifting the subsequent floating-point temporary stream from retail after otherwise structurally aligned code.",
+      "workaround": null,
+      "evidence": ["reports/GEDE01/progress.json: nonmatching_attempts.fn_801F69F0"]
     }
   ],
   "out_of_taxonomy": [

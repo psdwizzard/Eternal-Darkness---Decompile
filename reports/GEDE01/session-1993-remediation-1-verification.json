@@ -1,0 +1,44 @@
+{
+  "session_id": "session-1993-remediation-1",
+  "scope": "focused review remediation for fn_801F89B4; frontier not advanced",
+  "change": {
+    "file": "configure.py",
+    "object": "main/game/game_fn_801F89B4",
+    "extra_cflags": ["-use_lmw_stmw on"]
+  },
+  "build": {
+    "command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801F89B4.o build/GEDE01/main.dol >/dev/null; printf 'build_exit=%s\\n' \"$?\"",
+    "raw_output": "build_exit=0"
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F89B4 fn_801F89B4 -o build/GEDE01/session-1993-remediation-1-canonical.json --format json-pretty; printf 'canonical_exit=%s\\n' \"$?\"; jq -r '\"canonical retail_bytes=\\(.left.symbols[0].size) generated_bytes=\\(.right.symbols[0].size) match_percent=\\(.left.symbols[0].match_percent)\"' build/GEDE01/session-1993-remediation-1-canonical.json",
+    "raw_output": " INFO Writing to build/GEDE01/session-1993-remediation-1-canonical.json\ncanonical_exit=0\ncanonical retail_bytes=1528 generated_bytes=1564 match_percent=92.33246",
+    "retail_bytes": 1528,
+    "generated_bytes": 1564,
+    "match_percent": 92.33246
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F89B4 fn_801F89B4 -o build/GEDE01/session-1993-remediation-1-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address; printf 'relocation_strict_exit=%s\\n' \"$?\"; jq -r '\"relocation_strict retail_bytes=\\(.left.symbols[0].size) generated_bytes=\\(.right.symbols[0].size) match_percent=\\(.left.symbols[0].match_percent)\"' build/GEDE01/session-1993-remediation-1-reloc-strict.json",
+    "raw_output": " INFO Writing to build/GEDE01/session-1993-remediation-1-reloc-strict.json\nrelocation_strict_exit=0\nrelocation_strict retail_bytes=1528 generated_bytes=1564 match_percent=92.33246",
+    "retail_bytes": 1528,
+    "generated_bytes": 1564,
+    "match_percent": 92.33246
+  },
+  "save_restore_and_frame_evidence": {
+    "command": "jq -r '.left.symbols[0].instructions[:14][] | .instruction.formatted' build/GEDE01/session-1993-remediation-1-canonical.json; jq -r '.right.symbols[0].instructions[:14][] | .instruction.formatted' build/GEDE01/session-1993-remediation-1-canonical.json",
+    "raw_output": "stwu r1, -0x90(r1)\nmflr r0\nstw r0, 0x94(r1)\nstfd f31, 0x80(r1)\npsq_st f31, 0x88(r1), 0, qr0\nstfd f30, 0x70(r1)\npsq_st f30, 0x78(r1), 0, qr0\nstfd f29, 0x60(r1)\npsq_st f29, 0x68(r1), 0, qr0\nstfd f28, 0x50(r1)\npsq_st f28, 0x58(r1), 0, qr0\nstfd f27, 0x40(r1)\npsq_st f27, 0x48(r1), 0, qr0\nstmw r25, 0x24(r1)\nstwu r1, -0xa0(r1)\nmflr r0\nstw r0, 0xa4(r1)\nstfd f31, 0x90(r1)\npsq_st f31, 0x98(r1), 0, qr0\nstfd f30, 0x80(r1)\npsq_st f30, 0x88(r1), 0, qr0\nstfd f29, 0x70(r1)\npsq_st f29, 0x78(r1), 0, qr0\nstfd f28, 0x60(r1)\npsq_st f28, 0x68(r1), 0, qr0\nstfd f27, 0x50(r1)\npsq_st f27, 0x58(r1), 0, qr0\nstmw r25, 0x34(r1)"
+  },
+  "dol_gate": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'dol_cmp_exit=%s\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0",
+    "build_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "cmp_exit": 0
+  },
+  "result": {
+    "status": "NonMatching",
+    "matched_bytes_added": 0,
+    "next_target": "0x801F8FAC",
+    "conclusion": "The requested compiler flag was tested and retained because it corrects the save/restore form and improves the match. It does not change the generated 0xA0 frame to retail's 0x90 frame, so the object remains NonMatching. No scheduling claim is used as a blocker."
+  }
+}

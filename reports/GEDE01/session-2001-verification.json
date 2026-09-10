@@ -1,0 +1,15 @@
+{
+  "session": "session-2001",
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+  "canonical": {"matching_objects":5581,"total_objects":6744,"matching_functions":5346,"total_functions":8216,"matching_code_bytes":859956,"total_code_bytes":2300692,"linked_code_bytes":859956,"linked_data_bytes":38238},
+  "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -c function_reloc_diffs=name_address -o reports/GEDE01/session-2001-reloc-strict.json",
+  "relocation_strict": {"matching_functions":5341,"matching_code_bytes":858272,"total_code_bytes":2300692,"linked_code_bytes":859956,"linked_data_bytes":38238},
+  "direct_function_evidence": [
+    {"symbol":"fn_801FA354","bytes":188,"canonical_percent":100.0,"relocation_strict_percent":100.0,"relocations_equal":true},
+    {"symbol":"fn_801FA410","retail_bytes":60,"generated_bytes":44,"canonical_percent":40.533333,"relocation_strict_percent":40.533333},
+    {"symbol":"fn_801FA44C","bytes":8,"canonical_percent":100.0,"relocation_strict_percent":100.0,"relocations_equal":true}
+  ],
+  "matched_byte_sum": 196,
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "retail_cmp_exit": 0
+}

@@ -1,0 +1,11 @@
+{
+  "session_id": "session-1994",
+  "scope": "retry 2 of 3 for assigned fn_801F89B4 only",
+  "build": {"command":".tools/bin/ninja build/GEDE01/src/game/game_fn_801F89B4.o build/GEDE01/main.dol","exit":0},
+  "canonical_objdiff": {"command":"build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F89B4 fn_801F89B4 -o reports/GEDE01/session-1994-fn_801F89B4-attempt.json --format json-pretty","retail_bytes":1528,"generated_bytes":1528,"match_percent":99.73822},
+  "relocation_strict_objdiff": {"command":"build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F89B4 fn_801F89B4 -o reports/GEDE01/session-1994-fn_801F89B4-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address","retail_bytes":1528,"generated_bytes":1528,"match_percent":99.73822},
+  "canonical_report": {"command":"build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json","matching_objects":5572,"total_objects":6730,"matching_functions":5337,"total_functions":8216,"matching_code_bytes":858368,"total_code_bytes":2300692,"linked_code_bytes":858368,"code_percent":37.30912},
+  "relocation_strict_report": {"command":"build/tools/objdiff-cli report generate -p . -c function_reloc_diffs=name_address -o reports/GEDE01/session-1994-reloc-strict.json","matching_functions":5332,"matching_code_bytes":856684,"code_percent":37.235928},
+  "dol_gate": {"build_sha1":"ea24b6af954876ce072562ff39cdb4c81d32be1f","retail_sha1":"ea24b6af954876ce072562ff39cdb4c81d32be1f","cmp_exit":0},
+  "result": {"status":"NonMatching","matched_bytes_added":0,"nonmatching_bytes":1528,"next_target":"0x801F89B4","best_percent":99.73822,"divergence":"Six signed-conversion constant identities and r25/r30 byte-offset versus derived-pointer allocation remain."}
+}

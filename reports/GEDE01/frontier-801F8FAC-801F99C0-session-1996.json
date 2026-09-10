@@ -1,0 +1,28 @@
+{
+  "session_id": "session-1996",
+  "range_start": "0x801F8FAC",
+  "range_end": "0x801F92F8",
+  "next_target": "0x801F92F8",
+  "matched_bytes": 0,
+  "nonmatching_bytes": 844,
+  "accounted_bytes": 844,
+  "unaccounted_spans": [],
+  "functions": [
+    {
+      "name": "fn_801F8FAC",
+      "start": "0x801F8FAC",
+      "end": "0x801F92F8",
+      "size": 844,
+      "status": "NonMatching",
+      "objdiff_percent": 79.7346,
+      "evidence": "reports/GEDE01/session-1996-remediation-1-verification.json",
+      "divergence": "Fresh canonical and relocation-strict objdiff show a 36-byte generated-code deficit and a 0x70-byte generated frame versus the retail 0x80-byte frame. The definition's parameter order was corrected to agree with both known callers, but the PowerPC ABI assigns the pointer and float to separate register classes, so that correction does not alter the object. The remaining size and frame differences demonstrate unrecovered source structure; they are not attributed to instruction scheduling."
+    }
+  ],
+  "deferred_revisit": {
+    "name": "fn_801F92F8",
+    "start": "0x801F92F8",
+    "reason": "The reconstruction is incomplete and therefore remains the next frontier target; no owned-byte or matched-byte credit is claimed for it or later preconstructed functions."
+  },
+  "conclusion": "The accepted contiguous range stops before the incomplete fn_801F92F8 reconstruction. No matched-byte credit is claimed, and the next target remains fn_801F92F8. Fresh measurements and the unchanged exact-link gate are recorded in the remediation verification evidence."
+}
