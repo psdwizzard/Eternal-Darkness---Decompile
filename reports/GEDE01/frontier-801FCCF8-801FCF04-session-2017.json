@@ -1,0 +1,18 @@
+{
+  "session_id": "session-2017",
+  "range_start": "0x801FCCF8",
+  "range_end": "0x801FCF04",
+  "next_target": "0x801FCF04",
+  "range_bytes": 524,
+  "matched_bytes": 524,
+  "nonmatching_bytes": 0,
+  "unaccounted_spans": [],
+  "measurement": {
+    "command": "for f in 801FCCF8 801FCF00; do jq -r --arg f \"$f\" '.left.symbols[] | select(.name==(\"fn_\"+$f)) | \"fn_\\($f) retail_bytes=\\(.size) canonical_percent=\\(.match_percent)\"' reports/GEDE01/session-2017-fn_$f.json; jq -r --arg f \"$f\" '.left.symbols[] | select(.name==(\"fn_\"+$f)) | \"fn_\\($f) strict_retail_bytes=\\(.size) strict_percent=\\(.match_percent) reloc_differences=\\((.relocation_differences // [])|length)\"' build/GEDE01/session-2017-remediation-1-fn_$f-reloc-strict.json; done",
+    "raw_output": "fn_801FCCF8 retail_bytes=520 canonical_percent=100.0\nfn_801FCCF8 strict_retail_bytes=520 strict_percent=100.0 reloc_differences=0\nfn_801FCF00 retail_bytes=4 canonical_percent=100.0\nfn_801FCF00 strict_retail_bytes=4 strict_percent=100.0 reloc_differences=0"
+  },
+  "functions": [
+    {"symbol": "fn_801FCCF8", "start": "0x801FCCF8", "end": "0x801FCF00", "retail_bytes": 520, "generated_bytes": 520, "status": "Matching", "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "relocations_equal": true, "evidence": "reports/GEDE01/session-2017-fn_801FCCF8.json", "resolution": "A source-order change to the four-term swizzle sum reproduces retail evaluation order and codegen."},
+    {"symbol": "fn_801FCF00", "start": "0x801FCF00", "end": "0x801FCF04", "retail_bytes": 4, "generated_bytes": 4, "status": "Matching", "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "relocations_equal": true, "evidence": "reports/GEDE01/session-2017-fn_801FCF00.json"}
+  ]
+}

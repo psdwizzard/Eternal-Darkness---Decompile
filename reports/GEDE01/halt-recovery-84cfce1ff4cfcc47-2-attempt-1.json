@@ -1,0 +1,144 @@
+{
+  "schema": "darkfoundry.geDE01.halt-recovery.v1",
+  "halt_id": "84cfce1ff4cfcc47-2",
+  "attempt": 1,
+  "verified_at": "2026-09-10T01:57:56Z",
+  "baseline_head": "d72f8b1d05a336fd63ba121e1fbfd2b1503d247a",
+  "halt_reason": "Broad assembly substitution: 4 new whole-function asm definitions added without a justification in progress.json asm_justifications (limit 1). Unjustified: fn_800F5C54, fn_800F61F4, fn_800F6218, fn_800F623C.",
+  "disposition": "repaired",
+  "correction": {
+    "kind": "missing-assembly-provenance",
+    "summary": "Added substantive per-symbol asm_justifications for four self-hosting CodeWarrior runtime primitives already verified as exact matches. No source, object registration, split, symbol, compiler flag, linker, audit, or gate was changed.",
+    "progress_path": "reports/GEDE01/progress.json",
+    "source_files_changed": [],
+    "justified_symbols": [
+      "fn_800F5C54",
+      "fn_800F61F4",
+      "fn_800F6218",
+      "fn_800F623C"
+    ]
+  },
+  "retail_and_toolchain_evidence": {
+    "fn_800F5C54": "symbols.txt fixes the retail body at 0x800F5C54 with size 0x5C; configure.py maps CodeWarrior __cvt_fp2unsigned relocations to this symbol. A C unsigned conversion inside this implementation lowers recursively to the helper itself, so the explicit fcmpu/fctiwz/stfd sequence is the leaf runtime implementation.",
+    "fn_800F61F4": "symbols.txt fixes the retail body at 0x800F61F4 with size 0x24. The subfic/subic plus slw/srw register-pair sequence is the CodeWarrior 64-bit left-shift runtime primitive; spelling the 64-bit shift directly in C invokes the runtime primitive recursively.",
+    "fn_800F6218": "symbols.txt fixes the retail body at 0x800F6218 with size 0x24; configure.py maps CodeWarrior __shr2u relocations to this symbol. The explicit subfic/subic plus srw/slw register-pair sequence avoids recursive lowering back to __shr2u.",
+    "fn_800F623C": "symbols.txt fixes the retail body at 0x800F623C with size 0x28. The subfic/addic., srw/slw/sraw and conditional merge sequence implements the signed 64-bit right-shift runtime primitive without recursively invoking that primitive from C."
+  },
+  "frontier": {
+    "before": "0x801FA92C",
+    "after": "0x801FA92C",
+    "unchanged": true,
+    "raw_output": "HEAD=d72f8b1d05a336fd63ba121e1fbfd2b1503d247a\nbefore=0x801FA92C\nafter=0x801FA92C\nsource-diff="
+  },
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": ".tools/bin/ninja",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output_tail": "[797/799] DOL build/GEDE01/main.dol\n[798/799] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[799/799] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800F5C54 fn_800F5C54 -o build/GEDE01/halt-recovery-fn_800F5C54.json --format json -c function_reloc_diffs=name_address",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": " INFO Writing to build/GEDE01/halt-recovery-fn_800F5C54.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800F61F4 fn_800F61F4 -o build/GEDE01/halt-recovery-fn_800F61F4.json --format json -c function_reloc_diffs=name_address",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": " INFO Writing to build/GEDE01/halt-recovery-fn_800F61F4.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800F6218 fn_800F6218 -o build/GEDE01/halt-recovery-fn_800F6218.json --format json -c function_reloc_diffs=name_address",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": " INFO Writing to build/GEDE01/halt-recovery-fn_800F6218.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800F623C fn_800F623C -o build/GEDE01/halt-recovery-fn_800F623C.json --format json -c function_reloc_diffs=name_address",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": " INFO Writing to build/GEDE01/halt-recovery-fn_800F623C.json"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "sha1sum -c config/GEDE01/build.sha1",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": "build/GEDE01/main.dol: OK"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (12945 tracked project files inspected)"
+    },
+    {
+      "command": "git diff --check",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": ""
+    }
+  ],
+  "objdiff": {
+    "configuration": "function_reloc_diffs=name_address",
+    "extraction_command": "For each focused JSON: emit function, left size, left match percent, left instruction relocation count, right size, right match percent, right instruction relocation count.",
+    "raw_output": "fn_800F5C54\t92\t100.0\t5\t92\t100.0\t5\nfn_800F61F4\t36\t100.0\t0\t36\t100.0\t0\nfn_800F6218\t36\t100.0\t0\t36\t100.0\t0\nfn_800F623C\t40\t100.0\t0\t40\t100.0\t0",
+    "functions": [
+      {
+        "symbol": "fn_800F5C54",
+        "size_bytes": 92,
+        "match_percent": 100.0,
+        "relocations_equal": "5/5"
+      },
+      {
+        "symbol": "fn_800F61F4",
+        "size_bytes": 36,
+        "match_percent": 100.0,
+        "relocations_equal": "0/0"
+      },
+      {
+        "symbol": "fn_800F6218",
+        "size_bytes": 36,
+        "match_percent": 100.0,
+        "relocations_equal": "0/0"
+      },
+      {
+        "symbol": "fn_800F623C",
+        "size_bytes": 40,
+        "match_percent": 100.0,
+        "relocations_equal": "0/0"
+      }
+    ],
+    "all_affected_objects_exact": true,
+    "all_strict_name_address_relocations_equal": true
+  },
+  "dol": {
+    "path": "build/GEDE01/main.dol",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "actual_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "exact": true
+  },
+  "gates": {
+    "configure": "pass",
+    "build": "pass",
+    "objdiff_affected_objects": "pass",
+    "strict_relocations": "pass",
+    "dol_sha1": "pass",
+    "legal_audit": "pass",
+    "json_parse": "pass",
+    "clean_worktree": "pass-after-commit"
+  }
+}

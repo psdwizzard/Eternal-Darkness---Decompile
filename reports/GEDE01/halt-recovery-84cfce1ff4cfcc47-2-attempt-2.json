@@ -1,0 +1,175 @@
+{
+  "schema": "darkfoundry.geDE01.halt-recovery.v1",
+  "halt_id": "84cfce1ff4cfcc47-2",
+  "attempt": 2,
+  "verified_at": "2026-09-10T02:18:46Z",
+  "baseline_head": "1007d13d0965fcea7045d56ab7768461c6f2dacf",
+  "reviewed_match_commit": "d72f8b1d05a336fd63ba121e1fbfd2b1503d247a",
+  "halt_reason": "Broad assembly substitution: 4 new whole-function asm definitions added without a justification in progress.json asm_justifications (limit 1). Unjustified: fn_800F5C54, fn_800F61F4, fn_800F6218, fn_800F623C.",
+  "disposition": "repaired",
+  "correction": {
+    "kind": "remove-ineligible-whole-function-assembly",
+    "summary": "Restored the four pre-PR honest-C implementations, registered all four objects NonMatching, corrected the nearby recursion claim to the observed register-allocation and scheduling divergence, and removed the false asm_justifications. No frontier work was performed.",
+    "source_baseline": "d72f8b1d0~1",
+    "symbols": [
+      "fn_800F5C54",
+      "fn_800F61F4",
+      "fn_800F6218",
+      "fn_800F623C"
+    ]
+  },
+  "policy_evidence": {
+    "scheduler_path": "../scripts/decomp-scheduler.mjs",
+    "scheduler_line": 2224,
+    "rule": "Register allocation and instruction scheduling are codegen divergences and are not grounds for whole-function assembly; preserve honest C as NonMatching.",
+    "retail_symbols": "fn_800F5C54=.text:0x800F5C54,size:0x5C; fn_800F61F4=.text:0x800F61F4,size:0x24; fn_800F6218=.text:0x800F6218,size:0x24; fn_800F623C=.text:0x800F623C,size:0x28",
+    "c_relocation_observation": "Focused objdiff reports zero instruction relocations in both retail and generated bodies for every helper. The restored shift implementations use 32-bit word shifts and a constant 32-bit placement; fn_800F5C54 uses a signed int cast. The generated bodies therefore contain no self-call relocation supporting attempt 1's recursion premise."
+  },
+  "frontier": {
+    "before": "0x801FA92C",
+    "after": "0x801FA92C",
+    "unchanged": true,
+    "raw_output": "next_target=0x801FA92C"
+  },
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": ".tools/bin/ninja",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output_tail": "[799/804] REPORT\n INFO Loading project .\n INFO Generating report for 6748 units (using 8 threads)\n INFO Report generated in 0.287s\n INFO Writing to build/GEDE01/report.json\n[800/804] LINK build/GEDE01/main.elf\n[801/804] DOL build/GEDE01/main.dol\n[802/804] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[803/804] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800F5C54 fn_800F5C54 -o build/GEDE01/halt-recovery-attempt-2-fn_800F5C54.json --format json -c function_reloc_diffs=name_address",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": " INFO Writing to build/GEDE01/halt-recovery-attempt-2-fn_800F5C54.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800F61F4 fn_800F61F4 -o build/GEDE01/halt-recovery-attempt-2-fn_800F61F4.json --format json -c function_reloc_diffs=name_address",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": " INFO Writing to build/GEDE01/halt-recovery-attempt-2-fn_800F61F4.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800F6218 fn_800F6218 -o build/GEDE01/halt-recovery-attempt-2-fn_800F6218.json --format json -c function_reloc_diffs=name_address",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": " INFO Writing to build/GEDE01/halt-recovery-attempt-2-fn_800F6218.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800F623C fn_800F623C -o build/GEDE01/halt-recovery-attempt-2-fn_800F623C.json --format json -c function_reloc_diffs=name_address",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": " INFO Writing to build/GEDE01/halt-recovery-attempt-2-fn_800F623C.json"
+    },
+    {
+      "command": "for f in build/GEDE01/halt-recovery-attempt-2-fn_800F*.json; do jq focused symbol sizes, match percent, and instruction relocation counts; done",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": "fn_800F5C54\t92\t104\t19.782608\t0\t0\nfn_800F61F4\t36\t40\t27.777779\t0\t0\nfn_800F6218\t36\t40\t27.777779\t0\t0\nfn_800F623C\t40\t44\t61.5\t0\t0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "sha1sum -c config/GEDE01/build.sha1",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": "build/GEDE01/main.dol: OK"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (12946 tracked project files inspected)"
+    },
+    {
+      "command": "for each affected source: cmp source with git show d72f8b1d0~1:source",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": "game_fn_800F5C54.c matches d72f8b1d0~1\ngame_fn_800F61F4.c matches d72f8b1d0~1\ngame_fn_800F6218.c matches d72f8b1d0~1\ngame_fn_800F623C.c matches d72f8b1d0~1"
+    },
+    {
+      "command": "python3 progress/source audit plus rg config/GEDE01/symbols.txt configure.py",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": "next_target=0x801FA92C\nfn_800F5C54: whole_function_asm=False; asm_justified=False\nfn_800F61F4: whole_function_asm=False; asm_justified=False\nfn_800F6218: whole_function_asm=False; asm_justified=False\nfn_800F623C: whole_function_asm=False; asm_justified=False\n3094:fn_800F5C54 = .text:0x800F5C54; // type:function size:0x5C\n3175:fn_800F61F4 = .text:0x800F61F4; // type:function size:0x24\n3176:fn_800F6218 = .text:0x800F6218; // type:function size:0x24\n3177:fn_800F623C = .text:0x800F623C; // type:function size:0x28\n7748:Object(NonMatching, game/game_fn_800F5C54.c, extra_cflags=[-sdata 0])\n7751:Object(NonMatching, game/game_fn_800F61F4.c)\n7752:Object(NonMatching, game/game_fn_800F6218.c)\n7753:Object(NonMatching, game/game_fn_800F623C.c)"
+    },
+    {
+      "command": "git diff --check",
+      "cwd": "..",
+      "exit_code": 0,
+      "raw_output": ""
+    }
+  ],
+  "objdiff": {
+    "configuration": "function_reloc_diffs=name_address",
+    "raw_output_columns": "symbol retail_size generated_size match_percent retail_instruction_relocations generated_instruction_relocations",
+    "raw_output": "fn_800F5C54\t92\t104\t19.782608\t0\t0\nfn_800F61F4\t36\t40\t27.777779\t0\t0\nfn_800F6218\t36\t40\t27.777779\t0\t0\nfn_800F623C\t40\t44\t61.5\t0\t0",
+    "functions": [
+      {
+        "symbol": "fn_800F5C54",
+        "retail_size_bytes": 92,
+        "generated_size_bytes": 104,
+        "match_percent": 19.782608,
+        "instruction_relocations": "0/0",
+        "status": "NonMatching"
+      },
+      {
+        "symbol": "fn_800F61F4",
+        "retail_size_bytes": 36,
+        "generated_size_bytes": 40,
+        "match_percent": 27.777779,
+        "instruction_relocations": "0/0",
+        "status": "NonMatching"
+      },
+      {
+        "symbol": "fn_800F6218",
+        "retail_size_bytes": 36,
+        "generated_size_bytes": 40,
+        "match_percent": 27.777779,
+        "instruction_relocations": "0/0",
+        "status": "NonMatching"
+      },
+      {
+        "symbol": "fn_800F623C",
+        "retail_size_bytes": 40,
+        "generated_size_bytes": 44,
+        "match_percent": 61.5,
+        "instruction_relocations": "0/0",
+        "status": "NonMatching"
+      }
+    ],
+    "all_affected_objects_checked": true,
+    "false_matching_credit_removed": false
+  },
+  "dol": {
+    "path": "build/GEDE01/main.dol",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "actual_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "exact": true,
+    "link_behavior": "NonMatching objects retain compiled C for objdiff while the exact build links retail bytes."
+  },
+  "gates": {
+    "configure": "pass",
+    "build": "pass",
+    "objdiff_affected_objects": "pass-as-honest-nonmatching",
+    "strict_relocation_inspection": "pass",
+    "dol_sha1": "pass",
+    "legal_audit": "pass",
+    "frontier_unchanged": "pass",
+    "whole_function_asm_removed": "pass",
+    "false_asm_justifications_removed": "pass",
+    "json_parse": "pass",
+    "clean_worktree": "pass-after-commit"
+  }
+}

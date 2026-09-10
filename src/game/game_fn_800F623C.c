@@ -1,15 +1,12 @@
-asm void fn_800F623C(void)
+long long fn_800F623C(int hi, unsigned int lo, unsigned int shift)
 {
-    nofralloc
-    subfic r8, r5, 0x20
-    addic. r9, r5, -0x20
-    srw r4, r4, r5
-    slw r10, r3, r8
-    or r4, r4, r10
-    sraw r10, r3, r9
-    ble around
-    or r4, r4, r10
-around:
-    sraw r3, r3, r5
-    blr
+    unsigned int out_lo;
+    int under = 32 - shift;
+    int over = shift - 32;
+    out_lo = lo >> shift;
+    out_lo |= hi << under;
+    if (over > 0) {
+        out_lo |= hi >> over;
+    }
+    return ((unsigned long long)(hi >> shift) << 32) | out_lo;
 }

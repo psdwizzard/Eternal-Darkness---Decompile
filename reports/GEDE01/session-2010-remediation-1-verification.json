@@ -1,0 +1,58 @@
+{
+  "session_id": "session-2010",
+  "remediation": "review remediation 1",
+  "scope": "Correct session-2010 reporting and audit evidence only; do not advance the frontier or match new functions",
+  "source_or_registration_changes": false,
+  "affected_objects": [],
+  "affected_object_count": 0,
+  "affected_object_measurement": {
+    "command": "git diff --name-only 4660b91ab85961d164111701d24771de93241f42 -- configure.py src",
+    "raw_output": ""
+  },
+  "canonical_build": {
+    "command": "python3 configure.py && .tools/bin/ninja build/GEDE01/ok build/GEDE01/report.json build/GEDE01/main.dol",
+    "passed": true,
+    "completion_raw_output": "[799/800] DOL build/GEDE01/main.dol\n[800/800] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK",
+    "post_build_gate_command": "sha1sum -c config/GEDE01/build.sha1; echo sha1_check_exit=$?; test -f build/GEDE01/ok; echo ok_sentinel_exit=$?",
+    "post_build_gate_raw_output": "build/GEDE01/main.dol: OK\nsha1_check_exit=0\nok_sentinel_exit=0"
+  },
+  "current_inventory_measurement": {
+    "command": "python3 tools/session_2010_remediation_audit.py | sed -n '1,8p'",
+    "raw_output": "current calls=622 unique=622 mapped=622 unmapped=0 exact_100_candidates=0 retail_code_bytes=457432 retail_data_bytes=1132 functions=622 report_units=6761\ncluster_99.8_to_99.92 count=6\ncluster score=99.91304 source=src/game/game_fn_8015CFFC.c\ncluster score=99.85602 source=src/game/game_fn_801F89B4.c\ncluster score=99.85294 source=src/game/game_fn_801F6054.c\ncluster score=99.830505 source=src/game/game_fn_801F7510.c\ncluster score=99.808914 source=src/game/game_fn_8018C8FC.c\ncluster score=99.8 source=src/game/game_fn_801E5B10.c"
+  },
+  "sweep_history_measurement": {
+    "command": "python3 tools/session_2010_remediation_audit.py | sed -n '9,12p'",
+    "raw_output": "history session=1810 candidates_documented=2 reclaimed_documented=1\nhistory session=1890 candidates_documented=0 reclaimed_documented=0\nhistory session=1970 candidates_documented=0 reclaimed_documented=0\nhistory session=2010 candidates_documented=0 reclaimed_documented=0"
+  },
+  "canonical_accounting_measurement": {
+    "command": "jq -r '.measures | \"matching_objects=\\(.complete_units) total_objects=\\(.total_units) matching_functions=\\(.matched_functions) total_functions=\\(.total_functions) matching_code_bytes=\\(.matched_code) total_code_bytes=\\(.total_code) matching_data_bytes=\\(.matched_data) total_data_bytes=\\(.total_data) code_percent=\\(.matched_code_percent) function_percent=\\(.matched_functions_percent) linked_code_bytes=\\(.complete_code) linked_data_bytes=\\(.complete_data)\"' build/GEDE01/report.json",
+    "raw_output": "matching_objects=5727 total_objects=6761 matching_functions=5492 total_functions=8214 matching_code_bytes=922672 total_code_bytes=2300692 matching_data_bytes=39286 total_data_bytes=4305642 code_percent=40.10411 function_percent=66.86146 linked_code_bytes=922672 linked_data_bytes=39446"
+  },
+  "defensive_frontier_objdiff": [
+    {
+      "object": "main/game/game_fn_801FB270",
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FB270 -o - --format json -c function_reloc_diffs=name_address fn_801FB270 | jq -r '.left.symbols[] | select(.name==\"fn_801FB270\") | \"symbol=\\(.name) size=\\(.size) match_percent=\\(.match_percent) instructions=\\(.instructions|length)\"'",
+      "raw_output": "symbol=fn_801FB270 size=168 match_percent=100.0 instructions=42"
+    },
+    {
+      "object": "main/game/game_fn_801FB318",
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FB318 -o - --format json -c function_reloc_diffs=name_address fn_801FB318 | jq -r '.left.symbols[] | select(.name==\"fn_801FB318\") | \"symbol=\\(.name) size=\\(.size) match_percent=\\(.match_percent) instructions=\\(.instructions|length)\"'",
+      "raw_output": "symbol=fn_801FB318 size=156 match_percent=100.0 instructions=39"
+    }
+  ],
+  "hash_measurement": {
+    "command": "sha256sum build/GEDE01/report.json configure.py",
+    "raw_output": "f168e9c40cbf7a8326a043ec01a5e7f6dc9f7ea56a3a48e29e1af8c9866da5eb  build/GEDE01/report.json\nfd870d4680f29557c8e2d0d8f1e91aac685b5f7349f1deadcc8b92e114d45a02  configure.py"
+  },
+  "dol_measurement": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; echo dol_cmp_exit=$?",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+  },
+  "frontier_measurement": {
+    "command": "python3 tools/session_2010_remediation_audit.py | sed -n '13,15p'",
+    "raw_output": "chain assigned_target=0x801FB3B4 accepted_frontier=0x801FB3B4 candidate_frontier=0x801FB3B4\nfrontier next_target=0x801FB3B4\nprogress session_2009_range=0x801FB270..0x801FB3B4 frontier_evidence=reports/GEDE01/frontier-801FB270-801FB3B4-session-2009.json"
+  },
+  "frontier_report_updated": false,
+  "progress_json_updated": false,
+  "reason_frontier_and_progress_unchanged": "Fresh evidence did not change any frontier or progress value."
+}

@@ -1,0 +1,96 @@
+{
+  "schema": "darkfoundry.geDE01.halt-recovery.v1",
+  "halt_id": "84cfce1ff4cfcc47-2",
+  "attempt": 3,
+  "verified_at": "2026-09-10T02:36:10Z",
+  "baseline_head": "1b123dde0003a653e96b13d743e0541767c91f6e",
+  "halt_reason": "Broad assembly substitution: 4 new whole-function asm definitions added without a justification in progress.json asm_justifications (limit 1). Unjustified: fn_800F5C54, fn_800F61F4, fn_800F6218, fn_800F623C.",
+  "disposition": "repaired",
+  "correction": {
+    "kind": "regenerate-stale-canonical-headline",
+    "summary": "Regenerated the canonical progress headline and its two raw-output records from the fresh 6748-unit report after attempt 2 withdrew the four ineligible assembly matches. No source, configuration, gate, or frontier change was made.",
+    "withdrawn_symbols": [
+      "fn_800F5C54",
+      "fn_800F61F4",
+      "fn_800F6218",
+      "fn_800F623C"
+    ],
+    "withdrawn_retail_bytes": "92+36+36+40=204",
+    "false_matching_credit_removed": true
+  },
+  "frontier": {
+    "before": "0x801FA92C",
+    "after": "0x801FA92C",
+    "unchanged": true,
+    "command": "jq -r .next_target reports/GEDE01/progress.json",
+    "raw_output": "0x801FA92C"
+  },
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output_tail": "[795/799] REPORT\n INFO Loading project .\n INFO Generating report for 6748 units (using 8 threads)\n INFO Report generated in 0.251s\n INFO Writing to build/GEDE01/report.json\n[796/799] LINK build/GEDE01/main.elf\n[797/799] DOL build/GEDE01/main.dol\n[798/799] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[799/799] PROGRESS\nProgress:\n  All: 53.14% fuzzy, 40.05% matched, 40.05% linked (5717 / 6748 files)\n    Code: 921408 / 2300692 bytes (5482 / 8214 functions)\n    Data: 39286 / 4305642 bytes (0.91%)\n  Game Code: 88.74% fuzzy, 66.82% matched, 66.82% linked (5699 / 6318 files)\n    Code: 918380 / 1374380 bytes (5420 / 6039 functions)\n  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\n    Code: 3028 / 3028 bytes (62 / 62 functions)"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_SYMBOL SYMBOL -o build/GEDE01/halt-recovery-attempt-3-SYMBOL.json --format json -c function_reloc_diffs=name_address (run once for each withdrawn symbol)",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/halt-recovery-attempt-3-fn_800F5C54.json\nINFO Writing to build/GEDE01/halt-recovery-attempt-3-fn_800F61F4.json\nINFO Writing to build/GEDE01/halt-recovery-attempt-3-fn_800F6218.json\nINFO Writing to build/GEDE01/halt-recovery-attempt-3-fn_800F623C.json"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol && sha1sum -c config/GEDE01/build.sha1",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nbuild/GEDE01/main.dol: OK"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (12948 tracked project files inspected)"
+    },
+    {
+      "command": "jq canonical-report equality check; whole-function asm and asm_justifications audit; jq -r .next_target reports/GEDE01/progress.json",
+      "cwd": ".",
+      "exit_code": 0,
+      "raw_output": "progress_matches_report=true\nfn_800F5C54 whole_function_asm=false\nfn_800F61F4 whole_function_asm=false\nfn_800F6218 whole_function_asm=false\nfn_800F623C whole_function_asm=false\nwithdrawn_symbol_asm_justifications=none\nnext_target=0x801FA92C"
+    }
+  ],
+  "canonical_measurement": {
+    "command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+    "headline_extraction_command": "jq -r '.measures | canonical headline fields' build/GEDE01/report.json",
+    "category_extraction_command": "jq -r 'select Game Code and SDK/Runtime category measures' build/GEDE01/report.json",
+    "report_generated_by_build": true,
+    "raw_output": "matching_objects=5717 total_objects=6748 matching_functions=5482 total_functions=8214 matching_code_bytes=921408 total_code_bytes=2300692 matching_data_bytes=39286 total_data_bytes=4305642 code_percent=40.049168 function_percent=66.739716 linked_code_bytes=921408 linked_data_bytes=39446",
+    "category_raw_output": "linked_code_bytes=921408 linked_data_bytes=39446 game_code_matching_bytes=918380 game_code_total_bytes=1374380 game_code_linked_bytes=918380 game_code_score_link_gap=0 sdk_code_matching_bytes=3028 sdk_code_total_bytes=3028 sdk_objects_complete=18 sdk_objects_total=18",
+    "progress_matches_report": true
+  },
+  "objdiff": {
+    "configuration": "function_reloc_diffs=name_address",
+    "extraction_command": "jq -r 'select each target symbol and print name, retail size, generated size, match percent, retail relocation count, generated relocation count' build/GEDE01/halt-recovery-attempt-3-fn_800F5C54.json build/GEDE01/halt-recovery-attempt-3-fn_800F61F4.json build/GEDE01/halt-recovery-attempt-3-fn_800F6218.json build/GEDE01/halt-recovery-attempt-3-fn_800F623C.json",
+    "raw_output_columns": "symbol retail_size generated_size match_percent retail_relocations generated_relocations",
+    "raw_output": "fn_800F5C54\t92\t104\t19.782608\t5\t4\nfn_800F61F4\t36\t40\t27.777779\t0\t0\nfn_800F6218\t36\t40\t27.777779\t0\t0\nfn_800F623C\t40\t44\t61.5\t0\t0",
+    "status": "all four remain honest-C NonMatching objects; focused diffs regenerated successfully",
+    "relocation_note": "fn_800F5C54 contains constant/data relocations but no self-call relocation; the three long-long shift helpers contain no relocations. This corrects attempt 2's inaccurate blanket zero-relocation count without changing its assembly-policy conclusion."
+  },
+  "dol": {
+    "path": "build/GEDE01/main.dol",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "actual_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "exact": true
+  },
+  "gates": {
+    "configure": "pass",
+    "build": "pass",
+    "objdiff_affected_objects": "pass-as-honest-nonmatching",
+    "dol_sha1": "pass",
+    "legal_audit": "pass",
+    "frontier_unchanged": "pass",
+    "whole_function_asm_removed": "pass",
+    "false_asm_justifications_removed": "pass",
+    "false_matching_credit_removed": "pass",
+    "json_parse": "pass",
+    "clean_worktree": "pass-after-commit"
+  }
+}

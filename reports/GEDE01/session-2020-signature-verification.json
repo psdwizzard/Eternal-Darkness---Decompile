@@ -1,0 +1,43 @@
+{
+  "session_id": "session-2020",
+  "starting_target": "0x801FD3F8",
+  "ending_next_target": "0x801FD3F8",
+  "matched_bytes_added": 0,
+  "nonmatching_bytes_added": 0,
+  "correction": {
+    "symbol": "fn_801FD24C",
+    "source": "src/game/game_fn_80175244.c",
+    "before": "extern void fn_801FD24C(void);",
+    "after": "extern void* fn_801FD24C(void);",
+    "grounding": "Owned definition void* fn_801FD24C(void) at src/game/game_fn_801FD24C.c:3 establishes a GPR:r3 return. The only corrected caller has the same zero-parameter ABI and does not use the symbol as a callback or cast target."
+  },
+  "checks": [
+    {
+      "command": ".tools/bin/ninja",
+      "status": "passed",
+      "raw_output": "[806/806] LINK build/GEDE01/main.elf; DOL build/GEDE01/main.dol; VERIFY DOL SHA1"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80175244 fn_80175244 -o reports/GEDE01/objdiff-game_fn_80175244-session-2020.json --format json-pretty",
+      "status": "passed",
+      "raw_output": "fn_80175244 .text match_percent=100.0"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80175244 fn_80175244 -o reports/GEDE01/objdiff-game_fn_80175244-session-2020-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "status": "passed",
+      "raw_output": "fn_80175244 .text match_percent=100.0 with relocation name/address comparison enabled"
+    },
+    {
+      "command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+      "status": "passed",
+      "raw_output": "INFO Generating report for 6786 units; main/game/game_fn_80175244 complete=true matched_code_percent=100.0 complete_code_percent=100.0 fuzzy_match_percent=100.0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "status": "passed",
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+    }
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_byte_change": false
+}

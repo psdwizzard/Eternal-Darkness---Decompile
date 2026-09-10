@@ -1,0 +1,50 @@
+{
+  "session_id": "session-2012",
+  "range_start": "0x801FB6A4",
+  "range_end": "0x801FB9D4",
+  "next_target": "0x801FB9D4",
+  "matched_functions": ["fn_801FB9C8"],
+  "matched_bytes": 12,
+  "nonmatching_functions": ["fn_801FB6A4"],
+  "nonmatching_bytes": 804,
+  "range_bytes": 816,
+  "range_accounting_complete": true,
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "retail_cmp_exit": 0,
+  "canonical_report": {
+    "matching_functions": 5495,
+    "matching_objects": 5730,
+    "matching_code_bytes": 923436,
+    "linked_code_bytes": 923436,
+    "code_percent": 40.137314
+  },
+  "matched_function": {
+    "symbol": "fn_801FB9C8",
+    "source_kind": "standalone assembly",
+    "source_path": "src/game/game_fn_801FB9C8.s"
+  },
+  "nonmatching_function": {
+    "symbol": "fn_801FB6A4",
+    "source_kind": "C",
+    "source_path": "src/game/game_fn_801FB6A4.c"
+  },
+  "remediation_evidence": "reports/GEDE01/session-2012-remediation-1-verification.json",
+  "remediation_2_evidence": "reports/GEDE01/session-2012-remediation-2-verification.json",
+  "restored_field_measurements": {
+    "canonical_report": {
+      "command": "jq -r '.measures | \"matching_functions=\\(.matched_functions) matching_objects=\\(.complete_units) matching_code_bytes=\\(.matched_code) linked_code_bytes=\\(.complete_code) code_percent=\\(.matched_code_percent)\"' build/GEDE01/report.json",
+      "raw_output": "matching_functions=5495 matching_objects=5730 matching_code_bytes=923436 linked_code_bytes=923436 code_percent=40.137314"
+    },
+    "range_accounting": {
+      "command": "python3 -c 'import json; frontier=json.load(open(\"reports/GEDE01/session-2012-verification.json\")); matched=json.load(open(\"build/GEDE01/session-2012-remediation-2-fn_801FB9C8-canonical.json\")); nonmatching=json.load(open(\"build/GEDE01/session-2012-remediation-2-fn_801FB6A4-canonical.json\")); mb=int(next(x[\"size\"] for x in matched[\"left\"][\"symbols\"] if x[\"name\"]==\"fn_801FB9C8\")); nb=int(next(x[\"size\"] for x in nonmatching[\"left\"][\"symbols\"] if x[\"name\"]==\"fn_801FB6A4\")); rb=int(frontier[\"range_end\"],16)-int(frontier[\"range_start\"],16); print(f\"range_bytes={rb} matched_bytes={mb} nonmatching_bytes={nb} accounted_bytes={mb+nb} range_accounting_complete={str(rb==mb+nb).lower()}\")'",
+      "raw_output": "range_bytes=816 matched_bytes=12 nonmatching_bytes=804 accounted_bytes=816 range_accounting_complete=true"
+    },
+    "dol_identity": {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'cmp_exit=%s\\n' \"$?\"",
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+    }
+  },
+  "relocation_strict_report": "reports/GEDE01/session-2012-reloc-strict.json",
+  "matched_function_evidence": "reports/GEDE01/session-2012-fn_801FB9C8-objdiff.json",
+  "assigned_attempt_evidence": "reports/GEDE01/session-2012-fn_801FB6A4-attempt.json"
+}

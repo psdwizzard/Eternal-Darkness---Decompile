@@ -1,4 +1,4 @@
-extern void fn_801FD24C(void);
+extern void* fn_801FD24C(void);
 extern int fn_8016A598(void*);
 extern void fn_80163BB4(void*, const char*, ...);
 extern const char lbl_8024FF00[];

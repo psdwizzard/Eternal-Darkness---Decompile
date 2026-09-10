@@ -1,0 +1,19 @@
+{
+  "session_id": "session-2019",
+  "range_start": "0x801FD258",
+  "range_end": "0x801FD3F8",
+  "next_target": "0x801FD3F8",
+  "range_bytes": 416,
+  "matched_bytes": 208,
+  "nonmatching_bytes": 208,
+  "unaccounted_spans": [],
+  "measurement": {
+    "command": "inspect canonical and relocation-strict per-function objdiff JSON",
+    "raw_output": "fn_801FD258=192/192 canonical_percent=100.0 strict_percent=100.0 relocations_equal=true; fn_801FD318=208 retail/228 generated canonical_percent=37.75 NonMatching; fn_801FD3E8=16/16 canonical_percent=100.0 strict_percent=100.0 relocations_equal=true"
+  },
+  "functions": [
+    {"symbol": "fn_801FD258", "start": "0x801FD258", "end": "0x801FD318", "retail_bytes": 192, "generated_bytes": 192, "status": "Matching", "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "relocations_equal": true, "evidence": "reports/GEDE01/session-2019-fn_801FD258.json"},
+    {"symbol": "fn_801FD318", "start": "0x801FD318", "end": "0x801FD3E8", "retail_bytes": 208, "generated_bytes": 228, "status": "NonMatching", "canonical_percent": 37.75, "divergence": "GC/1.3 retains four address temporaries and a 32-byte frame; retail retains only r31 in a 16-byte frame and interleaves address formation with stores.", "evidence": "reports/GEDE01/session-2019-fn_801FD318.json"},
+    {"symbol": "fn_801FD3E8", "start": "0x801FD3E8", "end": "0x801FD3F8", "retail_bytes": 16, "generated_bytes": 16, "status": "Matching", "canonical_percent": 100.0, "relocation_strict_percent": 100.0, "relocations_equal": true, "evidence": "reports/GEDE01/session-2019-fn_801FD3E8.json"}
+  ]
+}

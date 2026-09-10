@@ -1,0 +1,54 @@
+{
+  "session_id": "session-2017-remediation-1",
+  "scope": "Correct the false NonMatching classification for fn_801FCCF8 without advancing the frontier.",
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja",
+    "exit_code": 0
+  },
+  "canonical_report_generation": {
+    "command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json --format json-pretty",
+    "raw_output": "INFO Loading project .\nINFO Generating report for 6777 units (using 8 threads)\nINFO Report generated in 0.154s\nINFO Writing to build/GEDE01/report.json"
+  },
+  "direct_objdiff_generation": {
+    "commands": [
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FCCF8 fn_801FCCF8 -o reports/GEDE01/session-2017-fn_801FCCF8.json --format json",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FCF00 fn_801FCF00 -o reports/GEDE01/session-2017-fn_801FCF00.json --format json",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FCCF8 fn_801FCCF8 -o build/GEDE01/session-2017-remediation-1-fn_801FCCF8-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FCF00 fn_801FCF00 -o build/GEDE01/session-2017-remediation-1-fn_801FCF00-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address"
+    ],
+    "raw_output": "INFO Writing to reports/GEDE01/session-2017-fn_801FCCF8.json\nINFO Writing to reports/GEDE01/session-2017-fn_801FCF00.json\nINFO Writing to build/GEDE01/session-2017-remediation-1-fn_801FCCF8-reloc-strict.json\nINFO Writing to build/GEDE01/session-2017-remediation-1-fn_801FCF00-reloc-strict.json"
+  },
+  "function_measurement": {
+    "command": "for f in 801FCCF8 801FCF00; do jq -r --arg f \"$f\" '.left.symbols[] | select(.name==(\"fn_\"+$f)) | \"fn_\\($f) retail_bytes=\\(.size) canonical_percent=\\(.match_percent)\"' reports/GEDE01/session-2017-fn_$f.json; jq -r --arg f \"$f\" '.left.symbols[] | select(.name==(\"fn_\"+$f)) | \"fn_\\($f) strict_retail_bytes=\\(.size) strict_percent=\\(.match_percent) reloc_differences=\\((.relocation_differences // [])|length)\"' build/GEDE01/session-2017-remediation-1-fn_$f-reloc-strict.json; done",
+    "raw_output": "fn_801FCCF8 retail_bytes=520 canonical_percent=100.0\nfn_801FCCF8 strict_retail_bytes=520 strict_percent=100.0 reloc_differences=0\nfn_801FCF00 retail_bytes=4 canonical_percent=100.0\nfn_801FCF00 strict_retail_bytes=4 strict_percent=100.0 reloc_differences=0"
+  },
+  "session_accounting": {
+    "command": "jq -r '.session_2017 | \"range=\\(.range) matched_bytes=\\(.matched_bytes) nonmatching_bytes=\\(.nonmatching_bytes) matched_functions=\\(.matched_functions|join(\",\")) nonmatching_function_count=\\(.nonmatching_functions|length)\"' reports/GEDE01/progress.json",
+    "raw_output": "range=0x801FCCF8..0x801FCF04 matched_bytes=524 nonmatching_bytes=0 matched_functions=fn_801FCCF8,fn_801FCF00 nonmatching_function_count=0"
+  },
+  "canonical_totals": {
+    "command": "jq -r '.measures | \"matching_objects=\\(.complete_units) total_objects=\\(.total_units) matching_functions=\\(.matched_functions) total_functions=\\(.total_functions) matching_code_bytes=\\(.matched_code) total_code_bytes=\\(.total_code) matching_data_bytes=\\(.matched_data) total_data_bytes=\\(.total_data) code_percent=\\(.matched_code_percent) function_percent=\\(.matched_functions_percent) linked_code_bytes=\\(.complete_code) linked_data_bytes=\\(.complete_data)\"' build/GEDE01/report.json",
+    "raw_output": "matching_objects=5740 total_objects=6777 matching_functions=5505 total_functions=8214 matching_code_bytes=925616 total_code_bytes=2300692 matching_data_bytes=39286 total_data_bytes=4305642 code_percent=40.232067 function_percent=67.01972 linked_code_bytes=925616 linked_data_bytes=39446"
+  },
+  "relocation_strict_report": {
+    "generation_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-2017-reloc-strict.json --format json -c function_reloc_diffs=name_address",
+    "measurement_command": "jq -r '.measures | \"strict_matching_objects=\\(.complete_units) strict_total_objects=\\(.total_units) strict_matching_functions=\\(.matched_functions) strict_total_functions=\\(.total_functions) strict_matching_code_bytes=\\(.matched_code) strict_total_code_bytes=\\(.total_code) strict_code_percent=\\(.matched_code_percent) strict_linked_code_bytes=\\(.complete_code) strict_linked_data_bytes=\\(.complete_data)\"' reports/GEDE01/session-2017-reloc-strict.json",
+    "raw_output": "strict_matching_objects=5740 strict_total_objects=6777 strict_matching_functions=5500 strict_total_functions=8214 strict_matching_code_bytes=923932 strict_total_code_bytes=2300692 strict_code_percent=40.158875 strict_linked_code_bytes=925616 strict_linked_data_bytes=39446"
+  },
+  "category_measurement": {
+    "command": "jq -r '.categories[] | select(.id==\"game\") | .measures | \"game_code_matching_bytes=\\(.complete_code) game_code_total_bytes=\\(.total_code) game_code_linked_bytes=\\(.complete_code) game_matching_functions=\\(.matched_functions) game_total_functions=\\(.total_functions) game_matching_objects=\\(.complete_units) game_total_objects=\\(.total_units)\"' build/GEDE01/report.json; jq -r '.categories[] | select(.id==\"sdk\") | .measures | \"sdk_code_matching_bytes=\\(.complete_code) sdk_code_total_bytes=\\(.total_code) sdk_objects_complete=\\(.complete_units) sdk_objects_total=\\(.total_units)\"' build/GEDE01/report.json",
+    "raw_output": "game_code_matching_bytes=922588 game_code_total_bytes=1384068 game_code_linked_bytes=922588 game_matching_functions=5443 game_total_functions=6068 game_matching_objects=5722 game_total_objects=6347\nsdk_code_matching_bytes=3028 sdk_code_total_bytes=3028 sdk_objects_complete=18 sdk_objects_total=18"
+  },
+  "layout_measurement": {
+    "command": "rg -n '^fn_801FCCF8 |^fn_801FCF00 |^fn_801FCF04 ' config/GEDE01/symbols.txt; rg -n -A1 'game_fn_801FCCF8.c:|game_fn_801FCF00.c:' config/GEDE01/splits.txt",
+    "raw_output": "7586:fn_801FCCF8 = .text:0x801FCCF8; // type:function size:0x208\n7587:fn_801FCF00 = .text:0x801FCF00; // type:function size:0x4\n7588:fn_801FCF04 = .text:0x801FCF04; // type:function size:0x314\n19690:game/game_fn_801FCCF8.c:\n19691-\t.text       start:0x801FCCF8 end:0x801FCF00\n--\n19693:game/game_fn_801FCF00.c:\n19694-\t.text       start:0x801FCF00 end:0x801FCF04"
+  },
+  "ledger_measurement": {
+    "command": "jq -r '\"nonmatching_attempts=\\(.nonmatching_attempts|length) has_fn_801FCCF8=\\([.nonmatching_attempts[] | select(.symbol == \"fn_801FCCF8\")] | length > 0) asm_justifications=\\(.asm_justifications|length) next_target=\\(.next_target)\"' reports/GEDE01/progress.json",
+    "raw_output": "nonmatching_attempts=125 has_fn_801FCCF8=false asm_justifications=23 next_target=0x801FCF04"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'cmp_exit=%s\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  }
+}

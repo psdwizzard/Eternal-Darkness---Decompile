@@ -1,0 +1,59 @@
+{
+  "session_id": "session-2012-remediation-2",
+  "scope": "Restore the session-2012 frontier report's counter-delta and identity gates without changing source, object registration, progress counters, or frontier.",
+  "full_build": {
+    "command": "./.tools/bin/ninja",
+    "result": "success",
+    "raw_output_tail": "[801/803] DOL build/GEDE01/main.dol\n[802/803] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[803/803] PROGRESS"
+  },
+  "canonical_object_verification": {
+    "fn_801FB6A4": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FB6A4 -o build/GEDE01/session-2012-remediation-2-fn_801FB6A4-canonical.json --format json-pretty fn_801FB6A4",
+      "measurement_command": "jq -r --arg symbol 'fn_801FB6A4' --arg mode 'canonical' '. as $root | $root.left.symbols[] | select(.name==$symbol) as $left | $root.right.symbols[] | select(.name==$symbol) as $right | \"symbol=\\($symbol) mode=\\($mode) retail_bytes=\\($left.size) generated_bytes=\\($right.size) match_percent=\\($left.match_percent) differing_instructions=\\([$left.instructions[] | select(.diff_kind != null)] | length)\"' build/GEDE01/session-2012-remediation-2-fn_801FB6A4-canonical.json",
+      "raw_output": "symbol=fn_801FB6A4 mode=canonical retail_bytes=804 generated_bytes=804 match_percent=99.50249 differing_instructions=10"
+    },
+    "fn_801FB9C8": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FB9C8 -o build/GEDE01/session-2012-remediation-2-fn_801FB9C8-canonical.json --format json-pretty fn_801FB9C8",
+      "measurement_command": "jq -r --arg symbol 'fn_801FB9C8' --arg mode 'canonical' '. as $root | $root.left.symbols[] | select(.name==$symbol) as $left | $root.right.symbols[] | select(.name==$symbol) as $right | \"symbol=\\($symbol) mode=\\($mode) retail_bytes=\\($left.size) generated_bytes=\\($right.size) match_percent=\\($left.match_percent) differing_instructions=\\([$left.instructions[] | select(.diff_kind != null)] | length)\"' build/GEDE01/session-2012-remediation-2-fn_801FB9C8-canonical.json",
+      "raw_output": "symbol=fn_801FB9C8 mode=canonical retail_bytes=12 generated_bytes=12 match_percent=100.0 differing_instructions=0"
+    }
+  },
+  "relocation_strict_object_verification": {
+    "config": "function_reloc_diffs=name_address",
+    "fn_801FB6A4": {
+      "command": "build/tools/objdiff-cli diff -p . -c function_reloc_diffs=name_address -u main/game/game_fn_801FB6A4 -o build/GEDE01/session-2012-remediation-2-fn_801FB6A4-reloc-strict.json --format json-pretty fn_801FB6A4",
+      "measurement_command": "jq -r --arg symbol 'fn_801FB6A4' --arg mode 'reloc-strict' '. as $root | $root.left.symbols[] | select(.name==$symbol) as $left | $root.right.symbols[] | select(.name==$symbol) as $right | \"symbol=\\($symbol) mode=\\($mode) retail_bytes=\\($left.size) generated_bytes=\\($right.size) match_percent=\\($left.match_percent) differing_instructions=\\([$left.instructions[] | select(.diff_kind != null)] | length)\"' build/GEDE01/session-2012-remediation-2-fn_801FB6A4-reloc-strict.json",
+      "raw_output": "symbol=fn_801FB6A4 mode=reloc-strict retail_bytes=804 generated_bytes=804 match_percent=99.50249 differing_instructions=10"
+    },
+    "fn_801FB9C8": {
+      "command": "build/tools/objdiff-cli diff -p . -c function_reloc_diffs=name_address -u main/game/game_fn_801FB9C8 -o build/GEDE01/session-2012-remediation-2-fn_801FB9C8-reloc-strict.json --format json-pretty fn_801FB9C8",
+      "measurement_command": "jq -r --arg symbol 'fn_801FB9C8' --arg mode 'reloc-strict' '. as $root | $root.left.symbols[] | select(.name==$symbol) as $left | $root.right.symbols[] | select(.name==$symbol) as $right | \"symbol=\\($symbol) mode=\\($mode) retail_bytes=\\($left.size) generated_bytes=\\($right.size) match_percent=\\($left.match_percent) differing_instructions=\\([$left.instructions[] | select(.diff_kind != null)] | length)\"' build/GEDE01/session-2012-remediation-2-fn_801FB9C8-reloc-strict.json",
+      "raw_output": "symbol=fn_801FB9C8 mode=reloc-strict retail_bytes=12 generated_bytes=12 match_percent=100.0 differing_instructions=0"
+    }
+  },
+  "canonical_report": {
+    "command": "jq -r '.measures | \"matching_functions=\\(.matched_functions) matching_objects=\\(.complete_units) matching_code_bytes=\\(.matched_code) linked_code_bytes=\\(.complete_code) code_percent=\\(.matched_code_percent)\"' build/GEDE01/report.json",
+    "raw_output": "matching_functions=5495 matching_objects=5730 matching_code_bytes=923436 linked_code_bytes=923436 code_percent=40.137314"
+  },
+  "range_accounting": {
+    "command": "python3 -c 'import json; frontier=json.load(open(\"reports/GEDE01/session-2012-verification.json\")); matched=json.load(open(\"build/GEDE01/session-2012-remediation-2-fn_801FB9C8-canonical.json\")); nonmatching=json.load(open(\"build/GEDE01/session-2012-remediation-2-fn_801FB6A4-canonical.json\")); mb=int(next(x[\"size\"] for x in matched[\"left\"][\"symbols\"] if x[\"name\"]==\"fn_801FB9C8\")); nb=int(next(x[\"size\"] for x in nonmatching[\"left\"][\"symbols\"] if x[\"name\"]==\"fn_801FB6A4\")); rb=int(frontier[\"range_end\"],16)-int(frontier[\"range_start\"],16); print(f\"range_bytes={rb} matched_bytes={mb} nonmatching_bytes={nb} accounted_bytes={mb+nb} range_accounting_complete={str(rb==mb+nb).lower()}\")'",
+    "raw_output": "range_bytes=816 matched_bytes=12 nonmatching_bytes=804 accounted_bytes=816 range_accounting_complete=true"
+  },
+  "counter_delta_gate": {
+    "command": "previous_bytes=$(git show 78e549442:eternal-darkness-decomp/reports/GEDE01/progress.json | jq -r '.matching_code_bytes'); current_bytes=$(jq -r '.matching_code_bytes' reports/GEDE01/progress.json); node --input-type=module -e 'import { readFileSync } from \"node:fs\"; import { assessCounterDelta } from \"../scripts/decomp-recovery.mjs\"; const report=JSON.parse(readFileSync(\"reports/GEDE01/session-2012-verification.json\",\"utf8\")); console.log(JSON.stringify(assessCounterDelta(report,{previousBytes:Number(process.argv[1]),currentBytes:Number(process.argv[2])})))' \"$previous_bytes\" \"$current_bytes\"",
+    "raw_output": "{\"known\":true,\"claimedBytes\":12,\"actualBytes\":12,\"shortfallBytes\":0,\"shortfall\":false}"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'cmp_exit=%s\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "frontier": {
+    "command": "jq -r '\"next_target=\" + .next_target' reports/GEDE01/progress.json",
+    "raw_output": "next_target=0x801FB9D4"
+  },
+  "unretained_experiment_measurement": {
+    "status": "unverified",
+    "reason": "The reused-local-form objdiff output from remediation 1 was not retained under build/GEDE01, so this remediation does not repeat its reported percentage."
+  },
+  "progress_update": "not performed because fresh verification did not change canonical evidence or the honest frontier"
+}

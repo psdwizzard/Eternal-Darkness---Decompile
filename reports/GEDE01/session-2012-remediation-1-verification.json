@@ -1,0 +1,51 @@
+{
+  "session_id": "session-2012-remediation-1",
+  "scope": "Review remediation only; no frontier advancement or unrelated matching work.",
+  "load_hoist_experiment": {
+    "source_forms_tested": [
+      "named signed-short locals loaded from every packed field before the multiply",
+      "named float locals holding every converted packed-field load before the multiply",
+      "block-scoped named float declaration-initializers before the multiply",
+      "one named float local reused across the packed-field loads"
+    ],
+    "build_and_diff_command": ".tools/bin/ninja build/GEDE01/src/game/game_fn_801FB6A4.o && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FB6A4 -o build/GEDE01/session-2012-remediation-1-fn_801FB6A4.json --format json-pretty fn_801FB6A4",
+    "distinct_local_forms_raw_output": "retail_bytes=804 generated_bytes=804 match_percent=99.427864 differing_instructions=13",
+    "reused_local_form_raw_output": "retail_bytes=804 generated_bytes=804 match_percent=99.477615 differing_instructions=13",
+    "result": "The documented load-hoist lever did not improve this function. Each tested hoist retained the multiply operand mismatches and added relocation-label or conversion-register mismatches, so the better original size-exact C expression was restored."
+  },
+  "canonical_object_verification": {
+    "fn_801FB6A4_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FB6A4 -o build/GEDE01/remediation-fn_801FB6A4-canonical.json --format json-pretty fn_801FB6A4",
+    "fn_801FB6A4_raw_output": "retail_bytes=804 generated_bytes=804 match_percent=99.50249 differing_instructions=10",
+    "fn_801FB9C8_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FB9C8 -o build/GEDE01/remediation-fn_801FB9C8-canonical.json --format json-pretty fn_801FB9C8",
+    "fn_801FB9C8_raw_output": "retail_bytes=12 generated_bytes=12 match_percent=100.0 differing_instructions=0"
+  },
+  "relocation_strict_object_verification": {
+    "config": "function_reloc_diffs=name_address",
+    "fn_801FB6A4_command": "build/tools/objdiff-cli diff -p . -c function_reloc_diffs=name_address -u main/game/game_fn_801FB6A4 -o build/GEDE01/remediation-fn_801FB6A4-reloc-strict.json --format json-pretty fn_801FB6A4",
+    "fn_801FB6A4_raw_output": "retail_bytes=804 generated_bytes=804 match_percent=99.50249 differing_instructions=10",
+    "fn_801FB9C8_command": "build/tools/objdiff-cli diff -p . -c function_reloc_diffs=name_address -u main/game/game_fn_801FB9C8 -o build/GEDE01/remediation-fn_801FB9C8-reloc-strict.json --format json-pretty fn_801FB9C8",
+    "fn_801FB9C8_raw_output": "retail_bytes=12 generated_bytes=12 match_percent=100.0 differing_instructions=0"
+  },
+  "canonical_report": {
+    "generate_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+    "generate_raw_output": "INFO Loading project .\nINFO Generating report for 6765 units (using 8 threads)\nINFO Report generated in 0.165s\nINFO Writing to build/GEDE01/report.json",
+    "headline_command": "jq -r '.measures | \"matching_objects=\\(.complete_units) total_objects=\\(.total_units) matching_functions=\\(.matched_functions) total_functions=\\(.total_functions) matching_code_bytes=\\(.matched_code) total_code_bytes=\\(.total_code) matching_data_bytes=\\(.matched_data) total_data_bytes=\\(.total_data) code_percent=\\(.matched_code_percent) function_percent=\\(.matched_functions_percent) linked_code_bytes=\\(.complete_code) linked_data_bytes=\\(.complete_data)\"' build/GEDE01/report.json",
+    "headline_raw_output": "matching_objects=5730 total_objects=6765 matching_functions=5495 total_functions=8214 matching_code_bytes=923436 total_code_bytes=2300692 matching_data_bytes=39286 total_data_bytes=4305642 code_percent=40.137314 function_percent=66.89798 linked_code_bytes=923436 linked_data_bytes=39446",
+    "category_command": "jq -r '.categories[] | select(.id==\"game\") | .measures | \"game_code_matching_bytes=\\(.complete_code) game_code_total_bytes=\\(.total_code) game_code_linked_bytes=\\(.complete_code) game_matching_functions=\\(.matched_functions) game_total_functions=\\(.total_functions) game_matching_objects=\\(.complete_units) game_total_objects=\\(.total_units)\"' build/GEDE01/report.json; jq -r '.categories[] | select(.id==\"sdk\") | .measures | \"sdk_code_matching_bytes=\\(.complete_code) sdk_code_total_bytes=\\(.total_code) sdk_objects_complete=\\(.complete_units) sdk_objects_total=\\(.total_units)\"' build/GEDE01/report.json",
+    "category_raw_output": "game_code_matching_bytes=920408 game_code_total_bytes=1378644 game_code_linked_bytes=920408 game_matching_functions=5433 game_total_functions=6056 game_matching_objects=5712 game_total_objects=6335\nsdk_code_matching_bytes=3028 sdk_code_total_bytes=3028 sdk_objects_complete=18 sdk_objects_total=18"
+  },
+  "assembly_disclosure": {
+    "command": "jq -r '.session_2012.matched_functions[]' reports/GEDE01/progress.json | while read -r symbol; do rg -B1 -n \"start:0x${symbol#fn_}\" config/GEDE01/splits.txt | head -2; done; jq -r '.session_2012.matched_functions | \"session_matched_function_count=\\(length)\"' reports/GEDE01/progress.json",
+    "raw_output": "19657-game/game_fn_801FB9C8.s:\n19658:\t.text       start:0x801FB9C8 end:0x801FB9D4\nsession_matched_function_count=1",
+    "conclusion": "The session's sole exact-matching function is a standalone assembly TU; no C function reached exact match in the session."
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'cmp_exit=%s\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "frontier_verification": {
+    "command": "jq -r '\"next_target=\" + .next_target' reports/GEDE01/progress.json",
+    "raw_output": "next_target=0x801FB9D4",
+    "conclusion": "The frontier was not advanced."
+  }
+}
