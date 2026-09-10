@@ -9,17 +9,17 @@ typedef struct Owner {
 
 int fn_8006ECD4(Owner *owner, int id)
 {
-    int result;
     Entry *entry;
+    int i;
+    int result;
 
     result = -1;
-    entry = owner->entries[0];
-    if (entry != 0 && entry->id == id) {
-        result = 0;
-    } else if ((entry = owner->entries[1]) != 0 && entry->id == id) {
-        result = 1;
-    } else if ((entry = owner->entries[2]) != 0 && entry->id == id) {
-        result = 2;
+    for (i = 0; i < 3; i++) {
+        entry = owner->entries[i];
+        if (entry != 0 && entry->id == id) {
+            result = i;
+            break;
+        }
     }
     return result;
 }

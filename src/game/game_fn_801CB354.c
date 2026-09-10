@@ -1,42 +1,53 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
-typedef struct Object {
+typedef struct SYNTH_VOICE {
     u8 pad[0xF4];
-    u32 index;
-} Object;
+    u32 id;
+} SYNTH_VOICE;
 
 extern u8 lbl_8062A230[];
 
-void fn_801CB354(u8 selector, u32 destination_index, u32 source_index)
-{
-    u8 offset;
-    u8* source_row;
-    u8* destination_row;
+#define INP_MIDI_CTRL_GLOBAL_OFFSET 0x43C0
+#define INP_MIDI_CTRL_BANK_SIZE 0x86
 
-    destination_index = ((Object*)destination_index)->index;
-    source_index = ((Object*)source_index)->index;
-    if (selector < 0x40) {
-        source_row = lbl_8062A230 + source_index * 0x86;
-        destination_row = lbl_8062A230 + destination_index * 0x86;
-        offset = selector & 0x1F;
-        destination_row[0x43C0 + offset] = source_row[0x43C0 + offset];
-        destination_row[0x43E0 + offset] = source_row[0x43E0 + offset];
-    } else if ((u8)(selector - 0x80) <= 1) {
-        source_row = lbl_8062A230 + source_index * 0x86;
-        destination_row = lbl_8062A230 + destination_index * 0x86;
-        offset = selector & ~1;
-        destination_row[0x43C0 + offset] = source_row[0x43C0 + offset];
-        destination_row[0x43C1 + offset] = source_row[0x43C1 + offset];
-    } else if ((u8)(selector - 0x84) <= 1) {
-        source_row = lbl_8062A230 + source_index * 0x86;
-        destination_row = lbl_8062A230 + destination_index * 0x86;
-        offset = selector & ~1;
-        destination_row[0x43C0 + offset] = source_row[0x43C0 + offset];
-        destination_row[0x43C1 + offset] = source_row[0x43C1 + offset];
-    } else {
-        source_row = lbl_8062A230 + source_index * 0x86;
-        destination_row = lbl_8062A230 + destination_index * 0x86;
-        destination_row[0x43C0 + selector] = source_row[0x43C0 + selector];
+void fn_801CB354(u8 controller, SYNTH_VOICE* dstState, SYNTH_VOICE* srcState)
+{
+    u32 ctrl;
+    u32 dstVoice;
+    u32 srcVoice;
+    u8* stateBase;
+    u8* bank;
+
+    ctrl = controller & 0xff;
+    stateBase = lbl_8062A230;
+    dstVoice = dstState->id & 0xff;
+    srcVoice = srcState->id & 0xff;
+
+    if (ctrl < 0x40) {
+        ctrl = controller & 0x1f;
+        *(stateBase + INP_MIDI_CTRL_GLOBAL_OFFSET + dstVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl) =
+            *(stateBase + INP_MIDI_CTRL_GLOBAL_OFFSET + srcVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl);
+        bank = stateBase + INP_MIDI_CTRL_GLOBAL_OFFSET + 0x20;
+        *(bank + dstVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl) = *(bank + srcVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl);
+        return;
     }
+    if (controller == 0x80 || controller == 0x81) {
+        ctrl = controller & 0xfe;
+        *(stateBase + INP_MIDI_CTRL_GLOBAL_OFFSET + dstVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl) =
+            *(stateBase + INP_MIDI_CTRL_GLOBAL_OFFSET + srcVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl);
+        bank = stateBase + INP_MIDI_CTRL_GLOBAL_OFFSET + 1;
+        *(bank + dstVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl) = *(bank + srcVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl);
+        return;
+    }
+    if (controller == 0x84 || controller == 0x85) {
+        ctrl = controller & 0xfe;
+        *(stateBase + INP_MIDI_CTRL_GLOBAL_OFFSET + dstVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl) =
+            *(stateBase + INP_MIDI_CTRL_GLOBAL_OFFSET + srcVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl);
+        bank = stateBase + INP_MIDI_CTRL_GLOBAL_OFFSET + 1;
+        *(bank + dstVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl) = *(bank + srcVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl);
+        return;
+    }
+    *(stateBase + INP_MIDI_CTRL_GLOBAL_OFFSET + dstVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl) =
+        *(stateBase + INP_MIDI_CTRL_GLOBAL_OFFSET + srcVoice * INP_MIDI_CTRL_BANK_SIZE + ctrl);
 }

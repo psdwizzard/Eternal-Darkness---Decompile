@@ -13,7 +13,7 @@ commits are not visible here. This file is the durable record of who did what.
 
 ## Andrew ([@ateich](https://github.com/ateich))
 
-**363 functions, 99,304 matched code bytes.**
+**554 functions, 181,468 matched code bytes.**
 
 ### Script handlers and narrowed values ([#1](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/1), [#2](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/2), [#3](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/3)) — 6 functions, 7,488 bytes
 
@@ -318,3 +318,56 @@ matched work and are what this entry credits.
 | `fn_8014549C` | 696 |
 | `fn_800A509C` | 660 |
 | _71 more_ | 19,488 |
+
+### Control-flow, type, and data-ownership corrections ([#18](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/18)) — 53 functions, 21,140 bytes
+
+This batch reconciled source structure, interfaces, declarations, and compiler-
+generated data ownership across 53 game functions. Every promoted translation
+unit was independently rebuilt on the then-current tree and verified at 100%
+under strict relocation name/address comparison. The canonical matched and
+linked code totals rose by exactly 21,140 bytes with no regression, and the
+retail DOL SHA-1 remained unchanged. The integration commit carries Andrew's
+`Co-authored-by` trailer; this entry repairs the missing durable public credit.
+
+| Function | Bytes |
+| --- | ---: |
+| `fn_8004998C` | 1,256 |
+| `fn_8008F224` | 912 |
+| `fn_801AD08C` | 888 |
+| `fn_8013E714` | 840 |
+| `fn_8008D6E4` | 784 |
+| `fn_801A3A78` | 672 |
+| `fn_80140010` | 584 |
+| `fn_80140408` | 580 |
+| _45 more_ | 14,624 |
+
+### Source, compiler, and boundary corrections ([#19](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/19)) — 138 functions, 61,024 bytes
+
+The largest single function-count contribution so far spans game code, the MSL
+runtime, MetroTRK, and MusyX. It corrects interfaces, control flow, declaration
+lifetimes, structure layouts, MWCC versions and flags, guarded compiler-private
+data ownership, and two false function boundaries. Every credited function was
+reconciled onto the current tree and independently rechecked at 100% with
+`function_reloc_diffs=name_address`; the full build retained the retail DOL
+SHA-1.
+
+The canonical counter rises by 136 functions and 61,016 bytes rather than the
+138 functions and 61,024 bytes credited here. The eight-byte difference is the
+pair of standalone four-byte `blr` functions that the old split already counted
+as matching. PR #19 proves those instructions belong to `fn_801B9350` and
+`fn_801CDB2C`, removes the two false function/object boundaries, and matches the
+correct containing functions. The contributor credit therefore records all 138
+functions and 61,024 bytes of matching work; the aggregate correctly records
+the net structural change.
+
+| Function | Bytes |
+| --- | ---: |
+| `fn_801B2980` | 2,800 |
+| `fn_801B941C` | 2,168 |
+| `fn_801B6768` | 1,972 |
+| `fn_801B46C8` | 1,920 |
+| `fn_801B5228` | 1,736 |
+| `fn_801B6F1C` | 1,712 |
+| `fn_801CA7C0` | 1,488 |
+| `fn_801C87DC` | 1,252 |
+| _130 more_ | 45,976 |

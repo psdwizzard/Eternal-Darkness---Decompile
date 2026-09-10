@@ -12,7 +12,6 @@ void fn_801D7E70(int value, int flag)
 {
     Object* state;
     int object;
-    int mode;
 
     if (fn_80201814(value) != 0) {
         state = fn_80201B8C();
@@ -22,8 +21,7 @@ void fn_801D7E70(int value, int flag)
                 if (flag == 0) {
                     fn_801D7380(object);
                 }
-                mode = flag == 0;
-                fn_8020123C(0x39, object, object, mode);
+                fn_8020123C(0x39, object, object, !flag);
             }
         }
     }

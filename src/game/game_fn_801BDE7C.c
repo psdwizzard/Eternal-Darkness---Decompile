@@ -1,77 +1,99 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
+typedef signed int s32;
+typedef float f32;
+typedef unsigned long long u64;
 
-typedef struct StreamState {
+typedef struct McmdVoiceState {
     u8 pad_000[0xF4];
-    u32 channel;
-    u8 pad_0F8[0x20];
-    u32 flags_118;
+    u32 id;
+    u8 pad_0F8[0x1C];
+    u32 cFlagsHi;
+    u32 cFlagsLo;
     u8 pad_11C[0x13];
-    u8 scale_12F;
+    u8 orgNote;
     u8 pad_130[0x28];
-    u32 scale_158;
-} StreamState;
+    u32 orgVolume;
+} McmdVoiceState;
 
-typedef struct StreamCommand {
-    u32 resource;
-} StreamCommand;
+typedef struct McmdCommandArgs {
+    u32 flags;
+    u32 value;
+} McmdCommandArgs;
 
-typedef struct Packet {
-    u32 value_00;
-    u32 value_04;
-    u16 value_08;
-    u16 value_0A;
-    u32 adjust_0C;
-    u32 adjust_10;
-} Packet;
+typedef struct AdsrLinear {
+    u16 atime;
+    u16 dtime;
+    u16 slevel;
+    u16 rtime;
+} AdsrLinear;
 
-extern u8* fn_801BD08C(u16);
-extern void fn_801CC914(u8, Packet*, int);
-extern float lbl_80252F2C[];
+typedef struct AdsrDls {
+    u32 atime;
+    u32 dtime;
+    u16 slevel;
+    u16 rtime;
+    s32 ascale;
+    s32 dscale;
+} AdsrDls;
 
-static u16 swap16(u16 value)
+typedef union McmdAdsrData {
+    AdsrLinear linear;
+    AdsrDls dls;
+} McmdAdsrData;
+
+typedef struct ADSR_INFO {
+    McmdAdsrData data;
+} ADSR_INFO;
+
+extern void* fn_801BD08C(u16);
+extern void fn_801CC914(u8, McmdAdsrData*, int);
+extern f32 lbl_80252F2C[];
+
+#define dataGetCurve fn_801BD08C
+#define hwSetADSR fn_801CC914
+#define voiceAdsrSustainTable lbl_80252F2C
+#define MAC_CFLAGS(v) (*(u64*)&(v)->cFlagsHi)
+
+void fn_801BDE7C(McmdVoiceState* svoice, McmdCommandArgs* cstep)
 {
-    return (value >> 8) | (value << 8);
-}
+    s32 ascale;
+    s32 dscale;
+    McmdAdsrData adsr;
+    ADSR_INFO* adsr_ptr;
 
-static u32 load_be32(u8* value)
-{
-    return ((u32)value[0] << 24) | ((u32)value[1] << 16) |
-           ((u32)value[2] << 8) | value[3];
-}
+    if ((adsr_ptr = (ADSR_INFO*)dataGetCurve(cstep->flags >> 8)) != 0) {
+        if (!(u8)(cstep->flags >> 24)) {
+            adsr.linear.atime = adsr_ptr->data.linear.atime >> 8 | adsr_ptr->data.linear.atime << 8;
+            adsr.linear.dtime = adsr_ptr->data.linear.dtime >> 8 | adsr_ptr->data.linear.dtime << 8;
+            adsr.linear.slevel = adsr_ptr->data.linear.slevel >> 8 | adsr_ptr->data.linear.slevel << 8;
+            adsr.linear.rtime = adsr_ptr->data.linear.rtime >> 8 | adsr_ptr->data.linear.rtime << 8;
+            hwSetADSR(svoice->id & 0xFF, &adsr, 0);
+        } else {
+            f32 sScale = voiceAdsrSustainTable[(u16)(adsr_ptr->data.dls.slevel >> 8 | adsr_ptr->data.dls.slevel << 8) >> 5];
+            adsr.dls.atime = ((u8*)&adsr_ptr->data.dls.atime)[0] << 0 | ((u8*)&adsr_ptr->data.dls.atime)[1] << 8 |
+                             ((u8*)&adsr_ptr->data.dls.atime)[2] << 16 | ((u8*)&adsr_ptr->data.dls.atime)[3] << 24;
+            adsr.dls.dtime = ((u8*)&adsr_ptr->data.dls.dtime)[0] << 0 | ((u8*)&adsr_ptr->data.dls.dtime)[1] << 8 |
+                             ((u8*)&adsr_ptr->data.dls.dtime)[2] << 16 | ((u8*)&adsr_ptr->data.dls.dtime)[3] << 24;
+            adsr.dls.slevel = 4096.0f * sScale;
+            adsr.dls.rtime = adsr_ptr->data.dls.rtime >> 8 | adsr_ptr->data.dls.rtime << 8;
+            ascale = ((u8*)&adsr_ptr->data.dls.ascale)[0] << 0 | ((u8*)&adsr_ptr->data.dls.ascale)[1] << 8 |
+                     ((u8*)&adsr_ptr->data.dls.ascale)[2] << 16 | ((u8*)&adsr_ptr->data.dls.ascale)[3] << 24;
+            dscale = ((u8*)&adsr_ptr->data.dls.dscale)[0] << 0 | ((u8*)&adsr_ptr->data.dls.dscale)[1] << 8 |
+                     ((u8*)&adsr_ptr->data.dls.dscale)[2] << 16 | ((u8*)&adsr_ptr->data.dls.dscale)[3] << 24;
 
-void fn_801BDE7C(StreamState* state, StreamCommand* command)
-{
-    u8* source = fn_801BD08C(command->resource >> 8);
-    Packet packet;
+            if (ascale != 0x80000000) {
+                adsr.dls.atime += (s32)(1.1920928955078125e-7f * svoice->orgVolume * ascale);
+            }
 
-    if (source == 0) {
-        return;
-    }
+            if (dscale != 0x80000000) {
+                adsr.dls.dtime += (s32)(0.0078125f * svoice->orgNote * dscale);
+            }
 
-    if ((command->resource >> 24) == 0) {
-        u16* input = (u16*)source;
-        u16* output = (u16*)&packet;
-        output[0] = swap16(input[0]);
-        output[1] = swap16(input[1]);
-        output[2] = swap16(input[2]);
-        output[3] = swap16(input[3]);
-        fn_801CC914(state->channel, &packet, 0);
-    } else {
-        packet.value_00 = load_be32(source);
-        packet.value_04 = load_be32(source + 4);
-        packet.value_08 = (u16)(0.25f * lbl_80252F2C[swap16(*(u16*)(source + 8)) >> 3]);
-        packet.value_0A = swap16(*(u16*)(source + 10));
-        packet.adjust_0C = load_be32(source + 12);
-        packet.adjust_10 = load_be32(source + 16);
-        if (packet.adjust_0C != 0x80000000) {
-            packet.value_00 += (u32)(0.0000152587890625f * (float)packet.adjust_0C * (float)state->scale_158);
+            hwSetADSR(svoice->id & 0xFF, &adsr, 1);
         }
-        if (packet.adjust_10 != 0x80000000) {
-            packet.value_04 += (u32)(0.00390625f * (float)packet.adjust_10 * (float)state->scale_12F);
-        }
-        fn_801CC914(state->channel, &packet, 1);
+
+        MAC_CFLAGS(svoice) |= 0x100;
     }
-    state->flags_118 |= 0x100;
 }

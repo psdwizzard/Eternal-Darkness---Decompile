@@ -4,56 +4,56 @@ typedef unsigned int u32;
 
 typedef struct Block32 { u32 word[8]; } Block32;
 typedef struct Entry {
-    u8 pad00[0x18]; u32 arg8; u32 arg7; u32 pad20; u32 flags[19];
-    u16 value; u16 pad72; Block32 block; u8 pad94[0x10]; u8 byteA4;
-    u8 padA5[0x13]; u32 fieldB8; u32 fieldBC; u16 fieldC0;
-    u8 padC2[2]; u32 fieldC4; u8 padC8[0x1C]; u8 bytesE4[4];
-    u8 padE8[8]; u32 fieldF0;
+    u8 pad00[0x18]; u32 mesgCallBackUserValue; u32 prio; u32 pad20; u32 changed[19];
+    u16 smp_id; u16 pad72; Block32 smp_info; u8 pad94[0x10]; u8 adsrMode;
+    u8 padA5[0x13]; u32 aTime; u32 dTime; u16 sLevel;
+    u8 padC2[2]; u32 rTime; u8 padC8[0x1C]; u8 lastPitch; u8 lastVol; u8 lastVolA; u8 lastVolB;
+    u8 padE8[8]; u32 flags;
 } Entry;
 
-extern Entry* volatile lbl_8064D4AC;
+extern Entry* lbl_8064D4AC;
+#define dspVoice lbl_8064D4AC
+#define salTimeOffset lbl_8064D4D8
 extern u8 lbl_8064D4D8;
 extern void fn_801CCC10(u32, u32);
 extern void fn_801CCC3C(u32, u32);
 extern void fn_801CCC68(u32, u32);
 
-void fn_801CC718(u32 index, u16 value, Block32* source, u32 initialize,
-                 u32 arg7, u32 arg8, u32 configure, u32 arg10)
+void fn_801CC718(u32 voiceIndex, u16 sampleId, Block32* sampleInfo, u32 resetAdsr, u32 priority,
+                 u32 callbackUserValue, u32 resetSrc, u32 itdMode)
 {
-    u32 offset = 0;
-    u32 zero = offset;
-    u32 flags = 0;
-    u8 i = 0;
+    u8 timeOffset;
+    u32 breakFlags;
 
-    while (i <= lbl_8064D4D8) {
-        u8* cursor = (u8*)lbl_8064D4AC + offset;
-        u32* field = (u32*)(cursor + 0x24 + index * 0xF4);
-        flags |= *field & 0x20;
-        *field = zero;
-        offset += 4;
-        i++;
+    breakFlags = 0;
+    for (timeOffset = 0; timeOffset <= salTimeOffset; timeOffset++) {
+        breakFlags |= dspVoice[voiceIndex].changed[timeOffset] & 0x20;
+        dspVoice[voiceIndex].changed[timeOffset] = 0;
     }
 
-    lbl_8064D4AC[index].flags[0] = flags;
-    lbl_8064D4AC[index].arg7 = arg7;
-    lbl_8064D4AC[index].arg8 = arg8;
-    lbl_8064D4AC[index].fieldF0 = 0;
-    lbl_8064D4AC[index].value = value;
-    lbl_8064D4AC[index].block = *source;
-    if (initialize != 0) {
-        lbl_8064D4AC[index].byteA4 = 0;
-        lbl_8064D4AC[index].fieldB8 = 0;
-        lbl_8064D4AC[index].fieldBC = 0;
-        lbl_8064D4AC[index].fieldC0 = 0x7FFF;
-        lbl_8064D4AC[index].fieldC4 = 0;
+    dspVoice[voiceIndex].changed[0] = breakFlags;
+    dspVoice[voiceIndex].prio = priority;
+    dspVoice[voiceIndex].mesgCallBackUserValue = callbackUserValue;
+    dspVoice[voiceIndex].flags = 0;
+    dspVoice[voiceIndex].smp_id = sampleId;
+    dspVoice[voiceIndex].smp_info = *sampleInfo;
+
+    if (resetAdsr != 0) {
+        dspVoice[voiceIndex].adsrMode = 0;
+        dspVoice[voiceIndex].aTime = 0;
+        dspVoice[voiceIndex].dTime = 0;
+        dspVoice[voiceIndex].sLevel = 0x7fff;
+        dspVoice[voiceIndex].rTime = 0;
     }
-    lbl_8064D4AC[index].bytesE4[0] = 0xFF;
-    lbl_8064D4AC[index].bytesE4[1] = 0xFF;
-    lbl_8064D4AC[index].bytesE4[2] = 0xFF;
-    lbl_8064D4AC[index].bytesE4[3] = 0xFF;
-    if (configure != 0) {
-        fn_801CCC10(index, 0);
-        fn_801CCC3C(index, 1);
+
+    dspVoice[voiceIndex].lastPitch = 0xff;
+    dspVoice[voiceIndex].lastVol = 0xff;
+    dspVoice[voiceIndex].lastVolA = 0xff;
+    dspVoice[voiceIndex].lastVolB = 0xff;
+
+    if (resetSrc != 0) {
+        fn_801CCC10(voiceIndex, 0);
+        fn_801CCC3C(voiceIndex, 1);
     }
-    fn_801CCC68(index, arg10);
+    fn_801CCC68(voiceIndex, itdMode);
 }

@@ -1,60 +1,86 @@
+typedef unsigned char u8;
 typedef unsigned short u16;
+typedef unsigned int u32;
+typedef int s32;
 
-typedef struct Bucket {
-    u16 count;
-    u16 start;
-} Bucket;
+typedef struct SDIR_TAB {
+    void* data;
+    void* base;
+    u16 numSmp;
+    u16 res;
+} SDIR_TAB;
 
-typedef struct ResourceEntry8 {
-    void* value;
+typedef struct DATA_TAB {
+    void* addr;
     u16 id;
-    u16 references;
-} ResourceEntry8;
+    u16 refCount;
+} DATA_TAB;
 
-extern unsigned char lbl_8061C748[];
+typedef struct LAYER_TAB {
+    void* addr;
+    u16 id;
+    u16 refCount;
+    u32 numEntries;
+} LAYER_TAB;
+
+typedef struct MAC_MAINTAB {
+    u16 num;
+    u16 subTabIndex;
+} MAC_MAINTAB;
+
+typedef struct MAC_SUBTAB {
+    void* data;
+    u16 id;
+    u16 refCount;
+} MAC_SUBTAB;
+
+static SDIR_TAB dataSmpSDirs[128];
+static DATA_TAB dataCurveTable[2048];
+static DATA_TAB dataKeymapTable[256];
+static LAYER_TAB dataLayerTable[256];
+static MAC_MAINTAB dataMacroBucketTable[512];
+static MAC_SUBTAB dataMacroTable[2048];
+
 extern u16 lbl_8064D3F8;
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
 
-int fn_801BCC04(u16 id)
-{
-    unsigned char* base = lbl_8061C748;
-    Bucket* bucket;
-    fn_801CE2B8();
-    if (((Bucket*)(base + 0x5A00))[id >> 6].count != 0) {
-        int bucket_start;
-        int bucket_count;
-        int index;
-        int entry_index;
-        int cursor;
+#define dataMacTotal lbl_8064D3F8
+#define sndBegin fn_801CE2B8
+#define sndEnd fn_801CE280
 
-        bucket = &((Bucket*)(base + 0x5A00))[id >> 6];
-        bucket_start = bucket->start;
-        bucket_count = bucket->count;
-        index = 0;
-        while (index < bucket_count &&
-               id != ((ResourceEntry8*)(base + 0x6200))[bucket_start + index].id) {
-            index++;
+s32 fn_801BCC04(u16 mid)
+{
+    s32 main;
+    s32 base;
+    s32 i;
+
+    sndBegin();
+    main = (mid >> 6) & 0x3ff;
+
+    if (dataMacroBucketTable[main].num != 0) {
+        base = dataMacroBucketTable[main].subTabIndex;
+        for (i = 0; i < dataMacroBucketTable[main].num && mid != dataMacroTable[base + i].id; ++i) {
         }
-        if (index < bucket_count) {
-            entry_index = bucket_start + index;
-            if (--((ResourceEntry8*)(base + 0x6200))[entry_index].references == 0) {
-                cursor = entry_index + 1;
-                bucket_count = lbl_8064D3F8;
-                for (; cursor < bucket_count; cursor++) {
-                    ((ResourceEntry8*)(base + 0x6200))[cursor - 1] =
-                        ((ResourceEntry8*)(base + 0x6200))[cursor];
+
+        if (i < dataMacroBucketTable[main].num) {
+            if (--dataMacroTable[base + i].refCount == 0) {
+                for (i = base + i + 1; i < dataMacTotal; ++i) {
+                    dataMacroTable[i - 1] = dataMacroTable[i];
                 }
-                for (index = 0; index < 0x200; index++) {
-                    if (((Bucket*)(base + 0x5A00))[index].start > bucket_start) {
-                        ((Bucket*)(base + 0x5A00))[index].start--;
+
+                for (i = 0; i < 512; ++i) {
+                    if (dataMacroBucketTable[i].subTabIndex > base) {
+                        --dataMacroBucketTable[i].subTabIndex;
                     }
                 }
-                bucket->count--;
-                lbl_8064D3F8--;
+
+                --dataMacroBucketTable[main].num;
+                --dataMacTotal;
             }
         }
     }
-    fn_801CE280();
+
+    sndEnd();
     return 0;
 }

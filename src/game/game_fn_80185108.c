@@ -9,11 +9,11 @@ void fn_80185108(u8* self)
 {
     u8 value[4];
     u8* saved_self;
+    int count;
     s16 current;
     int index;
     u8* entry;
     u8* position;
-    int count;
 
     saved_self = self;
     position = saved_self + 0x8C;

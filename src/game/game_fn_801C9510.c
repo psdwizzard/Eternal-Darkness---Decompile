@@ -40,13 +40,26 @@ extern void fn_801CE280(void);
 extern void fn_801CA538(Vec3*, Vec3*, Vec3*);
 extern void fn_801CA59C(float*, float*);
 
+static inline void ReleaseTarget(Target* target)
+{
+    u32 count = 0;
+    Voice* cursor = lbl_8064D4C0;
+    while (cursor != 0) {
+        if (cursor->target == target) {
+            count++;
+        }
+        cursor = cursor->previous;
+    }
+    if (count == 1) {
+        target->flags &= 0x7FFFFFFF;
+        target->flags |= 0x40000000;
+    }
+}
+
 int fn_801C9510(Voice* voice, Vec3* position, Vec3* velocity, Vec3* direction,
                 Vec3* up, u8 level, Target* target)
 {
     float transform[12];
-    Voice* cursor;
-    u32 count;
-    Target* previous;
 
     if (lbl_8064D3A0 != 0) {
         fn_801CE2B8();
@@ -71,26 +84,16 @@ int fn_801C9510(Voice* voice, Vec3* position, Vec3* velocity, Vec3* direction,
         fn_801CA59C(voice->matrix, transform);
         voice->level = (float)level / lbl_80650FD0;
 
-        previous = voice->target;
-        if (target != previous) {
-            if (previous != 0) {
-                cursor = lbl_8064D4C0;
-                count = 0;
-                while (cursor != 0) {
-                    if (cursor->target == previous) {
-                        count++;
-                    }
-                    cursor = cursor->previous;
-                }
-                if (count == 1) {
-                    previous->flags &= 0x7FFFFFFF;
-                    previous->flags |= 0x40000000;
-                }
+        if (target != voice->target) {
+            if (voice->target != 0) {
+                ReleaseTarget(voice->target);
             }
             voice->target = target;
-            if (target != 0 && (target->flags & 0x80000000) == 0 &&
-                target->object == 0) {
-                target->flags |= 0x80000000;
+            if (target != 0) {
+                Target* current = voice->target;
+                if ((current->flags & 0x80000000) == 0 && current->object == 0) {
+                    current->flags |= 0x80000000;
+                }
             }
         }
         fn_801CE280();

@@ -1,90 +1,92 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
+typedef signed int s32;
 typedef unsigned long long u64;
 
-typedef struct Resource {
-    u32 value0;
-    u32 value4;
-    u32 value8;
-    u32 valueC;
-    u32 value10;
-    u32 value14;
-    u32 value18;
-    u8 value1C;
-} Resource;
+typedef struct SAMPLE_INFO {
+    u32 info;
+    u32 addr;
+    void* extraData;
+    u32 offset;
+    u32 length;
+    u32 loop;
+    u32 loopLength;
+    u8 compType;
+} SAMPLE_INFO;
 
 #pragma pack(4)
-typedef struct StreamState {
+typedef struct SYNTH_VOICE {
     u8 pad_000[0xF4];
-    u32 kind;
+    u32 id;
     u8 pad_0F8[0x14];
-    u8 channel;
+    u8 prio;
     u8 pad_10D[3];
-    u32 flags_110;
-    u64 flags;
+    u32 age;
+    u64 cflags;
     u8 pad_11C[8];
-    u32 value_124;
-    u32 channel_128;
+    u32 sInfo;
+    u32 playFrq;
     u8 pad_12C[0x28];
-    u32 parameter_154;
+    u32 volume;
     u8 pad_158[0x3B];
-    u8 flag_193;
-} StreamState;
+    u8 itdMode;
+} SYNTH_VOICE;
 #pragma pack()
 
-typedef struct StreamCommand {
-    u32 flags;
-    u32 value;
-} StreamCommand;
+typedef struct MSTEP {
+    u32 para1;
+    u32 para2;
+} MSTEP;
 
-extern Resource lbl_80626D80;
-extern int fn_801BCF54(u16, Resource*);
-extern void fn_801BDCEC(StreamState*);
-extern void fn_801B7954(StreamState*);
-extern void fn_801CC718(u8, u16, Resource*, int, u32, u32, int, u8);
+extern s32 fn_801BCF54(u16, SAMPLE_INFO*);
+extern void fn_801BDCEC(SYNTH_VOICE*);
+extern void fn_801B7954(SYNTH_VOICE*);
+extern void fn_801CC718(u32, u16, SAMPLE_INFO*, u32, u32, u32, u32, u32);
 
-void fn_801BD990(StreamState* state, StreamCommand* command)
+
+void fn_801BD990(SYNTH_VOICE* svoice, MSTEP* cstep)
 {
-    Resource* resource;
-    u32 id;
+    static SAMPLE_INFO newsmp;
+    u16 smp;
 
-    id = (command->flags >> 8) & 0xFFFF;
-    resource = &lbl_80626D80;
+    smp = cstep->para1 >> 8;
 
-    if (fn_801BCF54(id, resource) == 0) {
-        switch (command->flags >> 24) {
-        case 0:
-            resource->valueC = command->value;
-            break;
-        case 1:
-            resource->valueC = command->value *
-                (u8)(127 - (state->parameter_154 >> 16)) / 127;
-            break;
-        case 2:
-            resource->valueC = command->value *
-                (u8)(state->parameter_154 >> 16) / 127;
-            break;
-        default:
-            resource->valueC = 0;
-            break;
-        }
-
-        if (resource->valueC >= resource->value10) {
-            resource->valueC = resource->value10 - 1;
-        }
-
-        fn_801CC718((u8)state->kind, id, resource,
-                    (state->flags & 0x100) == 0,
-                    (state->flags_110 >> 15) | ((u32)state->channel << 24),
-                    state->kind,
-                    (state->flags & 0x80000000000ULL) == 0,
-                    state->flag_193);
-        state->value_124 = resource->value0;
-        if (state->channel_128 != -1) {
-            fn_801BDCEC(state);
-        }
-        state->flags |= 0x20;
-        fn_801B7954(state);
+    if (fn_801BCF54(smp, &newsmp) != 0) {
+        return;
     }
+    switch ((u8)(cstep->para1 >> 0x18)) {
+    case 0:
+        newsmp.offset = cstep->para2;
+        break;
+    case 1:
+        newsmp.offset = ((u8)(0x7f - (svoice->volume >> 0x10)) * cstep->para2) / 0x7f;
+        break;
+    case 2:
+        newsmp.offset = ((u8)(svoice->volume >> 0x10) * cstep->para2) / 0x7f;
+        break;
+    default:
+        newsmp.offset = 0;
+        break;
+    }
+
+    {
+        u32 length = newsmp.length;
+        u32* offset = &newsmp.offset;
+        if (*offset >= length) {
+            *offset = length - 1;
+        }
+    }
+
+    fn_801CC718(svoice->id & 0xFF, smp, &newsmp, (svoice->cflags & 0x100) == 0,
+                ((u32)svoice->prio << 24) | (svoice->age >> 15), svoice->id,
+                (svoice->cflags & 0x80000000000ULL) == 0, svoice->itdMode);
+
+    svoice->sInfo = newsmp.info;
+
+    if (svoice->playFrq != 0xffffffff) {
+        fn_801BDCEC(svoice);
+    }
+    svoice->cflags |= 0x20;
+    fn_801B7954(svoice);
 }

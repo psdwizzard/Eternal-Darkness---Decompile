@@ -1,7 +1,11 @@
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-typedef struct Record { unsigned char pad[0x28]; u32 value; unsigned char tail[0x30]; } Record;
+typedef struct Record {
+    unsigned char pad[0x28];
+    u32 value;
+    unsigned char tail[0x30];
+} Record;
 
 extern int lbl_8064D17C;
 extern void* lbl_8064D18C;
@@ -40,15 +44,19 @@ void fn_8015BCB0(void)
     if (record_count != 0) {
         u16* record_output;
         int record_limit;
+        int remaining;
+
         records = fn_8015C3E0(2);
         record_output = values + used;
         record_limit = lbl_8064D17C;
-        for (i = 0; i < record_count; i++) {
+        remaining = record_count;
+        while (remaining > 0) {
             if (used < record_limit) {
                 *record_output++ = records->value;
                 used++;
             }
             records++;
+            remaining--;
         }
     }
     fn_80159F34(lbl_8064D18C, used, values);

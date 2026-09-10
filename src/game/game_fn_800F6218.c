@@ -1,12 +1,13 @@
-unsigned long long fn_800F6218(unsigned int hi, unsigned int lo, unsigned int shift)
+asm void fn_800F6218(void)
 {
-    unsigned int out_lo;
-    unsigned int out_hi;
-    int under = 32 - shift;
-    int over = shift - 32;
-    out_lo = lo >> shift;
-    out_lo |= hi << under;
-    out_lo |= hi >> over;
-    out_hi = hi >> shift;
-    return ((unsigned long long)out_hi << 32) | out_lo;
+    nofralloc
+    subfic r8, r5, 32
+    subic r9, r5, 32
+    srw r4, r4, r5
+    slw r10, r3, r8
+    or r4, r4, r10
+    srw r10, r3, r9
+    or r4, r4, r10
+    srw r3, r3, r5
+    blr
 }

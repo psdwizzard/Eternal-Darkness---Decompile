@@ -1,39 +1,39 @@
 {
   "status": "in progress",
-  "matching_objects": 5585,
-  "total_objects": 6750,
-  "matching_functions": 5350,
-  "total_functions": 8216,
-  "matching_code_bytes": 860596,
+  "matching_objects": 5721,
+  "total_objects": 6748,
+  "matching_functions": 5486,
+  "total_functions": 8214,
+  "matching_code_bytes": 921612,
   "total_code_bytes": 2300692,
-  "matching_data_bytes": 38690,
+  "matching_data_bytes": 39286,
   "total_data_bytes": 4305642,
-  "code_percent": 37.40596,
-  "function_percent": 65.116844,
-  "linked_code_bytes": 860596,
-  "linked_data_bytes": 38238,
-  "game_code_matching_bytes": 857568,
+  "code_percent": 40.058033,
+  "function_percent": 66.788414,
+  "linked_code_bytes": 921612,
+  "linked_data_bytes": 39446,
+  "game_code_matching_bytes": 918584,
   "game_code_total_bytes": 1374380,
-  "game_code_linked_bytes": 857568,
+  "game_code_linked_bytes": 918584,
   "sdk_code_matching_bytes": 3028,
   "sdk_code_total_bytes": 3028,
   "sdk_objects_complete": 18,
   "sdk_objects_total": 18,
   "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
-  "source": "canonical objdiff scorer basis regenerated during session-2004 from the fresh 6750-unit object graph; exact-link measures are recorded separately",
+  "source": "canonical objdiff scorer basis regenerated while landing PR #19 from the fresh 6748-unit object graph; exact-link measures are recorded separately",
   "headline_measurement_basis": {
     "config": "canonical default with no extra -c config",
     "report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
-    "raw_output": "matching_objects=5585 total_objects=6750 matching_functions=5350 total_functions=8216 matching_code_bytes=860596 total_code_bytes=2300692 matching_data_bytes=38690 total_data_bytes=4305642 code_percent=37.40596 function_percent=65.116844 linked_code_bytes=860596 linked_data_bytes=38238"
+    "raw_output": "matching_objects=5721 total_objects=6748 matching_functions=5486 total_functions=8214 matching_code_bytes=921612 total_code_bytes=2300692 matching_data_bytes=39286 total_data_bytes=4305642 code_percent=40.058033 function_percent=66.788414 linked_code_bytes=921612 linked_data_bytes=39446"
   },
   "derived_measurement": {
     "config": "canonical default with no extra -c config",
     "report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
-    "raw_output": "generated fresh report for 6750 units"
+    "raw_output": "generated fresh report for 6748 units"
   },
   "category_measurement": {
     "command": "read category measures from canonical report",
-    "raw_output": "linked_code_bytes=860596 linked_data_bytes=38238 game_code_matching_bytes=857568 game_code_total_bytes=1374380 game_code_linked_bytes=857568 game_code_score_link_gap=0 sdk_code_matching_bytes=3028 sdk_code_total_bytes=3028 sdk_objects_complete=18 sdk_objects_total=18"
+    "raw_output": "linked_code_bytes=921612 linked_data_bytes=39446 game_code_matching_bytes=918584 game_code_total_bytes=1374380 game_code_linked_bytes=918584 game_code_score_link_gap=0 sdk_code_matching_bytes=3028 sdk_code_total_bytes=3028 sdk_objects_complete=18 sdk_objects_total=18"
   },
   "dol_sha1_measurement": {
     "command": "sha1sum and cmp build and retail DOL",
@@ -287,15 +287,15 @@
   },
   "relocation_strict": {
     "config": "function_reloc_diffs=name_address",
-    "scope": "session-2004 aggregate relocation-strict accounting regenerated from the 6750-unit object graph",
-    "generate_command": "build/tools/objdiff-cli report generate -p . -c function_reloc_diffs=name_address -o reports/GEDE01/session-2004-reloc-strict.json",
-    "raw_output": "strict matching_functions=5345 total_functions=8216 matching_code_bytes=858912 total_code_bytes=2300692 code_percent=37.332767 linked_code_bytes=860596 linked_data_bytes=38238",
-    "matching_functions": 5345,
-    "matching_code_bytes": 858912,
+    "scope": "PR #19 aggregate relocation-strict accounting regenerated from the 6748-unit object graph",
+    "generate_command": "build/tools/objdiff-cli report generate -p . -c function_reloc_diffs=name_address -o build/GEDE01/pr19-reloc-strict.json",
+    "raw_output": "strict matching_functions=5481 total_functions=8214 matching_code_bytes=919928 total_code_bytes=2300692 code_percent=39.98484 linked_code_bytes=921612 linked_data_bytes=39446",
+    "matching_functions": 5481,
+    "matching_code_bytes": 919928,
     "total_code_bytes": 2300692,
-    "code_percent": 37.332767,
-    "linked_code_bytes": 860596,
-    "linked_data_bytes": 38238
+    "code_percent": 39.98484,
+    "linked_code_bytes": 921612,
+    "linked_data_bytes": 39446
   },
   "session_1799_direct_measurement": {
     "command": "jq direct-diff counts from reports/GEDE01/fn_801D1F78-session-1799-canonical.json; jq relocation counts from reports/GEDE01/fn_801D1F78-session-1799-reloc-strict.json; cmp the two direct reports",
@@ -5778,6 +5778,37 @@
     "source_head": "089fee7225258db9013a7948f590f05913eb8e55",
     "source_base": "712847d6fa050bb9b29c2168cc048295c9f8ca7e",
     "landed_by": "Revere halt recovery 1d3536599ddf915a-7 attempt 1"
+  },
+  "pr_landing_2026_09_09": {
+    "prs": [
+      19
+    ],
+    "contributor": "ateich",
+    "functions_credited": 138,
+    "code_bytes_credited": 61024,
+    "source_objects_promoted": 138,
+    "from": {
+      "matching_objects": 5585,
+      "total_objects": 6750,
+      "matching_functions": 5350,
+      "total_functions": 8216,
+      "matching_code_bytes": 860596,
+      "linked_code_bytes": 860596
+    },
+    "to": {
+      "matching_objects": 5721,
+      "total_objects": 6748,
+      "matching_functions": 5486,
+      "total_functions": 8214,
+      "matching_code_bytes": 921612,
+      "linked_code_bytes": 921612
+    },
+    "counter_note": "PR #19 matches 138 functions and 61024 retail code bytes. The canonical aggregates rise by 136 functions and 61016 bytes because the two false four-byte functions fn_801B9418 and fn_801CDBF0 were already counted as matching; the PR correctly merges those blr instructions into fn_801B9350 and fn_801CDB2C and removes the false function and object boundaries.",
+    "verification": "All 138 credited functions received fresh direct objdiff verification with function_reloc_diffs=name_address after reconciliation onto the current tree. Every function is 100 percent with equal retail/generated size and strict relocation comparison. A fresh full build completed at 921612 matched and linked code bytes, and the whole-DOL SHA-1 remains ea24b6af954876ce072562ff39cdb4c81d32be1f.",
+    "evidence": "reports/GEDE01/pr19-current-tree-verification.json",
+    "source_head": "1cb759e41d54840a589304425fb249d34bc72ff5",
+    "integration_base_head": "6934f5125",
+    "landed_by": "Smith"
   },
   "session_1862": {
     "status": "complete",

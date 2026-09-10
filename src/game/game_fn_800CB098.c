@@ -42,14 +42,12 @@ int fn_800CB098(s8 kind, s8 subtype, int state, int owner, int dispatch,
             int subtype_matches = subtype == -1 ? 1 : wanted_subtype == runtime->subtype;
             int state_matches = state == -1 ? 1 : state == runtime->state;
 
-            owner_matches = owner == -1 ? 1 :
-                (owner == object_owner && object_owner != -1);
+            owner_matches = owner == -1 ? 1 : (owner == object_owner && object_owner != -1) != 0;
             if (kind_matches && subtype_matches && state_matches && owner_matches) {
                 u32 handle = ((u32)fn_80201B54(object));
                 int accepted;
                 if (dispatch != 0) {
-                    accepted = (int)(fn_8020123C(59, 0, handle, 0) &
-                                     0xFFFFFFFFULL);
+                    accepted = (unsigned int)(fn_8020123C(59, 0, handle, 0) & 0xFFFFFFFF);
                 } else {
                     accepted = 1;
                 }

@@ -61,9 +61,9 @@ void* fn_801D6B44(u32 object_id, void* first, void* second, int index,
                 if (enable == 0) descriptor.flags &= 0xFFFFFF7FU;
                 fn_801D3CAC(type, 0, params);
                 params[3] = main17;
+                params[4] = main18;
                 descriptor.bytes[0x19] = 0x40;
                 params[2] = main16;
-                params[4] = main18;
                 owner = fn_80148300(list, &descriptor, work);
                 if (owner != 0) {
                     failed = 0;

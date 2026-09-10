@@ -1,43 +1,36 @@
-typedef signed char s8;
 typedef unsigned char u8;
-typedef int s32;
 
-extern u8 lbl_8032CC08[];
+static u8 clipTable[0x200];
+static int divTable[0x10];
+static int mcdivTable[0x200];
+
+static inline int saturate(int x)
+{
+    if (x < 0) {
+        return 0;
+    } else if (x > 0xFF) {
+        return 0xFF;
+    } else {
+        return x;
+    }
+}
 
 void fn_8010242C(void)
 {
-    s32 i;
-    s32 value;
-    u8* clamp;
-    s32* quantized;
-    s32* reciprocal;
+    int i;
+    int n;
 
-    clamp = lbl_8032CC08;
-    for (i = -128; i < 384; i++) {
-        if (i < 0) {
-            value = 0;
-        } else {
-            if (i <= 255) {
-                value = i;
-            } else {
-                value = 255;
-            }
-        }
-        *clamp++ = value;
+    for (i = 0, n = -0x80; i < 0x200; i++, n++) {
+        clipTable[i] = saturate(n);
     }
 
-    quantized = (s32*)(lbl_8032CC08 + 0x200);
-    for (i = 0; i < 16; i++) {
-        if (i == 0) {
-            quantized[i] = 0;
-        } else {
-            quantized[i] = (4096 / (i << 4)) << 4;
-        }
+    divTable[0] = 0;
+    for (i = 1; i < 0x10; i++) {
+        divTable[i] = 0x1000 / (i * 16) * 16;
     }
 
-    reciprocal = (s32*)(lbl_8032CC08 + 0x240);
-    reciprocal[0] = 0;
-    for (i = 1; i < 512; i++) {
-        reciprocal[i] = 4096 / i;
+    mcdivTable[0] = 0;
+    for (i = 1; i < 0x200; i++) {
+        mcdivTable[i] = 0x1000 / i;
     }
 }

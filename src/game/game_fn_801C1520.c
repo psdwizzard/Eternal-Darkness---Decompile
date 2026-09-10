@@ -2,67 +2,73 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-typedef struct VoiceLink {
-    u8 previous;
+typedef struct SynthVoiceListNode {
+    u8 prev;
     u8 next;
-    u16 active;
-} VoiceLink;
+    u16 user;
+} SynthVoiceListNode;
 
-typedef struct GroupLink {
-    u16 previous;
+typedef struct SynthRootListNode {
     u16 next;
-} GroupLink;
+    u16 prev;
+} SynthRootListNode;
 
-typedef struct Voice {
+typedef struct VidListTables {
+    u8 vidLists[0x800];
+    u8 midiKeySlots[0x80];
+    u8 directSlots[0x40];
+    SynthVoiceListNode priorityLinks[0x40];
+    u8 priorityGroupHeads[0x100];
+    SynthRootListNode prioritySortLinks[0x100];
+    SynthVoiceListNode freeList[0x40];
+} VidListTables;
+
+typedef struct SYNTH_VOICE {
     u8 pad_000[0xF4];
-    u32 index;
+    u32 id;
     u8 pad_0F8[0x14];
-    u8 group;
-} Voice;
+    u8 prio;
+    u8 pad_10D[3];
+    u32 age;
+} SYNTH_VOICE;
 
-typedef struct VoiceState {
-    u8 pad_000[0x8C0];
-    VoiceLink links[64];
-    u8 heads[256];
-    GroupLink groups[64];
-} VoiceState;
-
-extern VoiceState lbl_80626DA0;
+extern VidListTables lbl_80626DA0;
 extern u16 lbl_8064D464;
 
-void fn_801C1520(Voice* voice)
-{
-    VoiceLink* link;
-    VoiceState* state;
-    GroupLink* group;
-    u16 active;
+#define vidList (&lbl_80626DA0)
+#define voicePrioSortedRoot lbl_8064D464
+#define offsetof(type, member) ((u32)&((type*)0)->member)
 
-    state = &lbl_80626DA0;
-    link = (VoiceLink*)((u8*)state + (u8)voice->index * 4);
-    active = *(u16*)((u8*)link + 0x8C2);
-    link = (VoiceLink*)((u8*)link + 0x8C0);
-    if (active != 1) {
+void fn_801C1520(SYNTH_VOICE* s)
+{
+    VidListTables* vb;
+    SynthVoiceListNode* vps;
+    SynthRootListNode* pr;
+
+    vb = (VidListTables*)vidList;
+    vps = &((SynthVoiceListNode*)((u8*)vb + offsetof(VidListTables, priorityLinks)))[s->id & 0xff];
+    if (vps->user != 1) {
         return;
     }
-    if (link->previous != 0xFF) {
-        state->links[link->previous].next = link->next;
+    if (vps->prev != 0xff) {
+        vb->priorityLinks[vps->prev].next = vps->next;
     } else {
-        state->heads[voice->group] = link->next;
+        vb->priorityGroupHeads[s->prio] = vps->next;
     }
-
-    if (link->next != 0xFF) {
-        state->links[link->next].previous = link->previous;
-    } else if (link->previous == 0xFF) {
-        group = &state->groups[voice->group];
-        if (group->next != 0xFFFF) {
-            state->groups[group->next].previous = group->previous;
+    if (vps->next != 0xff) {
+        vb->priorityLinks[vps->next].prev = vps->prev;
+    } else if (vps->prev == 0xff) {
+        u32 prevv;
+        pr = &((SynthRootListNode*)((u8*)vb + offsetof(VidListTables, prioritySortLinks)))[s->prio];
+        prevv = pr->prev;
+        if (prevv != 0xffff) {
+            vb->prioritySortLinks[prevv].next = pr->next;
         } else {
-            lbl_8064D464 = group->previous;
+            voicePrioSortedRoot = pr->next;
         }
-        if (group->previous != 0xFFFF) {
-            state->groups[group->previous].next = group->next;
+        if (pr->next != 0xffff) {
+            vb->prioritySortLinks[pr->next].prev = pr->prev;
         }
     }
-
-    link->active = 0;
+    vps->user = 0;
 }

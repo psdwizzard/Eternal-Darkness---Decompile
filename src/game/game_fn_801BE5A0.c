@@ -2,75 +2,66 @@ typedef unsigned char u8;
 typedef signed char s8;
 typedef unsigned short u16;
 typedef unsigned int u32;
-typedef unsigned long long u64;
+typedef signed int s32;
 
-#pragma pack(4)
-typedef struct StreamState {
-    u8 pad_000[0x114];
-    u64 flags_114;
-    u8 pad_11C[5];
-    u8 channel_121;
-    u8 subchannel_122;
-    u8 pad_123[9];
-    u16 value_12C;
-    s8 signed_12E;
-    u8 pad_12F[0xE5];
-    u32 flags_214;
-} StreamState;
-#pragma pack()
+typedef struct McmdVoiceState {
+    u8 pad000[0x121];
+    u8 midi;
+    u8 midiSet;
+    u8 pad123[9];
+    u16 curNote;
+    s8 curDetune;
+} McmdVoiceState;
 
-typedef struct StreamCommand {
-    u32 value;
+typedef struct McmdCommandArgs {
     u32 flags;
-} StreamCommand;
+    u32 value;
+} McmdCommandArgs;
 
-extern u32 fn_801CC2E4(void);
-extern int fn_801C267C(StreamState*);
+extern u16 fn_801CC2E4(void);
+extern u32 fn_801C267C(McmdVoiceState*);
 extern void fn_801CB470(u8, u8, u8);
-extern int fn_801BD398(StreamState*, StreamCommand*);
+extern void fn_801BD398(McmdVoiceState*, McmdCommandArgs*);
 
-void fn_801BE5A0(StreamState* state, StreamCommand* command)
+void fn_801BE5A0(McmdVoiceState* state, McmdCommandArgs* args)
 {
-    u32 low;
-    u32 high;
-    StreamCommand* cmd;
-    StreamState* stream;
-    int pan;
+    u8 tmp;
+    s32 rangeHi;
+    s32 rangeLo;
+    u8 detune;
+    u8 keyLo;
+    u8 keyHi;
 
-    cmd = command;
-    stream = state;
-
-    if (((command->flags >> 8) & 0xFF) == 0) {
-        low = command->value >> 24;
-        high = (command->value >> 8) & 0xFF;
-        if (low > high) {
-            u32 temporary = low;
-            low = high;
-            high = temporary;
+    if (((args->value >> 8) & 0xff) == 0) {
+        keyHi = args->flags >> 0x18;
+        keyLo = args->flags >> 8;
+        detune = args->flags >> 0x18;
+        if (((args->flags >> 8) & 0xff) > detune) {
+            tmp = keyLo;
+            keyLo = keyHi;
+            keyHi = tmp;
         }
     } else {
-        int lower = stream->value_12C - ((command->value >> 8) & 0xFF);
-        int upper = stream->value_12C + (command->value >> 24);
-        low = lower < 0 ? 0 : (lower > 0x7F ? 0x7F : lower);
-        high = upper < 0 ? 0 : (upper > 0x7F ? 0x7F : upper);
+        rangeLo = state->curNote;
+        rangeLo -= (s32)((args->flags >> 8) & 0xff);
+        rangeHi = state->curNote + (args->flags >> 0x18);
+        keyLo = rangeLo < 0 ? 0 : rangeLo > 0x7f ? 0x7f : rangeLo;
+        keyHi = rangeHi < 0 ? 0 : rangeHi > 0x7f ? 0x7f : rangeHi;
     }
 
-    if ((command->flags & 0xFF) != 0) {
-        pan = (u16)fn_801CC2E4() % 201 - 100;
+    if ((u8)args->value != 0) {
+        detune = (fn_801CC2E4() % 0xc9) - 100;
     } else {
-        pan = (cmd->value >> 16) & 0xFF;
+        detune = (args->flags >> 0x10) & 0xff;
     }
 
-    cmd->value = (pan << 16) | 0x19 |
-                 ((((u16)fn_801CC2E4() %
-                    ((u8)high - (u8)low + 1)) + (u8)low) << 8);
-    cmd->flags = 0;
-    stream->value_12C = (cmd->value >> 8) & 0x7F;
-    stream->signed_12E = cmd->value >> 16;
-    if (fn_801C267C(stream)) {
-        fn_801CB470(stream->channel_121, stream->subchannel_122,
-                    (u8)stream->value_12C);
+    args->flags = (detune << 0x10) | 0x19 | ((keyLo + (fn_801CC2E4() % ((keyHi - keyLo) + 1))) << 8);
+    args->value = 0;
+    state->curNote = (args->flags >> 8) & 0x7f;
+    state->curDetune = (s8)(args->flags >> 0x10);
+    if (fn_801C267C(state) != 0) {
+        fn_801CB470(state->midi, state->midiSet, state->curNote & 0xff);
     }
-    cmd->value = 4;
-    fn_801BD398(stream, cmd);
+    args->flags = 4;
+    fn_801BD398(state, args);
 }

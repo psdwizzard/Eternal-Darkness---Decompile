@@ -4,71 +4,85 @@ typedef unsigned short u16;
 typedef int s32;
 typedef unsigned int u32;
 
-extern u8* lbl_8064D3D0;
-extern u16 fn_801CAFAC(s32, u32, u8);
-extern s32 fn_801B5C14(u8, u8, u8, u32, s32*);
-extern s32 fn_801C0BC8(u32, u8, u32, u32, u32, u8, u8, u8, u8, u8,
-                      u16, u16, u32, u8, u8, u32);
-extern s32 fn_801B6270(void*, s16, u32, u32, u32, u8, u8, u8, u8, u8,
-                       u16, u16, u32, u8, u8, u32);
-extern s32 fn_801B5E9C(void*, s16, u32, u32, u32, u8, u8, u8, u8, u8,
-                       u16, u16, u32, u8, u8, u32);
-extern u32 fn_801C14D0(s32);
+typedef struct SynthVoice {
+    u8 pad000[0xEC];
+    u32 child;
+    u8 padF0[0x11C - 0xF0];
+    u8 block;
+    u8 pad11D[0x404 - 0x11D];
+} SynthVoice;
 
-s32 fn_801B64D0(u32 flags, s32 pitch, u32 arg2, u32 arg3, u32 key,
-                 u8 velocity, u8 channel, u8 arg7, u8 arg8, u16 arg9,
-                 u16 arg10, u8 arg11, s16 pitch_add, u8 arg13, u32 arg14)
+extern SynthVoice* lbl_8064D3D0;
+extern u16 fn_801CAFAC(u8, u8, u8);
+extern u32 fn_801B5C14(u8, u8, u8, u32, u32*);
+extern u32 fn_801C0BC8(u16, u8, u8, u16, u8, u8, u8, u8, u8, u8, u16, u16, u32, u8, u8, u32);
+extern u32 fn_801B6270(u16, u8, u8, u16, u8, u8, u8, u8, u8, u8, u16, u16, u32, u8, u8, u32);
+extern u32 fn_801B5E9C(u16, u8, u8, u16, u8, u8, u8, u8, u8, u8, u16, u16, u32, u8, u8, u32);
+extern u32 fn_801C14D0(u32);
+
+#define synthVoice lbl_8064D3D0
+#define inpGetMidiCtrl fn_801CAFAC
+#define do_voice_portamento fn_801B5C14
+#define macStart fn_801C0BC8
+#define StartKeymap fn_801B6270
+#define StartLayer fn_801B5E9C
+#define vidGetInternalId fn_801C14D0
+#define HWVOICE(i) (&synthVoice[i])
+
+static inline u32 check_portamento(u8 key, u8 midi, u8 midiSet, u32 newVID, u32* vid)
 {
-    s32 result;
-    u32 next;
-    u8 new_pitch = pitch + pitch_add;
+    u32 rejected;
 
-    if (new_pitch > 255)
-        new_pitch = 255;
-
-    switch (flags & 0xC000) {
-    case 0:
-    {
-        s32 status;
-        if (fn_801CAFAC(0x41, channel, arg7) > 0x1F80) {
-            result = fn_801B5C14(key & 0x7F, channel, arg7, 1, &status);
-            next = !status;
-        } else {
-            result = -1;
-            next = 1;
-        }
-        if (!next)
-            return -1;
-        if (result != -1)
-            return result;
-        return fn_801C0BC8(flags, (u8)new_pitch, arg2, flags, arg3, key,
-                           velocity, channel, arg7, arg8, arg9, arg10, 1,
-                           arg11, arg13, arg14);
+    if (inpGetMidiCtrl(0x41, midi, midiSet) > 0x1F80) {
+        *vid = do_voice_portamento(key & 0x7F, midi, midiSet, newVID, &rejected);
+        return !rejected;
     }
-    case 0x4000:
-        result = fn_801B6270((void*)flags, new_pitch, arg2, flags, arg3,
-                             key, velocity, channel, arg7, arg8, arg9, arg10,
-                             1, arg11, arg13, arg14);
-        if (result != -1) {
-            next = fn_801C14D0(result);
-            while (next != 0xFFFFFFFF) {
-                (lbl_8064D3D0 + (u8)next * 0x404)[0x11C] = 0;
-                next = *(u32*)(lbl_8064D3D0 + (u8)next * 0x404 + 0xEC);
-            }
+    *vid = 0xFFFFFFFF;
+    return 1;
+}
+
+static inline void unblockAllAllocatedVoices(u32 vid)
+{
+    u32 vi;
+
+    vi = vidGetInternalId(vid);
+    while (vi != 0xFFFFFFFF) {
+        HWVOICE(vi & 0xFF)->block = 0;
+        vi = HWVOICE(vi & 0xFF)->child;
+    }
+}
+
+u32 fn_801B64D0(u16 id, u8 prio, u8 maxVoices, u8 key, u8 vol, u8 pan, u8 midi, u8 midiSet, u8 section, u16 step,
+                u16 trackid, u8 vGroup, s16 prioOffset, u8 studio, u32 itd)
+{
+    prio += prioOffset;
+    prio = prio > 0xFF ? 0xFF : prio;
+
+    switch (id & 0xC000) {
+    case 0: {
+        u32 handle;
+        if (!check_portamento(key, midi, midiSet, 1, &handle)) {
+            return -1;
         }
-        return result;
-    case 0x8000:
-        result = fn_801B5E9C((void*)flags, new_pitch, arg2, flags, arg3, key,
-                             velocity, channel, arg7, arg8, arg9, arg10, 1,
-                             arg11, arg13, arg14);
-        if (result != -1) {
-            next = fn_801C14D0(result);
-            while (next != 0xFFFFFFFF) {
-                (lbl_8064D3D0 + (u8)next * 0x404)[0x11C] = 0;
-                next = *(u32*)(lbl_8064D3D0 + (u8)next * 0x404 + 0xEC);
-            }
+        if (handle != 0xFFFFFFFF) {
+            return handle;
         }
-        return result;
+        return macStart(id, prio, maxVoices, id, key, vol, pan, midi, midiSet, section, step, trackid, 1, vGroup, studio, itd);
+    }
+    case 0x4000: {
+        u32 vid = StartKeymap(id, prio, maxVoices, id, key, vol, pan, midi, midiSet, section, step, trackid, 1, vGroup, studio, itd);
+        if (vid != 0xFFFFFFFF) {
+            unblockAllAllocatedVoices(vid);
+        }
+        return vid;
+    }
+    case 0x8000: {
+        u32 vid = StartLayer(id, prio, maxVoices, id, key, vol, pan, midi, midiSet, section, step, trackid, 1, vGroup, studio, itd);
+        if (vid != 0xFFFFFFFF) {
+            unblockAllAllocatedVoices(vid);
+        }
+        return vid;
+    }
     }
     return -1;
 }

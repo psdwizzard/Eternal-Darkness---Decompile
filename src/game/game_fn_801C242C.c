@@ -4,94 +4,86 @@ typedef unsigned int u32;
 typedef unsigned long long u64;
 
 #pragma pack(4)
-typedef struct Voice {
-    u8 pad_000[0x34];
-    u32 active;
-    u8 pad_038[0xCA];
-    u16 sound_id;
-    u8 pad_104[0xC];
-    u32 field_110;
-    u64 field_114;
-    u8 flag_11C;
-    u8 pad_11D[0x2E7];
-} Voice;
+typedef struct McmdVoiceState {
+    u8 pad000[0x34];
+    u32 addr;
+    u8 pad038[0x102 - 0x38];
+    u16 macroId;
+    u8 pad104[0x110 - 0x104];
+    u32 age;
+    u32 cFlagsHi;
+    u32 cFlagsLo;
+    u8 block;
+    u8 pad11D[0x404 - 0x11D];
+} McmdVoiceState;
 #pragma pack()
 
-typedef struct AudioState {
-    u8 pad_000[0x210];
-    u8 voice_count;
-} AudioState;
+typedef struct SynthInfo {
+    u8 pad000[0x210];
+    u8 voiceNum;
+} SynthInfo;
 
-extern AudioState lbl_80619C20;
-extern Voice* lbl_8064D3D0;
-extern void fn_801C106C(Voice*);
-extern void fn_801C1BCC(Voice*);
+extern SynthInfo lbl_80619C20;
+extern McmdVoiceState* lbl_8064D3D0;
+extern void fn_801C106C(McmdVoiceState*);
+extern void fn_801C1BCC(McmdVoiceState*);
 extern void fn_801B9C98(u32);
 extern void fn_801CC8C4(u32);
 
-static inline void stop_voice(Voice* voice, u32 index)
+#define synthInfo lbl_80619C20
+#define synthVoice lbl_8064D3D0
+#define vidRemoveVoiceReferences fn_801C106C
+#define voiceFree fn_801C1BCC
+#define streamKill fn_801B9C98
+#define hwBreak fn_801CC8C4
+
+static inline void voiceKill(u32 voice)
 {
-    if (voice->active != 0) {
-        fn_801C106C(voice);
-        voice->field_114 &= 0xFFFFFFFFFFFFFFFCULL;
-        voice->field_110 = 0;
-        fn_801C1BCC(voice);
+    McmdVoiceState* voiceState = &synthVoice[voice];
+
+    if (voiceState->addr != 0) {
+        vidRemoveVoiceReferences(voiceState);
+        *(u64*)&voiceState->cFlagsHi &= ~3;
+        voiceState->age = 0;
+        voiceFree(voiceState);
     }
-    if (voice->flag_11C != 0) {
-        fn_801B9C98(index);
+    if (voiceState->block != 0) {
+        streamKill(voice);
     }
-    fn_801CC8C4(index);
+    hwBreak(voice);
 }
 
-void fn_801C242C(u16* command)
+void fn_801C242C(u16* ref)
 {
-    u8* voice_count;
-    u32 index;
-    u32 offset;
-    Voice* voice;
-    u16 sound_id;
+    u32 i;
+    u16 id;
 
-    voice_count = &lbl_80619C20.voice_count;
-    index = 0;
-    offset = 0;
-    while (index < *voice_count) {
-        voice = (Voice*)((u8*)lbl_8064D3D0 + offset);
-        if (voice->active == 0 && voice->flag_11C == 0) {
-            stop_voice(voice, index);
+    for (i = 0; i < synthInfo.voiceNum; ++i) {
+        if (synthVoice[i].addr == 0 && synthVoice[i].block == 0) {
+            voiceKill(i);
         }
-        offset += 0x404;
-        index++;
     }
 
-    while (*command != 0xFFFF) {
-        if (*command & 0x8000) {
-            sound_id = *command & 0x3FFF;
-            while (sound_id <= command[1]) {
-                index = 0;
-                offset = 0;
-                while (index < *voice_count) {
-                    voice = (Voice*)((u8*)lbl_8064D3D0 + offset);
-                    if (voice->active != 0 && voice->sound_id == sound_id) {
-                        stop_voice(voice, index);
+    while (*ref != 0xFFFF) {
+        if ((*ref & 0x8000)) {
+            id = *ref & 0x3fff;
+            while (id <= ref[1]) {
+                for (i = 0; i < synthInfo.voiceNum; ++i) {
+                    McmdVoiceState* sv = &synthVoice[i];
+                    if (sv->addr != 0 && id == sv->macroId) {
+                        voiceKill(i);
                     }
-                    offset += 0x404;
-                    index++;
                 }
-                sound_id++;
+                ++id;
             }
-            command += 2;
+            ref += 2;
         } else {
-            index = 0;
-            offset = 0;
-            while (index < *voice_count) {
-                voice = (Voice*)((u8*)lbl_8064D3D0 + offset);
-                if (voice->active != 0 && voice->sound_id == *command) {
-                    stop_voice(voice, index);
+            for (i = 0; i < synthInfo.voiceNum; ++i) {
+                if (synthVoice[i].addr != 0 && *ref == synthVoice[i].macroId) {
+                    voiceKill(i);
                 }
-                offset += 0x404;
-                index++;
             }
-            command++;
+            ++ref;
         }
     }
 }

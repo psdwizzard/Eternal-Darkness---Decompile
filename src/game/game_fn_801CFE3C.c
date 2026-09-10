@@ -15,15 +15,10 @@ typedef struct Vec3s {
 typedef struct Pair {
     void* first;
     void* second;
+    u32 pad08;
+    u32 pad0C;
 } Pair;
 
-typedef struct Locals {
-    Vec3s packed;
-    u16 pad;
-    Vec3f position;
-    Pair pair;
-    u32 conversion_pad[2];
-} Locals;
 
 extern void* fn_80201AE4(void*);
 extern void* fn_80201814(void*);
@@ -46,7 +41,9 @@ extern u32 lbl_8064D54C;
 
 void fn_801CFE3C(void* source, u32 flags_a, u32 flags_b, void* target)
 {
-    Locals local;
+    Pair pair;
+    Vec3f position;
+    Vec3s packed;
     void* source_object;
     u32 dispatch_flags;
     void* target_data;
@@ -68,12 +65,12 @@ void fn_801CFE3C(void* source, u32 flags_a, u32 flags_b, void* target)
         {
             void* target_model = fn_80157888(source_data);
             if (fn_80157894(source_data) & 1) {
-                fn_80201E78(&local.position, (void*)((u32)source_position | 0));
-                local.packed.x = (s16)(int)local.position.x;
-                local.packed.y = (s16)(int)local.position.y;
-                local.packed.z = (s16)(int)(lbl_80651068 + local.position.z);
-                fn_80205470(0, target_data, &local.packed, 0x48, lbl_8065106C);
-                local.pair.first = target_data;
+                fn_80201E78(&position, source_position);
+                packed.x = (s16)(int)position.x;
+                packed.y = (s16)(int)position.y;
+                packed.z = (s16)(int)(lbl_80651068 + position.z);
+                fn_80205470(0, target_data, &packed, 0x48, lbl_8065106C);
+                pair.first = target_data;
             } else if ((u32)target_model & 1) {
                 void* list = fn_80158598(source_object, 0);
                 if (fn_80158550(list, target_data) == 0) {
@@ -84,13 +81,13 @@ void fn_801CFE3C(void* source, u32 flags_a, u32 flags_b, void* target)
                                     ((void**)*table)[index], 0);
                     }
                 }
-                local.pair.first = target_data;
+                pair.first = target_data;
             }
         }
-        local.pair.second = source_object;
+        pair.second = source_object;
         fn_8011E174(0x800, 1);
         lbl_8064D54C = 1;
-        fn_801D0794(dispatch_flags, 1, saved_source, &local.pair, fn_801D0C9C, 0,
+        fn_801D0794(dispatch_flags, 1, saved_source, &pair, fn_801D0C9C, 0,
                     fn_801D0C94, 0);
     }
 }

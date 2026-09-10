@@ -1,13 +1,8 @@
 typedef unsigned int u32;
+typedef struct FVec { float x, y, z; } FVec;
 
 typedef struct Listener Listener;
 typedef struct SoundPoint SoundPoint;
-typedef struct Direction Direction;
-
-struct Direction {
-    float value[3];
-    u32 pad;
-};
 
 struct Listener {
     char pad00[0x10];
@@ -37,26 +32,19 @@ struct SoundPoint {
 };
 
 extern SoundPoint* lbl_8064D4C0;
-extern float lbl_80650FB0;
-extern double lbl_80650FB8;
-extern float lbl_80650FC0;
-extern double lbl_80650FC8;
-extern float lbl_80650FD4;
-extern double lbl_80650FD8;
-extern float lbl_80650FE0;
 extern double __frsqrte(double);
 
 extern void fn_801CA3D8(float*, float*, float*);
 extern void fn_801CA484(float*);
 
-static float magnitude(float x, float y, float z, float zero,
-                       double half, double three_halves)
+static inline float magnitude(float value)
 {
-    float value = x * x + y * y + z * z;
+    static const double half = 0.5;
+    static const double three_halves = 3.0;
     double estimate;
     volatile float result;
 
-    if (value > zero) {
+    if (value > 0.0f) {
         estimate = __frsqrte(value);
         estimate = half * estimate *
                    (three_halves - estimate * estimate * value);
@@ -74,116 +62,94 @@ void fn_801C87DC(Listener* listener, float* gain, float* distance_mix,
                  float* direction_x, float* direction_y, float* vertical_mix)
 {
     SoundPoint* point;
-    u32 count;
-    double half;
-    float prediction_scale;
-    double three_halves;
-    float one;
-    float zero;
-    float vertical;
-    float direction_y_sum;
-    float direction_x_sum;
     float delta[3];
+    float vel[3];
+    float direction[3];
+    float velocity_distance;
+    float distance;
+    float projected_distance;
+    float prediction_scale;
+    float ratio;
+    FVec pan;
+    u32 count;
 
+    prediction_scale = 1.0f / 60.0f;
+    *gain = 0.0f;
+    *distance_mix = 1.0f;
+    pan.x = pan.y = pan.z = 0.0f;
     count = 0;
-    zero = lbl_80650FB0;
-    vertical = zero;
-    *gain = zero;
-    one = lbl_80650FD4;
-    *distance_mix = one;
-    direction_y_sum = vertical;
-    direction_x_sum = direction_y_sum;
     point = lbl_8064D4C0;
-    prediction_scale = lbl_80650FE0;
-    half = lbl_80650FC8;
-    three_halves = lbl_80650FD8;
 
     while (point != 0) {
-        float distance;
         delta[0] = listener->position[0] -
                    (point->position[0] + point->offset[0] * point->scale);
         delta[1] = listener->position[1] -
                    (point->position[1] + point->offset[1] * point->scale);
         delta[2] = listener->position[2] -
                    (point->position[2] + point->offset[2] * point->scale);
-        distance = magnitude(delta[0], delta[1], delta[2], zero, half,
-                             three_halves);
+        distance = magnitude(delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2]);
 
         if (listener->radius >= distance) {
-            float ratio = distance / listener->radius;
+            ratio = distance / listener->radius;
 
-            if (listener->curve >= zero) {
-                float attenuation = one -
-                    ((one - listener->curve) * ratio +
-                     ratio * (listener->curve * ratio));
+            if (listener->curve >= 0.0f) {
                 *gain += point->gain *
                          (listener->outer +
-                          (listener->inner - listener->outer) * attenuation);
+                          (listener->inner - listener->outer) *
+                              (1.0f -
+                               ((1.0f - listener->curve) * ratio +
+                                listener->curve * ratio * ratio)));
             } else {
-                float inverse = one - ratio;
-                float attenuation = one -
-                    ((one + listener->curve) * ratio -
-                     listener->curve * (one - inverse * inverse));
                 *gain += point->gain *
                          (listener->outer +
-                          (listener->inner - listener->outer) * attenuation);
+                          (listener->inner - listener->outer) *
+                              (1.0f -
+                               ((listener->curve + 1.0f) * ratio -
+                                listener->curve *
+                                    (1.0f - (1.0f - ratio) * (1.0f - ratio)))));
             }
 
-            if ((listener->flags & 0x00080000) == 0 &&
-                ((listener->flags & 8) != 0 || (point->flags & 1) != 0)) {
-                float velocity_distance;
-                delta[0] = point->velocity[0] - listener->velocity[0];
-                delta[1] = point->velocity[1] - listener->velocity[1];
-                delta[2] = point->velocity[2] - listener->velocity[2];
-                velocity_distance = magnitude(delta[0], delta[1],
-                                              delta[2], zero, half,
-                                              three_halves);
+            if (!(listener->flags & 0x00080000)) {
+                if ((listener->flags & 0x00000008) || (point->flags & 1)) {
+                    vel[0] = point->velocity[0] - listener->velocity[0];
+                    vel[1] = point->velocity[1] - listener->velocity[1];
+                    vel[2] = point->velocity[2] - listener->velocity[2];
+                    velocity_distance = magnitude(vel[0] * vel[0] + vel[1] * vel[1] + vel[2] * vel[2]);
 
-                if (velocity_distance > zero) {
-                    float projected_distance;
-                    delta[0] = listener->position[0] + listener->velocity[0] * prediction_scale -
-                               (point->position[0] + point->velocity[0] * prediction_scale);
-                    delta[1] = listener->position[1] + listener->velocity[1] * prediction_scale -
-                               (point->position[1] + point->velocity[1] * prediction_scale);
-                    delta[2] = listener->position[2] + listener->velocity[2] * prediction_scale -
-                               (point->position[2] + point->velocity[2] * prediction_scale);
-                    projected_distance = magnitude(delta[0], delta[1],
-                                                   delta[2], zero, half,
-                                                   three_halves);
+                    if (velocity_distance > 0.0f) {
+                        delta[0] = listener->position[0] + listener->velocity[0] * prediction_scale -
+                                   (point->position[0] + point->velocity[0] * prediction_scale);
+                        delta[1] = listener->position[1] + listener->velocity[1] * prediction_scale -
+                                   (point->position[1] + point->velocity[1] * prediction_scale);
+                        delta[2] = listener->position[2] + listener->velocity[2] * prediction_scale -
+                                   (point->position[2] + point->velocity[2] * prediction_scale);
+                        projected_distance = magnitude(delta[0] * delta[0] + delta[1] * delta[1] + delta[2] * delta[2]);
 
-                    if (projected_distance < distance) {
-                        *distance_mix = point->distance_scale /
-                                        (point->distance_scale - velocity_distance);
-                    } else {
-                        *distance_mix = point->distance_scale /
-                                        (point->distance_scale + velocity_distance);
+                        if (projected_distance < distance) {
+                            *distance_mix = point->distance_scale /
+                                            (point->distance_scale - velocity_distance);
+                        } else {
+                            *distance_mix = point->distance_scale /
+                                            (point->distance_scale + velocity_distance);
+                        }
                     }
                 }
-            }
 
-            if (distance != zero) {
-                Direction direction;
-                fn_801CA3D8(point->matrix, listener->position, direction.value);
-                if (direction.value[2] <= zero) {
-                    if (-point->negative_limit < direction.value[2]) {
-                        vertical += -direction.value[2] / point->negative_limit;
+                if (distance != 0.0f) {
+                    fn_801CA3D8(point->matrix, listener->position, direction);
+                    if (direction[2] <= 0.0f) {
+                        pan.z += -point->negative_limit < direction[2] ? -direction[2] / point->negative_limit : 1.0f;
                     } else {
-                        vertical += one;
+                        pan.z += point->positive_limit > direction[2] ? -direction[2] / point->positive_limit : -1.0f;
                     }
-                } else {
-                    if (point->positive_limit > direction.value[2]) {
-                        vertical += -direction.value[2] / point->positive_limit;
-                    } else {
-                        vertical += lbl_80650FC0;
+                    if (0.0f != direction[0] ||
+                        0.0f != direction[1] ||
+                        0.0f != direction[2]) {
+                        fn_801CA484(direction);
                     }
+                    pan.x += direction[0];
+                    pan.y -= direction[1];
                 }
-                if (direction.value[0] != zero ||
-                    direction.value[1] != zero ||
-                    direction.value[2] != zero) {
-                    fn_801CA484(direction.value);
-                }
-                direction_x_sum += direction.value[0];
-                direction_y_sum -= direction.value[1];
             }
         }
         point = point->next;
@@ -191,8 +157,8 @@ void fn_801C87DC(Listener* listener, float* gain, float* distance_mix,
     }
 
     if (count != 0) {
-        *direction_x = direction_x_sum / count;
-        *direction_y = direction_y_sum / count;
-        *vertical_mix = vertical / count;
+        *direction_x = pan.x / count;
+        *direction_y = pan.y / count;
+        *vertical_mix = pan.z / count;
     }
 }

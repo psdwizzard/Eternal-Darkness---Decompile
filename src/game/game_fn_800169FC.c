@@ -34,36 +34,30 @@ s32 fn_800169FC(void* script)
     }
 
     {
-        void** objects = lbl_8024E388;
-        FirstEntry* first = lbl_80241DE8;
         s32 i;
-
-        for (i = 0; i < 173; i++, first++) {
+        for (i = 0; i < 173; i++) {
+            FirstEntry* first = &lbl_80241DE8[i];
             if (first->id != -1) {
-                if (first->kind == 0) {
-                    fn_801E7974(objects[0], first->id);
+                u8 kind = first->kind;
+                if (kind == 0) {
+                    fn_801E7974(lbl_8024E388[0], first->id);
                 } else {
-                    fn_801E7974(
-                        *(void**)((u8*)objects + first->kind * 4 - 4),
-                        first->id);
+                    fn_801E7974(lbl_8024E388[kind - 1], first->id);
                 }
             }
         }
     }
 
     {
-        void** objects = lbl_8024E388;
-        SecondEntry* second = lbl_802417D0;
         s32 i;
-
-        for (i = 0; i < 51; i++, second++) {
+        for (i = 0; i < 51; i++) {
+            SecondEntry* second = &lbl_802417D0[i];
             if (second->id != -1) {
                 s32 kind = (u8)second->kind;
                 if (kind == 0xFF) {
-                    fn_801E7974(objects[0], second->id);
+                    fn_801E7974(lbl_8024E388[0], second->id);
                 } else {
-                    fn_801E7974(*(void**)((u8*)objects + kind * 4 - 4),
-                                second->id);
+                    fn_801E7974(lbl_8024E388[kind - 1], second->id);
                 }
             }
         }

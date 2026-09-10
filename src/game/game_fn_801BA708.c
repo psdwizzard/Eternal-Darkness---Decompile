@@ -1,92 +1,80 @@
 typedef unsigned char u8;
 typedef signed short s16;
+typedef unsigned short u16;
 typedef unsigned int u32;
 
-typedef struct StreamSlot {
-    u32 id;
+typedef struct SND_ADPCMSTREAM_INFO {
+    s16 coefTab[8][2];
+} SND_ADPCMSTREAM_INFO;
+
+typedef struct STREAM_INFO {
+    u32 stid;
     u32 flags;
     u8 state;
-    u8 positional;
+    u8 type;
     u8 pad0A[2];
-    void (*callback)(void);
-    u32 source;
-    u32 samples;
-    u32 buffer_bytes;
-    u8 pad1C[0x0C];
-    s16 position[16];
+    u32 (*updateFunction)(void*, u32, void*, u32, u32);
+    s16* buffer;
+    u32 size;
+    u32 bytes;
+    u32 last;
+    u16 numCoef;
+    u8 pad22[6];
+    s16 coefTab[8][2];
     u32 voice;
-    u32 callback_arg;
-    u32 voice_flags;
-    u8 format;
-    u8 volume;
-    u8 left;
-    u8 right;
-    u8 aux_left;
-    u8 aux_right;
-    u8 saved_left;
-    u8 saved_right;
-    u8 priority;
-    u8 cache_id;
+    u32 user;
+    u32 frq;
+    u8 prio;
+    u8 vol;
+    u8 pan;
+    u8 span;
+    u8 auxa;
+    u8 auxb;
+    u8 origPan;
+    u8 origSPan;
+    u8 studio;
+    u8 hwStreamHandle;
     u8 pad5E[2];
-    u32 cache;
-} StreamSlot;
+    u32 nextStreamHandle;
+} STREAM_INFO;
 
-extern StreamSlot lbl_8061AE48[];
+static STREAM_INFO streamInfo[64];
+
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
 
-static inline u32 find_stream(u32 id)
+#define hwDisableIrq fn_801CE2B8
+#define hwEnableIrq fn_801CE280
+
+
+
+static inline u32 GetPrivateIndex(u32 publicID)
 {
     u32 i;
-
-    for (i = 0; i < 64; i++) {
-        if (lbl_8061AE48[i].state != 0 && lbl_8061AE48[i].id == id) {
+    for (i = 0; i < 64; ++i) {
+        if (streamInfo[i].state != 0 && publicID == streamInfo[i].stid) {
             return i;
         }
     }
     return -1;
 }
 
-void fn_801BA708(u32 id, s16* position);
-
-static inline void update_cached_stream(u32 id, s16* position)
+void fn_801BA708(u32 stid, SND_ADPCMSTREAM_INFO* adpcmInfo)
 {
-    fn_801BA708(id, position);
-}
+    u32 j;
+    u32 i;
 
-void fn_801BA708(u32 id, s16* position)
-{
-    StreamSlot* slots = lbl_8061AE48;
-    u32 slot_index;
-    u32 cache;
-    StreamSlot* slot;
-
-    fn_801CE2B8();
-    slot_index = find_stream(id);
-
-    if (slot_index != (u32)-1) {
-        slot = &slots[slot_index];
-        slot->position[0] = position[0];
-        slot->position[1] = position[1];
-        slot->position[2] = position[2];
-        slot->position[3] = position[3];
-        slot->position[4] = position[4];
-        slot->position[5] = position[5];
-        slot->position[6] = position[6];
-        slot->position[7] = position[7];
-        slot->position[8] = position[8];
-        slot->position[9] = position[9];
-        slot->position[10] = position[10];
-        slot->position[11] = position[11];
-        slot->position[12] = position[12];
-        slot->position[13] = position[13];
-        slot->position[14] = position[14];
-        slot->position[15] = position[15];
-        *(unsigned short*)&lbl_8061AE48[slot_index].pad1C[4] = 8;
-        cache = lbl_8061AE48[slot_index].cache;
-        if (cache != (u32)-1) {
-            update_cached_stream(cache, position);
+    hwDisableIrq();
+    i = GetPrivateIndex(stid);
+    if (i != -1) {
+        for (j = 0; j < 8; ++j) {
+            streamInfo[i].coefTab[j][0] = adpcmInfo->coefTab[j][0];
+            streamInfo[i].coefTab[j][1] = adpcmInfo->coefTab[j][1];
+        }
+        streamInfo[i].numCoef = 8;
+        if (streamInfo[i].nextStreamHandle != 0xffffffff) {
+            fn_801BA708(streamInfo[i].nextStreamHandle, adpcmInfo);
         }
     }
-    fn_801CE280();
+    hwEnableIrq();
 }

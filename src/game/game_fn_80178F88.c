@@ -15,25 +15,25 @@ float fn_80178F88(float x1, float y1, float z1,
     }
 
     {
-    float z = z2 - z1;
-    if (z < 0.0f) {
-        z = -z;
-    }
+        float z = z2 - z1;
+        if (z < 0.0f) {
+            z = -z;
+        }
 
-    if (x < y) {
-        low = x;
-    } else {
-        low = y;
-        y = x;
-    }
+        if (x < y) {
+            low = x;
+        } else {
+            low = y;
+            y = x;
+        }
 
-    if (z < y) {
-        x = y;
-        y = z;
-    } else {
-        x = z;
-    }
+        if (z < y) {
+            x = y;
+            y = z;
+        } else {
+            x = z;
+        }
 
-    return x + (low + y) * 0.25f;
+        return (low + y) / 4.0f + x;
     }
 }

@@ -2,163 +2,177 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-extern u8 lbl_8062A230[];
-extern u8 lbl_80619C20[];
-extern u8* lbl_8064D3D0;
-extern void fn_801B7954(void*);
+typedef struct InpMidiState {
+    u8 pad0000[0xC0];
+    u8 ctrlByKey[8][16][0x86];
+    u8 ctrl[16][0x86];
+    u8 pad4C20[0x1920];
+    u32 dirty[8][16];
+    u8 pbRange[8][16];
+} InpMidiState;
 
-void fn_801CA7C0(u8 control, u8 channel, u8 layer, u8 value)
+typedef struct SYNTH_VOICE {
+    u8 pad_000[0x121];
+    u8 midi;
+    u8 midiSet;
+    u8 pad_123[0xB3];
+    u8 pbLowerKeyRange;
+    u8 pbUpperKeyRange;
+    u8 pad_1D8[0x3C];
+    u32 midiDirtyFlags;
+    u8 pad_218[0x1EC];
+} SYNTH_VOICE;
+
+typedef struct SynthInfo {
+    u8 pad000[0x210];
+    u8 voiceCount;
+} SynthInfo;
+
+extern u8 lbl_8062A230[];
+extern SynthInfo lbl_80619C20;
+extern SYNTH_VOICE* lbl_8064D3D0;
+extern void fn_801B7954(SYNTH_VOICE*);
+
+#define gInpMidiCtrlByKey (((InpMidiState*)lbl_8062A230)->ctrlByKey)
+#define gInpMidiCtrl (((InpMidiState*)lbl_8062A230)->ctrl)
+#define gInpMidiDirty (((InpMidiState*)lbl_8062A230)->dirty)
+#define SYNTH_CONFIGURATION (&lbl_80619C20)
+#define synthVoice lbl_8064D3D0
+#define synthKeyStateUpdate fn_801B7954
+
+static inline void inpSetRPNHi(InpMidiState* st, u8 set, u8 channel, u8 value)
 {
-    u8* state_base = lbl_8062A230;
+    u16 rpn;
+    u32 i;
+    u8 range;
+
+    rpn = st->ctrlByKey[set][channel][100] | (st->ctrlByKey[set][channel][101] << 8);
+    switch (rpn) {
+    case 0:
+        range = value > 24 ? 24 : value;
+        st->pbRange[set][channel] = range;
+        for (i = 0; i < SYNTH_CONFIGURATION->voiceCount; ++i) {
+            if (set == synthVoice[i].midiSet && channel == synthVoice[i].midi) {
+                synthVoice[i].pbUpperKeyRange = range;
+                synthVoice[i].pbLowerKeyRange = range;
+            }
+        }
+        break;
+    default:
+        break;
+    }
+}
+
+static inline void inpSetRPNLo(u8 set, u8 channel, u8 value)
+{
+}
+
+static inline void inpSetRPNDec(InpMidiState* st, u8 set, u8 channel)
+{
+    u16 rpn;
+    u32 i;
+    u8 range;
+
+    rpn = st->ctrlByKey[set][channel][100] | (st->ctrlByKey[set][channel][101] << 8);
+    switch (rpn) {
+    case 0:
+        range = st->pbRange[set][channel];
+        if (range != 0) {
+            --range;
+        }
+        st->pbRange[set][channel] = range;
+        for (i = 0; i < SYNTH_CONFIGURATION->voiceCount; ++i) {
+            if (set == synthVoice[i].midiSet && channel == synthVoice[i].midi) {
+                synthVoice[i].pbUpperKeyRange = range;
+                synthVoice[i].pbLowerKeyRange = range;
+            }
+        }
+        break;
+    default:
+        break;
+    }
+}
+
+static inline void inpSetRPNInc(InpMidiState* st, u8 set, u8 channel)
+{
+    u16 rpn;
+    u32 i;
+    u8 range;
+
+    rpn = st->ctrlByKey[set][channel][100] | (st->ctrlByKey[set][channel][101] << 8);
+    switch (rpn) {
+    case 0:
+        range = st->pbRange[set][channel];
+        if (range < 24) {
+            ++range;
+        }
+        st->pbRange[set][channel] = range;
+        for (i = 0; i < SYNTH_CONFIGURATION->voiceCount; ++i) {
+            if (set == synthVoice[i].midiSet && channel == synthVoice[i].midi) {
+                synthVoice[i].pbUpperKeyRange = range;
+                synthVoice[i].pbLowerKeyRange = range;
+            }
+        }
+        break;
+    default:
+        break;
+    }
+}
+
+void fn_801CA7C0(u8 ctrl, u8 channel, u8 set, u8 value)
+{
+    InpMidiState* st = (InpMidiState*)lbl_8062A230;
+    u32 i;
+
     if (channel == 0xFF) {
         return;
     }
 
-    if (layer != 0xFF) {
-        switch (control) {
-        case 0x26:
-            break;
+    if (set != 0xFF) {
+        switch (ctrl) {
         case 6:
-            if ((u16)((state_base[layer * 2144 + channel * 134 + 293] << 8) |
-                      state_base[layer * 2144 + channel * 134 + 292]) == 0) {
-                u8 amount = value;
-                u32 i;
-                u32 offset;
-                if (amount > 24) {
-                    amount = 24;
-                }
-                state_base[layer * 16 + channel + 26432] = amount;
-                for (i = 0, offset = i; i < lbl_80619C20[528]; offset += 1028, i++) {
-                    u8* voice = lbl_8064D3D0 + offset;
-                    if (layer == voice[290] && channel == voice[289]) {
-                        voice[471] = amount;
-                        lbl_8064D3D0[offset + 470] = amount;
-                    }
-                }
-            }
+            inpSetRPNHi(st, set, channel, value);
+            break;
+        case 0x26:
+            inpSetRPNLo(set, channel, value);
             break;
         case 0x60:
-            if ((u16)((state_base[layer * 2144 + channel * 134 + 293] << 8) |
-                      state_base[layer * 2144 + channel * 134 + 292]) == 0) {
-                u8 amount = state_base[layer * 16 + channel + 26432];
-                u32 i;
-                u32 offset;
-                if (amount != 0) {
-                    amount--;
-                }
-                state_base[layer * 16 + channel + 26432] = amount;
-                for (i = 0, offset = i; i < lbl_80619C20[528]; offset += 1028, i++) {
-                    u8* voice = lbl_8064D3D0 + offset;
-                    if (layer == voice[290] && channel == voice[289]) {
-                        voice[471] = amount;
-                        lbl_8064D3D0[offset + 470] = amount;
-                    }
-                }
-            }
+            inpSetRPNDec(st, set, channel);
             break;
         case 0x61:
-            if ((u16)((state_base[layer * 2144 + channel * 134 + 293] << 8) |
-                      state_base[layer * 2144 + channel * 134 + 292]) == 0) {
-                u8 amount = state_base[layer * 16 + channel + 26432];
-                u32 i;
-                u32 offset;
-                if (amount < 24) {
-                    amount++;
-                }
-                state_base[layer * 16 + channel + 26432] = amount;
-                for (i = 0, offset = i; i < lbl_80619C20[528]; offset += 1028, i++) {
-                    u8* voice = lbl_8064D3D0 + offset;
-                    if (layer == voice[290] && channel == voice[289]) {
-                        voice[471] = amount;
-                        lbl_8064D3D0[offset + 470] = amount;
-                    }
-                }
-            }
+            inpSetRPNInc(st, set, channel);
             break;
         }
 
-        state_base[layer * 2144 + channel * 134 + control + 192] = value & 0x7F;
-        {
-            u32 i;
-            u32 offset;
-            for (i = 0, offset = i; i < lbl_80619C20[528]; offset += 1028, i++) {
-                u8* voice = lbl_8064D3D0 + offset;
-                if (layer == voice[290] && channel == voice[289]) {
-                    *(u32*)(voice + 532) = 8191;
-                    fn_801B7954(voice);
-                }
+        st->ctrlByKey[set][channel][ctrl] = value & 0x7f;
+        for (i = 0; i < SYNTH_CONFIGURATION->voiceCount; ++i) {
+            if (set == synthVoice[i].midiSet && channel == synthVoice[i].midi) {
+                synthVoice[i].midiDirtyFlags = 0x1FFF;
+                synthKeyStateUpdate(&synthVoice[i]);
             }
         }
-        *(u32*)(state_base + layer * 64 + channel * 4 + 25920) = 0xFF;
+        st->dirty[set][channel] = 0xFF;
     } else {
-        switch (control) {
-        case 0x26:
-            break;
+        switch (ctrl) {
         case 6:
-            if ((u16)((state_base[layer * 2144 + channel * 134 + 293] << 8) |
-                      state_base[layer * 2144 + channel * 134 + 292]) == 0) {
-                u8 amount = value;
-                u32 i;
-                u32 offset;
-                if (amount > 24) {
-                    amount = 24;
-                }
-                state_base[layer * 16 + channel + 26432] = amount;
-                for (i = 0, offset = i; i < lbl_80619C20[528]; offset += 1028, i++) {
-                    u8* voice = lbl_8064D3D0 + offset;
-                    if (layer == voice[290] && channel == voice[289]) {
-                        voice[471] = amount;
-                        lbl_8064D3D0[offset + 470] = amount;
-                    }
-                }
-            }
+            inpSetRPNHi(st, set, channel, value);
+            break;
+        case 0x26:
+            inpSetRPNLo(set, channel, value);
             break;
         case 0x60:
-            if ((u16)((state_base[layer * 2144 + channel * 134 + 293] << 8) |
-                      state_base[layer * 2144 + channel * 134 + 292]) == 0) {
-                u8 amount = state_base[layer * 16 + channel + 26432];
-                u32 i;
-                u32 offset;
-                if (amount != 0) amount--;
-                state_base[layer * 16 + channel + 26432] = amount;
-                for (i = 0, offset = i; i < lbl_80619C20[528]; offset += 1028, i++) {
-                    u8* voice = lbl_8064D3D0 + offset;
-                    if (layer == voice[290] && channel == voice[289]) {
-                        voice[471] = amount;
-                        lbl_8064D3D0[offset + 470] = amount;
-                    }
-                }
-            }
+            inpSetRPNDec(st, set, channel);
             break;
         case 0x61:
-            if ((u16)((state_base[layer * 2144 + channel * 134 + 293] << 8) |
-                      state_base[layer * 2144 + channel * 134 + 292]) == 0) {
-                u8 amount = state_base[layer * 16 + channel + 26432];
-                u32 i;
-                u32 offset;
-                if (amount < 24) amount++;
-                state_base[layer * 16 + channel + 26432] = amount;
-                for (i = 0, offset = i; i < lbl_80619C20[528]; offset += 1028, i++) {
-                    u8* voice = lbl_8064D3D0 + offset;
-                    if (layer == voice[290] && channel == voice[289]) {
-                        voice[471] = amount;
-                        lbl_8064D3D0[offset + 470] = amount;
-                    }
-                }
-            }
+            inpSetRPNInc(st, set, channel);
             break;
         }
 
-        state_base[channel * 134 + control + 17344] = value & 0x7F;
-        {
-            u32 i;
-            u32 offset;
-            for (i = 0, offset = i; i < lbl_80619C20[528]; offset += 1028, i++) {
-                u8* voice = lbl_8064D3D0 + offset;
-                if (layer == voice[290] && channel == voice[289]) {
-                    *(u32*)(voice + 532) = 8191;
-                    fn_801B7954(voice);
-                }
+        st->ctrl[channel][ctrl] = value & 0x7f;
+        for (i = 0; i < SYNTH_CONFIGURATION->voiceCount; ++i) {
+            if (set == synthVoice[i].midiSet && channel == synthVoice[i].midi) {
+                synthVoice[i].midiDirtyFlags = 0x1FFF;
+                synthKeyStateUpdate(&synthVoice[i]);
             }
         }
     }

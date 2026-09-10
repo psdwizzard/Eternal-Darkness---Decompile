@@ -3,15 +3,19 @@ extern void fn_80163BB4(void*, const char*, ...);
 extern double fn_8016A694(void*, int);
 extern void *fn_80201814();
 extern void* fn_80204A8C(void);
-extern void fn_80204CE4(int, void*);
-extern int fn_80201C2C(int);
-extern int fn_80204C2C(int);
-extern int fn_80155DB4(int);
-extern void fn_801568B8(int, int);
+extern void fn_80204CE4(void*, void*);
+extern int fn_80201C2C(void*);
+extern int fn_80204C2C(void*);
+extern void* fn_80155DB4(void*);
+extern void fn_801568B8(void*, int);
 extern const char lbl_8024FF00[];
 
 int fn_8016CEF0(void* state)
 {
+    void* result;
+    void* source;
+    void* target;
+    void* handle;
     int third;
     int second;
     int first;
@@ -26,24 +30,25 @@ int fn_8016CEF0(void* state)
     third = (int)fn_8016A694(state, 3);
 
     if (first == -2) {
-        second = (int)fn_80201814(second);
-        if (second != 0) {
-            fn_80204CE4(second, fn_80204A8C());
+        target = fn_80201814(second);
+        if (target != 0) {
+            result = fn_80204A8C();
+            fn_80204CE4(target, result);
         }
     } else {
-        first = (int)fn_80201814(first);
-        if (first != 0) {
-            second = (int)fn_80201814(second);
-            if (second != 0) {
-                int value = fn_80201C2C(first);
+        source = fn_80201814(first);
+        if (source != 0) {
+            target = fn_80201814(second);
+            if (target != 0) {
+                int value = fn_80201C2C(source);
                 if (value == 0) {
-                    value = fn_80204C2C(first);
+                    value = fn_80204C2C(source);
                 }
-                fn_80204CE4(second, (void*)value);
+                fn_80204CE4(target, (void*)value);
                 if (third == 0) {
-                    second = fn_80155DB4(second);
-                    if (second != 0) {
-                        fn_801568B8(second, 0);
+                    handle = fn_80155DB4(target);
+                    if (handle != 0) {
+                        fn_801568B8(handle, 0);
                     }
                 }
             }

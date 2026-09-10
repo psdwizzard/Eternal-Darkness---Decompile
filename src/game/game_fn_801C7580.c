@@ -1,41 +1,42 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
-typedef struct Entry Entry;
-struct Entry {
+typedef struct DSPvoice DSPvoice;
+struct DSPvoice {
     unsigned char pad00[0xC];
-    Entry* next;
-    Entry* previous;
+    DSPvoice* next;
+    DSPvoice* prev;
     unsigned char pad14[0x10];
-    u32 flags;
+    u32 changed;
     unsigned char pad28[0xC4];
-    u8 active;
     u8 state;
-    u8 pending;
-    u8 group;
+    u8 postBreak;
+    u8 startupBreak;
+    u8 studio;
 };
 
-extern Entry* lbl_80628CB0[];
-void fn_801C7624(Entry* entry);
+typedef struct DSPstudioinfo {
+    unsigned char pad00[0x48];
+    DSPvoice* voiceRoot;
+    unsigned char pad4C[0x70];
+} DSPstudioinfo;
 
-void fn_801C7580(Entry* entry, u8 group)
+extern DSPstudioinfo lbl_80628CB0[];
+void fn_801C7624(DSPvoice* voice);
+
+void fn_801C7580(DSPvoice* voice, u8 studio)
 {
-    Entry** head;
-
-    if (entry->active != 0) {
-        fn_801C7624(entry);
-        entry->flags |= 0x20;
+    if (voice->state != 0) {
+        fn_801C7624(voice);
+        voice->changed |= 0x20;
     }
-
-    entry->state = 0;
-    head = lbl_80628CB0 + group * 47;
-    entry->next = head[18];
-    if (entry->next != 0) {
-        entry->next->previous = entry;
+    voice->postBreak = 0;
+    if ((voice->next = lbl_80628CB0[studio].voiceRoot) != 0) {
+        voice->next->prev = voice;
     }
-    entry->previous = 0;
-    head[18] = entry;
-    entry->pending = 0;
-    entry->active = 1;
-    entry->group = group;
+    voice->prev = 0;
+    lbl_80628CB0[studio].voiceRoot = voice;
+    voice->startupBreak = 0;
+    voice->state = 1;
+    voice->studio = studio;
 }

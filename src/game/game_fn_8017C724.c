@@ -8,10 +8,10 @@ typedef struct Request {
 } Request;
 
 extern char lbl_80250FF4[];
-extern void fn_8017B344(u8, int);
-extern int fn_8017B35C(u8);
-extern void fn_8017BA54();
-extern void fn_8017BA60(char*);
+extern void fn_8017B344(int, int);
+extern unsigned long long fn_8017B35C(int);
+extern void fn_8017BA54(unsigned long long);
+extern void fn_8017BA60(char*, int);
 extern void fn_8017AF78(void);
 
 void fn_8017C724(Request* request)
@@ -35,9 +35,9 @@ void fn_8017C724(Request* request)
     case -1:
         break;
     default:
-        fn_8017BA60(lbl_80250FF4);
+        fn_8017BA60(lbl_80250FF4, request->result);
         fn_8017AF78();
-        fn_8017BA54(0, 0);
+        fn_8017BA54(0);
         request->state = 2;
         break;
     }

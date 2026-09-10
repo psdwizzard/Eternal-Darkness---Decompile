@@ -49,15 +49,18 @@ void fn_801CDD38(u8 index)
             entry = entry->next;
         }
 
-        target = lbl_8064D504;
-        while (target != 0) {
-            previous = target->next;
-            if (target->value < lowest) {
-                lbl_8064D504 = previous;
-                target->next = lbl_8064D508;
-                lbl_8064D508 = target;
+        {
+            HeapEntry* next;
+            HeapEntry* current = lbl_8064D504;
+            while (current != 0) {
+                next = current->next;
+                if (current->value < lowest) {
+                    lbl_8064D504 = next;
+                    current->next = lbl_8064D508;
+                    lbl_8064D508 = current;
+                }
+                current = next;
             }
-            target = previous;
         }
 
         lbl_8064D4F0 = lowest != -1 ? lowest : lbl_8064D4E8;

@@ -17,12 +17,12 @@ int fn_800EA27C(int *result)
 
     *result = -1;
     for (i = 0; i < 6; i++) {
-        entry = lbl_80325F1C[i];
-        if (entry == 0) {
+        if (lbl_80325F1C[i] == 0) {
             *result = i;
             found = 1;
             break;
         }
+        entry = lbl_80325F1C[i];
         if ((entry->flags & 0x40) == 0 && (entry->flags & 0x10) != 0) {
             if (first || entry->priority < best) {
                 best = entry->priority;

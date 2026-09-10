@@ -21,11 +21,13 @@ extern CommFunction gDBCommTable[7];
 extern char lbl_80239C88[];
 extern char lbl_80239CAC[];
 
-void InitMetroTRKCommTable(int hardware)
+int InitMetroTRKCommTable(int hardware)
 {
+    int result;
+
     if (hardware == 1) {
         OSReport(lbl_80239C88);
-        Hu_IsStub();
+        result = Hu_IsStub();
         gDBCommTable[0] = DBInitComm;
         gDBCommTable[1] = DBInitInterrupts;
         gDBCommTable[2] = DBQueryData;
@@ -35,7 +37,7 @@ void InitMetroTRKCommTable(int hardware)
         gDBCommTable[6] = DBClose;
     } else {
         OSReport(lbl_80239CAC);
-        AMC_IsStub();
+        result = AMC_IsStub();
         gDBCommTable[0] = EXI2_Init;
         gDBCommTable[1] = EXI2_EnableInterrupts;
         gDBCommTable[2] = EXI2_Poll;
@@ -44,4 +46,6 @@ void InitMetroTRKCommTable(int hardware)
         gDBCommTable[5] = EXI2_Reserve;
         gDBCommTable[6] = EXI2_Unreserve;
     }
+
+    return result;
 }

@@ -1,100 +1,90 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
+typedef unsigned int u32;
 
-typedef struct Voice Voice;
-typedef struct Event Event;
+typedef struct SND_EMITTER {
+    u8 pad00[0x40];
+    void* group;
+} SND_EMITTER;
 
-struct Voice {
-    char pad00[0x40];
-    void* resource;
-};
+typedef struct RUN_LIST {
+    struct RUN_LIST* next;
+    float vol;
+    SND_EMITTER* em;
+} RUN_LIST;
 
-struct Event {
-    Event* next;
-    float key;
-    Voice* voice;
-};
+typedef struct START_LIST {
+    struct START_LIST* next;
+    float vol;
+    float xPan;
+    float yPan;
+    float zPan;
+    float pitch;
+    SND_EMITTER* em;
+} START_LIST;
 
-typedef struct Bucket {
-    void* resource;
-    Event* first;
-    Event* second;
-    u16 count;
+typedef struct START_GROUP {
+    void* id;
+    START_LIST* list;
+    RUN_LIST* running;
+    u16 numRunning;
     u16 pad0E;
-} Bucket;
+} START_GROUP;
 
-typedef struct AudioState {
-    char pad000[0x50];
-    Bucket buckets[176];
-    Event events[64];
-} AudioState;
-
-typedef struct BucketCursor {
-    char pad000[0x50];
-    Bucket bucket;
-} BucketCursor;
-
-extern AudioState lbl_80629390;
+static u8 s3dPad[0x50];
+static START_GROUP startGroup[64];
+static START_LIST startListNum[64];
+static RUN_LIST runList[64];
 extern u8 lbl_8064D4D3;
 extern u8 lbl_8064D4D5;
+#define startGroupNum lbl_8064D4D3
+#define runListNum lbl_8064D4D5
 
-void fn_801C9A08(Voice* voice, float key)
+void fn_801C9A08(SND_EMITTER* emitter, float vol)
 {
-    Bucket* bucket;
-    BucketCursor* cursor;
-    AudioState* state;
-    int bucket_count;
-    int index;
-    Event* current;
-    Event* previous;
-    Event* event;
-    Event** second;
+    START_GROUP* group;
+    RUN_LIST* node;
+    RUN_LIST* prev;
+    int groupCount;
+    int groupIndex;
 
-    bucket_count = lbl_8064D4D3;
-    state = &lbl_80629390;
-    bucket = state->buckets;
-    index = 0;
-
-    {
-        int remaining = bucket_count;
-        while (remaining-- > 0) {
-            if (voice->resource == bucket->resource) {
-                break;
-            }
-            bucket++;
-            index++;
-        }
-    }
-
-    if (index == bucket_count) {
-        cursor = (BucketCursor*)((char*)state + index * sizeof(Bucket));
-        cursor->bucket.first = 0;
-        cursor->bucket.second = 0;
-        cursor->bucket.count = 0;
-        cursor->bucket.resource = voice->resource;
-        lbl_8064D4D3++;
-    }
-
-    cursor = (BucketCursor*)((char*)state + index * sizeof(Bucket));
-    cursor->bucket.count++;
-    previous = 0;
-    second = &cursor->bucket.second;
-    current = *second;
-    while (current != 0) {
-        if (current->key > key) {
+    group = startGroup;
+    groupCount = startGroupNum;
+    for (groupIndex = 0; groupIndex < groupCount; groupIndex++) {
+        if (emitter->group == group->id) {
             break;
         }
-        previous = current;
-        current = current->next;
+        group++;
     }
 
-    if (previous == 0) {
-        *second = &state->events[lbl_8064D4D5];
-    } else {
-        previous->next = &state->events[lbl_8064D4D5];
+    if (groupIndex == groupCount) {
+        startGroup[groupIndex].list = (START_LIST*)0x0;
+        startGroup[groupIndex].running = (RUN_LIST*)0x0;
+        startGroup[groupIndex].numRunning = 0;
+        startGroup[groupIndex].id = emitter->group;
+        startGroupNum++;
     }
-    event = &state->events[lbl_8064D4D5];
-    event->next = current;
-    event->voice = voice;
-    state->events[lbl_8064D4D5++].key = key;
+
+    startGroup[groupIndex].numRunning++;
+    node = startGroup[groupIndex].running;
+    prev = (RUN_LIST*)0x0;
+    while (node != (RUN_LIST*)0x0) {
+        if (node->vol > vol) {
+            break;
+        }
+        prev = node;
+        node = node->next;
+    }
+
+    if (prev == (RUN_LIST*)0x0) {
+        startGroup[groupIndex].running = &runList[runListNum];
+    } else {
+        prev->next = &runList[runListNum];
+    }
+    {
+        RUN_LIST* newNode = &runList[runListNum];
+        newNode->next = node;
+        newNode->em = emitter;
+    }
+    runList[runListNum++].vol = vol;
 }

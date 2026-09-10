@@ -1,75 +1,75 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
-typedef struct Link {
-    struct Link* next;
-    struct Link* prev;
-    u32 key;
-    u32 value;
-} Link;
+typedef struct VID_LIST {
+    struct VID_LIST* next;
+    struct VID_LIST* prev;
+    u32 vid;
+    u32 root;
+} VID_LIST;
 
-typedef struct Voice {
+typedef struct SYNTH_VOICE {
     u8 pad_000[0xEC];
-    u32 previous_id;
-    u32 next_id;
-    u32 state;
-    Link* first;
-    Link* last;
+    u32 child;
+    u32 parent;
+    u32 id;
+    VID_LIST* vidList;
+    VID_LIST* vidMasterList;
     u8 pad_100[0x304];
-} Voice;
+} SYNTH_VOICE;
 
-extern Voice* lbl_8064D3D0;
-extern Link* lbl_8064D45C;
-extern Link* lbl_8064D460;
-extern void fn_801C2754(Voice* voice);
+extern SYNTH_VOICE* lbl_8064D3D0;
+extern VID_LIST* lbl_8064D45C;
+extern VID_LIST* lbl_8064D460;
+extern void fn_801C2754(SYNTH_VOICE* voice);
 
-static inline void release_link(Link* link)
+#define VID_UNLINK(field)                                                                                              \
+    if (s->field->prev != 0) {                                                                                         \
+        s->field->prev->next = s->field->next;                                                                         \
+    } else {                                                                                                           \
+        lbl_8064D45C = s->field->next;                                                                                 \
+    }                                                                                                                  \
+    if (s->field->next != 0) {                                                                                         \
+        s->field->next->prev = s->field->prev;                                                                         \
+    }                                                                                                                  \
+    s->field->next = lbl_8064D460;                                                                                     \
+    if (lbl_8064D460 != 0) {                                                                                           \
+        lbl_8064D460->prev = s->field;                                                                                 \
+    }                                                                                                                  \
+    s->field->prev = 0;                                                                                                \
+    lbl_8064D460 = s->field
+
+void fn_801C106C(SYNTH_VOICE* state)
 {
-    if (link->prev != 0) {
-        link->prev->next = link->next;
-    } else {
-        lbl_8064D45C = link->next;
-    }
-    if (link->next != 0) {
-        link->next->prev = link->prev;
-    }
-    link->next = lbl_8064D460;
-    if (lbl_8064D460 != 0) {
-        lbl_8064D460->prev = link;
-    }
-    link->prev = 0;
-    lbl_8064D460 = link;
-}
-
-void fn_801C106C(Voice* voice)
-{
-    if (voice->state != (u32)-1) {
-        fn_801C2754(voice);
-        if (voice->next_id != (u32)-1) {
-            lbl_8064D3D0[(u8)voice->next_id].previous_id = voice->previous_id;
-            if (voice->previous_id != (u32)-1) {
-                lbl_8064D3D0[(u8)voice->previous_id].next_id = voice->next_id;
+    SYNTH_VOICE* s = state;
+    if (s->id != 0xffffffff) {
+        fn_801C2754(state);
+        if (s->parent != 0xffffffff) {
+            lbl_8064D3D0[s->parent & 0xff].child = s->child;
+            if (s->child != 0xffffffff) {
+                lbl_8064D3D0[s->child & 0xff].parent = s->parent;
             }
-            release_link(voice->first);
-            voice->first = 0;
-        } else if (voice->previous_id != (u32)-1) {
-            voice->first->value = voice->previous_id;
-            lbl_8064D3D0[(u8)voice->previous_id].next_id = (u32)-1;
-            lbl_8064D3D0[(u8)voice->previous_id].last = voice->last;
-            if (voice->first != voice->last) {
-                release_link(voice->first);
+            VID_UNLINK(vidList);
+            s->vidList = 0;
+        } else if (s->child != 0xffffffff) {
+            s->vidList->root = s->child;
+            lbl_8064D3D0[s->child & 0xff].parent = 0xffffffff;
+            lbl_8064D3D0[s->child & 0xff].vidMasterList = s->vidMasterList;
+            if (s->vidList != s->vidMasterList) {
+                VID_UNLINK(vidList);
+                s->vidList = 0;
             }
-            voice->first = 0;
-            voice->last = 0;
-        } else if (voice->first != voice->last) {
-            release_link(voice->first);
-            voice->first = 0;
-            release_link(voice->last);
-            voice->last = 0;
+            s->vidList = 0;
+            s->vidMasterList = 0;
+        } else if (s->vidList != s->vidMasterList) {
+            VID_UNLINK(vidList);
+            s->vidList = 0;
+            VID_UNLINK(vidMasterList);
+            s->vidMasterList = 0;
         } else {
-            release_link(voice->first);
-            voice->first = 0;
-            voice->last = 0;
+            VID_UNLINK(vidList);
+            s->vidList = 0;
+            s->vidMasterList = 0;
         }
     }
 }

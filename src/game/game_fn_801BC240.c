@@ -1,95 +1,121 @@
+typedef unsigned char u8;
 typedef unsigned short u16;
+typedef unsigned int u32;
+typedef int s32;
 
-typedef struct GroupEntry {
+typedef struct SDIR_DATA {
     u16 id;
-    u16 state;
-    unsigned char padding[0x1C];
-} GroupEntry;
+    u16 ref_cnt;
+    u8 pad04[0x1C];
+} SDIR_DATA;
 
-typedef struct RegistryEntry {
-    GroupEntry* entries;
-    void* value;
-    u16 count;
-    u16 padding;
-} RegistryEntry;
+typedef struct SDIR_TAB {
+    SDIR_DATA* data;
+    void* base;
+    u16 numSmp;
+    u16 res;
+} SDIR_TAB;
 
-extern RegistryEntry lbl_8061C748[];
+typedef struct DATA_TAB {
+    void* addr;
+    u16 id;
+    u16 refCount;
+} DATA_TAB;
+
+typedef struct LAYER_TAB {
+    void* addr;
+    u16 id;
+    u16 refCount;
+    u32 numEntries;
+} LAYER_TAB;
+
+typedef struct MAC_MAINTAB {
+    u16 num;
+    u16 subTabIndex;
+} MAC_MAINTAB;
+
+typedef struct MAC_SUBTAB {
+    void* data;
+    u16 id;
+    u16 refCount;
+} MAC_SUBTAB;
+
+static SDIR_TAB dataSmpSDirs[128];
+static DATA_TAB dataCurveTable[2048];
+static DATA_TAB dataKeymapTable[256];
+static LAYER_TAB dataLayerTable[256];
+static MAC_MAINTAB dataMacroBucketTable[512];
+static MAC_SUBTAB dataMacroTable[2048];
+
 extern u16 lbl_8064D3F0;
+extern u16 lbl_8064D3F8;
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
 
-int fn_801BC240(GroupEntry* entries)
+#define dataMacTotal lbl_8064D3F8
+#define dataSmpSDirNum lbl_8064D3F0
+#define sndBegin fn_801CE2B8
+#define sndEnd fn_801CE280
+
+
+s32 fn_801BC240(SDIR_DATA* sdir)
 {
-    unsigned char* base = (unsigned char*)lbl_8061C748;
-    int index = 0;
-    int i;
-    int result = 0;
+    long i;
+    long j;
+    long index;
+    SDIR_DATA* data;
 
-    {
-    RegistryEntry* current = (RegistryEntry*)base;
-    while (index < lbl_8064D3F0 && current->entries != entries) {
-        current++;
-        index++;
+    index = 0;
+    for (; index < dataSmpSDirNum && dataSmpSDirs[index].data != sdir; ++index) {
     }
-    }
-    if (index != lbl_8064D3F0) {
 
-    fn_801CE2B8();
-    {
-        GroupEntry* entry = entries;
-        while (entry->id != 0xFFFF) {
-            if (entry->state != 0xFFFF && entry->state != 0) {
-                fn_801CE280();
-                return 0;
+    if (index != dataSmpSDirNum) {
+        sndBegin();
+
+        for (data = sdir; data->id != 0xFFFF; ++data) {
+            if (data->ref_cnt != 0xFFFF && data->ref_cnt != 0) {
+                break;
             }
-            entry++;
         }
-    }
 
-    {
-        GroupEntry* entry = entries;
-        while (entry->id != 0xFFFF) {
-            if (entry->state != 0xFFFF) {
-                RegistryEntry* other = (RegistryEntry*)base;
-                int outer = 0;
-                while (outer < lbl_8064D3F0) {
-                    if (other->entries != entries) {
-                        GroupEntry* candidate = other->entries;
-                        int inner = 0;
-                        while (inner < other->count) {
-                            if (entry->id == candidate->id && candidate->state == 0xFFFF) {
-                                other->entries[inner].state = 0;
+        if (data->id == 0xFFFF) {
+            data = sdir;
+
+            for (data = sdir; data->id != 0xFFFF; ++data) {
+                if (data->ref_cnt != 0xFFFF) {
+                    for (i = 0; i < dataSmpSDirNum; ++i) {
+                        if (dataSmpSDirs[i].data == sdir) {
+                            continue;
+                        }
+                        for (j = 0; j < dataSmpSDirs[i].numSmp; ++j) {
+                            if (data->id == dataSmpSDirs[i].data[j].id &&
+                                dataSmpSDirs[i].data[j].ref_cnt == 0xFFFF) {
+                                dataSmpSDirs[i].data[j].ref_cnt = 0;
                                 break;
                             }
-                            candidate++;
-                            inner++;
                         }
-                        if (inner != other->count) {
+
+                        if (j != dataSmpSDirs[i].numSmp) {
                             break;
                         }
                     }
-                    other++;
-                    outer++;
                 }
             }
-            entry++;
-        }
-    }
 
-    {
-        GroupEntry* entry = entries;
-        while (entry->id != 0xFFFF) {
-            entry->state = 0;
-            entry++;
-        }
-    }
+            for (data = sdir; data->id != 0xFFFF; ++data) {
+                data->ref_cnt = 0;
+            }
 
-    for (i = index + 1; i < lbl_8064D3F0; i++) {
-        lbl_8061C748[i - 1] = lbl_8061C748[i];
+            for (j = index + 1; j < dataSmpSDirNum; ++j) {
+                dataSmpSDirs[j - 1] = dataSmpSDirs[j];
+            }
+
+            --dataSmpSDirNum;
+            sndEnd();
+            return 1;
+        }
+
+        sndEnd();
     }
-    lbl_8064D3F0--;
-    fn_801CE280();
-    result = 1;
-    }
-    return result;
+    return 0;
 }

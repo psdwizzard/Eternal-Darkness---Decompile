@@ -1,65 +1,63 @@
-typedef struct DecimalRecord {
-    unsigned char unused[2];
-    short exponent;
-    unsigned char length;
-    char digits[1];
-} DecimalRecord;
+typedef struct decimal {
+    char sgn;
+    char unused;
+    short exp;
+    struct {
+        unsigned char length;
+        unsigned char text[1];
+    } sig;
+} decimal;
 
-void fn_800FAFD4(DecimalRecord* value, int precision)
+void fn_800FAFD4(decimal* dec, int new_length)
 {
+    signed char c;
+    signed char* p;
     int carry;
-    signed char digit;
-    char* cursor;
-    char* tail;
-    DecimalRecord* rounded;
 
-    if (precision < 0) {
-zero:
-        value->exponent = 0;
-        value->length = 1;
-        value->digits[0] = '0';
+    if (new_length < 0) {
+    return_zero:
+        dec->exp = 0;
+        dec->sig.length = 1;
+        *dec->sig.text = '0';
         return;
     }
 
-    if (precision >= value->length) {
+    if (new_length >= dec->sig.length) {
         return;
     }
 
-    rounded = (DecimalRecord*)((char*)value + precision);
-    digit = rounded->digits[0] - '0';
-    cursor = rounded->digits;
-    if (digit == 5) {
-        tail = (char*)value + value->length;
-        tail += 5;
-        while (--tail > cursor && *tail == '0') {
-        }
-        if (tail == cursor) {
-            carry = cursor[-1] & 1;
-        } else {
-            carry = 1;
-        }
+    p = (signed char*)dec->sig.text + new_length + 1;
+    c = *--p - '0';
+
+    if (c == 5) {
+        signed char* q = &((signed char*)dec->sig.text)[dec->sig.length];
+
+        while (--q > p && *q == '0')
+            ;
+        carry = (q == p) ? p[-1] & 1 : 1;
     } else {
-        carry = digit > 5;
+        carry = (c > 5);
     }
 
-    do {
-        digit = *--cursor + carry - '0';
-        carry = digit > 9;
-        if (!carry && digit != 0) {
-            *cursor = digit + '0';
+    while (new_length != 0) {
+        c = *--p - '0' + carry;
+
+        if ((carry = (c > 9)) != 0 || c == 0) {
+            --new_length;
+        } else {
+            *p = c + '0';
             break;
         }
-        --precision;
-    } while (precision != 0);
+    }
 
-    if (carry) {
-        ++value->exponent;
-        value->length = 1;
-        value->digits[0] = '1';
+    if (carry != 0) {
+        dec->exp += 1;
+        dec->sig.length = 1;
+        *dec->sig.text = '1';
         return;
+    } else if (new_length == 0) {
+        goto return_zero;
     }
-    if (precision == 0) {
-        goto zero;
-    }
-    value->length = precision;
+
+    dec->sig.length = new_length;
 }

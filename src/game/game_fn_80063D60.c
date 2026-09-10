@@ -23,26 +23,24 @@ extern void fn_801441C0(u16 count, s32 zero, u16 count_again);
 
 s32 fn_80063D60(void *value, DirectionState *state, u16 count)
 {
-    s32 index;
-    s32 changed;
-    void *input = value;
-    DirectionState *context = state;
     s32 direction;
     s32 doubled_count;
+    s16 x;
+    s32 index;
+    s32 changed;
+    s32 next;
 
     doubled_count = count * 2;
     changed = 0;
     for (index = 0; index < 2; index++) {
-        s16 x;
         s16 y;
-        s32 next;
 
-        x = index != 0 ? fn_801A6DB4(input) : fn_801A6DA4(input);
-        y = index != 0 ? fn_801A6DBC(input) : fn_801A6DAC(input);
+        x = index != 0 ? fn_801A6DB4(value) : fn_801A6DA4(value);
+        y = index != 0 ? fn_801A6DBC(value) : fn_801A6DAC(value);
         if (index != 0) {
-            direction = context->runtime->second_direction;
+            direction = state->runtime->second_direction;
         } else {
-            direction = context->runtime->first_direction;
+            direction = state->runtime->first_direction;
         }
 
         next = fn_80063C78(x, y);
@@ -55,9 +53,9 @@ s32 fn_80063D60(void *value, DirectionState *state, u16 count)
         }
 
         if (index != 0) {
-            context->runtime->second_direction = direction;
+            state->runtime->second_direction = direction;
         } else {
-            context->runtime->first_direction = direction;
+            state->runtime->first_direction = direction;
         }
     }
     return changed;

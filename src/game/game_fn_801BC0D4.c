@@ -1,80 +1,77 @@
+typedef unsigned char u8;
 typedef unsigned short u16;
+typedef unsigned int u32;
+typedef signed int s32;
 
-typedef struct GroupEntry {
+typedef struct SDIR_DATA {
     u16 id;
-    u16 state;
-    unsigned char padding[0x1C];
-} GroupEntry;
+    u16 ref_cnt;
+    u8 pad04[0x1C];
+} SDIR_DATA;
 
-typedef struct RegistryEntry {
-    GroupEntry* entries;
-    void* value;
-    u16 count;
-    u16 padding;
-} RegistryEntry;
+typedef struct SDIR_TAB {
+    SDIR_DATA* data;
+    void* base;
+    u16 numSmp;
+    u16 res;
+} SDIR_TAB;
 
-extern RegistryEntry lbl_8061C748[];
+static SDIR_TAB dataSmpSDirsStatic[128];
 extern u16 lbl_8064D3F0;
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
 
-int fn_801BC0D4(GroupEntry* entries, void* value)
-{
-    unsigned char* base = (unsigned char*)lbl_8061C748;
-    u16 count;
-    u16 inner;
-    int registry_count = lbl_8064D3F0;
-    int index = 0;
-    u16 i;
+#define dataSmpSDirs dataSmpSDirsStatic
+#define dataSmpSDirNum lbl_8064D3F0
 
-    while (index < registry_count && ((RegistryEntry*)base)[index].entries != entries) {
-        index++;
+static inline void dataFindSampleDir(SDIR_DATA* sample, s32* dirIndex, u16* k)
+{
+    for (*dirIndex = 0; *dirIndex < dataSmpSDirNum; ++*dirIndex) {
+        for (*k = 0; *k < dataSmpSDirs[*dirIndex].numSmp; ++*k) {
+            if (sample->id == dataSmpSDirs[*dirIndex].data[*k].id)
+                return;
+        }
     }
-    if (index == registry_count) {
-        if ((unsigned)registry_count < 0x80) {
-            count = 0;
-            while (entries[count].id != 0xFFFF) {
-                count++;
+}
+
+u32 fn_801BC0D4(SDIR_DATA* sdir, void* smp_data)
+{
+    s32 i;
+    SDIR_DATA* s;
+    u16 n;
+    u16 j;
+    u16 k;
+
+    for (i = 0; i < dataSmpSDirNum && dataSmpSDirs[i].data != sdir; ++i)
+        ;
+
+    if (i == dataSmpSDirNum) {
+        if (dataSmpSDirNum < 128) {
+            n = 0;
+            for (s = sdir; s->id != 0xFFFF; ++s) {
+                ++n;
             }
 
             fn_801CE2B8();
-            for (i = 0; i < count; i++) {
-                RegistryEntry* current = (RegistryEntry*)base;
-                int outer = 0;
-                while (outer < lbl_8064D3F0) {
-                    inner = 0;
-                    {
-                    GroupEntry* candidate = current->entries;
-                    while ((u16)inner < current->count) {
-                        if (entries[i].id == candidate->id) {
-                            goto found;
-                        }
-                        candidate++;
-                        inner++;
-                    }
-                    }
-                    current++;
-                    outer++;
-                }
-found:
-                if (outer != lbl_8064D3F0) {
-                    entries[i].state = 0xFFFF;
+            for (j = 0; j < n; ++j) {
+                dataFindSampleDir(&sdir[j], &i, &k);
+                if (i != dataSmpSDirNum) {
+                    sdir[j].ref_cnt = 0xFFFF;
                 } else {
-                    entries[i].state = 0;
+                    sdir[j].ref_cnt = 0;
                 }
             }
 
-            {
-                RegistryEntry* added = &((RegistryEntry*)base)[lbl_8064D3F0];
-                added->entries = entries;
-                added->count = count;
-                added->value = value;
-            }
-            lbl_8064D3F0++;
+            dataSmpSDirs[dataSmpSDirNum].data = sdir;
+            dataSmpSDirs[dataSmpSDirNum].numSmp = n;
+            dataSmpSDirs[dataSmpSDirNum].base = smp_data;
+            ++dataSmpSDirNum;
             fn_801CE280();
             return 1;
+        } else {
+            return 0;
         }
-        return 0;
     }
+
     return 1;
 }

@@ -1,82 +1,94 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
-typedef struct VoiceLink {
-    struct VoiceLink* next;
-    struct VoiceLink* prev;
+typedef struct SynthDelayedNode {
+    struct SynthDelayedNode* next;
+    struct SynthDelayedNode* prev;
     u8 unk8;
-    u8 bucket;
+    u8 jobTabIndex;
     u8 padA[2];
-} VoiceLink;
+} SynthDelayedNode;
 
-typedef struct VoiceBucket {
-    VoiceLink* type0;
-    VoiceLink* type2;
-    VoiceLink* type1;
-} VoiceBucket;
+typedef struct SynthJobTab {
+    SynthDelayedNode* lowPrecision;
+    SynthDelayedNode* event;
+    SynthDelayedNode* zeroOffset;
+} SynthJobTab;
 
+typedef struct SynthState {
+    u8 pad000[0x240];
+    SynthJobTab jobs[32];
+    u8 pad3C0[0xE20 - 0x3C0];
+} SynthState;
+
+extern SynthState lbl_80619860;
+#define synthState lbl_80619860
 extern u8 lbl_8064D3A1;
-extern u8 lbl_80619860[];
 
-void fn_801B775C(VoiceLink* voice, int type, u32 priority)
+#define synthJobTable synth->jobs
+#define synthJobTableIndex lbl_8064D3A1
+
+void fn_801B775C(SynthDelayedNode* fade, int mode, u32 delay)
 {
-    u32 bucket = (lbl_8064D3A1 + (priority >> 8)) & 0x1F;
-    VoiceBucket* bucket_info = (VoiceBucket*)(lbl_80619860 + bucket * 12 + 0x240);
-    VoiceLink** head;
-    VoiceLink* link;
+    SynthDelayedNode* newJq;
+    SynthDelayedNode** root;
+    u8 jobTabIndex;
+    SynthJobTab* jobTab;
+    SynthState* synth = &synthState;
 
-    switch (type) {
+    jobTabIndex = ((delay / 256) + synthJobTableIndex) & 0x1F;
+    jobTab = &synthJobTable[jobTabIndex];
+
+    switch (mode) {
     case 0:
-        link = voice;
-        if (link->bucket != 0xFF) {
-            if (link->bucket == bucket) {
+        newJq = fade;
+        if (newJq->jobTabIndex != 0xFF) {
+            if (newJq->jobTabIndex == jobTabIndex) {
                 return;
             }
-            if (link->next != 0) {
-                link->next->prev = link->prev;
+            if (newJq->next != 0) {
+                newJq->next->prev = newJq->prev;
             }
-            if (link->prev != 0) {
-                link->prev->next = link->next;
+            if (newJq->prev != 0) {
+                newJq->prev->next = newJq->next;
             } else {
-                ((VoiceBucket*)(lbl_80619860 + 0x240))[link->bucket].type0 = link->next;
+                synthJobTable[newJq->jobTabIndex].lowPrecision = newJq->next;
             }
         }
-        head = &bucket_info->type0;
+        root = &jobTab->lowPrecision;
         break;
     case 1:
-        link = voice + 1;
-        if (link->bucket != 0xFF) {
-            if (link->bucket == bucket) {
+        newJq = fade + 1;
+        if (newJq->jobTabIndex != 0xFF) {
+            if (newJq->jobTabIndex == jobTabIndex) {
                 return;
             }
-            if (link->next != 0) {
-                link->next->prev = link->prev;
+            if (newJq->next != 0) {
+                newJq->next->prev = newJq->prev;
             }
-            if (link->prev != 0) {
-                link->prev->next = link->next;
+            if (newJq->prev != 0) {
+                newJq->prev->next = newJq->next;
             } else {
-                ((VoiceBucket*)(lbl_80619860 + 0x240))[link->bucket].type1 = link->next;
+                synthJobTable[newJq->jobTabIndex].zeroOffset = newJq->next;
             }
         }
-        head = &bucket_info->type1;
+        root = &jobTab->zeroOffset;
         break;
     case 2:
-        link = voice + 2;
-        if (link->bucket != 0xFF) {
+        newJq = fade + 2;
+        if (newJq->jobTabIndex != 0xFF) {
             return;
         }
-        head = &bucket_info->type2;
+        root = &jobTab->event;
+        break;
+    default:
         break;
     }
 
-    link->bucket = bucket;
-    {
-        VoiceLink* old_head = *head;
-        link->next = old_head;
-        if (old_head != 0) {
-            old_head->prev = link;
-        }
+    newJq->jobTabIndex = jobTabIndex;
+    if ((newJq->next = *root) != 0) {
+        (*root)->prev = newJq;
     }
-    link->prev = 0;
-    *head = link;
+    newJq->prev = 0;
+    *root = newJq;
 }
