@@ -131,6 +131,20 @@ config.custom_build_rules = [
         "description": "EXTERNALIZE $in",
     },
     {
+        "name": "externalize_game_801FC204_local_data",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @101 jumptable_802FC7C8 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "python3 tools/externalize_elf_symbol.py $in @103 lbl_806514F8 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@101=jumptable_802FC7C8 --redefine-sym=@103=lbl_806514F8 "
+            "--remove-section=.data --remove-section=.sdata2 "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    },
+    {
         "name": "externalize_game_801EB09C_unsigned_bias",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @6 lbl_80651308 orig/GEDE01/sys/main.dol --require-whole-section && "
@@ -3190,6 +3204,11 @@ config.custom_build_steps = {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801ECF50.externalized"],
             "rule": "externalize_game_801ECF50_jumptable",
             "inputs": [f"build/{VERSION}/src/game/game_fn_801ECF50.o"],
+        },
+        {
+            "outputs": [f"build/{VERSION}/src/game/game_fn_801FC204.externalized"],
+            "rule": "externalize_game_801FC204_local_data",
+            "inputs": [f"build/{VERSION}/src/game/game_fn_801FC204.o"],
         },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801EB09C.externalized"],
@@ -12118,7 +12137,7 @@ config.libs = [
             Object(NonMatching, "game/game_fn_801FBD2C.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801FBEF0.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801FC034.c", mw_version="GC/1.3"),
-            Object(NonMatching, "game/game_fn_801FC204.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801FC204.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801FCCEC.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801FCCF8.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801FCF00.c", mw_version="GC/1.3"),
