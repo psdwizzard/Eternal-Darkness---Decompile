@@ -14,7 +14,6 @@ int fn_800A4F98(int mode)
     void* object;
     Runtime800A4F98* runtime;
     int matches;
-    int result;
 
     switch (mode) {
     case 0:
@@ -23,20 +22,12 @@ int fn_800A4F98(int mode)
         object = fn_80201814((void*)lbl_8064C544);
         runtime = object != 0 ? ((Runtime800A4F98*)fn_80201B8C(object)) : 0;
         matches = runtime != 0 && runtime->state == 1;
-        result = -matches;
-        result |= matches;
-        result >>= 31;
-        result &= lbl_8064C544;
-        return result;
+        return matches ? lbl_8064C544 : 0;
     case 2:
         object = fn_80201814((void*)lbl_8064C544);
         runtime = object != 0 ? ((Runtime800A4F98*)fn_80201B8C(object)) : 0;
         matches = runtime != 0 && runtime->state == 2;
-        result = -matches;
-        result |= matches;
-        result >>= 31;
-        result &= lbl_8064C544;
-        return result;
+        return matches ? lbl_8064C544 : 0;
     default:
         return 0;
     }
