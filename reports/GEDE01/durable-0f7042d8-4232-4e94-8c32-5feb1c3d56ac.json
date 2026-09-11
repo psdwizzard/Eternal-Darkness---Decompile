@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "0f7042d8-4232-4e94-8c32-5feb1c3d56ac",
+  "attempt": 3,
+  "base_commit": "35e68edf7b9f0756780989f43deeb39128d79984",
+  "target": "fn_80058834",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0f7042d8-4232-4e94-8c32-5feb1c3d56ac.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0f7042d8-4232-4e94-8c32-5feb1c3d56ac-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-0f7042d8-4232-4e94-8c32-5feb1c3d56ac.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 1984 bytes, 496 instructions, and 99.71774%. All 110 relocation-bearing instructions per side agree in relocation type, target, and addend. The 27 remaining rows are exclusively DIFF_ARG_MISMATCH register-coloring differences: retail keeps state_ref in r24 outside the kind-1 arm while generated uses r28; retail reuses r24 for current/blocked inside that arm while generated uses r23; retail uses facing/distance in f31/f30 while generated uses f30/f31; and retail uses r25 for action while generated uses r23. The preserved honest independent C reconstruction is already present on the accepted base, and prior declaration-scope/order variants did not improve this score."
+}

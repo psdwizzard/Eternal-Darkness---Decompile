@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "assignment_id": "0f7042d8-4232-4e94-8c32-5feb1c3d56ac",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "dol_check": "build/GEDE01/main.dol: OK"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058834 fn_80058834 -o reports/GEDE01/objdiff-0f7042d8-4232-4e94-8c32-5feb1c3d56ac.json --format json-pretty",
+      "exit_code": 0
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058834 fn_80058834 -o reports/GEDE01/objdiff-0f7042d8-4232-4e94-8c32-5feb1c3d56ac-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "output": "legal audit passed (13564 tracked project files inspected)"
+    }
+  ],
+  "canonical": {
+    "retail_bytes": 1984,
+    "generated_bytes": 1984,
+    "instruction_count": 496,
+    "match_percent": 99.71774,
+    "diff_count": 27,
+    "diff_kinds": {
+      "DIFF_ARG_MISMATCH": 27
+    }
+  },
+  "relocation_strict": {
+    "retail_bytes": 1984,
+    "generated_bytes": 1984,
+    "instruction_count": 496,
+    "match_percent": 99.71774,
+    "retail_relocation_count": 110,
+    "generated_relocation_count": 110,
+    "relocation_targets_types_and_addends_match": true,
+    "note": "The two relocation-bearing instruction text differences at offsets 0x290 and 0x2B8 are operand-register coloring only (retail f30, generated f31); both retain R_PPC_EMB_SDA21 against lbl_8064E510/lbl_8064E514 with addend 0."
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_match": true
+}
