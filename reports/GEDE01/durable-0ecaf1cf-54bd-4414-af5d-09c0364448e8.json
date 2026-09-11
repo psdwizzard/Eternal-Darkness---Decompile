@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "0ecaf1cf-54bd-4414-af5d-09c0364448e8",
+  "attempt": 3,
+  "base_commit": "e49cddc353b8ce909ee3ff8e911c89c37b754610",
+  "target": "fn_8000F774",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0ecaf1cf-54bd-4414-af5d-09c0364448e8.json",
+    "eternal-darkness-decomp/reports/GEDE01/trials-0ecaf1cf-54bd-4414-af5d-09c0364448e8.json"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff measure 99.45521% for a size-exact 1652-byte function (413 instructions per side), with all 114 relocation sites, types, resolved targets, and addends equal. The 44 remaining rows are register-argument mismatches: retail uses r29 for the parsed Vec3s pointer where generated code uses r28 (0x19C-0x210); retail then uses r28 for the long-lived handle and r29 for mode/controller values where generated code swaps them (0x240-0x4BC); the final object/found/array webs use retail r28/r27 where generated code uses r27/r28 (0x52C-0x610). Narrow-scope and register-hint trials were byte-identical; a position/mode union grew the function by 12 bytes and was rejected. The retained honest C translation unit remains NonMatching. The canonical build passed, built and retail DOL SHA-1 both equal ea24b6af954876ce072562ff39cdb4c81d32be1f, and the legal audit passed."
+}

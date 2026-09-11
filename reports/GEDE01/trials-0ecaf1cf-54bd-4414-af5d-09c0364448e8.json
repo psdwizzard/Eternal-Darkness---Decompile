@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "target": "fn_8000F774",
+  "recovered_attempt": {
+    "command": "git show --stat --oneline 5fc9503e657e5e9f3109470d9e1961dd3f452434 && git diff e49cddc353b8ce909ee3ff8e911c89c37b754610 5fc9503e657e5e9f3109470d9e1961dd3f452434 -- eternal-darkness-decomp/src/game/game_fn_8000F774.c",
+    "raw_output": "5fc9503e6 decomp: document fn_8000F774 attempt 2; the accepted base already contains the preserved source byte-for-byte, including corrected callback prototypes and the NonMatching annotation.",
+    "result": "No source transplant was necessary."
+  },
+  "scope_and_register_trials": {
+    "changes": "Narrow the Vec3s pointer scope; separately add register storage hints to the Vec3s pointer and handle.",
+    "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8000F774.externalized && build/tools/objdiff-cli diff -p . -u main/game/game_fn_8000F774 fn_8000F774 --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_metrics": "Each trial remained size=1652, match_percent=99.45521, instructions=413, diff_rows=44.",
+    "result": "Byte-identical register allocation; rejected."
+  },
+  "position_mode_union_trial": {
+    "change": "Represent the non-overlapping parsed position pointer and mode value as one union.",
+    "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8000F774.o && objdump -t build/GEDE01/src/game/game_fn_8000F774.o",
+    "raw_output": "00000000 l O .sdata2 00000008 @99; 00000000 g F .text 00000680 fn_8000F774",
+    "result": "Rejected: code grew from 0x674 (1652) to 0x680 (1664) bytes and the compiler-local double changed from @98 to @99."
+  },
+  "final_relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8000F774 fn_8000F774 -o reports/GEDE01/objdiff-0ecaf1cf-54bd-4414-af5d-09c0364448e8.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_metrics": "left size=1652 match_percent=99.45521 instructions=413 diff_rows=44 relocations=114; right size=1652 match_percent=99.45521 instructions=413 diff_rows=44 relocations=114",
+    "relocation_normalization": "All 114 relocation tuples (instruction site, type, resolved target name, addend) are equal."
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (13675 tracked project files inspected)"
+  }
+}
