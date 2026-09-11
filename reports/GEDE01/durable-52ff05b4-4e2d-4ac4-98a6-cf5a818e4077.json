@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "52ff05b4-4e2d-4ac4-98a6-cf5a818e4077",
+  "attempt": 2,
+  "base_commit": "c94f936226509ef0f31fe3638e5930a6206a9cf3",
+  "target": "fn_801AD9F4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-52ff05b4-4e2d-4ac4-98a6-cf5a818e4077.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-52ff05b4-4e2d-4ac4-98a6-cf5a818e4077-reloc-strict.json"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff are size-exact at 260/260 bytes and score 99.69231%. Four DIFF_ARG_MISMATCH rows remain at instruction indices 47, 48, 51, and 52 (offsets 0xBC, 0xC0, 0xCC, and 0xD0): retail allocates the active value to r5 and slot offset to r6, while canonical allocates the active value to r6 and slot offset to r5. Both direct reports contain 6 real relocation-bearing instructions per side and are byte-identical under function_reloc_diffs=name_address. The full build passed and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
