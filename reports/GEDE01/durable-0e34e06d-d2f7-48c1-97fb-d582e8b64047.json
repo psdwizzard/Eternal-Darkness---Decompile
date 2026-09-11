@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "0e34e06d-d2f7-48c1-97fb-d582e8b64047",
+  "attempt": 2,
+  "base_commit": "355bddd4855aae8d11626138ab68f05fb84fa86e",
+  "target": "fn_801FB6A4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0e34e06d-d2f7-48c1-97fb-d582e8b64047.json"
+  ],
+  "divergence": "Explicit relocation-strict objdiff (-c function_reloc_diffs=name_address) measures 99.50249% for the size-exact 804-byte function after the required constant-symbol externalization; all 14 relocation-bearing instructions agree. Ten fmuls instructions at function offsets 0xDC, 0x120, 0x134, 0x148, 0x15C, 0x170, 0x180, 0x208, 0x220, and 0x230 differ only in commutative source-operand order: retail uses converted-value times scale while GC/1.3 emits scale times converted-value from the preserved C spelling. Hoisting both scale constants into named const float locals and writing each local as the left operand was measured and produced an identical object, so that no-op source churn was reverted."
+}
