@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "target": "fn_8000F774",
+  "preserved_commit_inspection": {
+    "command": "git show --stat --oneline 8f126121c788a9ea8f84d9c0074c3d0381c5905d && git show -s --format='%H%n%P%n%s' 8f126121c788a9ea8f84d9c0074c3d0381c5905d",
+    "raw_output": "8f126121c Preserve interrupted durable worker before 0e34e06d-d2f7-48c1-97fb-d582e8b64047\n CLAUDE.md | 68 ++-------------------------------------------------------------\n 1 file changed, 2 insertions(+), 66 deletions(-)\n8f126121c788a9ea8f84d9c0074c3d0381c5905d\n973ab5b6f2ef90085647f499e0ef97daa24308d4\nPreserve interrupted durable worker before 0e34e06d-d2f7-48c1-97fb-d582e8b64047",
+    "result": "The checkpoint itself has no target files. Its parent supplies the prior 99.45521% report; the accepted base already contains that parent attempt's source reconstruction."
+  },
+  "baseline": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8000F774 fn_8000F774 -o build/GEDE01/fn_8000F774-baseline.json --format json-pretty",
+    "raw_metrics": "left size=1652 match_percent=99.45521 instructions=413 diff_rows=44 relocations=114; right size=1652 match_percent=99.45521 instructions=413 diff_rows=44 relocations=114"
+  },
+  "corrected_prototypes": {
+    "change": "Use the in-tree definitions: s32 fn_8002A590(void*), s32 fn_8002A508(void*), s32 fn_8002AA18(void*, void*, s32), and void fn_8002A4C8(void*).",
+    "command": "cmp -s build/GEDE01/fn_8000F774-baseline.json build/GEDE01/fn_8000F774-prototypes.json; printf 'baseline_vs_corrected_prototypes=%s\\n' \"$?\"",
+    "raw_output": "baseline_vs_corrected_prototypes=0",
+    "result": "Byte-identical objdiff report; retained because it removes four source-level declaration contradictions."
+  },
+  "declaration_order": {
+    "change": "Move the handle declaration ahead of position and mode.",
+    "command": "cmp -s build/GEDE01/fn_8000F774-prototypes.json build/GEDE01/fn_8000F774-reorder.json; printf 'corrected_prototypes_vs_reorder=%s\\n' \"$?\"",
+    "raw_output": "corrected_prototypes_vs_reorder=0",
+    "result": "Byte-identical; rejected."
+  },
+  "position_mode_union": {
+    "change": "Represent the non-overlapping position pointer and mode value as members of one local union.",
+    "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8000F774.o build/GEDE01/src/game/game_fn_8000F774.externalized",
+    "raw_output": "[1/2] MWCC build/GEDE01/src/game/game_fn_8000F774.o\n[2/2] EXTERNALIZE build/GEDE01/src/game/game_fn_8000F774.o\nFAILED: [code=1] build/GEDE01/src/game/game_fn_8000F774.externalized\nbuild/GEDE01/src/game/game_fn_8000F774.o: symbol '@98' not found\nninja: build stopped: subcommand failed.",
+    "result": "Rejected: it renumbered the compiler-local double symbol and no longer satisfied the existing externalization rule."
+  },
+  "final_relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8000F774 fn_8000F774 -o reports/GEDE01/objdiff-07b40771-305d-4d59-b7dc-ba02e6f3e0d9.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_metrics": "left size=1652 match_percent=99.45521 instructions=413 diff_rows=44 relocations=114; right size=1652 match_percent=99.45521 instructions=413 diff_rows=44 relocations=114",
+    "canonical_equivalence_command": "cmp -s build/GEDE01/fn_8000F774-baseline.json reports/GEDE01/objdiff-07b40771-305d-4d59-b7dc-ba02e6f3e0d9.json; printf 'baseline_vs_final=%s\\n' \"$?\"",
+    "canonical_equivalence_raw_output": "baseline_vs_final=0"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (13660 tracked project files inspected)"
+  }
+}

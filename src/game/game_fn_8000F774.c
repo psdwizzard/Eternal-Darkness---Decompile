@@ -95,12 +95,13 @@ extern void* fn_80158598(void*, s32);
 extern s32 fn_80158264(void*, void*, s32);
 extern void fn_80157E34(void*, s32, void*, void*, s32);
 
-extern void fn_8002A590(void);
-extern void fn_8002A508(void);
+extern s32 fn_8002A590(void*);
+extern s32 fn_8002A508(void*);
 extern void fn_8002AC60(void);
-extern void fn_8002AA18(void);
-extern void fn_8002A4C8(void);
+extern s32 fn_8002AA18(void*, void*, s32);
+extern void fn_8002A4C8(void*);
 
+/* NonMatching: remaining differences are register allocation only. */
 s32 fn_8000F774(void* script)
 {
     void* script_reg;
