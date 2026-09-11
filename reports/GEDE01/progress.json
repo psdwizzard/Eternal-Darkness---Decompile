@@ -1,14 +1,14 @@
 {
   "status": "in progress",
-  "matching_objects": 5852,
-  "total_objects": 6898,
-  "matching_functions": 5617,
+  "matching_objects": 5853,
+  "total_objects": 6899,
+  "matching_functions": 5618,
   "total_functions": 8214,
-  "matching_code_bytes": 937948,
+  "matching_code_bytes": 938060,
   "total_code_bytes": 2300692,
   "matching_data_bytes": 39294,
   "total_data_bytes": 4305642,
-  "code_percent": 40.76808,
+  "code_percent": 40.77295,
   "function_percent": 68.38325,
   "linked_code_bytes": 937948,
   "linked_data_bytes": 39454,
@@ -20,7 +20,7 @@
   "sdk_objects_complete": 18,
   "sdk_objects_total": 18,
   "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
-  "source": "session-2049 canonical objdiff scorer basis regenerated from the current object graph; exact-link measures are recorded separately",
+  "source": "durable assignment ce655491-1b79-4688-aa1a-0e7710d74435; canonical objdiff regenerated after integration",
   "headline_measurement_basis": {
     "config": "canonical default with no extra -c config",
     "report_command": "jq -r '.measures | \"matching_objects=\\(.complete_units) total_objects=\\(.total_units) matching_functions=\\(.matched_functions) total_functions=\\(.total_functions) matching_code_bytes=\\(.matched_code) total_code_bytes=\\(.total_code) matching_data_bytes=\\(.matched_data) total_data_bytes=\\(.total_data) code_percent=\\(.matched_code_percent) function_percent=\\(.matched_functions_percent) linked_code_bytes=\\(.complete_code) linked_data_bytes=\\(.complete_data)\"' build/GEDE01/report.json",
@@ -96,7 +96,7 @@
     ],
     "assigned_attempt": {
       "symbol": "fn_801FA454",
-      "best_objdiff_percent": 100.0,
+      "best_objdiff_percent": 100,
       "retail_bytes": 156,
       "generated_bytes": 156
     },
@@ -139,7 +139,7 @@
     "nonmatching_functions": [],
     "assigned_attempt": {
       "symbol": "fn_801FA774",
-      "best_objdiff_percent": 100.0,
+      "best_objdiff_percent": 100,
       "retail_bytes": 92,
       "generated_bytes": 92
     },
@@ -162,7 +162,7 @@
     ],
     "assigned_attempt": {
       "symbol": "fn_801FA92C",
-      "best_objdiff_percent": 100.0,
+      "best_objdiff_percent": 100,
       "retail_bytes": 156,
       "generated_bytes": 156
     },
@@ -224,7 +224,7 @@
     "nonmatching_functions": [],
     "assigned_attempt": {
       "symbol": "fn_801FB0B8",
-      "best_objdiff_percent": 100.0,
+      "best_objdiff_percent": 100,
       "retail_bytes": 36,
       "generated_bytes": 36
     },
@@ -245,7 +245,7 @@
     "nonmatching_functions": [],
     "assigned_attempt": {
       "symbol": "fn_801FB118",
-      "best_objdiff_percent": 100.0,
+      "best_objdiff_percent": 100,
       "retail_bytes": 180,
       "generated_bytes": 180
     },
@@ -266,7 +266,7 @@
     "nonmatching_functions": [],
     "assigned_attempt": {
       "symbol": "fn_801FB270",
-      "best_objdiff_percent": 100.0,
+      "best_objdiff_percent": 100,
       "retail_bytes": 168,
       "generated_bytes": 168
     },
@@ -287,7 +287,7 @@
     "nonmatching_functions": [],
     "assigned_attempt": {
       "symbol": "fn_801FB3B4",
-      "best_objdiff_percent": 100.0,
+      "best_objdiff_percent": 100,
       "retail_bytes": 740,
       "generated_bytes": 740
     },
@@ -4401,10 +4401,24 @@
     "range": "0x801FF2F8..0x801FF4A0",
     "matched_bytes": 424,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FF2F8", "fn_801FF338"],
+    "matched_functions": [
+      "fn_801FF2F8",
+      "fn_801FF338"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FF2F8", "best_objdiff_percent": 100.0, "retail_bytes": 64, "generated_bytes": 64},
-    "continuation_attempt": {"symbol": "fn_801FF338", "best_objdiff_percent": 100.0, "retail_bytes": 360, "generated_bytes": 360, "resolution": "Separating the rotating pool-index increment and ordering local initialization reproduces retail register allocation and instruction scheduling."},
+    "assigned_attempt": {
+      "symbol": "fn_801FF2F8",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 64,
+      "generated_bytes": 64
+    },
+    "continuation_attempt": {
+      "symbol": "fn_801FF338",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 360,
+      "generated_bytes": 360,
+      "resolution": "Separating the rotating pool-index increment and ordering local initialization reproduces retail register allocation and instruction scheduling."
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FF2F8-801FF4A0-session-2034.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2034-reloc-strict.json",
@@ -4417,12 +4431,31 @@
     "range": "0x801FF4A0..0x801FF5EC",
     "matched_bytes": 332,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FF4A0", "fn_801FF4D4", "fn_801FF554"],
+    "matched_functions": [
+      "fn_801FF4A0",
+      "fn_801FF4D4",
+      "fn_801FF554"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FF4A0", "best_objdiff_percent": 100.0, "retail_bytes": 52, "generated_bytes": 52},
+    "assigned_attempt": {
+      "symbol": "fn_801FF4A0",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 52,
+      "generated_bytes": 52
+    },
     "continuation_attempts": [
-      {"symbol": "fn_801FF4D4", "best_objdiff_percent": 100.0, "retail_bytes": 128, "generated_bytes": 128},
-      {"symbol": "fn_801FF554", "best_objdiff_percent": 100.0, "retail_bytes": 152, "generated_bytes": 152}
+      {
+        "symbol": "fn_801FF4D4",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 128,
+        "generated_bytes": 128
+      },
+      {
+        "symbol": "fn_801FF554",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 152,
+        "generated_bytes": 152
+      }
     ],
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FF4A0-801FF5EC-session-2035.json",
@@ -4436,10 +4469,39 @@
     "range": "0x80200338..0x80200534",
     "matched_bytes": 508,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_80200338", "fn_8020034C", "fn_802003C0", "fn_80200460"],
+    "matched_functions": [
+      "fn_80200338",
+      "fn_8020034C",
+      "fn_802003C0",
+      "fn_80200460"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_80200338", "best_objdiff_percent": 100.0, "retail_bytes": 20, "generated_bytes": 20},
-    "continuation_attempts": [{"symbol": "fn_8020034C", "best_objdiff_percent": 100.0, "retail_bytes": 116, "generated_bytes": 116}, {"symbol": "fn_802003C0", "best_objdiff_percent": 100.0, "retail_bytes": 160, "generated_bytes": 160}, {"symbol": "fn_80200460", "best_objdiff_percent": 100.0, "retail_bytes": 212, "generated_bytes": 212}],
+    "assigned_attempt": {
+      "symbol": "fn_80200338",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 20,
+      "generated_bytes": 20
+    },
+    "continuation_attempts": [
+      {
+        "symbol": "fn_8020034C",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 116,
+        "generated_bytes": 116
+      },
+      {
+        "symbol": "fn_802003C0",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 160,
+        "generated_bytes": 160
+      },
+      {
+        "symbol": "fn_80200460",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 212,
+        "generated_bytes": 212
+      }
+    ],
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-80200338-80200534-session-2043.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2043-reloc-strict.json",
@@ -4452,10 +4514,46 @@
     "range": "0x80200534..0x8020088C",
     "matched_bytes": 856,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_80200534", "fn_80200614", "fn_802006D4", "fn_802007DC", "fn_8020080C"],
+    "matched_functions": [
+      "fn_80200534",
+      "fn_80200614",
+      "fn_802006D4",
+      "fn_802007DC",
+      "fn_8020080C"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_80200534", "best_objdiff_percent": 100.0, "retail_bytes": 224, "generated_bytes": 224},
-    "continuation_attempts": [{"symbol": "fn_80200614", "best_objdiff_percent": 100.0, "retail_bytes": 192, "generated_bytes": 192}, {"symbol": "fn_802006D4", "best_objdiff_percent": 100.0, "retail_bytes": 264, "generated_bytes": 264}, {"symbol": "fn_802007DC", "best_objdiff_percent": 100.0, "retail_bytes": 48, "generated_bytes": 48}, {"symbol": "fn_8020080C", "best_objdiff_percent": 100.0, "retail_bytes": 128, "generated_bytes": 128}],
+    "assigned_attempt": {
+      "symbol": "fn_80200534",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 224,
+      "generated_bytes": 224
+    },
+    "continuation_attempts": [
+      {
+        "symbol": "fn_80200614",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 192,
+        "generated_bytes": 192
+      },
+      {
+        "symbol": "fn_802006D4",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 264,
+        "generated_bytes": 264
+      },
+      {
+        "symbol": "fn_802007DC",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 48,
+        "generated_bytes": 48
+      },
+      {
+        "symbol": "fn_8020080C",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 128,
+        "generated_bytes": 128
+      }
+    ],
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-80200534-8020088C-session-2044.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2044-reloc-strict.json",
@@ -4468,10 +4566,39 @@
     "range": "0x8020088C..0x80200C08",
     "matched_bytes": 892,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_8020088C", "fn_80200B20", "fn_80200B9C", "fn_80200BDC"],
+    "matched_functions": [
+      "fn_8020088C",
+      "fn_80200B20",
+      "fn_80200B9C",
+      "fn_80200BDC"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_8020088C", "best_objdiff_percent": 100.0, "retail_bytes": 660, "generated_bytes": 660},
-    "continuation_attempts": [{"symbol": "fn_80200B20", "best_objdiff_percent": 100.0, "retail_bytes": 124, "generated_bytes": 124}, {"symbol": "fn_80200B9C", "best_objdiff_percent": 100.0, "retail_bytes": 64, "generated_bytes": 64}, {"symbol": "fn_80200BDC", "best_objdiff_percent": 100.0, "retail_bytes": 44, "generated_bytes": 44}],
+    "assigned_attempt": {
+      "symbol": "fn_8020088C",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 660,
+      "generated_bytes": 660
+    },
+    "continuation_attempts": [
+      {
+        "symbol": "fn_80200B20",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 124,
+        "generated_bytes": 124
+      },
+      {
+        "symbol": "fn_80200B9C",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 64,
+        "generated_bytes": 64
+      },
+      {
+        "symbol": "fn_80200BDC",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 44,
+        "generated_bytes": 44
+      }
+    ],
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-8020088C-80200C08-session-2045.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2045-reloc-strict.json",
@@ -4484,10 +4611,60 @@
     "range": "0x80200C08..0x80200C40",
     "matched_bytes": 56,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_80200C08", "fn_80200C10", "fn_80200C18", "fn_80200C20", "fn_80200C28", "fn_80200C30", "fn_80200C38"],
+    "matched_functions": [
+      "fn_80200C08",
+      "fn_80200C10",
+      "fn_80200C18",
+      "fn_80200C20",
+      "fn_80200C28",
+      "fn_80200C30",
+      "fn_80200C38"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_80200C08", "best_objdiff_percent": 100.0, "retail_bytes": 8, "generated_bytes": 8},
-    "continuation_attempts": [{"symbol": "fn_80200C10", "best_objdiff_percent": 100.0, "retail_bytes": 8, "generated_bytes": 8}, {"symbol": "fn_80200C18", "best_objdiff_percent": 100.0, "retail_bytes": 8, "generated_bytes": 8}, {"symbol": "fn_80200C20", "best_objdiff_percent": 100.0, "retail_bytes": 8, "generated_bytes": 8}, {"symbol": "fn_80200C28", "best_objdiff_percent": 100.0, "retail_bytes": 8, "generated_bytes": 8}, {"symbol": "fn_80200C30", "best_objdiff_percent": 100.0, "retail_bytes": 8, "generated_bytes": 8}, {"symbol": "fn_80200C38", "best_objdiff_percent": 100.0, "retail_bytes": 8, "generated_bytes": 8}],
+    "assigned_attempt": {
+      "symbol": "fn_80200C08",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 8,
+      "generated_bytes": 8
+    },
+    "continuation_attempts": [
+      {
+        "symbol": "fn_80200C10",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 8,
+        "generated_bytes": 8
+      },
+      {
+        "symbol": "fn_80200C18",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 8,
+        "generated_bytes": 8
+      },
+      {
+        "symbol": "fn_80200C20",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 8,
+        "generated_bytes": 8
+      },
+      {
+        "symbol": "fn_80200C28",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 8,
+        "generated_bytes": 8
+      },
+      {
+        "symbol": "fn_80200C30",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 8,
+        "generated_bytes": 8
+      },
+      {
+        "symbol": "fn_80200C38",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 8,
+        "generated_bytes": 8
+      }
+    ],
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-80200C08-80200C40-session-2046.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2046-reloc-strict.json",
@@ -4500,10 +4677,46 @@
     "range": "0x80200C40..0x80200C74",
     "matched_bytes": 52,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_80200C40", "fn_80200C4C", "fn_80200C54", "fn_80200C60", "fn_80200C64"],
+    "matched_functions": [
+      "fn_80200C40",
+      "fn_80200C4C",
+      "fn_80200C54",
+      "fn_80200C60",
+      "fn_80200C64"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_80200C40", "best_objdiff_percent": 100.0, "retail_bytes": 12, "generated_bytes": 12},
-    "continuation_attempts": [{"symbol": "fn_80200C4C", "best_objdiff_percent": 100.0, "retail_bytes": 8, "generated_bytes": 8}, {"symbol": "fn_80200C54", "best_objdiff_percent": 100.0, "retail_bytes": 12, "generated_bytes": 12}, {"symbol": "fn_80200C60", "best_objdiff_percent": 100.0, "retail_bytes": 4, "generated_bytes": 4}, {"symbol": "fn_80200C64", "best_objdiff_percent": 100.0, "retail_bytes": 16, "generated_bytes": 16}],
+    "assigned_attempt": {
+      "symbol": "fn_80200C40",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 12,
+      "generated_bytes": 12
+    },
+    "continuation_attempts": [
+      {
+        "symbol": "fn_80200C4C",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 8,
+        "generated_bytes": 8
+      },
+      {
+        "symbol": "fn_80200C54",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 12,
+        "generated_bytes": 12
+      },
+      {
+        "symbol": "fn_80200C60",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 4,
+        "generated_bytes": 4
+      },
+      {
+        "symbol": "fn_80200C64",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 16,
+        "generated_bytes": 16
+      }
+    ],
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-80200C40-80200C74-session-2047.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2047-reloc-strict.json",
@@ -4516,9 +4729,16 @@
     "range": "0x80200C74..0x80200E1C",
     "matched_bytes": 424,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_80200C74"],
+    "matched_functions": [
+      "fn_80200C74"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_80200C74", "best_objdiff_percent": 100.0, "retail_bytes": 424, "generated_bytes": 424},
+    "assigned_attempt": {
+      "symbol": "fn_80200C74",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 424,
+      "generated_bytes": 424
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-80200C74-80200E1C-session-2048.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2048-reloc-strict.json",
@@ -4531,18 +4751,54 @@
     "range": "0x80200E1C..0x802010C8",
     "matched_bytes": 684,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_80200E1C", "fn_80200EAC", "fn_80200F3C", "fn_80200FC0", "fn_8020104C"],
+    "matched_functions": [
+      "fn_80200E1C",
+      "fn_80200EAC",
+      "fn_80200F3C",
+      "fn_80200FC0",
+      "fn_8020104C"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_80200E1C", "best_objdiff_percent": 100.0, "retail_bytes": 144, "generated_bytes": 144},
-    "continuation_attempts": [{"symbol": "fn_80200EAC", "best_objdiff_percent": 100.0, "retail_bytes": 144, "generated_bytes": 144}, {"symbol": "fn_80200F3C", "best_objdiff_percent": 100.0, "retail_bytes": 132, "generated_bytes": 132}, {"symbol": "fn_80200FC0", "best_objdiff_percent": 100.0, "retail_bytes": 140, "generated_bytes": 140}, {"symbol": "fn_8020104C", "best_objdiff_percent": 100.0, "retail_bytes": 124, "generated_bytes": 124}],
+    "assigned_attempt": {
+      "symbol": "fn_80200E1C",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 144,
+      "generated_bytes": 144
+    },
+    "continuation_attempts": [
+      {
+        "symbol": "fn_80200EAC",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 144,
+        "generated_bytes": 144
+      },
+      {
+        "symbol": "fn_80200F3C",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 132,
+        "generated_bytes": 132
+      },
+      {
+        "symbol": "fn_80200FC0",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 140,
+        "generated_bytes": 140
+      },
+      {
+        "symbol": "fn_8020104C",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 124,
+        "generated_bytes": 124
+      }
+    ],
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-80200E1C-802010C8-session-2049.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2049-reloc-strict.json",
     "verification_evidence": "reports/GEDE01/session-2049-verification.json",
     "conclusion": "Assigned fn_80200E1C and four immediate functions through fn_8020104C independently match 144, 144, 132, 140, and 124 bytes at 100.0% canonical and relocation-strict objdiff with equal relocations. Every byte in the contiguous 684-byte range is matched with no NonMatching code, assembly, shared reconstruction, fallback jump, gap, or unaccounted span; the fresh full relink is byte-identical to retail."
   },
-  "next_target": "0x802010C8",
-  "next_gate": "Attempt immediate fn_802010C8 at 0x802010C8 next and continue contiguously upward from the accounted frontier.",
+  "next_target": "0x80201138",
+  "next_gate": "Continue contiguous game .text at 0x80201138.",
   "asm_justifications": {
     "fn_801FB698": "The Gekko psq_st instruction stores f1 through GQR5 quantization and has no scalar C spelling or canonical MWCC intrinsic.",
     "fn_801FF9A0": "The deliberate empty CTR delay loop requires li r0, 0x20, mtctr r0, and bdnz; GC/1.3 deletes all C delay-loop spellings, so localized inline assembly preserves the retail timing loop without replacing the surrounding C.",
@@ -4799,8 +5055,8 @@
       "range": "0x801EDEC4..0x801EDF5C",
       "retail_size": 152,
       "generated_size": 144,
-      "canonical_percent": 80.0,
-      "relocation_strict_percent": 80.0,
+      "canonical_percent": 80,
+      "relocation_strict_percent": 80,
       "status": "NonMatching honest C",
       "measurement_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EDEC4 fn_801EDEC4 -o reports/GEDE01/objdiff-game_fn_801EDEC4-session-1927.json --format json-pretty",
       "measurement_raw_output": "retail_bytes=152 generated_bytes=144 match_percent=80.0",
@@ -4889,8 +5145,8 @@
     },
     "fn_801E8B6C": {
       "session_id": "session-1895",
-      "best_match_percent": 98.0,
-      "current_match_percent": 98.0,
+      "best_match_percent": 98,
+      "current_match_percent": 98,
       "retail_bytes": 440,
       "generated_bytes": 440,
       "retail_instructions": 110,
@@ -5398,7 +5654,7 @@
     },
     "fn_801D3A24": {
       "session_id": "session-1804",
-      "best_match_percent": 50.0,
+      "best_match_percent": 50,
       "retail_bytes": 16,
       "generated_bytes": 16,
       "retail_instructions": 4,
@@ -7997,9 +8253,19 @@
     "range": "0x801FB9D4..0x801FBC18",
     "matched_bytes": 580,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FB9D4", "fn_801FBA94", "fn_801FBAC8", "fn_801FBB84"],
+    "matched_functions": [
+      "fn_801FB9D4",
+      "fn_801FBA94",
+      "fn_801FBAC8",
+      "fn_801FBB84"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FB9D4", "best_objdiff_percent": 100.0, "retail_bytes": 192, "generated_bytes": 192},
+    "assigned_attempt": {
+      "symbol": "fn_801FB9D4",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 192,
+      "generated_bytes": 192
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FB9D4-801FBC18-session-2013.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2013-reloc-strict.json",
@@ -8011,10 +8277,25 @@
     "range": "0x801FBC18..0x801FBEF0",
     "matched_bytes": 276,
     "nonmatching_bytes": 452,
-    "matched_functions": ["fn_801FBC18"],
-    "nonmatching_functions": ["fn_801FBD2C"],
-    "assigned_attempt": {"symbol": "fn_801FBC18", "best_objdiff_percent": 100.0, "retail_bytes": 276, "generated_bytes": 276},
-    "continuation_attempt": {"symbol": "fn_801FBD2C", "best_objdiff_percent": 74.21239, "retail_bytes": 452, "generated_bytes": 360, "divergence": "GC/1.3 collapses the reconstructed corner setup and aggregate copies, producing 92 fewer bytes with different stack-slot allocation and downstream nonvolatile-register scheduling"},
+    "matched_functions": [
+      "fn_801FBC18"
+    ],
+    "nonmatching_functions": [
+      "fn_801FBD2C"
+    ],
+    "assigned_attempt": {
+      "symbol": "fn_801FBC18",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 276,
+      "generated_bytes": 276
+    },
+    "continuation_attempt": {
+      "symbol": "fn_801FBD2C",
+      "best_objdiff_percent": 74.21239,
+      "retail_bytes": 452,
+      "generated_bytes": 360,
+      "divergence": "GC/1.3 collapses the reconstructed corner setup and aggregate copies, producing 92 fewer bytes with different stack-slot allocation and downstream nonvolatile-register scheduling"
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FBC18-801FBEF0-session-2014.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2014-reloc-strict.json",
@@ -8026,10 +8307,23 @@
     "range": "0x801FBEF0..0x801FC204",
     "matched_bytes": 788,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FBEF0", "fn_801FC034"],
+    "matched_functions": [
+      "fn_801FBEF0",
+      "fn_801FC034"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FBEF0", "best_objdiff_percent": 100.0, "retail_bytes": 324, "generated_bytes": 324},
-    "continuation_attempt": {"symbol": "fn_801FC034", "best_objdiff_percent": 100.0, "retail_bytes": 464, "generated_bytes": 464},
+    "assigned_attempt": {
+      "symbol": "fn_801FBEF0",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 324,
+      "generated_bytes": 324
+    },
+    "continuation_attempt": {
+      "symbol": "fn_801FC034",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 464,
+      "generated_bytes": 464
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FBEF0-801FC204-session-2015.json",
     "assigned_evidence": "reports/GEDE01/session-2015-fn_801FBEF0-objdiff.json",
@@ -8043,10 +8337,25 @@
     "range": "0x801FC204..0x801FCCF8",
     "matched_bytes": 12,
     "nonmatching_bytes": 2792,
-    "matched_functions": ["fn_801FCCEC"],
-    "nonmatching_functions": ["fn_801FC204"],
-    "assigned_attempt": {"symbol": "fn_801FC204", "best_objdiff_percent": 99.67765, "retail_bytes": 2792, "generated_bytes": 2792, "divergence": "GC/1.3 selects different floating registers for the signed-short conversions and zero comparisons in switch cases 0 and 2; compiler-local jump-table and signed-conversion constant relocations also retain anonymous identities in the direct object."},
-    "continuation_attempt": {"symbol": "fn_801FCCEC", "best_objdiff_percent": 100.0, "retail_bytes": 12, "generated_bytes": 12},
+    "matched_functions": [
+      "fn_801FCCEC"
+    ],
+    "nonmatching_functions": [
+      "fn_801FC204"
+    ],
+    "assigned_attempt": {
+      "symbol": "fn_801FC204",
+      "best_objdiff_percent": 99.67765,
+      "retail_bytes": 2792,
+      "generated_bytes": 2792,
+      "divergence": "GC/1.3 selects different floating registers for the signed-short conversions and zero comparisons in switch cases 0 and 2; compiler-local jump-table and signed-conversion constant relocations also retain anonymous identities in the direct object."
+    },
+    "continuation_attempt": {
+      "symbol": "fn_801FCCEC",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 12,
+      "generated_bytes": 12
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FC204-801FCCF8-session-2016.json",
     "assigned_evidence": "reports/GEDE01/session-2016-fn_801FC204-objdiff.json",
@@ -8060,10 +8369,24 @@
     "range": "0x801FCCF8..0x801FCF04",
     "matched_bytes": 524,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FCCF8", "fn_801FCF00"],
+    "matched_functions": [
+      "fn_801FCCF8",
+      "fn_801FCF00"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FCCF8", "best_objdiff_percent": 100.0, "retail_bytes": 520, "generated_bytes": 520, "resolution": "Reordering the four terms in the multi-term sum controls MWCC evaluation order and reproduces retail codegen; this is not evidence for the single-binary-operation canonicalization dead end."},
-    "continuation_attempt": {"symbol": "fn_801FCF00", "best_objdiff_percent": 100.0, "retail_bytes": 4, "generated_bytes": 4},
+    "assigned_attempt": {
+      "symbol": "fn_801FCCF8",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 520,
+      "generated_bytes": 520,
+      "resolution": "Reordering the four terms in the multi-term sum controls MWCC evaluation order and reproduces retail codegen; this is not evidence for the single-binary-operation canonicalization dead end."
+    },
+    "continuation_attempt": {
+      "symbol": "fn_801FCF00",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 4,
+      "generated_bytes": 4
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FCCF8-801FCF04-session-2017.json",
     "assigned_evidence": "reports/GEDE01/session-2017-fn_801FCCF8.json",
@@ -8077,9 +8400,22 @@
     "range": "0x801FCF04..0x801FD258",
     "matched_bytes": 852,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FCF04", "fn_801FD218", "fn_801FD21C", "fn_801FD22C", "fn_801FD240", "fn_801FD24C"],
+    "matched_functions": [
+      "fn_801FCF04",
+      "fn_801FD218",
+      "fn_801FD21C",
+      "fn_801FD22C",
+      "fn_801FD240",
+      "fn_801FD24C"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FCF04", "best_objdiff_percent": 100.0, "retail_bytes": 788, "generated_bytes": 788, "resolution": "Recovering the 64-byte matrix allocation and separate 32-bit marker and argument locals reproduced the retail 0x100 stack frame and final aggregate-copy schedule."},
+    "assigned_attempt": {
+      "symbol": "fn_801FCF04",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 788,
+      "generated_bytes": 788,
+      "resolution": "Recovering the 64-byte matrix allocation and separate 32-bit marker and argument locals reproduced the retail 0x100 stack frame and final aggregate-copy schedule."
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FCF04-801FD258-session-2018.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2018-reloc-strict.json",
@@ -8091,10 +8427,26 @@
     "range": "0x801FD258..0x801FD3F8",
     "matched_bytes": 208,
     "nonmatching_bytes": 208,
-    "matched_functions": ["fn_801FD258", "fn_801FD3E8"],
-    "nonmatching_functions": ["fn_801FD318"],
-    "assigned_attempt": {"symbol": "fn_801FD258", "best_objdiff_percent": 100.0, "retail_bytes": 192, "generated_bytes": 192},
-    "continuation_attempt": {"symbol": "fn_801FD318", "best_objdiff_percent": 37.75, "retail_bytes": 208, "generated_bytes": 228, "divergence": "GC/1.3 retains four address temporaries and a 32-byte frame while retail retains only r31 in a 16-byte frame and interleaves address formation with stores."},
+    "matched_functions": [
+      "fn_801FD258",
+      "fn_801FD3E8"
+    ],
+    "nonmatching_functions": [
+      "fn_801FD318"
+    ],
+    "assigned_attempt": {
+      "symbol": "fn_801FD258",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 192,
+      "generated_bytes": 192
+    },
+    "continuation_attempt": {
+      "symbol": "fn_801FD318",
+      "best_objdiff_percent": 37.75,
+      "retail_bytes": 208,
+      "generated_bytes": 228,
+      "divergence": "GC/1.3 retains four address temporaries and a 32-byte frame while retail retains only r31 in a 16-byte frame and interleaves address formation with stores."
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FD258-801FD3F8-session-2019.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2019-reloc-strict.json",
@@ -8106,9 +8458,20 @@
     "range": "0x801FD3F8..0x801FD80C",
     "matched_bytes": 1044,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FD3F8", "fn_801FD534", "fn_801FD63C", "fn_801FD6AC", "fn_801FD6F4"],
+    "matched_functions": [
+      "fn_801FD3F8",
+      "fn_801FD534",
+      "fn_801FD63C",
+      "fn_801FD6AC",
+      "fn_801FD6F4"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FD3F8", "best_objdiff_percent": 100.0, "retail_bytes": 316, "generated_bytes": 316},
+    "assigned_attempt": {
+      "symbol": "fn_801FD3F8",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 316,
+      "generated_bytes": 316
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FD3F8-801FD80C-session-2021.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2021-reloc-strict.json",
@@ -8120,9 +8483,23 @@
     "range": "0x801FD80C..0x801FDA7C",
     "matched_bytes": 624,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FD80C", "fn_801FD848", "fn_801FD880", "fn_801FD8BC", "fn_801FD8F0", "fn_801FD958", "fn_801FD9C0", "fn_801FDA18"],
+    "matched_functions": [
+      "fn_801FD80C",
+      "fn_801FD848",
+      "fn_801FD880",
+      "fn_801FD8BC",
+      "fn_801FD8F0",
+      "fn_801FD958",
+      "fn_801FD9C0",
+      "fn_801FDA18"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FD80C", "best_objdiff_percent": 100.0, "retail_bytes": 60, "generated_bytes": 60},
+    "assigned_attempt": {
+      "symbol": "fn_801FD80C",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 60,
+      "generated_bytes": 60
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FD80C-801FDA7C-session-2022.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2022-reloc-strict.json",
@@ -8134,9 +8511,23 @@
     "range": "0x801FDA7C..0x801FDF74",
     "matched_bytes": 1272,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FDA7C", "fn_801FDB10", "fn_801FDC24", "fn_801FDDB0", "fn_801FDE24", "fn_801FDEB4", "fn_801FDF00", "fn_801FDF3C"],
+    "matched_functions": [
+      "fn_801FDA7C",
+      "fn_801FDB10",
+      "fn_801FDC24",
+      "fn_801FDDB0",
+      "fn_801FDE24",
+      "fn_801FDEB4",
+      "fn_801FDF00",
+      "fn_801FDF3C"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FDA7C", "best_objdiff_percent": 100.0, "retail_bytes": 148, "generated_bytes": 148},
+    "assigned_attempt": {
+      "symbol": "fn_801FDA7C",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 148,
+      "generated_bytes": 148
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FDA7C-801FDF74-session-2022.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2022-frontier-reloc-strict.json",
@@ -8148,9 +8539,21 @@
     "range": "0x801FDF74..0x801FE110",
     "matched_bytes": 412,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FDF74", "fn_801FDFB4", "fn_801FDFEC", "fn_801FE024", "fn_801FE05C", "fn_801FE0B4"],
+    "matched_functions": [
+      "fn_801FDF74",
+      "fn_801FDFB4",
+      "fn_801FDFEC",
+      "fn_801FE024",
+      "fn_801FE05C",
+      "fn_801FE0B4"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FDF74", "best_objdiff_percent": 100.0, "retail_bytes": 64, "generated_bytes": 64},
+    "assigned_attempt": {
+      "symbol": "fn_801FDF74",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 64,
+      "generated_bytes": 64
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FDF74-801FE110-session-2023.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2023-reloc-strict.json",
@@ -8162,9 +8565,19 @@
     "range": "0x801FE110..0x801FE2A8",
     "matched_bytes": 408,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FE110", "fn_801FE1EC", "fn_801FE22C", "fn_801FE25C"],
+    "matched_functions": [
+      "fn_801FE110",
+      "fn_801FE1EC",
+      "fn_801FE22C",
+      "fn_801FE25C"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FE110", "best_objdiff_percent": 100.0, "retail_bytes": 220, "generated_bytes": 220},
+    "assigned_attempt": {
+      "symbol": "fn_801FE110",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 220,
+      "generated_bytes": 220
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FE110-801FE2A8-session-2024.json",
     "assigned_evidence": "reports/GEDE01/session-2024-fn_801FE110.json",
@@ -8177,9 +8590,22 @@
     "range": "0x801FE2A8..0x801FE56C",
     "matched_bytes": 216,
     "nonmatching_bytes": 492,
-    "matched_functions": ["fn_801FE494", "fn_801FE4C8", "fn_801FE4FC", "fn_801FE52C"],
-    "nonmatching_functions": ["fn_801FE2A8"],
-    "assigned_attempt": {"symbol": "fn_801FE2A8", "best_objdiff_percent": 98.333336, "retail_bytes": 492, "generated_bytes": 488, "divergence": "GC/1.3 assigns the fallback global and condition discriminator to r3 and r0 instead of retail r0 and r3, rotates the post-call r3/r4 temporaries, and omits retail's extsb before the mode comparison, producing four fewer bytes."},
+    "matched_functions": [
+      "fn_801FE494",
+      "fn_801FE4C8",
+      "fn_801FE4FC",
+      "fn_801FE52C"
+    ],
+    "nonmatching_functions": [
+      "fn_801FE2A8"
+    ],
+    "assigned_attempt": {
+      "symbol": "fn_801FE2A8",
+      "best_objdiff_percent": 98.333336,
+      "retail_bytes": 492,
+      "generated_bytes": 488,
+      "divergence": "GC/1.3 assigns the fallback global and condition discriminator to r3 and r0 instead of retail r0 and r3, rotates the post-call r3/r4 temporaries, and omits retail's extsb before the mode comparison, producing four fewer bytes."
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FE2A8-801FE56C-session-2025.json",
     "assigned_evidence": "reports/GEDE01/session-2025-fn_801FE2A8.json",
@@ -8192,10 +8618,25 @@
     "range": "0x801FE56C..0x801FE890",
     "matched_bytes": 88,
     "nonmatching_bytes": 716,
-    "matched_functions": ["fn_801FE838"],
-    "nonmatching_functions": ["fn_801FE56C"],
-    "assigned_attempt": {"symbol": "fn_801FE56C", "best_objdiff_percent": 95.73743, "retail_bytes": 716, "generated_bytes": 712, "divergence": "GC/1.3 rotates six long-lived mask/index roles across r25-r30 and folds the feature-mask initialization, emitting one instruction fewer than retail."},
-    "continuation_attempt": {"symbol": "fn_801FE838", "best_objdiff_percent": 100.0, "retail_bytes": 88, "generated_bytes": 88},
+    "matched_functions": [
+      "fn_801FE838"
+    ],
+    "nonmatching_functions": [
+      "fn_801FE56C"
+    ],
+    "assigned_attempt": {
+      "symbol": "fn_801FE56C",
+      "best_objdiff_percent": 95.73743,
+      "retail_bytes": 716,
+      "generated_bytes": 712,
+      "divergence": "GC/1.3 rotates six long-lived mask/index roles across r25-r30 and folds the feature-mask initialization, emitting one instruction fewer than retail."
+    },
+    "continuation_attempt": {
+      "symbol": "fn_801FE838",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 88,
+      "generated_bytes": 88
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FE56C-801FE890-session-2026.json",
     "assigned_evidence": "reports/GEDE01/session-2026-fn_801FE56C-attempt.json",
@@ -8209,9 +8650,22 @@
     "range": "0x801FE890..0x801FE9DC",
     "matched_bytes": 332,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FE890", "fn_801FE8DC", "fn_801FE900", "fn_801FE934", "fn_801FE96C", "fn_801FE9A4"],
+    "matched_functions": [
+      "fn_801FE890",
+      "fn_801FE8DC",
+      "fn_801FE900",
+      "fn_801FE934",
+      "fn_801FE96C",
+      "fn_801FE9A4"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FE890", "best_objdiff_percent": 100.0, "retail_bytes": 76, "generated_bytes": 76, "resolution": "A 12-byte aggregate assignment reproduces retail's paired word-load and word-store schedule."},
+    "assigned_attempt": {
+      "symbol": "fn_801FE890",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 76,
+      "generated_bytes": 76,
+      "resolution": "A 12-byte aggregate assignment reproduces retail's paired word-load and word-store schedule."
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FE890-801FE9DC-session-2027.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2027-reloc-strict.json",
@@ -8223,9 +8677,20 @@
     "range": "0x801FE9DC..0x801FEB54",
     "matched_bytes": 376,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FE9DC", "fn_801FEA10", "fn_801FEA44", "fn_801FEA8C", "fn_801FEB2C"],
+    "matched_functions": [
+      "fn_801FE9DC",
+      "fn_801FEA10",
+      "fn_801FEA44",
+      "fn_801FEA8C",
+      "fn_801FEB2C"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FE9DC", "best_objdiff_percent": 100.0, "retail_bytes": 52, "generated_bytes": 52},
+    "assigned_attempt": {
+      "symbol": "fn_801FE9DC",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 52,
+      "generated_bytes": 52
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FE9DC-801FEB54-session-2028.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2028-reloc-strict.json",
@@ -8238,10 +8703,27 @@
     "range": "0x801FEB54..0x801FED48",
     "matched_bytes": 196,
     "nonmatching_bytes": 304,
-    "matched_functions": ["fn_801FEC84"],
-    "nonmatching_functions": ["fn_801FEB54"],
-    "assigned_attempt": {"symbol": "fn_801FEB54", "best_objdiff_percent": 95.32895, "retail_bytes": 304, "generated_bytes": 304, "measurement_command": "jq -r '\"canonical_percent=\\(.left.sections[]|select(.name==\".text\")|.match_percent) retail_bytes=\\(.left.sections[]|select(.name==\".text\")|.size) generated_bytes=\\(.right.sections[]|select(.name==\".text\")|.size)\"' reports/GEDE01/session-2029-remediation-1-fn_801FEB54.json", "raw_output": "canonical_percent=95.32895 retail_bytes=304 generated_bytes=304", "divergence": "The source now binds the retail .sbss objects as two-entry arrays at 8-byte strides, with the usage counter signed so the final guard emits cmpw. Canonical and relocation-strict objdiff now have equal relocation targets. Remaining divergence is the or-versus-andc nonzero-remainder discriminator and register scheduling around the final stores."},
-    "continuation_attempt": {"symbol": "fn_801FEC84", "best_objdiff_percent": 100.0, "retail_bytes": 196, "generated_bytes": 196},
+    "matched_functions": [
+      "fn_801FEC84"
+    ],
+    "nonmatching_functions": [
+      "fn_801FEB54"
+    ],
+    "assigned_attempt": {
+      "symbol": "fn_801FEB54",
+      "best_objdiff_percent": 95.32895,
+      "retail_bytes": 304,
+      "generated_bytes": 304,
+      "measurement_command": "jq -r '\"canonical_percent=\\(.left.sections[]|select(.name==\".text\")|.match_percent) retail_bytes=\\(.left.sections[]|select(.name==\".text\")|.size) generated_bytes=\\(.right.sections[]|select(.name==\".text\")|.size)\"' reports/GEDE01/session-2029-remediation-1-fn_801FEB54.json",
+      "raw_output": "canonical_percent=95.32895 retail_bytes=304 generated_bytes=304",
+      "divergence": "The source now binds the retail .sbss objects as two-entry arrays at 8-byte strides, with the usage counter signed so the final guard emits cmpw. Canonical and relocation-strict objdiff now have equal relocation targets. Remaining divergence is the or-versus-andc nonzero-remainder discriminator and register scheduling around the final stores."
+    },
+    "continuation_attempt": {
+      "symbol": "fn_801FEC84",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 196,
+      "generated_bytes": 196
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FEB54-801FED48-session-b3d91601.json",
     "assigned_evidence": "reports/GEDE01/session-2029-remediation-1-fn_801FEB54.json",
@@ -8257,9 +8739,18 @@
     "range": "0x801FED48..0x801FEF20",
     "matched_bytes": 472,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FED48", "fn_801FEE10", "fn_801FEE98"],
+    "matched_functions": [
+      "fn_801FED48",
+      "fn_801FEE10",
+      "fn_801FEE98"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FED48", "best_objdiff_percent": 100.0, "retail_bytes": 200, "generated_bytes": 200},
+    "assigned_attempt": {
+      "symbol": "fn_801FED48",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 200,
+      "generated_bytes": 200
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FED48-801FEF20-session-2031.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2031-reloc-strict.json",
@@ -8272,9 +8763,17 @@
     "range": "0x801FEF20..0x801FF008",
     "matched_bytes": 232,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FEF20", "fn_801FEF90"],
+    "matched_functions": [
+      "fn_801FEF20",
+      "fn_801FEF90"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FEF20", "best_objdiff_percent": 100.0, "retail_bytes": 112, "generated_bytes": 112},
+    "assigned_attempt": {
+      "symbol": "fn_801FEF20",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 112,
+      "generated_bytes": 112
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FEF20-801FF008-session-2032.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2032-reloc-strict.json",
@@ -8287,10 +8786,25 @@
     "range": "0x801FF008..0x801FF2F8",
     "matched_bytes": 188,
     "nonmatching_bytes": 564,
-    "matched_functions": ["fn_801FF23C"],
-    "nonmatching_functions": ["fn_801FF008"],
-    "assigned_attempt": {"symbol": "fn_801FF008", "best_objdiff_percent": 92.680855, "retail_bytes": 564, "generated_bytes": 564, "divergence": "Exact-size and structurally aligned C retains a different GC/1.3 nonvolatile-register allocation across the nested record loop."},
-    "continuation_attempt": {"symbol": "fn_801FF23C", "best_objdiff_percent": 100.0, "retail_bytes": 188, "generated_bytes": 188},
+    "matched_functions": [
+      "fn_801FF23C"
+    ],
+    "nonmatching_functions": [
+      "fn_801FF008"
+    ],
+    "assigned_attempt": {
+      "symbol": "fn_801FF008",
+      "best_objdiff_percent": 92.680855,
+      "retail_bytes": 564,
+      "generated_bytes": 564,
+      "divergence": "Exact-size and structurally aligned C retains a different GC/1.3 nonvolatile-register allocation across the nested record loop."
+    },
+    "continuation_attempt": {
+      "symbol": "fn_801FF23C",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 188,
+      "generated_bytes": 188
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FF008-801FF2F8-session-2033.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2033-reloc-strict.json",
@@ -8303,10 +8817,34 @@
     "range": "0x801FF5EC..0x801FF750",
     "matched_bytes": 92,
     "nonmatching_bytes": 264,
-    "matched_functions": ["fn_801FF6F4", "fn_801FF704"],
-    "nonmatching_functions": ["fn_801FF5EC"],
-    "assigned_attempt": {"symbol": "fn_801FF5EC", "best_objdiff_percent": 98.333336, "retail_bytes": 264, "generated_bytes": 260, "divergence": "GC/1.3 reuses the r5 value loaded by the second list scan as the remaining-list head, while retail reloads scan->next into nonvolatile r28 before the splice stores; the generated function is one instruction shorter."},
-    "continuation_attempts": [{"symbol": "fn_801FF6F4", "best_objdiff_percent": 100.0, "retail_bytes": 16, "generated_bytes": 16}, {"symbol": "fn_801FF704", "best_objdiff_percent": 100.0, "retail_bytes": 76, "generated_bytes": 76}],
+    "matched_functions": [
+      "fn_801FF6F4",
+      "fn_801FF704"
+    ],
+    "nonmatching_functions": [
+      "fn_801FF5EC"
+    ],
+    "assigned_attempt": {
+      "symbol": "fn_801FF5EC",
+      "best_objdiff_percent": 98.333336,
+      "retail_bytes": 264,
+      "generated_bytes": 260,
+      "divergence": "GC/1.3 reuses the r5 value loaded by the second list scan as the remaining-list head, while retail reloads scan->next into nonvolatile r28 before the splice stores; the generated function is one instruction shorter."
+    },
+    "continuation_attempts": [
+      {
+        "symbol": "fn_801FF6F4",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 16,
+        "generated_bytes": 16
+      },
+      {
+        "symbol": "fn_801FF704",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 76,
+        "generated_bytes": 76
+      }
+    ],
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FF5EC-801FF750-session-2036.json",
     "assigned_evidence": "reports/GEDE01/objdiff-fn_801FF5EC-session-2036-attempt.json",
@@ -8320,10 +8858,25 @@
     "range": "0x801FF750..0x801FF838",
     "matched_bytes": 232,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FF750", "fn_801FF7D4"],
+    "matched_functions": [
+      "fn_801FF750",
+      "fn_801FF7D4"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FF750", "best_objdiff_percent": 100.0, "retail_bytes": 132, "generated_bytes": 132},
-    "continuation_attempts": [{"symbol": "fn_801FF7D4", "best_objdiff_percent": 100.0, "retail_bytes": 100, "generated_bytes": 100}],
+    "assigned_attempt": {
+      "symbol": "fn_801FF750",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 132,
+      "generated_bytes": 132
+    },
+    "continuation_attempts": [
+      {
+        "symbol": "fn_801FF7D4",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 100,
+        "generated_bytes": 100
+      }
+    ],
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FF750-801FF838-session-2037.json",
     "relocation_strict_evidence": "reports/GEDE01/session-2037-reloc-strict.json",
@@ -8336,10 +8889,25 @@
     "range": "0x801FF838..0x801FF9A0",
     "matched_bytes": 360,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FF838", "fn_801FF8EC"],
+    "matched_functions": [
+      "fn_801FF838",
+      "fn_801FF8EC"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FF838", "best_objdiff_percent": 100.0, "retail_bytes": 180, "generated_bytes": 180},
-    "continuation_attempts": [{"symbol": "fn_801FF8EC", "best_objdiff_percent": 100.0, "retail_bytes": 180, "generated_bytes": 180}],
+    "assigned_attempt": {
+      "symbol": "fn_801FF838",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 180,
+      "generated_bytes": 180
+    },
+    "continuation_attempts": [
+      {
+        "symbol": "fn_801FF8EC",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 180,
+        "generated_bytes": 180
+      }
+    ],
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FF838-801FF9A0-session-2038.json",
     "assigned_evidence": "reports/GEDE01/objdiff-fn_801FF838-session-2038.json",
@@ -8354,15 +8922,54 @@
     "range": "0x801FF9A0..0x801FFD08",
     "matched_bytes": 108,
     "nonmatching_bytes": 764,
-    "matched_functions": ["fn_801FF9A0", "fn_801FFCE0", "fn_801FFCE4", "fn_801FFCF0", "fn_801FFCFC"],
-    "nonmatching_functions": ["fn_801FF9E4"],
-    "assigned_attempt": {"symbol": "fn_801FF9A0", "best_objdiff_percent": 100.0, "retail_bytes": 68, "generated_bytes": 68},
+    "matched_functions": [
+      "fn_801FF9A0",
+      "fn_801FFCE0",
+      "fn_801FFCE4",
+      "fn_801FFCF0",
+      "fn_801FFCFC"
+    ],
+    "nonmatching_functions": [
+      "fn_801FF9E4"
+    ],
+    "assigned_attempt": {
+      "symbol": "fn_801FF9A0",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 68,
+      "generated_bytes": 68
+    },
     "continuation_attempts": [
-      {"symbol": "fn_801FF9E4", "best_objdiff_percent": 84.219894, "retail_bytes": 764, "generated_bytes": 712, "divergence": "The reconstructed render loop has the correct broad state setup, command filtering, FIFO emission, and nested index traversal, but GC/1.3 emits a 0x50-byte frame with stmw r19 instead of retail's 0x40-byte frame with stmw r21, and schedules the packed-color and display-list operations differently."},
-      {"symbol": "fn_801FFCE0", "best_objdiff_percent": 100.0, "retail_bytes": 4, "generated_bytes": 4},
-      {"symbol": "fn_801FFCE4", "best_objdiff_percent": 100.0, "retail_bytes": 12, "generated_bytes": 12},
-      {"symbol": "fn_801FFCF0", "best_objdiff_percent": 100.0, "retail_bytes": 12, "generated_bytes": 12},
-      {"symbol": "fn_801FFCFC", "best_objdiff_percent": 100.0, "retail_bytes": 12, "generated_bytes": 12}
+      {
+        "symbol": "fn_801FF9E4",
+        "best_objdiff_percent": 84.219894,
+        "retail_bytes": 764,
+        "generated_bytes": 712,
+        "divergence": "The reconstructed render loop has the correct broad state setup, command filtering, FIFO emission, and nested index traversal, but GC/1.3 emits a 0x50-byte frame with stmw r19 instead of retail's 0x40-byte frame with stmw r21, and schedules the packed-color and display-list operations differently."
+      },
+      {
+        "symbol": "fn_801FFCE0",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 4,
+        "generated_bytes": 4
+      },
+      {
+        "symbol": "fn_801FFCE4",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 12,
+        "generated_bytes": 12
+      },
+      {
+        "symbol": "fn_801FFCF0",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 12,
+        "generated_bytes": 12
+      },
+      {
+        "symbol": "fn_801FFCFC",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 12,
+        "generated_bytes": 12
+      }
     ],
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FF9A0-801FFD08-session-2039.json",
@@ -8379,9 +8986,16 @@
     "range": "0x801FFD08..0x801FFE78",
     "matched_bytes": 368,
     "nonmatching_bytes": 0,
-    "matched_functions": ["fn_801FFD08"],
+    "matched_functions": [
+      "fn_801FFD08"
+    ],
     "nonmatching_functions": [],
-    "assigned_attempt": {"symbol": "fn_801FFD08", "best_objdiff_percent": 100.0, "retail_bytes": 368, "generated_bytes": 368},
+    "assigned_attempt": {
+      "symbol": "fn_801FFD08",
+      "best_objdiff_percent": 100,
+      "retail_bytes": 368,
+      "generated_bytes": 368
+    },
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FFD08-801FFE78-session-2041.json",
     "assigned_evidence": "reports/GEDE01/objdiff-fn_801FFD08-session-2041.json",
@@ -8395,10 +9009,34 @@
     "range": "0x801FFE78..0x80200338",
     "matched_bytes": 24,
     "nonmatching_bytes": 1192,
-    "matched_functions": ["fn_80200320", "fn_80200324"],
-    "nonmatching_functions": ["fn_801FFE78"],
-    "assigned_attempt": {"symbol": "fn_801FFE78", "best_objdiff_percent": 91.63758, "retail_bytes": 1192, "generated_bytes": 1176, "divergence": "GC/1.3 emits a 0x120-byte frame instead of retail's 0x140-byte frame, assigns the seven long-lived floating values and four Vec3 locals to different registers and stack slots, and schedules the ring setup and loop operations differently; the generated function is four instructions shorter."},
-    "continuation_attempts": [{"symbol": "fn_80200320", "best_objdiff_percent": 100.0, "retail_bytes": 4, "generated_bytes": 4}, {"symbol": "fn_80200324", "best_objdiff_percent": 100.0, "retail_bytes": 20, "generated_bytes": 20}],
+    "matched_functions": [
+      "fn_80200320",
+      "fn_80200324"
+    ],
+    "nonmatching_functions": [
+      "fn_801FFE78"
+    ],
+    "assigned_attempt": {
+      "symbol": "fn_801FFE78",
+      "best_objdiff_percent": 91.63758,
+      "retail_bytes": 1192,
+      "generated_bytes": 1176,
+      "divergence": "GC/1.3 emits a 0x120-byte frame instead of retail's 0x140-byte frame, assigns the seven long-lived floating values and four Vec3 locals to different registers and stack slots, and schedules the ring setup and loop operations differently; the generated function is four instructions shorter."
+    },
+    "continuation_attempts": [
+      {
+        "symbol": "fn_80200320",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 4,
+        "generated_bytes": 4
+      },
+      {
+        "symbol": "fn_80200324",
+        "best_objdiff_percent": 100,
+        "retail_bytes": 20,
+        "generated_bytes": 20
+      }
+    ],
     "unaccounted_spans": [],
     "frontier_evidence": "reports/GEDE01/frontier-801FFE78-80200338-session-2042.json",
     "assigned_evidence": "reports/GEDE01/fn_801FFE78-session-2042-objdiff.json",

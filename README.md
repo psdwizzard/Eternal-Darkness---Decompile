@@ -50,15 +50,13 @@ See `docs/` for the clean-room boundary, current analysis, compiler experiment m
 <!-- progress:start -->
 ## Progress
 
-Generated from `objdiff` build evidence (`reports/GEDE01/progress.json`), verified against `main.dol` SHA-1 `ea24b6af954876ce072562ff39cdb4c81d32be1f`.
+Verified DOL SHA-1: `ea24b6af954876ce072562ff39cdb4c81d32be1f`.
 
 | Metric | Matched | Total | Percent |
 | --- | ---: | ---: | ---: |
-| Code bytes | 937,948 | 2,300,692 | **40.77%** |
-| Functions | 5,617 | 8,214 | 68.38% |
-| Objects (TUs) | 5,852 | 6,898 | 84.84% |
-
-Denominators are the whole retail `main.dol`. Percentages count only functions that `objdiff` reports at 100%, relocations included; reconstructions registered as documented `NonMatching` are not counted. Most matched objects are small, so the object percentage runs far ahead of the code percentage — **code bytes is the honest measure of how far along this is.**
+| Code bytes | 938060 | 2300692 | 40.77% |
+| Functions | 5618 | 8214 | 68.40% |
+| Objects (TUs) | 5853 | 6899 | 84.84% |
 <!-- progress:end -->
 
 <!-- contributors:start -->
