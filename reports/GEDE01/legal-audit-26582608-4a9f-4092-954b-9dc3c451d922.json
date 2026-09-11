@@ -1,0 +1,105 @@
+{
+  "source": "src/game/game_fn_80201750.c",
+  "declarations": 0,
+  "symbols": 0,
+  "definitions": 0,
+  "ground_truth_by_symbol": {
+    "fn_802006D4": {
+      "kind": "retail-epilogue",
+      "return_shape": "GPR:r3",
+      "source": "build/GEDE01/asm/auto_03_801CE384_text.s:802007AC-802007D8",
+      "detail": "The loop increments r27 at 0x802007AC and the epilogue moves r27 to r3 at 0x802007C4 before returning."
+    },
+    "fn_8012B750": {
+      "kind": "retail-epilogue",
+      "return_shape": "FPR:f1",
+      "source": "orig/GEDE01/sys/main.dol:8012B750-8012B7A0",
+      "detail": "Both value paths load or negate the result into f1 at 0x8012B77C-0x8012B788; the epilogue does not overwrite f1 before blr at 0x8012B79C."
+    },
+    "fn_8020123C": {
+      "kind": "retail-epilogue",
+      "return_shape": "GPR:r3-r4",
+      "source": "orig/GEDE01/sys/main.dol:8020123C-802012A0",
+      "detail": "The final call to fn_8020088C at 0x80201288 produces r3:r4; fn_8020123C restores only r0 and r31 and returns without overwriting either result register. fn_8020088C's epilogue explicitly loads r4 at 0x80200AFC and moves r31 to r3 at 0x80200B00."
+    },
+    "fn_80201E78": {
+      "kind": "retail-epilogue",
+      "return_shape": "none",
+      "source": "orig/GEDE01/sys/main.dol:80201E78-80201EB8",
+      "detail": "The callee preserves incoming r3 as a destination pointer, resolves the source through fn_80201BC8, and passes destination and source to fn_8011F114. This is an aggregate hidden-result convention, not a scalar return register."
+    },
+    "fn_8020D318": {
+      "kind": "retail-epilogue",
+      "return_shape": "GPR:r3",
+      "source": "orig/GEDE01/sys/main.dol:8020D318-8020D3F4",
+      "detail": "The no-message path writes 0 to r3 at 0x8020D360 and the success path writes 1 to r3 at 0x8020D3D0; both flow to the common epilogue and blr at 0x8020D3F0."
+    },
+    "fn_80220234": {
+      "kind": "retail-epilogue",
+      "return_shape": "GPR:r3",
+      "source": "orig/GEDE01/sys/main.dol:80220234-802203B0",
+      "detail": "All exits produce a signed status in r3: early failures load -128 or -3, and the common path moves the status held in r30 to r3 at 0x80220398 before the epilogue."
+    },
+    "fn_8017B47C": {
+      "kind": "retail-epilogue",
+      "return_shape": "GPR:r3",
+      "source": "orig/GEDE01/sys/main.dol:8017B47C-8017B4F4",
+      "detail": "Each loop iteration calls fn_80220234 at 0x8017B4B8. A zero result branches directly to the epilogue at 0x8017B4D4, while loop exhaustion reaches the same epilogue with the last nonzero result; no instruction overwrites r3 before blr at 0x8017B4F0. Four independently matching retail callers consume this status from r3."
+    },
+    "fn_8017B8AC": {
+      "kind": "retail-epilogue",
+      "return_shape": "GPR:r3",
+      "source": "orig/GEDE01/sys/main.dol:8017B8AC-8017B8BC",
+      "detail": "The accessor forms lbl_8064A580 in r3, loads its signed integer field at offset 0x18 back into r3 at 0x8017B8B4, and returns it directly at 0x8017B8B8."
+    },
+    "fn_8017B904": {
+      "kind": "retail-epilogue",
+      "return_shape": "GPR:r3",
+      "source": "orig/GEDE01/sys/main.dol:8017B904-8017B914",
+      "detail": "The accessor forms lbl_8064A580 in r3, loads its signed integer field at offset 0x1C back into r3 at 0x8017B90C, and returns it directly at 0x8017B910."
+    },
+    "fn_80211A48": {
+      "kind": "retail-epilogue",
+      "return_shape": "none",
+      "source": "orig/GEDE01/sys/main.dol:80211A48-80211A6C",
+      "detail": "The paired-single add stores its result through the third parameter in r5 and returns directly at 0x80211A68 without writing r3."
+    },
+    "fn_80211AAC": {
+      "kind": "retail-epilogue",
+      "return_shape": "none",
+      "source": "orig/GEDE01/sys/main.dol:80211AAC-80211AF0",
+      "detail": "The normalized vector is stored through the second parameter in r4 and the function returns directly at 0x80211AEC without writing r3."
+    }
+  },
+  "retail_evidence_symbols": 11,
+  "applied_corrections": [],
+  "ground_truth_contradictions": [],
+  "return_register_contradictions": [],
+  "abi_divergent": [],
+  "cosmetic": [],
+  "session": {
+    "session_id": "durable-26582608-4a9f-4092-954b-9dc3c451d922",
+    "starting_target": "fn_80201750",
+    "ending_next_target": "fn_80201814",
+    "matched_bytes_added": 0,
+    "nonmatching_bytes_added": 0,
+    "match_counts_revised": false,
+    "verification": {
+      "build_command": ".tools/bin/ninja",
+      "build_status": "passed",
+      "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+      "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+      "dol_byte_change": false,
+      "affected_objects_100_percent": [
+        {
+          "name": "main/game/game_fn_80201750",
+          "matched_code_percent": 100.0,
+          "complete_code_percent": 100.0,
+          "complete": true,
+          "source": "build/GEDE01/report.json"
+        }
+      ],
+      "evidence_report": "reports/GEDE01/objdiff-26582608-4a9f-4092-954b-9dc3c451d922.json"
+    }
+  }
+}
