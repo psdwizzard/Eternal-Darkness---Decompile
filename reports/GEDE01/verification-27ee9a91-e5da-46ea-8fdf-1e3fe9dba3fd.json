@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "assignment_id": "27ee9a91-e5da-46ea-8fdf-1e3fe9dba3fd",
+  "target": "fn_8020123C",
+  "compiler": "GC/1.3",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8020123C fn_8020123C -o reports/GEDE01/objdiff-27ee9a91-e5da-46ea-8fdf-1e3fe9dba3fd.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8020123C fn_8020123C -o reports/GEDE01/objdiff-27ee9a91-e5da-46ea-8fdf-1e3fe9dba3fd-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "canonical": {
+    "match_percent": 100.0,
+    "retail_bytes": 100,
+    "generated_bytes": 100
+  },
+  "relocation_strict": {
+    "match_percent": 100.0,
+    "differing_instruction_rows": 0,
+    "relocations": [
+      {"offset": 44, "type": "R_PPC_REL24", "target": "fn_80200BDC", "addend": 0},
+      {"offset": 48, "type": "R_PPC_EMB_SDA21", "target": "lbl_8064C3C0", "addend": 0},
+      {"offset": 68, "type": "R_PPC_EMB_SDA21", "target": "lbl_8064C3C0", "addend": 0},
+      {"offset": 76, "type": "R_PPC_REL24", "target": "fn_8020088C", "addend": 0}
+    ]
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_check": "build/GEDE01/main.dol: OK",
+  "legal_audit": {
+    "command_output": "legal audit passed (13492 tracked project files inspected)",
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false
+  }
+}
