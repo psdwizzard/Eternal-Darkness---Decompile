@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "assignment_id": "3fd5a82a-f3c6-4514-9484-8a08ff7dee9c",
+  "attempt": 2,
+  "target": "fn_8015CFFC",
+  "compiler": "GC/1.3",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8015CFFC fn_8015CFFC -o reports/GEDE01/objdiff-3fd5a82a-f3c6-4514-9484-8a08ff7dee9c.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8015CFFC fn_8015CFFC -o reports/GEDE01/objdiff-3fd5a82a-f3c6-4514-9484-8a08ff7dee9c-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "build": {
+    "configure_exit": 0,
+    "ninja_exit": 0,
+    "dol_check_output": "build/GEDE01/main.dol: OK"
+  },
+  "canonical": {
+    "match_percent": 99.91304,
+    "retail_bytes": 460,
+    "generated_bytes": 460,
+    "retail_instructions": 115,
+    "generated_instructions": 115
+  },
+  "relocation_strict": {
+    "match_percent": 99.91304,
+    "relocations_equal": true,
+    "retail_relocation_count": 8,
+    "generated_relocation_count": 8,
+    "targets_and_addends": [
+      {"offset": 56, "type": "R_PPC_REL24", "target": "fn_8020D318", "addend": 0},
+      {"offset": 80, "type": "R_PPC_REL24", "target": "fn_80158850", "addend": 0},
+      {"offset": 120, "type": "R_PPC_REL24", "target": "fn_80158850", "addend": 0},
+      {"offset": 148, "type": "R_PPC_REL24", "target": "fn_8020D250", "addend": 0},
+      {"offset": 184, "type": "R_PPC_REL24", "target": "fn_8020D318", "addend": 0},
+      {"offset": 304, "type": "R_PPC_REL24", "target": "memcpy", "addend": 0},
+      {"offset": 316, "type": "R_PPC_REL24", "target": "DCFlushRange", "addend": 0},
+      {"offset": 416, "type": "R_PPC_REL24", "target": "fn_8020D250", "addend": 0}
+    ]
+  },
+  "instruction_differences": [
+    {"offset": 64, "retail": "mr r27, r3", "generated": "mr r28, r3", "kind": "DIFF_ARG_MISMATCH"},
+    {"offset": 92, "retail": "cmpwi r27, 0x0", "generated": "cmpwi r28, 0x0", "kind": "DIFF_ARG_MISMATCH"}
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_8015CFFC.c",
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "runtime_or_gate_edits": false
+  }
+}
