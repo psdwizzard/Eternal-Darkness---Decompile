@@ -1,0 +1,18 @@
+{
+  "session_id": "session-2047",
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+  "canonical": {"matching_objects": 5846, "total_objects": 6892, "matching_functions": 5611, "total_functions": 8214, "matching_code_bytes": 936840, "linked_code_bytes": 936840, "code_percent": 40.719925},
+  "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-2047-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+  "relocation_strict": {"matching_objects": 5846, "matching_functions": 5606, "matching_code_bytes": 935156, "linked_code_bytes": 936840},
+  "function_evidence": [
+    {"symbol": "fn_80200C40", "bytes": 12, "canonical": "reports/GEDE01/objdiff-fn_80200C40-session-2047.json", "relocation_strict": "reports/GEDE01/objdiff-fn_80200C40-session-2047-reloc-strict.json", "relocations": "1/1"},
+    {"symbol": "fn_80200C4C", "bytes": 8, "canonical": "reports/GEDE01/objdiff-fn_80200C4C-session-2047.json", "relocation_strict": "reports/GEDE01/objdiff-fn_80200C4C-session-2047-reloc-strict.json", "relocations": "0/0"},
+    {"symbol": "fn_80200C54", "bytes": 12, "canonical": "reports/GEDE01/objdiff-fn_80200C54-session-2047.json", "relocation_strict": "reports/GEDE01/objdiff-fn_80200C54-session-2047-reloc-strict.json", "relocations": "0/0"},
+    {"symbol": "fn_80200C60", "bytes": 4, "canonical": "reports/GEDE01/objdiff-fn_80200C60-session-2047.json", "relocation_strict": "reports/GEDE01/objdiff-fn_80200C60-session-2047-reloc-strict.json", "relocations": "0/0"},
+    {"symbol": "fn_80200C64", "bytes": 16, "canonical": "reports/GEDE01/objdiff-fn_80200C64-session-2047.json", "relocation_strict": "reports/GEDE01/objdiff-fn_80200C64-session-2047-reloc-strict.json", "relocations": "0/0"}
+  ],
+  "full_build_command": ".tools/bin/ninja build/GEDE01/main.dol",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "retail_cmp_exit": 0,
+  "legal_audit": "passed; 13425 tracked project files inspected"
+}

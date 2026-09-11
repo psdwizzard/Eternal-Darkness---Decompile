@@ -1,0 +1,18 @@
+{
+  "session_id": "session-2049",
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+  "canonical": {"matching_objects": 5852, "total_objects": 6898, "matching_functions": 5617, "total_functions": 8214, "matching_code_bytes": 937948, "linked_code_bytes": 937948, "code_percent": 40.76808},
+  "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-2049-reloc-strict.json -c function_reloc_diffs=name_address",
+  "relocation_strict": {"matching_objects": 5852, "matching_functions": 5612, "matching_code_bytes": 936264, "linked_code_bytes": 937948},
+  "function_evidence": [
+    {"symbol": "fn_80200E1C", "bytes": 144, "canonical": "reports/GEDE01/objdiff-fn_80200E1C-session-2049.json", "relocation_strict": "reports/GEDE01/objdiff-fn_80200E1C-session-2049-reloc-strict.json", "relocations": "all equal"},
+    {"symbol": "fn_80200EAC", "bytes": 144, "canonical": "reports/GEDE01/objdiff-fn_80200EAC-session-2049.json", "relocation_strict": "reports/GEDE01/objdiff-fn_80200EAC-session-2049-reloc-strict.json", "relocations": "all equal"},
+    {"symbol": "fn_80200F3C", "bytes": 132, "canonical": "reports/GEDE01/objdiff-fn_80200F3C-session-2049.json", "relocation_strict": "reports/GEDE01/objdiff-fn_80200F3C-session-2049-reloc-strict.json", "relocations": "all equal"},
+    {"symbol": "fn_80200FC0", "bytes": 140, "canonical": "reports/GEDE01/objdiff-fn_80200FC0-session-2049.json", "relocation_strict": "reports/GEDE01/objdiff-fn_80200FC0-session-2049-reloc-strict.json", "relocations": "all equal"},
+    {"symbol": "fn_8020104C", "bytes": 124, "canonical": "reports/GEDE01/objdiff-fn_8020104C-session-2049.json", "relocation_strict": "reports/GEDE01/objdiff-fn_8020104C-session-2049-reloc-strict.json", "relocations": "all equal"}
+  ],
+  "full_build_command": ".tools/bin/ninja build/GEDE01/main.dol",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "retail_cmp_exit": 0,
+  "legal_audit": "passed; 13467 tracked project files inspected"
+}

@@ -54,9 +54,9 @@ Generated from `objdiff` build evidence (`reports/GEDE01/progress.json`), verifi
 
 | Metric | Matched | Total | Percent |
 | --- | ---: | ---: | ---: |
-| Code bytes | 921,612 | 2,300,692 | **40.06%** |
-| Functions | 5,486 | 8,214 | 66.79% |
-| Objects (TUs) | 5,721 | 6,748 | 84.78% |
+| Code bytes | 937,948 | 2,300,692 | **40.77%** |
+| Functions | 5,617 | 8,214 | 68.38% |
+| Objects (TUs) | 5,852 | 6,898 | 84.84% |
 
 Denominators are the whole retail `main.dol`. Percentages count only functions that `objdiff` reports at 100%, relocations included; reconstructions registered as documented `NonMatching` are not counted. Most matched objects are small, so the object percentage runs far ahead of the code percentage — **code bytes is the honest measure of how far along this is.**
 <!-- progress:end -->
@@ -72,7 +72,7 @@ relocation-strict bases, with the whole-DOL SHA-1 gate unchanged.
 
 | Contributor | Functions | Matched code bytes | Share of all matched code |
 | --- | ---: | ---: | ---: |
-| **Andrew** ([@ateich](https://github.com/ateich)) | 554 | 181,468 | 19.7% |
+| **Andrew** ([@ateich](https://github.com/ateich)) | 554 | 181,468 | 19.3% |
 
 That is **181,468 bytes of retail code** this project did not have to match on its own. Thank you.
 

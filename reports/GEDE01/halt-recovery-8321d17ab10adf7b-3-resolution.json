@@ -1,0 +1,67 @@
+{
+  "halt_id": "8321d17ab10adf7b-3",
+  "scope": "Scheduler halt recovery only; no decompilation or unrelated frontier work was performed.",
+  "disposition": {
+    "status": "repaired",
+    "dispatch_released": true,
+    "next_dispatch_target": "0x80200C40",
+    "summary": "The authoritative chain was returned from MERGE_RECOVERY to READY only after proving that canonical merge 8a4fc4e03 already contains the reviewed session-2046 snapshot 8114a0a7c and that all reconstruction gates still pass. The parked batch was accepted exactly once at its verified candidate frontier 0x80200C40; no later function was credited or skipped."
+  },
+  "root_cause": {
+    "summary": "The scheduler sampled the worktree's live HEAD after session completion instead of retaining the reviewed session snapshot. A later operational commit, 5d1fa109a, therefore replaced 8114a0a7c in chain.agent_commit. Canonical merge 8a4fc4e03 had correctly integrated 8114a0a7c, but did not contain the unrelated operational commit. Recovery consequently misclassified the approved batch as absent and attempted to merge the moving agent branch. It then correctly refused because the canonical checkout had one uncommitted tracked file.",
+    "session_snapshot": "8114a0a7c7b716d85cf2fa2d69186e52dea57acc",
+    "misrecorded_operational_head": "5d1fa109ad179bcca65e79f0635c6fd2d136bb27",
+    "canonical_merge": "8a4fc4e03fd91626373889633635f315e0aefd97",
+    "operational_only_paths": [
+      "scripts/decomp-publish-mirror.sh",
+      "scripts/decomp-scheduler.mjs"
+    ]
+  },
+  "ancestry_verification": {
+    "command": "git merge-base --is-ancestor 8114a0a7c7b716d85cf2fa2d69186e52dea57acc 8a4fc4e03fd91626373889633635f315e0aefd97; printf 'session_in_canonical_exit=%s\\n' \"$?\"; git merge-base --is-ancestor 5d1fa109ad179bcca65e79f0635c6fd2d136bb27 8a4fc4e03fd91626373889633635f315e0aefd97; printf 'operational_head_in_canonical_exit=%s\\n' \"$?\"; git show -s --format='canonical=%H%nparents=%P%nsubject=%s' 8a4fc4e03fd91626373889633635f315e0aefd97; git diff --name-only 8114a0a7c7b716d85cf2fa2d69186e52dea57acc..5d1fa109ad179bcca65e79f0635c6fd2d136bb27",
+    "raw_output": "session_in_canonical_exit=0\\noperational_head_in_canonical_exit=1\\ncanonical=8a4fc4e03fd91626373889633635f315e0aefd97\\nparents=5c1ab5292408bb874fafeacfe7abaf36ec52d93f 8114a0a7c7b716d85cf2fa2d69186e52dea57acc\\nsubject=Merge agent/8f1c3278-8547-4bb9-b1a3-8f74c2df5aeb into refs/heads/checkpoint/foundry-runtime-2026-07-17\\nscripts/decomp-publish-mirror.sh\\nscripts/decomp-scheduler.mjs",
+    "verified": true
+  },
+  "frontier_invariant": {
+    "command": "jq -r '.next_target' reports/GEDE01/progress.json",
+    "raw_output": "0x80200C40",
+    "before": "0x80200C40",
+    "after": "0x80200C40",
+    "changed": false
+  },
+  "full_build": {
+    "command": ".tools/bin/ninja build/GEDE01/main.dol",
+    "exit_code": 0,
+    "raw_output_tail": "[802/802] DOL build/GEDE01/main.dol"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\\nbuild_exit=0\\nretail_cmp_exit=0",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  },
+  "affected_object_objdiff": {
+    "generation_command": "for addr in 80200C08 80200C10 80200C18 80200C20 80200C28 80200C30 80200C38; do build/tools/objdiff-cli diff -p . -u main/game/game_fn_$addr fn_$addr -o build/GEDE01/halt-recovery-8321d17ab10adf7b-3-resolution-$addr-canonical.json --format json; build/tools/objdiff-cli diff -p . -u main/game/game_fn_$addr fn_$addr -o build/GEDE01/halt-recovery-8321d17ab10adf7b-3-resolution-$addr-reloc-strict.json --format json -c function_reloc_diffs=name_address; done",
+    "raw_output": "canonical symbol=fn_80200C08 retail_bytes=8 generated_bytes=8 match_percent=100.0\\nreloc_strict symbol=fn_80200C08 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0\\ncanonical symbol=fn_80200C10 retail_bytes=8 generated_bytes=8 match_percent=100.0\\nreloc_strict symbol=fn_80200C10 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0\\ncanonical symbol=fn_80200C18 retail_bytes=8 generated_bytes=8 match_percent=100.0\\nreloc_strict symbol=fn_80200C18 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0\\ncanonical symbol=fn_80200C20 retail_bytes=8 generated_bytes=8 match_percent=100.0\\nreloc_strict symbol=fn_80200C20 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0\\ncanonical symbol=fn_80200C28 retail_bytes=8 generated_bytes=8 match_percent=100.0\\nreloc_strict symbol=fn_80200C28 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0\\ncanonical symbol=fn_80200C30 retail_bytes=8 generated_bytes=8 match_percent=100.0\\nreloc_strict symbol=fn_80200C30 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0\\ncanonical symbol=fn_80200C38 retail_bytes=8 generated_bytes=8 match_percent=100.0\\nreloc_strict symbol=fn_80200C38 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0",
+    "verified": true
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (13424 tracked project files inspected)"
+  },
+  "repaired_chain_state": {
+    "state": "READY",
+    "assigned_target": null,
+    "accepted_frontier": "0x80200C40",
+    "candidate_frontier": "0x80200C40",
+    "agent_commit": "8114a0a7c7b716d85cf2fa2d69186e52dea57acc",
+    "merged_commit": "8a4fc4e03fd91626373889633635f315e0aefd97",
+    "review_verdict": "APPROVE",
+    "review_complete": true,
+    "merge_complete": true,
+    "verification_complete": true,
+    "recovery_reason": null
+  },
+  "gate_changes": "None. DOL SHA-1, exact-build, relocation, objdiff, legal-audit, source, split, symbol, and progress gates were neither weakened nor bypassed."
+}

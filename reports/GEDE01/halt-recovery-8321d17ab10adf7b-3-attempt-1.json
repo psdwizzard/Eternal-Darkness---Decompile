@@ -1,0 +1,55 @@
+{
+  "halt_id": "8321d17ab10adf7b-3",
+  "attempt": 1,
+  "scope": "Halt recovery only; no decompilation frontier work or unrelated matching was performed.",
+  "disposition": {
+    "status": "blocked_by_workspace_boundary",
+    "halt_left_intact": true,
+    "founder_choice_required": false,
+    "summary": "The requested halt says that the separate canonical checkout has one uncommitted tracked file. This isolated worktree is clean and has no merge in progress. The WORKSPACE CONSTRAINT permits reads and writes only inside this worktree, so this attempt cannot inspect the canonical tracked edit, prove that a reset or merge would retain both sides, or commit the canonical correction. No destructive or speculative action was taken and MERGE_RECOVERY was not cleared.",
+    "smallest_safe_next_action": "An operator with authority over the canonical checkout must inspect its one tracked diff, preserve or commit the authored change, verify that it retains the approved candidate, and retry integration. The tracked edit must not be discarded merely to clear the halt."
+  },
+  "halt_evidence": {
+    "reported_reason": "Chain parked in MERGE_RECOVERY and automatic repair declined: canonical repo has uncommitted tracked changes: 1 file(s).",
+    "isolated_state_command": "git status --porcelain=v1; test ! -e \"$(git rev-parse --git-path MERGE_HEAD)\"; printf 'isolated_merge_head_absent_exit=%s\\n' \"$?\"",
+    "isolated_state_raw_output": "isolated_merge_head_absent_exit=0",
+    "committed_chain_command": "jq -c '{state,session_id,assigned_target,accepted_frontier,candidate_frontier,agent_commit,merged_commit,review_verdict,review_complete,merge_complete,verification_complete,recovery_reason,updated_at}' .darkfoundry/decomp-chain-state.json",
+    "committed_chain_raw_output": "{\"state\":\"MERGE_RECOVERY\",\"session_id\":\"739e9099-811c-4e3d-97cf-97bb9a8ffa57\",\"assigned_target\":\"0x80200C08\",\"accepted_frontier\":\"0x80200C08\",\"candidate_frontier\":\"0x80200C40\",\"agent_commit\":\"5d1fa109ad179bcca65e79f0635c6fd2d136bb27\",\"merged_commit\":\"8a4fc4e03fd91626373889633635f315e0aefd97\",\"review_verdict\":\"APPROVE\",\"review_complete\":true,\"merge_complete\":false,\"verification_complete\":true,\"recovery_reason\":\"APPROVE recorded but candidate commit is not present in canonical branch\",\"updated_at\":\"2026-09-10T23:21:12.776Z\"}",
+    "ancestry_command": "git show -s --format='head=%H%nhead_parents=%P%nhead_subject=%s' HEAD; git show -s --format='merged_commit=%H%nmerged_parents=%P%nmerged_subject=%s' 8a4fc4e03fd91626373889633635f315e0aefd97; git merge-base HEAD 8a4fc4e03fd91626373889633635f315e0aefd97",
+    "ancestry_raw_output": "head=5d1fa109ad179bcca65e79f0635c6fd2d136bb27\nhead_parents=8114a0a7c7b716d85cf2fa2d69186e52dea57acc\nhead_subject=fix(decomp): make mirror publication fail-safe\nmerged_commit=8a4fc4e03fd91626373889633635f315e0aefd97\nmerged_parents=5c1ab5292408bb874fafeacfe7abaf36ec52d93f 8114a0a7c7b716d85cf2fa2d69186e52dea57acc\nmerged_subject=Merge agent/8f1c3278-8547-4bb9-b1a3-8f74c2df5aeb into refs/heads/checkpoint/foundry-runtime-2026-07-17\n8114a0a7c7b716d85cf2fa2d69186e52dea57acc",
+    "interpretation": "The recorded merged commit already has approved session commit 8114a0a7c as its second parent. The later agent-head commit 5d1fa109a changes only repository-level scheduler publication files. Resolving the canonical dirty edit therefore requires canonical-checkout evidence; it is not a reason to alter game reconstruction artifacts or progress accounting."
+  },
+  "frontier_invariant": {
+    "command": "jq -r '\"next_target=\"+.next_target' reports/GEDE01/progress.json",
+    "raw_output": "next_target=0x80200C40",
+    "next_target_before_attempt": "0x80200C40",
+    "next_target_after_attempt": "0x80200C40",
+    "changed": false
+  },
+  "full_build": {
+    "command": ".tools/bin/ninja build/GEDE01/main.dol",
+    "exit_code": 0,
+    "raw_output_tail": "[801/802] LINK build/GEDE01/main.elf\n[802/802] DOL build/GEDE01/main.dol"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'retail_cmp_exit=%s\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nretail_cmp_exit=0",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  },
+  "affected_object_objdiff": {
+    "generation_command": "for addr in 80200C08 80200C10 80200C18 80200C20 80200C28 80200C30 80200C38; do build/tools/objdiff-cli diff -p . -u main/game/game_fn_$addr fn_$addr -o build/GEDE01/halt-recovery-8321d17ab10adf7b-3-attempt-1-$addr-canonical.json --format json; build/tools/objdiff-cli diff -p . -u main/game/game_fn_$addr fn_$addr -o build/GEDE01/halt-recovery-8321d17ab10adf7b-3-attempt-1-$addr-reloc-strict.json --format json -c function_reloc_diffs=name_address; done",
+    "measurement_command": "jq each generated canonical and relocation-strict report for symbol name, retail size, generated size, match percent, and relocation counts",
+    "raw_output": "canonical symbol=fn_80200C08 retail_bytes=8 generated_bytes=8 match_percent=100.0\nreloc_strict symbol=fn_80200C08 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0\ncanonical symbol=fn_80200C10 retail_bytes=8 generated_bytes=8 match_percent=100.0\nreloc_strict symbol=fn_80200C10 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0\ncanonical symbol=fn_80200C18 retail_bytes=8 generated_bytes=8 match_percent=100.0\nreloc_strict symbol=fn_80200C18 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0\ncanonical symbol=fn_80200C20 retail_bytes=8 generated_bytes=8 match_percent=100.0\nreloc_strict symbol=fn_80200C20 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0\ncanonical symbol=fn_80200C28 retail_bytes=8 generated_bytes=8 match_percent=100.0\nreloc_strict symbol=fn_80200C28 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0\ncanonical symbol=fn_80200C30 retail_bytes=8 generated_bytes=8 match_percent=100.0\nreloc_strict symbol=fn_80200C30 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0\ncanonical symbol=fn_80200C38 retail_bytes=8 generated_bytes=8 match_percent=100.0\nreloc_strict symbol=fn_80200C38 retail_bytes=8 generated_bytes=8 match_percent=100.0 retail_relocations=0 generated_relocations=0"
+  },
+  "retail_boundaries": {
+    "command": "awk '$1 ~ /^fn_80200C(08|10|18|20|28|30|38|40)$/ {print}' config/GEDE01/symbols.txt",
+    "raw_output": "fn_80200C08 = .text:0x80200C08; // type:function size:0x8\nfn_80200C10 = .text:0x80200C10; // type:function size:0x8\nfn_80200C18 = .text:0x80200C18; // type:function size:0x8\nfn_80200C20 = .text:0x80200C20; // type:function size:0x8\nfn_80200C28 = .text:0x80200C28; // type:function size:0x8\nfn_80200C30 = .text:0x80200C30; // type:function size:0x8\nfn_80200C38 = .text:0x80200C38; // type:function size:0x8\nfn_80200C40 = .text:0x80200C40; // type:function size:0xC"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (13424 tracked project files inspected)"
+  },
+  "gate_changes": "None. Exact-build, relocation, legal-audit, DOL SHA-1, source, configuration, split, symbol, and progress gates were not weakened, bypassed, or edited."
+}

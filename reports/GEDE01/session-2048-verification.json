@@ -1,0 +1,14 @@
+{
+  "session_id": "session-2048",
+  "canonical_report_command": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/report.json",
+  "canonical": {"matching_objects": 5847, "total_objects": 6893, "matching_functions": 5612, "total_functions": 8214, "matching_code_bytes": 937264, "linked_code_bytes": 937264, "code_percent": 40.738354},
+  "relocation_strict_report_command": "build/tools/objdiff-cli report generate -p . -o reports/GEDE01/session-2048-reloc-strict.json -c function_reloc_diffs=name_address",
+  "relocation_strict": {"matching_objects": 5847, "matching_functions": 5607, "matching_code_bytes": 935580, "linked_code_bytes": 937264},
+  "function_evidence": [
+    {"symbol": "fn_80200C74", "bytes": 424, "canonical": "reports/GEDE01/objdiff-fn_80200C74-session-2048.json", "relocation_strict": "reports/GEDE01/objdiff-fn_80200C74-session-2048-reloc-strict.json", "relocations": "all equal"}
+  ],
+  "full_build_command": ".tools/bin/ninja build/GEDE01/main.dol",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "retail_cmp_exit": 0,
+  "legal_audit": "passed; 13444 tracked project files inspected"
+}
