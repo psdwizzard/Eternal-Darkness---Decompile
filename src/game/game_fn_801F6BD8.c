@@ -19,6 +19,8 @@ extern Matrix44 lbl_8063BF28;
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
+/* NonMatching: size-exact honest C. Canonical GC/1.3 colors the final signed
+ * conversion bias and 0.5f scale into f4/f5 opposite retail. */
 void fn_801F6BD8(const Vec3* input, Int3* output, int clamp, int shift)
 {
     float inverse_z;
