@@ -42,6 +42,8 @@ int fn_801AD9F4(Entry** result)
                 }
             } while (index != 3);
 
+            /* NonMatching: size-exact; the final active value and slot-offset
+             * temporaries are allocated to r6/r5 instead of retail r5/r6. */
             lbl_8060B430.entries[slot].active = index = 1;
             entry = &lbl_8060B430.entries[slot];
             entry->id = id;
