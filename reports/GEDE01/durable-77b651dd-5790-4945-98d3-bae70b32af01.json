@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "77b651dd-5790-4945-98d3-bae70b32af01",
+  "attempt": 2,
+  "base_commit": "ed96806b1e5e60cad1811fdd484abe21f7150547",
+  "target": "fn_80058834",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-77b651dd-5790-4945-98d3-bae70b32af01.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-77b651dd-5790-4945-98d3-bae70b32af01-reloc-strict.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 1984 bytes, 496 instructions, and 99.71774%, with all 110 relocation-bearing instructions per side agreeing in relocation type, target, and addend. The 27 remaining rows are exclusively DIFF_ARG_MISMATCH operand-register differences: retail colors state_ref in r24 outside the kind-1 arm (0x0070, 0x00CC, 0x04D0, 0x0580, 0x0638), then reuses r24 for the non-overlapping probe/current/blocked live ranges inside that arm, while generated code coalesces state_ref/linked in r28 and uses r23 for current/blocked; retail also uses facing/distance in f31/f30 where generated code uses f30/f31, and retail action is r25 where generated is r23. Splitting and reordering declarations, widening the kind-1 temporaries, and swapping linked/state_ref declaration priority all produced the unchanged 99.71774% object."
+}
