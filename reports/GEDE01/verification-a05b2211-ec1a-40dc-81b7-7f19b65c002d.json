@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "assignment_id": "a05b2211-ec1a-40dc-81b7-7f19b65c002d",
+  "target": "fn_80201138",
+  "compiler": "GC/1.3",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201138 fn_80201138 -o reports/GEDE01/objdiff-a05b2211-ec1a-40dc-81b7-7f19b65c002d.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201138 fn_80201138 -o reports/GEDE01/objdiff-a05b2211-ec1a-40dc-81b7-7f19b65c002d-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "canonical": {
+    "match_percent": 100.0,
+    "retail_bytes": 156,
+    "generated_bytes": 156
+  },
+  "relocation_strict": {
+    "match_percent": 100.0,
+    "relocations": [
+      {"offset": 64, "type": "R_PPC_REL24", "target": "fn_80201B54", "addend": 0},
+      {"offset": 76, "type": "R_PPC_REL24", "target": "fn_80201B54", "addend": 0},
+      {"offset": 92, "type": "R_PPC_REL24", "target": "fn_80200BDC", "addend": 0},
+      {"offset": 112, "type": "R_PPC_REL24", "target": "fn_8020088C", "addend": 0}
+    ]
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_check": "build/GEDE01/main.dol: OK",
+  "legal_audit": {
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false
+  }
+}
