@@ -7,6 +7,7 @@ extern u64 OSGetTime(void);
 
 void fn_801E8DE4(u64 value)
 {
+    /* NonMatching: retail restores r30 before LR; GC/1.3 schedules LR first. */
     u64 now = OSGetTime();
     lbl_8064D5D4 = (unsigned int)now;
     lbl_8064D5D0 = (unsigned int)(now >> 32);

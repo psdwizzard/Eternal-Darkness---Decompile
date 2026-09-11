@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "bb13b205-ca89-4bf9-9bc0-ed0057f2571a",
+  "attempt": 1,
+  "base_commit": "2cd8eea569c6819bf73d1aadb4bbd185d4006363",
+  "target": "fn_801E8DE4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bb13b205-ca89-4bf9-9bc0-ed0057f2571a.json"
+  ],
+  "divergence": "Best relocation-strict objdiff is 99.333336% for size-exact 72-byte code with all five relocations equal. At offsets 0x34 and 0x38, retail emits lwz r30, 0x8(r1) then lwz r0, 0x14(r1), while canonical GC/1.3 emits those two restores in the opposite order; the remaining 16 instructions are identical."
+}
