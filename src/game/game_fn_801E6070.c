@@ -42,7 +42,7 @@ void fn_801E6070(TextState* state)
     y = state->y;
     if ((state->flags & 0x100) && (lbl_8064D5A8 & 1)) {
         state->phase++;
-        state->phase = 0 > state->phase ? 0 : state->phase;
+        state->phase = 0 < state->phase ? 0 : state->phase;
     }
     if (state->flags & 0x10)
         y -= state->phase;
