@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "4f776c7b-da4b-4de2-8248-69c5000731c1",
+  "attempt": 3,
+  "base_commit": "aec546f003b607f92fb49ade3949ce886aa7f02e",
+  "target": "fn_8018A574",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4f776c7b-da4b-4de2-8248-69c5000731c1.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4f776c7b-da4b-4de2-8248-69c5000731c1-reloc-strict.json"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff are size-exact at 792/792 bytes and score 99.69697% (191/198 instruction pairs exact). Seven DIFF_ARG_MISMATCH pairs remain at instruction indices 166, 168, 169, 173, 174, 175, and 177: retail keeps the shifted/clamped radius in r8 and loads x into r3, while canonical keeps radius in r3 and loads x into r5, rotating operands in the four derived-coordinate instructions at 0x2B4-0x2C4. All 12 real relocation-bearing instructions agree under strict name-address/addend comparison."
+}
