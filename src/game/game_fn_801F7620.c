@@ -21,9 +21,9 @@ void fn_801F7620(void* state)
         fn_801FA748(2, &value);
         *(void (**)(void*))((unsigned char*)state + 0x6C) = fn_801F7804;
     } else {
-        if (lbl_8064D5A8 - lbl_8064D7B4 * (lbl_8064D5A8 / lbl_8064D7B4) == 0) {
+        if (lbl_8064D5A8 % lbl_8064D7B4 == 0) {
             double amount = -(double)lbl_8064D7AC;
-            lbl_8064D7AC = amount;
+            lbl_8064D7AC = -lbl_8064D7AC;
             fn_801FA66C(2, 0, (float)amount);
         }
         fn_801F7804(state);
