@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "2a3b9181-9433-4104-aa54-97b58af2ee1f",
+  "attempt": 1,
+  "base_commit": "b363bf54f9d007e0768d80e752fccacccccc8afb",
+  "target": "fn_8018C8FC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2a3b9181-9433-4104-aa54-97b58af2ee1f.json"
+  ],
+  "divergence": "Fresh canonical objdiff is 99.808914% for a size-exact 628/628-byte function. Exactly six instructions differ only in register allocation: retail assigns mask/midpoint/normalized repeat count to r31/r30/r29, while the canonical compiler assigns them to r29/r31/r30 (differences at .text offsets 0x34, 0x38, 0x3C, 0x4C, 0x54, and 0x23C). All five relocation-bearing instructions agree by offset, relocation type, formatted target, and addend: fn_800FBFB0 R_PPC_REL24 at 0x48; lbl_80607120 R_PPC_ADDR16_HA at 0x244, R_PPC_ADDR16_LO at 0x24C, and R_PPC_NONE addend 12 at 0x254; memcpy R_PPC_REL24 at 0x25C. The honest C reconstruction, control flow, unrolled copy, remainder loop, mirror copy, and semantics are otherwise preserved."
+}
