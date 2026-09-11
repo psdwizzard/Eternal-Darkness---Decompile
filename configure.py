@@ -87,6 +87,17 @@ config.asflags = ["-mgekko", "--strip-local-absolute", "-I include", f"-I build/
 config.ldflags = ["-fp hardware", "-nodefaults"]
 config.custom_build_rules = [
     {
+        "name": "externalize_game_801F7510_signed_bias",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @13 lbl_80651480 "
+            "orig/GEDE01/sys/main.dol --require-whole-section && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@13=lbl_80651480 --remove-section=.sdata2 "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    },
+    {
         "name": "externalize_game_801FC034_signed_bias",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @12 lbl_80651480 "
@@ -5013,6 +5024,14 @@ config.custom_build_steps["post-compile"].append(
         "outputs": [f"build/{VERSION}/src/game/game_fn_801F55A0.externalized"],
         "rule": "externalize_game_801F55A0_signed_bias",
         "inputs": [f"build/{VERSION}/src/game/game_fn_801F55A0.o"],
+    }
+)
+
+config.custom_build_steps["post-compile"].append(
+    {
+        "outputs": [f"build/{VERSION}/src/game/game_fn_801F7510.externalized"],
+        "rule": "externalize_game_801F7510_signed_bias",
+        "inputs": [f"build/{VERSION}/src/game/game_fn_801F7510.o"],
     }
 )
 
@@ -12028,7 +12047,7 @@ config.libs = [
             Object(Matching, "game/game_fn_801F743C.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801F74C8.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801F74EC.c", mw_version="GC/1.3"),
-            Object(NonMatching, "game/game_fn_801F7510.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F7510.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801F75FC.c", mw_version="GC/1.3"),
             Object(NonMatching, "game/game_fn_801F7620.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801F76D8.c", mw_version="GC/1.3"),

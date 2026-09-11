@@ -28,8 +28,8 @@ void fn_801F7510(void* state)
             unsigned int mask = (1 << bits) - 1;
             int amount;
             bits--;
-            mask &= random;
-            amount = (1 << bits) - mask;
+            random = mask & random;
+            amount = (1 << bits) - random;
             fn_801FA66C(2, 0, (float)amount);
         }
         fn_801F7804(state);
