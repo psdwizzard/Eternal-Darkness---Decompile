@@ -20,6 +20,8 @@ extern void fn_801E5AE0(void);
 
 void fn_801E5B10(void* first, void* second, u32 value, void* callback)
 {
+    u32 current_time;
+
     lbl_8064D598 = 0;
     lbl_8064D588 = 0;
 
@@ -30,8 +32,9 @@ void fn_801E5B10(void* first, void* second, u32 value, void* callback)
         fn_8022C40C(&lbl_8064D570, second);
     }
 
-    lbl_8064D594 = lbl_80651290;
     lbl_8064D59C = value;
+    current_time = lbl_80651290;
+    lbl_8064D594 = current_time;
     lbl_8064D580 = 0;
     lbl_8064C31A = 110;
     lbl_8064D584 = 0;
