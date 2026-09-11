@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f89f268e-ef86-4f19-809c-fec64620ce13",
+  "attempt": 1,
+  "base_commit": "c56a1d0afba12fb2050bbf7d7154df97cec7ee0c",
+  "target": "fn_8015CFFC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f89f268e-ef86-4f19-809c-fec64620ce13.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff is size-exact at 99.91304% (460/460 bytes, 115/115 instructions) with all 8/8 R_PPC_REL24 relocation targets and addends equal. Only offsets 0x40 and 0x5c differ: retail retains the nonblocking fn_8020D318 result in r27 (mr r27,r3; cmpwi r27,0), while canonical MWCC GC/1.3 coalesces that path-dead lifetime with the destination lifetime in r28 (mr r28,r3; cmpwi r28,0). Block-local result and register/declaration-order source-shape experiments reproduced the same allocation. Full ninja build passed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
