@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "assignment_id": "ce422998-2501-4d69-9854-38f80c668f3c",
+  "target": "fn_80052CC0",
+  "compiler": "canonical project configuration",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80052CC0.c fn_80052CC0",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measurements": {
+    "fndiff_summary": "target 904 bytes  base 904 bytes  match 100.0",
+    "canonical_match_percent": 100.0,
+    "left_size": 904,
+    "right_size": 904,
+    "left_instruction_count": 226,
+    "right_instruction_count": 226,
+    "instruction_diff_count": 0,
+    "left_relocation_count": 115,
+    "right_relocation_count": 115,
+    "relocation_tuple_mismatches": 0,
+    "relocation_strict_match": true,
+    "relocation_tuple_fields": ["instruction_offset", "type", "target_name", "target_address", "addend"],
+    "objdiff_json_sha256": "d02268714d734b62734415e3e6b9119d02e4001dd429b616503478830f63cb19",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_check_output": "build/GEDE01/main.dol: OK",
+    "inline_assembly_search_matches": 0,
+    "git_diff_check_exit_code": 0
+  },
+  "build_log": "eternal-darkness-decomp/reports/GEDE01/build-ce422998-2501-4d69-9854-38f80c668f3c.log"
+}

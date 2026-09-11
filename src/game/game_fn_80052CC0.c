@@ -94,10 +94,9 @@ void fn_80052CC0(s32 unused0, s32 unused1)
     fn_8011B740();
     fn_801453FC();
 
-    state = &lbl_8030F540;
     descriptor = lbl_802417D0;
-    descriptor = (TypeDescriptor*)((u8*)descriptor +
-                                   state->type * sizeof(TypeDescriptor));
+    state = &lbl_8030F540;
+    descriptor = &descriptor[state->type];
     action = descriptor->action;
     if (action != -1 && state->option != 1) {
         index = (u8)descriptor->resource_index;
@@ -108,9 +107,8 @@ void fn_80052CC0(s32 unused0, s32 unused1)
         }
     }
 
-    descriptor = lbl_802417D0;
-    kinds = &descriptor->kind;
-    kind = *(s16*)((u8*)kinds + lbl_8030F540.type * sizeof(TypeDescriptor));
+    kinds = &lbl_802417D0[0].kind;
+    kind = lbl_802417D0[lbl_8030F540.type].kind;
     if (kind != -1 && lbl_8030F540.suppress == 0) {
         s16 argument;
         descriptor = &lbl_802417D0[lbl_8030F540.type];
