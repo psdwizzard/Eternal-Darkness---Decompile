@@ -35,7 +35,7 @@ void fn_801FC204(unsigned int type, int scale, SVec3* origin, SVec3* input,
         direction.x = -input->y;
         direction.y = input->x;
         direction.z = lbl_806514F0;
-        if (direction.x == lbl_806514F0 && direction.y == lbl_806514F0) {
+        if (direction.z == direction.x && direction.z == direction.y) {
             direction.x = lbl_80651500;
         } else {
             fn_80179A18(&direction);
@@ -60,7 +60,7 @@ void fn_801FC204(unsigned int type, int scale, SVec3* origin, SVec3* input,
         direction.x = input->y;
         direction.y = -input->x;
         direction.z = lbl_806514F0;
-        if (direction.x == lbl_806514F0 && direction.y == lbl_806514F0) {
+        if (direction.z == direction.x && direction.z == direction.y) {
             direction.x = lbl_80651504;
         } else {
             fn_80179A18(&direction);
