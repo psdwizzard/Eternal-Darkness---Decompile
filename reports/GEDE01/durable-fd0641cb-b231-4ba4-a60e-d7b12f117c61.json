@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "fd0641cb-b231-4ba4-a60e-d7b12f117c61",
+  "attempt": 1,
+  "base_commit": "da09585e627b3bd3ff640960236259b970d6223e",
+  "target": "fn_801F6054",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-fd0641cb-b231-4ba4-a60e-d7b12f117c61.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces a size-exact 136-byte function at 99.85294%; the sole instruction mismatch is generated bne 0x1c versus retail bgt 0x1c at function offset 0x48 (objdiff address field 72), after cmplwi r3, 0. The sole R_PPC_REL24 relocation is equal on both sides at offset 0x6C, targeting fn_801F5CFC with addend 0. A signed-int mask variant selected bgt but changed the adjacent unsigned comparisons from cmplwi to cmpwi and regressed to 96.47059%."
+}
