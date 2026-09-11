@@ -1,0 +1,85 @@
+{
+  "halt_id": "306e2fb8b2de4dd7-4",
+  "attempt": 3,
+  "scope": "Public-mirror publication halt repair verification only; no decomp frontier advancement or unrelated matching work was performed.",
+  "disposition": {
+    "status": "recovered_pending_scheduler_review_integration",
+    "publication_halt_condition_cleared": true,
+    "scheduler_state_hand_edited": false,
+    "founder_choice_required": false,
+    "summary": "Attempt 2 already repaired the failed publication by using the publish script's documented in-worktree clone and source-ref overrides. Fresh attempt-3 evidence confirms that the public main branch still points to mirror commit d5c24f65d641fe444091cbef0739292811619deb, whose Source-commit trailer names the exact reviewed canonical commit 16f82fd74ebc8a76ce3dab41b8fea44951580cd8; its parent remains be9a2dc31e516e50bb18273ff7a42b18f2138779, and its complete tracked tree equals the canonical decomp subtree. The original external clone and lock remain untouched because they are outside the mandatory worktree filesystem boundary. The chain record remains in SERVICE_RECOVERY intentionally: the bounded recovery workflow requires this report to pass review and be integrated before the scheduler performs its own transition, and running a normal scheduler tick now could advance the frontier.",
+    "smallest_correction": "Add this independently regenerated attempt-3 evidence report. Do not modify source, gates, progress, scheduler state, or the inaccessible external clone."
+  },
+  "scheduler_evidence": {
+    "command": "jq -c '{state,session_id,assigned_target,accepted_frontier,candidate_frontier,agent_commit,merged_commit,review_verdict,review_complete,merge_complete,verification_complete,recovery_reason,updated_at}' .darkfoundry/decomp-chain-state.json",
+    "raw_output": "{\"state\":\"SERVICE_RECOVERY\",\"session_id\":\"34842eda-a3ca-48a5-8deb-8e5cd08ef278\",\"assigned_target\":null,\"accepted_frontier\":\"0x802010C8\",\"candidate_frontier\":\"0x802010C8\",\"agent_commit\":\"d10a279601ccb57916cede0e3e1dfab576537c09\",\"merged_commit\":\"16f82fd74ebc8a76ce3dab41b8fea44951580cd8\",\"review_verdict\":\"APPROVE\",\"review_complete\":true,\"merge_complete\":true,\"verification_complete\":true,\"recovery_reason\":\"Public decomp mirror push failed: fatal: Unable to create '/home/rabbit/src/ed-decomp-publish/.git/index.lock': File exists.\\n\\nAnother git process seems to be running in this repository, e.g.\\nan editor opened by 'git commit'. Please ma\",\"updated_at\":\"2026-09-11T04:10:42.959Z\"}",
+    "interpretation": "Review, merge, and verification for the decomp session completed before publication failed. SERVICE_RECOVERY is scheduler-owned and must not be cleared by hand before this recovery task is reviewed and integrated."
+  },
+  "committed_recovery_artifact_evidence": {
+    "command": "git show --stat --oneline --decorate 8185c1c9458722f1822bf29944910bafcf8762f9",
+    "raw_output": "8185c1c94 Record halt recovery 306e2fb8b2de4dd7-4 attempt 2\n ...halt-recovery-306e2fb8b2de4dd7-4-attempt-2.json | 77 ++++++++++++++++++++++\n 1 file changed, 77 insertions(+)",
+    "interpretation": "The reviewed attempt-2 recovery commit contains only its assigned report artifact."
+  },
+  "canonical_commit_evidence": {
+    "command": "git cat-file -t 16f82fd74ebc8a76ce3dab41b8fea44951580cd8; git show -s --format='canonical=%H%nparents=%P%nsubject=%s' 16f82fd74ebc8a76ce3dab41b8fea44951580cd8; git merge-base --is-ancestor d10a279601ccb57916cede0e3e1dfab576537c09 16f82fd74ebc8a76ce3dab41b8fea44951580cd8; printf 'agent_in_canonical_exit=%s\\n' \"$?\"",
+    "raw_output": "commit\ncanonical=16f82fd74ebc8a76ce3dab41b8fea44951580cd8\nparents=7b95d073b918b4a86377c76d17fed2bcb19607c2\nsubject=progress: 40.77% of code matched (5617/8214 functions, 5852/6898 objects)\nagent_in_canonical_exit=0",
+    "interpretation": "The halted session's exact agent commit is an ancestor of the exact reviewed canonical commit."
+  },
+  "git_state_before_report": {
+    "command": "git status --porcelain=v1; if test -e \"$(git rev-parse --git-path MERGE_HEAD)\"; then echo merge_head_present=true; else echo merge_head_present=false; fi; ps -eo pid=,comm=,args= | awk '$2 == \"git\" || $2 ~ /^git-/ || $2 == \"decomp-publish-mirror.sh\" || $2 == \"decomp-scheduler.mjs\" {print}'",
+    "raw_output": "merge_head_present=false",
+    "interpretation": "The worktree was clean, no merge was in progress, and no Git or publication/scheduler process matched the process audit. The external clone was not inspected because it is outside the authorized workspace."
+  },
+  "public_remote_verification": {
+    "command": "git -C eternal-darkness-decomp/build/mirror-recovery-306e2fb8b2de4dd7-4-attempt-2 fetch -q origin main; git -C eternal-darkness-decomp/build/mirror-recovery-306e2fb8b2de4dd7-4-attempt-2 reset -q --hard origin/main; git -C eternal-darkness-decomp/build/mirror-recovery-306e2fb8b2de4dd7-4-attempt-2 log -2 --format='commit=%H%nparents=%P%nsubject=%s%nsource_commit=%(trailers:key=Source-commit,valueonly)%n'; git ls-remote https://github.com/psdwizzard/Eternal-Darkness---Decompile.git refs/heads/main",
+    "raw_output": "commit=d5c24f65d641fe444091cbef0739292811619deb\nparents=be9a2dc31e516e50bb18273ff7a42b18f2138779\nsubject=progress: 40.77% of code matched (5617/8214 functions, 5852/6898 objects)\nsource_commit=16f82fd74ebc8a76ce3dab41b8fea44951580cd8\n\ncommit=be9a2dc31e516e50bb18273ff7a42b18f2138779\nparents=0f795e41286c32098a5f8a365af11026c1bda4d1\nsubject=progress: 40.72% of code matched (5606/8214 functions, 5841/6887 objects)\nsource_commit=5d1fa109ad179bcca65e79f0635c6fd2d136bb27\n\nd5c24f65d641fe444091cbef0739292811619deb\trefs/heads/main",
+    "verified": true
+  },
+  "published_tree_equivalence": {
+    "command": "canonical_count=$(git ls-tree -r 16f82fd74ebc8a76ce3dab41b8fea44951580cd8 -- eternal-darkness-decomp | wc -l); mirror_count=$(git -C eternal-darkness-decomp/build/mirror-recovery-306e2fb8b2de4dd7-4-attempt-2 ls-tree -r HEAD | wc -l); diff -u <(git ls-tree -r 16f82fd74ebc8a76ce3dab41b8fea44951580cd8 -- eternal-darkness-decomp | sed 's#\\teternal-darkness-decomp/#\\t#') <(git -C eternal-darkness-decomp/build/mirror-recovery-306e2fb8b2de4dd7-4-attempt-2 ls-tree -r HEAD) > eternal-darkness-decomp/build/halt-recovery-306e2fb8b2de4dd7-4-attempt-3-tree.diff; tree_cmp_exit=$?; printf 'canonical_files=%s\\nmirror_files=%s\\ntree_cmp_exit=%s\\n' \"$canonical_count\" \"$mirror_count\" \"$tree_cmp_exit\"; wc -c eternal-darkness-decomp/build/halt-recovery-306e2fb8b2de4dd7-4-attempt-3-tree.diff",
+    "raw_output": "canonical_files=13467\nmirror_files=13467\ntree_cmp_exit=0\n0 eternal-darkness-decomp/build/halt-recovery-306e2fb8b2de4dd7-4-attempt-3-tree.diff",
+    "verified": true,
+    "interpretation": "Mode, blob object ID, and relative path agree for every tracked file."
+  },
+  "frontier_invariant": {
+    "command": "jq -r '\"next_target=\"+.next_target' eternal-darkness-decomp/reports/GEDE01/progress.json",
+    "raw_output": "next_target=0x802010C8",
+    "next_target_before_attempt": "0x802010C8",
+    "next_target_after_attempt": "0x802010C8",
+    "changed": false
+  },
+  "full_rebuild": {
+    "clean_command": ".tools/bin/ninja -t clean",
+    "clean_raw_output": "Cleaning... ninja: error: remove(build/binutils): Directory not empty\n6893 files.",
+    "clean_interpretation": "Ninja removed generated build outputs but returned nonzero because the downloaded build/binutils directory was nonempty. The following full build therefore regenerated the DOL and all required objects from the cleaned outputs.",
+    "build_command": ".tools/bin/ninja build/GEDE01/main.dol",
+    "working_directory": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "raw_output_excerpt": "[1/2] SPLIT config/GEDE01/config.yml\n INFO Initial analysis completed in 0.680s (found 8214 functions)\n INFO Splitting completed in 4.088s (wrote 6898 objects)\n[2/2] RUN configure.py\n[1/6276] AS build/GEDE01/src/Runtime.PPCEABI.H/__save_fpr.o\n...\n[6273/6276] LINK build/GEDE01/main.elf\n[6274/6276] DOL build/GEDE01/main.dol"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'retail_cmp_exit=%s\\n' \"$?\"",
+    "working_directory": "eternal-darkness-decomp",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nretail_cmp_exit=0",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  },
+  "affected_object_objdiff": {
+    "scope": "The five game objects authored by the approved session whose public mirror publication initially failed.",
+    "generation_command": "for addr in 80200E1C 80200EAC 80200F3C 80200FC0 8020104C; do build/tools/objdiff-cli diff -p . -u main/game/game_fn_$addr fn_$addr -o build/GEDE01/halt-recovery-306e2fb8b2de4dd7-4-attempt-3-$addr-canonical.json --format json; build/tools/objdiff-cli diff -p . -u main/game/game_fn_$addr fn_$addr -o build/GEDE01/halt-recovery-306e2fb8b2de4dd7-4-attempt-3-$addr-reloc-strict.json --format json -c function_reloc_diffs=name_address; done",
+    "measurement_command": "For every canonical and relocation-strict report, jq selected the named symbol on left and right and printed retail size, generated size, left match_percent, and counts of instruction.relocation entries.",
+    "raw_output": "mode=canonical symbol=fn_80200E1C retail_bytes=144 generated_bytes=144 match_percent=100.0 retail_relocations=4 generated_relocations=4\nmode=canonical symbol=fn_80200EAC retail_bytes=144 generated_bytes=144 match_percent=100.0 retail_relocations=3 generated_relocations=3\nmode=canonical symbol=fn_80200F3C retail_bytes=132 generated_bytes=132 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=canonical symbol=fn_80200FC0 retail_bytes=140 generated_bytes=140 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=canonical symbol=fn_8020104C retail_bytes=124 generated_bytes=124 match_percent=100.0 retail_relocations=4 generated_relocations=4\nmode=reloc-strict symbol=fn_80200E1C retail_bytes=144 generated_bytes=144 match_percent=100.0 retail_relocations=4 generated_relocations=4\nmode=reloc-strict symbol=fn_80200EAC retail_bytes=144 generated_bytes=144 match_percent=100.0 retail_relocations=3 generated_relocations=3\nmode=reloc-strict symbol=fn_80200F3C retail_bytes=132 generated_bytes=132 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=reloc-strict symbol=fn_80200FC0 retail_bytes=140 generated_bytes=140 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=reloc-strict symbol=fn_8020104C retail_bytes=124 generated_bytes=124 match_percent=100.0 retail_relocations=4 generated_relocations=4"
+  },
+  "retail_boundaries": {
+    "command": "awk '$1 ~ /^(fn_80200E1C|fn_80200EAC|fn_80200F3C|fn_80200FC0|fn_8020104C|fn_802010C8)$/ {print}' config/GEDE01/symbols.txt",
+    "working_directory": "eternal-darkness-decomp",
+    "raw_output": "fn_80200E1C = .text:0x80200E1C; // type:function size:0x90\nfn_80200EAC = .text:0x80200EAC; // type:function size:0x90\nfn_80200F3C = .text:0x80200F3C; // type:function size:0x84\nfn_80200FC0 = .text:0x80200FC0; // type:function size:0x8C\nfn_8020104C = .text:0x8020104C; // type:function size:0x7C\nfn_802010C8 = .text:0x802010C8; // type:function size:0x70"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "working_directory": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (13470 tracked project files inspected)"
+  },
+  "gate_changes": "None. Exact-build, relocation, legal-audit, DOL SHA-1, source, configuration, split, symbol, progress, scheduler, and publication gates were not weakened, bypassed, or edited."
+}

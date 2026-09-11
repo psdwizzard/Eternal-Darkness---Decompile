@@ -1,0 +1,77 @@
+{
+  "halt_id": "306e2fb8b2de4dd7-4",
+  "attempt": 2,
+  "scope": "Public-mirror publication halt repair and verification only; no decomp frontier advancement or unrelated matching work was performed.",
+  "disposition": {
+    "status": "recovered",
+    "publication_halt_condition_cleared": true,
+    "founder_choice_required": false,
+    "summary": "The failed external clone was not accessed or altered because it is outside this worktree's mandatory filesystem boundary. Instead, the exact reviewed canonical merge commit was published through an isolated clone under the ignored build directory. The push succeeded, the fetched public branch identifies that exact canonical source commit, and its complete tracked tree is identical to the canonical eternal-darkness-decomp subtree. The authoritative chain-state file was not hand-edited and the scheduler was not ticked, because a tick could dispatch new frontier work; the repaired publication condition is now ready for the scheduler-owned recovery transition.",
+    "smallest_correction": "Bypass only the unusable external working clone for this recovery publish. Preserve its index.lock untouched, publish the already-reviewed canonical subtree through an isolated in-worktree clone, and verify the resulting public tree byte-for-byte at the Git-blob level."
+  },
+  "scheduler_evidence": {
+    "command": "jq -c '{state,session_id,assigned_target,accepted_frontier,candidate_frontier,agent_commit,merged_commit,review_verdict,review_complete,merge_complete,verification_complete,recovery_reason,updated_at}' .darkfoundry/decomp-chain-state.json",
+    "raw_output": "{\"state\":\"SERVICE_RECOVERY\",\"session_id\":\"34842eda-a3ca-48a5-8deb-8e5cd08ef278\",\"assigned_target\":null,\"accepted_frontier\":\"0x802010C8\",\"candidate_frontier\":\"0x802010C8\",\"agent_commit\":\"d10a279601ccb57916cede0e3e1dfab576537c09\",\"merged_commit\":\"16f82fd74ebc8a76ce3dab41b8fea44951580cd8\",\"review_verdict\":\"APPROVE\",\"review_complete\":true,\"merge_complete\":true,\"verification_complete\":true,\"recovery_reason\":\"Public decomp mirror push failed: fatal: Unable to create '/home/rabbit/src/ed-decomp-publish/.git/index.lock': File exists.\\n\\nAnother git process seems to be running in this repository, e.g.\\nan editor opened by 'git commit'. Please ma\",\"updated_at\":\"2026-09-11T04:10:42.959Z\"}",
+    "interpretation": "The scheduler had already approved, merged, and verified the session. Only public mirror publication failed. The runtime record remains scheduler-owned; manually changing it would bypass its transition logic."
+  },
+  "canonical_commit_evidence": {
+    "command": "git cat-file -t 16f82fd74ebc8a76ce3dab41b8fea44951580cd8; git show -s --format='canonical=%H%nparents=%P%nsubject=%s' 16f82fd74ebc8a76ce3dab41b8fea44951580cd8; git merge-base --is-ancestor d10a279601ccb57916cede0e3e1dfab576537c09 16f82fd74ebc8a76ce3dab41b8fea44951580cd8; printf 'agent_in_canonical_exit=%s\\n' \"$?\"",
+    "raw_output": "commit\ncanonical=16f82fd74ebc8a76ce3dab41b8fea44951580cd8\nparents=7b95d073b918b4a86377c76d17fed2bcb19607c2\nsubject=progress: 40.77% of code matched (5617/8214 functions, 5852/6898 objects)\nagent_in_canonical_exit=0",
+    "interpretation": "The exact agent commit named by the halt record is an ancestor of the exact canonical merge commit named by that record."
+  },
+  "publication_dry_run": {
+    "command": "DECOMP_PUBLISH_REPO=\"$PWD\" DECOMP_PUBLISH_CLONE=\"$PWD/eternal-darkness-decomp/build/mirror-recovery-306e2fb8b2de4dd7-4-attempt-2\" DECOMP_PUBLISH_SOURCE_REF=16f82fd74ebc8a76ce3dab41b8fea44951580cd8 bash scripts/decomp-publish-mirror.sh --dry-run",
+    "exit_code": 0,
+    "raw_output": "mirror: would commit:\nmirror|   progress: 40.77% of code matched (5617/8214 functions, 5852/6898 objects)\nmirror|   \nmirror|   Source-commit: 16f82fd74ebc8a76ce3dab41b8fea44951580cd8\nmirror: 49 files changed, 299645 insertions(+), 35 deletions(-)"
+  },
+  "publication": {
+    "command": "DECOMP_PUBLISH_REPO=\"$PWD\" DECOMP_PUBLISH_CLONE=\"$PWD/eternal-darkness-decomp/build/mirror-recovery-306e2fb8b2de4dd7-4-attempt-2\" DECOMP_PUBLISH_SOURCE_REF=16f82fd74ebc8a76ce3dab41b8fea44951580cd8 bash scripts/decomp-publish-mirror.sh",
+    "exit_code": 0,
+    "raw_output": "mirror: pushed \"progress: 40.77% of code matched (5617/8214 functions, 5852/6898 objects)\"\nmirror: 49 files changed, 299645 insertions(+), 35 deletions(-)",
+    "external_stale_lock_modified": false
+  },
+  "public_remote_verification": {
+    "command": "git -C eternal-darkness-decomp/build/mirror-recovery-306e2fb8b2de4dd7-4-attempt-2 fetch -q origin main; git -C eternal-darkness-decomp/build/mirror-recovery-306e2fb8b2de4dd7-4-attempt-2 reset -q --hard origin/main; git -C eternal-darkness-decomp/build/mirror-recovery-306e2fb8b2de4dd7-4-attempt-2 log -1 --format='remote_head=%H%nsubject=%s%nsource_commit=%(trailers:key=Source-commit,valueonly)'; git ls-remote https://github.com/psdwizzard/Eternal-Darkness---Decompile.git refs/heads/main",
+    "raw_output": "remote_head=d5c24f65d641fe444091cbef0739292811619deb\nsubject=progress: 40.77% of code matched (5617/8214 functions, 5852/6898 objects)\nsource_commit=16f82fd74ebc8a76ce3dab41b8fea44951580cd8\n\nd5c24f65d641fe444091cbef0739292811619deb\trefs/heads/main",
+    "verified": true
+  },
+  "published_tree_equivalence": {
+    "command": "canonical_count=$(git ls-tree -r 16f82fd74ebc8a76ce3dab41b8fea44951580cd8 -- eternal-darkness-decomp | wc -l); mirror_count=$(git -C eternal-darkness-decomp/build/mirror-recovery-306e2fb8b2de4dd7-4-attempt-2 ls-tree -r HEAD | wc -l); diff -u <(git ls-tree -r 16f82fd74ebc8a76ce3dab41b8fea44951580cd8 -- eternal-darkness-decomp | sed 's#\\teternal-darkness-decomp/#\\t#') <(git -C eternal-darkness-decomp/build/mirror-recovery-306e2fb8b2de4dd7-4-attempt-2 ls-tree -r HEAD) > eternal-darkness-decomp/build/halt-recovery-306e2fb8b2de4dd7-4-attempt-2-tree.diff; tree_cmp_exit=$?; printf 'canonical_files=%s\\nmirror_files=%s\\ntree_cmp_exit=%s\\n' \"$canonical_count\" \"$mirror_count\" \"$tree_cmp_exit\"; wc -c eternal-darkness-decomp/build/halt-recovery-306e2fb8b2de4dd7-4-attempt-2-tree.diff",
+    "raw_output": "canonical_files=13467\nmirror_files=13467\ntree_cmp_exit=0\n0 eternal-darkness-decomp/build/halt-recovery-306e2fb8b2de4dd7-4-attempt-2-tree.diff",
+    "verified": true,
+    "interpretation": "Mode, blob object ID, and relative path match for every tracked file."
+  },
+  "frontier_invariant": {
+    "command": "jq -r '\"next_target=\"+.next_target' eternal-darkness-decomp/reports/GEDE01/progress.json",
+    "raw_output": "next_target=0x802010C8",
+    "next_target_before_attempt": "0x802010C8",
+    "next_target_after_attempt": "0x802010C8",
+    "changed": false
+  },
+  "full_build": {
+    "command": ".tools/bin/ninja build/GEDE01/main.dol",
+    "working_directory": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "raw_output_excerpt": "[1/802] MWCC build/GEDE01/src/game/game_fn_800098C0.o\n...\n[801/802] LINK build/GEDE01/main.elf\n[802/802] DOL build/GEDE01/main.dol"
+  },
+  "dol_identity": {
+    "command": "sha1sum build/GEDE01/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'retail_cmp_exit=%s\\n' \"$?\"",
+    "working_directory": "eternal-darkness-decomp",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nretail_cmp_exit=0",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  },
+  "affected_object_objdiff": {
+    "scope": "The five game objects authored by the approved session whose public mirror publication failed.",
+    "generation_command": "for addr in 80200E1C 80200EAC 80200F3C 80200FC0 8020104C; do build/tools/objdiff-cli diff -p . -u main/game/game_fn_$addr fn_$addr -o build/GEDE01/halt-recovery-306e2fb8b2de4dd7-4-attempt-2-$addr-canonical.json --format json; build/tools/objdiff-cli diff -p . -u main/game/game_fn_$addr fn_$addr -o build/GEDE01/halt-recovery-306e2fb8b2de4dd7-4-attempt-2-$addr-reloc-strict.json --format json -c function_reloc_diffs=name_address; done",
+    "measurement_command": "For each generated canonical and relocation-strict JSON report, jq selected the named symbol from left and right and printed retail size, generated size, match_percent, and relocation counts from instruction.relocation entries.",
+    "raw_output": "mode=canonical symbol=fn_80200E1C retail_bytes=144 generated_bytes=144 match_percent=100.0 retail_relocations=4 generated_relocations=4\nmode=canonical symbol=fn_80200EAC retail_bytes=144 generated_bytes=144 match_percent=100.0 retail_relocations=3 generated_relocations=3\nmode=canonical symbol=fn_80200F3C retail_bytes=132 generated_bytes=132 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=canonical symbol=fn_80200FC0 retail_bytes=140 generated_bytes=140 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=canonical symbol=fn_8020104C retail_bytes=124 generated_bytes=124 match_percent=100.0 retail_relocations=4 generated_relocations=4\nmode=reloc-strict symbol=fn_80200E1C retail_bytes=144 generated_bytes=144 match_percent=100.0 retail_relocations=4 generated_relocations=4\nmode=reloc-strict symbol=fn_80200EAC retail_bytes=144 generated_bytes=144 match_percent=100.0 retail_relocations=3 generated_relocations=3\nmode=reloc-strict symbol=fn_80200F3C retail_bytes=132 generated_bytes=132 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=reloc-strict symbol=fn_80200FC0 retail_bytes=140 generated_bytes=140 match_percent=100.0 retail_relocations=2 generated_relocations=2\nmode=reloc-strict symbol=fn_8020104C retail_bytes=124 generated_bytes=124 match_percent=100.0 retail_relocations=4 generated_relocations=4"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "working_directory": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (13469 tracked project files inspected)"
+  },
+  "gate_changes": "None. Exact-build, relocation, legal-audit, DOL SHA-1, source, configuration, split, symbol, progress, scheduler, and publication gates were not weakened, bypassed, or edited."
+}
