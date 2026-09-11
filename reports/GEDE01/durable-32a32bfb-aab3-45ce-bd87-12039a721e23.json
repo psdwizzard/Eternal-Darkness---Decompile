@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "32a32bfb-aab3-45ce-bd87-12039a721e23",
+  "attempt": 3,
+  "base_commit": "0f8ae40fec20a81ae3d08b73f0cbd2191d8d06af",
+  "target": "fn_801F6054",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-32a32bfb-aab3-45ce-bd87-12039a721e23.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces a size-exact 136-byte function at 99.85294%; the sole instruction mismatch is retail bgt versus generated bne at function offset 0x48 after cmplwi r3, 0. The sole R_PPC_REL24 relocation is equal on both sides at offset 0x6C, targeting fn_801F5CFC with addend 0. The fresh full build passed config/GEDE01/build.sha1 and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f. Attempt 3 also tested structured while, reversed comparison, count >= 1, unsigned switch, and function-scoped peephole-off spellings; none improved the retained reconstruction."
+}
