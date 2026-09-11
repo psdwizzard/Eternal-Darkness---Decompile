@@ -104,16 +104,16 @@ u16 fn_801FB6A4(PackedRecord* input, OutputRecord* output, int alternate, int co
     result.field20 = packed.field28;
     result.field1C = (signed char)packed.field3A;
 
-    result.field28 = packed.field10 * 0.0625f;
-    result.field2C = packed.field12 * 0.0625f;
-    result.field38 = packed.field3C * 0.0625f;
-    result.field34 = packed.field38 * 0.0625f;
-    result.field48 = packed.field18 * 0.001953125f;
-    result.field4C = packed.field1A * 0.001953125f;
-    result.field50 = packed.field1C * 0.001953125f;
-    result.field54 = packed.field1E * 0.001953125f;
-    result.field58 = packed.field20 * 0.001953125f;
-    result.field5C = packed.field22 * 0.001953125f;
+    result.field28 = packed.field10 / 16.0f;
+    result.field2C = packed.field12 / 16.0f;
+    result.field38 = packed.field3C / 16.0f;
+    result.field34 = packed.field38 / 16.0f;
+    result.field48 = packed.field18 / 512.0f;
+    result.field4C = packed.field1A / 512.0f;
+    result.field50 = packed.field1C / 512.0f;
+    result.field54 = packed.field1E / 512.0f;
+    result.field58 = packed.field20 / 512.0f;
+    result.field5C = packed.field22 / 512.0f;
 
     result.field3C = packed.flags & 1;
     result.field40 = packed.flags & 2;
