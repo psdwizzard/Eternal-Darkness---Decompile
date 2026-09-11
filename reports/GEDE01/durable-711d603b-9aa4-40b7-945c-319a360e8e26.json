@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "711d603b-9aa4-40b7-945c-319a360e8e26",
+  "attempt": 1,
+  "base_commit": "4ee3fe5476565e13e0a9bbc30206c0e8048f6cb9",
+  "target": "fn_8017FA14",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-711d603b-9aa4-40b7-945c-319a360e8e26.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces a size-exact 800-byte function with 200 instructions at 99.6%. All 12 differences are register arguments: generated assigns the persistent second-row pointer to r6 and the repeated-copy loop index to r8, while retail assigns the pointer to r8 and index to r6 (offsets 0x008, 0x01C, 0x048, 0x150, 0x158, 0x164, 0x190, 0x1BC, 0x2C4, 0x2CC, 0x2D8, and 0x310). The function has zero relocations; canonical and function_reloc_diffs=name_address reports are byte-identical. The retained source is the pre-existing independent honest-C reconstruction; focused lifetime/declaration-order and parameter-reuse variants did not improve 99.6%."
+}
