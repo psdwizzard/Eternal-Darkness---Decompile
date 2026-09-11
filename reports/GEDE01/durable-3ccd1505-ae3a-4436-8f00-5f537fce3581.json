@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "assignment_id": "3ccd1505-ae3a-4436-8f00-5f537fce3581",
+  "attempt": 3,
+  "base_commit": "f7063a00a6a1484f1f1e875d63bcd41db77dbad3",
+  "target": "fn_801F6BD8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3ccd1505-ae3a-4436-8f00-5f537fce3581.json",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-3ccd1505-ae3a-4436-8f00-5f537fce3581.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-3ccd1505-ae3a-4436-8f00-5f537fce3581.json",
+    "eternal-darkness-decomp/reports/GEDE01/variant-scale-left-3ccd1505-ae3a-4436-8f00-5f537fce3581.json",
+    "eternal-darkness-decomp/reports/GEDE01/variant-half-left-3ccd1505-ae3a-4436-8f00-5f537fce3581.json",
+    "eternal-darkness-decomp/reports/GEDE01/variant-factor-temporaries-3ccd1505-ae3a-4436-8f00-5f537fce3581.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.63636% for equal 440-byte functions, and all 19 relocation types, targets, and addends agree. Four register-coloring differences remain at 0x13C, 0x160, 0x164, and 0x178: GC/1.3 assigns the signed-conversion bias and 0.5f scale to f4/f5 opposite retail. Two distinct commutative-operand-order differences remain at 0x170 and 0x184: retail emits fmuls f3,f3,f4 and fmuls f0,f0,f4, while the candidate emits fmuls f3,f5,f3 and fmuls f0,f5,f0. Putting the scale factor on the left, putting 0.5f on the left, and materializing scale-factor temporaries all compile to the same six differences. The required full-build DOL SHA-1 was verified separately; because this TU remains NonMatching and is excluded from the link, that hash is only the build gate and does not corroborate this reconstruction."
+}

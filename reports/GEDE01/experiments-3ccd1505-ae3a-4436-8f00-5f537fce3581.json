@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "assignment_id": "3ccd1505-ae3a-4436-8f00-5f537fce3581",
+  "target": "fn_801F6BD8",
+  "compiler": "GC/1.3",
+  "build_commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F6BD8.externalized"
+  ],
+  "comparison_commands": {
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F6BD8 fn_801F6BD8 -o reports/GEDE01/canonical-3ccd1505-ae3a-4436-8f00-5f537fce3581.json --format json-pretty",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F6BD8 fn_801F6BD8 -o reports/GEDE01/objdiff-3ccd1505-ae3a-4436-8f00-5f537fce3581.json --format json-pretty -c function_reloc_diffs=name_address"
+  },
+  "baseline": {
+    "size_bytes": 440,
+    "canonical_percent": 99.63636,
+    "relocation_strict_percent": 99.63636,
+    "canonical_and_strict_reports_byte_identical": true,
+    "relocation_sites": 19,
+    "relocation_result": "All relocation types, targets, and addends agree; strict mode adds no differences.",
+    "instruction_differences": [
+      "0x13C retail lfd f5 vs candidate lfd f4 (register coloring)",
+      "0x160 retail fsubs f3,f1,f5 vs candidate fsubs f3,f1,f4 (register coloring)",
+      "0x164 retail lfs f4 vs candidate lfs f5 (register coloring)",
+      "0x170 retail fmuls f3,f3,f4 vs candidate fmuls f3,f5,f3 (commutative operand order plus colored scale register)",
+      "0x178 retail fsubs f0,f1,f5 vs candidate fsubs f0,f1,f4 (register coloring)",
+      "0x184 retail fmuls f0,f0,f4 vs candidate fmuls f0,f5,f0 (commutative operand order plus colored scale register)"
+    ]
+  },
+  "source_variants": [
+    {
+      "name": "scale-factor-left",
+      "change": "Reversed each complete product so ((float)(scale*N) * 0.5f) is the left operand.",
+      "evidence": "reports/GEDE01/variant-scale-left-3ccd1505-ae3a-4436-8f00-5f537fce3581.json",
+      "size_bytes": 440,
+      "relocation_strict_percent": 99.63636,
+      "result": "Compiler normalized both products; the same six instruction differences remained, including both fmuls operand orders."
+    },
+    {
+      "name": "half-constant-left",
+      "change": "Reversed each scale subexpression from (float)(scale*N) * 0.5f to 0.5f * (float)(scale*N).",
+      "evidence": "reports/GEDE01/variant-half-left-3ccd1505-ae3a-4436-8f00-5f537fce3581.json",
+      "size_bytes": 440,
+      "relocation_strict_percent": 99.63636,
+      "result": "Compiler normalized the subexpressions; the same six instruction differences remained."
+    },
+    {
+      "name": "factor-temporaries",
+      "change": "Materialized the width and height scale factors in two float locals before the output expressions.",
+      "evidence": "reports/GEDE01/variant-factor-temporaries-3ccd1505-ae3a-4436-8f00-5f537fce3581.json",
+      "size_bytes": 440,
+      "relocation_strict_percent": 99.63636,
+      "result": "The optimizer eliminated the temporaries; the same six instruction differences remained."
+    }
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_scope_note": "The SHA-1 verifies the mandated full-build gate only. Because this object remains NonMatching, it is excluded from the linked DOL and the hash is not evidence for this reconstruction."
+}
