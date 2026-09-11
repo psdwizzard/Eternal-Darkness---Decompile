@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "30a33459-bf5c-4776-8f05-689e1f390b85",
+  "attempt": 2,
+  "base_commit": "68ffed99519f1314127ec15a3d62fe644e42466f",
+  "target": "fn_8018ABD4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-30a33459-bf5c-4776-8f05-689e1f390b85.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits 320 bytes and 80 instructions at 99.625%; 75 instructions agree and five operands differ because generated code assigns fn_8018D020 to r27 and the 24-byte vertex offset to r26, opposite retail's callback in r26 and offset in r27 (retail offsets 0x6C, 0x70, 0x7C, 0x80, and 0xB0). All 13 .text relocations have equal offsets, types, targets, and addends, but instruction bytes are not identical, so no match is claimed. An explicit typed callback-local experiment produced the desired register roles but added a move, generated 324 bytes, and scored only 94.75%; it was discarded in favor of the preserved honest 99.625% reconstruction. The canonical build passed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
