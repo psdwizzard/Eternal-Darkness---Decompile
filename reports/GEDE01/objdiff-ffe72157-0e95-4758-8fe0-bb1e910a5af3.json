@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "assignment_id": "ffe72157-0e95-4758-8fe0-bb1e910a5af3",
+  "target": "fn_80049E74",
+  "source": "src/game/game_fn_80049E74.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80049E74.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "recovered_attempt": "e54f2637a309589a290f587e2f8827f508e6a73e",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": "INFO Loading and analyzing 1 module (using 1 thread)\nINFO Initial analysis completed in 1.247s (found 8214 functions)\nINFO Rebuilding relocations and splitting\nINFO Splitting completed in 25.847s (wrote 6954 objects)\nINFO Total time: 27.101s"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[814/817] LINK build/GEDE01/main.elf\n[815/817] DOL build/GEDE01/main.dol\n[816/817] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[817/817] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80049E74 fn_80049E74 -o build/GEDE01/objdiff-ffe72157-final-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=98.762886 retail_bytes=1940 generated_bytes=1940 retail_instructions=485 generated_instructions=485 differing_rows=10 retail_relocations=27 generated_relocations=27"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80049E74 fn_80049E74 -o build/GEDE01/objdiff-ffe72157-final-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=98.762886 retail_bytes=1940 generated_bytes=1940 retail_instructions=485 generated_instructions=485 differing_rows=10 retail_relocations=27 generated_relocations=27"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-ffe72157-final-canonical.raw.json build/GEDE01/objdiff-ffe72157-final-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "canonical_strict_cmp_exit=0"
+    },
+    {
+      "command": "jq normalized relocation records for each side, then cmp -s build/GEDE01/ffe72157-left-relocs.json build/GEDE01/ffe72157-right-relocs.json",
+      "exit_code": 0,
+      "raw_output": "retail_relocations=27 generated_relocations=27 relocation_records_cmp_exit=0; strict comparison key=function_reloc_diffs=name_address; all relocation addresses, types, target names/addresses, and addends equal"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    }
+  ],
+  "canonical": {
+    "match_percent": 98.762886,
+    "retail_bytes": 1940,
+    "generated_bytes": 1940,
+    "retail_instructions": 485,
+    "generated_instructions": 485,
+    "differing_rows": 10
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 27,
+    "generated_count": 27,
+    "records_equal": true,
+    "addresses_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true
+  },
+  "retail_differences": "0x1B8 cmpwi r23,0; 0x268 cmpwi r23,0; 0x344 cmpwi r23,0; 0x3F0 cmpwi r23,0; 0x4BC cmpwi r23,0; 0x58C cmpwi r23,0; 0x674 cmpwi r23,0; 0x69C cmpwi r23,0; 0x70C cmpwi r23,0; 0x734 cmpwi r23,0",
+  "generated_differences": "0x1B8 extsh. r0,r23; 0x268 extsh. r0,r23; 0x344 extsh. r0,r23; 0x3F0 extsh. r0,r23; 0x4BC extsh. r0,r23; 0x58C extsh. r0,r23; 0x674 extsh. r0,r23; 0x69C extsh. r0,r23; 0x70C extsh. r0,r23; 0x734 extsh. r0,r23",
+  "bounded_experiments": [
+    {
+      "change": "condition local changed from short to int",
+      "retained": false,
+      "raw_output": "match_percent=98.80412 retail_bytes=1940 generated_bytes=1940 DIFF_ARG_MISMATCH=102 DIFF_REPLACE=1",
+      "reason": "Removed the ten repeated tests but rotated persistent registers across 102 instruction arguments."
+    },
+    {
+      "change": "fn_80050A20 return changed from short to int while condition remained short",
+      "retained": false,
+      "raw_output": "match_percent=98.453606 retail_bytes=1940 generated_bytes=1940 DIFF_ARG_MISMATCH=18 DIFF_REPLACE=11",
+      "reason": "Introduced an extra sign-extension at the call result and regressed the localized diff."
+    }
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: the existing behavior-complete honest C reconstruction remains the most localized result. It is size-exact and relocation-exact, but is not a canonical 100% instruction match."
+}
