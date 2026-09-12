@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "assignment_id": "66a5861f-77f2-44f6-9349-a0ab5d3b040e",
+  "target": "fn_80201C2C",
+  "compiler": "GC/1.3",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/objdiff-66a5861f-canonical.json",
+    "relocation_strict": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/objdiff-66a5861f-reloc-strict.json -c function_reloc_diffs=name_address",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "relocations": "build/binutils/powerpc-eabi-readelf -r build/GEDE01/src/game/game_fn_80201C2C.o",
+    "legal_audit": "python3 tools/legal_audit.py"
+  },
+  "build_result": {
+    "exit_code": 0,
+    "sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "sha1_match": true,
+    "legal_audit_output": "legal audit passed (13785 tracked project files inspected)"
+  },
+  "canonical_unit": {
+    "name": "main/game/game_fn_80201C2C",
+    "measures": {
+      "fuzzy_match_percent": 100.0,
+      "total_code": "28",
+      "matched_code": "28",
+      "matched_code_percent": 100.0,
+      "total_functions": 1,
+      "matched_functions": 1,
+      "matched_functions_percent": 100.0,
+      "complete_code": "28",
+      "complete_code_percent": 100.0,
+      "total_units": 1,
+      "complete_units": 1
+    },
+    "function": {
+      "name": "fn_80201C2C",
+      "size": "28",
+      "fuzzy_match_percent": 100.0,
+      "address": "0"
+    },
+    "complete": true
+  },
+  "relocation_strict_unit": {
+    "config": "function_reloc_diffs=name_address",
+    "name": "main/game/game_fn_80201C2C",
+    "measures": {
+      "fuzzy_match_percent": 100.0,
+      "total_code": "28",
+      "matched_code": "28",
+      "matched_code_percent": 100.0,
+      "total_functions": 1,
+      "matched_functions": 1,
+      "matched_functions_percent": 100.0,
+      "complete_code": "28",
+      "complete_code_percent": 100.0,
+      "total_units": 1,
+      "complete_units": 1
+    },
+    "function": {
+      "name": "fn_80201C2C",
+      "size": "28",
+      "fuzzy_match_percent": 100.0,
+      "address": "0"
+    },
+    "complete": true,
+    "readelf_relocation_output": "There are no relocations in this file.",
+    "relocation_targets_and_addends_equal": true
+  },
+  "generated_text_hex": "28030000 41820010 80630030 28030000 4c820020 38600000 4e800020",
+  "conclusion": "Canonical and relocation-strict objdiff both measure fn_80201C2C at 28/28 bytes and 100.0%; the translation unit has no relocations, so relocation targets and addends are vacuously equal."
+}
