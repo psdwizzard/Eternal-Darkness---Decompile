@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "assignment_id": "4a0ccdb9-4e63-4ac4-a261-b9e4f214a578",
+  "target": "fn_80201CDC",
+  "compiler": "GC/1.3 (mwcc_242_53)",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201CDC -o reports/GEDE01/objdiff-4a0ccdb9-4e63-4ac4-a261-b9e4f214a578.json --format json-pretty fn_80201CDC",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201CDC -o reports/GEDE01/objdiff-4a0ccdb9-4e63-4ac4-a261-b9e4f214a578-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_80201CDC",
+    "sha1sum build/GEDE01/main.dol",
+    "build/binutils/powerpc-eabi-readelf -r build/GEDE01/obj/game/game_fn_80201CDC.o",
+    "build/binutils/powerpc-eabi-readelf -r build/GEDE01/src/game/game_fn_80201CDC.o",
+    "build/binutils/powerpc-eabi-readelf -x .text build/GEDE01/obj/game/game_fn_80201CDC.o",
+    "build/binutils/powerpc-eabi-readelf -x .text build/GEDE01/src/game/game_fn_80201CDC.o",
+    "python3 tools/legal_audit.py"
+  ],
+  "canonical": {
+    "match_percent": 100.0,
+    "retail_bytes": 12,
+    "generated_bytes": 12
+  },
+  "relocation_strict": {
+    "match_percent": 100.0,
+    "differing_instruction_rows": 0,
+    "retail_relocations": [],
+    "generated_relocations": [],
+    "relocation_targets_and_addends_match": true
+  },
+  "raw_text": {
+    "retail": "80630024806300084e800020",
+    "generated": "80630024806300084e800020",
+    "match": true
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_match": true,
+  "legal_audit": {
+    "command_output": "legal audit passed (13848 tracked project files inspected)",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "generated_binary_or_private_input_added": false
+  }
+}
