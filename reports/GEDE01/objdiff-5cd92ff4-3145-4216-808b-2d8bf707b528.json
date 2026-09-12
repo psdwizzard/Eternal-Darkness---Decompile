@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "assignment_id": "5cd92ff4-3145-4216-808b-2d8bf707b528",
+  "attempt": 3,
+  "target": "fn_801871F0",
+  "unit": "main/game/game_fn_801871F0",
+  "source_provenance": {
+    "classification": "inherited honest-C reconstruction; no retained target source or registration delta in attempt 3",
+    "source": "eternal-darkness-decomp/src/game/game_fn_801871F0.c",
+    "source_sha256": "7aeada9c8d15a18345fe5ee8247444b366b18e1460121ccf4e7e55c76cb6f04b",
+    "introducing_commit": "820c0e37fcbbd9d3d895f59fe65d137a60bf0822",
+    "accepted_base": "4c997a4732ee34b7a4dc279d0a4ac272fd2d948c",
+    "preserved_commit_checked": "656b4ba9da2b5956316d6dec39935ab2aae17f41",
+    "preserved_commit_note": "Preserved attempt 2 contained assignment reports only and confirmed the integrated reconstruction as the best retained source."
+  },
+  "compiler": {
+    "id": "mwcc_242_53",
+    "canonical_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801871F0 -o build/GEDE01/objdiff-5cd92ff4-canonical-final.raw.json --format json-pretty fn_801871F0",
+    "raw_report_sha256": "f312c9eeefaaa7cfcb4a44d4ef1a3dab9909335e963ed644c85dc77eb2c18838",
+    "raw_measurement": {
+      "target_size": 304,
+      "generated_size": 304,
+      "target_match_percent": 99.27631,
+      "generated_match_percent": 99.27631,
+      "target_differing_instruction_rows": 11,
+      "generated_differing_instruction_rows": 11,
+      "target_relocations": 1,
+      "generated_relocations": 1
+    }
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801871F0 -o build/GEDE01/objdiff-5cd92ff4-reloc-strict-final.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_801871F0",
+    "config": "function_reloc_diffs=name_address",
+    "raw_report_sha256": "f312c9eeefaaa7cfcb4a44d4ef1a3dab9909335e963ed644c85dc77eb2c18838",
+    "raw_report_byte_identical_to_canonical": true,
+    "raw_measurement": {
+      "target_size": 304,
+      "generated_size": 304,
+      "target_match_percent": 99.27631,
+      "generated_match_percent": 99.27631,
+      "target_differing_instruction_rows": 11,
+      "generated_differing_instruction_rows": 11,
+      "target_relocations": 1,
+      "generated_relocations": 1
+    },
+    "raw_readelf_relocations": {
+      "target": "000000d0  0000040a R_PPC_REL24  00000000  fn_80186C88 + 0",
+      "generated": "000000d0  0000030a R_PPC_REL24  00000000  fn_80186C88 + 0",
+      "comparison": "equal function offset 0xD0, type R_PPC_REL24, target fn_80186C88, and addend 0"
+    }
+  },
+  "instruction_differences": [
+    {"offset":"0x5C","target":"addi r3, r21, 0xa","generated":"addi r3, r30, 0xa","kind":"DIFF_ARG_MISMATCH"},
+    {"offset":"0x60","target":"lhax r0, r30, r3","generated":"lhax r0, r21, r3","kind":"DIFF_ARG_MISMATCH"},
+    {"offset":"0x68","target":"sthx r0, r30, r3","generated":"sthx r0, r21, r3","kind":"DIFF_ARG_MISMATCH"},
+    {"offset":"0x6C","target":"lhax r3, r30, r3","generated":"lhax r3, r21, r3","kind":"DIFF_ARG_MISMATCH"},
+    {"offset":"0x84","target":"addi r3, r21, 0xa","generated":"addi r3, r30, 0xa","kind":"DIFF_ARG_MISMATCH"},
+    {"offset":"0x88","target":"lhax r0, r30, r3","generated":"lhax r0, r21, r3","kind":"DIFF_ARG_MISMATCH"},
+    {"offset":"0x90","target":"sthx r0, r30, r3","generated":"sthx r0, r21, r3","kind":"DIFF_ARG_MISMATCH"},
+    {"offset":"0x94","target":"lhax r3, r30, r3","generated":"lhax r3, r21, r3","kind":"DIFF_ARG_MISMATCH"},
+    {"offset":"0xB4","target":"addi r20, r21, 0xa","generated":"addi r20, r30, 0xa","kind":"DIFF_ARG_MISMATCH"},
+    {"offset":"0xC0","target":"sthx r0, r30, r20","generated":"sthx r0, r21, r20","kind":"DIFF_ARG_MISMATCH"},
+    {"offset":"0xD4","target":"lhax r3, r30, r20","generated":"lhax r3, r21, r20","kind":"DIFF_ARG_MISMATCH"}
+  ],
+  "eliminated_variants": [
+    {
+      "source_shape": "typed s16 array access rooted at entry + 0xA while retaining offset through offset >> 1 indexing",
+      "retained": false,
+      "raw_report": "build/GEDE01/a3-v3.json",
+      "raw_measurement": {"target_size":304,"generated_size":304,"match_percent":81.22369},
+      "reason": "optimizer eliminated the intended offset lifetime and substantially regressed instruction alignment"
+    },
+    {
+      "source_shape": "56-byte typed Entry with a value member at 0xA, byte-offset member accesses, and entry++",
+      "retained": false,
+      "raw_report": "build/GEDE01/a3-v4.json",
+      "raw_measurement": {"target_size":304,"generated_size":304,"match_percent":81.68421},
+      "reason": "member-address reassociation substantially regressed instruction alignment"
+    }
+  ],
+  "build_verification": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2", "sha1sum build/GEDE01/main.dol"],
+    "ninja_result": "success; 822/822",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_note": "The hash verifies the overall Matching-unit link gate. fn_801871F0 remains NonMatching and excluded from the linked DOL."
+  },
+  "legal_audit": {
+    "translation_unit": "independent C",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
