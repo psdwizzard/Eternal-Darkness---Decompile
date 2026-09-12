@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "assignment_id": "a5925606-b715-4722-b3b7-82bd88f9b0e2",
+  "target": "fn_80201D24",
+  "compiler": "GC/1.3",
+  "canonical_objdiff": {
+    "command": "python3 tools/fndiff.py game/game_fn_80201D24.c fn_80201D24",
+    "exit_code": 0,
+    "raw_output": "target 8 bytes  base 8 bytes  match 100.0\n  0x0000  stw r4, 0x14(r3)                                     | stw r4, 0x14(r3)\n  0x0004  blr                                                  | blr",
+    "match_percent": 100.0,
+    "target_size": 8,
+    "base_size": 8
+  },
+  "relocation_strict": {
+    "command": "readelf -r build/GEDE01/src/game/game_fn_80201D24.o",
+    "exit_code": 0,
+    "raw_output": "There are no relocations in this file.",
+    "candidate_relocations": [],
+    "reference_instruction_relocations": [],
+    "targets_and_addends_match": true
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_output_tail": "[825/829] DOL build/GEDE01/main.dol\n[826/829] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "exit_code": 0,
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "match": true
+  },
+  "legal_audit": {
+    "command": "rg -n \"asm|__asm|#pragma|include\" src/game/game_fn_80201D24.c",
+    "exit_code": 1,
+    "raw_output": "",
+    "inline_or_whole_function_assembly": false,
+    "independent_translation_unit": "src/game/game_fn_80201D24.c"
+  }
+}
