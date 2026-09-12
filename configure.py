@@ -3149,6 +3149,20 @@ config.custom_build_rules.append(
 
 config.custom_build_rules.append(
     {
+        "name": "externalize_game_801247F8_signed_bias",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @22 lbl_80650108 "
+            "orig/GEDE01/sys/main.dol --require-whole-section && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@22=lbl_80650108 --remove-section=.sdata2 "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    }
+)
+
+config.custom_build_rules.append(
+    {
         "name": "split_game_801CD404_sbss_symbols",
         "command": (
             "touch -r $in $out && (build/binutils/powerpc-eabi-readelf -Ws $in | "
@@ -3208,6 +3222,11 @@ for rule in config.custom_build_rules:
 guarded_externalize_rules.add("externalize_string_pool_80250588")
 config.custom_build_steps = {
     "post-compile": [
+        {
+            "outputs": [f"build/{VERSION}/src/game/game_fn_801247F8.externalized"],
+            "rule": "externalize_game_801247F8_signed_bias",
+            "inputs": [f"build/{VERSION}/src/game/game_fn_801247F8.o"],
+        },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801EF910.externalized"],
             "rule": "externalize_game_801EF910_months",
