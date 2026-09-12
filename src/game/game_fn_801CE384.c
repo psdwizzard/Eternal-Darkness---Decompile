@@ -51,12 +51,14 @@ void fn_801CE384(u32 type, const Vec3f* position, u16 value, u32 value24,
                  u8 value1C, void** objects)
 {
     Descriptor descriptor;
-    Vec3f submit_position;
     Vec3f position_copy;
+    Vec3f submit_position;
     s16 indices[10];
     EffectParams params;
     u32 object_type;
     s16 count;
+    s16* index;
+    void** output;
     int i;
 
     fn_801CECB4(type, indices);
@@ -71,15 +73,17 @@ void fn_801CE384(u32 type, const Vec3f* position, u16 value, u32 value24,
 
     object_type = fn_801D38E8(type);
     count = fn_801CEB2C(type);
-    for (i = 0; i < count; i++) {
+    output = objects;
+    index = indices;
+    for (i = 0; i < count;) {
         f32 angle = lbl_80651038 * i / count;
         descriptor.word = lbl_80651E98;
         descriptor.half = lbl_80651E9C;
         position_copy.x = position->x + lbl_8065103C * fn_80048C2C(angle);
         position_copy.y = position->y + lbl_8065103C * fn_80048C50(angle);
-        position_copy.z = position->z + lbl_80651040;
-        params.value04 = indices[i];
-        params.object10 = fn_801D3988(indices[i], object_type);
+        position_copy.z = lbl_80651040 + position->z;
+        params.value04 = *index;
+        params.object10 = fn_801D3988(*index, object_type);
         params.angle14 = angle;
         submit_position = position_copy;
         {
@@ -87,14 +91,17 @@ void fn_801CE384(u32 type, const Vec3f* position, u16 value, u32 value24,
                                        fn_80190320);
             if (effect != 0) {
                 if (objects != 0) {
-                    objects[i] = fn_80156938(effect);
-                    if (objects[i] != 0) {
-                        fn_8017FF1C(objects[i], 4);
+                    *output = fn_80156938(effect);
+                    if (*output != 0) {
+                        fn_8017FF1C(*output, 4);
                     }
                 }
             } else if (objects != 0) {
-                objects[i] = 0;
+                *output = 0;
             }
         }
+        index++;
+        output++;
+        i++;
     }
 }
