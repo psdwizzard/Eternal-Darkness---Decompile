@@ -1,0 +1,22 @@
+{
+  "target": "fn_8020228C",
+  "compiler": "GC/1.3",
+  "build_commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2"
+  ],
+  "build_result": "success; build/GEDE01/main.dol: OK",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "objdiff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8020228C fn_8020228C -o reports/GEDE01/objdiff-dd4b155f-7b96-4605-afd2-84efc71569cc.json --format json",
+  "objdiff_output": "target 40 bytes  base 40 bytes  match 100.0",
+  "target_relocations": [
+    "00000010 R_PPC_EMB_SDA21 lbl_8064C4E0 + 0",
+    "00000014 R_PPC_REL24 fn_801E79FC + 0"
+  ],
+  "base_relocations": [
+    "00000010 R_PPC_EMB_SDA21 lbl_8064C4E0 + 0",
+    "00000014 R_PPC_REL24 fn_801E79FC + 0"
+  ],
+  "relocation_strict_result": "100%; counts, offsets, types, targets, and addends are equal"
+}
