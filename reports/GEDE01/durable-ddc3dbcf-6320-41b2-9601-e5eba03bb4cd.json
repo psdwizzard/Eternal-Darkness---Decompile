@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "ddc3dbcf-6320-41b2-9601-e5eba03bb4cd",
+  "attempt": 2,
+  "base_commit": "351b4ee7d0c49c40068029b1789bb1d3d8568c0e",
+  "target": "fn_801FE2A8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ddc3dbcf-6320-41b2-9601-e5eba03bb4cd.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces a size-exact 492-byte function at 99.87805%. The raw direct objdiff records four relocations on each side at offsets 0x24, 0x34, 0x64, and 0x154; their types, formatted targets, and zero addends agree. The only code differences are register selections at offsets 0x34, 0x38, and 0x3C: retail uses lwz r0, lbl_8064D18C@sda21; extsh. r3, r4; extsh r0, r0, while generated uses lwz r3, lbl_8064D18C@sda21; extsh. r0, r4; extsh r0, r3. Recovered commit e078c69eee691116925537d368d3bd01326e9faf's best source was already present on the accepted base; fresh legal C variants did not improve it and were discarded. A fresh python3 configure.py and .tools/bin/ninja -j2 build passed config/GEDE01/build.sha1, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
