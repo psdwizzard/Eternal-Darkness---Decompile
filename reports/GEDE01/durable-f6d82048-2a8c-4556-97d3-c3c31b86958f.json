@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f6d82048-2a8c-4556-97d3-c3c31b86958f",
+  "attempt": 1,
+  "base_commit": "466ee74f9423a6837cfa22ae15a393eda0a7c79a",
+  "target": "fn_80159F34",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f6d82048-2a8c-4556-97d3-c3c31b86958f.json"
+  ],
+  "divergence": "Canonical objdiff remains 98.492065%: retail is 504 bytes and generated is 508 bytes. Instructions agree through offset 0x170 and all 16/16 relocation-bearing instructions agree in offset, type, target, and addend. In the final volatile counter walk, retail loads lbl_8064D17C into r0 and keeps the slot pointer in r4; generated retains the count in r4, moves the slot base through r0 into r5, and therefore adds one mr instruction at generated offset 0x188, shifts the loop body by four bytes, and uses r5 rather than r4 for the counter loads and pointer increments."
+}
