@@ -43,7 +43,6 @@ void fn_801F10BC(s32 first, s32 mask, s32 unused)
     s32 color6;
     s32 color7;
     s32 best;
-    Entry801F10BC* entry;
     s32 i;
     Mtx matrix;
     Mtx position;
@@ -83,12 +82,11 @@ void fn_801F10BC(s32 first, s32 mask, s32 unused)
         }
         lbl_8064D6F0 = 0;
     } else {
-        entry = lbl_8063C4F8;
         best = -1;
-        for (i = 0; i < 8; entry++, i++) {
-            if ((mask & (1 << i)) != 0 && entry->object != 0 &&
-                (best == -1 || entry->value < lbl_80651348)) {
-                entry->value = lbl_80651348;
+        for (i = 0; i < 8; i++) {
+            if ((mask & (1 << i)) != 0 && lbl_8063C4F8[i].object != 0 &&
+                (best == -1 || lbl_8063C4F8[i].value < lbl_80651348)) {
+                lbl_8063C4F8[i].value = lbl_80651348;
                 best = i;
             }
         }
@@ -106,9 +104,10 @@ void fn_801F10BC(s32 first, s32 mask, s32 unused)
         color6 = *(s32*)(lbl_802FC5BC + 0xC);
         fn_80227EB8(1, &color6);
         lbl_8064D6F0 = 1;
-        color7 = *(s32*)(lbl_802FC5BC + 0x38);
-        fn_80227D50(1, &color7);
     }
+
+    color7 = *(s32*)(lbl_802FC5BC + 0x38);
+    fn_80227D50(1, &color7);
 
     if (lbl_8064D18C == 0x32) {
         fn_801ED434(2);
