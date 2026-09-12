@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "assignment_id": "75285cc7-9665-4868-ae5c-eb495ff6feca",
+  "target": "fn_80058394",
+  "source_reconciliation": {
+    "preserved_commit": "5cf8073456d65c34b36e6c6667d71e6855fbef86",
+    "accepted_base": "b4d886a120f15c27d4414a6f70e5150a31363392",
+    "result": "The accepted base already contains the recovered independent honest-C reconstruction. Commit 5cf8073456d65c34b36e6c6667d71e6855fbef86 preserves the prior measured attempt and confirms that seven legitimate source-level allocation experiments failed to improve it, so the accepted-base source and its NonMatching registration were retained unchanged."
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/objdiff-75285cc7-9665-4868-ae5c-eb495ff6feca-canonical.json --format json-pretty",
+    "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-75285cc7-9665-4868-ae5c-eb495ff6feca-canonical.json",
+    "raw_measurement": "retail_size=1184 generated_size=1184 retail_instructions=296 generated_instructions=296 retail_relocations=60 generated_relocations=60 match_percent=98.699326"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/objdiff-75285cc7-9665-4868-ae5c-eb495ff6feca-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-75285cc7-9665-4868-ae5c-eb495ff6feca-reloc-strict.json",
+    "raw_measurement": "retail_size=1184 generated_size=1184 retail_instructions=296 generated_instructions=296 retail_relocations=60 generated_relocations=60 match_percent=98.699326",
+    "relocation_result": "All 60 relocation-bearing instructions agree in offset, type, target, and addend. cmp reports byte-identical canonical and relocation-strict JSON outputs (exit 0)."
+  },
+  "divergence": "All instruction shapes, control flow, and relocations agree except for a five-way callee-saved register allocation cycle: retail assigns state/strings/kind/context/event to r27/r28/r29/r30/r31, while canonical GC/1.3 assigns strings/kind/context/event/state to r27/r28/r29/r30/r31. This produces 77 DIFF_ARG_MISMATCH instructions per side. Simultaneously mapping retail r27/r28/r29/r30/r31 to canonical r31/r27/r28/r29/r30 makes all 296 address-and-formatted-instruction records byte-identical (cmp exit 0).",
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "result": "success",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_scope": "The target remains NonMatching, so the DOL hash verifies the canonical fallback build and is not evidence that the candidate C matches."
+  },
+  "legal_audit": "No inline or whole-function assembly, shared reconstruction, runtime-code change, private input, generated binary, compiler-policy change, gate change, or neighboring-function edit is included."
+}
