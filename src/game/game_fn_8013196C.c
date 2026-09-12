@@ -30,6 +30,8 @@ extern void fn_8002AC60(void);
 void fn_8013196C(void)
 {
     Runtime* runtime;
+    int offset;
+    int index;
     register Selection* selection;
 
     runtime = fn_8015E4A4();
@@ -41,9 +43,6 @@ void fn_8013196C(void)
         }
     }
     if (selection != 0) {
-        int offset;
-        int index;
-
         index = 0;
         offset = 0;
         while (index < selection->count) {
