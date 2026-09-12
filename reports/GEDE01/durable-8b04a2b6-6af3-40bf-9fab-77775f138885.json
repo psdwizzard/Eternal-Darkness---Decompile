@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "8b04a2b6-6af3-40bf-9fab-77775f138885",
+  "attempt": 3,
+  "base_commit": "e53400abf13b900cb8e3e03b2a2ccc6b8ecdd151",
+  "target": "fn_801929A4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8b04a2b6-6af3-40bf-9fab-77775f138885.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces a size-exact 1256-byte function at 99.092354% under relocation-strict objdiff: 314 instructions per side, with 55 differing rows caused exclusively by a persistent nonvolatile-register allocation swap. Retail keeps the object pointer in r26 and the per-entry flag pointer in r25, while generated code keeps the object pointer in r25 and the flag pointer in r26. The guarded static-pool externalizer maps compiler-local @60 to retail lbl_80650B18; all 35 instruction relocations then have equal resolved targets and addends, with zero relocation diff kinds."
+}
