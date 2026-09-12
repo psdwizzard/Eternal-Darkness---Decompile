@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "assignment_id": "f54bca42-8816-4660-829b-7defd10f6267",
+  "target": "fn_80201EB8",
+  "compiler": "GC/1.3",
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "dol_check_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_output": [
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+    ]
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201EB8 fn_80201EB8 --format json",
+    "target_size": 60,
+    "base_size": 60,
+    "match_percent": 100.0,
+    "instructions": [
+      "stwu r1, -0x10(r1)",
+      "mflr r0",
+      "cmplwi r3, 0x0",
+      "stw r0, 0x14(r1)",
+      "beq 0x28",
+      "lwz r3, 0x34(r3)",
+      "cmplwi r3, 0x0",
+      "beq 0x28",
+      "bl fn_8011FB4C",
+      "b 0x2c",
+      "li r3, -0x1",
+      "lwz r0, 0x14(r1)",
+      "mtlr r0",
+      "addi r1, r1, 0x10",
+      "blr"
+    ]
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_80201EB8.o -2 build/GEDE01/src/game/game_fn_80201EB8.o fn_80201EB8 --format json-pretty",
+    "target_size": 60,
+    "base_size": 60,
+    "match_percent": 100.0,
+    "target_relocations": [
+      {"offset": 32, "type": "R_PPC_REL24", "target": "fn_8011FB4C", "addend": 0}
+    ],
+    "base_relocations": [
+      {"offset": 32, "type": "R_PPC_REL24", "target": "fn_8011FB4C", "addend": 0}
+    ],
+    "relocation_count_equal": true,
+    "relocation_targets_and_addends_equal": true
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80201EB8.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false
+  }
+}
