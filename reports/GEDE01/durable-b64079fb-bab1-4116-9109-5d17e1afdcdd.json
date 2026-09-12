@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b64079fb-bab1-4116-9109-5d17e1afdcdd",
+  "attempt": 1,
+  "base_commit": "289a17dcf6a1d3783a069b0abd748889a4ebfaf5",
+  "target": "fn_80204230",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b64079fb-bab1-4116-9109-5d17e1afdcdd.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are size-exact at 116/116 bytes and 91.89655%, with all four branch relocations represented in the same call order. Retail keeps the second argument/object in r31 and the fn_801A7540 result in r30, while GC/1.3 rotates those live ranges to r30 and r31; it consequently saves r30 before the mr. rather than between mr. and beq. The remaining differing instructions are this register allocation and save scheduling."
+}
