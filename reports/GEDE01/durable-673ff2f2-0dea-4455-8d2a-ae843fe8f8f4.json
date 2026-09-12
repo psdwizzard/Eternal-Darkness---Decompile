@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "673ff2f2-0dea-4455-8d2a-ae843fe8f8f4",
+  "attempt": 2,
+  "base_commit": "b0962e84afe1c3f8da78fe5df0e6675b4cf33bf6",
+  "target": "fn_80049E74",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-673ff2f2-0dea-4455-8d2a-ae843fe8f8f4.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits a size-exact 1940-byte function at 98.762886%; the canonical and relocation-strict direct objdiff reports are byte-identical, with all 27 relocation records (addresses, types, targets, and addends) equal. The only ten instruction differences are retail cmpwi r23,0 versus generated extsh. r0,r23 at function offsets 0x1B8, 0x268, 0x344, 0x3F0, 0x4BC, 0x58C, 0x674, 0x69C, 0x70C, and 0x734. A bounded int-return/int-local experiment removed those ten comparisons and measured 98.81443% at the same size, but caused 113 register-allocation differences, so the existing honest short-typed reconstruction was restored. The full canonical build passed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
