@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b2989085-3220-468d-95e9-df04706ec1e8",
+  "attempt": 3,
+  "base_commit": "8507cf453963655747e23fe7d170b93ad900393e",
+  "target": "fn_80183F70",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b2989085-3220-468d-95e9-df04706ec1e8.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are size-exact at 292/292 bytes and 98.15069%, with 73/73 instructions and all 17 relocation-bearing instructions equal in address, type, target, and addend. The remaining 27 instruction-operand differences are a persistent nonvolatile-register rotation: retail assigns descriptor/self/entry to r31/r30/r29, while canonical GC/1.3 assigns them to r29/r31/r30. Reordering K&R parameter declarations and using direct typed parameters both reproduced the same allocation and score."
+}
