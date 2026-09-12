@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a178199b-6a75-47a4-999c-9414754cb373",
+  "attempt": 2,
+  "base_commit": "cbae6862240b76965a1c613607d2e2fbb980885b",
+  "target": "fn_80153FD0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a178199b-6a75-47a4-999c-9414754cb373.json"
+  ],
+  "divergence": "Canonical objdiff is 98.22535% with retail and generated code both 284 bytes. Three instruction positions remain different: retail has li r7,10 at +0xC4, li r6,80 at +0xC8, and lbl_802FC5BC@l address formation at +0xD0; generated code forms the low address at +0xC4, then emits those constant loads at +0xC8 and +0xD0. Both sides contain 15 relocation-bearing instructions, but relocation-strict comparison is not 100% because the R_PPC_ADDR16_LO relocation targeting lbl_802FC5BC has retail offset +0xD0 versus generated offset +0xC4. The canonical DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
