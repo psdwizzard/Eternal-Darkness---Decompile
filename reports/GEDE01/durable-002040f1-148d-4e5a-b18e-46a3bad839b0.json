@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "002040f1-148d-4e5a-b18e-46a3bad839b0",
+  "attempt": 3,
+  "base_commit": "100835e19c899deac60079dcb76dce106e770412",
+  "target": "fn_801E2BF8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-002040f1-148d-4e5a-b18e-46a3bad839b0.json"
+  ],
+  "divergence": "The recovered strongest honest C reconstruction remains size-exact at 252/252 bytes and scores 98.87302% in fresh canonical and function_reloc_diffs=name_address measurements. Fourteen displayed rows differ: 13 genuine integer-to-float GPR, stack-slot, and FPR allocation/operand differences at 0x2C-0x40, 0x48-0x64, and 0x70, plus the non-codegen 0x44 symbol display difference between retail lbl_80651238 and MWCC's unit-local byte-identical @23 conversion constant. All five relocation offsets, types, and addends agree; four external targets agree and strict objdiff maps the local conversion constant equivalently. Canonical and relocation-strict raw reports are byte-identical. The full build passed and the DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "assignment_id": "002040f1-148d-4e5a-b18e-46a3bad839b0",
+  "attempt": 3,
+  "target": "fn_801E2BF8",
+  "unit": "main/game/game_fn_801E2BF8",
+  "source_provenance": {
+    "classification": "honest inherited NonMatching C reconstruction recovered and revalidated on the accepted base",
+    "source": "src/game/game_fn_801E2BF8.c",
+    "source_sha256": "00c2ea4d86c2903e1b0a0bf23582d184cfdac1983185974327f68bf7f56f2cf4",
+    "introducing_commit": "ab411f21d5e4a91c89d4d8692e8d49c570605db8",
+    "best_shape_commit": "5f8314b8ce805c25033cae847c91db30e749a331",
+    "accepted_base": "100835e19c899deac60079dcb76dce106e770412",
+    "preserved_evidence_commit": "6e9f2acf757c42419b23f38c1d8905b14d318c28",
+    "recovery_note": "git show confirms preserved commit 6e9f2acf contains the prior allocation-trial evidence. The accepted base already contains the byte-for-byte identical strongest source from 5f8314b8c, so no source transplant or registration change was necessary and no new source-level improvement is claimed."
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "canonical_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E2BF8 fn_801E2BF8 -o build/GEDE01/objdiff-002040f1-canonical.raw.json --format json-pretty",
+    "raw_report_sha256": "45e3252ea8caf44f19a9b5153bb198b490f0b9c1683d8f8121696e01cb2779de",
+    "raw_measurement": {
+      "target_size": 252,
+      "generated_size": 252,
+      "target_match_percent": 98.87302,
+      "generated_match_percent": 98.87302,
+      "target_differing_instruction_rows": 14,
+      "generated_differing_instruction_rows": 14,
+      "target_relocation_entries": 5,
+      "generated_relocation_entries": 5
+    }
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E2BF8 fn_801E2BF8 -o build/GEDE01/objdiff-002040f1-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "config": "function_reloc_diffs=name_address",
+    "raw_report_sha256": "45e3252ea8caf44f19a9b5153bb198b490f0b9c1683d8f8121696e01cb2779de",
+    "raw_report_byte_identical_to_canonical": true,
+    "raw_cmp_exit": 0,
+    "raw_measurement": {
+      "target_size": 252,
+      "generated_size": 252,
+      "target_match_percent": 98.87302,
+      "generated_match_percent": 98.87302,
+      "target_differing_instruction_rows": 14,
+      "generated_differing_instruction_rows": 14,
+      "target_relocation_entries": 5,
+      "generated_relocation_entries": 5
+    },
+    "raw_readelf_relocations": {
+      "target": [
+        "00000018 R_PPC_REL24 fn_801FD6F4 + 0",
+        "00000044 R_PPC_EMB_SDA21 lbl_80651238 + 0",
+        "00000084 R_PPC_EMB_SDA21 lbl_80651240 + 0",
+        "000000b4 R_PPC_REL24 fn_801FE05C + 0",
+        "000000dc R_PPC_REL24 fn_801FDB10 + 0"
+      ],
+      "generated": [
+        "00000018 R_PPC_REL24 fn_801FD6F4 + 0",
+        "00000044 R_PPC_EMB_SDA21 @23 + 0",
+        "00000084 R_PPC_EMB_SDA21 lbl_80651240 + 0",
+        "000000b4 R_PPC_REL24 fn_801FE05C + 0",
+        "000000dc R_PPC_REL24 fn_801FDB10 + 0"
+      ],
+      "assessment": "All relocation offsets, types, and addends agree. Four external target names agree. At 0x44 retail names the signed-conversion bias lbl_80651238 while MWCC names the generated unit-local byte-identical constant @23; strict objdiff maps it equivalently and emits a byte-identical report."
+    }
+  },
+  "instruction_differences": [
+    {"offset": "0x2C", "target": "lha r4, 0x1c(r31)", "generated": "lha r5, 0x1c(r31)", "classification": "codegen"},
+    {"offset": "0x34", "target": "stw r3, 0x10(r1)", "generated": "stw r3, 0x8(r1)", "classification": "codegen"},
+    {"offset": "0x38", "target": "xoris r0, r0, 0x8000", "generated": "xoris r4, r0, 0x8000", "classification": "codegen"},
+    {"offset": "0x3C", "target": "xoris r4, r4, 0x8000", "generated": "xoris r0, r5, 0x8000", "classification": "codegen"},
+    {"offset": "0x40", "target": "stw r0, 0x14(r1)", "generated": "stw r4, 0xc(r1)", "classification": "codegen"},
+    {"offset": "0x44", "target": "lfd f3, lbl_80651238@sda21", "generated": "lfd f3, @23@sda21", "classification": "constant-pool symbol presentation artifact"},
+    {"offset": "0x48", "target": "lfd f0, 0x10(r1)", "generated": "lfd f0, 0x8(r1)", "classification": "codegen"},
+    {"offset": "0x4C", "target": "stw r4, 0xc(r1)", "generated": "stw r0, 0x14(r1)", "classification": "codegen"},
+    {"offset": "0x50", "target": "fsubs f0, f0, f3", "generated": "fsubs f2, f0, f3", "classification": "codegen"},
+    {"offset": "0x58", "target": "stw r3, 0x8(r1)", "generated": "stw r3, 0x10(r1)", "classification": "codegen"},
+    {"offset": "0x5C", "target": "lfd f2, 0x8(r1)", "generated": "lfd f0, 0x10(r1)", "classification": "codegen"},
+    {"offset": "0x60", "target": "fadds f1, f1, f0", "generated": "fadds f1, f2, f1", "classification": "codegen"},
+    {"offset": "0x64", "target": "fsubs f0, f2, f3", "generated": "fsubs f0, f0, f3", "classification": "codegen"},
+    {"offset": "0x70", "target": "stw r4, 0x1c(r1)", "generated": "stw r0, 0x1c(r1)", "classification": "codegen"}
+  ],
+  "recovered_variant_evidence": {
+    "source_commit": "6e9f2acf757c42419b23f38c1d8905b14d318c28",
+    "trial_count": 14,
+    "best_result": "inherited inline increment-first expression retained at 252 bytes, 98.87302%, 14 differing rows per side",
+    "next_best_size_exact_result": "ordered float locals with clamp reconversion at 252 bytes, 98.47619%, 16 differing rows per side",
+    "assessment": "The preserved attempt explored operand ordering, ordered float and integer locals, direct compound assignment, comparison reversal, ternary clamping, and split conversions. None exceeded the retained source. Attempt 3 revalidated that retained source rather than preserving a weaker variant."
+  },
+  "build_verification": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2", "sha1sum build/GEDE01/main.dol"],
+    "ninja_result": "success; build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_note": "fn_801E2BF8 remains NonMatching and is excluded from the linked DOL; the hash verifies the overall Matching-unit link gate, not a match for this function."
+  },
+  "legal_audit": {
+    "translation_unit": "independent C",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
