@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "assignment_id": "a5382eec-1de5-4a76-b0ea-a067f1e33262",
+  "target": "fn_80088D04",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "python3 tools/fndiff.py game/game_fn_80088D04.c fn_80088D04",
+    "raw_summary": "target 320 bytes  base 320 bytes  match 99.25",
+    "retail_bytes": 320,
+    "generated_bytes": 320,
+    "retail_instructions": 80,
+    "generated_instructions": 80,
+    "match_percent": 99.25,
+    "different_instructions": 1
+  },
+  "relocation_strict": {
+    "source": "build/GEDE01/fndiff_fn_80088D04.json",
+    "retail_relocation_bearing_instructions": 35,
+    "generated_relocation_bearing_instructions": 35,
+    "equal_relocation_bearing_instructions": 34,
+    "different_relocation_bearing_instructions": 1,
+    "raw_diff": "retail: addi r28, r5, 0x0 [R_PPC_NONE target lbl_8031D3B8 addend 0] | generated: mr r28, r5 [R_PPC_NONE target lbl_8031D3B8 addend 0]",
+    "conclusion": "NonMatching: the target and addend agree, but the relocation-bearing instruction encoding does not."
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "raw_tail": "[816/818] DOL build/GEDE01/main.dol\n[817/818] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[818/818] PROGRESS"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "legal_audit": {
+    "translation_unit": "src/game/game_fn_80088D04.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false
+  }
+}

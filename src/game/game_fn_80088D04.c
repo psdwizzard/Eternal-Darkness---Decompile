@@ -32,17 +32,21 @@ extern void fn_801A8F08(s16, s16, s16, s16, int, int, int);
 void fn_80088D04(void)
 {
     Positions* positions = &lbl_8031D3B8;
+    s16* xs;
+    s16* ys;
+    s16* zs;
+    int i;
+    u8 count;
+    s16 x;
+    s16 y;
+    s16 z;
     u8 flags = lbl_8064C91D;
-    u8 count = lbl_8064C91C;
+    count = lbl_8064C91C;
 
     if (flags & 2) {
-        s16* xs = positions->x;
-        s16* ys = positions->y;
-        s16* zs = positions->z;
-        int i;
-        s16 x;
-        s16 y;
-        s16 z;
+        xs = positions->x;
+        ys = positions->y;
+        zs = positions->z;
 
         for (i = 0; i < count; i++) {
             u32 config;
