@@ -1,0 +1,46 @@
+{
+  "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201DE0 fn_80201DE0 --format json-pretty -c function_reloc_diffs=name_address",
+  "exit_code": 0,
+  "mode": "relocation-strict",
+  "relocation_comparison": "name_address",
+  "left": {
+    "sections": [
+      {"name": ".text", "kind": "SECTION_CODE", "size": "8", "match_percent": 100.0}
+    ],
+    "symbols": [
+      {
+        "name": "fn_80201DE0",
+        "size": "8",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 100.0,
+        "instructions": [
+          {"instruction": {"size": 4, "formatted": "stw r4, 0x18(r3)"}},
+          {"instruction": {"address": "4", "size": 4, "formatted": "blr "}}
+        ]
+      }
+    ],
+    "relocations": []
+  },
+  "right": {
+    "sections": [
+      {"name": ".text", "kind": "SECTION_CODE", "size": "8"}
+    ],
+    "symbols": [
+      {
+        "name": "fn_80201DE0",
+        "size": "8",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 100.0,
+        "instructions": [
+          {"instruction": {"size": 4, "formatted": "stw r4, 0x18(r3)"}},
+          {"instruction": {"address": "4", "size": 4, "formatted": "blr "}}
+        ]
+      }
+    ],
+    "relocations": []
+  },
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+}
