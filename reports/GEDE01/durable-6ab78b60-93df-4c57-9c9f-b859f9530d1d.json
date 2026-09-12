@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "6ab78b60-93df-4c57-9c9f-b859f9530d1d",
+  "attempt": 3,
+  "base_commit": "9848916adf0d9d0394461aed4e951854a445ecfd",
+  "target": "fn_8007CFB0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6ab78b60-93df-4c57-9c9f-b859f9530d1d.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6ab78b60-93df-4c57-9c9f-b859f9530d1d-canonical.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.8125% for 320 bytes/80 instructions. Exactly three argument-register mismatches remain at instructions 4, 5, and 10: retail preserves the incoming object in r31 (mr r31,r4; mr r3,r31 twice), while generated code preserves it in r27 (mr r27,r4; mr r3,r27 twice). All later register allocation, instruction order, control flow, code size, and call relocation targets/addends agree. Fully prototyping fn_80201814, fn_80201B8C, fn_80201C24, fn_801E8328, and fn_8020123C was attempted and retained; it corrected signature debt but measured 98.875% before local declaration-order refinement."
+}
