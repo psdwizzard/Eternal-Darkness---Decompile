@@ -112,7 +112,7 @@ void fn_801FE2A8(Input* input, u32 id)
         entry->flags = 4;
         mode = (s8)input->mode;
         if ((s32)mode == 1) {
-            entry->mode = 1;
+            entry->mode = mode;
             entry->copy48 = input->copy48;
         } else {
             entry->mode = 0;

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "4502ace0-6604-4982-9658-40c00b56732c",
+  "attempt": 1,
+  "base_commit": "61acb3c6494408b28f6a2bd0f704420d7d140e40",
+  "target": "fn_801FE2A8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4502ace0-6604-4982-9658-40c00b56732c.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces a size-exact 492-byte function at 99.87805%. Relocation-strict direct objdiff records four instruction relocations on each side with equal types, targets, addresses, and addends. The only remaining differences are three register selections at function offsets 0x34, 0x38, and 0x3C: retail uses lwz r0, lbl_8064D18C@sda21; extsh. r3, r4; extsh r0, r0, while generated uses lwz r3, lbl_8064D18C@sda21; extsh. r0, r4; extsh r0, r3. Storing the signed mode local rather than literal 1 improved the historical 98.333336%/488-byte reconstruction by preserving retail's extsb and exact downstream code. The fresh full build passed config/GEDE01/build.sha1 and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
