@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "25c08897-231a-41c4-a38e-2d1725696719",
+  "attempt": 3,
+  "base_commit": "a8e31c1ea0f28bb24f7283789a5c0600cd9aebb8",
+  "target": "fn_801247F8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-25c08897-231a-41c4-a38e-2d1725696719.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff is size-exact at 99.84615% (260/260 bytes, 65/65 instructions). The guarded split-TU externalization makes all four relocations agree with retail in type, offset, target, and zero addend. The sole remaining code difference is at +0x3C: retail encodes lwzx r4,r8,r4 while canonical GC/1.3 encodes the commutative operands as lwzx r4,r4,r8; both legal C addition orders select the latter encoding."
+}
