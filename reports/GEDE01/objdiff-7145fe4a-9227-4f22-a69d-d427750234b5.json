@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "assignment_id": "7145fe4a-9227-4f22-a69d-d427750234b5",
+  "attempt": 3,
+  "target": "fn_80180E14",
+  "compiler": "GC/1.3 canonical settings from configure.py",
+  "source": "src/game/game_fn_80180E14.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80180E14.c\")",
+  "split": ".text start:0x80180E14 end:0x80180ED8",
+  "recovery": "The honest C reconstruction and registration preserved in commit 40adf07d297df76a5987a94618752ef6573ab910 were already present unchanged on accepted base 7e66ffc9603ef04893739a6abdedfa3a6a364d81; fresh measurements were taken on that base.",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80180E14 fn_80180E14 -o build/GEDE01/objdiff-7145fe4a-default.json --format json-pretty",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80180E14 fn_80180E14 -c function_reloc_diffs=name_address -o build/GEDE01/objdiff-7145fe4a-reloc-strict.json --format json-pretty",
+    "dol_hash": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "legal_audit": "python3 tools/legal_audit.py",
+    "diff_check": "git diff --check"
+  },
+  "raw_measured_outputs": {
+    "configure": "INFO Splitting completed in 5.573s (wrote 6932 objects); RUN configure.py succeeded",
+    "build": "[819/821] PROGRESS; build/GEDE01/main.dol: OK; ninja exited 0",
+    "canonical_objdiff": "left .text size 196, right .text size 196, fn_80180E14 left/right size 196, 49 instructions each, match_percent 99.38776",
+    "relocation_strict_objdiff": "left .text size 196, right .text size 196, fn_80180E14 left/right size 196, 49 instructions each, match_percent 99.38776; 12/12 real .text relocations equal by offset, type, target, and addend",
+    "dol_hash": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+    "legal_audit": "legal audit passed (13706 tracked project files inspected)",
+    "diff_check": "git diff --check exited 0 with no output"
+  },
+  "result": {
+    "status": "attempted",
+    "retail_bytes": 196,
+    "generated_bytes": 196,
+    "retail_instructions": 49,
+    "generated_instructions": 49,
+    "canonical_match_percent": 99.38776,
+    "relocation_strict_match_percent": 99.38776,
+    "matching_claimed": false
+  },
+  "instruction_differences": [
+    {
+      "offset": "0x44",
+      "retail": "mr r4, r28",
+      "generated": "mr r6, r30",
+      "objdiff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x48",
+      "retail": "mr r5, r29",
+      "generated": "mr r4, r28",
+      "objdiff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x4C",
+      "retail": "mr r6, r30",
+      "generated": "mr r5, r29",
+      "objdiff_kind": "DIFF_ARG_MISMATCH"
+    }
+  ],
+  "equal_real_text_relocations": [
+    {"offset":"0x08","type":"R_PPC_ADDR16_HA","target":"lbl_80606334","addend":0},
+    {"offset":"0x10","type":"R_PPC_ADDR16_LO","target":"lbl_80606334","addend":0},
+    {"offset":"0x34","type":"R_PPC_EMB_SDA21","target":"lbl_8064D238","addend":0},
+    {"offset":"0x38","type":"R_PPC_REL24","target":"fn_8018038C","addend":0},
+    {"offset":"0x54","type":"R_PPC_REL24","target":"fn_80180ED8","addend":0},
+    {"offset":"0x60","type":"R_PPC_REL24","target":"fn_801810A0","addend":0},
+    {"offset":"0x64","type":"R_PPC_ADDR16_HA","target":"fn_801813E4","addend":0},
+    {"offset":"0x68","type":"R_PPC_ADDR16_LO","target":"fn_801813E4","addend":0},
+    {"offset":"0x7C","type":"R_PPC_ADDR16_HA","target":"fn_8018D998","addend":0},
+    {"offset":"0x80","type":"R_PPC_ADDR16_LO","target":"fn_8018D998","addend":0},
+    {"offset":"0x8C","type":"R_PPC_ADDR16_HA","target":"fn_8018DC24","addend":0},
+    {"offset":"0x90","type":"R_PPC_ADDR16_LO","target":"fn_8018DC24","addend":0}
+  ],
+  "historical_attempts_recovered_from_commit_40adf07d297df76a5987a94618752ef6573ab910": [
+    {"shape":"ConfigBlock[0x14] post-increment reconstruction retained on accepted base","score":99.38776,"outcome":"best honest-C reconstruction"},
+    {"shape":"explicit saved call_config plus pointer increment before helper call","score":93.65306,"outcome":"argument moves matched but pointer increment folded into later addressing"},
+    {"shape":"post-increment in an earlier comma-expression argument","score":93.65306,"outcome":"same folded-increment divergence"},
+    {"shape":"unsigned-long fourth-argument prototype and cast","score":99.38776,"outcome":"identical argument-move schedule"},
+    {"shape":"scheduling disabled around the function","score":79.38776,"outcome":"disturbed scheduling throughout"}
+  ],
+  "divergence": "Exact size, control flow, all non-call instructions outside offsets 0x44-0x4C, and all 12 real relocations match. Only fn_80180ED8 argument setup differs: retail orders moves to r4, r5, r6; canonical GC/1.3 orders r6, r4, r5."
+}
