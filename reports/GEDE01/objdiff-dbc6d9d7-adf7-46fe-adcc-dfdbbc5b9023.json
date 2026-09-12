@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "assignment_id": "dbc6d9d7-adf7-46fe-adcc-dfdbbc5b9023",
+  "attempt": 2,
+  "target": "fn_801E2BF8",
+  "unit": "main/game/game_fn_801E2BF8",
+  "source_provenance": {
+    "classification": "inherited reconstruction; fresh attempt 2 trials did not improve code generation",
+    "source": "src/game/game_fn_801E2BF8.c",
+    "source_sha256": "00c2ea4d86c2903e1b0a0bf23582d184cfdac1983185974327f68bf7f56f2cf4",
+    "introducing_commit": "ab411f21d5e4a91c89d4d8692e8d49c570605db8",
+    "best-shape_commit": "5f8314b8ce805c25033cae847c91db30e749a331",
+    "accepted_base": "3e7087fbb5bd6c67c35d96855f9a06315a5fbf76",
+    "preserved_commit_checked": "8d57402987c62a83e1f2e4847415f5ba90834ec1",
+    "preserved_commit_parent": "69fd07eee2474e3baf59040188cb23c9cbf3cf64",
+    "preserved_commit_target_files": [],
+    "preserved_commit_note": "git show confirms that the preservation commit itself changes only CLAUDE.md. Its parent contains the prior reports; the accepted base already contains the same strongest source from commit 5f8314b8c, so no source transplant was necessary and no fresh source improvement is claimed."
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "canonical_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E2BF8 fn_801E2BF8 -o build/GEDE01/objdiff-dbc6d9d7-canonical-final.raw.json --format json-pretty",
+    "raw_report_sha256": "45e3252ea8caf44f19a9b5153bb198b490f0b9c1683d8f8121696e01cb2779de",
+    "raw_measurement": {
+      "target_size": 252,
+      "generated_size": 252,
+      "target_match_percent": 98.87302,
+      "target_differing_instruction_rows": 14,
+      "generated_differing_instruction_rows": 14,
+      "target_relocation_entries": 5,
+      "generated_relocation_entries": 5
+    }
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E2BF8 fn_801E2BF8 -o build/GEDE01/objdiff-dbc6d9d7-reloc-strict-final.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "config": "function_reloc_diffs=name_address",
+    "raw_report_sha256": "45e3252ea8caf44f19a9b5153bb198b490f0b9c1683d8f8121696e01cb2779de",
+    "raw_report_byte_identical_to_canonical": true,
+    "raw_measurement": {
+      "target_size": 252,
+      "generated_size": 252,
+      "target_match_percent": 98.87302,
+      "target_differing_instruction_rows": 14,
+      "generated_differing_instruction_rows": 14,
+      "target_relocation_entries": 5,
+      "generated_relocation_entries": 5
+    },
+    "raw_readelf_relocations": {
+      "target": [
+        "00000018 R_PPC_REL24 fn_801FD6F4 + 0",
+        "00000044 R_PPC_EMB_SDA21 lbl_80651238 + 0",
+        "00000084 R_PPC_EMB_SDA21 lbl_80651240 + 0",
+        "000000b4 R_PPC_REL24 fn_801FE05C + 0",
+        "000000dc R_PPC_REL24 fn_801FDB10 + 0"
+      ],
+      "generated": [
+        "00000018 R_PPC_REL24 fn_801FD6F4 + 0",
+        "00000044 R_PPC_EMB_SDA21 @23 + 0",
+        "00000084 R_PPC_EMB_SDA21 lbl_80651240 + 0",
+        "000000b4 R_PPC_REL24 fn_801FE05C + 0",
+        "000000dc R_PPC_REL24 fn_801FDB10 + 0"
+      ],
+      "assessment": "All offsets, types, and addends agree. Four external target names agree. At 0x44 retail names the signed-conversion bias lbl_80651238 while MWCC names the generated unit-local, byte-identical constant @23; strict objdiff maps it equivalently and produces a byte-identical report. This naming row is an object-level constant-pool presentation artifact, not one of the 13 genuine code-generation differences."
+    }
+  },
+  "instruction_differences": [
+    {"offset": "0x2C", "target": "lha r4, 0x1c(r31)", "generated": "lha r5, 0x1c(r31)", "classification": "codegen"},
+    {"offset": "0x34", "target": "stw r3, 0x10(r1)", "generated": "stw r3, 0x8(r1)", "classification": "codegen"},
+    {"offset": "0x38", "target": "xoris r0, r0, 0x8000", "generated": "xoris r4, r0, 0x8000", "classification": "codegen"},
+    {"offset": "0x3C", "target": "xoris r4, r4, 0x8000", "generated": "xoris r0, r5, 0x8000", "classification": "codegen"},
+    {"offset": "0x40", "target": "stw r0, 0x14(r1)", "generated": "stw r4, 0xc(r1)", "classification": "codegen"},
+    {"offset": "0x44", "target": "lfd f3, lbl_80651238@sda21", "generated": "lfd f3, @23@sda21", "classification": "constant-pool symbol presentation artifact"},
+    {"offset": "0x48", "target": "lfd f0, 0x10(r1)", "generated": "lfd f0, 0x8(r1)", "classification": "codegen"},
+    {"offset": "0x4C", "target": "stw r4, 0xc(r1)", "generated": "stw r0, 0x14(r1)", "classification": "codegen"},
+    {"offset": "0x50", "target": "fsubs f0, f0, f3", "generated": "fsubs f2, f0, f3", "classification": "codegen"},
+    {"offset": "0x58", "target": "stw r3, 0x8(r1)", "generated": "stw r3, 0x10(r1)", "classification": "codegen"},
+    {"offset": "0x5C", "target": "lfd f2, 0x8(r1)", "generated": "lfd f0, 0x10(r1)", "classification": "codegen"},
+    {"offset": "0x60", "target": "fadds f1, f1, f0", "generated": "fadds f1, f2, f1", "classification": "codegen"},
+    {"offset": "0x64", "target": "fsubs f0, f2, f3", "generated": "fsubs f0, f0, f3", "classification": "codegen"},
+    {"offset": "0x70", "target": "stw r4, 0x1c(r1)", "generated": "stw r0, 0x1c(r1)", "classification": "codegen"}
+  ],
+  "fresh_variant_trials": [
+    {"source_shape": "inherited inline increment-first expression (retained)", "target_size": 252, "generated_size": 252, "match_percent": 98.87302, "differing_rows_per_side": 14, "raw_report_sha256": "45e3252ea8caf44f19a9b5153bb198b490f0b9c1683d8f8121696e01cb2779de"},
+    {"source_shape": "docs/matching.md ordered float locals: limit conversion declared first, increment conversion second, value + increment, reuse limit in clamp", "target_size": 252, "generated_size": 240, "match_percent": 94.07937, "differing_rows_per_side": 13, "raw_report_sha256": "7cc35f65a798c104b123d8415987fedbeaa19bdda8f14f3da331c6c160de621b"},
+    {"source_shape": "ordered float locals but reconvert state->limit in clamp body", "target_size": 252, "generated_size": 252, "match_percent": 98.47619, "differing_rows_per_side": 16, "raw_report_sha256": "631689e6b45c7f58361649ea4f8c7ae8a51c3438f8b225462f6e10e0f12206f4"},
+    {"source_shape": "named increment float with state->value + increment", "target_size": 252, "generated_size": 252, "match_percent": 98.47619, "differing_rows_per_side": 16, "raw_report_sha256": "631689e6b45c7f58361649ea4f8c7ae8a51c3438f8b225462f6e10e0f12206f4"},
+    {"source_shape": "inline state->value + (f32)state->increment", "target_size": 252, "generated_size": 252, "match_percent": 98.47619, "differing_rows_per_side": 16, "raw_report_sha256": "631689e6b45c7f58361649ea4f8c7ae8a51c3438f8b225462f6e10e0f12206f4"},
+    {"source_shape": "direct state->value compound assignment and direct clamp", "target_size": 252, "generated_size": 260, "match_percent": 79.07937, "differing_rows_per_side": 34, "raw_report_sha256": "185a18104db327c0ee5561bf8c5920945d5543c7d968158375d379d2ba6be011"},
+    {"source_shape": "reverse clamp comparison to value > state->limit", "target_size": 252, "generated_size": 252, "match_percent": 98.63492, "differing_rows_per_side": 16, "raw_report_sha256": "444337376968f87e904887e788a32672969e9d0a287d9448ce42e85df91180bc"},
+    {"source_shape": "named s8 increment then s16 limit integer locals", "target_size": 252, "generated_size": 252, "match_percent": 98.87302, "differing_rows_per_side": 14, "raw_report_sha256": "84dd9d8fadfe370019937e9ded1a12eff85cad98e7d120f445ab8c7cfec74a55"},
+    {"source_shape": "named s16 limit then s8 increment integer locals", "target_size": 252, "generated_size": 252, "match_percent": 98.87302, "differing_rows_per_side": 14, "raw_report_sha256": "84dd9d8fadfe370019937e9ded1a12eff85cad98e7d120f445ab8c7cfec74a55"},
+    {"source_shape": "ternary clamp assignment", "target_size": 252, "generated_size": 260, "match_percent": 95.46032, "differing_rows_per_side": 19, "raw_report_sha256": "e5245c23f6d53f23dedc95a3068b5646c0b0c66560000f47f3603ed0d7f8b4d8"},
+    {"source_shape": "split increment conversion then value += state->value", "target_size": 252, "generated_size": 252, "match_percent": 98.2381, "differing_rows_per_side": 17, "raw_report_sha256": "040cd292d180e6792c8f08c9888b83c646fc3ea6031c52c0986c65250b86abfa"},
+    {"source_shape": "named converted increment on left of addition", "target_size": 252, "generated_size": 252, "match_percent": 98.87302, "differing_rows_per_side": 14, "raw_report_sha256": "45e3252ea8caf44f19a9b5153bb198b490f0b9c1683d8f8121696e01cb2779de"},
+    {"source_shape": "split state->value then value += state->increment", "target_size": 252, "generated_size": 252, "match_percent": 98.15873, "differing_rows_per_side": 18, "raw_report_sha256": "6ffd80a1343d147d9f9255dd33e087a3ef54f45e69360f12c48649445f075a11"},
+    {"source_shape": "declare converted limit after inline value expression and use it only in compare", "target_size": 252, "generated_size": 252, "match_percent": 98.87302, "differing_rows_per_side": 14, "raw_report_sha256": "45e3252ea8caf44f19a9b5153bb198b490f0b9c1683d8f8121696e01cb2779de"}
+  ],
+  "build_verification": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2", "sha1sum build/GEDE01/main.dol"],
+    "ninja_result": "success",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_note": "fn_801E2BF8 remains NonMatching and is excluded from the linked DOL; the hash verifies that the overall Matching-unit link gate remains intact, not that this function matches."
+  },
+  "legal_audit": {
+    "translation_unit": "independent C",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}

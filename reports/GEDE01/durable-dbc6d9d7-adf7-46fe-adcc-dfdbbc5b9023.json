@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "dbc6d9d7-adf7-46fe-adcc-dfdbbc5b9023",
+  "attempt": 2,
+  "base_commit": "3e7087fbb5bd6c67c35d96855f9a06315a5fbf76",
+  "target": "fn_801E2BF8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-dbc6d9d7-adf7-46fe-adcc-dfdbbc5b9023.json"
+  ],
+  "divergence": "Attempt 2 makes no source-level or score improvement over the 98.87302% reconstruction already present on the accepted base; it must not be counted as newly matched progress. Fresh canonical and function_reloc_diffs=name_address objdiff are byte-identical and size-exact at 252/252 bytes, with 14 displayed differing rows: 13 genuine integer-to-float GPR, stack-slot, and FPR allocation/operand differences at 0x2C-0x40, 0x48-0x64, and 0x70, plus the non-codegen 0x44 label display difference between retail lbl_80651238 and MWCC's unit-local byte-identical @23 conversion constant. All five relocation offsets, types, and addends agree; four external targets agree and strict objdiff maps the local conversion constant equivalently. Thirteen freshly measured rejected source variants, including the ordered-local technique from docs/matching.md, are recorded with exact scores, sizes, differing-row counts, and raw-report hashes. The full build passed and the DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
