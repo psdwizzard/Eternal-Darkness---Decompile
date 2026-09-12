@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "assignment_id": "5ea5f22e-afb9-414e-9628-7e760d1ced2a",
+  "target": "fn_80129C2C",
+  "compiler": "GC/1.3",
+  "objdiff": "objdiff-cli 3.6.1",
+  "command": "python3 tools/fndiff.py game/game_fn_80129C2C.c fn_80129C2C",
+  "target_size": 188,
+  "candidate_size": 188,
+  "match_percent": 99.25532,
+  "relocation_strict": {
+    "target_relocations": [],
+    "candidate_relocations": [],
+    "matching_relocations": 0,
+    "total_relocations": 0
+  },
+  "instruction_differences": [
+    {"offset": "0x1c", "target": "lwz r9, 0xb8(r4)", "candidate": "lwz r8, 0xb8(r4)", "kind": "DIFF_ARG_MISMATCH"},
+    {"offset": "0x28", "target": "li r8, 0x0", "candidate": "li r9, 0x0", "kind": "DIFF_ARG_MISMATCH"},
+    {"offset": "0x2c", "target": "lwz r9, 0x0(r9)", "candidate": "lwz r8, 0x0(r8)", "kind": "DIFF_ARG_MISMATCH"},
+    {"offset": "0x34", "target": "subf r0, r9, r5", "candidate": "subf r0, r8, r5", "kind": "DIFF_ARG_MISMATCH"},
+    {"offset": "0x70", "target": "li r8, 0x1", "candidate": "li r9, 0x1", "kind": "DIFF_ARG_MISMATCH"},
+    {"offset": "0x74", "target": "cmpwi r8, 0x0", "candidate": "cmpwi r9, 0x0", "kind": "DIFF_ARG_MISMATCH"}
+  ],
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "result": "success",
+    "dol_check_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "output": "legal audit passed (13901 tracked project files inspected)"
+  }
+}
