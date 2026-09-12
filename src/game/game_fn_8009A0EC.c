@@ -59,11 +59,12 @@ int fn_8009A0EC(register void* object, register int phase, void* event)
             }
             result = 1;
         } else {
-            result = 0;
+            goto zero_result;
         }
-    } else if (phase == 1) {
+    } else if (phase != 1) {
         result = 0;
     } else {
+zero_result:
         result = 0;
     }
     return result;
