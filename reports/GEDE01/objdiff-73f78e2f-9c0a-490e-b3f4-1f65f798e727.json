@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "assignment_id": "73f78e2f-9c0a-490e-b3f4-1f65f798e727",
+  "target": "fn_80175A08",
+  "compiler": "canonical GC/1.3",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80175A08 fn_80175A08 -o build/GEDE01/objdiff-73f78e2f-9c0a-490e-b3f4-1f65f798e727-canonical.json --format json-pretty",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80175A08 fn_80175A08 -o build/GEDE01/objdiff-73f78e2f-9c0a-490e-b3f4-1f65f798e727-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "legal_audit": "python3 tools/legal_audit.py"
+  },
+  "raw_measured_outputs": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_check": "build/GEDE01/main.dol: OK",
+    "legal_audit": "legal audit passed (14176 tracked project files inspected)",
+    "canonical": {
+      "match_percent": 97.82407,
+      "retail_text_bytes": 432,
+      "candidate_text_bytes": 436,
+      "retail_instructions": 108,
+      "candidate_instructions": 109,
+      "retail_relocations": 26,
+      "candidate_relocations": 27
+    },
+    "relocation_strict": {
+      "config": "function_reloc_diffs=name_address",
+      "match_percent": 97.82407,
+      "retail_text_bytes": 432,
+      "candidate_text_bytes": 436,
+      "retail_instructions": 108,
+      "candidate_instructions": 109,
+      "retail_relocations": 26,
+      "candidate_relocations": 27
+    }
+  },
+  "exact_codegen_divergence": {
+    "retail": [
+      "0x14: addi r31, r4, lbl_8024FF00@l",
+      "0x44: addi r4, r31, 0x0",
+      "0xC8/0xD0/0xD4: jumptable_802504E4 address/load sequence"
+    ],
+    "candidate": [
+      "0x10: addi r0, r4, lbl_8024FF00@l",
+      "0x18: mr r31, r0 (extra instruction)",
+      "0x48: mr r4, r31",
+      "0xCC/0xD4/0xD8: @22 jump-table address/load sequence shifted by four bytes"
+    ],
+    "summary": "Canonical MWCC materializes the string-pool low half into r0 before the callee-save stores and then copies it to r31. Retail delays the low-half add until after the r31 save and writes directly to r31. This adds one instruction and shifts the later jump-table sequence by four bytes; the extra instruction also accounts for the extra R_PPC_NONE relocation record. Behavior, calls, switch dispatch, value conversions, and setter argument registers otherwise agree."
+  },
+  "candidate": "src/game/game_fn_80175A08.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80175A08.c\", extra_cflags=[\"-sdata 0\"])",
+  "split": ".text start:0x80175A08 end:0x80175BB8",
+  "result": "attempted"
+}
