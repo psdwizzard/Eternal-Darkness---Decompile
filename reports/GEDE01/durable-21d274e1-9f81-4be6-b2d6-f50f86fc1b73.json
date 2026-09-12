@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "21d274e1-9f81-4be6-b2d6-f50f86fc1b73",
+  "attempt": 1,
+  "base_commit": "e17ec15eba40984a2482f11c6fb1ce619a9e9b8b",
+  "target": "fn_802042A4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-21d274e1-9f81-4be6-b2d6-f50f86fc1b73.json"
+  ],
+  "divergence": "Best canonical and relocation-strict direct objdiff score is 91.89655% with size-exact 116-byte code and 30 instructions on each side. All four R_PPC_REL24 calls are present on both sides with corresponding targets and zero addends. GC/1.3 assigns the persistent object to r30 and the first lookup result to r31, while retail assigns the object to r31 and the lookup result to r30; this produces seven operand mismatches plus one insertion and one deletion around the nonvolatile save/mr schedule. The prescribed build passed, build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f, and tools/legal_audit.py passed for 14181 tracked project files."
+}
