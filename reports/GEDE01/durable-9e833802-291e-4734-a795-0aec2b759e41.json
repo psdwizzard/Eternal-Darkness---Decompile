@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9e833802-291e-4734-a795-0aec2b759e41",
+  "attempt": 1,
+  "base_commit": "393dbd2671bb2ba20301cbb7df6028b2fc2c4800",
+  "target": "fn_80201F80",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9e833802-291e-4734-a795-0aec2b759e41.json"
+  ],
+  "divergence": "94.245285% canonical: retail is 212 bytes and generated is 208 bytes. At .text+0x8c, GC/1.3 speculatively computes flags|mask before the comparison and removes retail's branch-over-else instruction; relocation targets/types/addends agree, but the final fn_80201E50 R_PPC_REL24 site is consequently +0xa4 instead of retail +0xa8."
+}

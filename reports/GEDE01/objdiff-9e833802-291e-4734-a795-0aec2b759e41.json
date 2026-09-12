@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "assignment_id": "9e833802-291e-4734-a795-0aec2b759e41",
+  "target": "fn_80201F80",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201F80 -o build/GEDE01/objdiff-9e833802-291e-4734-a795-0aec2b759e41-canonical.json --format json-pretty fn_80201F80",
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-9e833802-291e-4734-a795-0aec2b759e41-canonical.json",
+    "match_percent": 94.245285,
+    "retail_size": 212,
+    "generated_size": 208
+  },
+  "relocation_strict": {
+    "command": "readelf -rW build/GEDE01/obj/game/game_fn_80201F80.o; readelf -rW build/GEDE01/src/game/game_fn_80201F80.o",
+    "retail_raw_output": "0000003c R_PPC_REL24 fn_80201CCC + 0; 0000006c R_PPC_REL24 fn_80201E50 + 0; 00000080 R_PPC_REL24 fn_80201E50 + 0; 000000a8 R_PPC_REL24 fn_80201E50 + 0",
+    "generated_raw_output": "0000003c R_PPC_REL24 fn_80201CCC + 0; 0000006c R_PPC_REL24 fn_80201E50 + 0; 00000080 R_PPC_REL24 fn_80201E50 + 0; 000000a4 R_PPC_REL24 fn_80201E50 + 0",
+    "result": "targets, types, and addends agree; final fn_80201E50 relocation is four bytes early because generated toggle code is four bytes shorter"
+  },
+  "divergence": {
+    "range": "retail .text+0x8c..0xa8 versus generated .text+0x8c..0xa4",
+    "raw_output": "retail: and r0,r30,r3; cmplw r30,r0; bne +0xc; andc r4,r3,r30; b +0x8; or r4,r3,r30; generated: and r0,r30,r3; or r4,r3,r30; cmplw r30,r0; bne +0x8; andc r4,r3,r30",
+    "summary": "GC/1.3 speculatively computes the OR value before the toggle comparison and removes retail's branch-over-else instruction"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  }
+}
