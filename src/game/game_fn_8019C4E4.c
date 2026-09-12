@@ -3,12 +3,12 @@ typedef signed short s16;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-extern u32 lbl_806501D0;
-extern u16 lbl_806501D4;
-extern u32 lbl_806501D8;
-extern u16 lbl_806501DC;
+extern u32 lbl_80651E00;
+extern u16 lbl_80651E04;
+extern u32 lbl_80651E08;
+extern u16 lbl_80651E0C;
 extern void* lbl_8064D224;
-extern const float lbl_80650F90;
+extern const float lbl_80650C10;
 extern u8 lbl_80607120[];
 extern u8 lbl_80606328[];
 extern u8 lbl_80606318[];
@@ -35,10 +35,10 @@ void fn_8019C4E4(u8* object, void* first, void* second, u8* config)
     cfg = config;
     base = first;
     self = object;
-    setup.word = lbl_806501D0;
-    setup.half = lbl_806501D4;
-    value.word = lbl_806501D8;
-    value.half = lbl_806501DC;
+    setup.word = lbl_80651E00;
+    setup.half = lbl_80651E04;
+    value.word = lbl_80651E08;
+    value.half = lbl_80651E0C;
     count = cfg[0];
     entry = *(u8**)(self + 0x4C);
     fn_801804AC(self, base, &setup, &value);
@@ -59,7 +59,7 @@ void fn_8019C4E4(u8* object, void* first, void* second, u8* config)
     for (; (u8)i < count; entry += 0x38, i++) {
         fn_80180554(entry, base, &setup, &value, *(u16*)(cfg + 8), 0);
         fn_801805E0(entry + 0x20, 4, cfg[1], (u32)((i & 0x3F) * 4),
-                    cfg + 0x18, lbl_80650F90);
+                    cfg + 0x18, lbl_80650C10);
     }
 
     fn_8018CEC0(*(void**)(self + 0x54), count);
