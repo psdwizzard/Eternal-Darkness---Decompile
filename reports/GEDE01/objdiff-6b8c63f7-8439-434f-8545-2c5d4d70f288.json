@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "assignment_id": "6b8c63f7-8439-434f-8545-2c5d4d70f288",
+  "target": "fn_80202160",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80202160 -o build/GEDE01/objdiff-6b8c63f7-8439-434f-8545-2c5d4d70f288-canonical.json --format json-pretty fn_80202160",
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-6b8c63f7-8439-434f-8545-2c5d4d70f288-canonical.json",
+    "match_percent": 100.0,
+    "retail_size": 12,
+    "generated_size": 12,
+    "retail_instructions": 3,
+    "generated_instructions": 3,
+    "instruction_output": "lwz r0, 0x1c(r3); rlwinm r3, r0, 0, 28, 28; blr"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80202160 -o build/GEDE01/objdiff-6b8c63f7-8439-434f-8545-2c5d4d70f288-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_80202160",
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-6b8c63f7-8439-434f-8545-2c5d4d70f288-reloc-strict.json",
+    "match_percent": 100.0,
+    "retail_size": 12,
+    "generated_size": 12,
+    "retail_instructions": 3,
+    "generated_instructions": 3,
+    "result": "100.0%; all instructions and relocation-sensitive comparisons agree"
+  },
+  "relocations": {
+    "command": "build/binutils/powerpc-eabi-readelf -rW build/GEDE01/obj/game/game_fn_80202160.o; build/binutils/powerpc-eabi-readelf -rW build/GEDE01/src/game/game_fn_80202160.o",
+    "retail_raw_output": "There are no relocations in this file.",
+    "generated_raw_output": "There are no relocations in this file.",
+    "result": "both objects contain zero relocations; relocation sites, targets, and addends agree"
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "build/GEDE01/main.dol: OK; Progress Game Code: 946848 / 1405164 bytes, 5655 / 6274 functions"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (14041 tracked project files inspected)",
+    "result": "independent C translation unit; no inline or whole-function assembly, shared reconstruction, fallback jump, or neighboring function changes"
+  }
+}
