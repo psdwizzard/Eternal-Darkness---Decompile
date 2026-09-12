@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "assignment_id": "cdf05609-6099-4e64-9b5a-b972f166d61a",
+  "attempt": 2,
+  "target": "fn_80180E14",
+  "compiler": "GC/1.3 canonical settings from configure.py",
+  "source": "src/game/game_fn_80180E14.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80180E14.c\")",
+  "split": ".text start:0x80180E14 end:0x80180ED8",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80180E14 fn_80180E14 -o build/GEDE01/objdiff-cdf05609-default.json --format json-pretty",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80180E14 fn_80180E14 -c function_reloc_diffs=name_address -o build/GEDE01/objdiff-cdf05609-reloc-strict.json --format json-pretty",
+    "dol_hash": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "legal_audit": "python3 tools/legal_audit.py"
+  },
+  "raw_measured_outputs": {
+    "configure": "INFO Splitting completed (wrote 6929 objects); RUN configure.py succeeded",
+    "build": "[810/810] PROGRESS; build/GEDE01/main.dol: OK",
+    "canonical_objdiff": "target 196 bytes; base 196 bytes; match_percent 99.38776",
+    "relocation_strict_objdiff": "target 196 bytes; base 196 bytes; match_percent 99.38776; 12/12 real ELF .text relocations equal by offset, type, target, and addend",
+    "dol_hash": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+    "legal_audit": "legal audit passed (13695 tracked project files inspected)",
+    "diff_check": "git diff --check exited 0 with no output"
+  },
+  "result": {
+    "status": "attempted",
+    "retail_bytes": 196,
+    "generated_bytes": 196,
+    "retail_instructions": 49,
+    "generated_instructions": 49,
+    "match_percent": 99.38776,
+    "matching_claimed": false
+  },
+  "instruction_differences": [
+    {
+      "offset": "0x44",
+      "retail": "mr r4, r28",
+      "generated": "mr r6, r30",
+      "objdiff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x48",
+      "retail": "mr r5, r29",
+      "generated": "mr r4, r28",
+      "objdiff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x4C",
+      "retail": "mr r6, r30",
+      "generated": "mr r5, r29",
+      "objdiff_kind": "DIFF_ARG_MISMATCH"
+    }
+  ],
+  "equal_real_text_relocations": [
+    {"offset":"0x08","type":"R_PPC_ADDR16_HA","target":"lbl_80606334","addend":0},
+    {"offset":"0x10","type":"R_PPC_ADDR16_LO","target":"lbl_80606334","addend":0},
+    {"offset":"0x34","type":"R_PPC_EMB_SDA21","target":"lbl_8064D238","addend":0},
+    {"offset":"0x38","type":"R_PPC_REL24","target":"fn_8018038C","addend":0},
+    {"offset":"0x54","type":"R_PPC_REL24","target":"fn_80180ED8","addend":0},
+    {"offset":"0x60","type":"R_PPC_REL24","target":"fn_801810A0","addend":0},
+    {"offset":"0x64","type":"R_PPC_ADDR16_HA","target":"fn_801813E4","addend":0},
+    {"offset":"0x68","type":"R_PPC_ADDR16_LO","target":"fn_801813E4","addend":0},
+    {"offset":"0x7C","type":"R_PPC_ADDR16_HA","target":"fn_8018D998","addend":0},
+    {"offset":"0x80","type":"R_PPC_ADDR16_LO","target":"fn_8018D998","addend":0},
+    {"offset":"0x8C","type":"R_PPC_ADDR16_HA","target":"fn_8018DC24","addend":0},
+    {"offset":"0x90","type":"R_PPC_ADDR16_LO","target":"fn_8018DC24","addend":0}
+  ],
+  "attempted_source_shapes": [
+    {
+      "shape": "preserved ConfigBlock[0x14] post-increment reconstruction from commit 4367db13bf4344dc9a0bdcd02f9b69582858a3bc",
+      "score": 99.38776,
+      "outcome": "best retained honest-C reconstruction"
+    },
+    {
+      "shape": "explicit call_config save followed by config increment before the helper call",
+      "score": 93.65306,
+      "outcome": "argument moves matched, but GC/1.3 folded the pointer increment into later addi/lbz addressing; reverted"
+    },
+    {
+      "shape": "post-increment moved into an earlier comma-expression argument with config - 1 as the final argument",
+      "score": 93.65306,
+      "outcome": "same folded-increment divergence; reverted"
+    },
+    {
+      "shape": "unsigned-long fourth-argument prototype and cast",
+      "score": 99.38776,
+      "outcome": "identical three-instruction argument-move schedule; reverted"
+    },
+    {
+      "shape": "scheduling disabled around the function",
+      "score": 79.38776,
+      "outcome": "disturbed scheduling throughout the function; reverted"
+    }
+  ],
+  "divergence": "The body, exact 196-byte size, control flow, and all 12 real relocations agree. Only fn_80180ED8 argument setup differs at offsets 0x44-0x4C: retail emits r4, r5, r6 while canonical GC/1.3 emits r6, r4, r5. The following addi r30,r30,0x14 and every remaining instruction match."
+}
