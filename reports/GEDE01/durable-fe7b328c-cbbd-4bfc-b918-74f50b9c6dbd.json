@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "fe7b328c-cbbd-4bfc-b918-74f50b9c6dbd",
+  "attempt": 1,
+  "base_commit": "53d257a7e2e01dbabb2a0c7cf65bb6b0e26aeab1",
+  "target": "fn_80153FD0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-fe7b328c-cbbd-4bfc-b918-74f50b9c6dbd.json"
+  ],
+  "divergence": "Canonical objdiff is 98.22535% with retail and generated code both 284 bytes. Three instruction positions (five differing encoded bytes) remain at +0xC4, +0xC8, and +0xD0: retail schedules li r7,10; li r6,80; addi r5,r3,lbl_802FC5BC@l, while generated schedules the addi first and then the two li instructions. Both sides have 15 relocation-bearing instructions with equal types, targets, and addends in sequence, but relocation-strict comparison is not 100% because the R_PPC_ADDR16_LO instruction occurs at generated +0xC4 versus retail +0xD0. The canonical DOL SHA-1 remains ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
