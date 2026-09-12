@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "7c229c99-249e-4f39-8b1a-70d1aa794f60",
+  "attempt": 2,
+  "base_commit": "b0962e84afe1c3f8da78fe5df0e6675b4cf33bf6",
+  "target": "fn_801F10BC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7c229c99-249e-4f39-8b1a-70d1aa794f60.json"
+  ],
+  "divergence": "Best canonical GC/1.3 and relocation-strict objdiff is size-exact at 99.699646% (1132/1132 bytes, 283/283 instructions). The 13 remaining argument mismatches are only floating-point register allocation in the unrolled selection loop: retail keeps lbl_80651348 in f0 and loads each entry value into f1, while canonical MWCC keeps lbl_80651348 in f1 and uses f0 for each entry value at byte offsets 0x1E4, 0x218/0x21C/0x224, 0x254/0x258/0x260, 0x290/0x294/0x29C, and 0x2CC/0x2D0/0x2D8. The relocation-strict comparison reports no relocation mismatches across its 59 non-NONE relocations. The full canonical build passed config/GEDE01/build.sha1, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
