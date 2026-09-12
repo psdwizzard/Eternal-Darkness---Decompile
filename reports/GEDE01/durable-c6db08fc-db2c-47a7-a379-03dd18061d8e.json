@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c6db08fc-db2c-47a7-a379-03dd18061d8e",
+  "attempt": 2,
+  "base_commit": "6185ddc256f232cd890c70c34a19c796e829d28b",
+  "target": "fn_801535D8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c6db08fc-db2c-47a7-a379-03dd18061d8e.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff are identical: size-exact 680/680 bytes at 99.20588%, with 26 operand-level differences across 170 instructions. GC/1.3 swaps the retail r29/r30 allocation for the optional other-state/owner lifetimes and the later masked-count/count lifetime; the final mapped value uses generated r29 instead of retail r28. At offsets 0x1B8 and 0x1C4, generated conversion constants relocate as compiler-local @43 and @41 rather than retail lbl_806505B0 and lbl_806505A8 (R_PPC_EMB_SDA21); each side has 30 instruction relocations. The fresh linked DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
