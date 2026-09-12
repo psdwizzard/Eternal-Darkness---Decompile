@@ -43,7 +43,7 @@ void fn_801E86D8(Table* destination, Table* source)
         count = destination_count;
     }
     if (destination_count < source_count) {
-        fn_801E7DCC(lbl_80265AB0);
+        fn_801E7DCC(lbl_80265AB0, source_count, destination_count);
     }
 
     destination_entry = (Entry*)destination;
