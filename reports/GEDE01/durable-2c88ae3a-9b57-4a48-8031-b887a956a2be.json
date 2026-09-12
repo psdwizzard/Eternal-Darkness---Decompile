@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "2c88ae3a-9b57-4a48-8031-b887a956a2be",
+  "attempt": 3,
+  "base_commit": "01acce4eabbf4dcc0343545c9bfea40749b1098a",
+  "target": "fn_80160480",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2c88ae3a-9b57-4a48-8031-b887a956a2be.json"
+  ],
+  "divergence": "Best canonical objdiff is 98.933334% at the exact 120-byte size. Relocation-strict comparison passes all 8 ELF relocations (offset, type, target, and zero addend), but codegen reverses the two Entry type loads at 0x10-0x14 and consequently uses r5/r4 instead of retail r6/r5 for the descriptor-table lookups and byte loads at 0x24-0x30."
+}
