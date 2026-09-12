@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "assignment_id": "e86eee68-1882-4097-9fa6-242dd48f5e62",
+  "measured_at_utc": "2026-09-12T01:24:52Z",
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F0BF0 fn_801F0BF0 -o reports/GEDE01/objdiff-e86eee68-1882-4097-9fa6-242dd48f5e62.json --format json-pretty",
+    "exit_code": 0,
+    "retail_bytes": 192,
+    "generated_bytes": 192,
+    "retail_instructions": 48,
+    "generated_instructions": 48,
+    "match_percent": 100.0
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F0BF0 fn_801F0BF0 -o reports/GEDE01/objdiff-e86eee68-1882-4097-9fa6-242dd48f5e62-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "config": "function_reloc_diffs=name_address",
+    "match_percent": 100.0,
+    "retail_relocations": [
+      ["R_PPC_REL24", 2, "fn_801ED468", 0],
+      ["R_PPC_REL24", 3, "fn_801F08B8", 0],
+      ["R_PPC_REL24", 3, "fn_801F08B8", 0]
+    ],
+    "generated_relocations": [
+      ["R_PPC_REL24", 2, "fn_801ED468", 0],
+      ["R_PPC_REL24", 3, "fn_801F08B8", 0],
+      ["R_PPC_REL24", 3, "fn_801F08B8", 0]
+    ]
+  },
+  "experiments": [
+    {
+      "source_shape": "explicit cursor initialized with lists",
+      "match_percent": 99.166664,
+      "result": "six lower-loop r30/r31 operand mismatches"
+    },
+    {
+      "source_shape": "explicit cursor initialized with lists + 0",
+      "match_percent": 99.166664,
+      "result": "byte-identical to explicit lists spelling"
+    },
+    {
+      "source_shape": "explicit cursor initialized with &lists[0]",
+      "match_percent": 99.166664,
+      "result": "byte-identical to explicit lists spelling"
+    },
+    {
+      "source_shape": "indexed access lists[i] in both loop halves",
+      "match_percent": 100.0,
+      "result": "retained; MWCC synthesizes the retail cursor induction in r31 and keeps i in r30"
+    }
+  ],
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "result": "legal audit passed (13737 tracked project files inspected)",
+    "translation_unit": "src/game/game_fn_801F0BF0.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "generated_or_private_inputs_staged": false
+  }
+}
