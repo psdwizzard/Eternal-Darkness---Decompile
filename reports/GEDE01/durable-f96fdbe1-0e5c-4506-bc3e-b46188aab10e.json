@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f96fdbe1-0e5c-4506-bc3e-b46188aab10e",
+  "attempt": 1,
+  "base_commit": "84fec0e3ab6656b1b023f0ca4a559ee834e68fa1",
+  "target": "fn_8007CFB0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f96fdbe1-0e5c-4506-bc3e-b46188aab10e.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces the same 320-byte/80-instruction control flow and all 17 relocation-bearing instructions agree under function_reloc_diffs=name_address, but objdiff remains 98.875% because 18 instructions use an equivalent callee-saved-register allocation: retail object/value/current/related/state are r31/r26/r30/r29/r27 while generated code uses r26/r30/r29/r27/r26; linked and owner remain exact in r28/r31. Declaration-order and typed-prototype variants did not improve on the preserved behavior-complete NonMatching C. A full python3 configure.py and .tools/bin/ninja -j2 build passed, and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
