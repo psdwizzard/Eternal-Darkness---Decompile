@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "2516294e-7196-43be-8b73-5cc7c0cd6d9e",
+  "attempt": 3,
+  "base_commit": "665f8090c658898bb5c36021706d72cf681dede6",
+  "target": "fn_8001CA04",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2516294e-7196-43be-8b73-5cc7c0cd6d9e.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict direct objdiff reports are byte-identical and measure 98.208954% for fn_8001CA04: canonical MWCC emits 264 text bytes versus retail's 268. At retail offsets 0x6C-0x84 it keeps the converted mode in r5, compares r5, and emits mr r3,r5 before fn_800451E4; the independent reconstruction uses r3 throughout and omits that instruction, shifting the final 11 of 16 relocation sites four bytes earlier. The unsigned-to-double conversion at 0x3C relocates against compiler-local @18 in generated .sdata2 instead of retail lbl_8064DE60. Both sides have 16 text relocations with zero addends. The owned diagnostic strings match byte-for-byte; retail .data is 80 bytes while generated .data is 79 bytes, with the generated conversion bias occupying a separate 8-byte .sdata2 section. Range-check, unsigned-mode, register-hint, and explicit union-conversion experiments either reproduced 98.208954% or regressed to 96.38806%/97.95522%, so the original honest C was restored. The fresh full build succeeds and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
