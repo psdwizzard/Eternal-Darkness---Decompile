@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "842c48b7-b124-4a33-989a-703eeac815b3",
+  "attempt": 3,
+  "base_commit": "e2a3e914db746fbb88321c90f044fae5d10ace43",
+  "target": "fn_801E8D54",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-842c48b7-b124-4a33-989a-703eeac815b3.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-842c48b7-b124-4a33-989a-703eeac815b3-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-842c48b7-b124-4a33-989a-703eeac815b3.json"
+  ],
+  "divergence": "Canonical and relocation-strict direct objdiff are size-exact at 96 bytes and score 99.166664%. Splitting both 64-bit counters into their retail high/low word symbols fixes the prior relocation mismatch: all 11 relocation-bearing instructions per side now agree in type, target, and addend, including retail lbl_8064D5CC and lbl_8064D5D4 with addend 0 rather than base-symbol +4 references. Exactly two instruction slots remain different: at .text+0x34 retail emits addc r3,r4,r6 while GC/1.3 emits addc r3,r6,r4, and at .text+0x38 retail emits adde r0,r0,r5 while GC/1.3 emits adde r0,r5,r0. The operands are commutative, but their reversed encoding prevents a byte match."
+}

@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "assignment_id": "842c48b7-b124-4a33-989a-703eeac815b3",
+  "target": "fn_801E8D54",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "output": "configuration generated successfully"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "output": "build/GEDE01/main.dol: OK"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E8D54 fn_801E8D54 -o reports/GEDE01/objdiff-842c48b7-b124-4a33-989a-703eeac815b3.json --format json-pretty",
+      "exit_code": 0,
+      "output": "INFO Writing to reports/GEDE01/objdiff-842c48b7-b124-4a33-989a-703eeac815b3.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E8D54 fn_801E8D54 -o reports/GEDE01/objdiff-842c48b7-b124-4a33-989a-703eeac815b3-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "output": "INFO Writing to reports/GEDE01/objdiff-842c48b7-b124-4a33-989a-703eeac815b3-reloc-strict.json"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "if rg -n '__asm|asm[[:space:]]*\\(' src/game/game_fn_801E8D54.c; then exit 1; else echo 'legal audit: no inline or whole-function assembly in src/game/game_fn_801E8D54.c'; fi",
+      "exit_code": 0,
+      "output": "legal audit: no inline or whole-function assembly in src/game/game_fn_801E8D54.c"
+    }
+  ],
+  "measurements": {
+    "canonical": {
+      "match_percent": 99.166664,
+      "retail_bytes": 96,
+      "rebuilt_bytes": 96
+    },
+    "relocation_strict": {
+      "config": "function_reloc_diffs=name_address",
+      "match_percent": 99.166664,
+      "retail_bytes": 96,
+      "rebuilt_bytes": 96,
+      "relocation_bearing_instructions_per_side": 11,
+      "relocation_types_targets_and_addends_equal": true
+    },
+    "differing_instruction_slots": [
+      {
+        "text_offset": "0x34",
+        "retail": "addc r3, r4, r6",
+        "rebuilt": "addc r3, r6, r4"
+      },
+      {
+        "text_offset": "0x38",
+        "retail": "adde r0, r0, r5",
+        "rebuilt": "adde r0, r5, r0"
+      }
+    ]
+  }
+}
