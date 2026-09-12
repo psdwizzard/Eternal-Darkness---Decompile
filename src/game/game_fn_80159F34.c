@@ -18,9 +18,10 @@ void fn_80159F34(short current, int count, short* ids)
 {
     int occupied[4];
     int present[4];
-    volatile Slot* slot;
     int i;
     int j;
+    volatile Slot* slot;
+    int remaining;
 
     memset(occupied, 0, sizeof(occupied));
     memset(present, 0, sizeof(present));
@@ -55,10 +56,8 @@ void fn_80159F34(short current, int count, short* ids)
         }
     }
 
-    i = lbl_8064D17C;
-    slot = lbl_805B6F80;
-    for (; i > 0; i--) {
+    for (slot = lbl_805B6F80, remaining = lbl_8064D17C; remaining > 0;
+         remaining--, slot++) {
         slot->counter;
-        slot++;
     }
 }

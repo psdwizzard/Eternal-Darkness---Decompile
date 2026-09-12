@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "044eaadb-7b6d-40ca-bfb3-7c7471ac6648",
+  "attempt": 2,
+  "base_commit": "41366e98c8d65b50bec527ff6da0b85560ab2a5f",
+  "target": "fn_80159F34",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-044eaadb-7b6d-40ca-bfb3-7c7471ac6648.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.007935%: retail is 504 bytes and generated is 508 bytes, with all 16/16 relocation-bearing instructions retaining the expected targets and addends. Instructions agree through offset 0x170. At retail offset 0x174 the final volatile counter walk loads lbl_8064D17C into r0 and constructs the lbl_805B6F80 pointer directly in r4; generated loads the count into r5, constructs the address through r0, and inserts mr r4,r0 at generated offset 0x188. The inserted move shifts the remaining loop by four bytes; its volatile counter loads now use the retail r4 pointer register."
+}
