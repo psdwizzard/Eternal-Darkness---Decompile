@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3c36a0c6-19ff-4d6d-8103-93d9aeaa0bd5",
+  "attempt": 2,
+  "base_commit": "9fa670be206d20b947b93dc1f760b6cc107c1dca",
+  "target": "fn_8001CA04",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3c36a0c6-19ff-4d6d-8103-93d9aeaa0bd5.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 98.208954% for fn_8001CA04: canonical MWCC emits 264 text bytes versus retail's 268. At retail offsets 0x6C-0x84 it keeps the converted mode in r5, compares r5, and emits mr r3,r5 before fn_800451E4; the reconstruction uses r3 throughout and omits that instruction, shifting the final 11 of 16 relocation sites four bytes earlier. The unsigned-to-double conversion at 0x3C relocates against compiler-local @18 in generated .sdata2 instead of retail lbl_8064DE60. Both sides have 16 text relocations with zero addends. The owned diagnostic strings match byte-for-byte; retail .data is 80 bytes while generated .data is 79 bytes, with the generated conversion bias occupying a separate 8-byte .sdata2 section. The fresh full build succeeds and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
