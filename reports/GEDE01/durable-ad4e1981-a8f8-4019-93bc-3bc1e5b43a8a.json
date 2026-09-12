@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "ad4e1981-a8f8-4019-93bc-3bc1e5b43a8a",
+  "attempt": 2,
+  "base_commit": "3eece4e5b24a8cc631d794b99d68b4edb8fd5238",
+  "target": "fn_801711D0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ad4e1981-a8f8-4019-93bc-3bc1e5b43a8a.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict direct objdiff both measure 97.927925%: retail is 444 bytes and generated C is 448 bytes. GC/1.3 emits addi r0,r4,lbl_8024FF00@l followed by mr r30,r0, while retail emits addi r30,r4,lbl_8024FF00@l directly; this shifts subsequent instruction addresses by four bytes. The strict report also marks two sda21 constant operands as argument mismatches (retail lbl_806506A8 versus generated local @15). The full canonical build passes and build/GEDE01/main.dol retains the required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
