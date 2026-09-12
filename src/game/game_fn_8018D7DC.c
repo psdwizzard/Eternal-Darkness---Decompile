@@ -21,16 +21,16 @@ void fn_8018D7DC(u8* object)
     u8* state;
     u8* self;
     u8* config;
-    u8* color;
-    u8* object_data;
-    int i;
-    int byte_offset;
     int zero1;
     int zero2;
-    u8* source;
-    u8* destination;
     u8* color_destination;
+    int i;
     int copies;
+    u8* destination;
+    u8* source;
+    u8* color;
+    u8* object_data;
+    int byte_offset;
     int saved;
 
     state = object + 0x8C;
