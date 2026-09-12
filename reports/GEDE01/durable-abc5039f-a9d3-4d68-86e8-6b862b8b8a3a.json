@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "abc5039f-a9d3-4d68-86e8-6b862b8b8a3a",
+  "attempt": 3,
+  "base_commit": "be6e08d6a01c0938c291f1f368123824f19a1f0f",
+  "target": "fn_80153FD0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-abc5039f-a9d3-4d68-86e8-6b862b8b8a3a.json"
+  ],
+  "divergence": "Canonical objdiff is 98.22535% with retail and generated code both 284 bytes. Three instruction positions remain different: retail has li r7,10 at +0xC4, li r6,80 at +0xC8, and lbl_802FC5BC@l address formation at +0xD0; generated code forms the low address at +0xC4, then emits those constant loads at +0xC8 and +0xD0. Relocation-strict comparison is not 100% because the R_PPC_ADDR16_LO relocation targeting lbl_802FC5BC has retail offset +0xD0 versus generated offset +0xC4. The canonical DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f. Typed-layout, explicit-local, source-order, and canonical scheduling probes did not improve the preserved honest C reconstruction."
+}
