@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "8668803f-2367-44e1-a85a-e58a496ceffd",
+  "attempt": 3,
+  "base_commit": "ffa8e40b376436e79689d7b4bcdbf0ffa927207e",
+  "target": "fn_80159F34",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8668803f-2367-44e1-a85a-e58a496ceffd.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.007935%: retail is 504 bytes and generated is 508 bytes. Instructions agree through offset 0x170. At retail offset 0x174 the final volatile counter walk loads lbl_8064D17C into r0 and constructs lbl_805B6F80 directly in r4; generated loads the count into r5, constructs the address through r0, and inserts mr r4,r0 at generated offset 0x188. This extra move shifts the remaining loop and epilogue by four bytes. The rebuilt DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
