@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "assignment_id": "e12f130b-9bdb-4fd1-9e46-4cf6c38e8fa4",
+  "target": "fn_80201E48",
+  "unit": "main/game/game_fn_80201E48",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201E48 fn_80201E48 -o build/GEDE01/objdiff-e12f130b-9bdb-4fd1-9e46-4cf6c38e8fa4-canonical.json --format json-pretty",
+    "target_size": 8,
+    "base_size": 8,
+    "match_percent": 100.0,
+    "target_relocations": 0,
+    "base_relocations": 0,
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-e12f130b-9bdb-4fd1-9e46-4cf6c38e8fa4-canonical.json"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201E48 fn_80201E48 -o build/GEDE01/objdiff-e12f130b-9bdb-4fd1-9e46-4cf6c38e8fa4-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "target_size": 8,
+    "base_size": 8,
+    "match_percent": 100.0,
+    "target_relocations": 0,
+    "base_relocations": 0,
+    "relocations": [],
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-e12f130b-9bdb-4fd1-9e46-4cf6c38e8fa4-reloc-strict.json"
+  },
+  "instruction_diff": {
+    "command": "python3 tools/fndiff.py game/game_fn_80201E48.c fn_80201E48",
+    "raw_output": "target 8 bytes  base 8 bytes  match 100.0\n  0x0000  li r3, 0x0 | li r3, 0x0\n  0x0004  blr | blr"
+  },
+  "direct_report_comparison": {
+    "command": "cmp -s build/GEDE01/objdiff-e12f130b-9bdb-4fd1-9e46-4cf6c38e8fa4-canonical.json build/GEDE01/objdiff-e12f130b-9bdb-4fd1-9e46-4cf6c38e8fa4-reloc-strict.json",
+    "raw_output": "direct_json_cmp_exit=0"
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80201E48.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "private_or_generated_artifacts_in_commit": false
+  }
+}
