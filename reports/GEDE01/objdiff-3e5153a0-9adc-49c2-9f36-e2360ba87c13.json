@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "assignment_id": "3e5153a0-9adc-49c2-9f36-e2360ba87c13",
+  "target": "fn_80203D94",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80203D94 -o build/GEDE01/objdiff-3e5153a0-9adc-49c2-9f36-e2360ba87c13-canonical.json --format json-pretty fn_80203D94",
+    "raw_measurement": {
+      "left_text_size": 460,
+      "right_text_size": 460,
+      "left_text_match_percent": 99.73913,
+      "symbol": "fn_80203D94",
+      "symbol_size": 460,
+      "symbol_match_percent": 99.73913
+    },
+    "raw_output_sha1": "3dfa4aad98928dd20271dd520d1cb0d79129a882"
+  },
+  "relocation_strict": {
+    "match_percent": 100.0,
+    "relocation_count": 20,
+    "offset_type_target_addend_result": "all 20 entries equal after ignoring ELF symbol-table indices and relocation-section file offsets",
+    "raw_readelf_base": "build/GEDE01/objdiff-3e5153a0-9adc-49c2-9f36-e2360ba87c13-base-relocs.txt",
+    "raw_readelf_target": "build/GEDE01/objdiff-3e5153a0-9adc-49c2-9f36-e2360ba87c13-target-relocs.txt",
+    "relocations": [
+      "0x24 R_PPC_REL24 fn_80200C10 +0", "0x30 R_PPC_REL24 fn_80200C20 +0", "0x34 R_PPC_REL24 fn_80201814 +0", "0x44 R_PPC_REL24 fn_80201B54 +0", "0x54 R_PPC_REL24 fn_800459E0 +0",
+      "0x7c R_PPC_EMB_SDA21 lbl_8064D18C +0", "0xb8 R_PPC_EMB_SDA21 lbl_8064D18C +0", "0xdc R_PPC_REL24 fn_802019EC +0", "0xf0 R_PPC_REL24 fn_802019EC +0", "0x100 R_PPC_REL24 fn_8004892C +0",
+      "0x10c R_PPC_EMB_SDA21 lbl_8064C4E0 +0", "0x114 R_PPC_REL24 fn_801E7974 +0", "0x11c R_PPC_REL24 fn_80035628 +0", "0x120 R_PPC_EMB_SDA21 lbl_8064D8AC +0", "0x12c R_PPC_REL24 fn_80201D2C +0",
+      "0x138 R_PPC_REL24 fn_80201D14 +0", "0x154 R_PPC_EMB_SDA21 lbl_8064D180 +0", "0x178 R_PPC_REL24 fn_802019EC +0", "0x184 R_PPC_REL24 fn_802019EC +0", "0x1a0 R_PPC_REL24 fn_8020123C +0"
+    ]
+  },
+  "codegen_divergence": {
+    "instruction_count": 6,
+    "raw_differences": [
+      "0xb8: retail lwz r4, lbl_8064D18C@sda21; generated lwz r0, lbl_8064D18C@sda21",
+      "0xc0: retail cmpwi r4, 0x20; generated cmpwi r0, 0x20",
+      "0xcc: retail cmpwi r4, 0x7; generated cmpwi r0, 0x7",
+      "0x154: retail lwz r4, lbl_8064D180@sda21; generated lwz r0, lbl_8064D180@sda21",
+      "0x15c: retail cmpwi r4, 0x20; generated cmpwi r0, 0x20",
+      "0x168: retail cmpwi r4, 0x7; generated cmpwi r0, 0x7"
+    ]
+  },
+  "verification": {
+    "configure_command": "python3 configure.py",
+    "build_command": ".tools/bin/ninja -j2",
+    "build_result": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "legal_audit_command": "python3 tools/legal_audit.py",
+    "legal_audit_result": "legal audit passed (14157 tracked project files inspected)"
+  }
+}
