@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3ae7c3fb-9f60-4bb8-863c-585ef4c68f0d",
+  "attempt": 3,
+  "base_commit": "4fe81810125c55f25b6bd652d5d70f577ecc5d1d",
+  "target": "fn_80175A08",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3ae7c3fb-9f60-4bb8-863c-585ef4c68f0d.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are 97.82407%: retail is 432 bytes/108 instructions/26 relocations versus candidate 436 bytes/109 instructions/27 relocations. Canonical GC/1.3 emits an extra early addi-to-r0 then mr-to-r31 for lbl_8024FF00; retail emits addi directly to r31 after its save, shifting the later jump-table sequence by four bytes."
+}
