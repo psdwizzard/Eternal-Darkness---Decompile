@@ -10,6 +10,8 @@ extern void fn_801A69F0(int);
 
 void fn_801A68C4(void* state)
 {
+    /* NonMatching: GC/1.3 folds the final zero test below into a single beq;
+       retail retains bne to the active path followed by b to the epilogue. */
     unsigned char* data = state;
     void* first = 0;
     void* second = 0;
@@ -20,15 +22,9 @@ void fn_801A68C4(void* state)
     if (*(int*)(data + 0x98) != 0) {
       active = *(int*)(data + 0x9C);
       if (active != 0) {
-       do {
-        if (lbl_80251200[0] != 0)
-            break;
-        if (lbl_80251200[1] != 0)
-            break;
-        if (lbl_80251200[2] != 0)
-            break;
-        return;
-       } while (0);
+       if (lbl_80251200[0] == 0 && lbl_80251200[1] == 0 &&
+           lbl_80251200[2] == 0)
+           return;
         object = fn_80201814(active);
         if (object != 0) {
             first = fn_80201BC8(object);
@@ -44,6 +40,6 @@ void fn_801A68C4(void* state)
             difference = fn_80179F20(difference);
             fn_801A69F0(difference < 0.0f || difference > 3.1415927f);
         }
-       }
+      }
       }
 }
