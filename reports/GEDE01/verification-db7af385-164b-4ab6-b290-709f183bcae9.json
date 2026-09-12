@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "assignment_id": "db7af385-164b-4ab6-b290-709f183bcae9",
+  "target": "fn_8017A7D4",
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "result": "success",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_caveat": "fn_8017A7D4 remains Object(NonMatching) and is excluded from the linked DOL, so this required whole-build gate does not corroborate the candidate reconstruction."
+  },
+  "measurements": [
+    {
+      "basis": "canonical",
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017A7D4 fn_8017A7D4 -o reports/GEDE01/objdiff-db7af385-164b-4ab6-b290-709f183bcae9.json --format json-pretty",
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-db7af385-164b-4ab6-b290-709f183bcae9.json",
+      "match_percent": 99.09091,
+      "target_bytes": 484,
+      "candidate_bytes": 484,
+      "target_instructions": 121,
+      "candidate_instructions": 121,
+      "identical_instruction_words": 101,
+      "target_relocation_instructions": 10,
+      "candidate_relocation_instructions": 10
+    },
+    {
+      "basis": "relocation-strict:name_address",
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017A7D4 -c function_reloc_diffs=name_address fn_8017A7D4 -o reports/GEDE01/objdiff-db7af385-164b-4ab6-b290-709f183bcae9-reloc-strict.json --format json-pretty",
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-db7af385-164b-4ab6-b290-709f183bcae9-reloc-strict.json",
+      "match_percent": 99.09091,
+      "target_bytes": 484,
+      "candidate_bytes": 484,
+      "target_instructions": 121,
+      "candidate_instructions": 121,
+      "identical_instruction_words": 101,
+      "target_relocation_instructions": 10,
+      "candidate_relocation_instructions": 10
+    }
+  ],
+  "source_shape_trials": {
+    "compiled_variants": 13,
+    "best_match_percent": 99.09091,
+    "byte_neutral_levers": [
+      "move scale declarations before dot-product locals",
+      "declare dot separately before assignment",
+      "reverse the right-y multiplication operands",
+      "hoist one-plus-dot condition"
+    ],
+    "regressions": [
+      "initialize right_y in its declaration: 98.96694%",
+      "hoist the x/y partial sum: 98.67769%",
+      "hoist left_w in the final product: 99.00826%",
+      "reverse x, z, or w product operands individually: 99.00826%",
+      "hoist left_z in its product: 99.00826%"
+    ]
+  }
+}

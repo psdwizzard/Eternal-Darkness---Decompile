@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "db7af385-164b-4ab6-b290-709f183bcae9",
+  "attempt": 3,
+  "base_commit": "abb6ba0fee3e2bfa2ba0f2c64b1222b3db0a1324",
+  "target": "fn_8017A7D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-db7af385-164b-4ab6-b290-709f183bcae9.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-db7af385-164b-4ab6-b290-709f183bcae9-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-db7af385-164b-4ab6-b290-709f183bcae9.json"
+  ],
+  "divergence": "Canonical and separately recorded relocation-strict name_address measurements both score 99.09091%: both sides contain 484 bytes and 121 instructions, with 101/121 instruction words identical and 10 relocation-bearing instructions per side. The 20 differences are confined to FPR allocation at offsets 0x40, 0x4C, 0x54-0x58, 0x60, 0x68-0x7C, 0x84-0x88, and 0x120-0x138. Retail keeps right->y in f7 while canonical output assigns f6, cascading through the dot-product prelude and antipodal setup; control flow, instruction count, stack layout, branch destinations, opcodes, and relocation sites align. Thirteen focused source-shaping variants were compiled; declaration and condition hoists were byte-neutral, while explicit component hoists and operand reversals regressed. The full build passes and main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f, but because this unit remains Object(NonMatching) and is excluded from the link, that DOL check does not validate this reconstruction."
+}
