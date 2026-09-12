@@ -36,8 +36,10 @@ void fn_801E8B6C(RangeControl* control, short amount)
         }
     } else if (control->value > control->maximum) {
         if (control->flags & 1) {
-            int wrapped = control->value - control->maximum + control->minimum;
-            control->value = wrapped - 1;
+            int wrapped = control->value - control->maximum;
+            wrapped += control->minimum;
+            wrapped--;
+            control->value = wrapped;
         } else {
             control->value = control->maximum;
         }
