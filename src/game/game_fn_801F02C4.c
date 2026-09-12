@@ -15,6 +15,11 @@ extern volatile const float lbl_8065135C;
 
 extern FloatTriple* fn_8015AB00(int);
 
+/*
+ * NonMatching: behavior-complete, size-exact reconstruction. GC/1.3 reverses
+ * retail's f0/f1/f2 allocation in the two angle-wrap blocks and owns the
+ * signed-conversion double locally instead of referencing lbl_80651360.
+ */
 void fn_801F02C4(void)
 {
     FloatTriple* value;
