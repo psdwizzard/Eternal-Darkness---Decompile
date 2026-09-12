@@ -15,9 +15,9 @@ extern const double lbl_806508E8;
 void fn_8017A7D4(const Vec4* left, const Vec4* right, float amount,
                  Vec4* output)
 {
-    float right_y = right->y;
     float left_y = left->y;
-    float dot = left->x * right->x + left_y * right_y +
+    float right_y;
+    float dot = left->x * right->x + left_y * (right_y = right->y) +
                 left->z * right->z + left->w * right->w;
     float left_scale;
     float right_scale;
