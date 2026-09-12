@@ -15,7 +15,7 @@ typedef struct TextDescriptor {
     u16 unknown14;
     u16 line_limit;
     s8 align;
-    u8 font;
+    s8 font;
     s8 text[1510];
 } TextDescriptor;
 
@@ -33,7 +33,9 @@ void fn_801E6A8C(TextDescriptor* descriptor)
     int height;
     u16 limit;
 
-    if (descriptor == 0 || descriptor->text == 0)
+    if (descriptor == 0)
+        return;
+    if (descriptor->text == 0)
         return;
     lbl_8064C314 = descriptor->scale;
     text = descriptor->text;
@@ -41,20 +43,19 @@ void fn_801E6A8C(TextDescriptor* descriptor)
     total_height = 0;
     max_width = 0;
     if (!(descriptor->flags & 0x10000))
-        fn_801E6814(descriptor, (s8)descriptor->font);
+        fn_801E6814(descriptor, descriptor->font);
     limit = descriptor->line_limit < 1 ? 1 : descriptor->line_limit;
     descriptor->line_limit = limit;
     while (text[0] != 0 || text[1] != 0) {
         width = 0;
         height = 0;
-        text = fn_801E645C(text, (s8)descriptor->font, &width, &height);
+        text = fn_801E645C(text, descriptor->font, &width, &height);
         lines++;
         if (width > max_width)
             max_width = width;
         if (descriptor->flags & 0x10) {
-            if (lines > descriptor->line_limit)
-                break;
-            total_height += height;
+            if (lines <= descriptor->line_limit)
+                total_height += height;
         } else {
             total_height += height;
         }
