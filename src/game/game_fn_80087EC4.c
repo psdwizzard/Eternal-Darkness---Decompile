@@ -22,6 +22,10 @@ extern void fn_8006EA4C(void);
 extern void fn_8006BEE4(void*, void (*)(void));
 extern void fn_8006DEF8(Work*, int, void*, void*, int);
 
+/* NonMatching: behavior- and size-exact reconstruction. Canonical GC/1.3
+ * output scores 98.194176% (412/412 bytes); retail coalesces the branch-local
+ * index with owner in r31 and therefore saves r26-r31, while this source uses
+ * r25-r31 and lowers the indexed byte stores through equivalent registers. */
 int fn_80087EC4(Work* work)
 {
     State* state = fn_8006ED98(work);
