@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e28f3890-14ba-45c7-b038-4fe156e34513",
+  "attempt": 1,
+  "base_commit": "0c3061ee22849eb7089f51b56986c32a97b5be33",
+  "target": "fn_80049E74",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e28f3890-14ba-45c7-b038-4fe156e34513.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits a 1940-byte object at 98.762886%. All instruction and relocation structure agrees except ten equivalent signed-16-bit zero tests: retail uses cmpwi r23,0 at offsets 0x1B8, 0x268, 0x344, 0x3F0, 0x4BC, 0x58C, 0x674, 0x69C, 0x70C, and 0x734, while generated code uses extsh. r0,r23. Retyping the persistent condition as int removed those tests but perturbed nonvolatile allocation throughout and reached only 98.81443%, so the existing honest short-typed reconstruction was preserved. The full build passed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
