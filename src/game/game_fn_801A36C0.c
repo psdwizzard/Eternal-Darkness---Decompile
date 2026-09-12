@@ -21,16 +21,16 @@ extern void fn_8018865C(void*, void*, void*);
 
 void fn_801A36C0(u8* object)
 {
+    u8 count;
+    u16 vertex_size;
+    u16 index_size;
+    u16 color_size;
     u8* vertex_data;
     u8* index_data;
     u8* color_data;
     register u8* self;
     int vertex_offset;
     int i;
-    register u8 count;
-    register u16 vertex_size;
-    register u16 index_size;
-    register u16 color_size;
     u8* entries;
     u8* color;
     u16 offset;
