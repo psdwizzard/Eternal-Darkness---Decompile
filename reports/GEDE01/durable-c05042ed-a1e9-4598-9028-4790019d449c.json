@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c05042ed-a1e9-4598-9028-4790019d449c",
+  "attempt": 2,
+  "base_commit": "42ad29f79f6b0200e3b324e9e5ea4ab0c8dd95ff",
+  "target": "fn_801A68C4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c05042ed-a1e9-4598-9028-4790019d449c.json"
+  ],
+  "divergence": "Canonical and relocation-strict GC/1.3 objdiff both score 98.13333%: retail is 300 bytes and the generated C is 296 bytes. Retail offsets 0x64..0x6C encode the third lbl_80251200 zero test as bne 0x70 followed by b 0x108; GC/1.3 folds this equivalent control flow into beq 0x104, shifting the otherwise matching calls and epilogue by four bytes. Canonical and relocation-strict raw JSON are byte-identical, and the linked DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
