@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "assignment_id": "1b9db16a-6098-42c2-8e65-395a385a9652",
+  "target": "fn_80201F44",
+  "compiler": "GC/1.3",
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "dol_check_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201F44 fn_80201F44 -o build/GEDE01/1b9db16a-canonical.json --format json-pretty",
+    "measurement_command": "jq -r '(.left.symbols[] | select(.name == \"fn_80201F44\") | .match_percent) as $percent | (.left.symbols[] | select(.name == \"fn_80201F44\") | .size) as $retail | (.right.symbols[] | select(.name == \"fn_80201F44\") | .size) as $generated | \"canonical_percent=\\($percent) retail_bytes=\\($retail) generated_bytes=\\($generated)\"' build/GEDE01/1b9db16a-canonical.json",
+    "raw_output": "canonical_percent=100.0 retail_bytes=60 generated_bytes=60",
+    "target_size": 60,
+    "base_size": 60,
+    "match_percent": 100.0
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_80201F44.o -2 build/GEDE01/src/game/game_fn_80201F44.o fn_80201F44 -o build/GEDE01/1b9db16a-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "measurement_command": "jq -r '(.left.symbols[] | select(.name == \"fn_80201F44\") | .match_percent) as $percent | (.left.symbols[] | select(.name == \"fn_80201F44\") | .size) as $retail | (.right.symbols[] | select(.name == \"fn_80201F44\") | .size) as $generated | \"strict_percent=\\($percent) retail_bytes=\\($retail) generated_bytes=\\($generated)\"' build/GEDE01/1b9db16a-reloc-strict.json",
+    "raw_output": "strict_percent=100.0 retail_bytes=60 generated_bytes=60",
+    "canonical_strict_cmp_command": "cmp -s build/GEDE01/1b9db16a-canonical.json build/GEDE01/1b9db16a-reloc-strict.json",
+    "canonical_strict_cmp_output": "canonical_strict_cmp_exit=0",
+    "target_size": 60,
+    "base_size": 60,
+    "match_percent": 100.0,
+    "target_relocations": [],
+    "base_relocations": [],
+    "relocation_count_equal": true,
+    "relocation_targets_and_addends_equal": true
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80201F44.c",
+    "assembly_search_command": "rg -n '__asm|(^|[^A-Za-z_])asm([^A-Za-z_]|$)' src/game/game_fn_80201F44.c",
+    "assembly_search_raw_output": "assembly_audit_rg_exit=1",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false
+  }
+}

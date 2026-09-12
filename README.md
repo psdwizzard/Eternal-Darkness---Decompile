@@ -54,9 +54,9 @@ Verified DOL SHA-1: `ea24b6af954876ce072562ff39cdb4c81d32be1f`.
 
 | Metric | Matched | Total | Percent |
 | --- | ---: | ---: | ---: |
-| Code bytes | 949536 | 2300692 | 41.27% |
-| Functions | 5713 | 8214 | 69.55% |
-| Objects (TUs) | 5948 | 6979 | 85.23% |
+| Code bytes | 949596 | 2300692 | 41.27% |
+| Functions | 5714 | 8214 | 69.56% |
+| Objects (TUs) | 5949 | 6980 | 85.23% |
 <!-- progress:end -->
 
 <!-- contributors:start -->
