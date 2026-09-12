@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "7db9cfc1-b4b7-4c96-9a82-199f13e4adf2",
+  "attempt": 1,
+  "base_commit": "763bd04c3519c245112c70605a7b25488b8a941c",
+  "target": "fn_8001CA04",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7db9cfc1-b4b7-4c96-9a82-199f13e4adf2.json"
+  ],
+  "divergence": "Relocation-strict objdiff measures 98.208954%: canonical MWCC emits 264 text bytes versus retail's 268. At retail offsets 0x6C-0x84 it keeps the converted mode in r3, whereas retail loads and compares it in r5 and emits mr r3,r5 before fn_800451E4. The unsigned-to-double conversion relocates its bias load to compiler-local @18 rather than retail lbl_8064DE60. Both sides have 16 text relocations; the missing mr shifts the final 11 relocation sites by four bytes. Owned .data is 80 bytes at 100%."
+}
