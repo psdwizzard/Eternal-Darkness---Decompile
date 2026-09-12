@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "target": "fn_80201C84",
+  "compiler": "GC/1.3 (mwcc_242_53)",
+  "canonical_build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "sha1_match": true
+  },
+  "objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201C84 -o reports/GEDE01/objdiff-11356ea8-49db-4e08-9f2f-72378bc04064.json --format json-pretty fn_80201C84",
+    "text_size": 8,
+    "function_match_percent": 100.0,
+    "instructions": [
+      "lwz r3, 0x20(r3)",
+      "blr"
+    ]
+  },
+  "relocation_strict": {
+    "target_object": "build/GEDE01/obj/game/game_fn_80201C84.o",
+    "base_object": "build/GEDE01/src/game/game_fn_80201C84.o",
+    "target_readelf_r": "There are no relocations in this file.",
+    "base_readelf_r": "There are no relocations in this file.",
+    "relocation_targets_and_addends_match": true
+  },
+  "raw_text": {
+    "target": "806300204e800020",
+    "base": "806300204e800020",
+    "match": true
+  },
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "retail_or_private_input_added": false,
+    "generated_binary_added": false
+  }
+}
