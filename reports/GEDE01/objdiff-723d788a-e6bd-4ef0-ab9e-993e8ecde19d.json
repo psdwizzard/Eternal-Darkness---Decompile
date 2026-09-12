@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "assignment_id": "723d788a-e6bd-4ef0-ab9e-993e8ecde19d",
+  "target": "fn_80201DF8",
+  "unit": "main/game/game_fn_80201DF8",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201DF8 fn_80201DF8 -o build/GEDE01/objdiff-723d788a-e6bd-4ef0-ab9e-993e8ecde19d-canonical.json --format json-pretty",
+    "target_size": 80,
+    "base_size": 80,
+    "match_percent": 100.0,
+    "target_relocations": 1,
+    "base_relocations": 1,
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-723d788a-e6bd-4ef0-ab9e-993e8ecde19d-canonical.json"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201DF8 fn_80201DF8 -o build/GEDE01/objdiff-723d788a-e6bd-4ef0-ab9e-993e8ecde19d-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "target_size": 80,
+    "base_size": 80,
+    "match_percent": 100.0,
+    "target_relocations": 1,
+    "base_relocations": 1,
+    "relocations": [
+      {
+        "offset": "0x1c",
+        "type": "R_PPC_REL24",
+        "target_target": "fn_80201CCC",
+        "target_base": "fn_80201CCC",
+        "addend_target": 0,
+        "addend_base": 0
+      }
+    ],
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-723d788a-e6bd-4ef0-ab9e-993e8ecde19d-reloc-strict.json"
+  },
+  "instruction_diff": {
+    "command": "python3 tools/fndiff.py game/game_fn_80201DF8.c fn_80201DF8",
+    "raw_output": "target 80 bytes  base 80 bytes  match 100.0\n  0x0000  stwu r1, -0x10(r1) | stwu r1, -0x10(r1)\n  0x0004  mflr r0 | mflr r0\n  0x0008  stw r0, 0x14(r1) | stw r0, 0x14(r1)\n  0x000c  stw r31, 0xc(r1) | stw r31, 0xc(r1)\n  0x0010  mr r31, r4 | mr r31, r4\n  0x0014  stw r30, 0x8(r1) | stw r30, 0x8(r1)\n  0x0018  mr r30, r3 | mr r30, r3\n  0x001c  bl fn_80201CCC [None+0 t10] | bl fn_80201CCC [None+0 t10]\n  0x0020  rlwinm. r0, r3, 0, 20, 20 | rlwinm. r0, r3, 0, 20, 20\n  0x0024  beq 0x30 | beq 0x30\n  0x0028  lha r3, 0x30(r30) | lha r3, 0x30(r30)\n  0x002c  b 0x38 | b 0x38\n  0x0030  lha r3, 0x30(r30) | lha r3, 0x30(r30)\n  0x0034  sth r31, 0x30(r30) | sth r31, 0x30(r30)\n  0x0038  lwz r0, 0x14(r1) | lwz r0, 0x14(r1)\n  0x003c  lwz r31, 0xc(r1) | lwz r31, 0xc(r1)\n  0x0040  lwz r30, 0x8(r1) | lwz r30, 0x8(r1)\n  0x0044  mtlr r0 | mtlr r0\n  0x0048  addi r1, r1, 0x10 | addi r1, r1, 0x10\n  0x004c  blr | blr"
+  },
+  "direct_report_comparison": {
+    "command": "cmp -s build/GEDE01/objdiff-723d788a-e6bd-4ef0-ab9e-993e8ecde19d-canonical.json build/GEDE01/objdiff-723d788a-e6bd-4ef0-ab9e-993e8ecde19d-reloc-strict.json",
+    "raw_output": "direct_json_cmp_exit=0"
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80201DF8.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "private_or_generated_artifacts_in_commit": false
+  }
+}
