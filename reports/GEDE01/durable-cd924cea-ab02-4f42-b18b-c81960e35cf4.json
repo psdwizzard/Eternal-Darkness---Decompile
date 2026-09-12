@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "cd924cea-ab02-4f42-b18b-c81960e35cf4",
+  "attempt": 2,
+  "base_commit": "ed1f196debde1edf009e69b1939901a60bad7ad1",
+  "target": "fn_801E86D8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-cd924cea-ab02-4f42-b18b-c81960e35cf4.json"
+  ],
+  "divergence": "Canonical GC/1.3 relocation-strict objdiff is size-exact at 204 bytes and 99.21568%. At offsets 0x44..0x5C retail loads source->count into r4 and destination->count into r5, while the compiler assigns r0 and r3; the six differing instructions are lwz r4/r0, lwz r5/r3, mr r31 r4/r0, cmplw r5/r3 r4/r0, mr r31 r5/r3, and the repeated cmplw. All three relocations match in address, type, target, and zero addend. The prescribed full build passes and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
