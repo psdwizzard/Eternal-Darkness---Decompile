@@ -19,13 +19,15 @@ typedef struct Context801A82FC {
 
 extern Context801A82FC* fn_8015C28C(int);
 
+/* NonMatching: size-exact honest C at 98.690475%. Canonical GC/1.3 uses
+ * buffer/data-base/byte-offset in r4/r3/r6; retail uses r6/r4/r3. */
 void* fn_801A82FC(u32 value)
 {
     Context801A82FC* context = fn_8015C28C(2);
     void* result = 0;
 
     if (context != 0 && context->active != 0 && context->ready != 0) {
-        register Buffer801A82FC* buffer = &context->buffer;
+        Buffer801A82FC* buffer = &context->buffer;
         if (buffer != 0) {
             u32 offset = 0;
             int index = 0;
