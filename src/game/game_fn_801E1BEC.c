@@ -39,6 +39,11 @@ extern u8 fn_801CEB2C(void*);
 extern s32 fn_801D3A34(void*, s32);
 extern void fn_8014EAA4(void*, s32, s32, s32, s32, s32, s32, s32);
 
+static inline s32 get_value(void* object, s32 kind)
+{
+    return fn_801D3A34(object, kind);
+}
+
 void fn_801E1BEC(Work* work)
 {
     if (work->owner != lbl_8064D18C || (work->flags & 1) != 0) {
@@ -73,15 +78,15 @@ void fn_801E1BEC(Work* work)
         fn_801FE934(work->effect, 15);
         break;
     case 40: {
-        s32 c;
         s32 b;
+        s32 c;
         s32 kind;
         s32 a;
         s32 d;
         kind = fn_801CEB2C(work->object);
         a = fn_801D3A34(work->object, 53);
-        b = fn_801D3A34(work->object, 78);
-        c = fn_801D3A34(work->object, 74);
+        b = get_value(work->object, 78);
+        c = get_value(work->object, 74);
         d = fn_801D3A34(work->object, 70);
         fn_8014EAA4(work->output, 250, kind, a, d, c, b, 4);
         break;
