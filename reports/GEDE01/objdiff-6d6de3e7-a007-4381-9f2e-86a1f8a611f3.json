@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "assignment_id": "6d6de3e7-a007-4381-9f2e-86a1f8a611f3",
+  "target": "fn_80202054",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80202054 -o build/GEDE01/objdiff-6d6de3e7-a007-4381-9f2e-86a1f8a611f3-canonical.json --format json-pretty fn_80202054",
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-6d6de3e7-a007-4381-9f2e-86a1f8a611f3-canonical.json",
+    "match_percent": 100.0,
+    "retail_size": 96,
+    "generated_size": 96
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80202054 -o build/GEDE01/objdiff-6d6de3e7-a007-4381-9f2e-86a1f8a611f3-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_80202054",
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-6d6de3e7-a007-4381-9f2e-86a1f8a611f3-reloc-strict.json",
+    "match_percent": 100.0,
+    "retail_size": 96,
+    "generated_size": 96,
+    "result": "100.0%; instructions and relocation-sensitive comparison agree"
+  },
+  "relocations": {
+    "command": "readelf -rW build/GEDE01/obj/game/game_fn_80202054.o; readelf -rW build/GEDE01/src/game/game_fn_80202054.o",
+    "retail_raw_output": "0000002c R_PPC_REL24 fn_80201CCC + 0; 00000044 R_PPC_REL24 fn_80201E50 + 0",
+    "generated_raw_output": "0000002c R_PPC_REL24 fn_80201CCC + 0; 00000044 R_PPC_REL24 fn_80201E50 + 0",
+    "result": "all relocation sites, types, targets, and addends agree"
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "build/GEDE01/main.dol: OK; Progress Game Code: 946664 / 1404980 bytes, 5653 / 6272 functions"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "legal_audit": {
+    "raw_output": "independent C translation unit; no inline or whole-function assembly; no shared reconstruction or fallback jump; only assigned source, configure.py registration, splits.txt registration, and assignment-specific reports changed"
+  }
+}
