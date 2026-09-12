@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "assignment_id": "917627cb-b8b9-4b23-97e3-5a1f67ee7501",
+  "target": "fn_802020B4",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_802020B4 -o build/GEDE01/objdiff-917627cb-b8b9-4b23-97e3-5a1f67ee7501-canonical.json --format json-pretty fn_802020B4",
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-917627cb-b8b9-4b23-97e3-5a1f67ee7501-canonical.json",
+    "match_percent": 100.0,
+    "retail_size": 172,
+    "generated_size": 172,
+    "retail_instructions": 43,
+    "generated_instructions": 43
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_802020B4 -o build/GEDE01/objdiff-917627cb-b8b9-4b23-97e3-5a1f67ee7501-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_802020B4",
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-917627cb-b8b9-4b23-97e3-5a1f67ee7501-reloc-strict.json",
+    "match_percent": 100.0,
+    "retail_size": 172,
+    "generated_size": 172,
+    "retail_instructions": 43,
+    "generated_instructions": 43,
+    "result": "100.0%; all instructions and relocation-sensitive comparisons agree"
+  },
+  "relocations": {
+    "command": "build/binutils/powerpc-eabi-readelf -rW build/GEDE01/obj/game/game_fn_802020B4.o; build/binutils/powerpc-eabi-readelf -rW build/GEDE01/src/game/game_fn_802020B4.o",
+    "retail_raw_output": "0000001c R_PPC_REL24 fn_80201B54 + 0; 00000024 R_PPC_REL24 fn_80158598 + 0; 00000030 R_PPC_REL24 fn_80157E1C + 0; 00000048 R_PPC_REL24 fn_80157E24 + 0; 0000004c R_PPC_REL24 fn_80201814 + 0; 00000054 R_PPC_REL24 fn_802020B4 + 0; 00000070 R_PPC_REL24 fn_80201B5C + 0",
+    "generated_raw_output": "0000001c R_PPC_REL24 fn_80201B54 + 0; 00000024 R_PPC_REL24 fn_80158598 + 0; 00000030 R_PPC_REL24 fn_80157E1C + 0; 00000048 R_PPC_REL24 fn_80157E24 + 0; 0000004c R_PPC_REL24 fn_80201814 + 0; 00000054 R_PPC_REL24 fn_802020B4 + 0; 00000070 R_PPC_REL24 fn_80201B5C + 0",
+    "result": "all seven relocation sites, types, targets, and addends agree"
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "build/GEDE01/main.dol: OK; Progress Game Code: 946836 / 1405152 bytes, 5654 / 6273 functions"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (14030 tracked project files inspected)",
+    "result": "independent C translation unit; no inline or whole-function assembly, shared reconstruction, fallback jump, or neighboring function changes"
+  }
+}
