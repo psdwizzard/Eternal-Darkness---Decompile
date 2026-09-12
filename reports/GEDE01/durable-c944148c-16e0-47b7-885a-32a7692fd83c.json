@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c944148c-16e0-47b7-885a-32a7692fd83c",
+  "attempt": 2,
+  "base_commit": "56b9131462457e39f7af3841e431dd011e2b9bf5",
+  "target": "fn_801E8B6C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c944148c-16e0-47b7-885a-32a7692fd83c.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces a size-exact 440-byte, 110-instruction function at 99.90909% with zero relocations on both sides. At offset 0xE4 retail emits `subf r0,r5,r3` followed by `add r3,r0,r4`; generated code emits `subf r3,r5,r3` followed by `add r3,r3,r4`. All other instruction slots match."
+}
