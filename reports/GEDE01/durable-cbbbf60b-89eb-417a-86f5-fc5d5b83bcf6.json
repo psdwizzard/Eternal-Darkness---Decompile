@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "cbbbf60b-89eb-417a-86f5-fc5d5b83bcf6",
+  "attempt": 1,
+  "base_commit": "71febd5e44bb30c1738e3d55a1fc5392065d7b37",
+  "target": "fn_801EB30C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-cbbbf60b-89eb-417a-86f5-fc5d5b83bcf6.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.23077%: retail and generated code are each 52 bytes (13 instructions), and both R_PPC_REL24 relocation targets/addends agree. At offsets 0x18 and 0x1C, retail emits lwz r3,0x3014(r3) then rlwinm r3,r3,0,6,4, while canonical GC/1.3 emits lwz r0,0x3014(r3) then rlwinm r3,r0,0,6,4. The retained volatile MMIO C reconstruction is otherwise exact. A fresh canonical build completed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
