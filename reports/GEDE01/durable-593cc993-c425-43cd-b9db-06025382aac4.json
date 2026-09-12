@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "593cc993-c425-43cd-b9db-06025382aac4",
+  "attempt": 3,
+  "base_commit": "438814876822bbe7357adff3fce81603beb7a8c1",
+  "target": "fn_80129C2C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-593cc993-c425-43cd-b9db-06025382aac4.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-593cc993-c425-43cd-b9db-06025382aac4.json"
+  ],
+  "divergence": "Canonical GC/1.3 output is size-exact at 188/188 bytes and measures 99.25532% under explicit function_reloc_diffs=name_address comparison. Exactly six operand differences remain: retail uses r9 for the entry+0xB8 pointer/value and r8 for reject, while generated code swaps those roles. Neither object has a .rela.text section. Seven explicit pointer, scope, assignment-order, and declaration-order variants were measured; three were codegen-identical and four regressed to 98.510635-98.93617%. The mandated full build completed 830/830 with exit 0 and produced a byte-identical DOL with SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

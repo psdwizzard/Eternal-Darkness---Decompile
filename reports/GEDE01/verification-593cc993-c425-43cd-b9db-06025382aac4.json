@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "assignment_id": "593cc993-c425-43cd-b9db-06025382aac4",
+  "attempt": 3,
+  "target": "fn_80129C2C",
+  "compiler": "GC/1.3",
+  "recovery": {
+    "requested_preserved_commit": "a652e1584c024b6caaf1eb7d7a1984323dab3150",
+    "source_commit": "5b2e4b29cc7c54c657539c2900c412271e164060",
+    "raw_result": "a652e1584c024b6caaf1eb7d7a1984323dab3150 changes only CLAUDE.md; its parent 5b2e4b29cc7c54c657539c2900c412271e164060 contains the prior fn_80129C2C report. The accepted base already contains the same independent source and NonMatching registration, so no source, configure.py, or splits.txt reconciliation edit was necessary."
+  },
+  "canonical_build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_output": [
+      "[2/2] RUN configure.py",
+      "[1/830] MWCC build/GEDE01/src/game/game_fn_80008014.o",
+      "[438/830] EXTERNALIZE build/GEDE01/src/game/game_fn_801B4FB4.o",
+      "[439/830] EXTERNALIZE build/GEDE01/src/game/game_fn_801B5228.o",
+      "[824/830] REPORT",
+      "[825/830] LINK build/GEDE01/main.elf",
+      "[826/830] DOL build/GEDE01/main.dol",
+      "[827/830] CHECK config/GEDE01/build.sha1",
+      "build/GEDE01/main.dol: OK",
+      "[828/830] PROGRESS"
+    ]
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80129C2C fn_80129C2C -o reports/GEDE01/objdiff-593cc993-c425-43cd-b9db-06025382aac4.json --format json-pretty -c function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "raw_output": "INFO Writing to reports/GEDE01/objdiff-593cc993-c425-43cd-b9db-06025382aac4.json",
+    "target_size": 188,
+    "candidate_size": 188,
+    "match_percent": 99.25532,
+    "instruction_differences": 6,
+    "target_rela_text_sections": 0,
+    "candidate_rela_text_sections": 0
+  },
+  "tested_variants": [
+    {
+      "spelling": "retain an explicit int *current local before computing same",
+      "raw_output": "188\t99.25532\t6",
+      "result": "codegen-identical to the retained candidate"
+    },
+    {
+      "spelling": "assign reject before old_kind and same within a nested block",
+      "raw_output": "188\t99.25532\t6",
+      "result": "codegen-identical to the retained candidate"
+    },
+    {
+      "spelling": "declare reject inside the conditional block before assigning same",
+      "raw_output": "188\t98.510635\t13",
+      "result": "regressed"
+    },
+    {
+      "spelling": "top-level declaration order old_kind, reject, result",
+      "raw_output": "188\t98.93617\t9",
+      "result": "regressed"
+    },
+    {
+      "spelling": "top-level declaration order result, reject, old_kind",
+      "raw_output": "188\t98.510635\t13",
+      "result": "regressed"
+    },
+    {
+      "spelling": "top-level declaration order reject, result, old_kind",
+      "raw_output": "188\t98.510635\t13",
+      "result": "regressed"
+    },
+    {
+      "spelling": "declare same at function scope and assign it in the conditional",
+      "raw_output": "188\t99.25532\t6",
+      "result": "codegen-identical to the retained candidate"
+    }
+  ],
+  "dol_verification": {
+    "commands": [
+      "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "stat -c '%n mtime=%y size=%s' build/GEDE01/main.dol",
+      "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+    ],
+    "exit_code": 0,
+    "raw_output": [
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+      "build/GEDE01/main.dol mtime=2026-09-12 10:08:54.490779543 -0400 size=3156384",
+      "cmp_exit=0"
+    ]
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (13933 tracked project files inspected)"
+  },
+  "final_source_check": {
+    "command": "git diff --exit-code -- src/game/game_fn_80129C2C.c",
+    "exit_code": 0,
+    "result": "The final source is exactly the accepted-base candidate after all temporary variants were reverted."
+  }
+}
