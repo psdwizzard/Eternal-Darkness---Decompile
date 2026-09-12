@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f4f4c29f-9d24-4a2a-b5f5-4c9d634ec51a",
+  "attempt": 1,
+  "base_commit": "e333be7638f69b92bd8c3470de1759e81447b897",
+  "target": "fn_801535D8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f4f4c29f-9d24-4a2a-b5f5-4c9d634ec51a.json"
+  ],
+  "divergence": "Canonical GC/1.3 output is size-exact at 680 bytes and reaches 99.20588%. Of 170 instructions, 26 have argument differences: the principal divergence is an equivalent r29/r30 allocation swap for the optional other-state/owner lifetimes and the later count lifetime; the final mapped value uses r29 instead of retail r28; and the two conversion constants relocate to compiler-local pool symbols rather than retail lbl_806505B0 and lbl_806505A8. The explicit masked_count/bits locals reproduce retail's three-instruction truncation-and-mask evaluation order."
+}

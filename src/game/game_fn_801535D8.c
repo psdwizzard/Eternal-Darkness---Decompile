@@ -1,11 +1,11 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
 
-extern void *fn_80156938();
-extern void *fn_80201BC8();
+extern void *fn_80156938(void*);
+extern void *fn_80201BC8(void*);
 extern int fn_801990E8(void*);
 extern int fn_8012FAB4(void*, int);
-extern void* fn_80201C24();
+extern void* fn_80201C24(void*);
 extern int fn_80157894(void);
 extern void fn_80157B6C(void*, int);
 extern void fn_80199154(void*, int);
@@ -28,20 +28,20 @@ extern u8 fn_801990F8(void*);
 
 void fn_801535D8(void* object, void* other)
 {
-    void* other_state = 0;
+    void* runtime;
+    int count;
     void* other_owner = 0;
-    void* state = fn_80156938(object);
-    void* runtime = *(void**)((u8*)state + 0x88);
+    void* other_state = 0;
     int active;
     int value;
-    int count;
+    u16 masked_count;
+    u8 bits;
     float fraction;
 
-    if (other != 0) {
-        other_state = fn_80156938(other);
-        if (other_state != 0) {
-            other_owner = fn_80201BC8(other_state);
-        }
+    runtime = *(void**)((u8*)fn_80156938(object) + 0x88);
+
+    if (other != 0 && (other_state = fn_80156938(other)) != 0) {
+        other_owner = fn_80201BC8(other_state);
     }
     if (fn_801990E8(runtime) == 0) {
       if (other_owner != 0) {
@@ -71,7 +71,9 @@ void fn_801535D8(void* object, void* other)
         goto done;
     }
     count = fn_8017FEA4(runtime);
-    if (((u16)count & fn_80199118(runtime)) != 0) {
+    masked_count = (u16)count;
+    bits = fn_80199118(runtime);
+    if ((masked_count & bits) != 0) {
         goto done;
     }
     count = fn_80199100(runtime);
