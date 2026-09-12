@@ -20,10 +20,10 @@ extern void fn_80204810(void);
 
 void fn_800E33B8(int id, void *resource, EventData *data)
 {
-    void *object;
     EventData *event_data;
-    int argument;
     int mode;
+    void *object;
+    int argument;
     void *created;
     int value;
 

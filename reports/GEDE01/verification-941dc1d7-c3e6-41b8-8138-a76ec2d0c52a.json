@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "assignment_id": "941dc1d7-c3e6-41b8-8138-a76ec2d0c52a",
+  "target": "fn_800E33B8",
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "output": "build/GEDE01/main.dol: OK"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800E33B8 fn_800E33B8 -o reports/GEDE01/objdiff-941dc1d7-c3e6-41b8-8138-a76ec2d0c52a.json --format json-pretty",
+      "exit_code": 0,
+      "output": {"size": 252, "match_percent": 98.492065, "instruction_differences": 18, "relocations": 14}
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800E33B8 fn_800E33B8 -o reports/GEDE01/objdiff-941dc1d7-c3e6-41b8-8138-a76ec2d0c52a-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "output": {"size": 252, "match_percent": 98.492065, "instruction_differences": 18, "relocations": 14, "relocation_sequence_diff_exit": 0}
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "exit_code": 0,
+      "output": [
+        "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+        "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+      ]
+    }
+  ],
+  "tested_levers": [
+    {"spelling": "locals declared as event_data, mode, object, argument, created", "result": "retained; 252 bytes, 98.492065%, 18 register-operand differences"},
+    {"spelling": "use the EventData formal parameter directly without a local alias", "result": "unchanged codegen"},
+    {"spelling": "declarations initialized at first use", "result": "unchanged codegen"},
+    {"spelling": "register storage class on the five long-lived locals", "result": "unchanged codegen"},
+    {"spelling": "prototype fn_80201814(int) and fn_80128C28(void *, void *, int)", "result": "unchanged codegen"},
+    {"spelling": "repeat event_data->value directly instead of retaining value", "result": "unchanged codegen"},
+    {"spelling": "type object as RuntimeState *", "result": "unchanged codegen"},
+    {"spelling": "assign argument before mode", "result": "252 bytes, 98.5873%, 18 differences, but moves the argument constants into retail's mode instruction slots and the mode constants into retail's argument slots; rejected as a worse structural alignment"},
+    {"spelling": "call fn_80201814 before assigning the local event_data alias", "result": "unchanged codegen"}
+  ],
+  "side_interpretation": "objdiff left is target_path build/GEDE01/obj/game/game_fn_800E33B8.o (retail); right is base_path build/GEDE01/src/game/game_fn_800E33B8.o (generated). The preserved attempt's narrative reversed these sides."
+}
