@@ -35,8 +35,8 @@ extern float lbl_806510E0;
 int fn_801D76A8(void* item, Object* object, s16* first, s16* second)
 {
     int result;
-    void* effect;
     int kind;
+    void* effect;
     u8 count;
     Vec3 item_position;
     Vec3 first_position;

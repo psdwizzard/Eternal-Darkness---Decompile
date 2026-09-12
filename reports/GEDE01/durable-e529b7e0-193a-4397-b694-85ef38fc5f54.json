@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e529b7e0-193a-4397-b694-85ef38fc5f54",
+  "attempt": 3,
+  "base_commit": "cc9bb3b6c4a9de6dfe12cad56eca53253cdcc8af",
+  "target": "fn_801D76A8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e529b7e0-193a-4397-b694-85ef38fc5f54.json"
+  ],
+  "divergence": "Relocation-strict objdiff measures 99.04256%: retail is 752 bytes and generated is 756 bytes, with 189 aligned comparison rows and 27 relocations on each side. All 17 divergent rows are the effect/count r29/r26 versus r26/r29 register-allocation inversion and retail staging fn_801D38E8's result directly into r28 where GC/1.3 routes it through r0 and emits one extra mr. The signed-conversion bias is correctly externalized to lbl_806510D8 and is no longer divergent."
+}
