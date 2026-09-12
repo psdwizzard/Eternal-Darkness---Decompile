@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "assignment_id": "78ce55d8-576d-40e1-8761-2f7afbba9e06",
+  "attempt": 4,
+  "base_commit": "161b58a99b2879d5e2045571248a8e7e7912a810",
+  "target": "fn_801EB7A8",
+  "compiler": "GC/1.3",
+  "source": "eternal-darkness-decomp/src/game/game_fn_801EB7A8.c",
+  "source_sha1": "03b576719751e6f4085b42eab2f8ce8e3ace5da9",
+  "recovery": {
+    "requested_checkpoint": "58f813b8f57b1f9f248d3c6580761fe58814b801",
+    "candidate_source_commit": "200ea7a03e20baa217cd99ba573f2ab37f5e3808",
+    "previous_evidence_commit": "fee9bfbf6",
+    "reconciliation": "The accepted base already contained the recovered independent translation unit, split entry, and GC/1.3 NonMatching registration. Attempt 4 replaced the pointer-walk expression with equivalent direct table indexing, which makes GC/1.3 materialize lbl_80639260 directly in r31 and removes the prior extra mr instruction."
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_terminal_output": [
+      "[815/818] DOL build/GEDE01/main.dol",
+      "[816/818] CHECK config/GEDE01/build.sha1",
+      "build/GEDE01/main.dol: OK",
+      "[817/818] PROGRESS"
+    ],
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_exit_code": 0,
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_verified": true
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EB7A8 -o build/GEDE01/fn_801EB7A8-canonical-attempt4.json --format json-pretty fn_801EB7A8",
+    "exit_code": 0,
+    "raw_terminal_output": "INFO Writing to build/GEDE01/fn_801EB7A8-canonical-attempt4.json",
+    "retail_size": 260,
+    "candidate_size": 260,
+    "match_percent": 100.0,
+    "raw_assertion": "jq canonical .text size=260 match_percent=100: exit 0"
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EB7A8 -c function_reloc_diffs=name_address -o build/GEDE01/fn_801EB7A8-reloc-strict-attempt4.json --format json-pretty fn_801EB7A8",
+    "exit_code": 0,
+    "raw_terminal_output": "INFO Writing to build/GEDE01/fn_801EB7A8-reloc-strict-attempt4.json",
+    "mode": "function_reloc_diffs=name_address",
+    "retail_size": 260,
+    "candidate_size": 260,
+    "match_percent": 100.0,
+    "relocation_targets_and_addends_checked": true,
+    "raw_assertion": "jq relocation-strict fn_801EB7A8 size=260 match_percent=100: exit 0",
+    "comparison_to_canonical_raw_json": "cmp exit 0: canonical and relocation-strict JSON outputs are byte-identical for this function",
+    "retail_relocation_ledger": [
+      "R_PPC_EMB_SDA21 lbl_8064D618 addend=0",
+      "R_PPC_ADDR16_HA lbl_80639260 addend=0",
+      "R_PPC_ADDR16_LO lbl_80639260 addend=0",
+      "R_PPC_NONE lbl_80639260 addend=0",
+      "R_PPC_NONE lbl_80639260 addend=4",
+      "R_PPC_EMB_SDA21 lbl_8064D5FC addend=0",
+      "R_PPC_REL24 fn_8015DB84 addend=0",
+      "R_PPC_REL24 fn_801EB340 addend=0",
+      "R_PPC_NONE lbl_80639260 addend=8",
+      "R_PPC_EMB_SDA21 lbl_8064D654 addend=0",
+      "R_PPC_REL24 fn_801EB5C8 addend=0",
+      "R_PPC_EMB_SDA21 lbl_8064D618 addend=0",
+      "R_PPC_REL24 fn_80228D9C addend=0"
+    ],
+    "candidate_relocations_match_retail_by_name_address_and_addend": true
+  },
+  "legal_audit": {
+    "independent_translation_unit": true,
+    "whole_function_assembly": false,
+    "inline_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changed": false,
+    "neighboring_functions_edited": false
+  },
+  "conclusion": "Matched. Canonical and relocation-strict objdiff both report 100.0% for the 260-byte function, with relocation targets and addends checked."
+}

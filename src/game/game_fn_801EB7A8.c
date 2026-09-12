@@ -21,7 +21,6 @@ extern void fn_80228D9C(void);
 
 void fn_801EB7A8(Scene* scene, int mode)
 {
-    register Entry* entry;
     int i;
     void* display_list;
     Object* object;
@@ -32,9 +31,9 @@ void fn_801EB7A8(Scene* scene, int mode)
     if (lbl_8064D618 == mode)
         return;
 
-    for (entry = lbl_80639260, i = 0; i < lbl_8064D654; entry++, i++) {
-        display_list = entry->display_list;
-        resource = entry->object;
+    for (i = 0; i < lbl_8064D654; i++) {
+        display_list = lbl_80639260[i].display_list;
+        resource = lbl_80639260[i].object;
         value = -1;
         switch (mode) {
         case 0: value = resource->mode0; break;
