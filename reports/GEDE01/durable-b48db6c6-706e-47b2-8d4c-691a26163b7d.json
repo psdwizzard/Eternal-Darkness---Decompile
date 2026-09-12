@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b48db6c6-706e-47b2-8d4c-691a26163b7d",
+  "attempt": 3,
+  "base_commit": "603730e32aa278c7794a29e4ec5691218bf42c9f",
+  "target": "fn_8018D7DC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b48db6c6-706e-47b2-8d4c-691a26163b7d.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff are size-exact at 444/444 bytes and 99.0991%, with 95 identical instructions and 16 DIFF_ARG_MISMATCH instructions. All remaining code differences are register allocation: the first loop uses generated object-data/byte-offset registers r23/r24 instead of retail r24/r28; the second loop uses generated source/destination/color-destination/count/index registers r22/r23/r25/r24/r26 instead of retail r22/r23/r26/r24/r25. Both objects have equal 300-byte .rela.text sections with 25 relocations; every relocation offset, type, target, and addend matches strictly. The canonical build succeeds and main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
