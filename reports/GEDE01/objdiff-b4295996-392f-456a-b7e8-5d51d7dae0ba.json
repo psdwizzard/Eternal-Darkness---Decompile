@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "assignment_id": "b4295996-392f-456a-b7e8-5d51d7dae0ba",
+  "target": "fn_80204028",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80204028 fn_80204028 -o build/GEDE01/objdiff-b4295996-392f-456a-b7e8-5d51d7dae0ba-canonical.json --format json-pretty",
+    "raw_measurement": {
+      "left_text_size": 344,
+      "right_text_size": 344,
+      "left_text_match_percent": 100.0,
+      "symbol": "fn_80204028",
+      "symbol_size": 344,
+      "symbol_match_percent": 100.0
+    },
+    "raw_output_sha1": "060aa7273c77a4c300f0f1dd7fa7c9d8779ad4f0"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80204028 fn_80204028 -o build/GEDE01/objdiff-b4295996-392f-456a-b7e8-5d51d7dae0ba-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_measurement": {
+      "left_text_size": 344,
+      "right_text_size": 344,
+      "symbol_match_percent": 100.0,
+      "relocation_count_each_side": 17,
+      "relocation_offsets": ["0x1c", "0x2c", "0x3c", "0x5c", "0x68", "0x7c", "0x90", "0x9c", "0xa4", "0xa8", "0xac", "0xb0", "0xdc", "0x100", "0x110", "0x124", "0x130"],
+      "relocation_types": ["R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_ADDR16_HA", "R_PPC_ADDR16_LO", "R_PPC_NONE", "R_PPC_NONE", "R_PPC_NONE", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24"],
+      "relocation_targets": ["fn_80201B9C", "fn_80201BC8", "fn_8011F114", "fn_80201EB8", "fn_80201B54", "fn_80201BC8", "fn_8011F114", "lbl_8023B880", "lbl_8023B880", "lbl_8023B880", "lbl_8023B880", "lbl_8023B880", "fn_80201EB8", "fn_80178E94", "fn_80201B54", "fn_8020123C", "fn_80201BC0"],
+      "relocation_addends": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 8, 0, 0, 0, 0, 0],
+      "offset_type_target_addend_result": "all entries identical"
+    },
+    "raw_output_sha1": "060aa7273c77a4c300f0f1dd7fa7c9d8779ad4f0"
+  },
+  "codegen_divergence": {
+    "instruction_count": 0,
+    "raw_differences": []
+  },
+  "verification": {
+    "configure_command": "python3 configure.py",
+    "build_command": ".tools/bin/ninja -j2",
+    "build_result": "build/GEDE01/main.dol: OK",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "legal_audit_command": "python3 tools/legal_audit.py",
+    "legal_audit_result": "legal audit passed (14163 tracked project files inspected)"
+  }
+}
