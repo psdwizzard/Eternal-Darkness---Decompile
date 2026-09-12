@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "assignment_id": "57a5d28f-f147-4404-8fb1-6a9e04729e17",
+  "target": "fn_800173CC",
+  "source": "eternal-darkness-decomp/src/game/game_fn_800173CC.c",
+  "recovery": {
+    "preserved_commit": "f3593684945c68ce75d31f443ce40171e2ad43f2",
+    "useful_parent": "1804589f4",
+    "reconciled_change": "Replaced the prior inline mr of r3 with the honest C parameter assignment script = arg; no assembly remains."
+  },
+  "compiler": "mwcc_242_53 (canonical GC/1.3 settings from configure.py)",
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "exit_code": 0,
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": [
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+    ]
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (13759 tracked project files inspected)"
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800173CC fn_800173CC -o build/GEDE01/fn_800173CC-canonical-attempt2.json --format json-pretty",
+    "exit_code": 0,
+    "raw_measurement": "target 564 bytes  base 564 bytes  match 99.04256"
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800173CC fn_800173CC -c function_reloc_diffs=name_address -o build/GEDE01/fn_800173CC-reloc-strict-attempt2.json --format json-pretty",
+    "exit_code": 0,
+    "raw_measurement": "retail_bytes=564 generated_bytes=564 match_percent=99.04256 relocation_sites_left=39 relocation_sites_right=39",
+    "relocations": "all 39/39 relocation-bearing instructions agree by offset, relocation type, displayed target, and addend"
+  },
+  "differences": {
+    "count": 14,
+    "retail_offsets_hex": ["0x1c", "0xac", "0xbc", "0xfc", "0x100", "0x10c", "0x114", "0x148", "0x170", "0x19c", "0x1ac", "0x1e4", "0x1ec", "0x1f0"],
+    "raw_retail_instructions": ["mr r25, r3", "clrlwi r27, r3, 16", "cmplw r0, r27", "clrlwi r26, r3, 16", "mr r3, r25", "mr r25, r3", "mr r3, r25", "cmpw r26, r0", "add r0, r3, r27", "clrlwi r27, r3, 16", "cmplw r0, r27", "mr r3, r25", "mr r25, r3", "cmplwi r25, 0x0"],
+    "raw_generated_instructions": ["mr r27, r3", "clrlwi r25, r3, 16", "cmplw r25, r0", "clrlwi r25, r3, 16", "mr r3, r27", "mr r26, r3", "mr r3, r26", "cmpw r25, r0", "add r0, r27, r3", "clrlwi r25, r3, 16", "cmpw r25, r0", "mr r3, r26", "mr r26, r3", "cmplwi r26, 0x0"],
+    "summary": "Canonical MWCC rotates the overlapping initial collection, iterator, and truncated-id live ranges across r25-r27; offset 0x1AC also differs in comparison unsignedness and operand order. Size, scheduling, control flow, and relocations match."
+  }
+}

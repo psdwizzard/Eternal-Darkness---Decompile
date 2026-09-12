@@ -28,7 +28,7 @@ extern s32 fn_80205134(void*);
 extern u32 fn_80157BF4(void*);
 extern void fn_80157A28(void*, u8);
 
-s32 fn_800173CC(void*)
+s32 fn_800173CC(void* arg)
 {
     register void* target;
     register u8 result;
@@ -41,9 +41,7 @@ s32 fn_800173CC(void*)
     register void* related;
     register void* object;
 
-    asm {
-        mr script, r3
-    }
+    script = arg;
     related = fn_80201814(fn_80201B44());
     fn_80205288((s32)fn_80201B3C());
     result = 0;
