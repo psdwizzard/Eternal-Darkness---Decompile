@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e1b493ff-8fe5-4a13-b382-42cdebf21a4b",
+  "attempt": 3,
+  "base_commit": "b99cf85329248d70fd87bf34337f5971b802f56a",
+  "target": "fn_800173CC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e1b493ff-8fe5-4a13-b382-42cdebf21a4b.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure a size-exact 564-byte function at 99.39716%. All 39/39 relocation-bearing instructions agree by offset, displayed target, type, and addend. Fourteen operand mismatches remain because canonical MWCC rotates overlapping collection, iterator, and truncated-id live ranges across r25-r27; one commutative add also reverses operands. The honest C reconstruction contains no inline or whole-function assembly. The full build passed with DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f and the legal audit passed."
+}

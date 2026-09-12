@@ -80,7 +80,7 @@ s32 fn_800173CC(void* arg)
                     }
                 } else if (fn_80157BF4(object) == 3) {
                     temp = (void*)(u16)fn_80158234(target_data);
-                    if ((u16)fn_80158234(object) == (s32)temp &&
+                    if ((u32)(u16)fn_80158234(object) == (u32)temp &&
                         (u16)fn_80157994(target_data) != 0 &&
                         (u16)fn_80157994(object) == 0) {
                         fn_80157C98(object, 0x80, 0x20);
