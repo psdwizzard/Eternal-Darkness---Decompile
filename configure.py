@@ -8107,9 +8107,7 @@ config.libs = [
             Object(Matching, "game/game_fn_8011C428.c"),
             Object(Matching, "game/game_fn_8011C468.c"),
             Object(Matching, "game/game_fn_8011C4D8.c"),
-            # Honest C; MWCC materializes the initial zero in r6 rather than
-            # reusing the later r3, leaving one extra instruction.
-            Object(NonMatching, "game/game_fn_8011C6BC.c"),
+            Object(Matching, "game/game_fn_8011C6BC.c"),
             Object(Matching, "game/game_fn_8011C798.c"),
             Object(Matching, "game/game_fn_8011C830.c"),
             Object(Matching, "game/game_fn_8011CC20.c"),

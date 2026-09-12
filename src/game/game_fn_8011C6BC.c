@@ -14,7 +14,7 @@ extern int lbl_8064CE68;
 extern int lbl_8064C504;
 
 extern int fn_801A98F4(int, int);
-extern unsigned char fn_801A9B30(int);
+extern unsigned char fn_801A9B30(void);
 extern int fn_801E6CA0(int, int, int, int, int);
 extern void fn_801E6328(int, short, int);
 extern int fn_801E8A8C(void);
@@ -30,7 +30,7 @@ void fn_8011C6BC(int x, int value, unsigned char mode)
     lbl_8064CE53 = 255;
     lbl_8064CE60 = x;
     lbl_8064CE5C = value;
-    random = fn_801A9B30(0);
+    random = fn_801A9B30();
     lbl_8064CE55 = random;
     lbl_8064CE64 = random;
     lbl_8064CE52 = 0;
