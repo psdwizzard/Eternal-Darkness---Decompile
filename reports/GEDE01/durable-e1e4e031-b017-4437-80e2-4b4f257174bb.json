@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e1e4e031-b017-4437-80e2-4b4f257174bb",
+  "attempt": 2,
+  "base_commit": "32913fec3abe198676efbf3510d0c61b9607574d",
+  "target": "fn_801E1BEC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e1e4e031-b017-4437-80e2-4b4f257174bb.json"
+  ],
+  "divergence": "Canonical and relocation-strict direct objdiff both measure 99.72789%: 588/588 bytes, 147/147 instructions, and 26/26 relocations. The canonical and function_reloc_diffs=name_address reports are byte-for-byte identical, confirming relocation targets and addends agree. Eight register-allocation instruction words remain: retail uses r3 while generated code uses r0 for the resource-null checks at offsets 0x60/0x64 and 0x1D0/0x1D4; retail holds timer-40 query IDs 78 and 74 in r29 and r30 while generated code swaps them, differing at offsets 0x188, 0x198, 0x1B4, and 0x1B8. The canonical build completed successfully and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
