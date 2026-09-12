@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "6045972c-1aca-4dc1-acc6-034d9159f6fa",
+  "attempt": 1,
+  "base_commit": "1fed7f96a8d771f3c3822e4425ec415073595e92",
+  "target": "fn_80202E28",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6045972c-1aca-4dc1-acc6-034d9159f6fa.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 62.233887%. The C candidate is 2696 bytes versus the 3848-byte target and has 115 versus 197 relocation-bearing instructions. It recovers all six top-level action families and most repeated event/combat branches, but omits the exact stack-vector initialization, three constant-vector applications, camera-space setup, effect construction, and associated globals; prologue frame/register allocation and downstream branch layout consequently differ."
+}
