@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "919aa6d8-a7c6-4117-9f80-12e742581a6c",
+  "attempt": 2,
+  "base_commit": "c8a79ba44482600316cd96aa35806961b56d1786",
+  "target": "fn_801CE384",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-919aa6d8-a7c6-4117-9f80-12e742581a6c.json"
+  ],
+  "divergence": "Canonical and relocation-strict GC/1.3 output is size-exact at 528/528 bytes and scores 98.56061%. Retail and generated code retain different callee-saved allocations for the six arguments, object type, callback, conversion temporaries, loop index, and explicit output/index iterators. All 19 relocation-bearing instruction sites, relocation types, and addends align, but the signed-conversion bias at instruction offset 0xA8 targets retail lbl_80651048 versus compiler-local @31 in the generated object. The required linked DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
