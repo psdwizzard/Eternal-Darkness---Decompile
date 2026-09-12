@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "assignment_id": "e104d795-4980-44bf-84b7-12c448de7e0a",
+  "attempt": 2,
+  "target": "fn_80088D04",
+  "compiler": "GC/1.3",
+  "source_recovery": {
+    "preserved_commit": "7f2c5b73c259440929adba9cc5f59200bc58abd7",
+    "reconciliation": "The accepted base already contains the preserved standalone reconstruction, configure.py registration, and splits.txt entry; no source reconciliation diff was required."
+  },
+  "canonical": {
+    "command": "python3 tools/fndiff.py game/game_fn_80088D04.c fn_80088D04",
+    "raw_summary": "target 320 bytes  base 320 bytes  match 99.25",
+    "retail_bytes": 320,
+    "generated_bytes": 320,
+    "retail_instructions": 80,
+    "generated_instructions": 80,
+    "match_percent": 99.25,
+    "different_instructions": 1
+  },
+  "relocation_strict": {
+    "source": "build/GEDE01/fndiff_fn_80088D04.json",
+    "retail_relocation_bearing_instructions": 35,
+    "generated_relocation_bearing_instructions": 35,
+    "equal_relocation_bearing_instructions": 34,
+    "different_relocation_bearing_instructions": 1,
+    "relocation_targets_and_addends": "All displayed relocation target names, types, and addends agree. The differing instruction carries the same synthetic R_PPC_NONE association to lbl_8031D3B8 with addend 0 on both sides.",
+    "raw_diff": "0x0030 retail: addi r28, r5, 0x0 [R_PPC_NONE target lbl_8031D3B8 addend 0] | generated: mr r28, r5 [R_PPC_NONE target lbl_8031D3B8 addend 0]",
+    "conclusion": "NonMatching: relocation identity agrees, but the relocation-bearing instruction encoding does not."
+  },
+  "expression_tests": [
+    {
+      "variant": "flat extern s16[30] with &positions[0], &positions[10], &positions[20]",
+      "raw_summary": "target 320 bytes  base 320 bytes  match 99.25",
+      "raw_diff": "0x0030 retail addi r28,r5,0x0 | generated mr r28,r5"
+    },
+    {
+      "variant": "explicit (s16*)&positions->x, (s16*)&positions->y, (s16*)&positions->z",
+      "raw_summary": "target 320 bytes  base 320 bytes  match 99.25",
+      "raw_diff": "0x0030 retail addi r28,r5,0x0 | generated mr r28,r5"
+    }
+  ],
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "raw_tail": "[825/830] LINK build/GEDE01/main.elf\n[826/830] DOL build/GEDE01/main.dol\n[827/830] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[828/830] PROGRESS",
+    "exit_code": 0
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "legal_audit": {
+    "translation_unit": "src/game/game_fn_80088D04.c",
+    "independent_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "gate_or_compiler_policy_changes": false
+  }
+}
