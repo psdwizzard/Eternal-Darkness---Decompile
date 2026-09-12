@@ -32,8 +32,6 @@ void fn_801FF5EC(Context* left, Context* right)
 
     while (left_node != 0) {
         Node* scan = left_node;
-        Node* remainder;
-
         if (right_node != 0) {
             while (right_node->next != 0 &&
                    right_node->next->state < left_node->state) {
@@ -44,13 +42,13 @@ void fn_801FF5EC(Context* left, Context* right)
                        scan->next->state < right_node->next->state) {
                     scan = scan->next;
                 }
-                remainder = scan->next;
-                scan->next = right_node->next;
-                right_node->next = left_node;
-                left_node = remainder;
-                right_node = scan;
-                continue;
             }
+            left = (Context*)*(Node* volatile*)&scan->next;
+            scan->next = right_node->next;
+            right_node->next = left_node;
+            left_node = (Node*)left;
+            right_node = scan;
+            continue;
         }
 
         right->head = left_node;

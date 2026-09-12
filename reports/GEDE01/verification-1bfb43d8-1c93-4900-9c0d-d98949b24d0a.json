@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "assignment_id": "1bfb43d8-1c93-4900-9c0d-d98949b24d0a",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FF5EC -o reports/GEDE01/objdiff-1bfb43d8-1c93-4900-9c0d-d98949b24d0a.json --format json-pretty -c function_reloc_diffs=name_address fn_801FF5EC",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_outputs": {
+    "build": "build/GEDE01/main.dol: OK",
+    "objdiff": "left .text size=264 match_percent=100.0; right .text size=264; fn_801FF5EC left size=264 match_percent=100.0; fn_801FF5EC right size=264 match_percent=100.0",
+    "relocations": "R_PPC_REL24 target_symbol=2 on both sides for both calls; strict function_reloc_diffs=name_address reported no diffs",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "whole_function_assembly": false,
+    "inline_assembly": false,
+    "shared_reconstruction": false,
+    "independent_translation_unit": "src/game/game_fn_801FF5EC.c"
+  }
+}
