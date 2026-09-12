@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "assignment_id": "9afd7c95-9fea-46c5-99ae-9203627d5030",
+  "target": "fn_80203F60",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80203F60 fn_80203F60 -o build/GEDE01/objdiff-9afd7c95-9fea-46c5-99ae-9203627d5030-canonical.json --format json-pretty",
+    "raw_measurement": {
+      "left_text_size": 200,
+      "right_text_size": 200,
+      "left_text_match_percent": 100.0,
+      "symbol": "fn_80203F60",
+      "symbol_size": 200,
+      "symbol_match_percent": 100.0
+    },
+    "raw_output_sha1": "1ea7ab8f6d0ffca88e501541bd3cc49b4793fba8"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80203F60 fn_80203F60 -o build/GEDE01/objdiff-9afd7c95-9fea-46c5-99ae-9203627d5030-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_measurement": {
+      "left_text_size": 200,
+      "right_text_size": 200,
+      "symbol_match_percent": 100.0,
+      "relocation_count_each_side": 5,
+      "relocation_offsets": ["0x8", "0x4c", "0x68", "0x88", "0x98"],
+      "relocation_types": ["R_PPC_EMB_SDA21", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_EMB_SDA21"],
+      "relocation_targets": ["lbl_806515A8", "fn_8013F3C0", "fn_80137350", "fn_8013AD48", "lbl_806515A8"],
+      "relocation_addends": [0, 0, 0, 0, 0],
+      "offset_type_target_addend_result": "all entries identical"
+    },
+    "raw_output_sha1": "1ea7ab8f6d0ffca88e501541bd3cc49b4793fba8"
+  },
+  "codegen_divergence": {
+    "instruction_count": 0,
+    "raw_differences": []
+  },
+  "verification": {
+    "configure_command": "python3 configure.py",
+    "build_command": ".tools/bin/ninja -j2",
+    "build_result": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "legal_audit_command": "python3 tools/legal_audit.py",
+    "legal_audit_result": "legal audit passed (14153 tracked project files inspected)"
+  }
+}
