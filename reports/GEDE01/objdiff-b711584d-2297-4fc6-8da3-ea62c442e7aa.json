@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "assignment_id": "b711584d-2297-4fc6-8da3-ea62c442e7aa",
+  "target": "fn_80201E78",
+  "compiler": "GC/1.3",
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_output": [
+      "[419/829] MWCC build/GEDE01/src/game/game_fn_80201E78.o",
+      "[824/829] LINK build/GEDE01/main.elf",
+      "[825/829] DOL build/GEDE01/main.dol",
+      "[826/829] CHECK config/GEDE01/build.sha1",
+      "build/GEDE01/main.dol: OK",
+      "[827/829] PROGRESS"
+    ]
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "raw_output": [
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+      "cmp_exit=0"
+    ],
+    "verified": true
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201E78 fn_80201E78 -o build/GEDE01/b711584d-canonical.json --format json-pretty",
+    "exit_code": 0,
+    "raw_output": "INFO Writing to build/GEDE01/b711584d-canonical.json",
+    "raw_json_measurement": {
+      "left_size": "64",
+      "right_size": "64",
+      "left_match_percent": 100.0,
+      "right_match_percent": 100.0
+    },
+    "match_percent": 100.0
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201E78 fn_80201E78 -o build/GEDE01/b711584d-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "raw_output": "INFO Writing to build/GEDE01/b711584d-reloc-strict.json",
+    "raw_json_measurement": {
+      "left_size": "64",
+      "right_size": "64",
+      "left_match_percent": 100.0,
+      "right_match_percent": 100.0
+    },
+    "match_percent": 100.0,
+    "left_relocations": [
+      "00000018 R_PPC_REL24 fn_80201BC8 + 0",
+      "00000028 R_PPC_REL24 fn_8011F114 + 0"
+    ],
+    "right_relocations": [
+      "00000018 R_PPC_REL24 fn_80201BC8 + 0",
+      "00000028 R_PPC_REL24 fn_8011F114 + 0"
+    ],
+    "raw_relocation_note": "Each raw JSON relocation object has address, type/type_name, and target_symbol but no addend field on either side; the ELF implicit addend is therefore zero on both sides.",
+    "relocation_targets_and_addends_equal": true
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80201E78.c",
+    "honest_c": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false
+  }
+}
