@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "assignment_id": "4a9ed688-d7e6-4c48-aec4-bc17f89394ce",
+  "attempt": 3,
+  "target": "fn_801D1F78",
+  "compiler": "GC/1.3",
+  "compiler_flags": ["-use_lmw_stmw on"],
+  "source": "eternal-darkness-decomp/src/game/game_fn_801D1F78.c",
+  "recovery": {
+    "preserved_commit": "ab9a2b2f6314eb8718017d337c6a0d07a85cbea6",
+    "command": "git rev-parse ab9a2b2f6314eb8718017d337c6a0d07a85cbea6^:eternal-darkness-decomp/src/game/game_fn_801D1F78.c HEAD:eternal-darkness-decomp/src/game/game_fn_801D1F78.c",
+    "raw_output": "eab3f2796ee42a2edcf56779a0c8c5717f3cdcf3\neab3f2796ee42a2edcf56779a0c8c5717f3cdcf3",
+    "result": "The accepted base already contains the exact preserved honest-C source blob."
+  },
+  "registration": {
+    "configure": "Object(NonMatching, \"game/game_fn_801D1F78.c\", mw_version=\"GC/1.3\", extra_cflags=[\"-use_lmw_stmw on\"])",
+    "split": ".text start:0x801D1F78 end:0x801D2440"
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_result": "configure exit 0; initial ninja attempts encountered transient generated-object races; prescribed -j2 retry exit 0 with: build/GEDE01/main.dol: OK",
+    "target_command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D1F78.externalized",
+    "target_raw_result": "[1/2] MWCC build/GEDE01/src/game/game_fn_801D1F78.o\n[2/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801D1F78.o",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_cmp_command": "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "dol_cmp_exit": 0
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1F78 -o build/GEDE01/objdiff-4a9ed688-canonical.json --format json fn_801D1F78",
+    "raw_result": "INFO Writing to build/GEDE01/objdiff-4a9ed688-canonical.json; exit 0",
+    "raw_measurement": "match_percent=97.810455 retail_size=1224 generated_size=1224 retail_instructions=306 generated_instructions=306 diff_slots=8",
+    "retail_size": 1224,
+    "generated_size": 1224,
+    "retail_instructions": 306,
+    "generated_instructions": 306,
+    "match_percent": 97.810455
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D1F78 -o build/GEDE01/objdiff-4a9ed688-reloc-strict.json --format json -c function_reloc_diffs=name_address fn_801D1F78",
+    "raw_result": "INFO Writing to build/GEDE01/objdiff-4a9ed688-reloc-strict.json; exit 0",
+    "raw_measurement": "match_percent=97.810455 retail_size=1224 generated_size=1224 retail_relocations=12 generated_relocations=12 targets_and_addends_equal=true",
+    "match_percent": 97.810455,
+    "retail_relocations": 12,
+    "generated_relocations": 12,
+    "targets_and_addends_equal": true,
+    "relocation_target_multiset": [
+      "lbl_8065107C+0 R_PPC_EMB_SDA21",
+      "lbl_80651070+0 R_PPC_EMB_SDA21",
+      "lbl_80651080+0 R_PPC_EMB_SDA21",
+      "fn_80048C2C+0 R_PPC_REL24",
+      "fn_80048C50+0 R_PPC_REL24",
+      "fn_801F6B6C+0 R_PPC_REL24 (3 occurrences)",
+      "fn_80201814+0 R_PPC_REL24",
+      "fn_80201BC8+0 R_PPC_REL24",
+      "fn_8011F6A4+0 R_PPC_REL24 (2 occurrences)"
+    ]
+  },
+  "diff": {
+    "identical_instruction_slots": 301,
+    "diff_slots": 8,
+    "retail_entry_order": "lfs f29,lbl_8065107C; addi r26,r1,0xc4; lfd f30,lbl_80651070; mr r28,r3; lfd f31,lbl_80651080; mr r29,r5; li r27,0",
+    "generated_entry_order": "lfd f30,lbl_80651070; mr r28,r3; lfs f29,lbl_8065107C; mr r29,r5; lfd f31,lbl_80651080; addi r26,r1,0xc4; li r27,0",
+    "exact_divergence": "The generated function is size-exact and aligns after the entry block. GC/1.3 schedules addi r26,r1,0xc4, lfd f30,lbl_80651070@sda21, mr r28,r3, mr r29,r5, and li r27,0 differently from retail; lfs f29 and lfd f31 move only as part of that entry permutation. No semantic control-flow or relocation divergence remains."
+  },
+  "legal_audit": {
+    "command": "rg -n '#pragma|\\b(__asm|asm)\\b' eternal-darkness-decomp/src/game/game_fn_801D1F78.c",
+    "raw_result": "exit 1; no matches",
+    "whole_function_assembly": false,
+    "inline_assembly": false,
+    "independent_translation_unit": true
+  }
+}
