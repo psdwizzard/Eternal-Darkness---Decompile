@@ -1,6 +1,8 @@
 typedef signed short s16;
 typedef unsigned char u8;
 
+#pragma use_lmw_stmw on
+
 typedef float Matrix34[3][4];
 
 typedef struct Color {
@@ -74,7 +76,8 @@ void fn_801ED5F4(int object, int flags, s16 value, float* direction,
             transform[0][0] = -direction[0] / lbl_8065132C;
             transform[0][1] = -direction[1] / lbl_8065132C;
             transform[0][2] = -direction[2] / lbl_8065132C;
-            transform[1][0] = alpha / lbl_8065132C;
+            transform[0][3] = alpha / lbl_8065132C;
+            transform[1][0] = lbl_80651318;
             transform[1][1] = lbl_80651318;
             transform[1][2] = lbl_80651318;
             transform[1][3] = lbl_80651318;
@@ -143,7 +146,9 @@ void fn_801ED5F4(int object, int flags, s16 value, float* direction,
             color.r = 0xFF;
             break;
         default:
-            color.r = color.g = color.b = 0;
+            color.r = 0;
+            color.g = 0;
+            color.b = 0;
             break;
         }
 
