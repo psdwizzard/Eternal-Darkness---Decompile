@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "assignment_id": "7d726632-6b00-46b0-9abe-97d72ae7c261",
+  "attempt": 3,
+  "target": "fn_80199868",
+  "source": "eternal-darkness-decomp/src/game/game_fn_80199868.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80199868.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "recovery": {
+    "preserved_commit": "4e4b677a98b515df8d8d5ce2a89a077f045afcf1",
+    "raw_output": "The accepted base 26a0d72e8bae0c548669bb5a415171b773d1f62c already contains source blob e923ae3dc351a397c029615246e025f68a4b8eb4, the same source measured by preserved attempt 4e4b677a98b515df8d8d5ce2a89a077f045afcf1; no source reconciliation edit was necessary."
+  },
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[825/831] REPORT; [826/831] LINK build/GEDE01/main.elf; [827/831] DOL build/GEDE01/main.dol; [828/831] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [829/831] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80199868 fn_80199868 -o build/GEDE01/objdiff-7d726632-final-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=97.87248 retail_bytes=596 generated_bytes=596 retail_instructions=149 generated_instructions=149 differing_rows=52 retail_relocations=11 generated_relocations=11"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80199868 fn_80199868 -o build/GEDE01/objdiff-7d726632-final-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=97.87248 retail_bytes=596 generated_bytes=596 retail_instructions=149 generated_instructions=149 differing_rows=52 retail_relocations=11 generated_relocations=11"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-7d726632-final-canonical.raw.json build/GEDE01/objdiff-7d726632-final-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "canonical_strict_cmp_exit=0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (14475 tracked project files inspected)"
+    }
+  ],
+  "canonical": {
+    "match_percent": 97.87248,
+    "retail_bytes": 596,
+    "generated_bytes": 596,
+    "retail_instructions": 149,
+    "generated_instructions": 149,
+    "differing_rows": 52
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 11,
+    "generated_count": 11,
+    "addresses_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true,
+    "raw_output": "byte offsets=[0x64,0x74,0xC8,0xD4,0x128,0x174,0x1B8,0x1D0,0x1DC,0x1F4,0x228]; all are R_PPC_REL24 with equal target identities and implicit zero addends"
+  },
+  "divergence": "The remaining 52 instruction rows are register-allocation differences across r25-r30 plus one commuted mullw operand at byte offset 0x38. Retail retains object in r29, while generated code retains it in r30 and rotates pass-local entry/index/count values. Stack frame, control flow, calls, total code size, and all 11 relocations agree.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: retained the recovered behavior-complete, size-exact and relocation-exact honest C reconstruction; canonical instructions are not a 100% match."
+}
