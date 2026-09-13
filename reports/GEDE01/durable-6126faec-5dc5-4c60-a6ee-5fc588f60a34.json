@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "6126faec-5dc5-4c60-a6ee-5fc588f60a34",
+  "attempt": 1,
+  "base_commit": "55912c7dea57df53cc764d626d882fbd5b15d432",
+  "target": "fn_80206E8C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6126faec-5dc5-4c60-a6ee-5fc588f60a34.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 93.888885%: retail is 72 bytes and generated code is 68 bytes. Retail loads the prior EXI control register through r0, copies it to return register r3 with an extra mr r3,r0, then masks and updates r0; canonical SDK MWCC instead loads the preserved return value directly into r3 and derives the updated value in r0 with andi. r0,r3,0x7f5. The remaining instruction stream and all branch/mask/store operations match, and this function has no relocations."
+}
