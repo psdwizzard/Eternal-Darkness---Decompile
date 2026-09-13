@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "assignment_id": "8ba75d43-c150-4c1d-8f86-103f48abb9e5",
+  "target": "fn_80205914",
+  "compiler": "GC/1.3",
+  "cflags_addition": "-use_lmw_stmw on",
+  "source": "eternal-darkness-decomp/src/game/game_fn_80205914.c",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_80205914.o -2 build/GEDE01/src/game/game_fn_80205914.o -o - --format json -c function_reloc_diffs=none fn_80205914",
+    "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_80205914.o -2 build/GEDE01/src/game/game_fn_80205914.o -o - --format json -c function_reloc_diffs=name_address fn_80205914",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measured_outputs": {
+    "canonical_build": "exit 0; [818/820] DOL build/GEDE01/main.dol; [819/820] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [820/820] PROGRESS",
+    "canonical_objdiff": "{\"target_size\":\"900\",\"base_size\":\"900\",\"match\":98.22222}",
+    "relocation_strict_objdiff": "{\"target_size\":\"900\",\"base_size\":\"900\",\"match\":98.22222,\"left_relocations\":49,\"right_relocations\":49,\"diff_instructions\":9}",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "sections": {
+    ".text": {
+      "target_size": 900,
+      "base_size": 900,
+      "canonical_match_percent": 98.22222,
+      "relocation_strict_match_percent": 98.22222
+    }
+  },
+  "relocations": {
+    "target_count": 49,
+    "base_count": 49,
+    "exact_site_target_type_addend_equal": 49,
+    "site_differences": []
+  },
+  "divergence": {
+    "range": "0x2C0-0x328",
+    "detail": "Removing volatile from the four input fields makes the candidate exactly reproduce the retail loads at 0x2CC, 0x2D4, 0x2D8 and 0x2DC, the stores at 0x2E0-0x2EC, and all 49 relocation sites. Remaining non-relocation differences are the exchanged branch destinations at 0x2C0 and 0x2C8, plus MWCC scheduling/register allocation around fn_8012C774: retail schedules mr r3 at 0x308 and addi r5 at 0x318 and retains the middle value in r8, while the candidate emits addi r5 at 0x308 and mr r3 at 0x318, retains it in r7, and exchanges the ordering of addi r6, stw middle, and li r7 through 0x328."
+  },
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "translation_unit_function_count": 1,
+    "retail_binary_bytes_embedded": false
+  }
+}

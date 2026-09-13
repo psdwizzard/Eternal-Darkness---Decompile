@@ -105,10 +105,10 @@ int fn_80205914(void *object, int event, void *data)
         if (data_type == 0x11) {
             struct {
                 u32 output[3];
-                volatile u32 c;
-                volatile u32 alternate;
-                volatile u32 b;
-                volatile u32 a;
+                u32 c;
+                u32 alternate;
+                u32 b;
+                u32 a;
             } local;
 
             local.a = lbl_806515D0;
