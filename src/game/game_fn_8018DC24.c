@@ -6,8 +6,8 @@ typedef unsigned int u32;
 extern u8 lbl_80607120[];
 extern s16 lbl_80607900[];
 extern int lbl_8064D738;
-extern u32 lbl_80651D68;
-extern u16 lbl_80651D6C;
+extern u32 lbl_80651D70;
+extern u16 lbl_80651D74;
 
 extern int fn_80180430(void*, u8);
 extern void fn_80181808(void*, int, int);
@@ -64,8 +64,8 @@ void fn_8018DC24(u8* object)
     for (; i < count; i++) {
         struct { u32 word; u16 half; } point;
         int shade;
-        point.word = lbl_80651D68;
-        point.half = lbl_80651D6C;
+        point.word = lbl_80651D70;
+        point.half = lbl_80651D74;
         shade = (int)((float)phase * *(float*)(transform + 0x30)) & 0x3F;
         if ((transform[5] & 0x40) != 0 || i < transform[0]) {
             if (fn_80180430(self + 0x24, (u8)i) != 0) {
