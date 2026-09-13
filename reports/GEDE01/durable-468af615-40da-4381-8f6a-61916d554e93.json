@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "468af615-40da-4381-8f6a-61916d554e93",
+  "attempt": 3,
+  "base_commit": "a9b1913f0913751c5a3a324e2d905501e949d9ca",
+  "target": "fn_8016FA08",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-468af615-40da-4381-8f6a-61916d554e93.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff v3.6.1 measures 97.77778%: retail is 396 bytes with 24 relocation-bearing instruction records, while generated code is 400 bytes with 25. At retail offset 0x14 MWCC should emit addi r31,r4,lbl_8024FF00@l, but generated code emits addi r0,r4,lbl_8024FF00@l at 0x10 and then mr r31,r0 at 0x18. This extra instruction shifts subsequent branch destinations by four bytes; additionally, retail offset 0x44 emits addi r4,r31,0 with an R_PPC_NONE record targeting lbl_8024FF00, while generated offset 0x48 emits mr r4,r31. Pointer qualifier/declaration variants retained 97.77778%; spelling all four references directly against lbl_8024FF00 regressed to 85.47475%, so the recovered honest reconstruction was retained."
+}
