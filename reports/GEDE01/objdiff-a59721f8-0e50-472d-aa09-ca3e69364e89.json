@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "assignment_id": "a59721f8-0e50-472d-aa09-ca3e69364e89",
+  "target": "fn_80171560",
+  "source": "src/game/game_fn_80171560.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80171560.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": "INFO Loading and analyzing 1 module (using 1 thread)\nINFO Initial analysis completed in 1.204s (found 8214 functions)\nINFO Rebuilding relocations and splitting\nINFO Splitting completed in 5.669s (wrote 7065 objects)\nINFO Total time: 6.883s"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[610/613] LINK build/GEDE01/main.elf\n[611/613] DOL build/GEDE01/main.dol\n[612/613] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[613/613] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80171560 fn_80171560 -o build/GEDE01/a597-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "canonical percent=96.61539 retail_bytes=260 generated_bytes=264 retail_instructions=65 generated_instructions=66 differing_rows=3 retail_relocations=16 generated_relocations=17"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80171560 fn_80171560 -o build/GEDE01/a597-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "strict percent=96.61539 retail_bytes=260 generated_bytes=264 retail_instructions=65 generated_instructions=66 differing_rows=3 retail_relocations=16 generated_relocations=17"
+    },
+    {
+      "command": "jq diff rows from build/GEDE01/a597-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "left address=none instruction=<insert> diff=DIFF_INSERT\nleft address=24 instruction=addi r31, r4, lbl_8024FF00@l diff=DIFF_REPLACE\nleft address=56 instruction=addi r4, r31, 0x0 diff=DIFF_REPLACE\nright address=16 instruction=addi r0, r4, lbl_8024FF00@l diff=DIFF_INSERT\nright address=28 instruction=mr r31, r0 diff=DIFF_REPLACE\nright address=60 instruction=mr r4, r31 diff=DIFF_REPLACE"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (14712 tracked project files inspected)"
+    }
+  ],
+  "canonical": {
+    "match_percent": 96.61539,
+    "retail_bytes": 260,
+    "generated_bytes": 264,
+    "retail_instructions": 65,
+    "generated_instructions": 66,
+    "differing_rows": 3
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 16,
+    "generated_count": 17,
+    "addresses_types_targets_addends_equal": false
+  },
+  "bounded_experiments": [
+    {
+      "change": "Declare lbl_8024FF00 as a char array and use three direct address expressions.",
+      "retained": false,
+      "raw_output": "match_percent=83.50769 retail_bytes=260 generated_bytes=272",
+      "reason": "Lost the shared long-lived base and materialized the address independently at each error call."
+    },
+    {
+      "change": "Declare lbl_8024FF00 as an array of ErrorStrings, add register/volatile qualifiers, and test a local definition.",
+      "retained": false,
+      "raw_output": "each qualifier/declaration variant retained match_percent=96.61539 retail_bytes=260 generated_bytes=264",
+      "reason": "All produced the same early r0 address temporary and later copy to r31; the local definition additionally introduced unowned data."
+    },
+    {
+      "change": "Capture the argument-count call result before initializing the shared error-string base.",
+      "retained": false,
+      "raw_output": "match_percent=90.38461 retail_bytes=260 generated_bytes=264",
+      "reason": "Moved address setup around the first call and changed persistent register allocation."
+    }
+  ],
+  "divergence": "Retail emits addi r31,r4,lbl_8024FF00@l at text offset 0x18 after stmw. Canonical GC/1.3 instead emits addi r0,r4,lbl_8024FF00@l at 0x10 before stmw and mr r31,r0 at 0x1C, adding four bytes. At the first diagnostic argument, retail retains addi r4,r31,0 at 0x38 while generated code folds it to mr r4,r31 at 0x3C. These shifts leave 16 retail versus 17 generated relocation-bearing instructions, so relocation-strict equality fails.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: the pre-existing behavior-complete honest C reconstruction remains the best bounded result and is preserved as the assignment's sole NonMatching target translation unit."
+}
