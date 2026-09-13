@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "assignment_id": "af0ed5cb-b9ca-4545-8158-71a5e1f785e9",
+  "target": "fn_80171560",
+  "source": "src/game/game_fn_80171560.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80171560.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[817/820] LINK build/GEDE01/main.elf\n[818/820] DOL build/GEDE01/main.dol\n[819/820] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[820/820] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80171560 fn_80171560 -o build/GEDE01/af0ed-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "canonical percent=96.61539 retail_bytes=260 generated_bytes=264 retail_instructions=65 generated_instructions=66"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80171560 fn_80171560 -o build/GEDE01/af0ed-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "strict percent=96.61539 retail_bytes=260 generated_bytes=264 retail_instructions=65 generated_instructions=66; 13 non-R_PPC_NONE relocations on each side, all target names/types/addends semantically agree and all addends are zero, but relocation offsets after the inserted instruction differ, so strict equality fails"
+    },
+    {
+      "command": "jq differing instruction rows from build/GEDE01/af0ed-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "left address=none instruction=<insert> diff=DIFF_INSERT\nleft address=24 instruction=addi r31, r4, lbl_8024FF00@l diff=DIFF_REPLACE\nleft address=56 instruction=addi r4, r31, 0x0 diff=DIFF_REPLACE\nright address=16 instruction=addi r0, r4, lbl_8024FF00@l diff=DIFF_INSERT\nright address=28 instruction=mr r31, r0 diff=DIFF_REPLACE\nright address=60 instruction=mr r4, r31 diff=DIFF_REPLACE"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (14724 tracked project files inspected)"
+    }
+  ],
+  "canonical": {
+    "match_percent": 96.61539,
+    "retail_bytes": 260,
+    "generated_bytes": 264,
+    "retail_instructions": 65,
+    "generated_instructions": 66,
+    "differing_rows": 3
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_relocations": 13,
+    "generated_relocations": 13,
+    "targets_types_addends_semantically_equal": true,
+    "all_addends_zero": true,
+    "offsets_equal": false,
+    "strict_match_percent": 96.61539
+  },
+  "bounded_experiments": [
+    {
+      "change": "Recover and remeasure the behavior-complete independent C translation unit already accepted on base commit 9d5a745b1694087b0b145cc0bc7b5ef31e46e0f2.",
+      "retained": true,
+      "raw_output": "canonical=96.61539 strict=96.61539 retail_bytes=260 generated_bytes=264"
+    },
+    {
+      "change": "Model the zero-offset argument-count diagnostic as char argument_count[0x344] and pass the decayed member array directly.",
+      "retained": false,
+      "raw_output": "match_percent=96.61539 retail_bytes=260 generated_bytes=264",
+      "reason": "GC/1.3 still folded the zero-offset address to mr r4,r31 and retained the early r0 address temporary."
+    }
+  ],
+  "divergence": "Retail emits addi r31,r4,lbl_8024FF00@l at text offset 0x18 after stmw. Canonical GC/1.3 instead emits addi r0,r4,lbl_8024FF00@l at 0x10 before stmw and mr r31,r0 at 0x1C, adding four bytes. At the first diagnostic argument, retail retains addi r4,r31,0 at 0x38 while generated code folds it to mr r4,r31 at 0x3C. The 13 real relocation targets, types, and zero addends correspond, but the extra instruction shifts subsequent relocation offsets, preventing relocation-strict equality.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: the recovered behavior-complete honest C reconstruction remains the best bounded result and is preserved as the sole NonMatching translation unit for this target."
+}
