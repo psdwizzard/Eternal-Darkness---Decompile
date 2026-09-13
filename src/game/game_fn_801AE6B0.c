@@ -20,7 +20,7 @@ struct Entry {
     u8 phase;
     u8 padding6B[9];
     u32 active;
-    u32 pending;
+    int pending;
     u8 padding7C[8];
 };
 
@@ -36,16 +36,11 @@ void fn_801AE6B0(u32 unused, void* lock)
     u32 index = 0;
     Entry* entry = &lbl_8060B430[0];
 
-    if ((void*)entry->lock != lock) {
-        entry++;
-        index = 1;
-        if ((void*)entry->lock != lock) {
-            entry++;
-            index = 2;
-            if ((void*)entry->lock != lock) {
-                index = 3;
-            }
+    for (; index < 3; index++) {
+        if ((void*)entry->lock == lock) {
+            break;
         }
+        entry++;
     }
 
     entry = &lbl_8060B430[index];
@@ -108,6 +103,8 @@ void fn_801AE6B0(u32 unused, void* lock)
             fn_801B9E7C(entry->stream,
                         entry->alternate_half != 0 ? 0 : entry->buffer_size >> 1,
                         entry->buffer_size >> 1, 0, 0);
+            break;
+        case 5:
             break;
         }
     } else {
