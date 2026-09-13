@@ -85,6 +85,7 @@ s32 fn_80060F9C(void *owner, void *resource, void *probe, void *target,
     s32 created;
     u16 state;
 
+    result = 0;
     owner_data = fn_80201B8C(owner);
     iterator = fn_80201B94(owner);
     fn_8011F114(&resource_position, resource);
@@ -92,7 +93,6 @@ s32 fn_80060F9C(void *owner, void *resource, void *probe, void *target,
     if (fn_80066D04(owner, 3) == 0 && fn_80066D04(owner, 2) == 0) {
         relaxed = 1;
     }
-    result = 0;
     if ((mask & flags) == 0) {
         fn_800359A0(owner, 0);
     }
