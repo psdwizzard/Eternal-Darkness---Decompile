@@ -20,10 +20,10 @@ extern const char lbl_8024FF00[];
 
 int fn_80175BB8(void* state)
 {
-    int object_id;
-    int kind;
-    void* object;
     const char* strings = lbl_8024FF00;
+    int kind;
+    int object_id;
+    void* object;
 
     if (fn_8016A598(state) != 2) {
         fn_80163BB4(state, strings, 2, fn_8016A598(state));
