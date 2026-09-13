@@ -20,18 +20,18 @@ void fn_8018A060(u8* arg)
 {
     u8* data;
     u16 vertex_count;
-    u16 buffer0_size;
-    u16 buffer1_size;
-    u16 buffer2_size;
     u8* buffer0;
     u8* buffer1;
     u8* buffer2;
     u8* object;
+    int buffer_offset;
+    int i;
+    u8 entry_count;
+    u16 buffer0_size;
+    u16 buffer1_size;
+    u16 buffer2_size;
     u8* entry;
     u8* color_out;
-    u8 entry_count;
-    int i;
-    int buffer_offset;
 
     object = arg;
     data = lbl_80607120;
