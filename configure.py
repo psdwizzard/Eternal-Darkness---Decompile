@@ -8647,7 +8647,7 @@ config.libs = [
             Object(Matching, "game/game_fn_8013A3C8.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/game_fn_8013A538.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/game_fn_8013AD48.c", extra_cflags=["-use_lmw_stmw on"]),
-            Object(NonMatching, "game/game_fn_8013B178.c"),
+            Object(Matching, "game/game_fn_8013B178.c"),
             Object(Matching, "game/game_fn_8013B798.c"),
             Object(Matching, "game/game_fn_8013B83C.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_8013B8C0.c"),
