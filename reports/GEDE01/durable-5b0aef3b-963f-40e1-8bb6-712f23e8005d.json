@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "5b0aef3b-963f-40e1-8bb6-712f23e8005d",
+  "attempt": 1,
+  "base_commit": "390b8ab0fc4b2c66c40276c11e5f941f2f2c87e0",
+  "target": "fn_8018A060",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-5b0aef3b-963f-40e1-8bb6-712f23e8005d.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is 97.0% with size-exact 360-byte text and 90 instructions on each side. All 39 differing rows are DIFF_ARG_MISMATCH: GC/1.3 assigns the persistent object, three buffer pointers, three flush sizes, entry/color pointers, callback address, and outer-loop count/index/offset to a different r19-r31 permutation than retail. The 27 relocation-bearing instructions are present on each side, but strict comparison is not 100% because register operands differ at callback materialization/use and the surrounding relocated instruction stream."
+}
