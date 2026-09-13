@@ -14,10 +14,10 @@ extern void fn_8018865C(void*, void*, void*);
 
 void fn_8019C3B8(u8* object)
 {
-    register u8* vertex_data;
-    register u8* index_data;
-    register u8* color_data;
     register u8* self;
+    register u8* color_data;
+    register u8* index_data;
+    register u8* vertex_data;
     int vertex_offset;
     int i;
     u8 count;
