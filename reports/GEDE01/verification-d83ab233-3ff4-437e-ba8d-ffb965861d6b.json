@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "assignment_id": "d83ab233-3ff4-437e-ba8d-ffb965861d6b",
+  "target": "fn_802051E8",
+  "compiler": "GC/1.3",
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_802051E8 fn_802051E8 -o reports/GEDE01/objdiff-d83ab233-3ff4-437e-ba8d-ffb965861d6b-canonical.json --format json-pretty",
+    "target_bytes": 40,
+    "generated_bytes": 40,
+    "target_instructions": 10,
+    "generated_instructions": 10,
+    "match_percent": 100.0,
+    "differing_rows": 0,
+    "target_relocations": 0,
+    "generated_relocations": 0
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_802051E8 fn_802051E8 -o reports/GEDE01/objdiff-d83ab233-3ff4-437e-ba8d-ffb965861d6b-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "target_bytes": 40,
+    "generated_bytes": 40,
+    "target_instructions": 10,
+    "generated_instructions": 10,
+    "match_percent": 100.0,
+    "differing_rows": 0,
+    "target_relocations": 0,
+    "generated_relocations": 0
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "result": "success",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "runtime_code_edits": false,
+    "source_basis": "Independent C reconstruction from the retail disassembly supplied by the local immutable split artifacts."
+  }
+}
