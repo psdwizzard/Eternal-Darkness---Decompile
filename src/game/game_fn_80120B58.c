@@ -30,7 +30,7 @@ void fn_80120B58(Object* object)
         float increment = lbl_806500C4;
         float maximum = lbl_806500C8;
         object->value = value + increment;
-        if (object->value == maximum) {
+        if (maximum == object->value) {
             object->value = maximum;
         }
     }
