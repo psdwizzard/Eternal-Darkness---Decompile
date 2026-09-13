@@ -9,6 +9,11 @@ typedef struct Info {
     u16 half;
 } Info;
 
+typedef struct Entry {
+    void* value;
+    u32 unused[2];
+} Entry;
+
 extern u32 lbl_80651DB8;
 extern u16 lbl_80651DBC;
 extern u8 lbl_80607120[];
@@ -22,7 +27,11 @@ void* memcpy(void* dst, const void* src, unsigned long size);
 
 void fn_80196918(u8* object, u8* config)
 {
+    u8 values[196];
+    Entry entry;
     Info info;
+    u8 second[6];
+    u8 first[6];
     u8* table;
     int i;
 
@@ -50,28 +59,26 @@ void fn_80196918(u8* object, u8* config)
 
     switch (object[0xa2]) {
     case 7: {
-        void* entry;
         for (i = 0; i < 2; i++) {
-            fn_8018D788(i, object, &entry, *(u16*)(table + 2));
-            fn_80197D20(object, entry, &info, config[0x2c]);
+            fn_8018D788(i, object, (void**)&entry, *(u16*)(table + 2));
+            fn_80197D20(object, entry.value, &info, config[0x2c]);
         }
         break;
     }
     case 8:
     case 9: {
-        u8 first[6];
-        u8 second[6];
-        u8 values[196];
-        void* entry;
         fn_80198850(config + 0x68, values, (u8)(object[1] >> 1), first, second);
         memcpy(object + 0x10, first, 6);
         memcpy(object + 0x16, second, 6);
         for (i = 0; i < 2; i++) {
-            fn_8018D788(i, object, &entry, *(u16*)(table + 2));
-            fn_80197D20(object, entry, &info, config[0x2c]);
-            fn_80198A2C(entry, values, (u8)(object[1] >> 1));
-            fn_80198420(object + 0x10, *(void**)(object + 0x4c), object[1],
-                        entry, object[0x8c]);
+            fn_8018D788(i, object, (void**)&entry, *(u16*)(table + 2));
+            fn_80197D20(object, entry.value, &info, config[0x2c]);
+            fn_80198A2C(entry.value, values, (u8)(object[1] >> 1));
+            {
+                u8 count = *(volatile u8*)(object + 1);
+                fn_80198420(object + 0x10, *(void**)(object + 0x4c), count,
+                        entry.value, object[0x8c]);
+            }
         }
         break;
     }
