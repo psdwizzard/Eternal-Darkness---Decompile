@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "assignment_id": "2d02bbb0-5dc3-4b85-86d4-e5750ca2e4b4",
+  "target": "fn_80205470",
+  "compiler": "GC/1.3",
+  "compiler_flags": ["-use_lmw_stmw on"],
+  "canonical_objdiff": {
+    "command": "python3 tools/fndiff.py game/game_fn_80205470.c fn_80205470",
+    "raw_summary": "target 448 bytes  base 448 bytes  match 100.0",
+    "target_size": 448,
+    "base_size": 448,
+    "instruction_count": 112,
+    "match_percent": 100.0,
+    "diff_kinds": [null]
+  },
+  "relocation_strict": {
+    "command": "build/binutils/powerpc-eabi-objdump -dr build/GEDE01/src/game/game_fn_80205470.o; build/binutils/powerpc-eabi-objdump -dr build/GEDE01/obj/game/game_fn_80205470.o",
+    "match_percent": 100.0,
+    "relocation_count": 23,
+    "relocations": [
+      {"offset":"0x2C","type":"R_PPC_REL24","target":"fn_80201814","addend":0},
+      {"offset":"0x34","type":"R_PPC_REL24","target":"fn_80201BC8","addend":0},
+      {"offset":"0x44","type":"R_PPC_REL24","target":"fn_80155DB4","addend":0},
+      {"offset":"0x52","type":"R_PPC_ADDR16_HA","target":"lbl_8023B890","addend":0},
+      {"offset":"0x56","type":"R_PPC_ADDR16_LO","target":"lbl_8023B890","addend":0},
+      {"offset":"0x70","type":"R_PPC_EMB_SDA21","target":"lbl_806515C8 (candidate local @9, same owned .sdata2 address)","addend":0},
+      {"offset":"0xD0","type":"R_PPC_REL24","target":"fn_801261F4","addend":0},
+      {"offset":"0xD4","type":"R_PPC_EMB_SDA21","target":"lbl_8064D8B0","addend":0},
+      {"offset":"0xDC","type":"R_PPC_REL24","target":"fn_80204E0C","addend":0},
+      {"offset":"0xE4","type":"R_PPC_REL24","target":"fn_801568D8","addend":0},
+      {"offset":"0xEC","type":"R_PPC_REL24","target":"fn_801568E4","addend":0},
+      {"offset":"0xF4","type":"R_PPC_REL24","target":"fn_801568F0","addend":0},
+      {"offset":"0x100","type":"R_PPC_REL24","target":"fn_8011F0E8","addend":0},
+      {"offset":"0x104","type":"R_PPC_EMB_SDA21","target":"lbl_8064D18C","addend":0},
+      {"offset":"0x10C","type":"R_PPC_REL24","target":"fn_8011FB54","addend":0},
+      {"offset":"0x118","type":"R_PPC_REL24","target":"fn_8011F7E0","addend":0},
+      {"offset":"0x124","type":"R_PPC_REL24","target":"fn_8012B7A0","addend":0},
+      {"offset":"0x158","type":"R_PPC_REL24","target":"fn_8012CDF0","addend":0},
+      {"offset":"0x15C","type":"R_PPC_EMB_SDA21","target":"lbl_806515C4","addend":0},
+      {"offset":"0x164","type":"R_PPC_EMB_SDA21","target":"lbl_806515C0","addend":0},
+      {"offset":"0x16C","type":"R_PPC_EMB_SDA21","target":"lbl_806515BC","addend":0},
+      {"offset":"0x18C","type":"R_PPC_REL24","target":"fn_8012C62C","addend":0},
+      {"offset":"0x1A0","type":"R_PPC_REL24","target":"fn_8020123C","addend":0}
+    ],
+    "raw_result": "candidate and reference contain 23 relocations at identical offsets and types; every target resolves to the same symbol address with zero addend; owned .sdata2 bytes on both sides are 4330000080000000; objdiff reports 100.0 with no differing instructions"
+  },
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "exit_code": 0,
+    "raw_sha1_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_result": "legal audit passed (14518 tracked project files inspected)",
+    "source_kind": "independent C translation unit",
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false
+  }
+}
