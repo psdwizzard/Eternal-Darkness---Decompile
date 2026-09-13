@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "5b01341f-b10f-475f-8070-6fe068c72d51",
+  "attempt": 2,
+  "base_commit": "6edec39f422ad23500b5b3eff8de72dd0e0e691a",
+  "target": "fn_801DF060",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-5b01341f-b10f-475f-8070-6fe068c72d51.json"
+  ],
+  "divergence": "Canonical and relocation-strict direct objdiff are 96.932304%: retail and generated code are both 4136 bytes and 1034 instructions, but 134 aligned rows differ. Retail uses a 0x100-byte frame and assigns the object to r31 before loading through it; GC/1.3 uses a 0xD0-byte frame, delays that assignment, and differs in r26-r31 allocation, Vec3 stack-slot/aggregate scheduling, and repeated 26-argument call setup. Generated code has 134 relocation-bearing instructions versus retail's 133, so relocation-strict equality is not achieved. The canonical linked DOL nevertheless verifies at SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
