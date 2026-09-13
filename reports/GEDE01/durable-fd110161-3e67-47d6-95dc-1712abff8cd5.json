@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "fd110161-3e67-47d6-95dc-1712abff8cd5",
+  "attempt": 1,
+  "base_commit": "70c39be3a26bc368de8f8e5d4c52480ee5c96aca",
+  "target": "fn_80176A94",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-fd110161-3e67-47d6-95dc-1712abff8cd5.json"
+  ],
+  "divergence": "Relocation-strict objdiff v3.6.1 measures 96.76471%: retail is 272 bytes and canonical GC/1.3 is 276 bytes. The recovered result-to-ID lifetime now matches retail's lwz r3 followed by mr r30,r3, but canonical still materializes lbl_8024FF00@l in r0 before saving r31 and then emits mr r31,r0, whereas retail saves r31 first and materializes the low half directly with addi r31,r4,lbl_8024FF00@l; the validation diagnostic also emits mr r4,r31 instead of retail's equivalent addi r4,r31,0."
+}

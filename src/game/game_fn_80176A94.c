@@ -23,7 +23,8 @@ int fn_80176A94(void* state)
         return 0;
     }
 
-    id = (int)fn_8016A694(state, 1);
+    result = (int)fn_8016A694(state, 1);
+    id = result;
     result = fn_80220A68(id, handle, 0);
     if (result == 0 || result == -6) {
         result = fn_802213DC(id);
