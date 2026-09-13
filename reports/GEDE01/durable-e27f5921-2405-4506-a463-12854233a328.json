@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e27f5921-2405-4506-a463-12854233a328",
+  "attempt": 1,
+  "base_commit": "a7c162fb311524e7512bd854e79a5548e3d97169",
+  "target": "fn_8018FFBC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e27f5921-2405-4506-a463-12854233a328.json"
+  ],
+  "divergence": "Best fresh canonical/relocation-strict objdiff is 97.62712% with exact-size 708-byte functions: 172 aligned instructions compare equal, while setup address/count conversion uses generated r7/r8/r7 versus retail r8/r6/r7 (three argument mismatches plus two inserts/two deletes in objdiff alignment), and the unrolled-loop i += 8 instruction is scheduled after the fifth copy instead of retail's seventh copy. The two 12-byte .rela.text records retain equal targets and addends under function_reloc_diffs=name_address; the relocation-bearing opcodes still differ in register operands."
+}
