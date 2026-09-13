@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3980d6e8-d169-458a-9ae3-f448eff36b88",
+  "attempt": 1,
+  "base_commit": "9ffb0ed259b01880b8dba58b68a09d71ebe4d018",
+  "target": "fn_8008A6F8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3980d6e8-d169-458a-9ae3-f448eff36b88.json"
+  ],
+  "divergence": "The inherited honest C reconstruction remains size-exact at 272/272 bytes and scores 96.911766% in canonical and relocation-strict objdiff. Retail uses cmpw r3,r0 where GC/1.3 emits the commuted cmpw r0,r3, and retail schedules li r7,0 after the conditional float load where GC/1.3 schedules it before the comparison. All 19 relocation types, targets, and addends agree; the two float-load relocation sites shift by four bytes with that scheduling difference. The full build, legal audit, and exact DOL SHA-1 gate pass."
+}
