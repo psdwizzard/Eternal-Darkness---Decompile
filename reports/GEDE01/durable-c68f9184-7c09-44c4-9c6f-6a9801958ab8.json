@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c68f9184-7c09-44c4-9c6f-6a9801958ab8",
+  "attempt": 1,
+  "base_commit": "e3ed790fa3240208f86fe61db49870148b9b8d91",
+  "target": "fn_8016FA08",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c68f9184-7c09-44c4-9c6f-6a9801958ab8.json"
+  ],
+  "divergence": "Canonical objdiff v3.6.1 measures 97.77778%: retail is 396 bytes with 24 relocation-bearing instruction records, while generated code is 400 bytes with 25. MWCC materializes lbl_8024FF00@l into r0 and then emits mr r31,r0; retail emits addi r31,r4,lbl_8024FF00@l directly. This extra generated instruction shifts subsequent branch destinations by four bytes, and the zero-offset format argument is emitted as mr r4,r31 instead of retail addi r4,r31,0."
+}
