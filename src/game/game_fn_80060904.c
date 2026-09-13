@@ -30,11 +30,6 @@ typedef struct Entry {
     s32 unused;
 } Entry;
 
-typedef struct EntryList {
-    s32 count;
-    Entry *entries;
-} EntryList;
-
 typedef enum Result {
     ResultFour = 4,
     ResultFive = 5,
@@ -83,30 +78,30 @@ extern void fn_802042A4(void);
 s32 fn_80060904(void *owner, void *resource, void *target)
 {
     OwnerData *owner_data;
-    void *owner_value;
-    Vec3 source_position;
-    Vec3 position;
+    u32 owner_value;
     s32 special;
+    Entry *entries;
+    s32 list_count;
+    Vec3 position;
+    Vec3 source_position;
+    void *created;
+    s32 result;
+    void *descriptor;
     void *target_value;
     s32 owner_id;
-    Result result;
-    s32 created_status;
-    void *created;
-    void *descriptor;
+    u32 created_status;
     s32 resource_value;
-    s32 mode;
-    EntryList list;
     s32 i;
     s32 offset;
     s32 first;
 
     owner_data = fn_80201B8C(owner);
-    owner_value = fn_80201B94(owner);
+    owner_value = (u32)fn_80201B94(owner);
     fn_8011F114(&source_position, resource);
     position = source_position;
     special = 0;
     created_status = 0;
-    target_value = fn_80201C48(owner_value);
+    target_value = fn_80201C48((void *)owner_value);
     owner_id = fn_80201B54(owner);
 
     if (((OwnerState *)owner_data->state)->count < 1) {
@@ -134,9 +129,9 @@ s32 fn_80060904(void *owner, void *resource, void *target)
                 descriptor = fn_801A717C();
                 first = 1;
                 if (result == 4) {
-                    mode = 0;
+                    owner_value = 0;
                 } else {
-                    mode = result == 5 ? 1 : 2;
+                    owner_value = result == 5 ? 1 : 2;
                 }
 
                 resource_value = fn_80072354(owner_data->resource);
@@ -157,12 +152,13 @@ s32 fn_80060904(void *owner, void *resource, void *target)
                     }
                     fn_801A7560(descriptor, flags);
                 }
-                fn_800CF6AC(owner, resource_value, owner_data, descriptor, mode, result);
+                fn_800CF6AC(owner, resource_value, owner_data, descriptor, owner_value, result);
 
-                fn_801292E0(resource, &list.count, &list.entries);
+                fn_801292E0(resource, &list_count, &entries);
+                i = 0;
                 offset = 0;
-                for (i = 0; i < list.count; i++, offset += sizeof(Entry)) {
-                    Entry *entry = (Entry *)((u8 *)list.entries + offset);
+                for (; i < list_count; offset += sizeof(Entry), i++) {
+                    Entry *entry = (Entry *)((u8 *)entries + offset);
                     switch (entry->kind) {
                     case 1: {
                         s32 callback_arg = entry->packed >> 17;
