@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d635ac7f-4ad7-418d-9af0-123e2eca8b57",
+  "attempt": 1,
+  "base_commit": "3281190066df761602707d9fd69003806eb3d5c3",
+  "target": "fn_801C3E2C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d635ac7f-4ad7-418d-9af0-123e2eca8b57.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff are both 96.6875% for the size-exact 320-byte function, with identical relocation shapes. Four aligned diff rows remain in the initial resource-stack lookup: retail emits extsh r0,r0; mulli r3,r0,0xc; lwzx r31,r4,r3, while GC/1.2.5n retains the pre-decrement index in r3, inserts add r3,r4,r3, and folds the -1 element adjustment into lwz r31,-0xc(r3). Prefix-decrement and explicit s16-index formulations were measured at 93.975%/312 bytes and 95.7375%/324 bytes, so the existing honest C reconstruction remains the best result."
+}
