@@ -45,8 +45,8 @@ void fn_8019C3B8(u8* object)
 
     object_data = *(u8**)(self + 0x4C);
     color = color_data;
-    vertex_offset = 0;
     i = 0;
+    vertex_offset = 0;
     for (; i < count; i++) {
         int j;
         fn_80188A7C(object_data, vertex_data + vertex_offset, fn_8018D020);
