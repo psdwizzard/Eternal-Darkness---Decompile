@@ -8,7 +8,7 @@ extern void fn_801D1318(u32);
 extern s32 fn_801D10C0(u32);
 extern void fn_801A9E40(s32);
 extern s32 fn_801B05E8(s32, s32, s32, s32, s32, s32, s32, s32);
-extern void* fn_801D18FC(s32, u32, u32, u32, s32, u32, s32, u32, u32, u32, u32, u32);
+extern void* fn_801D18FC(s32, u32, u32, u32, s32, u32, s32, u32, u32, u32, u32);
 extern void* fn_801D8760(s32, u32, u32, s32, u32, u32, u32, u32, u32);
 extern void* fn_801D70B0(s32, u32, u32, s32, u8, u32, u32, u32, u32, u32);
 extern void* fn_801E2F04(s32, u32, u32, s32, u32, u32, u32, u32, u32, u32);
@@ -24,13 +24,14 @@ extern void fn_801B08BC(s32, s32, s32);
 void* fn_801D0814(u32 flags, u32 arg1, s32 subject, void* data, u32 arg4,
                   u32 arg5, u32 arg6, u32 arg7, s32 stack_arg)
 {
-    s32 resource = -1;
+    s32 resource;
     s32 kind;
     void* result = 0;
 
     if (lbl_8064D538 != 0 && subject == fn_80201AE4()) {
         goto done;
     }
+    resource = -1;
     if (subject == fn_80201AE4()) {
         fn_801D1318(flags);
     }
@@ -44,7 +45,7 @@ void* fn_801D0814(u32 flags, u32 arg1, s32 subject, void* data, u32 arg4,
     switch (flags & 0x1ff0) {
     case 0x300:
         result = fn_801D18FC(resource, flags, subject, ((u32*)data)[1], stack_arg,
-                             arg1, ((u32*)data)[0], arg4, arg5, arg6, arg7, 0);
+                             arg1, ((u32*)data)[0], arg4, arg5, arg6, arg7);
         break;
     case 0x1040:
         result = fn_801D8760(resource, flags, subject, stack_arg, arg1, arg4,
@@ -55,8 +56,8 @@ void* fn_801D0814(u32 flags, u32 arg1, s32 subject, void* data, u32 arg4,
                              arg1, arg4, arg5, arg6, arg7);
         break;
     case 0x810:
-        result = fn_801E2F04(resource, flags, subject, stack_arg, ((u32*)data)[0],
-                             arg1, arg4, arg5, arg6, arg7);
+        result = fn_801E2F04(resource, flags, subject, stack_arg, arg1,
+                             ((u32*)data)[0], arg4, arg5, arg6, arg7);
         break;
     case 0x1010:
         if (((s32*)data)[0] > 0) {
