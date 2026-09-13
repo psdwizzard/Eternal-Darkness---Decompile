@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "fea249c4-ed6f-4903-8cac-9ed8cc0be366",
+  "attempt": 2,
+  "base_commit": "b094b44b94443def69bbdbf28eab24ccc9826dbc",
+  "target": "fn_801E915C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-fea249c4-ed6f-4903-8cac-9ed8cc0be366.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both reproduce the best result: size-exact at 1032/1032 bytes and 98.10465%, with 224 aligned instructions, 31 operand mismatches, two replacements, one insertion, and one deletion. All 10 relocation-bearing instructions agree in site, type, target name/address, and addend. The remaining codegen divergence is volatile-register allocation: the three entry-relocation loops exchange r5/r6 for field offset and loaded size; the data50 loops exchange r4/r5 and r30/r31 for byte offsets and element counters; and the data58 loop exchanges r30/r31 plus emits mr instead of the retail second li. The verified whole-DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
