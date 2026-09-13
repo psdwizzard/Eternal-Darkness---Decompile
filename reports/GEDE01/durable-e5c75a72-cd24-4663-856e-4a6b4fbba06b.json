@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e5c75a72-cd24-4663-856e-4a6b4fbba06b",
+  "attempt": 2,
+  "base_commit": "bc1cef0fc8113084bfab08c504266426145825e7",
+  "target": "fn_801F7E40",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e5c75a72-cd24-4663-856e-4a6b4fbba06b.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff (functionRelocDiffs=all) both measure 97.52631%: retail is 380 bytes and generated C is 372 bytes. All 27 real relocation-bearing instructions (34 including R_PPC_NONE annotations) are present on both sides with matching targets and addends. Retail retains two addis r0,r4,0 instructions before the 0xFFFF sentinel comparisons that generated C omits and has seven consequent register-operand mismatches: r30/r31 allocation at offsets 40, 72, 212, 312, and 328, plus direct r4 comparisons instead of r0 at retail offsets 88 and 228. The full canonical build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
