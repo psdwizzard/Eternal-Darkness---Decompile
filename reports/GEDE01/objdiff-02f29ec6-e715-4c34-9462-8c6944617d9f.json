@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "assignment_id": "02f29ec6-e715-4c34-9462-8c6944617d9f",
+  "target": "fn_80205914",
+  "compiler": "GC/1.3",
+  "cflags_addition": "-use_lmw_stmw on",
+  "source": "src/game/game_fn_80205914.c",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_80205914.o",
+    "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_80205914.o -2 build/GEDE01/src/game/game_fn_80205914.o fn_80205914 --format json -c function_reloc_diffs=none",
+    "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_80205914.o -2 build/GEDE01/src/game/game_fn_80205914.o fn_80205914 --format json -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measured_outputs": {
+    "canonical_build": "exit 0; [817/820] DOL build/GEDE01/main.dol; [818/820] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [819/820] PROGRESS",
+    "candidate_compile": "exit 0; [1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o",
+    "canonical_objdiff": "target 900 bytes base 900 bytes match 96.64445",
+    "relocation_strict_objdiff": "target 900 bytes base 900 bytes match 96.64445",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "sections": {
+    ".text": {
+      "target_size": 900,
+      "base_size": 900,
+      "canonical_match_percent": 96.64445,
+      "relocation_strict_match_percent": 96.64445
+    }
+  },
+  "relocations": {
+    "target_count": 49,
+    "base_count": 49,
+    "target_type_addend_multiset_equal": true,
+    "exact_site_target_type_addend_equal": 47,
+    "site_differences": [
+      {
+        "target_offset": "0x2D8",
+        "base_offset": "0x2DC",
+        "type": "R_PPC_EMB_SDA21",
+        "target_symbol": "lbl_806515D8",
+        "addend": 0
+      },
+      {
+        "target_offset": "0x2DC",
+        "base_offset": "0x2E4",
+        "type": "R_PPC_EMB_SDA21",
+        "target_symbol": "lbl_80651F70",
+        "addend": 0
+      }
+    ]
+  },
+  "divergence": {
+    "range": "0x2C0-0x334",
+    "detail": "The explicit local-layout struct now reproduces all retail stack slots: inputs at r1+0x14 through r1+0x20 and outputs at r1+0x08 through r1+0x10. Remaining differences are MWCC scheduling and register allocation: retail loads the four input words into r6/r5/r4/r0 before storing them, while the candidate interleaves loads and stores using r4/r0; retail schedules mr r3 and addi r5 differently and carries the middle output in r8 rather than r7. The changed scheduling moves the lbl_806515D8 SDA relocation from 0x2D8 to 0x2DC and lbl_80651F70 from 0x2DC to 0x2E4. The two earlier conditional branches consequently exchange destinations 0x364 and 0x36C. Outside this block the instructions and relocations compare equal."
+  },
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "translation_unit_function_count": 1,
+    "retail_binary_bytes_embedded": false
+  }
+}

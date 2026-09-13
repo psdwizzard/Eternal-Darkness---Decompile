@@ -103,19 +103,26 @@ int fn_80205914(void *object, int event, void *data)
         }
     } else if (event == 0xB) {
         if (data_type == 0x11) {
-            u32 output[3];
-            volatile u32 a = lbl_806515D0;
-            volatile u32 b = lbl_806515D4;
-            volatile u32 alternate = lbl_806515D8;
-            volatile u32 c = lbl_80651F70;
+            struct {
+                u32 output[3];
+                volatile u32 c;
+                volatile u32 alternate;
+                volatile u32 b;
+                volatile u32 a;
+            } local;
+
+            local.a = lbl_806515D0;
+            local.b = lbl_806515D4;
+            local.alternate = lbl_806515D8;
+            local.c = lbl_80651F70;
 
             if (!(fn_8011FAEC(target) & 0x2000)) {
-                b = alternate;
+                local.b = local.alternate;
             }
-            output[0] = c;
-            output[1] = b;
-            output[2] = a;
-            fn_8012C774(target, &output[2], &output[1], &output[0], 4);
+            local.output[0] = local.c;
+            local.output[1] = local.b;
+            local.output[2] = local.a;
+            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);
             fn_8011FA8C(target, 0, 0x2000);
             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);
             return 1;
