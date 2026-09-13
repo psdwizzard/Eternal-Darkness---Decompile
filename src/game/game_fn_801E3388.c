@@ -87,8 +87,9 @@ void fn_801E3388(Object* object)
             void** output_b;
             void** output_c;
             void* output_d;
-            u32 alternate_flags;
             u32 resource;
+            void* second_resource;
+            u32 alternate_flags;
             resource = fn_801E2E1C(object->flags, (int)owner, object->source);
             fn_801E3020(object->runtime, object->flags, object->position,
                          object->source, (int)owner, &output_a, &output_b,
@@ -104,18 +105,17 @@ void fn_801E3388(Object* object)
                 u8 kind;
                 alternate_flags = (object->flags & ~0x810) | 0x1010;
                 kind = fn_801CEB2C(alternate_flags);
+                second_resource = fn_801DA3B0(object->runtime,
+                                              alternate_flags,
+                                              object->position, kind,
+                                              (int)owner, 0,
+                                              &output_a, &second_b,
+                                              &output_d, &second_d);
                 *second_d = fn_80201B54(fn_800CD458((int)owner,
                                                     alternate_flags,
                                                     fn_801DA058(alternate_flags),
                                                     output_a, second_b, output_d,
-                                                    (void*)(resource =
-                                                    (u32)fn_801DA3B0(
-                                                        object->runtime,
-                                                        alternate_flags,
-                                                        object->position, kind,
-                                                        (int)owner, 0,
-                                                        &output_a, &second_b,
-                                                        &output_d, &second_d))));
+                                                    second_resource));
             }
         } else {
             fn_801FE22C(object->lifetime);
