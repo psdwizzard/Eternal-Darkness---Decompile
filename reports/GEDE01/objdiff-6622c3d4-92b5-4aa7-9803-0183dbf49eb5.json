@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "assignment_id": "6622c3d4-92b5-4aa7-9803-0183dbf49eb5",
+  "attempt": 2,
+  "target": "fn_8016F78C",
+  "unit": "main/game/game_fn_8016F78C",
+  "source": {
+    "path": "eternal-darkness-decomp/src/game/game_fn_8016F78C.c",
+    "sha256": "53491cb7585910742239574efbbade5633bfc13736ff35c5108cd631ffee801f",
+    "classification": "honest inherited independent NonMatching C reconstruction recovered from preserved commit 17f4d3b197957f20a9d89d5708b1737f36d11451 and freshly revalidated on the accepted base",
+    "registration": "Object(NonMatching, \"game/game_fn_8016F78C.c\")",
+    "split": ".text start:0x8016F78C end:0x8016F8F8"
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "canonical_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -DVERSION_GEDE01 -DNDEBUG=1 -lang=c"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8016F78C -o build/GEDE01/objdiff-6622c3d4-canonical.raw.json --format json-pretty fn_8016F78C",
+    "exit_code": 0,
+    "raw_report_sha256": "ea9da9f3c0ff9221bc6cbd64ae4bd4a38df7020cc44af1bc28c719d328f66b3f",
+    "raw_measurement": {
+      "retail_size": 364,
+      "generated_size": 368,
+      "retail_match_percent": 97.58242,
+      "retail_differing_rows": 3,
+      "generated_differing_rows": 3,
+      "retail_relocation_bearing_instructions": 21,
+      "generated_relocation_bearing_instructions": 22
+    }
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8016F78C -o build/GEDE01/objdiff-6622c3d4-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_8016F78C",
+    "config": "function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "raw_report_sha256": "ea9da9f3c0ff9221bc6cbd64ae4bd4a38df7020cc44af1bc28c719d328f66b3f",
+    "raw_report_byte_identical_to_canonical": true,
+    "raw_cmp_exit": 0,
+    "raw_measurement": {
+      "retail_size": 364,
+      "generated_size": 368,
+      "retail_match_percent": 97.58242,
+      "retail_relocation_bearing_instructions": 21,
+      "generated_relocation_bearing_instructions": 22
+    },
+    "relocation_divergence": "The extra generated R_PPC_ADDR16_LO relocation to lbl_8024FF00 is at generated offset 0x10 instead of retail offset 0x18 because MWCC emits the low-address addi four instructions early, then carries the value through r0. Objdump shows 17 physical .rela.text records on both sides; objdiff additionally annotates address-derived R_PPC_NONE instructions, yielding 21 retail versus 22 generated relocation-bearing instruction rows. External call targets and addends agree after the four-byte shift caused by the insertion."
+  },
+  "instruction_differences": [
+    {
+      "alignment_row": 4,
+      "retail": null,
+      "generated_offset": "0x10",
+      "generated": "addi r0, r4, lbl_8024FF00@l",
+      "kind": "DIFF_INSERT"
+    },
+    {
+      "alignment_row": 7,
+      "retail_offset": "0x18",
+      "retail": "addi r31, r4, lbl_8024FF00@l",
+      "generated_offset": "0x1C",
+      "generated": "mr r31, r0",
+      "kind": "DIFF_REPLACE"
+    },
+    {
+      "alignment_row": 19,
+      "retail_offset": "0x48",
+      "retail": "addi r4, r31, 0x0",
+      "generated_offset": "0x4C",
+      "generated": "mr r4, r31",
+      "kind": "DIFF_REPLACE"
+    }
+  ],
+  "recovered_variant_measurements": [
+    {"form": "retained StringBlock pointer, const removed", "size": 368, "match_percent": 97.58242},
+    {"form": "separate declaration and assignment", "size": 368, "match_percent": 97.58242},
+    {"form": "integer address base with explicit offsets", "size": 368, "match_percent": 97.58242},
+    {"form": "direct global field references", "size": 376, "match_percent": 85.18681},
+    {"form": "comma-expression lifetime and register qualifier trials", "size": 368, "match_percent": 97.58242}
+  ],
+  "build_verification": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2", "sha1sum build/GEDE01/main.dol"],
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "raw_terminal_result": "build/GEDE01/main.dol: OK",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "note": "The function remains NonMatching and is excluded from the linked DOL; this verifies the repository-wide canonical link gate, not a function match."
+  },
+  "legal_audit": {
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
