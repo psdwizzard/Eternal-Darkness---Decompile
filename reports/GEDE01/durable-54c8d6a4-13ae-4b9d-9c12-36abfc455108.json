@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "54c8d6a4-13ae-4b9d-9c12-36abfc455108",
+  "attempt": 1,
+  "base_commit": "48574d81b7727c4f2780d23458cc11eee3587f26",
+  "target": "fn_800601FC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-54c8d6a4-13ae-4b9d-9c12-36abfc455108.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff (function_reloc_diffs=all) both measure 97.75%: retail and generated C are each 832 bytes and 209 instructions. Both objects contain 48 relocation-bearing instructions at identical offsets, with equal relocation types, targets, and zero addends. The remaining aligned diff comprises 55 argument/operand mismatches caused by an equivalent r23-r31 callee-saved register allocation, plus one fn_801292E0 three-argument setup scheduling difference represented by one inserted and one deleted aligned row. Correcting fn_8015C910 and fn_8013FBE4 to unsigned return shapes fixed the two compare-opcode mismatches and improved the historical 97.17308% score. The full canonical build passed, legal_audit.py passed for 14441 tracked project files, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
