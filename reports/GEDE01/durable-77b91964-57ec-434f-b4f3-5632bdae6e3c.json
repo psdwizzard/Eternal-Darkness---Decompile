@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "77b91964-57ec-434f-b4f3-5632bdae6e3c",
+  "attempt": 1,
+  "base_commit": "0a5bc66e534d82a70583fe068a58b246e9576377",
+  "target": "fn_80189C14",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-77b91964-57ec-434f-b4f3-5632bdae6e3c.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-77b91964-57ec-434f-b4f3-5632bdae6e3c-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-77b91964-57ec-434f-b4f3-5632bdae6e3c.json"
+  ],
+  "divergence": "Best canonical and relocation-strict score is 97.07792% with exact 616/616-byte size and 25 relocation-bearing instructions on each side. Vec3 input/output stack slots now agree, but 74 instructions remain different because GC/1.3 selects a coherent persistent-register permutation: generated self/count/buffers use r31/r25/r20-r17 where retail uses r16/r26/r21,r19,r18, with corresponding loop/global registers shifted; the generated conversion constant is also named local @29 where retail names lbl_80650A70. Calls and global relocation addresses/addends otherwise align."
+}

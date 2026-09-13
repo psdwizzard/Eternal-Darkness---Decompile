@@ -11,24 +11,34 @@ extern void fn_80188584(void*, void*), fn_8018D0D0(void*, void*, s16);
 extern int fn_801ED57C(int);
 extern void fn_801889D8(void*, void*, void*), fn_80226D78(int);
 
-void fn_80189C14(u8* self)
+void fn_80189C14(u8* arg)
 {
     u8* data = lbl_80607120;
-    u8 count = self[1];
-    u16 size0 = *(u16*)(data + 2);
-    u16 flush0 = *(u16*)(data + 0xA);
-    u16 flush1 = *(u16*)(data + 0xE);
-    u16 flush2 = *(u16*)(data + 0xC);
-    u8* buffer0 = *(u8**)(self + 0x50);
-    u8* buffer1 = *(u8**)(self + 0x54);
-    u8* buffer2 = *(u8**)(self + 0x58);
-    u8* entries;
-    u8* out;
     int entry_index;
-    int position_offset;
     int j;
+    u8 count;
+    u16 size0 = *(u16*)(data + 2);
+    u16 flush0;
+    u16 flush1;
+    u16 flush2;
+    u8* entries;
+    u8* buffer0;
+    s16* position;
+    u8* buffer1;
+    u8* buffer2;
+    u8* out;
+    u8* self;
+    int position_offset;
     int saved;
 
+    self = arg;
+    count = self[1];
+    flush0 = *(u16*)(data + 0xA);
+    flush1 = *(u16*)(data + 0xE);
+    flush2 = *(u16*)(data + 0xC);
+    buffer0 = *(u8**)(self + 0x50);
+    buffer1 = *(u8**)(self + 0x54);
+    buffer2 = *(u8**)(self + 0x58);
     if (lbl_8064D738 != 0) {
         buffer1 += size0 * 4;
         buffer0 += size0 * 6;
@@ -38,11 +48,11 @@ void fn_80189C14(u8* self)
     out = buffer2;
     position_offset = 0;
     for (entry_index = 0; entry_index < count; entry_index++) {
-        s16* position = (s16*)(buffer0 + position_offset);
+        position = (s16*)(buffer0 + position_offset);
         fn_80188A7C(entries, position, fn_8018D020);
         for (j = 0; j < entries[0x20]; j++) {
-            Vec3 input;
             Vec3 output;
+            Vec3 input;
             input.x = (float)position[0];
             input.y = (float)position[1];
             input.z = (float)position[2];
