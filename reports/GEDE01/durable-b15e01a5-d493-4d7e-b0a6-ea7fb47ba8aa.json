@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "b15e01a5-d493-4d7e-b0a6-ea7fb47ba8aa",
+  "attempt": 2,
+  "base_commit": "6f3f8e7da9d395b0d48fa30a392ff0dbc2ffc1f8",
+  "target": "fn_801C8600",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b15e01a5-d493-4d7e-b0a6-ea7fb47ba8aa.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-b15e01a5-d493-4d7e-b0a6-ea7fb47ba8aa.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-b15e01a5-d493-4d7e-b0a6-ea7fb47ba8aa.json"
+  ],
+  "divergence": "Size-exact 476-byte honest C reconstruction reaches 96.60504% in canonical and relocation-strict objdiff. GC/1.2.5n assigns the cached lbl_80650FD0 float to f30 and the unsigned-conversion bias to f31, opposite retail's f31/f30 allocation; it consequently selects different conversion stack slots and integer result registers at 0x801C8660-0x801C86A4 and 0x801C876C-0x801C87B0. The split TU also emits the conversion bias as TU-local @30 rather than retail lbl_80650FB8, so that SDA21 relocation target remains unequal."
+}
