@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c966f5de-e60f-4ae0-8a54-2e683c1bd4cf",
+  "attempt": 1,
+  "base_commit": "4157bcd4969616001a95dc17ca9cc7bf630b027a",
+  "target": "fn_801DF060",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c966f5de-e60f-4ae0-8a54-2e683c1bd4cf.json"
+  ],
+  "divergence": "Canonical and relocation-strict direct objdiff are 96.932304%: retail and generated code are both 4136 bytes and 1034 instructions, but 134 rows differ. Retail uses a 0x100-byte frame and assigns the object to r31 before loading through it; GC/1.3 uses a 0xD0-byte frame, delays that assignment, and differs in r26-r31 allocation, Vec3 stack-slot/aggregate scheduling, and repeated 26-argument call setup. Generated code has 134 relocation-bearing instructions versus retail's 133, so relocation-strict equality is not achieved."
+}
