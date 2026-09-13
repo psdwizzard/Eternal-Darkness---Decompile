@@ -13,7 +13,7 @@ typedef struct Shared {
 
 typedef struct Auxiliary { u8 pad[0x18]; int enabled; } Auxiliary;
 
-extern Shared lbl_805B6FE0;
+extern volatile Shared lbl_805B6FE0;
 extern Auxiliary lbl_805B701C;
 extern void* lbl_8064C4E4;
 extern int lbl_8064C5C0;
@@ -34,7 +34,7 @@ extern void fn_8015BDAC(void);
 extern void fn_8015C020(int);
 extern unsigned int fn_801E7998(void*);
 extern int fn_80201AE4(void);
-extern void* fn_80201B3C();
+extern int fn_80201B3C();
 extern int fn_80201B44();
 extern void fn_8020D250(void*, int, int);
 extern u32 OSDisableInterrupts(void);
@@ -49,6 +49,8 @@ void fn_8015BDF0(int requested, void* queue)
 {
     int secondary;
     int audio_mode;
+    int expected;
+    s16* ptr;
     u32 interrupts;
 
     fn_800460FC();
@@ -64,17 +66,17 @@ void fn_8015BDF0(int requested, void* queue)
     }
     if (lbl_8064C4E4 != 0 && lbl_8064C5C0 == 0 && lbl_805B701C.enabled != 0) {
         fn_8011FB54(lbl_8064C4E4, lbl_8064D18C);
-        fn_80201B3C();
-        fn_80046F28(fn_80201AE4(), lbl_8064D18C);
+        fn_80046F28(fn_80201B3C(), lbl_8064D18C);
         audio_mode = fn_80201AE4();
-        if (fn_80201B44() == audio_mode) {
+        expected = fn_80201B44();
+        if (expected == audio_mode) {
             fn_80046FC4(lbl_8064D18C, 0);
         }
     }
     fn_80046B68();
-    if (secondary != -1 && *slot_id_ptr(secondary) == requested) {
+    if (secondary != -1 && (ptr = slot_id_ptr(secondary), *ptr == requested)) {
         fn_8015BDAC();
-    } else if (*slot_id_ptr(lbl_805B6FE0.primary) != requested) {
+    } else if (ptr = slot_id_ptr(lbl_805B6FE0.primary), *ptr != requested) {
         fn_8015BDAC();
         interrupts = OSDisableInterrupts();
         *slot_id_ptr(lbl_805B6FE0.primary) = requested;
@@ -83,7 +85,7 @@ void fn_8015BDF0(int requested, void* queue)
         OSRestoreInterrupts(interrupts);
     }
     lbl_805B6FE0.queues[lbl_805B6FE0.primary] = queue;
-    if (lbl_805B6FE0.slots[lbl_805B6FE0.primary][0x8142] == 1) {
+    if ((signed char)lbl_805B6FE0.slots[lbl_805B6FE0.primary][0x8142] == 1) {
         lbl_805B6FE0.queues[lbl_805B6FE0.primary] = 0;
         if (queue != 0) {
             fn_8020D250(queue, 0, 1);

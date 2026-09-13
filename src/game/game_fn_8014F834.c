@@ -10,14 +10,14 @@ typedef struct Vec3Words {
 
 extern u32 lbl_80651C00;
 extern u16 lbl_80651C04;
-extern float lbl_80650578;
-extern float lbl_8065057C;
+extern const float lbl_80650578;
+extern const float lbl_8065057C;
 
 extern void fn_80150158(void);
 extern u8* fn_80149D98(void*);
 extern void fn_80149D64(void*);
 extern void fn_801858E0(void*);
-extern void fn_80185AE8(void);
+extern void* fn_80185AE8(s16*, void*, u8*);
 extern int fn_801E8328();
 extern void* memcpy(void*, const void*, unsigned int);
 
@@ -44,7 +44,7 @@ void fn_8014F834(Vec3Words* position, u16 value, u16 target,
         embedded = instance + 0x10;
         *(u16*)(instance + 0x0A) = 0;
         *(s16*)(instance + 0x0C) = -delta;
-        divisor = (*(s8*)(instance + 0x0F) =
+        divisor = (*(u8*)(instance + 0x0F) =
                        -(60 / *(s16*)(instance + 0x0C)));
         fn_801858E0(embedded);
         *(u32*)(embedded + 0x78) = *source;

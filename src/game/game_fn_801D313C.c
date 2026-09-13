@@ -6,13 +6,13 @@ typedef struct Object {
     u8 bytes[0x1000];
 } Object;
 
-extern float lbl_806510A8;
+extern const float lbl_806510A8;
 extern u32 lbl_8064D18C;
 extern void fn_801D324C(void);
 extern Object* fn_801D0D78(u32, u32, u32, void*, void (*)(void), u32, u32,
                            u32, u32, u32);
 extern void fn_801D0CA4(Object*);
-extern void fn_801AAE68(int, int, int, void*, int, int, int, u16, float, int);
+extern int fn_801AAE68(int, int, int, void*, int, int, int, u16, float, int);
 
 void fn_801D313C(u32 id, u32 kind, void* position)
 {

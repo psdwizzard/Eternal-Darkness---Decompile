@@ -36,7 +36,8 @@ void fn_801274F4(void* entries, u16 count, Runtime* runtime,
     } else {
         state->previous = state->current;
         wrapped = 1;
-        index = (count - 1) & ~(((unsigned int)value >> 31) - 1);
+        value = ((unsigned int)value >> 31) - 1;
+        index = (count - 1) & ~value;
     }
     if (count > index) {
         state->current = (u8*)entries + index * 0xC;
@@ -46,13 +47,9 @@ void fn_801274F4(void* entries, u16 count, Runtime* runtime,
     if (wrapped != 0) {
         state->span = runtime->scale << 16;
     } else {
-        if (fn_801285C0(state->current) - fn_801285C0(state->previous) < 0) {
-            state->span = -(fn_801285C0(state->current) -
-                            fn_801285C0(state->previous));
-        } else {
-            state->span = fn_801285C0(state->current) -
-                          fn_801285C0(state->previous);
-        }
+        state->span = fn_801285C0(state->current) - fn_801285C0(state->previous) < 0
+                          ? -(fn_801285C0(state->current) - fn_801285C0(state->previous))
+                          : fn_801285C0(state->current) - fn_801285C0(state->previous);
     }
     if (wrapped != 0) {
         *output = fn_801285C0(state->current);

@@ -21,8 +21,8 @@ extern void fn_801605F4(Object*);
 int fn_80161044(Object* object, void (*callback)(Object*, void*), void* argument)
 {
     JumpContext context;
-    register JumpContext* volatile* saved_context;
-    register volatile int* result;
+    JumpContext* volatile* saved_context;
+    volatile int* result;
     void* saved_start = object->start;
     void* saved_current = object->current;
     void* saved_limit = object->limit;

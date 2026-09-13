@@ -23,9 +23,10 @@ extern u32 lbl_80651AEC;
 extern u32 lbl_80651AF0;
 extern u32 lbl_80651AF4;
 extern u32 lbl_80651AF8;
-extern float lbl_8064F400;
-extern float lbl_8064F404;
+extern float lbl_8064F460;
+extern float lbl_8064F464;
 
+#pragma opt_common_subs off
 void fn_800DBC0C(void *context)
 {
     void *state;
@@ -61,6 +62,8 @@ void fn_800DBC0C(void *context)
 
     if ((fn_80036D5C(saved_context) & 0x01000000) != 0) {
         fn_801261F4(object);
-        fn_80120AD0(object, 0, 100, 0x20a, lbl_8064F400, lbl_8064F404);
+        fn_80120AD0(object, 0, 100, 0x20a, lbl_8064F460, lbl_8064F464);
     }
 }
+
+#pragma opt_common_subs reset

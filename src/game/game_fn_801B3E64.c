@@ -12,48 +12,80 @@ struct Node {
     u32 key;
 };
 
-typedef struct Request {
-    u32 handle;
-    u16 type;
+typedef struct SynthStartRequest {
+    u32 seqId1;
+    u16 time1;
     u8 pad06[2];
-    u32 target;
-    u16 value0C;
+    u32 seqId2;
+    u16 time2;
     u8 pad0E[2];
-    u32 value10;
-    u16 value14;
-    u16 value16;
-    u8 value18;
-    u8 value19;
+    u32 arr2;
+    u16 gid2;
+    u16 sid2;
+    u8 vol2;
+    u8 studio2;
     u8 pad1A[2];
-    u32 value1C;
-    u32 value20;
-    u16 value24;
+    u32 trackMute2[2];
+    u16 speed2;
     u8 flags;
-} Request;
+    u8 pad27;
+} SynthStartRequest;
 
-typedef struct CreateInfo {
+typedef struct SynthPlayParams {
     u32 flags;
-    u32 value4;
-    u32 value8;
-    u16 valueC;
-    u16 valueE;
-    u8 value10;
+    u32 trackMute[2];
+    u16 speed;
+    u16 volumeTime;
+    u8 volumeTarget;
     u8 pad11[7];
-    u8 value18;
-} CreateInfo;
+    u8 numFaded;
+} SynthPlayParams;
 
-extern u8 lbl_8060C020[];
+typedef struct SynthSyncCrossInfo {
+    u8 pad00[4];
+    u8 vol2;
+    u8 pad05[3];
+    u32 trackMute2[2];
+    u16 speed2;
+    u8 flags;
+    u8 pad13;
+} SynthSyncCrossInfo;
+
+typedef struct SynthSection {
+    u8 pad00[0xE];
+    u16 speed;
+    u8 pad10[0x38 - 0x10];
+} SynthSection;
+
+typedef struct SynthVoice {
+    u8 pad000[0x11C];
+    u32 trackMute[2];
+    u8 pad124[0xEC8 - 0x124];
+    SynthSyncCrossInfo syncCrossInfo;
+    u32* syncSeqIdPtr;
+    u8 syncPending;
+    u8 padEE1[0x150C - 0xEE1];
+    SynthSection section[15];
+    u8 pad1854[0x1868 - 0x1854];
+} SynthVoice;
+
+typedef struct SynthVoiceRuntime {
+    u8 pad[0x1400];
+    SynthVoice voices[1];
+} SynthVoiceRuntime;
+
+extern SynthVoiceRuntime lbl_8060C020;
 extern Node* lbl_8064D398;
 extern Node* lbl_8064D39C;
-extern void fn_801B3CC8(int, int, u32, int);
+extern void fn_801B3CC8(u8, u16, u32, u8);
 extern void fn_801B3B08(u32);
-extern int fn_801B2914(u32);
-extern void fn_801B8D00(int, int, u32, int);
+extern u32 fn_801B2914(u32);
+extern void fn_801B8D00(u8, u16, u32, u8);
 extern void fn_801B8C70(u32);
 extern void fn_801B8CA8(u32, u32, u32);
 extern void fn_801B8C28(u32, u16);
-extern int fn_801C3F6C(u16, u16, u32, CreateInfo*, int, u8);
-extern int fn_801C40AC(u16, u16, u32, CreateInfo*, u8);
+extern u32 fn_801C3F6C(u16, u16, void*, SynthPlayParams*, u8, u8);
+extern u32 fn_801C40AC(u16, u16, void*, SynthPlayParams*, u8);
 
 static inline int resolve_handle(u32 value)
 {
@@ -73,149 +105,159 @@ static inline int resolve_handle(u32 value)
     return -1;
 }
 
-void fn_801B3E64(Request* request, u32* output, u8 alternate)
+#define seqVolume fn_801B3CC8
+#define sndSeqVolume fn_801B8D00
+#define seqContinue fn_801B3B08
+#define sndSeqContinue fn_801B8C70
+#define sndSeqMute fn_801B8CA8
+#define sndSeqSpeed fn_801B8C28
+#define seqPlaySong fn_801C3F6C
+#define sndSeqPlayEx fn_801C40AC
+#define seqGetPrivateId fn_801B2914
+
+void fn_801B3E64(SynthStartRequest* ci, u32* new_seqId, u8 irq_call)
 {
-    u8* base = lbl_8060C020;
-    u32 original = request->handle;
-    int id = resolve_handle(original);
+    SynthVoiceRuntime* runtime;
+    SynthPlayParams params;
+    u32 deadSlot2;
+    u32 slot;
+    u32 newHandle;
+    u32 mixValue0;
+    u32 mixValue1;
+    u16 speed;
+    u16 fadeTime;
+    u8 flags;
+    SynthVoice* pendingVoice;
+    SynthStartRequest* pendingRequest;
 
-    if (request->flags & 4) {
-        u8* entry = base + id * 0x1868;
-        u32* src = (u32*)request;
-        u32* dst = (u32*)(entry + 0x22B4);
-        dst[0] = src[0];
-        dst[1] = src[1];
-        dst[2] = src[2];
-        dst[3] = src[3];
-        dst[4] = src[4];
-        dst[5] = src[5];
-        dst[6] = src[6];
-        dst[7] = src[7];
-        dst[8] = src[8];
-        dst[9] = src[9];
-        entry[0x22E0] = 1;
-        *(u32*)(entry + 0x22DC) = (u32)output;
-        entry[0x22DA] &= ~4;
-        *output = request->handle | 0x80000000U;
+    runtime = &lbl_8060C020;
+
+    slot = resolve_handle(ci->seqId1);
+    flags = ci->flags;
+    if ((flags & 4) != 0) {
+        pendingVoice = (SynthVoice*)((u8*)runtime + slot * sizeof(SynthVoice));
+        pendingRequest = (SynthStartRequest*)((u8*)pendingVoice + 0x22B4);
+        *pendingRequest = *ci;
+        *(u8*)((u8*)pendingVoice + 0x22E0) = 1;
+        *(u32**)((u8*)pendingVoice + 0x22DC) = new_seqId;
+        pendingRequest->flags &= ~4;
+        *new_seqId = ci->seqId1 | 0x80000000;
         return;
     }
 
-    if (alternate) {
-        if (request->type >= 5)
-            request->type = 5;
-        if (request->flags & 1)
-            fn_801B3CC8(0, request->type, original, 2);
-        else if (request->flags & 0x40)
-            fn_801B3CC8(0, request->type, original, 3);
-        else
-            fn_801B3CC8(0, request->type, original, 1);
+    if (irq_call != 0) {
+        fadeTime = ci->time1 < 5 ? 5 : ci->time1;
+        if ((flags & 1) != 0) {
+            seqVolume(0, fadeTime, ci->seqId1, 2);
+        } else if ((flags & 0x40) != 0) {
+            seqVolume(0, fadeTime, ci->seqId1, 3);
+        } else {
+            seqVolume(0, fadeTime, ci->seqId1, 1);
+        }
     } else {
-        if (request->flags & 1)
-            fn_801B8D00(0, request->type, original, 2);
-        else if (request->flags & 0x40)
-            fn_801B8D00(0, request->type, original, 3);
-        else
-            fn_801B8D00(0, request->type, original, 1);
+        if ((flags & 1) != 0) {
+            sndSeqVolume(0, ci->time1, ci->seqId1, 2);
+        } else if ((flags & 0x40) != 0) {
+            sndSeqVolume(0, ci->time1, ci->seqId1, 3);
+        } else {
+            sndSeqVolume(0, ci->time1, ci->seqId1, 1);
+        }
     }
 
-    if (output == 0)
+    if (new_seqId == 0) {
         return;
+    }
 
-    if (request->flags & 2) {
-        int target_id = resolve_handle(request->target);
-        if (target_id == -1) {
-            *output = -1;
+    if ((ci->flags & 2) != 0) {
+        if ((slot = resolve_handle(ci->seqId2)) != 0xFFFFFFFF) {
+            if (irq_call != 0) {
+                seqContinue(ci->seqId2);
+                seqVolume(ci->vol2, ci->time2, ci->seqId2, 0);
+                if ((ci->flags & 0x10) != 0) {
+                    newHandle = ci->seqId2;
+                    mixValue1 = ci->trackMute2[1];
+                    mixValue0 = ci->trackMute2[0];
+                    newHandle = seqGetPrivateId(newHandle);
+                    if (newHandle != 0xFFFFFFFF) {
+                        if ((newHandle & 0x80000000) == 0) {
+                            runtime->voices[newHandle].trackMute[0] = mixValue0;
+                            runtime->voices[newHandle].trackMute[1] = mixValue1;
+                        } else {
+                            runtime->voices[newHandle & 0x7FFFFFFF].syncCrossInfo.flags |= 0x10;
+                            runtime->voices[newHandle & 0x7FFFFFFF].syncCrossInfo.trackMute2[0] = mixValue0;
+                            runtime->voices[newHandle & 0x7FFFFFFF].syncCrossInfo.trackMute2[1] = mixValue1;
+                        }
+                    }
+                }
+                if ((ci->flags & 0x20) != 0) {
+                    newHandle = ci->seqId2;
+                    speed = ci->speed2;
+                    newHandle = seqGetPrivateId(newHandle);
+                    if ((newHandle & 0x80000000) == 0) {
+                        u32 section;
+                        for (section = 0; section < 16; section++) {
+                            runtime->voices[newHandle].section[section].speed = speed;
+                        }
+                    } else {
+                        runtime->voices[newHandle & 0x7FFFFFFF].syncCrossInfo.flags |= 0x20;
+                        runtime->voices[newHandle & 0x7FFFFFFF].syncCrossInfo.speed2 = speed;
+                    }
+                }
+            } else {
+                sndSeqContinue(ci->seqId2);
+                sndSeqVolume(ci->vol2, ci->time2, ci->seqId2, 0);
+                if ((ci->flags & 0x10) != 0) {
+                    sndSeqMute(ci->seqId2, ci->trackMute2[0], ci->trackMute2[1]);
+                }
+                if ((ci->flags & 0x20) != 0) {
+                    sndSeqSpeed(ci->seqId2, ci->speed2);
+                }
+            }
+            *new_seqId = ci->seqId2;
             return;
         }
-        if (alternate) {
-            int index;
-            fn_801B3B08(request->target);
-            fn_801B3CC8(request->value18, request->value0C, request->target, 0);
-            if (request->flags & 0x10) {
-                index = fn_801B2914(request->target);
-                if (index != -1) {
-                    if ((index & 0x80000000U) == 0) {
-                        u8* entry = base + index * 0x1868;
-                        *(u32*)(entry + 0x151C) = request->value1C;
-                        *(u32*)(entry + 0x1520) = request->value20;
-                    } else {
-                        u8* entry = base + (index & 0x7FFFFFFF) * 0x1868;
-                        entry[0x22DA] |= 0x10;
-                        *(u32*)(entry + 0x22D0) = request->value1C;
-                        *(u32*)(entry + 0x22D4) = request->value20;
-                    }
-                }
-            }
-            if (request->flags & 0x20) {
-                u16 value = request->value24;
-                index = fn_801B2914(request->target);
-                if ((index & 0x80000000U) == 0) {
-                    u8* entry = base + index * 0x1868;
-                    int i;
-                    for (i = 0; i < 16; i++)
-                        *(u16*)(entry + 0x291A + i * 0x38) = value;
-                } else {
-                    u8* entry = base + (index & 0x7FFFFFFF) * 0x1868;
-                    entry[0x22DA] |= 0x20;
-                    *(u16*)(entry + 0x22D8) = value;
-                }
-            }
-        } else {
-            fn_801B8C70(request->target);
-            fn_801B8D00(request->value18, request->value0C, request->target, 0);
-            if (request->flags & 0x10)
-                fn_801B8CA8(request->target, request->value1C, request->value20);
-            if (request->flags & 0x20)
-                fn_801B8C28(request->target, request->value24);
-        }
-        *output = request->target;
+        *new_seqId = 0xFFFFFFFF;
         return;
     }
 
-    {
-        CreateInfo info;
-        info.flags = 4;
-        if (request->flags & 8)
-            info.flags |= 0x10;
-        if (request->flags & 0x20) {
-            info.flags |= 2;
-            info.valueC = request->value24;
-        }
-        if (request->flags & 0x10) {
-            info.flags |= 1;
-            info.value4 = request->value1C;
-            info.value8 = request->value20;
-        }
-        info.valueE = request->value0C;
-        info.value10 = request->value18;
-        info.value18 = 0;
-        if (alternate) {
-            int created = fn_801C3F6C(request->value14, request->value16,
-                                      request->value10, &info, 1,
-                                      request->value19);
-            *output = created;
-            if (created != -1 && (request->flags & 0x80)) {
-                int index = fn_801B2914(created);
-                if (index != -1) {
-                    if ((index & 0x80000000U) == 0) {
-                        u8* entry = base + index * 0x1868;
-                        *(u32*)(entry + 0x151C) = 0;
-                        *(u32*)(entry + 0x1520) = 0;
-                    } else {
-                        u8* entry = base + (index & 0x7FFFFFFF) * 0x1868;
-                        entry[0x22DA] |= 0x10;
-                        *(u32*)(entry + 0x22D0) = 0;
-                        *(u32*)(entry + 0x22D4) = 0;
-                    }
+    params.flags = 4;
+    if ((ci->flags & 8) != 0) {
+        params.flags |= 0x10;
+    }
+    if ((ci->flags & 0x20) != 0) {
+        params.flags |= 2;
+        params.speed = ci->speed2;
+    }
+    if ((ci->flags & 0x10) != 0) {
+        params.flags |= 1;
+        params.trackMute[0] = ci->trackMute2[0];
+        params.trackMute[1] = ci->trackMute2[1];
+    }
+    params.volumeTime = ci->time2;
+    params.volumeTarget = ci->vol2;
+    params.numFaded = 0;
+
+    if (irq_call != 0) {
+        newHandle = seqPlaySong(ci->gid2, ci->sid2, (void*)ci->arr2, &params, 1, ci->studio2);
+        *new_seqId = newHandle;
+        if ((newHandle != 0xFFFFFFFF) && ((ci->flags & 0x80) != 0)) {
+            newHandle = seqGetPrivateId(*new_seqId);
+            if (newHandle != 0xFFFFFFFF) {
+                if ((newHandle & 0x80000000) == 0) {
+                    runtime->voices[newHandle].trackMute[0] = 0;
+                    runtime->voices[newHandle].trackMute[1] = 0;
+                } else {
+                    runtime->voices[newHandle & 0x7FFFFFFF].syncCrossInfo.flags |= 0x10;
+                    runtime->voices[newHandle & 0x7FFFFFFF].syncCrossInfo.trackMute2[0] = 0;
+                    runtime->voices[newHandle & 0x7FFFFFFF].syncCrossInfo.trackMute2[1] = 0;
                 }
             }
-        } else {
-            int created = fn_801C40AC(request->value14, request->value16,
-                                      request->value10, &info,
-                                      request->value19);
-            *output = created;
-            if (created != -1 && (request->flags & 0x80))
-                fn_801B8CA8(created, 0, 0);
+        }
+    } else {
+        newHandle = sndSeqPlayEx(ci->gid2, ci->sid2, (void*)ci->arr2, &params, ci->studio2);
+        *new_seqId = newHandle;
+        if ((newHandle != 0xFFFFFFFF) && ((ci->flags & 0x80) != 0)) {
+            sndSeqMute(*new_seqId, 0, 0);
         }
     }
 }

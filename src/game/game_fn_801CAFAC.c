@@ -1,61 +1,64 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
 
-extern u8 lbl_8062A230[];
+typedef struct InpMidiCtrls {
+    u8 pad00[0xC0];
+    u8 byKey[8][16][134];
+    u8 ctrl[16][134];
+} InpMidiCtrls;
 
-u16 fn_801CAFAC(int control, int channel, int layer)
+extern InpMidiCtrls lbl_8062A230;
+
+#define gInpMidiCtrlByKey s->byKey
+#define gInpMidiCtrl s->ctrl
+
+u16 fn_801CAFAC(u8 controller, u8 slot, u8 key)
 {
-    u8* base = lbl_8062A230;
-    u8 channel8 = channel;
+    short mask = 0x1f;
+    InpMidiCtrls* s = &lbl_8062A230;
 
-    if (channel8 != 0xFF) {
-        u8 layer8 = layer;
-
-        if (layer8 != 0xFF) {
-            u8 control8 = control;
-
-            if (control8 < 0x40) {
-                u8* data = base + layer8 * 2144 + channel8 * 134 + (control8 & 0x1F);
-                return (data[0xC0] << 7) | data[0xE0];
+    if (slot != 0xff) {
+        if (key != 0xff) {
+            if (controller < 0x40) {
+                return gInpMidiCtrlByKey[key][slot][controller & 0x1f] << 7 |
+                       gInpMidiCtrlByKey[key][slot][(controller & 0x1f) + 0x20];
             }
-            if (control8 < 0x46) {
-                u8 value = base[layer8 * 2144 + channel8 * 134 + control8 + 0xC0];
-                return value < 0x40 ? 0 : 0x3FFF;
+            if (controller < 0x46) {
+                return (gInpMidiCtrlByKey[key][slot][controller] < 0x40) ? 0 : 0x3fff;
             }
-            if (control8 >= 0x60 && control8 < 0x66) {
+            if (controller >= 0x60 && controller < 0x66) {
                 return 0;
             }
-            if ((u8)(control - 0x80) <= 1) {
-                u8* data = base + (u8)layer * 2144 + (u8)channel * 134 + ((u8)control & 0xFE);
-                return (data[0xC0] << 7) | data[0xC1];
+            if (controller == 0x80 || controller == 0x81) {
+                return (gInpMidiCtrlByKey[key][slot][controller & 0xfe] << 7) |
+                       gInpMidiCtrlByKey[key][slot][(controller & 0xfe) + 1];
             }
-            if ((u8)(control - 0x84) <= 1) {
-                u8* data = base + (u8)layer * 2144 + (u8)channel * 134 + ((u8)control & 0xFE);
-                return (data[0xC0] << 7) | data[0xC1];
+            if (controller == 0x84 || controller == 0x85) {
+                return (gInpMidiCtrlByKey[key][slot][controller & 0xfe] << 7) |
+                       gInpMidiCtrlByKey[key][slot][(controller & 0xfe) + 1];
             }
-            return base[(u8)layer * 2144 + (u8)channel * 134 + (u8)control + 0xC0] << 7;
+            return gInpMidiCtrlByKey[key][slot][controller] << 7;
         }
 
-        if ((u8)control < 0x40) {
-            u8* data = base + channel8 * 134 + ((u8)control & 0x1F);
-            return (data[0x43C0] << 7) | data[0x43E0];
+        if (controller < 0x40) {
+            return (gInpMidiCtrl[slot][controller & mask] << 7) |
+                   gInpMidiCtrl[slot][(controller & mask) + 0x20];
         }
-        if ((u8)control < 0x46) {
-            u8 value = base[channel8 * 134 + (u8)control + 0x43C0];
-            return value < 0x40 ? 0 : 0x3FFF;
+        if (controller < 0x46) {
+            return (gInpMidiCtrl[slot][controller] < 0x40) ? 0 : 0x3fff;
         }
-        if ((u8)control >= 0x60 && (u8)control < 0x66) {
+        if (controller >= 0x60 && controller < 0x66) {
             return 0;
         }
-        if ((u8)(control - 0x80) <= 1) {
-            u8* data = base + (u8)channel * 134 + ((u8)control & 0xFE);
-            return (data[0x43C0] << 7) | data[0x43C1];
+        if (controller == 0x80 || controller == 0x81) {
+            return (gInpMidiCtrl[slot][controller & 0xfe] << 7) |
+                   gInpMidiCtrl[slot][(controller & 0xfe) + 1];
         }
-        if ((u8)(control - 0x84) <= 1) {
-            u8* data = base + (u8)channel * 134 + ((u8)control & 0xFE);
-            return (data[0x43C0] << 7) | data[0x43C1];
+        if (controller == 0x84 || controller == 0x85) {
+            return (gInpMidiCtrl[slot][controller & 0xfe] << 7) |
+                   gInpMidiCtrl[slot][(controller & 0xfe) + 1];
         }
-        return base[(u8)channel * 134 + (u8)control + 0x43C0] << 7;
+        return gInpMidiCtrl[slot][controller] << 7;
     }
     return 0;
 }

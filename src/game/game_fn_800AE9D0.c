@@ -8,12 +8,12 @@ typedef struct RequestContext {
 } RequestContext;
 
 extern void *fn_8006ED3C();
-extern void fn_8006EB60(void);
+extern int fn_8006EB60(void*);
 extern void fn_8006E20C(void);
-extern void fn_8006BEE4(RequestContext*, void (*)(void));
+extern void fn_8006BEE4(RequestContext*, int (*)(void*));
 extern void fn_8006DEF8(void*, int, void (*)(void), void*, int);
 extern void fn_800AEB48(void);
-extern char* fn_800FD40C(void*, const void*, void*);
+extern char* fn_800FD40C(void*, const void*);
 extern unsigned int fn_801A9B28(void);
 extern unsigned int fn_801A9B30(void);
 extern void* memset(void*, int, unsigned int);
@@ -43,12 +43,12 @@ void fn_800AE9D0(void* object)
     fn_8006DEF8(owner, 24, fn_800AEB48, owner, 1);
     owner[index * 0x2C + 0x68] = 0;
     fn_8006DEF8(owner, 24, fn_8006E20C, owner, 10);
-    for (i = 1; i < 4; i++) {
+    for (i = 1; i < 3; i++) {
         owner[index * 0x2C + 0x68] = i;
         fn_8006DEF8(owner, 24, 0, 0, 1);
     }
     owner[index * 0x2C + 0x68] = 0;
-    fn_800FD40C(owner + 0x18, lbl_80246E08, owner + index * 0x2C + 0x68);
+    fn_800FD40C(owner + 0x18, lbl_80246E08);
     lbl_8064C9E0 = fn_801A9B28() & 0xFF;
     lbl_8064C9DC = fn_801A9B30() & 0xFF;
 }

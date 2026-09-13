@@ -17,9 +17,11 @@ extern void* memcpy(void*, const void*, u32);
 #pragma opt_propagation off
 void fn_801F338C(void)
 {
+    Data801F338C* data = &lbl_8063BEA0;
+
     lbl_8064C380 = lbl_8064C384;
-    memcpy(lbl_8063BEA0.a, lbl_8063BEA0.b, 0x10);
-    memcpy(lbl_8063BEA0.c, lbl_8063BEA0.d, 0x10);
+    memcpy(data->a, data->b, 0x10);
+    memcpy(data->c, data->d, 0x10);
     lbl_8064D770 = lbl_8064D764;
 }
 #pragma opt_propagation reset

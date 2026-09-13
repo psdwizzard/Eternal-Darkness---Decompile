@@ -10,26 +10,14 @@ void fn_801F4FC8(u8* source, int* red, int* green, int* blue)
     *blue = (1164 * (source[0] - 16) + 2018 * (source[1] - 128) + 500) / 1000;
 
     component = *red;
-    if (component > 255) {
-        component = 255;
-    } else {
-        component &= ~(component >> 31);
-    }
+    component = component > 255 ? 255 : (component < 0 ? 0 : component);
     *red = (u8)component;
 
     component = *green;
-    if (component > 255) {
-        component = 255;
-    } else {
-        component &= ~(component >> 31);
-    }
+    component = component > 255 ? 255 : (component < 0 ? 0 : component);
     *green = (u8)component;
 
     component = *blue;
-    if (component > 255) {
-        component = 255;
-    } else {
-        component &= ~(component >> 31);
-    }
+    component = component > 255 ? 255 : (component < 0 ? 0 : component);
     *blue = (u8)component;
 }

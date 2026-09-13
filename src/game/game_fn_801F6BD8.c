@@ -49,7 +49,7 @@ void fn_801F6BD8(const Vec3* input, Int3* output, int clamp, int shift)
     }
 
     scale = 1 << shift;
-    output->x = (int)((1.0 + x) * ((float)(scale * 640) * 0.5f));
-    output->y = (int)((1.0 - y) * ((float)(scale * 480) * 0.5f));
+    output->x = (int)((1.0 + x) * ((float)(scale * 640) / 2.0f));
+    output->y = (int)((1.0 - y) * ((float)(scale * 480) / 2.0f));
     output->z = (int)(16352.0 * z + 16352.0);
 }

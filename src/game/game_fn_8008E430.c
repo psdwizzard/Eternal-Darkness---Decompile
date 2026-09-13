@@ -23,23 +23,21 @@ extern void* fn_8011F130(void*);
 extern void fn_801A764C(void*, void*);
 extern void fn_801A7228(void*);
 
-/* NonMatching: behavior-complete frontier reconstruction; short-local reuse and
- * declaration-sensitive register allocation remain to be refined. */
 void fn_8008E430(void* object, int object_id, Data8008E430* data,
                  void* resource, void* argument, int* timer, int delay)
 {
-    int selected = data->primary;
+    int selected;
     int is_current;
-    short value = 0;
+    short value;
 
-    if (selected == 0) selected = data->fallback;
+    selected = data->primary != 0 ? data->primary : data->fallback;
     is_current = selected == fn_800DE3F8();
-    if (is_current && (unsigned int)fn_8020123C(125, object_id, selected, 1) == 0) {
+    if (is_current && (unsigned int)(fn_8020123C(125, object_id, selected, 1) & 0xFFFFFFFF) == 0) {
         fn_8020123C(126, object_id, object_id, 0);
         return;
     }
-    --*timer;
-    if (*timer > 1) return;
+    if (--*timer > 1) return;
+    value = 0;
     *timer = 240;
     if (data->fallback != 0) {
         fn_8020123C(128, object_id, selected, 0);
@@ -56,14 +54,12 @@ void fn_8008E430(void* object, int object_id, Data8008E430* data,
         *timer = delay != 0 ? delay : 100;
     } else {
         void* request = fn_801A717C();
-        void* resource_value;
         short other = 0;
         fn_801A74A0(request, object_id);
         fn_801A74A8(request, selected);
         fn_801A7538(request, 1);
         fn_801A7518(request, 5);
-        resource_value = fn_8011F130(resource);
-        fn_801A764C(request, resource_value);
+        fn_801A764C(request, fn_8011F130(resource));
         fn_8020123C(39, object_id, selected, (int)request);
         fn_801A7228(request);
         fn_80038308(object, 0, &other);

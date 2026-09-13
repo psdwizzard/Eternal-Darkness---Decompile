@@ -5,11 +5,12 @@ typedef unsigned int u32;
 typedef struct Vec3 { float x, y, z; } Vec3;
 typedef struct Effect {
     u8 fields[0x90];
-    void (*callback)(void);
+    void* (*callback)(void*, void*, void*);
     void* runtime;
     Vec3 position;
     u8 direction[6];
     u8 type;
+    u8 tail[4];
 } Effect;
 typedef struct Setup {
     u32 first;
@@ -24,27 +25,28 @@ extern u32 lbl_806504C4;
 extern u32 lbl_806504C8;
 extern u32 lbl_80651BE8;
 extern u16 lbl_80651BEC;
-extern float lbl_806504CC;
-extern float lbl_806504D0;
-extern float lbl_806504D4;
+extern const float lbl_806504CC;
+extern const float lbl_806504D0;
+extern const float lbl_806504D4;
 
 extern void fn_8018F76C(Effect*);
 extern void fn_8018F808(Effect*, Vec3*, void*);
-extern void fn_8018F864(void);
+extern void* fn_8018F864(void*, void*, void*);
 extern void* memcpy(void*, const void*, unsigned int);
 extern void* fn_80147EC4(Effect*);
 extern void fn_801568B8(void*, int);
 extern void fn_80180AC8(void*, int);
 extern int fn_801A98F4(int, int);
 
+#pragma opt_common_subs off
 void fn_8014C23C(u16 kind, u8 variant, s8 strength)
 {
     Setup setup;
     Effect effect;
     void* object;
 
-    setup.first = lbl_806504C8;
     setup.second = lbl_806504C4;
+    setup.first = lbl_806504C8;
     setup.direction_word = lbl_80651BE8;
     setup.direction_tail = lbl_80651BEC;
     setup.position.x = lbl_806504CC;
@@ -52,8 +54,8 @@ void fn_8014C23C(u16 kind, u8 variant, s8 strength)
     setup.position.z = lbl_806504D4;
     fn_8018F76C(&effect);
     if (kind != 0) {
-        *(u16*)((u8*)&effect + 8) = kind + 255;
-        *(u16*)((u8*)&effect + 6) = kind;
+        *(u16*)((u8*)&effect + 6) = kind + 255;
+        *(u16*)((u8*)&effect + 8) = kind;
     }
     if (variant != 0)
         ((u8*)&setup)[3] = variant;
@@ -75,3 +77,5 @@ void fn_8014C23C(u16 kind, u8 variant, s8 strength)
         }
     }
 }
+
+#pragma opt_common_subs reset

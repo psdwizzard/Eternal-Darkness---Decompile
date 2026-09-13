@@ -35,17 +35,18 @@ void fn_801F69F0(const Int3* input, Vec3* output, int shift)
     Vec3 transformed;
     int adjusted_x = fn_801A93E8(input->x, shift);
     int scale = 1 << shift;
+    float w;
 
-    normalized.x = 2.0f * (float)adjusted_x / (float)(scale * 640) -
-                   1.0f;
-    normalized.y = 1.0f -
-                   2.0f * (float)input->y / (float)(scale * 480);
+    w = (float)adjusted_x;
+    normalized.x = 2.0f * w / (float)(scale * 640) - 1.0f;
+    normalized.y = 1.0f - 2.0f * (float)input->y / (float)(scale * 480);
     normalized.z = ((float)input->z - 16352.0f) / 16352.0f;
 
-    normalized.w = fn_8017AE0C(&lbl_8063BF28, normalized.z);
-    normalized.x *= normalized.w;
-    normalized.y *= normalized.w;
-    normalized.z *= normalized.w;
+    w = fn_8017AE0C(&lbl_8063BF28, normalized.z);
+    normalized.w = w;
+    normalized.x *= w;
+    normalized.y *= w;
+    normalized.z *= w;
 
     fn_8017ACE0(&lbl_8063C028, (Vec3*)&normalized, &transformed);
     transformed.z = lbl_8063C028.m[3][2] * normalized.w;

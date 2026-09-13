@@ -29,13 +29,14 @@ typedef struct Runtime {
     u16 valueFA;
     u16 valueFC;
     u16 valueFE;
-    u8 options;
+    u8 rest : 7;
+    u8 flag : 1;
     u8 value101;
     u8 active[14];
 } Runtime;
 
-extern float lbl_806501A8;
-extern float lbl_806501AC;
+extern const float lbl_806501A8;
+extern const float lbl_806501AC;
 extern Vec3 lbl_8024EE48;
 
 void fn_80128C50(Runtime* runtime)
@@ -63,9 +64,9 @@ void fn_80128C50(Runtime* runtime)
     runtime->valueC0 = lbl_806501A8;
     runtime->valueFA = 0;
     runtime->valueFC = 1;
-    runtime->options &= 1;
+    runtime->rest = 0;
     runtime->value101 = 0;
     runtime->valueF0 = -1;
     runtime->valueFE = 0;
-    runtime->options &= 0xFE;
+    runtime->flag = 0;
 }

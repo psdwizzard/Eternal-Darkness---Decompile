@@ -52,7 +52,7 @@ extern void fn_80149B0C(void*, u32, u32);
 extern void fn_80191360(Effect*);
 extern u8 fn_801CEB2C(void*);
 extern u16 fn_801D3A34(void*, u32);
-extern void fn_801E8328(u32, Effect*);
+extern int fn_801E8328(u32, Effect*);
 
 void fn_801E2CF4(Actor* actor, Effect* effect, void* fieldA8, u32 arg4,
                  u32 arg5, u32 arg6, u8 child_byte, u32 arg8,

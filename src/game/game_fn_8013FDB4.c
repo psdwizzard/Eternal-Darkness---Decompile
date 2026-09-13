@@ -3,7 +3,7 @@
 typedef struct Vec3 { float x, y, z; } Vec3;
 typedef struct Result { Vec3 normal; Vec3 point; } Result;
 
-extern float lbl_806503D8;
+extern const float lbl_806503D8;
 extern int lbl_8064D18C;
 extern void* fn_8013FBE4(void*, const void*, Result*, void*, unsigned int);
 extern float fn_80211D4C(const void*, const Vec3*);
@@ -11,7 +11,6 @@ extern void *fn_80201B9C();
 extern void *fn_80201BC8();
 extern int fn_80201EB8();
 extern void* fn_80201B94();
-#define fn_80201B94(a) ((int)fn_80201B94(a))
 extern int fn_8011FAEC(void*);
 extern int fn_80201CDC(void*);
 extern int fn_80047C70(void*);
@@ -23,8 +22,9 @@ int fn_8013FDB4(void* owner, const void* value, Result* out, void* skip,
 {
     Result candidate;
     float best;
-    int found;
     void* hit;
+    Vec3* candidate_point;
+    int found;
 
     *kind = 0;
     best = lbl_806503D8;
@@ -37,12 +37,13 @@ int fn_8013FDB4(void* owner, const void* value, Result* out, void* skip,
     }
     if (flags & 2) {
         void* node = fn_80201B9C();
-        Vec3* candidate_point = &candidate.point;
+
+        candidate_point = &candidate.point;
         while (node != 0) {
             void* object = fn_80201BC8(node);
             if (lbl_8064D18C == fn_80201EB8(node) && object != 0 &&
                 object != skip && fn_80201B94(node) != 0 &&
-                (fn_8011FAEC(object) & 0x100) != 0 &&
+                (fn_8011FAEC(object) & 0x80) != 0 &&
                 (fn_80201CDC(node) & 4) != 0 &&
                 fn_80047C70(object) == 0 &&
                 fn_80136FF8(value, object, &candidate)) {

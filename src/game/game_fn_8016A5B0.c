@@ -11,6 +11,6 @@ void fn_8016A5B0(Context* context, int count)
     if (count >= 0) {
         fn_80160628(context, context->stack, count);
     } else {
-        context->top += (count << 4) + 16;
+        context->top = context->top + 16 + (count << 4);
     }
 }

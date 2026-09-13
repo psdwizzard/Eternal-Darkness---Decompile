@@ -21,50 +21,52 @@ typedef struct ResourceLoad {
     ResourceNode* base;
 } ResourceLoad;
 
-extern u8 lbl_8064DA20;
-extern s16 lbl_8064DAF0;
-extern ResourceLoad lbl_806386B0[];
+extern u8 lbl_8064D3A0;
+extern s16 lbl_8064D470;
+extern ResourceLoad lbl_806286B0[];
 extern u32 fn_801CD224(u32);
-extern int fn_801BC0D4(void*, u32);
+extern u32 fn_801BC0D4(void*, u32);
 extern void fn_801C3B30(u16*, void*, u8, void*);
-extern void fn_801BC670(u16, void*, u16);
+extern u32 fn_801BC670(u16, void*, u16);
 extern void fn_801CD3E0(void);
 
-int fn_801C3CBC(ResourceNode* base, u16 id, u32 kind, void* archive,
-                void* direct)
+int fn_801C3CBC(ResourceNode* prj_data, u16 gid, u32 kind, void* sdir, void* pool)
 {
-    u16* list;
-    ResourceNode* node;
-    ResourceLoad* loads = lbl_806386B0;
+    ResourceNode* g;
+    u16* sampleRef;
+    ResourceLoad* gsTab = lbl_806286B0;
+    s16 curSp;
+    void* poolPtr;
 
-    if (lbl_8064DA20 != 0) {
-        s16 count = lbl_8064DAF0;
-        if (count < 128) {
-            node = base;
-            while (node->next != 0xFFFFFFFF) {
-                if (node->id == id) {
-                    loads[count].node = node;
-                    loads[count].base = base;
-                    loads[count].archive = archive;
-                    list = (u16*)((u8*)base + node->list1);
-                    if (fn_801BC0D4(archive, fn_801CD224(kind))) {
-                        fn_801C3B30(list, archive, 1, 0);
-                    }
-                    fn_801C3B30((u16*)((u8*)base + node->list0), direct, 0, 0);
-                    fn_801C3B30((u16*)((u8*)base + node->list4), direct, 4, 0);
-                    fn_801C3B30((u16*)((u8*)base + node->list2), direct, 2, 0);
-                    fn_801C3B30((u16*)((u8*)base + node->list3), direct, 3, 0);
-                    if (node->flags == 1) {
-                        u8* extra = (u8*)base + node->extra;
-                        fn_801BC670(id, extra + 4, *(u16*)extra);
-                    }
-                    fn_801CD3E0();
-                    lbl_8064DAF0++;
-                    return 1;
+    if (lbl_8064D3A0 && (curSp = lbl_8064D470) < 128) {
+        g = prj_data;
+
+        while (g->next != 0xFFFFFFFF) {
+            if (g->id == gid) {
+                gsTab[curSp].node = g;
+                gsTab[curSp].base = prj_data;
+                poolPtr = pool;
+                gsTab[curSp].archive = sdir;
+                sampleRef = (u16*)((u8*)prj_data + g->list1);
+                if (fn_801BC0D4(sdir, fn_801CD224(kind))) {
+                    fn_801C3B30(sampleRef, sdir, 1, 0);
                 }
-                node = (ResourceNode*)((u8*)base + node->next);
+                fn_801C3B30((u16*)((u8*)prj_data + g->list0), poolPtr, 0, 0);
+                fn_801C3B30((u16*)((u8*)prj_data + g->list4), poolPtr, 4, 0);
+                fn_801C3B30((u16*)((u8*)prj_data + g->list2), pool, 2, 0);
+                fn_801C3B30((u16*)((u8*)prj_data + g->list3), pool, 3, 0);
+                if (g->flags == 1) {
+                    u8* fd = (u8*)prj_data + g->extra;
+                    fn_801BC670(gid, fd + 4, *(u16*)fd);
+                }
+                fn_801CD3E0();
+                ++lbl_8064D470;
+                return 1;
             }
+
+            g = (ResourceNode*)((u8*)prj_data + *(u32*)g);
         }
     }
+
     return 0;
 }

@@ -16,23 +16,15 @@ extern Color lbl_8064D594;
 u32 fn_801E3A34(Color* color)
 {
     Color old = lbl_8064D594;
-    u8 value;
-
     lbl_8064D594 = *color;
-    value = 230;
-    if (lbl_8064D594.channel.r <= 230) {
-        value = lbl_8064D594.channel.r;
-    }
-    lbl_8064D594.channel.r = value;
-    value = 230;
-    if (lbl_8064D594.channel.g <= 230) {
-        value = lbl_8064D594.channel.g;
-    }
-    lbl_8064D594.channel.g = value;
-    value = 230;
-    if (lbl_8064D594.channel.b <= 230) {
-        value = lbl_8064D594.channel.b;
-    }
-    lbl_8064D594.channel.b = value;
+    lbl_8064D594.channel.r = lbl_8064D594.channel.r <= 230
+                                      ? lbl_8064D594.channel.r
+                                      : 230;
+    lbl_8064D594.channel.g = lbl_8064D594.channel.g <= 230
+                                      ? lbl_8064D594.channel.g
+                                      : 230;
+    lbl_8064D594.channel.b = lbl_8064D594.channel.b <= 230
+                                      ? lbl_8064D594.channel.b
+                                      : 230;
     return old.value;
 }

@@ -9,16 +9,15 @@ typedef struct Entry {
     u16 flags;
 } Entry;
 
-extern Entry lbl_80637C10;
+extern Entry lbl_80637C10[];
 extern void fn_801E8534(Entry*);
 
 void fn_801E83A8(void)
 {
-    register Entry* entry;
     s32 i;
 
-    entry = &lbl_80637C10;
-    for (i = 0; i < 350; i++, entry++) {
+    for (i = 0; i < 350; i++) {
+        Entry* entry = &lbl_80637C10[i];
         if (entry->flags & 1) {
             if (entry->delay <= 1) {
                 entry->callback(entry->argument0, entry->argument1);
