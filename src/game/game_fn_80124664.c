@@ -30,24 +30,31 @@ extern const double lbl_80650178;
 
 void fn_80124664(Owner* owner, s32 index, u32 flags, float value)
 {
-    s32 channel_offset = index * 0x28;
-    Channel* channel;
-    Table* table = owner->table;
+    u32 one;
+    s32 offset;
+    u8* entry_index;
+    s32 channel_offset;
+    u32 inverse;
+    u32 new_flags;
+    u32 bit;
+    Table* table;
     u16 count;
+    Channel* channel;
+    s32 i;
+    channel_offset = index * 0x28;
+    table = owner->table;
     channel = (Channel*)((u8*)owner->channels + channel_offset);
     count = table->count;
 
     if (!(channel->flags & 8) || (flags & 8)) {
-        u32 one = 1;
-        s32 entry_index = index * 8;
-        u32 bit = one << index;
-        u32 new_flags = flags | 5;
-        u32 inverse = ~bit;
-        s32 offset;
-        s32 i;
+        one = 1;
+        entry_index = (u8*)(index * 8);
+        bit = one << index;
+        new_flags = flags | 5;
+        inverse = ~bit;
         for (offset = 0, i = 0; i < count; i++) {
             u8* entry = table->entries + offset + 0x14;
-            if (entry != 0 && *(u32*)(entry + entry_index) != 0xFFFFFFFF) {
+            if (entry != 0 && *(u32*)(entry_index + (u32)entry) != 0xFFFFFFFF) {
                 if (lbl_80650178 == value) {
                     channel->flags = 0;
                     owner->active &= inverse;
