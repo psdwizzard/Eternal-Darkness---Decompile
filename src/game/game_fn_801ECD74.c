@@ -14,6 +14,8 @@ extern Color lbl_8064D674;
 extern const float lbl_8065131C;
 extern void fn_80229D8C(int channel, Color* color);
 
+/* NonMatching: behavior-complete and size-exact. GC/1.3 hoists the local
+ * address calculation across one independent color-byte load. */
 void fn_801ECD74(Color* color)
 {
     Color copy;
