@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "assignment_id": "233de35e-a51a-4484-ad9d-6442de551e36",
+  "target": "fn_802053B0",
+  "compiler": "GC/1.3",
+  "compiler_flags": ["-use_lmw_stmw on"],
+  "canonical_objdiff": {
+    "command": "python3 tools/fndiff.py game/game_fn_802053B0.c fn_802053B0",
+    "raw_summary": "target 192 bytes  base 192 bytes  match 100.0",
+    "target_size": 192,
+    "base_size": 192,
+    "instruction_count": 48,
+    "match_percent": 100.0,
+    "diff_kinds": [null]
+  },
+  "relocation_strict": {
+    "command": "build/binutils/powerpc-eabi-objdump -dr build/GEDE01/src/game/game_fn_802053B0.o; build/binutils/powerpc-eabi-objdump -dr build/GEDE01/obj/game/game_fn_802053B0.o",
+    "match_percent": 100.0,
+    "relocations": [
+      {"offset": "0x38", "type": "R_PPC_REL24", "target": "fn_80205158", "addend": 0},
+      {"offset": "0x48", "type": "R_PPC_REL24", "target": "fn_80158234", "addend": 0},
+      {"offset": "0x54", "type": "R_PPC_REL24", "target": "fn_80158234", "addend": 0},
+      {"offset": "0x70", "type": "R_PPC_REL24", "target": "fn_80157BF4", "addend": 0},
+      {"offset": "0xA0", "type": "R_PPC_REL24", "target": "fn_80201814", "addend": 0}
+    ],
+    "raw_result": "candidate and reference each contain the five listed R_PPC_REL24 relocations at identical offsets, targets, and zero addends; objdiff reports no differing instructions"
+  },
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "exit_code": 0,
+    "raw_sha1_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "source_kind": "independent C translation unit",
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false
+  }
+}
