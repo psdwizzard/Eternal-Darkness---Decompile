@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "368fa19f-0c5f-4e08-b334-0be3e80fe424",
+  "attempt": 1,
+  "base_commit": "4f27c2fb21ec8476933c0188282e7850e23cec41",
+  "target": "fn_801F7E40",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-368fa19f-0c5f-4e08-b334-0be3e80fe424.json"
+  ],
+  "divergence": "Relocation-strict objdiff measures 97.52631%: retail is 380 bytes and generated C is 372 bytes, with all 27 relocation-bearing instructions represented. The remaining codegen divergence is two retail addis r0,r4,0 instructions before the 0xFFFF sentinel comparisons (generated C compares r4 directly), plus the consequent seven r30/r31 or compare-register operand mismatches; the reconstructed five-Vec3 declaration order otherwise recovers the retail 0x70 frame and stack offsets. The full build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
