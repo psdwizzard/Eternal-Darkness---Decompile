@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "assignment_id": "a0846bb6-3b38-483b-9fca-2517c9c164f2",
+  "target": "fn_80060F9C",
+  "compiler": "GC/1.3 (canonical configure.py settings; -use_lmw_stmw on)",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80060F9C -o build/GEDE01/fndiff-a0846bb6-canonical-final.json --format json-pretty fn_80060F9C",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80060F9C -o build/GEDE01/fndiff-a0846bb6-reloc-strict-final.json --format json-pretty -c function_reloc_diffs=name_address fn_80060F9C",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "legal_audit": "python3 tools/legal_audit.py"
+  },
+  "raw_measured_outputs": {
+    "build": "exit_code=0; build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "legal_audit": "legal audit passed (14514 tracked project files inspected)",
+    "final_canonical": "left_bytes=1292 right_bytes=1292 left_instructions=323 right_instructions=323 match_percent=98.79257 DIFF_ARG_MISMATCH=78; no insert/delete/replace/opcode mismatches",
+    "final_relocation_strict": "match_percent=98.79257 left_relocations=63 right_relocations=63 exact_offset_type_target_sequence_equal=true exact_offset_entries=63/63 addends=all_zero_or_absent"
+  },
+  "recovery": "Inspected preserved attempt commit e20742426f96a7424a14766a3101be7978eb4036. Its useful source prerequisite from commit 35466a0c401cc09d395ac7fef1b86573b277c42d was already present on the accepted base: result initialization precedes the initial helper calls, producing the retail 0xA0 stack frame and stmw r21 prologue.",
+  "improvements": "Corrected the distance gate so fn_8003E1F0 runs only for distances 400 through 699; corrected the creation gate to create only when (ready == 0 || relaxed != 0) and state bit 0x80 is clear; moved created initialization before fn_800CCC78; made the iterator's integer comparison signed; and expressed the floating scale as a compound multiply. These changes removed all prior instruction scheduling, relocation-offset, branch-opcode, signedness, and floating-operand divergences.",
+  "result": {
+    "status": "attempted",
+    "match_percent": 98.79257,
+    "retail_bytes": 1292,
+    "generated_bytes": 1292,
+    "retail_instructions": 323,
+    "generated_instructions": 323,
+    "difference_kinds": {
+      "DIFF_ARG_MISMATCH": 78
+    },
+    "relocations_each": 63,
+    "relocation_semantics_equal": true,
+    "relocations_at_exact_offsets": 63,
+    "relocation_addends": "all zero or absent on both sides"
+  },
+  "divergence": "The only remaining differences are 78 operand-only mismatches from one cyclic callee-saved register allocation: retail uses r24/r25/r26/r27/r28/r29 for owner/resource/probe-or-distance/target/alternate/iterator, while generated code uses r25/r26/r27/r28/r29/r24. Instruction count, byte size, opcode stream, control flow, and all 63 relocation offsets, types, semantic targets, and zero addends agree."
+}

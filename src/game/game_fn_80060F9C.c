@@ -68,7 +68,7 @@ s32 fn_80060F9C(void *owner, void *resource, void *probe, void *target,
                 void *alternate, s32 mask, s32 flags)
 {
     OwnerData *owner_data;
-    void *iterator;
+    s32 iterator;
     Vec3 resource_position;
     s32 relaxed;
     s32 result;
@@ -87,7 +87,7 @@ s32 fn_80060F9C(void *owner, void *resource, void *probe, void *target,
 
     result = 0;
     owner_data = fn_80201B8C(owner);
-    iterator = fn_80201B94(owner);
+    iterator = (s32)fn_80201B94(owner);
     fn_8011F114(&resource_position, resource);
     relaxed = 0;
     if (fn_80066D04(owner, 3) == 0 && fn_80066D04(owner, 2) == 0) {
@@ -97,21 +97,21 @@ s32 fn_80060F9C(void *owner, void *resource, void *probe, void *target,
         fn_800359A0(owner, 0);
     }
 
-    fn_80201CD4(iterator);
-    value = fn_80201C48(iterator);
-    if ((s32)fn_80201C48(iterator) == 1 &&
+    fn_80201CD4((void *)iterator);
+    value = fn_80201C48((void *)iterator);
+    if ((s32)fn_80201C48((void *)iterator) == 1 &&
         ((((u8 *)owner_data->state)[0x89] & 2) == 0)) {
         fn_80060C28((void *)fn_80201B54(owner), resource, owner_data);
         goto done;
     }
-    iterator = value;
+    iterator = (s32)value;
 
     if (fn_800CA7D4(probe, owner, target, resource, 30, 1) != 0) {
         result = fn_80060904(owner, resource, alternate);
         goto done;
     }
 
-    if (iterator != 0 && (value = fn_80201814(iterator)) != 0) {
+    if (iterator != 0 && (value = fn_80201814((void *)iterator)) != 0) {
         value = fn_80201BC8(value);
         if (value != 0 && ((TargetState *)target)->count == 0) {
             fn_8012FE10(value, 0, &target_position);
@@ -125,16 +125,17 @@ s32 fn_80060F9C(void *owner, void *resource, void *probe, void *target,
             query_position = delta;
             facing = fn_8012B7D0(resource, &query_position);
             fn_8017A12C(&angle, fn_8012B750(resource), facing);
-            facing = fn_8011F6F8(resource) * lbl_8064E600;
+            facing = fn_8011F6F8(resource);
+            facing *= lbl_8064E600;
 
             if (relaxed == 0) {
                 if (distance >= 400) {
                     if (distance >= 700) {
                         goto normal_path;
                     }
-                }
-                if (fn_8003E1F0(owner, &delta, 1, facing) == 0) {
-                    goto normal_path;
+                    if (fn_8003E1F0(owner, &delta, 1, facing) == 0) {
+                        goto normal_path;
+                    }
                 }
 
                 retry_position = delta;
@@ -163,15 +164,16 @@ s32 fn_80060F9C(void *owner, void *resource, void *probe, void *target,
             }
 
 normal_path:
+            created = 0;
             ready = fn_800CCC78(owner, 1000);
             fn_800360B0(owner, &state);
-            created = 0;
-            if (ready == 0 && relaxed == 0) {
-                if ((state & 0x80) == 0) {
-                    goto no_create;
-                }
+            if (ready != 0 && relaxed == 0) {
+                goto no_create;
             }
-            created = fn_800601FC(owner, fn_80201814(iterator), alternate);
+            if ((state & 0x80) != 0) {
+                goto no_create;
+            }
+            created = fn_800601FC(owner, fn_80201814((void *)iterator), alternate);
             result = created;
 
 no_create:
