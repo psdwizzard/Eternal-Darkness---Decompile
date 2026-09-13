@@ -6,14 +6,14 @@ extern const char lbl_8024FF00[];
 
 int fn_80171D6C(void* state)
 {
+    const char* strings = lbl_8024FF00;
     int arg1;
     int arg2;
+    unsigned char clamped2;
     int arg3;
     int arg4;
     unsigned char clamped1;
-    unsigned char clamped2;
     signed char clamped4;
-    const char* strings = lbl_8024FF00;
 
     if (fn_8016A598(state) != 4) {
         fn_80163BB4(state, strings, 4, fn_8016A598(state));

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "fba4469e-1697-4ec9-8223-04d5f527cbad",
+  "attempt": 1,
+  "base_commit": "e7aa6e54a2aff24a61b53edc9bf3999ad1d20f90",
+  "target": "fn_80171D6C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-fba4469e-1697-4ec9-8223-04d5f527cbad.json"
+  ],
+  "divergence": "Canonical objdiff-cli 3.6.1 reports 98.0531%: retail is 452 bytes and generated code is 456 bytes. All substantive body instructions and register allocations from retail +0x20 onward align after accounting for the four-byte shift, except retail addi r4,r31,0 at +0x3C versus generated mr r4,r31 at shifted +0x40. The primary divergence is address materialization: retail retains lbl_8024FF00@ha in r4 across stmw and emits addi r31,r4,lbl_8024FF00@l at +0x1C, while MWCC emits addi r0,r4,lbl_8024FF00@l at +0x10 then mr r31,r0 at +0x1C. Relocation-strict comparison therefore fails: retail has 17 relocation-bearing instructions versus generated 18, with the ADDR16_LO at retail +0x1C versus generated +0x10 plus a generated R_PPC_NONE association at +0x1C. The canonical build completes and build/GEDE01/main.dol remains ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
