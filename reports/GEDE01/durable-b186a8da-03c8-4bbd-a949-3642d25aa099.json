@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b186a8da-03c8-4bbd-a949-3642d25aa099",
+  "attempt": 3,
+  "base_commit": "052b4287027491be8af7d10e6df3dd3391e6f57c",
+  "target": "fn_801D0814",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b186a8da-03c8-4bbd-a949-3642d25aa099.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff score is 99.33761% with exact 936-byte target/generated sizes, 234 instructions, and 21 relocation-bearing instructions on each side; the two reports are byte-identical, confirming relocation targets and addends agree. The remaining 31 instruction differences are exclusively a consistent r30/r31 allocation swap: retail keeps the resource handle in r30 and the result pointer in r31, while GC/1.3 assigns resource to r31 and result to r30. A bounded register storage-class experiment produced no codegen change and was rejected. The full build passes and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
