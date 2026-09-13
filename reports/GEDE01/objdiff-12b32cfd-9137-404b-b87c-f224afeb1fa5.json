@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "assignment_id": "12b32cfd-9137-404b-b87c-f224afeb1fa5",
+  "target": "fn_80205630",
+  "unit": "main/game/game_fn_80205630",
+  "compiler": "GC/1.3",
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80205630 fn_80205630 -o build/GEDE01/objdiff-12b32cfd-9137-404b-b87c-f224afeb1fa5-canonical.json --format json-pretty",
+    "target_size": 80,
+    "base_size": 80,
+    "match_percent": 100.0,
+    "target_relocations": 4,
+    "base_relocations": 4,
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-12b32cfd-9137-404b-b87c-f224afeb1fa5-canonical.json"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80205630 fn_80205630 -o build/GEDE01/objdiff-12b32cfd-9137-404b-b87c-f224afeb1fa5-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "target_size": 80,
+    "base_size": 80,
+    "match_percent": 100.0,
+    "target_relocations": 4,
+    "base_relocations": 4,
+    "relocations": [
+      {"offset": 20, "type": "R_PPC_REL24", "target": "fn_80201B3C", "addend": 0},
+      {"offset": 32, "type": "R_PPC_REL24", "target": "fn_80205288", "addend": 0},
+      {"offset": 44, "type": "R_PPC_REL24", "target": "fn_80201C24", "addend": 0},
+      {"offset": 48, "type": "R_PPC_REL24", "target": "fn_80157AB8", "addend": 0}
+    ],
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-12b32cfd-9137-404b-b87c-f224afeb1fa5-reloc-strict.json"
+  },
+  "instruction_diff": {
+    "command": "python3 tools/fndiff.py game/game_fn_80205630.c fn_80205630",
+    "raw_output": "target 80 bytes  base 80 bytes  match 100.0\n  0x0014  bl fn_80201B3C [None+0 t10] | bl fn_80201B3C [None+0 t10]\n  0x0020  bl fn_80205288 [None+0 t10] | bl fn_80205288 [None+0 t10]\n  0x002c  bl fn_80201C24 [None+0 t10] | bl fn_80201C24 [None+0 t10]\n  0x0030  bl fn_80157AB8 [None+0 t10] | bl fn_80157AB8 [None+0 t10]"
+  },
+  "direct_report_comparison": {
+    "command": "cmp -s build/GEDE01/objdiff-12b32cfd-9137-404b-b87c-f224afeb1fa5-canonical.json build/GEDE01/objdiff-12b32cfd-9137-404b-b87c-f224afeb1fa5-reloc-strict.json",
+    "raw_output": "direct_json_cmp_exit=0"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80205630.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "private_or_generated_artifacts_in_commit": false
+  }
+}
