@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "assignment_id": "1f78b0fa-8c7d-4094-9719-1574e0c555a2",
+  "target": "fn_8005B528",
+  "compiler": "GC/1.3",
+  "registration": "Object(NonMatching, \"game/game_fn_8005B528.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8005B528 fn_8005B528 -o reports/GEDE01/objdiff-1f78b0fa-8c7d-4094-9719-1574e0c555a2-canonical.json --format json-pretty",
+    "raw_output": "retail_size=1676 generated_size=1660 retail_instruction_rows=424 generated_instruction_rows=424 match_percent=96.4105; DIFF_ARG_MISMATCH=7 DIFF_DELETE=9 DIFF_INSERT=5 DIFF_REPLACE=1",
+    "retail_bytes": 1676,
+    "generated_bytes": 1660,
+    "match_percent": 96.4105,
+    "raw_report": "reports/GEDE01/objdiff-1f78b0fa-8c7d-4094-9719-1574e0c555a2-canonical.json"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8005B528 fn_8005B528 -o reports/GEDE01/objdiff-1f78b0fa-8c7d-4094-9719-1574e0c555a2-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_output": "match_percent=96.4105; retail_relocation_instructions=70 generated_relocation_instructions=70 exact_aligned_relocation_instructions=65 nonexact_aligned_relocation_instructions=5; retail relocation diff kinds: DIFF_ARG_MISMATCH=3 DIFF_DELETE=1 DIFF_REPLACE=1; generated relocation diff kinds: DIFF_ARG_MISMATCH=3 DIFF_INSERT=2",
+    "match_percent": 96.4105,
+    "retail_relocation_instructions": 70,
+    "generated_relocation_instructions": 70,
+    "exact_aligned_relocation_instructions": 65,
+    "nonexact_aligned_relocation_instructions": 5,
+    "raw_report": "reports/GEDE01/objdiff-1f78b0fa-8c7d-4094-9719-1574e0c555a2-reloc-strict.json"
+  },
+  "codegen_divergence": {
+    "raw_output": "Retail-only instructions at function offsets 0x178 cmpwi r3,0x18, 0x17c beq 0x184, 0x180 nop, and 0x1e8 cmpwi r3,0 account for the 16-byte size delta. At retail 0x36c..0x3ac (generated 0x358..0x39c), canonical GC/1.3 schedules the lbl_8064C5A8 lookup before copying the compiler-local {0x5B,0x61,0x62} initializer and duplicates lbl_80651948 into the timer after the indexed load; retail copies the initializer first, then performs the indexed lookup, while interleaving the two timer stores. The latter region accounts for all five nonexact relocation-bearing rows. The discarded-result comparisons cannot be retained by ordinary side-effect-free C without an artificial operation; the recovered behavior is otherwise complete.",
+    "diff_counts": {
+      "DIFF_ARG_MISMATCH": 7,
+      "DIFF_DELETE": 9,
+      "DIFF_INSERT": 5,
+      "DIFF_REPLACE": 1
+    }
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "exit=0; build/GEDE01/main.dol: OK; Progress All: 55.26% fuzzy, 42.12% matched, 42.12% linked (6038 / 7066 files); Code: 969088 / 2300692 bytes (5803 / 8214 functions)"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol && cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0",
+    "sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "cmp_exit": 0
+  },
+  "legal_audit": {
+    "independent_translation_unit": true,
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_functions_edited": false,
+    "generated_binaries_staged": false,
+    "private_inputs_staged": false
+  }
+}

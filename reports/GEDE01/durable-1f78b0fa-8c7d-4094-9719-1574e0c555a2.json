@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "1f78b0fa-8c7d-4094-9719-1574e0c555a2",
+  "attempt": 2,
+  "base_commit": "42c067b7b442f7fee9006655d4335adf15935585",
+  "target": "fn_8005B528",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1f78b0fa-8c7d-4094-9719-1574e0c555a2.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 96.4105% (1676 retail bytes versus 1660 generated). Retail retains four discarded-result instructions at offsets 0x178-0x180 and 0x1e8 that honest side-effect-free C does not emit; the remaining differences are local-initializer/timer scheduling at retail 0x36c-0x3ac, where 5 of 70 relocation-bearing rows are not exactly aligned."
+}
