@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "assignment_id": "2141078e-c37c-4ee9-8577-ea78f4bc849a",
+  "target": "fn_801C8600",
+  "compiler": "GC/1.2.5n",
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801C8600 fn_801C8600 -o reports/GEDE01/objdiff-canonical-2141078e-c37c-4ee9-8577-ea78f4bc849a.json --format json-pretty",
+    "retail_bytes": 476,
+    "generated_bytes": 476,
+    "match_percent": 96.60504
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801C8600 fn_801C8600 -o reports/GEDE01/objdiff-2141078e-c37c-4ee9-8577-ea78f4bc849a.json --format json-pretty -c function_reloc_diffs=name_address",
+    "retail_bytes": 476,
+    "generated_bytes": 476,
+    "match_percent": 96.60504
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (14700 tracked project files inspected)"
+  }
+}
