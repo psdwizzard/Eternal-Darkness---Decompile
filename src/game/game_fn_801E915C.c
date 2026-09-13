@@ -153,7 +153,7 @@ u32 fn_801E915C(const u8* source, Header* header)
         offset += header->count54 * 4;
         for (i = 0, byte_offset = 0; i < header->count54; i++, byte_offset += 4) {
             *(u32*)(header->data58 + byte_offset) = (u32)(source + offset);
-            offset += fn_801EA6FC(source + offset, (void*)(header->data58 + byte_offset));
+            offset += fn_801EA6FC(source + offset, *(void**)(header->data58 + byte_offset));
         }
     }
 
