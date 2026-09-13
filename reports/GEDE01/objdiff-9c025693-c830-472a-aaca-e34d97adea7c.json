@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "assignment_id": "9c025693-c830-472a-aaca-e34d97adea7c",
+  "target": "fn_80205318",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80205318 fn_80205318 -o reports/GEDE01/objdiff-9c025693-c830-472a-aaca-e34d97adea7c-canonical.json --format json-pretty",
+    "exit_code": 0,
+    "raw_report": "reports/GEDE01/objdiff-9c025693-c830-472a-aaca-e34d97adea7c-canonical.json",
+    "raw_report_sha1": "45a86a3ea51a114265b9bf6458342fa73a2e6721",
+    "retail_size": 152,
+    "generated_size": 152,
+    "retail_instructions": 38,
+    "generated_instructions": 38,
+    "match_percent": 100.0
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80205318 fn_80205318 -o reports/GEDE01/objdiff-9c025693-c830-472a-aaca-e34d97adea7c-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "raw_report": "reports/GEDE01/objdiff-9c025693-c830-472a-aaca-e34d97adea7c-reloc-strict.json",
+    "raw_report_sha1": "45a86a3ea51a114265b9bf6458342fa73a2e6721",
+    "retail_size": 152,
+    "generated_size": 152,
+    "retail_instructions": 38,
+    "generated_instructions": 38,
+    "match_percent": 100.0,
+    "relocations_equal": true,
+    "retail_relocations": 4,
+    "generated_relocations": 4,
+    "relocations": [
+      {"offset": 64, "type": "R_PPC_REL24", "target": "fn_80205158", "addend": 0},
+      {"offset": 68, "type": "R_PPC_REL24", "target": "fn_80157C80", "addend": 0},
+      {"offset": 84, "type": "R_PPC_REL24", "target": "fn_80201814", "addend": 0},
+      {"offset": 104, "type": "R_PPC_REL24", "target": "fn_802020B4", "addend": 0}
+    ]
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_sha1_verified": true
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "output": "legal audit passed (14506 tracked project files inspected)"
+  }
+}
