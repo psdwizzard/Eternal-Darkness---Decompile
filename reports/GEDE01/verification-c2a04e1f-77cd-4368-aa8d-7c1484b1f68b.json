@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "assignment_id": "c2a04e1f-77cd-4368-aa8d-7c1484b1f68b",
+  "target": "fn_80189C14",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80189C14 fn_80189C14 -o reports/GEDE01/objdiff-c2a04e1f-77cd-4368-aa8d-7c1484b1f68b.json --format json-pretty",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80189C14 fn_80189C14 -o reports/GEDE01/objdiff-c2a04e1f-77cd-4368-aa8d-7c1484b1f68b-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "report_comparison": "cmp -s reports/GEDE01/objdiff-c2a04e1f-77cd-4368-aa8d-7c1484b1f68b.json reports/GEDE01/objdiff-c2a04e1f-77cd-4368-aa8d-7c1484b1f68b-reloc-strict.json"
+  },
+  "raw_measured_outputs": {
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_sha_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical": "retail_size=616 generated_size=616 match=97.07792 relocations=25 differing_instructions=74",
+    "relocation_strict": "retail_size=616 generated_size=616 match=97.07792 relocations=25 differing_instructions=74",
+    "canonical_vs_relocation_strict_cmp_exit_code": 0
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80189C14.c",
+    "range": "0x80189C14-0x80189E7C",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
