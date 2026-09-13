@@ -98,7 +98,7 @@ void fn_801E3388(Object* object)
                                                 output_a, output_d,
                                                 resource, lbl_80651248));
             *output_c = *output_b;
-            if ((object->flags & 0xF) == 8 && resource != 0) {
+            if ((object->flags & 0xF) == 8 && (int)resource != 0) {
                 void* second_b;
                 void** second_d;
                 u8 kind;
