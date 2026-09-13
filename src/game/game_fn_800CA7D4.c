@@ -7,11 +7,13 @@ typedef struct CounterState {
 } CounterState;
 
 extern u32 fn_8011FAF4(void *);
-extern void fn_8011FABC(void *, int, int);
+extern unsigned int fn_8011FABC(void *, int, int);
 extern void fn_800BCDF0(void *);
 
 #pragma use_lmw_stmw on
-int fn_800CA7D4(void *unused, void *owner, register CounterState *state,
+#define MAX0(value) (0 > (value) ? 0 : (value))
+
+int fn_800CA7D4(void *unused, void *owner, CounterState *state,
                 void *resource, int limit, int decrement)
 {
     int result;
@@ -23,14 +25,13 @@ int fn_800CA7D4(void *unused, void *owner, register CounterState *state,
             int count = state->count + 1;
             state->count = count;
             if ((u8)count > (u8)limit) {
-            fn_800BCDF0(owner);
-            result = 1;
-            state->count = 0;
+                fn_800BCDF0(owner);
+                result = 1;
+                state->count = 0;
             }
         }
     } else {
-        int count = state->count - (u8)decrement;
-        state->count = count >= 0 ? count : 0;
+        state->count = MAX0(state->count - (u8)decrement);
     }
     return result;
 }

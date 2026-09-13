@@ -17,13 +17,14 @@ extern void DCInvalidateRange(void*, u32);
 extern void fn_801F50EC(void*, void*);
 extern void fn_8020B774(void*, u32);
 extern void fn_801F5240(int);
-extern void fn_80133300(void);
+extern int fn_80133300(void);
 extern void fn_80134BFC(void);
 
 void fn_801F53E8(int value)
 {
-    void* source = lbl_8064D718;
     void* buffer;
+    void* source = lbl_8064D718;
+    u32 allocation;
     u32 event;
 
     if (fn_8015E4B4() != 0 && (signed char)lbl_8030F540[472] != -1) {
@@ -31,9 +32,8 @@ void fn_801F53E8(int value)
         fn_801F3528(&event);
         return;
     }
-    buffer = lbl_8064D6BC;
-    if (buffer == 0) {
-        buffer = (void*)(((u32)fn_801397F8(&event, 1, 2, 1) + 31) & ~31);
+    if ((buffer = lbl_8064D6BC) == 0) {
+        buffer = (void*)(((u32)fn_801397F8(&allocation, 1, 2, 1) + 31) & ~31);
     }
     lbl_8064D6B8 = buffer;
     DCInvalidateRange(source, 0x96000);
@@ -46,6 +46,6 @@ void fn_801F53E8(int value)
         fn_80133300();
         if (*(u32*)(lbl_8030F540 + 456) & 1) fn_80133300();
         if (*(short*)(lbl_8030F540 + 470) == -1) fn_80134BFC();
-        *(u16*)(lbl_8030F540 + 470) = (u16)-1;
+        *(short*)(lbl_8030F540 + 470) = -1;
     }
 }

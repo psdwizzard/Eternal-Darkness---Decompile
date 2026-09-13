@@ -14,6 +14,7 @@ typedef struct EntryState {
 
 extern EntryState lbl_8060B430;
 
+#pragma peephole off
 int fn_801AD9F4(Entry** result)
 {
     unsigned int slot;
@@ -25,7 +26,7 @@ int fn_801AD9F4(Entry** result)
     entry = entries;
     for (; slot < 3; entry++, slot++) {
         if (entry->active == 0) {
-            register unsigned int index;
+            unsigned int index;
             unsigned int id;
 
             do {
@@ -42,17 +43,15 @@ int fn_801AD9F4(Entry** result)
                 }
             } while (index != 3);
 
-            /* NonMatching: size-exact; the final active value and slot-offset
-             * temporaries are allocated to r6/r5 instead of retail r5/r6. */
-            lbl_8060B430.entries[slot].active = index = 1;
-            entry = &lbl_8060B430.entries[slot];
-            entry->id = id;
-            entry->value8 = 0;
-            entry->valueC = 0;
-            *result = entry;
+            lbl_8060B430.entries[slot].active = 1;
+            lbl_8060B430.entries[slot].id = id;
+            lbl_8060B430.entries[slot].value8 = 0;
+            lbl_8060B430.entries[slot].valueC = 0;
+            *result = &lbl_8060B430.entries[slot];
             return id;
         }
     }
 
     return -1;
 }
+#pragma peephole reset

@@ -34,7 +34,7 @@ s32 fn_8001CA04(void* script)
             }
             break;
         default:
-            fn_80163BB4(script, lbl_8023CD70);
+            fn_80163BB4(script, lbl_8023CD70, mode);
             return 0;
         }
         break;

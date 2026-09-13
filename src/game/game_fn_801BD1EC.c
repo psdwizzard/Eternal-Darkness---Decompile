@@ -1,36 +1,51 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
+typedef signed int s32;
 
-typedef struct SearchTable {
-    u16 unused;
-    u16 count;
-    void* entries;
-} SearchTable;
+typedef struct FX_TAB {
+    u16 id;
+    u8 pad[8];
+} FX_TAB;
+
+typedef struct FX_GROUP {
+    u16 pad;
+    u16 fxNum;
+    FX_TAB* fxTab;
+} FX_GROUP;
+
+typedef struct SynthDataTables {
+    u8 pad0000[0xA200];
+    FX_GROUP fxGroup[128];
+    u8 getSampleKey[0x2C];
+    FX_TAB getFXKey;
+} SynthDataTables;
 
 extern u8 lbl_8061C748[];
 extern u16 lbl_8064D3FA;
-extern int fn_801BD1DC(void*, void*);
-extern void* fn_801CC370(void*, void*, u32, u32, int (*)(void*, void*));
+extern s32 fn_801BD1DC(void*, void*);
+extern void* fn_801CC370(void*, void*, int, u32, s32 (*)(void*, void*));
 
-void* fn_801BD1EC(u32 id)
+#define dataSmpSDirs lbl_8061C748
+#define dataFXGroupNum lbl_8064D3FA
+
+FX_TAB* fn_801BD1EC(u16 fid)
 {
-    u8* base = lbl_8061C748;
-    SearchTable* table;
-    int i;
-    u32 offset;
+    FX_TAB* ret;
+    long i;
+    FX_TAB* tab;
+    SynthDataTables* t = (SynthDataTables*)dataSmpSDirs;
+    FX_GROUP* g;
+    int zero;
 
-    i = 0;
-    offset = i << 3;
-    *(u16*)(base + 0xA62C) = id;
-    table = (SearchTable*)(base + 0x10000 + offset - 0x5E00);
-    for (; i < lbl_8064D3FA; i++) {
-        void* result = fn_801CC370(base + 0xA62C, table->entries,
-                                   table->count, 10, fn_801BD1DC);
-        if (result != 0) {
-            return result;
+    t->getFXKey.id = fid;
+    g = t->fxGroup;
+    for (i = (zero = 0); i < dataFXGroupNum; ++i) {
+        tab = g[i].fxTab;
+        if ((ret = (FX_TAB*)fn_801CC370(&t->getFXKey, tab, g[i].fxNum, sizeof(FX_TAB), fn_801BD1DC))) {
+            return ret;
         }
-        table++;
     }
+
     return 0;
 }

@@ -1,6 +1,7 @@
 extern float lbl_80650350;
 extern float lbl_80650358;
 
+#pragma opt_loop_invariants off
 int fn_8013DB8C(const short* minimum, const short* maximum,
                 const float* origin, const float* delta,
                 float* result, float* amount)
@@ -40,18 +41,17 @@ int fn_8013DB8C(const short* minimum, const short* maximum,
     }
 
     selected = 0;
-    if (time[selected] < time[1]) {
-        selected = 1;
-    }
-    if (time[selected] < time[2]) {
-        selected = 2;
+    for (axis = 1; axis < 3; axis++) {
+        if (time[selected] < time[axis]) {
+            selected = axis;
+        }
     }
     if (time[selected] < lbl_80650350) {
         return 0;
     }
 
     for (axis = 0; axis < 3; axis++) {
-        if (axis != selected) {
+        if (selected != axis) {
             result[axis] = origin[axis] + time[selected] * delta[axis];
             if (result[axis] < minimum[axis] || result[axis] > maximum[axis]) {
                 return 0;
@@ -63,3 +63,5 @@ int fn_8013DB8C(const short* minimum, const short* maximum,
     *amount = time[selected];
     return 1;
 }
+
+#pragma opt_loop_invariants reset

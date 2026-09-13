@@ -46,17 +46,21 @@ void fn_801E5448(s16 x, s16 y, float scale, const char* format, ...)
     va_list args;
     TextDescriptor text;
     TextDescriptor* text_ptr = &text;
+    u16 flags;
+    s8 align;
 
     fn_801E5430(x, y);
     memset(text_ptr, 0, sizeof(text));
-    va_start(args, format);
+    align = lbl_8064C31A;
     text_ptr->x = lbl_8064D576;
     text_ptr->y = lbl_8064D578;
     text_ptr->font = lbl_8064D580;
-    text_ptr->align = lbl_8064C31A;
+    text_ptr->align = align;
     text_ptr->scale = scale;
-    text_ptr->flags = text_ptr->align == 'c' ? 2 : 0;
+    flags = align == 'c' ? 2 : 0;
+    text_ptr->flags = flags;
     text_ptr->color = lbl_8064D594;
+    va_start(args, format);
     fn_800F9E2C(text_ptr->text, format, args);
     fn_801E5920(text_ptr->text);
     fn_801E6A8C(text_ptr);

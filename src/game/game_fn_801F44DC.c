@@ -1,11 +1,11 @@
 typedef float Matrix34[3][4];
 
-extern float lbl_80651348;
-extern float lbl_8065137C;
-extern float lbl_80651378;
-extern float lbl_806513E4;
-extern float lbl_806513FC;
-extern float lbl_80651400;
+extern const float lbl_80651348;
+extern const float lbl_8065137C;
+extern const float lbl_80651378;
+extern const float lbl_806513E4;
+extern const float lbl_806513FC;
+extern const float lbl_80651400;
 
 extern void fn_802119B0();
 extern void fn_8022B4B8();

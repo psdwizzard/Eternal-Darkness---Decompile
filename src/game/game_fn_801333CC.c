@@ -30,17 +30,20 @@ typedef struct Triple {
 extern Manager* fn_8015E4A4(void);
 extern void *fn_80201B9C();
 extern int fn_8013864C(int, int);
-extern void fn_80053E50(float, int, int, int, int, int, int, int, int,
-                       Triple, int);
-extern float lbl_80650258;
+extern int fn_80053E50(float, int, int, int, int, int, int, int, int,
+                      Triple, int);
+extern const float lbl_80650258;
 
 void fn_801333CC(void)
 {
     Manager* manager = fn_8015E4A4();
 
     if (manager != 0) {
-        int offset = 0;
-        int i = 0;
+        int offset;
+        int i;
+
+        i = 0;
+        offset = 0;
 
         while (i < manager->count) {
             Entry entry = *(Entry*)((char*)manager->entries + offset);

@@ -1,74 +1,74 @@
 typedef unsigned int u32;
 
-typedef struct Link {
-    struct Link* next;
-    struct Link* prev;
-    u32 key;
-    u32 value;
-} Link;
+typedef struct VID_LIST {
+    struct VID_LIST* next;
+    struct VID_LIST* prev;
+    u32 vid;
+    u32 root;
+} VID_LIST;
 
-typedef struct Voice {
+typedef struct SYNTH_VOICE {
     unsigned char pad_000[0xF4];
-    u32 value;
-    Link* link;
-    Link* current;
-} Voice;
+    u32 id;
+    VID_LIST* vidList;
+    VID_LIST* vidMasterList;
+} SYNTH_VOICE;
 
 extern u32 lbl_8064D458;
-extern Link* lbl_8064D45C;
-extern Link* lbl_8064D460;
+extern VID_LIST* lbl_8064D45C;
+extern VID_LIST* lbl_8064D460;
 
-u32 fn_801C13D4(Voice* voice, u32 remember)
+u32 fn_801C13D4(SYNTH_VOICE* s, u32 returnNewId)
 {
-    u32 key;
-    Link* link;
-    Link* previous;
-    Link* free;
-    Link* allocated;
+    u32 nextId;
+    VID_LIST* cursor;
+    VID_LIST* node;
+    VID_LIST* prev;
+    VID_LIST* freeNode;
 
     do {
-        key = lbl_8064D458;
-        lbl_8064D458 = key + 1;
-    } while (key == 0xFFFFFFFF);
+        nextId = lbl_8064D458;
+        lbl_8064D458 = nextId + 1;
+    } while (nextId == 0xffffffffU);
 
-    link = lbl_8064D45C;
-    previous = 0;
-    while (link != 0) {
-        if (link->key > key) {
+    cursor = lbl_8064D45C;
+    prev = 0;
+    while ((node = cursor) != 0) {
+        if (node->vid > nextId) {
             break;
         }
-        if (link->key == key) {
+        if (node->vid == nextId) {
             do {
-                key = lbl_8064D458;
-                lbl_8064D458 = key + 1;
-            } while (key == 0xFFFFFFFF);
+                nextId = lbl_8064D458;
+                lbl_8064D458 = nextId + 1;
+            } while (nextId == 0xffffffffU);
         }
-        previous = link;
-        link = link->next;
+        prev = node;
+        cursor = node->next;
     }
 
-    free = lbl_8064D460;
-    if ((allocated = free) == 0) {
-        return 0xFFFFFFFF;
+    if ((freeNode = lbl_8064D460) == 0) {
+        return 0xffffffffU;
     }
-    lbl_8064D460 = free->next;
-    if (free->next != 0) {
+    if ((lbl_8064D460 = lbl_8064D460->next) != 0) {
         lbl_8064D460->prev = 0;
     }
-
-    if (previous == 0) {
-        lbl_8064D45C = allocated;
+    if (prev == 0) {
+        lbl_8064D45C = freeNode;
     } else {
-        previous->next = allocated;
+        prev->next = freeNode;
     }
-    allocated->prev = previous;
-    allocated->next = link;
-    if (link != 0) {
-        link->prev = allocated;
+    freeNode->prev = prev;
+    freeNode->next = node;
+    if (node != 0) {
+        node->prev = freeNode;
     }
-    allocated->key = key;
-    allocated->value = voice->value;
-    voice->current = remember ? allocated : 0;
-    voice->link = allocated;
-    return remember ? key : voice->value;
+    freeNode->vid = nextId;
+    freeNode->root = s->id;
+    s->vidMasterList = ((u32)returnNewId != 0) ? freeNode : 0;
+    s->vidList = freeNode;
+    if ((u32)returnNewId != 0) {
+        return nextId;
+    }
+    return s->id;
 }

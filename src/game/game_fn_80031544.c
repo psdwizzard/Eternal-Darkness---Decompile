@@ -32,7 +32,6 @@ typedef struct EffectState {
 } EffectState;
 
 extern EffectState lbl_80303B30;
-extern const double lbl_8064E038;
 extern const float lbl_8064E064;
 extern const float lbl_8064E15C;
 
@@ -61,7 +60,7 @@ void fn_80031544(void* object, s32 arg2, s32 arg3)
     lbl_80303B30.radius = 50;
     lbl_80303B30.update = fn_801FDA7C;
     lbl_80303B30.strength = 50;
-    lbl_80303B30.rate = (s32)(lbl_8064E064 + (float)lbl_80303B30.lifetime / lbl_8064E15C);
+    lbl_80303B30.rate = lbl_8064E064 + (float)lbl_80303B30.lifetime / lbl_8064E15C;
     lbl_80303B30.owner_id = fn_80201B54(object);
     lbl_80303B30.finish = fn_8014CA98;
     lbl_80303B30.active = 1;

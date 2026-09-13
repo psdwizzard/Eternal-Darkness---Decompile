@@ -1,8 +1,18 @@
 typedef unsigned int u32;
 typedef unsigned char u8;
 
-int fn_801E79FC(u8* bits, u32 index)
+static inline u32 TestBits(u32 word, u32 mask)
 {
-    u32* words = (u32*)(bits + 4);
-    return (words[index >> 5] & (1 << (index & 31))) != 0;
+    return word & mask;
+}
+
+int fn_801E79FC(u32* set, u32 index)
+{
+    u32 offset;
+    u32 bit;
+
+    set = (u32*)((u8*)set + 4);
+    offset = (index >> 5) << 2;
+    bit = index & 31;
+    return TestBits(*(u32*)((u8*)set + offset), 1 << bit) != 0;
 }

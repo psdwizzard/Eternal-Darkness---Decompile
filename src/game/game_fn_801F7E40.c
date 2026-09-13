@@ -18,14 +18,16 @@ extern void fn_80211A48(Vec3*, Vec3*, Vec3*);
 
 void fn_801F7E40(Vec3* output, void* input, float amount)
 {
-    Vec3 a;
-    Vec3 b;
-    Vec3 c;
     void* value;
-    unsigned int index;
+    int index;
+    Vec3 e;
+    Vec3 d;
+    Vec3 c;
+    Vec3 b;
+    Vec3 a;
 
     if (input != 0) {
-        fn_8011F114(&c);
+        fn_8011F114(&e);
         value = fn_8011F7D8(input);
         index = fn_8011F134(input);
         if (index == 0xFFFF) {
@@ -39,14 +41,14 @@ void fn_801F7E40(Vec3* output, void* input, float amount)
         value = fn_8011F7D8(lbl_8064C4E4);
         index = fn_8011F134(lbl_8064C4E4);
         if (index == 0xFFFF) {
-            fn_80127F90(lbl_8064C4E4, 0, &c);
+            fn_80127F90(lbl_8064C4E4, 0, &d);
         } else {
-            fn_80127F90(lbl_8064C4E4, index, &c);
+            fn_80127F90(lbl_8064C4E4, index, &d);
         }
         lbl_802FC6FC = a;
-        lbl_802FC6FC.z = c.z;
+        lbl_802FC6FC.z = d.z;
     }
 
-    fn_80211A90(value, &b, amount);
-    fn_80211A48(&lbl_802FC6FC, &b, output);
+    fn_80211A90(value, &c, amount);
+    fn_80211A48(&lbl_802FC6FC, &c, output);
 }

@@ -28,15 +28,21 @@ extern void fn_8008CBA4(State*);
 int fn_8008C7F8(State* state, void* object, Vec3* position, void* owner,
                 Event* event)
 {
-    void* ownerObject = fn_80201814(owner);
-    void* objectState = fn_80201B8C(object);
     int allowed = 1;
+    void* ownerObject = fn_80201814(owner);
+    void* objectState;
     int result = 0;
 
+    objectState = fn_80201B8C(object);
+
     if (event != 0) {
-        if ((event->type >= 30 && event->type < 32) ||
-            (event->type >= 81 && event->type < 83)) {
+        switch (event->type) {
+        case 30:
+        case 31:
+        case 81:
+        case 82:
             allowed = 0;
+            break;
         }
     }
     if (allowed && fn_80201B5C(ownerObject) == 50)

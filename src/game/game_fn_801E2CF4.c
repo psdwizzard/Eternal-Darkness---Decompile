@@ -2,11 +2,17 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
+typedef struct Position {
+    u32 x;
+    u32 y;
+    u32 z;
+} Position;
+
 typedef struct Actor {
     u8 pad0[4];
     void* field4;
     u8 pad8[0x30];
-    u32 position[3];
+    Position position;
 } Actor;
 
 typedef struct Effect {
@@ -30,7 +36,7 @@ typedef struct Effect {
     u8 pad2A[2];
     void* field2C;
     u8 pad30[4];
-    u32 position[3];
+    Position position;
     u8 pad40[0x68];
     void* fieldA8;
     u8 padAC[0x10];
@@ -46,7 +52,7 @@ extern void fn_80149B0C(void*, u32, u32);
 extern void fn_80191360(Effect*);
 extern u8 fn_801CEB2C(void*);
 extern u16 fn_801D3A34(void*, u32);
-extern void fn_801E8328(u32, Effect*);
+extern int fn_801E8328(u32, Effect*);
 
 void fn_801E2CF4(Actor* actor, Effect* effect, void* fieldA8, u32 arg4,
                  u32 arg5, u32 arg6, u8 child_byte, u32 arg8,
@@ -71,9 +77,7 @@ void fn_801E2CF4(Actor* actor, Effect* effect, void* fieldA8, u32 arg4,
         effect->byte18 = 8;
         effect->byte1A = 15;
         effect->field24 = 0;
-        effect->position[0] = actor->position[0];
-        effect->position[1] = actor->position[1];
-        effect->position[2] = actor->position[2];
+        effect->position = actor->position;
         effect->byte1B = byte1B;
         effect->half28 = 250;
         effect->field2C = fieldA8;
