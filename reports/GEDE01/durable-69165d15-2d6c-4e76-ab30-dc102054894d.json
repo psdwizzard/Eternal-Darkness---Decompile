@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "69165d15-2d6c-4e76-ab30-dc102054894d",
+  "attempt": 3,
+  "base_commit": "d2eb0fa2d4adc9561bb251236142e8e3644e439f",
+  "target": "fn_8006B21C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-69165d15-2d6c-4e76-ab30-dc102054894d.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict direct objdiff both measure 96.87805%: 328 retail bytes versus 320 generated, and the two raw reports are byte-identical. GC/1.3 omits retail's addi r3,r31,0 before the lbl_8064C8D4 store and addi r5,r31,0x654 before the four State field stores, instead storing r31 directly and folding those field offsets into r31-relative accesses. After memset it schedules addi r0,r31,0x7b8 before addi r3,r31,0x654 and folds the linked-buffer destination store to 0x7b0(r31), versus retail's addi r3 first and stw r0,0x15c(r3)."
+}
