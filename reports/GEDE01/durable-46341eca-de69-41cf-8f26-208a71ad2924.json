@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "46341eca-de69-41cf-8f26-208a71ad2924",
+  "attempt": 2,
+  "base_commit": "5e39615b3745a708d6434cc5898bda2a2159055b",
+  "target": "fn_8016FA08",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-46341eca-de69-41cf-8f26-208a71ad2924.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff v3.6.1 measures 97.77778%: retail is 396 bytes with 24 relocation-bearing instruction records, while generated code is 400 bytes with 25. At retail offset 0x14 MWCC should emit addi r31,r4,lbl_8024FF00@l, but generated code first emits addi r0,r4,lbl_8024FF00@l at 0x10 and then mr r31,r0 at 0x18. This extra instruction shifts subsequent branch destinations by four bytes; additionally, the zero-offset format argument at retail 0x44 is addi r4,r31,0, while generated 0x48 is mr r4,r31."
+}
