@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "assignment_id": "b3fa80d1-f5e6-4b7d-b3dd-fa31fb494401",
+  "target": "fn_80205288",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80205288 -o build/GEDE01/objdiff-b3fa80d1-f5e6-4b7d-b3dd-fa31fb494401-canonical.json --format json-pretty fn_80205288",
+    "left_size": 144,
+    "right_size": 144,
+    "match_percent": 100.0
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80205288 -o build/GEDE01/objdiff-b3fa80d1-f5e6-4b7d-b3dd-fa31fb494401-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_80205288",
+    "match_percent": 100.0,
+    "relocations_equal": true,
+    "left": [
+      {"offset": 56, "type": "R_PPC_REL24", "target": "fn_80205158", "addend": 0},
+      {"offset": 60, "type": "R_PPC_REL24", "target": "fn_80157C80", "addend": 0},
+      {"offset": 108, "type": "R_PPC_REL24", "target": "fn_80201814", "addend": 0}
+    ],
+    "right": [
+      {"offset": 56, "type": "R_PPC_REL24", "target": "fn_80205158", "addend": 0},
+      {"offset": 60, "type": "R_PPC_REL24", "target": "fn_80157C80", "addend": 0},
+      {"offset": 108, "type": "R_PPC_REL24", "target": "fn_80201814", "addend": 0}
+    ]
+  },
+  "dol_sha1": {
+    "retail": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "rebuilt": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  }
+}
