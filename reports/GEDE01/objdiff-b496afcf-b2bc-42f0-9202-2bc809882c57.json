@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "assignment_id": "b496afcf-b2bc-42f0-9202-2bc809882c57",
+  "target": "fn_800741E8",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/fndiff.py game/game_fn_800741E8.c fn_800741E8"
+  ],
+  "build": {
+    "configure_exit": 0,
+    "ninja_exit": 0,
+    "dol_check_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "objdiff": {
+    "raw_summary": "target 296 bytes  base 292 bytes  match 97.297295",
+    "target_bytes": 296,
+    "base_bytes": 292,
+    "match_percent": 97.297295,
+    "canonical_100_percent": false,
+    "relocation_strict_100_percent": false,
+    "relocations": {
+      "target_count": 15,
+      "base_count": 15,
+      "type": "R_PPC_REL24",
+      "all_addends": 0,
+      "ordered_targets_equal": true,
+      "ordered_targets": [
+        "fn_80128EAC", "fn_801A7498", "fn_801A7490", "fn_8011F114",
+        "fn_80201814", "fn_80201814", "fn_80201BC8", "fn_80201B8C",
+        "fn_80074440", "fn_80129BE4", "fn_80074310", "fn_8011F6F0",
+        "fn_80137E60", "fn_8020123C", "fn_8020123C"
+      ],
+      "target_instruction_offsets": [24, 40, 56, 72, 80, 96, 112, 128, 152, 164, 200, 208, 220, 248, 268],
+      "base_instruction_offsets": [24, 40, 56, 72, 80, 96, 112, 124, 148, 160, 196, 204, 216, 244, 264],
+      "exact_result": "Targets, types, and addends agree for all 15 relocations, but strict placement is not 100% because the generated object omits the target instruction at 0x7c and every later relocation is four bytes early."
+    },
+    "raw_divergence": [
+      "0x0010 target mr r30,r3 | base mr r27,r3",
+      "0x0014 target mr r31,r4 | base mr r28,r4",
+      "0x005c target mr r31,r0 | base mr r30,r0",
+      "0x006c target mr r31,r0 | base mr r30,r0",
+      "0x0074 target mr r0,r3 | base mr r31,r3",
+      "0x0078 target mr r3,r31 | base mr r3,r30",
+      "0x007c target mr r31,r0 | base has no instruction",
+      "0x0084 target lwz r27,0x44(r3) | base lwz r30,0x44(r3)",
+      "remaining semantic differences are the consequent r27/r30 and r28/r31 callee-saved register substitutions; control flow and calls otherwise agree"
+    ]
+  },
+  "bounded_trials": [
+    {"variant": "existing behavior-complete C baseline", "match_percent": 97.297295},
+    {"variant": "direct parameter lifetimes and register-qualified parameters", "match_percent": 97.297295},
+    {"variant": "typed extern prototypes", "match_percent": 97.297295},
+    {"variant": "reversed local declaration order", "match_percent": 96.756760}
+  ],
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "register_binding_hack": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_staged": false,
+    "private_inputs_staged": false
+  }
+}

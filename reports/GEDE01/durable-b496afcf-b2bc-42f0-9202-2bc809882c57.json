@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b496afcf-b2bc-42f0-9202-2bc809882c57",
+  "attempt": 1,
+  "base_commit": "69fe9a4f834c4c0cf36432554c44a6dbb1b09391",
+  "target": "fn_800741E8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b496afcf-b2bc-42f0-9202-2bc809882c57.json"
+  ],
+  "divergence": "Best canonical objdiff is 97.297295% (296 retail bytes versus 292 generated). Generated code assigns object/state and link/resolved values to different callee-saved registers and omits retail's mr r31,r0 at target offset 0x7c; all 15 R_PPC_REL24 targets/types/addends agree, but the missing instruction shifts the final eight relocation sites four bytes early, so relocation-strict 100% is not achieved."
+}
