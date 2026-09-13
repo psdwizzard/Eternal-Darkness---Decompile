@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "fae692b3-7fda-400e-8e52-dd49b14e29de",
+  "attempt": 3,
+  "base_commit": "6383165fbb011e273501051ce8b103757e5cfc9e",
+  "target": "fn_800601FC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-fae692b3-7fda-400e-8e52-dd49b14e29de.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both measure 99.27404%; their raw JSON outputs are byte-identical (SHA-1 82dc5a9ed193a5ca7891b762974fac83171daf9f). Retail and generated C are each 832 bytes and 208 instructions. Both objects contain 48 relocation-bearing instructions at identical sites, with strict comparison finding no relocation divergence. The remaining aligned diff is exactly 31 DIFF_ARG_MISMATCH rows: 27 equivalent callee-saved register operand differences and four stack-slot operand differences around fn_801292E0 and the recovered count/entries loop. Replacing the aggregate EntryList local with independent count and entries locals removed the prior inserted/deleted call-scheduling rows and improved the previous 97.75% score without assembly. The canonical build passed, legal_audit.py passed for 14465 tracked project files, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

@@ -88,7 +88,8 @@ s32 fn_800601FC(void *source, void *target)
     u8 hit[0x18];
     void *created;
     void *descriptor;
-    EntryList list;
+    s32 count;
+    Entry *entries;
     s32 i;
     s32 offset;
     s32 callback_arg;
@@ -142,10 +143,10 @@ s32 fn_800601FC(void *source, void *target)
     fn_801A7538(descriptor, 1);
     fn_801A7518(descriptor, 0x14);
 
-    fn_801292E0(source_resource, &list.count, &list.entries);
+    fn_801292E0(source_resource, &count, &entries);
     offset = 0;
-    for (i = 0; i < list.count; i++, offset += sizeof(Entry)) {
-        Entry *entry = (Entry *)((u8 *)list.entries + offset);
+    for (i = 0; i < count; i++, offset += sizeof(Entry)) {
+        Entry *entry = (Entry *)((u8 *)entries + offset);
         switch (entry->kind) {
         case 1:
             callback_arg = entry->packed >> 17;
