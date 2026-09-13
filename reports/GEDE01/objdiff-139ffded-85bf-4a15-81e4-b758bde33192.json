@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "assignment_id": "139ffded-85bf-4a15-81e4-b758bde33192",
+  "target": "fn_800741E8",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "sha1sum build/GEDE01/main.dol",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800741E8 fn_800741E8 -o build/GEDE01/objdiff-139ffded-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800741E8 fn_800741E8 -o build/GEDE01/objdiff-139ffded-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "python3 tools/fndiff.py game/game_fn_800741E8.c fn_800741E8"
+  ],
+  "build": {
+    "configure_exit": 0,
+    "ninja_exit": 0,
+    "raw_ninja_tail": "[815/817] DOL build/GEDE01/main.dol\n[816/817] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[817/817] PROGRESS",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "objdiff": {
+    "raw_canonical_summary": "target 296 bytes  base 296 bytes  match 98.64865",
+    "raw_relocation_strict_summary": "target 296 bytes  base 296 bytes  match 98.64865",
+    "target_bytes": 296,
+    "base_bytes": 296,
+    "target_instructions": 74,
+    "base_instructions": 74,
+    "match_percent": 98.64865,
+    "canonical_100_percent": false,
+    "relocation_strict_100_percent": false,
+    "relocations": {
+      "target_count": 15,
+      "base_count": 15,
+      "type": "R_PPC_REL24",
+      "all_addends": 0,
+      "ordered_offsets_equal": true,
+      "ordered_targets_equal": true,
+      "ordered_offsets": [24, 40, 56, 72, 80, 96, 112, 128, 152, 164, 200, 208, 220, 248, 268],
+      "ordered_targets": [
+        "fn_80128EAC", "fn_801A7498", "fn_801A7490", "fn_8011F114",
+        "fn_80201814", "fn_80201814", "fn_80201BC8", "fn_80201B8C",
+        "fn_80074440", "fn_80129BE4", "fn_80074310", "fn_8011F6F0",
+        "fn_80137E60", "fn_8020123C", "fn_8020123C"
+      ],
+      "exact_result": "All 15 relocation offsets, types, targets and zero addends agree. The strict score remains below 100% solely because instruction register operands differ."
+    },
+    "raw_divergence": [
+      "Retail and generated code are both 296 bytes and 74 instructions; every opcode, branch target, call and instruction position agrees.",
+      "Retail preserves object in r30 and link in r31; generated preserves them in r27 and r28.",
+      "The first lookup result matches in r29, while retail/generated place the second lookup result in r28/r30.",
+      "The call pipeline from target offset 0x6c through 0x80 now matches exactly, including retail's mr r31,r0 at 0x7c.",
+      "Retail/generated place State.owner in r27/r28; all later differing instructions are consequent r30/r27, r28/r30 and r27/r28 callee-saved-register substitutions."
+    ]
+  },
+  "bounded_trials": [
+    {"variant": "inherited behavior-complete C baseline", "match_percent": 97.297295, "generated_bytes": 292},
+    {"variant": "separate resolution temporaries with original first/second declaration order", "match_percent": 98.175674, "generated_bytes": 296},
+    {"variant": "separate resolution temporaries with second declared before first", "match_percent": 98.64865, "generated_bytes": 296},
+    {"variant": "late second declaration", "match_percent": 98.51351, "generated_bytes": 296},
+    {"variant": "early-return control flow", "match_percent": 92.63513, "generated_bytes": 304}
+  ],
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "register_binding_hack": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "gate_or_compiler_policy_edits": false,
+    "generated_binaries_staged": false,
+    "private_inputs_staged": false
+  }
+}

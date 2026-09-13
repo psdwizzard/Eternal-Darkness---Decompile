@@ -31,36 +31,36 @@ extern void *fn_80137E60(void *, Vec3 *);
 extern unsigned long long fn_8020123C();
 
 /* NonMatching: behavior-complete paired-object setup and routing. Retail and
- * base have the same 15 call/data relocations; the remaining differences are
- * MWCC's callee-saved register assignment and one redundant result move. */
+ * base have the same size and 15 call relocations; the remaining differences
+ * are MWCC's callee-saved register assignments. */
 int fn_800741E8(void *object, void *link)
 {
     register void *resolved_second;
-    register void *object_r;
+    void *second;
     register void *first;
-    register void *second;
     register State *state;
+    void *resolved_value;
+    void *resolved_final;
     Vec3 position;
     Vec3 result;
     int found;
 
     resolved_second = link;
-    object_r = object;
-    if (fn_80128EAC(object_r) == 7) {
+    if (fn_80128EAC(object) == 7) {
         first = fn_801A7498(resolved_second);
         second = fn_801A7490(resolved_second);
-        fn_8011F114(&position, object_r);
-        resolved_second = fn_80201814(second);
-        state = (State *)fn_80201814(first);
-        resolved_second = fn_80201BC8(resolved_second);
-        state = ((State *)fn_80201B8C(state))->owner;
-        found = fn_80074440(object_r, resolved_second, state, &result);
-        fn_80129BE4(object_r);
+        fn_8011F114(&position, object);
+        resolved_value = fn_80201814(second);
+        resolved_second = fn_80201814(first);
+        resolved_final = fn_80201BC8(resolved_value);
+        state = ((State *)fn_80201B8C(resolved_second))->owner;
+        found = fn_80074440(object, resolved_final, state, &result);
+        fn_80129BE4(object);
         if (found != 0) {
             state->active = 1;
-            fn_80074310(object_r, &position, state, &result);
-            fn_8011F6F0(object_r);
-            state->handle = fn_80137E60(object_r, &position);
+            fn_80074310(object, &position, state, &result);
+            fn_8011F6F0(object);
+            state->handle = fn_80137E60(object, &position);
         } else {
             fn_8020123C(0x74, first, second, 0);
             fn_8020123C(0x74, first, first, 0);
