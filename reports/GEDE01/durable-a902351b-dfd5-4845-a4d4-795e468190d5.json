@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a902351b-dfd5-4845-a4d4-795e468190d5",
+  "attempt": 3,
+  "base_commit": "b01a5f84270acb4ec42949e4a8d6f53b355a50af",
+  "target": "fn_80175BB8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a902351b-dfd5-4845-a4d4-795e468190d5.json"
+  ],
+  "divergence": "Best fresh canonical GC/1.3 and relocation-strict objdiff score is 98.391815%: retail is 684 bytes/171 instructions and generated output is 688 bytes/172 instructions. Generated code materializes lbl_8024FF00@l into r0 before callee-save stores and later moves r0 to r30, while retail delays a direct addi into r30, leaving one extra instruction and shifting subsequent branches. Relocation-strict comparison also reports compiler-local jumptable @22 versus jumptable_80250504 and conversion constants @23/@24 versus lbl_806506A8/lbl_806506B0. Fresh full build succeeded and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
