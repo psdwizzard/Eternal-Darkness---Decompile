@@ -37,13 +37,18 @@ extern int fn_801AC9F4(int sound, int volume, Vec3i80202678 *position,
 
 int fn_80202678(void *owner, void *effect)
 {
-    int result = 0;
-    void *resource = fn_801A7498(effect);
-    void *linked = fn_80201814(resource);
-    int height = fn_80128F40(owner) >> 17;
-    Vec3i80202678 position;
+    int result;
     unsigned int flags;
     Output80202678 *output;
+    void *linked;
+    void *resource;
+    int height;
+    Vec3i80202678 position;
+
+    result = 0;
+    resource = fn_801A7498(effect);
+    linked = fn_80201814(resource);
+    height = fn_80128F40(owner) >> 17;
 
     fn_80201E78(&position, linked);
     flags = fn_80201CDC(linked);
