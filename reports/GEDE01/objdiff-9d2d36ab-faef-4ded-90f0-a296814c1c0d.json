@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "assignment_id": "9d2d36ab-faef-4ded-90f0-a296814c1c0d",
+  "target": "fn_801C3E2C",
+  "unit": "main/game/game_fn_801C3E2C",
+  "compiler": "GC/1.2.5n",
+  "compiler_flags": ["-Cpp_exceptions on", "-use_lmw_stmw on"],
+  "source": "eternal-darkness-decomp/src/game/game_fn_801C3E2C.c",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801C3E2C -o build/GEDE01/objdiff-9d2d36ab-final-canonical.raw.json --format json-pretty fn_801C3E2C",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801C3E2C -o build/GEDE01/objdiff-9d2d36ab-final-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_801C3E2C",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measured_outputs": {
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_sha1_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical": {
+      "retail_size": 320,
+      "generated_size": 320,
+      "retail_instruction_rows": 81,
+      "generated_instruction_rows": 81,
+      "match_percent": 96.6875,
+      "differing_rows_each_side": 4,
+      "retail_sections": {"extab_size": 8, "extab_match_percent": 100.0, "extabindex_size": 12, "extabindex_match_percent": 100.0, "text_size": 320, "text_match_percent": 96.6875}
+    },
+    "relocation_strict": {
+      "config": "function_reloc_diffs=name_address",
+      "retail_size": 320,
+      "generated_size": 320,
+      "retail_instruction_rows": 81,
+      "generated_instruction_rows": 81,
+      "match_percent": 96.6875,
+      "differing_rows_each_side": 4,
+      "relocation_count_each_side": 17,
+      "relocation_targets_and_addends": [
+        ["R_PPC_ADDR16_HA", "lbl_806286B0", 0],
+        ["R_PPC_ADDR16_LO", "lbl_806286B0", 0],
+        ["R_PPC_EMB_SDA21", "lbl_8064D470", 0],
+        ["R_PPC_EMB_SDA21", "lbl_8064D470", 0],
+        ["R_PPC_EMB_SDA21", "lbl_8064D470", 0],
+        ["R_PPC_REL24", "fn_801CE2B8", 0],
+        ["R_PPC_REL24", "fn_801C9460", 0],
+        ["R_PPC_REL24", "fn_801B399C", 0],
+        ["R_PPC_REL24", "fn_801C242C", 0],
+        ["R_PPC_REL24", "fn_801CE280", 0],
+        ["R_PPC_REL24", "fn_801C3BCC", 0],
+        ["R_PPC_REL24", "fn_801BC240", 0],
+        ["R_PPC_REL24", "fn_801C3B30", 0],
+        ["R_PPC_REL24", "fn_801C3B30", 0],
+        ["R_PPC_REL24", "fn_801C3B30", 0],
+        ["R_PPC_REL24", "fn_801C3B30", 0],
+        ["R_PPC_REL24", "fn_801BC798", 0]
+      ]
+    },
+    "retail_diff_rows": [
+      [44, "DIFF_DELETE", "extsh r0, r0"],
+      [48, "DIFF_ARG_MISMATCH", "mulli r3, r0, 0xc"],
+      [null, "DIFF_INSERT", null],
+      [60, "DIFF_REPLACE", "lwzx r31, r4, r3"]
+    ],
+    "generated_diff_rows": [
+      [null, "DIFF_DELETE", null],
+      [44, "DIFF_ARG_MISMATCH", "mulli r3, r3, 0xc"],
+      [52, "DIFF_INSERT", "add r3, r4, r3"],
+      [60, "DIFF_REPLACE", "lwz r31, -0xc(r3)"]
+    ],
+    "measured_trials": [
+      {"spelling": "post-decrement minus one (preserved best)", "retail_size": 320, "generated_size": 320, "match_percent": 96.6875},
+      {"spelling": "prefix decrement", "retail_size": 320, "generated_size": 324, "match_percent": 95.7375},
+      {"spelling": "assignment expression", "retail_size": 320, "generated_size": 324, "match_percent": 95.7375},
+      {"spelling": "assignment plus volatile depth read", "retail_size": 320, "generated_size": 336, "match_percent": 91.55},
+      {"spelling": "s16 cast plus volatile first structure access", "retail_size": 320, "generated_size": 324, "match_percent": 95.7375}
+    ]
+  },
+  "result": "attempted",
+  "divergence": "The size-exact best candidate differs only in the initial resource-stack lookup. Retail sign-extends the stored decremented s16 into r0, multiplies it into r3, and loads the node with lwzx r31,r4,r3. GC/1.2.5n retains the original pre-decrement index in r3, forms the table entry with add r3,r4,r3, and folds the minus-one element adjustment into lwz r31,-0xc(r3). All later instructions align, exception sections match, and relocation types, targets, and addends have the same shape."
+}
