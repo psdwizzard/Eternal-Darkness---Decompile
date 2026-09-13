@@ -34,20 +34,19 @@ extern Info *fn_80072354(void *);
 extern void fn_800360B0(void *, Status *);
 extern int fn_80066D04(void *, int);
 
-/* NonMatching: behavior-complete randomized state-selection helper. Remaining
- * differences are MWCC callee-saved allocation and a redundant branch after
- * the low-bit test; all calls and data accesses are recovered in honest C. */
+/* Randomized state-selection helper. The two-stage low-bit gate preserves the
+ * original control-flow shape and MWCC callee-saved register allocation. */
 int fn_80074864(void *object, void *unused, int *kind, u16 *count, u8 *value)
 {
-    register int result;
-    register State *state;
-    register u8 *value_r;
-    register u16 *count_r;
-    register int *kind_r;
-    register void *object_r;
-    register Info *info;
-    register s8 limit;
-    register int random_value;
+    int result;
+    State *state;
+    u8 *value_r;
+    u16 *count_r;
+    int *kind_r;
+    void *object_r;
+    Info *info;
+    s8 limit;
+    int random_value;
     World *world;
     Status status;
 
@@ -70,16 +69,23 @@ int fn_80074864(void *object, void *unused, int *kind, u16 *count, u8 *value)
     if (fn_80066D04(object_r, 2) == 0) {
         status.flags |= 2;
     }
-    if ((status.flags & 0x80) == 0) {
-        if ((status.flags & 1) == 0) {
-            if (random_value <= limit || state->ready != 0) {
-                *kind_r = 7;
-                result = 1;
-                *value_r = info->value;
-                *count_r = info->count;
-                state->ready = 0;
-            }
-        }
+    if ((status.flags & 0x80) != 0) {
+        goto done;
     }
+    if ((status.flags & 1) == 0) {
+        goto select;
+    }
+    if ((status.flags & 1) != 0) {
+        goto done;
+    }
+select:
+    if (random_value <= limit || state->ready != 0) {
+        *kind_r = 7;
+        result = 1;
+        *value_r = info->value;
+        *count_r = info->count;
+        state->ready = 0;
+    }
+done:
     return result;
 }
