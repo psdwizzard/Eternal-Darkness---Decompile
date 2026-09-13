@@ -64,23 +64,25 @@ void fn_801E6814(TextDescriptor* descriptor, unsigned int font_index)
         while (*text == '\\' && lbl_8064D57C == 0) {
             ++text;
             if (*text == 'i') {
-                value = 0;
                 digits = 0;
+                value = 0;
                 text++;
                 while (*text >= '0' && *text <= '9' && digits < 3) {
-                    value = value * 10 + *text;
+                    value *= 10;
+                    value += *text;
                     digits++;
                     text++;
                     value -= '0';
                 }
                 if (value >= 0 && value < 32) {
-                    width += (int)(lbl_8064C314 * lbl_8064D59C->widths[value]);
+                    width += (int)(lbl_8064D59C->widths[value] * lbl_8064C314);
                 } else {
                     fn_801E7DCC(lbl_8026461C);
                 }
             } else if (*text == 'r') {
-                value = lbl_8064D564 + 31;
-                width += (int)(lbl_8064C314 * ((u8*)lbl_8064D59C)[value]);
+                value = lbl_8064D564;
+                value += 31;
+                width += (int)(((u8*)lbl_8064D59C)[value] * lbl_8064C314);
                 text += fn_801E41AC(text) + 1;
             } else {
                 text += fn_801E41AC(text) + 1;
@@ -88,7 +90,7 @@ void fn_801E6814(TextDescriptor* descriptor, unsigned int font_index)
         }
 
         if (text[0] == 0 && text[1] == 0)
-            break;
+            continue;
         if (*text == '\n') {
             space = 0;
             width = 0;
