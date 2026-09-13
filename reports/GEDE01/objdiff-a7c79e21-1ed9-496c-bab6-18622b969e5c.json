@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "assignment_id": "a7c79e21-1ed9-496c-bab6-18622b969e5c",
+  "target": "fn_80052670",
+  "source": "src/game/game_fn_80052670.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80052670.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[826/831] LINK build/GEDE01/main.elf; [827/831] DOL build/GEDE01/main.dol; [828/831] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [829/831] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80052670 fn_80052670 -o build/GEDE01/objdiff-a7c79e21-final-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=95.71342 retail_bytes=656 generated_bytes=640 retail_instructions=164 generated_instructions=160 DIFF_ARG_MISMATCH=21 DIFF_REPLACE=3 DIFF_DELETE=4"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80052670 fn_80052670 -o build/GEDE01/objdiff-a7c79e21-final-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=95.71342 retail_bytes=656 generated_bytes=640 retail_instructions=164 generated_instructions=160 DIFF_ARG_MISMATCH=21 DIFF_REPLACE=3 DIFF_DELETE=4"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-a7c79e21-final-canonical.raw.json build/GEDE01/objdiff-a7c79e21-final-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "canonical_strict_cmp_exit=0"
+    },
+    {
+      "command": "readelf -r build/GEDE01/obj/game/game_fn_80052670.o and readelf -r build/GEDE01/src/game/game_fn_80052670.o; normalize relocation type, target name, and addend in sequence",
+      "exit_code": 0,
+      "raw_output": "retail_relocations=48 generated_relocations=48 type_target_addend_sequence_equal=true relocation_site_offsets_equal=false; first shifted site: retail=0x3e generated=0x3a target=lbl_80238F60 addend=0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (14698 tracked project files inspected)"
+    }
+  ],
+  "canonical": {
+    "match_percent": 95.71342,
+    "retail_bytes": 656,
+    "generated_bytes": 640,
+    "retail_instructions": 164,
+    "generated_instructions": 160,
+    "differing_rows": 28,
+    "diff_arg_mismatch": 21,
+    "diff_replace": 3,
+    "diff_delete": 4
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 48,
+    "generated_count": 48,
+    "types_targets_addends_equal_in_sequence": true,
+    "relocation_site_offsets_equal": false,
+    "canonical_report_byte_identical": true
+  },
+  "exact_codegen_divergence": "Retail retains four base-pointer materializations that canonical GC/1.3 folds away: addi r24,r30,0x2120 at retail 0x38 before the 64-byte template copy; addi r4,r30,0 at retail 0xF8 before the descriptor lookup; and addi r5,r30,0 at retail 0x170 and 0x194 before the two descriptor field lookups. Their absence makes generated code 16 bytes shorter, changes stmw/lmw from r24 at stack offset 0x10 to r25 at 0x14, folds template stores from 0x20..0x5C(r24) to 0x2140..0x217C(r30), and shifts later branch and relocation sites. Relocation types, target names, and addends remain equal in sequence, but site offsets cannot be equal while the instruction stream is shorter.",
+  "recovery": {
+    "preserved_commit": "2698bb7c1b11c0dfc302fe09eb9b73d07cf87580",
+    "raw_output": "The accepted base already contains the behavior-complete independent C translation unit from preserved source commit ec4125f28 and the NonMatching configure.py and splits.txt registration. Commit 2698bb7c preserved the prior measured diagnosis; attempt 2 rebuilt and remeasured it unchanged."
+  },
+  "bounded_experiments_recovered": [
+    {
+      "change": "Express the template base directly as &lbl_802417D0.destination.",
+      "retained": false,
+      "raw_output": "match_percent=95.71342 retail_bytes=656 generated_bytes=640; instruction output unchanged",
+      "reason": "Canonical GC/1.3 still folded the destination base into 0x2140..0x217C(r30)."
+    },
+    {
+      "change": "Qualify the descriptor and template destination as volatile to inhibit base folding.",
+      "retained": false,
+      "raw_output": "match_percent=73.56707 retail_bytes=656 generated_bytes=656",
+      "reason": "Volatile semantics expanded and interleaved the copy, changed the stack frame and register allocation, and regressed the localized diff. The honest non-volatile reconstruction was restored."
+    }
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: the recovered behavior-complete independent C translation unit remains the best honest reconstruction at 95.71342%. It is not a canonical or relocation-site-exact 100% match and therefore remains NonMatching."
+}
