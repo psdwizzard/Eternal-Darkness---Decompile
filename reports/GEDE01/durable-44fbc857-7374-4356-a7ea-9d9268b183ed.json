@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "44fbc857-7374-4356-a7ea-9d9268b183ed",
+  "attempt": 3,
+  "base_commit": "d874acd254154917282728fec4914f4468b2202e",
+  "target": "fn_801EBDDC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-44fbc857-7374-4356-a7ea-9d9268b183ed.json"
+  ],
+  "divergence": "Best canonical and relocation-strict score is 97.421875% at the exact 256-byte size with all 19 relocation targets and addends agreeing. GC/1.3 rotates three live ranges versus retail: loop offset r4 instead of r6, image pointer r6 instead of r5, and transient global/value r5 instead of r4; for example the final store is sthx r0,r6,r4 instead of sthx r0,r5,r6. Declaration reordering did not affect codegen, and moving the zero initialization reduced the score to 91.5625%, so the existing honest NonMatching reconstruction was retained."
+}
