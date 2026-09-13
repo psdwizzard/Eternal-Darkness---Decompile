@@ -14,9 +14,9 @@ void fn_8017D700(Vec3s* position, Vec3s* target, s16 z_offset,
                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,
                  s16 z_acceleration, s16 z_speed)
 {
-    s16 dx = target->x - position->x;
-    s16 dz = target->z - position->z - z_offset;
     s16 dy = target->y - position->y;
+    s16 dz = target->z - position->z - z_offset;
+    s16 dx = target->x - position->x;
 
     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);
     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);
