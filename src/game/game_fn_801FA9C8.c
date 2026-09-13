@@ -37,12 +37,12 @@ void fn_801FA9C8(short amount)
     {
         float zero = lbl_80651464;
         lbl_8063E9C8.time += delta;
-        time = zero > lbl_8063E9C8.time ? zero : lbl_8063E9C8.time;
+        time = lbl_8063E9C8.time > zero ? lbl_8063E9C8.time : zero;
     }
     if ((float)fn_801F9A38(lbl_8063E9C8.object->resource, 1) < time) {
         result = (float)fn_801F9A38(lbl_8063E9C8.object->resource, 1);
     } else {
-        result = lbl_80651464 > lbl_8063E9C8.time ? lbl_80651464 : lbl_8063E9C8.time;
+        result = lbl_8063E9C8.time > lbl_80651464 ? lbl_8063E9C8.time : lbl_80651464;
     }
     lbl_8063E9C8.time = result;
 }
