@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "8b311280-8dee-4d2f-b6bc-94643c156417",
+  "attempt": 2,
+  "base_commit": "bde7dbf5e46d666253d5c9fbe4c2480eab62fc0c",
+  "target": "fn_80206B68",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8b311280-8dee-4d2f-b6bc-94643c156417.json"
+  ],
+  "divergence": "Relocation-strict objdiff measures 95.84746% with equal 236-byte target and candidate functions. The corrected 0x03FFFFE0 DMA mask now emits the retail rlwinm mask. Remaining differences are register allocation and scheduling at 0x98-0xCC: retail uses lwz r0, mulli r5, ori result r4, addi result r0, mask result r3, then add r4 at 0xB4; candidate uses lwz r4, mulli r0, ori result r4, addi result r5, add r5 at 0xB0, then mask result r0, with the three MMIO stores based on r5 instead of r4."
+}
