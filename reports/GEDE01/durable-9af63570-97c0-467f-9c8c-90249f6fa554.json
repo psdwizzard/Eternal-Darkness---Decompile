@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9af63570-97c0-467f-9c8c-90249f6fa554",
+  "attempt": 2,
+  "base_commit": "d730c835fdebe63649d16d73d28d579cccf8c7f5",
+  "target": "fn_8006B21C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9af63570-97c0-467f-9c8c-90249f6fa554.json"
+  ],
+  "divergence": "Canonical and relocation-strict direct objdiff both measure 96.87805%: 328 retail bytes versus 320 generated. MWCC omits retail's addi r3,r31,0 before the lbl_8064C8D4 store and addi r5,r31,0x654 before the four State field stores; after memset it now materializes State in r3 at the retail position, but forms the linked buffer as addi r0,r3,0x164 and folds the destination store to 0x7b0(r31), versus retail addi r0,r31,0x7b8 and stw r0,0x15c(r3). Retail has 36 relocation-bearing instruction rows versus 34 generated; the two raw canonical/strict reports are byte-identical."
+}

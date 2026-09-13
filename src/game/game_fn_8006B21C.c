@@ -9,13 +9,29 @@ typedef struct Resource {
     void *value18;
 } Resource;
 
+typedef struct State {
+    u8 pad0[6];
+    u8 value6;
+    u8 pad7;
+    u8 value8;
+    u8 value9;
+    u16 valueA;
+    u8 padC[0x150];
+    void *value15C;
+} State;
+
+typedef struct GlobalState {
+    u8 pad0[0x654];
+    State state;
+} GlobalState;
+
 extern u8 lbl_803108B8[];
 extern void *lbl_8064C8C0;
 extern s32 lbl_8064C8C4;
 extern s32 lbl_8064C8C8;
 extern s32 lbl_8064C8CC;
 extern void *lbl_8064C8D0;
-extern void *lbl_8064C8D4;
+extern u8 (*lbl_8064C8D4)[0x654];
 extern s32 lbl_8064C914;
 
 extern void *memset(void *dest, s32 value, unsigned long size);
@@ -30,17 +46,20 @@ extern unsigned int fn_800FBFB0(void);
 
 void fn_8006B21C(s32 mode)
 {
-    u8 *base = lbl_803108B8;
+    GlobalState *root = (GlobalState *)lbl_803108B8;
+    u8 *base = (u8 *)root;
+    State *state;
     Resource *resource;
 
-    lbl_8064C8D4 = base;
+    lbl_8064C8D4 = &root->pad0;
     lbl_8064C8D0 = base + 0x630;
     switch (mode) {
     case 1:
-        base[0x65A] = 0;
-        base[0x65C] = 5;
-        *(u16 *)(base + 0x65E) = 0;
-        base[0x65D] = 1;
+        state = (State *)(base + 0x654);
+        state->value6 = 0;
+        state->value8 = 5;
+        state->valueA = 0;
+        state->value9 = 1;
         resource = fn_8006D1DC(0x25);
         if (resource != 0) {
             resource->value8 = 0;
@@ -50,8 +69,9 @@ void fn_8006B21C(s32 mode)
         break;
     default:
         memset(base + 0x654, 0, 0x164);
-        *(void **)(base + 0x7B0) = base + 0x7B8;
-        fn_8006B364(base + 0x654);
+        state = (State *)(base + 0x654);
+        state->value15C = (u8 *)state + 0x164;
+        fn_8006B364(state);
         break;
     }
     fn_8006B40C();
