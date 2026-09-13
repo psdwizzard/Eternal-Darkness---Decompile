@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "assignment_id": "126e36aa-7a6b-4e41-9e06-9d69a4bdde57",
+  "target": "fn_801E7A28",
+  "compiler": "GC/1.3",
+  "compiler_flags": ["-use_lmw_stmw on"],
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw_output": "exit_code=0; build/GEDE01/main.dol: OK",
+  "canonical_command": "python3 tools/fndiff.py game/game_fn_801E7A28.c fn_801E7A28",
+  "canonical_raw_output": "target 168 bytes  base 168 bytes  match 100.0",
+  "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E7A28 fn_801E7A28 -o build/GEDE01/fndiff_fn_801E7A28_strict.json --format json-pretty -c function_reloc_diffs=name_address",
+  "relocation_strict_raw_output": "left size 168 match_percent 100.0 relocations []; right size 168 match_percent 100.0 relocations []",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "dol_compare_command": "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_compare_raw_output": "cmp_exit=0",
+  "legal_audit_command": "python3 tools/legal_audit.py",
+  "legal_audit_raw_output": "legal audit passed (14264 tracked project files inspected)"
+}
