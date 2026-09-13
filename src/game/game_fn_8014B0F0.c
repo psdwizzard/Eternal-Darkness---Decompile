@@ -38,10 +38,10 @@ void fn_8014B0F0(void* left, void* right)
 {
     int count;
     Set* set;
-    Set* entry;
-    int i;
-    int mode;
     u16 bit;
+    int mode;
+    int i;
+    Set* entry;
     Set* right_set;
     int update;
     Value value;
@@ -49,8 +49,8 @@ void fn_8014B0F0(void* left, void* right)
     if (left == 0) {
         return;
     }
-    right_set = 0;
     update = 0;
+    right_set = 0;
     mode = 0;
     if (right != 0 && fn_80157034(right) == 0) {
         right_set = fn_80156938(right);

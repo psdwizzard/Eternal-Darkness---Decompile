@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "assignment_id": "c7b36023-eb97-4f4d-8350-6d0891e48c81",
+  "attempt": 1,
+  "target": "fn_8014B0F0",
+  "compiler_configuration": {
+    "configure_registration": "Object(NonMatching, \"game/game_fn_8014B0F0.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+    "split": ".text start:0x8014B0F0 end:0x8014B33C",
+    "translation_unit": "src/game/game_fn_8014B0F0.c"
+  },
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": "INFO Loading and analyzing 1 module (using 1 thread)\nINFO Rebuilding relocations and splitting\nINFO Splitting completed (wrote 7021 objects)\nINFO Total time: 54.931s"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[829/829] SHA1SUM build/GEDE01/main.dol"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "python3 tools/fndiff.py game/game_fn_8014B0F0.c fn_8014B0F0",
+      "exit_code": 0,
+      "raw_output": "target 588 bytes  base 588 bytes  match 97.993195"
+    }
+  ],
+  "objdiff": {
+    "tool": "build/tools/objdiff-cli",
+    "target_size": 588,
+    "generated_size": 588,
+    "match_percent": 97.993195,
+    "differing_instructions": 47,
+    "target_relocations": 18,
+    "generated_relocations": 18,
+    "relocations_equal": true,
+    "relocation_mismatches": []
+  },
+  "dol_sha1": {
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "actual": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "match": true
+  },
+  "legal_audit": {
+    "independent_translation_unit": true,
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_functions_edited": false
+  },
+  "divergence": "Size and all 18 relocation offsets/types/targets/addends match. The remaining 47 differing instruction words are equivalent callee-saved register allocation: the first loop keeps the u16 mask in r26 instead of retail's transient r3 with r26 across calls; the cleanup loop allocates entry/mask/index as r28/r27/r26 instead of retail r29/r3-with-r26/r24; the update loop allocates context/entry/x/y/z/mask/index/position as r24/r28/r25/r23/r22/r27/r26/r29 instead of retail r23/r29/r28/r27/r26/r3-with-r25/r24/r22."
+}
