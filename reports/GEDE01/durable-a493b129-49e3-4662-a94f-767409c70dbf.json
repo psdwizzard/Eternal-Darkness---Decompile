@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a493b129-49e3-4662-a94f-767409c70dbf",
+  "attempt": 1,
+  "base_commit": "b5c6b31c5feb762b3c1c57a074b9274c6af88b88",
+  "target": "fn_80205914",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a493b129-49e3-4662-a94f-767409c70dbf.json"
+  ],
+  "divergence": "Relocation-strict objdiff is 96.58667% with exact 0x384-byte code size and matching call/relocation targets. The remaining divergence is confined to 0x2CC-0x330: the retail code keeps four input words at stack offsets 0x14-0x20 and copies three selected words to 0x08-0x10, while this honest C reconstruction allocates the inputs at 0x08-0x14 and outputs at 0x18-0x20, changing load/store registers, scheduling, and pointer addends for fn_8012C774. The required ninja build was invoked but repeatedly regenerated a prematurely truncated build.ninja until interrupted; the retained direct canonical MWCC object compiled successfully. Existing build/GEDE01/main.dol SHA-1 verified as ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
