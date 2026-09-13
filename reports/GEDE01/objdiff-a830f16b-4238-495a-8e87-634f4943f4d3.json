@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "assignment_id": "a830f16b-4238-495a-8e87-634f4943f4d3",
+  "attempt": 2,
+  "target": "fn_8014B0F0",
+  "recovered_from_commit": "1203f740f0b7c5fee99d72c51006d01af7391629",
+  "compiler_configuration": {
+    "configure_registration": "Object(NonMatching, \"game/game_fn_8014B0F0.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+    "split": ".text start:0x8014B0F0 end:0x8014B33C",
+    "translation_unit": "src/game/game_fn_8014B0F0.c"
+  },
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[815/818] LINK build/GEDE01/main.elf\n[816/818] DOL build/GEDE01/main.dol\n[817/818] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[818/818] PROGRESS"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "python3 tools/fndiff.py game/game_fn_8014B0F0.c fn_8014B0F0",
+      "exit_code": 0,
+      "raw_output": "target 588 bytes  base 588 bytes  match 97.993195"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8014B0F0 fn_8014B0F0 -o reports/GEDE01/objdiff-a830f16b-4238-495a-8e87-634f4943f4d3.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to reports/GEDE01/objdiff-a830f16b-4238-495a-8e87-634f4943f4d3.json"
+    }
+  ],
+  "objdiff": {
+    "tool": "build/tools/objdiff-cli",
+    "configuration": "function_reloc_diffs=name_address",
+    "target_size": 588,
+    "generated_size": 588,
+    "match_percent": 97.993195,
+    "differing_instructions": 47,
+    "target_relocations": 18,
+    "generated_relocations": 18,
+    "relocations_equal": true,
+    "relocation_mismatches": [],
+    "relocation_addends": "All implicit zero addends; strict records contain identical offsets, R_PPC_REL24 types, and target symbols."
+  },
+  "dol_sha1": {
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "actual": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "match": true
+  },
+  "legal_audit": {
+    "independent_translation_unit": true,
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_functions_edited": false,
+    "runtime_or_global_progress_edited": false
+  },
+  "divergence": "Size and all 18 relocation offsets/types/targets/addends match. The remaining 47 differing instruction words are equivalent callee-saved register allocation: the first loop keeps the u16 mask in r26 instead of retail's transient r3 with r26 across calls; the cleanup loop allocates entry/mask/index as r28/r27/r26 instead of retail r29/r3-with-r26/r24; the update loop allocates context/entry/x/y/z/mask/index/position as r24/r28/r25/r23/r22/r27/r26/r29 instead of retail r23/r29/r28/r27/r26/r3-with-r25/r24/r22."
+}
