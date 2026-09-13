@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "assignment_id": "6ad27979-5981-47d3-b7f4-6526be43a441",
+  "target": "fn_80060F9C",
+  "compiler": "GC/1.3 (canonical configure.py settings; -use_lmw_stmw on)",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80060F9C -o build/GEDE01/fndiff-6ad27979-canonical-final.json --format json-pretty fn_80060F9C",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80060F9C -o build/GEDE01/fndiff-6ad27979-reloc-strict-final.json --format json-pretty -c function_reloc_diffs=name_address fn_80060F9C",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "legal_audit": "python3 tools/legal_audit.py"
+  },
+  "raw_measured_outputs": {
+    "build": "exit_code=0; build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "legal_audit": "legal audit passed (14496 tracked project files inspected)",
+    "final_canonical": "left_bytes=1292 right_bytes=1292 left_instructions=324 right_instructions=324 match_percent=97.86068 DIFF_ARG_MISMATCH=80 DIFF_DELETE=1 DIFF_INSERT=1 DIFF_OP_MISMATCH=3 DIFF_REPLACE=1",
+    "final_relocation_strict": "match_percent=97.86068 left_relocations=63 right_relocations=63 semantic_target_type_addend_sequence_equal=true exact_offset_entries=61/63 shifted=fn_800CCC78:left_816:right_812,fn_800360B0:left_832:right_828"
+  },
+  "recovery": "Recovered and re-measured the useful reconstruction preserved by commit 35466a0c401cc09d395ac7fef1b86573b277c42d. The accepted base already contained its source improvement: result initialization precedes the initial helper calls, producing the retail 0xA0 stack frame and stmw r21 prologue.",
+  "result": {
+    "status": "attempted",
+    "match_percent": 97.86068,
+    "retail_bytes": 1292,
+    "generated_bytes": 1292,
+    "retail_instructions": 324,
+    "generated_instructions": 324,
+    "relocations_each": 63,
+    "relocation_semantics_equal": true,
+    "relocations_at_exact_offsets": 61
+  },
+  "divergence": "Canonical GC/1.3 assigns the long-lived owner/resource/probe/target/alternate and iterator values to r25-r29/r24 instead of retail r24-r28/r29, producing 80 operand-only mismatches. One signed-versus-unsigned zero comparison remains, the floating multiply operands are commuted, and the creation gate has three inverse branch opcodes. Around the ready/state setup, generated schedules li r4,1000 four bytes before retail and li r23,0 four bytes after retail; this shifts only the fn_800CCC78 and fn_800360B0 relocations by -4 bytes. All 63 relocation types, semantic targets, and addends otherwise agree in sequence."
+}
