@@ -12418,6 +12418,7 @@ config.libs = [
             Object(Matching, "game/game_fn_80204A14.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_80204A8C.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_80204A94.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_80204B10.c", mw_version="GC/1.3"),
             Object(NonMatching, "game/game_fn_801ED118.c", mw_version="GC/1.3"),
         ],
     },

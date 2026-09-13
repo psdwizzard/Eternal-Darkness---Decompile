@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "assignment_id": "8d7c6e78-6e78-4f1f-af57-eb8f855d48b9",
+  "target": "fn_80204B10",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80204B10 -o reports/GEDE01/objdiff-8d7c6e78-6e78-4f1f-af57-eb8f855d48b9-canonical.json --format json-pretty fn_80204B10",
+    "report": "reports/GEDE01/objdiff-8d7c6e78-6e78-4f1f-af57-eb8f855d48b9-canonical.json",
+    "raw_measurement": {"left_size":216,"right_size":216,"left_instructions":54,"right_instructions":54,"match_percent":100.0}
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80204B10 -o reports/GEDE01/objdiff-8d7c6e78-6e78-4f1f-af57-eb8f855d48b9-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_80204B10",
+    "report": "reports/GEDE01/objdiff-8d7c6e78-6e78-4f1f-af57-eb8f855d48b9-reloc-strict.json",
+    "raw_measurement": {"left_size":216,"right_size":216,"left_instructions":54,"right_instructions":54,"match_percent":100.0,"left_relocations":5,"right_relocations":5,"relocations_equal":true},
+    "relocations": [
+      {"address":32,"type":"R_PPC_REL24","target":"fn_80204A8C","addend":0},
+      {"address":40,"type":"R_PPC_REL24","target":"fn_80201B9C","addend":0},
+      {"address":60,"type":"R_PPC_REL24","target":"fn_80204A94","addend":0},
+      {"address":88,"type":"R_PPC_REL24","target":"fn_80204A8C","addend":0},
+      {"address":120,"type":"R_PPC_REL24","target":"fn_80204A94","addend":0}
+    ]
+  },
+  "verification": {
+    "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+    "build_result": "success",
+    "legal_audit_raw_output": "legal audit passed (14316 tracked project files inspected)"
+  },
+  "dol": {"path":"build/GEDE01/main.dol","sha1":"ea24b6af954876ce072562ff39cdb4c81d32be1f"}
+}
