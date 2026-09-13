@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "assignment_id": "009d3633-ca1e-412b-a8c8-3b1ffb5475d9",
+  "target": "fn_80204CE4",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80204CE4 -o reports/GEDE01/objdiff-009d3633-ca1e-412b-a8c8-3b1ffb5475d9-canonical.json --format json-pretty fn_80204CE4",
+    "report": "reports/GEDE01/objdiff-009d3633-ca1e-412b-a8c8-3b1ffb5475d9-canonical.json",
+    "raw_measurement": {"left_size":148,"right_size":148,"left_instructions":37,"right_instructions":37,"match_percent":100.0}
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80204CE4 -o reports/GEDE01/objdiff-009d3633-ca1e-412b-a8c8-3b1ffb5475d9-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_80204CE4",
+    "report": "reports/GEDE01/objdiff-009d3633-ca1e-412b-a8c8-3b1ffb5475d9-reloc-strict.json",
+    "raw_measurement": {"left_size":148,"right_size":148,"left_instructions":37,"right_instructions":37,"match_percent":100.0,"left_relocations":2,"right_relocations":2,"relocations_equal":true},
+    "relocations": [
+      {"address":44,"type":"R_PPC_REL24","target":"fn_80205210","addend":0},
+      {"address":88,"type":"R_PPC_REL24","target":"fn_80201B54","addend":0}
+    ],
+    "readelf_raw_output": {
+      "original": "0000002c  0000040a R_PPC_REL24       00000000   fn_80205210 + 0\n00000058  0000050a R_PPC_REL24       00000000   fn_80201B54 + 0",
+      "candidate": "0000002c  0000030a R_PPC_REL24       00000000   fn_80205210 + 0\n00000058  0000040a R_PPC_REL24       00000000   fn_80201B54 + 0"
+    }
+  },
+  "verification": {
+    "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+    "build_result": "success (build/GEDE01/main.dol: OK)",
+    "legal_audit_command": "python3 tools/legal_audit.py",
+    "legal_audit_raw_output": "legal audit passed (14360 tracked project files inspected)"
+  },
+  "dol": {"path":"build/GEDE01/main.dol","sha1":"ea24b6af954876ce072562ff39cdb4c81d32be1f"}
+}
