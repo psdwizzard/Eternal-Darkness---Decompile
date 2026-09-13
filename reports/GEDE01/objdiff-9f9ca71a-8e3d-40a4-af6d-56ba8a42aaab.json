@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "assignment_id": "9f9ca71a-8e3d-40a4-af6d-56ba8a42aaab",
+  "target": "fn_801EBDDC",
+  "unit": "main/game/game_fn_801EBDDC",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EBDDC fn_801EBDDC -o build/GEDE01/objdiff-9f9ca71a-8e3d-40a4-af6d-56ba8a42aaab-canonical.json --format json-pretty",
+    "target_size": 256,
+    "base_size": 256,
+    "match_percent": 97.421875,
+    "target_relocations": 19,
+    "base_relocations": 19,
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-9f9ca71a-8e3d-40a4-af6d-56ba8a42aaab-canonical.json"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EBDDC fn_801EBDDC -o build/GEDE01/objdiff-9f9ca71a-8e3d-40a4-af6d-56ba8a42aaab-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "target_size": 256,
+    "base_size": 256,
+    "match_percent": 97.421875,
+    "target_relocations": 19,
+    "base_relocations": 19,
+    "relocation_targets_and_addends": "All 19 relocation targets and addends agree under function_reloc_diffs=name_address; remaining diffs are instruction register arguments.",
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-9f9ca71a-8e3d-40a4-af6d-56ba8a42aaab-reloc-strict.json"
+  },
+  "instruction_diff": {
+    "command": "python3 tools/fndiff.py game/game_fn_801EBDDC.c fn_801EBDDC",
+    "raw_output": "target 256 bytes  base 256 bytes  match 97.421875\nfirst mismatch 0x0014: target lwz r5, 0x14(r3) | base lwz r6, 0x14(r3)\nloop-index mismatch 0x0020: target li r6, 0x1fc | base li r4, 0x1fc\ninner-value mismatch 0x004c: target lwz r4, lbl_8064D664@sda21 | base lwz r5, lbl_8064D664@sda21\nimage-pointer mismatch 0x0058: target lwz r5, lbl_8064D604@sda21 | base lwz r6, lbl_8064D604@sda21\nfinal indexed store mismatch 0x00f0: target sthx r0, r5, r6 | base sthx r0, r6, r4\nlast mismatch 0x00f4: target subi r6, r6, 0x2 | base subi r4, r4, 0x2"
+  },
+  "direct_report_comparison": {
+    "command": "cmp -s build/GEDE01/objdiff-9f9ca71a-8e3d-40a4-af6d-56ba8a42aaab-canonical.json build/GEDE01/objdiff-9f9ca71a-8e3d-40a4-af6d-56ba8a42aaab-reloc-strict.json",
+    "raw_output": "cmp_exit=0"
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (14366 tracked project files inspected)",
+    "independent_translation_unit": "src/game/game_fn_801EBDDC.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "private_or_generated_artifacts_in_commit": false
+  }
+}
