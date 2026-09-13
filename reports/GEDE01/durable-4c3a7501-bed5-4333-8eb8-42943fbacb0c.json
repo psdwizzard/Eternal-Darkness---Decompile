@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "4c3a7501-bed5-4333-8eb8-42943fbacb0c",
+  "attempt": 3,
+  "base_commit": "c58a8e892665f97cda959d5a11d7868ae0ed8be2",
+  "target": "fn_8018FFBC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4c3a7501-bed5-4333-8eb8-42943fbacb0c.json"
+  ],
+  "divergence": "Fresh canonical build passed and build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f. Fresh relocation-strict objdiff with function_reloc_diffs=name_address is 97.62712% for exact-size 708-byte functions with seven diff rows. Generated entry setup uses lis/addi/load through r7/r8/r8 and delays clrlwi r7,r6,24 until offset 0x0C, while retail uses r8/r6/r6 and schedules clrlwi at offset 0x04. Generated also schedules addi r9,r9,8 during the seventh unrolled copy rather than retail during the fifth copy. The two actual 12-byte relocation records have equal lbl_80607120 targets and addends; the relocation-bearing instructions remain argument mismatches because their registers differ."
+}
