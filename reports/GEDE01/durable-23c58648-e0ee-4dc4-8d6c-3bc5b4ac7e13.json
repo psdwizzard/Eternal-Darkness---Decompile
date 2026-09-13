@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "23c58648-e0ee-4dc4-8d6c-3bc5b4ac7e13",
+  "attempt": 2,
+  "base_commit": "265c9a0e3e411b7eb1b2b996b63a703b59cc9172",
+  "target": "fn_801F50EC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-23c58648-e0ee-4dc4-8d6c-3bc5b4ac7e13.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both measure 97.17647% for a size-exact 340/340-byte function. The two R_PPC_REL24 relocations at offsets 0x74 and 0x100 agree in type, fn_801F4FC8 target, and zero addend. The only remaining differences are seven aligned instructions at offsets 0x38..0x5C: retail computes row_offset plus the low column bits, then adds the shifted high column bits and block base, while GC/1.3 reassociates this tiled destination address as low plus high, then block base, then row_offset and allocates its temporaries to different volatile registers. A fresh python3 configure.py plus .tools/bin/ninja -j2 build passed, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
