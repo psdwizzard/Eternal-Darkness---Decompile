@@ -74,7 +74,7 @@ void fn_801CE744(u32 type, u32 value, const Vec3f* position, u16 index,
     count = fn_801CEB2C(type);
     for (i = 0; i < count; i++) {
         f32 angle = base_angle + lbl_80651038 * i / count;
-        void* object = 0;
+        void* object;
         void* effect;
         descriptor.word = lbl_80651EA0;
         descriptor.half = lbl_80651EA4;
@@ -83,6 +83,7 @@ void fn_801CE744(u32 type, u32 value, const Vec3f* position, u16 index,
         position_copy.z = lbl_80651040 + position->z;
         params.value04 = indices[i];
         params.object10 = fn_801D3988(indices[i], object_type);
+        object = 0;
         submit_position = position_copy;
         effect = fn_80148008(&submit_position, &descriptor, &params, fn_8019045C);
         if (effect != 0) {
