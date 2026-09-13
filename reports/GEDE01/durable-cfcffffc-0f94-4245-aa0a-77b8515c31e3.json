@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "cfcffffc-0f94-4245-aa0a-77b8515c31e3",
+  "attempt": 3,
+  "base_commit": "bd4c51451a96f16b787b8209c4f0218f5df7aeee",
+  "target": "fn_80176A94",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-cfcffffc-0f94-4245-aa0a-77b8515c31e3.json"
+  ],
+  "divergence": "Relocation-aware objdiff-cli v3.6.1 measures 96.76471%: retail is 272 bytes and canonical GC/1.3 is 276 bytes, while both .rela.text sections are 168 bytes (14 concrete ELF text relocations). Canonical materializes lbl_8024FF00@l in r0 before saving r31 and then emits mr r31,r0, whereas retail saves r31 first and materializes the low half directly with addi r31,r4,lbl_8024FF00@l; the validation diagnostic also emits mr r4,r31 instead of retail's equivalent addi r4,r31,0. The recovered one-argument validation, numeric conversion, handle association, three result paths, relocation targets/addends, and cleanup otherwise agree. The canonical build succeeds and build/GEDE01/main.dol has the required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
