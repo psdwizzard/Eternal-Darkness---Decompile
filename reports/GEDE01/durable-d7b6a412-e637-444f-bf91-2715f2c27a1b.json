@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d7b6a412-e637-444f-bf91-2715f2c27a1b",
+  "attempt": 1,
+  "base_commit": "41ec8ca98a9eced0b0695ef5a4d5809777f16981",
+  "target": "fn_80199868",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d7b6a412-e637-444f-bf91-2715f2c27a1b.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits a size-exact 596-byte function at 97.87248%; canonical and relocation-strict objdiff reports are byte-identical and all 11 relocation records have equal addresses, types, targets, and addends. The 52 remaining rows are register-coloring differences across r25-r30 plus a commuted mullw operand at 0x38: retail keeps object in r29 while generated code keeps it in r30, and pass-local entry/index/count values consequently rotate. The full build passed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

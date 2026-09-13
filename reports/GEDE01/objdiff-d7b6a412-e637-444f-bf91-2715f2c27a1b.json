@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "assignment_id": "d7b6a412-e637-444f-bf91-2715f2c27a1b",
+  "target": "fn_80199868",
+  "source": "src/game/game_fn_80199868.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80199868.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[816/819] LINK build/GEDE01/main.elf; [817/819] DOL build/GEDE01/main.dol; [818/819] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [819/819] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80199868 fn_80199868 -o build/GEDE01/objdiff-d7b6a412-final-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=97.87248 retail_bytes=596 generated_bytes=596 retail_instructions=149 generated_instructions=149 differing_rows=52 retail_relocations=11 generated_relocations=11"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80199868 fn_80199868 -o build/GEDE01/objdiff-d7b6a412-final-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=97.87248 retail_bytes=596 generated_bytes=596 retail_instructions=149 generated_instructions=149 differing_rows=52 retail_relocations=11 generated_relocations=11"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-d7b6a412-final-canonical.raw.json build/GEDE01/objdiff-d7b6a412-final-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "canonical_strict_cmp_exit=0"
+    },
+    {
+      "command": "normalized comparison of all relocation-bearing instructions from both strict-report sides",
+      "exit_code": 0,
+      "raw_output": "retail_relocations=11 generated_relocations=11; offsets=[0x64,0x74,0xC8,0xD4,0x128,0x174,0x1B8,0x1D0,0x1DC,0x1F4,0x228]; all types are R_PPC_REL24; strict target-symbol comparison passed; addresses, types, targets, and addends equal"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    }
+  ],
+  "canonical": {
+    "match_percent": 97.87248,
+    "retail_bytes": 596,
+    "generated_bytes": 596,
+    "retail_instructions": 149,
+    "generated_instructions": 149,
+    "differing_rows": 52
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 11,
+    "generated_count": 11,
+    "records_equal": true,
+    "addresses_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true
+  },
+  "bounded_experiments": [
+    {
+      "change": "correct fn_8018E26C return type from int to u8",
+      "retained": true,
+      "raw_output": "match_percent improved from 97.167786 to 97.57047; retail clrlwi. r0,r3,24 at 0x1BC now matches"
+    },
+    {
+      "change": "scope independent first, second, and third pass locals to their lexical blocks",
+      "retained": true,
+      "raw_output": "match_percent improved from 97.57047 to 97.87248; size remained exact at 596 bytes"
+    },
+    {
+      "change": "hoist second-pass actor local to function scope",
+      "retained": false,
+      "raw_output": "match_percent regressed from 97.87248 to 97.77181; best scoped form restored"
+    }
+  ],
+  "divergence": "The 52 remaining instruction rows are register-coloring and one commuted mullw operand difference. Retail keeps object in r29 and uses pass-specific entry/index/count values in r27-r30; canonical C keeps object in r30 and colors those values across r25-r29. Control-flow branches, calls, stack frame, code size, and all 11 relocations agree.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: retained the best behavior-complete, size-exact, relocation-exact honest C reconstruction; it is not a canonical 100% instruction match."
+}

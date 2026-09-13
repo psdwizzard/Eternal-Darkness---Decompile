@@ -9,7 +9,7 @@ extern void* fn_80201814(u32);
 extern void* fn_80201BC8(void);
 extern void fn_8011F6A4(void*, void*, void*, int, void*, int);
 extern void fn_80180518(void*, u8, int);
-extern int fn_8018E26C(void*, void*);
+extern u8 fn_8018E26C(void*, void*);
 extern int fn_80180430(void*, u8);
 extern int fn_80180454(void*);
 extern void fn_8017DCA8(void*, s16, void*);
@@ -17,12 +17,6 @@ extern void fn_8017DCA8(void*, s16, void*);
 int fn_80199868(u8* object)
 {
     u8* config = object + 0x8c;
-    void* actor;
-    u8* sequence;
-    u8* entry;
-    int first;
-    int index;
-    int count;
     struct {
         u32 unused[2];
         float x;
@@ -31,6 +25,10 @@ int fn_80199868(u8* object)
         u32 padding[5];
     } result;
 
+    {
+    u8* entry;
+    int first;
+    int index;
     if (*(u16*)(object + 0xa) % config[0] == 0) {
         first = (*(u16*)(object + 0xa) / config[0]) * config[1];
         entry = *(u8**)(object + 0x4c) + first * 0x38;
@@ -40,7 +38,14 @@ int fn_80199868(u8* object)
             entry += 0x38;
         }
     }
+    }
 
+    {
+    void* actor;
+    u8* sequence;
+    u8* entry;
+    int first;
+    int index;
     if (*(u16*)(object + 0xa) >= config[2] &&
         (*(u16*)(object + 0xa) - config[2]) % config[0] == 0 &&
         *(u16*)(object + 0xa) <= *(u16*)(object + 0xc) &&
@@ -61,7 +66,12 @@ int fn_80199868(u8* object)
             sequence += 4;
         }
     }
+    }
 
+    {
+    u8* entry;
+    int index;
+    int count;
     entry = *(u8**)(object + 0x4c);
     index = 0;
     count = object[1];
@@ -75,6 +85,7 @@ int fn_80199868(u8* object)
             fn_8017DCA8(entry + 0xa, *(s16*)(entry + 0x1c), entry + 0x10);
         }
         entry += 0x38;
+    }
     }
 
     (*(u16*)(object + 0xa))++;
