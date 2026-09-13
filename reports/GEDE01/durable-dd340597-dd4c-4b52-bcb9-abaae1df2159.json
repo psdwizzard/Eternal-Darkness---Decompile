@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "dd340597-dd4c-4b52-bcb9-abaae1df2159",
+  "attempt": 3,
+  "base_commit": "7767ad8d8734d78f59a1acd6b9f4873fd85d7e2c",
+  "target": "fn_8016F78C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-dd340597-dd4c-4b52-bcb9-abaae1df2159.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both measure 97.58242%: retail is 364 bytes and generated is 368 bytes, with 21 versus 22 relocation-bearing instruction rows. Canonical GC/1.3 emits addi r0,r4,lbl_8024FF00@l at generated 0x10 and later mr r31,r0, while retail delays the low-address materialization to 0x18 and writes it directly to r31; the extra instruction shifts the remainder by four bytes, and the zero-offset argument is mr r4,r31 instead of retail addi r4,r31,0. The recovered honest NonMatching C reconstruction was preserved. The full build passed and the DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
