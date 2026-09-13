@@ -91,8 +91,7 @@ s32 fn_8005B528(void *context, void *event, u32 *result)
         return 1;
     }
     if (kind == 3) {
-        if (fn_80128EAC(object) != 0x18)
-            asm { nop }
+        fn_80128EAC(object);
         return 1;
     }
     if (kind == 0xE5) {
@@ -109,7 +108,6 @@ s32 fn_8005B528(void *context, void *event, u32 *result)
     }
     if (kind == 7) {
         fn_800A1060();
-        asm { cmpwi r3, 0 }
         return 1;
     }
     if (kind == 6) {

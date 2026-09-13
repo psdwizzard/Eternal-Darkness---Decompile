@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b1a748ff-b364-4a5d-94d5-366cbb49ac48",
+  "attempt": 1,
+  "base_commit": "bd58fa5b89039327a41812882d60b21964868c9b",
+  "target": "fn_8005B528",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b1a748ff-b364-4a5d-94d5-366cbb49ac48.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are 96.4105% (1676 retail bytes versus 1660 generated). Retail retains cmpwi/beq/nop after fn_80128EAC and cmpwi after fn_800A1060 that clean C eliminates; GC/1.3 also schedules the local {0x5B,0x61,0x62} initializer differently at 0x0368..0x03C0. Both objects have 70 relocation-bearing instructions, with 65 aligned exactly."
+}

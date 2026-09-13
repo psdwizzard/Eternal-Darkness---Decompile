@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "assignment_id": "b1a748ff-b364-4a5d-94d5-366cbb49ac48",
+  "target": "fn_8005B528",
+  "compiler": "GC/1.3",
+  "registration": "Object(NonMatching, \"game/game_fn_8005B528.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8005B528 fn_8005B528 -o build/GEDE01/b1a748ff-canonical.json --format json",
+    "raw_output": "target_size=1676 generated_size=1660 match_percent=96.4105",
+    "retail_bytes": 1676,
+    "generated_bytes": 1660,
+    "match_percent": 96.4105
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8005B528 fn_8005B528 -o build/GEDE01/b1a748ff-reloc-strict.json --format json -c function_reloc_diffs=name_address",
+    "raw_output": "target_size=1676 generated_size=1660 match_percent=96.4105; retail_relocation_instructions=70 generated_relocation_instructions=70 exact_aligned_relocation_instructions=65 nonexact_aligned_relocation_instructions=5",
+    "match_percent": 96.4105,
+    "retail_relocation_instructions": 70,
+    "generated_relocation_instructions": 70,
+    "exact_aligned_relocation_instructions": 65,
+    "nonexact_aligned_relocation_instructions": 5
+  },
+  "codegen_diff": {
+    "raw_output": "0x0178 retail cmpwi r3,0x18 absent generated; 0x017c retail beq absent generated; 0x0180 retail nop absent generated; 0x01e8 retail cmpwi r3,0 absent generated; 0x0368..0x03c0 local {0x5B,0x61,0x62} initializer and lbl_8064C5A8/lbl_80651948 loads scheduled differently",
+    "diff_counts": {
+      "DIFF_ARG_MISMATCH": 7,
+      "DIFF_DELETE": 9,
+      "DIFF_INSERT": 5,
+      "DIFF_REPLACE": 1
+    }
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "build/GEDE01/main.dol: OK; Progress All: 54.86% fuzzy, 41.68% matched, 41.68% linked (5992 / 7023 files); Code: 958836 / 2300692 bytes (5757 / 8214 functions)"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0",
+    "sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "cmp_exit": 0
+  },
+  "legal_audit": {
+    "independent_translation_unit": true,
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_functions_edited": false,
+    "generated_binaries_staged": false,
+    "private_inputs_staged": false
+  }
+}
