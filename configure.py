@@ -8513,7 +8513,7 @@ config.libs = [
             Object(Matching, "game/game_fn_8013017C.c"),
             Object(Matching, "game/game_fn_801301B0.c"),
             Object(Matching, "game/game_fn_80130214.c"),
-            Object(NonMatching, "game/game_fn_80130258.c"),
+            Object(Matching, "game/game_fn_80130258.c"),
             Object(Matching, "game/game_fn_801302BC.c"),
             Object(Matching, "game/game_fn_801302FC.c"),
             Object(Matching, "game/game_fn_8013033C.c"),
