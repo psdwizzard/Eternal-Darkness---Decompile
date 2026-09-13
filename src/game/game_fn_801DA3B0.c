@@ -2,6 +2,12 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
+typedef struct Vec3u {
+    u32 x;
+    u32 y;
+    u32 z;
+} Vec3u;
+
 extern void* fn_80201814(u32);
 extern void* fn_80201B8C(void);
 extern int fn_80201B64(void*);
@@ -29,18 +35,18 @@ void* fn_801DA3B0(void* runtime, u32 flags, void* position, void* value,
                   int owner, u8 option, void** output_a, void** output_b,
                   void** output_d, void** output_c)
 {
+    int alternate;
+    int special;
     void* owner_object;
     u8* object;
-    int special;
+    u8* effect;
 
     object = 0;
     owner_object = fn_80201814(owner);
     if (owner_object != 0) {
         u8* state;
-        u8* effect;
         void* allocated;
         u32 kind;
-        int alternate;
         u8* info = fn_80201B8C();
 
         special = 0;
@@ -104,9 +110,7 @@ void* fn_801DA3B0(void* runtime, u32 flags, void* position, void* value,
         }
         *(u32*)(effect + 0x24) = 1;
         *(u32*)(effect + 0x20) = 1;
-        *(u32*)(effect + 0x34) = *(u32*)(object + 0x38);
-        *(u32*)(effect + 0x38) = *(u32*)(object + 0x3C);
-        *(u32*)(effect + 0x3C) = *(u32*)(object + 0x40);
+        *(Vec3u*)(effect + 0x34) = *(Vec3u*)(object + 0x38);
         *(u16*)(effect + 0x28) = 250;
         *(u32*)(effect + 0x2C) = owner;
         *(void**)(effect + 0x30) = runtime;
