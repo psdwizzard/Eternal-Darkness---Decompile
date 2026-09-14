@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "60c1be7b-3db9-40f0-98cc-fbebcc58f13b",
+  "attempt": 1,
+  "base_commit": "f33daeee549981e6db86513e11a0a4b3725fe4ee",
+  "target": "fn_8017EE58",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-60c1be7b-3db9-40f0-98cc-fbebcc58f13b.json"
+  ],
+  "divergence": "Best fresh canonical and relocation-strict objdiff is 94.40288%: retail is 556 bytes and generated is 548 bytes, with 28 relocation-bearing instructions on each side and identical canonical/strict reports. GC/1.3 rotates the persistent object/first/config/raw-index/zero-extended-index registers, maintains the zero-extended loop index instead of materializing retail's separate clrlwi before the 0x38 multiply, folds the explicit truncation of index plus one, and consequently emits two fewer instructions with different second fn_80180518 argument scheduling."
+}
