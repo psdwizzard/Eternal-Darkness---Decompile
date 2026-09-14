@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c8eae34b-7c74-487e-9bcc-0932449bc9e3",
+  "attempt": 2,
+  "base_commit": "05390e0c654ca575138a51f38443b8fa5212fc99",
+  "target": "fn_8020686C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c8eae34b-7c74-487e-9bcc-0932449bc9e3.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure a size-exact 98.37749% (604 retail bytes and 604 candidate bytes). The immediate-data loop entry still emits cmpwi r30,0; li r24,0; li r25,0; ble instead of retail li r24,0; cmpw r24,r30; li r25,0; bge. At offsets 0x20C-0x22C the control-register calculation is instruction-equivalent but rotates the retail r5/r4/r3 temporaries to r5/r4/r6, including addi r6,r3,0x6800 rather than addi r3,r3,0x6800. All seven relocation entries agree in type, target, and zero addend. The rebuilt DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f and cmp against retail returns 0."
+}

@@ -57,11 +57,11 @@ BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void *callback)
     }
 
     exi->immBuf = buf;
-    regAddr = chan * 20;
     exi->immLen = type != 1 ? len : 0;
     data = (type << 2) | 1;
     data |= (len - 1) << 4;
-    regAddr += 0xCC006800;
+    regAddr = 0xCC006800;
+    regAddr += chan * 20;
     *(volatile u32 *)(regAddr + 12) = data;
     OSRestoreInterrupts(enabled);
     return 1;
