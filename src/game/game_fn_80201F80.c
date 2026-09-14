@@ -33,7 +33,9 @@ int fn_80201F80(Object80201F80* object, int operation, u32 mask)
             if ((flags & mask) == mask) {
                 flags &= ~mask;
             } else {
-                flags |= mask;
+                u32 newFlags = flags;
+                newFlags |= mask;
+                flags = newFlags;
             }
             fn_80201E50(object->value, flags);
             result = 1;
