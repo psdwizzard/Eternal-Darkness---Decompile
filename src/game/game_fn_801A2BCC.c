@@ -19,18 +19,22 @@ void fn_801A2BCC(u8* object, void* input, s16* output, int count)
         int x = transformed[0];
         int y = transformed[1];
         int z = transformed[2];
+        int left = x - radius;
+        int top = y + radius;
+        int right = x + radius;
+        int bottom = y - radius;
 
-        output[0] = x - radius;
-        output[1] = y + radius;
+        output[0] = left;
+        output[1] = top;
         output[2] = z;
-        output[3] = x + radius;
-        output[4] = y + radius;
+        output[3] = right;
+        output[4] = top;
         output[5] = z;
-        output[6] = x + radius;
-        output[7] = y - radius;
+        output[6] = right;
+        output[7] = bottom;
         output[8] = z;
-        output[9] = x - radius;
-        output[10] = y - radius;
+        output[9] = left;
+        output[10] = bottom;
         output[11] = z;
 
         object += 0x38;
