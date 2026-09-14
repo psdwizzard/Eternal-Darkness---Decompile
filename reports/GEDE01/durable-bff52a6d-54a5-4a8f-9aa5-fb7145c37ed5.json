@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "bff52a6d-54a5-4a8f-9aa5-fb7145c37ed5",
+  "attempt": 3,
+  "base_commit": "25fc7373220572f7fbdd7ca73403e2324f6cdc7c",
+  "target": "fn_801A9CDC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bff52a6d-54a5-4a8f-9aa5-fb7145c37ed5.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both score 95.916664%: retail is 240 bytes while GC/1.3 emits 244 bytes. Generated offset 0x18 writes lbl_80607CB0@l into r0 and inserts mr r4,r0 at 0x1C, while retail writes the low relocation directly into r4; the shifted loop then uses a different register cycle (minimum r5 versus retail r7, value r6 versus retail r5, target r7 versus retail r6, and next r0 versus retail r8). The fn_801A9B38 and fn_801AD8B4 call relocations and lbl_80607CB0 HA/LO relocation target/addends are preserved under function_reloc_diffs=name_address. The final linked DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
