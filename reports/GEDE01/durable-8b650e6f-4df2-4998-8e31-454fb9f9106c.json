@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "8b650e6f-4df2-4998-8e31-454fb9f9106c",
+  "attempt": 3,
+  "base_commit": "a074d19c7ff6d643cf1858783f7e252c7a8462b2",
+  "target": "fn_801861C4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8b650e6f-4df2-4998-8e31-454fb9f9106c.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8b650e6f-4df2-4998-8e31-454fb9f9106c-canonical.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 94.8985% (retail 1064 bytes, generated 1060 bytes). The first differing instruction is at offset 0x1C: retail emits `mr r26, r3`, while generated emits `mr r25, r3`, beginning the long-lived-register allocation rotation. The sole net missing generated instruction is retail offset 0x278 `fmr f0, f1`: retail prepares fn_80102340 arguments as `fmr f0, f1; fmr f1, f31; fmr f2, f0`, whereas generated emits `fmr f2, f1; fmr f1, f31`, accounting for the four-byte size deficit and shifting every later relocation by four bytes. The clamp sequence also schedules the lbl_80650A24 load four bytes earlier at generated offset 0x1D0 versus retail offset 0x1D4."
+}
