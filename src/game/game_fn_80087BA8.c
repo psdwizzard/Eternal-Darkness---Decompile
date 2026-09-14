@@ -30,19 +30,19 @@ extern void fn_8006BEE4(void*, void (*)(void));
 int fn_80087BA8(Work* work)
 {
     int index;
+    int success;
     void* state;
     Owner* owner;
     float* position;
     int* data;
-    int success;
     int placed;
     int i;
 
+    success = 0;
     state = fn_8006ED3C(work, 6, &index);
     owner = work->owner;
     position = owner->position;
     data = owner->data;
-    success = 0;
     if (owner->active == 0) {
         placed = 0;
         for (i = 0; i < 20; i++) {
