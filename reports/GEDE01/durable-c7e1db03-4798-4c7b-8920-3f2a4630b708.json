@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c7e1db03-4798-4c7b-8920-3f2a4630b708",
+  "attempt": 3,
+  "base_commit": "0c877a2331899c16f0f681507aacc938bb8119d5",
+  "target": "fn_800C4AA0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c7e1db03-4798-4c7b-8920-3f2a4630b708.json"
+  ],
+  "divergence": "Fresh canonical GC/1.3 and relocation-strict objdiff are size-exact at 204/204 bytes and score 95.0%. Both sides contain 17 relocation-bearing instructions at identical offsets with identical rendered targets, types, and zero addends. The 11 diff records comprise one prologue scheduling insert/delete pair and nine argument mismatches: canonical assigns the output pointer to r30 and the retained state reference/state pointer to r31, while retail assigns them to r31 and r30; canonical loads the selected resource directly into r29 before moving it to r3, while retail loads it into r3 before preserving it in r29. An expression-order source variant produced identical codegen and was discarded. The full canonical build succeeded and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
