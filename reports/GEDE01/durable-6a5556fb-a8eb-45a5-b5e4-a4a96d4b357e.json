@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "6a5556fb-a8eb-45a5-b5e4-a4a96d4b357e",
+  "attempt": 3,
+  "base_commit": "c566c76b51038c6f8c90861e1c0938ddfd4dc1d9",
+  "target": "fn_801D88D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6a5556fb-a8eb-45a5-b5e4-a4a96d4b357e.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff measure 99.37464% with equal 1388-byte/347-instruction functions and 33 relocations on each side. Remaining divergence is MWCC register allocation: retail saves r26-r31 and keeps flags in r26, while generated saves r27-r31 and keeps flags in r27; the case-2 signed result and case-8 results are consequently colored differently, including a generated call-site extsh. Six signed-integer-to-double conversion relocations target the generated local @40 constant instead of retail lbl_80651110."
+}
