@@ -10,8 +10,12 @@ typedef struct InstanceList {
     void* entries[1];
 } InstanceList;
 
-extern unsigned int lbl_8065053C;
-extern unsigned short lbl_80650540;
+typedef struct Entry {
+    u8 data[0x174];
+} Entry;
+
+extern volatile unsigned int lbl_8065053C;
+extern volatile unsigned short lbl_80650540;
 
 extern void fn_8014F320(void*, u8, short);
 extern void fn_8018199C(void*, Coord3*, Coord3*, void*);
@@ -19,19 +23,19 @@ extern void fn_80185108(void*);
 extern void fn_801851A0(void*, Coord3*);
 
 /* NonMatching: behavior-complete honest C. Retail overwrites r4 for the entry
- * multiply, schedules the two SDA21 loads in the opposite order, and allocates
- * the loop index/current pointer to r29/r31 rather than r31/r29. */
+ * multiply; this reconstruction uses r5 for that value, which also leaves r4
+ * rather than r5 as the temporary for the following 32-bit config load. */
 void fn_8014EB38(u8* object, int index)
 {
-    int i;
+    void** current;
     int count;
     u8* entry;
-    void** current;
+    int i;
     InstanceList* list;
     Coord3 position;
     Coord3 config;
 
-    entry = object + 0xEBC + index * 0x174;
+    entry = (u8*)((Entry*)object + index) + 0xEBC;
     *(unsigned int*)&config = lbl_8065053C;
     config.z = lbl_80650540;
 
@@ -46,7 +50,7 @@ void fn_8014EB38(u8* object, int index)
         list = *(InstanceList**)(entry + 0x170);
         count = list->count;
         current = list->entries;
-        for (i = 0; i < count; i++, current++) {
+        for (i = 0; i < count; current++, i++) {
             fn_80185108(*current);
             fn_801851A0(*current, &position);
         }

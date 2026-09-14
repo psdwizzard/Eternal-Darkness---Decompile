@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "assignment_id": "8433d78a-28d4-4264-a3f9-d9f160dbe914",
+  "target": "fn_8014EB38",
+  "recovered_from_commit": "d2aca29c3578b42342016fba9cb3bfd6c0724811",
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw": "build/GEDE01/main.dol: OK",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "canonical_command": "python3 tools/fndiff.py game/game_fn_8014EB38.c fn_8014EB38",
+  "canonical_raw": "target 248 bytes  base 248 bytes  match 99.67742",
+  "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8014EB38 -o reports/GEDE01/objdiff-8433d78a-28d4-4264-a3f9-d9f160dbe914.json --format json-pretty -c function_reloc_diffs=name_address fn_8014EB38",
+  "relocation_strict_raw": "left .text size 248 match_percent 99.67742; right fn_8014EB38 size 248; 6 relocation-bearing instructions on each side, with identical types, targets, and addends",
+  "relocations": [
+    "retail/reconstructed 0x28 R_PPC_EMB_SDA21 lbl_8065053C+0",
+    "retail/reconstructed 0x2c R_PPC_EMB_SDA21 lbl_80650540+0",
+    "retail/reconstructed 0x50 R_PPC_REL24 fn_8014F320+0",
+    "retail/reconstructed 0xa0 R_PPC_REL24 fn_8018199C+0",
+    "retail/reconstructed 0xbc R_PPC_REL24 fn_80185108+0",
+    "retail/reconstructed 0xc8 R_PPC_REL24 fn_801851A0+0"
+  ],
+  "codegen_divergence": [
+    "0x08: retail mulli r4,r4,0x174; reconstructed mulli r5,r4,0x174",
+    "0x18: retail forms the entry offset from r4; reconstructed uses r5",
+    "0x28 and 0x30: retail uses r5 for the lbl_8065053C load/store; reconstructed uses r4 because of the entry-offset register choice"
+  ]
+}
