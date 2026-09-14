@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "assignment_id": "a72b79d6-f810-41a8-9b9f-729b39f8451b",
+  "target": "fn_8014EB38",
+  "recovered_from_commit": "c1c416e2121974a73554172efaca7198777d7c5d",
+  "canonical_command": "python3 tools/fndiff.py game/game_fn_8014EB38.c fn_8014EB38",
+  "canonical_raw": "target 248 bytes  base 248 bytes  match 95.20968",
+  "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8014EB38 -o reports/GEDE01/objdiff-a72b79d6-f810-41a8-9b9f-729b39f8451b.json --format json-pretty -c function_reloc_diffs=name_address fn_8014EB38",
+  "relocation_strict_raw": "left .text size 248 match_percent 95.20968; right fn_8014EB38 size 248 match_percent 95.20968; 6 relocation-bearing instructions on each side",
+  "relocations": [
+    "retail 0x28 R_PPC_EMB_SDA21 lbl_8065053C+0; reconstructed 0x28 R_PPC_EMB_SDA21 lbl_80650540+0",
+    "retail 0x2c R_PPC_EMB_SDA21 lbl_80650540+0; reconstructed 0x2c R_PPC_EMB_SDA21 lbl_8065053C+0",
+    "retail/reconstructed 0x50 R_PPC_REL24 fn_8014F320+0",
+    "retail/reconstructed 0xa0 R_PPC_REL24 fn_8018199C+0",
+    "retail/reconstructed 0xbc R_PPC_REL24 fn_80185108+0",
+    "retail/reconstructed 0xc8 R_PPC_REL24 fn_801851A0+0"
+  ],
+  "codegen_divergence": [
+    "0x08 and 0x18: retail overwrites r4 for the 0x174 multiply; reconstructed C uses temporary r5",
+    "0x28 through 0x38: retail loads and stores lbl_8065053C before lbl_80650540; reconstructed C schedules the halfword first, swapping the SDA21 relocation targets at 0x28 and 0x2c",
+    "0xac through 0xd8: retail assigns loop index/count/current to r29/r30/r31; reconstructed C assigns current/count/index to r29/r30/r31"
+  ],
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw": "build/GEDE01/main.dol: OK",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+}
