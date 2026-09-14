@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "1e92e896-1a66-4311-8f86-7907565fb6e4",
+  "attempt": 2,
+  "base_commit": "7b48691b95e593f5c3d5a928c56386351bcaab03",
+  "target": "fn_800BF0C0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1e92e896-1a66-4311-8f86-7907565fb6e4.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff are size-exact at 376/376 bytes and score 98.67021%. All 23 relocation-bearing instructions agree in offset, relocation type, target name, and zero addend. The 23 remaining instruction differences are exclusively GPR operands: retail keeps event/current/maximum/owner/world in r30/r25/r26/r27/r28, while canonical GC/1.3 assigns r25/r26/r27/r28/r30; state and holder agree in r29/r31. The later resource temporary consequently remains in r30 instead of retail r25. A fresh full build succeeds and build/GEDE01/main.dol is byte-identical to retail with SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
