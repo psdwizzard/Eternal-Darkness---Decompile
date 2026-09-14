@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d501281c-f66c-4f14-af14-926b13a2f34d",
+  "attempt": 1,
+  "base_commit": "0a0e9e42b3d2b59cea195906828fc1b3e3d655fa",
+  "target": "fn_8019B4D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d501281c-f66c-4f14-af14-926b13a2f34d.json"
+  ],
+  "divergence": "Fresh canonical objdiff measures 95.881485%: retail is 540 bytes and generated code is 528 bytes. At retail offsets 0xD0/0xD8, GC/1.3 schedules li r4,4 and addi r3,r31,0x20 in the opposite order around an otherwise identical fn_801805E0 call; at 0xFC retail emits extsb r7,r0 while the typed C emits clrlwi r7,r0,24; at 0x1B4-0x1DC retail materializes the conditional texture value through stack slot 0x14 and then copies it to the address-taken slot 0x8, while GC/1.3 folds the temporary and emits a direct branch/store sequence, producing 12 fewer bytes. All real call/data relocation targets and addends outside this differing local sequence agree. The required full python3 configure.py plus .tools/bin/ninja -j2 build was attempted twice but stopped on the pre-existing unrelated game_fn_801B46C8 externalization error (lbl_8060C020 is not defined in a NOBITS section); the target TU itself compiles successfully, and the existing canonical build/GEDE01/main.dol verifies as ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
