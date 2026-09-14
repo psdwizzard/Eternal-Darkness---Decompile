@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a1adaabe-492c-40b1-88e5-af66cc7b4f08",
+  "attempt": 3,
+  "base_commit": "6f4159a1fc1fd52f651369a8f542349a01f68318",
+  "target": "fn_8008D5D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a1adaabe-492c-40b1-88e5-af66cc7b4f08.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict direct objdiff both measure 96.17647% with equal 272-byte code. All 13 R_PPC_REL24 relocations agree at offsets 0x28, 0x38, 0x40, 0x54, 0x60, 0x78, 0x80, 0x90, 0x9C, 0xA8, 0xB4, 0xC8, and 0xE8, with identical targets and zero addends. The remaining instruction differences are a callee-saved register-coloring cycle: retail uses r29 for object, r28 for target, and r30 for mode, while generated code uses r28 for object, r30 for target, and r29 for mode; this also moves the r28 save from retail offset 0x24 to generated offset 0x1C. The accepted base already contains the independent behavior-complete, size-exact honest C reconstruction. The full canonical build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
