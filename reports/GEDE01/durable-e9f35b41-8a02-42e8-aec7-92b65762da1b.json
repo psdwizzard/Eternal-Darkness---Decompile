@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e9f35b41-8a02-42e8-aec7-92b65762da1b",
+  "attempt": 1,
+  "base_commit": "797ea7739ed57cc1d6dfaa6907e43e21e2bcf62a",
+  "target": "fn_801AD95C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e9f35b41-8a02-42e8-aec7-92b65762da1b.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits 156 bytes against retail's 152 bytes at 96.052635%. Retail forms lbl_8060B430 directly into r31 at text offset 0x24, while generated code forms it in r0 and emits an extra mr r31,r0 at 0x28. This shifts the first loop and second branch by four bytes. In the second loop, retail assigns the counter to r30 and entry pointer to r31, while generated code assigns the counter to r31 and entry pointer to r30. Both sides contain the same six relocation-bearing operations with matching types, targets, and addends (two ADDR16_HA, two ADDR16_LO, and one REL24 call to each helper); their instruction offsets diverge after the extra mr. The full canonical build passes and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
