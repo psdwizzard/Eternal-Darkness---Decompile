@@ -16,6 +16,8 @@ extern char lbl_802FC8AC[];
 
 extern void fn_800F8BAC(const char*, const char*, int);
 
+/* NonMatching: behavior-complete and size-exact. The remaining instructions
+ * differ only in scheduling the final cache-address calculation and stores. */
 void fn_801FEB54(int frame, int effects, int particles, int trails,
                  int textures, int anims)
 {
@@ -27,7 +29,7 @@ void fn_801FEB54(int frame, int effects, int particles, int trails,
     SLOT(lbl_8064D850) = address;
     address = (address - particles * 4) & ~31;
     SLOT(lbl_8064D848) = address;
-    address = (address - ((particles >> 3) + ((particles & 7) != 0))) & ~31;
+    address = (address - ((particles >> 3) + ((particles & 7) > 0))) & ~31;
     SLOT(lbl_8064D840) = address;
     address = (address - particles) & ~31;
     SLOT(lbl_8064D838) = address;
