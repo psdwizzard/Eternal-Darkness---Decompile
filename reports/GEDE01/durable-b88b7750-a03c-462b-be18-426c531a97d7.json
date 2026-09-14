@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b88b7750-a03c-462b-be18-426c531a97d7",
+  "attempt": 2,
+  "base_commit": "87531ff91d650c001f017350e798aa9b41c9b2c8",
+  "target": "fn_800D38CC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b88b7750-a03c-462b-be18-426c531a97d7.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits the correct 260-byte function at 94.76923%. Remaining instruction differences are floating-point register allocation across f0/f1/f3/f4 in both descriptor initializations and scheduling of addi r4,r1,8 for the second fn_80155748 call (generated at +0x009c versus retail at +0x00a4). The relocation-strict diff was measured with function_reloc_diffs=name_address: both sides contain 13 relocation-bearing instructions with identical offsets, types, targets, and zero addends. The full build reproduces DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
