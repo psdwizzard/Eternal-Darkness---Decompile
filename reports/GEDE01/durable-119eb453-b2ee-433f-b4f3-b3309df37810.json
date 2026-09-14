@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "119eb453-b2ee-433f-b4f3-b3309df37810",
+  "attempt": 2,
+  "base_commit": "8e1aaae937b6d67db09713da7d6cf97468e14574",
+  "target": "fn_800606BC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-119eb453-b2ee-433f-b4f3-b3309df37810.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 96.015625% for the size-exact 256/256-byte function. All 12 R_PPC_REL24 call relocations retain the same offsets, targets, types, and zero addends. The remaining text differences are an equivalent register-coloring rotation: retail uses r29 for owner (then event), r28 for value, and r30 for resolved, while generated code uses r28 for owner, r30 for value, and r29 for resolved (then event); this also moves the r28 save from retail offset 0x24 to generated offset 0x1c. A fresh canonical full build reproduces the verified retail DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
