@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f962cba6-44ec-49a8-8d9f-31e3782cfc8e",
+  "attempt": 2,
+  "base_commit": "2bfea060829607be77512627bad058346ef0e2ac",
+  "target": "fn_801EB340",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f962cba6-44ec-49a8-8d9f-31e3782cfc8e.json"
+  ],
+  "divergence": "Fresh canonical GC/1.3 and direct relocation-strict objdiff are byte-identical, size-exact at 648/648 bytes, and measure 95.35185%. All eight R_PPC_REL24 relocations agree in offset, target, and zero addend. Differences are confined to offsets 0x40-0xC8 in texture-parameter preprocessing and downstream register assignment: retail keeps original format in r0, masked format in r5, decremented width in r8, and decremented height in r7, while generated code initially uses r8, r5, r7, and r9 and schedules the stack stores differently. From offset 0xCC through the command parser and epilogue, instruction scheduling agrees. The full build passed and the DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
