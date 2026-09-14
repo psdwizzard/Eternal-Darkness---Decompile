@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "295c5132-df11-48d2-bd28-afa4146f0172",
+  "attempt": 3,
+  "base_commit": "1e0158e04e7fee4d84b8dc1460e5e1ac536229d4",
+  "target": "fn_801FEB54",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-295c5132-df11-48d2-bd28-afa4146f0172.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both score 96.11842%; retail and generated .text are each 304 bytes with 16 relocations and equal relocation targets/addends. At offsets 0xD4..0xF8, retail materializes lbl_8064D818 before calculating the final aligned address, while canonical GC/1.3 calculates the address first; this rotates r5/r6 through the lbl_8064D818 store, lbl_8064D808 store, and reload. The full rebuild passed and build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
