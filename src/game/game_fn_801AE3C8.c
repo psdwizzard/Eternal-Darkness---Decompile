@@ -33,17 +33,18 @@ extern int fn_80213704(void*, void*, u32, u32, void (*)(void), int);
 
 int fn_801AE3C8(Entry* entry)
 {
-    register void (*callback)(void);
-    u32 amount;
+    register u32 amount;
     void* destination;
+    void* selected;
     u32 position;
     u32 half_size;
 
     half_size = entry->chunk_size >> 1;
     amount = half_size;
-    destination = entry->half != 0
-                      ? (u8*)entry->buffer + half_size
-                      : entry->buffer;
+    selected = entry->half != 0
+                   ? (u8*)entry->buffer + half_size
+                   : entry->buffer;
+    destination = selected;
 
     if (entry->position + amount > entry->limit) {
         if (entry->limit > entry->position) {
@@ -52,12 +53,11 @@ int fn_801AE3C8(Entry* entry)
                    half_size - amount);
         } else {
             memset(destination, 0, amount);
+            fn_801B9E7C(entry->handle,
+                        entry->half != 0 ? entry->buffer_size >> 1 : 0,
+                        entry->buffer_size >> 1, 0, 0);
+            amount = 0;
         }
-
-        fn_801B9E7C(entry->handle,
-                    entry->half != 0 ? entry->buffer_size >> 1 : 0,
-                    entry->buffer_size >> 1, 0, 0);
-        amount = 0;
     }
 
     if (amount != 0) {
@@ -66,9 +66,8 @@ int fn_801AE3C8(Entry* entry)
             return 0;
         }
 
-        callback = fn_801AE6B0;
         while (fn_80213704(entry->work, destination, amount,
-                          entry->source->value08 + position, callback, 2) == 0) {
+                          entry->source->value08 + position, fn_801AE6B0, 2) == 0) {
         }
         entry->pending = 1;
         entry->position += amount;

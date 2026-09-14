@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "0c27dffb-0ca0-4ffc-9e23-4d707abba51b",
+  "attempt": 1,
+  "base_commit": "564a6a8fecfb725dca43a0677d43e0752eb3a18a",
+  "target": "fn_8018AD14",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0c27dffb-0ca0-4ffc-9e23-4d707abba51b.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is size-exact at 412/412 bytes but only 95.67961%. In the raw diff, retail initializes the fallback loop index in r20, reloads object data into r21, copies zero to byte_offset in r23, and materializes fn_8018D020 in r22; generated code reloads object data into r22, materializes fn_8018D020 in r23, then independently zeros r20 and r21. This changes instruction scheduling, register allocation, and callback relocation placement: fn_8018D020 HA/LO relocation fields are at 0xe6/0xf2 retail versus 0xe2/0xea generated, although targets and addends are the same. python3 configure.py and .tools/bin/ninja -j2 completed successfully, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

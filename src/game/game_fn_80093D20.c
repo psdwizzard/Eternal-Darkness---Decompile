@@ -30,22 +30,23 @@ extern void* fn_801A717C(void);
 extern void fn_801A74A0(void*, int);
 extern void fn_801A74A8(void*, int);
 extern void fn_801A7538(void*, int);
-extern void fn_801A7518(void*, short);
+extern void fn_801A7518();
 extern unsigned long long fn_8020123C();
 extern void fn_801A7228(void*);
 extern void fn_8003CB6C(void);
 extern int fn_800389E0(void*, int, int, int);
-extern void fn_80201138(float, int, void*, int, int, int, int);
+extern void fn_80201138(float, int, void*, int, int, int);
 
 void fn_80093D20(register void* object, register void* source)
 {
     register Runtime80093D20* runtime = ((Runtime80093D20*)fn_80201B8C(object));
+    register short amount;
     register void* resource = fn_80201BC8(object);
     register int id = fn_80201B54(object);
     register int room = fn_80201EB8(object);
     register u32 flags = fn_80036D5C(object);
 
-    if ((flags & 0x01010000) != 0) {
+    if ((flags & 0x80) != 0 || (flags & 0x8000) != 0) {
         resource = fn_801294DC(resource, 0x92, 0x20, 10);
         if (resource != 0) {
             int value = id << 8;
@@ -68,7 +69,7 @@ void fn_80093D20(register void* object, register void* source)
         if (runtime->kind == 10 || runtime->kind == 0x18) {
             int source_id = fn_80200C20(source);
             int current_id = fn_80201B44();
-            short amount = -0x23;
+            amount = -0x23;
             if (runtime->kind == 10) {
                 amount = 0x32;
             }
@@ -88,6 +89,6 @@ void fn_80093D20(register void* object, register void* source)
         fn_800389E0(object, 0, 0, 1);
         fn_80201D2C(object, 8);
         fn_80201D14(object, 1);
-        fn_80201138(lbl_8064EC98, 0x11, object, 8, -1, 0, 0);
+        fn_80201138(lbl_8064EC98, 0x11, object, 8, -1, 0);
     }
 }

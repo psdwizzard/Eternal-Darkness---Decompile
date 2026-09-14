@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "assignment_id": "8f07dc5a-088f-4365-ba24-efb1b5539394",
+  "target": "fn_80185CA4",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80185CA4 -o build/GEDE01/objdiff-8f07dc5a-088f-4365-ba24-efb1b5539394-canonical.raw.json --format json-pretty fn_80185CA4",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80185CA4 -o build/GEDE01/objdiff-8f07dc5a-088f-4365-ba24-efb1b5539394.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_80185CA4",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measured_outputs": {
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_sha1_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical": {
+      "target_size": 360,
+      "candidate_size": 356,
+      "target_instruction_count": 90,
+      "candidate_instruction_count": 90,
+      "match_percent": 95.666664
+    },
+    "relocation_strict": {
+      "config": "function_reloc_diffs=name_address",
+      "match_percent": 95.666664,
+      "target_relocation_count": 20,
+      "candidate_relocation_count": 20,
+      "same_target_type_addend_sequence": true,
+      "equal_offsets_through": 232,
+      "remaining_candidate_offset_delta": -4,
+      "target_offsets": [32, 36, 56, 132, 140, 152, 188, 200, 216, 232, 268, 272, 280, 288, 300, 316, 320, 324, 328, 336],
+      "candidate_offsets": [32, 36, 56, 132, 140, 152, 188, 200, 216, 232, 264, 268, 276, 284, 296, 312, 316, 320, 324, 332],
+      "targets_types_addends": [
+        ["lbl_80651D38", "R_PPC_EMB_SDA21", 0],
+        ["lbl_80651D3C", "R_PPC_EMB_SDA21", 0],
+        ["fn_801804AC", "R_PPC_REL24", 0],
+        ["lbl_8064D224", "R_PPC_EMB_SDA21", 0],
+        ["memset", "R_PPC_REL24", 0],
+        ["fn_80179904", "R_PPC_REL24", 0],
+        ["fn_80180554", "R_PPC_REL24", 0],
+        ["lbl_80650A18", "R_PPC_EMB_SDA21", 0],
+        ["fn_801805E0", "R_PPC_REL24", 0],
+        ["fn_80180518", "R_PPC_REL24", 0],
+        ["fn_8018C2D0", "R_PPC_REL24", 0],
+        ["lbl_80607120", "R_PPC_ADDR16_HA", 0],
+        ["lbl_80607120", "R_PPC_ADDR16_LO", 0],
+        ["lbl_80607120", "R_PPC_NONE", 2],
+        ["fn_8018C540", "R_PPC_REL24", 0],
+        ["lbl_80606328", "R_PPC_ADDR16_HA", 0],
+        ["lbl_80606318", "R_PPC_ADDR16_HA", 0],
+        ["lbl_80606318", "R_PPC_ADDR16_LO", 0],
+        ["lbl_80606328", "R_PPC_ADDR16_LO", 0],
+        ["fn_801F5A04", "R_PPC_REL24", 0]
+      ]
+    },
+    "byte_index_experiment": {
+      "change": "declare loop index as u8 instead of int",
+      "candidate_size": 360,
+      "match_percent": 95.166664,
+      "result": "rejected because it reduced the score; the preserved source retains int"
+    }
+  },
+  "exact_codegen_divergence": {
+    "register_allocation": "Retail maps desc/self/arg1/entry/count/index to r30/r28/r29/r26/r31/r27; canonical GC/1.3 maps them to r27/r31/r26/r28/r30/r29.",
+    "loop_test": "Retail emits clrlwi r0,r27,24; cmplw r0,r31; blt at offsets 0xf4/0xf8/0xfc. The best candidate emits cmpw r29,r30; blt at 0xf4/0xf8, making the candidate four bytes shorter and shifting all later relocations by -4.",
+    "relocations": "All 20 relocation target/type/addend triples occur in the same order, but the ten relocations after the loop test do not have equal offsets because of the missing truncation instruction. Therefore relocation-strict 100% is not claimed."
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80185CA4.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}

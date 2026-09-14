@@ -1,0 +1,131 @@
+{
+  "baseCommit": "7879786988af83c4a1994c7c40cd7ed8063c51ed",
+  "remoteHead": "ad967e89334f177d00f88ced84b3d8e41fc69fc0",
+  "anchor": "b7c5191bb3bcd18ae8b3e33a1b20ecf446e54614",
+  "previousSource": "e9f8d80ce266a0abff756ff7a2b2bc81038943ac",
+  "changedPaths": [
+    "eternal-darkness-decomp/configure.py",
+    "eternal-darkness-decomp/src/game/game_fn_8018BC68.c",
+    "eternal-darkness-decomp/src/game/game_fn_8018BD94.c",
+    "eternal-darkness-decomp/src/game/game_fn_8018BEC0.c",
+    "eternal-darkness-decomp/src/game/game_fn_8018BFEC.c",
+    "eternal-darkness-decomp/src/game/game_fn_801A2FB4.c"
+  ],
+  "alreadyIntegrated": false,
+  "canonical": {
+    "fuzzy_match_percent": 56.101273,
+    "total_code": "2300692",
+    "matched_code": "1009872",
+    "matched_code_percent": 43.89427,
+    "total_data": "4305642",
+    "matched_data": "39466",
+    "matched_data_percent": 0.9166113,
+    "total_functions": 8214,
+    "matched_functions": 5885,
+    "matched_functions_percent": 71.645966,
+    "complete_code": "1009872",
+    "complete_code_percent": 43.89427,
+    "complete_data": "39742",
+    "complete_data_percent": 0.9230215,
+    "total_units": 7066,
+    "complete_units": 6120
+  },
+  "strict": {
+    "fuzzy_match_percent": 56.093193,
+    "total_code": "2300692",
+    "matched_code": "1008188",
+    "matched_code_percent": 43.821075,
+    "total_data": "4305642",
+    "matched_data": "39466",
+    "matched_data_percent": 0.9166113,
+    "total_functions": 8214,
+    "matched_functions": 5880,
+    "matched_functions_percent": 71.5851,
+    "complete_code": "1009872",
+    "complete_code_percent": 43.89427,
+    "complete_data": "39742",
+    "complete_data_percent": 0.9230215,
+    "total_units": 7066,
+    "complete_units": 6120
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "review": {
+    "reviewerA": null,
+    "reviewerB": {
+      "reviewer": "claude",
+      "issues": [
+        "None blocking. The merge brings in the contributor's work exactly and changes nothing else. The only files touched between the base (b7c5191) and the merge (ad967e893) are `configure.py` and the five `src/game/` files. Those six files are identical to the contributor's commit 07755f9ac, so no conflict was resolved by hand. On the base side, none of the six files changed since the merge base, so no existing work was dropped.",
+        "No assembly shortcuts or ways around the rules. None of the five files contain `asm`, `#pragma`, `__declspec`, raw `.long`/opword data or `entry` tricks. The compiler flags were not changed: `-use_lmw_stmw on` is kept on all five objects. The only build-config change is switching those five objects from NonMatching to Matching.",
+        "The code changes are plain C rewrites that should give the same result, not guesses:",
+        "- **8018BC68 / BD94 / BEC0 / BFEC:** the `register` locals and the `self` alias are gone, and the locals are declared in a different order. The running `+= 0x18` offset is now `i * QUAD_VERTEX_COUNT * sizeof(GeneratedVertex)`, which is 4 × 6 = 24 = 0x18, so the arithmetic is unchanged.",
+        "- **801A2FB4:** the body moved into a `static inline` helper that hands back the `saved` value through a pointer, and the caller restores it. The order of effects is unchanged. This is a legitimate MWCC way to shift variable layout, not a hack.",
+        "One side fix in 8018BD94 is correct. It changes the externs `fn_80189968(void*, void*, void*)` and `fn_8018D020(void)` to the typed callback signature, which is what 16 other files already use. That reduces the cross-file signature mismatches rather than adding one.",
+        "Minor, not a blocker: 801A2FB4 still declares `fn_8018D020(void)`. Four other files do the same, so it was already there before this PR. It's harmless here because the function is only passed as a pointer, but it's still a leftover mismatch.",
+        "Minor verification caveat: I did not rebuild. `build/GEDE01` dates from Sep 5, before this merge, so its `.o` files and `report.json` can't back the new Matching claims. The byte-level checks still have to come from the gates that run after approval: fresh canonical build, strict no-regression, imported Matching, legal audit and retail DOL SHA-1.",
+        "Watch for after approval: if MWCC doesn't inline `generate_object` in 801A2FB4, a separate local function will end up in the object and the unit will fail objdiff. The strict gate would catch that, so this is not a reason to hold back approval."
+      ],
+      "rating": 8,
+      "verdict": "APPROVE",
+      "raw": "ISSUES:\n- None blocking. The merge brings in the contributor's work exactly and changes nothing else. The only files touched between the base (b7c5191) and the merge (ad967e893) are `configure.py` and the five `src/game/` files. Those six files are identical to the contributor's commit 07755f9ac, so no conflict was resolved by hand. On the base side, none of the six files changed since the merge base, so no existing work was dropped.\n- No assembly shortcuts or ways around the rules. None of the five files contain `asm`, `#pragma`, `__declspec`, raw `.long`/opword data or `entry` tricks. The compiler flags were not changed: `-use_lmw_stmw on` is kept on all five objects. The only build-config change is switching those five objects from NonMatching to Matching.\n- The code changes are plain C rewrites that should give the same result, not guesses:\n  - **8018BC68 / BD94 / BEC0 / BFEC:** the `register` locals and the `self` alias are gone, and the locals are declared in a different order. The running `+= 0x18` offset is now `i * QUAD_VERTEX_COUNT * sizeof(GeneratedVertex)`, which is 4 × 6 = 24 = 0x18, so the arithmetic is unchanged.\n  - **801A2FB4:** the body moved into a `static inline` helper that hands back the `saved` value through a pointer, and the caller restores it. The order of effects is unchanged. This is a legitimate MWCC way to shift variable layout, not a hack.\n- One side fix in 8018BD94 is correct. It changes the externs `fn_80189968(void*, void*, void*)` and `fn_8018D020(void)` to the typed callback signature, which is what 16 other files already use. That reduces the cross-file signature mismatches rather than adding one.\n- Minor, not a blocker: 801A2FB4 still declares `fn_8018D020(void)`. Four other files do the same, so it was already there before this PR. It's harmless here because the function is only passed as a pointer, but it's still a leftover mismatch.\n- Minor verification caveat: I did not rebuild. `build/GEDE01` dates from Sep 5, before this merge, so its `.o` files and `report.json` can't back the new Matching claims. The byte-level checks still have to come from the gates that run after approval: fresh canonical build, strict no-regression, imported Matching, legal audit and retail DOL SHA-1.\n- Watch for after approval: if MWCC doesn't inline `generate_object` in 801A2FB4, a separate local function will end up in the object and the unit will fail objdiff. The strict gate would catch that, so this is not a reason to hold back approval.\n\nRATING: 8\n\nVERDICT: APPROVE"
+    },
+    "consensus": [
+      {
+        "issue": "None blocking. The merge brings in the contributor's work exactly and changes nothing else. The only files touched between the base (b7c5191) and the merge (ad967e893) are `configure.py` and the five `src/game/` files. Those six files are identical to the contributor's commit 07755f9ac, so no conflict was resolved by hand. On the base side, none of the six files changed since the merge base, so no existing work was dropped.",
+        "reviewerA": false,
+        "reviewerB": true,
+        "agreed": false
+      },
+      {
+        "issue": "No assembly shortcuts or ways around the rules. None of the five files contain `asm`, `#pragma`, `__declspec`, raw `.long`/opword data or `entry` tricks. The compiler flags were not changed: `-use_lmw_stmw on` is kept on all five objects. The only build-config change is switching those five objects from NonMatching to Matching.",
+        "reviewerA": false,
+        "reviewerB": true,
+        "agreed": false
+      },
+      {
+        "issue": "The code changes are plain C rewrites that should give the same result, not guesses:",
+        "reviewerA": false,
+        "reviewerB": true,
+        "agreed": false
+      },
+      {
+        "issue": "- **8018BC68 / BD94 / BEC0 / BFEC:** the `register` locals and the `self` alias are gone, and the locals are declared in a different order. The running `+= 0x18` offset is now `i * QUAD_VERTEX_COUNT * sizeof(GeneratedVertex)`, which is 4 × 6 = 24 = 0x18, so the arithmetic is unchanged.",
+        "reviewerA": false,
+        "reviewerB": true,
+        "agreed": false
+      },
+      {
+        "issue": "- **801A2FB4:** the body moved into a `static inline` helper that hands back the `saved` value through a pointer, and the caller restores it. The order of effects is unchanged. This is a legitimate MWCC way to shift variable layout, not a hack.",
+        "reviewerA": false,
+        "reviewerB": true,
+        "agreed": false
+      },
+      {
+        "issue": "One side fix in 8018BD94 is correct. It changes the externs `fn_80189968(void*, void*, void*)` and `fn_8018D020(void)` to the typed callback signature, which is what 16 other files already use. That reduces the cross-file signature mismatches rather than adding one.",
+        "reviewerA": false,
+        "reviewerB": true,
+        "agreed": false
+      },
+      {
+        "issue": "Minor, not a blocker: 801A2FB4 still declares `fn_8018D020(void)`. Four other files do the same, so it was already there before this PR. It's harmless here because the function is only passed as a pointer, but it's still a leftover mismatch.",
+        "reviewerA": false,
+        "reviewerB": true,
+        "agreed": false
+      },
+      {
+        "issue": "Minor verification caveat: I did not rebuild. `build/GEDE01` dates from Sep 5, before this merge, so its `.o` files and `report.json` can't back the new Matching claims. The byte-level checks still have to come from the gates that run after approval: fresh canonical build, strict no-regression, imported Matching, legal audit and retail DOL SHA-1.",
+        "reviewerA": false,
+        "reviewerB": true,
+        "agreed": false
+      },
+      {
+        "issue": "Watch for after approval: if MWCC doesn't inline `generate_object` in 801A2FB4, a separate local function will end up in the object and the unit will fail objdiff. The strict gate would catch that, so this is not a reason to hold back approval.",
+        "reviewerA": false,
+        "reviewerB": true,
+        "agreed": false
+      }
+    ],
+    "hasDisagreement": false,
+    "table": "| Issue | Claude |\n|-------|--------|\n| None blocking. The merge brings in the contributor's work exactly and changes nothing else. The only files touched between the base (b7c5191) and the merge (ad967e893) are `configure.py` and the five `src/game/` files. Those six files are identical to the contributor's commit 07755f9ac, so no conflict was resolved by hand. On the base side, none of the six files changed since the merge base, so no existing work was dropped. | ✓ |\n| No assembly shortcuts or ways around the rules. None of the five files contain `asm`, `#pragma`, `__declspec`, raw `.long`/opword data or `entry` tricks. The compiler flags were not changed: `-use_lmw_stmw on` is kept on all five objects. The only build-config change is switching those five objects from NonMatching to Matching. | ✓ |\n| The code changes are plain C rewrites that should give the same result, not guesses: | ✓ |\n| - **8018BC68 / BD94 / BEC0 / BFEC:** the `register` locals and the `self` alias are gone, and the locals are declared in a different order. The running `+= 0x18` offset is now `i * QUAD_VERTEX_COUNT * sizeof(GeneratedVertex)`, which is 4 × 6 = 24 = 0x18, so the arithmetic is unchanged. | ✓ |\n| - **801A2FB4:** the body moved into a `static inline` helper that hands back the `saved` value through a pointer, and the caller restores it. The order of effects is unchanged. This is a legitimate MWCC way to shift variable layout, not a hack. | ✓ |\n| One side fix in 8018BD94 is correct. It changes the externs `fn_80189968(void*, void*, void*)` and `fn_8018D020(void)` to the typed callback signature, which is what 16 other files already use. That reduces the cross-file signature mismatches rather than adding one. | ✓ |\n| Minor, not a blocker: 801A2FB4 still declares `fn_8018D020(void)`. Four other files do the same, so it was already there before this PR. It's harmless here because the function is only passed as a pointer, but it's still a leftover mismatch. | ✓ |\n| Minor verification caveat: I did not rebuild. `build/GEDE01` dates from Sep 5, before this merge, so its `.o` files and `report.json` can't back the new Matching claims. The byte-level checks still have to come from the gates that run after approval: fresh canonical build, strict no-regression, imported Matching, legal audit and retail DOL SHA-1. | ✓ |\n| Watch for after approval: if MWCC doesn't inline `generate_object` in 801A2FB4, a separate local function will end up in the object and the unit will fail objdiff. The strict gate would catch that, so this is not a reason to hold back approval. | ✓ |\n\n**Claude Rating:** 8/10 — APPROVE\n\n_Second reviewer disabled (modelRouting.enableSecondReviewer)._",
+    "verdict": "APPROVE"
+  }
+}

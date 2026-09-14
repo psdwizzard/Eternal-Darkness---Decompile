@@ -58,7 +58,7 @@ void fn_80185CA4(u8* self, void* arg1, void* arg2, u8* desc)
     memset(self_local + 0x24, 0, 0x10);
     fn_80179904(self_local + 0x16, *(s16*)(desc_local + 0x20));
 
-    for (i = 0; i < count; i++) {
+    for (i = 0; (u8)i < count; i++) {
         fn_80180554(entry, arg1_local, self_local + 0x16, &setup,
                     *(u16*)(desc_local + 8), 0);
         fn_801805E0(entry + 0x20, 2, desc_local[1], (i & 0x7F) << 1,

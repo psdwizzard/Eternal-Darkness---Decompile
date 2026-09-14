@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f0162f40-0b7a-4826-8c41-43cb4bb91c00",
+  "attempt": 3,
+  "base_commit": "64588c85115f98ba075afe37b324264a1a337b70",
+  "target": "fn_8018AD14",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f0162f40-0b7a-4826-8c41-43cb4bb91c00.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is size-exact at 412/412 bytes but remains 95.67961%. Retail fallback instructions at 0xe0-0xf0 initialize the loop index in r20, materialize fn_8018D020 HA in r3, reload object data into r21, copy r20 into byte_offset r23, then materialize the callback LO into r22. Generated code materializes callback HA/LO at 0xe0/0xe8 into r23, reloads object data into r22 at 0xe4, and independently initializes byte_offset r21 and loop index r20 at 0xec/0xf0. Thus scheduling, register allocation, and callback relocation placement differ; both sides have 26 relocation-bearing instruction annotations with the same targets and zero addends. Opposite chained-assignment order stayed at 95.67961%, sharing the induction variable across both loops fell to 95.53398%, and an explicit callback local grew generated code to 416 bytes. python3 configure.py and .tools/bin/ninja -j2 completed successfully; build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f; python3 tools/legal_audit.py passed with 14918 tracked project files inspected."
+}

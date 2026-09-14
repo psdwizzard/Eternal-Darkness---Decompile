@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "79765ce5-f995-4a7a-8287-160fb3d5106b",
+  "attempt": 3,
+  "base_commit": "6457c3dfc0b1a9afee998fa9cb773be7c491d5fa",
+  "target": "fn_801752B0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-79765ce5-f995-4a7a-8287-160fb3d5106b.json"
+  ],
+  "divergence": "Best fresh canonical relocation-strict objdiff is 95.642204% with size-exact 436-byte text, 111 instructions, and 20 relocation-bearing instructions on each side. Retail materializes fn_801754D0 through r4 at +0xF0/+0xF8, while generated code first materializes it in r3 at +0xEC and transfers it to r4 at +0xF4. Retail materializes the descriptor pointer at +0x110 and converts/stores the u16 through r7 at +0x118/+0x120; generated code converts/stores through r3 at +0x114/+0x11C and materializes the descriptor pointer at +0x120. The signed-conversion bias relocation at +0x104 targets retail lbl_806506A8 but generated compiler-local @19. The canonical build passes and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

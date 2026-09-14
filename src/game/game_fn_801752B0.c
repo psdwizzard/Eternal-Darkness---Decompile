@@ -19,7 +19,7 @@ typedef struct CommandDescriptor {
     u8 byte33;
     u8 byte34;
     u8 pad35[0xF];
-    void (*callback)(void);
+    int (*callback)(void*);
     u8 pad48[0x28];
 } CommandDescriptor;
 
@@ -34,7 +34,7 @@ extern void fn_80163BB4(void*, const char*, ...);
 extern void fn_8014CBC0(ResourceRef*);
 extern void fn_8014C37C(int, ResourceRef*);
 extern void fn_801FE8DC(CommandDescriptor*, float, float, float);
-extern void fn_801754D0(void);
+extern int fn_801754D0(void*);
 extern const char lbl_8024FF00[];
 extern const float lbl_806506B8;
 extern const float lbl_80650704;

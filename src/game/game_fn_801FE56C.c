@@ -53,30 +53,41 @@ extern void fn_801F10BC(u32, u32, int);
 
 void fn_801FE56C(void)
 {
-    u32 mask = 0;
-    const u32* constants = lbl_8023B830;
-    u32 feature_mask = 0;
-    int slot = 0;
-    int count = fn_801EF37C();
+    int allow_hidden;
     void* player;
-    int allow_hidden = 0;
-    int i;
     Entry** cursor;
+    int i;
+    int count;
+    const u32* constants;
+    u32 mask;
+    u32 feature_mask;
+    int slot;
+    Vec3 origin;
+    Vec3 position;
+    Vec3 target;
+    Vec3 fallback_position;
+    Vec3 transformed;
+
+    mask = 0;
+    constants = lbl_8023B830;
+    feature_mask = 0;
+    slot = 0;
+    count = fn_801EF37C();
 
     if (fn_80201B3C() != 0) {
+        fn_80201B3C();
         player = fn_80201BC8();
     } else {
         player = 0;
     }
 
+    allow_hidden = 0;
     if (fn_80047178() != 0 && fn_8012FA54(player, 15) != 0) {
         allow_hidden = 1;
     }
 
     if (lbl_8064C4E4 != 0) {
-        Vec3 origin = *(Vec3*)&constants[0];
-        Vec3 transformed;
-        Vec3 position;
+        origin = *(Vec3*)&constants[0];
         fn_8011F114(&transformed, lbl_8064C4E4);
         position = transformed;
         position.z += lbl_80651548;
@@ -85,10 +96,10 @@ void fn_801FE56C(void)
         fn_801F0CB0(&lbl_8063F00C, &origin, 0, 7, 0, 0, 0);
         feature_mask |= 0x80;
     } else {
-        Vec3 target = *(Vec3*)&constants[3];
-        Vec3 position = *(Vec3*)&constants[6];
+        target = *(Vec3*)&constants[3];
+        fallback_position = *(Vec3*)&constants[6];
         fn_801ECE7C(255);
-        fn_801FD6AC(&lbl_8063F00C, &position, lbl_802FC5BC, 20000);
+        fn_801FD6AC(&lbl_8063F00C, &fallback_position, lbl_802FC5BC, 20000);
         fn_801F0CB0(&lbl_8063F00C, &target, 0, 7, 0, 0, 0);
         feature_mask |= 0x80;
     }

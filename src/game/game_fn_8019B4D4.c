@@ -9,6 +9,10 @@ typedef struct SixBytes {
     u16 half;
 } SixBytes;
 
+typedef struct Texture {
+    u32 word;
+} Texture;
+
 extern u32 lbl_80651DF0;
 extern u16 lbl_80651DF4;
 extern void* lbl_8064D224;
@@ -27,15 +31,15 @@ extern void fn_8018E230(void*, void*, int, u8, u8, u8);
 extern void fn_8018E260(void*, u8, u8);
 extern void fn_8018CB70(void*, u8, u16);
 extern void fn_8018C540(void*, void*, u8, int, u16);
-extern u32 fn_8018EF9C(void*);
+extern Texture fn_8018EF9C(void*);
 extern void fn_801F5A04(void*, s16, void*, void*);
 
 void fn_8019B4D4(u8* object, void* first, void* second, u8* config)
 {
     SixBytes setup;
     u8* entry;
-    u32 texture;
-    void* default_texture;
+    Texture selected_texture;
+    Texture* default_texture;
 
     setup.word = lbl_80651DF0;
     setup.half = lbl_80651DF4;
@@ -56,7 +60,7 @@ void fn_8019B4D4(u8* object, void* first, void* second, u8* config)
     memset(object + 0x24, 0, 0x10);
 
     fn_80180554(entry, first, second, &setup, 0, 0);
-    default_texture = lbl_802FC5BC + 0xC;
+    default_texture = (Texture*)(lbl_802FC5BC + 0xC);
     fn_801805E0(entry + 0x20, 4, config[1], 0, default_texture,
                 lbl_80650BF8);
 
@@ -78,11 +82,11 @@ void fn_8019B4D4(u8* object, void* first, void* second, u8* config)
     fn_8018CB70(*(void**)(object + 0x54), 1,
                 *(u16*)(lbl_80607130 + 2));
     if (*(int*)(config + 0x28) != 0) {
-        texture = fn_8018EF9C(*(void**)(config + 0x38));
+        selected_texture = fn_8018EF9C(*(void**)(config + 0x38));
     } else {
-        texture = *(u32*)default_texture;
+        selected_texture = *default_texture;
     }
-    fn_8018C540(*(void**)(object + 0x58), &texture, 1, 4,
+    fn_8018C540(*(void**)(object + 0x58), &selected_texture, 1, 4,
                 *(u16*)(lbl_80607130 + 2));
     if (*(s16*)(config + 4) >= 0) {
         fn_801F5A04(object + 0x6C, *(s16*)(config + 4), lbl_80606328,

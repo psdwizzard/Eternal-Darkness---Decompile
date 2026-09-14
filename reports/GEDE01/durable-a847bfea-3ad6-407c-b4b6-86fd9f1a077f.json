@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "a847bfea-3ad6-407c-b4b6-86fd9f1a077f",
+  "attempt": 3,
+  "base_commit": "9f0cd00f0a77b3b0cf64e2cbf6b7bc608f3a05cd",
+  "target": "fn_80173F04",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a847bfea-3ad6-407c-b4b6-86fd9f1a077f.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a847bfea-3ad6-407c-b4b6-86fd9f1a077f-reloc-strict.json"
+  ],
+  "divergence": "Fresh canonical and explicit function_reloc_diffs=name_address objdiff runs both measure 95.675000%: retail is 640 bytes/160 instructions and generated is 632 bytes/158 instructions, with 29 relocation-bearing instructions on each side. The stack frame is identical (stwu -0x150, LR at 0x154, addi +0x150); retail saves/restores r22-r31 at 0x128 while generated saves/restores r21-r31 at 0x124. Retail loads lbl_80651CA8, lbl_80651CAC, and lbl_806506FC after the save into r5/r4/r0 and spills all three; generated schedules the first two loads before stmw and keeps lbl_806506FC live in extra callee-saved r21, shifting later register and local-stack assignments. The generated relocation symbols additionally expose lbl_806506A8 through the existing @22 signed-conversion-bias externalization, so relocation-strict equality is not claimed. The behavior-complete independent NonMatching C reconstruction recovered from the accepted base is retained. The full canonical build passed and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

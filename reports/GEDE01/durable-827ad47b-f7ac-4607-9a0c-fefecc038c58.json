@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "827ad47b-f7ac-4607-9a0c-fefecc038c58",
+  "attempt": 3,
+  "base_commit": "44cde5107ce6582aa8536498474a01b0bad23810",
+  "target": "fn_8018CB70",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-827ad47b-f7ac-4607-9a0c-fefecc038c58.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces a size-exact 424-byte function at 95.896225%. The unrolled stores and loop control align, and relocation-strict inspection finds zero relocations in both objects. The remaining divergence is initialization scheduling and GPR coloring: retail emits count in r8, count-minus-eight in r6, group in r9, and the second-buffer pointer in r7, ordered as clrlwi/offset-shift/subi/group-init/second-pointer-add; generated code emits count in r7, count-minus-eight in r6, group in r9, and the second-buffer pointer in r8, ordered as clrlwi/offset-shift/second-pointer-add/group-init/subi. Later count comparisons use generated r7 versus retail r8, and the outer-loop pointer reset uses generated r8 versus retail r7. The full canonical rebuild and legal audit passed, and the linked DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

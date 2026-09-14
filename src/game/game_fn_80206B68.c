@@ -19,10 +19,11 @@ extern BOOL OSRestoreInterrupts(BOOL);
 extern void __OSUnmaskInterrupts(u32);
 extern void fn_80206E8C(s32, s32, s32, s32);
 
+volatile u32 __EXIRegs[15] : 0xCC006800;
+
 BOOL EXIDma(s32 chan, void *buf, s32 len, u32 type, void *callback)
 {
     BOOL enabled;
-    u32 regAddr;
     EXIControl *exi;
 
     exi = &Ecb_80640AA8[chan];
@@ -39,11 +40,9 @@ BOOL EXIDma(s32 chan, void *buf, s32 len, u32 type, void *callback)
     }
 
     exi->state |= 1;
-    regAddr = 0xCC006800;
-    regAddr += chan * 20;
-    *(volatile u32 *)(regAddr + 4) = (u32)buf & 0x03FFFFE0;
-    *(volatile u32 *)(regAddr + 8) = len;
-    *(volatile u32 *)(regAddr + 12) = (type << 2) | 3;
+    __EXIRegs[chan * 5 + 1] = (u32)buf & 0x03FFFFE0;
+    __EXIRegs[chan * 5 + 2] = len;
+    __EXIRegs[chan * 5 + 3] = (type << 2) | 3;
     OSRestoreInterrupts(enabled);
     return 1;
 }

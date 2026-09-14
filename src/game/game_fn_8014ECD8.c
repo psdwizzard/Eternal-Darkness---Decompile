@@ -11,8 +11,7 @@ typedef struct Vec3Words {
     unsigned int x, y, z;
 } Vec3Words;
 
-extern unsigned int lbl_80650544;
-extern u16 lbl_80650548;
+extern Coord3 lbl_80650544;
 extern float lbl_8065054C;
 extern int lbl_802FC5BC[];
 
@@ -28,9 +27,9 @@ extern int fn_801E8328();
 extern void* memcpy(void*, const void*, unsigned int);
 
 /* NonMatching: behavior- and size-exact entry/resource initializer at
- * 95.59259% (432/432 bytes). The remaining differences are confined to
- * equivalent scratch-register selection and scheduling for the two copied
- * configuration constants and one float constant. */
+ * 98.10185% (432/432 bytes). One equivalent relocation names
+ * lbl_80650544+4 instead of lbl_80650548, and li 9 is scheduled after the
+ * adjacent float load instead of before it. */
 void fn_8014ECD8(u8* object, int index, u8 variant)
 {
     u8 object_id;
@@ -38,15 +37,13 @@ void fn_8014ECD8(u8* object, int index, u8 variant)
     void* resource;
     u8* embedded;
     Coord3 config;
-    u8 six;
-    u16 nine;
+    u16 extent;
     float scale;
 
     index *= 0x174;
     entry = object + 0xEBC + index;
-    *(unsigned int*)&config = lbl_80650544;
-    config.z = lbl_80650548;
-    object_id = object[0];
+    config = lbl_80650544;
+    object_id = *(volatile u8*)object;
 
     fn_80180D0C(entry);
     entry[0] = object_id;
@@ -56,13 +53,11 @@ void fn_8014ECD8(u8* object, int index, u8 variant)
     *(s8*)(entry + 3) = -25;
     fn_80180DDC(entry, object_id);
 
-    index = *(volatile u16*)(object + 0x28);
-    six = 6;
-    nine = 9;
+    extent = *(volatile u16*)(object + 0x28);
     scale = lbl_8065054C;
-    *(u16*)(entry + 0x1C) = index;
-    entry[0x14] = six;
-    *(u16*)(entry + 0x20) = nine;
+    *(u16*)(entry + 0x1C) = extent;
+    entry[0x14] = 6;
+    *(u16*)(entry + 0x20) = 9;
     entry[0x18] &= ~0x20;
     *(float*)(entry + 0x50) = scale;
     *(u16*)(entry + 8) =

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "da7f0ef7-5370-45b7-ba2c-fd53f00a2cc7",
+  "attempt": 2,
+  "base_commit": "e4d8e8984d01c2653b71a5d2c216a3988a6196b9",
+  "target": "fn_80173F04",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-da7f0ef7-5370-45b7-ba2c-fd53f00a2cc7.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-da7f0ef7-5370-45b7-ba2c-fd53f00a2cc7-reloc-strict.json"
+  ],
+  "divergence": "Best valid canonical and explicit function_reloc_diffs=name_address objdiff runs both measure 95.675000%: retail is 640 bytes/160 instructions and generated is 632 bytes/158 instructions, with 29 relocation-bearing instructions on each side. The stack frame is identical (stwu -0x150, LR at 0x154, addi +0x150); the actual prologue divergence is retail stmw/lmw r22 at 0x128 versus generated r21 at 0x124. Retail loads lbl_80651CA8, lbl_80651CAC, and lbl_806506FC after the save into r5/r4/r0 and spills all three, while generated schedules the first two loads before stmw and keeps lbl_806506FC live in extra callee-saved r21, shifting later register and local-stack assignments. The generated relocation symbols additionally expose lbl_806506A8 through the existing @22 signed-conversion-bias externalization, so relocation-strict equality is not claimed. Fresh ruled-out experiments: moving the three reads after the argument-count guard fell to 77.706250%; moving value before descriptor was codegen-identical at 95.675000%; a contiguous plain local value/descriptor aggregate measured 95.875000% only before normalization but expanded the frame to 0x160, saved r20-r31, emitted 644 bytes, renamed the compiler-local bias to @23, and failed the canonical configured @22 externalization, so it was discarded. The original behavior-complete independent NonMatching C reconstruction is retained."
+}

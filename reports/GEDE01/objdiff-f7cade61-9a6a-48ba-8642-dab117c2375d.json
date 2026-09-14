@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "assignment_id": "f7cade61-9a6a-48ba-8642-dab117c2375d",
+  "target": "fn_80185CA4",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80185CA4 -o build/GEDE01/objdiff-f7cade61-9a6a-48ba-8642-dab117c2375d-canonical.raw.json --format json-pretty fn_80185CA4",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80185CA4 -o build/GEDE01/objdiff-f7cade61-9a6a-48ba-8642-dab117c2375d.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_80185CA4",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measured_outputs": {
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_sha1_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical": {
+      "target_size": 360,
+      "candidate_size": 360,
+      "target_instruction_count": 90,
+      "candidate_instruction_count": 90,
+      "match_percent": 97.333336
+    },
+    "relocation_strict": {
+      "config": "function_reloc_diffs=name_address",
+      "match_percent": 97.333336,
+      "target_relocation_count": 20,
+      "candidate_relocation_count": 20,
+      "same_offsets_targets_types_addends": true,
+      "offsets": [32, 36, 56, 132, 140, 152, 188, 200, 216, 232, 268, 272, 280, 288, 300, 316, 320, 324, 328, 336],
+      "targets_types_addends": [
+        ["lbl_80651D38", "R_PPC_EMB_SDA21", 0],
+        ["lbl_80651D3C", "R_PPC_EMB_SDA21", 0],
+        ["fn_801804AC", "R_PPC_REL24", 0],
+        ["lbl_8064D224", "R_PPC_EMB_SDA21", 0],
+        ["memset", "R_PPC_REL24", 0],
+        ["fn_80179904", "R_PPC_REL24", 0],
+        ["fn_80180554", "R_PPC_REL24", 0],
+        ["lbl_80650A18", "R_PPC_EMB_SDA21", 0],
+        ["fn_801805E0", "R_PPC_REL24", 0],
+        ["fn_80180518", "R_PPC_REL24", 0],
+        ["fn_8018C2D0", "R_PPC_REL24", 0],
+        ["lbl_80607120", "R_PPC_ADDR16_HA", 0],
+        ["lbl_80607120", "R_PPC_ADDR16_LO", 0],
+        ["lbl_80607120", "R_PPC_NONE", 2],
+        ["fn_8018C540", "R_PPC_REL24", 0],
+        ["lbl_80606328", "R_PPC_ADDR16_HA", 0],
+        ["lbl_80606318", "R_PPC_ADDR16_HA", 0],
+        ["lbl_80606318", "R_PPC_ADDR16_LO", 0],
+        ["lbl_80606328", "R_PPC_ADDR16_LO", 0],
+        ["fn_801F5A04", "R_PPC_REL24", 0]
+      ]
+    },
+    "source_experiment": {
+      "change": "cast the int loop index to u8 in the loop condition",
+      "previous_candidate_size": 356,
+      "previous_match_percent": 95.666664,
+      "new_candidate_size": 360,
+      "new_match_percent": 97.333336,
+      "result": "preserved because it emits retail's clrlwi/cmplw loop test and improves the score"
+    }
+  },
+  "exact_codegen_divergence": {
+    "instruction_shape": "All 90 opcodes and instruction offsets align after the explicit u8 loop-condition cast; objdiff reports 45 DIFF_ARG_MISMATCH instructions and no opcode or length mismatch.",
+    "register_allocation": "Retail maps desc/self/arg1/entry/count/index to r30/r28/r29/r26/r31/r27; canonical GC/1.3 maps them to r31/r30/r26/r27/r29/r28. The remaining 2.666664 percentage points are register-argument differences.",
+    "relocations": "All 20 relocations agree in offset, target name/address, type, and addend under function_reloc_diffs=name_address; the function is not claimed matched because canonical and strict instruction scores are 97.333336%, not 100%."
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80185CA4.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}

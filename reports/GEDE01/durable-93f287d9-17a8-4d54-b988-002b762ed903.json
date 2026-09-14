@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "93f287d9-17a8-4d54-b988-002b762ed903",
+  "attempt": 3,
+  "base_commit": "6b91657c605b6c745f5b0f8d070981e79642be8a",
+  "target": "fn_801FE56C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-93f287d9-17a8-4d54-b988-002b762ed903.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff reports are byte-identical and improve the size-exact 716-byte reconstruction from 97.10615% to 97.7933%. Function-scope Vec3 declaration ordering recovers every retail stack slot, and declaration ordering recovers the mask, feature-mask, slot, loop-index, cursor, and loop-body registers. The 19 remaining diff rows are 15 operand mismatches plus two replacements, one deletion, and one insertion: retail uses r24/r23 for the constants/player pair while generated uses r23/r24; retail retains li r26,0 and updates it with ori r26,r26,0x80 at 0x110 and 0x190, while generated folds those to li r26,0x80 four bytes earlier; and generated materializes lbl_8063EA00 through r0 plus mr r29,r0. Both ELF objects contain the same ordered 39 relocation types, targets, and zero addends, but relocation records 3 through 31 (29 records) are four bytes early until the compensating mr. The required build passed, build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f, and tools/legal_audit.py passed all 14895 tracked project files."
+}
