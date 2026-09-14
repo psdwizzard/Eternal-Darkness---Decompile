@@ -20,18 +20,14 @@ extern void fn_80229C0C(int, int, int, int, int, int);
 extern void fn_801ED510(int, int, int);
 extern void fn_8018865C(void*, void*, void*);
 
-void fn_801A2FB4(u8* object)
+static inline void generate_object(u8* object, int* saved)
 {
-    u16 size0;
-    u16 size1;
-    u16 size2;
-    void* output0;
-    void* output1;
     u32* output2;
-    int old;
-    u8* input;
-    u32* output2_cursor;
-    int i;
+    void* output1;
+    void* output0;
+    u16 size2;
+    u16 size1;
+    u16 size0;
     u16 offset;
 
     offset = *(u16*)(lbl_80607120 + 2);
@@ -48,20 +44,26 @@ void fn_801A2FB4(u8* object)
         output2 = (u32*)((u8*)output2 + (u32)offset * 4);
     }
 
-    input = *(u8**)(object + 0x4C);
-    output2_cursor = output2;
-    input[0x21] = (u8)(lbl_80650D34 * *(float*)(object + 0x94));
-    fn_80188C1C(input, output0, fn_8018D020);
+    {
+        u32* output2_cursor;
+        u8* input;
+        int i;
 
-    for (i = 0; i < input[0x20]; i++) {
-        *output2_cursor++ = *(u32*)(lbl_802FC5BC + 0xC);
+        input = *(u8**)(object + 0x4C);
+        output2_cursor = output2;
+        input[0x21] = (u8)(lbl_80650D34 * *(float*)(object + 0x94));
+        fn_80188C1C(input, output0, fn_8018D020);
+
+        for (i = 0; i < input[0x20]; i++) {
+            *output2_cursor++ = *(u32*)(lbl_802FC5BC + 0xC);
+        }
     }
 
     DCFlushRange(output0, size0);
     DCFlushRange(output1, size1);
     DCFlushRange(output2, size2);
 
-    old = fn_801ED57C(0);
+    *saved = fn_801ED57C(0);
     fn_801ECF50(3);
     fn_8018D0D0(object, object + 0x5C, *(s16*)(object + 0xE));
     if (fn_801EF384()) {
@@ -75,5 +77,12 @@ void fn_801A2FB4(u8* object)
         fn_801ED510(0, 0, 0);
         fn_80229C0C(0, 0, 1, 2, 1, 0);
     }
-    fn_801ED57C(old);
+}
+
+void fn_801A2FB4(u8* object)
+{
+    int saved;
+
+    generate_object(object, &saved);
+    fn_801ED57C(saved);
 }
