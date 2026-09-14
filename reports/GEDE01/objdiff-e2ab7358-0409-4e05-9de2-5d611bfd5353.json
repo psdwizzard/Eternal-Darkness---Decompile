@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "assignment_id": "e2ab7358-0409-4e05-9de2-5d611bfd5353",
+  "target": "fn_80159440",
+  "unit": "game/game_fn_80159440.c",
+  "compiler": "Metrowerks CodeWarrior for GameCube GC/1.3",
+  "compiler_sha256": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715",
+  "objdiff_version": "objdiff-cli 3.6.1",
+  "canonical": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "objdiff": {
+    "command": "python3 tools/fndiff.py game/game_fn_80159440.c fn_80159440",
+    "raw_summary": "target 496 bytes  base 492 bytes  match 98.08871",
+    "retail_size": 496,
+    "generated_size": 492,
+    "match_percent": 98.08871,
+    "retail_instruction_rows": 124,
+    "generated_instruction_rows": 124,
+    "retail_relocation_bearing_rows": 46,
+    "generated_relocation_bearing_rows": 45,
+    "relocation_strict_match": false,
+    "raw_divergence": [
+      "retail 0x004c: addi r3, r29, 0x21c [R_PPC_NONE lbl_805B6E00+540]; generated has no instruction",
+      "retail 0x0054: stw r0, 0x18(r3) [R_PPC_NONE lbl_805B6E00+564]; generated 0x0054: stw r0, 0x234(r29) [R_PPC_NONE lbl_805B6E00+564]",
+      "retail 0x0110: addi r6, r29, 0x1e0 [R_PPC_NONE lbl_805B6E00+480]; generated uses r5",
+      "retail 0x0114: lwz r0, 0x4(r6) [R_PPC_NONE lbl_805B6E00+484]; generated: lwz r0, 0x1e4(r29) [R_PPC_NONE lbl_805B6E00+484]",
+      "channel block otherwise has the retail repeated index reload count, but its retained base is r5 instead of r6 and its first indexed value is held in r3 instead of r0 because the transition-address instruction was folded"
+    ],
+    "generated_detail": "build/GEDE01/fndiff_fn_80159440.json"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "output": "legal audit passed (15088 tracked project files inspected)"
+  },
+  "source_scope": "Independent honest C translation unit recovered from preserved commit 029b1c6ba2ddad9188dccebddf58328d9897c27c and already present on the accepted base; no inline or whole-function assembly, shared reconstruction, gate changes, compiler-policy changes, or neighboring-function edits."
+}
