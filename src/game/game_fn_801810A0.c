@@ -15,9 +15,11 @@ typedef struct FloatCoord3 {
     float z;
 } FloatCoord3;
 
+typedef float Matrix34[3][4];
+
 typedef struct Entry801810A0 {
     u8 pad00[8];
-    s16 field08;
+    u16 field08;
     s16 x;
     s16 y;
     s16 z;
@@ -41,8 +43,7 @@ typedef struct State801810A0 {
     u8 pad34[0x2C];
     FloatCoord3 transform_source;
     FloatCoord3 transform_angles;
-    FloatCoord3 transform_result;
-    u8 pad84[4];
+    Matrix34 transform;
 } State801810A0;
 
 typedef struct Object801810A0 {
@@ -65,18 +66,18 @@ extern const double lbl_80650970;
 extern u32 lbl_80650968;
 
 extern void* memcpy(void*, const void*, unsigned int);
-extern void fn_8018163C(Entry801810A0*, ShortCoord3*, u8, u16);
-extern void fn_80211380(FloatCoord3*, FloatCoord3*, float);
-extern void fn_80211710(FloatCoord3*, FloatCoord3*, FloatCoord3*);
-extern unsigned int fn_800FBFB0(void);
-extern void fn_8018E230(Entry801810A0*, u8*, int, u8, int, int);
-extern void fn_8018E260(Entry801810A0*, int, int);
+extern void fn_8018163C(Entry801810A0*, const ShortCoord3*, s16, int);
+extern void fn_80211380(Matrix34, const FloatCoord3*, float);
+extern void fn_80211710(Matrix34, const FloatCoord3*, FloatCoord3*);
+extern u32 fn_800FBFB0(void);
+extern void fn_8018E230(u8*, u8*, u8, u8, u8, u8);
+extern void fn_8018E260(u8*, u8, u8);
 extern void fn_801806D4(u8*, u32*, int);
-extern void fn_80180518(u8*, u8, int);
+extern void fn_80180518(u32*, u32, int);
 
 void fn_801810A0(Object801810A0* object, u8* config)
 {
-    State801810A0* current;
+    u8* selector_base;
     u8 outer_count;
     u8 inner_count;
     int outer;
@@ -86,8 +87,6 @@ void fn_801810A0(Object801810A0* object, u8* config)
     Entry801810A0* entry;
     FloatCoord3 position;
     ShortCoord3 work;
-    float scale;
-    float zero;
 
     inner_count = config[2];
     outer_count = object->count;
@@ -108,40 +107,38 @@ void fn_801810A0(Object801810A0* object, u8* config)
     state->transform_source = *(FloatCoord3*)(config + 0x34);
     memcpy(state->pad34, (u8*)object + 0x10, 6);
 
-    scale = lbl_8065096C;
-    zero = lbl_8065095C;
-    current = state;
-    outer = 0;
-    inner = 0;
+    selector_base = (u8*)state;
     outer_index = 0;
+    inner = 0;
+    outer = 0;
     while (outer < outer_count) {
-        while (inner < inner_count) {
-            *(u32*)&work = lbl_80651CD8;
-            *(u16*)((u8*)&work + 4) = lbl_80651CDC;
-            work.z = entry->z;
-            current->selectors[0] = state->field06;
-            fn_8018163C(entry, &work,
-                        (u8)((int)((float)inner * state->angle_step) & 0x3F),
-                        current->selectors[0]);
+        *(u32*)&work = lbl_80651CD8;
+        *(u16*)((u8*)&work + 4) = lbl_80651CDC;
+        *(u16*)(selector_base + 0xE) = state->field06;
+        work.z = entry->z;
+        fn_8018163C(entry, &work,
+                    (u8)((int)((float)inner * state->angle_step) & 0x3F),
+                    *(u16*)(selector_base + 0xE));
 
-            position.x = entry->x;
-            position.y = entry->y;
-            position.z = entry->z;
-            if (state->transform_source.z < zero) {
-                fn_80211380(&state->transform_result, &state->transform_source,
-                            scale * -state->transform_source.z);
-                fn_80211710(&state->transform_result, &position, &position);
-            }
-            entry->x = (s16)(position.x + object->base.x);
-            entry->y = (s16)(position.y + object->base.y);
-            entry->z = (s16)position.z;
-            entry->field08 += state->stride * outer_index;
-            entry++;
-            inner++;
+        position.x = entry->x;
+        position.y = entry->y;
+        position.z = entry->z;
+        fn_80211380(state->transform, &state->transform_source,
+                    lbl_8065096C * (state->transform_source.z < lbl_8065095C
+                                     ? -state->transform_source.z
+                                     : state->transform_source.z));
+        fn_80211710(state->transform, &position, &position);
+        entry->x = (s16)(position.x + object->base.x);
+        entry->y = (s16)(position.y + object->base.y);
+        entry->z = (s16)position.z;
+        entry->field08 += state->stride * outer_index;
+        entry++;
+        inner++;
+        if (inner >= inner_count) {
+            inner = 0;
+            outer_index++;
         }
-        inner = 0;
-        current = (State801810A0*)((u8*)current + 2);
-        outer_index++;
+        selector_base += 2;
         outer++;
     }
 
@@ -149,16 +146,16 @@ void fn_801810A0(Object801810A0* object, u8* config)
     outer = 0;
     while (outer < inner_count) {
         if (state->mode == 4) {
-            fn_8018E230(entry, &entry->render[3], 4,
+            fn_8018E230((u8*)entry, &entry->render[3], 4,
                         (u8)((fn_800FBFB0() & 7) * 0x14), 0xA, 0xF0);
-            fn_8018E260(entry, 0xF0, 0x78);
+            fn_8018E260((u8*)entry, 0xF0, 0x78);
         } else {
             u32 render = lbl_80650968;
             fn_801806D4((u8*)entry + 0x20, &render, 0);
         }
-        fn_80180518(object->control, state->index, 1);
-        entry++;
+        fn_80180518((u32*)object->control, state->index, 1);
         state->index++;
+        entry++;
         outer++;
     }
 }

@@ -14,76 +14,77 @@ typedef struct Entry {
 extern Entry lbl_8060B5E0[];
 extern void fn_801B0E68(int);
 
-int fn_801AFCC8(int owner_arg, int wanted_arg, u8 limit_arg, int increment,
-                Entry** choices_arg, Entry** special_arg)
+int fn_801AFCC8(int owner, int mode, u8 wanted, int limit,
+                Entry** choices, Entry** special)
 {
-    int first_rank = 7;
-    int second_rank = 7;
-    int result = 0;
-    Entry* entry = lbl_8060B5E0;
-    int remaining = 3;
-    int total = 0;
-    int found = 0;
-    Entry** special = special_arg;
-    Entry** choices = choices_arg;
-    u8 limit = limit_arg;
-    int wanted = wanted_arg;
-    int owner = owner_arg;
+    int i;
+    int ranks[2];
+    int result;
+    Entry* entry;
+    int remaining;
+    int total;
+    int found;
+
+    result = 0;
+    entry = lbl_8060B5E0;
+    found = 0;
+    remaining = 3;
+    total = 0;
+    ranks[0] = 7;
+    ranks[1] = 7;
 
     choices[0] = 0;
     choices[1] = 0;
     *special = 0;
-    if (increment != 0) {
-        limit++;
+    if (limit != 0) {
+        wanted++;
     }
 
-    {
-    for (owner_arg = 0; owner_arg < 4; owner_arg++, entry++) {
+    for (i = 0; i < 4; i++, entry++) {
         switch (entry->state) {
         case 0:
         case 1:
-          break;
+            break;
         case 2:
         case 3:
         case 4:
         case 5:
         case 6:
-          if (entry->owner != owner) {
-            remaining -= entry->count;
-            if (entry->rank < limit) {
-                total += entry->count;
-                if (entry->count == 2) {
-                    if (found == 1) {
-                        fn_801B0E68(12);
+            if (entry->owner != owner) {
+                remaining -= entry->count;
+                if (entry->rank < wanted) {
+                    total += entry->count;
+                    if (entry->count == 2) {
+                        if (found == 1) {
+                            fn_801B0E68(12);
+                        }
+                        found = 1;
+                        *special = entry;
                     }
-                    found = 1;
-                    *special = entry;
-                }
-                if (first_rank > entry->rank && first_rank >= second_rank) {
-                    first_rank = entry->rank;
-                    choices[0] = entry;
-                } else if (second_rank > entry->rank) {
-                    second_rank = entry->rank;
-                    choices[1] = entry;
+                    if (ranks[0] > entry->rank && ranks[0] >= ranks[1]) {
+                        ranks[0] = entry->rank;
+                        choices[0] = entry;
+                    } else if (ranks[1] > entry->rank) {
+                        ranks[1] = entry->rank;
+                        choices[1] = entry;
+                    }
                 }
             }
-          }
-          break;
+            break;
         }
     }
-    }
 
-    if (remaining >= wanted) {
+    if (remaining >= mode) {
         *special = 0;
         choices[1] = 0;
         choices[0] = 0;
         result = 1;
-    } else if (wanted == 1) {
-        if (first_rank == 1) {
+    } else if (mode == 1) {
+        if (ranks[0] == 1) {
             *special = 0;
             choices[1] = 0;
             result = 1;
-        } else if (second_rank == 1) {
+        } else if (ranks[1] == 1) {
             *special = 0;
             choices[0] = 0;
             result = 1;
@@ -91,10 +92,10 @@ int fn_801AFCC8(int owner_arg, int wanted_arg, u8 limit_arg, int increment,
             choices[1] = 0;
             choices[0] = 0;
             result = 1;
-        } else if (first_rank < second_rank) {
+        } else if (ranks[0] < ranks[1]) {
             choices[1] = 0;
             result = 1;
-        } else if (second_rank < 7) {
+        } else if (ranks[1] < 7) {
             choices[0] = 0;
             result = 1;
         } else {
@@ -102,15 +103,15 @@ int fn_801AFCC8(int owner_arg, int wanted_arg, u8 limit_arg, int increment,
             choices[1] = 0;
             choices[0] = 0;
         }
-    } else if (remaining == 1 && first_rank == 1) {
+    } else if (remaining == 1 && ranks[0] == 1) {
         *special = 0;
         choices[1] = 0;
         result = 1;
-    } else if (remaining == 1 && second_rank == 1) {
+    } else if (remaining == 1 && ranks[1] == 1) {
         *special = 0;
         choices[0] = 0;
         result = 1;
-    } else if (first_rank == 1 && second_rank == 1) {
+    } else if (ranks[0] == 1 && ranks[1] == 1) {
         *special = 0;
         result = 1;
     } else if (remaining == 1 && found != 0) {
@@ -135,9 +136,9 @@ int fn_801AFCC8(int owner_arg, int wanted_arg, u8 limit_arg, int increment,
                     *special = 0;
                     result = 1;
                 }
-            } else if (first_rank < second_rank) {
+            } else if (ranks[0] < ranks[1]) {
                 choices[1] = 0;
-            } else if (second_rank < 7) {
+            } else if (ranks[1] < 7) {
                 choices[0] = 0;
             } else {
                 result = 0;
