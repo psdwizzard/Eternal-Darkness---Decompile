@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d92922a4-f85b-45f4-9d4b-26ed52d94ab7",
+  "attempt": 1,
+  "base_commit": "f6d93493d1d56335933eda7473fbd8a170c7ac7c",
+  "target": "fn_801861C4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d92922a4-f85b-45f4-9d4b-26ed52d94ab7.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff is 94.8985%: retail is 1064 bytes and generated is 1060 bytes, with 268 aligned instruction rows and 43 relocation-bearing instructions on each side. A distinct translation Matrix34 and aggregate declaration order recover retail's 0x200-byte frame and exact prologue/epilogue, but canonical GC/1.3 still cyclically assigns the long-lived self, state, entry, generation, count, index, vector pointer and vector offset across r25-r31 differently; matrix/vector locals remain eight bytes displaced, the three clamp blocks use a different f0/f1 load/store schedule, and the generated control-flow sequence remains one instruction shorter."
+}

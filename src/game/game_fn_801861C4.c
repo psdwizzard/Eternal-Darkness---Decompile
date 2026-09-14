@@ -59,17 +59,21 @@ extern void fn_80211710(Matrix34, Vec3*, Vec3*);
 
 int fn_801861C4(u8* self)
 {
-    Locals locals;
-    Vec3 transformed;
-    Quaternion rotation;
+    /* NonMatching: the distinct translation matrix and aggregate declaration
+     * order recover retail's 0x200-byte frame. Canonical GC/1.3 still rotates
+     * the long-lived r25-r31 values and schedules the clamp loads differently. */
     Vec3 direction;
     Vec3 origin;
-    Matrix34 result;
-    Matrix34 combined;
-    Matrix34 z_rotation;
-    Matrix34 y_rotation;
-    Matrix34 x_rotation;
+    Quaternion rotation;
+    Vec3 transformed;
     Matrix34 transform;
+    Matrix34 translation;
+    Matrix34 x_rotation;
+    Matrix34 y_rotation;
+    Matrix34 z_rotation;
+    Matrix34 combined;
+    Matrix34 result;
+    Locals locals;
     float length;
     int changed = 0;
     int vector_offset;
@@ -150,10 +154,10 @@ int fn_801861C4(u8* self)
         fn_802114E0(transform, &rotation);
     }
     fn_80210FDC(transform, result, transform);
-    fn_80211484(x_rotation, (float)*(s16*)(self_local + 0x10),
+    fn_80211484(translation, (float)*(s16*)(self_local + 0x10),
                  (float)*(s16*)(self_local + 0x12),
                  (float)*(s16*)(self_local + 0x14));
-    fn_80210FDC(x_rotation, transform, transform);
+    fn_80210FDC(translation, transform, transform);
 
     index = 0;
     while (index < vector_offset) {
