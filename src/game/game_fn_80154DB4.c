@@ -30,13 +30,23 @@ void* fn_80154DB4(void* object, void* arg4, void* arg5, u16 value,
             fn_80147E88(&desc);
             fn_80154A14(&desc, state, kind);
             desc.bytes[0xBC] = mode;
-            if (value == 0 || kind != 0) {
+            if (value != 0)
+                goto initialize;
+            if (kind == 0)
+                goto initialize;
+            if (kind == 0)
+                goto initialized;
+            if (value != 0)
+                goto initialized;
+initialize:
+            {
                 fn_801A1AF4(&desc);
                 *(u16*)(desc.bytes + 6) = value;
                 *(u32*)(desc.bytes + 0x94) = 0;
                 desc.bytes[0x18] = kind;
                 *(float*)(desc.bytes + 0x14) = scale;
             }
+initialized:
             fn_80149B0C(state, arg4, arg5);
             desc.bytes[0xBE] = flag;
             result = fn_80148300(owner, &desc, state);
