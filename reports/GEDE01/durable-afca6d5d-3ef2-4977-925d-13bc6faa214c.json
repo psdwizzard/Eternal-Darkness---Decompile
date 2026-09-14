@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "afca6d5d-3ef2-4977-925d-13bc6faa214c",
+  "attempt": 3,
+  "base_commit": "84906ddeb5e808880270ac3ed3aa97c689252812",
+  "target": "fn_8014ECD8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-afca6d5d-3ef2-4977-925d-13bc6faa214c.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both report 98.10185% for size-exact 432/432-byte functions with 17 relocation-bearing instructions per side. At function offset 0x2C, retail uses R_PPC_EMB_SDA21 targeting lbl_80650548 with addend 0 while generated code targets lbl_80650544 with addend 4. The remaining code difference is equivalent scheduling of li r0,9 at retail offset 0x78 versus generated offset 0x7C, across the adjacent lfs f0,lbl_8065054C. The full build succeeds and build/GEDE01/main.dol has the required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
