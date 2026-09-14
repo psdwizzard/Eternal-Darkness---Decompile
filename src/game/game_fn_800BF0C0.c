@@ -9,7 +9,7 @@ extern int fn_801A7498(void *);
 extern void *fn_80201814();
 extern void *fn_80201B8C();
 extern void *fn_801A7778(void *);
-extern u32 fn_80157994(void *);
+extern u16 fn_80157994(void *);
 extern u32 fn_801A76B8(void *);
 extern void fn_801A75B0(void *, u8);
 extern u32 fn_8020216C(void *);
@@ -17,7 +17,7 @@ extern void fn_80157A28(void *, u8);
 extern u8 fn_80157A80(void *);
 extern void fn_80157A8C(void *, u8);
 extern unsigned long long fn_8020123C();
-extern void* fn_80201B3C();
+extern void *fn_80201B3C();
 extern void *fn_80205288(void);
 extern void *fn_802053B0(void *, void *);
 extern void *fn_80201BC8();
@@ -27,16 +27,24 @@ extern void fn_80157C98(void *, int, int);
 
 void *fn_800BF0C0(void *unused, void *event)
 {
-    int owner = fn_801A7498(event);
-    void *world = fn_80201814(owner);
-    void **holder = fn_80201B8C();
-    void *state = fn_801A7778(event);
-    u16 maximum = fn_80157994(state);
-    u8 current = fn_801A76B8(event);
+    void *event_object = event;
+    void *state;
+    void *world;
+    int owner;
+    int maximum;
+    int current;
+    void **holder;
+
+    owner = fn_801A7498(event_object);
+    world = fn_80201814(owner);
+    holder = fn_80201B8C();
+    state = fn_801A7778(event_object);
+    maximum = fn_80157994(state);
+    current = fn_801A76B8(event_object) & 0xFF;
 
     if (current > maximum) {
         current = maximum;
-        fn_801A75B0(event, (u8)maximum);
+        fn_801A75B0(event_object, (u8)maximum);
     }
 
     if ((fn_8020216C(world) & 0x10000) == 0 && maximum != 0) {
