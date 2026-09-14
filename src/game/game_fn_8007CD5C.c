@@ -1,19 +1,20 @@
 typedef unsigned short u16;
+typedef unsigned int u32;
 typedef int s32;
 
-extern int fn_80201B54();
+extern s32 fn_80201B54(void *);
 extern void *fn_8004918C(void);
-extern void *fn_80201BC8();
+extern void *fn_80201BC8(void *);
 extern void *fn_80158598(s32, s32);
 extern s32 fn_80157FE0(void *, s32, s32);
 extern void *fn_80201814();
-extern void* fn_80201C24();
-extern u16 fn_80157948(void *);
+extern void *fn_80201C24(void);
+extern s32 fn_80157948(void *);
 extern u16 fn_80157994(void *);
-extern s32 fn_802053B0(void *, void *);
-extern void fn_80201D2C(void *, int);
-extern void fn_80201D14(void *, int);
-extern void *fn_801294DC(void *, int, int, int);
+extern u32 fn_802053B0(void *, void *);
+extern void fn_80201D2C(void *, s32);
+extern void fn_80201D14(void *, s32);
+extern void *fn_801294DC(void *, s32, s32, s32);
 extern void fn_80128C28();
 extern void fn_80128C44(void *, void *, s32);
 extern s32 fn_80129334(void *, s32, s32 *, s32);
@@ -30,24 +31,25 @@ extern void fn_800BFF84(void);
 extern void fn_8007D4D8(void);
 extern void fn_8007D0F0(void);
 
-/* NonMatching: honest reconstruction of the multi-callback creation path. */
+/* Multi-callback creation path. */
 s32 fn_8007CD5C(void *object)
 {
     s32 object_id;
+    void *created;
     void *current;
     void *resource;
     void *target;
-    void *created;
     s32 shifted_id;
     s32 index;
-    s32 result = -1;
-    s32 result2 = -1;
+    s32 result;
+    s32 result2;
 
     object_id = fn_80201B54(object);
     current = fn_8004918C();
+    result = -1;
     resource = fn_80201BC8(object);
     fn_80157FE0(fn_80158598(object_id, 0), 2, 0);
-    fn_80201814(0);
+    fn_80201814();
     target = fn_80201C24();
     if ((u16)fn_80157994(target) == (u16)fn_80157948(target)) {
         fn_80201D2C(object, 1);

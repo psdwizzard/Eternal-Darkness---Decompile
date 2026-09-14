@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "assignment_id": "4f8c6cc3-85cf-4ec0-88c6-a41ab471ed70",
+  "attempt": 1,
+  "target": "fn_8007CD5C",
+  "translation_unit": "src/game/game_fn_8007CD5C.c",
+  "compiler_registration": "Object(Matching, \"game/game_fn_8007CD5C.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "canonical_objdiff": {
+    "command": "python3 tools/fndiff.py game/game_fn_8007CD5C.c fn_8007CD5C",
+    "exit_code": 0,
+    "raw_output": "target 596 bytes  base 596 bytes  match 100.0",
+    "artifact": "build/GEDE01/fndiff_fn_8007CD5C.json",
+    "instruction_count": 149,
+    "match_percent": 100.0
+  },
+  "relocation_strict": {
+    "command": "diff -u <(readelf -rW build/GEDE01/obj/game/game_fn_8007CD5C.o | awk '/^000/{print $1,$3,$5,$7}') <(readelf -rW build/GEDE01/src/game/game_fn_8007CD5C.o | awk '/^000/{print $1,$3,$5,$7}')",
+    "exit_code": 0,
+    "raw_output": "relocation_diff_exit=0",
+    "retail_relocation_count": 47,
+    "compiled_relocation_count": 47,
+    "normalized_retail_sha256": "39a301599d89ace073c1c0c78c4753ac3a7008deca9a428f73a81b7e2dc13a48",
+    "normalized_compiled_sha256": "39a301599d89ace073c1c0c78c4753ac3a7008deca9a428f73a81b7e2dc13a48",
+    "comparison_fields": [
+      "offset",
+      "type",
+      "target",
+      "addend"
+    ],
+    "targets_and_addends_identical": true
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "exit_code": 0,
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  },
+  "legal_audit": {
+    "command": "rg -n '(^|[^A-Za-z])(asm|__asm|incbin)([^A-Za-z]|$)' src/game/game_fn_8007CD5C.c",
+    "exit_code": 1,
+    "raw_output": "",
+    "interpretation": "No inline assembly, whole-function assembly, or incbin construct is present."
+  },
+  "split_registration": {
+    "path": "config/GEDE01/splits.txt",
+    "text_start": "0x8007CD5C",
+    "text_end": "0x8007CFB0",
+    "independent_translation_unit": true,
+    "changed": false
+  }
+}
