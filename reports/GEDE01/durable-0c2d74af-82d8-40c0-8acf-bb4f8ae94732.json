@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "0c2d74af-82d8-40c0-8acf-bb4f8ae94732",
+  "attempt": 2,
+  "base_commit": "d705ff41eff66eacf08ab7da08fe61a37c558639",
+  "target": "fn_8019DEFC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0c2d74af-82d8-40c0-8acf-bb4f8ae94732.json"
+  ],
+  "divergence": "Fresh canonical GC/1.3 and relocation-strict objdiff measure 98.333336% for a size-exact 96-byte, 24-instruction reconstruction, with zero relocations on both sides. The remaining seven operand-only mismatches are a consistent r6/r7 register-allocation swap: retail keeps the advancing s16 timer cursor in r6 and forms the flag index in r7, while the candidate keeps the cursor in r7 and forms the flag index in r6, affecting offsets 0x08, 0x1c, 0x20, 0x24, 0x30, 0x40, and 0x44. All opcodes, immediates, branches, instruction count, and other operands match. The canonical build completed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
