@@ -34,22 +34,24 @@ void fn_801F5A04(Entry* result, u32 entry_index, Table* table, int argument)
         if (value == -1)
             continue;
         {
-        u32 bit = 1 << i;
-        if ((result->flags & bit) != 0 && (used & bit) == 0) {
-            u16 j;
+        if ((result->flags & (1 << i)) != 0 && (used & (1 << i)) == 0) {
             s16 index = fn_801F6054(lbl_8064D78A, lbl_8064D788,
                                     lbl_8064D790, value, argument);
+            s16 other;
+            u16 j;
             lbl_8064D78A = index;
             lbl_8064D78C[index] = value;
-            result->values[i] = index;
-            used |= bit;
+            result->values[i] = *(volatile s16*)&lbl_8064D78A;
+            used |= 1 << i;
             for (j = i + 1; j < 11; j++) {
-                s16 other = result->values[j];
-                u32 other_bit = 1 << j;
-                if (other != -1 && (result->flags & other_bit) != 0 &&
-                    (used & other_bit) == 0 && value == other) {
-                    used |= other_bit;
-                    result->values[j] = lbl_8064D78A;
+                other = result->values[j];
+                if (other != -1) {
+                    u32 other_bit = 1 << j;
+                    if ((result->flags & other_bit) != 0 &&
+                        (used & other_bit) == 0 && value == other) {
+                        used |= other_bit;
+                        result->values[j] = lbl_8064D78A;
+                    }
                 }
             }
         }
