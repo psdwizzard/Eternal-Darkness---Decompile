@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "67d8443c-7d68-4411-8dc3-83d5738747dc",
+  "attempt": 1,
+  "base_commit": "58e8a7605d3a14a2e307d9ed6bac346d7c5c44ef",
+  "target": "fn_8008D5D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-67d8443c-7d68-4411-8dc3-83d5738747dc.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff score is 96.17647% with equal 272-byte code and 13/13 R_PPC_REL24 relocations. The remaining instruction differences are a callee-saved register-coloring cycle: retail uses r29 for object, r28 for target, and r30 for mode, while generated code uses r28 for object, r30 for target, and r29 for mode; this also moves the r28 save from retail offset 0x28 to generated offset 0x1c."
+}
