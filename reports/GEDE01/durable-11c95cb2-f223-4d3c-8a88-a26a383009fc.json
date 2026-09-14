@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "11c95cb2-f223-4d3c-8a88-a26a383009fc",
+  "attempt": 1,
+  "base_commit": "50c3a94cd7d5db5b3a3f0891f50b6f71d730c27d",
+  "target": "fn_8018AA30",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-11c95cb2-f223-4d3c-8a88-a26a383009fc.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces a size-exact 420-byte function at 94.85714% with 98 of 107 instructions aligned. Retail initializes the small-count loop state with li r19,0 at offset 220, materializes fn_8018D020 in r20 via HA/LO relocations at offsets 224/232, and copies r19 to byte-offset r21 at offset 228. Generated code materializes fn_8018D020 in r21 via HA/LO relocations at offsets 220/228, initializes byte-offset r20 at offset 224, and initializes loop counter r19 at offset 232. Consequently the three uses at offsets 244, 248, and 296 have r20/r21 swapped; both objects have 18 real relocations but callback relocation sites differ."
+}
