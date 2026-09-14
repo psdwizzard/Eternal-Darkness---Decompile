@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "assignment_id": "6713adf7-5059-4321-97ae-43f1832abd92",
+  "target": "fn_801FA4F0",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FA4F0 fn_801FA4F0 -o build/GEDE01/objdiff-6713adf7-5059-4321-97ae-43f1832abd92.raw.json --format json",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FA4F0 -o build/GEDE01/objdiff-6713adf7-5059-4321-97ae-43f1832abd92-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_801FA4F0",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measured_outputs": {
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_sha1_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical": {
+      "target_size": 380,
+      "candidate_size": 384,
+      "target_instruction_rows": 97,
+      "candidate_instruction_rows": 97,
+      "match_percent": 95.41053,
+      "diff_kinds": {
+        "DIFF_NONE": 90,
+        "DIFF_DELETE": 1,
+        "DIFF_ARG_MISMATCH": 2,
+        "DIFF_INSERT": 2,
+        "DIFF_REPLACE": 2
+      }
+    },
+    "relocation_strict": {
+      "config": "function_reloc_diffs=name_address",
+      "match_percent": 95.41053,
+      "target_real_relocation_count": 32,
+      "candidate_real_relocation_count": 32,
+      "target_synthetic_base_addend_count": 20,
+      "candidate_synthetic_base_addend_count": 21,
+      "same_offsets_targets_types_addends": false,
+      "real_relocation_type_counts_each_side": {
+        "R_PPC_EMB_SDA21": 16,
+        "R_PPC_REL24": 14,
+        "R_PPC_ADDR16_HA": 1,
+        "R_PPC_ADDR16_LO": 1
+      }
+    },
+    "recovery": {
+      "preserved_commit": "b9e42882451b6fa2b48d48c416ec0c686af92331",
+      "accepted_base_already_contained_source": true,
+      "registration": "Object(NonMatching, \"game/game_fn_801FA4F0.c\", mw_version=\"GC/1.3\")"
+    }
+  },
+  "exact_codegen_divergence": {
+    "prologue_and_base": "Retail emits cmplwi at 0x10, lis at 0x14, and addi r31,r3,lbl_8063C6B8@l at 0x1c. Canonical GC/1.3 emits lis at 0x10, addi r3,r3,lbl_8063C6B8@l at 0x18, cmplwi at 0x20, and an extra mr r31,r3 at 0x28.",
+    "memcpy_zero_offset_operands": "Retail emits addi r3,r31,0x1540 then addi r4,r31,0 for the save copy, and addi r3,r31,0 for the restore copy. Canonical emits mr r4,r31 before the destination addi for the save copy and mr r3,r31 for the restore copy.",
+    "size_and_relocations": "The extra base-pointer move makes the candidate 384 bytes versus retail's 380. The same 32 real relocation kinds and targets are represented, but offsets after the prologue differ by four bytes, so relocation-strict equality is false. Candidate also has one extra synthetic R_PPC_NONE base-addend annotation for the extra move."
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_801FA4F0.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "gate_or_compiler_policy_changes": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
