@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "assignment_id": "97371bca-ba2a-489f-ba14-65a06c2b6573",
+  "target": "fn_80201F80",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80201F80 -o build/GEDE01/objdiff-97371bca-ba2a-489f-ba14-65a06c2b6573-canonical.json --format json-pretty fn_80201F80",
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-97371bca-ba2a-489f-ba14-65a06c2b6573-canonical.json\nretail_size=212 match_percent=94.245285 generated_size=208",
+    "match_percent": 94.245285,
+    "retail_size": 212,
+    "generated_size": 208
+  },
+  "relocation_strict": {
+    "command": "readelf -rW build/GEDE01/obj/game/game_fn_80201F80.o; readelf -rW build/GEDE01/src/game/game_fn_80201F80.o",
+    "retail_raw_output": "0000003c R_PPC_REL24 fn_80201CCC + 0; 0000006c R_PPC_REL24 fn_80201E50 + 0; 00000080 R_PPC_REL24 fn_80201E50 + 0; 000000a8 R_PPC_REL24 fn_80201E50 + 0",
+    "generated_raw_output": "0000003c R_PPC_REL24 fn_80201CCC + 0; 0000006c R_PPC_REL24 fn_80201E50 + 0; 00000080 R_PPC_REL24 fn_80201E50 + 0; 000000a4 R_PPC_REL24 fn_80201E50 + 0",
+    "result": "not 100% relocation-strict: relocation targets, types, and addends agree, but the final fn_80201E50 relocation site is four bytes early"
+  },
+  "divergence": {
+    "range": "retail .text+0x8c..0xa8 versus generated .text+0x8c..0xa4",
+    "retail_raw_output": "and r0,r30,r3; cmplw r30,r0; bne +0xc; andc r4,r3,r30; b +0x8; or r4,r3,r30",
+    "generated_raw_output": "and r0,r30,r3; or r4,r3,r30; cmplw r30,r0; bne +0x8; andc r4,r3,r30",
+    "summary": "GC/1.3 speculatively computes flags|mask before the comparison and removes retail's branch-over-else instruction"
+  },
+  "experiments": {
+    "raw_output": "reverse condition/branches: 94.15094%; duplicate fn_80201E50 calls in branches: 82.35849%; neither retained because both regress the canonical score"
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "[845/847] DOL build/GEDE01/main.dol\n[846/847] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[847/847] PROGRESS"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  },
+  "legal_audit": {
+    "raw_output": "src/game/game_fn_80201F80.c is one independent C translation unit; configure.py registers it as NonMatching with canonical GC/1.3; no inline or whole-function assembly, shared reconstruction, fallback jump, neighboring edit, gate change, or new compiler policy"
+  }
+}
