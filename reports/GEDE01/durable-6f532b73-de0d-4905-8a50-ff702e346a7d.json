@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "6f532b73-de0d-4905-8a50-ff702e346a7d",
+  "attempt": 3,
+  "base_commit": "e8cac48c7ea8a9e92c2f6e2c9cb2423a646d386f",
+  "target": "fn_80112754",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6f532b73-de0d-4905-8a50-ff702e346a7d.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff are identical at 98.19768%: retail is 344 bytes and canonical GC/1.3 emits 348 bytes. Nine GPR operand mismatches and one generated insertion remain: MWCC colors mode/horizontal as r30/r29 instead of retail r29/r30, routes the initial horizontal result through r0 plus an extra mr r29,r0, and consequently uses r29 instead of r30 in the first two switch arms. All 21 relocation-bearing instructions align under function_reloc_diffs=name_address. The full canonical build passed and build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
