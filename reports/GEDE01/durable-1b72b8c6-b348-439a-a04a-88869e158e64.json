@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "1b72b8c6-b348-439a-a04a-88869e158e64",
+  "attempt": 2,
+  "base_commit": "bb9b598ea477f24ab2626c02f448c0da53009dfe",
+  "target": "fn_800DE648",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1b72b8c6-b348-439a-a04a-88869e158e64.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are 95.085106% with equal 188-byte code. Retail uses aggregate stack slots return=0x20..0x28, intermediate=0x2C..0x34, position=0x14..0x1C, and second copy=0x08..0x10; MWCC generates return=0x08..0x10, intermediate=0x20..0x28, position=0x14..0x1C, and second copy=0x2C..0x34. The second copy also loads/stores as r5,r0/store/store/r0/store instead of retail r6,r5,r0/store/store/store. All six R_PPC_REL24 relocations retain equal target-symbol indices and zero addends under strict comparison."
+}
