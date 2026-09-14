@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "assignment_id": "d6b52946-d8b6-4762-90b8-60e905695c08",
+  "target": "fn_80093F6C",
+  "compiler": "canonical project configuration",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80093F6C.c fn_80093F6C",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measured_outputs": {
+    "build_check": "build/GEDE01/main.dol: OK",
+    "fndiff": "target 780 bytes  base 780 bytes  match 100.0",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "objdiff_report_unit": {
+      "name": "main/game/game_fn_80093F6C",
+      "total_code": "780",
+      "matched_code": "780",
+      "matched_code_percent": 100.0,
+      "total_functions": 1,
+      "matched_functions": 1,
+      "complete_units": 1
+    }
+  },
+  "canonical": {
+    "retail_bytes": 780,
+    "generated_bytes": 780,
+    "match_percent": 100.0,
+    "instruction_differences": 0
+  },
+  "relocation_strict": {
+    "retail_relocation_instructions": 41,
+    "generated_relocation_instructions": 41,
+    "offset_type_target_addend_differences": 0,
+    "match_percent": 100.0,
+    "source": "build/GEDE01/fndiff_fn_80093F6C.json"
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80093F6C.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false
+  }
+}
