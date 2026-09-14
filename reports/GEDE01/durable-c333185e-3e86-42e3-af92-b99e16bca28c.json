@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c333185e-3e86-42e3-af92-b99e16bca28c",
+  "attempt": 2,
+  "base_commit": "e761d668839c7416ecda65ffec41bd1248444aaa",
+  "target": "fn_801D88D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c333185e-3e86-42e3-af92-b99e16bca28c.json"
+  ],
+  "divergence": "Relocation-strict objdiff measures 98.07493%: retail is 1388 bytes/347 instructions and generated is 1384 bytes/346 instructions, with 33 relocations on each side. The C reconstruction emits the retail 0x70-byte frame and exact per-operation stack-slot offsets. Remaining codegen divergence is register allocation (generated saves r27-r31 and reuses r29/r28 across mutually exclusive result arms, while retail saves r26-r31 and assigns flags/results to r26-r29), three missing extsh instructions after the case-2 integer additions, and six compiler-generated signed-conversion constant relocations targeting @40 rather than retail lbl_80651110."
+}
