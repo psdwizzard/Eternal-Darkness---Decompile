@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e7983aab-c5c4-4ad1-b36f-449f0a4485cd",
+  "attempt": 1,
+  "base_commit": "fc7130f45006e0a65ad7a006ffef0b09a5b1029b",
+  "target": "fn_80159440",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e7983aab-c5c4-4ad1-b36f-449f0a4485cd.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff score is 98.08871% (496 retail bytes versus 492 generated; 46 retail versus 45 generated relocation-bearing rows). GC/1.3 folds the transition subobject address into stw 0x234(r29), omitting retail's addi r3,r29,0x21c before stw 0x18(r3); this also changes the retained channel-table base/register allocation, although the reconstruction now reproduces retail's repeated channel-index reload count."
+}

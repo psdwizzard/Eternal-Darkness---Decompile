@@ -5,7 +5,7 @@ typedef void (*TransitionCallback)(int*, int*);
 
 typedef struct ChannelTable {
     int unused;
-    int current;
+    volatile int current;
     int pad08;
     void* channels[12];
 } ChannelTable;
@@ -90,10 +90,9 @@ void fn_80159440(int value, u32 flags)
     fn_80159184(flags);
 
     {
-        ChannelTable* channels = &globals->channel_table;
-        int index = channels->current;
-        if (index != -1) {
-            char* channel = (char*)channels->channels[index];
+        ChannelTable* channels = (ChannelTable*)((u32)globals + 0x1E0);
+        if (channels->current != -1) {
+            char* channel = (char*)channels->channels[channels->current];
             *(short*)(channel + 0x8140) = -1;
             channel = (char*)channels->channels[channels->current];
             channel[0x8142] = 0;
