@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e599e312-af4a-4541-97dc-cde78ed9b1d0",
+  "attempt": 2,
+  "base_commit": "649a7ad4cc181033a454e07048890428d1cde851",
+  "target": "fn_80112754",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e599e312-af4a-4541-97dc-cde78ed9b1d0.json"
+  ],
+  "divergence": "Relocation-strict objdiff is 98.19768%: retail is 344 bytes (86 instructions) and canonical GC/1.3 emits 348 bytes (87 instructions). Nine GPR operand mismatches and one generated insertion remain: MWCC colors mode/horizontal as r30/r29 instead of retail r29/r30, routes the initial horizontal result through r0 plus an extra mr r29,r0, and consequently uses r29 instead of r30 in the first two switch arms. The honest reconstruction declares fn_801E63F0 with its matched TextDescriptor* signature and passes item in all three arms. All 21 relocation-bearing instructions align under function_reloc_diffs=name_address."
+}
