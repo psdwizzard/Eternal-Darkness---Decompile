@@ -371,3 +371,33 @@ the net structural change.
 | `fn_801CA7C0` | 1,488 |
 | `fn_801C87DC` | 1,252 |
 | _130 more_ | 45,976 |
+
+### Source, compiler, and data corrections ([#20](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/20)) — 71 functions, 35,544 bytes
+
+This batch matches 71 game functions through interface and structure recovery,
+source-shape and lifetime corrections, narrow per-object MWCC settings, and
+guarded ownership of compiler-generated constants, jump tables, and static
+pools. It includes substantial MusyX reconstruction and replaces several
+forcing artifacts with maintainable source.
+
+All 71 functions were reconciled onto the current monorepo tree, rebuilt, and
+independently measured at 100% with
+`function_reloc_diffs=name_address`. The canonical matched and linked totals
+both rose by exactly 35,544 bytes, the legal audit passed, and the rebuilt DOL
+remained byte-identical to retail. Eight objects retain the project's known
+`R_PPC_EMB_SDA21` relocation-offset encoding convention; `fn_801C13D4` has one
+retail-side self-branch relocation that MWCC resolves locally. These do not
+change relocation targets/addends or linked bytes and are recorded explicitly
+in the landing evidence.
+
+| Function | Bytes |
+| --- | ---: |
+| `fn_801C4B5C` | 10,720 |
+| `fn_801BEF40` | 5,388 |
+| `fn_801B86C0` | 1,348 |
+| `fn_801B3E64` | 1,332 |
+| `fn_801535D8` | 680 |
+| `fn_801CAFAC` | 652 |
+| `fn_8008E430` | 576 |
+| `fn_8015BDF0` | 560 |
+| _63 more_ | 14,288 |

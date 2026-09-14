@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "b4c711ad-8d1e-4c4b-a402-c1cff2dd0a12",
+  "attempt": 1,
+  "base_commit": "88f1e4f70d4e27294110cdc7acf9ef94c4d31cb0",
+  "target": "fn_8019FAB8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b4c711ad-8d1e-4c4b-a402-c1cff2dd0a12.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-b4c711ad-8d1e-4c4b-a402-c1cff2dd0a12.json"
+  ],
+  "divergence": "Canonical GC/1.3 output is size-exact at 508/508 bytes and reaches 96.18898%, but 19 instruction positions remain different. The first four-point loop assigns its point cursor, byte offset, and counter to r27/r25/r24 instead of retail r28/r27/r24 and consequently reverses the cursor/offset updates. The outer loop initializes offset/index as r26/r25 instead of retail r26/r24; its inner loop emits cursor/index/stride setup before the retail loop-body label and uses r27/r24/r28 instead of retail r27/r25/r28, leaving the outer index in r25 instead of r24. This is not a 100% canonical or relocation-strict match and remains NonMatching."
+}

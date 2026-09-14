@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3353b1a3-7bb7-4844-b6b2-5389295a285d",
+  "attempt": 3,
+  "base_commit": "f5ddacc38940ed12d1eba23fadaae4ef947fe857",
+  "target": "fn_801AFCC8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3353b1a3-7bb7-4844-b6b2-5389295a285d.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are identical at 97.24424%: retail is 868 bytes and generated code is 872 bytes. All 10 relocation records agree by type, target-symbol index, and addend, but retail saves owner, wanted, limit, choices, and special in r21-r25 and reserves r20 for the loop counter; GC/1.3 assigns the incoming values to r20-r24, emits an extra mr r25,r20 to preserve owner, then reuses r20 for the counter. This register rotation produces 58 argument mismatches, one deletion, and two insertions."
+}

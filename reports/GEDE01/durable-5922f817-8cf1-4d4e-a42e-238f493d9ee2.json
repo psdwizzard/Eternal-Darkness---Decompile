@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "5922f817-8cf1-4d4e-a42e-238f493d9ee2",
+  "attempt": 1,
+  "base_commit": "16b7fbeb2824cfe13c222429ee405836c37529c8",
+  "target": "fn_800542D0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-5922f817-8cf1-4d4e-a42e-238f493d9ee2.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 96.19403% with size-exact 1072-byte objects. The raw diff has 80 argument mismatches, three insertions, three deletions, and one opcode mismatch: GC/1.3 assigns the eight register-passed byte parameters and the effect-list/loop temporaries to a different callee-saved register permutation, emits the flags ternary with the opposite branch layout, and schedules the final lbl_8064C848 SDA load at 0x3FC rather than retail 0x400. Both objects have 46 real relocation-bearing instructions in the same semantic order; 45 occur at identical offsets, with only that final SDA load shifted by one instruction."
+}

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c8cf05d2-4771-4f74-a298-9871fbc27a9a",
+  "attempt": 2,
+  "base_commit": "b58bbaf624501652891d62380210e1e7f0df5e41",
+  "target": "fn_8018BC68",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c8cf05d2-4771-4f74-a298-9871fbc27a9a.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits the exact retail 300-byte, 75-instruction control flow at a fresh relocation-strict objdiff score of 98.26667%; all 18 relocation annotations agree in type, target, and addend. The remaining 20 instruction operand mismatches are one callee-saved-register permutation: retail self/vertex/index/callback/byte-offset use r28/r31/r30/r26/r27, while generated C uses r31/r27/r28/r30/r26. Count, all three sizes, color data, object data, color cursor, and outer index now use the retail registers."
+}

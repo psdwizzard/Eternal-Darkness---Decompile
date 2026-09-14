@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "4928bbd0-a4d3-4eba-8ef0-81c29b761bf1",
+  "attempt": 2,
+  "base_commit": "eeaf7a6afb0d00950899fe591a770d9bc1594c48",
+  "target": "fn_8013DB8C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4928bbd0-a4d3-4eba-8ef0-81c29b761bf1.json"
+  ],
+  "divergence": "Canonical and relocation-strict direct objdiff are identical, size-exact at 696/696 bytes, and 99.02299%. The remaining 25 instruction mismatches are two R_PPC_EMB_SDA21 signed-short conversion constant relocation targets (retail lbl_80650348 versus compiler-local @77) plus floating-register allocation across the three unrolled slab-time calculations: retail keeps zero in f3 and the invalid time in f0 and computes through f2/f1, while generated code keeps zero in f2 and invalid time in f3 and computes through f1/f0. A bounded explicit zero/invalid lifetime experiment regressed to 98.735634% and was rejected."
+}

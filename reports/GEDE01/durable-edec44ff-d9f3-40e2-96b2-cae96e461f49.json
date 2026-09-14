@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "edec44ff-d9f3-40e2-96b2-cae96e461f49",
+  "attempt": 1,
+  "base_commit": "94306870ab7954f8cbb5ac0a97954084a6a800e4",
+  "target": "fn_8018BFEC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-edec44ff-d9f3-40e2-96b2-cae96e461f49.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits the exact retail 300-byte, 75-instruction control flow at a fresh canonical and relocation-strict objdiff score of 98.26667%; both modes produce byte-identical JSON and all 18 relocation annotations agree in type, target, and addend. The remaining 20 rows are operand-only mismatches from one callee-saved-register permutation: retail self/vertex/index/color/callback/vertex-offset use r28/r31/r30/r29/r26/r27, while generated C uses r31/r27/r28/r29/r30/r26. The full build and legal audit pass, and main.dol retains SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

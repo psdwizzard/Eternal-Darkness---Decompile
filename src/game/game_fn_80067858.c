@@ -50,8 +50,13 @@ s32 fn_80067858(s32 object_id)
             }
         }
 
-        if ((found != 0 || free_slot != -1) && found <= 1 &&
-            free_slot != -1 && found != 1) {
+        if (found == 0 && free_slot == -1) {
+            return result;
+        }
+        if (found > 1) {
+            return result;
+        }
+        if (free_slot != -1 && found != 1) {
             result = free_slot;
             lbl_8030FBF8[free_slot].object_id = object_id;
             *installed = &lbl_8030FBF8[free_slot];

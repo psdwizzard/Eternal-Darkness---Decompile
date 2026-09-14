@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "579234fa-e50e-4af9-b82e-f3c8f992fa48",
+  "attempt": 3,
+  "base_commit": "b6ab7bf242ecc97c01dd334fed1a3c75cee54c91",
+  "target": "fn_8013DB8C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-579234fa-e50e-4af9-b82e-f3c8f992fa48.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict direct objdiff reports are byte-identical, size-exact at 696/696 bytes, and 99.02299%. The remaining 25 instruction mismatches comprise two R_PPC_EMB_SDA21 signed-short conversion constant relocation targets (retail lbl_80650348 versus compiler-local @77) plus floating-register allocation across the three unrolled slab-time calculations: retail keeps zero in f3 and the invalid time in f0 and computes through f2/f1, while generated code keeps zero in f2 and invalid time in f3 and computes through f1/f0. The required whole-DOL build verifies at SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

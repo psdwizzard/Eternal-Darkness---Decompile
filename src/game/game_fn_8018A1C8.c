@@ -11,21 +11,31 @@ extern int fn_801ED57C(int);
 extern void fn_8018D0D0(void*, void*, s16);
 extern void fn_801887C4(void*, void*, void*);
 
-void fn_8018A1C8(u8* self)
+void fn_8018A1C8(u8* object)
 {
-    u8* data = lbl_80607120;
-    u8 count = self[1];
-    u16 vertex_count = *(u16*)(data + 2);
-    u16 size0 = *(u16*)(data + 0xA);
-    u16 size1 = *(u16*)(data + 0xE);
-    u16 size2 = *(u16*)(data + 0xC);
-    u8* buffer0 = *(u8**)(self + 0x50);
-    u8* buffer1 = *(u8**)(self + 0x54);
-    u8* buffer2 = *(u8**)(self + 0x58);
+    register u8* self;
+    register u8* buffer2;
+    register u8* buffer1;
+    register u8* buffer0;
+    int offset;
+    int i;
+    u8 count;
+    u16 size0;
+    u16 size1;
+    u16 size2;
     u8* entry;
     u8* out;
-    int i;
-    int offset;
+    u16 vertex_count;
+
+    self = object;
+    count = self[1];
+    vertex_count = *(u16*)(lbl_80607120 + 2);
+    size0 = *(u16*)(lbl_80607120 + 0xA);
+    size1 = *(u16*)(lbl_80607120 + 0xE);
+    size2 = *(u16*)(lbl_80607120 + 0xC);
+    buffer0 = *(u8**)(self + 0x50);
+    buffer1 = *(u8**)(self + 0x54);
+    buffer2 = *(u8**)(self + 0x58);
 
     if (lbl_8064D738 != 0) {
         buffer1 += vertex_count * 4;
@@ -34,8 +44,9 @@ void fn_8018A1C8(u8* self)
     }
     entry = *(u8**)(self + 0x4C);
     out = buffer2;
+    i = 0;
     offset = 0;
-    for (i = 0; i < count; i++) {
+    for (; i < count; i++) {
         int j;
         fn_80188A7C(entry, buffer0 + offset, fn_8018D724);
         for (j = 0; j < entry[0x20]; j++) {

@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "assignment_id": "cfcb3761-0d01-4152-9509-ca362c929b77",
+  "attempt": 4,
+  "target": "fn_80067858",
+  "unit": "main/game/game_fn_80067858",
+  "compiler": "canonical GC/1.3 configuration from configure.py",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80067858.c fn_80067858",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80067858 fn_80067858 -o build/GEDE01/fndiff_fn_80067858_reloc_strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "raw_measurements": {
+    "preserved_source_blob": "536d3930ad2718766aba8ce8e8397c3b060aad17: 72862c2c103f8e26f9968956ea514a9695f13caf",
+    "attempt_4_source_blob": "48d4266564cb98cc464fba7691cf53db57e1ce68",
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_check_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "legal_audit_output": "legal audit passed (14772 tracked project files inspected)",
+    "target_compile_command": "compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+    "canonical_objdiff_output": "target 448 bytes  base 456 bytes  match 97.14286; left instruction_rows=114 relocation_rows=18; right instruction_rows=114 relocation_rows=18",
+    "relocation_strict_objdiff_output": "target 448 bytes  base 456 bytes  match 97.14286; left instruction_rows=114 relocation_rows=18; right instruction_rows=114 relocation_rows=18"
+  },
+  "relocation_audit": {
+    "targets_types_and_addends_equal": true,
+    "sequence": [
+      "fn_80201814:R_PPC_REL24:addend=0",
+      "fn_80201B8C:R_PPC_REL24:addend=0",
+      "fn_80201EB8:R_PPC_REL24:addend=0",
+      "lbl_8064D18C:R_PPC_EMB_SDA21:addend=0",
+      "lbl_8030FBF8:R_PPC_ADDR16_HA:addend=0",
+      "lbl_8030FBF8:R_PPC_ADDR16_LO:addend=0",
+      "lbl_8030FBF8:R_PPC_NONE:addend=248",
+      "lbl_8030FBF8:R_PPC_NONE:addend=520",
+      "lbl_8030FBF8:R_PPC_NONE:addend=272",
+      "lbl_8030FBF8:R_PPC_NONE:addend=792",
+      "lbl_8030FBF8:R_PPC_NONE:addend=544",
+      "lbl_8030FBF8:R_PPC_NONE:addend=1064",
+      "lbl_8030FBF8:R_PPC_NONE:addend=816",
+      "lbl_8030FBF8:R_PPC_NONE:addend=1088",
+      "lbl_8030FBF8:R_PPC_ADDR16_HA:addend=0",
+      "lbl_8030FBF8:R_PPC_ADDR16_LO:addend=0",
+      "lbl_8030FBF8:R_PPC_NONE:addend=0",
+      "lbl_8030FBF8:R_PPC_NONE:addend=248"
+    ]
+  },
+  "canonical_match_percent": 97.14286,
+  "relocation_strict_match_percent": 97.14286,
+  "matched": false,
+  "divergence": "Canonical GC/1.3 emits 456 bytes versus retail's 448. Generated assigns free_slot/state/object_id to r28/r29/r30 while retail assigns them to r30/r28/r29. The explicit C early returns recover the retail conditional-branch shape but emit redundant `mr r3,r31` instructions at generated offsets 0x016c and 0x017c before branching to the shared epilogue, accounting for the eight extra bytes. All 18 relocation targets, types, and addends agree."
+}

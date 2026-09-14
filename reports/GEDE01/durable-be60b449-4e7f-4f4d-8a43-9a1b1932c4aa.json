@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "be60b449-4e7f-4f4d-8a43-9a1b1932c4aa",
+  "attempt": 2,
+  "base_commit": "9b89d63088306a3a02ba01faafe48ad0371f1fda",
+  "target": "fn_800542D0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-be60b449-4e7f-4f4d-8a43-9a1b1932c4aa.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both measure 96.19403% with size-exact 1072-byte objects; their raw JSON outputs are byte-identical. The diff has 80 argument mismatches, three insertions, three deletions, and one opcode mismatch: canonical GC/1.3 assigns the eight register-passed byte parameters and the effect-list/loop temporaries to a different callee-saved register permutation, emits the flags ternary with the opposite branch layout, and schedules the final lbl_8064C848 SDA load at generated offset 0x3FC rather than retail 0x400. Both objects have 46 real relocation-bearing instructions in the same semantic order; 45 occur at identical offsets, with only that final SDA load shifted by one instruction. The full build passed and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
