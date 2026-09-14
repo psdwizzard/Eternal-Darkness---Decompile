@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9f4df648-b3b2-463c-9410-d9d3dff9a93e",
+  "attempt": 3,
+  "base_commit": "dfdb147676b7bfa4060c9c1abad4951fc40b1ae7",
+  "target": "fn_8017EE58",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9f4df648-b3b2-463c-9410-d9d3dff9a93e.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is 94.40288%: retail is 556 bytes and generated is 548 bytes. Both sides contain 28 relocation-bearing instructions with identical relocation types, targets, ordering, and addends, including the lbl_80607120 R_PPC_NONE addend 2. GC/1.3 rotates the persistent object, first-coordinate, config, raw-index, and zero-extended-index registers; maintains the zero-extended loop index instead of emitting retail's separate clrlwi before the 0x38 multiply; folds retail's explicit truncation of index plus one; and consequently emits two fewer instructions with different second fn_80180518 argument scheduling. The independent honest-C translation unit and existing NonMatching registration were already present on the accepted base from the preserved prior reconstruction. The required python3 configure.py and .tools/bin/ninja -j2 full build pass, the DOL check reports OK, and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
