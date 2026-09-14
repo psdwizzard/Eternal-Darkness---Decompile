@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "62498f70-93ea-41e1-b28c-5295cf0b53fc",
+  "attempt": 1,
+  "base_commit": "f000158ba8ff256e614d6b5fbb92a911008a0544",
+  "target": "fn_801EF5EC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-62498f70-93ea-41e1-b28c-5295cf0b53fc.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff remain 94.223305% with exact 412-byte size. The remaining differences are cmpwi versus retail cmplwi at 0x14; r0 versus retail r3 for the lbl_802FC500 address at 0x28/0x2C; movement of the lbl_8064D718 store from retail 0x4C to generated 0x50; movement of the unsigned-conversion double load and stack store around 0x58..0x70; and the conversion-constant relocation spelling @18 versus retail lbl_80651350 at 0x6C and 0xE8. A u32 return declaration corrected the comparison opcode but reduced the measured aligned score to 92.864075%, so the pre-existing honest size-exact C reconstruction was preserved."
+}
