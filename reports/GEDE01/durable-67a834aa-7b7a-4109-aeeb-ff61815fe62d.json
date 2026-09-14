@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "67a834aa-7b7a-4109-aeeb-ff61815fe62d",
+  "attempt": 1,
+  "base_commit": "1c707e4ddc9206fcd569a47671d4548993f118f4",
+  "target": "fn_8019DEFC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-67a834aa-7b7a-4109-aeeb-ff61815fe62d.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces the full retail 96-byte instruction sequence at 98.333336%, with no relocations in either object. The only remaining codegen divergence is a consistent register allocation swap: retail keeps the advancing s16 timer cursor in r6 and computes the per-iteration flag index in r7, while the candidate keeps the timer cursor in r7 and computes the flag index in r6. This changes the register operands at offsets 0x08, 0x1c, 0x20, 0x24, 0x30, 0x40, and 0x44; all opcodes, immediates, branches, size, and other operands match. The canonical build completed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
