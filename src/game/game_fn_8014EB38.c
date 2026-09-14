@@ -18,6 +18,9 @@ extern void fn_8018199C(void*, Coord3*, Coord3*, void*);
 extern void fn_80185108(void*);
 extern void fn_801851A0(void*, Coord3*);
 
+/* NonMatching: behavior-complete honest C. Retail overwrites r4 for the entry
+ * multiply, schedules the two SDA21 loads in the opposite order, and allocates
+ * the loop index/current pointer to r29/r31 rather than r31/r29. */
 void fn_8014EB38(u8* object, int index)
 {
     int i;

@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "assignment_id": "cf314056-f195-4179-8c13-180760f23227",
+  "target": "fn_8014EB38",
+  "tool": "objdiff-cli 3.6.1",
+  "canonical_command": "python3 tools/fndiff.py game/game_fn_8014EB38.c fn_8014EB38",
+  "canonical_raw": "target 248 bytes  base 248 bytes  match 95.20968",
+  "code": {
+    "target_bytes": 248,
+    "base_bytes": 248,
+    "match_percent": 95.20968
+  },
+  "relocation_strict": {
+    "total": 6,
+    "matching_offset_type_target_addend": 4,
+    "raw": [
+      "0x28 target R_PPC_EMB_SDA21 lbl_8065053C+0; base R_PPC_EMB_SDA21 lbl_80650540+0",
+      "0x2c target R_PPC_EMB_SDA21 lbl_80650540+0; base R_PPC_EMB_SDA21 lbl_8065053C+0",
+      "0x50 target/base R_PPC_REL24 fn_8014F320+0",
+      "0xa0 target/base R_PPC_REL24 fn_8018199C+0",
+      "0xbc target/base R_PPC_REL24 fn_80185108+0",
+      "0xc8 target/base R_PPC_REL24 fn_801851A0+0"
+    ]
+  },
+  "codegen_divergence": [
+    "0x08/0x18: retail overwrites r4 for the 0x174 multiply; reconstructed C uses temporary r5",
+    "0x28-0x38: retail loads/stores lbl_8065053C before lbl_80650540; reconstructed C schedules the halfword load first, swapping the two SDA21 relocation offsets",
+    "0xac-0xd8: retail assigns loop index/count/current to r29/r30/r31; reconstructed C assigns r31/r30/r29"
+  ],
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw": "build/GEDE01/main.dol: OK",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+}
