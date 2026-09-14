@@ -1,11 +1,15 @@
+typedef struct Vector {
+    unsigned int x;
+    unsigned int y;
+    unsigned int z;
+} Vector;
+
 typedef struct Message {
     unsigned int first;
     unsigned int second;
     float time;
     unsigned char padC[4];
-    unsigned int fourth;
-    unsigned int fifth;
-    unsigned int sixth;
+    Vector vector;
     unsigned char byte;
     unsigned char pad1D[3];
 } Message;
@@ -17,9 +21,7 @@ typedef struct Source {
     unsigned int second;
     signed short value;
     unsigned char pad16[0xE];
-    unsigned int fourth;
-    unsigned int fifth;
-    unsigned int sixth;
+    Vector vector;
 } Source;
 
 typedef struct Owner {
@@ -39,20 +41,16 @@ extern double lbl_8064F020;
 unsigned short fn_800BB7A8(void *output, void *object)
 {
     Message result;
-    float tick;
     float time;
 
     time = fn_80200534(((void *)fn_80201B54(object)), -1, 0x39);
-    tick = fn_80117E58();
-    time += fn_80200BDC() - tick;
+    time += fn_80200BDC() - fn_80117E58();
     if (time >= lbl_8064F010) {
         Source *source = ((Owner *)fn_80201B8C(object))->source;
         result.first = source->first;
         result.second = source->second;
         *(signed short *)&result.padC[0] = source->value;
-        result.fourth = source->fourth;
-        result.fifth = source->fifth;
-        result.sixth = source->sixth;
+        result.vector = source->vector;
         result.byte = source->byte;
     }
     result.time = time;
