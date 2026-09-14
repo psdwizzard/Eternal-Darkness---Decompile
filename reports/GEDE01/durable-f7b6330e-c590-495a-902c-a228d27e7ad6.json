@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f7b6330e-c590-495a-902c-a228d27e7ad6",
+  "attempt": 3,
+  "base_commit": "333a28c77f2f2e78e1eaa330cef69eb4e7b2279f",
+  "target": "fn_80087BA8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f7b6330e-c590-495a-902c-a228d27e7ad6.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff measure 96.89189% and remain size-exact at 444/444 bytes with 111 instructions and 13 relocation sites per side. Every relocation has the same formatted target and type with zero addend. Remaining codegen divergence is equivalent allocation of work/position to generated r28/r29 instead of retail r29/r28, reuse of generated r27 instead of retail r25 for the callback-reset loop counter, and equivalent indexed-store address formation (generated addi/stbx versus retail add/stb at the first and final stores)."
+}
