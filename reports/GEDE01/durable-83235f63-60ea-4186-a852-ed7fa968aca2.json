@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "83235f63-60ea-4186-a852-ed7fa968aca2",
+  "attempt": 3,
+  "base_commit": "70a7f6ad1e58c653de1c3a98c295eb019f97d1c6",
+  "target": "fn_801BEC38",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-83235f63-60ea-4186-a852-ed7fa968aca2.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict direct objdiff both measure 95.39007%: retail is 564 bytes/141 instructions versus generated 552 bytes/138 instructions. All 17 relocation-bearing instruction entries agree in type, target, and addend sequence. The remaining divergence is GC/1.2.5n's selected/offset/id callee-saved allocation cycle (retail r31/r30/r29 versus generated r30/r29/r31), direct r3 coloring of the destination voice instead of retail r5, and omission of retail's command-value-path mr r4,r31 plus both explicit mr r3,r5 call-argument copies; the generated frame is consequently 40 bytes instead of retail's 48 bytes. Focused local-inline-helper and distinct destination-pointer spellings compiled identically to the preserved source."
+}
