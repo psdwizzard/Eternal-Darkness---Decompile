@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "assignment_id": "8b396018-5fda-4e02-aa25-12a3f8fffd25",
+  "attempt": 3,
+  "target": "fn_800A0140",
+  "compiler": "mwcc_242_53 (GC/1.3 canonical project configuration)",
+  "source_provenance": "The behavior-complete independent translation unit is present at accepted base 6a9b1f9d044c1e55e147f8018517f4345923e68f. Preserved commit d9652459805d7867114039073c5d64562a77e9d7 supplied the prior raw analysis for the same source; this attempt rebuilt and remeasured it on the accepted base.",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "sha1sum build/GEDE01/main.dol",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A0140 -o build/GEDE01/fndiff_fn_800A0140.json fn_800A0140"
+  ],
+  "raw_measured_output": {
+    "configure_and_build_exit": 0,
+    "build_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "objdiff": "match_percent=94.13223 retail_size=484 generated_size=472 retail_instructions=121 generated_instructions=118 retail_relocations=32 generated_relocations=31"
+  },
+  "canonical_objdiff": {
+    "match_percent": 94.13223,
+    "retail_bytes": 484,
+    "generated_bytes": 472,
+    "retail_instructions": 121,
+    "generated_instructions": 118
+  },
+  "relocation_strict": {
+    "matched": false,
+    "retail_count": 32,
+    "generated_count": 31,
+    "types_targets_addends": "Every emitted relocation has the expected type, symbolic target, and zero addend in sequence. Generated code omits retail relocation {offset:216,type:R_PPC_EMB_SDA21,target:lbl_8064EE1C,addend:0}; subsequent relocation offsets shift with the shorter code. Retail/generated initial register operands also differ at the otherwise equal lbl_8064C934 and lbl_8064EE1C relocation sites.",
+    "retail_relocations_raw": [
+      "32 R_PPC_REL24 fn_8006ED98 +0", "44 R_PPC_REL24 fn_80201814 +0", "48 R_PPC_REL24 fn_80201BC8 +0", "56 R_PPC_REL24 fn_80128EE4 +0", "60 R_PPC_EMB_SDA21 lbl_8064C934 +0", "64 R_PPC_EMB_SDA21 lbl_8064EE1C +0", "80 R_PPC_EMB_SDA21 lbl_8064EE20 +0", "104 R_PPC_EMB_SDA21 lbl_8064EE28 +0", "120 R_PPC_EMB_SDA21 lbl_8064EE30 +0", "136 R_PPC_EMB_SDA21 lbl_8064C930 +0", "140 R_PPC_EMB_SDA21 lbl_8064EDB0 +0", "164 R_PPC_REL24 fn_800C1B50 +0", "176 R_PPC_REL24 fn_8011F114 +0", "192 R_PPC_REL24 fn_8012AC74 +0", "196 R_PPC_EMB_SDA21 lbl_8064C934 +0", "200 R_PPC_EMB_SDA21 lbl_8064C930 +0", "208 R_PPC_EMB_SDA21 lbl_8064C934 +0", "216 R_PPC_EMB_SDA21 lbl_8064EE1C +0", "228 R_PPC_EMB_SDA21 lbl_8064EE20 +0", "292 R_PPC_REL24 fn_8006DEF8 +0", "312 R_PPC_REL24 fn_80201814 +0", "320 R_PPC_REL24 fn_80201B8C +0", "332 R_PPC_EMB_SDA21 lbl_8064EDB8 +0", "348 R_PPC_REL24 fn_8020104C +0", "356 R_PPC_REL24 fn_80036D38 +0", "364 R_PPC_REL24 fn_80201814 +0", "368 R_PPC_EMB_SDA21 lbl_8064EDB8 +0", "396 R_PPC_REL24 fn_800C1B50 +0", "408 R_PPC_REL24 fn_8011F114 +0", "424 R_PPC_REL24 fn_8012AC74 +0", "436 R_PPC_REL24 fn_802020B4 +0", "444 R_PPC_REL24 fn_801A5C30 +0"
+    ],
+    "generated_relocations_raw": [
+      "32 R_PPC_REL24 fn_8006ED98 +0", "44 R_PPC_REL24 fn_80201814 +0", "48 R_PPC_REL24 fn_80201BC8 +0", "56 R_PPC_REL24 fn_80128EE4 +0", "60 R_PPC_EMB_SDA21 lbl_8064C934 +0", "64 R_PPC_EMB_SDA21 lbl_8064EE1C +0", "80 R_PPC_EMB_SDA21 lbl_8064EE20 +0", "104 R_PPC_EMB_SDA21 lbl_8064EE28 +0", "120 R_PPC_EMB_SDA21 lbl_8064EE30 +0", "136 R_PPC_EMB_SDA21 lbl_8064C930 +0", "140 R_PPC_EMB_SDA21 lbl_8064EDB0 +0", "164 R_PPC_REL24 fn_800C1B50 +0", "176 R_PPC_REL24 fn_8011F114 +0", "192 R_PPC_REL24 fn_8012AC74 +0", "196 R_PPC_EMB_SDA21 lbl_8064C934 +0", "200 R_PPC_EMB_SDA21 lbl_8064C930 +0", "208 R_PPC_EMB_SDA21 lbl_8064C934 +0", "224 R_PPC_EMB_SDA21 lbl_8064EE20 +0", "288 R_PPC_REL24 fn_8006DEF8 +0", "308 R_PPC_REL24 fn_80201814 +0", "316 R_PPC_REL24 fn_80201B8C +0", "328 R_PPC_EMB_SDA21 lbl_8064EDB8 +0", "344 R_PPC_REL24 fn_8020104C +0", "352 R_PPC_REL24 fn_80036D38 +0", "360 R_PPC_REL24 fn_80201814 +0", "372 R_PPC_EMB_SDA21 lbl_8064EDB8 +0", "384 R_PPC_REL24 fn_800C1B50 +0", "396 R_PPC_REL24 fn_8011F114 +0", "412 R_PPC_REL24 fn_8012AC74 +0", "424 R_PPC_REL24 fn_802020B4 +0", "432 R_PPC_REL24 fn_801A5C30 +0"
+    ]
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_800A0140.c",
+    "registration": "Object(NonMatching, \"game/game_fn_800A0140.c\")",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false
+  },
+  "divergence": "GC/1.3 assigns state/transform/loop-or-object lifetimes to r28/r30/r29-or-r31 instead of retail r30/r29/r28. It keeps the sampled lbl_8064C934 value in f1 and the lower bound in f2, then reuses f2 at the else-if; retail keeps the sample in f2 and reloads lbl_8064EE1C into f0 at offset 216. The missing reload accounts for one of three missing generated instructions and one missing relocation. Near the final fn_800C1B50 call, retail also loads lbl_8064EDB8 earlier, transfers the returned object through r0 into r28, and emits fmr f2,f1, while generated code keeps the returned object in r31 and loads lbl_8064EDB8 directly into f1. The C remains behavior-complete and uses no assembly or shared reconstruction."
+}
