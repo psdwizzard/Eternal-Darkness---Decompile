@@ -51,8 +51,8 @@ void fn_8018DE9C(u8* object)
         color_data += offset * 4;
     }
     object_data = *(u8**)(self + 0x4C);
-    scratch = lbl_80607900;
     color = color_data;
+    scratch = lbl_80607900;
     coordinate = (u16*)transform;
     i = 0;
     for (; i < count; i++) {
