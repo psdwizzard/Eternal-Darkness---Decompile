@@ -1,0 +1,1346 @@
+{
+  "version": 1,
+  "assignment_id": "db397da9-97bd-4a9f-af8a-cf015a007e40",
+  "target": "fn_8015CFFC",
+  "reviewed_preserved_commits": [
+    "8c9b73343b6ec4e055476684ca8fcd5ef91fbc09",
+    "dcbb38f380e7030b6bb2cafd9a79ecb2aa1276d5",
+    "7bd726f39235cb9d59a42583c72d3d4622f5bc34",
+    "16e391a28408547841fd6e9cdc634249cdf2818f",
+    "bb8a54617517619209b5f977631d12a3504262ed",
+    "9f7dcac0f702df9c852f72e665cea7fcb6f0cfd3"
+  ],
+  "prior_work": "Reviewed preserved result envelopes, attempt-2 verification, failed-attempt evidence and preserved source. Earlier scalar declaration/register, destination-liveness and return-shape probes had already failed. The union storage-identity hypothesis was documented but explicitly untested in attempt 6.",
+  "source_reconciliation": {
+    "equals_accepted_base": true,
+    "equals_preserved_attempt_6": true,
+    "sha256": "bb83bba22488f62bd6a1ef21b7b00f46335ff9955de4a1ad02ed54f37d849a1f",
+    "registration": "NonMatching",
+    "decision": "All new variants reverted. Preserve the existing simpler independent C translation unit; no configure or split edit needed."
+  },
+  "experiments": [
+    {
+      "name": "union_same_member",
+      "patch": "--- baseline\n+++ union_same_member\n@@ -34,17 +34,17 @@\n {\n     register void* output = destination;\n     u32 copied = 0;\n-    int amount;\n+    union { int value; } transfer;\n     Message* message;\n \n     if (state->mode == 1) {\n-        amount = fn_8020D318(state->input_queue, &message, 0);\n+        transfer.value = fn_8020D318(state->input_queue, &message, 0);\n \n         if (state->message != 0) {\n             fn_80158850(state->message);\n             state->message = 0;\n         }\n-        if (amount) {\n+        if (transfer.value) {\n             if (message->type == 2) {\n                 fn_80158850(message);\n                 return 1;\n@@ -69,20 +69,20 @@\n             state->reply_queue = state->message->reply_queue;\n         }\n \n-        amount = length;\n+        transfer.value = length;\n         if (state->remaining < length) {\n-            amount = state->remaining;\n+            transfer.value = state->remaining;\n         }\n-        memcpy(state->data, (u8*)output + copied, amount);\n-        DCFlushRange(state->data, amount);\n+        memcpy(state->data, (u8*)output + copied, transfer.value);\n+        DCFlushRange(state->data, transfer.value);\n         if (state->progress == 0) {\n             state->progress = *(u32*)state->data + 4;\n         }\n-        length -= amount;\n-        copied += amount;\n-        state->data += amount;\n-        state->remaining -= amount;\n-        state->progress -= amount;\n+        length -= transfer.value;\n+        copied += transfer.value;\n+        state->data += transfer.value;\n+        state->remaining -= transfer.value;\n+        state->progress -= transfer.value;\n \n         if (state->remaining == 0) {\n             fn_8020D250(state->reply_queue, state->message, 1);\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8015CFFC.o"
+          ],
+          "exit_code": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015CFFC.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8015CFFC",
+            "fn_8015CFFC",
+            "-o",
+            "reports/GEDE01/probe-db397da9-97bd-4a9f-af8a-cf015a007e40.json",
+            "--format",
+            "json-pretty"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/probe-db397da9-97bd-4a9f-af8a-cf015a007e40.json\n"
+        }
+      ],
+      "measurements": {
+        "left": {
+          "size": "460",
+          "match_percent": 99.91304,
+          "instruction_count": 115,
+          "differences": [
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "64",
+                "size": 4,
+                "formatted": "mr r27, r3",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mr",
+                      "opcode": 357
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r27"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "92",
+                "size": 4,
+                "formatted": "cmpwi r27, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "cmpwi",
+                      "opcode": 260
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r27"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            }
+          ]
+        },
+        "right": {
+          "size": "460",
+          "match_percent": 99.91304,
+          "instruction_count": 115,
+          "differences": [
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "64",
+                "size": 4,
+                "formatted": "mr r28, r3",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mr",
+                      "opcode": 357
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r28"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "92",
+                "size": 4,
+                "formatted": "cmpwi r28, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "cmpwi",
+                      "opcode": 260
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r28"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            }
+          ]
+        }
+      },
+      "hypothesis": "Give the mutually exclusive receive-result and copy-amount definitions one aggregate member storage identity, rather than a scalar variable whose webs MWCC may split.",
+      "retained": false
+    },
+    {
+      "name": "union_distinct_members",
+      "patch": "--- baseline\n+++ union_distinct_members\n@@ -34,17 +34,17 @@\n {\n     register void* output = destination;\n     u32 copied = 0;\n-    int amount;\n+    union { int received; int amount; } transfer;\n     Message* message;\n \n     if (state->mode == 1) {\n-        amount = fn_8020D318(state->input_queue, &message, 0);\n+        transfer.received = fn_8020D318(state->input_queue, &message, 0);\n \n         if (state->message != 0) {\n             fn_80158850(state->message);\n             state->message = 0;\n         }\n-        if (amount) {\n+        if (transfer.received) {\n             if (message->type == 2) {\n                 fn_80158850(message);\n                 return 1;\n@@ -69,20 +69,20 @@\n             state->reply_queue = state->message->reply_queue;\n         }\n \n-        amount = length;\n+        transfer.amount = length;\n         if (state->remaining < length) {\n-            amount = state->remaining;\n+            transfer.amount = state->remaining;\n         }\n-        memcpy(state->data, (u8*)output + copied, amount);\n-        DCFlushRange(state->data, amount);\n+        memcpy(state->data, (u8*)output + copied, transfer.amount);\n+        DCFlushRange(state->data, transfer.amount);\n         if (state->progress == 0) {\n             state->progress = *(u32*)state->data + 4;\n         }\n-        length -= amount;\n-        copied += amount;\n-        state->data += amount;\n-        state->remaining -= amount;\n-        state->progress -= amount;\n+        length -= transfer.amount;\n+        copied += transfer.amount;\n+        state->data += transfer.amount;\n+        state->remaining -= transfer.amount;\n+        state->progress -= transfer.amount;\n \n         if (state->remaining == 0) {\n             fn_8020D250(state->reply_queue, state->message, 1);\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8015CFFC.o"
+          ],
+          "exit_code": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015CFFC.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8015CFFC",
+            "fn_8015CFFC",
+            "-o",
+            "reports/GEDE01/probe-db397da9-97bd-4a9f-af8a-cf015a007e40.json",
+            "--format",
+            "json-pretty"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/probe-db397da9-97bd-4a9f-af8a-cf015a007e40.json\n"
+        }
+      ],
+      "measurements": {
+        "left": {
+          "size": "460",
+          "match_percent": 99.91304,
+          "instruction_count": 115,
+          "differences": [
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "64",
+                "size": 4,
+                "formatted": "mr r27, r3",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mr",
+                      "opcode": 357
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r27"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "92",
+                "size": 4,
+                "formatted": "cmpwi r27, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "cmpwi",
+                      "opcode": 260
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r27"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            }
+          ]
+        },
+        "right": {
+          "size": "460",
+          "match_percent": 99.91304,
+          "instruction_count": 115,
+          "differences": [
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "64",
+                "size": 4,
+                "formatted": "mr r28, r3",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mr",
+                      "opcode": 357
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r28"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "92",
+                "size": 4,
+                "formatted": "cmpwi r28, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "cmpwi",
+                      "opcode": 260
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r28"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            }
+          ]
+        }
+      },
+      "hypothesis": "Use named int members for the receive status and transfer amount with the same union storage; each member is written before it is read, with no type punning.",
+      "retained": false
+    },
+    {
+      "name": "leading_receive_local",
+      "patch": "--- baseline\n+++ leading_receive_local\n@@ -32,19 +32,20 @@\n \n int fn_8015CFFC(void* destination, int length, ReadState* state)\n {\n+    int received;\n     register void* output = destination;\n     u32 copied = 0;\n     int amount;\n     Message* message;\n \n     if (state->mode == 1) {\n-        amount = fn_8020D318(state->input_queue, &message, 0);\n+        received = fn_8020D318(state->input_queue, &message, 0);\n \n         if (state->message != 0) {\n             fn_80158850(state->message);\n             state->message = 0;\n         }\n-        if (amount) {\n+        if (received) {\n             if (message->type == 2) {\n                 fn_80158850(message);\n                 return 1;\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8015CFFC.o"
+          ],
+          "exit_code": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015CFFC.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8015CFFC",
+            "fn_8015CFFC",
+            "-o",
+            "reports/GEDE01/probe-db397da9-97bd-4a9f-af8a-cf015a007e40.json",
+            "--format",
+            "json-pretty"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/probe-db397da9-97bd-4a9f-af8a-cf015a007e40.json\n"
+        }
+      ],
+      "measurements": {
+        "left": {
+          "size": "460",
+          "match_percent": 99.91304,
+          "instruction_count": 115,
+          "differences": [
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "64",
+                "size": 4,
+                "formatted": "mr r27, r3",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mr",
+                      "opcode": 357
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r27"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "92",
+                "size": 4,
+                "formatted": "cmpwi r27, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "cmpwi",
+                      "opcode": 260
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r27"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            }
+          ]
+        },
+        "right": {
+          "size": "460",
+          "match_percent": 99.91304,
+          "instruction_count": 115,
+          "differences": [
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "64",
+                "size": 4,
+                "formatted": "mr r28, r3",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mr",
+                      "opcode": 357
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r28"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "92",
+                "size": 4,
+                "formatted": "cmpwi r28, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "cmpwi",
+                      "opcode": 260
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r28"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            }
+          ]
+        }
+      },
+      "hypothesis": "Test the reviewer-requested leading receive-result local, separate from loop amount and declared before output.",
+      "retained": false
+    },
+    {
+      "name": "leading_receive_register_parameters",
+      "patch": "--- baseline\n+++ leading_receive_register_parameters\n@@ -30,21 +30,22 @@\n extern void* memcpy(void*, const void*, u32);\n extern void DCFlushRange(void*, u32);\n \n-int fn_8015CFFC(void* destination, int length, ReadState* state)\n+int fn_8015CFFC(register void* destination, register int length, register ReadState* state)\n {\n+    int received;\n     register void* output = destination;\n     u32 copied = 0;\n     int amount;\n     Message* message;\n \n     if (state->mode == 1) {\n-        amount = fn_8020D318(state->input_queue, &message, 0);\n+        received = fn_8020D318(state->input_queue, &message, 0);\n \n         if (state->message != 0) {\n             fn_80158850(state->message);\n             state->message = 0;\n         }\n-        if (amount) {\n+        if (received) {\n             if (message->type == 2) {\n                 fn_80158850(message);\n                 return 1;\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8015CFFC.o"
+          ],
+          "exit_code": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015CFFC.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8015CFFC",
+            "fn_8015CFFC",
+            "-o",
+            "reports/GEDE01/probe-db397da9-97bd-4a9f-af8a-cf015a007e40.json",
+            "--format",
+            "json-pretty"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/probe-db397da9-97bd-4a9f-af8a-cf015a007e40.json\n"
+        }
+      ],
+      "measurements": {
+        "left": {
+          "size": "460",
+          "match_percent": 99.91304,
+          "instruction_count": 115,
+          "differences": [
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "64",
+                "size": 4,
+                "formatted": "mr r27, r3",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mr",
+                      "opcode": 357
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r27"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "92",
+                "size": 4,
+                "formatted": "cmpwi r27, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "cmpwi",
+                      "opcode": 260
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r27"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            }
+          ]
+        },
+        "right": {
+          "size": "460",
+          "match_percent": 99.91304,
+          "instruction_count": 115,
+          "differences": [
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "64",
+                "size": 4,
+                "formatted": "mr r28, r3",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mr",
+                      "opcode": 357
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r28"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "92",
+                "size": 4,
+                "formatted": "cmpwi r28, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "cmpwi",
+                      "opcode": 260
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r28"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                },
+                {}
+              ]
+            }
+          ]
+        }
+      },
+      "hypothesis": "Combine the reviewer-requested leading result local with register-qualified existing parameters, without changing the three-parameter ABI.",
+      "retained": false
+    },
+    {
+      "name": "mode_switch_shared_exit",
+      "hypothesis": "Represent the mode dispatch as a switch with a common nonblocking exit, testing exit-edge effects on allocation.",
+      "patch": "--- baseline\n+++ mode_switch_shared_exit\n@@ -37,7 +37,8 @@\n     int amount;\n     Message* message;\n \n-    if (state->mode == 1) {\n+    switch (state->mode) {\n+    case 1:\n         amount = fn_8020D318(state->input_queue, &message, 0);\n \n         if (state->message != 0) {\n@@ -47,15 +48,14 @@\n         if (amount) {\n             if (message->type == 2) {\n                 fn_80158850(message);\n-                return 1;\n+                break;\n             }\n             if (state->reply_queue != 0) {\n                 fn_8020D250(state->reply_queue, message, 1);\n             }\n         }\n-        return 1;\n-    }\n-\n+        break;\n+    default:\n     do {\n         if (state->remaining == 0) {\n             fn_8020D318(state->input_queue, &message, 1);\n@@ -90,4 +90,6 @@\n         }\n     } while (length != 0);\n     return 0;\n+    }\n+    return 1;\n }\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8015CFFC.o"
+          ],
+          "exit_code": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015CFFC.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8015CFFC",
+            "fn_8015CFFC",
+            "-o",
+            "reports/GEDE01/probe-db397da9-97bd-4a9f-af8a-cf015a007e40.json",
+            "--format",
+            "json-pretty"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/probe-db397da9-97bd-4a9f-af8a-cf015a007e40.json\n"
+        }
+      ],
+      "measurements": {
+        "left": {
+          "size": "460",
+          "match_percent": 95.347824,
+          "instruction_count": 118,
+          "differences": [
+            {
+              "diff_kind": "DIFF_OP_MISMATCH",
+              "instruction": {
+                "address": "40",
+                "size": 4,
+                "formatted": "bne 0xa0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "bne",
+                      "opcode": 265
+                    }
+                  },
+                  {
+                    "arg": {
+                      "branch_dest": "160"
+                    }
+                  }
+                ],
+                "branch_dest": "160"
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                }
+              ]
+            },
+            {
+              "diff_kind": "DIFF_INSERT"
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "64",
+                "size": 4,
+                "formatted": "mr r27, r3",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mr",
+                      "opcode": 357
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r27"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 1
+                },
+                {}
+              ]
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "92",
+                "size": 4,
+                "formatted": "cmpwi r27, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "cmpwi",
+                      "opcode": 260
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r27"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 1
+                },
+                {}
+              ]
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "96",
+                "size": 4,
+                "formatted": "beq 0x98",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "beq",
+                      "opcode": 265
+                    }
+                  },
+                  {
+                    "arg": {
+                      "branch_dest": "152"
+                    }
+                  }
+                ],
+                "branch_dest": "152"
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 2
+                }
+              ]
+            },
+            {
+              "diff_kind": "DIFF_DELETE",
+              "instruction": {
+                "address": "124",
+                "size": 4,
+                "formatted": "li r3, 0x1",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "1"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "140",
+                "size": 4,
+                "formatted": "beq 0x98",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "beq",
+                      "opcode": 265
+                    }
+                  },
+                  {
+                    "arg": {
+                      "branch_dest": "152"
+                    }
+                  }
+                ],
+                "branch_dest": "152"
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 2
+                }
+              ]
+            },
+            {
+              "diff_kind": "DIFF_DELETE",
+              "instruction": {
+                "address": "152",
+                "size": 4,
+                "formatted": "li r3, 0x1",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "1"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "156",
+                "size": 4,
+                "formatted": "b 0x1b8",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "b",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "branch_dest": "440"
+                    }
+                  }
+                ],
+                "branch_dest": "440"
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 3
+                }
+              ]
+            },
+            {
+              "diff_kind": "DIFF_INSERT"
+            },
+            {
+              "diff_kind": "DIFF_INSERT"
+            }
+          ]
+        },
+        "right": {
+          "size": "464",
+          "match_percent": 95.347824,
+          "instruction_count": 118,
+          "differences": [
+            {
+              "diff_kind": "DIFF_OP_MISMATCH",
+              "instruction": {
+                "address": "40",
+                "size": 4,
+                "formatted": "beq 0x30",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "beq",
+                      "opcode": 265
+                    }
+                  },
+                  {
+                    "arg": {
+                      "branch_dest": "48"
+                    }
+                  }
+                ],
+                "branch_dest": "48"
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 0
+                }
+              ]
+            },
+            {
+              "diff_kind": "DIFF_INSERT",
+              "instruction": {
+                "address": "44",
+                "size": 4,
+                "formatted": "b 0x9c",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "b",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "branch_dest": "156"
+                    }
+                  }
+                ],
+                "branch_dest": "156"
+              }
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "68",
+                "size": 4,
+                "formatted": "mr r28, r3",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mr",
+                      "opcode": 357
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r28"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 1
+                },
+                {}
+              ]
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "96",
+                "size": 4,
+                "formatted": "cmpwi r28, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "cmpwi",
+                      "opcode": 260
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r28"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 1
+                },
+                {}
+              ]
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "100",
+                "size": 4,
+                "formatted": "beq 0x1b8",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "beq",
+                      "opcode": 265
+                    }
+                  },
+                  {
+                    "arg": {
+                      "branch_dest": "440"
+                    }
+                  }
+                ],
+                "branch_dest": "440"
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 2
+                }
+              ]
+            },
+            {
+              "diff_kind": "DIFF_DELETE"
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "140",
+                "size": 4,
+                "formatted": "beq 0x1b8",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "beq",
+                      "opcode": 265
+                    }
+                  },
+                  {
+                    "arg": {
+                      "branch_dest": "440"
+                    }
+                  }
+                ],
+                "branch_dest": "440"
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 2
+                }
+              ]
+            },
+            {
+              "diff_kind": "DIFF_DELETE"
+            },
+            {
+              "diff_kind": "DIFF_ARG_MISMATCH",
+              "instruction": {
+                "address": "152",
+                "size": 4,
+                "formatted": "b 0x1b8",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "b",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "branch_dest": "440"
+                    }
+                  }
+                ],
+                "branch_dest": "440"
+              },
+              "arg_diff": [
+                {
+                  "diff_index": 2
+                }
+              ]
+            },
+            {
+              "diff_kind": "DIFF_INSERT",
+              "instruction": {
+                "address": "436",
+                "size": 4,
+                "formatted": "b 0x1bc",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "b",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "branch_dest": "444"
+                    }
+                  }
+                ],
+                "branch_dest": "444"
+              }
+            },
+            {
+              "diff_kind": "DIFF_INSERT",
+              "instruction": {
+                "address": "440",
+                "size": 4,
+                "formatted": "li r3, 0x1",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "1"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "retained": false
+    }
+  ],
+  "conclusion": "Union storage identity and the reviewer-requested leading-result variants all reproduce r28 for the nonblocking result. The switch exit regresses to 464 bytes / 95.347824%. No new hypothesis improves the baseline."
+}

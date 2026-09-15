@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "db397da9-97bd-4a9f-af8a-cf015a007e40",
+  "attempt": 7,
+  "base_commit": "768f4970ebdb88cc605d688a3b010498ce8e01b7",
+  "target": "fn_8015CFFC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-db397da9-97bd-4a9f-af8a-cf015a007e40.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-db397da9-97bd-4a9f-af8a-cf015a007e40-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-db397da9-97bd-4a9f-af8a-cf015a007e40.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-db397da9-97bd-4a9f-af8a-cf015a007e40.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-db397da9-97bd-4a9f-af8a-cf015a007e40.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both score 99.91304%, size-exact at 460 bytes / 115 instructions. Direct ELF comparison finds 458/460 equal bytes and 113/115 equal instructions. Only offsets 0x40 and 0x5c differ: retail keeps the nonblocking fn_8020D318 result in r27 (mr r27,r3; cmpwi r27,0), while canonical GC/1.3 uses the path-dead destination register r28. All 8/8 R_PPC_REL24 offsets, targets, symbol values and signed addends agree. Newly compiled same-member and distinct-member union-storage probes and reviewer-requested leading-result/parameter-register probes reproduce the baseline; a switch shared-exit probe regresses to 464 bytes / 95.347824%. All probes reverted, preserving the existing independent NonMatching C. Fresh python3 configure.py and .tools/bin/ninja -j2 passed, legal audit passed, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
