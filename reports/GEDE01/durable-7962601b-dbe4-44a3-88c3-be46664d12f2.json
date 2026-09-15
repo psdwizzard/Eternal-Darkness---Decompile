@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "7962601b-dbe4-44a3-88c3-be46664d12f2",
+  "attempt": 2,
+  "base_commit": "48a8b4e7ad55cb76f12ce49ab28b8e5468cd2151",
+  "target": "fn_800C849C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7962601b-dbe4-44a3-88c3-be46664d12f2.json"
+  ],
+  "divergence": "Best fresh relocation-strict objdiff is 94.117645%: retail is 204 bytes and canonical GC/1.3 emits 200 bytes. Immediately after fn_8012B750, canonical moves fmr f2,f31 before stfs f1,0xc(r1) and omits retail's following frsp f1,f1; the remaining instructions and all seven relocation-bearing instructions align, including targets and addends. The canonical build completed and build/GEDE01/main.dol is byte-identical to retail at SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
