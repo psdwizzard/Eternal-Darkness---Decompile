@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "assignment_id": "f636b75d-1985-4658-a253-3ee916d302c9",
+  "attempt": 2,
+  "target": "fn_80026320",
+  "unit": "main/game/game_fn_80026320",
+  "source_provenance": {
+    "classification": "honest inherited NonMatching C reconstruction revalidated on the assignment base",
+    "source": "src/game/game_fn_80026320.c",
+    "source_sha256": "7a2d43dc5716f6699f84e830b59603274613cd135c0fca49ff031e84ac74b926",
+    "introducing_commit": "9895fdeea2fbb472d321f3a0b59252893a31045e",
+    "best_shape_commit": "9111442848aeec51651ba78c549f3673967794d4",
+    "preserved_attempt_commit": "e8c98e572f1288e56c890d5e22bf54b41ddcf36b",
+    "accepted_base": "93cb224f35d95d5fe3c2be88e29cf373fb86574a",
+    "assessment": "The assignment base already contains the exact strongest preserved behavior-complete source and its independent NonMatching registration and split. This attempt retained that source unchanged and produced fresh measurements under the new assignment ID."
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "canonical_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80026320 fn_80026320 -o build/GEDE01/objdiff-f636b75d-1985-4658-a253-3ee916d302c9-canonical.raw.json --format json-pretty",
+    "exit_code": 0,
+    "raw_report_sha256": "a7dbcb523e946e9c5d6e6c4c0dada53c5df3473c26dd395c9a08edec22e0f8d7",
+    "raw_measurement": {
+      "target_size": 1056,
+      "generated_size": 1032,
+      "target_match_percent": 90.420456,
+      "aligned_rows": 270,
+      "matching_rows": 141,
+      "differing_rows": 129,
+      "target_instruction_rows": 264,
+      "generated_instruction_rows": 258,
+      "target_relocation_entries": 44,
+      "generated_relocation_entries": 44
+    }
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80026320 fn_80026320 -o build/GEDE01/objdiff-f636b75d-1985-4658-a253-3ee916d302c9-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "config": "function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "raw_report_sha256": "a7dbcb523e946e9c5d6e6c4c0dada53c5df3473c26dd395c9a08edec22e0f8d7",
+    "raw_report_byte_identical_to_canonical": true,
+    "raw_cmp_exit": 0,
+    "raw_measurement": {
+      "target_size": 1056,
+      "generated_size": 1032,
+      "target_match_percent": 90.420456,
+      "target_relocation_entries": 44,
+      "generated_relocation_entries": 44,
+      "fully_aligned_relocation_records": 31,
+      "differing_aligned_relocation_rows": 13
+    },
+    "differing_relocation_region": "The 13 non-aligned rows are the twelve lbl_80238BF8 aggregate loads at retail offsets 0x68-0xBC versus generated offsets 0x68-0xB4, plus the signed-int-to-double bias load at retail 0xC4 (lbl_8064DF80) versus generated 0xBC (@31). The aggregate loads carry R_PPC_NONE records with the same 0x00..0x2C addend set but are scheduled in a different order; the bias constant is byte-equivalent but privately named by MWCC."
+  },
+  "codegen_divergence": {
+    "summary": "Retail emits 24 more code bytes. Its initial four-Vec3f aggregate-copy web is scheduled in a different order, it materializes both signed-int-to-float conversions instead of collapsing the repeated extent conversion, and it colors the batch cursor, loop counter, and three interior quad pointers differently across r26-r30. The later float-to-int call sequence consequently uses different temporary stack slots.",
+    "diff_kind_counts_per_side": {
+      "argument_mismatch": 109,
+      "delete": 12,
+      "insert": 6,
+      "replace": 2
+    }
+  },
+  "build_verification": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol"
+    ],
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "ninja_result": "success; build/GEDE01/main.dol: OK",
+    "sha1_exit_code": 0,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_note": "fn_80026320 remains NonMatching and is excluded from the linked DOL; this verifies the overall Matching-unit link gate."
+  },
+  "registration": {
+    "configure_py": "Object(NonMatching, game/game_fn_80026320.c)",
+    "split_text": "start:0x80026320 end:0x80026740",
+    "translation_unit": "independent C"
+  },
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
