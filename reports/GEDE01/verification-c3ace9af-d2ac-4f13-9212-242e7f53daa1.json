@@ -1,0 +1,138 @@
+{
+  "target": "fn_8018C8FC",
+  "canonical_match_percent": 99.87261,
+  "relocation_strict_match_percent": 99.87261,
+  "size_bytes": {
+    "retail": 628,
+    "compiled": 628
+  },
+  "compiler": "GC/1.3, unchanged canonical flags, -use_lmw_stmw on",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8018C8FC --format json-pretty -o reports/GEDE01/canonical-c3ace9af-d2ac-4f13-9212-242e7f53daa1.json",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8018C8FC -c functionRelocDiffs=name_address --format json-pretty -o reports/GEDE01/objdiff-c3ace9af-d2ac-4f13-9212-242e7f53daa1.json"
+  ],
+  "configure_exit_code": 0,
+  "ninja_exit_code": 0,
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "relocation_instructions": {
+    "left": [
+      {
+        "offset": "0x48",
+        "instruction": "bl fn_800FBFB0",
+        "type": "R_PPC_REL24",
+        "addend": 0
+      },
+      {
+        "offset": "0x244",
+        "instruction": "lis r3, lbl_80607120@ha",
+        "type": "R_PPC_ADDR16_HA",
+        "addend": 0
+      },
+      {
+        "offset": "0x24c",
+        "instruction": "addi r3, r3, lbl_80607120@l",
+        "type": "R_PPC_ADDR16_LO",
+        "addend": 0
+      },
+      {
+        "offset": "0x254",
+        "instruction": "lhz r5, 0xc(r3)",
+        "type": "R_PPC_NONE",
+        "addend": 12
+      },
+      {
+        "offset": "0x25c",
+        "instruction": "bl memcpy",
+        "type": "R_PPC_REL24",
+        "addend": 0
+      }
+    ],
+    "right": [
+      {
+        "offset": "0x48",
+        "instruction": "bl fn_800FBFB0",
+        "type": "R_PPC_REL24",
+        "addend": 0
+      },
+      {
+        "offset": "0x244",
+        "instruction": "lis r3, lbl_80607120@ha",
+        "type": "R_PPC_ADDR16_HA",
+        "addend": 0
+      },
+      {
+        "offset": "0x24c",
+        "instruction": "addi r3, r3, lbl_80607120@l",
+        "type": "R_PPC_ADDR16_LO",
+        "addend": 0
+      },
+      {
+        "offset": "0x254",
+        "instruction": "lhz r5, 0xc(r3)",
+        "type": "R_PPC_NONE",
+        "addend": 12
+      },
+      {
+        "offset": "0x25c",
+        "instruction": "bl memcpy",
+        "type": "R_PPC_REL24",
+        "addend": 0
+      }
+    ]
+  },
+  "remaining_instruction_differences": {
+    "left": [
+      {
+        "offset": "0x34",
+        "instruction": "subi r31, r3, 0x1",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "offset": "0x3c",
+        "instruction": "clrlwi r29, r5, 24",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "offset": "0x4c",
+        "instruction": "and r0, r31, r3",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "offset": "0x23c",
+        "instruction": "cmpw r28, r29",
+        "kind": "DIFF_ARG_MISMATCH"
+      }
+    ],
+    "right": [
+      {
+        "offset": "0x34",
+        "instruction": "subi r29, r3, 0x1",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "offset": "0x3c",
+        "instruction": "clrlwi r31, r5, 24",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "offset": "0x4c",
+        "instruction": "and r0, r29, r3",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "offset": "0x23c",
+        "instruction": "cmpw r28, r31",
+        "kind": "DIFF_ARG_MISMATCH"
+      }
+    ]
+  },
+  "source_retained": "Existing independent NonMatching translation unit equals preserved de41d6eb source; no source or registration change necessary. New experimental sources were reverted.",
+  "prior_attempts_reviewed": [
+    "de41d6ebf11070c119a890998ecbcfbd88d059a4",
+    "50e2da738f70997cf91c56e44d244275df9c0b0f",
+    "110cc98365bcfcd9ebec6512f68a6d486bb57a6b"
+  ],
+  "experiment_note": "Point-of-use loop-invariant hoisting, aggregate scalar replacement, expression staging and width hypotheses did not improve the baseline. A mixed-declaration delta-staging trial failed C compilation; moving the declaration before statements produced the recorded delta-staged measurement."
+}
