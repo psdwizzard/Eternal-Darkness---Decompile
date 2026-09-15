@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "assignment_id": "7a9fcee9-38a6-4d32-b039-ab5cf170a300",
+  "target": "fn_8017D508",
+  "compiler": "GC/1.3 (canonical project configuration)",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017D508 fn_8017D508 -o build/GEDE01/durable-7a9fcee9-final-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017D508 fn_8017D508 -o build/GEDE01/durable-7a9fcee9-final-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "python3 tools/fndiff.py game/game_fn_8017D508.c fn_8017D508",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "raw_measured_outputs": [
+    "build/GEDE01/main.dol: OK",
+    "target 504 bytes  base 508 bytes  match 91.666664",
+    "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "legal audit passed (15407 tracked project files inspected)",
+    "retail +0x0004: extsh r0, r7 | generated: alignment gap",
+    "retail +0x0010: alignment gap | generated: extsh r30, r7",
+    "retail +0x0014: neg r30, r0 | generated: neg r31, r30",
+    "retail +0x00bc: mr r4, r30 | generated: mr r5, r10",
+    "retail +0x00c0: alignment gap | generated: mr r0, r31",
+    "retail +0x00e8: mr r0, r30 | generated: mr r30, r31"
+  ],
+  "instruction_measurement": {
+    "retail_bytes": 504,
+    "generated_bytes": 508,
+    "retail_instructions": 126,
+    "generated_instructions": 127,
+    "canonical_match_percent": 91.666664,
+    "relocation_strict_match_percent": 91.666664
+  },
+  "relocation_strict": {
+    "equal": true,
+    "retail_count": 0,
+    "generated_count": 0,
+    "comparison_fields": ["offset", "type", "target", "addend"],
+    "records": []
+  },
+  "ownership": {
+    "source": "src/game/game_fn_8017D508.c",
+    "source_blob": "a666da68f16a54c4e0144286c79eb4aab4b6407a",
+    "configure_registration": "Object(NonMatching, \"game/game_fn_8017D508.c\")",
+    "split": ".text start:0x8017D508 end:0x8017D700"
+  },
+  "attempt_notes": [
+    "Recovered the attempt-2 evidence from preserved commit 0d23e88b0cd7d0573ad8f9906f79d6027aa8ffb6 and confirmed the same independent honest-C reconstruction, configure.py registration, and split are already present on accepted base 2ec5315136f2948674d743c11a365ab40105e1b5.",
+    "The reconstruction expresses target deltas, signed symmetric acceleration clamps, velocity accumulation, unsigned per-axis speed clamps, and position update without inline or whole-function assembly.",
+    "Fresh canonical and relocation-strict comparisons reproduce the preserved 91.666664% best candidate. The remaining structural surplus is one generated mr in the third acceleration clamp. GC/1.3 retains the positive acceleration bound in r30 and the negative bound in r31, whereas retail retains the positive bound in r0 and the negative bound in r30; this shifts the delta register web through the first 0x110 bytes.",
+    "No source change was justified by the recovered evidence or fresh measurements. No neighboring function, compiler policy, gate, progress file, generated binary, or private input is included."
+  ]
+}
