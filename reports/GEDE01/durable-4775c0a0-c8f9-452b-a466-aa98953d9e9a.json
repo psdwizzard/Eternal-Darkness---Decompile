@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "4775c0a0-c8f9-452b-a466-aa98953d9e9a",
+  "attempt": 1,
+  "base_commit": "8c27373d90b538996b52ab7c48bb339081c4299f",
+  "target": "fn_80173BDC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4775c0a0-c8f9-452b-a466-aa98953d9e9a.json"
+  ],
+  "divergence": "Relocation-strict objdiff measures 87.977776% with size-exact 360-byte, 90-instruction code and 19 relocation-bearing instructions on each side. GC/1.3 schedules the first lbl_806506EC word load before the LR/r31 saves instead of after the prologue, uses a compiler-local @11 signed-conversion double instead of retail lbl_806506A8 at text offset 0xC4, and selects/orders r5 plus the final Vec3 word store and argument-address setup differently from retail's r8 schedule near offsets 0x108-0x134."
+}
