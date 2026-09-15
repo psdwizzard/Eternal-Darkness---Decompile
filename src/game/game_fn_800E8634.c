@@ -14,7 +14,6 @@ extern void fn_80201D14(void *, int);
 
 int fn_800E8634(void *callback, void *object)
 {
-    void *state;
     int handle;
 
     handle = fn_80201B54(object);
@@ -22,8 +21,7 @@ int fn_800E8634(void *callback, void *object)
         fn_802006D4(handle, handle, 1, 18, 0);
         fn_80201138(18, object, 1, 57, 0, lbl_8064F7EC);
     } else {
-        state = fn_80201BC8(object);
-        fn_800E8524(object, callback != state);
+        fn_800E8524(object, callback != fn_80201BC8(object));
         fn_8020104C(201, handle, handle, 0, lbl_8064F800);
         fn_80201D2C(object, 6);
         fn_80201D14(object, 1);
