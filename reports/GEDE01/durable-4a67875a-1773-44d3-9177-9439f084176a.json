@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "4a67875a-1773-44d3-9177-9439f084176a",
+  "attempt": 1,
+  "base_commit": "d46626b184b99c924b3c0559f4da47b5e9751229",
+  "target": "fn_801EBC6C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4a67875a-1773-44d3-9177-9439f084176a.json"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff both measure 93.53261%: retail is 368 bytes and generated C is 360 bytes. Both relocation records match in address, type, target, and addend. Retail keeps the packed pixel in r5, creates a separate r4 comparison temporary, and uses r6 for the step; generated code keeps the pixel in r7, folds the narrowing, uses r8 for the step, and schedules the accumulator/packed-color construction differently from 0xDC through 0x124. The restored best candidate passes the full build with DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
