@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "643cb23c-9abf-4cdb-bed9-2888eb776e17",
+  "attempt": 2,
+  "base_commit": "6ed099c8fac3fb8627d48403abcc3286b0a082d9",
+  "target": "fn_80198850",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-643cb23c-9abf-4cdb-bed9-2888eb776e17.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff are both 90.663155%: retail is 380 bytes and generated C is 360 bytes. Both R_PPC_REL24 relocations agree by symbol index (2 and 3), target (fn_801989CC and memcpy), type, and zero addend. Canonical GC/1.3 saves r24-r31 while the reconstruction saves r25-r31; parameters and maximum-distance accumulators use a different preserved-register allocation, and generated code elides five retail intermediate moves (the three absolute-distance result moves, the pre-loop point-pointer move, and a late count move). The full build succeeds and build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
