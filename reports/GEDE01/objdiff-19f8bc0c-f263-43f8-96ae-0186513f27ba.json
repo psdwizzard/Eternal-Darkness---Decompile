@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "assignment_id": "19f8bc0c-f263-43f8-96ae-0186513f27ba",
+  "attempt": 2,
+  "target": "fn_80109CB0",
+  "unit": "main/game/game_fn_80109CB0",
+  "compiler": "GC/1.3 (canonical configuration)",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80109CB0 fn_80109CB0 -o build/GEDE01/fn_80109CB0-attempt2-final.json --format json",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "instruction_diff": "python3 tools/fndiff.py game/game_fn_80109CB0.c fn_80109CB0"
+  },
+  "raw_measured_outputs": {
+    "build": "build completed successfully; build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "objdiff": "target 112 bytes  base 112 bytes  match 92.85714",
+    "generated_instruction_count": 28,
+    "retail_instruction_count": 28,
+    "instruction_diff_rows": [
+      "generated 0x0024: lwz r3, lbl_8064CCA0@sda21 [target lbl_8064CCA0 addend 0 type 109] | retail: absent (DIFF_DELETE)",
+      "generated 0x0028: li r4, 0x3 | retail 0x0024: li r4, 0x3",
+      "generated 0x002c: bge 0x34 | retail 0x0028: bge 0x30",
+      "generated 0x0030: li r4, 0x0 | retail 0x002c: li r4, 0x0",
+      "generated: absent | retail 0x0030: lwz r3, lbl_8064CCA0@sda21 [target lbl_8064CCA0 addend 0 type 109] (DIFF_INSERT)"
+    ]
+  },
+  "relocation_strict": {
+    "passed": false,
+    "equal_sites": "7/8",
+    "generated": [
+      "0x14 R_PPC_EMB_SDA21 lbl_8064CCA0 addend 0",
+      "0x18 R_PPC_REL24 fn_801E8D34 addend 0",
+      "0x24 R_PPC_EMB_SDA21 lbl_8064CCA0 addend 0",
+      "0x38 R_PPC_REL24 fn_801E8B24 addend 0",
+      "0x3c R_PPC_EMB_SDA21 lbl_8064CCA0 addend 0",
+      "0x40 R_PPC_REL24 fn_801E8D34 addend 0",
+      "0x54 R_PPC_REL24 fn_801A98F4 addend 0",
+      "0x58 R_PPC_REL24 fn_80144C40 addend 0"
+    ],
+    "retail": [
+      "0x14 R_PPC_EMB_SDA21 lbl_8064CCA0 addend 0",
+      "0x18 R_PPC_REL24 fn_801E8D34 addend 0",
+      "0x30 R_PPC_EMB_SDA21 lbl_8064CCA0 addend 0",
+      "0x38 R_PPC_REL24 fn_801E8B24 addend 0",
+      "0x3c R_PPC_EMB_SDA21 lbl_8064CCA0 addend 0",
+      "0x40 R_PPC_REL24 fn_801E8D34 addend 0",
+      "0x54 R_PPC_REL24 fn_801A98F4 addend 0",
+      "0x58 R_PPC_REL24 fn_80144C40 addend 0"
+    ],
+    "divergence": "The second lbl_8064CCA0 SDA21 relocation has the correct type, target, and zero addend, but occurs at generated offset 0x24 rather than retail offset 0x30."
+  },
+  "codegen_divergence": "GC/1.3 schedules the second lbl_8064CCA0 load before li r4,3 / bge / li r4,0; retail schedules it after that signed mode-selection branch. Every other instruction and relocation target/addend agrees after alignment.",
+  "variants_measured_attempt_2": [
+    "recovered canonical retained form: 92.85714%",
+    "non-volatile global declaration: 92.85714%",
+    "goto-shaped selection: 86.60714%",
+    "reversed mode initialization/condition: 92.42857%",
+    "old-style fn_801E8B24 prototype: 92.85714%",
+    "switch-shaped selection: 83.03571%"
+  ],
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80109CB0.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
