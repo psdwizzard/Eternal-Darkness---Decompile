@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3577025d-daa8-424f-aa3f-8eda3fb49e98",
+  "attempt": 2,
+  "base_commit": "994c7c39b8c987556e5cd71f0128319bca76acf7",
+  "target": "fn_800A1AF0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3577025d-daa8-424f-aa3f-8eda3fb49e98.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict direct objdiff are byte-identical and measure a size-exact 160/160-byte function at 95.0%. All three R_PPC_REL24 relocations agree at offsets 0x54, 0x78, and 0x80, including the fn_8012C62C, fn_8012F58C, and fn_8012C278 targets and zero addends. The sole codegen divergence is instruction scheduling: generated GC/1.3 materializes addi r7,r1,0x8 at offset 0x44 immediately before stw r11,0xC(r1), while retail emits that same addi at offset 0x48 immediately after the store. Fresh python3 configure.py and .tools/bin/ninja -j2 completed successfully, and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
