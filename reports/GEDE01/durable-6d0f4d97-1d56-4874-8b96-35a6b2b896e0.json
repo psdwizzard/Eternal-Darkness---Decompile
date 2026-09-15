@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "6d0f4d97-1d56-4874-8b96-35a6b2b896e0",
+  "attempt": 3,
+  "base_commit": "5658ccd81f5fe88164f7333f7aae26b28d79d56b",
+  "target": "fn_801A4430",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6d0f4d97-1d56-4874-8b96-35a6b2b896e0.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are both 92.20146%: retail is 1092 bytes and generated is 1080 bytes. The retained TU-local -use_lmw_stmw on setting produces retail's stmw r18/lmw r18 shape. Remaining divergence starts with retail's 0x110-byte frame versus the generated 0x100-byte frame; retail saves and uses f28 while generated does not, causing downstream saved-register allocation, floating conversion scheduling, stack offsets, and relocation placement to differ."
+}
