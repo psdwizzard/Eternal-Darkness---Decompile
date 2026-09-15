@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "assignment_id": "19f63796-c9a4-432d-9811-6de418ecf276",
+  "target": "fn_800531F0",
+  "compiler": "canonical project configuration (GC/1.3)",
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[851/853] DOL build/GEDE01/main.dol\n[852/853] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[853/853] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800531F0 fn_800531F0 -o build/GEDE01/objdiff-19f63796-canonical.raw.json --format json",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-19f63796-canonical.raw.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800531F0 fn_800531F0 -o build/GEDE01/objdiff-19f63796-reloc-strict.raw.json --format json -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-19f63796-reloc-strict.raw.json"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "rg -n '__asm|asm\\s*\\(' src/game/game_fn_800531F0.c",
+      "exit_code": 1,
+      "raw_output": ""
+    }
+  ],
+  "measurements": {
+    "canonical": {
+      "retail_size": 1040,
+      "generated_size": 1040,
+      "retail_instruction_rows": 262,
+      "generated_instruction_rows": 262,
+      "retail_relocation_rows": 133,
+      "generated_relocation_rows": 133,
+      "match_percent": 97.82692,
+      "differing_retail_rows": 14
+    },
+    "relocation_strict": {
+      "policy": "function_reloc_diffs=name_address",
+      "retail_size": 1040,
+      "generated_size": 1040,
+      "retail_instruction_rows": 262,
+      "generated_instruction_rows": 262,
+      "retail_relocation_rows": 133,
+      "generated_relocation_rows": 133,
+      "match_percent": 97.82692,
+      "differing_retail_rows": 14,
+      "raw_report_identical_to_canonical": true
+    },
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_matches_expected": true,
+    "inline_or_whole_function_assembly_hits": 0
+  },
+  "baseline_match_percent": 89.31154,
+  "retained_best_match_percent": 97.82692,
+  "divergence": "Size-exact honest C. The remaining 14 differing retail rows are confined to two GC/1.3 code-generation clusters: five aligned rows at retail offsets 0x298..0x2A8 where the compiler stores TransitionState.effect before materializing fn_80144430 argument r4 while retail interleaves li r4,1 before the state-base addi/store, and nine aligned rows at 0x3C0..0x3E8 where final descriptor-mode address formation uses r0/r4/r5/r6 in a different schedule from retail. Both direct report modes measure 97.82692%; this is not a match claim."
+}
