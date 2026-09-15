@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e045b27f-b85e-4148-afe2-e0930fff85df",
+  "attempt": 2,
+  "base_commit": "cb51754be07346511fb54cb7c8b6626904110465",
+  "target": "fn_8008A96C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e045b27f-b85e-4148-afe2-e0930fff85df.json"
+  ],
+  "divergence": "Relocation-strict objdiff measured 97.86184% with retail/generated sizes 608/604 bytes and 38/38 relocation-bearing instructions. The six alignment entries are three argument mismatches, two retail-only instructions, and one generated-only instruction: canonical GC/1.3 schedules li r27,0 before preserving the owner return instead of after it, passes the second position-call result directly in r4 instead of preserving it through retail's mr r0,r3 and mr r4,r0 pair, and reverses the operands of two equivalent add instructions. Prototype and address-expression ordering experiments produced identical codegen."
+}
