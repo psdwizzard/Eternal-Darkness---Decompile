@@ -2,6 +2,7 @@ typedef signed short s16;
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
+typedef unsigned long long u64;
 
 typedef struct Vec3 {
     float x;
@@ -23,7 +24,7 @@ extern int fn_80201B4C(void*);
 extern void* fn_80201B54(void*);
 extern int fn_80201EB8(void*);
 extern void fn_80201E78(Vec3*, void*);
-extern int fn_8020123C(int, int, void*, void*);
+extern u64 fn_8020123C(int, int, void*, void*);
 extern void* fn_801A717C(void);
 extern void fn_801A74A0(void*, int);
 extern void fn_801A74A8(void*, void*);
@@ -57,6 +58,8 @@ int fn_8018F378(u8* self)
                 int kind = fn_80201EB8(iterator);
                 int state = fn_80201B4C(iterator);
                 Vec3 other_position;
+                Vec3 entry_position;
+                Vec3 fetched_position;
                 void* owner;
                 void* object;
                 u16 bound_x;
@@ -71,7 +74,8 @@ int fn_8018F378(u8* self)
                 if (state != 0 && state != 1)
                     continue;
 
-                fn_80201E78(&other_position, iterator);
+                fn_80201E78(&fetched_position, iterator);
+                other_position = fetched_position;
                 owner = fn_80201B54(iterator);
                 object = fn_80201BC8(iterator);
                 if (object == 0)
@@ -88,12 +92,11 @@ int fn_8018F378(u8* self)
                                       *(s16*)(entry + 0xE));
                 if (delta_x > bound_z || delta_z > bound_x)
                     continue;
-                if ((fn_8020123C(0x3B, 0, owner, 0) & 0xFFFF) != 1)
+                if ((u32)fn_8020123C(0x3B, 0, owner, 0) != 1)
                     continue;
 
                 {
                     void* effect = fn_801A717C();
-                    Vec3 entry_position;
                     fn_801A74A0(effect, 0);
                     fn_801A74A8(effect, owner);
                     fn_801A7538(effect, 1);
