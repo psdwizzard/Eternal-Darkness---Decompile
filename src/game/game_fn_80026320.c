@@ -40,6 +40,9 @@ extern void fn_80026754(s32, s32, s32);
 extern void fn_80026744(f32, f32);
 extern void fn_80026740(void);
 
+/* NonMatching: behavior-complete reconstruction of the eleven-entry debug
+ * quad pass. Retail's aggregate-copy schedule and signed-int conversions keep
+ * a different r19-r30/FPR live-range assignment and emit 24 additional bytes. */
 void fn_80026320(BatchEntry* batch)
 {
     s32 i;
