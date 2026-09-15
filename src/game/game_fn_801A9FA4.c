@@ -41,13 +41,15 @@ extern u32 lbl_8064D18C;
 extern void* lbl_8064C4E4;
 extern f32 lbl_80650E50;
 
+/* NonMatching: behavior-complete and size-exact. The remaining code differences
+ * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus
+ * the compiler-local unsigned-conversion bias symbol. */
 s32 fn_801A9FA4(void* object, u32 value)
 {
     u8 scale = (value & 0xFF000000) >> 24;
     u16 sound;
-    register void* owner = object;
-    u16 packed = value;
     u8 divisor = (value & 0x00FF0000) >> 16;
+    u16 packed = value;
     u8 volume;
     u8 mode;
     u16 parameter;
@@ -56,11 +58,12 @@ s32 fn_801A9FA4(void* object, u32 value)
     s32 adjusted;
     SoundRequest request;
 
-    sound = fn_8004A608(owner, packed, &volume, &mode, &parameter, &flags);
+    sound = fn_8004A608(object, packed, &volume, &mode, &parameter, &flags);
 
     if (scale != 0 && divisor != 0) {
-        s32 converted = (s32)(((f32)scale / (f32)divisor) * (f32)volume);
-        u8 adjusted;
+        f32 ratio = (f32)scale / (f32)divisor;
+        s32 converted = (s32)(ratio * (f32)volume);
+        s32 adjusted;
         if ((u8)converted != 0) {
             adjusted = (u8)converted;
         } else {
@@ -85,28 +88,39 @@ s32 fn_801A9FA4(void* object, u32 value)
 
     if (flags & 8) {
         s32 type;
-        s32 index = (u16)sound;
-        if (index == 28) {
-            type = fn_800A1060() ? 4 : 6;
-        } else if (index >= 91 && index < 95) {
+        s32 index = sound;
+        switch (index) {
+        case 28:
+            if (fn_800A1060()) {
+                type = 4;
+            } else {
+                type = 6;
+            }
+            break;
+        case 91:
+        case 92:
+        case 93:
+        case 94:
             type = 4;
-        } else {
+            break;
+        default:
             type = 2;
+            break;
         }
         fn_801B05E8(index, volume, type, 1, 0, 5, 0, 0);
         goto done;
     }
 
     if (sound != 0xFFFF && volume != 0) {
-        position = fn_8011F130(owner);
+        position = fn_8011F130(object);
         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,
                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);
 
-        fn_80201A84(owner);
+        fn_80201A84(object);
         {
             void* queue = fn_80201814();
             if (queue != 0) {
-                request.object = owner;
+                request.object = object;
                 request.value = packed;
                 request.volume = volume;
                 request.scale = scale;
@@ -119,10 +133,11 @@ s32 fn_801A9FA4(void* object, u32 value)
             }
         }
 
-        if (owner == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {
+        if (object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {
             s32 first = fn_8005099C();
             s32 second = fn_80050950();
-            if (fn_80050B08(first, second, 77, &volume, 0, 0, 0) == 0xFFFF) {
+            sound = fn_80050B08(first, second, 77, &volume, 0, 0, 0);
+            if (sound == 0xFFFF) {
                 goto done;
             }
             fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,
@@ -130,7 +145,7 @@ s32 fn_801A9FA4(void* object, u32 value)
             goto done;
         }
 
-        if ((flags & 0x20) && owner == lbl_8064C4E4) {
+        if ((flags & 0x20) && object == lbl_8064C4E4) {
             fn_801AA388(1);
             if (fn_80052228() && !fn_800522A4()) {
                 sound = fn_80052250();
