@@ -9,8 +9,9 @@ u32 fn_80206E8C(s32 chan, s32 exi, s32 tc, s32 ext)
     u32 cpr;
     u32 previous;
 
-    previous = REG(chan, 0);
-    cpr = previous & 0x7F5;
+    cpr = REG(chan, 0);
+    previous = cpr;
+    cpr &= 0x7F5;
     if (exi != 0) {
         cpr |= 2;
     }
