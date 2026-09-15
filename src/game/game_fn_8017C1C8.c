@@ -26,11 +26,10 @@ extern void fn_8017AF78(void);
 
 void fn_8017C1C8(Request* request)
 {
-    /* NonMatching: behavior-complete request cleanup. Retail assigns the
-     * request/status bases to r31/r30; GC/1.3 assigns them to r30/r31 and
-     * reuses the value index, producing 228 bytes instead of 232. */
+    /* NonMatching: behavior-complete request cleanup. The volatile-qualified
+     * read preserves retail's second value-index load; GC/1.3 still selects
+     * r0 rather than retail's r4 for the result reload and comparison. */
     u8* statuses = lbl_8064A580.statuses;
-    unsigned int index;
 
     if (statuses[request->value] != 0) {
         fn_8017B294(request->value);
@@ -41,9 +40,8 @@ void fn_8017C1C8(Request* request)
             fn_8017BA60(lbl_80250FC4);
             request->state = 2;
             fn_8017B344(request->value, 0);
-            index = request->value;
-            statuses[index] = 0;
-            lbl_8064A580.values[index] = 0;
+            statuses[request->value] = 0;
+            lbl_8064A580.values[((volatile Request*)request)->value] = 0;
             lbl_8064A580.callback = 0;
             fn_8017AF78();
         }
