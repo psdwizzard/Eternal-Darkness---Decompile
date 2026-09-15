@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e6a4aef5-2e7c-4dc7-8d70-26a3d7333c0d",
+  "attempt": 3,
+  "base_commit": "b57cba7635644a768b63da0db83e569d73db4fdc",
+  "target": "fn_801D1B7C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e6a4aef5-2e7c-4dc7-8d70-26a3d7333c0d.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict direct objdiff is 92.11364%: retail is 176 bytes (44 instructions) and generated C is 164 bytes (41 actual instructions; the report aligns 44 rows with three deletions). GC/1.3 folds retail addi r3,r7,0 / addi r3,r7,12 / addi r3,r7,24 row-base setup into the following indexed address and lfs displacements, causing a 12-byte deficit and shifted switch branch targets. All five real relocations match in type, target, and addend. The canonical python3 configure.py and .tools/bin/ninja -j2 build completed, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f. The accepted base already contains the preserved honest C reconstruction from commit 9628ed1791a4db670958f5caa7c5fd8929eda431; preserved attempt report commit a6b94162428cf902ddbbcecf2d922a95a49a633d confirms array, register-pointer, pointer-association, volatile-data, volatile-pointer, and byte-pointer variants were tested without improvement."
+}
