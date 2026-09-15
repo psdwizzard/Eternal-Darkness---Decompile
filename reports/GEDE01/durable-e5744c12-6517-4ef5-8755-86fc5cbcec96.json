@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e5744c12-6517-4ef5-8755-86fc5cbcec96",
+  "attempt": 2,
+  "base_commit": "05586bfff27ae3052cd3476251d54e9d842c1894",
+  "target": "fn_80135510",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e5744c12-6517-4ef5-8755-86fc5cbcec96.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 98.47183% with size-exact 568-byte, 143-instruction output and 70 relocation-bearing instructions on each side. The partitioning loop is instruction-identical. Remaining differences are confined to initialization: retail loads 8 into r6 and 1 into r3 then stores lbl_8064CF8C before lbl_8064CF84, while GC/1.3 loads 1 into r6 and 8 into r3 and reverses those stores; later retail copies zero from r30 into r29 with mr before initializing r28, while GC/1.3 emits independent li instructions for r29 and r28. Canonical build succeeded and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
