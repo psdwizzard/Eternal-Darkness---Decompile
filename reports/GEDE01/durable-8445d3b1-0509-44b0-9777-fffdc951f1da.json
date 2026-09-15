@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "8445d3b1-0509-44b0-9777-fffdc951f1da",
+  "attempt": 1,
+  "base_commit": "cfd356513855434008d668a205b80b1332f4965e",
+  "target": "fn_800746CC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8445d3b1-0509-44b0-9777-fffdc951f1da.json"
+  ],
+  "divergence": "Best canonical objdiff is 90.53125% (retail 256 bytes, generated 252 bytes). All 13/13 R_PPC_REL24 relocations match type, target, and zero addend; 7/13 also match exact offsets, while the final six generated offsets are four bytes early. Remaining codegen is the callee-saved allocation permutation (retail object/first/second/state in r31/r30/r29/r28 versus generated r28/r29/r30/r31), prologue save scheduling, and retail's extra r0 shuttle around the fn_8011F114 position-copy call; the four-byte size difference shifts downstream branches and relocation offsets."
+}

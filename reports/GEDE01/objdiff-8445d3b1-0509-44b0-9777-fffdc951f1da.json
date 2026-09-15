@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "assignment_id": "8445d3b1-0509-44b0-9777-fffdc951f1da",
+  "target": "fn_800746CC",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800746CC fn_800746CC -o build/GEDE01/final_fn_800746CC.json --format json-pretty",
+    "target_size": 256,
+    "base_size": 252,
+    "match_percent": 90.53125
+  },
+  "relocation_strict": {
+    "commands": [
+      "build/binutils/powerpc-eabi-readelf -r build/GEDE01/obj/game/game_fn_800746CC.o",
+      "build/binutils/powerpc-eabi-readelf -r build/GEDE01/src/game/game_fn_800746CC.o"
+    ],
+    "matched": false,
+    "exact_offset_type_target_addend_sites": 7,
+    "matching_type_target_addend_sites": 13,
+    "total_sites": 13,
+    "type": "R_PPC_REL24",
+    "addend": 0,
+    "sites": [
+      {"target_offset": 36, "base_offset": 36, "target": "fn_80128EAC"},
+      {"target_offset": 52, "base_offset": 52, "target": "fn_801A7498"},
+      {"target_offset": 68, "base_offset": 68, "target": "fn_801A7490"},
+      {"target_offset": 84, "base_offset": 84, "target": "fn_80201814"},
+      {"target_offset": 88, "base_offset": 88, "target": "fn_80201B8C"},
+      {"target_offset": 100, "base_offset": 100, "target": "fn_80201814"},
+      {"target_offset": 104, "base_offset": 104, "target": "fn_80201BC8"},
+      {"target_offset": 120, "base_offset": 116, "target": "fn_8011F114"},
+      {"target_offset": 132, "base_offset": 128, "target": "fn_80178E94"},
+      {"target_offset": 148, "base_offset": 144, "target": "fn_80128BE4"},
+      {"target_offset": 176, "base_offset": 172, "target": "fn_8020123C"},
+      {"target_offset": 196, "base_offset": 192, "target": "fn_8020123C"},
+      {"target_offset": 216, "base_offset": 212, "target": "fn_8011FA8C"}
+    ]
+  },
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "result": "success",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_verified": true
+  },
+  "raw_summary": "target 256 bytes  base 252 bytes  match 90.53125; relocation type/target/addend matched 13/13, while full offset/type/target/addend tuples matched 7/13 because the generated function is four bytes shorter after offset 0x68; build/GEDE01/main.dol: OK"
+}
