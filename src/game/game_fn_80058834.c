@@ -93,6 +93,7 @@ s32 fn_80058834(void *context, void *event, u32 *result)
         float facing;
         float distance;
         float angle;
+        s32 blocked;
 
         special = 0;
         fn_80130434(object, 1);
@@ -106,10 +107,12 @@ s32 fn_80058834(void *context, void *event, u32 *result)
         if (special != 0 || resolved != 0) {
             if (special == 0) {
                 void *current = fn_80201BC8();
+                /* The original state reference is dead within the kind-1 arm. */
+                state_ref = current;
                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {
-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);
+                    fn_80036B7C(state_ref, fn_801A7770((void *)linked), &position);
                     fn_8011E174(8, 1);
-                } else fn_8011F114(&position, current);
+                } else fn_8011F114(&position, state_ref);
             }
             temporary = position;
             facing = fn_8012B7D0(object, &temporary);
@@ -117,10 +120,10 @@ s32 fn_80058834(void *context, void *event, u32 *result)
             fn_8017A12C(&angle, distance, facing);
             if ((fn_801A74C0((void *)linked) & 0x20) != 0) {
                 float separation;
-                s32 blocked;
+                float threshold;
                 fn_80211A6C(&original, &position, &direction);
                 separation = fn_80211B08(&direction);
-                blocked = fn_80204434(object, &position, 0, lbl_8064E508) == 0;
+                blocked = !fn_80204434(object, &position, 0, lbl_8064E508);
                 if (separation <= lbl_8064E50C || blocked != 0) {
                     basis = lbl_80238FDC;
                     fn_8012B6FC(object, &basis, &basis);
@@ -129,13 +132,13 @@ s32 fn_80058834(void *context, void *event, u32 *result)
                     angle = lbl_8064E4EC;
                     if (blocked != 0) separation = -separation;
                 }
-                distance = lbl_8064E510;
+                threshold = lbl_8064E510;
                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&
-                    fn_8011EB04(object) == 73) distance = lbl_8064E514;
-                if (separation < distance) {
+                    fn_8011EB04(object) == 73) threshold = lbl_8064E514;
+                if (separation < threshold) {
                     fn_80211AAC(&direction, &direction);
                     fn_80211A90(&direction, &scaled, lbl_8064E518);
-                    fn_80211A90(&direction, &direction, distance - separation);
+                    fn_80211A90(&direction, &direction, threshold - separation);
                     fn_80211A48(&original, &direction, &offset);
                     adjusted = 1;
                 }
@@ -154,9 +157,10 @@ s32 fn_80058834(void *context, void *event, u32 *result)
                     }
                 } else resolved = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);
                 if (resolved != 0) {
-                    u32 upper = (u32)value << 8;
-                    fn_80128C28(resolved, fn_80204810, upper | 6);
-                    fn_80128C44(resolved, fn_80204810, upper | 7);
+                    /* Reuse the completed obstruction test for the callback tag. */
+                    blocked = (u32)value << 8;
+                    fn_80128C28(resolved, fn_80204810, (u32)blocked | 6);
+                    fn_80128C44(resolved, fn_80204810, (u32)blocked | 7);
                 } else {
                     fn_80201D2C(context, 1);
                     fn_80201D14(context, 1);

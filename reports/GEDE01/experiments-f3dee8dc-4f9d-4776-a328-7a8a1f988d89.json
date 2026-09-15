@@ -1,0 +1,3692 @@
+[
+  {
+    "name": "baseline",
+    "patch": "",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.747986,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      },
+      {
+        "offset": 428,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f31, f1",
+        "generated": "fmr f30, f1"
+      },
+      {
+        "offset": 440,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f2, f31",
+        "generated": "fmr f2, f30"
+      },
+      {
+        "offset": 448,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f30, f1",
+        "generated": "fmr f31, f1"
+      },
+      {
+        "offset": 540,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "srwi r24, r0, 5",
+        "generated": "srwi r23, r0, 5"
+      },
+      {
+        "offset": 552,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 612,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f31, f30",
+        "generated": "fmr f30, f31"
+      },
+      {
+        "offset": 620,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 656,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lfs f30, lbl_8064E510@sda21",
+        "generated": "lfs f31, lbl_8064E510@sda21"
+      },
+      {
+        "offset": 696,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lfs f30, lbl_8064E514@sda21",
+        "generated": "lfs f31, lbl_8064E514@sda21"
+      },
+      {
+        "offset": 700,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fcmpo cr0, f29, f30",
+        "generated": "fcmpo cr0, f29, f31"
+      },
+      {
+        "offset": 736,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fsubs f1, f30, f29",
+        "generated": "fsubs f1, f31, f29"
+      },
+      {
+        "offset": 944,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f1, f31",
+        "generated": "fmr f1, f30"
+      },
+      {
+        "offset": 964,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f1, f31",
+        "generated": "fmr f1, f30"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r23, r29, 8"
+      },
+      {
+        "offset": 1012,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r23, 0x6"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r23, 0x7"
+      },
+      {
+        "offset": 1232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 1408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r28)"
+      },
+      {
+        "offset": 1592,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r28)"
+      }
+    ]
+  },
+  {
+    "name": "split_initial_heading_from_threshold",
+    "patch": "--- \n+++ \n@@ -117,6 +117,7 @@\n             fn_8017A12C(&angle, distance, facing);\n             if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n                 float separation;\n+                float threshold;\n                 s32 blocked;\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n@@ -129,13 +130,13 @@\n                     angle = lbl_8064E4EC;\n                     if (blocked != 0) separation = -separation;\n                 }\n-                distance = lbl_8064E510;\n+                threshold = lbl_8064E510;\n                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&\n-                    fn_8011EB04(object) == 73) distance = lbl_8064E514;\n-                if (separation < distance) {\n+                    fn_8011EB04(object) == 73) threshold = lbl_8064E514;\n+                if (separation < threshold) {\n                     fn_80211AAC(&direction, &direction);\n                     fn_80211A90(&direction, &scaled, lbl_8064E518);\n-                    fn_80211A90(&direction, &direction, distance - separation);\n+                    fn_80211A90(&direction, &direction, threshold - separation);\n                     fn_80211A48(&original, &direction, &offset);\n                     adjusted = 1;\n                 }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.85887,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      },
+      {
+        "offset": 540,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "srwi r24, r0, 5",
+        "generated": "srwi r23, r0, 5"
+      },
+      {
+        "offset": 552,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 620,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r23, r29, 8"
+      },
+      {
+        "offset": 1012,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r23, 0x6"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r23, 0x7"
+      },
+      {
+        "offset": 1232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 1408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r28)"
+      },
+      {
+        "offset": 1592,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r28)"
+      }
+    ]
+  },
+  {
+    "name": "reuse_probe_for_current",
+    "patch": "--- \n+++ \n@@ -105,11 +105,11 @@\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                probe = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C(probe, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, probe);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.50605,
+    "size": "1980",
+    "mismatches": [
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 316,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r0, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_DELETE",
+        "retail": "mr r24, r0",
+        "generated": null
+      },
+      {
+        "offset": 428,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f31, f1",
+        "generated": "fmr f30, f1"
+      },
+      {
+        "offset": 440,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f2, f31",
+        "generated": "fmr f2, f30"
+      },
+      {
+        "offset": 448,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f30, f1",
+        "generated": "fmr f31, f1"
+      },
+      {
+        "offset": 540,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "srwi r24, r0, 5",
+        "generated": "srwi r23, r0, 5"
+      },
+      {
+        "offset": 552,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 612,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f31, f30",
+        "generated": "fmr f30, f31"
+      },
+      {
+        "offset": 620,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 656,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lfs f30, lbl_8064E510@sda21",
+        "generated": "lfs f31, lbl_8064E510@sda21"
+      },
+      {
+        "offset": 696,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lfs f30, lbl_8064E514@sda21",
+        "generated": "lfs f31, lbl_8064E514@sda21"
+      },
+      {
+        "offset": 700,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fcmpo cr0, f29, f30",
+        "generated": "fcmpo cr0, f29, f31"
+      },
+      {
+        "offset": 736,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fsubs f1, f30, f29",
+        "generated": "fsubs f1, f31, f29"
+      },
+      {
+        "offset": 924,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr. r25, r3",
+        "generated": "mr. r24, r3"
+      },
+      {
+        "offset": 944,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f1, f31",
+        "generated": "fmr f1, f30"
+      },
+      {
+        "offset": 952,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 964,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f1, f31",
+        "generated": "fmr f1, f30"
+      },
+      {
+        "offset": 984,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r25, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 988,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmplwi r25, 0x0",
+        "generated": "cmplwi r24, 0x0"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r23, r29, 8"
+      },
+      {
+        "offset": 1008,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1012,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r23, 0x6"
+      },
+      {
+        "offset": 1024,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r23, 0x7"
+      },
+      {
+        "offset": 1232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 1408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r28)"
+      },
+      {
+        "offset": 1592,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r28)"
+      }
+    ]
+  },
+  {
+    "name": "reuse_state_ref_for_probe",
+    "patch": "--- \n+++ \n@@ -69,7 +69,7 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    void *state_ref = fn_80201B8C(context);\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -86,7 +86,6 @@\n         void **state;\n         s32 handled = 0;\n         s32 adjusted = 0;\n-        void *probe;\n         s32 special;\n         s32 moved = 0;\n         void *resolved;\n@@ -97,11 +96,11 @@\n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **) *(void **)state_ref;\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n-        probe = fn_8006D444();\n-        if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n+        state_ref = fn_8006D444();\n+        if (fn_8006D344(state_ref, 0xC0, 0) != 0 && fn_80088528(state_ref, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n@@ -179,7 +178,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **) *(void **)state_ref;\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.6875,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      },
+      {
+        "offset": 428,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f31, f1",
+        "generated": "fmr f30, f1"
+      },
+      {
+        "offset": 440,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f2, f31",
+        "generated": "fmr f2, f30"
+      },
+      {
+        "offset": 448,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f30, f1",
+        "generated": "fmr f31, f1"
+      },
+      {
+        "offset": 540,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "srwi r24, r0, 5",
+        "generated": "srwi r23, r0, 5"
+      },
+      {
+        "offset": 552,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 612,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f31, f30",
+        "generated": "fmr f30, f31"
+      },
+      {
+        "offset": 620,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 656,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lfs f30, lbl_8064E510@sda21",
+        "generated": "lfs f31, lbl_8064E510@sda21"
+      },
+      {
+        "offset": 696,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lfs f30, lbl_8064E514@sda21",
+        "generated": "lfs f31, lbl_8064E514@sda21"
+      },
+      {
+        "offset": 700,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fcmpo cr0, f29, f30",
+        "generated": "fcmpo cr0, f29, f31"
+      },
+      {
+        "offset": 736,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fsubs f1, f30, f29",
+        "generated": "fsubs f1, f31, f29"
+      },
+      {
+        "offset": 924,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr. r25, r3",
+        "generated": "mr. r24, r3"
+      },
+      {
+        "offset": 944,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f1, f31",
+        "generated": "fmr f1, f30"
+      },
+      {
+        "offset": 952,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 964,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f1, f31",
+        "generated": "fmr f1, f30"
+      },
+      {
+        "offset": 984,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r25, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 988,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmplwi r25, 0x0",
+        "generated": "cmplwi r24, 0x0"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r23, r29, 8"
+      },
+      {
+        "offset": 1008,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1012,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r23, 0x6"
+      },
+      {
+        "offset": 1024,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r23, 0x7"
+      },
+      {
+        "offset": 1232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 1408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r28)"
+      },
+      {
+        "offset": 1592,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r28)"
+      }
+    ]
+  },
+  {
+    "name": "reuse_state_ref_for_probe_and_current",
+    "patch": "--- \n+++ \n@@ -69,7 +69,7 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    void *state_ref = fn_80201B8C(context);\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -86,7 +86,6 @@\n         void **state;\n         s32 handled = 0;\n         s32 adjusted = 0;\n-        void *probe;\n         s32 special;\n         s32 moved = 0;\n         void *resolved;\n@@ -97,19 +96,19 @@\n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **) *(void **)state_ref;\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n-        probe = fn_8006D444();\n-        if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n+        state_ref = fn_8006D444();\n+        if (fn_8006D344(state_ref, 0xC0, 0) != 0 && fn_80088528(state_ref, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                state_ref = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C(state_ref, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, state_ref);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n@@ -179,7 +178,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **) *(void **)state_ref;\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.50605,
+    "size": "1980",
+    "mismatches": [
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 316,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r0, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_DELETE",
+        "retail": "mr r24, r0",
+        "generated": null
+      },
+      {
+        "offset": 428,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f31, f1",
+        "generated": "fmr f30, f1"
+      },
+      {
+        "offset": 440,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f2, f31",
+        "generated": "fmr f2, f30"
+      },
+      {
+        "offset": 448,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f30, f1",
+        "generated": "fmr f31, f1"
+      },
+      {
+        "offset": 540,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "srwi r24, r0, 5",
+        "generated": "srwi r23, r0, 5"
+      },
+      {
+        "offset": 552,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 612,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f31, f30",
+        "generated": "fmr f30, f31"
+      },
+      {
+        "offset": 620,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 656,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lfs f30, lbl_8064E510@sda21",
+        "generated": "lfs f31, lbl_8064E510@sda21"
+      },
+      {
+        "offset": 696,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lfs f30, lbl_8064E514@sda21",
+        "generated": "lfs f31, lbl_8064E514@sda21"
+      },
+      {
+        "offset": 700,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fcmpo cr0, f29, f30",
+        "generated": "fcmpo cr0, f29, f31"
+      },
+      {
+        "offset": 736,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fsubs f1, f30, f29",
+        "generated": "fsubs f1, f31, f29"
+      },
+      {
+        "offset": 924,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr. r25, r3",
+        "generated": "mr. r24, r3"
+      },
+      {
+        "offset": 944,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f1, f31",
+        "generated": "fmr f1, f30"
+      },
+      {
+        "offset": 952,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 964,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "fmr f1, f31",
+        "generated": "fmr f1, f30"
+      },
+      {
+        "offset": 984,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r25, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 988,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmplwi r25, 0x0",
+        "generated": "cmplwi r24, 0x0"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r23, r29, 8"
+      },
+      {
+        "offset": 1008,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1012,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r23, 0x6"
+      },
+      {
+        "offset": 1024,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r23, 0x7"
+      },
+      {
+        "offset": 1232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 1408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r28)"
+      },
+      {
+        "offset": 1592,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r28)"
+      }
+    ]
+  },
+  {
+    "name": "initialize_moved_after_special",
+    "patch": "--- \n+++ \n@@ -88,13 +88,14 @@\n         s32 adjusted = 0;\n         void *probe;\n         s32 special;\n-        s32 moved = 0;\n+        s32 moved;\n         void *resolved;\n         float facing;\n         float distance;\n         float angle;\n \n         special = 0;\n+        moved = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n         state = (void **)*state_ref;\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.83871,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 172,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "li r25, 0x0",
+        "generated": "li r23, 0x0"
+      },
+      {
+        "offset": 176,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "li r23, 0x0",
+        "generated": "li r25, 0x0"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      },
+      {
+        "offset": 540,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "srwi r24, r0, 5",
+        "generated": "srwi r23, r0, 5"
+      },
+      {
+        "offset": 552,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 620,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r23, r29, 8"
+      },
+      {
+        "offset": 1012,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r23, 0x6"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r23, 0x7"
+      },
+      {
+        "offset": 1232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 1408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r28)"
+      },
+      {
+        "offset": 1592,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r28)"
+      }
+    ]
+  },
+  {
+    "name": "reuse_state_ref_for_current_only",
+    "patch": "--- \n+++ \n@@ -105,11 +105,11 @@\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                state_ref = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C(state_ref, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, state_ref);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.616936,
+    "size": "1980",
+    "mismatches": [
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 316,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r0, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_DELETE",
+        "retail": "mr r24, r0",
+        "generated": null
+      },
+      {
+        "offset": 540,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "srwi r24, r0, 5",
+        "generated": "srwi r23, r0, 5"
+      },
+      {
+        "offset": 552,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 620,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 924,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr. r25, r3",
+        "generated": "mr. r24, r3"
+      },
+      {
+        "offset": 952,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 984,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r25, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 988,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmplwi r25, 0x0",
+        "generated": "cmplwi r24, 0x0"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r23, r29, 8"
+      },
+      {
+        "offset": 1008,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1012,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r23, 0x6"
+      },
+      {
+        "offset": 1024,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r23, 0x7"
+      },
+      {
+        "offset": 1232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 1408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r28)"
+      },
+      {
+        "offset": 1592,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r28)"
+      }
+    ]
+  },
+  {
+    "name": "reuse_unsigned_state_for_current",
+    "patch": "--- \n+++ \n@@ -69,7 +69,7 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    u32 state_slot = (u32)fn_80201B8C(context);\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -97,7 +97,7 @@\n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **)*((void **)state_slot);\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n         probe = fn_8006D444();\n@@ -105,11 +105,11 @@\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                state_slot = (u32)fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C((void *)state_slot, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, (void *)state_slot);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n@@ -180,7 +180,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **)*((void **)state_slot);\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n@@ -195,7 +195,7 @@\n         return 1;\n     }\n     if (kind == 61) {\n-        fn_800C39D0(context); **(void ***)state_ref = 0; fn_800C2474(object, 1);\n+        fn_800C39D0(context); **(void ***)((void **)state_slot) = 0; fn_800C2474(object, 1);\n         fn_80201D2C(context, 1); fn_80201D14(context, 1); return 1;\n     }\n     if (kind == 60) {\n@@ -205,7 +205,7 @@\n     }\n     if (kind == 175) {\n         if (*(void **)(lbl_80331748 + 0xAC) != 0) {\n-            **(void ***)state_ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n+            **(void ***)((void **)state_slot) = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n             if (result != 0) *result = 1;\n             fn_80201D2C(context, 0x40); fn_80201D14(context, 1);\n         }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.616936,
+    "size": "1980",
+    "mismatches": [
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 316,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r0, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_DELETE",
+        "retail": "mr r24, r0",
+        "generated": null
+      },
+      {
+        "offset": 540,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "srwi r24, r0, 5",
+        "generated": "srwi r23, r0, 5"
+      },
+      {
+        "offset": 552,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 620,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 924,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr. r25, r3",
+        "generated": "mr. r24, r3"
+      },
+      {
+        "offset": 952,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 984,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r25, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 988,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmplwi r25, 0x0",
+        "generated": "cmplwi r24, 0x0"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r23, r29, 8"
+      },
+      {
+        "offset": 1008,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1012,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r23, 0x6"
+      },
+      {
+        "offset": 1024,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r23, 0x7"
+      },
+      {
+        "offset": 1232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 1408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r28)"
+      },
+      {
+        "offset": 1592,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r28)"
+      }
+    ]
+  },
+  {
+    "name": "reuse_unsigned_state_for_current_and_blocked",
+    "patch": "--- \n+++ \n@@ -69,7 +69,7 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    u32 state_slot = (u32)fn_80201B8C(context);\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -97,7 +97,7 @@\n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **)*((void **)state_slot);\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n         probe = fn_8006D444();\n@@ -105,11 +105,11 @@\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                state_slot = (u32)fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C((void *)state_slot, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, (void *)state_slot);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n@@ -118,17 +118,16 @@\n             if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n                 float separation;\n                 float threshold;\n-                s32 blocked;\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n-                blocked = fn_80204434(object, &position, 0, lbl_8064E508) == 0;\n-                if (separation <= lbl_8064E50C || blocked != 0) {\n+                state_slot = fn_80204434(object, &position, 0, lbl_8064E508) == 0;\n+                if (separation <= lbl_8064E50C || state_slot != 0) {\n                     basis = lbl_80238FDC;\n                     fn_8012B6FC(object, &basis, &basis);\n                     direction = basis;\n                     facing = distance;\n                     angle = lbl_8064E4EC;\n-                    if (blocked != 0) separation = -separation;\n+                    if (state_slot != 0) separation = -separation;\n                 }\n                 threshold = lbl_8064E510;\n                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&\n@@ -180,7 +179,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **)*((void **)state_slot);\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n@@ -195,7 +194,7 @@\n         return 1;\n     }\n     if (kind == 61) {\n-        fn_800C39D0(context); **(void ***)state_ref = 0; fn_800C2474(object, 1);\n+        fn_800C39D0(context); **(void ***)((void **)state_slot) = 0; fn_800C2474(object, 1);\n         fn_80201D2C(context, 1); fn_80201D14(context, 1); return 1;\n     }\n     if (kind == 60) {\n@@ -205,7 +204,7 @@\n     }\n     if (kind == 175) {\n         if (*(void **)(lbl_80331748 + 0xAC) != 0) {\n-            **(void ***)state_ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n+            **(void ***)((void **)state_slot) = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n             if (result != 0) *result = 1;\n             fn_80201D2C(context, 0x40); fn_80201D14(context, 1);\n         }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.40524,
+    "size": "1980",
+    "mismatches": [
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 316,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r0, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_DELETE",
+        "retail": "mr r24, r0",
+        "generated": null
+      },
+      {
+        "offset": 552,
+        "kind": "DIFF_REPLACE",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmplwi r24, 0x0"
+      },
+      {
+        "offset": 620,
+        "kind": "DIFF_REPLACE",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmplwi r24, 0x0"
+      },
+      {
+        "offset": 924,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr. r25, r3",
+        "generated": "mr. r24, r3"
+      },
+      {
+        "offset": 952,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 984,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r25, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 988,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmplwi r25, 0x0",
+        "generated": "cmplwi r24, 0x0"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r23, r29, 8"
+      },
+      {
+        "offset": 1008,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1012,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r23, 0x6"
+      },
+      {
+        "offset": 1024,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r23, 0x7"
+      },
+      {
+        "offset": 1232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 1408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r28)"
+      },
+      {
+        "offset": 1592,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r28)"
+      }
+    ]
+  },
+  {
+    "name": "reuse_unsigned_state_for_current_blocked_and_tag",
+    "patch": "--- \n+++ \n@@ -69,7 +69,7 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    u32 state_slot = (u32)fn_80201B8C(context);\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -97,7 +97,7 @@\n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **)*((void **)state_slot);\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n         probe = fn_8006D444();\n@@ -105,11 +105,11 @@\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                state_slot = (u32)fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C((void *)state_slot, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, (void *)state_slot);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n@@ -118,17 +118,16 @@\n             if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n                 float separation;\n                 float threshold;\n-                s32 blocked;\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n-                blocked = fn_80204434(object, &position, 0, lbl_8064E508) == 0;\n-                if (separation <= lbl_8064E50C || blocked != 0) {\n+                state_slot = fn_80204434(object, &position, 0, lbl_8064E508) == 0;\n+                if (separation <= lbl_8064E50C || state_slot != 0) {\n                     basis = lbl_80238FDC;\n                     fn_8012B6FC(object, &basis, &basis);\n                     direction = basis;\n                     facing = distance;\n                     angle = lbl_8064E4EC;\n-                    if (blocked != 0) separation = -separation;\n+                    if (state_slot != 0) separation = -separation;\n                 }\n                 threshold = lbl_8064E510;\n                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&\n@@ -155,9 +154,9 @@\n                     }\n                 } else resolved = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);\n                 if (resolved != 0) {\n-                    u32 upper = (u32)value << 8;\n-                    fn_80128C28(resolved, fn_80204810, upper | 6);\n-                    fn_80128C44(resolved, fn_80204810, upper | 7);\n+                    state_slot = (u32)value << 8;\n+                    fn_80128C28(resolved, fn_80204810, state_slot | 6);\n+                    fn_80128C44(resolved, fn_80204810, state_slot | 7);\n                 } else {\n                     fn_80201D2C(context, 1);\n                     fn_80201D14(context, 1);\n@@ -180,7 +179,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **)*((void **)state_slot);\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n@@ -195,7 +194,7 @@\n         return 1;\n     }\n     if (kind == 61) {\n-        fn_800C39D0(context); **(void ***)state_ref = 0; fn_800C2474(object, 1);\n+        fn_800C39D0(context); **(void ***)((void **)state_slot) = 0; fn_800C2474(object, 1);\n         fn_80201D2C(context, 1); fn_80201D14(context, 1); return 1;\n     }\n     if (kind == 60) {\n@@ -205,7 +204,7 @@\n     }\n     if (kind == 175) {\n         if (*(void **)(lbl_80331748 + 0xAC) != 0) {\n-            **(void ***)state_ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n+            **(void ***)((void **)state_slot) = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n             if (result != 0) *result = 1;\n             fn_80201D2C(context, 0x40); fn_80201D14(context, 1);\n         }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.40524,
+    "size": "1980",
+    "mismatches": [
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 316,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r0, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_DELETE",
+        "retail": "mr r24, r0",
+        "generated": null
+      },
+      {
+        "offset": 552,
+        "kind": "DIFF_REPLACE",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmplwi r24, 0x0"
+      },
+      {
+        "offset": 620,
+        "kind": "DIFF_REPLACE",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmplwi r24, 0x0"
+      },
+      {
+        "offset": 924,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr. r25, r3",
+        "generated": "mr. r24, r3"
+      },
+      {
+        "offset": 952,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 984,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r25, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 988,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmplwi r25, 0x0",
+        "generated": "cmplwi r24, 0x0"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r25, r29, 8"
+      },
+      {
+        "offset": 1008,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1012,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r25, 0x6"
+      },
+      {
+        "offset": 1024,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r25, 0x7"
+      },
+      {
+        "offset": 1232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 1408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r28)"
+      },
+      {
+        "offset": 1592,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r28)"
+      }
+    ]
+  },
+  {
+    "name": "compute_moved_boolean_at_use",
+    "patch": "--- \n+++ \n@@ -88,7 +88,7 @@\n         s32 adjusted = 0;\n         void *probe;\n         s32 special;\n-        s32 moved = 0;\n+        s32 moved;\n         void *resolved;\n         float facing;\n         float distance;\n@@ -141,7 +141,7 @@\n                     adjusted = 1;\n                 }\n             }\n-            if ((angle < lbl_8064E4EC ? -angle : angle) > lbl_8064E51C) moved = 1;\n+            moved = ((angle < lbl_8064E4EC ? -angle : angle) > lbl_8064E51C);\n             if (moved != 0 || adjusted != 0) {\n                 s32 mode;\n                 handled = 1;\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 98.116936,
+    "size": "1976",
+    "mismatches": [
+      {
+        "offset": 0,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stwu r1, -0xd0(r1)",
+        "generated": "stwu r1, -0xc0(r1)"
+      },
+      {
+        "offset": 8,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r0, 0xd4(r1)",
+        "generated": "stw r0, 0xc4(r1)"
+      },
+      {
+        "offset": 12,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stfd f31, 0xc0(r1)",
+        "generated": "stfd f31, 0xb0(r1)"
+      },
+      {
+        "offset": 16,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "psq_st f31, 0xc8(r1), 0, qr0",
+        "generated": "psq_st f31, 0xb8(r1), 0, qr0"
+      },
+      {
+        "offset": 20,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stfd f30, 0xb0(r1)",
+        "generated": "stfd f30, 0xa0(r1)"
+      },
+      {
+        "offset": 24,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "psq_st f30, 0xb8(r1), 0, qr0",
+        "generated": "psq_st f30, 0xa8(r1), 0, qr0"
+      },
+      {
+        "offset": 28,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stfd f29, 0xa0(r1)",
+        "generated": "stfd f29, 0x90(r1)"
+      },
+      {
+        "offset": 32,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "psq_st f29, 0xa8(r1), 0, qr0",
+        "generated": "psq_st f29, 0x98(r1), 0, qr0"
+      },
+      {
+        "offset": 36,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stmw r23, 0x7c(r1)",
+        "generated": "stmw r24, 0x70(r1)"
+      },
+      {
+        "offset": 44,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r23, r4",
+        "generated": "mr r24, r4"
+      },
+      {
+        "offset": 48,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r31, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "offset": 52,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r25, r5",
+        "generated": "mr r27, r5"
+      },
+      {
+        "offset": 56,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r23",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 60,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r27, r6, lbl_80243A40@l",
+        "generated": "addi r25, r6, lbl_80243A40@l"
+      },
+      {
+        "offset": 68,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r26, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 72,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 84,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 88,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r30, r0",
+        "generated": "mr r31, r0"
+      },
+      {
+        "offset": 100,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 104,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r29, r0",
+        "generated": "mr r30, r0"
+      },
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r29, r3"
+      },
+      {
+        "offset": 116,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r30",
+        "generated": "mr r4, r31"
+      },
+      {
+        "offset": 132,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x1",
+        "generated": "cmpwi r28, 0x1"
+      },
+      {
+        "offset": 160,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 164,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "li r27, 0x0",
+        "generated": "li r28, 0x0"
+      },
+      {
+        "offset": 168,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "li r26, 0x0",
+        "generated": "li r27, 0x0"
+      },
+      {
+        "offset": 172,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "li r25, 0x0",
+        "generated": "li r24, 0x0"
+      },
+      {
+        "offset": 176,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "li r23, 0x0",
+        "generated": "li r4, 0x1"
+      },
+      {
+        "offset": 180,
+        "kind": "DIFF_DELETE",
+        "retail": "li r4, 0x1",
+        "generated": null
+      },
+      {
+        "offset": 188,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r29)"
+      },
+      {
+        "offset": 208,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r28, 0x0(r3)",
+        "generated": "lwz r29, 0x0(r3)"
+      },
+      {
+        "offset": 232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r25, r3"
+      },
+      {
+        "offset": 252,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r25"
+      },
+      {
+        "offset": 272,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "li r23, 0x1",
+        "generated": "li r24, 0x1"
+      },
+      {
+        "offset": 276,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r28",
+        "generated": "mr r3, r29"
+      },
+      {
+        "offset": 288,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r23, 0x0",
+        "generated": "cmpwi r24, 0x0"
+      },
+      {
+        "offset": 304,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r23, 0x0",
+        "generated": "cmpwi r24, 0x0"
+      },
+      {
+        "offset": 320,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r28",
+        "generated": "mr r3, r29"
+      },
+      {
+        "offset": 340,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r28",
+        "generated": "mr r3, r29"
+      },
+      {
+        "offset": 396,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 432,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 456,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r28",
+        "generated": "mr r3, r29"
+      },
+      {
+        "offset": 504,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 572,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 660,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r28",
+        "generated": "mr r3, r29"
+      },
+      {
+        "offset": 680,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 768,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "li r26, 0x1",
+        "generated": "li r27, 0x1"
+      },
+      {
+        "offset": 808,
+        "kind": "DIFF_REPLACE",
+        "retail": "ble 0x330",
+        "generated": "mfcr r0"
+      },
+      {
+        "offset": 812,
+        "kind": "DIFF_REPLACE",
+        "retail": "li r25, 0x1",
+        "generated": "extrwi. r0, r0, 1, 1"
+      },
+      {
+        "offset": 816,
+        "kind": "DIFF_DELETE",
+        "retail": "cmpwi r25, 0x0",
+        "generated": null
+      },
+      {
+        "offset": 824,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x0",
+        "generated": "cmpwi r27, 0x0"
+      },
+      {
+        "offset": 836,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "li r27, 0x1",
+        "generated": "li r28, 0x1"
+      },
+      {
+        "offset": 864,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x0",
+        "generated": "cmpwi r27, 0x0"
+      },
+      {
+        "offset": 880,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r28",
+        "generated": "mr r3, r29"
+      },
+      {
+        "offset": 892,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x0",
+        "generated": "cmpwi r27, 0x0"
+      },
+      {
+        "offset": 908,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 932,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 972,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r24, r30, 8"
+      },
+      {
+        "offset": 1044,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1056,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1068,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r27, 0x0",
+        "generated": "cmpwi r28, 0x0"
+      },
+      {
+        "offset": 1076,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r28",
+        "generated": "mr r3, r29"
+      },
+      {
+        "offset": 1088,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r28",
+        "generated": "mr r3, r29"
+      },
+      {
+        "offset": 1100,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 1116,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1128,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1148,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x7",
+        "generated": "cmpwi r28, 0x7"
+      },
+      {
+        "offset": 1156,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1160,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r4, r27, 0xa0",
+        "generated": "addi r4, r25, 0xa0"
+      },
+      {
+        "offset": 1164,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r5, r27, 0x164",
+        "generated": "addi r5, r25, 0x164"
+      },
+      {
+        "offset": 1168,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r6, r27, 0xcc",
+        "generated": "addi r6, r25, 0xcc"
+      },
+      {
+        "offset": 1172,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r8, r27, 0xd8",
+        "generated": "addi r8, r25, 0xd8"
+      },
+      {
+        "offset": 1192,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1224,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x6",
+        "generated": "cmpwi r28, 0x6"
+      },
+      {
+        "offset": 1232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r29)"
+      },
+      {
+        "offset": 1236,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r23, 0x0(r3)",
+        "generated": "lwz r24, 0x0(r3)"
+      },
+      {
+        "offset": 1240,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r23",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1252,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 1268,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r23",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1280,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1292,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1312,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x28",
+        "generated": "cmpwi r28, 0x28"
+      },
+      {
+        "offset": 1336,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r23",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1344,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r23, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 1364,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r29",
+        "generated": "mr r4, r30"
+      },
+      {
+        "offset": 1368,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r5, r29",
+        "generated": "mr r5, r30"
+      },
+      {
+        "offset": 1372,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r6, r23",
+        "generated": "mr r6, r24"
+      },
+      {
+        "offset": 1392,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x3d",
+        "generated": "cmpwi r28, 0x3d"
+      },
+      {
+        "offset": 1400,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r29)"
+      },
+      {
+        "offset": 1416,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 1432,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1444,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1464,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x3c",
+        "generated": "cmpwi r28, 0x3c"
+      },
+      {
+        "offset": 1472,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r30"
+      },
+      {
+        "offset": 1476,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r29",
+        "generated": "mr r4, r30"
+      },
+      {
+        "offset": 1496,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1504,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmplwi r25, 0x0",
+        "generated": "cmplwi r27, 0x0"
+      },
+      {
+        "offset": 1512,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r23",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1528,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r0, 0x0(r25)",
+        "generated": "stw r0, 0x0(r27)"
+      },
+      {
+        "offset": 1532,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1544,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1564,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0xaf",
+        "generated": "cmpwi r28, 0xaf"
+      },
+      {
+        "offset": 1592,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r29)"
+      },
+      {
+        "offset": 1600,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1612,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 1620,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 1628,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmplwi r25, 0x0",
+        "generated": "cmplwi r27, 0x0"
+      },
+      {
+        "offset": 1640,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r0, 0x0(r25)",
+        "generated": "stw r0, 0x0(r27)"
+      },
+      {
+        "offset": 1644,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1656,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r31",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1676,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x2",
+        "generated": "cmpwi r28, 0x2"
+      },
+      {
+        "offset": 1696,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r31"
+      },
+      {
+        "offset": 1720,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x34",
+        "generated": "cmpwi r28, 0x34"
+      },
+      {
+        "offset": 1736,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x45",
+        "generated": "cmpwi r28, 0x45"
+      },
+      {
+        "offset": 1752,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x29",
+        "generated": "cmpwi r28, 0x29"
+      },
+      {
+        "offset": 1768,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x2a",
+        "generated": "cmpwi r28, 0x2a"
+      },
+      {
+        "offset": 1784,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x2d",
+        "generated": "cmpwi r28, 0x2d"
+      },
+      {
+        "offset": 1800,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x2c",
+        "generated": "cmpwi r28, 0x2c"
+      },
+      {
+        "offset": 1816,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x2e",
+        "generated": "cmpwi r28, 0x2e"
+      },
+      {
+        "offset": 1832,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0xb1",
+        "generated": "cmpwi r28, 0xb1"
+      },
+      {
+        "offset": 1848,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x9b",
+        "generated": "cmpwi r28, 0x9b"
+      },
+      {
+        "offset": 1864,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0xb2",
+        "generated": "cmpwi r28, 0xb2"
+      },
+      {
+        "offset": 1880,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0xcc",
+        "generated": "cmpwi r28, 0xcc"
+      },
+      {
+        "offset": 1896,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0xca",
+        "generated": "cmpwi r28, 0xca"
+      },
+      {
+        "offset": 1912,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r26, 0x93",
+        "generated": "cmpwi r28, 0x93"
+      },
+      {
+        "offset": 1928,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "subfic r0, r26, 0x1f",
+        "generated": "subfic r0, r28, 0x1f"
+      },
+      {
+        "offset": 1940,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "psq_l f31, 0xc8(r1), 0, qr0",
+        "generated": "psq_l f31, 0xb8(r1), 0, qr0"
+      },
+      {
+        "offset": 1944,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lfd f31, 0xc0(r1)",
+        "generated": "lfd f31, 0xb0(r1)"
+      },
+      {
+        "offset": 1948,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "psq_l f30, 0xb8(r1), 0, qr0",
+        "generated": "psq_l f30, 0xa8(r1), 0, qr0"
+      },
+      {
+        "offset": 1952,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lfd f30, 0xb0(r1)",
+        "generated": "lfd f30, 0xa0(r1)"
+      },
+      {
+        "offset": 1956,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "psq_l f29, 0xa8(r1), 0, qr0",
+        "generated": "psq_l f29, 0x98(r1), 0, qr0"
+      },
+      {
+        "offset": 1960,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lfd f29, 0xa0(r1)",
+        "generated": "lfd f29, 0x90(r1)"
+      },
+      {
+        "offset": 1964,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lmw r23, 0x7c(r1)",
+        "generated": "lmw r24, 0x70(r1)"
+      },
+      {
+        "offset": 1968,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r0, 0xd4(r1)",
+        "generated": "lwz r0, 0xc4(r1)"
+      },
+      {
+        "offset": 1976,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r1, r1, 0xd0",
+        "generated": "addi r1, r1, 0xc0"
+      }
+    ]
+  },
+  {
+    "name": "reuse_state_ref_for_intermediate_dereference",
+    "patch": "--- \n+++ \n@@ -83,7 +83,6 @@\n     original = current_position;\n     if (kind == 1) {\n         u32 linked;\n-        void **state;\n         s32 handled = 0;\n         s32 adjusted = 0;\n         void *probe;\n@@ -97,8 +96,8 @@\n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n-        linked = (u32)*state;\n+        state_ref = (void **)*state_ref;\n+        linked = (u32)*state_ref;\n         fn_80204844(fn_80201B9C(), 0x20);\n         probe = fn_8006D444();\n         if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.85887,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      },
+      {
+        "offset": 540,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "srwi r24, r0, 5",
+        "generated": "srwi r23, r0, 5"
+      },
+      {
+        "offset": 552,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 620,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r23, r29, 8"
+      },
+      {
+        "offset": 1012,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r23, 0x6"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r23, 0x7"
+      },
+      {
+        "offset": 1232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 1408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r28)"
+      },
+      {
+        "offset": 1592,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r28)"
+      }
+    ]
+  },
+  {
+    "name": "logical_not_blocked",
+    "patch": "--- \n+++ \n@@ -121,7 +121,7 @@\n                 s32 blocked;\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n-                blocked = fn_80204434(object, &position, 0, lbl_8064E508) == 0;\n+                blocked = !fn_80204434(object, &position, 0, lbl_8064E508);\n                 if (separation <= lbl_8064E50C || blocked != 0) {\n                     basis = lbl_80238FDC;\n                     fn_8012B6FC(object, &basis, &basis);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.879036,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      },
+      {
+        "offset": 924,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr. r25, r3",
+        "generated": "mr. r24, r3"
+      },
+      {
+        "offset": 952,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 984,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r25, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 988,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmplwi r25, 0x0",
+        "generated": "cmplwi r24, 0x0"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r23, r29, 8"
+      },
+      {
+        "offset": 1008,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1012,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r23, 0x6"
+      },
+      {
+        "offset": 1024,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r24"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r23, 0x7"
+      }
+    ]
+  },
+  {
+    "name": "union_state_and_probe",
+    "patch": "--- \n+++ \n@@ -69,7 +69,8 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    union { void **ref; void *ptr; s32 flag; u32 tag; } scratch;\n+    scratch.ref = fn_80201B8C(context);\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -86,7 +87,6 @@\n         void **state;\n         s32 handled = 0;\n         s32 adjusted = 0;\n-        void *probe;\n         s32 special;\n         s32 moved = 0;\n         void *resolved;\n@@ -97,11 +97,11 @@\n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **)*scratch.ref;\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n-        probe = fn_8006D444();\n-        if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n+        scratch.ptr = fn_8006D444();\n+        if (fn_8006D344(scratch.ptr, 0xC0, 0) != 0 && fn_80088528(scratch.ptr, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n@@ -180,7 +180,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **)*scratch.ref;\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n@@ -195,7 +195,7 @@\n         return 1;\n     }\n     if (kind == 61) {\n-        fn_800C39D0(context); **(void ***)state_ref = 0; fn_800C2474(object, 1);\n+        fn_800C39D0(context); **(void ***)scratch.ref = 0; fn_800C2474(object, 1);\n         fn_80201D2C(context, 1); fn_80201D14(context, 1); return 1;\n     }\n     if (kind == 60) {\n@@ -205,7 +205,7 @@\n     }\n     if (kind == 175) {\n         if (*(void **)(lbl_80331748 + 0xAC) != 0) {\n-            **(void ***)state_ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n+            **(void ***)scratch.ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n             if (result != 0) *result = 1;\n             fn_80201D2C(context, 0x40); fn_80201D14(context, 1);\n         }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_80058834.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80058834.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80058834.d build/GEDE01/src/game/game_fn_80058834.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_80058834.c\n# ------------------------------------\n#      74: Vec3 original;\n#   Error: ^^^^\n#   expression syntax error\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+    "build_stderr": "",
+    "build_exit": 2
+  },
+  {
+    "name": "union_state_probe_current",
+    "patch": "--- \n+++ \n@@ -69,7 +69,8 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    union { void **ref; void *ptr; s32 flag; u32 tag; } scratch;\n+    scratch.ref = fn_80201B8C(context);\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -86,7 +87,6 @@\n         void **state;\n         s32 handled = 0;\n         s32 adjusted = 0;\n-        void *probe;\n         s32 special;\n         s32 moved = 0;\n         void *resolved;\n@@ -97,19 +97,19 @@\n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **)*scratch.ref;\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n-        probe = fn_8006D444();\n-        if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n+        scratch.ptr = fn_8006D444();\n+        if (fn_8006D344(scratch.ptr, 0xC0, 0) != 0 && fn_80088528(scratch.ptr, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                scratch.ptr = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C(scratch.ptr, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, scratch.ptr);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n@@ -180,7 +180,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **)*scratch.ref;\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n@@ -195,7 +195,7 @@\n         return 1;\n     }\n     if (kind == 61) {\n-        fn_800C39D0(context); **(void ***)state_ref = 0; fn_800C2474(object, 1);\n+        fn_800C39D0(context); **(void ***)scratch.ref = 0; fn_800C2474(object, 1);\n         fn_80201D2C(context, 1); fn_80201D14(context, 1); return 1;\n     }\n     if (kind == 60) {\n@@ -205,7 +205,7 @@\n     }\n     if (kind == 175) {\n         if (*(void **)(lbl_80331748 + 0xAC) != 0) {\n-            **(void ***)state_ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n+            **(void ***)scratch.ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n             if (result != 0) *result = 1;\n             fn_80201D2C(context, 0x40); fn_80201D14(context, 1);\n         }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_80058834.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80058834.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80058834.d build/GEDE01/src/game/game_fn_80058834.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_80058834.c\n# ------------------------------------\n#      74: Vec3 original;\n#   Error: ^^^^\n#   expression syntax error\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+    "build_stderr": "",
+    "build_exit": 2
+  },
+  {
+    "name": "union_state_probe_current_blocked",
+    "patch": "--- \n+++ \n@@ -69,7 +69,8 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    union { void **ref; void *ptr; s32 flag; u32 tag; } scratch;\n+    scratch.ref = fn_80201B8C(context);\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -86,7 +87,6 @@\n         void **state;\n         s32 handled = 0;\n         s32 adjusted = 0;\n-        void *probe;\n         s32 special;\n         s32 moved = 0;\n         void *resolved;\n@@ -97,19 +97,19 @@\n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **)*scratch.ref;\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n-        probe = fn_8006D444();\n-        if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n+        scratch.ptr = fn_8006D444();\n+        if (fn_8006D344(scratch.ptr, 0xC0, 0) != 0 && fn_80088528(scratch.ptr, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                scratch.ptr = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C(scratch.ptr, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, scratch.ptr);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n@@ -118,17 +118,16 @@\n             if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n                 float separation;\n                 float threshold;\n-                s32 blocked;\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n-                blocked = fn_80204434(object, &position, 0, lbl_8064E508) == 0;\n-                if (separation <= lbl_8064E50C || blocked != 0) {\n+                scratch.flag = fn_80204434(object, &position, 0, lbl_8064E508) == 0;\n+                if (separation <= lbl_8064E50C || scratch.flag != 0) {\n                     basis = lbl_80238FDC;\n                     fn_8012B6FC(object, &basis, &basis);\n                     direction = basis;\n                     facing = distance;\n                     angle = lbl_8064E4EC;\n-                    if (blocked != 0) separation = -separation;\n+                    if (scratch.flag != 0) separation = -separation;\n                 }\n                 threshold = lbl_8064E510;\n                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&\n@@ -180,7 +179,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **)*scratch.ref;\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n@@ -195,7 +194,7 @@\n         return 1;\n     }\n     if (kind == 61) {\n-        fn_800C39D0(context); **(void ***)state_ref = 0; fn_800C2474(object, 1);\n+        fn_800C39D0(context); **(void ***)scratch.ref = 0; fn_800C2474(object, 1);\n         fn_80201D2C(context, 1); fn_80201D14(context, 1); return 1;\n     }\n     if (kind == 60) {\n@@ -205,7 +204,7 @@\n     }\n     if (kind == 175) {\n         if (*(void **)(lbl_80331748 + 0xAC) != 0) {\n-            **(void ***)state_ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n+            **(void ***)scratch.ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n             if (result != 0) *result = 1;\n             fn_80201D2C(context, 0x40); fn_80201D14(context, 1);\n         }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_80058834.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80058834.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80058834.d build/GEDE01/src/game/game_fn_80058834.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_80058834.c\n# ------------------------------------\n#      74: Vec3 original;\n#   Error: ^^^^\n#   expression syntax error\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+    "build_stderr": "",
+    "build_exit": 2
+  },
+  {
+    "name": "union_all_r24_ranges",
+    "patch": "--- \n+++ \n@@ -69,7 +69,8 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    union { void **ref; void *ptr; s32 flag; u32 tag; } scratch;\n+    scratch.ref = fn_80201B8C(context);\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -86,7 +87,6 @@\n         void **state;\n         s32 handled = 0;\n         s32 adjusted = 0;\n-        void *probe;\n         s32 special;\n         s32 moved = 0;\n         void *resolved;\n@@ -97,19 +97,19 @@\n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **)*scratch.ref;\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n-        probe = fn_8006D444();\n-        if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n+        scratch.ptr = fn_8006D444();\n+        if (fn_8006D344(scratch.ptr, 0xC0, 0) != 0 && fn_80088528(scratch.ptr, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                scratch.ptr = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C(scratch.ptr, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, scratch.ptr);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n@@ -118,17 +118,16 @@\n             if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n                 float separation;\n                 float threshold;\n-                s32 blocked;\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n-                blocked = fn_80204434(object, &position, 0, lbl_8064E508) == 0;\n-                if (separation <= lbl_8064E50C || blocked != 0) {\n+                scratch.flag = fn_80204434(object, &position, 0, lbl_8064E508) == 0;\n+                if (separation <= lbl_8064E50C || scratch.flag != 0) {\n                     basis = lbl_80238FDC;\n                     fn_8012B6FC(object, &basis, &basis);\n                     direction = basis;\n                     facing = distance;\n                     angle = lbl_8064E4EC;\n-                    if (blocked != 0) separation = -separation;\n+                    if (scratch.flag != 0) separation = -separation;\n                 }\n                 threshold = lbl_8064E510;\n                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&\n@@ -155,9 +154,9 @@\n                     }\n                 } else resolved = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);\n                 if (resolved != 0) {\n-                    u32 upper = (u32)value << 8;\n-                    fn_80128C28(resolved, fn_80204810, upper | 6);\n-                    fn_80128C44(resolved, fn_80204810, upper | 7);\n+                    scratch.tag = (u32)value << 8;\n+                    fn_80128C28(resolved, fn_80204810, scratch.tag | 6);\n+                    fn_80128C44(resolved, fn_80204810, scratch.tag | 7);\n                 } else {\n                     fn_80201D2C(context, 1);\n                     fn_80201D14(context, 1);\n@@ -180,7 +179,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **)*scratch.ref;\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n@@ -195,7 +194,7 @@\n         return 1;\n     }\n     if (kind == 61) {\n-        fn_800C39D0(context); **(void ***)state_ref = 0; fn_800C2474(object, 1);\n+        fn_800C39D0(context); **(void ***)scratch.ref = 0; fn_800C2474(object, 1);\n         fn_80201D2C(context, 1); fn_80201D14(context, 1); return 1;\n     }\n     if (kind == 60) {\n@@ -205,7 +204,7 @@\n     }\n     if (kind == 175) {\n         if (*(void **)(lbl_80331748 + 0xAC) != 0) {\n-            **(void ***)state_ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n+            **(void ***)scratch.ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n             if (result != 0) *result = 1;\n             fn_80201D2C(context, 0x40); fn_80201D14(context, 1);\n         }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_80058834.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80058834.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80058834.d build/GEDE01/src/game/game_fn_80058834.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_80058834.c\n# ------------------------------------\n#      74: Vec3 original;\n#   Error: ^^^^\n#   expression syntax error\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+    "build_stderr": "",
+    "build_exit": 2
+  },
+  {
+    "name": "separate_state_ref_assignment",
+    "patch": "--- \n+++ \n@@ -69,7 +69,8 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    void **state_ref;\n+    state_ref = fn_80201B8C(context);\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_80058834.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80058834.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80058834.d build/GEDE01/src/game/game_fn_80058834.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_80058834.c\n# ------------------------------------\n#      74: Vec3 original;\n#   Error: ^^^^\n#   expression syntax error\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+    "build_stderr": "",
+    "build_exit": 2
+  },
+  {
+    "name": "separate_current_assignment",
+    "patch": "--- \n+++ \n@@ -105,7 +105,8 @@\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                void *current;\n+                current = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n                     fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.85887,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      },
+      {
+        "offset": 540,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "srwi r24, r0, 5",
+        "generated": "srwi r23, r0, 5"
+      },
+      {
+        "offset": 552,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 620,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r23, 0x0"
+      },
+      {
+        "offset": 1000,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r23, r29, 8"
+      },
+      {
+        "offset": 1012,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r23, 0x6"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r23, 0x7"
+      },
+      {
+        "offset": 1232,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 1408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r28)"
+      },
+      {
+        "offset": 1592,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r28)"
+      }
+    ]
+  },
+  {
+    "name": "logical_not_with_separate_action",
+    "patch": "--- \n+++ \n@@ -144,20 +144,21 @@\n             if ((angle < lbl_8064E4EC ? -angle : angle) > lbl_8064E51C) moved = 1;\n             if (moved != 0 || adjusted != 0) {\n                 s32 mode;\n+                void *action;\n                 handled = 1;\n                 if ((angle < lbl_8064E4EC ? -angle : angle) > lbl_8064E520 || adjusted != 0) mode = 2;\n                 else mode = fn_801A77B0((void *)linked);\n                 if (adjusted != 0) {\n-                    resolved = fn_8012976C(object, mode, 0x8023, &offset, lbl_8064E524);\n-                    if (resolved != 0) {\n+                    action = fn_8012976C(object, mode, 0x8023, &offset, lbl_8064E524);\n+                    if (action != 0) {\n                         fn_80128B8C(object, &scaled);\n-                        fn_80129BA4(resolved, facing, lbl_8064E524);\n+                        fn_80129BA4(action, facing, lbl_8064E524);\n                     }\n-                } else resolved = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);\n-                if (resolved != 0) {\n+                } else action = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);\n+                if (action != 0) {\n                     u32 upper = (u32)value << 8;\n-                    fn_80128C28(resolved, fn_80204810, upper | 6);\n-                    fn_80128C44(resolved, fn_80204810, upper | 7);\n+                    fn_80128C28(action, fn_80204810, upper | 6);\n+                    fn_80128C44(action, fn_80204810, upper | 7);\n                 } else {\n                     fn_80201D2C(context, 1);\n                     fn_80201D14(context, 1);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.90927,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      },
+      {
+        "offset": 924,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr. r25, r3",
+        "generated": "mr. r23, r3"
+      },
+      {
+        "offset": 952,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 984,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r25, r3",
+        "generated": "mr r23, r3"
+      },
+      {
+        "offset": 988,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmplwi r25, 0x0",
+        "generated": "cmplwi r23, 0x0"
+      },
+      {
+        "offset": 1008,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 1024,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r23"
+      }
+    ]
+  },
+  {
+    "name": "logical_not_reuse_blocked_for_tag",
+    "patch": "--- \n+++ \n@@ -93,6 +93,7 @@\n         float facing;\n         float distance;\n         float angle;\n+        s32 blocked;\n \n         special = 0;\n         fn_80130434(object, 1);\n@@ -118,7 +119,6 @@\n             if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n                 float separation;\n                 float threshold;\n-                s32 blocked;\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n                 blocked = !fn_80204434(object, &position, 0, lbl_8064E508);\n@@ -155,9 +155,9 @@\n                     }\n                 } else resolved = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);\n                 if (resolved != 0) {\n-                    u32 upper = (u32)value << 8;\n-                    fn_80128C28(resolved, fn_80204810, upper | 6);\n-                    fn_80128C44(resolved, fn_80204810, upper | 7);\n+                    blocked = (u32)value << 8;\n+                    fn_80128C28(resolved, fn_80204810, (u32)blocked | 6);\n+                    fn_80128C44(resolved, fn_80204810, (u32)blocked | 7);\n                 } else {\n                     fn_80201D2C(context, 1);\n                     fn_80201D14(context, 1);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "logical_not_separate_action_reuse_blocked_tag",
+    "patch": "--- \n+++ \n@@ -93,6 +93,7 @@\n         float facing;\n         float distance;\n         float angle;\n+        s32 blocked;\n \n         special = 0;\n         fn_80130434(object, 1);\n@@ -118,7 +119,6 @@\n             if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n                 float separation;\n                 float threshold;\n-                s32 blocked;\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n                 blocked = !fn_80204434(object, &position, 0, lbl_8064E508);\n@@ -144,20 +144,21 @@\n             if ((angle < lbl_8064E4EC ? -angle : angle) > lbl_8064E51C) moved = 1;\n             if (moved != 0 || adjusted != 0) {\n                 s32 mode;\n+                void *action;\n                 handled = 1;\n                 if ((angle < lbl_8064E4EC ? -angle : angle) > lbl_8064E520 || adjusted != 0) mode = 2;\n                 else mode = fn_801A77B0((void *)linked);\n                 if (adjusted != 0) {\n-                    resolved = fn_8012976C(object, mode, 0x8023, &offset, lbl_8064E524);\n-                    if (resolved != 0) {\n+                    action = fn_8012976C(object, mode, 0x8023, &offset, lbl_8064E524);\n+                    if (action != 0) {\n                         fn_80128B8C(object, &scaled);\n-                        fn_80129BA4(resolved, facing, lbl_8064E524);\n+                        fn_80129BA4(action, facing, lbl_8064E524);\n                     }\n-                } else resolved = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);\n-                if (resolved != 0) {\n-                    u32 upper = (u32)value << 8;\n-                    fn_80128C28(resolved, fn_80204810, upper | 6);\n-                    fn_80128C44(resolved, fn_80204810, upper | 7);\n+                } else action = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);\n+                if (action != 0) {\n+                    blocked = (u32)value << 8;\n+                    fn_80128C28(action, fn_80204810, (u32)blocked | 6);\n+                    fn_80128C44(action, fn_80204810, (u32)blocked | 7);\n                 } else {\n                     fn_80201D2C(context, 1);\n                     fn_80201D14(context, 1);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.90927,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      },
+      {
+        "offset": 924,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr. r25, r3",
+        "generated": "mr. r23, r3"
+      },
+      {
+        "offset": 952,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 984,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r25, r3",
+        "generated": "mr r23, r3"
+      },
+      {
+        "offset": 988,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmplwi r25, 0x0",
+        "generated": "cmplwi r23, 0x0"
+      },
+      {
+        "offset": 1008,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 1024,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r23"
+      }
+    ]
+  },
+  {
+    "name": "union_state_probe_fixed",
+    "patch": "--- \n+++ \n@@ -69,7 +69,7 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    union { void **ref; void *ptr; s32 flag; u32 tag; } scratch = { fn_80201B8C(context) };\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -86,7 +86,6 @@\n         void **state;\n         s32 handled = 0;\n         s32 adjusted = 0;\n-        void *probe;\n         s32 special;\n         s32 moved = 0;\n         void *resolved;\n@@ -97,11 +96,11 @@\n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **)*scratch.ref;\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n-        probe = fn_8006D444();\n-        if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n+        scratch.ptr = fn_8006D444();\n+        if (fn_8006D344(scratch.ptr, 0xC0, 0) != 0 && fn_80088528(scratch.ptr, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n@@ -180,7 +179,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **)*scratch.ref;\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n@@ -195,7 +194,7 @@\n         return 1;\n     }\n     if (kind == 61) {\n-        fn_800C39D0(context); **(void ***)state_ref = 0; fn_800C2474(object, 1);\n+        fn_800C39D0(context); **(void ***)scratch.ref = 0; fn_800C2474(object, 1);\n         fn_80201D2C(context, 1); fn_80201D14(context, 1); return 1;\n     }\n     if (kind == 60) {\n@@ -205,7 +204,7 @@\n     }\n     if (kind == 175) {\n         if (*(void **)(lbl_80331748 + 0xAC) != 0) {\n-            **(void ***)state_ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n+            **(void ***)scratch.ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n             if (result != 0) *result = 1;\n             fn_80201D2C(context, 0x40); fn_80201D14(context, 1);\n         }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_80058834.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80058834.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80058834.d build/GEDE01/src/game/game_fn_80058834.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_80058834.c\n# ------------------------------------\n#      72: void **ref; void *ptr; s32 flag; u32 tag; } scratch = { fn_80201B8C(context) };\n#   Error:                                                                               ^\n#   illegal constant expression\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+    "build_stderr": "",
+    "build_exit": 2
+  },
+  {
+    "name": "union_state_probe_current_fixed",
+    "patch": "--- \n+++ \n@@ -69,7 +69,7 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    union { void **ref; void *ptr; s32 flag; u32 tag; } scratch = { fn_80201B8C(context) };\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -86,7 +86,6 @@\n         void **state;\n         s32 handled = 0;\n         s32 adjusted = 0;\n-        void *probe;\n         s32 special;\n         s32 moved = 0;\n         void *resolved;\n@@ -97,19 +96,19 @@\n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **)*scratch.ref;\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n-        probe = fn_8006D444();\n-        if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n+        scratch.ptr = fn_8006D444();\n+        if (fn_8006D344(scratch.ptr, 0xC0, 0) != 0 && fn_80088528(scratch.ptr, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                scratch.ptr = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C(scratch.ptr, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, scratch.ptr);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n@@ -180,7 +179,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **)*scratch.ref;\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n@@ -195,7 +194,7 @@\n         return 1;\n     }\n     if (kind == 61) {\n-        fn_800C39D0(context); **(void ***)state_ref = 0; fn_800C2474(object, 1);\n+        fn_800C39D0(context); **(void ***)scratch.ref = 0; fn_800C2474(object, 1);\n         fn_80201D2C(context, 1); fn_80201D14(context, 1); return 1;\n     }\n     if (kind == 60) {\n@@ -205,7 +204,7 @@\n     }\n     if (kind == 175) {\n         if (*(void **)(lbl_80331748 + 0xAC) != 0) {\n-            **(void ***)state_ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n+            **(void ***)scratch.ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n             if (result != 0) *result = 1;\n             fn_80201D2C(context, 0x40); fn_80201D14(context, 1);\n         }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_80058834.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80058834.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80058834.d build/GEDE01/src/game/game_fn_80058834.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_80058834.c\n# ------------------------------------\n#      72: void **ref; void *ptr; s32 flag; u32 tag; } scratch = { fn_80201B8C(context) };\n#   Error:                                                                               ^\n#   illegal constant expression\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+    "build_stderr": "",
+    "build_exit": 2
+  },
+  {
+    "name": "union_all_r24_ranges_fixed",
+    "patch": "--- \n+++ \n@@ -69,7 +69,7 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    union { void **ref; void *ptr; s32 flag; u32 tag; } scratch = { fn_80201B8C(context) };\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -86,7 +86,6 @@\n         void **state;\n         s32 handled = 0;\n         s32 adjusted = 0;\n-        void *probe;\n         s32 special;\n         s32 moved = 0;\n         void *resolved;\n@@ -97,19 +96,19 @@\n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **)*scratch.ref;\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n-        probe = fn_8006D444();\n-        if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n+        scratch.ptr = fn_8006D444();\n+        if (fn_8006D344(scratch.ptr, 0xC0, 0) != 0 && fn_80088528(scratch.ptr, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                scratch.ptr = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C(scratch.ptr, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, scratch.ptr);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n@@ -118,17 +117,16 @@\n             if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n                 float separation;\n                 float threshold;\n-                s32 blocked;\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n-                blocked = !fn_80204434(object, &position, 0, lbl_8064E508);\n-                if (separation <= lbl_8064E50C || blocked != 0) {\n+                scratch.flag = !fn_80204434(object, &position, 0, lbl_8064E508);\n+                if (separation <= lbl_8064E50C || scratch.flag != 0) {\n                     basis = lbl_80238FDC;\n                     fn_8012B6FC(object, &basis, &basis);\n                     direction = basis;\n                     facing = distance;\n                     angle = lbl_8064E4EC;\n-                    if (blocked != 0) separation = -separation;\n+                    if (scratch.flag != 0) separation = -separation;\n                 }\n                 threshold = lbl_8064E510;\n                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&\n@@ -155,9 +153,9 @@\n                     }\n                 } else resolved = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);\n                 if (resolved != 0) {\n-                    u32 upper = (u32)value << 8;\n-                    fn_80128C28(resolved, fn_80204810, upper | 6);\n-                    fn_80128C44(resolved, fn_80204810, upper | 7);\n+                    scratch.tag = (u32)value << 8;\n+                    fn_80128C28(resolved, fn_80204810, scratch.tag | 6);\n+                    fn_80128C44(resolved, fn_80204810, scratch.tag | 7);\n                 } else {\n                     fn_80201D2C(context, 1);\n                     fn_80201D14(context, 1);\n@@ -180,7 +178,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **)*scratch.ref;\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n@@ -195,7 +193,7 @@\n         return 1;\n     }\n     if (kind == 61) {\n-        fn_800C39D0(context); **(void ***)state_ref = 0; fn_800C2474(object, 1);\n+        fn_800C39D0(context); **(void ***)scratch.ref = 0; fn_800C2474(object, 1);\n         fn_80201D2C(context, 1); fn_80201D14(context, 1); return 1;\n     }\n     if (kind == 60) {\n@@ -205,7 +203,7 @@\n     }\n     if (kind == 175) {\n         if (*(void **)(lbl_80331748 + 0xAC) != 0) {\n-            **(void ***)state_ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n+            **(void ***)scratch.ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n             if (result != 0) *result = 1;\n             fn_80201D2C(context, 0x40); fn_80201D14(context, 1);\n         }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_80058834.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80058834.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80058834.d build/GEDE01/src/game/game_fn_80058834.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_80058834.c\n# ------------------------------------\n#      72: void **ref; void *ptr; s32 flag; u32 tag; } scratch = { fn_80201B8C(context) };\n#   Error:                                                                               ^\n#   illegal constant expression\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+    "build_stderr": "",
+    "build_exit": 2
+  },
+  {
+    "name": "current_temporary_then_blocked_slot",
+    "patch": "--- \n+++ \n@@ -107,10 +107,11 @@\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n                 void *current = fn_80201BC8();\n+                blocked = (s32)current;\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C((void *)blocked, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, (void *)blocked);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "signed_current_handle",
+    "patch": "--- \n+++ \n@@ -106,11 +106,11 @@\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                s32 current = (s32)fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C((void *)current, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, (void *)current);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "reuse_blocked_for_current",
+    "patch": "--- \n+++ \n@@ -106,11 +106,11 @@\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                blocked = (s32)fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C((void *)blocked, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, (void *)blocked);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "current_temporary_then_probe_slot",
+    "patch": "--- \n+++ \n@@ -107,10 +107,11 @@\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n                 void *current = fn_80201BC8();\n+                probe = current;\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C(probe, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, probe);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "union_current_blocked_tag",
+    "patch": "--- \n+++ \n@@ -93,7 +93,7 @@\n         float facing;\n         float distance;\n         float angle;\n-        s32 blocked;\n+        union { void *current; s32 blocked; } scratch;\n \n         special = 0;\n         fn_80130434(object, 1);\n@@ -106,11 +106,11 @@\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                scratch.current = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C(scratch.current, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, scratch.current);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n@@ -121,14 +121,14 @@\n                 float threshold;\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n-                blocked = !fn_80204434(object, &position, 0, lbl_8064E508);\n-                if (separation <= lbl_8064E50C || blocked != 0) {\n+                scratch.blocked = !fn_80204434(object, &position, 0, lbl_8064E508);\n+                if (separation <= lbl_8064E50C || scratch.blocked != 0) {\n                     basis = lbl_80238FDC;\n                     fn_8012B6FC(object, &basis, &basis);\n                     direction = basis;\n                     facing = distance;\n                     angle = lbl_8064E4EC;\n-                    if (blocked != 0) separation = -separation;\n+                    if (scratch.blocked != 0) separation = -separation;\n                 }\n                 threshold = lbl_8064E510;\n                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&\n@@ -155,9 +155,9 @@\n                     }\n                 } else resolved = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);\n                 if (resolved != 0) {\n-                    blocked = (u32)value << 8;\n-                    fn_80128C28(resolved, fn_80204810, (u32)blocked | 6);\n-                    fn_80128C44(resolved, fn_80204810, (u32)blocked | 7);\n+                    scratch.blocked = (u32)value << 8;\n+                    fn_80128C28(resolved, fn_80204810, (u32)scratch.blocked | 6);\n+                    fn_80128C44(resolved, fn_80204810, (u32)scratch.blocked | 7);\n                 } else {\n                     fn_80201D2C(context, 1);\n                     fn_80201D14(context, 1);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 98.752014,
+    "size": "1988",
+    "mismatches": [
+      {
+        "offset": 112,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r3",
+        "generated": "mr r28, r3"
+      },
+      {
+        "offset": 120,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r3, r1, 0x18",
+        "generated": "addi r3, r1, 0x20"
+      },
+      {
+        "offset": 128,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x18(r1)",
+        "generated": "lwz r4, 0x20(r1)"
+      },
+      {
+        "offset": 136,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x1c(r1)",
+        "generated": "lwz r3, 0x24(r1)"
+      },
+      {
+        "offset": 140,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r0, 0x20(r1)",
+        "generated": "lwz r0, 0x28(r1)"
+      },
+      {
+        "offset": 144,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r4, 0x60(r1)",
+        "generated": "stw r4, 0x68(r1)"
+      },
+      {
+        "offset": 148,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r3, 0x64(r1)",
+        "generated": "stw r3, 0x6c(r1)"
+      },
+      {
+        "offset": 152,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r0, 0x68(r1)",
+        "generated": "stw r0, 0x70(r1)"
+      },
+      {
+        "offset": 204,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 256,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r4, r1, 0x54",
+        "generated": "addi r4, r1, 0x5c"
+      },
+      {
+        "offset": 316,
+        "kind": "DIFF_REPLACE",
+        "retail": "mr r0, r3",
+        "generated": "stw r3, 0xc(r1)"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_DELETE",
+        "retail": "mr r24, r0",
+        "generated": null
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_REPLACE",
+        "retail": "mr r3, r24",
+        "generated": "lwz r3, 0xc(r1)"
+      },
+      {
+        "offset": 356,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r5, r1, 0x54",
+        "generated": "addi r5, r1, 0x5c"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_REPLACE",
+        "retail": "mr r4, r24",
+        "generated": "lwz r4, 0xc(r1)"
+      },
+      {
+        "offset": 384,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r3, r1, 0x54",
+        "generated": "addi r3, r1, 0x5c"
+      },
+      {
+        "offset": 392,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r6, 0x54(r1)",
+        "generated": "lwz r6, 0x5c(r1)"
+      },
+      {
+        "offset": 400,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x58(r1)",
+        "generated": "lwz r5, 0x60(r1)"
+      },
+      {
+        "offset": 404,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r4, r1, 0xc",
+        "generated": "addi r4, r1, 0x14"
+      },
+      {
+        "offset": 408,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r0, 0x5c(r1)",
+        "generated": "lwz r0, 0x64(r1)"
+      },
+      {
+        "offset": 412,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r6, 0xc(r1)",
+        "generated": "stw r6, 0x14(r1)"
+      },
+      {
+        "offset": 416,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r5, 0x10(r1)",
+        "generated": "stw r5, 0x18(r1)"
+      },
+      {
+        "offset": 420,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r0, 0x14(r1)",
+        "generated": "stw r0, 0x1c(r1)"
+      },
+      {
+        "offset": 444,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r3, r1, 0x8",
+        "generated": "addi r3, r1, 0x10"
+      },
+      {
+        "offset": 472,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r3, r1, 0x60",
+        "generated": "addi r3, r1, 0x68"
+      },
+      {
+        "offset": 476,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r4, r1, 0x54",
+        "generated": "addi r4, r1, 0x5c"
+      },
+      {
+        "offset": 480,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r5, r1, 0x48",
+        "generated": "addi r5, r1, 0x50"
+      },
+      {
+        "offset": 488,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r3, r1, 0x48",
+        "generated": "addi r3, r1, 0x50"
+      },
+      {
+        "offset": 508,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r4, r1, 0x54",
+        "generated": "addi r4, r1, 0x5c"
+      },
+      {
+        "offset": 540,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "srwi r24, r0, 5",
+        "generated": "srwi r0, r0, 5"
+      },
+      {
+        "offset": 544,
+        "kind": "DIFF_INSERT",
+        "retail": null,
+        "generated": "stw r0, 0x8(r1)"
+      },
+      {
+        "offset": 556,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r0, 0x0"
+      },
+      {
+        "offset": 568,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r4, r1, 0x24",
+        "generated": "addi r4, r1, 0x2c"
+      },
+      {
+        "offset": 596,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r7, 0x24(r1)",
+        "generated": "stw r7, 0x2c(r1)"
+      },
+      {
+        "offset": 600,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r6, 0x28(r1)",
+        "generated": "stw r6, 0x30(r1)"
+      },
+      {
+        "offset": 604,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r0, 0x2c(r1)",
+        "generated": "stw r0, 0x34(r1)"
+      },
+      {
+        "offset": 612,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x24(r1)",
+        "generated": "lwz r0, 0x8(r1)"
+      },
+      {
+        "offset": 620,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x28(r1)",
+        "generated": "lwz r4, 0x2c(r1)"
+      },
+      {
+        "offset": 624,
+        "kind": "DIFF_INSERT",
+        "retail": null,
+        "generated": "lwz r3, 0x30(r1)"
+      },
+      {
+        "offset": 628,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmpwi r24, 0x0",
+        "generated": "cmpwi r0, 0x0"
+      },
+      {
+        "offset": 632,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r0, 0x2c(r1)",
+        "generated": "lwz r0, 0x34(r1)"
+      },
+      {
+        "offset": 640,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r4, 0x48(r1)",
+        "generated": "stw r4, 0x50(r1)"
+      },
+      {
+        "offset": 644,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r3, 0x4c(r1)",
+        "generated": "stw r3, 0x54(r1)"
+      },
+      {
+        "offset": 648,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stw r0, 0x50(r1)",
+        "generated": "stw r0, 0x58(r1)"
+      },
+      {
+        "offset": 652,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "stfs f0, 0x8(r1)",
+        "generated": "stfs f0, 0x10(r1)"
+      },
+      {
+        "offset": 716,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r3, r1, 0x48",
+        "generated": "addi r3, r1, 0x50"
+      },
+      {
+        "offset": 732,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r3, r1, 0x48",
+        "generated": "addi r3, r1, 0x50"
+      },
+      {
+        "offset": 736,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r4, r1, 0x3c",
+        "generated": "addi r4, r1, 0x44"
+      },
+      {
+        "offset": 748,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r3, r1, 0x48",
+        "generated": "addi r3, r1, 0x50"
+      },
+      {
+        "offset": 760,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r3, r1, 0x60",
+        "generated": "addi r3, r1, 0x68"
+      },
+      {
+        "offset": 764,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r4, r1, 0x48",
+        "generated": "addi r4, r1, 0x50"
+      },
+      {
+        "offset": 768,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r5, r1, 0x30",
+        "generated": "addi r5, r1, 0x38"
+      },
+      {
+        "offset": 780,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lfs f2, 0x8(r1)",
+        "generated": "lfs f2, 0x10(r1)"
+      },
+      {
+        "offset": 920,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r6, r1, 0x30",
+        "generated": "addi r6, r1, 0x38"
+      },
+      {
+        "offset": 932,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr. r25, r3",
+        "generated": "mr. r26, r3"
+      },
+      {
+        "offset": 944,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "addi r4, r1, 0x3c",
+        "generated": "addi r4, r1, 0x44"
+      },
+      {
+        "offset": 960,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 992,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r25, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "offset": 996,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "cmplwi r25, 0x0",
+        "generated": "cmplwi r26, 0x0"
+      },
+      {
+        "offset": 1008,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "slwi r24, r29, 8",
+        "generated": "slwi r25, r29, 8"
+      },
+      {
+        "offset": 1016,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1020,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x6",
+        "generated": "ori r5, r25, 0x6"
+      },
+      {
+        "offset": 1032,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r25",
+        "generated": "mr r3, r26"
+      },
+      {
+        "offset": 1040,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "ori r5, r24, 0x7",
+        "generated": "ori r5, r25, 0x7"
+      },
+      {
+        "offset": 1240,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r3, 0x0(r24)",
+        "generated": "lwz r3, 0x0(r28)"
+      },
+      {
+        "offset": 1416,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r5, 0x0(r24)",
+        "generated": "lwz r5, 0x0(r28)"
+      },
+      {
+        "offset": 1600,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "lwz r4, 0x0(r24)",
+        "generated": "lwz r4, 0x0(r28)"
+      }
+    ]
+  },
+  {
+    "name": "logical_not_special",
+    "patch": "--- \n+++ \n@@ -105,7 +105,7 @@\n         if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n-            if (special == 0) {\n+            if (!special) {\n                 void *current = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n                     fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "truth_test_special_or_resolved",
+    "patch": "--- \n+++ \n@@ -104,7 +104,7 @@\n         probe = fn_8006D444();\n         if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n-        if (special != 0 || resolved != 0) {\n+        if (special || resolved) {\n             if (special == 0) {\n                 void *current = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "negated_disjunction_special_resolved",
+    "patch": "--- \n+++ \n@@ -104,7 +104,7 @@\n         probe = fn_8006D444();\n         if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n-        if (special != 0 || resolved != 0) {\n+        if (!(special == 0 && resolved == 0)) {\n             if (special == 0) {\n                 void *current = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "unsigned_special",
+    "patch": "--- \n+++ \n@@ -87,7 +87,7 @@\n         s32 handled = 0;\n         s32 adjusted = 0;\n         void *probe;\n-        s32 special;\n+        u32 special;\n         s32 moved = 0;\n         void *resolved;\n         float facing;\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.72782,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 288,
+        "kind": "DIFF_REPLACE",
+        "retail": "cmpwi r23, 0x0",
+        "generated": "cmplwi r23, 0x0"
+      },
+      {
+        "offset": 304,
+        "kind": "DIFF_REPLACE",
+        "retail": "cmpwi r23, 0x0",
+        "generated": "cmplwi r23, 0x0"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "byte_special",
+    "patch": "--- \n+++ \n@@ -87,7 +87,7 @@\n         s32 handled = 0;\n         s32 adjusted = 0;\n         void *probe;\n-        s32 special;\n+        u8 special;\n         s32 moved = 0;\n         void *resolved;\n         float facing;\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.72782,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 288,
+        "kind": "DIFF_REPLACE",
+        "retail": "cmpwi r23, 0x0",
+        "generated": "clrlwi. r0, r23, 24"
+      },
+      {
+        "offset": 304,
+        "kind": "DIFF_REPLACE",
+        "retail": "cmpwi r23, 0x0",
+        "generated": "clrlwi. r0, r23, 24"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "logical_not_blocked_conditions",
+    "patch": "--- \n+++ \n@@ -122,13 +122,13 @@\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n                 blocked = !fn_80204434(object, &position, 0, lbl_8064E508);\n-                if (separation <= lbl_8064E50C || blocked != 0) {\n+                if (separation <= lbl_8064E50C || blocked) {\n                     basis = lbl_80238FDC;\n                     fn_8012B6FC(object, &basis, &basis);\n                     direction = basis;\n                     facing = distance;\n                     angle = lbl_8064E4EC;\n-                    if (blocked != 0) separation = -separation;\n+                    if (blocked) separation = -separation;\n                 }\n                 threshold = lbl_8064E510;\n                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "logical_not_handled",
+    "patch": "--- \n+++ \n@@ -164,7 +164,7 @@\n                 }\n             }\n         }\n-        if (handled == 0) {\n+        if (!handled) {\n             fn_801A74D8((void *)linked, 0x01000000);\n             fn_801294DC(object, fn_801A77B0((void *)linked), 0x21, 1);\n             fn_80201D2C(context, 0x58);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "truth_test_moved_adjusted",
+    "patch": "--- \n+++ \n@@ -142,7 +142,7 @@\n                 }\n             }\n             if ((angle < lbl_8064E4EC ? -angle : angle) > lbl_8064E51C) moved = 1;\n-            if (moved != 0 || adjusted != 0) {\n+            if (moved || adjusted) {\n                 s32 mode;\n                 handled = 1;\n                 if ((angle < lbl_8064E4EC ? -angle : angle) > lbl_8064E520 || adjusted != 0) mode = 2;\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "logical_not_kind1_flags",
+    "patch": "--- \n+++ \n@@ -104,8 +104,8 @@\n         probe = fn_8006D444();\n         if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n-        if (special != 0 || resolved != 0) {\n-            if (special == 0) {\n+        if (special || resolved) {\n+            if (!special) {\n                 void *current = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n                     fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n@@ -122,13 +122,13 @@\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n                 blocked = !fn_80204434(object, &position, 0, lbl_8064E508);\n-                if (separation <= lbl_8064E50C || blocked != 0) {\n+                if (separation <= lbl_8064E50C || blocked) {\n                     basis = lbl_80238FDC;\n                     fn_8012B6FC(object, &basis, &basis);\n                     direction = basis;\n                     facing = distance;\n                     angle = lbl_8064E4EC;\n-                    if (blocked != 0) separation = -separation;\n+                    if (blocked) separation = -separation;\n                 }\n                 threshold = lbl_8064E510;\n                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&\n@@ -142,7 +142,7 @@\n                 }\n             }\n             if ((angle < lbl_8064E4EC ? -angle : angle) > lbl_8064E51C) moved = 1;\n-            if (moved != 0 || adjusted != 0) {\n+            if (moved || adjusted) {\n                 s32 mode;\n                 handled = 1;\n                 if ((angle < lbl_8064E4EC ? -angle : angle) > lbl_8064E520 || adjusted != 0) mode = 2;\n@@ -164,7 +164,7 @@\n                 }\n             }\n         }\n-        if (handled == 0) {\n+        if (!handled) {\n             fn_801A74D8((void *)linked, 0x01000000);\n             fn_801294DC(object, fn_801A77B0((void *)linked), 0x21, 1);\n             fn_80201D2C(context, 0x58);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "best_reuse_state_ref_for_current",
+    "patch": "--- \n+++ \n@@ -106,11 +106,11 @@\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                state_ref = fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C(state_ref, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, state_ref);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.78831,
+    "size": "1980",
+    "mismatches": [
+      {
+        "offset": 316,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r0, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_DELETE",
+        "retail": "mr r24, r0",
+        "generated": null
+      }
+    ]
+  },
+  {
+    "name": "signed_scratch_state_blocked_tag",
+    "patch": "--- \n+++ \n@@ -69,7 +69,7 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    s32 scratch = (s32)fn_80201B8C(context);\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -93,12 +93,11 @@\n         float facing;\n         float distance;\n         float angle;\n-        s32 blocked;\n \n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **)*((void **)scratch);\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n         probe = fn_8006D444();\n@@ -121,14 +120,14 @@\n                 float threshold;\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n-                blocked = !fn_80204434(object, &position, 0, lbl_8064E508);\n-                if (separation <= lbl_8064E50C || blocked != 0) {\n+                scratch = !fn_80204434(object, &position, 0, lbl_8064E508);\n+                if (separation <= lbl_8064E50C || scratch != 0) {\n                     basis = lbl_80238FDC;\n                     fn_8012B6FC(object, &basis, &basis);\n                     direction = basis;\n                     facing = distance;\n                     angle = lbl_8064E4EC;\n-                    if (blocked != 0) separation = -separation;\n+                    if (scratch != 0) separation = -separation;\n                 }\n                 threshold = lbl_8064E510;\n                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&\n@@ -155,9 +154,9 @@\n                     }\n                 } else resolved = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);\n                 if (resolved != 0) {\n-                    blocked = (u32)value << 8;\n-                    fn_80128C28(resolved, fn_80204810, (u32)blocked | 6);\n-                    fn_80128C44(resolved, fn_80204810, (u32)blocked | 7);\n+                    scratch = (u32)value << 8;\n+                    fn_80128C28(resolved, fn_80204810, (u32)scratch | 6);\n+                    fn_80128C44(resolved, fn_80204810, (u32)scratch | 7);\n                 } else {\n                     fn_80201D2C(context, 1);\n                     fn_80201D14(context, 1);\n@@ -180,7 +179,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **)*((void **)scratch);\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n@@ -195,7 +194,7 @@\n         return 1;\n     }\n     if (kind == 61) {\n-        fn_800C39D0(context); **(void ***)state_ref = 0; fn_800C2474(object, 1);\n+        fn_800C39D0(context); **(void ***)((void **)scratch) = 0; fn_800C2474(object, 1);\n         fn_80201D2C(context, 1); fn_80201D14(context, 1); return 1;\n     }\n     if (kind == 60) {\n@@ -205,7 +204,7 @@\n     }\n     if (kind == 175) {\n         if (*(void **)(lbl_80331748 + 0xAC) != 0) {\n-            **(void ***)state_ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n+            **(void ***)((void **)scratch) = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n             if (result != 0) *result = 1;\n             fn_80201D2C(context, 0x40); fn_80201D14(context, 1);\n         }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  },
+  {
+    "name": "signed_scratch_state_current_blocked_tag",
+    "patch": "--- \n+++ \n@@ -69,7 +69,7 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    s32 scratch = (s32)fn_80201B8C(context);\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -93,12 +93,11 @@\n         float facing;\n         float distance;\n         float angle;\n-        s32 blocked;\n \n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **)*((void **)scratch);\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n         probe = fn_8006D444();\n@@ -106,11 +105,11 @@\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                scratch = (s32)fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C((void *)scratch, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, (void *)scratch);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n@@ -121,14 +120,14 @@\n                 float threshold;\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n-                blocked = !fn_80204434(object, &position, 0, lbl_8064E508);\n-                if (separation <= lbl_8064E50C || blocked != 0) {\n+                scratch = !fn_80204434(object, &position, 0, lbl_8064E508);\n+                if (separation <= lbl_8064E50C || scratch != 0) {\n                     basis = lbl_80238FDC;\n                     fn_8012B6FC(object, &basis, &basis);\n                     direction = basis;\n                     facing = distance;\n                     angle = lbl_8064E4EC;\n-                    if (blocked != 0) separation = -separation;\n+                    if (scratch != 0) separation = -separation;\n                 }\n                 threshold = lbl_8064E510;\n                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&\n@@ -155,9 +154,9 @@\n                     }\n                 } else resolved = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);\n                 if (resolved != 0) {\n-                    blocked = (u32)value << 8;\n-                    fn_80128C28(resolved, fn_80204810, (u32)blocked | 6);\n-                    fn_80128C44(resolved, fn_80204810, (u32)blocked | 7);\n+                    scratch = (u32)value << 8;\n+                    fn_80128C28(resolved, fn_80204810, (u32)scratch | 6);\n+                    fn_80128C44(resolved, fn_80204810, (u32)scratch | 7);\n                 } else {\n                     fn_80201D2C(context, 1);\n                     fn_80201D14(context, 1);\n@@ -180,7 +179,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **)*((void **)scratch);\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n@@ -195,7 +194,7 @@\n         return 1;\n     }\n     if (kind == 61) {\n-        fn_800C39D0(context); **(void ***)state_ref = 0; fn_800C2474(object, 1);\n+        fn_800C39D0(context); **(void ***)((void **)scratch) = 0; fn_800C2474(object, 1);\n         fn_80201D2C(context, 1); fn_80201D14(context, 1); return 1;\n     }\n     if (kind == 60) {\n@@ -205,7 +204,7 @@\n     }\n     if (kind == 175) {\n         if (*(void **)(lbl_80331748 + 0xAC) != 0) {\n-            **(void ***)state_ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n+            **(void ***)((void **)scratch) = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n             if (result != 0) *result = 1;\n             fn_80201D2C(context, 0x40); fn_80201D14(context, 1);\n         }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.78831,
+    "size": "1980",
+    "mismatches": [
+      {
+        "offset": 316,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r0, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_DELETE",
+        "retail": "mr r24, r0",
+        "generated": null
+      }
+    ]
+  },
+  {
+    "name": "signed_scratch_all_r24",
+    "patch": "--- \n+++ \n@@ -69,7 +69,7 @@\n     s32 kind = fn_80200C10(event);\n     void *object = fn_80201BC8(context);\n     s32 value = (s32)fn_80201B54(context);\n-    void **state_ref = fn_80201B8C(context);\n+    s32 scratch = (s32)fn_80201B8C(context);\n     Vec3 original;\n     Vec3 position;\n     Vec3 direction;\n@@ -86,31 +86,29 @@\n         void **state;\n         s32 handled = 0;\n         s32 adjusted = 0;\n-        void *probe;\n         s32 special;\n         s32 moved = 0;\n         void *resolved;\n         float facing;\n         float distance;\n         float angle;\n-        s32 blocked;\n \n         special = 0;\n         fn_80130434(object, 1);\n         fn_801301B0(object, 0, 0x20);\n-        state = (void **)*state_ref;\n+        state = (void **)*((void **)scratch);\n         linked = (u32)*state;\n         fn_80204844(fn_80201B9C(), 0x20);\n-        probe = fn_8006D444();\n-        if (fn_8006D344(probe, 0xC0, 0) != 0 && fn_80088528(probe, &position) != 0) special = 1;\n+        scratch = (s32)fn_8006D444();\n+        if (fn_8006D344((void *)scratch, 0xC0, 0) != 0 && fn_80088528((void *)scratch, &position) != 0) special = 1;\n         resolved = fn_80201814(fn_801A7490((void *)linked));\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n-                void *current = fn_80201BC8();\n+                scratch = (s32)fn_80201BC8();\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C((void *)scratch, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, (void *)scratch);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n@@ -121,14 +119,14 @@\n                 float threshold;\n                 fn_80211A6C(&original, &position, &direction);\n                 separation = fn_80211B08(&direction);\n-                blocked = !fn_80204434(object, &position, 0, lbl_8064E508);\n-                if (separation <= lbl_8064E50C || blocked != 0) {\n+                scratch = !fn_80204434(object, &position, 0, lbl_8064E508);\n+                if (separation <= lbl_8064E50C || scratch != 0) {\n                     basis = lbl_80238FDC;\n                     fn_8012B6FC(object, &basis, &basis);\n                     direction = basis;\n                     facing = distance;\n                     angle = lbl_8064E4EC;\n-                    if (blocked != 0) separation = -separation;\n+                    if (scratch != 0) separation = -separation;\n                 }\n                 threshold = lbl_8064E510;\n                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&\n@@ -155,9 +153,9 @@\n                     }\n                 } else resolved = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);\n                 if (resolved != 0) {\n-                    blocked = (u32)value << 8;\n-                    fn_80128C28(resolved, fn_80204810, (u32)blocked | 6);\n-                    fn_80128C44(resolved, fn_80204810, (u32)blocked | 7);\n+                    scratch = (u32)value << 8;\n+                    fn_80128C28(resolved, fn_80204810, (u32)scratch | 6);\n+                    fn_80128C44(resolved, fn_80204810, (u32)scratch | 7);\n                 } else {\n                     fn_80201D2C(context, 1);\n                     fn_80201D14(context, 1);\n@@ -180,7 +178,7 @@\n         return 1;\n     }\n     if (kind == 6) {\n-        void *linked = *(void **)*state_ref;\n+        void *linked = *(void **)*((void **)scratch);\n         fn_801294DC(object, fn_801A77B0(linked), 0x21, 1);\n         fn_801A74D8(linked, 0x01000000);\n         fn_80201D2C(context, 0x58); fn_80201D14(context, 1);\n@@ -195,7 +193,7 @@\n         return 1;\n     }\n     if (kind == 61) {\n-        fn_800C39D0(context); **(void ***)state_ref = 0; fn_800C2474(object, 1);\n+        fn_800C39D0(context); **(void ***)((void **)scratch) = 0; fn_800C2474(object, 1);\n         fn_80201D2C(context, 1); fn_80201D14(context, 1); return 1;\n     }\n     if (kind == 60) {\n@@ -205,7 +203,7 @@\n     }\n     if (kind == 175) {\n         if (*(void **)(lbl_80331748 + 0xAC) != 0) {\n-            **(void ***)state_ref = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n+            **(void ***)((void **)scratch) = 0; fn_800C39D0(context); fn_801261F4(object); fn_8012B344(object);\n             if (result != 0) *result = 1;\n             fn_80201D2C(context, 0x40); fn_80201D14(context, 1);\n         }\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.78831,
+    "size": "1980",
+    "mismatches": [
+      {
+        "offset": 316,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r0, r3",
+        "generated": "mr r24, r3"
+      },
+      {
+        "offset": 324,
+        "kind": "DIFF_DELETE",
+        "retail": "mr r24, r0",
+        "generated": null
+      }
+    ]
+  },
+  {
+    "name": "best_current_temporary_to_state_ref",
+    "patch": "--- \n+++ \n@@ -107,10 +107,11 @@\n         if (special != 0 || resolved != 0) {\n             if (special == 0) {\n                 void *current = fn_80201BC8();\n+                state_ref = current;\n                 if ((fn_801A74C0((void *)linked) & 0x20) != 0) {\n-                    fn_80036B7C(current, fn_801A7770((void *)linked), &position);\n+                    fn_80036B7C(state_ref, fn_801A7770((void *)linked), &position);\n                     fn_8011E174(8, 1);\n-                } else fn_8011F114(&position, current);\n+                } else fn_8011F114(&position, state_ref);\n             }\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 100.0,
+    "size": "1984",
+    "mismatches": []
+  },
+  {
+    "name": "explicit_end_probe_lifetime",
+    "patch": "--- \n+++ \n@@ -112,6 +112,7 @@\n                     fn_8011E174(8, 1);\n                 } else fn_8011F114(&position, current);\n             }\n+            probe = 0;\n             temporary = position;\n             facing = fn_8012B7D0(object, &temporary);\n             distance = fn_8012B750(object);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80058834.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.96976,
+    "size": "1984",
+    "mismatches": [
+      {
+        "offset": 324,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r24, r0",
+        "generated": "mr r23, r0"
+      },
+      {
+        "offset": 352,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r3, r24",
+        "generated": "mr r3, r23"
+      },
+      {
+        "offset": 380,
+        "kind": "DIFF_ARG_MISMATCH",
+        "retail": "mr r4, r24",
+        "generated": "mr r4, r23"
+      }
+    ]
+  }
+]
