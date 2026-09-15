@@ -2,6 +2,12 @@ typedef struct Vec3 {
     float x, y, z;
 } Vec3;
 
+typedef struct Search {
+    char query[8];
+    unsigned int distance;
+    unsigned char unknown[32];
+} Search;
+
 #pragma use_lmw_stmw on
 
 extern void *fn_80201BC8();
@@ -50,16 +56,15 @@ void fn_800C7E40(void *object)
     void *sound;
     void *constant;
     unsigned long long result;
-    Vec3 direction;
     unsigned char reference[12];
-    char search[8];
-    unsigned int distance_local;
+    Vec3 direction;
+    Search search;
 
     runtime = fn_80201BC8(object);
     if (fn_8011FB4C(runtime) != lbl_8064D18C) {
         return;
     }
-    if (fn_8011F598(runtime, 2, 15, -1, search, 1) == -1) {
+    if (fn_8011F598(runtime, 2, 15, -1, &search, 1) == -1) {
         return;
     }
 
@@ -71,7 +76,7 @@ void fn_800C7E40(void *object)
 
     limit = 400;
     fn_80201E78(reference, other);
-    distance_ptr = &distance_local;
+    distance_ptr = &search.distance;
     distance = fn_80178E94(reference, distance_ptr);
     kind = fn_8011EB04(runtime);
     if (kind == 0xFB) {

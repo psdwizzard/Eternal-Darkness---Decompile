@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "assignment_id": "22f3533f-0355-46a5-b8d1-b7fd3c801d65",
+  "target": "fn_800C7E40",
+  "compiler": "canonical project configuration",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_800C7E40.c fn_800C7E40",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "build_output": "build/GEDE01/main.dol: OK",
+  "objdiff_output": "target 680 bytes  base 680 bytes  match 99.17647",
+  "instruction_measurement": {
+    "target_instructions": 170,
+    "base_instructions": 170,
+    "exact_instructions": 145,
+    "argument_mismatch_instructions": 25
+  },
+  "relocation_measurement": {
+    "target_relocation_bearing_instructions": 52,
+    "base_relocation_bearing_instructions": 52,
+    "same_offsets_types_targets_and_addends": 52,
+    "byte_exact_relocation_bearing_instructions": 41,
+    "strict_100_percent": false
+  },
+  "representative_raw_diff": [
+    "0x005c mr r30, r3 | mr r28, r3",
+    "0x008c mr r28, r3 | mr r29, r3",
+    "0x0098 mr r29, r3 | mr r30, r3",
+    "0x0140 lis r3, lbl_8023989C@ha | lis r4, lbl_8023989C@ha",
+    "0x0144 addi r5, r3, lbl_8023989C@l | addi r6, r4, lbl_8023989C@l",
+    "0x0180 addi r28, r4, 0x18 | addi r29, r4, 0x18"
+  ],
+  "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "legal_audit_output": "legal audit passed (15318 tracked project files inspected)",
+  "divergence": "Size, 0x70-byte frame, all local stack offsets, opcodes, branches, calls, and scheduling are exact. The remaining 25 argument-only mismatches are a parent/distance/kind/constant r30/r28/r29/r28 versus canonical r28/r29/r30/r29 allocation cycle and associated r3-r6 vector-copy scratch choices. All 52 relocation-bearing instructions agree in offset, type, target, and addend, but 11 carry differing register encodings, so canonical and relocation-strict byte comparison are not 100%."
+}
