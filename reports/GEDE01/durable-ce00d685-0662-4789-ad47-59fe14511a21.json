@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "ce00d685-0662-4789-ad47-59fe14511a21",
+  "attempt": 2,
+  "base_commit": "8e3c7beeaf41d559712e9da55650478fe7196fba",
+  "target": "fn_80173D44",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ce00d685-0662-4789-ad47-59fe14511a21.json"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff both score 96.42857% at the exact retail size of 448 bytes. The volatile value reconstruction recovers the retail 0xF0-byte frame, single r31 save, stack layout, and all instructions after offset 0x1C. The only remaining divergence is four alignment edits in the startup schedule: candidate lwz loads for lbl_80651CA0 and lbl_806506F4 are scheduled at offsets 0x08 and 0x10, while retail schedules the three SDA loads together after mr r31,r3 at offsets 0x14, 0x18, and 0x1C. Both sides contain 112 instructions and 21 relocation-bearing instructions. The full linked DOL SHA-1 remains ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

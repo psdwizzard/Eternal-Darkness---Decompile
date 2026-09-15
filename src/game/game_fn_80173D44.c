@@ -37,7 +37,7 @@ int fn_80173D44(void* arg)
     int resource;
     int kind;
     Vec3s* source;
-    u32 value;
+    volatile u32 value;
     Descriptor descriptor;
     Vec3f position;
     Vec3f submit_position;
