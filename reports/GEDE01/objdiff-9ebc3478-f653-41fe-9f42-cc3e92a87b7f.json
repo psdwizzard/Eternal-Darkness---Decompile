@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "assignment_id": "9ebc3478-f653-41fe-9f42-cc3e92a87b7f",
+  "target": "fn_8001DE84",
+  "compiler": "GC/1.3 mwcceppc.exe, canonical flags from configure.py",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8001DE84 fn_8001DE84 -o build/GEDE01/objdiff-9ebc3478-f653-41fe-9f42-cc3e92a87b7f.raw.json --format json-pretty",
+    "sha1sum build/GEDE01/main.dol",
+    "readelf -r build/GEDE01/obj/game/game_fn_8001DE84.o",
+    "readelf -r build/GEDE01/src/game/game_fn_8001DE84.o"
+  ],
+  "raw_measured_outputs": {
+    "objdiff": "fn_8001DE84 retail size 360 generated size 356 match_percent 94.18889; .text retail size 360 generated size 356 match_percent 94.18889",
+    "build": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "relocation_audit": "retail_count 7 generated_count 9 strict_equal false"
+  },
+  "canonical": {
+    "match_percent": 94.18889,
+    "retail_size": 360,
+    "generated_size": 356,
+    "matched": false
+  },
+  "relocation_strict": {
+    "matched": false,
+    "retail_relocation_count": 7,
+    "generated_relocation_count": 9,
+    "types_targets_offsets_and_addends_match": false,
+    "retail_relocations": [
+      {"offset": 10, "type": "R_PPC_ADDR16_HA", "target": "lbl_80302400", "addend": 0},
+      {"offset": 22, "type": "R_PPC_ADDR16_LO", "target": "lbl_80302400", "addend": 0},
+      {"offset": 60, "type": "R_PPC_REL24", "target": "fn_8020EFBC", "addend": 0},
+      {"offset": 68, "type": "R_PPC_REL24", "target": "fn_8020F0F8", "addend": 0},
+      {"offset": 152, "type": "R_PPC_REL24", "target": "fn_80228B50", "addend": 0},
+      {"offset": 310, "type": "R_PPC_ADDR16_HA", "target": "lbl_8023D660", "addend": 0},
+      {"offset": 318, "type": "R_PPC_ADDR16_LO", "target": "lbl_8023D660", "addend": 0}
+    ],
+    "generated_relocations": [
+      {"offset": 10, "type": "R_PPC_ADDR16_HA", "target": "lbl_80302400", "addend": 0},
+      {"offset": 22, "type": "R_PPC_ADDR16_LO", "target": "lbl_80302400", "addend": 0},
+      {"offset": 56, "type": "R_PPC_REL24", "target": "fn_8020EFBC", "addend": 0},
+      {"offset": 64, "type": "R_PPC_REL24", "target": "fn_8020F0F8", "addend": 0},
+      {"offset": 70, "type": "R_PPC_ADDR16_HA", "target": "lbl_80302400", "addend": 0},
+      {"offset": 82, "type": "R_PPC_ADDR16_LO", "target": "lbl_80302400", "addend": 0},
+      {"offset": 148, "type": "R_PPC_REL24", "target": "fn_80228B50", "addend": 0},
+      {"offset": 306, "type": "R_PPC_ADDR16_HA", "target": "lbl_8023D660", "addend": 0},
+      {"offset": 314, "type": "R_PPC_ADDR16_LO", "target": "lbl_8023D660", "addend": 0}
+    ]
+  },
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "translation_unit": "src/game/game_fn_8001DE84.c",
+    "independent_translation_unit": true,
+    "neighboring_functions_edited": false,
+    "shared_reconstruction": false
+  },
+  "experiments": [
+    "Recovered the prior assignment evidence from preserved commit 7283224f9801ee00211f73992c2bf0c0e10a7335 and confirmed the accepted base already contains the strongest honest reconstruction from commit 4d7305aa67983c8578def6a38727ad9e560f1365.",
+    "Fresh canonical compilation on base b37e438c587f32b9ed80ec19b280ac6d4195d837 reproduced 94.18889% with a 356-byte generated function against 360 retail bytes.",
+    "Byte-addressing the backing global retains typed interior views and reproduces the retail loop base and unrolled halfword stores, but MWCC still folds the +0x1C and +0x98 interior bases differently."
+  ],
+  "divergence": "Canonical code is 356 bytes versus retail 360. MWCC folds the retail +0x1C Info and +0x98 Work interior bases into r31, rematerializes lbl_80302400 around the fn_80228B50 setup, schedules previous_value earlier, and shifts all three calls and the tail four bytes early. Retail has 7 relocations while generated code has 9 because of the extra lbl_80302400 HA/LO pair at offsets 0x46/0x52; shared targets and addends agree but shifted sites do not."
+}
