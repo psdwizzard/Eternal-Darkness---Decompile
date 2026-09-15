@@ -19,9 +19,6 @@ extern s32 lbl_8064D18C;
 extern u8 lbl_802FC5BC[];
 extern Entry801F10BC lbl_8063C4F8[];
 extern Mtx lbl_8063C068;
-extern float lbl_80651348;
-extern float lbl_806513B4;
-
 extern void fn_8022806C(s32, s32, s32, s32, s32, s32, s32);
 extern void fn_80227EB8(s32, s32*);
 extern void fn_80227D50(s32, s32*);
@@ -85,16 +82,16 @@ void fn_801F10BC(s32 first, s32 mask, s32 unused)
         best = -1;
         for (i = 0; i < 8; i++) {
             if ((mask & (1 << i)) != 0 && lbl_8063C4F8[i].object != 0 &&
-                (best == -1 || lbl_8063C4F8[i].value < lbl_80651348)) {
-                lbl_8063C4F8[i].value = lbl_80651348;
+                (best == -1 || lbl_8063C4F8[i].value < 0.0f)) {
+                lbl_8063C4F8[i].value = 0.0f;
                 best = i;
             }
         }
         if (best != -1) {
             fn_80210FB0(position);
-            position[0][0] = lbl_806513B4 * lbl_8063C4F8[best].position.x;
-            position[0][1] = lbl_806513B4 * lbl_8063C4F8[best].position.y;
-            position[0][2] = lbl_806513B4 * lbl_8063C4F8[best].position.z;
+            position[0][0] = 256.0f * lbl_8063C4F8[best].position.x;
+            position[0][1] = 256.0f * lbl_8063C4F8[best].position.y;
+            position[0][2] = 256.0f * lbl_8063C4F8[best].position.z;
             fn_802114E0(matrix, lbl_8063C4F8[best].object);
             fn_80210FDC(lbl_8063C068, matrix, matrix);
             fn_802111A0(matrix, matrix);

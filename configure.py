@@ -3085,6 +3085,10 @@ game_section_externalizations = {
         ".sdata2",
         [("@5", "lbl_80651348"), ("@6", "lbl_8065134C"), ("@8", "lbl_80651350")],
     ),
+    "801F10BC": (
+        ".sdata2",
+        [("@36", "lbl_80651348"), ("@37", "lbl_806513B4")],
+    ),
     "801F69F0": (
         ".sdata2",
         [
@@ -12081,7 +12085,7 @@ config.libs = [
             Object(Matching, "game/game_fn_801F0BF0.c", mw_version="GC/1.3"),
             Object(NonMatching, "game/game_fn_801F0CB0.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801F1034.c", mw_version="GC/1.3"),
-            Object(NonMatching, "game/game_fn_801F10BC.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801F10BC.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801F1528.c", mw_version="GC/1.3"),
             Object(NonMatching, "game/game_fn_801F15D0.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801F194C.c", mw_version="GC/1.3"),
