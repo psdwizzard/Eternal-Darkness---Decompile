@@ -21,14 +21,14 @@ extern void fn_80179904(void*, int);
 
 /*
  * Honest NonMatching reconstruction. The behavior and all field writes are
- * recovered; remaining differences are MWCC parameter-register allocation
- * and the two packed-kind selection branch shapes.
+ * recovered; remaining differences are temporary-register selection in the
+ * two packed-kind blocks and floating-point load scheduling.
  */
 void fn_8014D478(void* owner, Vec3* position, float* rotation,
                  int first_kind, int second_kind, int* source, int flags)
 {
     void* state;
-    int kind;
+    u8 kind;
 
     if (((flags & 4) != 0 || !(lbl_8064CF04 >= lbl_806504F8)) && flags != 0) {
         state = fn_80149D98(fn_8014D650);
@@ -38,26 +38,30 @@ void fn_8014D478(void* owner, Vec3* position, float* rotation,
             *(int*)((char*)state + 0x38C) = flags;
 
             if (lbl_8064CF04 >= lbl_806504FC) {
-                kind = (first_kind >> 2) & 0x3F;
-                if (kind <= 0)
-                    kind = first_kind & 0xFF;
+                int packed = (first_kind >> 2) & 0x3F;
+                kind = first_kind & 0xFF;
+                if (packed > 0)
+                    kind = packed;
             } else if (lbl_8064CF04 >= lbl_80650500) {
-                kind = (first_kind >> 1) & 0x7F;
-                if (kind <= 0)
-                    kind = first_kind & 0xFF;
+                int packed = (first_kind >> 1) & 0x7F;
+                kind = first_kind & 0xFF;
+                if (packed > 0)
+                    kind = packed;
             } else {
                 kind = first_kind & 0xFF;
             }
             *(u8*)((char*)state + 0x398) = kind;
 
             if (lbl_8064CF04 >= lbl_806504FC) {
-                kind = (second_kind >> 2) & 0x3F;
-                if (kind <= 0)
-                    kind = second_kind & 0xFF;
+                int packed = (second_kind >> 2) & 0x3F;
+                kind = second_kind & 0xFF;
+                if (packed > 0)
+                    kind = packed;
             } else if (lbl_8064CF04 >= lbl_80650500) {
-                kind = (second_kind >> 1) & 0x7F;
-                if (kind <= 0)
-                    kind = second_kind & 0xFF;
+                int packed = (second_kind >> 1) & 0x7F;
+                kind = second_kind & 0xFF;
+                if (packed > 0)
+                    kind = packed;
             } else {
                 kind = second_kind & 0xFF;
             }
