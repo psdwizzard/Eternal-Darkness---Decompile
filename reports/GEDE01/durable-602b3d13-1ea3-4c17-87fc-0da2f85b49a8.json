@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "602b3d13-1ea3-4c17-87fc-0da2f85b49a8",
+  "attempt": 3,
+  "base_commit": "9ddf3a11e81aeeb0e7d5cd95e336f7727f7477ef",
+  "target": "fn_8007C90C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-602b3d13-1ea3-4c17-87fc-0da2f85b49a8.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both measure 98.045456% with equal 440-byte functions and 111 instructions per side. Both sides contain 38 relocations with identical types, targets, and addends; the fn_80204810@ha relocation is scheduled at retail offset 0x60 versus generated offset 0x64 because of the adjacent slwi movement. Four aligned diff rows remain: retail preserves the initial object ID in r26 while MWCC preserves it in r29; MWCC schedules the equivalent slwi r31 operation at byte offset 0x60 instead of retail offset 0x64; and the equality compare at byte offset 0x98 uses the equivalent operand order cmpw r26,r0 instead of retail cmpw r0,r26. The full build passed, the rebuilt DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f, and the legal audit passed."
+}
