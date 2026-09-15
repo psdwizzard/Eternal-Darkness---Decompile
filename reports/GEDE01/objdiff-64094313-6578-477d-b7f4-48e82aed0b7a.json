@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "assignment_id": "64094313-6578-477d-b7f4-48e82aed0b7a",
+  "target": "fn_8007930C",
+  "source": "eternal-darkness-decomp/src/game/game_fn_8007930C.c",
+  "registration": "Object(NonMatching, \"game/game_fn_8007930C.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "recovered_from": "2e4793f9ad15df3c95e6a371f1863faf28ce1608",
+  "accepted_base_integration": "74f830b60535ebcdf372b53316f9009c75b4a133",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[843/847] REPORT\n[844/847] LINK build/GEDE01/main.elf\n[845/847] DOL build/GEDE01/main.dol\n[846/847] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[847/847] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8007930C fn_8007930C -o build/GEDE01/objdiff-64094313-final-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-64094313-final-canonical.raw.json\nmatch_percent=98.04348 retail_bytes=552 generated_bytes=552 retail_instructions=138 generated_instructions=138 differing_retail_rows=53 difference_kinds={DIFF_ARG_MISMATCH:53}"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8007930C fn_8007930C -o build/GEDE01/objdiff-64094313-final-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-64094313-final-reloc-strict.raw.json\nmatch_percent=98.04348 retail_bytes=552 generated_bytes=552 retail_instructions=138 generated_instructions=138 differing_retail_rows=53 retail_relocations=36 generated_relocations=36"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-64094313-final-canonical.raw.json build/GEDE01/objdiff-64094313-final-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "report_cmp_exit=0"
+    },
+    {
+      "command": "compare normalized left/right relocation records from relocation-strict objdiff JSON",
+      "exit_code": 0,
+      "raw_output": "left_count=36 right_count=36 records_equal=true; instruction offsets, R_PPC_REL24 types, strict name/address targets, and represented zero addends agree"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+    },
+    {
+      "command": "rg -n 'asm|__asm|#pragma|register ' src/game/game_fn_8007930C.c",
+      "exit_code": 1,
+      "raw_output": "no matches"
+    }
+  ],
+  "canonical": {
+    "match_percent": 98.04348,
+    "retail_bytes": 552,
+    "generated_bytes": 552,
+    "retail_instructions": 138,
+    "generated_instructions": 138,
+    "differing_retail_rows": 53,
+    "difference_kinds": {
+      "DIFF_ARG_MISMATCH": 53
+    }
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 36,
+    "generated_count": 36,
+    "records_equal": true,
+    "offsets_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true
+  },
+  "divergence": "The behavior-complete C is size-, instruction-count-, opcode-, control-flow-, call-, stack-access-, and relocation-exact. All 53 remaining rows are DIFF_ARG_MISMATCH from a consistent nonvolatile-register allocation permutation: retail uses r29/r30/r28/r27/r31/r26/r24 for the principal context/object/state/entry-or-owner/action-or-result/value/loop lifetimes, while generated code assigns the corresponding lifetimes chiefly to r27/r28/r31/r29-or-r26/r30-or-r26/r24/r26. No register binding, pragma, or assembly is present.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: retain the single honest independent NonMatching C reconstruction at 98.04348%."
+}
