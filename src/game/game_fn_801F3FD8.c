@@ -52,8 +52,8 @@ void fn_801F3FD8(Vec3* point, s32 duration)
     u32 ordinary_mask = 0x10;
     u32 seen_mask = 0;
     u32 enabled_mask = 0;
-    s32 candidate_index = 0;
     s32 cap;
+    s32 candidate_index = 0;
     s32 extra_count;
     s32 i;
 
