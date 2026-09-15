@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "c847bb1f-4d56-4284-872d-606809311cd3",
+  "attempt": 5,
+  "base_commit": "41c3733b1fff40268c0ed8deda42908dd8ec92d5",
+  "target": "fn_80058834",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c847bb1f-4d56-4284-872d-606809311cd3.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c847bb1f-4d56-4284-872d-606809311cd3-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-c847bb1f-4d56-4284-872d-606809311cd3.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 1984 bytes, 496 instructions, and 99.747986%. All 110 relocation-bearing instructions per side agree in relocation type, target, and addend. The 24 remaining rows are exclusively DIFF_ARG_MISMATCH: retail uses r24 for state_ref and the non-overlapping kind-1 current/blocked live ranges while generated uses r28 and r23 (11 rows); retail uses facing/distance in f31/f30 while generated uses f30/f31 (10 rows); and retail uses r24 for the callback tag while generated uses r23 (3 rows). Reusing the dead resolved pointer as the action handle improved the prior 99.71774% result by making the action live range match retail r25."
+}

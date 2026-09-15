@@ -143,21 +143,20 @@ s32 fn_80058834(void *context, void *event, u32 *result)
             if ((angle < lbl_8064E4EC ? -angle : angle) > lbl_8064E51C) moved = 1;
             if (moved != 0 || adjusted != 0) {
                 s32 mode;
-                void *action;
                 handled = 1;
                 if ((angle < lbl_8064E4EC ? -angle : angle) > lbl_8064E520 || adjusted != 0) mode = 2;
                 else mode = fn_801A77B0((void *)linked);
                 if (adjusted != 0) {
-                    action = fn_8012976C(object, mode, 0x8023, &offset, lbl_8064E524);
-                    if (action != 0) {
+                    resolved = fn_8012976C(object, mode, 0x8023, &offset, lbl_8064E524);
+                    if (resolved != 0) {
                         fn_80128B8C(object, &scaled);
-                        fn_80129BA4(action, facing, lbl_8064E524);
+                        fn_80129BA4(resolved, facing, lbl_8064E524);
                     }
-                } else action = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);
-                if (action != 0) {
+                } else resolved = fn_80129A00(object, mode, 0x25, facing, lbl_8064E524);
+                if (resolved != 0) {
                     u32 upper = (u32)value << 8;
-                    fn_80128C28(action, fn_80204810, upper | 6);
-                    fn_80128C44(action, fn_80204810, upper | 7);
+                    fn_80128C28(resolved, fn_80204810, upper | 6);
+                    fn_80128C44(resolved, fn_80204810, upper | 7);
                 } else {
                     fn_80201D2C(context, 1);
                     fn_80201D14(context, 1);

@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "assignment_id": "c847bb1f-4d56-4284-872d-606809311cd3",
+  "commands": [
+    {"command": "python3 configure.py", "exit_code": 0},
+    {"command": ".tools/bin/ninja -j2", "exit_code": 0, "output": "build/GEDE01/main.dol: OK"},
+    {"command": "sha1sum build/GEDE01/main.dol", "exit_code": 0, "output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"},
+    {"command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058834 fn_80058834 -o reports/GEDE01/objdiff-c847bb1f-4d56-4284-872d-606809311cd3.json --format json-pretty", "exit_code": 0},
+    {"command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058834 fn_80058834 -o reports/GEDE01/objdiff-c847bb1f-4d56-4284-872d-606809311cd3-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address", "exit_code": 0},
+    {"command": "python3 tools/legal_audit.py", "exit_code": 0, "output": "legal audit passed (15764 tracked project files inspected)"}
+  ],
+  "experiment": {
+    "hypothesis": "The original source may have reused the resolved-object pointer after its last read as the later action handle, allowing MWCC to coalesce those non-overlapping live ranges into retail r25 instead of assigning the action to r23.",
+    "result": "Reusing resolved for the action handle preserved all 496 instructions and raised canonical and relocation-strict similarity from 99.71774% (27 differing rows) to 99.747986% (24 differing rows). The action-handle r25 differences disappeared. A follow-up reuse of the earlier probe variable for the callback tag regressed to 99.6875% and was reverted. A pointer-indirection-type experiment compiled identically to the accepted base and was also reverted."
+  },
+  "canonical": {"retail_bytes": 1984, "generated_bytes": 1984, "instruction_count": 496, "match_percent": 99.747986, "diff_count": 24, "diff_kinds": {"DIFF_ARG_MISMATCH": 24}},
+  "relocation_strict": {"retail_bytes": 1984, "generated_bytes": 1984, "instruction_count": 496, "match_percent": 99.747986, "retail_relocation_count": 110, "generated_relocation_count": 110, "relocation_targets_types_and_addends_match": true},
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_match": true
+}
