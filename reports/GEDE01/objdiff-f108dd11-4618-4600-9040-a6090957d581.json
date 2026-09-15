@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "assignment_id": "f108dd11-4618-4600-9040-a6090957d581",
+  "target": "fn_80074040",
+  "source": "src/game/game_fn_80074040.c",
+  "registration": "Object(Matching, \"game/game_fn_80074040.c\")",
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[850/855] REPORT; [851/855] LINK build/GEDE01/main.elf; [852/855] DOL build/GEDE01/main.dol; [853/855] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [854/855] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80074040 fn_80074040 -o build/GEDE01/objdiff-f108dd11-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=100.0 retail_bytes=96 generated_bytes=96 retail_relocations=3 generated_relocations=3"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80074040 fn_80074040 -o build/GEDE01/objdiff-f108dd11-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=100.0 retail_bytes=96 generated_bytes=96; relocation at 28: R_PPC_REL24 target fn_801A7498 addend 0 on both sides; relocation at 44: R_PPC_REL24 target fn_801A7490 addend 0 on both sides; relocation at 64: R_PPC_REL24 target fn_8020123C addend 0 on both sides"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-f108dd11-canonical.raw.json build/GEDE01/objdiff-f108dd11-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "canonical_strict_cmp_exit=0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (15553 tracked project files inspected)"
+    }
+  ],
+  "canonical": {
+    "match_percent": 100.0,
+    "retail_bytes": 96,
+    "generated_bytes": 96
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 3,
+    "generated_count": 3,
+    "addresses_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Matched: the independent C translation unit is 100.0% canonical and relocation-strict with all relocations equal; no assembly or shared reconstruction is used."
+}
