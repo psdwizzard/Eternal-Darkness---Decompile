@@ -10,6 +10,7 @@ extern void* memcpy(void*, const void*, u32);
 void fn_801913F4(u8* object)
 {
     u32 value = lbl_80650B24;
+    volatile u32 saved_value;
     struct LocalValues {
         u32 word;
         u16 half;
@@ -19,7 +20,11 @@ void fn_801913F4(u8* object)
     source.half = lbl_80651D9C;
     object[0] = 0x20;
     object[1] = 1;
-    *(u16*)(object + 6) = object[0];
+    {
+        u8 first = object[0];
+        saved_value = value;
+        *(u16*)(object + 6) = first;
+    }
     *(u16*)(object + 4) = 0x31;
     object[2] = 0x87;
     *(signed char*)(object + 3) = -9;
@@ -38,6 +43,6 @@ void fn_801913F4(u8* object)
     *(u32*)(object + 0x2C) = 0;
     *(u32*)(object + 0x38) = 0;
     memcpy(object + 0x1E, &source, 6);
-    *(u32*)(object + 0x3C) = value;
+    *(u32*)(object + 0x3C) = saved_value;
     object[0x24] = 0;
 }
