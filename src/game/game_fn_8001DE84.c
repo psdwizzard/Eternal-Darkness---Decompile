@@ -42,7 +42,7 @@ typedef struct GlobalState {
     u8 clear[0x100];
 } GlobalState;
 
-extern GlobalState lbl_80302400;
+extern u8 lbl_80302400[];
 extern DataState lbl_8023D660;
 
 typedef struct TypeA TypeA;
@@ -53,13 +53,13 @@ extern void fn_80228B50(void*, void*, s32, u32);
 
 void fn_8001DE84(u8 mode, u32 value)
 {
-    GlobalState* state = &lbl_80302400;
-    Info* info = &state->info;
-    Work* work = &state->work;
+    u8* state = lbl_80302400;
+    Info* info = (Info*)(state + 0x1C);
+    Work* work = (Work*)(state + 0x98);
     s32 i;
 
     info->flags &= ~2U;
-    fn_8020EFBC((TypeA*)state->object60);
+    fn_8020EFBC((TypeA*)(state + 0x60));
     fn_8020F0F8((TypeB*)((u8*)info + 0x44));
 
     info->previous_mode = info->mode;
@@ -73,11 +73,11 @@ void fn_8001DE84(u8 mode, u32 value)
     work->field08 = 0;
     work->field0C = 0;
     work->field10 = 0;
-    work->values = state->values;
-    fn_80228B50(state->clear, state->values, 0, sizeof(state->clear));
+    work->values = (u16*)(state + 0xC0);
+    fn_80228B50(state + 0x2C0, state + 0xC0, 0, 0x100);
 
     for (i = 0; i < 0x100; i++) {
-        state->values[i] = 0xFF;
+        ((u16*)(state + 0xC0))[i] = 0xFF;
     }
 
     lbl_8023D660.field2C = 0xFF;
