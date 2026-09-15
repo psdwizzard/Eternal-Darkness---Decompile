@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "57dd6662-3dd7-4fb8-9b7b-674e1305f374",
+  "attempt": 1,
+  "base_commit": "7755369fde57848a1106b2ddc898d8cb4dbd566a",
+  "target": "fn_80132B24",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-57dd6662-3dd7-4fb8-9b7b-674e1305f374.json"
+  ],
+  "divergence": "Best canonical GC/1.3 result is 92.109375%: candidate is 260 bytes versus retail 256 because MWCC materializes lbl_8030F540 through r0 then copies it to r28; it also schedules the record word at +0x4 after floating-point call setup instead of before it. All 9 actual relocation sites have equal types, targets, and addends."
+}

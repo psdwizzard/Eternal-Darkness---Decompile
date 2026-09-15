@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "assignment_id": "57dd6662-3dd7-4fb8-9b7b-674e1305f374",
+  "target": "fn_80132B24",
+  "compiler": "GC/1.3",
+  "cflags_extra": ["-use_lmw_stmw on"],
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80132B24.c fn_80132B24",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measurements": {
+    "build_tail": [
+      "[846/849] DOL build/GEDE01/main.dol",
+      "[847/849] CHECK config/GEDE01/build.sha1",
+      "build/GEDE01/main.dol: OK",
+      "[848/849] PROGRESS"
+    ],
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "fndiff_summary": "target 256 bytes  base 260 bytes  match 92.109375",
+    "instruction_differences": [
+      "0x002c target: addi r28, r3, lbl_8030F540@l | candidate: addi r0, r3, lbl_8030F540@l",
+      "0x0034 target: <none> | candidate: mr r28, r0",
+      "0x0088 target: lwz r5, 0x4(r26) | candidate: <aligned later>",
+      "0x008c target: li r0, 0x7 | candidate: <aligned later>",
+      "0x0094 target: <none> | candidate: li r0, 0x7",
+      "0x00a8 target: <none> | candidate: lwz r5, 0x4(r26)"
+    ],
+    "retail_actual_relocations": [
+      "0x0024 R_PPC_ADDR16_HA lbl_8030F540 addend 0",
+      "0x002c R_PPC_ADDR16_LO lbl_8030F540 addend 0",
+      "0x0048 R_PPC_REL24 fn_801FD6F4 addend 0",
+      "0x005c R_PPC_EMB_SDA21 lbl_8065024C addend 0",
+      "0x0078 R_PPC_REL24 fn_801FD6AC addend 0",
+      "0x0090 R_PPC_EMB_SDA21 lbl_80650228 addend 0",
+      "0x00a4 R_PPC_EMB_SDA21 lbl_80650250 addend 0",
+      "0x00d0 R_PPC_REL24 fn_801FE8DC addend 0",
+      "0x00dc R_PPC_REL24 fn_801E8328 addend 0"
+    ],
+    "candidate_actual_relocations": [
+      "0x0024 R_PPC_ADDR16_HA lbl_8030F540 addend 0",
+      "0x002c R_PPC_ADDR16_LO lbl_8030F540 addend 0",
+      "0x0048 R_PPC_REL24 fn_801FD6F4 addend 0",
+      "0x005c R_PPC_EMB_SDA21 lbl_8065024C addend 0",
+      "0x0078 R_PPC_REL24 fn_801FD6AC addend 0",
+      "0x0090 R_PPC_EMB_SDA21 lbl_80650228 addend 0",
+      "0x00a4 R_PPC_EMB_SDA21 lbl_80650250 addend 0",
+      "0x00d0 R_PPC_REL24 fn_801FE8DC addend 0",
+      "0x00dc R_PPC_REL24 fn_801E8328 addend 0"
+    ]
+  },
+  "relocation_strict": {
+    "actual_relocations_equal": true,
+    "count": 9,
+    "code_match": false,
+    "strict_match": false
+  },
+  "experiments": [
+    {"form": "existing explicit four-word copy", "score": 92.109375, "retained": true},
+    {"form": "0x78-byte stride pointer with RuntimeSlot view", "score": 92.109375, "retained": false},
+    {"form": "Quad structure assignment", "score": 91.796875, "retained": false},
+    {"form": "reverse first two word assignments", "score": 91.90625, "retained": false}
+  ],
+  "legal_audit": "Honest C only; no inline or whole-function assembly; no shared reconstruction; no neighboring source edits."
+}
