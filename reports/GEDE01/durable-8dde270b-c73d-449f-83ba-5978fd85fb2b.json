@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "8dde270b-c73d-449f-83ba-5978fd85fb2b",
+  "attempt": 2,
+  "base_commit": "8a11b9eec2935ba9423b1186d18d149f98a2ac4e",
+  "target": "fn_8014D478",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8dde270b-c73d-449f-83ba-5978fd85fb2b.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff reproduces 97.28814% with identical 472-byte/119-instruction size. Remaining differences are r0/r3 temporary selection in both packed-kind blocks plus floating-point load scheduling; the two scheduled SDA21 loads remain at retail offsets 0x6c/0x78 versus generated 0x78/0x7c. The full canonical build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
