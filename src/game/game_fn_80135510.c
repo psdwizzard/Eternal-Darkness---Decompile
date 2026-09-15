@@ -24,18 +24,22 @@ extern int fn_801358B4(int);
 extern void fn_80134FD8(Slot*, u32, void*);
 
 /* NonMatching: honest reconstruction of the one-time pool allocation and
- * group partitioning. The retail compiler fully unrolls the eight-group sum. */
+ * group partitioning. Remaining differences are initialization scheduling. */
 void fn_80135510(void)
 {
+    u32 slot_offset;
+    u32 group_offset;
+    u32 record_offset;
     int i;
+    u32 offset;
     u32 j;
-    u32 offset = 0;
-    u32 record_offset = 0;
+    Group* group;
+    Slot* slot;
 
     if (lbl_8064CF84 == 0) {
         lbl_8064CF8C = 8;
-        lbl_8064CF84 = 1;
         lbl_8064CF90 = lbl_8024EEB8;
+        lbl_8064CF84 = 1;
         lbl_8064CFB0 = 0;
         lbl_8064CFAC = 0;
         for (i = 0; i < 8; i++) {
@@ -50,15 +54,20 @@ void fn_80135510(void)
     lbl_8064CF9C = 0;
     lbl_8064CFA4 = 0;
     fn_801358B4(1);
-    lbl_8064CF94 = 0;
+    lbl_8064CF94 = group_offset = 0;
+    offset = 0;
+    record_offset = group_offset;
     for (i = 0; i < lbl_8064CF8C; i++) {
-        Group* group = &lbl_8064CF90[i];
+        group = (Group*)((char*)lbl_8064CF90 + group_offset);
         if (lbl_8064CF94 < group->width) lbl_8064CF94 = group->width;
+        slot_offset = record_offset;
         for (j = 0; j < group->count; j++) {
-            fn_80134FD8((Slot*)((char*)lbl_8064CF88 + record_offset),
-                        group->width, (char*)lbl_8064CF80 + offset);
+            slot = (Slot*)((char*)lbl_8064CF88 + slot_offset);
             record_offset += 0x18;
+            slot_offset += 0x18;
+            fn_80134FD8(slot, group->width, (char*)lbl_8064CF80 + offset);
             offset += group->width;
         }
+        group_offset += 8;
     }
 }
