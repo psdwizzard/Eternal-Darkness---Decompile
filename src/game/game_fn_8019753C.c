@@ -6,12 +6,12 @@ extern u8 lbl_80607120[];
 void fn_8019753C(u8* destination, const u8* first, const u8* second,
                  u16 dimensions)
 {
-    int split = (dimensions >> 8) & 0x7f;
-    int width = dimensions & 0xff;
+    u8 split = (dimensions >> 1) & 0x7f;
     u8* second_row = destination + *(u16*)(lbl_80607120 + 2) * 4;
-    int row;
+    int width = dimensions & 0xff;
+    int row = 0;
 
-    for (row = 0; row < 2; row++) {
+    for (; row < 2; row++) {
         int x;
         for (x = 0; x < split; x++) {
             destination[0] = first[0];
@@ -24,6 +24,7 @@ void fn_8019753C(u8* destination, const u8* first, const u8* second,
             destination[7] = first[3];
             destination += 8;
         }
+        x = split;
         for (; x < width; x++) {
             destination[0] = first[0];
             destination[1] = first[1];
