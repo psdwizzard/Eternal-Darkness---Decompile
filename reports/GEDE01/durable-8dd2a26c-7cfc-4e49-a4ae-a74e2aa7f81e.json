@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "8dd2a26c-7cfc-4e49-a4ae-a74e2aa7f81e",
+  "attempt": 3,
+  "base_commit": "e1d457798f591340b197cebf6451bdcbd3ff8054",
+  "target": "fn_80053048",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8dd2a26c-7cfc-4e49-a4ae-a74e2aa7f81e-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8dd2a26c-7cfc-4e49-a4ae-a74e2aa7f81e.json"
+  ],
+  "divergence": "Fresh canonical and function_reloc_diffs=name_address objdiff both measure 96.30189% with exact 424-byte size, 107 displayed instruction rows per side, and 33 relocation-bearing rows per side whose addresses, types, resolved targets, and addends compare equal. The 22 aligned differing rows remain register-allocation and scheduling differences: retail uses r28 for the record pointer, r27 for the copied transition type, and r24/r26 for the inner slot/mask while generated code uses r27, r26, and r28/r24 respectively; the second call-argument move is scheduled at generated 0xDC instead of retail 0xE4, and cleanup similarly exchanges r27/r28. The full build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
