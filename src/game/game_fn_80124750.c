@@ -10,22 +10,31 @@ typedef struct Owner { u8 pad[0x3C]; Table* table; u8 pad40[0x25C]; Channel* cha
 void fn_80124750(Owner* owner, s32 index, s32 delay, s32 repeats, u32 flags,
                   float value, float upper, float rise, float fall)
 {
-    u32 one = 1;
-    u32 new_flags = flags | 9;
-    s32 entry_index = index * 8;
-    s32 channel_offset = index * 0x28;
-    u32 bit = one << index;
-    Table* table = owner->table;
-    s32 offset = 0;
-    s32 count = table->count;
+    u32 one;
+    s32 offset;
+    u8* entry_index;
+    s32 channel_offset;
+    u32 bit;
+    u32 new_flags;
+    Table* table;
+    u16 count;
+    Channel* channel;
     s32 i;
+
+    one = 1;
+    new_flags = flags | 9;
+    entry_index = (u8*)(index * 8);
+    channel_offset = index * 0x28;
+    bit = one << index;
+    table = owner->table;
+    offset = 0;
+    count = table->count;
 
     for (i = 0; i < count; i++) {
         u8* entry = table->entries + offset + 0x14;
-        if (entry != 0 && *(u32*)(entry + entry_index) != 0xFFFFFFFF) {
-            Channel* channel;
-            owner->active |= bit;
+        if (entry != 0 && *(u32*)(entry_index + (u32)entry) != 0xFFFFFFFF) {
             channel = (Channel*)((u8*)owner->channels + channel_offset);
+            owner->active |= bit;
             channel->value = value;
             channel->upper = upper;
             channel->lower = value;
