@@ -64,9 +64,9 @@ static s32 is_allowed(u32 object)
 
 void fn_801E2408(u8* object)
 {
-    u8* work = object + 0xBC;
-    u32 subject = *(u32*)(object + 4);
     s32 id;
+    u32 subject;
+    u8* work = object + 0xBC;
     u8 kind;
 
     if (*(s32*)(object + 8) != lbl_8064D18C || (object[0xFF0] & 1) != 0) {
@@ -77,6 +77,8 @@ void fn_801E2408(u8* object)
         fn_801E237C(object);
         return;
     }
+
+    subject = *(u32*)(object + 4);
 
     switch (*(u16*)(object + 0xFF4)) {
     case 0:
