@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "assignment_id": "87a38195-60a7-45b2-83a1-49c1c7ae6574",
+  "target": "fn_800531F0",
+  "compiler": "canonical project configuration (GC/1.3)",
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[852/854] DOL build/GEDE01/main.dol\n[853/854] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[854/854] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800531F0 fn_800531F0 -o build/GEDE01/objdiff-87a38195-canonical.raw.json --format json",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-87a38195-canonical.raw.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800531F0 fn_800531F0 -o build/GEDE01/objdiff-87a38195-reloc-strict.raw.json --format json -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-87a38195-reloc-strict.raw.json"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "rg -n '__asm|asm\\s*\\(' src/game/game_fn_800531F0.c",
+      "exit_code": 1,
+      "raw_output": ""
+    }
+  ],
+  "measurements": {
+    "canonical": {
+      "retail_size": 1040,
+      "generated_size": 1040,
+      "retail_instruction_rows": 262,
+      "generated_instruction_rows": 262,
+      "retail_relocation_rows": 133,
+      "generated_relocation_rows": 133,
+      "match_percent": 97.82692,
+      "differing_retail_rows": 14
+    },
+    "relocation_strict": {
+      "policy": "function_reloc_diffs=name_address",
+      "retail_size": 1040,
+      "generated_size": 1040,
+      "retail_instruction_rows": 262,
+      "generated_instruction_rows": 262,
+      "retail_relocation_rows": 133,
+      "generated_relocation_rows": 133,
+      "match_percent": 97.82692,
+      "differing_retail_rows": 14,
+      "raw_report_identical_to_canonical": true
+    },
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_matches_expected": true,
+    "inline_or_whole_function_assembly_hits": 0
+  },
+  "remaining_retail_sequences": {
+    "effect_store_cluster_0x298_0x2a8": [
+      "0x298 lis r5, lbl_8030F540@ha",
+      "0x29c li r4, 1",
+      "0x2a0 addi r29, r5, lbl_8030F540@l",
+      "0x2a4 stb r3, 0x1e6(r29)",
+      "0x2a8 li r3, 2"
+    ],
+    "descriptor_cluster_0x3bc_0x3e8": [
+      "0x3bc lbz r4, 0x1da(r31)",
+      "0x3c0 lis r6, lbl_80241DE8@ha",
+      "0x3c4 li r0, 0",
+      "0x3c8 lis r3, lbl_8030F540@ha",
+      "0x3cc mulli r5, r4, 0x28",
+      "0x3d0 addi r6, r6, lbl_80241DE8@l",
+      "0x3d4 addi r4, r3, lbl_8030F540@l",
+      "0x3d8 stw r0, lbl_8064C850@sda21",
+      "0x3dc li r3, 0",
+      "0x3e0 add r5, r6, r5",
+      "0x3e4 lbz r0, 0x19(r5)",
+      "0x3e8 stb r0, 0x1e0(r4)"
+    ]
+  },
+  "divergence": "Size-exact honest C. Fourteen differing retail rows remain in two GC/1.3 code-generation clusters. At 0x298..0x2A8 retail materializes fn_80144430 argument r4 between the state-base lis and addi/store, while generated code completes the state-base addi/store before li r4,1. At 0x3BC..0x3E8 retail assigns the transition type, descriptor base, and zero to r4/r6/r0, while generated code assigns them to r0/r4/r6 and consequently forms the descriptor address through r0. Canonical and relocation-strict reports are identical at 97.82692%; this is not a match claim."
+}
