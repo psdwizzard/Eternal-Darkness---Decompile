@@ -17,7 +17,7 @@ extern int lbl_8064C578;
 extern void* lbl_8064D18C;
 
 extern int fn_80036D5C(void*);
-extern int fn_80201EB8();
+extern int fn_80201EB8(void*);
 extern void *fn_80201BC8();
 #define FN_80201E78_RETURN void
 #define FN_80201E78_PARAMETERS Vec3*, void*
@@ -38,18 +38,17 @@ void fn_8008F960(void* object, void* actor, int* link, void* state,
                  Runtime* runtime, void* extra)
 {
     int flags = fn_80036D5C(object);
-    void* associated = (void *)fn_80201EB8(object);
+    int associated = fn_80201EB8(object);
     void* current = fn_80201BC8(object);
     Vec3 transform;
 
     fn_80201E78(&transform, object);
     fn_80036DA4(object, flags & ~0x100000);
-    if (associated == lbl_8064D18C) {
-        SceneEntry* entry = &lbl_8031D3F8[lbl_8064C578][lbl_8064C560][lbl_8064C564];
-        int id = entry->fourth;
-        int next;
+    if (associated == (int)lbl_8064D18C) {
+        int scene = lbl_8064C560;
+        int next = scene + 1;
+        int id = lbl_8031D3F8[lbl_8064C578][scene][lbl_8064C564].fourth;
         lbl_8064C564 = 0;
-        next = lbl_8064C560 + 1;
         lbl_8064C560 = next;
         if (next >= 2 || lbl_8031D3F8[lbl_8064C578][next][0].mode == 0) {
             link[5] = 0;

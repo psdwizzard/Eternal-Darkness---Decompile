@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f16d1a0c-8a2f-4f5a-a405-1fb31b1b60aa",
+  "attempt": 1,
+  "base_commit": "2540d848cba7a9973138e9676dffbe8128427578",
+  "target": "fn_8008F960",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f16d1a0c-8a2f-4f5a-a405-1fb31b1b60aa.json"
+  ],
+  "divergence": "Best canonical and relocation-strict direct objdiff score is 99.44056%, size-exact at 572 bytes (143 instructions) on both sides. The canonical and relocation-strict raw reports are byte-identical, with all 39 relocation-bearing instructions agreeing in offset, type, target, and addend. The only remaining divergence is 14 argument/register mismatches at retail offsets 0x74, 0x7C, 0x84, 0x88, 0x8C, 0x98, 0x9C, 0xA0, 0xA4, 0xA8, 0xAC, 0xB0, 0xB8, and 0xBC: GC/1.3 rotates r0/r3/r4/r5 while evaluating the scene-table indices, loading the selected short ID, updating the next-scene index, and testing the next table entry. Control flow, calls, stack layout, function size, and all instructions outside that indexing block match. Full build passed with build/GEDE01/main.dol SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f; legal audit passed for 15472 tracked project files."
+}
