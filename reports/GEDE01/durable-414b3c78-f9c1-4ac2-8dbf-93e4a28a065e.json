@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "414b3c78-f9c1-4ac2-8dbf-93e4a28a065e",
+  "attempt": 3,
+  "base_commit": "34b87e37cf130199ae0e64cfa87d9790f50f3893",
+  "target": "fn_801F7234",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-414b3c78-f9c1-4ac2-8dbf-93e4a28a065e.json"
+  ],
+  "divergence": "Best canonical and relocation-strict score is 92.39231%: retail emits 520 bytes while canonical GC/1.3 emits 500. The generated code folds five retail pointer-materialization addi instructions into lbl_8063C6B8-base-relative field loads (and schedules the initial symbol low-half materialization before the flags test), leaving 25 aligned diff rows per side despite equivalent recovered control flow and corresponding relocation targets/addends."
+}

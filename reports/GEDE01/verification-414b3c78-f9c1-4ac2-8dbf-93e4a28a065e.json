@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "assignment_id": "414b3c78-f9c1-4ac2-8dbf-93e4a28a065e",
+  "target": "fn_801F7234",
+  "compiler": "GC/1.3",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F7234 fn_801F7234 -o reports/GEDE01/objdiff-414b3c78-f9c1-4ac2-8dbf-93e4a28a065e-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F7234 fn_801F7234 -o reports/GEDE01/objdiff-414b3c78-f9c1-4ac2-8dbf-93e4a28a065e.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol",
+    "rg -n '#pragma[[:space:]]+asm|__asm|asm[[:space:]]*\\(' src/game/game_fn_801F7234.c"
+  ],
+  "raw_measurement": "retail_text_bytes=520 generated_text_bytes=500 canonical_match_percent=92.39231 relocation_strict_match_percent=92.39231 retail_rela_text_bytes=132 generated_rela_text_bytes=132 aligned_diff_rows_left=25 aligned_diff_rows_right=25",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_verified": true,
+  "legal_audit": {
+    "source": "src/game/game_fn_801F7234.c",
+    "whole_function_or_inline_assembly_matches": 0,
+    "independent_translation_unit": true,
+    "runtime_or_neighbor_edits_in_attempt": false,
+    "private_or_generated_inputs_staged": false
+  },
+  "recovery": "The accepted base already contains the honest source reconstruction recovered from preserved commit 0b7be26a7d5d3257d9aa83d612dc63dc1cc79789 history; its measurements were independently reproduced for this assignment."
+}
