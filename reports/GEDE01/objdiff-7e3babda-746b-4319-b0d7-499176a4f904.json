@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "assignment_id": "7e3babda-746b-4319-b0d7-499176a4f904",
+  "attempt": 3,
+  "target": "fn_80050B08",
+  "compiler": "canonical project configuration (GC/1.3, -use_lmw_stmw on)",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80050B08.c fn_80050B08",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80050B08 fn_80050B08 -o build/GEDE01/fn_80050B08-attempt3-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80050B08 fn_80050B08 -o build/GEDE01/fn_80050B08-attempt3-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "canonical_objdiff_raw": {
+    "target_bytes": 5904,
+    "generated_bytes": 5884,
+    "match_percent": 94.78658,
+    "aligned_instruction_rows": 1492,
+    "differing_rows": 543,
+    "diff_kinds": {
+      "DIFF_ARG_MISMATCH": 475,
+      "DIFF_DELETE": 21,
+      "DIFF_INSERT": 16,
+      "DIFF_OP_MISMATCH": 6,
+      "DIFF_REPLACE": 25
+    }
+  },
+  "relocation_strict_objdiff_raw": {
+    "configuration": "function_reloc_diffs=name_address",
+    "target_bytes": 5904,
+    "generated_bytes": 5884,
+    "match_percent": 94.78658,
+    "aligned_instruction_rows": 1492,
+    "differing_rows": 543,
+    "target_relocations": 100,
+    "generated_relocations": 100,
+    "target_relocation_types": {
+      "R_PPC_ADDR16_HA": 15,
+      "R_PPC_ADDR16_LO": 15,
+      "R_PPC_NONE": 25,
+      "R_PPC_REL24": 45
+    },
+    "generated_relocation_types": {
+      "R_PPC_ADDR16_HA": 15,
+      "R_PPC_ADDR16_LO": 15,
+      "R_PPC_NONE": 25,
+      "R_PPC_REL24": 45
+    },
+    "relocation_targets_and_addends_equal": false,
+    "strict_match": false
+  },
+  "build_result_raw": "build/GEDE01/main.dol: OK",
+  "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "source_recovery": "The accepted base contains the honest C reconstruction recovered by preserved commit 999a51d3b5a231994c74eff809cddb1f0ed55e6f. Attempt 3 corrected two over-broad inner-switch default labels to the retail selector set 0x24, 0x25, and 0x26, improving the measured score from 94.04201% to 94.78658% and reducing the size gap from 64 bytes to 20 bytes.",
+  "divergence": "Retail is 5904 bytes versus 5884 generated. Both use a 0x70 frame, stmw/lmw r20, the same four aggregate stack-block offsets, a u16 result path, and 100 relocations with identical type totals. The first persistent divergence begins at 0x20: retail places duration/result/global/arguments/flags/actor/selector in r21-r30, while generated code cyclically assigns those long-lived values across r21-r30 with duration in r30; this drives 475 operand mismatches. Remaining scheduling and switch-layout differences comprise 21 deletions, 16 insertions, six opcode mismatches, and 25 replacements, leaving a net five-instruction (20-byte) size gap. Switch jump-table symbols/offsets differ, so relocation targets/addends are not strictly identical despite equal relocation counts and types."
+}

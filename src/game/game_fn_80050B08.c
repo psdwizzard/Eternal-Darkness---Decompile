@@ -310,7 +310,9 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
     case 233:                                       /* switch 1 */
         var_r28 = 4;
         switch (arg2) {                             /* switch 8; irregular */
-        default:                                    /* switch 8 */
+        case 0x24:                                  /* switch 8 */
+        case 0x25:                                  /* switch 8 */
+        case 0x26:                                  /* switch 8 */
             var_r22 = 0x10B;
             sp8 = 0x64;
             var_r31 = 2;
@@ -361,7 +363,9 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             var_r31 = 2;
             var_r21 = 0x1388;
             break;
-        default:                                    /* switch 9 */
+        case 0x24:                                  /* switch 9 */
+        case 0x25:                                  /* switch 9 */
+        case 0x26:                                  /* switch 9 */
             var_r22 = 0x182;
             sp8 = 0x64;
             var_r31 = 2;
