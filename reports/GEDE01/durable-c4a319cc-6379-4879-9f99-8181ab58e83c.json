@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c4a319cc-6379-4879-9f99-8181ab58e83c",
+  "attempt": 1,
+  "base_commit": "432de12ec2a7a3fde5537a4c7fce3646fdcfbcb5",
+  "target": "fn_801A7958",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c4a319cc-6379-4879-9f99-8181ab58e83c.json"
+  ],
+  "divergence": "Best canonical and relocation-strict direct objdiff is 96.76712%: retail is 584 bytes/146 instructions/24 relocations, while GC/1.3 with the existing -use_lmw_stmw on option emits 588 bytes/147 instructions/25 relocations. The option corrects retail's inline stmw/lmw lowering, but generated code still materializes lbl_80251528 through an extra pre-save addi/mr pair, colors entry/index/remainder/loop registers as r24/r27/r26/r28 instead of retail r26/r28/r24/r27, schedules the first variadic-call operands differently, and names the unsigned-conversion constant @29 rather than retail lbl_80650DE8. The strict alignment has 122 matching rows, 20 argument mismatches, 4 replacements, and 1 insertion."
+}

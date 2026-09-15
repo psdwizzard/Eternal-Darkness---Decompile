@@ -10952,7 +10952,11 @@ config.libs = [
             Object(Matching, "game/game_fn_801A78EC.c"),
             Object(Matching, "game/game_fn_801A7910.c"),
             Object(Matching, "game/game_fn_801A7934.c"),
-            Object(NonMatching, "game/game_fn_801A7958.c"),
+            Object(
+                NonMatching,
+                "game/game_fn_801A7958.c",
+                extra_cflags=["-use_lmw_stmw on"],
+            ),
             Object(NonMatching, "game/game_fn_801A7BA0.c"),
             Object(Matching, "game/game_fn_801A7D20.c"),
             Object(Matching, "game/game_fn_801A7D44.c"),
