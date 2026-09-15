@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "assignment_id": "e1b0d651-1348-4e22-8643-031a49aa014e",
+  "target": "fn_801F7234",
+  "compiler": "GC/1.3",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F7234 fn_801F7234 -o reports/GEDE01/objdiff-e1b0d651-1348-4e22-8643-031a49aa014e-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F7234 fn_801F7234 -o reports/GEDE01/objdiff-e1b0d651-1348-4e22-8643-031a49aa014e.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measurement": "retail_text_bytes=520 generated_text_bytes=500 canonical_match_percent=92.39231 relocation_strict_match_percent=92.39231 retail_rela_text_bytes=132 generated_rela_text_bytes=132 aligned_diff_rows_left=25 aligned_diff_rows_right=25",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_verified": true,
+  "variants": [
+    {
+      "description": "Declare lbl_8063C6B8 as State[] instead of byte storage and remove the cast",
+      "retail_text_bytes": 520,
+      "generated_text_bytes": 500,
+      "match_percent": 92.39231,
+      "disposition": "reverted because code generation was unchanged"
+    },
+    {
+      "description": "Nest the y/z equality tests under the x equality branch and materialize the two special-state pointers only inside that branch",
+      "retail_text_bytes": 520,
+      "generated_text_bytes": 500,
+      "match_percent": 92.39231,
+      "disposition": "reverted because code generation was unchanged"
+    }
+  ]
+}
