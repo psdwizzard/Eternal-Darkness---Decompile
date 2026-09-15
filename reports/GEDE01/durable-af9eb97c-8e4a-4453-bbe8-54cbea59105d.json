@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "af9eb97c-8e4a-4453-bbe8-54cbea59105d",
+  "attempt": 1,
+  "base_commit": "94f90f564650a9e83397d807cf8f246ffd53440f",
+  "target": "fn_801BA94C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-af9eb97c-8e4a-4453-bbe8-54cbea59105d.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff is 88.08658%: retail text is 924 bytes while generated text is 900 bytes. Retail uses an 88-byte frame with stmw r23,0x34(r1); generated uses a 96-byte frame with stmw r24,0x40(r1). The differing live-range allocation changes the callee-saved identities for the global slot base, identifier, volume, left/right, and auxiliary values, and changes several slot-field/cache address formations. All external call relocation targets are semantically aligned, but the instruction/address-form differences and compiler-local floating-constant symbols prevent a 100% relocation-strict match. Canonical configure/build completed successfully and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
