@@ -1,4 +1,5 @@
 typedef unsigned char u8;
+typedef unsigned short u16;
 typedef unsigned int u32;
 
 typedef struct Vec3 {
@@ -46,7 +47,7 @@ void fn_801FFE78(Vec3* first_center, Vec3* axis, Vec3* second_center,
     int dominant;
     int i;
 
-    if (axis->x == 0.0f && axis->y == 0.0f && axis->z == 0.0f) {
+    if (!axis->x && !axis->y && !axis->z) {
         return;
     }
     fn_80211AAC(axis, &direction);
@@ -56,16 +57,16 @@ void fn_801FFE78(Vec3* first_center, Vec3* axis, Vec3* second_center,
     dominant = fn_80179EB8(&direction);
 
     if ((signed char)dominant == 2 && direction.z < 0.0f) {
-        if (first_x > 0.0f) first_x *= 0.5f;
-        if (second_x > 0.0f) second_x *= 0.5f;
+        if (first_x > 0.0f) first_x *= -1.0f;
+        if (second_x > 0.0f) second_x *= -1.0f;
     }
     if ((signed char)dominant == 1 && direction.y > 0.0f) {
-        if (first_x > 0.0f) first_x *= 0.5f;
-        if (second_x > 0.0f) second_x *= 0.5f;
+        if (first_x > 0.0f) first_x *= -1.0f;
+        if (second_x > 0.0f) second_x *= -1.0f;
     }
     if ((signed char)dominant == 0 && direction.x < 0.0f) {
-        if (second_x > 0.0f) first_x *= 0.5f;
-        if (second_x > 0.0f) second_x *= 0.5f;
+        if (second_x > 0.0f) first_x *= -1.0f;
+        if (second_x > 0.0f) second_x *= -1.0f;
     }
 
     fn_80179C10(&projection_offset, 0.0f, 0.0f, &direction, first_depth, dominant);
@@ -91,7 +92,7 @@ void fn_801FFE78(Vec3* first_center, Vec3* axis, Vec3* second_center,
     fn_80179C10(&second_next, cosine * second_x, sine * second_y,
                 &direction, second_depth, dominant);
     fn_80211A48(&second_next, &second_point, &second_next);
-    fn_80226AB4(0x80, 3, sides * 4);
+    fn_80226AB4(0x80, 3, (u16)(sides * 4));
 
     for (i = 0; (u8)i < sides; i++) {
         sine = fn_80048C2C((u8)i * angle);
