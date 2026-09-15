@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "assignment_id": "fcb2b397-30d0-4343-8c56-0aacdd9fd1cf",
+  "attempt": 2,
+  "target": "fn_801F3FD8",
+  "unit": "main/game/game_fn_801F3FD8",
+  "source": {
+    "path": "src/game/game_fn_801F3FD8.c",
+    "sha256": "b3306d5069c3a6f1465f0e354814dfd828451d6b1ede6f8f869f87db2ca29ec5",
+    "classification": "independent honest C reconstruction",
+    "compiler": "Metrowerks CodeWarrior for GameCube GC/1.3"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F3FD8 fn_801F3FD8 -o build/GEDE01/objdiff-fcb2b397-canonical.raw.json --format json-pretty",
+    "raw_report_sha256": "1cf6fda41f21a74487aab72b301c9be93be6606346adfc9ad54ae6dc3ef4294a",
+    "raw_measurement": {
+      "target_size": 936,
+      "generated_size": 932,
+      "target_match_percent": 89.74786,
+      "generated_match_percent": 89.74786,
+      "target_instruction_rows": 243,
+      "generated_instruction_rows": 243,
+      "target_differing_instruction_rows": 55,
+      "generated_differing_instruction_rows": 55,
+      "target_relocation_entries": 26,
+      "generated_relocation_entries": 26
+    }
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F3FD8 fn_801F3FD8 -o build/GEDE01/objdiff-fcb2b397-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "config": "function_reloc_diffs=name_address",
+    "raw_report_sha256": "1cf6fda41f21a74487aab72b301c9be93be6606346adfc9ad54ae6dc3ef4294a",
+    "raw_report_byte_identical_to_canonical": true,
+    "raw_cmp_exit": 0,
+    "raw_measurement": {
+      "target_size": 936,
+      "generated_size": 932,
+      "target_match_percent": 89.74786,
+      "generated_match_percent": 89.74786,
+      "target_differing_instruction_rows": 55,
+      "generated_differing_instruction_rows": 55,
+      "target_relocation_entries": 26,
+      "generated_relocation_entries": 26
+    },
+    "relocation_assessment": "All 26 relocation types, targets, and addends occur on both sides, but strict equality fails: early SDA21 relocations are scheduled at different instruction offsets (including lbl_806513F0 at target 0x58 versus generated 0x50 and lbl_806513F4 at target 0x64 versus generated 0x6C), and the loop's lbl_806513F0/lbl_806513F4 load order is reversed at 0x198/0x1A0."
+  },
+  "divergence": {
+    "summary": "The generated function is four bytes short and differs in 55 aligned instruction rows. Remaining differences are initialization load/store scheduling and FPR choice, swapped f30/f31 constant loads in the extra-effect loop, delayed construction of fn_801F0CB0 argument r6, and candidate pointer/local-address GPR allocation (retail r31/r28-r30 versus generated r28/r29-r31).",
+    "best_match_percent": 89.74786,
+    "attempt_2_result": "The accepted base already contained the preserved attempt's best source; fresh canonical and relocation-strict measurements reproduce its score and exact raw report hash."
+  },
+  "build_verification": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol"
+    ],
+    "ninja_result": "success; build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "legal_audit": {
+    "translation_unit": "independent C",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
