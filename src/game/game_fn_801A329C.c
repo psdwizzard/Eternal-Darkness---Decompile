@@ -3,7 +3,8 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 typedef signed short s16;
 
-extern u8 lbl_80651E68[];
+extern u32 lbl_80651E68;
+extern u16 lbl_80651E6C;
 extern u8 lbl_80607440[];
 extern u8 lbl_80607120[];
 extern u32 lbl_8064D18C;
@@ -28,11 +29,9 @@ void fn_801A329C(u8* object, void* arg0, void* arg1, u8* descriptor)
     u8 count;
     u8 i;
     u8 random_base;
-    u8* constant;
-    u32 time0;
 
-    *(u32*)local = *(u32*)lbl_80651E68;
-    *(u16*)(local + 4) = *(u16*)(lbl_80651E68 + 4);
+    *(u32*)local = lbl_80651E68;
+    *(u16*)(local + 4) = lbl_80651E6C;
     entry = *(u8**)(object + 0x4C);
     count = descriptor[0];
     fn_801804AC(object, arg0, arg1, local);
@@ -51,13 +50,12 @@ void fn_801A329C(u8* object, void* arg0, void* arg1, u8* descriptor)
     object[3] |= 0x81;
     memset(object + 0x24, 0, 0x10);
 
-    constant = lbl_80607440;
     for (i = 0; i < count; i++) {
         fn_80180554(entry, arg0, arg1, local, *(u16*)(descriptor + 8), 0);
         random_base = descriptor[1];
         fn_801805E0(entry + 0x20, 4,
                     (u8)(random_base - ((random_base - 1) & fn_800FBFB0()) + 4),
-                    (u8)i * 4, constant, lbl_80650D10);
+                    (i & 0x3F) * 4, lbl_80607440, lbl_80650D10);
         fn_80180518(object + 0x24, i, 1);
         entry += 0x38;
     }
@@ -65,7 +63,7 @@ void fn_801A329C(u8* object, void* arg0, void* arg1, u8* descriptor)
     fn_8018CB70(*(void**)(object + 0x54), count,
                 *(u16*)(lbl_80607120 + 2));
     *(u16*)(object + 0x22) = 4;
-    time0 = fn_80048650();
+    arg0 = (void*)fn_80048650();
     fn_801F5A04(object + 0x6C, *(s16*)(descriptor + 4),
-                fn_80048640(), time0);
+                fn_80048640(), (u32)arg0);
 }

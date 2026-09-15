@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "assignment_id": "3dba5f9a-79ff-4f7b-a2f7-ac30ec171f7d",
+  "commands": {
+    "build": "python3 configure.py && .tools/bin/ninja -j2",
+    "build_exit_code": 0,
+    "build_sha1_check_output": "build/GEDE01/main.dol: OK",
+    "sha1sum_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801A329C fn_801A329C -o reports/GEDE01/objdiff-3dba5f9a-79ff-4f7b-a2f7-ac30ec171f7d.json --format json"
+  },
+  "objdiff": {
+    "text_size": 388,
+    "match_percent": 100.0,
+    "relocation_count_left": 21,
+    "relocation_count_right": 21,
+    "relocation_types_targets_addends_equal": true
+  },
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false
+  }
+}
