@@ -46,11 +46,10 @@ void fn_8008F960(void* object, void* actor, int* link, void* state,
     fn_80036DA4(object, flags & ~0x100000);
     if (associated == (int)lbl_8064D18C) {
         int scene = lbl_8064C560;
-        int next = scene + 1;
         int id = lbl_8031D3F8[lbl_8064C578][scene][lbl_8064C564].fourth;
         lbl_8064C564 = 0;
-        lbl_8064C560 = next;
-        if (next >= 2 || lbl_8031D3F8[lbl_8064C578][next][0].mode == 0) {
+        lbl_8064C560 = scene + 1;
+        if (lbl_8064C560 >= 2 || lbl_8031D3F8[lbl_8064C578][lbl_8064C560][0].mode == 0) {
             link[5] = 0;
             fn_80201D34(object, 9);
             fn_80201D1C(object, 1);
