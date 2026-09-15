@@ -37,9 +37,9 @@ int fn_8007930C(void *context, void *object)
 {
     u8 *state = fn_80201B8C(context);
     int owner = (int)fn_80201B94(context);
-    Vec3 position;
     Vec3 copy;
-    int result = 0;
+    Vec3 position;
+    int result;
     int value;
     int kind;
     void *action;
@@ -49,16 +49,19 @@ int fn_8007930C(void *context, void *object)
     fn_8011F114(&position, object);
     copy = position;
     fn_80128EE4(object);
+    result = 0;
     kind = fn_80201C48(owner);
     value = fn_80201B54(context);
-    if (fn_80079008(context, object))
-        return 0;
+    if (fn_80079008(context, object)) {
+        result = 0;
+        goto done;
+    }
     if (*(u8 *)(*(u8 **)(state + 0xC) + 0x45) != 0 ||
         *(signed char *)(*(u8 **)(state + 0xC) + 0x41) != 0)
-        return 0;
+        goto done;
     entry = fn_801294DC(object, 4, 0, 6);
     if (entry == 0)
-        return 0;
+        goto done;
     action = fn_801A717C();
     i = fn_80072354(*(int *)(state + 0x90));
     fn_801A7460(action, 4);
@@ -80,5 +83,7 @@ int fn_8007930C(void *context, void *object)
     fn_80201D2C(context, 6);
     fn_80201D14(context, 1);
     result = 1;
+
+done:
     return result;
 }

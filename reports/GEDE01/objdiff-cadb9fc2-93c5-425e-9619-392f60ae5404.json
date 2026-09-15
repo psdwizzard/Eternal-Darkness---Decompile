@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "assignment_id": "cadb9fc2-93c5-425e-9619-392f60ae5404",
+  "target": "fn_8007930C",
+  "source": "src/game/game_fn_8007930C.c",
+  "registration": "Object(NonMatching, \"game/game_fn_8007930C.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": "configuration completed and regenerated the GEDE01 build graph"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 1,
+      "raw_output": "FAILED: build/GEDE01/src/game/game_fn_801B46C8.externalized\nbuild/GEDE01/src/game/game_fn_801B46C8.o: 'lbl_8060C020' is not defined in a NOBITS section\nninja: build stopped: subcommand failed.",
+      "scope_note": "The full build reached an unrelated pre-existing externalization failure outside this assignment's permitted edit scope. The assigned translation unit was built separately and passed."
+    },
+    {
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8007930C.o",
+      "exit_code": 0,
+      "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8007930C.o"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8007930C fn_8007930C -o build/GEDE01/objdiff-cadb9fc2-final-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=98.04348 retail_bytes=552 generated_bytes=552 retail_instructions=138 generated_instructions=138 differing_retail_rows=53 retail_relocations=36 generated_relocations=36"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8007930C fn_8007930C -o build/GEDE01/objdiff-cadb9fc2-final-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=98.04348 retail_bytes=552 generated_bytes=552 retail_instructions=138 generated_instructions=138 differing_retail_rows=53 retail_relocations=36 generated_relocations=36 relocation_records_equal=true"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-cadb9fc2-final-canonical.raw.json build/GEDE01/objdiff-cadb9fc2-final-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "canonical_strict_cmp_exit=0"
+    },
+    {
+      "command": "compare normalized instruction relocation records from both objdiff sides",
+      "exit_code": 0,
+      "raw_output": "retail_relocations=36 generated_relocations=36 relocation_records_equal=true; all relocation offsets, types, target-symbol identities, targets, and addends agree under function_reloc_diffs=name_address"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+    },
+    {
+      "command": "rg -n 'asm|__asm|#pragma|register ' src/game/game_fn_8007930C.c",
+      "exit_code": 1,
+      "raw_output": "no matches"
+    }
+  ],
+  "canonical": {
+    "match_percent": 98.04348,
+    "retail_bytes": 552,
+    "generated_bytes": 552,
+    "retail_instructions": 138,
+    "generated_instructions": 138,
+    "differing_retail_rows": 53
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 36,
+    "generated_count": 36,
+    "records_equal": true,
+    "addresses_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true
+  },
+  "improvement": {
+    "baseline_match_percent": 92.22464,
+    "baseline_retail_bytes": 552,
+    "baseline_generated_bytes": 568,
+    "final_match_percent": 98.04348,
+    "final_retail_bytes": 552,
+    "final_generated_bytes": 552,
+    "changes": "Enabled canonical stmw/lmw lowering, corrected Vec3 declaration order, and represented the shared result/epilogue control flow."
+  },
+  "divergence": "All opcodes, instruction ordering, control-flow destinations, stack offsets, function/data references, and 36 relocation records agree. The remaining 53 objdiff rows are solely a consistent GC/1.3 nonvolatile-register allocation permutation: retail uses context/object/state/result-action-entry-loop roles across r29/r30/r28/r31/r27/r24, while generated code colors the corresponding lifetimes primarily as r27/r28/r31/r26-r30-r29/r26. No register binding or assembly was used.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: preserve the size-exact, relocation-exact, behavior-complete honest C reconstruction as NonMatching at 98.04348%."
+}
