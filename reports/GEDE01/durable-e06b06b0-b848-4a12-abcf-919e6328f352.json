@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e06b06b0-b848-4a12-abcf-919e6328f352",
+  "attempt": 3,
+  "base_commit": "6bd76fc4c795110c43dedd312bcc5f8c1bacfe73",
+  "target": "fn_800D3598",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e06b06b0-b848-4a12-abcf-919e6328f352.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both emit 136 bytes against 136 retail bytes at 93.088234%. All five R_PPC_REL24 relocations agree at offsets 0x24, 0x28, 0x38, 0x50, and 0x64 with targets fn_80201B94, fn_80201C48, fn_80201B54, fn_80129FD0, and fn_8020123C and zero addends. Remaining codegen differences are callee-saved register allocation and one prologue scheduling difference: retail keeps object/id in r31 and the fn_80201C48 result in r30, while generated code keeps object/id in r30 and the result in r31; generated stw r30, 0x18(r1) precedes mr r30, r4, while retail saves r30 after mr r31, r4."
+}
