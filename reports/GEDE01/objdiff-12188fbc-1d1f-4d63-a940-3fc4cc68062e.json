@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "assignment_id": "12188fbc-1d1f-4d63-a940-3fc4cc68062e",
+  "target": "fn_800DB660",
+  "unit": "main/game/game_fn_800DB660",
+  "compiler_flags": ["canonical project flags", "-use_lmw_stmw on"],
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800DB660 -o build/GEDE01/db660-final-canonical.json --format json-pretty fn_800DB660",
+    "stdout": "INFO Writing to build/GEDE01/db660-final-canonical.json",
+    "retail_text_bytes": 472,
+    "generated_text_bytes": 472,
+    "match_percent": 100.0
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800DB660 -o build/GEDE01/db660-final-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_800DB660",
+    "stdout": "INFO Writing to build/GEDE01/db660-final-strict.json",
+    "retail_text_bytes": 472,
+    "generated_text_bytes": 472,
+    "match_percent": 100.0,
+    "retail_relocation_instructions": 30,
+    "generated_relocation_instructions": 30,
+    "relocation_targets_and_addends": "equal"
+  },
+  "raw_comparison": {
+    "canonical_sha256": "8ac969bffb3373d981bce783335bdbb24bb6958f9cef608793795ff569f35b8c",
+    "relocation_strict_sha256": "8ac969bffb3373d981bce783335bdbb24bb6958f9cef608793795ff569f35b8c",
+    "cmp_exit_status": 0
+  },
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "ninja_check_stdout": "build/GEDE01/main.dol: OK",
+    "sha1_command": "sha1sum build/GEDE01/main.dol",
+    "sha1_stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  }
+}

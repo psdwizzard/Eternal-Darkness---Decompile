@@ -1,11 +1,5 @@
 typedef unsigned int u32;
 
-typedef struct Triple {
-    u32 x;
-    u32 y;
-    u32 z;
-} Triple;
-
 extern void *fn_80201BC8();
 extern void* fn_80201C24();
 extern void *fn_80155DB4(void *);
@@ -27,48 +21,67 @@ extern u32 lbl_8064F4B0;
 extern u32 lbl_8064F4B4;
 extern u32 lbl_8064F4B8;
 extern u32 lbl_8064F4BC;
-extern u32 lbl_8064F4C8;
-extern u32 lbl_80651ACC;
 extern u32 lbl_80651AD0;
 extern u32 lbl_80651AD4;
+extern u32 lbl_80651AD8;
+extern u32 lbl_80651ADC;
 
-void fn_800DB660(void *context, int mode)
+void fn_800DB660(void *context, int input_mode)
 {
-    void *object = fn_80201BC8(context);
-    void *state = fn_80201C24(context);
-    void *action = fn_80155DB4(context);
+    void *action;
+    int owner;
+    void *object;
+    void *state;
+    int mode;
+    void *owner_state;
+    int kind;
+    int index;
+    void *linked;
+    void *other_action;
+
+    mode = input_mode;
+    object = fn_80201BC8(context);
+    state = fn_80201C24(context);
+    action = fn_80155DB4(context);
 
     if (mode == 1) {
-        int owner = fn_80201B44();
-        void *owner_state = fn_80158598(owner, 0);
-        int kind = fn_80201B54(context);
-        int index = fn_80158264(owner_state, state, 1);
-        void *linked = (*(void ***)state)[index];
+        owner = fn_80201B44();
+        owner_state = fn_80158598(owner, 0);
+        kind = fn_80201B54(context);
+        index = fn_80158264(owner_state, state, 1);
+        linked = (**(void ****)state)[index];
 
         if (fn_801E1ED4(fn_80201B44()) != 0 && fn_801E2004(fn_80201B44()) == 4) {
-            Triple value;
-            value.x = lbl_8064F4B4;
-            value.y = lbl_8064F4B0;
-            value.z = lbl_8064F4AC;
-            fn_8012C62C(object, 15, &value.z, &value.y, &value.x, 6);
+            u32 value_z;
+            u32 value_y;
+            u32 value_x;
+            value_x = lbl_8064F4B4;
+            value_y = lbl_8064F4B0;
+            value_z = lbl_8064F4AC;
+            fn_8012C62C(object, 15, &value_z, &value_y, &value_x, 6);
             fn_8012F58C(object, 15, 0, 1, 30, 8);
         } else {
-            Triple value;
-            value.x = lbl_80651AD4;
-            value.y = lbl_80651AD0;
-            value.z = lbl_8064F4B8;
-            fn_8012C62C(object, 15, &value.z, &value.y, &value.x, 0);
+            u32 value_z;
+            u32 value_y;
+            u32 value_x;
+            value_x = lbl_80651AD4;
+            value_y = lbl_80651AD0;
+            value_z = lbl_8064F4B8;
+            fn_8012C62C(object, 15, &value_z, &value_y, &value_x, 0);
         }
 
-        fn_8002A754(action, fn_80155DB4(fn_80201814(owner)));
+        other_action = fn_80155DB4(fn_80201814(owner));
+        fn_8002A754(action, other_action);
         fn_800CC140(owner, kind, 0, linked, 0);
     } else {
         if (fn_80157864(state, 0) != 0) {
-            Triple value;
-            value.x = lbl_80651ACC;
-            value.y = lbl_8064F4C8;
-            value.z = lbl_8064F4BC;
-            fn_8012C62C(object, 15, &value.z, &value.y, &value.x, 0);
+            u32 value_z;
+            u32 value_y;
+            u32 value_x;
+            value_x = lbl_80651ADC;
+            value_y = lbl_80651AD8;
+            value_z = lbl_8064F4BC;
+            fn_8012C62C(object, 15, &value_z, &value_y, &value_x, 0);
         }
         fn_801568B8(action, 0);
     }
