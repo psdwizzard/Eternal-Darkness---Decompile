@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9a7aacb2-706d-4f1d-9af6-5604167934c7",
+  "attempt": 1,
+  "base_commit": "000452ff404cae4a5d907a3793a61de14ca4b6bb",
+  "target": "fn_8019753C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9a7aacb2-706d-4f1d-9af6-5604167934c7.json"
+  ],
+  "divergence": "Relocation-strict objdiff is 93.01255% with size exact at 956/956 bytes and all 3 relocation-bearing instructions equal. Canonical GC/1.3 schedules and colors the initial width/split/second-row induction differently (generated starts lis r8; extrwi r7; addi r8; li r9; lhz r0; clrlwi r8; subi r6, while retail starts lis r7; clrlwi r0; addi r7; li r8; lhz r9; extrwi r7; slwi r6), cascading into register mismatches through both compiler-unrolled byte-copy loops; measured diff kinds are 216 argument mismatches, 2 replacements, 2 deletions, 2 insertions, and 19 equal instructions."
+}
