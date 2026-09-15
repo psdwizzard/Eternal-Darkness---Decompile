@@ -31,14 +31,14 @@ extern void fn_8020104C(int, void*, void*, int, float);
 extern void fn_80201D34(void *, s32);
 extern void fn_80201D1C(void *, s32);
 
-s32 fn_80063124(s32 context, s32 object, s32 event, s32 current_object,
-                 s32 unused, s32 *out_result)
+void fn_80063124(s32 context, s32 object, s32 event, s32 current_object,
+                  s32 unused, s32 *out_result)
 {
     s32 event_data;
-    s32 signed_step;
     s32 step;
-    s32 special;
+    s32 signed_step;
     u16 channels;
+    s32 special;
     s32 index;
     s32 result;
 
@@ -47,8 +47,8 @@ s32 fn_80063124(s32 context, s32 object, s32 event, s32 current_object,
     step = fn_801A74F8();
     fn_801A7530(event_data);
     channels = fn_801A7530(event_data);
-    special = channels & 2;
     signed_step = (s16)step;
+    special = channels & 2;
 
     for (index = 0; index < 4; index++) {
         if ((channels & (1 << index)) != 0) {
@@ -67,10 +67,7 @@ s32 fn_80063124(s32 context, s32 object, s32 event, s32 current_object,
             state = fn_80036D38(context);
             is_current = fn_80201B44() == current_object;
             remaining -= signed_step;
-            if (remaining < limit) {
-                limit = remaining;
-            }
-            remaining = limit;
+            remaining = remaining < limit ? remaining : limit;
             remaining = remaining > 0 ? remaining : 0;
             fn_800389E0(context, index, remaining, 1);
 
@@ -97,5 +94,4 @@ s32 fn_80063124(s32 context, s32 object, s32 event, s32 current_object,
     if (out_result != 0) {
         *out_result = result;
     }
-    return result;
 }
