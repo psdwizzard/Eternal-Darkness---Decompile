@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "assignment_id": "ea5f4a5f-a6b3-498d-a073-8503f483c9a4",
+  "target": "fn_80140258",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80140258 fn_80140258 -o build/GEDE01/objdiff-ea5f4a5f-canonical.json --format json",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-ea5f4a5f-a6b3-498d-a073-8503f483c9a4-canonical.raw.json",
+    "raw_measurement": "target 432 bytes; base 432 bytes; 108 target instructions; 108 base instructions; match_percent 100.0"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80140258 fn_80140258 -o build/GEDE01/objdiff-ea5f4a5f-reloc-strict.json --format json -c function_reloc_diffs=name_address",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-ea5f4a5f-a6b3-498d-a073-8503f483c9a4-reloc-strict.raw.json",
+    "raw_measurement": "target 432 bytes; base 432 bytes; match_percent 100.0; 7 target relocation-bearing instructions; 7 base relocation-bearing instructions; all offsets, types, formatted targets, and zero addends equal",
+    "target_relocations": ["28:R_PPC_EMB_SDA21:lbl_806503D8+0", "80:R_PPC_REL24:fn_80140010+0", "108:R_PPC_REL24:fn_8013DAA8+0", "160:R_PPC_REL24:fn_8014317C+0", "184:R_PPC_REL24:fn_80211D4C+0", "212:R_PPC_REL24:fn_80211D4C+0", "248:R_PPC_REL24:fn_80211D4C+0"],
+    "base_relocations": ["28:R_PPC_EMB_SDA21:lbl_806503D8+0", "80:R_PPC_REL24:fn_80140010+0", "108:R_PPC_REL24:fn_8013DAA8+0", "160:R_PPC_REL24:fn_8014317C+0", "184:R_PPC_REL24:fn_80211D4C+0", "212:R_PPC_REL24:fn_80211D4C+0", "248:R_PPC_REL24:fn_80211D4C+0"]
+  },
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "raw_result": "ninja completed 856/856; build/GEDE01/main.dol: OK"
+  },
+  "dol": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "retail_cmp_exit": 0
+  },
+  "legal_audit": {
+    "command": "rg -n 'asm|__asm|ASM|#pragma.*code' src/game/game_fn_80140258.c",
+    "raw_output": "",
+    "result": "honest C only; no inline or whole-function assembly"
+  }
+}
