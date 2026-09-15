@@ -74,12 +74,20 @@ float fn_801F89B4(Vec3* point, Vec3* output, MotionResource* resource)
         }
 
         {
-            int current_offset = best_index * 0x18;
-            int neighbor_offset = neighbor * 0x18;
-            short* current_third = (short*)((char*)resource->spline_keys + current_offset + 0x10);
-            short* current_second = (short*)((char*)resource->spline_keys + current_offset + 0xA);
-            float amount = lbl_806514B0;
-            float step = lbl_806514AC;
+            int current_offset;
+            int neighbor_offset;
+            short* current_third;
+            short* current_second;
+            float amount;
+            float step;
+            best_index *= 0x18;
+            neighbor *= 0x18;
+            current_offset = best_index;
+            neighbor_offset = neighbor;
+            current_third = (short*)((char*)resource->spline_keys + current_offset + 0x10);
+            current_second = (short*)((char*)resource->spline_keys + current_offset + 0xA);
+            amount = lbl_806514B0;
+            step = lbl_806514AC;
             fn_80179814((short*)((char*)resource->spline_keys + current_offset + 4),
                         (short*)((char*)resource->spline_keys + neighbor_offset + 4),
                         current_third, current_second, output, amount);
@@ -127,10 +135,16 @@ float fn_801F89B4(Vec3* point, Vec3* output, MotionResource* resource)
         }
 
         {
-            int current_offset = best_index * 0xC;
-            int neighbor_offset = neighbor * 0xC;
-            float amount = lbl_806514B0;
-            float step = lbl_806514AC;
+            int current_offset;
+            int neighbor_offset;
+            float amount;
+            float step;
+            best_index *= 0xC;
+            neighbor *= 0xC;
+            current_offset = best_index;
+            neighbor_offset = neighbor;
+            amount = lbl_806514B0;
+            step = lbl_806514AC;
             fn_8017974C((short*)((char*)resource->linear_keys + current_offset + 4),
                         (short*)((char*)resource->linear_keys + neighbor_offset + 4),
                         output, amount);
