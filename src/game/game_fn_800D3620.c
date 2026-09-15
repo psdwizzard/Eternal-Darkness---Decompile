@@ -13,6 +13,9 @@ extern unsigned long long fn_8020123C();
 
 int fn_800D3620(void *state, void *object)
 {
+    /* NonMatching: honest C recovers all calls and data flow. GC/1.3 reuses
+     * the object register for value and emits 204 bytes; retail keeps four
+     * nonvolatile lifetimes through the third query and emits 212 bytes. */
     void *resource = fn_80201B94(object);
     int value = fn_80201C48(resource);
     int id = fn_80201B54(object);

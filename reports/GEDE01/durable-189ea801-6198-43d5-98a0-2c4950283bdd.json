@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "189ea801-6198-43d5-98a0-2c4950283bdd",
+  "attempt": 1,
+  "base_commit": "109570f4e1976a60ba6c90c071abc899eeef313a",
+  "target": "fn_800D3620",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-189ea801-6198-43d5-98a0-2c4950283bdd.json"
+  ],
+  "divergence": "Best canonical objdiff is 91.01887%: retail is 212 bytes while GC/1.3 emits 204. Retail saves r28-r31 and keeps state/object/resource/value live in r31/r30/r28/r29 through fn_80201B54 before reusing r30 for id; generated code saves only r29-r31, assigns state/resource/value/id to r29/r31/r30/r31, and consequently shifts prologue, epilogue, register moves, and all later call offsets by four bytes. All 11 relocation-bearing instructions retain the same types, targets, and zero addends."
+}
