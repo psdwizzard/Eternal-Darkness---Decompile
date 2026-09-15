@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "104e63ea-4a46-4446-b447-ecb57ee7c72e",
+  "attempt": 3,
+  "base_commit": "05e0bd5e4683e395b2b81f6133b659db596dba54",
+  "target": "fn_801FF008",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-104e63ea-4a46-4446-b447-ecb57ee7c72e.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 96.950356% with retail and generated code both 564 bytes (143 instructions). The remaining codegen divergence is confined to inner-loop initialization/order at retail +0x7C..+0x84 (retail li r30; mr r29,r30; mr r28,r21 versus generated mr r28,r21; li r30; li r29), one commutative add operand order at retail +0x98, and equivalent object-address formation at retail +0x11C..+0x124 (retail loads the records base into r0, adds r29, then indexes by r27; generated loads it into r3, adds r27 and r29, then indexes by r3). Relocation targets and addends agree. The full build and relink passed, and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

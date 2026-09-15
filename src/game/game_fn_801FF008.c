@@ -50,6 +50,7 @@ void fn_801FF008(Header* header, int arg)
     int count;
     Record* output;
     void* object;
+    u32 object_value;
     u32 value;
 
     result = 2;
@@ -61,10 +62,11 @@ void fn_801FF008(Header* header, int arg)
     for (; i < count; i++) {
         *output = *(Record*)((u8*)header->records + record_offset);
 
-        value_offset = id_offset = 0;
+        id_offset = 0;
+        value_offset = id_offset;
         destination = output;
-        for (j = 0; j < 11; j++, value_offset += 4,
-             destination = (Record*)((u8*)destination + 4), id_offset += 2) {
+        for (j = 0; j < 11; j++, id_offset += 2, value_offset += 4,
+             destination = (Record*)((u8*)destination + 4)) {
             id = *(s16*)(record_offset + (u8*)header->records +
                          id_offset + 0x5C);
             if (id != -1) {
@@ -79,9 +81,10 @@ void fn_801FF008(Header* header, int arg)
                         if (result == 2) {
                             result = 1;
                         }
-                    } else if ((object = *(void**)((u8*)header->records +
-                                                   record_offset +
-                                                   value_offset)) != 0) {
+                    } else if ((object_value = *(u32*)(record_offset +
+                                                       (u8*)header->records +
+                                                       value_offset)) != 0) {
+                        object = (void*)object_value;
                         if (object == 0) {
                             fn_800F8BAC(lbl_8064C3B8, lbl_802FC8AC, 371);
                         }
