@@ -20,8 +20,9 @@ extern unsigned int fn_800F5C54(double);
 extern int fn_8015C4A4(int, int);
 extern Vec3s* fn_80158ABC(int, int, void*);
 extern void fn_8018358C(EffectParams*);
-extern void fn_801834F0(void);
-extern void* fn_80148008(Vec3f*, Descriptor*, EffectParams*, void (*)(void));
+extern u8* fn_801834F0(void*, void*, void*);
+extern void* fn_80148008(Vec3f*, Descriptor*, EffectParams*,
+                         u8* (*)(void*, void*, void*));
 extern void* fn_80156938(void*);
 extern void fn_8017FF1C(void*, int);
 extern const u32 lbl_80651CA0;

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9be4d4c7-eb11-4fee-8f41-16fcadc25514",
+  "attempt": 1,
+  "base_commit": "295f9cac689e16067b5534df255b6ae97b3ce207",
+  "target": "fn_80173D44",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9be4d4c7-eb11-4fee-8f41-16fcadc25514.json"
+  ],
+  "divergence": "Canonical GC/1.3 is size-exact at 448 bytes and scores 90.66071%, with four objdiff inserts and four deletes. Generated code uses a 0xF0-byte frame, preserves only r31 for state/resource/kind, and spills the initial lbl_806506F4 value; retail uses a 0xE0-byte frame, preserves r30/r31, keeps the initial value in r31, and carries state/resource/kind in r30. This shifts the descriptor, Vec3f, conversion, aggregate-copy, and epilogue stack slots/schedule. Both sides have 112 instructions and 21 relocation-bearing instructions; relocation type/target/addend sequences agree, but only 13 of 21 relocation offsets agree because of the schedule differences."
+}
