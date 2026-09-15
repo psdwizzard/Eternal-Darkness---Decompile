@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "543f13f9-a63d-4efc-94cb-1f91f2ebe59c",
+  "attempt": 1,
+  "base_commit": "3e092febb4fceff7aab2a0ece67ec861d8ed9383",
+  "target": "fn_800674E4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-543f13f9-a63d-4efc-94cb-1f91f2ebe59c.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits the correct 364-byte function and all 20 relocation-bearing instructions match under relocation-strict comparison, but objdiff is 99.78022%: the fn_800AD2B4 result is allocated to r30 instead of retail r26 at text offset 0xF0, with the same register-choice difference propagated through cmpwi at 0x134, cmpw at 0x13C, and mr at 0x148."
+}
