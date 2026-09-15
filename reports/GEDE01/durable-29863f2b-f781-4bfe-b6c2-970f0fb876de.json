@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "29863f2b-f781-4bfe-b6c2-970f0fb876de",
+  "attempt": 2,
+  "base_commit": "ee7ca26032c638b967341df51be82c397224176d",
+  "target": "fn_80132B24",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-29863f2b-f781-4bfe-b6c2-970f0fb876de.json"
+  ],
+  "divergence": "Best canonical GC/1.3 result is 95.078125%: candidate is 260 bytes versus retail 256 because MWCC materializes lbl_8030F540 through r0 and copies it to r28. In the two-word copy, retail holds the first word in r3 and stores it before forming the fn_801FE8DC output pointer; candidate holds it in r6 and forms that pointer first. The nine relocation type/target/addend tuples agree in sequence, but their actual offsets after the extra mr differ by four bytes, so relocation-strict comparison is not 100%."
+}

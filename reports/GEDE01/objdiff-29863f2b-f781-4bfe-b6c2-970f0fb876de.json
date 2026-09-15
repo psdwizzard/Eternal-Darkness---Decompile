@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "assignment_id": "29863f2b-f781-4bfe-b6c2-970f0fb876de",
+  "target": "fn_80132B24",
+  "compiler": "GC/1.3",
+  "cflags_extra": ["-use_lmw_stmw on"],
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80132B24.c fn_80132B24",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measurements": {
+    "build_tail": [
+      "[844/847] LINK build/GEDE01/main.elf",
+      "[845/847] DOL build/GEDE01/main.dol",
+      "[846/847] CHECK config/GEDE01/build.sha1",
+      "build/GEDE01/main.dol: OK",
+      "[847/847] PROGRESS"
+    ],
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "fndiff_summary": "target 256 bytes  base 260 bytes  match 95.078125",
+    "instruction_differences": [
+      "target 0x002c: addi r28, r3, lbl_8030F540@l | candidate: addi r0, r3, lbl_8030F540@l",
+      "target after 0x0030: no instruction | candidate: mr r28, r0",
+      "target copy load: lwz r3, 0x0(r26) | candidate: lwz r6, 0x0(r26)",
+      "target order: stw r3, 0x6c(r28) then addi r3, r28, 0x54 | candidate order: addi r3, r28, 0x54 then stw r6, 0x6c(r28)"
+    ],
+    "retail_actual_relocations": [
+      "0x0024 R_PPC_ADDR16_HA lbl_8030F540 addend 0",
+      "0x002c R_PPC_ADDR16_LO lbl_8030F540 addend 0",
+      "0x0044 R_PPC_REL24 fn_801FD6F4 addend 0",
+      "0x0058 R_PPC_EMB_SDA21 lbl_8065024C addend 0",
+      "0x0074 R_PPC_REL24 fn_801FD6AC addend 0",
+      "0x008c R_PPC_EMB_SDA21 lbl_80650228 addend 0",
+      "0x009c R_PPC_EMB_SDA21 lbl_80650250 addend 0",
+      "0x00c4 R_PPC_REL24 fn_801FE8DC addend 0",
+      "0x00d0 R_PPC_REL24 fn_801E8328 addend 0"
+    ],
+    "candidate_actual_relocations": [
+      "0x0024 R_PPC_ADDR16_HA lbl_8030F540 addend 0",
+      "0x002c R_PPC_ADDR16_LO lbl_8030F540 addend 0",
+      "0x0048 R_PPC_REL24 fn_801FD6F4 addend 0",
+      "0x005c R_PPC_EMB_SDA21 lbl_8065024C addend 0",
+      "0x0078 R_PPC_REL24 fn_801FD6AC addend 0",
+      "0x0090 R_PPC_EMB_SDA21 lbl_80650228 addend 0",
+      "0x00a0 R_PPC_EMB_SDA21 lbl_80650250 addend 0",
+      "0x00c8 R_PPC_REL24 fn_801FE8DC addend 0",
+      "0x00d4 R_PPC_REL24 fn_801E8328 addend 0"
+    ]
+  },
+  "relocation_strict": {
+    "relocation_sequence_type_target_addend_equal": true,
+    "actual_offsets_equal": false,
+    "count_each": 9,
+    "code_match": false,
+    "strict_match": false
+  },
+  "experiments": [
+    {"form": "preserved explicit four-word copy", "score": 92.109375, "retained": false},
+    {"form": "single-object global declaration", "score": 59.671875, "retained": false},
+    {"form": "two scalar copy temporaries", "score": 94.96875, "retained": false},
+    {"form": "two-word Pair structure assignment", "score": 95.078125, "retained": true}
+  ],
+  "legal_audit": "Honest C only; no inline or whole-function assembly; independent translation unit retained; no shared reconstruction, gate changes, compiler-policy changes, or neighboring function edits."
+}

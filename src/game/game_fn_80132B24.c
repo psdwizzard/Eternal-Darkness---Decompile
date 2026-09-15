@@ -18,6 +18,10 @@ typedef struct Quad {
     unsigned int word[4];
 } Quad;
 
+typedef struct Pair {
+    unsigned int word[2];
+} Pair;
+
 typedef struct RuntimeSlot {
     char pad_0[0x50];
     int handle;
@@ -62,8 +66,7 @@ void fn_80132B24(Batch* batch, u16 value)
                 fn_801FD6AC((char*)resource + 0x34, record, record->vector,
                             (int)(record->scale * lbl_8065024C));
             } else {
-                slot->value_words.word[0] = record->words[0];
-                slot->value_words.word[1] = record->words[1];
+                *(Pair*)&slot->value_words = *(Pair*)record;
                 slot->value_words.word[2] = record->words[2];
                 slot->value_words.word[3] = *(unsigned int*)record->vector;
                 slot->state = 0;
