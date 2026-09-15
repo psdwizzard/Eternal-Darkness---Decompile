@@ -5,11 +5,13 @@ extern void fn_8020123C(int first, int second, int third, int value);
 
 int fn_80204230(int unused, int object)
 {
+    int second;
+
     if (object != 0) {
-        int first = fn_801A7540(object);
-        int second = fn_801A7498(object);
-        if (first != 0) {
-            fn_8020123C(first, second, second, 0);
+        unused = fn_801A7540(object);
+        second = fn_801A7498(object);
+        if (unused != 0) {
+            fn_8020123C(unused, second, second, 0);
         }
         fn_801A7228(object);
     }
