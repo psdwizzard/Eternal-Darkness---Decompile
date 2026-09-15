@@ -1,4 +1,5 @@
 typedef void (*EntryCallback)(int, int);
+typedef void (*BeginCallback)(int, int);
 typedef void (*DoneCallback)(int);
 
 typedef struct WorkEntry {
@@ -14,7 +15,7 @@ typedef struct WorkEntry {
 } WorkEntry;
 
 typedef struct WorkList {
-    DoneCallback begin;
+    BeginCallback begin;
     WorkEntry* entries;
     DoneCallback done;
     int callback_arg;
@@ -24,32 +25,32 @@ typedef struct WorkList {
     unsigned int flags;
 } WorkList;
 
-extern int lbl_8064D050;
+extern unsigned int lbl_8064D050;
 extern int lbl_8064D06C;
 extern WorkList* lbl_8064D078;
 extern unsigned int fn_80144760(unsigned int, int, short, int);
-extern short fn_80144A2C(unsigned int, short, short, int);
+extern int fn_80144A2C(unsigned int, short, short, int);
 
 int fn_80144C4C(WorkList* list)
 {
+    int result = 0;
     WorkEntry* entry;
     int remaining;
-    int result = 0;
 
     list->flags |= 2;
     if (list->active != 0)
         result = 4;
-    if (lbl_8064D078 != 0 && lbl_8064D078 != list) {
+    if (lbl_8064D078 != 0 && list != lbl_8064D078) {
         result |= 2;
         if (list->active == 0 && list->begin != 0)
-            list->begin(list->callback_arg);
+            list->begin(list->callback_arg, 2);
     }
     if (result == 0) {
         entry = list->entries;
         lbl_8064D06C = 0;
         result = 1;
         if (list->begin != 0)
-            list->begin(list->callback_arg);
+            list->begin(list->callback_arg, 1);
         if (lbl_8064D050 == 0) {
             remaining = list->count;
             while (remaining > 0) {
@@ -58,7 +59,7 @@ int fn_80144C4C(WorkList* list)
                         unsigned int mask = fn_80144760(entry->flags, 1, entry->adjustment, list->index);
                         if ((mask | (entry->flags == 0)) != 0) {
                             if (lbl_8064D06C != 0)
-                                break;
+                                goto next;
                             if (entry->counter == entry->trigger + entry->period)
                                 entry->counter = entry->trigger;
                             if (entry->counter == 0 || entry->counter == entry->trigger)
@@ -73,6 +74,7 @@ int fn_80144C4C(WorkList* list)
                             entry->callback(fn_80144A2C(mask, entry->adjustment, entry->scale, list->index), entry->callback_arg);
                     }
                 }
+            next:
                 remaining--;
                 entry++;
             }
