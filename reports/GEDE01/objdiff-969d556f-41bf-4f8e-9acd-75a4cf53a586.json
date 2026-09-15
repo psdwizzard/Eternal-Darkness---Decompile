@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "assignment_id": "969d556f-41bf-4f8e-9acd-75a4cf53a586",
+  "target": "fn_800DE704",
+  "tool": "tools/fndiff.py",
+  "canonical": {
+    "target_bytes": 452,
+    "generated_bytes": 448,
+    "match_percent": 97.87611,
+    "raw_output": "target 452 bytes  base 448 bytes  match 97.87611"
+  },
+  "relocation_strict": {
+    "match": false,
+    "reason": "Code is not 100%: generated output is four bytes short. Relocation-bearing callback and call instructions have the expected targets and addends in the measured fndiff, but the canonical code-size/instruction gate fails.",
+    "raw_divergence": [
+      "0x00ac retail: mr r0, r3 | generated: mr r31, r3",
+      "0x00b0 retail: mr r3, r30 | generated: mr r3, r28",
+      "0x00b4 retail: mr r27, r0 | generated: mr r4, r30",
+      "0x00b8 retail: mr r4, r31 | generated: absent",
+      "remaining differences: callee-saved register allocation r27-r31"
+    ]
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "python3 tools/fndiff.py game/game_fn_800DE704.c fn_800DE704"
+    ],
+    "ninja_result": "build/GEDE01/main.dol: OK",
+    "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "translation_unit": "src/game/game_fn_800DE704.c"
+  }
+}
