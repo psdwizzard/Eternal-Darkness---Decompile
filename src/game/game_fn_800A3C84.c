@@ -6,6 +6,13 @@ typedef struct Vec800A3C84 {
     u32 x;
 } Vec800A3C84;
 
+typedef struct Vec4_800A3C84 {
+    u32 w;
+    u32 z;
+    u32 y;
+    u32 x;
+} Vec4_800A3C84;
+
 extern u32 lbl_8064EEAC;
 extern u32 lbl_8064EEB0;
 extern u32 lbl_8064EEB4;
@@ -21,8 +28,9 @@ extern void fn_8012F58C(void*, void*, int, int, int, int);
 
 /*
  * Behavior-complete reconstruction of the three-mode vector/action dispatch.
- * The remaining differences are MWCC's aggregate stack-slot placement and
- * volatile register scheduling. Objdiff: 93.8806%, 268/264 bytes.
+ * The remaining differences are MWCC's argument-address scheduling and the
+ * temporary register selected for the first vector word in the first two
+ * arms. Objdiff: 95.58209%, size-exact at 268 bytes.
  */
 void fn_800A3C84(void* object, void* runtime, int first, int second)
 {
@@ -43,7 +51,8 @@ void fn_800A3C84(void* object, void* runtime, int first, int second)
                      (float*)&values.z, 4);
         fn_8012F58C(object, runtime, 0, 0, 0, 0x40);
     } else {
-        Vec800A3C84 values;
+        Vec4_800A3C84 values;
+        values.w = lbl_8064EEC4;
         values.z = lbl_8064EEC4;
         values.y = lbl_80651A28;
         values.x = lbl_8064EEC4;

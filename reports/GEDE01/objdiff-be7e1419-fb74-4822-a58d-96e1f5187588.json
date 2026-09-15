@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "assignment_id": "be7e1419-fb74-4822-a58d-96e1f5187588",
+  "target": "fn_800A3C84",
+  "compiler": "GC/1.3 mwcceppc.exe, canonical flags from configure.py",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A3C84 fn_800A3C84 -o build/GEDE01/objdiff-be7e1419-canonical.raw.json --format json-pretty",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measured_outputs": {
+    "objdiff": "target 268 bytes  base 268 bytes  match 95.58209",
+    "build": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "canonical": {
+    "match_percent": 95.58209,
+    "retail_size": 268,
+    "generated_size": 268,
+    "matched": false
+  },
+  "relocation_strict": {
+    "matched": false,
+    "reason": "Code is not 100%; relocation identities were separately audited from the raw objdiff instruction records.",
+    "retail_relocation_count": 14,
+    "generated_relocation_count": 14,
+    "targets_and_addends_match": true,
+    "addends": "all zero",
+    "ordered_targets": [
+      "lbl_8064EEB4",
+      "lbl_8064EEB0",
+      "lbl_8064EEAC",
+      "fn_8012C62C",
+      "fn_8012C478",
+      "lbl_8064EEC0",
+      "lbl_8064EEBC",
+      "lbl_8064EEB8",
+      "fn_8012C62C",
+      "fn_8012F58C",
+      "lbl_8064EEC4",
+      "lbl_80651A28",
+      "fn_8012C62C",
+      "fn_8012C478"
+    ]
+  },
+  "divergence": "Size-exact honest C. At retail offsets 0x24..0x40 and 0x6c..0x88 MWCC emits equivalent but differently scheduled address setup: generated selects r7 rather than r8 for the first vector-word load, orders the r6/r5 address calculations oppositely, stores that first word before forming r7, and schedules li r8 earlier. At 0xbc and 0xcc the final arm forms r7 and r5 in the opposite order. All remaining instructions and all 14 relocation targets/addends agree."
+}
