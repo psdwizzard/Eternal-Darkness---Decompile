@@ -2,7 +2,7 @@ typedef signed short s16;
 typedef struct Vec3 { float x, y, z; } Vec3;
 typedef struct SVec3 { s16 x, y, z; } SVec3;
 
-extern const Vec3 lbl_8023A718;
+extern Vec3 lbl_8023A718;
 extern const Vec3 lbl_8063D378;
 extern const float lbl_806504B8;
 extern const float lbl_806504BC;
