@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c936c077-e1a5-40a9-b54b-a22edd860425",
+  "attempt": 2,
+  "base_commit": "f6fa39de60f338e61a9739d53505f566e14f13a8",
+  "target": "fn_801F3528",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c936c077-e1a5-40a9-b54b-a22edd860425.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict name/address objdiff is size-exact at 128/128 bytes and 93.65625%. Retail allocates the 0x4330 conversion word, lbl_8063C608 base, blue, and alpha in r7/r6/r4/r0 while GC/1.3 uses r0/r4/r6/r7; generated lbl_8064C384 store occurs at 0x70 instead of retail 0x64, displacing the final float stores. All four relocation-bearing instructions are present with the intended named globals except the generated conversion constant remains object-local @6 rather than retail lbl_80651350. Full rebuild passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
