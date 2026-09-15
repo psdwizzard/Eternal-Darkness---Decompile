@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "assignment_id": "a1e392a6-c2b8-4631-9f7a-ddbffacf0415",
+  "target": "fn_8018F948",
+  "compiler": "GC/1.3",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8018F948 fn_8018F948 -o reports/GEDE01/objdiff-a1e392a6-c2b8-4631-9f7a-ddbffacf0415.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8018F948 fn_8018F948 -o reports/GEDE01/objdiff-a1e392a6-c2b8-4631-9f7a-ddbffacf0415-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "canonical": {
+    "match_percent": 91.197914,
+    "retail_bytes": 384,
+    "generated_bytes": 384,
+    "differing_instruction_rows_per_side": 49
+  },
+  "relocation_strict": {
+    "match_percent": 91.197914,
+    "differing_instruction_rows_per_side": 49,
+    "relocation_bearing_instructions_per_side": 19,
+    "relocation_targets_and_addends": "equivalent under function_reloc_diffs=name_address"
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_check": "build/GEDE01/main.dol: OK",
+  "legal_audit": {
+    "command_output": "legal audit passed (15442 tracked project files inspected)",
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false
+  },
+  "source_experiment": "Replacing the local aliases with direct parameter uses produced byte-identical 384-byte code and the same 91.197914% score; the canonical source text was restored.",
+  "divergence": "Exact-size honest C. GC/1.3 assigns object/config/entry to r31/r27/r28 instead of retail r27/r30/r31, correspondingly permutes first/second/count/value-index registers, emits clrlwi for the fn_80180518 index argument where retail reuses the already-clean byte value, and hoists the two lbl_80651D80 fixed-coordinate loads ahead of the retail argument moves."
+}
