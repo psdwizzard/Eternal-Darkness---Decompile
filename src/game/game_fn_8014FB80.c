@@ -7,7 +7,7 @@ typedef struct Vec3Words { u32 x, y, z; } Vec3Words;
 
 extern u32 lbl_80651C10;
 extern u16 lbl_80651C14;
-extern float lbl_80650580;
+extern const float lbl_80650580;
 extern void fn_8014B738(void);
 extern u8* fn_80149D98(void*);
 extern void fn_80149D64(void*);
@@ -25,6 +25,7 @@ void fn_8014FB80(Vec3Words* position, u16 value, u16 target,
     if (instance != 0) {
         u8* embedded;
         Vec3Words adjusted;
+        u16 targetValue = target;
 
         config.word = lbl_80651C10;
         config.half = lbl_80651C14;
@@ -40,9 +41,9 @@ void fn_8014FB80(Vec3Words* position, u16 value, u16 target,
         *(u16*)(embedded + 6) = *(u16*)(embedded + 8) + 2;
         embedded[2] = 250;
         *(s8*)(embedded + 3) = -125;
-        embedded[0x14] = -(((u16)target - 5) / *(u16*)(embedded + 6));
+        embedded[0x14] = -((targetValue - 5) / *(u16*)(embedded + 6));
         *(u16*)(embedded + 0x1E) = 5;
-        *(u16*)(embedded + 0x1C) = (u16)target + 32;
+        *(u16*)(embedded + 0x1C) = targetValue + 32;
         embedded[0x18] |= 2;
         if (enabled != 0)
             embedded[0x18] |= 8;
