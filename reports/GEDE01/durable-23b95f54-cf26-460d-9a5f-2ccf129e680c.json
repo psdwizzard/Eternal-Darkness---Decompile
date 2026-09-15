@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "23b95f54-cf26-460d-9a5f-2ccf129e680c",
+  "attempt": 4,
+  "base_commit": "d2027905024d5755da2b81a5c5cfda74e0238cb5",
+  "target": "fn_8017C1C8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-23b95f54-cf26-460d-9a5f-2ccf129e680c.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff-cli v3.6.1 measure 99.827580% with equal 232-byte retail and generated code. Exactly two instruction rows differ: at 0x60 retail emits `lwz r4, 0x8(r31)` while GC/1.3 emits `lwz r0, 0x8(r31)`, and at 0x64 retail emits `cmpwi r4, -0x1` while GC/1.3 emits `cmpwi r0, -0x1`. All 13 real relocations have identical offsets, types, targets, and zero addends; the nine R_PPC_NONE metadata relocations also agree. New expression-shape and type hypotheses did not improve the result: switch-sentinel, reversed-comparison, volatile-field, and unsigned-return variants retained 99.827580%; an arithmetic-sentinel variant regressed to 98.879310%; and a volatile-request variant produced 240 bytes at 85.517240%. The strongest behavior-complete NonMatching reconstruction was restored. The canonical build passes and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
