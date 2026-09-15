@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "assignment_id": "21291a4c-033d-48c3-a9e6-8eecbef534ed",
+  "attempt": 1,
+  "target": "fn_801E7B24",
+  "unit": "main/game/game_fn_801E7B24",
+  "source": {
+    "path": "eternal-darkness-decomp/src/game/game_fn_801E7B24.c",
+    "sha256": "9ee5934eb7dd49e7386c6a2a1ab25fe6491cea616645dcdbe5803d469e936581",
+    "classification": "independent C translation unit"
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "canonical_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E7B24 fn_801E7B24 -o build/GEDE01/objdiff-21291a4c-canonical.raw.json --format json-pretty",
+    "raw_report_sha256": "5ca5ba85844a527e598ec6e3b972814ec5f84c848edf2ac1bfe549150e13a5c9",
+    "raw_measurement": "left size 180 match 100.0 differing instruction rows 0 relocations 0; right size 180 match 100.0 differing instruction rows 0 relocations 0"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E7B24 fn_801E7B24 -o build/GEDE01/objdiff-21291a4c-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "config": "function_reloc_diffs=name_address",
+    "raw_report_sha256": "5ca5ba85844a527e598ec6e3b972814ec5f84c848edf2ac1bfe549150e13a5c9",
+    "raw_report_byte_identical_to_canonical": true,
+    "raw_cmp_exit": 0,
+    "raw_measurement": "left size 180 match 100.0 differing instruction rows 0 relocations 0; right size 180 match 100.0 differing instruction rows 0 relocations 0",
+    "relocation_assessment": "Retail and generated functions both contain zero relocation entries, so relocation targets and addends agree vacuously."
+  },
+  "build_verification": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol"
+    ],
+    "ninja_raw_result": "success; build/GEDE01/main.dol: OK",
+    "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "legal_audit": {
+    "translation_unit": "independent C",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
