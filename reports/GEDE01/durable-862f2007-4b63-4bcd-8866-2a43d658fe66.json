@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "862f2007-4b63-4bcd-8866-2a43d658fe66",
+  "attempt": 4,
+  "base_commit": "a4d9a6aef16729badaeb947dbbc9db8a3172294e",
+  "target": "fn_8018C8FC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-862f2007-4b63-4bcd-8866-2a43d658fe66.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is 99.872610% for a size-exact 628/628-byte function, improving the preserved 99.808914% frontier. Modeling the third argument as an int formal and explicitly normalizing it into a u8 local places midpoint in retail r30. Exactly four instruction arguments remain different: retail assigns mask/repeat count to r31/r29, while GC/1.3 assigns them to r29/r31 (offsets 0x34, 0x3C, 0x4C, and 0x23C). All five relocation-bearing instructions agree by offset, type, target, and addend, including lbl_80607120 R_PPC_NONE addend 12. The canonical build produced a byte-identical DOL with SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
