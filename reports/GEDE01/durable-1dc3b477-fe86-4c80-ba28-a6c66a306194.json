@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "1dc3b477-fe86-4c80-ba28-a6c66a306194",
+  "attempt": 4,
+  "base_commit": "93c6c56b81a3c0b40bcea151f10f2fd94b3f3d66",
+  "target": "fn_8007CFB0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1dc3b477-fe86-4c80-ba28-a6c66a306194.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.8125% for 320 bytes/80 instructions. Exactly three register-allocation mismatches remain at instructions 4, 5, and 10: retail keeps the incoming object in r31 (mr r31,r4; mr r3,r31 twice), while generated code keeps it in r27 (mr r27,r4; mr r3,r27 twice). All 17 relocation-bearing instructions agree by target name/address/addend under function_reloc_diffs=name_address; all later allocation, instruction order, control flow, and code size agree. This attempt tested a distinct live-range/coalescing hypothesis using explicit parameter copies, direct object/owner variable reuse, narrower lexical scope for state, parameter type/const/register qualifiers, register locals, opt_propagation control, and a late redundant object dependency. The equivalent forms stayed at 99.8125%; lexical scope and non-folded dependency variants regressed, so the clean behavior-complete NonMatching C was retained."
+}
