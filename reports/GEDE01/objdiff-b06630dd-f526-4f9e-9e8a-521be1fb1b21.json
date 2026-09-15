@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "assignment_id": "b06630dd-f526-4f9e-9e8a-521be1fb1b21",
+  "target": "fn_80197D20",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80197D20 fn_80197D20 -o reports/GEDE01/objdiff-b06630dd-f526-4f9e-9e8a-521be1fb1b21-canonical.raw.json --format json-pretty",
+    "raw_report": "reports/GEDE01/objdiff-b06630dd-f526-4f9e-9e8a-521be1fb1b21-canonical.raw.json",
+    "raw_measurement_output": "retail_bytes=1076 retail_instructions=269 match_percent=88.09293 relocations=13\ngenerated_bytes=1072 generated_instructions=268 match_percent=88.09293 relocations=13"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80197D20 fn_80197D20 -o reports/GEDE01/objdiff-b06630dd-f526-4f9e-9e8a-521be1fb1b21-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_report": "reports/GEDE01/objdiff-b06630dd-f526-4f9e-9e8a-521be1fb1b21-reloc-strict.raw.json",
+    "raw_measurement_output": "retail_bytes=1076 retail_instructions=269 match_percent=88.09293 relocations=13\ngenerated_bytes=1072 generated_instructions=268 match_percent=88.09293 relocations=13",
+    "raw_relocation_output": "retail: lbl_8023B0A0@ha+0, lbl_8023B0A0@l+0, fn_8018FEDC+0, fn_80198AAC+0, memcpy+0, lbl_80650BA8@sda21+0, lbl_80650B94@sda21+0, lbl_80650B98@sda21+0, fn_80179370+0, fn_80198154+0, fn_80198318+0, lbl_80650BAC@sda21+0, fn_80198BF4+0\ngenerated: lbl_8023B0A0@ha+0, lbl_8023B0A0@l+0, fn_8018FEDC+0, fn_80198AAC+0, memcpy+0, lbl_80650BA8@sda21+0, lbl_80650B94@sda21+0, @61@sda21+0, fn_80179370+0, fn_80198154+0, fn_80198318+0, lbl_80650BAC@sda21+0, fn_80198BF4+0"
+  },
+  "experiments": [
+    {
+      "name": "leading parameter locals",
+      "raw_measurement_output": "retail_bytes=1076 generated_bytes=1068 match_percent=86.50929; generated prologue stmw r21,0x44(r1)",
+      "retained": false
+    },
+    {
+      "name": "typed CoordPair and Entry delta loop",
+      "raw_measurement_output": "retail_bytes=1076 generated_bytes=652 match_percent=53.929367; typed indexing suppressed the retail-style unrolling",
+      "retained": false
+    },
+    {
+      "name": "duplicate full-count and half-count live ranges",
+      "raw_measurement_output": "retail_bytes=1076 generated_bytes=1072 match_percent=88.09293; generated prologue stmw r20,0x40(r1), with mr r20,r31 but duplicate half-count coalesced",
+      "retained": true
+    }
+  ],
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_terminal_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_cmp_raw_output": "DOL_CMP_EXIT=0"
+  },
+  "divergence": "Best candidate is 1072 bytes versus retail 1076. Retail preserves r19-r31 and explicitly copies both count (mr r19,r31) and half-count (mr r20,r30); GC/1.3 preserves r20-r31, emits only the count copy (mr r20,r31), and coalesces the identical half-count live range. The resulting one-register rotation and the unrolled delta-loop scheduling differ. All 13 relocation-bearing instructions and addends are present, but the compiler-generated signed-short-to-float conversion bias targets TU-local @61 instead of retail lbl_80650B98. Under the permitted one-function honest-C scope, merely declaring lbl_80650B98 does not retarget MWCC's synthesized conversion pool; doing so requires externalization/configuration or shared pool ownership, both outside this assignment."
+}

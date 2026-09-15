@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b06630dd-f526-4f9e-9e8a-521be1fb1b21",
+  "attempt": 2,
+  "base_commit": "acc511e6434c90eb39fdab3d06b8e9f01b711fd1",
+  "target": "fn_80197D20",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b06630dd-f526-4f9e-9e8a-521be1fb1b21.json"
+  ],
+  "divergence": "Best canonical and relocation-strict score is 88.09293% (1072 generated versus 1076 retail bytes). Retail saves r19-r31 and keeps separate count and half-count copies; GC/1.3 saves r20-r31, coalesces the half-count copy, and consequently allocates/schedules the unrolled delta loop differently. All 13 relocation slots and addends exist, but the synthesized signed-conversion bias targets local @61 rather than retail lbl_80650B98; correcting that pool ownership requires a forbidden configuration/shared-TU change."
+}
