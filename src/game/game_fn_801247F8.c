@@ -4,17 +4,20 @@ typedef unsigned int u32;
 typedef signed int s32;
 
 typedef struct Channel { float value, upper, lower, rise, fall, delta; s32 repeats, delay, timer; u32 flags; } Channel;
+typedef struct EntryChannel { u32 value; u32 pad4; } EntryChannel;
 typedef struct Table { u8 pad[0xC]; u16 count; u8 padE[0x1A]; u8* entries; } Table;
 typedef struct Owner { u8 pad[0x3C]; Table* table; u8 pad40[0x25C]; Channel* channels; u8 pad2A0[0x24]; u32 active; } Owner;
 
 extern const float lbl_80650110;
 extern const float lbl_80650114;
 
+#pragma optimization_level 3
+
 void fn_801247F8(Owner* owner, s32 index, s32 frames, float target)
 {
     u32 one = 1;
     s32 offset = 0;
-    s32 entry_index = index * 8;
+    s32 entry_offset = index * 8;
     s32 channel_offset;
     u32 bit;
     Table* table;
@@ -26,8 +29,8 @@ void fn_801247F8(Owner* owner, s32 index, s32 frames, float target)
     count = table->count;
 
     for (i = 0; i < count; i++) {
-        u8* entry = table->entries + offset + 0x14;
-        if (entry != 0 && *(u32*)(entry + entry_index) != 0xFFFFFFFF) {
+        EntryChannel* entry = (EntryChannel*)(table->entries + offset + 0x14);
+        if (entry != 0 && entry[entry_offset / sizeof(EntryChannel)].value != 0xFFFFFFFF) {
             Channel* channel = (Channel*)((u8*)owner->channels + channel_offset);
             if (channel->value != target) {
                 if (frames == 0) {
@@ -56,3 +59,5 @@ void fn_801247F8(Owner* owner, s32 index, s32 frames, float target)
         offset += 0x114;
     }
 }
+
+#pragma optimization_level reset

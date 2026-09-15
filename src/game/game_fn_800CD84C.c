@@ -12,21 +12,29 @@ typedef struct RuntimeState {
 
 extern void *fn_80201B8C();
 
+#pragma opt_lifetimes off
+
 int fn_800CD84C(void *object)
 {
     int count = 0;
 
     if (object != 0) {
         RuntimeState *state = ((RuntimeState *)fn_80201B8C(object));
-        if (state->resource->slots[0] != 0) {
+        volatile Resource *resource;
+        resource = state->resource;
+        if (resource->slots[0] != 0) {
             count = 1;
         }
-        if (state->resource->slots[1] != 0) {
+        resource = state->resource;
+        if (resource->slots[1] != 0) {
             count++;
         }
-        if (state->resource->slots[2] != 0) {
+        resource = state->resource;
+        if (resource->slots[2] != 0) {
             count++;
         }
     }
     return count;
 }
+
+#pragma opt_lifetimes reset

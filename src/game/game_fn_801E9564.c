@@ -28,11 +28,15 @@ extern void fn_80155BB0(const char*, const char*, ...);
 extern char lbl_80265B74[];
 extern char lbl_80265B98[];
 
-/* NonMatching: behavior-complete, size-exact reconstruction. GC/1.3 assigns
- * the entry pointer and field size to r4/r3; retail uses r3/r4. */
+static inline Entry110* GetEntry(Entry110* entries, u16 index)
+{
+    return &entries[index];
+}
+
 u32 fn_801E9564(const u8* source, Header* header)
 {
     u32 offset = 0;
+    u32 size;
     Entry110* entry;
     u16 i;
     Entry110* entries;
@@ -45,37 +49,35 @@ u32 fn_801E9564(const u8* source, Header* header)
         fn_80155BB0(lbl_80265B74, lbl_80265B98, header->type, 0x10);
     }
     if (header->entries != 0) {
-        u32 size = (u32)header->entries;
+        size = (u32)header->entries;
         header->entries = (Entry110*)(source + offset);
         offset += size;
     }
-    {
     entries = header->entries;
     for (i = 0; i < header->count04; i++) {
-        entry = &entries[i];
+        entry = GetEntry(entries, i);
         if (entry->data104 != 0) {
-            u32 size = entry->data104;
+            size = entry->data104;
             entry->data104 = (u32)(source + offset);
             offset += size;
         }
         if (entry->data108 != 0) {
-            u32 size = entry->data108;
+            size = entry->data108;
             entry->data108 = (u32)(source + offset);
             offset += size;
         }
         if (entry->data10C != 0) {
-            u32 size = entry->data10C;
+            size = entry->data10C;
             entry->data10C = (u32)(source + offset);
             offset += size;
         }
     }
-    }
     if (header->links != 0) {
-        u32 size = (u32)header->links;
+        size = (u32)header->links;
         header->links = (Entry0C*)(source + offset);
         offset += size;
         for (i = 0; i < header->count08; i++) {
-            header->links[i].entry08 = &header->entries[i];
+            header->links[i].entry08 = GetEntry(header->entries, i);
         }
     }
     return offset;

@@ -2,6 +2,8 @@ typedef unsigned char u8;
 typedef unsigned int u32;
 typedef int s32;
 
+#pragma opt_propagation off
+
 s32 fn_80032A5C(u8* state)
 {
     u8 amount = state[0x26];
@@ -19,9 +21,11 @@ s32 fn_80032A5C(u8* state)
 
         if (target != 0) {
             if (increasing) {
+                s32 limit;
                 difference = target - step;
+                limit = 0 > difference ? 0 : difference;
 
-                if (state[0x4B] < (u8)(0 > difference ? 0 : difference)) {
+                if (state[0x4B] < (u8)limit) {
                     state[0x4B] += step;
                     complete = 0;
                 } else {
@@ -40,3 +44,5 @@ s32 fn_80032A5C(u8* state)
 
     return complete;
 }
+
+#pragma opt_propagation reset

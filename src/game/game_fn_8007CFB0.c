@@ -28,6 +28,7 @@ extern void fn_80157C98(void *, s32, s32);
 
 s32 fn_8007CFB0(void *unused, void *object)
 {
+    register unsigned long object_r = (unsigned long)object;
     CallbackOwner *owner;
     void *current;
     void *related;
@@ -36,9 +37,9 @@ s32 fn_8007CFB0(void *unused, void *object)
     void *value;
 
     (void)unused;
-    value = fn_801A7498(object);
+    value = fn_801A7498((void *)object_r);
     current = fn_80201814(value);
-    linked = fn_801A7778(object);
+    linked = fn_801A7778((void *)object_r);
     related = fn_802053B0(current, linked);
     owner = current != 0 ? fn_80201B8C(current) : 0;
     if (linked != 0 && related != 0) {

@@ -30,6 +30,14 @@ extern void fn_80158850(Message*);
 extern void* memcpy(void*, const void*, u32);
 extern void DCFlushRange(void*, u32);
 
+static inline int TransferAmount(int length, u32 remaining)
+{
+    if (remaining < length) {
+        return remaining;
+    }
+    return length;
+}
+
 int fn_8015CFFC(void* destination, int length, ReadState* state)
 {
     register void* output = destination;
@@ -73,10 +81,7 @@ int fn_8015CFFC(void* destination, int length, ReadState* state)
             state->reply_queue = state->message->reply_queue;
         }
 
-        amount = length;
-        if (state->remaining < length) {
-            amount = state->remaining;
-        }
+        amount = TransferAmount(length, state->remaining);
         memcpy(state->data, (u8*)output + copied, amount);
         DCFlushRange(state->data, amount);
         if (state->progress == 0) {

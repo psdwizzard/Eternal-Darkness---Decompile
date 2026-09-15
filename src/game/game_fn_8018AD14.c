@@ -3,6 +3,14 @@ typedef unsigned short u16;
 typedef signed short s16;
 typedef unsigned int u32;
 
+typedef struct GeneratedVertex {
+    s16 x;
+    s16 y;
+    s16 z;
+} GeneratedVertex;
+
+enum { QUAD_VERTEX_COUNT = 4 };
+
 extern u8 lbl_80607120[];
 extern s16 lbl_80607900[];
 extern int lbl_8064D738;
@@ -24,8 +32,8 @@ void fn_8018AD14(u8* object)
     u16 vertex_size;
     u16 index_size;
     u16 color_size;
-    int byte_offset;
     int j;
+    int i;
     u8* object_data;
     u8* vertex_data;
     u8* index_data;
@@ -49,29 +57,26 @@ void fn_8018AD14(u8* object)
     object_data = *(u8**)(object + 0x4C);
     color = color_data;
     count = raw_count;
-    {
-        int i;
-        for (i = 0; i < count; i++) {
-            *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);
-            lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);
-            for (j = 0; j < object_data[0x20]; j++) {
-                color[3] = object_data[0x2B];
-                color += 4;
-            }
-            object_data += 0x38;
+    for (i = 0; i < count; i++) {
+        *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);
+        lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);
+        for (j = 0; j < object_data[0x20]; j++) {
+            color[3] = object_data[0x2B];
+            color += 4;
         }
+        object_data += 0x38;
     }
 
     if (raw_count > 3) {
         fn_8018A310(*(u8**)(object + 0x4C), lbl_80607900, vertex_data, count);
     } else {
-        int i;
-        byte_offset = i = 0;
+        i = 0;
         object_data = *(u8**)(object + 0x4C);
         for (; i < count; i++) {
-            fn_80188A7C(object_data, vertex_data + byte_offset, fn_8018D020);
+            fn_80188A7C(object_data,
+                        vertex_data + i * QUAD_VERTEX_COUNT * sizeof(GeneratedVertex),
+                        fn_8018D020);
             object_data += 0x38;
-            byte_offset += 0x18;
         }
     }
 

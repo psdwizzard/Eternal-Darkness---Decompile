@@ -2,6 +2,14 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef signed short s16;
 
+typedef struct GeneratedVertex {
+    s16 x;
+    s16 y;
+    s16 z;
+} GeneratedVertex;
+
+enum { QUAD_VERTEX_COUNT = 4 };
+
 extern u8 lbl_80607120[];
 extern int lbl_8064D738;
 
@@ -16,7 +24,6 @@ extern void fn_80188868(void*, void*, void*, float);
 void fn_8018ABD4(u8* object)
 {
     u16 offset;
-    int byte_offset;
     int i;
     u8 count;
     u16 vertex_size;
@@ -44,11 +51,12 @@ void fn_8018ABD4(u8* object)
 
     object_data = *(u8**)(object + 0x4C);
     color = color_data;
-    for (i = 0, byte_offset = 0; i < count;
-         byte_offset += 0x18, i++) {
+    for (i = 0; i < count; i++) {
         int j;
 
-        fn_80188A7C(object_data, vertex_data + byte_offset, fn_8018D020);
+        fn_80188A7C(object_data,
+                    vertex_data + i * QUAD_VERTEX_COUNT * sizeof(GeneratedVertex),
+                    fn_8018D020);
         for (j = 0; j < object_data[0x20]; j++) {
             color[3] = object_data[0x2B];
             color += 4;

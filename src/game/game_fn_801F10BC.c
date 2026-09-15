@@ -32,6 +32,7 @@ extern void fn_802111A0(Mtx, Mtx);
 extern void fn_8022B748(Mtx, s32, s32);
 extern void fn_801ED434(s32);
 
+#pragma opt_loop_invariants off
 void fn_801F10BC(s32 first, s32 mask, s32 unused)
 {
     s32 color0;
@@ -57,6 +58,7 @@ void fn_801F10BC(s32 first, s32 mask, s32 unused)
         fn_8022806C(0, 0, 0, 0, 0, 0, 2);
         color0 = *(s32*)(lbl_802FC5BC + 0x0);
         fn_80227EB8(0, &color0);
+        /* Retail retains this bit-1 mask test and its branch body. */
         if ((lbl_8064C378 | 2) == 0) {
             color1 = *(s32*)(lbl_802FC5BC + 0xC);
             fn_80227EB8(0, &color1);
@@ -120,3 +122,4 @@ void fn_801F10BC(s32 first, s32 mask, s32 unused)
         fn_8022806C(1, 0, 0, 0, 0, 0, 2);
     }
 }
+#pragma opt_loop_invariants reset

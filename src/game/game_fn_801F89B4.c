@@ -38,6 +38,20 @@ extern const float lbl_806514AC;
 extern const float lbl_806514B0;
 extern const double lbl_806514B8;
 
+static inline int ScaleCurrentOffset(int index, int stride)
+{
+    int offset = index * stride;
+    return offset;
+}
+
+static inline int ScaleNeighborOffset(int index, int stride)
+{
+    const int offset = index * stride;
+    return offset;
+}
+
+#pragma opt_dead_assignments off
+
 float fn_801F89B4(Vec3* point, Vec3* output, MotionResource* resource)
 {
     float best = lbl_806514A8;
@@ -74,9 +88,9 @@ float fn_801F89B4(Vec3* point, Vec3* output, MotionResource* resource)
         }
 
         {
-            int current_offset = best_index * 0x18;
-            int neighbor_offset = neighbor * 0x18;
+            int current_offset = ScaleCurrentOffset(best_index, 0x18);
             short* current_third = (short*)((char*)resource->spline_keys + current_offset + 0x10);
+            int neighbor_offset = ScaleNeighborOffset(neighbor, 0x18);
             short* current_second = (short*)((char*)resource->spline_keys + current_offset + 0xA);
             float amount = lbl_806514B0;
             float step = lbl_806514AC;
@@ -127,8 +141,8 @@ float fn_801F89B4(Vec3* point, Vec3* output, MotionResource* resource)
         }
 
         {
-            int current_offset = best_index * 0xC;
-            int neighbor_offset = neighbor * 0xC;
+            int current_offset = ScaleCurrentOffset(best_index, 0xC);
+            int neighbor_offset = ScaleNeighborOffset(neighbor, 0xC);
             float amount = lbl_806514B0;
             float step = lbl_806514AC;
             fn_8017974C((short*)((char*)resource->linear_keys + current_offset + 4),
@@ -158,3 +172,5 @@ float fn_801F89B4(Vec3* point, Vec3* output, MotionResource* resource)
     }
     return result;
 }
+
+#pragma opt_dead_assignments reset
