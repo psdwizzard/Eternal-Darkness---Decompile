@@ -82,15 +82,18 @@ extern void fn_801EF400(void);
 
 void fn_801EFA68(DisplayConfig* config, int mode)
 {
-    int unused;
     void* arenaLo;
     void* arenaHi;
     void* newLo;
+    u16 height;
+    u16 width;
     DisplayState* state = &lbl_8064D71C;
+    char* label = lbl_802FC2C0;
+    u32 initialValue = lbl_80651358;
+    volatile u32 value = initialValue;
     u32 gxValue;
-    volatile u32 value = lbl_80651358;
 
-    fn_8015DAB0(lbl_802FC2C0, unused, value);
+    fn_8015DAB0(label, mode, initialValue);
     OSInit();
     DVDInit();
     fn_80215D2C(1);
@@ -109,19 +112,21 @@ void fn_801EFA68(DisplayConfig* config, int mode)
     arenaLo = OSGetArenaLo();
     arenaHi = OSGetArenaHi();
     memset(arenaLo, 0, (u8*)arenaHi - (u8*)arenaLo);
+    height = lbl_8064C38C->height;
+    width = lbl_8064C38C->width;
     state->field_0 = lbl_802662C0;
     state->field_4 = (void*)(((u32)arenaLo + 31) & ~31);
     OSSetArenaLo((void*)(((u32)state->field_4 +
-        ((((lbl_8064C38C->width + 15) & ~15) * lbl_8064C38C->height) << 1) + 31) & ~31));
+        ((((width + 15) & ~15) * height) << 1) + 31) & ~31));
 
     newLo = OSGetArenaLo();
     arenaHi = OSGetArenaHi();
     newLo = fn_8020AF08(newLo, arenaHi, 1);
     OSSetArenaLo(newLo);
+    arenaLo = (void*)(((u32)newLo + 31) & ~31);
     arenaHi = (void*)((u32)arenaHi & ~31);
-    newLo = (void*)(((u32)newLo + 31) & ~31);
-    memset(newLo, 0, (u8*)arenaHi - (u8*)newLo);
-    fn_8020AF78(newLo, arenaHi);
+    memset(arenaLo, 0, (u8*)arenaHi - (u8*)arenaLo);
+    fn_8020AF78(arenaLo, arenaHi);
     fn_8020AEF8();
     fn_801EF910();
     OSSetArenaLo(arenaHi);
