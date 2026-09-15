@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "670769ed-66f9-4a41-a3b4-d6bdbdf54313",
+  "attempt": 1,
+  "base_commit": "1d0bcd72a1ce7be764f04910656c75c17b2bd31c",
+  "target": "fn_8017C1C8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-670769ed-66f9-4a41-a3b4-d6bdbdf54313.json"
+  ],
+  "divergence": "Relocation-strict objdiff v3.6.1 measures 89.137930%: retail is 232 bytes and generated code is 228 bytes, with 19 differing alignment/instruction rows. Retail allocates request/statuses to r31/r30 while GC/1.3 allocates them to r30/r31; generated code also reuses the value index instead of retail's second lbz at 0xa8. The 13 real relocations retain the recovered targets and zero addends, but lbl_8064A580 R_PPC_ADDR16_HA occurs at retail 0x14 versus generated 0x18, and fn_8017AF78 R_PPC_REL24 occurs at retail 0xb8 versus generated 0xb4. The canonical build passes with main.dol SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

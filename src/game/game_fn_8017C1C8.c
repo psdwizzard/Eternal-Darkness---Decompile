@@ -18,7 +18,7 @@ typedef struct Request {
 
 extern GlobalState lbl_8064A580;
 extern char lbl_80250FC4[];
-extern void fn_8017B294(u8);
+extern int fn_8017B294(u8);
 extern int fn_80220B4C(u8);
 extern void fn_8017BA60(char*);
 extern void fn_8017B344(u8, int);
@@ -26,6 +26,9 @@ extern void fn_8017AF78(void);
 
 void fn_8017C1C8(Request* request)
 {
+    /* NonMatching: behavior-complete request cleanup. Retail assigns the
+     * request/status bases to r31/r30; GC/1.3 assigns them to r30/r31 and
+     * reuses the value index, producing 228 bytes instead of 232. */
     u8* statuses = lbl_8064A580.statuses;
     unsigned int index;
 
