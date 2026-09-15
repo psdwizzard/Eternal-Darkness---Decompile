@@ -7517,8 +7517,8 @@ config.libs = [
             # differences are aggregate stack placement and byte-copy scheduling.
             Object(Matching, "game/game_fn_800C8394.c"),
             Object(Matching, "game/game_fn_800C8434.c"),
-            # 88.039215%: size-exact behavior-complete angle interpolation;
-            # remaining differences are float-conversion scheduling and threshold register choice.
+            # 94.117645%: behavior-complete angle interpolation; canonical omits
+            # retail's frsp and schedules the target-angle move before the current-angle store.
             Object(NonMatching, "game/game_fn_800C849C.c"),
             # 87.864%: behavior-complete peer scan and dispatch; remaining
             # differences are aggregate stack placement and temporary scheduling.
