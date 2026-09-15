@@ -37,7 +37,7 @@ int fn_801AE3C8(Entry* entry)
     void* destination;
     void* selected;
     u32 position;
-    u32 half_size;
+    unsigned long half_size;
 
     half_size = entry->chunk_size >> 1;
     amount = half_size;
@@ -52,7 +52,7 @@ int fn_801AE3C8(Entry* entry)
             memset((u8*)destination + amount, 0,
                    half_size - amount);
         } else {
-            memset(destination, 0, amount);
+            memset(destination, 0, half_size);
             fn_801B9E7C(entry->handle,
                         entry->half != 0 ? entry->buffer_size >> 1 : 0,
                         entry->buffer_size >> 1, 0, 0);
