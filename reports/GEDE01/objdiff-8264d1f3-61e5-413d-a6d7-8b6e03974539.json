@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "assignment_id": "8264d1f3-61e5-413d-a6d7-8b6e03974539",
+  "target": "fn_80109D20",
+  "source": "src/game/game_fn_80109D20.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80109D20.c\")",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[844/847] LINK build/GEDE01/main.elf\n[845/847] DOL build/GEDE01/main.dol\n[846/847] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[847/847] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80109D20 fn_80109D20 -o build/GEDE01/objdiff-8264d1f3-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=92.85714 retail_bytes=112 generated_bytes=112 retail_instructions=29 generated_instructions=29 DIFF_DELETE=1 DIFF_INSERT=1 retail_relocations=8 generated_relocations=8"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80109D20 fn_80109D20 -o build/GEDE01/objdiff-8264d1f3-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=92.85714 retail_bytes=112 generated_bytes=112 retail_instructions=29 generated_instructions=29 DIFF_DELETE=1 DIFF_INSERT=1 retail_relocations=8 generated_relocations=8"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-8264d1f3-canonical.raw.json build/GEDE01/objdiff-8264d1f3-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "canonical_strict_cmp_exit=0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    }
+  ],
+  "canonical": {
+    "match_percent": 92.85714,
+    "retail_bytes": 112,
+    "generated_bytes": 112,
+    "retail_instructions": 29,
+    "generated_instructions": 29,
+    "diff_delete": 1,
+    "diff_insert": 1
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 8,
+    "generated_count": 8,
+    "matching_sites": 7,
+    "mismatching_sites": 1,
+    "difference": "R_PPC_EMB_SDA21 targeting lbl_8064CCA0 is at function offset 0x24 in retail and 0x30 in generated code; type, target, and addend agree, but the relocation-bearing instruction offset does not."
+  },
+  "retail_differences": "0x24 lwz r3,lbl_8064CCA0@sda21; then li r4,2 at 0x28, bge 0x34 at 0x2C, and li r4,1 at 0x30",
+  "generated_differences": "li r4,2 at 0x24; bge 0x30 at 0x28; li r4,1 at 0x2C; then lwz r3,lbl_8064CCA0@sda21 at 0x30",
+  "bounded_experiments": [
+    {
+      "change": "Read lbl_8064CCA0 into a local object pointer before selecting mode, then pass the local.",
+      "retained": false,
+      "raw_output": "match_percent=89.28571 retail_bytes=112 generated_bytes=116",
+      "reason": "The compiler loaded the pointer into r0 before copying the old mode to r31, then emitted mr r3,r0 after the branch, adding four bytes and increasing differences."
+    },
+    {
+      "change": "Pass the signed conditional expression directly as the second call argument.",
+      "retained": false,
+      "raw_output": "match_percent=86.96429 retail_bytes=112 generated_bytes=108",
+      "reason": "The compiler converted the ternary into branchless extsh/srawi/addi code."
+    }
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: the size-exact behavior-complete honest C reconstruction remains the best bounded result. Canonical GC/1.3 schedules one SDA object load after the signed mode-selection branch rather than before it, preventing both canonical and relocation-strict 100%."
+}

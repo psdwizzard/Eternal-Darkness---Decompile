@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "8264d1f3-61e5-413d-a6d7-8b6e03974539",
+  "attempt": 1,
+  "base_commit": "a3a22a7ca27af471a5cea3c0185cfa7547fa4f30",
+  "target": "fn_80109D20",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8264d1f3-61e5-413d-a6d7-8b6e03974539.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are size-exact at 92.85714% (112/112 bytes, 29/29 instructions, 8/8 relocations). The sole structural divergence is scheduling the lbl_8064CCA0 SDA load: retail offset 0x24 precedes li/bge/li mode selection, while generated offset 0x30 follows it; therefore that relocation-bearing instruction's offset differs even though its type, target, and addend agree. The retained honest C remains NonMatching. The full build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
