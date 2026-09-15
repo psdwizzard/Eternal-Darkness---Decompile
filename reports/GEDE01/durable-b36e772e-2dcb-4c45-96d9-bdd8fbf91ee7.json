@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b36e772e-2dcb-4c45-96d9-bdd8fbf91ee7",
+  "attempt": 2,
+  "base_commit": "d56efcde776a98ae241a7267462237c6a1941139",
+  "target": "fn_8017CCD8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b36e772e-2dcb-4c45-96d9-bdd8fbf91ee7.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict direct objdiff both measure 93.69091%: retail is 220 bytes and generated code is 216 bytes. After the fn_8017CF74 call, retail emits a second clrlwi u16 truncation before the 12-byte entry stride, while canonical reuses the full-width saved count; canonical also schedules the global-base addi and entry-cursor load in the opposite order, reverses the two independent tail additions, and shifts one of eight real relocation offsets by four bytes while preserving the relocation type, target, and addend sequence. The preserved honest C reconstruction is therefore retained as NonMatching."
+}
