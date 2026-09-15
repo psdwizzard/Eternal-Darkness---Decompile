@@ -75,8 +75,8 @@ extern void fn_8022A814(u32, u32);
 
 void fn_8001E144(u32 mode)
 {
-    u8* data = lbl_8023D020;
     GlobalState* global = &lbl_80302400;
+    u8* data = lbl_8023D020;
     Context* context = &global->context;
     Timings* timings = &global->timings;
     u32 sizes[5];
