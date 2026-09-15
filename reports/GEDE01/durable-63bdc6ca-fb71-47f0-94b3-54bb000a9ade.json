@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "63bdc6ca-fb71-47f0-94b3-54bb000a9ade",
+  "attempt": 5,
+  "base_commit": "7f42f86c6883005faa0ed58e5978ff805f7cfc1c",
+  "target": "fn_8015CFFC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-63bdc6ca-fb71-47f0-94b3-54bb000a9ade.json"
+  ],
+  "divergence": "Canonical and relocation-strict direct objdiff are byte-identical and size-exact at 99.91304% (460/460 bytes, 115/115 instructions), with all 8/8 R_PPC_REL24 relocations equal. Only offsets 0x40 and 0x5c differ: retail preserves the nonblocking fn_8020D318 result in r27 (mr r27,r3; cmpwi r27,0), while canonical MWCC GC/1.3 coalesces that path-dead lifetime into destination register r28. New pre-mode-split amount initialization and direct-return/control-flow-web hypotheses each compiled to the same best allocation; the redundant initialization was reverted and the simpler direct-return honest C was retained. Strict raw evidence is eternal-darkness-decomp/reports/GEDE01/objdiff-63bdc6ca-fb71-47f0-94b3-54bb000a9ade-strict.json. Fresh configure.py and .tools/bin/ninja -j2 succeeded, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

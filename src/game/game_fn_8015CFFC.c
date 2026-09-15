@@ -36,7 +36,6 @@ int fn_8015CFFC(void* destination, int length, ReadState* state)
     u32 copied = 0;
     int amount;
     Message* message;
-    int result;
 
     if (state->mode == 1) {
         amount = fn_8020D318(state->input_queue, &message, 0);
@@ -48,15 +47,13 @@ int fn_8015CFFC(void* destination, int length, ReadState* state)
         if (amount) {
             if (message->type == 2) {
                 fn_80158850(message);
-                result = 1;
-                goto done;
+                return 1;
             }
             if (state->reply_queue != 0) {
                 fn_8020D250(state->reply_queue, message, 1);
             }
         }
-        result = 1;
-        goto done;
+        return 1;
     }
 
     do {
@@ -65,8 +62,7 @@ int fn_8015CFFC(void* destination, int length, ReadState* state)
             ((volatile ReadState*)state)->message = message;
             if (state->message->type == 2 || state->mode == 1) {
                 state->mode = 1;
-                result = 1;
-                goto done;
+                return 1;
             }
             state->remaining = state->message->remaining;
             state->data = state->message->data;
@@ -93,7 +89,5 @@ int fn_8015CFFC(void* destination, int length, ReadState* state)
             state->message = 0;
         }
     } while (length != 0);
-    result = 0;
-done:
-    return result;
+    return 0;
 }
