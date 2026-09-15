@@ -10,7 +10,7 @@ typedef struct ColorF {
 } ColorF;
 
 extern ColorF lbl_8063C608;
-extern u32 lbl_8064D704;
+extern u32 lbl_8064C384;
 
 #pragma opt_propagation off
 void fn_801F3528(Color8* color)
@@ -24,7 +24,7 @@ void fn_801F3528(Color8* color)
     lbl_8063C608.red = (float)red;
     lbl_8063C608.green = (float)green;
     lbl_8063C608.blue = (float)blue;
+    lbl_8064C384 = packed;
     lbl_8063C608.alpha = (float)alpha;
-    lbl_8064D704 = packed;
 }
 #pragma opt_propagation reset
