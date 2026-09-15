@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "assignment_id": "c7bc3d93-9590-4d70-add4-cc2d995e6d64",
+  "target": "fn_8007930C",
+  "source": "eternal-darkness-decomp/src/game/game_fn_8007930C.c",
+  "registration": "Object(NonMatching, \"game/game_fn_8007930C.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "recovered_from": "2e4793f9ad15df3c95e6a371f1863faf28ce1608",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": "[1/1] RUN configure.py"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[843/849] MWCC build/GEDE01/src/game/game_fn_8007930C.o\n[845/849] LINK build/GEDE01/main.elf\n[846/849] DOL build/GEDE01/main.dol\n[847/849] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[848/849] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8007930C fn_8007930C -o build/GEDE01/objdiff-c7bc3d93-final-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-c7bc3d93-final-canonical.raw.json\nmatch_percent=98.04348 retail_bytes=552 generated_bytes=552 retail_instructions=138 generated_instructions=138 differing_retail_rows=53"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8007930C fn_8007930C -o build/GEDE01/objdiff-c7bc3d93-final-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-c7bc3d93-final-reloc-strict.raw.json\nmatch_percent=98.04348 retail_bytes=552 generated_bytes=552 retail_instructions=138 generated_instructions=138 differing_retail_rows=53 retail_relocations=36 generated_relocations=36"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-c7bc3d93-final-canonical.raw.json build/GEDE01/objdiff-c7bc3d93-final-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "report_cmp_exit=0"
+    },
+    {
+      "command": "compare objdiff left/right relocation address and relocation objects",
+      "exit_code": 0,
+      "raw_output": "left_count=36 right_count=36 relocation_records_equal=true; offsets, types, strict target-symbol identities, and represented addends agree"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0"
+    },
+    {
+      "command": "rg -n 'asm|__asm|#pragma|register ' src/game/game_fn_8007930C.c",
+      "exit_code": 1,
+      "raw_output": "no matches"
+    }
+  ],
+  "canonical": {
+    "match_percent": 98.04348,
+    "retail_bytes": 552,
+    "generated_bytes": 552,
+    "retail_instructions": 138,
+    "generated_instructions": 138,
+    "differing_retail_rows": 53,
+    "difference_kinds": {
+      "DIFF_ARG_MISMATCH": 53
+    }
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 36,
+    "generated_count": 36,
+    "records_equal": true,
+    "offsets_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true
+  },
+  "divergence": "The size-exact control flow, opcode sequence, stack accesses, calls, and all 36 relocation records agree. The remaining 53 rows are DIFF_ARG_MISMATCH results from a consistent nonvolatile-register allocation permutation: retail assigns long-lived context/object/state/result/action/entry/loop roles chiefly to r29/r30/r28/r31/r27/r24, while generated code colors the corresponding lifetimes chiefly to r27/r28/r31/r26-r30-r29/r26. No register binding, pragma, or assembly was used.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: preserve the honest, behavior-complete, size-exact and relocation-exact C reconstruction as NonMatching at 98.04348%."
+}
