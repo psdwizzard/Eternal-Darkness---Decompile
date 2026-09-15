@@ -20,14 +20,14 @@ extern void fn_80201D14(void *, int);
 extern void fn_80204810(void);
 extern void fn_8007D0F0(void);
 
-/* NonMatching: honest reconstruction of the paired target creation path. */
+/* Creates and configures the paired target path for an object. */
 s32 fn_8007CB6C(void *object)
 {
     void *resource;
+    void *second;
     s32 object_id;
     void *created;
     s32 first;
-    void *second;
     s32 lookup;
     s32 result;
 

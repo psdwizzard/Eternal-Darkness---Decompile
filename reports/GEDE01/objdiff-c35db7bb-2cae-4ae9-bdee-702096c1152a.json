@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "assignment_id": "c35db7bb-2cae-4ae9-bdee-702096c1152a",
+  "target": "fn_8007CB6C",
+  "compiler": "GC/1.3",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_8007CB6C.c fn_8007CB6C",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measurements": {
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_sha1_check_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "fndiff_output": "target 496 bytes  base 496 bytes  match 100.0",
+    "retail_size": 496,
+    "generated_size": 496,
+    "canonical_match_percent": 100.0,
+    "instruction_differences": [],
+    "retail_relocation_count": 41,
+    "generated_relocation_count": 41,
+    "relocation_types_targets_addends_equal": true,
+    "relocations": [
+      "0x0014 R_PPC_REL24 fn_80201B54 +0", "0x001C R_PPC_REL24 fn_8004918C +0",
+      "0x002C R_PPC_REL24 fn_80201BC8 +0", "0x0040 R_PPC_REL24 fn_801294DC +0",
+      "0x004C R_PPC_REL24 fn_8004918C +0", "0x0058 R_PPC_REL24 fn_80158598 +0",
+      "0x0064 R_PPC_REL24 fn_80157FE0 +0", "0x0068 R_PPC_ADDR16_HA fn_80204810 +0",
+      "0x0078 R_PPC_ADDR16_LO fn_80204810 +0", "0x0080 R_PPC_REL24 fn_80128C28 +0",
+      "0x0084 R_PPC_ADDR16_HA fn_80204810 +0", "0x008C R_PPC_ADDR16_LO fn_80204810 +0",
+      "0x0094 R_PPC_REL24 fn_80128C44 +0", "0x00AC R_PPC_REL24 fn_80129364 +0",
+      "0x00C4 R_PPC_REL24 fn_80158598 +0", "0x00D0 R_PPC_REL24 fn_80157FE0 +0",
+      "0x00D4 R_PPC_REL24 fn_80201814 +0", "0x00D8 R_PPC_REL24 fn_80201C24 +0",
+      "0x00E8 R_PPC_REL24 fn_80157948 +0", "0x00F4 R_PPC_REL24 fn_80157A28 +0",
+      "0x0104 R_PPC_REL24 fn_80157C98 +0", "0x010C R_PPC_ADDR16_HA fn_8007D0F0 +0",
+      "0x0114 R_PPC_ADDR16_LO fn_8007D0F0 +0", "0x0120 R_PPC_REL24 fn_801287C4 +0",
+      "0x012C R_PPC_REL24 fn_80201814 +0", "0x0130 R_PPC_REL24 fn_80201C24 +0",
+      "0x0140 R_PPC_REL24 fn_80157948 +0", "0x014C R_PPC_REL24 fn_80157A28 +0",
+      "0x015C R_PPC_REL24 fn_80157C98 +0", "0x0168 R_PPC_REL24 fn_80158598 +0",
+      "0x0174 R_PPC_REL24 fn_80157FE0 +0", "0x0178 R_PPC_REL24 fn_80201814 +0",
+      "0x017C R_PPC_REL24 fn_80201C24 +0", "0x0184 R_PPC_REL24 fn_80157948 +0",
+      "0x0190 R_PPC_REL24 fn_80157A28 +0", "0x01A0 R_PPC_REL24 fn_80157C98 +0",
+      "0x01A8 R_PPC_ADDR16_HA fn_8007D0F0 +0", "0x01B0 R_PPC_ADDR16_LO fn_8007D0F0 +0",
+      "0x01BC R_PPC_REL24 fn_801287C4 +0", "0x01C8 R_PPC_REL24 fn_80201D2C +0",
+      "0x01D4 R_PPC_REL24 fn_80201D14 +0"
+    ]
+  },
+  "relocation_strict_100_percent": true,
+  "legal_audit": {
+    "honest_c": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
