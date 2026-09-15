@@ -39,7 +39,7 @@ extern u8 lbl_80639228[];
 extern void* lbl_8064D74C;
 extern s32 lbl_8064C84C;
 extern s32 lbl_8064C854;
-extern s32 lbl_8064C600;
+extern volatile s32 lbl_8064C600;
 extern void* lbl_8064C85C;
 extern void* lbl_8064C4E4;
 extern s32 lbl_8064D6E8;
@@ -113,15 +113,19 @@ extern void fn_8020EF80(void*);
 
 void fn_800539D8(void)
 {
-    s32 delta;
     s32 stamp;
-    s32 first;
-    s32 second;
+    s32 delta;
     s32 third;
+    s32 second;
+    s32 first;
+    s32 new_stamp;
     TransitionData* base = &lbl_802417D0;
 
     if (lbl_8030F540.cancel == 1) {
-        if (base->descriptors[lbl_8030F540.type].restore == -1) {
+        u8 type = lbl_8030F540.type;
+        TransitionDescriptor* descriptors = base->descriptors;
+        descriptors += type;
+        if (descriptors->restore == -1) {
             lbl_8030F540.cancel = 0;
             fn_80045A24(0, 0);
             fn_800B9474(0x7F);
@@ -182,8 +186,9 @@ void fn_800539D8(void)
         lbl_8064D6C4 = 0;
         fn_801F33E8();
     }
-    stamp = fn_802365D4();
+    new_stamp = fn_802365D4();
     fn_801313EC(&third, &second, &first);
+    stamp = new_stamp;
     if (fn_802365C0() != 0) {
         delta = stamp - (lbl_8030F540.elapsed + lbl_8030F540.offset);
     } else {
@@ -199,7 +204,7 @@ void fn_800539D8(void)
         minutes = stamp / 60;
         hours = minutes / 60;
         fn_801E56AC((u8*)base + 0x221C, hours, minutes - hours * 60,
-                    (stamp - minutes * 60) / 2, lbl_8064E4D8);
+                    (stamp - minutes * 60) >> 1, lbl_8064E4D8);
         fn_801E56AC((u8*)base + 0x223C, first, second, third,
                     lbl_8064E4D8);
     }

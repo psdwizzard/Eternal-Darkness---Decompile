@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "assignment_id": "5c942ab7-f2b4-4894-989c-0173a8b5207e",
+  "target": "fn_800539D8",
+  "compiler": "mwcc_242_53",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800539D8 fn_800539D8 -o build/GEDE01/objdiff-5c942ab7-f2b4-4894-989c-0173a8b5207e-canonical.json --format json-pretty",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800539D8 fn_800539D8 -o build/GEDE01/objdiff-5c942ab7-f2b4-4894-989c-0173a8b5207e-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "legal_audit": "rg -n '__asm|asm[[:space:]]*\\(' src/game/game_fn_800539D8.c; rg -n '^void fn_' src/game/game_fn_800539D8.c"
+  },
+  "raw_measurements": {
+    "canonical": {
+      "match_percent": 97.86014,
+      "retail_size": 1144,
+      "candidate_size": 1144,
+      "retail_instruction_rows": 288,
+      "candidate_instruction_rows": 288,
+      "diff_none": 269,
+      "diff_argument_mismatch": 13,
+      "diff_delete": 2,
+      "diff_insert": 2,
+      "diff_replace": 2,
+      "retail_relocations": 149,
+      "candidate_relocations": 149
+    },
+    "relocation_strict": {
+      "configuration": "function_reloc_diffs=name_address",
+      "match_percent": 97.86014,
+      "retail_size": 1144,
+      "candidate_size": 1144,
+      "retail_relocations": 149,
+      "candidate_relocations": 149
+    },
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_verified": true,
+    "build_check": "build/GEDE01/main.dol: OK",
+    "legal_audit": {
+      "function_definitions": 1,
+      "inline_or_whole_function_assembly_hits": 0,
+      "independent_translation_unit": "src/game/game_fn_800539D8.c"
+    }
+  },
+  "improvement": "Recovered the preserved 95.13986% candidate and improved it to 97.86014%. An explicit advanced descriptor pointer emits retail's addi-plus-index sequence; reordered output locals match the fn_801313EC stack slots; staging the fn_802365D4 result matches retail's r0-to-r27 sequence; arithmetic shift matches retail's half-second calculation; and volatile counter semantics reproduce the second lbl_8064C600 load.",
+  "divergence": "The equal-size 1144-byte candidate has 269 of 288 aligned instruction rows identical. Remaining code differences are confined chiefly to the lbl_8064CB64 diagnostic formatting block: MWCC schedules lbl_8064E4D8 and lbl_8030F540 address loads differently, colors the signed division-by-60 temporaries as r5/r6 opposites, and orders the final format-call loads differently. One later symmetric cmpw uses reversed operands. Canonical and relocation-strict scores are both 97.86014%, so this is not a match."
+}
