@@ -1,6 +1,14 @@
 typedef signed char s8;
 typedef unsigned char u8;
 
+typedef struct Entry {
+    u8 pad[0x2b];
+    u8 field_2b;
+    u8 pad_2c[3];
+    u8 field_2f;
+    u8 pad_30[8];
+} Entry;
+
 extern void fn_8018E230(u8*, u8*, u8, u8, s8, u8);
 extern void fn_8018E8B8(u8*, u8, int);
 
@@ -22,17 +30,19 @@ void fn_80198C8C(u8* object, u8 mode, u8 value, s8 step, u8 kind, u8 limit)
         } else {
             u8 half = count >> 1;
             u8 level = (step / 2) * ((value - 150) / step) + 60;
-            u8* p;
+            Entry* records;
 
             entry[1] = kind;
             entry[5] = step;
+            records = *(Entry**)(object + 0x4c);
             for (i = 0; i < count; i++)
-                entry[i * 0x38 + 0x2b] = level;
+                records[i].field_2b = level;
+            records = *(Entry**)(object + 0x4c);
             for (i = 0; i < half; i++)
-                entry[i * 0x38 + 0x2f] = level;
-            p = entry + half * 0x38;
+                records[i].field_2f = level;
+            records = *(Entry**)(object + 0x4c) + half;
             for (i = 0; i < half; i++)
-                p[i * 0x38 + 0x2f] = value;
+                records[i].field_2f = value;
         }
     } else {
         object[0xa2] = 8;
