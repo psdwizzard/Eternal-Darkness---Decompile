@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "assignment_id": "a6e1a645-d982-47cd-a4bf-2c3881a6e804",
+  "target": "fn_801BACE8",
+  "source": "src/game/game_fn_801BACE8.c",
+  "compiler": "GC/1.2.5n",
+  "compiler_flags": ["-Cpp_exceptions on"],
+  "registration": {
+    "configure.py": "Object(NonMatching, \"game/game_fn_801BACE8.c\", mw_version=\"GC/1.2.5n\", extra_cflags=[\"-Cpp_exceptions on\"])",
+    "split": ".text start:0x801BACE8 end:0x801BAF90; extab start:0x800057F0 end:0x800057F8; extabindex start:0x80006068 end:0x80006074"
+  },
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw_output_tail": "[851/853] DOL build/GEDE01/main.dol\n[852/853] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[853/853] PROGRESS",
+  "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801BACE8 fn_801BACE8 -o reports/GEDE01/objdiff-a6e1a645-d982-47cd-a4bf-2c3881a6e804-canonical.json --format json-pretty",
+  "canonical_measurement_raw_output": "retail_bytes=680 generated_bytes=684 match_percent=89.3353 retail_real_instructions=170 generated_real_instructions=171 retail_relocations=58 generated_relocations=56",
+  "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801BACE8 fn_801BACE8 -o reports/GEDE01/objdiff-a6e1a645-d982-47cd-a4bf-2c3881a6e804.json --format json-pretty -c function_reloc_diffs=name_address",
+  "relocation_strict_measurement_raw_output": "retail_bytes=680 generated_bytes=684 match_percent=89.3353 retail_real_instructions=170 generated_real_instructions=171 retail_relocations=58 generated_relocations=56",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+  "legal_audit": {
+    "independent_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "generated_binary_committed": false
+  },
+  "divergence": "GC/1.2.5n keeps the same 0x40 frame and stmw/lmw shape but rotates the long-lived id, parameter, slot-base, parameter-base, state-base, and cache-base values across r26-r31. Generated code is one instruction/four bytes longer because each cache fetch folds retail's add-plus-lwz pair into lwzx while inserting an mr to preserve the cache id. Both unsigned-to-float conversion sequences use compiler-local @38 instead of retail lbl_80650F10 relocations, leaving 56 generated versus 58 retail instruction relocations. The generated extab is byte-identical, but extabindex records generated text length 0x2AC versus retail 0x2A8."
+}
