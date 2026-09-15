@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9c160bf8-3f79-41fb-9456-25011a60c19a",
+  "attempt": 1,
+  "base_commit": "ea20d25a150d95d5318a337c90e40a296062d5b1",
+  "target": "fn_801D84F4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9c160bf8-3f79-41fb-9456-25011a60c19a.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff measures 97.53846% with exact 520-byte and 130-instruction parity. The remaining divergence is register allocation and adjacent scheduling: retail loads byte 0x13A before preserving object in r29, keeps state in r28 and the point iterator in r31, while GC/1.3 for this C preserves object in r28 first, keeps state in r31, and the point iterator in r29. Control flow, call sequence, frame size, float-to-short conversions, radial teardown loop, segment loop, and closing segment are recovered; this is therefore preserved as the single honest NonMatching C reconstruction. Full canonical build passed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

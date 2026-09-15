@@ -29,12 +29,14 @@ extern void fn_801D0E78(Object*);
 
 void fn_801D84F4(Object* object)
 {
-    Point3s points[16];
+    Point3s points[8];
+    u8 flags = object->bytes[0x13A];
     u8* state = object->bytes + 0xBC;
     s16 count;
     int i;
+    Point3s* line;
 
-    if ((object->bytes[0x13A] & 5) == 0 &&
+    if ((flags & 5) == 0 &&
         fn_80201814(*(void**)(state + 0)) == 0) {
         void* value = *(void**)(state + 4);
         fn_8020123C(0x39, value, value, 0);
@@ -46,7 +48,9 @@ void fn_801D84F4(Object* object)
     if (*(void**)(state + 0x4C) != 0)
         fn_80142FCC(*(void**)(state + 0x4C));
 
-    count = (s16)fn_801CEB2C(*(u32*)(object->bytes + 4));
+    i = fn_801CEB2C(*(u32*)(object->bytes + 4));
+    line = points;
+    count = (s16)i;
     for (i = 0; i < count; i++) {
         float angle = *(float*)(state + 0x48) +
             lbl_806510E4 * (float)i / (float)count;
@@ -65,8 +69,10 @@ void fn_801D84F4(Object* object)
     }
 
     if ((state[0x7E] & 8) == 0) {
-        for (i = 0; i < count - 1; i++)
-            fn_801D7998(&points[i], &points[i + 1], object);
+        for (i = 0; i < count - 1; i++) {
+            fn_801D7998(line, line + 1, object);
+            line++;
+        }
         fn_801D7998(&points[i], &points[0], object);
     }
     fn_801D0E78(object);
