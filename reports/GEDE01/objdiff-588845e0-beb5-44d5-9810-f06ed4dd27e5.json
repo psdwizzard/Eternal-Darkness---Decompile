@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "assignment_id": "588845e0-beb5-44d5-9810-f06ed4dd27e5",
+  "target": "fn_800C7E40",
+  "compiler": "canonical project configuration",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_800C7E40.c fn_800C7E40",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "build_output": "build/GEDE01/main.dol: OK",
+  "objdiff_output": "target 680 bytes  base 680 bytes  match 99.1",
+  "instruction_measurement": {
+    "target_instructions": 170,
+    "base_instructions": 170,
+    "exact_instructions": 134,
+    "argument_mismatch_instructions": 36
+  },
+  "relocation_measurement": {
+    "target_relocation_bearing_instructions": 52,
+    "base_relocation_bearing_instructions": 52,
+    "same_offsets_types_targets_and_addends": 52,
+    "byte_exact_relocation_bearing_instructions": 41,
+    "strict_100_percent": false
+  },
+  "representative_raw_diff": [
+    "0x0000 stwu r1, -0x70(r1) | stwu r1, -0x50(r1)",
+    "0x0030 addi r7, r1, 0x20 | addi r7, r1, 0xc",
+    "0x005c mr r30, r3 | mr r28, r3",
+    "0x007c addi r27, r1, 0x28 | addi r27, r1, 0x8",
+    "0x008c mr r28, r3 | mr r29, r3",
+    "0x0098 mr r29, r3 | mr r30, r3",
+    "0x0180 addi r28, r4, 0x18 | addi r29, r4, 0x18",
+    "0x0294 lmw r24, 0x50(r1) | lmw r24, 0x30(r1)",
+    "0x02a0 addi r1, r1, 0x70 | addi r1, r1, 0x50"
+  ],
+  "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "legal_audit_output": "legal audit passed (15312 tracked project files inspected)",
+  "divergence": "Size, opcodes, branches, calls, and scheduling are otherwise exact, but canonical emits a 0x50-byte frame instead of retail's 0x70-byte frame. Local addresses differ for search (r1+0x0C versus retail r1+0x20), direction (r1+0x20 versus retail r1+0x08), and distance (r1+0x08 versus retail r1+0x28), while reference is exact at r1+0x14. These stack-layout choices also assign parent, distance, kind, and constant to r28, r29, r30, and r29 instead of retail r30, r28, r29, and r28. Relocation offsets, types, targets, and addends agree, but canonical and relocation-strict byte comparison are not 100%."
+}
