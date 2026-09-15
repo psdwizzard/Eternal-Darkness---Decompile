@@ -78,6 +78,7 @@ void fn_801952E8(u8* object, int populate)
     ys = (s16*)(state + 0x42);
     zs = (s16*)(state + 0x5C);
     if (populate) {
+        records = *(VertexRecord**)(object + 0x4C);
         for (i = 0; i < count; i++) {
             records[i + 1].x = xs[i];
             records[i + 1].y = ys[i];
@@ -107,14 +108,18 @@ void fn_801952E8(u8* object, int populate)
         *(u16*)(state + 0x12) &= 7;
         *(u16*)(state + 0x14) &= 7;
         records = *(VertexRecord**)(object + 0x4C);
-        for (i = 0; i < count; i++) {
-            u16 bit = 8 << i;
-            if (records[i + 1].x < xs[i])
-                *(u16*)(state + 0x10) |= bit;
-            if (records[i + 1].y < ys[i])
-                *(u16*)(state + 0x12) |= bit;
-            if (records[i + 1].z < zs[i])
-                *(u16*)(state + 0x14) |= bit;
+        records++;
+        {
+            u32 bit = 8;
+            for (i = 0; i < count; i++, records++, xs++, ys++, zs++) {
+                if (records->x < *xs)
+                    *(u16*)(state + 0x10) |= bit;
+                if (records->y < *ys)
+                    *(u16*)(state + 0x12) |= bit;
+                if (records->z < *zs)
+                    *(u16*)(state + 0x14) |= bit;
+                bit <<= 1;
+            }
         }
     }
 }
