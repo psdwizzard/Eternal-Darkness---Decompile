@@ -11912,7 +11912,7 @@ config.libs = [
             Object(Matching, "game/game_fn_801E8E94.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E8EBC.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E8EEC.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
-            Object(NonMatching, "game/game_fn_801E8EFC.c", mw_version="GC/1.3", extra_cflags=["-schedule off", "-opt nopeephole", "-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801E8EFC.c", mw_version="GC/1.3", extra_cflags=["-schedule off", "-opt nopeephole", "-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E8FAC.c", mw_version="GC/1.3", extra_cflags=["-schedule off", "-opt nopeephole"]),
             Object(Matching, "game/game_fn_801E9068.c", mw_version="GC/1.3", extra_cflags=["-schedule off", "-opt nopeephole"]),
             Object(Matching, "game/game_fn_801E9124.c", mw_version="GC/1.3", extra_cflags=["-schedule off"]),

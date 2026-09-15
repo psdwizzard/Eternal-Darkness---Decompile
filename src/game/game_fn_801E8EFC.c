@@ -22,12 +22,15 @@ extern State* fn_8015C28C(int);
 void fn_801E8EFC(u8 clear_mask, u8 set_mask)
 {
     State* state = fn_8015C28C(2);
+    unsigned int inverted;
     u16 i;
+    Entry* entry;
 
     if (state != 0 && state->ready_a != 0 && state->ready_b != 0) {
-        Entry* entry = state->entries;
-        unsigned int inverted = ~clear_mask;
-        for (i = 0; i < state->count; i++, entry++) {
+        entry = state->entries;
+        i = 0;
+        inverted = ~clear_mask;
+        for (; i < state->count; i++, entry++) {
             entry->flags &= inverted;
             entry->flags |= set_mask;
         }
