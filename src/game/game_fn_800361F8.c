@@ -74,6 +74,8 @@ u32 fn_800361F8(Object* object)
     case 6:
         result = lbl_8064CCF4 & 0x10;
         break;
+    case 7:
+        break;
     }
 
     return result;

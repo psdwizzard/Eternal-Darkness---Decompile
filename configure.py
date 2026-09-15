@@ -3119,6 +3119,7 @@ game_section_externalizations = {
 }
 
 game_jumptable_externalizations = {
+    "800361F8": [("@29", "jumptable_8023E4E8")],
     "8006E53C": [("@26", "jumptable_80244324")],
     "800CF598": [("@26", "jumptable_802489C4")],
     "801ACFE8": [("@21", "jumptable_80251748")],
@@ -6226,7 +6227,7 @@ config.libs = [
             Object(Matching, "game/game_fn_800360B0.c"),
             Object(Matching, "game/game_fn_80036104.c"),
             Object(Matching, "game/game_fn_80036198.c"),
-            Object(NonMatching, "game/game_fn_800361F8.c"),
+            Object(Matching, "game/game_fn_800361F8.c"),
             Object(
                 NonMatching,
                 "game/game_fn_80036374.c",
