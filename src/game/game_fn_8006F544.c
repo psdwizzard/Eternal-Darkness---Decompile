@@ -37,19 +37,16 @@ extern void *memset(void *dest, int value, unsigned int size);
 extern void *lbl_803127F8[32];
 
 /* NonMatching: size-exact behavior-complete reconstruction. Remaining output
- * differences are nonvolatile-register allocation across the two loops. */
+ * differences are initial address formation and first-loop register allocation. */
 void fn_8006F544(Owner *owner, int enabled)
 {
-    void *source;
     Config *config;
-    int slot;
-    int object;
-    int value;
-    u8 object_count;
-    u8 slot_count;
-    void **objects;
-    Config *slot_config;
     void **object_iter;
+    void **objects;
+    int object;
+    u8 object_count;
+    int value;
+    void *source;
 
     source = 0;
     if (fn_80201814(owner->resource) != 0) {
@@ -60,24 +57,27 @@ void fn_8006F544(Owner *owner, int enabled)
     config = (Config *)((u8 *)config + 0x48);
     value = config->value;
     object_count = config->object_count;
-    slot_count = config->slot_count;
-    slot_config = config;
-    for (slot = 0; slot < slot_count; slot++) {
-        if (slot_config->slots[0] != 0) {
-            int id = fn_80201B54(slot_config->slots[0]);
-            if (id == slot_config->expected) {
-                fn_8020123C(0x39, source, id, 0);
-                if (enabled != 0) {
-                    void *runtime = fn_80155DB4(slot_config->slots[0]);
-                    if (runtime != 0) {
-                        fn_80156FF4(runtime);
+    {
+        Config *slot_config = config;
+        u8 slot_count = config->slot_count;
+        int slot;
+        for (slot = 0; slot < slot_count; slot++) {
+            if (slot_config->slots[0] != 0) {
+                int id = fn_80201B54(slot_config->slots[0]);
+                if (id == slot_config->expected) {
+                    fn_8020123C(0x39, source, id, 0);
+                    if (enabled != 0) {
+                        void *runtime = fn_80155DB4(slot_config->slots[0]);
+                        if (runtime != 0) {
+                            fn_80156FF4(runtime);
+                        }
                     }
+                    slot_config->slots[0] = 0;
+                    slot_config->expected = 0;
                 }
-                slot_config->slots[0] = 0;
-                slot_config->expected = 0;
             }
+            slot_config = (Config *)((u8 *)slot_config + 4);
         }
-        slot_config = (Config *)((u8 *)slot_config + 4);
     }
     object_iter = objects;
     for (object = 0; object < object_count; object_iter++, object++) {
