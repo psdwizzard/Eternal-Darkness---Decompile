@@ -8,7 +8,7 @@ typedef struct KindInfo {
     u8 kind;
 } KindInfo;
 
-extern u32 lbl_802FC5BC[];
+extern const u32 lbl_802FC5BC[];
 extern void fn_801E3644(void);
 extern void fn_801499C4(void);
 extern void* fn_80201814(u32);
@@ -39,9 +39,10 @@ void* fn_801E3020(u32 runtime, u32 flags, void* position, u32 source,
     u8* work;
     u8* data;
     u8* secondary;
-    u32 special = 0;
+    u32 special;
 
     info = fn_80201B8C(fn_80201814(owner));
+    special = 0;
     if (info->family == 2 && info->kind == 8) {
         special = 1;
     }
