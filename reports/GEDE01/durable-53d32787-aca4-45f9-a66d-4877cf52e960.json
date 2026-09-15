@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "53d32787-aca4-45f9-a66d-4877cf52e960",
+  "attempt": 4,
+  "base_commit": "9fc0d888bed08ed2814c0ed08e5c736c3ab5bd6b",
+  "target": "fn_801E1BEC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-53d32787-aca4-45f9-a66d-4877cf52e960.json"
+  ],
+  "divergence": "Canonical and relocation-strict direct objdiff both measure 99.72789% with size-exact 588/588 bytes, 147/147 instructions, and 26/26 relocations; cmp confirms the reports are byte-for-byte identical, so relocation targets and addends agree. Eight register-allocation instruction words remain: retail uses r3 while generated code uses r0 for resource-null checks at offsets 0x60/0x64 and 0x1D0/0x1D4; retail holds timer-40 query IDs 78 and 74 in r29 and r30 while generated code swaps them at offsets 0x188, 0x198, 0x1B4, and 0x1B8. This attempt tested a distinct ABI-return-register/lifetime hypothesis using an inline or explicit register resource temporary, constant-specific query wrappers, and register-qualified query locals; all emitted the same eight differences, so the cleaner prior reconstruction was retained. The canonical build completed and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
