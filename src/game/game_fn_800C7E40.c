@@ -2,14 +2,6 @@ typedef struct Vec3 {
     float x, y, z;
 } Vec3;
 
-typedef struct Locals {
-    Vec3 direction;
-    unsigned char reference[12];
-    char search[8];
-    unsigned int distance;
-    unsigned char pad[32];
-} Locals;
-
 #pragma use_lmw_stmw on
 
 extern void *fn_80201BC8();
@@ -58,13 +50,16 @@ void fn_800C7E40(void *object)
     void *sound;
     void *constant;
     unsigned long long result;
-    Locals locals;
+    Vec3 direction;
+    unsigned char reference[12];
+    char search[8];
+    unsigned int distance_local;
 
     runtime = fn_80201BC8(object);
     if (fn_8011FB4C(runtime) != lbl_8064D18C) {
         return;
     }
-    if (fn_8011F598(runtime, 2, 15, -1, locals.search, 1) == -1) {
+    if (fn_8011F598(runtime, 2, 15, -1, search, 1) == -1) {
         return;
     }
 
@@ -74,10 +69,10 @@ void fn_800C7E40(void *object)
         return;
     }
 
-    fn_80201E78(locals.reference, other);
     limit = 400;
-    distance_ptr = &locals.distance;
-    distance = fn_80178E94(locals.reference, distance_ptr);
+    fn_80201E78(reference, other);
+    distance_ptr = &distance_local;
+    distance = fn_80178E94(reference, distance_ptr);
     kind = fn_8011EB04(runtime);
     if (kind == 0xFB) {
         limit = 100;
@@ -101,28 +96,28 @@ void fn_800C7E40(void *object)
         return;
     }
 
-    locals.direction = lbl_8023989C;
+    direction = lbl_8023989C;
     if ((int)parent == (int)((void *)fn_80201B44(relation))) {
         sound = fn_801A717C();
         constant = lbl_802FC5BC + 0x18;
-        fn_800CEA1C(0x17, 3, locals.reference, 0, 5, 5, lbl_8064F22C,
+        fn_800CEA1C(0x17, 3, reference, 0, 5, 5, lbl_8064F22C,
                     lbl_8064F21C, lbl_8064F224, constant);
-        fn_8014D478(runtime, distance_ptr, &locals.direction, 5, 3,
+        fn_8014D478(runtime, distance_ptr, &direction, 5, 3,
                     constant, 3);
         fn_801A74A0(sound, relation);
         fn_801A74A8(sound, parent);
         fn_801A7538(sound, 1);
         fn_801A7518(sound, 0x3C);
-        fn_801A764C(sound, locals.reference);
+        fn_801A764C(sound, reference);
         fn_801A7550(sound, 0xC);
         fn_8020123C(0x27, relation, parent, sound);
         fn_801A7228(sound);
     } else {
         fn_80067180(other);
         constant = lbl_802FC5BC + 0x18;
-        fn_800CEA1C(0x17, 3, locals.reference, 0, 5, 15, lbl_8064F23C,
+        fn_800CEA1C(0x17, 3, reference, 0, 5, 15, lbl_8064F23C,
                     lbl_8064F21C, lbl_8064F224, constant);
-        fn_8014D478(runtime, distance_ptr, &locals.direction, 10, 3,
+        fn_8014D478(runtime, distance_ptr, &direction, 10, 3,
                     constant, 3);
     }
 }

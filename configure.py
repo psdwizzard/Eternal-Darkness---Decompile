@@ -7507,8 +7507,8 @@ config.libs = [
             # secondary runtime to r30 rather than retail's reused r27.
             Object(Matching, "game/game_fn_800C7C0C.c"),
             Object(Matching, "game/game_fn_800C7DCC.c"),
-            # 91.72941%: behavior-complete; remaining differences are the
-            # aggregate/outgoing stack area and callee-saved register allocation.
+            # 99.1%: size-exact behavior-complete C; remaining differences are
+            # stack-slot/frame layout and three long-lived register assignments.
             Object(NonMatching, "game/game_fn_800C7E40.c"),
             Object(Matching, "game/game_fn_800C80E8.c"),
             Object(Matching, "game/game_fn_800C81E0.c"),
