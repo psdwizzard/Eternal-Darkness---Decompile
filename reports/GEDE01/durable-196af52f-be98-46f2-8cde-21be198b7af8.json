@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "196af52f-be98-46f2-8cde-21be198b7af8",
+  "attempt": 2,
+  "base_commit": "0e9e089d9dea35b3576780ee94eed45782fad8cf",
+  "target": "fn_80064B38",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-196af52f-be98-46f2-8cde-21be198b7af8.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces 720 bytes versus 756 retail bytes at 88.27513%. Retail retains li/slw/clrlwi construction of the three supplemental channel masks while generated code folds them to immediate 2/4/8, removing a live register and cascading into persistent-register allocation differences. Both objects have 30 relocations with equal target/type/addend sequences, but the final nine site offsets differ due to the shorter generated blocks. The full build passes and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
