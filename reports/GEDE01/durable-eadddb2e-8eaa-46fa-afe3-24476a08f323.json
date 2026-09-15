@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "eadddb2e-8eaa-46fa-afe3-24476a08f323",
+  "attempt": 3,
+  "base_commit": "e0157cd8de20a0acd41b2aea6070a6c9e054a946",
+  "target": "fn_8019ECA0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-eadddb2e-8eaa-46fa-afe3-24476a08f323.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both score 92.4186%: retail is 688 bytes and generated honest C is 684 bytes, with 52 relocation-bearing instructions on each side. Generated code omits retail's pre-call addi r26,r22,0x8C and materializes the fields pointer after fn_8018D788, shifting subsequent scheduling and rotating long-lived obj/entry/draw/color/loop values across r21-r29. The signed-integer conversion load also targets generated local pool symbol @25 instead of retail lbl_80650C60. The callback branch shape and per-entry float field addressing match structurally. python3 configure.py and .tools/bin/ninja -j2 completed successfully; build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f; legal audit passed with 15399 tracked project files inspected."
+}
