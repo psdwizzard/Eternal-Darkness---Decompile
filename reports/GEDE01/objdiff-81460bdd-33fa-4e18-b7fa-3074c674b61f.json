@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "assignment_id": "81460bdd-33fa-4e18-b7fa-3074c674b61f",
+  "target": "fn_801F4380",
+  "compiler": "GC/1.3",
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F4380 -o build/GEDE01/objdiff-81460bdd-final.raw.json --format json-pretty fn_801F4380",
+    "raw_measured_output": {
+      "section": ".text",
+      "target_size": 312,
+      "base_size": 312,
+      "target_match_percent": 100.0,
+      "base_match_percent": 100.0
+    }
+  },
+  "text_strict": {
+    "command": "objcopy --only-section=.text for target and base; cmp -l; wc -c",
+    "raw_measured_output": "cmp -l: no output (identical); target 312 bytes; base 312 bytes"
+  },
+  "relocation_strict": {
+    "command": "build/binutils/powerpc-eabi-readelf -rW target.o and base.o",
+    "target_count": 7,
+    "base_count": 7,
+    "entries": [
+      {"offset": "0x1c", "type": "R_PPC_REL24", "target": "fn_801FD258", "addend": 0},
+      {"offset": "0x24", "type": "R_PPC_REL24", "target": "fn_801FD240", "addend": 0},
+      {"offset": "0x7c", "type": "R_PPC_EMB_SDA21", "target": "lbl_8064D18C", "addend": 0},
+      {"offset": "0x90", "type": "R_PPC_REL24", "target": "fn_8015E4E8", "addend": 0},
+      {"offset": "0xdc", "type": "R_PPC_REL24", "target": "fn_801F0CB0", "addend": 0},
+      {"offset": "0x100", "type": "R_PPC_REL24", "target": "fn_801F0CB0", "addend": 0},
+      {"offset": "0x120", "type": "R_PPC_REL24", "target": "fn_801F10BC", "addend": 0}
+    ],
+    "result": "target and base relocation offsets, types, symbol targets, and addends are identical"
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "result": "success; build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_measured_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  }
+}

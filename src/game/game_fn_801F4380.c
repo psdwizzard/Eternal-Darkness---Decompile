@@ -24,7 +24,7 @@ extern s32 lbl_8064D18C;
 extern s32 fn_801FD258(void);
 extern Candidate** fn_801FD240(void);
 extern s32 fn_8015E4E8(void);
-extern void fn_801F0CB0(EffectRec*, Vec3*, void*, s32, u8, Vec3*, u8*);
+extern void fn_801F0CB0(EffectRec*, Vec3*, void*, s32, u8, u8*, Vec3*);
 extern void fn_801F10BC(u32, u32, s32);
 
 #pragma use_lmw_stmw on
@@ -32,28 +32,37 @@ extern void fn_801F10BC(u32, u32, s32);
 void fn_801F4380(Vec3* point)
 {
     Candidate candidate;
+    Candidate** current;
+    Vec3* color;
+    u8* attributes;
+    EffectRec* effect;
     u32 active_mask = 0;
-    s32 count = 0;
     s32 cap;
+    s32 count = 0;
     Candidate** candidates;
 
     cap = fn_801FD258();
     candidates = fn_801FD240();
     if (cap > 3) cap = 3;
     if (cap > 0) {
-        Candidate** current = candidates;
+        current = candidates;
+        color = &candidate.color;
+        attributes = candidate.attributes;
+        effect = &candidate.effect;
         while (count < cap) {
+            s32 index;
             candidate = **current;
             if (candidate.id == lbl_8064D18C &&
                 (!fn_8015E4E8() || candidate.subtype == 7)) {
                 active_mask |= 0x20 << count;
+                index = count + 5;
                 if (candidate.kind == 1) {
-                    fn_801F0CB0(&candidate.effect, point, 0, count + 5, 0,
-                                 &candidate.color, candidate.attributes);
+                    fn_801F0CB0(effect, point, 0, index, 0,
+                                 attributes, color);
                     count++;
                 } else {
-                    fn_801F0CB0(&candidate.effect, point, 0, count + 5, 0,
-                                 &candidate.color, 0);
+                    fn_801F0CB0(effect, point, 0, index, 0,
+                                 attributes, 0);
                     count++;
                 }
             }
