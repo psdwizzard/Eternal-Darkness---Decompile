@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "assignment_id": "ff6336b4-0655-4967-997b-5d25b8aeda05",
+  "target": "fn_801EBC6C",
+  "source": "src/game/game_fn_801EBC6C.c",
+  "registration": "Object(NonMatching, \"game/game_fn_801EBC6C.c\", mw_version=\"GC/1.3\")",
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[844/848] REPORT; [845/848] LINK build/GEDE01/main.elf; [846/848] DOL build/GEDE01/main.dol; [847/848] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [848/848] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EBC6C fn_801EBC6C -o build/GEDE01/objdiff-ff6336b4-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=97.82609 retail_bytes=368 generated_bytes=364 left_diff_counts={DIFF_ARG_MISMATCH:11,DIFF_DELETE:1} right_diff_counts={DIFF_ARG_MISMATCH:11,DIFF_DELETE:1} retail_relocations=2 generated_relocations=2"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EBC6C fn_801EBC6C -o build/GEDE01/objdiff-ff6336b4-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=97.82609 retail_bytes=368 generated_bytes=364; relocation at 48: R_PPC_REL24 target memset addend 0 on both sides; relocation at 112: R_PPC_EMB_SDA21 target lbl_8064D6A0 addend 0 on both sides"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-ff6336b4-canonical.raw.json build/GEDE01/objdiff-ff6336b4-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "canonical_strict_cmp_exit=0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (15191 tracked project files inspected)"
+    }
+  ],
+  "canonical": {
+    "match_percent": 97.82609,
+    "retail_bytes": 368,
+    "generated_bytes": 364,
+    "left_diff_counts": {
+      "DIFF_ARG_MISMATCH": 11,
+      "DIFF_DELETE": 1
+    },
+    "right_diff_counts": {
+      "DIFF_ARG_MISMATCH": 11,
+      "DIFF_DELETE": 1
+    }
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 2,
+    "generated_count": 2,
+    "addresses_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true
+  },
+  "recovery": {
+    "preserved_commit": "c700fd80c7360fedb5b1a82e62cae2d7e6e400c2",
+    "raw_output": "git show confirms preserved commit c700fd80 contains only the prior assignment-specific durable and objdiff reports. Base 5fa6ddea already contains the independent source from bfa6bc5df, which was refined in this attempt."
+  },
+  "exact_codegen_divergence": "Instructions match through offset 0xDC. From 0xE0 through 0x120 retail uses r6 for the effective step, reuses r4 for the accumulator, constructs the packed pixel in persistent r5 with an explicit slwi at 0x114, then stores the accumulator and inserts the low byte with rlwimi. GC/1.3 uses r7 for the effective step, r6 for the accumulator, constructs the packed value in r4, folds the shift into rlwimi, and omits retail's slwi, producing 364 bytes instead of 368. The loop tail matches again after this block. Both relocations match exactly.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: the behavior-complete independent honest C reconstruction remains NonMatching at 97.82609%; no matched credit is claimed."
+}

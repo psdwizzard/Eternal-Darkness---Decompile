@@ -30,7 +30,10 @@ void fn_801EBC6C(Source* source, State* state, u16* image)
     register State* work = state;
     register Source* input = source;
     register u16* output = image;
-    int value;
+    u16 value;
+    int compare;
+    int step;
+    int packed;
     int i;
 
     memset(work, 0, 0x18);
@@ -39,28 +42,30 @@ void fn_801EBC6C(Source* source, State* state, u16* image)
     work->count = input->forward_count;
 
     if (output != 0 && input != 0) {
-        value = (input->lower + work->step) & 0xFFFF;
+        value = input->lower + work->step;
         lbl_8064D6A0 = 0;
 
         for (i = 0x1FE; i >= 0; i -= 2) {
             if (work->delay == 0) {
                 if (work->count == 0) {
-                    int step;
-                    if (value <= input->lower) {
+                    compare = (u16)value;
+                    if (compare <= input->lower) {
                         work->step = input->step;
                         work->count = input->forward_count;
-                    } else if (value >= input->upper) {
+                    } else if (compare >= input->upper) {
                         work->step = -input->step;
                         work->count = input->reverse_count;
                     }
 
                     step = work->step;
-                    if (input->upper == input->lower && (unsigned char)value == input->lower)
+                    if (input->upper == input->lower && (unsigned char)compare == input->lower)
                         step = 0;
 
-                    step += value;
+                    step += compare;
                     work->accumulator += input->step;
-                    value = ((u16)(0xFF - (unsigned char)step) << 8) | (unsigned char)step;
+                    packed = (0xFF - (unsigned char)step) << 8;
+                    packed |= (unsigned char)step;
+                    value = packed;
                 } else {
                     work->count--;
                 }
