@@ -30,18 +30,26 @@ extern void *fn_80201BC0(void *);
 
 void *fn_800BE938(void *object, int enabled)
 {
-    void *cursor = fn_80201B9C();
-    void *selected = 0;
-    unsigned int best_distance = (unsigned int)-1;
-    float limit = lbl_8064F11C * lbl_8064B710;
-    int object_owner = fn_80201B54(object);
-    int object_id = fn_80201EB8(object);
-    void *object_position_object = fn_80201BC8(object);
+    void *cursor;
+    void *selected;
+    void *object_position_object;
+    unsigned int best_distance;
+    float limit;
+    int object_owner;
+    int object_id;
     Vec3 object_position;
     Vec3 candidate_position;
 
+    cursor = fn_80201B9C();
+    selected = 0;
+    best_distance = (unsigned int)-1;
+    limit = lbl_8064F11C * lbl_8064B710;
+    object_owner = fn_80201B54(object);
+    object_id = fn_80201EB8(object);
+    object_position_object = fn_80201BC8(object);
     fn_8011F114(&object_position, object_position_object);
     while (cursor != 0) {
+        unsigned int distance;
         NodeInfo *info = ((NodeInfo *)fn_80201B8C(cursor));
         int *flags = info != 0 ? info->flags : 0;
         void *candidate_position_object = fn_80201BC8(cursor);
@@ -54,7 +62,6 @@ void *fn_800BE938(void *object, int enabled)
                 fn_8020123C(0x3B, object_owner, candidate_owner, 0) &
                 0xFFFFFFFFULL;
             if (result == 1) {
-                unsigned int distance;
                 int accepted;
 
                 fn_800C43AC(&candidate_position, cursor);
@@ -64,22 +71,14 @@ void *fn_800BE938(void *object, int enabled)
                     if (info != 0 && info->kind == 13) {
                         limit = lbl_8064F120;
                     }
-                    accepted = fn_80204434(object_position_object,
-                                           &candidate_position, 0, limit);
+                    accepted = (unsigned char)fn_80204434(
+                        object_position_object, &candidate_position, 0, limit);
                 }
                 if (distance < best_distance && accepted) {
                     best_distance = distance;
                     selected = cursor;
-    }
-}
-
-/*
- * Honest-C boundary: this reconstruction recovers the complete nearest-peer
- * selection, collision gate and selected-node flag update. Remaining
- * differences are declaration-sensitive callee-saved register allocation and
- * the missing unsigned-byte normalization of fn_80204434's return; no inline
- * assembly is used.
- */
+                }
+            }
         }
         cursor = fn_80201BC0(cursor);
     }
