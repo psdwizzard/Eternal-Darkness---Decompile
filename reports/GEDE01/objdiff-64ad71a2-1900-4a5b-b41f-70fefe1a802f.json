@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "assignment_id": "64ad71a2-1900-4a5b-b41f-70fefe1a802f",
+  "target": "fn_8017F3B4",
+  "compiler": "GC/1.3",
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_check_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "retail_cmp_command": "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "retail_cmp_exit_code": 0
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017F3B4 fn_8017F3B4 -o build/GEDE01/objdiff-64ad71a2-1900-4a5b-b41f-70fefe1a802f-canonical.json --format json-pretty",
+    "exit_code": 0,
+    "left_size": 844,
+    "right_size": 844,
+    "left_match_percent": 100.0,
+    "right_match_percent": 100.0,
+    "text_match_percent": 100.0,
+    "instruction_differences": 0
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017F3B4 fn_8017F3B4 -o build/GEDE01/objdiff-64ad71a2-1900-4a5b-b41f-70fefe1a802f-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "left_size": 844,
+    "right_size": 844,
+    "left_match_percent": 100.0,
+    "right_match_percent": 100.0,
+    "text_match_percent": 100.0,
+    "instruction_differences": 0,
+    "relocations": [
+      {"offset": 8, "type": "R_PPC_ADDR16_HA", "target": "lbl_8063D378", "addend": 0},
+      {"offset": 24, "type": "R_PPC_ADDR16_LO", "target": "lbl_8063D378", "addend": 0},
+      {"offset": 108, "type": "R_PPC_REL24", "target": "fn_80178F14", "addend": 0},
+      {"offset": 168, "type": "R_PPC_REL24", "target": "fn_80180430", "addend": 0},
+      {"offset": 200, "type": "R_PPC_REL24", "target": "fn_8018E26C", "addend": 0},
+      {"offset": 236, "type": "R_PPC_REL24", "target": "fn_80180518", "addend": 0},
+      {"offset": 352, "type": "R_PPC_REL24", "target": "fn_8018EFB0", "addend": 0},
+      {"offset": 368, "type": "R_PPC_REL24", "target": "fn_8018EFB0", "addend": 0},
+      {"offset": 476, "type": "R_PPC_REL24", "target": "fn_800FBFB0", "addend": 0},
+      {"offset": 500, "type": "R_PPC_REL24", "target": "fn_800FBFB0", "addend": 0},
+      {"offset": 552, "type": "R_PPC_REL24", "target": "fn_8017D2B4", "addend": 0},
+      {"offset": 736, "type": "R_PPC_REL24", "target": "fn_8018E230", "addend": 0},
+      {"offset": 780, "type": "R_PPC_REL24", "target": "fn_80180454", "addend": 0}
+    ],
+    "relocation_targets_and_addends_match": true
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (15485 tracked project files inspected)"
+  }
+}
