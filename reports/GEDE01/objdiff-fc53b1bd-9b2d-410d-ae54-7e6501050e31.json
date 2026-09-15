@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "assignment_id": "fc53b1bd-9b2d-410d-ae54-7e6501050e31",
+  "target": "fn_80064B38",
+  "source": "src/game/game_fn_80064B38.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80064B38.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[852/855] LINK build/GEDE01/main.elf\n[853/855] DOL build/GEDE01/main.dol\n[854/855] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[855/855] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80064B38 fn_80064B38 -o build/GEDE01/objdiff-fc53b1bd-final-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=88.27513 retail_bytes=756 generated_bytes=720 aligned_instruction_rows=194 differing_rows=67 retail_relocations=30 generated_relocations=30"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80064B38 fn_80064B38 -o build/GEDE01/objdiff-fc53b1bd-final-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=88.27513 retail_bytes=756 generated_bytes=720 aligned_instruction_rows=194 differing_rows=67 retail_relocations=30 generated_relocations=30"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-fc53b1bd-final-canonical.raw.json build/GEDE01/objdiff-fc53b1bd-final-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "canonical_strict_cmp_exit=0"
+    },
+    {
+      "command": "readelf -rW build/GEDE01/obj/game/game_fn_80064B38.o and readelf -rW build/GEDE01/src/game/game_fn_80064B38.o",
+      "exit_code": 0,
+      "raw_output": "retail relocation section .rela.text: 30 entries; generated relocation section .rela.text: 30 entries. Types, target-symbol names, and addends agree in semantic order; every addend is 0. Sites through fn_801A7510 agree. The final nine generated sites are 0x1b0,0x1c8,0x1f0,0x20c,0x224,0x24c,0x268,0x280,0x2a8 versus retail 0x1b4,0x1cc,0x1fc,0x21c,0x234,0x264,0x284,0x29c,0x2cc because generated code folds the supplemental mask constructions."
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    }
+  ],
+  "canonical": {
+    "match_percent": 88.27513,
+    "retail_bytes": 756,
+    "generated_bytes": 720,
+    "aligned_instruction_rows": 194,
+    "differing_rows": 67
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "match_percent": 88.27513,
+    "retail_count": 30,
+    "generated_count": 30,
+    "target_types_names_addends_equal_in_semantic_order": true,
+    "site_offsets_equal": false,
+    "canonical_report_byte_identical": true
+  },
+  "bounded_experiments": [
+    {
+      "change": "Replace the second and third supplemental-channel bit assignments with increments, retaining the same honest semantics.",
+      "retained": false,
+      "raw_output": "target 756 bytes base 720 bytes match 88.27513",
+      "reason": "MWCC produced the identical constant-folded candidate, so the original clearer assignments were restored."
+    }
+  ],
+  "divergence": "The behavior-complete C reconstruction remains 36 bytes shorter. Retail keeps a live shift-count register and emits li/slw/clrlwi mask construction for supplemental channels 1, 2, and 3, whereas canonical GC/1.3 folds those masks to immediate 2, 4, and 8. Losing that live register rotates persistent allocation (retail context/result/amount/mask/owner use r27/r28/r24/r29/r25; generated uses r28/r29/r25/r27/r26), producing most of the 67 aligned differing rows. Relocation targets, types, and zero addends remain semantically identical, but the last nine relocation site offsets shift as the three folded blocks become shorter.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: preserve the existing independent, behavior-complete honest C reconstruction as NonMatching; it is not a canonical or relocation-strict 100% match."
+}
