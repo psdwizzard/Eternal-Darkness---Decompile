@@ -34,7 +34,7 @@ void fn_801952E8(u8* object, int populate)
     VertexRecord* records;
     int i;
 
-    if (*(u32*)(state + 0x7C) & 0x4000) {
+    if (*(u32*)(object + 0x108) & 0x4000) {
         *(s16*)(state + 0x22) = fn_801F6D90(first[0], first[1], first[2]);
         *(s16*)(state + 0x24) =
             (fn_801F6D90(second[0], second[1], second[2]) -

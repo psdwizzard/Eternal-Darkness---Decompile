@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "assignment_id": "9ef04720-c247-436f-a77b-daf622585244",
+  "attempt": 2,
+  "target": "fn_801952E8",
+  "unit": "main/game/game_fn_801952E8",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801952E8 fn_801952E8 -o build/GEDE01/objdiff-9ef04720-final-canonical.json --format json-pretty",
+    "target_size": 1284,
+    "base_size": 1284,
+    "match_percent": 95.685356,
+    "target_relocations": 12,
+    "base_relocations": 12,
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-9ef04720-final-canonical.json"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801952E8 fn_801952E8 -o build/GEDE01/objdiff-9ef04720-final-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "target_size": 1284,
+    "base_size": 1284,
+    "match_percent": 95.685356,
+    "target_relocations": 12,
+    "base_relocations": 12,
+    "relocation_targets_and_addends": "All 12 relocation offsets, types, resolved target addresses, and zero addends agree under function_reloc_diffs=name_address. At offsets 164 and 176, retail names lbl_80650B58/lbl_80650B68 and generated names @75/@77 resolve to the same addresses.",
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-9ef04720-final-reloc-strict.json"
+  },
+  "direct_report_comparison": {
+    "command": "cmp -s build/GEDE01/objdiff-9ef04720-final-canonical.json build/GEDE01/objdiff-9ef04720-final-reloc-strict.json",
+    "raw_output": "cmp_exit=0"
+  },
+  "instruction_diff": {
+    "command": "python3 tools/fndiff.py game/game_fn_801952E8.c fn_801952E8",
+    "raw_output": "target 1284 bytes  base 1284 bytes  match 95.685356\nopening 0x0000-0x00a0 now matches instruction-for-instruction\nconstant relocations 0x00a4 and 0x00b0 display retail lbl_80650B58/lbl_80650B68 versus generated @75/@77\npopulate loop 0x0204-0x03c8: target reloads the record base into r3, forms record+0x38 in r6, and uses r7 as induction count; base retains record base in r7, uses r8 as induction count, and folds record+1 into store offsets\nfinal loop setup 0x047c-0x048c: target loads record base into r3 and forms r4 before mtctr/cmpwi; base loads directly into r4 and schedules addi after cmpwi\nfinal loop body 0x0490-0x04fc and epilogue 0x0500-0x0510 match instruction-for-instruction"
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (15233 tracked project files inspected)",
+    "independent_translation_unit": "src/game/game_fn_801952E8.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "private_or_generated_artifacts_in_commit": false
+  }
+}
