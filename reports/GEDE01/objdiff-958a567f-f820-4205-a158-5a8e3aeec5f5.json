@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "assignment_id": "958a567f-f820-4205-a158-5a8e3aeec5f5",
+  "target": "fn_80139F28",
+  "compiler": "canonical project compiler and flags; game/game_fn_80139F28.c retains -use_lmw_stmw on",
+  "commands": {
+    "build": "python3 configure.py && .tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80139F28 fn_80139F28 -o build/GEDE01/objdiff-958a567f-canonical.raw.json --format json-pretty",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80139F28 fn_80139F28 -o build/GEDE01/objdiff-958a567f-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "legal_audit": "python3 tools/legal_audit.py"
+  },
+  "raw_measured_outputs": {
+    "build_sha1_gate": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "legal_audit": "legal audit passed (15676 tracked project files inspected)",
+    "canonical": {
+      "target_size": 536,
+      "base_size": 536,
+      "target_match_percent": 100.0,
+      "base_match_percent": 100.0,
+      "target_relocation_count": 23,
+      "base_relocation_count": 23
+    },
+    "relocation_strict": {
+      "config": "function_reloc_diffs=name_address",
+      "target_size": 536,
+      "base_size": 536,
+      "target_match_percent": 100.0,
+      "base_match_percent": 100.0,
+      "target_relocation_count": 23,
+      "base_relocation_count": 23,
+      "all_offsets_types_targets_addends_equal": true,
+      "relocation_targets_and_occurrences": {
+        "fn_80201BD0": 1,
+        "fn_8012AB2C": 2,
+        "fn_8011F6F8": 3,
+        "fn_8013F3C0": 2,
+        "fn_8013A538": 1,
+        "fn_80139E20": 1,
+        "fn_8011FAF4": 1,
+        "fn_8011F114": 1,
+        "fn_8011F130": 1,
+        "lbl_806502B8": 1,
+        "fn_80211A6C": 2,
+        "fn_8013F4D0": 1,
+        "fn_8011EB1C": 1,
+        "fn_80201B5C": 1,
+        "lbl_8064C4E4": 2,
+        "fn_8013B538": 1,
+        "fn_80155ABC": 1
+      },
+      "all_addends": 0
+    }
+  }
+}
