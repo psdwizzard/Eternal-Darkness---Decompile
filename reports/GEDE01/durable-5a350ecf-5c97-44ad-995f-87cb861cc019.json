@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "5a350ecf-5c97-44ad-995f-87cb861cc019",
+  "attempt": 1,
+  "base_commit": "1deb072a535be4001c20d37a263bf7d13d687ee4",
+  "target": "fn_8017A5A8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-5a350ecf-5c97-44ad-995f-87cb861cc019.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff score is 93.382355%: retail is 136 bytes/34 instructions and generated code is 128 bytes/32 instructions. All 6 relocation-bearing instructions agree, but canonical GC/1.3 coalesces the absolute-value conditional into an in-place f1 update; retail preserves f1 and materializes both ternary arms in f0, adding a branch and fmr and causing four argument mismatches plus two deleted instructions."
+}
