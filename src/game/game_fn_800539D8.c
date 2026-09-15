@@ -16,9 +16,9 @@ typedef struct TransitionState {
     s8 next;
     u8 type;
     u8 pad1DB[3];
-    u8 delayed;
+    s8 delayed;
     u8 pad1DF[5];
-    u8 cancel;
+    s8 cancel;
 } TransitionState;
 
 typedef struct TransitionDescriptor {
@@ -27,8 +27,13 @@ typedef struct TransitionDescriptor {
     u8 pad22[6];
 } TransitionDescriptor;
 
+typedef struct TransitionData {
+    u8 pad000[0x618];
+    TransitionDescriptor descriptors[1];
+} TransitionData;
+
 extern TransitionState lbl_8030F540;
-extern u8 lbl_802417D0[];
+extern TransitionData lbl_802417D0;
 extern u8 lbl_806391F0[];
 extern u8 lbl_80639228[];
 extern void* lbl_8064D74C;
@@ -85,7 +90,7 @@ extern void fn_801313EC(s32*, s32*, s32*);
 extern s32 fn_802365C0(void);
 extern void fn_801E3AA4(s32);
 extern void fn_801E5430(s32, s32);
-extern void fn_801E56AC(void*, s32, s32, s32, float);
+extern void fn_801E56AC(void*, s32, s32, s32, ...);
 extern void fn_801E5FE4(void);
 extern void fn_800EB74C(void);
 extern void fn_80053600(s16, s32);
@@ -108,18 +113,20 @@ extern void fn_8020EF80(void*);
 
 void fn_800539D8(void)
 {
-    s32 stamp;
     s32 delta;
+    s32 stamp;
     s32 first;
     s32 second;
     s32 third;
-    TransitionDescriptor* desc = (TransitionDescriptor*)(lbl_802417D0 + 0x618);
+    TransitionData* base = &lbl_802417D0;
 
-    if (lbl_8030F540.cancel == 1 && desc[lbl_8030F540.type].restore == -1) {
-        lbl_8030F540.cancel = 0;
-        fn_80045A24(0, 0);
-        fn_800B9474(0x7F);
-        return;
+    if (lbl_8030F540.cancel == 1) {
+        if (base->descriptors[lbl_8030F540.type].restore == -1) {
+            lbl_8030F540.cancel = 0;
+            fn_80045A24(0, 0);
+            fn_800B9474(0x7F);
+            return;
+        }
     }
 
     fn_800243E8();
@@ -187,13 +194,13 @@ void fn_800539D8(void)
         s32 hours;
         fn_801E3AA4(0);
         fn_801E5430(10, 50);
-        fn_801E56AC(lbl_802417D0 + 0x2208, stamp, lbl_8030F540.elapsed,
+        fn_801E56AC((u8*)base + 0x2208, stamp, lbl_8030F540.elapsed,
                     lbl_8030F540.offset, lbl_8064E4D8);
         minutes = stamp / 60;
         hours = minutes / 60;
-        fn_801E56AC(lbl_802417D0 + 0x221C, hours, minutes - hours * 60,
+        fn_801E56AC((u8*)base + 0x221C, hours, minutes - hours * 60,
                     (stamp - minutes * 60) / 2, lbl_8064E4D8);
-        fn_801E56AC(lbl_802417D0 + 0x223C, first, second, third,
+        fn_801E56AC((u8*)base + 0x223C, first, second, third,
                     lbl_8064E4D8);
     }
     if (delta > 0 && fn_802365C0() != 0) {
