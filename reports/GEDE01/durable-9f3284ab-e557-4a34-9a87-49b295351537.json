@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9f3284ab-e557-4a34-9a87-49b295351537",
+  "attempt": 2,
+  "base_commit": "2c345cf4bec3b85f78136fd6fab6ae1aa59bbb92",
+  "target": "fn_80023258",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9f3284ab-e557-4a34-9a87-49b295351537.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff v3.6.1 both measure 93.8327%: retail is 1052 bytes and generated is 1028 bytes. Both sides contain the same ordered sequence of 61 real relocations by formatted target, relocation type, and zero addend. The 33 aligned diff records comprise 17 argument mismatches, 10 deletes, 4 inserts, and 2 replacements, concentrated in retail retaining lbl_80302400 + 0x1C in r29 and transient presentation pointers while canonical MWCC folds those address materializations into direct r31-relative accesses; retail later reuses r29 for the fn_801EB080 result. Final cleanup similarly materializes data + 0x640 while generated folds stores into r30-relative accesses. The stronger existing honest-C reconstruction was preserved unchanged. A fresh canonical build passed, and build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
