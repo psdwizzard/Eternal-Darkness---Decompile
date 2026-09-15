@@ -19,19 +19,11 @@ extern u8 lbl_80238E60[];
 extern const char lbl_8024104C[];
 extern u8 lbl_803003C8[];
 
-void fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32 *arg6) {
-    s32 sp38;
-    s32 sp34;
-    s32 sp30;
-    s32 sp2C;
-    s32 sp28;
-    s32 sp24;
-    s32 sp20;
-    s32 sp1C;
-    s32 sp18;
-    s32 sp14;
-    s32 sp10;
-    s32 spC;
+u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32 *arg6) {
+    s32 sp30[3];
+    s32 sp24[3];
+    s32 sp18[3];
+    s32 spC[3];
     u8 sp8;
     s32 var_r28;
     s32 var_r29;
@@ -40,6 +32,7 @@ void fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s3
     u16 var_r22;
     u16 var_r3;
     u16 var_r3_2;
+    u8 *var_r23 = lbl_80238E60;
 
     var_r29 = arg0;
     var_r22 = 0xFFFF;
@@ -83,10 +76,10 @@ void fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s3
             var_r21 = 0x5DC;
             break;
         case 0x1B:                                  /* switch 2 */
-            sp30 = M2C_FIELD(&lbl_80238E60, s32 *, 0xB0);
-            sp34 = M2C_FIELD(&lbl_80238E60, s32 *, 0xB4);
-            sp38 = M2C_FIELD(&lbl_80238E60, s32 *, 0xB8);
-            var_r22 = fn_801A9F44(3, &sp30);
+            sp30[0] = M2C_FIELD(var_r23, s32 *, 0xB0);
+            sp30[1] = M2C_FIELD(var_r23, s32 *, 0xB4);
+            sp30[2] = M2C_FIELD(var_r23, s32 *, 0xB8);
+            var_r22 = fn_801A9F44(3, sp30);
             sp8 = 0x64;
             var_r31 = 2;
             var_r21 = 0x3E8;
@@ -919,10 +912,10 @@ void fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s3
             var_r21 = 0x5DC;
             break;
         case 0x1B:                                  /* switch 20 */
-            sp24 = M2C_FIELD(&lbl_80238E60, s32 *, 0xBC);
-            sp28 = M2C_FIELD(&lbl_80238E60, s32 *, 0xC0);
-            sp2C = M2C_FIELD(&lbl_80238E60, s32 *, 0xC4);
-            var_r22 = fn_801A9F44(3, &sp24);
+            sp24[0] = M2C_FIELD(var_r23, s32 *, 0xBC);
+            sp24[1] = M2C_FIELD(var_r23, s32 *, 0xC0);
+            sp24[2] = M2C_FIELD(var_r23, s32 *, 0xC4);
+            var_r22 = fn_801A9F44(3, sp24);
             sp8 = 0x64;
             var_r31 = 2;
             var_r21 = 0x3E8;
@@ -974,10 +967,10 @@ void fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s3
             var_r21 = 0x5DC;
             break;
         case 0x1B:                                  /* switch 21 */
-            sp18 = M2C_FIELD(&lbl_80238E60, s32 *, 0xC8);
-            sp1C = M2C_FIELD(&lbl_80238E60, s32 *, 0xCC);
-            sp20 = M2C_FIELD(&lbl_80238E60, s32 *, 0xD0);
-            var_r22 = fn_801A9F44(3, &sp18);
+            sp18[0] = M2C_FIELD(var_r23, s32 *, 0xC8);
+            sp18[1] = M2C_FIELD(var_r23, s32 *, 0xCC);
+            sp18[2] = M2C_FIELD(var_r23, s32 *, 0xD0);
+            var_r22 = fn_801A9F44(3, sp18);
             sp8 = 0x64;
             var_r31 = 2;
             var_r21 = 0x3E8;
@@ -1034,10 +1027,10 @@ void fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s3
                 var_r21 = 0x5DC;
                 break;
             case 0x1B:                              /* switch 22 */
-                spC = M2C_FIELD(&lbl_80238E60, s32 *, 0xD4);
-                sp10 = M2C_FIELD(&lbl_80238E60, s32 *, 0xD8);
-                sp14 = M2C_FIELD(&lbl_80238E60, s32 *, 0xDC);
-                var_r22 = fn_801A9F44(3, &spC);
+                spC[0] = M2C_FIELD(var_r23, s32 *, 0xD4);
+                spC[1] = M2C_FIELD(var_r23, s32 *, 0xD8);
+                spC[2] = M2C_FIELD(var_r23, s32 *, 0xDC);
+                var_r22 = fn_801A9F44(3, spC);
                 sp8 = 0x64;
                 var_r31 = 2;
                 var_r21 = 0x3E8;
@@ -1082,4 +1075,5 @@ void fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s3
         *arg6 |= var_r28;
     }
     fn_800EB458(lbl_8024104C, var_r29, var_r22, arg2, sp8, var_r31, var_r21);
+    return var_r22;
 }
