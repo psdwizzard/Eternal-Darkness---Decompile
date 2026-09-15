@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "73cb2641-fe8e-4de6-acd4-64516714fbb3",
+  "attempt": 5,
+  "base_commit": "7f473d4c546de05cbe255eae3f3e27022ca3b5dd",
+  "target": "fn_801AE3C8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-73cb2641-fe8e-4de6-acd4-64516714fbb3.json"
+  ],
+  "divergence": "Fresh canonical and function_reloc_diffs=name_address relocation-strict objdiff are size-exact at 360/360 bytes and 99.94444%. The sole instruction difference remains offset 0x44: retail emits add r0, r4, r29 while canonical GC/1.3 emits the equivalent add r0, r4, r5. All eight relocation-bearing instruction records align at offsets 0x6c, 0x78, 0xac, 0xd4, 0xd8, 0xf4, 0xfc, and 0x13c with equal types, targets, and addends. A new type-spelling/CSE hypothesis was tested: changing only amount from u32 to unsigned long forces the desired add r0,r4,r29, but recolors the half-size and limit temporaries, inserts mr r5,r29 at offset 0x78, and scores 98.44444%; signed long scores 97.77778%. Introducing a separate end-position intermediate is byte-identical to the retained 99.94444% reconstruction and does not change the r5 operand. The superior existing reconstruction was restored unchanged. python3 configure.py and .tools/bin/ninja -j2 completed successfully; build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f; python3 tools/legal_audit.py passed with 15474 tracked project files inspected."
+}
