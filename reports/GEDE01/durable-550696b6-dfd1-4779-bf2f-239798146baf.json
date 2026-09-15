@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "550696b6-dfd1-4779-bf2f-239798146baf",
+  "attempt": 1,
+  "base_commit": "7fe30c8baac7f7511f636ed341e7587388087397",
+  "target": "fn_801AD528",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-550696b6-dfd1-4779-bf2f-239798146baf.json"
+  ],
+  "divergence": "Fresh relocation-strict objdiff measures 90.18868%: retail is 212 bytes while canonical GC/1.3 emits 208. At retail offsets 0x20-0x44, retail materializes lbl_8060B204 in r4 before mulli and separately recomputes base-plus-index into r30 for the handle; generated code materializes the base through r3/r0 after mulli, retains the combined slot pointer in r3, and derives r30 with addi, omitting one add instruction. This shifts the following branch targets and epilogue by four bytes; call relocation targets and addends otherwise agree."
+}
