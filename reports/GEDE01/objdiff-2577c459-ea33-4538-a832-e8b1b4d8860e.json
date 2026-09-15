@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "assignment_id": "2577c459-ea33-4538-a832-e8b1b4d8860e",
+  "target": "fn_80109D20",
+  "source": "eternal-darkness-decomp/src/game/game_fn_80109D20.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80109D20.c\")",
+  "compiler": "GC/1.3 canonical flags from configure.py",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[843/848] MWCC build/GEDE01/src/game/game_fn_80109D20.o\n[844/848] REPORT\n[845/848] LINK build/GEDE01/main.elf\n[846/848] DOL build/GEDE01/main.dol\n[847/848] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[848/848] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80109D20 fn_80109D20 -o build/GEDE01/objdiff-2577c459-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "canonical_match_percent=92.85714 retail_size=112 generated_size=112 retail_actual_instructions=28 generated_actual_instructions=28 retail_relocations=8 generated_relocations=8 left_diff_kinds=DIFF_DELETE:1,DIFF_INSERT:1 right_diff_kinds=DIFF_DELETE:1,DIFF_INSERT:1"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80109D20 fn_80109D20 -o build/GEDE01/objdiff-2577c459-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "relocation_strict_match_percent=92.85714 retail_relocations=8 generated_relocations=8; retail DIFF_DELETE offset=36 instruction='lwz r3, lbl_8064CCA0@sda21' relocation=R_PPC_EMB_SDA21 target=lbl_8064CCA0 addend=0; generated DIFF_INSERT offset=48 instruction='lwz r3, lbl_8064CCA0@sda21' relocation=R_PPC_EMB_SDA21 target=lbl_8064CCA0 addend=0"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-2577c459-canonical.raw.json build/GEDE01/objdiff-2577c459-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "cmp_exit=0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    }
+  ],
+  "canonical": {
+    "match_percent": 92.85714,
+    "retail_bytes": 112,
+    "generated_bytes": 112,
+    "retail_instructions": 28,
+    "generated_instructions": 28,
+    "diff_delete": 1,
+    "diff_insert": 1
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 8,
+    "generated_count": 8,
+    "matching_sites": 7,
+    "mismatching_sites": 1,
+    "difference": "The R_PPC_EMB_SDA21 relocation targeting lbl_8064CCA0 with addend 0 is at function offset 0x24 in retail and 0x30 in generated code. All seven other relocation sites, types, targets, and addends agree."
+  },
+  "retail_difference": "At 0x24 retail emits lwz r3,lbl_8064CCA0@sda21 before li r4,2 / bge / li r4,1.",
+  "generated_difference": "Generated code emits the same lwz and relocation at 0x30, after li r4,2 / bge / li r4,1. The remaining instructions and total size agree.",
+  "bounded_experiments": [
+    {
+      "change": "Pass a direct ternary expression as the mode argument.",
+      "retained": false,
+      "raw_output": "match_percent=86.96429 retail_bytes=112 generated_bytes=108",
+      "reason": "GC/1.3 replaced the branch with extsh/srawi/addi arithmetic."
+    },
+    {
+      "change": "Use an explicit if/else assignment for mode.",
+      "retained": false,
+      "raw_output": "match_percent=86.96429 retail_bytes=112 generated_bytes=108",
+      "reason": "GC/1.3 again selected branchless arithmetic."
+    },
+    {
+      "change": "Capture lbl_8064CCA0 into the same local pointer in both branch arms.",
+      "retained": false,
+      "raw_output": "match_percent=85.53571 retail_bytes=112 generated_bytes=120",
+      "reason": "The compiler retained two pointer loads and added a join branch."
+    },
+    {
+      "change": "Capture lbl_8064CCA0 in a register-qualified local before mode selection.",
+      "retained": false,
+      "raw_output": "match_percent=89.28571 retail_bytes=112 generated_bytes=116",
+      "reason": "The compiler loaded the pointer into r0 at 0x20 and later added mr r3,r0."
+    },
+    {
+      "change": "Use a short local for mode.",
+      "retained": false,
+      "raw_output": "match_percent=88.92857 retail_bytes=112 generated_bytes=116",
+      "reason": "The compiler selected r0 for mode and added extsh r4,r0."
+    }
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "legal_audit": "The retained file is an independently reconstructed C implementation derived from retail instruction behavior. It contains no inline or whole-function assembly, copied proprietary source, generated binary, or private retail input.",
+  "conclusion": "Attempted: the recovered size-exact, behavior-complete C reconstruction remains the best bounded result. Canonical GC/1.3 schedules one relocation-bearing SDA load twelve bytes later than retail, preventing both canonical and relocation-strict 100%."
+}
