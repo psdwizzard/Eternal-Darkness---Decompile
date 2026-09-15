@@ -55,11 +55,15 @@ int fn_8008A2E0(Work* work)
 {
     int index;
     Context* context = fn_8006ED3C(work, 5, &index);
-    u8* memory = work->runtime->memory;
+    u8* effect;
+    u8* secondary;
+    u8* memory;
     int result = 0;
-    u8* effect = memory + 0xB00;
-    u8* secondary = memory + 0xBC4;
     u32 identifier;
+
+    memory = work->runtime->memory;
+    effect = memory + 0xB00;
+    secondary = memory + 0xBC4;
 
     context->counter++;
     if (context->counter >= 8)
@@ -74,9 +78,11 @@ int fn_8008A2E0(Work* work)
                 *(void**)(effect + 0xC0) = fn_80149E04();
                 if (*(void**)(effect + 0xC0) != 0) {
                     u32 color = lbl_8064EBB0;
+                    u32 soundColor;
                     int value = fn_8017FDF4(*(void**)(memory + 0x94));
                     Vec3 position;
-                    int mode = 2;
+                    Vec3 direction;
+                    int mode;
                     void* scene;
                     SVec3* source;
 
@@ -101,8 +107,9 @@ int fn_8008A2E0(Work* work)
                     *(u32*)(effect + 0xA8) = identifier;
                     fn_801E8328(0x1A, effect);
 
-                    color = lbl_8064EBB4;
-                    *(Vec3*)(&position) = lbl_80239620;
+                    soundColor = lbl_8064EBB4;
+                    mode = 2;
+                    direction = lbl_80239620;
                     scene = fn_80201BC8(fn_80201814(*(void**)(work->bytes + 0x38)));
                     source = fn_8017FDE4(*(void**)(memory + 0x94));
                     position.x = source->x;
@@ -110,13 +117,13 @@ int fn_8008A2E0(Work* work)
                     position.z = source->z;
                     if ((context->counter & 1) == 0)
                         mode = 0;
-                    fn_8014D98C(scene, &position, (Vec3*)&lbl_80239620,
-                                mode, 1, &color);
+                    fn_8014D98C(scene, &position, &direction,
+                                mode, 1, &soundColor);
                 }
 
                 *(void**)(secondary + 0xC0) = fn_80149E04();
                 if (*(void**)(secondary + 0xC0) != 0) {
-                    u32 color = lbl_8064EBB8;
+                    volatile u32 color = lbl_8064EBB8;
                     fn_8014E4C0(secondary, *(void**)(secondary + 0xC0));
                     fn_8019BCEC(secondary);
                     *(u32*)(secondary + 0x18) = color;
