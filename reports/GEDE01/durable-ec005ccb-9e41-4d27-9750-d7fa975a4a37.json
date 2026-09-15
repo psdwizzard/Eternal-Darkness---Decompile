@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "ec005ccb-9e41-4d27-9750-d7fa975a4a37",
+  "attempt": 2,
+  "base_commit": "5ebb37c056fc55b2b78a87a87aa40095682b04ca",
+  "target": "fn_80080A38",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ec005ccb-9e41-4d27-9750-d7fa975a4a37.json"
+  ],
+  "divergence": "Relocation-strict objdiff is size-exact at 324/324 bytes and 94.395065%, with all 10 ordered relocation targets, types, and addends equal. Remaining codegen differences are the initial lbl_8064EA60 load scheduled after rather than before the nonvolatile-save sequence, reversed source-word loads at retail offsets 0x9c/0xa0 (retail r0@0x60 then r3@0x64; generated r3@0x64 then r0@0x60), and the hit-adjustment FP load/FMA register schedule from retail offsets 0xd8..0x108. The canonical configure and full ninja -j2 build completed successfully, and build/GEDE01/main.dol verifies as ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
