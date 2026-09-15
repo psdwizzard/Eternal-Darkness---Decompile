@@ -22,11 +22,11 @@ typedef struct Context {
 } Context;
 
 extern int lbl_8064D7D8;
-extern Record* lbl_8064D8A0[2];
+extern Record* lbl_8064D820[2];
 extern Context lbl_8063F020[2];
 extern u8 lbl_8030F540[];
-extern char lbl_80649A38[];
-extern char lbl_8030C8AC[];
+extern char lbl_8064C3B8[4];
+extern char lbl_802FC8AC[];
 
 extern void** fn_801FF2F8(Context*, s16);
 extern void fn_8015DAB0(void*);
@@ -39,29 +39,37 @@ extern void fn_800F8BAC(const char*, const char*, int);
 
 void fn_801FF008(Header* header, int arg)
 {
-    int result = 2;
+    int id_offset;
+    int value_offset;
+    Record* destination;
+    int record_offset;
+    s16 id;
+    int result;
     int i;
-    int record_offset = 0;
-    int count = header->count;
-    Record* output = lbl_8064D8A0[lbl_8064D7D8];
+    int j;
+    int count;
+    Record* output;
+    void* object;
+    u32 value;
 
-    for (i = 0; i < count; i++) {
-        int id_offset;
-        int value_offset;
-        Record* destination;
-        int j;
+    result = 2;
+    i = 0;
+    record_offset = 0;
+    count = header->count;
+    output = lbl_8064D820[lbl_8064D7D8];
+
+    for (; i < count; i++) {
         *output = *(Record*)((u8*)header->records + record_offset);
 
-        id_offset = 0;
-        value_offset = id_offset;
+        value_offset = id_offset = 0;
         destination = output;
         for (j = 0; j < 11; j++, value_offset += 4,
              destination = (Record*)((u8*)destination + 4), id_offset += 2) {
-            s16 id = *(s16*)((u8*)header->records + record_offset +
-                            id_offset + 0x5C);
+            id = *(s16*)(record_offset + (u8*)header->records +
+                         id_offset + 0x5C);
             if (id != -1) {
-                u32 value = *(u32*)((u8*)header->records + record_offset +
-                                   value_offset + 0x2C);
+                value = *(u32*)((u8*)header->records + record_offset +
+                                value_offset + 0x2C);
                 if (fn_801FF2F8(&lbl_8063F020[lbl_8064D7D8], id) == 0) {
                     u8 type = output->type;
                     if (type != 0 && type == (s8)lbl_8030F540[0x1E0]) {
@@ -71,12 +79,11 @@ void fn_801FF008(Header* header, int arg)
                         if (result == 2) {
                             result = 1;
                         }
-                    } else if (*(void**)((u8*)header->records + record_offset +
-                                        value_offset) != 0) {
-                        void* object = *(void**)((u8*)header->records +
-                                                record_offset + value_offset);
+                    } else if ((object = *(void**)((u8*)header->records +
+                                                   record_offset +
+                                                   value_offset)) != 0) {
                         if (object == 0) {
-                            fn_800F8BAC(lbl_80649A38, lbl_8030C8AC, 371);
+                            fn_800F8BAC(lbl_8064C3B8, lbl_802FC8AC, 371);
                         }
                         fn_8015DAB0(object);
                         destination->objects[0] = object;
@@ -92,7 +99,7 @@ void fn_801FF008(Header* header, int arg)
 
     {
         int old_index = lbl_8064D7D8;
-        Record* old_output = lbl_8064D8A0[old_index];
+        Record* old_output = lbl_8064D820[old_index];
         fn_801FF5EC(&lbl_8063F020[old_index],
                     &lbl_8063F020[old_index ^ 1]);
         fn_801FF838(&lbl_8063F020[lbl_8064D7D8 ^ 1], arg);
