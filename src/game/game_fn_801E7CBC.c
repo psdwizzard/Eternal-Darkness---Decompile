@@ -19,6 +19,9 @@ extern void fn_80226AB4(int, int, int);
 extern void fn_801E7BDC(float, float, float);
 extern void fn_801E7BD8(void);
 
+/* NonMatching: behavior- and size-exact. The remaining mismatch is confined to
+ * scheduling and volatile-register selection for the final two state words and
+ * the four arguments to fn_801EDA7C. */
 void fn_801E7CBC(Vec3* a, Vec3* b, Vec3* c, Vec3* d, u32* value)
 {
     DrawState state = lbl_8023B6A8;
