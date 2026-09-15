@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "b0b4f420-3e0f-4061-929b-66066daed9ac",
+  "attempt": 7,
+  "base_commit": "71e1692f86ab566037d79d264f550aa7c089b4cf",
+  "target": "fn_801FE2A8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b0b4f420-3e0f-4061-929b-66066daed9ac.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-b0b4f420-3e0f-4061-929b-66066daed9ac.json",
+    "eternal-darkness-decomp/reports/GEDE01/validation-b0b4f420-3e0f-4061-929b-66066daed9ac.json",
+    "eternal-darkness-decomp/reports/GEDE01/variants-b0b4f420-3e0f-4061-929b-66066daed9ac.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-b0b4f420-3e0f-4061-929b-66066daed9ac.json"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff both measure 99.87805%, with exact 492-byte size. Only offsets 0x34, 0x38 and 0x3C differ: retail uses lwz r0, lbl_8064D18C@sda21; extsh. r3, r4; extsh r0, r0, while generated uses lwz r3, lbl_8064D18C@sda21; extsh. r0, r4; extsh r0, r3. All four ELF relocations agree in offsets, types, targets, symbol values and zero addends. Eleven freshly compiled variants tested leading parameter-copy register coloring and signed-comparison live ranges. Parameter-copy variants remained identical; using the promoted comparison value for selection moved the global load into r0 but replaced extsh. with cmpwi and regressed to 99.43089%. Discarded variants and retained the accepted best independent NonMatching C source, verified byte-identical to preserved attempt 6. Fresh canonical builds and legal audit pass; main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f. No policy or shared-input changes were needed."
+}

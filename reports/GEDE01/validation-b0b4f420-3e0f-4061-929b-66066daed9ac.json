@@ -1,0 +1,235 @@
+{
+  "assignment_id": "b0b4f420-3e0f-4061-929b-66066daed9ac",
+  "measured_utc": "2026-09-15T17:46:05.283006+00:00",
+  "target": {
+    "path": "build/GEDE01/obj/game/game_fn_801FE2A8.o",
+    "sha256": "ff5f36abcbffe3bf30457db2519a09f80de37133f39dd6d0c90e488913286199",
+    "text_size": 492,
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": "0x24",
+        "type": 10,
+        "target": "fn_801FD6F4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "section": ".text",
+        "offset": "0x34",
+        "type": 109,
+        "target": "lbl_8064D18C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "section": ".text",
+        "offset": "0x64",
+        "type": 10,
+        "target": "fn_801FD6AC",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "section": ".text",
+        "offset": "0x154",
+        "type": 10,
+        "target": "fn_801FE838",
+        "target_value": 0,
+        "addend": 0
+      }
+    ]
+  },
+  "candidate": {
+    "path": "build/GEDE01/src/game/game_fn_801FE2A8.o",
+    "sha256": "898790ff0d83dcf0e615f96b34d1634c2cdb9df57962ea6584ae4e6b6b5c733e",
+    "text_size": 492,
+    "relocations": [
+      {
+        "section": ".text",
+        "offset": "0x24",
+        "type": 10,
+        "target": "fn_801FD6F4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "section": ".text",
+        "offset": "0x34",
+        "type": 109,
+        "target": "lbl_8064D18C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "section": ".text",
+        "offset": "0x64",
+        "type": 10,
+        "target": "fn_801FD6AC",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "section": ".text",
+        "offset": "0x154",
+        "type": 10,
+        "target": "fn_801FE838",
+        "target_value": 0,
+        "addend": 0
+      }
+    ]
+  },
+  "relocations_equal": true,
+  "differing_instruction_words": [
+    {
+      "offset": "0x34",
+      "retail": "80000000",
+      "generated": "80600000"
+    },
+    {
+      "offset": "0x38",
+      "retail": "7c830735",
+      "generated": "7c800735"
+    },
+    {
+      "offset": "0x3c",
+      "retail": "7c000734",
+      "generated": "7c600734"
+    }
+  ],
+  "source_sha256": "2cb6ab18b2e47d85bf9f6dc122e2420aa2a896bbc78a2a049c5a6591c98d1471",
+  "source_matches_preserved_attempt_6": true,
+  "checks": [
+    {
+      "command": [
+        "sha1sum",
+        "-c",
+        "config/GEDE01/build.sha1"
+      ],
+      "exit_code": 0,
+      "stdout": "build/GEDE01/main.dol: OK\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "exit_code": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "stdout": "legal audit passed (15561 tracked project files inspected)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".tools/bin/ninja",
+        "-t",
+        "commands",
+        "build/GEDE01/src/game/game_fn_801FE2A8.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_801FE2A8.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801FE2A8.d build/GEDE01/src/game/game_fn_801FE2A8.d\n",
+      "stderr": ""
+    }
+  ],
+  "notes": [
+    "Source remains independently registered NonMatching with GC/1.3; whole-DOL verification uses its retail split.",
+    "All comparison results in this assignment were freshly measured. Historical source was verified equal; historical measurements were not copied.",
+    "ELF32 big-endian SHT_RELA entries decoded directly, comparing section, offset, type, target name, target symbol value and signed addend.",
+    "No compiler flags, registration, splits, runtime code, global progress or shared inputs changed. Existing unrelated CLAUDE.md modification excluded from commit."
+  ],
+  "final_build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/build-b0b4f420-3e0f-4061-929b-66066daed9ac.json"
+  },
+  "objdiff": {
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-b0b4f420-3e0f-4061-929b-66066daed9ac.json",
+    "match_percent": 99.87805,
+    "target_size": "492",
+    "candidate_size": "492"
+  },
+  "objdiff-strict": {
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-b0b4f420-3e0f-4061-929b-66066daed9ac.json",
+    "match_percent": 99.87805,
+    "target_size": "492",
+    "candidate_size": "492"
+  },
+  "variant_summary": [
+    {
+      "name": "leading_id_copy",
+      "score": 99.87805,
+      "object_sha256": "898790ff0d83dcf0e615f96b34d1634c2cdb9df57962ea6584ae4e6b6b5c733e"
+    },
+    {
+      "name": "leading_input_copy",
+      "score": 99.87805,
+      "object_sha256": "898790ff0d83dcf0e615f96b34d1634c2cdb9df57962ea6584ae4e6b6b5c733e"
+    },
+    {
+      "name": "both_parameter_copies_0",
+      "score": 99.87805,
+      "object_sha256": "898790ff0d83dcf0e615f96b34d1634c2cdb9df57962ea6584ae4e6b6b5c733e"
+    },
+    {
+      "name": "both_parameter_copies_1",
+      "score": 99.87805,
+      "object_sha256": "898790ff0d83dcf0e615f96b34d1634c2cdb9df57962ea6584ae4e6b6b5c733e"
+    },
+    {
+      "name": "leading_id_copy_compare_reversed",
+      "score": 99.87805,
+      "object_sha256": "898790ff0d83dcf0e615f96b34d1634c2cdb9df57962ea6584ae4e6b6b5c733e"
+    },
+    {
+      "name": "shared_signed_mode_compare",
+      "score": 99.87805,
+      "object_sha256": "898790ff0d83dcf0e615f96b34d1634c2cdb9df57962ea6584ae4e6b6b5c733e"
+    },
+    {
+      "name": "shared_signed_mode_compare_and_selection",
+      "score": 99.43089,
+      "object_sha256": "a6599276137a401854546f186308247d22b7f305f50bde2fa679d7e05c7e5e8d"
+    },
+    {
+      "name": "named_promoted_compare",
+      "score": 99.87805,
+      "object_sha256": "898790ff0d83dcf0e615f96b34d1634c2cdb9df57962ea6584ae4e6b6b5c733e"
+    },
+    {
+      "name": "named_promoted_compare_and_selection",
+      "score": 99.43089,
+      "object_sha256": "a6599276137a401854546f186308247d22b7f305f50bde2fa679d7e05c7e5e8d"
+    },
+    {
+      "name": "assignment_in_compare",
+      "score": 99.87805,
+      "object_sha256": "898790ff0d83dcf0e615f96b34d1634c2cdb9df57962ea6584ae4e6b6b5c733e"
+    },
+    {
+      "name": "promoted_compare_after_null_return",
+      "score": 99.87805,
+      "object_sha256": "898790ff0d83dcf0e615f96b34d1634c2cdb9df57962ea6584ae4e6b6b5c733e"
+    }
+  ],
+  "staged_legal_audit": {
+    "command": [
+      "python3",
+      "tools/legal_audit.py"
+    ],
+    "exit_code": 0,
+    "stdout": "legal audit passed (15567 tracked project files inspected)\n",
+    "stderr": ""
+  }
+}
