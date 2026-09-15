@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "045e9d3a-74f4-4a26-b736-3206b52dba50",
+  "attempt": 2,
+  "base_commit": "3c40749492cc7d65d610f96d248d5145158cf53d",
+  "target": "fn_80090FF4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-045e9d3a-74f4-4a26-b736-3206b52dba50.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff is 89.47369% with size-exact 304-byte retail and generated functions and all 11/11 R_PPC_REL24 relocations equal in offset, type, target, and zero addend. Differences are confined to the two signed-short decrement-to-zero clamps at function offsets 0x38-0x80: retail lowers each clamp through xoris/subfic/addc/subfe/andc, while canonical GC/1.3 lowers the honest C comparison through subfc/srwi/subfe/andc and schedules the first clamp's argument moves differently. Full build SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
