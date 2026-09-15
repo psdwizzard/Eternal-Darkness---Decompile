@@ -28,6 +28,13 @@ struct Context {
     Current* current;
 };
 
+typedef struct Payload Payload;
+struct Payload {
+    u32 third;
+    u32 second;
+    u32 first;
+};
+
 extern LookupRow lbl_8023BA30[];
 extern u32 lbl_8064C4E0;
 extern u32* lbl_8064C5A8;
@@ -53,7 +60,7 @@ void fn_801E215C(s32 type)
     s32 removed;
     Object* object;
     s32 allowed;
-    s32 handle;
+    u32 handle;
     void* result;
 
     if (type == 0x5A) {
@@ -62,7 +69,7 @@ void fn_801E215C(s32 type)
         effect = 0x34A;
     }
 
-    if (effect == 0) {
+    if ((u32)effect == 0) {
         return;
     }
     removed = 0;
@@ -93,20 +100,21 @@ void fn_801E215C(s32 type)
         if (fn_801E79FC(lbl_8064C4E0, effect) != 0) {
             fn_8012C478(result, 0xF, 0);
         } else {
-            u32 first = lbl_80651218;
-            u32 second = lbl_8065121C;
-            u32 third = lbl_80651F34;
+            Payload source;
             u32 arg1;
             u32 arg2;
             u32 arg3;
+            source.first = lbl_80651218;
+            source.second = lbl_8065121C;
+            source.third = lbl_80651F34;
             if (removed) {
-                ((u8*)&first)[3] = 0;
-                ((u8*)&third)[3] = 5;
+                ((u8*)&source.first)[3] = 0;
+                ((u8*)&source.third)[3] = 5;
             }
             fn_8012C478(result, 0xF, 1);
-            arg1 = first;
-            arg2 = third;
-            arg3 = second;
+            arg3 = source.second;
+            arg2 = source.third;
+            arg1 = source.first;
             fn_8012C62C(result, 0xF, &arg1, &arg2, &arg3, 4);
         }
     }

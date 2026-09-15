@@ -11764,7 +11764,7 @@ config.libs = [
             Object(Matching, "game/game_fn_801E2004.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E2068.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E20D0.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
-            Object(NonMatching, "game/game_fn_801E215C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801E215C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E237C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             # Complete state dispatcher; the remaining four-byte and scheduling
             # delta is driven by subject lifetime, stack slots, and register allocation.
