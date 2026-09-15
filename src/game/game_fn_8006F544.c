@@ -36,6 +36,8 @@ extern void fn_8011FB54(void *object, int value);
 extern void *memset(void *dest, int value, unsigned int size);
 extern void *lbl_803127F8[32];
 
+/* NonMatching: size-exact behavior-complete reconstruction. Remaining output
+ * differences are nonvolatile-register allocation across the two loops. */
 void fn_8006F544(Owner *owner, int enabled)
 {
     void *source;
@@ -45,38 +47,46 @@ void fn_8006F544(Owner *owner, int enabled)
     int value;
     u8 object_count;
     u8 slot_count;
+    void **objects;
+    Config *slot_config;
+    void **object_iter;
 
     source = 0;
     if (fn_80201814(owner->resource) != 0) {
         source = fn_80036D38()->object;
     }
-    config = (Config *)((u8 *)owner->config + 0x48);
+    config = owner->config;
+    objects = lbl_803127F8;
+    config = (Config *)((u8 *)config + 0x48);
     value = config->value;
     object_count = config->object_count;
     slot_count = config->slot_count;
+    slot_config = config;
     for (slot = 0; slot < slot_count; slot++) {
-        if (config->slots[slot] != 0) {
-            int id = fn_80201B54(config->slots[slot]);
-            if (id == config->expected) {
+        if (slot_config->slots[0] != 0) {
+            int id = fn_80201B54(slot_config->slots[0]);
+            if (id == slot_config->expected) {
                 fn_8020123C(0x39, source, id, 0);
                 if (enabled != 0) {
-                    void *runtime = fn_80155DB4(config->slots[slot]);
+                    void *runtime = fn_80155DB4(slot_config->slots[0]);
                     if (runtime != 0) {
                         fn_80156FF4(runtime);
                     }
                 }
-                config->slots[slot] = 0;
-                config->expected = 0;
+                slot_config->slots[0] = 0;
+                slot_config->expected = 0;
             }
         }
+        slot_config = (Config *)((u8 *)slot_config + 4);
     }
-    for (object = 0; object < object_count; object++) {
-        if (lbl_803127F8[object] != 0) {
+    object_iter = objects;
+    for (object = 0; object < object_count; object_iter++, object++) {
+        if (object_iter != 0 && *object_iter != 0) {
             void *runtime;
-            fn_80201B8C(lbl_803127F8[object]);
-            runtime = fn_80201BC8(lbl_803127F8[object]);
-            if (fn_80201B54(lbl_803127F8[object]) != 0 &&
-                fn_80201EB8(lbl_803127F8[object]) == 10000) {
+            fn_80201B8C(*object_iter);
+            runtime = fn_80201BC8(*object_iter);
+            if (fn_80201B54(*object_iter) != 0 &&
+                fn_80201EB8(*object_iter) == 10000) {
                 fn_8011FB54(runtime, value);
             }
         }
