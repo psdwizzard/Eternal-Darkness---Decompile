@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "assignment_id": "a0947359-9bb3-428d-9856-28eaf52f58ba",
+  "target": "fn_800746CC",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800746CC fn_800746CC -o build/GEDE01/final_fn_800746CC.json --format json-pretty",
+    "target_size": 256,
+    "base_size": 256,
+    "match_percent": 92.171875
+  },
+  "relocation_strict": {
+    "commands": [
+      "build/binutils/powerpc-eabi-readelf -r build/GEDE01/obj/game/game_fn_800746CC.o",
+      "build/binutils/powerpc-eabi-readelf -r build/GEDE01/src/game/game_fn_800746CC.o"
+    ],
+    "matched": true,
+    "exact_offset_type_target_addend_sites": 13,
+    "matching_type_target_addend_sites": 13,
+    "total_sites": 13,
+    "type": "R_PPC_REL24",
+    "addend": 0,
+    "sites": [
+      {"offset": 36, "target": "fn_80128EAC"},
+      {"offset": 52, "target": "fn_801A7498"},
+      {"offset": 68, "target": "fn_801A7490"},
+      {"offset": 84, "target": "fn_80201814"},
+      {"offset": 88, "target": "fn_80201B8C"},
+      {"offset": 100, "target": "fn_80201814"},
+      {"offset": 104, "target": "fn_80201BC8"},
+      {"offset": 120, "target": "fn_8011F114"},
+      {"offset": 132, "target": "fn_80178E94"},
+      {"offset": 148, "target": "fn_80128BE4"},
+      {"offset": 176, "target": "fn_8020123C"},
+      {"offset": 196, "target": "fn_8020123C"},
+      {"offset": 216, "target": "fn_8011FA8C"}
+    ],
+    "raw_summary": "Both readelf outputs contain 13 R_PPC_REL24 entries at offsets 0x24,0x34,0x44,0x54,0x58,0x64,0x68,0x78,0x84,0x94,0xb0,0xc4,0xd8, with identical targets in order and addend +0 at every site."
+  },
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "result": "success",
+    "raw_check_output": "build/GEDE01/main.dol: OK",
+    "sha1_command": "sha1sum build/GEDE01/main.dol",
+    "sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_verified": true
+  },
+  "codegen_divergence": "Retail assigns object/first/second/state to r31/r30/r29/r28 and interleaves the first two parameter moves with callee-save stores; generated assigns them to r28/r29/r30/r31 and emits the callee-save stores before the parameter moves. The explicit position_object temporary now reproduces retail's r0 result shuttle around fn_8011F114, restores the generated size to 256 bytes, aligns every branch and relocation offset, and improves canonical similarity from the preserved attempt's 90.53125% to 92.171875%."
+}

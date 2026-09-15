@@ -22,23 +22,25 @@ extern unsigned long long fn_8020123C();
 extern unsigned int fn_8011FA8C(void *, int, int);
 
 /* NonMatching: behavior-complete paired-object distance event handler. The
- * remaining differences are callee-saved register allocation and one
- * equivalent result move around the position-copy call. */
+ * remaining differences are callee-saved register allocation and prologue
+ * scheduling. */
 int fn_800746CC(void *object, void *link)
 {
     register State *state;
     register void *second;
     register void *first;
     register void *object_r;
+    register void *position_object;
     Vec3 position;
 
-    first = link;
     object_r = object;
+    first = link;
     if (fn_80128EAC(object_r) == 7) {
         first = fn_801A7498(first);
         second = fn_801A7490(link);
         state = *(State **)((u8 *)fn_80201B8C(fn_80201814(first)) + 0x44);
-        fn_8011F114(&position, fn_80201BC8(fn_80201814(second)));
+        position_object = fn_80201BC8(fn_80201814(second));
+        fn_8011F114(&position, position_object);
         if (fn_80178E94((Vec3 *)((u8 *)state + 0x19C), &position) > 200) {
             fn_80128BE4(object_r);
             state->active = 1;
