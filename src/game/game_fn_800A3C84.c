@@ -1,18 +1,5 @@
 typedef unsigned int u32;
 
-typedef struct Vec800A3C84 {
-    u32 z;
-    u32 y;
-    u32 x;
-} Vec800A3C84;
-
-typedef struct Vec4_800A3C84 {
-    u32 w;
-    u32 z;
-    u32 y;
-    u32 x;
-} Vec4_800A3C84;
-
 extern u32 lbl_8064EEAC;
 extern u32 lbl_8064EEB0;
 extern u32 lbl_8064EEB4;
@@ -26,38 +13,41 @@ extern void* fn_8012C62C(void*, void*, float*, float*, float*, int);
 extern void fn_8012C478(void*, void*, int);
 extern void fn_8012F58C(void*, void*, int, int, int, int);
 
-/*
- * Behavior-complete reconstruction of the three-mode vector/action dispatch.
- * The remaining differences are MWCC's argument-address scheduling and the
- * temporary register selected for the first vector word in the first two
- * arms. Objdiff: 95.58209%, size-exact at 268 bytes.
- */
+/* Three-mode vector/action dispatch. */
 void fn_800A3C84(void* object, void* runtime, int first, int second)
 {
+    u32 first_x;
+    u32 first_y;
+    u32 first_z;
+    u32 second_x;
+    u32 second_y;
+    u32 second_z;
+    u32 third_x;
+    u32 third_y;
+    u32 third_z;
+    volatile u32 third_w;
+
     if (first != 0) {
-        Vec800A3C84 values;
-        values.z = lbl_8064EEB4;
-        values.y = lbl_8064EEB0;
-        values.x = lbl_8064EEAC;
-        fn_8012C62C(object, runtime, (float*)&values.x, (float*)&values.y,
-                     (float*)&values.z, 4);
+        first_z = lbl_8064EEB4;
+        first_y = lbl_8064EEB0;
+        first_x = lbl_8064EEAC;
+        fn_8012C62C(object, runtime, (float*)&first_x, (float*)&first_y,
+                     (float*)&first_z, 4);
         fn_8012C478(object, runtime, 1);
     } else if (second != 0) {
-        Vec800A3C84 values;
-        values.z = lbl_8064EEC0;
-        values.y = lbl_8064EEBC;
-        values.x = lbl_8064EEB8;
-        fn_8012C62C(object, runtime, (float*)&values.x, (float*)&values.y,
-                     (float*)&values.z, 4);
+        second_z = lbl_8064EEC0;
+        second_y = lbl_8064EEBC;
+        second_x = lbl_8064EEB8;
+        fn_8012C62C(object, runtime, (float*)&second_x, (float*)&second_y,
+                     (float*)&second_z, 4);
         fn_8012F58C(object, runtime, 0, 0, 0, 0x40);
     } else {
-        Vec4_800A3C84 values;
-        values.w = lbl_8064EEC4;
-        values.z = lbl_8064EEC4;
-        values.y = lbl_80651A28;
-        values.x = lbl_8064EEC4;
-        fn_8012C62C(object, runtime, (float*)&values.x, (float*)&values.y,
-                     (float*)&values.z, 4);
+        third_w = lbl_8064EEC4;
+        third_z = lbl_8064EEC4;
+        third_y = lbl_80651A28;
+        third_x = lbl_8064EEC4;
+        fn_8012C62C(object, runtime, (float*)&third_x, (float*)&third_y,
+                     (float*)&third_z, 4);
         fn_8012C478(object, runtime, 0);
     }
 }
