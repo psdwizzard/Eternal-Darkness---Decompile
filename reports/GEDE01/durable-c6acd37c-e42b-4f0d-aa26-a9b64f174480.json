@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c6acd37c-e42b-4f0d-aa26-a9b64f174480",
+  "attempt": 1,
+  "base_commit": "a07b5f16d33b72dd51ae5c7e1658523204f8927d",
+  "target": "fn_80080A38",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c6acd37c-e42b-4f0d-aa26-a9b64f174480.json"
+  ],
+  "divergence": "Relocation-strict objdiff is size-exact at 324/324 bytes and 94.395065%, with all 10 relocation targets, types, and addends equal. Remaining codegen differences are the initial lbl_8064EA60 load scheduled after rather than before the nonvolatile-save sequence, reversed source-word loads at retail offsets 0x9c/0xa0 (retail r0@0x60 then r3@0x64; generated r3@0x64 then r0@0x60), and the hit-adjustment FP load/FMA register schedule from retail offsets 0xd8..0x108. The requested full ninja build was attempted but stopped on the pre-existing unrelated game_fn_801B35BC externalization error: lbl_8060D420 is not defined in a NOBITS section. The target TU itself compiles successfully, and the existing main.dol verifies as ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

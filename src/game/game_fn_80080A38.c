@@ -34,6 +34,8 @@ extern unsigned int fn_8013F898(void *, Segment *, Hit *);
 void fn_80080A38(Vec3 *result, const Vec3 *start, Vec3 *end,
                  int adjust_hit, int shorten)
 {
+    /* NonMatching: behavior-complete, size-exact reconstruction. Remaining
+     * differences are two word-load slots and FP expression scheduling. */
     Segment segment;
     Hit hit;
     Vec3 scaled;
@@ -48,15 +50,26 @@ void fn_80080A38(Vec3 *result, const Vec3 *start, Vec3 *end,
             fn_80211A48(&segment.start, &scaled, &segment.end);
             fn_8013F3C0(&segment, &segment.start, &segment.end,
                         segment.width);
-            *end = segment.end;
+            {
+                unsigned int *src = (unsigned int *)&segment.end;
+                unsigned int *dst = (unsigned int *)end;
+                unsigned int second = src[1];
+                unsigned int first = src[0];
+                dst[0] = first;
+                {
+                    unsigned int third = src[2];
+                    dst[1] = second;
+                    dst[2] = third;
+                }
+            }
         }
     }
     if (adjust_hit) {
         void *context = fn_8015C348(2);
         if (fn_8013F898(context, &segment, &hit)) {
             float x = hit.position.x + segment.direction.x * segment.width;
-            float y = hit.position.y + segment.direction.y * segment.width;
             float z = hit.position.z + segment.direction.z * segment.width;
+            float y = hit.position.y + segment.direction.y * segment.width;
             end->x = x;
             end->y = y;
             end->z = z;
