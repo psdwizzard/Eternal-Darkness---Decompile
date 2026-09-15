@@ -29,6 +29,7 @@ extern void fn_8012EDB0(s32 context, s32 index, Vec3 *position, f32 first,
 extern s32 fn_8013057C(s32 context, s32 index);
 extern void fn_801301B0(s32 context, s32 clear, s32 set);
 
+#pragma opt_common_subs off
 void fn_80066888(s32 context, s32 event, f32 first, f32 second)
 {
     EventVectors vectors;
@@ -51,7 +52,7 @@ void fn_80066888(s32 context, s32 event, f32 first, f32 second)
                 if (scale > bounded) {
                     bounded = scale;
                 }
-                if (bounded > lbl_8064E698) {
+                if (lbl_8064E698 < bounded) {
                     bounded = lbl_8064E698;
                 } else if (scale > lbl_8064E6EC) {
                     bounded = scale;
@@ -70,3 +71,4 @@ void fn_80066888(s32 context, s32 event, f32 first, f32 second)
         }
     }
 }
+#pragma opt_common_subs reset

@@ -1920,9 +1920,9 @@ config.custom_build_rules = [
     {
         "name": "externalize_game_80066888_bias",
         "command": (
-            "python3 tools/externalize_elf_symbol.py $in @31 && "
+            "python3 tools/externalize_elf_symbol.py $in @28 && "
             "build/binutils/powerpc-eabi-objcopy "
-            "--redefine-sym=@31=lbl_8064E6E0 --remove-section=.sdata2 $in "
+            "--redefine-sym=@28=lbl_8064E6E0 --remove-section=.sdata2 $in "
             "&& touch $out"
         ),
         "description": "EXTERNALIZE $in",
