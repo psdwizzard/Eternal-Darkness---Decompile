@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "638213cb-509d-4ea9-89d1-c51b8ac59d13",
+  "attempt": 2,
+  "base_commit": "b3f3c094d66100b966be8ac859b34cae435a50d8",
+  "target": "fn_801D84F4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-638213cb-509d-4ea9-89d1-c51b8ac59d13.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff measures 97.53846% with exact 520-byte parity (130 PowerPC instructions plus the report's terminal alignment entry) and 14 relocation sites on each side, all with matching relocation types and zero addends; the generated conversion constant is rendered as local @39 at the retail lbl_806510D8 address under name_address comparison. Remaining differences are register allocation and adjacent scheduling: retail loads byte 0x13A before preserving object in r29, keeps state in r28 and the point iterator in r31; GC/1.3 preserves object in r28 first, keeps state in r31 and the point iterator in r29. The raw diff contains 24 non-equal aligned entries, dominated by those register substitutions, with the initial mr shifted across the flags load. Control flow, calls, frame size, conversions, teardown loop, segment loop, and closing segment are recovered. Full canonical build passed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
