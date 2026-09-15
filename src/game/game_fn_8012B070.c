@@ -11,6 +11,7 @@ typedef struct State8012B070 {
     void* callback_args[14];
     u8 pad70[0x48];
     void* resource;
+    u8 padBC[4];
     float angle;
     u8 padC4[8];
     Vec8012B070 transform;
@@ -19,6 +20,7 @@ typedef struct State8012B070 {
     void* resource_id;
     u32 flags;
     u16 attributes;
+    u8 padFA[2];
     u16 state;
 } State8012B070;
 
@@ -37,8 +39,9 @@ extern float lbl_806501BC;
 
 int fn_8012B070(u8* owner)
 {
-    State8012B070* current;
     State8012B070* next;
+    State8012B070* selected;
+    State8012B070* current;
     int index;
     int i;
     Vec8012B070 local;
@@ -49,14 +52,14 @@ int fn_8012B070(u8* owner)
     }
     if (fn_8012B018(owner, &index)) {
         *(u16*)(*(u8**)(owner + 0x40) + 0x880) = index;
-        current = fn_80128E30(owner);
-        if (current->flags & 0x80) {
+        selected = fn_80128E30(owner);
+        if (selected->flags & 0x80) {
             for (i = 0; i < 14; i++) {
-                if (current->callbacks[i] != 0) {
-                    current->callbacks[i](owner, current->callback_args[i]);
+                if (selected->callbacks[i] != 0) {
+                    selected->callbacks[i](owner, selected->callback_args[i]);
                 }
             }
-            current->state = 8;
+            selected->state = 8;
             fn_8012B070(owner);
         } else {
             next = fn_80128E30(owner);
@@ -73,7 +76,7 @@ int fn_8012B070(u8* owner)
             }
             if (!(next->attributes & 1) || !(current->attributes & 1) ||
                 current->resource != next->resource) {
-                fn_80129DE0(owner, next, !(next->flags & 0x20000), 1);
+                fn_80129DE0(owner, next, !(next->flags & 0x10000), 1);
             }
         }
         fn_80128C50(current);
