@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "148023a9-0696-48ee-a836-5c133e3b28fa",
+  "attempt": 4,
+  "base_commit": "bdad276dfdf2b5df9c44abb4e8a9ec5d015cc00c",
+  "target": "fn_8015CFFC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-148023a9-0696-48ee-a836-5c133e3b28fa.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are size-exact at 99.91304% (460/460 bytes, 115/115 instructions), with all 8/8 R_PPC_REL24 relocation targets and addends equal. Only offsets 0x40 and 0x5c differ: retail retains the nonblocking fn_8020D318 result in r27 (mr r27,r3; cmpwi r27,0), while canonical MWCC GC/1.3 coalesces that path-dead lifetime with the destination lifetime in r28 (mr r28,r3; cmpwi r28,0). A new pointer-relative destination-liveness probe optimized to an unsigned comparison without changing allocation; a volatile-destination interference probe forced stack traffic and 488 bytes; both were reverted. Removing the destination register qualifier was codegen-identical to the retained best reconstruction."
+}
