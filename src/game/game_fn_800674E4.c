@@ -25,14 +25,15 @@ extern void fn_80201DD8();
 void fn_800674E4(s32 context, s32 event)
 {
     s32 actor = fn_80036D38(context);
+    s32 has_target;
     s32 owner_object;
     s32 owner;
     u32 flags;
     s32 event_id;
     s32 state;
     s32 mode;
-    s32 has_target;
     s32 effect;
+    s32 result;
 
     owner = fn_80201B54(context);
     owner_object = (s32)fn_80201B94(context);
@@ -53,7 +54,7 @@ void fn_800674E4(s32 context, s32 event)
             break;
     }
     if (has_target) {
-        effect = fn_800AD2B4();
+        result = fn_800AD2B4();
         if (lbl_8064D18C == 0x29 && fn_8015C9F0() == 0)
             fn_8016B400(0x47E, owner, 0);
         flags = *(u32 *)actor;
@@ -61,7 +62,7 @@ void fn_800674E4(s32 context, s32 event)
         *(u32 *)actor = flags;
         *(s32 *)(actor + 0xC0) = event_id;
         fn_80201DD8(owner_object, 0);
-        if (effect != 0 && event_id != effect)
-            fn_8020123C(0x90, owner, effect, 0);
+        if (result != 0 && event_id != result)
+            fn_8020123C(0x90, owner, result, 0);
     }
 }
