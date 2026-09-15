@@ -26,7 +26,9 @@ void fn_8014BEC4(int unused, Vec3* source, SVec3* out, Vec3* result, Vec3* copy)
     Vec3 direction;
     void* object;
 
-    offset = lbl_8023A718;
+    offset.x = lbl_8023A718.x;
+    offset.y = lbl_8023A718.y;
+    offset.z = lbl_8023A718.z;
     object = fn_80201BC8(fn_80201814());
     fn_8012B690(object, &offset, &base);
     fn_8011F114(&world, object);

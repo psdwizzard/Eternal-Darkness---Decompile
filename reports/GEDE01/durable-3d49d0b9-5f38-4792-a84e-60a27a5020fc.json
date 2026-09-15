@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3d49d0b9-5f38-4792-a84e-60a27a5020fc",
+  "attempt": 2,
+  "base_commit": "138184dd302fd1f330d450634be6c1cb74049621",
+  "target": "fn_8014BEC4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3d49d0b9-5f38-4792-a84e-60a27a5020fc.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff is 96.26214% with equal 412-byte function sizes. The field-wise Vec3 copy emits lis r3 plus relocation-bearing lfsu f2,lbl_8023A718@l(r3), followed by lfs/lfs and stfs/stfs/stfs; retail emits lis r8 plus relocation-bearing lwzu r5,lbl_8023A718@l(r8), followed by lwz/lwz and stw/stw/stw. GC/1.3 also schedules mr r27,r4 before mr r28,r5, while retail schedules them in the reverse order. Subsequent instructions, relocation targets, and relocation addends align, but the differing prologue opcodes/registers prevent a strict match."
+}
