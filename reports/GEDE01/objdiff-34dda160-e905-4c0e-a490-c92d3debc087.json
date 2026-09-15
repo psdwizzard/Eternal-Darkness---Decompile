@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "assignment_id": "34dda160-e905-4c0e-a490-c92d3debc087",
+  "target": "fn_8015CBB0",
+  "objdiff": {
+    "tool": "objdiff-cli 3.6.1",
+    "command": "python3 tools/fndiff.py game/game_fn_8015CBB0.c fn_8015CBB0",
+    "stdout": "target 528 bytes  base 528 bytes  match 100.0",
+    "target_size": 528,
+    "base_size": 528,
+    "match_percent": 100.0
+  },
+  "relocation_strict": {
+    "command_target": "readelf -r build/GEDE01/obj/game/game_fn_8015CBB0.o",
+    "target_stdout": "000001f4  0000040a R_PPC_REL24       00000000   DCFlushRange + 0",
+    "command_base": "readelf -r build/GEDE01/src/game/game_fn_8015CBB0.o",
+    "base_stdout": "000001f4  0000030a R_PPC_REL24       00000000   DCFlushRange + 0",
+    "relocations_equal": true,
+    "matched_relocations": 1,
+    "total_relocations": 1,
+    "normalized_relocations": [
+      {
+        "offset": "0x1f4",
+        "type": "R_PPC_REL24",
+        "target": "DCFlushRange",
+        "addend": 0
+      }
+    ]
+  },
+  "canonical_build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "result": "build/GEDE01/main.dol: OK",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "stdout": "legal audit passed (15193 tracked project files inspected)"
+  }
+}

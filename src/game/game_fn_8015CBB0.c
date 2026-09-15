@@ -12,21 +12,21 @@ u32 fn_8015CBB0(const u8* source, u32 source_size, u8* destination)
     u8 suffix[256];
     u8* output = destination;
     u32 consumed = 0;
+    u32 output_size = 0;
 
     while (consumed < source_size) {
         int width = *source++;
-        int next_code = 0;
-        int stack_size;
-        int count;
+        int next_code;
         int i;
 
         consumed++;
         for (i = 0; i < 256; i++)
             prefix[i] = i;
 
+        next_code = 0;
         for (;;) {
             if (width > 127) {
-                next_code += width;
+                next_code = width + next_code;
                 width = 0;
                 next_code -= 127;
             }
@@ -48,33 +48,40 @@ u32 fn_8015CBB0(const u8* source, u32 source_size, u8* destination)
             consumed++;
         }
 
-        count = ((u32)source[0] << 8) + source[1];
-        source += 2;
-        consumed += 2;
-        stack_size = 0;
-        for (;;) {
-            int code;
+        {
             int value;
+            int stack_size;
+            int count;
 
-            if (stack_size != 0) {
-                code = stack[--stack_size];
-            } else {
-                if (count-- == 0)
-                    break;
-                code = *source++;
-                consumed++;
-            }
+            count = ((u32)source[0] << 24) >> 16;
+            count += source[1];
+            source += 2;
+            consumed += 2;
+            stack_size = 0;
+            for (;;) {
+                int code;
 
-            value = prefix[code];
-            if (code == value) {
-                *output++ = code;
-            } else {
-                stack[stack_size++] = suffix[code];
-                stack[stack_size++] = value;
+                if (stack_size != 0) {
+                    code = stack[--stack_size];
+                } else {
+                    if (count-- == 0)
+                        break;
+                    code = *source++;
+                    consumed++;
+                }
+
+                value = prefix[code];
+                if (code == value) {
+                    *output++ = code;
+                    output_size++;
+                } else {
+                    stack[stack_size++] = suffix[code];
+                    stack[stack_size++] = value;
+                }
             }
         }
     }
 
-    DCFlushRange(destination, output - destination);
-    return output - destination;
+    DCFlushRange(destination, output_size);
+    return output_size;
 }
