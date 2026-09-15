@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "assignment_id": "ab1b6e44-78ec-41fb-8208-fa2aeb6ecd28",
+  "attempt": 2,
+  "target": "fn_801E2408",
+  "unit": "main/game/game_fn_801E2408",
+  "source": {
+    "path": "eternal-darkness-decomp/src/game/game_fn_801E2408.c",
+    "sha256": "d7daf9a6200741a4de2adda35de713a3b03df9ae7eb771f8a939500c2b295afc",
+    "classification": "independent honest-C NonMatching reconstruction",
+    "recovery": "The useful source from preserved commit f7e07540e0adc5e9f10d2ac76b26a54bcf7151f8 was already present byte-for-byte at accepted base b633bb447118f6e4545ac5b59d6608f1fd698594."
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "extra_cflags": ["-use_lmw_stmw on"],
+    "registration": "Object(NonMatching, \"game/game_fn_801E2408.c\", mw_version=\"GC/1.3\", extra_cflags=[\"-use_lmw_stmw on\"])"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E2408 fn_801E2408 -o build/GEDE01/objdiff-ab1b6e44-final-canonical.raw.json --format json-pretty",
+    "raw_report_sha256": "8ee4fd8d14c58ec8163c1578274eb63845a8d48cff93be9915cd163453e0f9df",
+    "measurement_raw_output": "{\"retail_bytes\":1600,\"generated_bytes\":1604,\"match_percent\":93.09,\"retail_real_instructions\":400,\"generated_real_instructions\":401,\"retail_differing_rows\":101,\"generated_differing_rows\":101,\"retail_relocation_bearing_rows\":111,\"generated_relocation_bearing_rows\":111}"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E2408 fn_801E2408 -o build/GEDE01/objdiff-ab1b6e44-final-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "config": "function_reloc_diffs=name_address",
+    "raw_report_sha256": "8ee4fd8d14c58ec8163c1578274eb63845a8d48cff93be9915cd163453e0f9df",
+    "cmp_raw_output": "cmp_exit=0",
+    "assessment": "The strict report is byte-identical to canonical. Both sides contain 111 relocation-bearing instruction rows; relocation target names, addresses, and addends are represented, but the code is not a 100% match."
+  },
+  "divergence": "Generated code is four bytes and one instruction longer than retail. GC/1.3 assigns object/subject/id to r29/r31/r28 instead of retail r31/r28/r29. The case-80 effect packet also has different stack-slot and float-load scheduling. These allocation and scheduling differences account for 101 aligned differing rows.",
+  "build_verification": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2", "sha1sum build/GEDE01/main.dol", "python3 tools/legal_audit.py"],
+    "ninja_raw_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "legal_audit_raw_output": "legal audit passed (15334 tracked project files inspected)"
+  }
+}
