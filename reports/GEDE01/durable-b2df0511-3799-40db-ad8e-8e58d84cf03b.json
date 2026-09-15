@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b2df0511-3799-40db-ad8e-8e58d84cf03b",
+  "attempt": 2,
+  "base_commit": "c2e789a2d024c693b3a22c869b6815f3bfdfd0a0",
+  "target": "fn_8018F378",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b2df0511-3799-40db-ad8e-8e58d84cf03b.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff score is 93.32287%: retail text is 892 bytes and generated text is 896 bytes. Canonical GC/1.3 saves r25-r31 instead of retail's r24-r31, assigns the iterator/object/bounds/distance/effect live ranges differently, repeats one float-to-int conversion, lowers the 64-bit status test without retail's li/and mask pair, and folds retail's lhz-plus-extsh effect-id load into lha. Both sides contain 30 relocation-bearing instructions and the strict diff reports no relocation-specific mismatch rows. A clean canonical rebuild produced the required DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
