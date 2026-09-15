@@ -12243,7 +12243,7 @@ config.libs = [
             Object(NonMatching, "game/game_fn_801F9CF4.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801FA01C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801FA198.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
-            Object(NonMatching, "game/game_fn_801FA250.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801FA250.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801FA354.c", mw_version="GC/1.3"),
             Object(NonMatching, "game/game_fn_801FA410.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801FA44C.c", mw_version="GC/1.3"),

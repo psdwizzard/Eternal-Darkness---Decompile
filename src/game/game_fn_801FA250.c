@@ -23,24 +23,28 @@ extern int fn_8011FA40(void*);
 
 int fn_801FA250(void* resource, int selector, void* resource_handle)
 {
+    void* target = resource;
     ResourceState* state;
     int result;
 
-    state = fn_8015C28C(selector);
     result = -1;
+    state = fn_8015C28C(selector);
 
     if (resource_handle != 0) {
-        ResourceEntry* entry;
+        ResourceEntry* initial_entry;
         int count;
-        int i;
 
         fn_8011F950(resource_handle);
-        entry = fn_8011F9E4(resource_handle, 0);
+        initial_entry = fn_8011F9E4(resource_handle, 0);
         count = fn_8011FA40(resource_handle);
-        for (i = 0; i < count; entry++, i++) {
-            if (resource == entry->resource) {
-                result = i;
-                break;
+        {
+            ResourceEntry* entry = initial_entry;
+            int i;
+            for (i = 0; i < count; entry++, i++) {
+                if (target == entry->resource) {
+                    result = i;
+                    break;
+                }
             }
         }
     } else if (state->ready_a != 0 && state->ready_b != 0) {
@@ -48,7 +52,7 @@ int fn_801FA250(void* resource, int selector, void* resource_handle)
         int i;
 
         for (i = 0; i < state->count; entry++, i++) {
-            if (resource == entry->resource) {
+            if (target == entry->resource) {
                 result = i;
                 break;
             }

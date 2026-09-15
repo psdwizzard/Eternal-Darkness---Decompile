@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "assignment_id": "f3439b83-f3a9-4b05-85b0-3b2c3e0651bc",
+  "attempt": 1,
+  "target": "fn_801FA250",
+  "unit": "main/game/game_fn_801FA250",
+  "source": {
+    "path": "src/game/game_fn_801FA250.c",
+    "sha256": "64b1f0b6b2f3532457a41f7bf53c4519a72c516712b58a9d086b816ce87789bd",
+    "classification": "independent honest C reconstruction",
+    "compiler": "Metrowerks CodeWarrior for GameCube GC/1.3"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FA250 fn_801FA250 -o build/GEDE01/objdiff-f3439b83-canonical.raw.json --format json-pretty",
+    "raw_report_sha256": "8c805791bcaac47e0e4349657e2eea2bfbfb8c7fd51d81a047c25d3c925876d4",
+    "raw_measurement": {
+      "target_size": 260,
+      "generated_size": 260,
+      "target_match_percent": 100.0,
+      "generated_match_percent": 100.0,
+      "target_instruction_count": 65,
+      "generated_instruction_count": 65,
+      "target_differing_instruction_rows": 0,
+      "generated_differing_instruction_rows": 0,
+      "target_relocation_entries": 4,
+      "generated_relocation_entries": 4
+    }
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FA250 fn_801FA250 -o build/GEDE01/objdiff-f3439b83-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "config": "function_reloc_diffs=name_address",
+    "raw_report_sha256": "8c805791bcaac47e0e4349657e2eea2bfbfb8c7fd51d81a047c25d3c925876d4",
+    "raw_report_byte_identical_to_canonical": true,
+    "raw_cmp_exit": 0,
+    "raw_measurement": {
+      "target_size": 260,
+      "generated_size": 260,
+      "target_match_percent": 100.0,
+      "generated_match_percent": 100.0,
+      "target_differing_instruction_rows": 0,
+      "generated_differing_instruction_rows": 0
+    },
+    "raw_readelf_relocations": {
+      "target": [
+        "00000028 R_PPC_REL24 fn_8015C28C + 0",
+        "00000038 R_PPC_REL24 fn_8011F950 + 0",
+        "00000044 R_PPC_REL24 fn_8011F9E4 + 0",
+        "00000054 R_PPC_REL24 fn_8011FA40 + 0"
+      ],
+      "generated": [
+        "00000028 R_PPC_REL24 fn_8015C28C + 0",
+        "00000038 R_PPC_REL24 fn_8011F950 + 0",
+        "00000044 R_PPC_REL24 fn_8011F9E4 + 0",
+        "00000054 R_PPC_REL24 fn_8011FA40 + 0"
+      ],
+      "assessment": "All relocation offsets, types, targets, and addends match exactly."
+    }
+  },
+  "build_verification": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol"
+    ],
+    "ninja_result": "success; build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "legal_audit": {
+    "translation_unit": "independent C",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
