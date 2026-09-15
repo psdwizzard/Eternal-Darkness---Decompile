@@ -30,6 +30,7 @@ void fn_8019ECA0(u8* obj)
     float second[3][4];
     u8* entry;
     u8* color;
+    u8* fields;
     int count;
     int offset;
     int matrix_offset;
@@ -39,10 +40,13 @@ void fn_8019ECA0(u8* obj)
     DrawFn draw;
 
     fn_8018D788(lbl_8064D738, obj, &buffers, *(u16*)((u8*)&setup + 2));
+    fields = obj + 0x8C;
     entry = *(u8**)(obj + 0x4C);
     count = obj[1];
     color = buffers.colors;
-    draw = *(int*)(obj + 0x8C) ? fn_8019EF50 : fn_8019EFAC;
+    draw = fn_8019EF50;
+    if (*(int*)fields == 0)
+        draw = fn_8019EFAC;
     offset = 0;
     matrix_offset = 0;
     for (i = 0; i < count; i++) {
@@ -57,7 +61,7 @@ void fn_8019ECA0(u8* obj)
             color[3] = entry[0x2B];
         fn_80211484(&first, lbl_80650C74, lbl_80650C74, lbl_80650C68);
         fn_80211268((float (*)[3][4])(lbl_80607140 + lbl_8064D738 * 0x180 + matrix_offset),
-                    *(float*)(obj + 0xBC + i * 4), 90);
+                    *(float*)(fields + 0x30 + i * 4), 90);
         fn_80210FDC((float (*)[3][4])(lbl_80607140 + lbl_8064D738 * 0x180 + matrix_offset),
                     &first, &second);
         fn_80211484(&first, lbl_80650C78, lbl_80650C78, lbl_80650C68);

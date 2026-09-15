@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "12f9e87e-2b27-4df9-a2cb-71dce7a2bf5c",
+  "attempt": 1,
+  "base_commit": "65095e31fac8473f7d57c43bfaf3c79e53344d52",
+  "target": "fn_8019ECA0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-12f9e87e-2b27-4df9-a2cb-71dce7a2bf5c.json"
+  ],
+  "divergence": "Best fresh canonical and relocation-strict objdiff score is 92.4186%: retail is 688 bytes and generated honest C is 684 bytes, improving the base reconstruction's 91.73837%/672-byte result. Both sides contain 52 relocation-bearing instructions, but generated code omits retail's pre-call addi r26,r22,0x8C and materializes the field pointer after fn_8018D788, shifting subsequent scheduling by four bytes; long-lived obj/entry/draw/color/loop values consequently use a different r21-r29 allocation. The signed-integer conversion load also targets generated local pool symbol @25 instead of retail lbl_80650C60. The callback branch shape and per-entry float field addressing now match structurally. The complete canonical build passed, build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f, and the legal audit passed with 15383 tracked project files inspected."
+}
