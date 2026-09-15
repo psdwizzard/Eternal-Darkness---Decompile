@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e5f92f53-25e4-4c57-9c37-17ad031ec6f4",
+  "attempt": 1,
+  "base_commit": "dd0db419f335c6d803004ade5e121e12712c1948",
+  "target": "fn_8017CCD8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e5f92f53-25e4-4c57-9c37-17ad031ec6f4.json"
+  ],
+  "divergence": "Best canonical and relocation-aware direct objdiff is 93.69091%: retail is 220 bytes and generated code is 216 bytes. After the fn_8017CF74 call, retail emits a second clrlwi u16 truncation before the 12-byte entry stride; canonical reuses the full-width saved count, schedules the global-base addi and entry-cursor load in the opposite order, reverses the two independent tail additions, and shifts one of eight relocation offsets by four bytes while preserving the relocation type/target/addend sequence. An explicit second cast was tested but made the optimizer keep the truncated count live across the call, selected save/restore helpers and a different r27-r31 allocation, generated 200 bytes, and regressed the score to 64.72727%, so it was not retained."
+}
