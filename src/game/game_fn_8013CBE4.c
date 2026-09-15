@@ -19,13 +19,11 @@ float fn_8013CBE4(const Vec3* origin, const Vec3* endpoint,
     fn_80211A6C(point, origin, &delta);
     amount = fn_80211B44(&delta, &segment) / length;
     if (clamp != 0) {
-        float lower = lbl_8065031C;
-        float upper = lbl_80650320;
-        float maximum = amount > lower ? amount : lower;
-        if (upper < maximum) {
-            amount = upper;
+        float maximum = amount > 0.0f ? amount : 0.0f;
+        if (1.0f < maximum) {
+            amount = 1.0f;
         } else {
-            amount = amount > lower ? amount : lower;
+            amount = amount > 0.0f ? amount : 0.0f;
         }
     }
     output->x = origin->x + segment.x * amount;
