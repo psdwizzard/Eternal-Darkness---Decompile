@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d7ec8437-da74-4e6c-8386-db0564c9a8eb",
+  "attempt": 3,
+  "base_commit": "db674ae2a12b3f3e9a3f9452cbe953978ef13fe7",
+  "target": "fn_80132B24",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d7ec8437-da74-4e6c-8386-db0564c9a8eb.json"
+  ],
+  "divergence": "Best canonical score is 95.078125%: candidate is 260 bytes versus the 256-byte retail function because global-base formation uses addi r0 followed by mr r28,r0 instead of direct addi r28; the first record-copy load uses r6 instead of r3 and is scheduled after addi r3,r28,0x54. The extra instruction shifts seven of nine relocation offsets by +4, so relocation-strict comparison fails despite equal relocation type/target/addend sequences."
+}
