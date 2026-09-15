@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "285267a6-2f97-431b-bf3c-ea30456a8bdd",
+  "attempt": 1,
+  "base_commit": "72bdc00ce0e78841e6d165397d77b1631536ca28",
+  "target": "fn_800D3598",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-285267a6-2f97-431b-bf3c-ea30456a8bdd.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits 136 bytes against 136 retail bytes at 93.088234%. All 5 R_PPC_REL24 relocations agree in instruction offset, type, target, and addend. Remaining codegen differences are register allocation and one prologue scheduling difference: retail keeps object/id in r31 and the fn_80201C48 result in r30, while generated code keeps object/id in r30 and the result in r31; generated stw r30, 0x18(r1) precedes mr r30, r4, while retail saves r30 after mr r31, r4."
+}
