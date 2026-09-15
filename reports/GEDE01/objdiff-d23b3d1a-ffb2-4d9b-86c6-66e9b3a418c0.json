@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "assignment_id": "d23b3d1a-ffb2-4d9b-86c6-66e9b3a418c0",
+  "target": "fn_8012C774",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "objdiff": "python3 tools/fndiff.py game/game_fn_8012C774.c fn_8012C774",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measurements": {
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_check_output": "build/GEDE01/main.dol: OK",
+    "objdiff_exit_code": 0,
+    "objdiff_output": "target 144 bytes  base 144 bytes  match 88.47222",
+    "candidate_size_bytes": 144,
+    "retail_size_bytes": 144,
+    "canonical_match_percent": 88.47222,
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "relocation_strict": {
+    "equal": true,
+    "matched_sites": 2,
+    "total_sites": 2,
+    "sites": [
+      {
+        "offset": "0x30",
+        "type": "R_PPC_REL24",
+        "candidate_target": "fn_8012FA54",
+        "candidate_addend": 0,
+        "retail_target": "fn_8012FA54",
+        "retail_addend": 0
+      },
+      {
+        "offset": "0x74",
+        "type": "R_PPC_REL24",
+        "candidate_target": "fn_8012C62C",
+        "candidate_addend": 0,
+        "retail_target": "fn_8012C62C",
+        "retail_addend": 0
+      }
+    ]
+  },
+  "divergence": {
+    "range": "0x3c-0x70",
+    "candidate": "GC/1.3 hoists the three pointer loads before argument-address setup, retaining the first two values in r5 and r9 before stores to stack offsets 0x8 and 0xc.",
+    "retail": "Retail loads each value through r0; it stores the value from r29 at 0x3c/0x54, performs argument setup, then loads and stores r28 at 0x64/0x68 and r27 at 0x6c/0x70.",
+    "unchanged_regions": "Prologue, saved-register allocation, loop/control flow, calls, stack offsets, epilogue, and both relocations agree."
+  }
+}
