@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "assignment_id": "dd3d1435-9966-47ef-8c45-df683cd550c2",
+  "target": "fn_8008DBA8",
+  "compiler": "canonical project configuration (GC/1.3)",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8008DBA8.o",
+    "python3 tools/fndiff.py game/game_fn_8008DBA8.c fn_8008DBA8",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "build_output": "build/GEDE01/main.dol: OK",
+  "objdiff_output": "target 380 bytes  base 380 bytes  match 98.57895",
+  "instruction_measurement": {
+    "target_instructions": 95,
+    "base_instructions": 95,
+    "exact_instructions": 68,
+    "argument_mismatch_instructions": 27
+  },
+  "relocation_measurement": {
+    "target_relocation_bearing_instructions": 22,
+    "base_relocation_bearing_instructions": 22,
+    "same_offsets_types_targets_and_addends": 22,
+    "byte_exact_relocation_bearing_instructions": 22,
+    "strict_100_percent": false
+  },
+  "representative_raw_diff": [
+    "0x0010 mr r29, r4 | mr r28, r4",
+    "0x0014 mr r27, r3 | mr r31, r3",
+    "0x0028 mr r26, r0 | mr r26, r0",
+    "0x0038 mr r28, r0 | mr r27, r0",
+    "0x005c mr r30, r3 | mr r29, r3",
+    "0x0068 mr r31, r3 | mr r30, r3",
+    "0x00a0 mr r27, r0 | mr r27, r0",
+    "0x00a4 bl fn_8012B344 | bl fn_8012B344",
+    "0x00a8 mr r3, r27 | mr r3, r27",
+    "0x011c mr r26, r0 | mr r26, r0",
+    "0x0144 mr r4, r29 | mr r4, r28",
+    "0x014c mr r3, r28 | mr r3, r27"
+  ],
+  "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "legal_audit_output": "legal audit passed (15314 tracked project files inspected)",
+  "divergence": "Size, opcode selection, call order, branch layout, and instruction scheduling are exact. All 22 R_PPC_REL24 relocation-bearing instructions have identical offsets, types, targets, and addends and are byte-exact. The remaining 27 argument mismatches are a declaration-sensitive callee-saved allocation: retail uses object/message r27, effect/argument r29, resolved mode r28, flags r30, and state r31, while canonical C initially uses object r31, effect/argument r28, resolved mode r27, flags r29, and state r30. The event path becomes byte-identical after the fn_8012B344 argument setup, but the alternate path retains the equivalent register permutation. Therefore neither canonical nor relocation-strict comparison is 100%."
+}
