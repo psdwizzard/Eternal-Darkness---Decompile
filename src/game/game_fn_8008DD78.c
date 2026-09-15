@@ -36,20 +36,21 @@ typedef struct Data8008DD78 {
     void* value90;
 } Data8008DD78;
 
-/* NonMatching: behavior-complete honest C; local lifetimes and aggregate-copy
- * scheduling differ from retail. */
+/* NonMatching: behavior-complete honest C. Size, instruction scheduling, and
+ * all 38 relocation sites align; the remaining differences are register
+ * allocation for the object, data/value, and effect live ranges. */
 int fn_8008DD78(void* object, void* resource)
 {
     Vec8008DD78 position;
-    void* data;
-    Data8008DD78* value;
-    void* target;
+    Vec8008DD78 target_position;
+    void* actor;
     void* created;
-    void* nested;
-    void* effect;
+    void* target;
+    Data8008DD78* value;
+    void* data;
+    int callback;
     int owner;
     int target_id;
-    int callback;
 
     fn_8011F114(&position);
     owner = fn_80201B54(object);
@@ -58,34 +59,35 @@ int fn_8008DD78(void* object, void* resource)
     target_id = fn_80201C48(data);
     target = fn_80201814(target_id);
     if (target != 0)
-        fn_80201E78(&position, target);
+        fn_80201E78(&target_position, target);
     fn_80204180(object, target);
-    if (target == 0)
-        return 0;
-    created = fn_801294DC(resource, 4, 0, 6);
-    if (created == 0)
-        return 0;
-    nested = fn_80072354(value->value90);
-    effect = fn_801A717C(nested);
-    fn_801A7460(effect, 4);
-    fn_801A74A0(effect, owner);
-    fn_801A74A8(effect, target_id);
-    fn_801A74C8(effect, 1);
-    fn_801A7560(effect, 132);
-    fn_800CF6AC(object, nested, value, effect, 1, 5);
-    fn_801A7550(effect, 12);
-    fn_801A7558(effect, 7);
-    fn_801A764C(effect, &position);
-    fn_801287C4(created, fn_8003B8A0, effect, 25);
-    callback = 26;
-    do {
-        fn_801287C4(created, fn_8008DBA8, effect, callback);
-        callback++;
-    } while (callback < 35);
-    fn_801287C4(created, fn_800DEA88, effect, 15);
-    fn_80128C28(created, fn_8008DD24, effect);
-    fn_80128C44(created, fn_802042A4, effect);
-    fn_80201D2C(object, 6);
-    fn_80201D14(object, 1);
-    return 1;
+    if (target != 0) {
+        created = fn_801294DC(resource, 4, 0, 6);
+        if (created != 0) {
+            resource = fn_80072354(value->value90);
+            actor = fn_801A717C(resource);
+            fn_801A7460(actor, 4);
+            fn_801A74A0(actor, owner);
+            fn_801A74A8(actor, target_id);
+            fn_801A74C8(actor, 1);
+            fn_801A7560(actor, 132);
+            fn_800CF6AC(object, resource, value, actor, 1, 5);
+            fn_801A7550(actor, 12);
+            fn_801A7558(actor, 7);
+            fn_801A764C(actor, &position);
+            fn_801287C4(created, fn_8003B8A0, actor, 25);
+            callback = 26;
+            do {
+                fn_801287C4(created, fn_8008DBA8, actor, callback);
+                callback++;
+            } while (callback < 35);
+            fn_801287C4(created, fn_800DEA88, actor, 15);
+            fn_80128C28(created, fn_8008DD24, actor);
+            fn_80128C44(created, fn_802042A4, actor);
+            fn_80201D2C(object, 6);
+            fn_80201D14(object, 1);
+            return 1;
+        }
+    }
+    return 0;
 }
