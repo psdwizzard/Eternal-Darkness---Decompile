@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3fc1ef90-5eec-41ff-b300-acc8f1cc5609",
+  "attempt": 5,
+  "base_commit": "b9ab7e8598257d17ff8b44ab3f11b304bba4f67a",
+  "target": "fn_8007CFB0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3fc1ef90-5eec-41ff-b300-acc8f1cc5609.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.8125% for 320 bytes and 80 instructions. Exactly three register-allocation operands differ at instructions 4, 5, and 10: retail preserves the incoming object in r31 (mr r31,r4; mr r3,r31 twice), while canonical GC/1.3 preserves it in r27 (mr r27,r4; mr r3,r27 twice). The other 77 instructions agree, and all 17 relocation-bearing instructions agree by target name/address/addend under function_reloc_diffs=name_address. Attempt 5 tested a new aggregate-overlay hypothesis for the disjoint object/owner lifetimes and a distinct 32-bit-handle typing hypothesis; both produced the same 99.8125% output, so the clean behavior-complete NonMatching C was retained."
+}
