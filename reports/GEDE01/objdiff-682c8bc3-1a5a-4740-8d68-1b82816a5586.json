@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "assignment_id": "682c8bc3-1a5a-4740-8d68-1b82816a5586",
+  "target": "fn_8006053C",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_8006053C.c fn_8006053C",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measured_output": {
+    "fndiff_summary": "target 384 bytes  base 392 bytes  match 96.614586",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_check": "build/GEDE01/main.dol: OK",
+    "build_result": "[851/851] PROGRESS (exit 0)"
+  },
+  "canonical": {
+    "match_percent": 96.614586,
+    "retail_size": 384,
+    "candidate_size": 392,
+    "matched": false
+  },
+  "relocation_strict": {
+    "matched": true,
+    "retail_count": 8,
+    "candidate_count": 8,
+    "type": "R_PPC_REL24",
+    "addends": [0, 0, 0, 0, 0, 0, 0, 0],
+    "targets": [
+      "fn_800FBFB0",
+      "fn_80201B8C",
+      "fn_80201BC8",
+      "fn_800360B0",
+      "fn_80072354",
+      "fn_8011F114",
+      "fn_80066D04",
+      "fn_80066D04"
+    ]
+  },
+  "divergence": "Candidate is 392 bytes versus retail 384. Starting at retail +0x8c, MWCC allocates cumulative middle/high thresholds to r26/r29 instead of retail r29/r26. This changes the three signed-byte loads/extensions and the two cumulative adds. At the flag tests, candidate emits extsb-to-r0 plus mr-to-r31 twice where retail emits direct extsb-to-r31, accounting for the two extra instructions. Later signed threshold comparisons consequently use the swapped registers."
+}

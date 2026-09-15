@@ -44,8 +44,8 @@ s32 fn_8006053C(void *owner, s32 enabled)
     RangeData *range;
     Vec3 position;
     s32 low;
-    s8 middle;
-    s8 high;
+    s32 middle;
+    s32 high;
 
     fn_800360B0(owner, &flags);
     select = enabled & ~(-((flags >> 7) & 1));
