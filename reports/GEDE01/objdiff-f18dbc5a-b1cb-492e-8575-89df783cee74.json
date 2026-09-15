@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "assignment_id": "f18dbc5a-b1cb-492e-8575-89df783cee74",
+  "target": "fn_80135510",
+  "canonical_objdiff": {
+    "command": "python3 tools/fndiff.py game/game_fn_80135510.c fn_80135510",
+    "exit_code": 0,
+    "raw_summary": "target 568 bytes  base 568 bytes  match 98.556335",
+    "target_instruction_count": 143,
+    "base_instruction_count": 143,
+    "raw_divergence": [
+      "0x01a4 target: mr r29, r30 | base: <none>",
+      "0x01a8 target: li r28, 0x0 | base: li r29, 0x0",
+      "0x01ac target: <none> | base: li r28, 0x0"
+    ]
+  },
+  "relocation_strict": {
+    "source": "build/GEDE01/fndiff_fn_80135510.json",
+    "target_relocation_instruction_count": 70,
+    "base_relocation_instruction_count": 70,
+    "matching_offset_type_target_addend_count": 70,
+    "mismatching_offset_type_target_addend_count": 0,
+    "raw_summary": "left 568 98.556335 143 70; right 568 98.556335 143 70; strict relocation tuple mismatches 0"
+  },
+  "build": {
+    "configure_command": "python3 configure.py",
+    "build_command": ".tools/bin/ninja -j2",
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "raw_sha1sum": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_verified": true
+  }
+}

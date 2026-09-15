@@ -37,9 +37,9 @@ void fn_80135510(void)
     Slot* slot;
 
     if (lbl_8064CF84 == 0) {
-        lbl_8064CF8C = 8;
-        lbl_8064CF90 = lbl_8024EEB8;
         lbl_8064CF84 = 1;
+        lbl_8064CF90 = lbl_8024EEB8;
+        lbl_8064CF8C = 8;
         lbl_8064CFB0 = 0;
         lbl_8064CFAC = 0;
         for (i = 0; i < 8; i++) {
