@@ -48,11 +48,12 @@ void fn_80066888(s32 context, s32 event, f32 first, f32 second)
             if ((mask & (1U << index)) && fn_80066D80(context, index)) {
                 f32 scale = (f32)(s16)fn_801A74F8(event) / lbl_8064E6E8;
                 f32 bounded = lbl_8064E6EC;
+                f32 upper = lbl_8064E698;
 
                 if (scale > bounded) {
                     bounded = scale;
                 }
-                if (lbl_8064E698 < bounded) {
+                if (upper < bounded) {
                     bounded = lbl_8064E698;
                 } else if (scale > lbl_8064E6EC) {
                     bounded = scale;
