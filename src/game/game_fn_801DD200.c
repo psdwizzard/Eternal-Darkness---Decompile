@@ -94,15 +94,15 @@ void* fn_801DD200(int object_id, SpawnInfo* info, int arg2, int arg3,
 
     switch (type) {
     case 3: case 4: case 28: case 29: case 30: case 79: case 80: case 93:
-        flags |= 1 << 16; high_index = 0; break;
+        flags |= 0x00010000U; high_index = 0; break;
     case 1: case 6: case 7: case 8: case 128:
-        flags |= 2 << 16; high_index = 1; break;
+        flags |= 0x00020000U; high_index = 1; break;
     case 2: case 15: case 16:
-        flags |= 4 << 16; high_index = 2; break;
+        flags |= 0x00040000U; high_index = 2; break;
     case 10:
-        flags |= 8 << 16; break;
+        flags |= 0x00080000U; break;
     case 126:
-        flags |= 2 << 16; high_index = 1; break;
+        flags |= 0x00020000U; high_index = 1; break;
     }
 
     {
