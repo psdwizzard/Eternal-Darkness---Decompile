@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "2ad68284-3025-4c4b-9958-8392274f1565",
+  "attempt": 2,
+  "base_commit": "edaa2f78d6a9df34f5963324ed235efac3e97aa4",
+  "target": "fn_8000F1DC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2ad68284-3025-4c4b-9958-8392274f1565.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict comparisons both score 92.01852%, with exact 432-byte size and 111 instructions on each side. All 16 call relocations have equal targets, R_PPC_REL24 types, and zero addends, but the fn_8016A598 relocation is at generated offset 0x18 versus retail offset 0x1C; the other 15 relocation addresses agree. GC/1.3 rotates the five long-lived script/argument/entity/data values across r27-r31 relative to retail, schedules arg3's zero initialization after the argument-count comparison instead of before the first call, and emits the final flag selection as a direct r3/r4 branch sequence while retail preserves the fetched flags in r5, forms the default in r0, moves the entity to r3 before the conditional, and selects the alternate mask through the opposite branch shape. The retained source is the prior honest independent C reconstruction recovered on the accepted base; no assembly or neighboring function was used. A fresh full build completed and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
