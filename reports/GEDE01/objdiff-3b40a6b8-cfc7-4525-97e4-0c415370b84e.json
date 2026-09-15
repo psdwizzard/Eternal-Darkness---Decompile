@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "assignment_id": "3b40a6b8-cfc7-4525-97e4-0c415370b84e",
+  "target": "fn_80203D94",
+  "compiler": "GC/1.3",
+  "compiler_sha256": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715",
+  "registration": "NonMatching; canonical flags unchanged; independent C translation unit retained byte-identical to accepted base",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80203D94 -o build/GEDE01/objdiff-3b40a6b8-cfc7-4525-97e4-0c415370b84e-canonical.json --format json-pretty fn_80203D94",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to build/GEDE01/objdiff-3b40a6b8-cfc7-4525-97e4-0c415370b84e-canonical.json\n",
+    "symbol_size": "460",
+    "candidate_size": "460",
+    "match_percent": 99.73913,
+    "raw_output_sha256": "f9e6acaa380a76fae11458748b462bc087fada336e563f3b2883cd23c16adf43",
+    "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/raw-objdiff-3b40a6b8-cfc7-4525-97e4-0c415370b84e.json"
+  },
+  "instruction_differences": [
+    {
+      "offset": "0xb8",
+      "retail": "lwz r4, lbl_8064D18C@sda21",
+      "candidate": "lwz r0, lbl_8064D18C@sda21",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0xc0",
+      "retail": "cmpwi r4, 0x20",
+      "candidate": "cmpwi r0, 0x20",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0xcc",
+      "retail": "cmpwi r4, 0x7",
+      "candidate": "cmpwi r0, 0x7",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x154",
+      "retail": "lwz r4, lbl_8064D180@sda21",
+      "candidate": "lwz r0, lbl_8064D180@sda21",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x15c",
+      "retail": "cmpwi r4, 0x20",
+      "candidate": "cmpwi r0, 0x20",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x168",
+      "retail": "cmpwi r4, 0x7",
+      "candidate": "cmpwi r0, 0x7",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    }
+  ],
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80203D94 -o build/GEDE01/objdiff-3b40a6b8-cfc7-4525-97e4-0c415370b84e-relocation_strict.json --format json-pretty -c function_reloc_diffs=name_address fn_80203D94",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to build/GEDE01/objdiff-3b40a6b8-cfc7-4525-97e4-0c415370b84e-relocation_strict.json\n",
+    "symbol_size": "460",
+    "candidate_size": "460",
+    "match_percent": 99.73913,
+    "raw_output_sha256": "f9e6acaa380a76fae11458748b462bc087fada336e563f3b2883cd23c16adf43",
+    "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/raw-objdiff-3b40a6b8-cfc7-4525-97e4-0c415370b84e.json"
+  },
+  "relocation_comparison": {
+    "count": 20,
+    "offset_type_target_addend_match_percent": 100.0,
+    "raw_results": [
+      {
+        "command": "build/binutils/powerpc-eabi-readelf -r build/GEDE01/obj/game/game_fn_80203D94.o",
+        "exit_code": 0,
+        "stdout": "\nRelocation section '.rela.text' at offset 0x20c contains 20 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000024  0000040a R_PPC_REL24       00000000   fn_80200C10 + 0\n00000030  0000050a R_PPC_REL24       00000000   fn_80200C20 + 0\n00000034  0000060a R_PPC_REL24       00000000   fn_80201814 + 0\n00000044  0000070a R_PPC_REL24       00000000   fn_80201B54 + 0\n00000054  0000080a R_PPC_REL24       00000000   fn_800459E0 + 0\n0000007c  0000096d R_PPC_EMB_SDA21   00000000   lbl_8064D18C + 0\n000000b8  0000096d R_PPC_EMB_SDA21   00000000   lbl_8064D18C + 0\n000000dc  00000a0a R_PPC_REL24       00000000   fn_802019EC + 0\n000000f0  00000a0a R_PPC_REL24       00000000   fn_802019EC + 0\n00000100  00000b0a R_PPC_REL24       00000000   fn_8004892C + 0\n0000010c  00000c6d R_PPC_EMB_SDA21   00000000   lbl_8064C4E0 + 0\n00000114  00000d0a R_PPC_REL24       00000000   fn_801E7974 + 0\n0000011c  00000e0a R_PPC_REL24       00000000   fn_80035628 + 0\n00000120  00000f6d R_PPC_EMB_SDA21   00000000   lbl_8064D8AC + 0\n0000012c  0000100a R_PPC_REL24       00000000   fn_80201D2C + 0\n00000138  0000110a R_PPC_REL24       00000000   fn_80201D14 + 0\n00000154  0000126d R_PPC_EMB_SDA21   00000000   lbl_8064D180 + 0\n00000178  00000a0a R_PPC_REL24       00000000   fn_802019EC + 0\n00000184  00000a0a R_PPC_REL24       00000000   fn_802019EC + 0\n000001a0  0000130a R_PPC_REL24       00000000   fn_8020123C + 0\n",
+        "stderr": "",
+        "offset_type_target_addend": [
+          "00000024 R_PPC_REL24 fn_80200C10 + 0",
+          "00000030 R_PPC_REL24 fn_80200C20 + 0",
+          "00000034 R_PPC_REL24 fn_80201814 + 0",
+          "00000044 R_PPC_REL24 fn_80201B54 + 0",
+          "00000054 R_PPC_REL24 fn_800459E0 + 0",
+          "0000007c R_PPC_EMB_SDA21 lbl_8064D18C + 0",
+          "000000b8 R_PPC_EMB_SDA21 lbl_8064D18C + 0",
+          "000000dc R_PPC_REL24 fn_802019EC + 0",
+          "000000f0 R_PPC_REL24 fn_802019EC + 0",
+          "00000100 R_PPC_REL24 fn_8004892C + 0",
+          "0000010c R_PPC_EMB_SDA21 lbl_8064C4E0 + 0",
+          "00000114 R_PPC_REL24 fn_801E7974 + 0",
+          "0000011c R_PPC_REL24 fn_80035628 + 0",
+          "00000120 R_PPC_EMB_SDA21 lbl_8064D8AC + 0",
+          "0000012c R_PPC_REL24 fn_80201D2C + 0",
+          "00000138 R_PPC_REL24 fn_80201D14 + 0",
+          "00000154 R_PPC_EMB_SDA21 lbl_8064D180 + 0",
+          "00000178 R_PPC_REL24 fn_802019EC + 0",
+          "00000184 R_PPC_REL24 fn_802019EC + 0",
+          "000001a0 R_PPC_REL24 fn_8020123C + 0"
+        ]
+      },
+      {
+        "command": "build/binutils/powerpc-eabi-readelf -r build/GEDE01/src/game/game_fn_80203D94.o",
+        "exit_code": 0,
+        "stdout": "\nRelocation section '.rela.text' at offset 0x200 contains 20 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000024  0000070a R_PPC_REL24       00000000   fn_80200C10 + 0\n00000030  0000080a R_PPC_REL24       00000000   fn_80200C20 + 0\n00000034  0000090a R_PPC_REL24       00000000   fn_80201814 + 0\n00000044  00000a0a R_PPC_REL24       00000000   fn_80201B54 + 0\n00000054  00000b0a R_PPC_REL24       00000000   fn_800459E0 + 0\n0000007c  0000036d R_PPC_EMB_SDA21   00000000   lbl_8064D18C + 0\n000000b8  0000036d R_PPC_EMB_SDA21   00000000   lbl_8064D18C + 0\n000000dc  00000c0a R_PPC_REL24       00000000   fn_802019EC + 0\n000000f0  00000c0a R_PPC_REL24       00000000   fn_802019EC + 0\n00000100  00000d0a R_PPC_REL24       00000000   fn_8004892C + 0\n0000010c  0000046d R_PPC_EMB_SDA21   00000000   lbl_8064C4E0 + 0\n00000114  00000e0a R_PPC_REL24       00000000   fn_801E7974 + 0\n0000011c  00000f0a R_PPC_REL24       00000000   fn_80035628 + 0\n00000120  0000056d R_PPC_EMB_SDA21   00000000   lbl_8064D8AC + 0\n0000012c  0000100a R_PPC_REL24       00000000   fn_80201D2C + 0\n00000138  0000110a R_PPC_REL24       00000000   fn_80201D14 + 0\n00000154  0000066d R_PPC_EMB_SDA21   00000000   lbl_8064D180 + 0\n00000178  00000c0a R_PPC_REL24       00000000   fn_802019EC + 0\n00000184  00000c0a R_PPC_REL24       00000000   fn_802019EC + 0\n000001a0  0000120a R_PPC_REL24       00000000   fn_8020123C + 0\n",
+        "stderr": "",
+        "offset_type_target_addend": [
+          "00000024 R_PPC_REL24 fn_80200C10 + 0",
+          "00000030 R_PPC_REL24 fn_80200C20 + 0",
+          "00000034 R_PPC_REL24 fn_80201814 + 0",
+          "00000044 R_PPC_REL24 fn_80201B54 + 0",
+          "00000054 R_PPC_REL24 fn_800459E0 + 0",
+          "0000007c R_PPC_EMB_SDA21 lbl_8064D18C + 0",
+          "000000b8 R_PPC_EMB_SDA21 lbl_8064D18C + 0",
+          "000000dc R_PPC_REL24 fn_802019EC + 0",
+          "000000f0 R_PPC_REL24 fn_802019EC + 0",
+          "00000100 R_PPC_REL24 fn_8004892C + 0",
+          "0000010c R_PPC_EMB_SDA21 lbl_8064C4E0 + 0",
+          "00000114 R_PPC_REL24 fn_801E7974 + 0",
+          "0000011c R_PPC_REL24 fn_80035628 + 0",
+          "00000120 R_PPC_EMB_SDA21 lbl_8064D8AC + 0",
+          "0000012c R_PPC_REL24 fn_80201D2C + 0",
+          "00000138 R_PPC_REL24 fn_80201D14 + 0",
+          "00000154 R_PPC_EMB_SDA21 lbl_8064D180 + 0",
+          "00000178 R_PPC_REL24 fn_802019EC + 0",
+          "00000184 R_PPC_REL24 fn_802019EC + 0",
+          "000001a0 R_PPC_REL24 fn_8020123C + 0"
+        ]
+      }
+    ]
+  },
+  "hypotheses": "Attempt 6 tested explicit if and range/goto dispatch, private inline C dispatch helpers with state passed versus loaded internally, and an extra initial-target helper argument before/after state to change inlining and allocation interference. None improved the original. Supplementary width and volatile-local probes were worse or identical; narrowed-type probes are diagnostics only, not justified reconstructions. Reusing state as the call argument was identical; two supplementary reuse probes were rejected by the C compiler because declarations followed statements. All experiments were discarded. No helper or alternate reconstruction is retained.",
+  "experiments_file": "eternal-darkness-decomp/reports/GEDE01/experiments-3b40a6b8-cfc7-4525-97e4-0c415370b84e.json",
+  "dol_note": "The function remains NonMatching, so the verified DOL links the original assembly for this function; its hash is a build integrity check, not a claim that the C candidate matches.",
+  "verification": {
+    "raw_build_commands_file": "eternal-darkness-decomp/reports/GEDE01/verification-3b40a6b8-cfc7-4525-97e4-0c415370b84e.json",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "legal_audit": {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "stdout": "legal audit passed (15722 tracked project files inspected)\n",
+      "stderr": ""
+    }
+  },
+  "preserved_attempts_reviewed": [
+    "b775f41c25fdb80620c0946940d1466a0ff58dc9",
+    "998a581ecd716601612484ad7e2e1efbc554e505",
+    "e42962e8e13d35f7fb000fb2f4f5ece3e3d1ea21",
+    "f7e1804399b21cfb743669580d7d63993533fc80",
+    "e98e2defe391eff7586b4bbe75f51f716aa67526"
+  ]
+}
