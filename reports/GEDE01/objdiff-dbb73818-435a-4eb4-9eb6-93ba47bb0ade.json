@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "assignment_id": "dbb73818-435a-4eb4-9eb6-93ba47bb0ade",
+  "attempt": 1,
+  "target": "fn_801E7014",
+  "compiler": "GC/1.3",
+  "compiler_flags": "-use_lmw_stmw on",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E7014 -c function_reloc_diffs=name_address -o build/GEDE01/objdiff-dbb73818-final-strict.json --format json-pretty fn_801E7014",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "dol_compare": "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+  },
+  "raw_measured_outputs": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "build_sha1_gate": "build/GEDE01/main.dol: OK",
+    "retail_size_bytes": 232,
+    "generated_size_bytes": 244,
+    "canonical_percent": 90.51724,
+    "relocation_strict_percent": 90.51724,
+    "strict_relocation_mode": "function_reloc_diffs=name_address",
+    "built_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_cmp_exit": 0
+  },
+  "strict_diff": {
+    "retail_relocation_count": 14,
+    "generated_relocation_count": 13,
+    "relocation_targets_and_addends_checked": true,
+    "first_relocation_difference": "retail 0x80 lfd f2,lbl_80651288@sda21; generated 0x80 lfd f2,@23@sda21; both have null addends",
+    "instruction_divergences": [
+      "retail 0xA8 ble 0xB0 versus generated ble 0xB4",
+      "retail 0xAC fmr f2,f1 versus generated fmr f0,f1 followed by two extra clamp-join instructions",
+      "retail 0xB0 lfs f0,lbl_80651298@sda21 versus generated 0xB8 lfs f3,lbl_80651298@sda21",
+      "retail reloads lbl_80651284 at 0xC0; generated retains it in f2",
+      "generated adds a second two-instruction clamp join before its final store",
+      "retail final store is at 0xD0 using f0; generated final store is at 0xDC using f3"
+    ]
+  },
+  "attempts": [
+    {
+      "candidate": "existing direct CLAMP honest-C reconstruction",
+      "percent": 90.51724,
+      "generated_size_bytes": 244,
+      "preserved": true
+    },
+    {
+      "candidate": "explicit clamped/result temporaries",
+      "percent": 88.75862,
+      "generated_size_bytes": 228,
+      "preserved": false
+    },
+    {
+      "candidate": "single value temporary passed to CLAMP",
+      "percent": 88.36207,
+      "generated_size_bytes": 240,
+      "preserved": false
+    }
+  ],
+  "scope_audit": {
+    "function_translation_unit": "src/game/game_fn_801E7014.c",
+    "configure_registration": "Object(NonMatching, game/game_fn_801E7014.c, mw_version=GC/1.3, extra_cflags=[-use_lmw_stmw on])",
+    "split": ".text 0x801E7014..0x801E70FC",
+    "runtime_source_changed_from_base": false,
+    "inline_or_whole_function_assembly": false,
+    "neighboring_functions_changed": false,
+    "generated_binaries_staged": false
+  }
+}

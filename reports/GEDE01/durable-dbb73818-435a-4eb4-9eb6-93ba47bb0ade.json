@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "dbb73818-435a-4eb4-9eb6-93ba47bb0ade",
+  "attempt": 1,
+  "base_commit": "59e97569928107725c7bb52adabc5fb3bae41e7a",
+  "target": "fn_801E7014",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-dbb73818-435a-4eb4-9eb6-93ba47bb0ade.json"
+  ],
+  "divergence": "Best canonical and relocation-strict score is 90.51724% (232 retail bytes versus 244 generated). GC/1.3 emits two extra clamp join pairs, assigns the bounds/result to different FPRs, reloads the signed-conversion double through a local @23 symbol instead of lbl_80651288, and retains the low bound rather than reproducing retail's reload before the final selection."
+}
