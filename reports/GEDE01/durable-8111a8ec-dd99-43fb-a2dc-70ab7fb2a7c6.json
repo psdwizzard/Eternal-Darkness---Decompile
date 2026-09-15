@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "8111a8ec-dd99-43fb-a2dc-70ab7fb2a7c6",
+  "attempt": 1,
+  "base_commit": "7755ebd2edd27e51d6513568c7cd1becb76b325d",
+  "target": "fn_801FFE78",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8111a8ec-dd99-43fb-a2dc-70ab7fb2a7c6.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits a size-exact 1192-byte function at 99.379196%. The 23 remaining instruction differences are three operand-order differences in the initial zero-vector comparisons at retail offsets 0x7C, 0x98, and 0xA4; one instruction-selection difference at 0x30C (retail clrlslwi r5,r29,18,2 versus generated slwi r5,r29,2); and 19 SDA21 constant-pool relocation-target naming differences where retail references lbl_80651560/lbl_80651564/lbl_80651568/lbl_80651570/lbl_80651578 and the generated object references equivalent TU-local constants. The direct objdiff evidence records relocation types, targets, and addends. The full canonical build passed, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
