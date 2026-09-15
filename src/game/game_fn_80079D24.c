@@ -50,19 +50,17 @@ extern void fn_800BE390(void *object, void *argument);
 int fn_80079D24(void *object, void *target, void *owner, void *argument,
                 void *extra)
 {
-    Vec3 object_position;
-    Vec3 target_position;
     Vec3 alternate_position;
+    Vec3 target_position;
+    Vec3 object_position;
     void *handle = fn_80201B94(object);
-    void *info = fn_80201B8C(object);
-    void *state = *(void **)((char *)info + 0xC);
+    void *state = *(void **)((char *)fn_80201B8C(object) + 0xC);
     int target_state;
     void *linked;
     void *linked_position;
     int distance;
     int visible;
     int valid;
-    int result = 0;
     float vertical;
     float speed;
     float side;
@@ -136,7 +134,7 @@ int fn_80079D24(void *object, void *target, void *owner, void *argument,
         } else {
             fn_8012976C(target, 2, 0x31, &target_position, speed);
         }
-        return result;
+        return 0;
     }
 
     if (fn_800BE2CC(object, argument, &alternate_position)) {
@@ -153,7 +151,7 @@ int fn_80079D24(void *object, void *target, void *owner, void *argument,
         } else {
             fn_8012976C(target, type, 0x31, &alternate_position, speed);
         }
-        return result;
+        return 0;
     }
 
 finish:

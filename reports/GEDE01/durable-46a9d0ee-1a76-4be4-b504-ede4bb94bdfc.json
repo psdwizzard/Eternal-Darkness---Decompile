@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "46a9d0ee-1a76-4be4-b504-ede4bb94bdfc",
+  "attempt": 2,
+  "base_commit": "5ba9e72c38fc007ad4d8bcb9c6766ab72c2c9787",
+  "target": "fn_80079D24",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-46a9d0ee-1a76-4be4-b504-ede4bb94bdfc.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is 91.08135%: the reference/left function is 1180 bytes and the generated/right function is 1144 bytes, with 58 relocation-bearing instructions on each side. The first exact codegen divergence is the nonvolatile save: reference emits stmw r21,0x34(r1), while generated emits addi r11,r1,0x60; bl _savegpr_22. Reference then retains the five parameters in r26-r30 and initializes r31 with li 0; generated retains them in r25-r29 with no early zero initialization. After fn_80201B94, reference retains the handle in r24 and retains fn_80201B8C's result in r23 across fn_8011F114 before loading state into r22; generated retains the handle in r22 and immediately loads state into r30 from 0xc(r3). These different persistent-register lifetimes rotate target_state and later locals (reference target_state r23 versus generated r31), shift later branch addresses, and account for the remaining 36-byte/reference-nine-instruction excess. Both sides carry 58 relocation-bearing instructions, but code bytes and scheduling are not identical, so the unit remains NonMatching. Whole-DOL SHA-1 verification passed at ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
