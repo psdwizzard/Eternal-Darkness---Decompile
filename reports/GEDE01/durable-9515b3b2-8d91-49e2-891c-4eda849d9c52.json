@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "9515b3b2-8d91-49e2-891c-4eda849d9c52",
+  "attempt": 4,
+  "base_commit": "246c2ad9197821d3134b0c0d2c2c6a1e2877cec9",
+  "target": "fn_80058834",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9515b3b2-8d91-49e2-891c-4eda849d9c52.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9515b3b2-8d91-49e2-891c-4eda849d9c52-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-9515b3b2-8d91-49e2-891c-4eda849d9c52.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 1984 bytes, 496 instructions, and 99.71774%. All 110 relocation-bearing instructions per side agree in relocation type, target, and addend. The 27 remaining rows are exclusively DIFF_ARG_MISMATCH register-coloring differences: retail coalesces the non-overlapping state_ref and kind-1 current/blocked live ranges into r24 while generated uses r28 and r23; retail uses facing/distance in f31/f30 where generated uses f30/f31; and retail uses r25 for action where generated uses r23. A new direct-double-dereference experiment removed the transient state local but compiled identically, so the clearer preserved reconstruction was retained."
+}
