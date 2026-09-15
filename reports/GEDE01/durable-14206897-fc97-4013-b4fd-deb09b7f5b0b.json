@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "14206897-fc97-4013-b4fd-deb09b7f5b0b",
+  "attempt": 1,
+  "base_commit": "0b45226613111c243185609afbfa6ab213f5d01a",
+  "target": "fn_8016B5CC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-14206897-fc97-4013-b4fd-deb09b7f5b0b.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces 844 bytes versus retail's 840 at 93.88095% objdiff. Both objects have 35 ELF text relocations and no relocation mismatches. The realloc tail is instruction-identical; the remaining four-byte excess and principal instruction divergence are in the allocation/search path, where retail forms &lbl_805FAAD8[index], advances it with lwzu 4, and uses indexed stores, while canonical MWCC materializes index + 1 and uses separate indexed loads/stores."
+}

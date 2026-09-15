@@ -49,8 +49,8 @@ void* fn_8016B5CC(void* context, void* allocation, int size,
     } else {
         words = (size + 3) / 4;
         if (words == 0) {
-            int target = ((char*)allocation - lbl_8064D1C8) / 4;
             int covered = 0;
+            int target = ((char*)allocation - lbl_8064D1C8) / 4;
 
             for (index = 0; index < 1536; index++) {
                 value = lbl_805FAAD8[index];
@@ -60,26 +60,24 @@ void* fn_8016B5CC(void* context, void* allocation, int size,
                 }
             }
 
-            entry = &lbl_805FAAD8[index];
-            lbl_8064D1B8 += *entry;
-            *entry = -*entry;
-            if (index < 1535 && entry[1] > 0) {
-                *entry += entry[1];
-                entry[1] = 0;
+            lbl_8064D1B8 += lbl_805FAAD8[index];
+            lbl_805FAAD8[index] = -lbl_805FAAD8[index];
+            if (index < 1535 && lbl_805FAAD8[index + 1] > 0) {
+                lbl_805FAAD8[index] += lbl_805FAAD8[index + 1];
+                lbl_805FAAD8[index + 1] = 0;
             }
             for (; index > 0; index--) {
-                if (entry[-1] < 0) {
+                if (lbl_805FAAD8[index - 1] < 0) {
                     break;
                 }
-                entry[-1] += *entry;
-                *entry = 0;
-                entry--;
+                lbl_805FAAD8[index - 1] += lbl_805FAAD8[index];
+                lbl_805FAAD8[index] = 0;
             }
             allocation = 0;
         } else {
-            int bytes = words * 4;
-            replacement = fn_8016B5CC(context, 0, bytes, lbl_8024FEDC, 0x36F);
-            memcpy(replacement, allocation, bytes);
+            words *= 4;
+            replacement = fn_8016B5CC(context, 0, words, lbl_8024FEDC, 0x36F);
+            memcpy(replacement, allocation, words);
             fn_8016B5CC(context, allocation, 0, lbl_8024FEDC, 0x371);
             allocation = replacement;
         }
