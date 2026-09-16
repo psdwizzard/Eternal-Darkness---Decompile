@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "assignment_id": "6f222a4c-7582-4f3a-bae5-7f5e09618363",
+  "attempt": 7,
+  "base_commit": "c42d96b75295202a1e2e9dbe7e06dafe8f331797",
+  "target": "fn_801D88D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6f222a4c-7582-4f3a-bae5-7f5e09618363.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-6f222a4c-7582-4f3a-bae5-7f5e09618363.json",
+    "eternal-darkness-decomp/reports/GEDE01/hypotheses-6f222a4c-7582-4f3a-bae5-7f5e09618363.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-6f222a4c-7582-4f3a-bae5-7f5e09618363.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-6f222a4c-7582-4f3a-bae5-7f5e09618363.log",
+    "eternal-darkness-decomp/reports/GEDE01/configure-6f222a4c-7582-4f3a-bae5-7f5e09618363.log",
+    "eternal-darkness-decomp/reports/GEDE01/dol-sha1-6f222a4c-7582-4f3a-bae5-7f5e09618363.txt",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-target-6f222a4c-7582-4f3a-bae5-7f5e09618363.txt",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-generated-6f222a4c-7582-4f3a-bae5-7f5e09618363.txt",
+    "eternal-darkness-decomp/reports/GEDE01/legal-audit-6f222a4c-7582-4f3a-bae5-7f5e09618363.txt"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff remain at 99.46110%: 1388 bytes, 347 instructions and 33 relocations per side. Retail saves r26-r31 and holds flags in r26; generated saves r27-r31 and holds flags in r27, uses r0 for the flag-mask intermediate, assigns case-2 result to r28 instead of r29 with an extra call-site extsh replacing a move, and assigns case-8 results to r29/r28 instead of r28/r27. Owned .sdata2 bytes and normalized relocation targets, offsets, types and addends match. New narrowing-expression, register-hint, and initialized-short-result variants did not improve the baseline. The retained case-2 short remains uninitialized on unmatched inner-switch flags, unlike retail r29 initialized to zero; initializing it added an instruction. Canonical DOL SHA-1 verified; legal audit passed."
+}
