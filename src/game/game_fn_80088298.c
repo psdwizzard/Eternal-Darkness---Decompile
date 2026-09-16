@@ -7,6 +7,13 @@ typedef struct Work {
 } Work;
 typedef struct Object44 { u8 pad[0x44]; int object_id; } Object44;
 typedef struct Object8C { u8 pad[0x8C]; Object44* object; } Object8C;
+typedef struct SlotView {
+    u8 pad[0x68];
+    u8 state;
+    u8 pad69;
+    u8 field6A;
+    u8 field6B;
+} SlotView;
 
 extern EventState* fn_8006ED98(Work*);
 extern void *fn_8006ED3C();
@@ -37,16 +44,18 @@ int fn_80088298(Work* work)
     Object44* current = fn_80036D38();
     void* other = fn_80201814(current->object_id);
     Object8C* info = fn_80201B8C(object);
+    Owner* notification_owner = work->owner;
     int index;
+    int callback_index;
     int offset;
     int i;
 
     if (state->mode == 6) {
         fn_8006ED3C(work, 6, &index);
         if (fn_801A6D94(lbl_8064C824)) {
-            index = fn_8006ECD4(work, 6);
+            callback_index = fn_8006ECD4(work, 6);
             fn_8006BEE4(state, fn_8006EA4C);
-            offset = index * 0x2C;
+            offset = callback_index * 0x2C;
             ((u8*)work)[offset + 0x68] = 4;
             fn_8006DEF8(work, 6, 0, 0, 0);
             for (i = 0; i < 4; i++) {
@@ -62,18 +71,17 @@ int fn_80088298(Work* work)
         fn_801A5C30(1);
         fn_802020B4(other, 1);
         fn_8006ED3C(work, 7, &index);
-        offset = index * 0x2C;
-        ((u8*)work)[offset + 0x6A] = 3;
-        ((u8*)work)[offset + 0x6B] = 3;
-        ((u8*)work)[offset + 0x68] = 4;
+        ((SlotView*)((u8*)work + index * 0x2C))->field6A = 3;
+        ((SlotView*)((u8*)work + index * 0x2C))->field6B = 3;
+        ((SlotView*)((u8*)work + index * 0x2C))->state = 4;
         fn_8006DEF8(work, 7, 0, 0, 0);
-        ((u8*)work)[offset + 0x68] = 0;
+        ((SlotView*)((u8*)work + index * 0x2C))->state = 0;
         fn_8006DEF8(work, 7, 0, 0, 0);
-        ((u8*)work)[offset + 0x68] = 1;
+        ((SlotView*)((u8*)work + index * 0x2C))->state = 1;
         fn_8006DEF8(work, 7, 0, 0, 0);
-        ((u8*)work)[offset + 0x68] = 2;
+        ((SlotView*)((u8*)work + index * 0x2C))->state = 2;
         fn_8006DEF8(work, 7, 0, 0, 0);
-        if ((*(unsigned int*)((u8*)owner + 0x20) & 0x20) == 0)
+        if ((*(unsigned int*)((u8*)notification_owner + 0x20) & 0x20) == 0)
             fn_8020104C(0x51, 0, info->object->object_id, 0, lbl_8064EB78);
         fn_8015C8A4(2, 0);
         fn_801B08BC(-1, 0x1B, 0);
