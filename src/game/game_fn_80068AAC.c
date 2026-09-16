@@ -48,6 +48,8 @@ extern void *fn_80201814();
 extern void *fn_80201B8C();
 extern void *fn_80201BC8();
 extern int fn_80201B54();
+extern s32 fn_80201BC0(s32);
+extern u8 fn_80204508(s32, s32);
 extern u32 fn_80178E94(Vec3 *, Vec3 *);
 extern void fn_8013F4D0(Vec3 *, Vec3 *, Vec3 *);
 extern s32 fn_8014317C(Vec3 *, Vec3 *, void *, s32, s32);
@@ -61,6 +63,7 @@ void fn_80068AAC(s32 source, s32 object_id, void *effect, RuntimeState **state,
 {
     Vec3 effect_pos;
     Vec3 raised_pos;
+    volatile Vec3 initial_pos;
     s32 owner_kind;
     s32 *objects;
     s32 event_value;
@@ -70,7 +73,8 @@ void fn_80068AAC(s32 source, s32 object_id, void *effect, RuntimeState **state,
     u16 duration;
     u16 strength;
     u16 result;
-    u32 p0, p1, p2;
+    u32 mode;
+    u32 p2[2], p1[2], p0[2];
 
     result = 0;
     owner_kind = fn_80201EB8(object_id);
@@ -84,6 +88,8 @@ void fn_80068AAC(s32 source, s32 object_id, void *effect, RuntimeState **state,
     }
 
     list_item = (s32)fn_80201B9C();
+    initial_pos = lbl_80239060;
+    mode = lbl_8064E714;
     fn_80038308(object_id, 0, &result);
     objects = fn_800681C8();
     event_value = fn_80200C20(event);
@@ -95,13 +101,12 @@ void fn_80068AAC(s32 source, s32 object_id, void *effect, RuntimeState **state,
     fn_800685A4(effect, 2);
     fn_800685A4(effect, 3);
 
-    p2 = lbl_8064E718;
-    p1 = lbl_8064E71C;
-    p0 = lbl_80651958;
-    fn_8012C62C(effect, 15, &p2, &p1, &p0, 4);
-    p0 = lbl_8064E714;
-    fn_8014CCB0(effect, &p0, 4);
-    fn_8014D100(effect, &p0, 8, 1);
+    p0[0] = p0[1] = lbl_80651958;
+    p1[0] = p1[1] = lbl_8064E71C;
+    p2[0] = p2[1] = lbl_8064E718;
+    fn_8012C62C(effect, 15, &p2[1], &p1[1], &p0[1], 4);
+    fn_8014CCB0(effect, &mode, 4);
+    fn_8014D100(effect, &mode, 8, 1);
 
     if ((*state)->duration != 0 && (*state)->strength != 0) {
         duration = (*state)->duration;
@@ -111,7 +116,7 @@ void fn_80068AAC(s32 source, s32 object_id, void *effect, RuntimeState **state,
         strength = level * 5 + 5;
         duration = level * 200 + 250;
     }
-    if (actor->kind >= 0x40 && actor->kind < 0x43)
+    if (actor->kind < 0x43 && actor->kind >= 0x40)
         strength = 0;
 
     if (event_kind != 0) {
@@ -122,17 +127,17 @@ void fn_80068AAC(s32 source, s32 object_id, void *effect, RuntimeState **state,
                 s32 candidate_id = objects[iter];
                 if (candidate_id != 0 && candidate_id != event_value) {
                     void *candidate = fn_80201814(candidate_id);
-                    RuntimeState **candidate_state = (RuntimeState **)((u8 *)fn_80201B8C(candidate_id) + 4);
+                    RuntimeState ***candidate_state = (RuntimeState ***)((u8 *)fn_80201B8C(candidate_id) + 4);
                     fn_8020123C(0x44, source, candidate_id, 1);
                     fn_8020104C(0x43, source, candidate_id, 0, lbl_8064C898);
                     lbl_8064C898 += lbl_8064E728;
-                    (*candidate_state)->duration = duration;
-                    (*candidate_state)->strength = strength;
+                    (**candidate_state)->duration = duration;
+                    (**candidate_state)->strength = strength;
                     (void)candidate;
                 }
             }
         }
-        (*state)->flags &= (u8)~2;
+        (*state)->flags &= ~2;
         fn_80068074(object_id);
     }
     lbl_8064C8A0 = strength;
@@ -140,11 +145,20 @@ void fn_80068AAC(s32 source, s32 object_id, void *effect, RuntimeState **state,
     while (list_item != 0) {
         void *info = fn_80201B8C(list_item);
         void *position = fn_80201BC8(list_item);
-        Vec3 target_pos = lbl_8023906C;
+        Vec3 position_pos;
+        Vec3 fallback_pos;
+        Vec3 target_pos;
+        Vec3 *chosen_pos;
         s32 target_kind;
         s32 target_owner;
-        if (position != 0)
-            fn_8011F114(&target_pos, position);
+        if (position != 0) {
+            fn_8011F114(&position_pos, position);
+            chosen_pos = &position_pos;
+        } else {
+            fallback_pos = lbl_8023906C;
+            chosen_pos = &fallback_pos;
+        }
+        target_pos = *chosen_pos;
         target_kind = fn_80201EB8(list_item);
         target_owner = fn_80201B54(list_item);
         if (owner_kind == target_kind && position != 0 && info != 0 &&
@@ -168,7 +182,8 @@ void fn_80068AAC(s32 source, s32 object_id, void *effect, RuntimeState **state,
     fn_800CC860(object_id, 1, 0);
     fn_800BE8D4(source);
     if (actor->mode == 1 && actor->variant == 3) {
-        fn_8011E174(0x40, 0);
+        if (actor->mode == 1)
+            fn_8011E174(0x40, 0);
         fn_800A5390(object_id, effect, actor, event, 1, 1, 1);
     } else {
         fn_8020104C(0x39, source, source, 0, lbl_8064E728);

@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "assignment_id": "131a0537-fae5-4e85-9000-f8427f94bbd3",
+  "target": "fn_80068AAC",
+  "compiler": "GC/1.3",
+  "commands": [
+    {
+      "argv": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_80068AAC.o",
+      "exit_code": 0,
+      "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80068AAC.o"
+    },
+    {
+      "argv": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80068AAC fn_80068AAC -o build/GEDE01/objdiff-fn_80068AAC-final.json --format json",
+      "exit_code": 0,
+      "stdout": "INFO Writing to build/GEDE01/objdiff-fn_80068AAC-final.json"
+    },
+    {
+      "argv": "sha1sum orig/GEDE01/sys/main.dol build/GEDE01/main.dol",
+      "exit_code": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "argv": "rg -n '__asm|asm\\s*\\(|\\.long|\\.4byte|register\\s+' src/game/game_fn_80068AAC.c",
+      "exit_code": 1,
+      "stdout": ""
+    }
+  ],
+  "canonical": {
+    "match_percent": 91.333336,
+    "retail_size": 1332,
+    "generated_size": 1316,
+    "matched": false
+  },
+  "relocation_strict": {
+    "matched": false,
+    "retail_relocation_bearing_instructions": 70,
+    "generated_relocation_bearing_instructions": 73,
+    "reason": "The volatile preservation of the retail's otherwise dead initial Vec3 copy emits lis/addi plus three relocation-bearing loads rather than retail's lis/lwzu plus two offset loads; instruction alignment and relocation positions also diverge around omitted assertion-shaped control flow."
+  },
+  "baseline": {
+    "match_percent": 79.65766,
+    "generated_size": 1220,
+    "retail_size": 1332
+  },
+  "divergence": "Best honest C emits a 0xc0-byte frame rather than retail's 0xf0-byte frame, assigns long-lived parameters and locals to different callee-saved registers, and lacks retail branch/nop sequences after the object-list null check and already-active state flag. The generated function is 16 bytes shorter overall and has three extra relocation-bearing instructions due to preserving the otherwise dead lbl_80239060 aggregate initialization."
+}
