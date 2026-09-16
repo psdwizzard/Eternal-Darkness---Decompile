@@ -114,6 +114,17 @@ config.custom_build_rules = [
         "description": "EXTERNALIZE $in",
     },
     {
+        "name": "externalize_game_801F9CF4_signed_bias",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @40 lbl_80651480 "
+            "orig/GEDE01/sys/main.dol --require-whole-section && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@40=lbl_80651480 --remove-section=.sdata2 "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    },
+    {
         "name": "externalize_game_801FC034_signed_bias",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @12 lbl_80651480 "
@@ -5229,6 +5240,14 @@ config.custom_build_steps["post-compile"].append(
         "outputs": [f"build/{VERSION}/src/game/game_fn_801F7510.externalized"],
         "rule": "externalize_game_801F7510_signed_bias",
         "inputs": [f"build/{VERSION}/src/game/game_fn_801F7510.o"],
+    }
+)
+
+config.custom_build_steps["post-compile"].append(
+    {
+        "outputs": [f"build/{VERSION}/src/game/game_fn_801F9CF4.externalized"],
+        "rule": "externalize_game_801F9CF4_signed_bias",
+        "inputs": [f"build/{VERSION}/src/game/game_fn_801F9CF4.o"],
     }
 )
 
@@ -12278,7 +12297,7 @@ config.libs = [
             Object(Matching, "game/game_fn_801F9A38.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801F9AA8.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801F9AF8.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
-            Object(NonMatching, "game/game_fn_801F9CF4.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801F9CF4.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801FA01C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801FA198.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801FA250.c", mw_version="GC/1.3"),

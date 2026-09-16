@@ -65,8 +65,9 @@ void fn_801F9CF4(MotionState* state, int resource_index, int endpoint,
 {
     short* first;
     ShortVec3 fallback;
+    unsigned char snapshot[0x10];
     Vec3 sample;
-    unsigned char snapshot[0x20];
+    Vec3 terminal_sample;
 
     state->mode = 3;
     if (resources[resource_index].linear_count != 0 ||
@@ -130,13 +131,13 @@ void fn_801F9CF4(MotionState* state, int resource_index, int endpoint,
             state->callback = fn_801F7FBC;
         }
     } else if (interpolation_mode == 0) {
-        sample.x = resources[resource_index].base.x;
-        sample.y = resources[resource_index].base.y;
-        sample.z = resources[resource_index].base.z;
+        terminal_sample.x = resources[resource_index].base.x;
+        terminal_sample.y = resources[resource_index].base.y;
+        terminal_sample.z = resources[resource_index].base.z;
         state->resource = &resources[resource_index];
         state->key = 0;
         state->callback = 0;
-        fn_801F8994(state, &sample, resources[resource_index].speed);
+        fn_801F8994(state, &terminal_sample, resources[resource_index].speed);
         state->mode = 4;
     } else {
         if (interpolation_mode != 0) {
