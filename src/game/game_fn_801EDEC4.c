@@ -8,13 +8,15 @@ typedef struct StateRegion {
 extern StateRegion lbl_80639260;
 extern void fn_80225FE8(int, int, int, int, int, int);
 
+/* NonMatching: behavior-complete reconstruction. GC/1.3 reassociates the
+ * field-base-plus-index accesses; retail preserves indexed addressing. */
 void fn_801EDEC4(int index, int value0, int value1, int value2)
 {
     StateRegion* state = &lbl_80639260;
     int* values1 = state->values1;
 
-    if (values1[index] != value1 || state->values0[index] != value0 ||
-        state->values2[index] != value2) {
+    if (values1[index] != value1 || value0 != state->values0[index] ||
+        value2 != state->values2[index]) {
         fn_80225FE8(index, value0, value1, value2, 0, 125);
         values1[index] = value1;
         state->values0[index] = value0;
