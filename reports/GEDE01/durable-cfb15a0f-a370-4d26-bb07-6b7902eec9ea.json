@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "cfb15a0f-a370-4d26-bb07-6b7902eec9ea",
+  "attempt": 3,
+  "base_commit": "3fabf51f0bb22b089245092234687e955145f47c",
+  "target": "fn_801A9FA4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-cfb15a0f-a370-4d26-bb07-6b7902eec9ea.json"
+  ],
+  "divergence": "Canonical and function_reloc_diffs=name_address relocation-strict objdiff are size-exact at 996/996 bytes and 99.65864%. Correcting fn_801B0CA4's second parameter from u16 to its owning word-width ABI removes the prior clrlwi divergence. The remaining 17 differing rows are a 16-row r26/r27/r29 allocation cycle (retail object/position/divisor and branch-local fn_8005099C result versus generated registers) plus the unsigned-conversion bias operand naming lbl_80650E58 versus compiler-local @66; the latter resolves to the same linked constant and is not a DOL blocker. Register-qualified parameter/local aliases were codegen-neutral, while moving position ahead of divisor worsened the score and was rejected. The full canonical rebuild passed with main.dol SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

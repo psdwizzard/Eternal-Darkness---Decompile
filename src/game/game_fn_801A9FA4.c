@@ -17,7 +17,7 @@ typedef struct SoundRequest {
 } SoundRequest;
 
 extern u16 fn_8004A608(void*, u16, u8*, u8*, u16*, u32*);
-extern void fn_801B0CA4(s32, u16);
+extern void fn_801B0CA4(s32, s32);
 extern s32 fn_800A1060(void);
 extern void fn_801B05E8(s32, u8, s32, s32, s32, s32, s32, s32);
 extern void* fn_8011F130(void*);
