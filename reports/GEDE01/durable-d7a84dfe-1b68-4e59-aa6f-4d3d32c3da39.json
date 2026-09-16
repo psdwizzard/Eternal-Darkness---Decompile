@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d7a84dfe-1b68-4e59-aa6f-4d3d32c3da39",
+  "attempt": 3,
+  "base_commit": "0b47b410199fd2a089bab99c790623f2edf17f66",
+  "target": "fn_801E2B28",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d7a84dfe-1b68-4e59-aa6f-4d3d32c3da39.json"
+  ],
+  "divergence": "Canonical GC/1.3 output is 87.07692% and remains exactly 208 bytes/52 instructions. All 8 retail relocation targets, types, and zero addends are represented, but the lbl_80651230 relocation moves from retail 0x50 to generated 0x64 and lbl_80651234 moves from retail 0x74 to generated 0x6C. In the 0x50-0x78 window, retail loads lbl_80651230 at 0x50, copies f1 to f2 at 0x68, loads lbl_80651234 at 0x74, and forms object+4 at 0x78; generated code emits those operations at 0x64, 0x74, 0x6C, and 0x68 while advancing the duration/enabled/type constants. This is not relocation-strict. Full build passed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
