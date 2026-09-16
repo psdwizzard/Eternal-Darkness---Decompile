@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "44a4d164-36cd-43c4-8ca2-af3b33519ec4",
+  "attempt": 4,
+  "base_commit": "94d810053466116eee8968070e9f55c1008d308e",
+  "target": "fn_801A9FA4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-44a4d164-36cd-43c4-8ca2-af3b33519ec4.json"
+  ],
+  "divergence": "Canonical and function_reloc_diffs=name_address relocation-strict objdiff are size-exact at 996/996 bytes and 99.65864%, with 17 differing instruction rows. Wider u32/u16 divisor declarations changed extraction and worsened the score; splitting divisor/packed initialization into assignments, block-scoping position at its first use, and coalescing the shadowed adjusted local preserved the frontier. The remaining 16 register rows are one r26/r27/r29 allocation cycle: retail uses r29 for object, r27 for divisor and branch-local fn_8005099C result, and r26 for position, while generated code uses r26, r29, and r27 respectively. The seventeenth row is the unsigned-conversion bias operand naming lbl_80650E58 versus compiler-local @67; it resolves to the same linked constant. The full canonical rebuild passed and main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

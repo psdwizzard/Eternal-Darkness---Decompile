@@ -48,22 +48,22 @@ s32 fn_801A9FA4(void* object, u32 value)
 {
     u8 scale = (value & 0xFF000000) >> 24;
     u16 sound;
-    u8 divisor = (value & 0x00FF0000) >> 16;
-    u16 packed = value;
+    u8 divisor;
+    u16 packed;
     u8 volume;
     u8 mode;
     u16 parameter;
     u32 flags;
-    void* position;
     s32 adjusted;
     SoundRequest request;
 
+    divisor = (value & 0x00FF0000) >> 16;
+    packed = value;
     sound = fn_8004A608(object, packed, &volume, &mode, &parameter, &flags);
 
     if (scale != 0 && divisor != 0) {
         f32 ratio = (f32)scale / (f32)divisor;
         s32 converted = (s32)(ratio * (f32)volume);
-        s32 adjusted;
         if ((u8)converted != 0) {
             adjusted = (u8)converted;
         } else {
@@ -112,7 +112,7 @@ s32 fn_801A9FA4(void* object, u32 value)
     }
 
     if (sound != 0xFFFF && volume != 0) {
-        position = fn_8011F130(object);
+        void* position = fn_8011F130(object);
         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,
                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);
 
