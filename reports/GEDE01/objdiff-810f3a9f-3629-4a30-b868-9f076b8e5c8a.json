@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "assignment_id": "810f3a9f-3629-4a30-b868-9f076b8e5c8a",
+  "target": "fn_80064E2C",
+  "compiler": "canonical GC/1.3 configuration from configure.py",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80064E2C fn_80064E2C -o reports/GEDE01/objdiff-810f3a9f-3629-4a30-b868-9f076b8e5c8a-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80064E2C fn_80064E2C -o reports/GEDE01/objdiff-810f3a9f-3629-4a30-b868-9f076b8e5c8a-relocation-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "canonical_objdiff": {
+    "raw_summary": "canonical retail=1312 generated=1316 match=97.143295 retail_relocations=61 generated_relocations=61",
+    "raw_artifact": "reports/GEDE01/objdiff-810f3a9f-3629-4a30-b868-9f076b8e5c8a-canonical.json",
+    "retail_size_bytes": 1312,
+    "generated_size_bytes": 1316,
+    "match_percent": 97.143295
+  },
+  "relocation_strict_objdiff": {
+    "basis": "function_reloc_diffs=name_address",
+    "raw_summary": "strict retail=1312 generated=1316 match=97.143295 retail_relocations=61 generated_relocations=61",
+    "raw_artifact": "reports/GEDE01/objdiff-810f3a9f-3629-4a30-b868-9f076b8e5c8a-relocation-strict.json",
+    "match_percent": 97.143295,
+    "retail_relocation_count": 61,
+    "generated_relocation_count": 61,
+    "types_targets_addends_in_order_equal": true,
+    "passed_100_percent_gate": false
+  },
+  "dol_verification": {
+    "raw_sha1sum": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "passed": true
+  },
+  "divergence": "The corrected unsigned context parameter now emits retail cmplwi at 0x0434; signed-16 first/lower parameters plus the ternary min remove the prior extra extsh and reproduce retail's 0x0254..0x0274 clamp sequence; the branchless nonnegative clamp is documented in source. The remaining generated object is 1316 bytes versus retail's 1312. GC/1.3 swaps the long-lived original-first/is-current-owner assignments (generated r15/r16 versus retail r16/r15), cyclically assigns event-value/owner/result/made-event to generated r31/r30/r27/r28 versus retail r28/r27/r30/r31, reverses the two mask-normalization instructions at retail 0x0138, lowers the half-amount clamp with a different r0/r3/r4 schedule around retail 0x0398..0x03B8, and schedules the final conditional fn_80201BC8 result and first feedback-call arguments differently around retail 0x0434..0x047C. The canonical alignment contains 47 argument mismatches, 3 replacements, 3 inserts, and 2 deletes; the net insert accounts for the four-byte size excess. All 61 relocation type/target/addend tuples are equal in order under the separate name_address strict run."
+}

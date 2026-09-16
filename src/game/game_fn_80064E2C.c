@@ -29,7 +29,7 @@ extern u32 fn_801A74C0(s32 event);
 extern void *fn_80201814();
 extern s32 fn_80071D5C(void *object);
 extern s32 fn_801A74F8(s32 event);
-extern void fn_801A7518(s32 event, s16 value);
+extern void fn_801A7518(s32 event, s32 value);
 extern unsigned long long fn_8020123C();
 extern int fn_801E79FC(void*, int);
 extern void fn_801E7974(s32 object, s32 value);
@@ -46,27 +46,28 @@ extern void *fn_80201BC8();
 extern void fn_80120AD0(void *object, s32 zero, s32 amount, s32 kind,
                         float first, float second);
 
-s32 fn_80064E2C(s32 context, s32 event, s32 index, u16 mask, s32 amount,
-                 s32 first, s32 lower)
+s32 fn_80064E2C(u32 context, s32 event, s32 index, u16 mask, s32 amount,
+                 s16 first, s16 lower)
 {
     u8 *state;
     s32 original_event;
-    EventPosition position;
     EventPosition copied_position;
+    EventPosition position;
     s32 event_value;
     s32 owner;
+    s16 original_first;
     s32 is_current_owner;
     s32 feedback;
     s32 made_event;
     s32 result;
     s32 update_result;
-    s16 remaining;
     void *object;
 
     state = fn_80036D38(context);
     original_event = fn_801A7488(event);
     fn_801A7744(&position, event);
     copied_position = position;
+    original_first = first;
     made_event = 0;
     result = 0;
     feedback = -1;
@@ -80,9 +81,9 @@ s32 fn_80064E2C(s32 context, s32 event, s32 index, u16 mask, s32 amount,
         if (object != 0 && (!is_current_owner || fn_80071D5C(object) == 0)) {
             s32 old_amount = fn_801A74F8(event);
             u32 response;
-            fn_801A7518(event, (s16)amount);
+            fn_801A7518(event, amount);
             response = (u32)fn_8020123C(0xB, owner, target, event);
-            fn_801A7518(event, (s16)old_amount);
+            fn_801A7518(event, old_amount);
             if (!(mask & (u16)response)) {
                 return 0;
             }
@@ -117,30 +118,29 @@ s32 fn_80064E2C(s32 context, s32 event, s32 index, u16 mask, s32 amount,
         feedback = 2;
     }
 
-    remaining = (s16)((s16)first - (s16)amount);
-    if (remaining >= (s16)lower) {
-        remaining = (s16)lower;
-    }
-    if (remaining < 0) {
-        remaining = 0;
-    }
+    first = (s16)(first - (s16)amount);
+    first = first < lower ? first : lower;
+    /* Codegen-shaping spelling: emits retail's neg/andc/srawi/and clamp. */
+    first = (s16)(first & ((-first & ~first) >> 31));
 
-    update_result = fn_800389E0(context, index, remaining, 1);
+    update_result = fn_800389E0(context, index, first, 1);
     result |= 1;
-    if (remaining != 0 && original_event != -1 && index == 0) {
-        u32 response = (u32)fn_8020123C(0x35, event_value, owner, event);
-        result |= 0x10;
+    if (first != 0 && original_event != -1 && index == 0) {
+        u32 response = (u32)(fn_8020123C(0x35, event_value, owner, event) &
+                             0xFFFFFFFFULL);
+        s32 response_result = result | 0x10;
         if (response & 1) {
-            result |= 0x30;
+            response_result = result | 0x30;
         }
-    } else if (remaining <= 0 && index == 0 && update_result != 0) {
+        result = response_result;
+    } else if (first <= 0 && index == 0 && update_result != 0) {
         if (fn_802021AC(context) == 0) {
             fn_8020123C(8, event_value, owner, 0);
             result |= 2;
         } else {
             fn_800389E0(context, index, 0, 1);
         }
-    } else if (remaining <= 0 && (s16)first <= 0 && index == 1 &&
+    } else if (first <= 0 && original_first <= 0 && index == 1 &&
                is_current_owner) {
         s32 created = fn_801A717C();
         s32 half;
@@ -148,17 +148,18 @@ s32 fn_80064E2C(s32 context, s32 event, s32 index, u16 mask, s32 amount,
         fn_801A74A0(created, owner);
         fn_801A74A8(created, owner);
         fn_801A7538(created, 1);
-        half = ((s16)amount) >> 1;
-        if (half < 1) {
-            half = 1;
+        half = 1;
+        if (((s16)amount >> 1) >= 1) {
+            half = ((s16)amount) >> 1;
         }
         fn_801A7518(created, (s16)half);
         fn_801A764C(created, &copied_position);
-        if (((u32)fn_8020123C(0x27, event_value, owner, created) & 1) != 0) {
+        if (((u32)(fn_8020123C(0x27, event_value, owner, created) &
+                    0xFFFFFFFFULL) & 1) != 0) {
             feedback = 0;
         }
         fn_801A7228(created);
-    } else if (state != 0 && remaining <= (s16)state[0x166] && index == 0) {
+    } else if (state != 0 && first <= (s16)state[0x166] && index == 0) {
         fn_8020123C(9, event_value, owner, 0);
         result |= 4;
     }
