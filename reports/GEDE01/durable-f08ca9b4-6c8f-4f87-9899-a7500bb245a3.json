@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "f08ca9b4-6c8f-4f87-9899-a7500bb245a3",
+  "attempt": 1,
+  "base_commit": "94d144629d3f3c072dc50e41a9687b4836248713",
+  "target": "fn_8017BBD0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f08ca9b4-6c8f-4f87-9899-a7500bb245a3.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-f08ca9b4-6c8f-4f87-9899-a7500bb245a3.json"
+  ],
+  "divergence": "Best relocation-strict objdiff score is 86.390625%: retail is 256 bytes (64 instructions) while canonical MWCC emits 244 bytes (61 instructions). The remaining divergence is concentrated in the queue-index wrap: retail emits an xoris/addc/subfe/andc branchless sequence and a different early r6-r11 register schedule, while canonical MWCC emits subi/srawi/and; the later entry population, calls, and relocation targets/addends agree."
+}
