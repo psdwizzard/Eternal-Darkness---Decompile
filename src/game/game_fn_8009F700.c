@@ -2,13 +2,18 @@ typedef unsigned char u8;
 typedef signed short s16;
 typedef unsigned int u32;
 
+typedef struct Owner8009F700 {
+    u8 pad00[0x20];
+    u32 flags;
+} Owner8009F700;
+
 typedef struct State8009F700 {
     u8 pad00[0x38];
     void* field_38;
     u8 pad3C[0x2C];
     u8 field_68;
     u8 pad69[0x5B];
-    u8* owner;
+    Owner8009F700* owner;
 } State8009F700;
 
 typedef struct Context8009F700 {
@@ -29,29 +34,30 @@ typedef struct Runtime8009F700 {
 
 extern Context8009F700* fn_8006ED98(State8009F700*);
 extern void fn_8006DEF8(State8009F700*, int, void*, void*, int);
-extern void *fn_80201814();
-extern void *fn_80201B8C();
-extern unsigned long long fn_8020123C();
+extern void fn_80201814(void*);
+extern Runtime8009F700* fn_80201B8C(void);
+extern void fn_8020123C(int, int, void*, int);
 
 int fn_8009F700(register State8009F700* state)
 {
     Context8009F700* context;
+    Owner8009F700* owner;
     int result = 0;
-    int i;
     Runtime8009F700* runtime;
 
     context = fn_8006ED98(state);
-    if (*(u32*)(state->owner + 0x20) & 0x2000) {
+    owner = state->owner;
+    if (owner->flags & 0x2000) {
         context->counter++;
-        *(u32*)(state->owner + 0x20) &= ~0x2000;
+        owner->flags &= ~0x2000u;
     }
     if (context->counter >= 3) {
-        for (i = 0; i < 4; i++) {
-            state->field_68 = 0;
+        for (result = 0; result < 4; result++) {
+            state->field_68 = result;
             fn_8006DEF8(state, context->kind, 0, 0, 0);
         }
         fn_80201814(state->field_38);
-        runtime = ((Runtime8009F700*)fn_80201B8C());
+        runtime = fn_80201B8C();
         fn_8020123C(81, 0, runtime->field_8C->field_44, 0);
         result = 1;
     }
