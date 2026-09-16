@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "6b898c27-62f1-48a7-b673-7504fc573d7f",
+  "attempt": 1,
+  "base_commit": "93d349608f34858ae7505e7e8a540b6f770a1a47",
+  "target": "fn_8001DFEC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6b898c27-62f1-48a7-b673-7504fc573d7f.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 92.30488% with equal 328-byte retail/generated code. Retail materializes lbl_80302400+0x1C, +0x98, and +0xC0 interior pointers; canonical GC/1.3 folds those accesses into r31, reloads lbl_80302400 around fn_80228B50, and therefore emits 9 real relocations versus retail's 7. The five relocations at sites 0x8, 0x14, 0x80, 0x11C, and 0x124 agree in type/target/addend; the two early calls are shifted by four bytes and the generated root reload adds two relocations."
+}

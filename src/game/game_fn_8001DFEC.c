@@ -58,20 +58,20 @@ void fn_8001DFEC(u8 mode, u32 value)
     Work* work = &state->work;
     s32 i;
 
-    info->flags &= ~2U;
     info->previous_mode = info->mode;
     info->previous_value = info->value;
     info->mode = mode;
     info->value = value;
+    info->flags &= ~2U;
     fn_8020EFBC((TypeA*)state->object60);
     fn_8020F0F8((TypeB*)((u8*)info + 0x44));
 
     work->field00 = 0;
+    work->values = state->values;
     work->field04 = 0;
     work->field08 = 0;
     work->field0C = 0;
     work->field10 = 0;
-    work->values = state->values;
     fn_80228B50(state->clear, state->values, 0, sizeof(state->clear));
 
     for (i = 0; i < 0x100; i++) {
