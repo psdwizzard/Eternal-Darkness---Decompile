@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "assignment_id": "291be257-7600-4f7e-ba1a-0a5356e17ac8",
+  "target": "fn_800173CC",
+  "source": "eternal-darkness-decomp/src/game/game_fn_800173CC.c",
+  "recovery": {
+    "preserved_commit": "0fe02d7aec71f075e5cad36b4c6b23f563e959f8",
+    "base_state": "The accepted base already contained the preserved 99.39716% honest C reconstruction, isolated NonMatching registration, and split entry, so no source or registration reconciliation was required.",
+    "attempt_4_hypothesis": "Tested whether declaration order and an independently typed truncated-ID live range would make canonical MWCC color the collection/iterator/ID interference triangle as retail r25/r26/r27.",
+    "raw_trials": [
+      "iterator declaration moved ahead of competing register variables: direct-object match_percent=99.21986",
+      "reused pointer/ID temporary split into a dedicated u16 target_id: direct-object match_percent=98.085106",
+      "individual register hints removed from related, compare_id, and temp: no instruction-pattern improvement",
+      "All trial changes were rejected; the preserved best source was restored byte-for-byte."
+    ]
+  },
+  "compiler": "mwcc_242_53 (canonical GC/1.3 settings from configure.py)",
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": [
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+    ]
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (15974 tracked project files inspected)"
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800173CC fn_800173CC -o build/GEDE01/fn_800173CC-canonical-attempt4.json --format json-pretty",
+    "exit_code": 0,
+    "raw_measurement": "canonical left=564 right=564 left_match=99.39716 right_match=99.39716 left_diffs=14 right_diffs=14"
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800173CC fn_800173CC -c function_reloc_diffs=name_address -o build/GEDE01/fn_800173CC-reloc-strict-attempt4.json --format json-pretty",
+    "exit_code": 0,
+    "raw_measurement": "strict left=564 right=564 left_match=99.39716 right_match=99.39716",
+    "relocation_validation": "left_count=39 right_count=39 normalized_relocations_equal=true mismatches=[]",
+    "normalization": "instruction address, formatted instruction/target, relocation type name, and addend (absent addends normalized to zero)"
+  },
+  "differences": {
+    "count": 14,
+    "retail_offsets_hex": ["0x1c", "0xac", "0xbc", "0xfc", "0x100", "0x10c", "0x114", "0x148", "0x170", "0x19c", "0x1ac", "0x1e4", "0x1ec", "0x1f0"],
+    "diff_kinds": "14 x DIFF_ARG_MISMATCH",
+    "raw_retail_instructions": ["mr r25, r3", "clrlwi r27, r3, 16", "cmplw r0, r27", "clrlwi r26, r3, 16", "mr r3, r25", "mr r25, r3", "mr r3, r25", "cmpw r26, r0", "add r0, r3, r27", "clrlwi r27, r3, 16", "cmplw r0, r27", "mr r3, r25", "mr r25, r3", "cmplwi r25, 0x0"],
+    "raw_generated_instructions": ["mr r27, r3", "clrlwi r25, r3, 16", "cmplw r25, r0", "clrlwi r25, r3, 16", "mr r3, r27", "mr r26, r3", "mr r3, r26", "cmpw r25, r0", "add r0, r27, r3", "clrlwi r25, r3, 16", "cmplw r25, r0", "mr r3, r26", "mr r26, r3", "cmplwi r26, 0x0"],
+    "summary": "The function remains size- and schedule-exact, with all 39 relocation tuples equal. Canonical MWCC still assigns the long-lived collection/iterator and truncated-ID values to r25-r27 differently from retail; the add at 0x170 is also operand-reversed. The distinct declaration-order and live-range-splitting hypothesis regressed codegen and was not retained."
+  }
+}
