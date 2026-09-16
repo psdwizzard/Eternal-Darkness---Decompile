@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "assignment_id": "ca05af4f-2805-49c2-b6e9-d50ade984ec8",
+  "attempt": 2,
+  "target": "fn_800DBF60",
+  "compiler": "GC/1.3",
+  "compiler_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+  "source": "src/game/game_fn_800DBF60.c",
+  "registration": "Object(NonMatching, game/game_fn_800DBF60.c, extra_cflags=[-use_lmw_stmw on])",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_800DBF60.c fn_800DBF60",
+    "build/binutils/powerpc-eabi-readelf -r build/GEDE01/obj/game/game_fn_800DBF60.o",
+    "build/binutils/powerpc-eabi-readelf -r build/GEDE01/src/game/game_fn_800DBF60.o",
+    "python3 tools/legal_audit.py",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "measurements": {
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "ninja_verification_stdout": "build/GEDE01/main.dol: OK",
+    "objdiff_stdout": "target 752 bytes  base 744 bytes  match 92.835106",
+    "target_bytes": 752,
+    "candidate_bytes": 744,
+    "different_instruction_rows": 55,
+    "match_percent": 92.835106,
+    "relocation_strict": {
+      "target_readelf_stdout_header": "Relocation section '.rela.text' at offset 0x330 contains 47 entries:",
+      "candidate_readelf_stdout_header": "Relocation section '.rela.text' at offset 0x31c contains 45 entries:",
+      "target_count": 47,
+      "candidate_count": 45,
+      "equal_offsets_types_targets_addends": false,
+      "first_offset_divergence": "target 000000fa R_PPC_ADDR16_LO lbl_80325B80 + 0; candidate 000000f6 R_PPC_ADDR16_LO lbl_80325B80 + 0",
+      "target_only_relocations": [
+        "0000020a R_PPC_ADDR16_HA lbl_80325B80 + 0",
+        "00000212 R_PPC_ADDR16_LO lbl_80325B80 + 0"
+      ],
+      "recovered_call_relocations": [
+        "target 00000288 R_PPC_REL24 fn_8011F130 + 0; candidate 00000280 R_PPC_REL24 fn_8011F130 + 0",
+        "target 000002ac R_PPC_REL24 fn_800DC3A0 + 0; candidate 000002a4 R_PPC_REL24 fn_800DC3A0 + 0"
+      ]
+    },
+    "representative_codegen_diff": [
+      "0x0020 target: mr r29, r3 | candidate: mr r22, r3",
+      "0x0140 target: addi r22, r3, lbl_80325B80@l | candidate: addi r29, r3, lbl_80325B80@l",
+      "0x0154 target: addi r29, r3, lbl_80325B80@l | candidate: addi r4, r3, lbl_80325B80@l",
+      "0x0160 target: no instruction | candidate: mr r22, r4",
+      "0x02b0 both: mr r7, r30",
+      "0x02bc both: bl fn_800DC3A0"
+    ],
+    "legal_audit_stdout": "legal audit passed (15837 tracked project files inspected)",
+    "legal_audit_exit_code": 0,
+    "dol_sha1_stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_matches": true
+  },
+  "reconstruction_change": "Recovered fn_8011F130(object), corrected fn_800DC3A0's level parameter to signed int, corrected inferred return types, and hoisted two packet aliases across the construction block. The signed parameter removes the reviewed mask; the aliases remove candidate-only lbl_80325B80 relocations and improve the preserved attempt from 88.776596% to 92.835106%.",
+  "conclusion": "The isolated C reconstruction remains NonMatching. The remaining eight-byte size deficit and 55 differing rows are dominated by callee-saved register allocation and packet-base scheduling: retail assigns the first persistent base to r22 and rematerializes a second base directly into r29, while the candidate assigns the first to r29 and creates the second through r4 followed by mr r22,r4. Relocation-strict comparison therefore fails with 47 retail versus 45 candidate relocations."
+}

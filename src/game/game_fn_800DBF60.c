@@ -1,4 +1,5 @@
 typedef unsigned char u8;
+typedef signed char s8;
 typedef unsigned short u16;
 typedef signed short s16;
 
@@ -23,13 +24,13 @@ extern void fn_80153464(void *, void *);
 extern int fn_80201AE4(void);
 extern void fn_8019917C(void *);
 extern int fn_801D3A24(u8, int);
-extern int fn_80148300(void *, void *, void *);
+extern unsigned int fn_80148300(void *, void *, void *);
 extern void fn_80157930(void *, int);
 extern void fn_80149EB8(void *);
-extern u16 fn_8006749C(u8);
+extern int fn_8006749C(u8);
 extern void fn_80120AD0(void *, int, s16, u16, float, float);
-extern int fn_8011F130(void *);
-extern void fn_800DC3A0(void *, int, void *, u8, u8, int);
+extern void *fn_8011F130(void *);
+extern void fn_800DC3A0(void *, int, void *, u8, int, int);
 extern int fn_801E855C(int, void *, int);
 extern int fn_801E8328();
 extern float lbl_8064F460;
@@ -72,29 +73,34 @@ void fn_800DBF60(int owner, void *context, int level, void *effect, float amount
             *(int *)(lbl_80325B80 + 0xa8) = kind;
             node = fn_80149E04();
             if (node != 0) {
+                u8 *packet;
+                u8 *amount_packet;
+
                 fn_80153464(lbl_80325B80, node);
                 if (owner == fn_80201AE4()) {
                     lbl_80325B80[0xbc] |= 0x10;
                 }
-                fn_8019917C(lbl_80325B80);
-                lbl_80325B80[0] = 0x18;
-                *(u16 *)(lbl_80325B80 + 4) = fn_801D3A24(object_kind, 0x31);
-                lbl_80325B80[1] = 3;
-                lbl_80325B80[3] = (u8)-10;
+                amount_packet = lbl_80325B80;
+                fn_8019917C(amount_packet);
+                packet = lbl_80325B80;
+                packet[0] = 0x18;
+                *(u16 *)(packet + 4) = fn_801D3A24(object_kind, 0x31);
+                packet[1] = 3;
+                *(s8 *)(packet + 3) = -10;
                 if (amount > lbl_8064F464) {
-                    *(u16 *)(lbl_80325B80 + 6) = (int)amount;
+                    *(u16 *)(amount_packet + 6) = (int)amount;
                 } else {
-                    *(int *)(lbl_80325B80 + 0x1c) = 1;
+                    *(int *)(packet + 0x1c) = 1;
                 }
-                lbl_80325B80[0x15] = (u8)((u8)level * 2 - 1);
+                packet[0x15] = (u8)((u8)level * 2 - 1);
                 switch ((u8)level) {
-                case 2: lbl_80325B80[0x14] = 0x38; break;
-                case 3: lbl_80325B80[0x14] = 0x48; break;
-                case 4: lbl_80325B80[0x14] = 0x40; break;
+                case 2: packet[0x14] = 0x38; break;
+                case 3: packet[0x14] = 0x48; break;
+                case 4: packet[0x14] = 0x40; break;
                 }
-                lbl_80325B80[0x17] = 0xf0;
-                lbl_80325B80[0x18] = 0x78;
-                if (fn_80148300(action, lbl_80325B80, node) != 0) {
+                packet[0x17] = 0xf0;
+                packet[0x18] = 0x78;
+                if (fn_80148300(action, packet, node) != 0) {
                     fn_80157930(state, *(int *)((u8 *)node + 0x88));
                 } else {
                     fn_80149EB8(node);
@@ -107,7 +113,7 @@ void fn_800DBF60(int owner, void *context, int level, void *effect, float amount
                              flags, lbl_8064F460, lbl_8064F460);
             }
             if (effect != 0) {
-                fn_800DC3A0(effect, kind, position, object_kind, level,
+                fn_800DC3A0(effect, kind, fn_8011F130(object), object_kind, level,
                             (int)amount);
                 if (fn_801E855C(0x14, effect, 0) == 0) {
                     fn_801E8328(0x14, effect);
