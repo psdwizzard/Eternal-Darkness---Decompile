@@ -74,8 +74,8 @@ extern void fn_802042A4(void);
 
 s32 fn_800601FC(void *source, void *target)
 {
+    void *created;
     void *source_resource;
-    void *target_resource;
     OwnerData *owner_data;
     s32 relaxed;
     s32 source_value;
@@ -86,18 +86,18 @@ s32 fn_800601FC(void *source, void *target)
     Vec3 target_pos;
     u8 transform[0x3C];
     u8 hit[0x18];
-    void *created;
     void *descriptor;
-    s32 count;
     Entry *entries;
-    s32 i;
+    s32 count;
     s32 offset;
+    s32 i;
     s32 callback_arg;
     s32 cooldown;
 
     if (source != 0 && target != 0) {
       source_resource = fn_80201BC8(source);
       if (source_resource != 0) {
+       void *target_resource;
        target_resource = fn_80201BC8(target);
        if (target_resource != 0) {
 
@@ -144,8 +144,8 @@ s32 fn_800601FC(void *source, void *target)
     fn_801A7518(descriptor, 0x14);
 
     fn_801292E0(source_resource, &count, &entries);
-    offset = 0;
-    for (i = 0; i < count; i++, offset += sizeof(Entry)) {
+    i = 0;
+    for (offset = 0; i < count; offset += sizeof(Entry), i++) {
         Entry *entry = (Entry *)((u8 *)entries + offset);
         switch (entry->kind) {
         case 1:
