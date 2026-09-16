@@ -6,6 +6,7 @@ typedef struct Entry {
     unsigned char pad4[0x114];
     u32 source;
     u32 size;
+    u32 unknown;
     u32 state;
 } Entry;
 
@@ -16,39 +17,45 @@ typedef struct Header {
     u32 entries;
 } Header;
 
-extern u32 lbl_80649E5C;
-extern void* fn_80138A6C(u32);
+extern u32 lbl_8064C7DC;
+extern void* fn_80138A6C(u32, void*);
 extern u32 fn_8015E7A0(void);
 extern u32 fn_8015E7C8(u32);
 extern void fn_8015D7D4(u32, void*, void*, u32, int);
 extern void* memcpy(void*, const void*, u32);
 
-Header* fn_80139B1C(unsigned char* base, int unused, u32* offset, void* source_base,
-                    int mode)
+Header* fn_80139B1C(unsigned char* base, int unused, u32* offset, void* alloc_arg,
+                    void* source_base, int mode)
 {
-    Header* input = (Header*)(base + *offset);
-    u32 header_size = input->count * 0x128 + 0x48;
-    Header* result = fn_80138A6C(header_size);
-    u32 total = 0;
-    u32 checkpoint = fn_8015E7A0();
-    Entry* entry;
+    Header* result;
+    Header* header;
+    u32 header_size;
+    u32 total;
+    u32 checkpoint;
     int i;
 
-    memcpy(result, input, header_size);
-    result->entries += (u32)result;
-    entry = (Entry*)result->entries;
-    for (i = 0; i < result->count; i++, entry++) {
-        u32 size = (entry->size + 31) & ~31;
+    header = (Header*)(base + *offset);
+    header_size = header->count * 0x128 + 0x48;
+    result = fn_80138A6C(header_size, alloc_arg);
+    total = 0;
+    checkpoint = fn_8015E7A0();
+    memcpy(result, header, header_size);
+    header = result;
+    result->entries = (u32)result + result->entries;
+    result = (Header*)result->entries;
+    for (i = 0; i < header->count; i++, result = (Header*)((Entry*)result + 1)) {
+        u32 size = (((Entry*)result)->size + 31) & ~31;
         u32 position = fn_8015E7C8(size);
         total += size;
         if (checkpoint <= position) {
+            u32 source = ((Entry*)result)->source;
             fn_8015D7D4(position, source_base,
-                        base + *offset + entry->source, size, mode);
+                        (unsigned char*)source + *offset, size, mode);
         }
-        entry->source = position;
-        entry->clear = 0;
-        entry->state = 0;
+        ((Entry*)result)->source = position;
+        ((Entry*)result)->clear = 0;
+        ((Entry*)result)->state = 0;
     }
-    lbl_80649E5C += total;
-    return result;
+    lbl_8064C7DC += total;
+    return header;
 }
