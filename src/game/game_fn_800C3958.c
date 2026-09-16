@@ -2,20 +2,17 @@ typedef unsigned char u8;
 
 extern u8 lbl_80248730[];
 
-/* NonMatching: size-exact honest C at 84.0% (120/120 bytes). The nine
- * comparisons and early returns agree; MWCC folds pointer increments into
- * fixed offsets instead of retail's sequence of update-form byte loads. */
-void fn_800C3958(void *unused, u8 value)
+unsigned int fn_800C3958(void *unused, unsigned int value)
 {
     u8 *entry = lbl_80248730;
+    int i;
+    value &= 0xff;
 
-    if (value == *entry++) return;
-    if (value == *entry++) return;
-    if (value == *entry++) return;
-    if (value == *entry++) return;
-    if (value == *entry++) return;
-    if (value == *entry++) return;
-    if (value == *entry++) return;
-    if (value == *entry++) return;
-    if (value == *entry) return;
+    if (value == *entry) return value;
+    #pragma unroll 7
+    for (i = 0; i < 7; i++) {
+        if (value == *++entry) return value;
+    }
+    if (value == entry[1]) return value;
+    return value;
 }
