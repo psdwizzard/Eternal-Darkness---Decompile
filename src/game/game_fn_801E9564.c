@@ -28,12 +28,10 @@ extern void fn_80155BB0(const char*, const char*, ...);
 extern char lbl_80265B74[];
 extern char lbl_80265B98[];
 
-/* NonMatching: behavior-complete, size-exact reconstruction. GC/1.3 assigns
- * the entry pointer and field size to r4/r3; retail uses r3/r4. */
 u32 fn_801E9564(const u8* source, Header* header)
 {
     u32 offset = 0;
-    Entry110* entry;
+    u32 size;
     u16 i;
     Entry110* entries;
 
@@ -52,20 +50,19 @@ u32 fn_801E9564(const u8* source, Header* header)
     {
     entries = header->entries;
     for (i = 0; i < header->count04; i++) {
-        entry = &entries[i];
-        if (entry->data104 != 0) {
-            u32 size = entry->data104;
-            entry->data104 = (u32)(source + offset);
+        size = entries[i].data104;
+        if (size != 0) {
+            entries[i].data104 = (u32)(source + offset);
             offset += size;
         }
-        if (entry->data108 != 0) {
-            u32 size = entry->data108;
-            entry->data108 = (u32)(source + offset);
+        size = entries[i].data108;
+        if (size != 0) {
+            entries[i].data108 = (u32)(source + offset);
             offset += size;
         }
-        if (entry->data10C != 0) {
-            u32 size = entry->data10C;
-            entry->data10C = (u32)(source + offset);
+        size = entries[i].data10C;
+        if (size != 0) {
+            entries[i].data10C = (u32)(source + offset);
             offset += size;
         }
     }

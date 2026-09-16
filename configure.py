@@ -11986,7 +11986,7 @@ config.libs = [
             Object(Matching, "game/game_fn_801E9124.c", mw_version="GC/1.3", extra_cflags=["-schedule off"]),
             Object(Matching, "game/game_fn_801E914C.c", mw_version="GC/1.3", extra_cflags=["-schedule off", "-opt nopeephole"]),
             Object(NonMatching, "game/game_fn_801E915C.c", mw_version="GC/1.3"),
-            Object(NonMatching, "game/game_fn_801E9564.c", mw_version="GC/1.3"),
+            Object(Matching, "game/game_fn_801E9564.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801E971C.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801E97D4.c", mw_version="GC/1.3"),
             Object(NonMatching, "game/game_fn_801E995C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
