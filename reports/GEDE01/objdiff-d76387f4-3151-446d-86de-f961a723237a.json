@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "assignment_id": "d76387f4-3151-446d-86de-f961a723237a",
+  "target": "fn_800CA554",
+  "compiler": "mwcc_242_53 (GC/1.3)",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800CA554 -o /tmp/fn-canonical.json --format json-pretty fn_800CA554",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800CA554 -o /tmp/fn-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_800CA554",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measured_outputs": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "build_final": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical": {
+      "retail_size": 108,
+      "generated_size": 108,
+      "match_percent": 87.40741
+    },
+    "relocation_strict": {
+      "retail_size": 108,
+      "generated_size": 108,
+      "match_percent": 87.40741,
+      "retail_relocations": [
+        "0x24 R_PPC_REL24 fn_801DE5C4 addend 0",
+        "0x30 R_PPC_REL24 fn_801DE5CC addend 0",
+        "0x48 R_PPC_REL24 fn_8020123C addend 0"
+      ],
+      "generated_relocations": [
+        "0x24 R_PPC_REL24 fn_801DE5C4 addend 0",
+        "0x30 R_PPC_REL24 fn_801DE5CC addend 0",
+        "0x48 R_PPC_REL24 fn_8020123C addend 0"
+      ],
+      "relocation_targets_and_addends_equal": true
+    }
+  },
+  "instruction_divergence": {
+    "retail": [
+      "0x10 mr r31,r3",
+      "0x18 srwi r30,r4,8",
+      "0x20 mr r29,r4",
+      "0x2c mr r3,r31",
+      "0x38 mr r4,r30",
+      "0x3c mr r5,r30",
+      "0x40 clrlwi r3,r29,24"
+    ],
+    "generated": [
+      "0x10 srwi r31,r4,8",
+      "0x18 mr r30,r4",
+      "0x20 mr r29,r3",
+      "0x2c mr r3,r29",
+      "0x38 clrlwi r3,r30,24",
+      "0x3c mr r4,r31",
+      "0x40 mr r5,r31"
+    ]
+  },
+  "attempt_notes": [
+    "The retained independent C translation unit represents the complete behavior and is size-exact.",
+    "A normal explicit saved-pointer and saved-value variant produced the identical 87.40741% object.",
+    "The known 100% pointer-to-integer register-allocation coercion was not retained because it is not an honest source reconstruction."
+  ]
+}
