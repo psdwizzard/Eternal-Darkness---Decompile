@@ -19,7 +19,7 @@ typedef struct BufferSet {
     int active;
     short state;
     short pad_a;
-    Buffer* buffers[7];
+    Buffer* volatile buffers[7];
 } BufferSet;
 
 typedef struct Slot {
@@ -30,12 +30,11 @@ typedef struct Slot {
     int kind;
     int offset;
     int size;
-    int pad14;
 } Slot;
 
 extern BufferSet lbl_805B6FE0;
 extern Slot lbl_805B6F80[4];
-extern int lbl_8064D168[];
+extern int lbl_8064D168;
 extern int lbl_8064D17C;
 extern int lbl_8064D178;
 extern int lbl_8064D144;
@@ -48,7 +47,7 @@ extern void* memset(void*, int, unsigned int);
 
 void fn_801599BC(int fresh, int clear)
 {
-    Saved saved[8];
+    Saved saved[2];
     int count = fn_800460FC();
     int i;
 
@@ -70,36 +69,39 @@ void fn_801599BC(int fresh, int clear)
     lbl_805B6FE0.state = -1;
 
     for (i = 0; i < count; i++) {
-        Buffer* buffer;
         if (fresh == 0) {
-            buffer = fn_801FEA8C(0x8148, 1, lbl_8024F038, 0x761);
-            memset(buffer, 0, 0x8148);
-            buffer->aux_a = fn_801FEA8C(0xC360, 1, lbl_8024F038, 0x763);
-            buffer->aux_b = fn_801FEA8C(0xC360, 1, lbl_8024F038, 0x764);
+            lbl_805B6FE0.buffers[i] = fn_801FEA8C(0x8148, 1, lbl_8024F038, 0x761);
+            memset(lbl_805B6FE0.buffers[i], 0, 0x8148);
+            lbl_805B6FE0.buffers[i]->aux_a = fn_801FEA8C(0xC360, 1, lbl_8024F038, 0x763);
+            lbl_805B6FE0.buffers[i]->aux_b = fn_801FEA8C(0xC360, 1, lbl_8024F038, 0x764);
         } else {
-            buffer = saved[i].buffer;
+            lbl_805B6FE0.buffers[i] = saved[i].buffer;
             if (clear == 1) {
-                memset(buffer, 0, 0x8148);
+                memset(lbl_805B6FE0.buffers[i], 0, 0x8148);
             }
-            buffer->aux_a = saved[i].aux_a;
-            buffer->aux_b = saved[i].aux_b;
+            lbl_805B6FE0.buffers[i]->aux_a = saved[i].aux_a;
+            lbl_805B6FE0.buffers[i]->aux_b = saved[i].aux_b;
         }
-        lbl_805B6FE0.buffers[i] = buffer;
         if (clear == 1) {
-            buffer->state = -1;
-            buffer->owner = lbl_8064D168[i];
+            lbl_805B6FE0.buffers[i]->state = -1;
+            lbl_805B6FE0.buffers[i]->owner = (&lbl_8064D168)[i];
         }
     }
 
     if (clear != 0) {
         int slot;
+        int offset = 0x600000;
+        Slot* entry;
         lbl_8064D17C = fn_800460F4();
         memset(lbl_805B6F80, 0, 0x60);
+        entry = lbl_805B6F80;
         for (i = 0; i < 4; i++) {
-            lbl_805B6F80[i].state = -1;
-            lbl_805B6F80[i].kind = 5;
-            lbl_805B6F80[i].offset = 0x600000 + i * 0x1A9A00;
-            lbl_805B6F80[i].size = 0x1A9A00;
+            entry->state = -1;
+            entry->kind = 5;
+            entry->offset = offset;
+            entry->size = 0x1A9A00;
+            offset += 0x1A9A00;
+            entry++;
         }
         slot = lbl_8064D17C;
         lbl_8064D178 = slot;

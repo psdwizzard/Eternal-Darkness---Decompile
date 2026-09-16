@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b00f8217-8feb-4fc1-8ea3-bb888a5c0e56",
+  "attempt": 2,
+  "base_commit": "0681998729f3f1cdbf9661f2ba2ba780faac8995",
+  "target": "fn_801599BC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b00f8217-8feb-4fc1-8ea3-bb888a5c0e56.json"
+  ],
+  "divergence": "Best canonical relocation-strict objdiff is 91.27969%. Retail and generated are both 1044 bytes and both contain 99 relocation-bearing instructions. The prologue, parameter coloring, saved-buffer copy, and allocation/restoration loop now substantially match. The remaining divergence is concentrated after the memset of lbl_805B6F80: retail keeps a rolling offset in r8 and schedules the four unrolled 0x18-byte Slot initializations around the slot comparison, while generated constant-folds the four offsets into r6/r5/r4/r0 and hoists the lbl_8064D17C load/comparison; this changes register allocation and instruction order through the final conditional slot update."
+}
