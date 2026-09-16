@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "41a0b335-eeb2-40ec-ad23-41a7d3ecc525",
+  "attempt": 2,
+  "base_commit": "e718f69163f523f9aa246231b213bbe136a4403e",
+  "target": "fn_800A0324",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-41a0b335-eeb2-40ec-ad23-41a7d3ecc525.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.60784% with equal 408-byte .text and 19 relocations per side. Seven non-relocating argument-register mismatches remain at offsets 0x7C, 0x88, 0x90, 0x134, 0x144, 0x154, and 0x164: retail uses r27 for the handle iterator and r28 for the actor, while generated code uses r28 for the iterator and r27 for the actor. An explicit handle iterator produced the desired r27/r28 pair but disturbed surrounding long-lived register allocation and reduced the score, so the 99.60784% reconstruction was retained."
+}
