@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a13db5ce-5b2a-40a3-bb9c-cb867ff564f5",
+  "attempt": 4,
+  "base_commit": "3e741e85ed93129038bc95428adaae053ca2fc8e",
+  "target": "fn_8018ABD4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a13db5ce-5b2a-40a3-bb9c-cb867ff564f5.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits 320 bytes and 80 instructions at 99.625%: 75 instructions agree and five operands differ at offsets 0x6C, 0x70, 0x7C, 0x80, and 0xB0 because generated code assigns fn_8018D020 to r27 and the 24-byte vertex offset to r26, opposite retail's callback in r26 and offset in r27. All 13 .text relocations compare equal in offset, type, target, and addend. A new optimizer-derived induction experiment using i * 0x18 remained size-exact but scored 97.5% because it converted the induction value into a running vertex pointer and changed loop setup/call operands; a split typed callback declaration/assignment generated 324 bytes and scored 93.4375%. Both were discarded in favor of the honest 99.625% reconstruction. The required python3 configure.py and .tools/bin/ninja -j2 build passed, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
