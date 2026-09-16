@@ -110,6 +110,7 @@ s32 fn_8000F774(void* script)
     s32 mode;
     void* handle;
     void* callback;
+    s32 controller;
     void* found;
     ItemArray* array;
     s32 index;
@@ -208,40 +209,40 @@ s32 fn_8000F774(void* script)
     } else if (req.f30 == 5) {
         goto done;
     } else if (req.f30 == 2) {
-        mode = (s32)fn_80156DA0(3, 0);
-        if (mode != 0) {
+        controller = (s32)fn_80156DA0(3, 0);
+        if (controller != 0) {
             if (fn_8011FCB0(handle) != 0) {
                 callback = (void*)fn_8002A508;
             } else {
                 callback = (void*)fn_8002A590;
             }
-            fn_801568C8((void*)mode, callback, (void*)fn_8002AC60,
+            fn_801568C8((void*)controller, callback, (void*)fn_8002AC60,
                         (void*)fn_8002AA18);
-            fn_80156904((void*)mode, 0);
-            fn_801568FC((void*)mode, 0);
-            fn_801568C0((void*)mode, 0);
-            fn_801568B8((void*)mode, 0);
-            fn_8015690C((void*)mode, (void*)fn_8002A4C8);
-            fn_80156918((void*)mode, view);
+            fn_80156904((void*)controller, 0);
+            fn_801568FC((void*)controller, 0);
+            fn_801568C0((void*)controller, 0);
+            fn_801568B8((void*)controller, 0);
+            fn_8015690C((void*)controller, (void*)fn_8002A4C8);
+            fn_80156918((void*)controller, view);
         }
     } else if (req.f30 == 4) {
-        mode = (s32)fn_80204A8C();
+        controller = (s32)fn_80204A8C();
         fn_801E8328(1, view);
         fn_801261F4(handle);
         v2b = lbl_8064DD1C;
         v1b = lbl_8064DD18;
         v0b = lbl_8064DD14;
         fn_8012C62C(handle, 15, &v0b, &v1b, &v2b, 4);
-        fn_80204CE4(view, (void*)mode);
+        fn_80204CE4(view, (void*)controller);
     } else if (req.f30 == 7) {
-        mode = (s32)fn_80204A8C();
+        controller = (s32)fn_80204A8C();
         fn_801E8328(1, view);
         fn_801261F4(handle);
         v2c = lbl_8064DD28;
         v1c = lbl_8064DD24;
         v0c = lbl_8064DD20;
         fn_8012C62C(handle, 15, &v0c, &v1c, &v2c, 4);
-        fn_80204CE4(view, (void*)mode);
+        fn_80204CE4(view, (void*)controller);
         fn_80201D2C(view, 0x24);
         fn_80201D14(view, 1);
         fn_80157B80(fn_80201C24(view), 0x80);
