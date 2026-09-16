@@ -1,0 +1,115 @@
+{
+  "relocation_readelf": [
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/obj/game/game_fn_8018C118.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x1f8 contains 2 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000002  00000406 R_PPC_ADDR16_HA        00000000   lbl_80607120 + 0\n0000000a  00000404 R_PPC_ADDR16_LO        00000000   lbl_80607120 + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/src/game/game_fn_8018C118.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x1ec contains 2 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000002  00000306 R_PPC_ADDR16_HA        00000000   lbl_80607120 + 0\n0000000a  00000304 R_PPC_ADDR16_LO        00000000   lbl_80607120 + 0\n",
+      "stderr": ""
+    }
+  ],
+  "checks": [
+    {
+      "command": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "exit_code": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "stdout": "legal audit passed (15819 tracked project files inspected)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8018C118.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8018C118.o",
+        "-o",
+        "reports/GEDE01/objdiff-canonical-ea6da80d-6a5f-47f2-bb97-8558ca59f54d.json",
+        "--format",
+        "json",
+        "fn_8018C118"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-canonical-ea6da80d-6a5f-47f2-bb97-8558ca59f54d.json\n"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8018C118.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8018C118.o",
+        "-o",
+        "reports/GEDE01/objdiff-ea6da80d-6a5f-47f2-bb97-8558ca59f54d.json",
+        "--format",
+        "json",
+        "-c",
+        "functionRelocDiffs=all",
+        "fn_8018C118"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-ea6da80d-6a5f-47f2-bb97-8558ca59f54d.json\n"
+    }
+  ],
+  "source_matches_preserved_commit": "1f6cd860e98d57683fe6e28fae840ff31ec4ceae",
+  "source_sha256": "89452a8e0bc383ea11093ffe263d977615759dd77e3dbe353560a1ffd930a15c",
+  "compiler": "GC/1.3; canonical configure.py settings, unchanged",
+  "registration": "NonMatching; existing independent TU and split retained",
+  "dol_interpretation": "Canonical NonMatching build links the retail target for this function; DOL hash is a regression gate, not proof of candidate equivalence.",
+  "unrelocated_text_byte_comparison": {
+    "target_size": 440,
+    "candidate_size": 440,
+    "equal_bytes": 429,
+    "mismatching_byte_offsets": [
+      20,
+      21,
+      32,
+      33,
+      37,
+      49,
+      354,
+      370,
+      424,
+      425,
+      426
+    ],
+    "note": "Raw ELF .text bytes compared directly; relocation type/target/addend separately checked with readelf and strict objdiff."
+  },
+  "staged_legal_audit": {
+    "command": [
+      "python3",
+      "eternal-darkness-decomp/tools/legal_audit.py"
+    ],
+    "exit_code": 0,
+    "stdout": "legal audit passed (15825 tracked project files inspected)\n",
+    "stderr": ""
+  }
+}

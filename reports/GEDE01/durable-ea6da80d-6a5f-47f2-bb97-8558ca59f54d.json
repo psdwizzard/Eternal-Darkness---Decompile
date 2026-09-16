@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "ea6da80d-6a5f-47f2-bb97-8558ca59f54d",
+  "attempt": 6,
+  "base_commit": "d39f43cf0820a1982f1c09285c1d0e621ab5a6d9",
+  "target": "fn_8018C118",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ea6da80d-6a5f-47f2-bb97-8558ca59f54d.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-ea6da80d-6a5f-47f2-bb97-8558ca59f54d.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-ea6da80d-6a5f-47f2-bb97-8558ca59f54d.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-ea6da80d-6a5f-47f2-bb97-8558ca59f54d.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-ea6da80d-6a5f-47f2-bb97-8558ca59f54d.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff remain 99.681816%, size-exact at 440/440 bytes. Seven DIFF_ARG_MISMATCH instructions at byte offsets 20, 32, 36, 48, 352, 368, and 424 exchange r7/r8: retail uses r8 for the loop bound and r7 for the second-buffer pointer; canonical GC/1.3 uses r7 for the bound and r8 for the pointer. Both real relocations agree in type, target lbl_80607120, and addend 0; R_PPC_NONE load metadata agrees at addend 2. Aggregate-record and array-record pointer hypotheses and equivalent address/cursor/control-flow variants did not improve the score. Moving pointer advancement into the inner for increment fell to 53.7%; original NonMatching C restored. Full canonical build and legal audit passed; DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f verified."
+}
