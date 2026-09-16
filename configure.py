@@ -7554,8 +7554,8 @@ config.libs = [
             # 96.07843%: behavior-complete angle interpolation; canonical reloads
             # the volatile current angle where retail keeps it live through an frsp.
             Object(NonMatching, "game/game_fn_800C849C.c"),
-            # 87.864%: behavior-complete peer scan and dispatch; remaining
-            # differences are aggregate stack placement and temporary scheduling.
+            # 92.912%: behavior-complete peer scan and dispatch; remaining
+            # differences are frame/register allocation and temporary scheduling.
             Object(NonMatching, "game/game_fn_800C8568.c"),
             Object(Matching, "game/game_fn_800C9164.c"),
             Object(Matching, "game/game_fn_800C91F8.c"),

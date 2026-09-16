@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "12287694-352e-480c-a910-c024bffc9329",
+  "attempt": 2,
+  "base_commit": "1eb2095012e8b839e4a5ca13b840579d390ad6fb",
+  "target": "fn_800C8568",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-12287694-352e-480c-a910-c024bffc9329.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff measures 92.912%: retail is 500 bytes and generated C is 488 bytes. Retail uses a 0x60 frame/stmw r20 while canonical uses a 0x70 frame/stmw r19 because the narrowed radius occupies an additional long-lived nonvolatile register, shifting register allocation. Canonical optimizes away the behaviorally inert candidate_id == 1 empty conditional, so retail's cmpwi r27,1 / bne +4 / nop at offsets 0xFC-0x104 is absent. Both sides have 24 relocation-bearing instructions, but shifted offsets prevent relocation-strict equality. The canonical build completed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
