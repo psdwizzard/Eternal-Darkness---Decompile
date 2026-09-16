@@ -52,8 +52,8 @@ int fn_80088A04(Work* work)
 
         settings->angle = fn_800FBFB0() % 512;
         random = fn_800FBFB0();
-        input.x = settings->angle + 64;
         settings->scale = 128;
+        input.x = settings->angle + 64;
         input.z = -1;
         settings->phase = random % 352;
         input.y = settings->phase + 64;

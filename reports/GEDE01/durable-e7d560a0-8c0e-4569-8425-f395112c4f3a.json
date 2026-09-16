@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e7d560a0-8c0e-4569-8425-f395112c4f3a",
+  "attempt": 1,
+  "base_commit": "45ee2e25523da190278a3ff0a6b96aa1d698636a",
+  "target": "fn_80088A04",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e7d560a0-8c0e-4569-8425-f395112c4f3a.json"
+  ],
+  "divergence": "Best canonical and relocation-strict score is 88.359375% with equal 256-byte retail/generated functions and 12 relocation-bearing instructions on each side. The remaining divergence is a systematic allocation swap: retail keeps the owner Work pointer in r31 and lbl_8031D3B8 in r30, while generated code keeps them in r30 and r31; the same allocation decision changes the remainder-calculation temporaries (retail r5/r4/r7/r6 versus generated r4/r5/r0/r6)."
+}
