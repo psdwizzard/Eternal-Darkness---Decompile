@@ -37,14 +37,11 @@ void fn_8015DB84(ResourceTable* table, void* context, u32 index)
 {
     EntryPair* pair = fn_8015DB74(table, index);
     EntryA* entry = pair->first;
-    u8 different;
+    int different = 0;
 
-    if (entry->field21 == entry->field22) {
-        different = 0;
-    } else {
+    if (entry->field21 != entry->field22) {
         different = 1;
     }
-
     fn_80228474(context, entry->data, entry->field2, entry->field0,
                 entry->field4, entry->fieldC, entry->field10, different);
     entry = pair->first;
