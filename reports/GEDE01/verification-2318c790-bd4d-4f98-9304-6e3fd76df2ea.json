@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "assignment_id": "2318c790-bd4d-4f98-9304-6e3fd76df2ea",
+  "target": "fn_801E6814",
+  "hypothesis": "The remaining register allocation was caused by expression-boundary and local-lifetime cues: block-scoped and for-loop parser forms might swap accumulator/count allocation, while an explicit width temporary or volatile source ordering might reproduce the retail \\r load and FPR schedule.",
+  "tested_variants": [
+    "Moved the digit counter into the \\i branch and varied initialization order.",
+    "Rewrote the numeric parser as a for loop with updates in its iteration expression.",
+    "Reused the integer value and then used a distinct unsigned width temporary in the \\r calculation.",
+    "Qualified the \\r globals volatile to constrain their load order."
+  ],
+  "variant_result": "Every variant scored 99.11392% or lower; the accepted 99.24051% source was restored byte-for-byte.",
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "exit_code": 0,
+    "raw_result": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E6814 fn_801E6814 -o reports/GEDE01/objdiff-2318c790-bd4d-4f98-9304-6e3fd76df2ea.json --format json-pretty",
+    "exit_code": 0,
+    "match_percent": 99.24051,
+    "retail_bytes": 632,
+    "generated_bytes": 632,
+    "retail_instructions": 158,
+    "generated_instructions": 158,
+    "retail_relocations": 21,
+    "generated_relocations": 21,
+    "diff_rows": 17
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E6814 fn_801E6814 -o reports/GEDE01/objdiff-2318c790-bd4d-4f98-9304-6e3fd76df2ea-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "match_percent": 99.24051,
+    "retail_bytes": 632,
+    "generated_bytes": 632,
+    "retail_instructions": 158,
+    "generated_instructions": 158,
+    "retail_relocations": 21,
+    "generated_relocations": 21,
+    "diff_rows": 17
+  },
+  "legal_audit": {
+    "command": "rg -n 'asm|__asm|#pragma' src/game/game_fn_801E6814.c",
+    "exit_code": 1,
+    "stdout": "",
+    "conclusion": "No inline assembly, whole-function assembly, or pragmas are present."
+  }
+}
