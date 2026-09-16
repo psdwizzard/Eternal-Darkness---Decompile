@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "assignment_id": "f5e3fee0-46be-4e01-8597-66a560657620",
+  "target": "fn_801F9CF4",
+  "compiler": "GC/1.3",
+  "compiler_flags": ["-use_lmw_stmw on"],
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/final-canonical-full.json",
+    "relocation_strict": "build/tools/objdiff-cli report generate -p . -o build/GEDE01/final-strict-full.json -c function_reloc_diffs=name_address",
+    "direct_relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F9CF4 -o build/GEDE01/final-strict-direct.json -c function_reloc_diffs=name_address fn_801F9CF4",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measurements": {
+    "canonical_report_output": "fn_801F9CF4 size=808 fuzzy_match_percent=99.876236",
+    "relocation_strict_report_output": "fn_801F9CF4 size=808 fuzzy_match_percent=99.82674",
+    "direct_strict_output": "retail size=808 match_percent=99.82674; generated size=808 match_percent=99.82674",
+    "retail_instruction_count": 202,
+    "generated_instruction_count": 202,
+    "strict_differing_retail_rows": 27,
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "ninja_sha1_check_output": "build/GEDE01/main.dol: OK"
+  },
+  "relocations": {
+    "count_retail": 25,
+    "count_generated": 25,
+    "strict_comparison": "name_address",
+    "all_equal": false,
+    "unequal": [
+      {
+        "instruction_offset": 300,
+        "type": "R_PPC_EMB_SDA21",
+        "retail_target": "lbl_80651480",
+        "generated_target": "@40",
+        "retail_addend": 0,
+        "generated_addend": 0
+      },
+      {
+        "instruction_offset": 652,
+        "type": "R_PPC_EMB_SDA21",
+        "retail_target": "lbl_80651480",
+        "generated_target": "@40",
+        "retail_addend": 0,
+        "generated_addend": 0
+      }
+    ],
+    "equal_relocations": 23
+  },
+  "bounded_trials": [
+    {
+      "change": "Recovered size-exact preserved candidate",
+      "canonical_percent": 83.22277,
+      "relocation_strict_percent": 83.17326
+    },
+    {
+      "change": "Repeated resources[resource_index] subscripting to preserve base and scaled index separately",
+      "relocation_strict_percent": 99.30198,
+      "result": "Recovered retail r26-r31 allocation and stmw/lmw shape"
+    },
+    {
+      "change": "Expanded snapshot local to 0x20 bytes",
+      "relocation_strict_percent": 99.33168,
+      "result": "Recovered retail 0x70 stack frame"
+    },
+    {
+      "change": "Retained explicit nonzero test inside final else arm",
+      "relocation_strict_percent": 99.82674,
+      "result": "Recovered retail redundant beq and exact 808-byte/202-instruction size"
+    },
+    {
+      "change": "Combined padded local aggregate experiment",
+      "relocation_strict_percent": 97.064354,
+      "result": "Rejected because member-address lowering and scheduling regressed"
+    }
+  ],
+  "divergence": "The executable is size- and instruction-count-exact and reproduces retail's 0x70 frame, stmw/lmw r26-r31 allocation, and final redundant beq. The remaining 27 strict diff rows are local-stack addressing plus two relocation-target differences: retail sample and snapshot begin at r1+0x1C and r1+0x28 while generated begins at r1+0x10 and r1+0x1C; generated signed-short conversion spill pairs occupy r1+0x40..0x54 while retail uses r1+0x38..0x4C. At instruction offsets 0x12C and 0x28C (decimal 300 and 652), retail relocates R_PPC_EMB_SDA21 to lbl_80651480+0 while generated relocates to TU-local @40+0. All other 23 relocations match in type, target, and addend."
+}
