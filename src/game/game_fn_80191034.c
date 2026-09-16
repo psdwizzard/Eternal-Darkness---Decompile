@@ -3,7 +3,7 @@ typedef unsigned short u16;
 typedef signed short s16;
 
 extern u8 lbl_80607120[];
-extern void* lbl_8064D738;
+extern int lbl_8064D738;
 
 extern int fn_80180430(void*, u8);
 extern u8 fn_801911B0(void*, int);
@@ -18,17 +18,17 @@ extern void fn_80188868(void*, void*, void*, float);
 void fn_80191034(u8* data)
 {
     u8* table = lbl_80607120;
+    int i;
     u8 count = data[1];
     u16 index_count = *(u16*)(table + 2);
     u16 size_a = *(u16*)(table + 0xA);
     u16 size_c = *(u16*)(table + 0xE);
     u16 size_b = *(u16*)(table + 0xC);
+    u8* element;
     u8* buffer_a = *(u8**)(data + 0x50);
     u8* buffer_b = *(u8**)(data + 0x54);
     u8* buffer_c = *(u8**)(data + 0x58);
-    u8* element;
     u8* output;
-    int i;
     int buffer_offset;
     int j;
     int token;
