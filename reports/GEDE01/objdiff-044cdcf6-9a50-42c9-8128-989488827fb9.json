@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "assignment_id": "044cdcf6-9a50-42c9-8128-989488827fb9",
+  "attempt": 6,
+  "target": "fn_80088D04",
+  "compiler": "GC/1.3",
+  "source_recovery": {
+    "accepted_base": "e8886a30f2bc73c36727e77260ee80928d6ee8c8",
+    "preserved_attempt_reviewed": "01f03f048010998fbf6474d4588dda3fbf207f49",
+    "result": "The accepted base already contains the preserved standalone C reconstruction, canonical registration, and split. No source reconciliation was necessary."
+  },
+  "new_codegen_hypothesis": {
+    "hypothesis": "Volatile pointee provenance on the three position-array cursors may inhibit GC/1.3's zero-offset address-copy canonicalization, preserving addi r28,r5,0 while leaving the cursor loads and increments intact.",
+    "variant": "Declare xs, ys, and zs as volatile s16 pointers, retaining all expressions and canonical compiler settings.",
+    "commands": [
+      ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_80088D04.o",
+      "python3 tools/fndiff.py game/game_fn_80088D04.c fn_80088D04"
+    ],
+    "raw_output": [
+      "[1/1] MWCC build/GEDE01/src/game/game_fn_80088D04.o",
+      "target 320 bytes  base 324 bytes  match 89.75",
+      "0x001c retail: lbz r24,lbl_8064C91C@sda21 | generated: lbz r26,lbl_8064C91C@sda21",
+      "0x0030 retail: addi r28,r5,0 | generated: mr r30,r5",
+      "0x00b8 retail: add r5,r23,r21 | generated: extsh r0,r23",
+      "generated epilogue ends at 0x0148 versus retail 0x013c"
+    ],
+    "result": "The qualifier changed register allocation and volatile-load expression scheduling, increased output by one instruction, and still canonicalized the zero-offset cursor to mr. The 320-byte 99.25% reconstruction was restored."
+  },
+  "canonical": {
+    "command": "python3 tools/fndiff.py game/game_fn_80088D04.c fn_80088D04",
+    "raw_summary": "target 320 bytes  base 320 bytes  match 99.25",
+    "retail_bytes": 320,
+    "generated_bytes": 320,
+    "retail_instructions": 80,
+    "generated_instructions": 80,
+    "match_percent": 99.25,
+    "different_instructions": 1,
+    "raw_diff": "0x0030 retail: addi r28, r5, 0x0 [None+0 tNone] | generated: mr r28, r5 [None+0 tNone]"
+  },
+  "relocation_strict": {
+    "raw_measurement_source": "build/GEDE01/fndiff_fn_80088D04.json",
+    "retail_relocation_associated_instructions": 35,
+    "generated_relocation_associated_instructions": 35,
+    "equal_relocation_associations": 35,
+    "different_instruction_encodings": 1,
+    "raw_diff": "0x0030 retail: addi r28, r5, 0x0 [None+0 tNone] | generated: mr r28, r5 [None+0 tNone]",
+    "conclusion": "All displayed relocation targets, types, and addends agree. Offset 0x30 has no ELF relocation on either side and carries an equal synthetic [None+0 tNone] association, but relocation-strict byte identity fails on the instruction encoding."
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "raw_tail": "[867/869] DOL build/GEDE01/main.dol\n[868/869] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[869/869] PROGRESS\nAll: 56.36% fuzzy, 45.54% matched, 45.54% linked (6193 / 7068 files)",
+    "exit_code": 0
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "legal_audit": {
+    "translation_unit": "src/game/game_fn_80088D04.c",
+    "independent_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "gate_changes": false,
+    "compiler_policy_changes": false
+  }
+}
