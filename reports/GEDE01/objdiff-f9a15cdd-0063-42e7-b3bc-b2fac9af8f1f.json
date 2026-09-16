@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "assignment_id": "f9a15cdd-0063-42e7-b3bc-b2fac9af8f1f",
+  "target": "fn_801FA9C8",
+  "compiler": "GC/1.3",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_801FA9C8.c fn_801FA9C8",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FA9C8 fn_801FA9C8 -o build/GEDE01/fn_801FA9C8-attempt4-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "build/binutils/powerpc-eabi-readelf -r build/GEDE01/obj/game/game_fn_801FA9C8.o",
+    "build/binutils/powerpc-eabi-readelf -r build/GEDE01/src/game/game_fn_801FA9C8.o",
+    "python3 tools/legal_audit.py",
+    "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+  ],
+  "different_codegen_hypothesis": {
+    "hypothesis": "Make the time lvalue explicit through a pointer, or make the clamp baseline the primary live range, to reverse MWCC's f0/f1 allocation without changing the clamp semantics.",
+    "raw_trials": [
+      "pointer-backed lvalue: target 324 bytes  base 324 bytes  match 99.012344 before signed-bias post-processing; generated instructions remained the same as the preserved reconstruction",
+      "combined update/comparison: target 324 bytes  base 324 bytes  match 98.888885",
+      "explicit baseline plus if: target 324 bytes  base 336 bytes  match 89.96296; compiler introduced callee-saved f30"
+    ],
+    "outcome": "Rejected all three variants and preserved the better size-exact reconstruction already present at the accepted base."
+  },
+  "canonical_objdiff": {
+    "target_bytes": 324,
+    "generated_bytes": 324,
+    "target_instructions": 81,
+    "generated_instructions": 81,
+    "match_percent": 99.19753,
+    "raw_summary": "target 324 bytes  base 324 bytes  match 99.19753",
+    "raw_differences": [
+      "0x0078 target: lfs f0, lbl_80651464@sda21 | generated: lfs f1, lbl_80651464@sda21",
+      "0x0080 target: lfs f1, 0xc(r30) | generated: lfs f0, 0xc(r30)",
+      "0x0084 target: fadds f31, f1, f31 | generated: fadds f31, f0, f31",
+      "0x0088 target: fcmpo cr0, f31, f0 | generated: fcmpo cr0, f31, f1",
+      "0x0098 target: fmr f31, f0 | generated: fmr f31, f1",
+      "0x0100 target: fsubs f1, f0, f1 | generated: fsubs f0, f0, f1",
+      "0x0108 target: lfs f1, 0xc(r30) | generated: lfs f0, 0xc(r30)",
+      "0x010c target: lfs f0, lbl_80651464@sda21 | generated: lfs f1, lbl_80651464@sda21",
+      "0x0110 target: fcmpo cr0, f1, f0 | generated: fcmpo cr0, f0, f1",
+      "0x011c target: fmr f1, f0 | generated: fmr f0, f1",
+      "0x0120 target: stfs f1, 0xc(r30) | generated: stfs f0, 0xc(r30)"
+    ]
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "match_percent": 99.19753,
+    "status": "not_100_percent_due_to_instruction_operand_differences",
+    "target_elf_relocations": 16,
+    "generated_elf_relocations": 16,
+    "target_relocation_bearing_instructions_including_synthetic_addends": 23,
+    "generated_relocation_bearing_instructions_including_synthetic_addends": 23,
+    "sites_types_targets_addends_equal": true,
+    "raw_elf_relocation_sequence": [
+      "0x0020 R_PPC_REL24 fn_80144C40 + 0",
+      "0x0032 R_PPC_ADDR16_HA lbl_8063E9C8 + 0",
+      "0x003a R_PPC_ADDR16_LO lbl_8063E9C8 + 0",
+      "0x003c R_PPC_EMB_SDA21 lbl_80651480 + 0",
+      "0x0060 R_PPC_REL24 fn_80144710 + 0",
+      "0x006c R_PPC_EMB_SDA21 lbl_806514C8 + 0",
+      "0x0076 R_PPC_ADDR16_HA lbl_8063E9C8 + 0",
+      "0x0078 R_PPC_EMB_SDA21 lbl_80651464 + 0",
+      "0x007e R_PPC_ADDR16_LO lbl_8063E9C8 + 0",
+      "0x009e R_PPC_ADDR16_HA lbl_8063E9C8 + 0",
+      "0x00a6 R_PPC_ADDR16_LO lbl_8063E9C8 + 0",
+      "0x00b0 R_PPC_REL24 fn_801F9A38 + 0",
+      "0x00c0 R_PPC_EMB_SDA21 lbl_80651480 + 0",
+      "0x00e4 R_PPC_REL24 fn_801F9A38 + 0",
+      "0x00f4 R_PPC_EMB_SDA21 lbl_80651480 + 0",
+      "0x010c R_PPC_EMB_SDA21 lbl_80651464 + 0"
+    ],
+    "raw_synthetic_addends": [
+      "0x004c R_PPC_NONE lbl_8063E9C8 + 8",
+      "0x0080 R_PPC_NONE lbl_8063E9C8 + 12",
+      "0x008c R_PPC_NONE lbl_8063E9C8 + 12",
+      "0x00a8 R_PPC_NONE lbl_8063E9C8 + 4",
+      "0x00d8 R_PPC_NONE lbl_8063E9C8 + 4",
+      "0x0108 R_PPC_NONE lbl_8063E9C8 + 12",
+      "0x0120 R_PPC_NONE lbl_8063E9C8 + 12"
+    ]
+  },
+  "build": {
+    "configure_exit": 0,
+    "ninja_exit": 0,
+    "integrated_sha1_check_raw": "build/GEDE01/main.dol: OK",
+    "cmp_exit": 0,
+    "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "retail_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+    "legal_audit_raw": "legal audit passed (16148 tracked project files inspected)"
+  }
+}
