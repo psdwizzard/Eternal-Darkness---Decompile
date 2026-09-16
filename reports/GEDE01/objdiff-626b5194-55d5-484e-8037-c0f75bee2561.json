@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "assignment_id": "626b5194-55d5-484e-8037-c0f75bee2561",
+  "target": "fn_801EB30C",
+  "compiler": "GC/1.3",
+  "commands": {
+    "build": "python3 configure.py && .tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EB30C fn_801EB30C -o build/GEDE01/fn_801EB30C-attempt5-canonical.raw.json --format json-pretty",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EB30C fn_801EB30C -o build/GEDE01/fn_801EB30C-attempt5-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "retail_relocations": "readelf -Wr build/GEDE01/obj/game/game_fn_801EB30C.o",
+    "generated_relocations": "readelf -Wr build/GEDE01/src/game/game_fn_801EB30C.o",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measurements": {
+    "canonical": {
+      "retail_text_size": "52",
+      "generated_text_size": "52",
+      "retail_function_size": "52",
+      "generated_function_size": "52",
+      "match_percent": 99.23077
+    },
+    "relocation_strict": {
+      "retail_text_size": "52",
+      "generated_text_size": "52",
+      "retail_function_size": "52",
+      "generated_function_size": "52",
+      "match_percent": 99.23077
+    },
+    "raw_reports_byte_identical": true,
+    "differing_instructions": [
+      {
+        "offset": "0x18",
+        "retail": "lwz r3, 0x3014(r3)",
+        "generated": "lwz r0, 0x3014(r3)",
+        "objdiff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "offset": "0x1c",
+        "retail": "rlwinm r3, r3, 0, 6, 4",
+        "generated": "rlwinm r3, r0, 0, 6, 4",
+        "objdiff_kind": "DIFF_ARG_MISMATCH"
+      }
+    ],
+    "retail_relocations": [
+      "0000000c  0000040a R_PPC_REL24  00000000  fn_80226378 + 0",
+      "00000010  0000050a R_PPC_REL24  00000000  fn_802263D4 + 0"
+    ],
+    "generated_relocations": [
+      "0000000c  0000030a R_PPC_REL24  00000000  fn_80226378 + 0",
+      "00000010  0000040a R_PPC_REL24  00000000  fn_802263D4 + 0"
+    ],
+    "relocation_offsets_types_targets_addends_equal": true,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "attempt_5_hypothesis_tests": [
+    {
+      "hypothesis": "An explicit register-qualified result scalar, with volatile load, mask, and addition in separate statements, may bind the load to the ABI return register r3.",
+      "result": "99.23077%; generated code still uses lwz r0,0x3014(r3) followed by rlwinm r3,r0,0,6,4."
+    },
+    {
+      "hypothesis": "Declaring the two ignored call results as u32 may preserve ABI return-register affinity into the subsequent return computation.",
+      "result": "99.23077%; generated code still uses r0 for the volatile load."
+    }
+  ],
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_801EB30C.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "compiler_policy_changed": false,
+    "neighboring_functions_edited": false,
+    "final_source_diff_from_accepted_base": false
+  },
+  "notes": [
+    "The NonMatching object is excluded from the link, so the required DOL hash is a global build gate and does not validate this candidate.",
+    "CLAUDE.md was already modified at turn start and was neither edited nor staged by this attempt."
+  ]
+}
