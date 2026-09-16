@@ -22,9 +22,6 @@ extern void fn_8018199C(void*, Coord3*, Coord3*, void*);
 extern void fn_80185108(void*);
 extern void fn_801851A0(void*, Coord3*);
 
-/* NonMatching: behavior-complete honest C. Retail overwrites r4 for the entry
- * multiply; this reconstruction uses r5 for that value, which also leaves r4
- * rather than r5 as the temporary for the following 32-bit config load. */
 void fn_8014EB38(u8* object, int index)
 {
     void** current;
@@ -34,9 +31,11 @@ void fn_8014EB38(u8* object, int index)
     InstanceList* list;
     Coord3 position;
     Coord3 config;
+    unsigned int configXY;
 
     entry = (u8*)((Entry*)object + index) + 0xEBC;
-    *(unsigned int*)&config = lbl_8065053C;
+    configXY = lbl_8065053C;
+    *(unsigned int*)&config = configXY;
     config.z = lbl_80650540;
 
     if (*(void**)(entry + 0x94) != 0) {
