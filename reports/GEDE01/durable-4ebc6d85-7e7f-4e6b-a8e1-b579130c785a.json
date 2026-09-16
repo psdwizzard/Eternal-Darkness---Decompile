@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "4ebc6d85-7e7f-4e6b-a8e1-b579130c785a",
+  "attempt": 5,
+  "base_commit": "1bc7d52f3fac3a5195603660b95574d42cc25fb0",
+  "target": "fn_8018C118",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4ebc6d85-7e7f-4e6b-a8e1-b579130c785a.json"
+  ],
+  "divergence": "Canonical GC/1.3 relocation-strict objdiff remains size-exact at 99.681816% (440/440 bytes). Both real .text relocations, plus the R_PPC_NONE addend metadata on the load, agree in type, target, and addend. Seven DIFF_ARG_MISMATCH instructions remain at byte offsets 20, 32, 36, 48, 352, 368, and 424: retail assigns the loop bound to r8 and the second-buffer pointer to r7, while canonical assigns the bound to r7 and the pointer to r8. Attempt 5 tested distinct caller-width, inclusive-bound, and byte-pointer representation hypotheses. Caller-width and byte-pointer forms emitted the same 99.681816% code; the inclusive-bound form grew to 444 bytes and fell to 96.01818%, so the strongest honest reconstruction was restored. The full canonical build passed, legal audit passed, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
