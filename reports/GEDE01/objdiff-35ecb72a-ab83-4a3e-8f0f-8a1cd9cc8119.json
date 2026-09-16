@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "assignment_id": "35ecb72a-ab83-4a3e-8f0f-8a1cd9cc8119",
+  "attempt": 4,
+  "target": "fn_801F35A8",
+  "source": "eternal-darkness-decomp/src/game/game_fn_801F35A8.c",
+  "registration": "Object(Matching, \"game/game_fn_801F35A8.c\", mw_version=\"GC/1.3\")",
+  "recovery": {
+    "preserved_commit": "95f8d21491d3c3f00482bb9a237acf9410884dc7",
+    "preserved_strict_match_percent": 91.438354,
+    "raw_output": "Recovered corrected state symbols, projection and coordinate constants, the by-value Color ABI, and the independent 0x20-byte texture scratch object. Replacing the reused divisor local with four direct (float)lbl_8064D764 conversions produced the retail 0xE0 frame and all 219 retail instructions. Full prototypes for all 26 callees were also tested and retained; they were byte-neutral relative to the corrected function."
+  },
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[833/859] EXTERNALIZE build/GEDE01/src/game/game_fn_801F35A8.o; [854/859] REPORT; [855/859] LINK build/GEDE01/main.elf; [856/859] DOL build/GEDE01/main.dol; [857/859] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [858/859] PROGRESS; All: 56.27% fuzzy, 45.07% matched, 45.07% linked; Game Code: 90.63% fuzzy, 72.54% matched, 72.54% linked"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F35A8 fn_801F35A8 -o build/GEDE01/objdiff-35ec-final-canonical.raw.json --format json-pretty -c function_reloc_diffs=none",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-35ec-final-canonical.raw.json; left section_size=876 symbol_size=876 match=100.0 instruction_diff_counts={DIFF_NONE:219} relocations=67; right section_size=876 symbol_size=876 match=100.0 instruction_diff_counts={DIFF_NONE:219} relocations=67"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F35A8 fn_801F35A8 -o build/GEDE01/objdiff-35ec-final-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-35ec-final-strict.raw.json; left section_size=876 symbol_size=876 match=100.0 instruction_diff_counts={DIFF_NONE:219} relocations=67; right section_size=876 symbol_size=876 match=100.0 instruction_diff_counts={DIFF_NONE:219} relocations=67"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (15870 tracked project files inspected)"
+    }
+  ],
+  "canonical": {
+    "config": "function_reloc_diffs=none",
+    "match_percent": 100.0,
+    "retail_bytes": 876,
+    "generated_bytes": 876,
+    "instruction_count_each": 219,
+    "instruction_diff_counts": {
+      "DIFF_NONE": 219
+    }
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "match_percent": 100.0,
+    "retail_relocations": 67,
+    "generated_relocations": 67,
+    "targets_and_addends": "equal"
+  },
+  "constant_pool_externalization": {
+    "section": ".sdata2",
+    "mappings": {
+      "@21": "lbl_80651350",
+      "@23": "lbl_80651360"
+    },
+    "guard": "tools/externalize_elf_symbol.py validates each local constant against orig/GEDE01/sys/main.dol before objcopy symbol redefinition and section removal"
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Matched: fn_801F35A8 is 100% on separate canonical and relocation-strict comparisons, is registered Matching and linked into the verified DOL."
+}
