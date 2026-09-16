@@ -43,7 +43,7 @@ extern void fn_8004525C(void);
 extern void fn_80045200(void*);
 extern void fn_80025A78(s32);
 extern void fn_8016B400(s32, s32, s32);
-extern s32 fn_8001DA0C(void);
+extern void fn_8001DA0C(void);
 extern void fn_80052580(s32, s32, s32, s32, s32);
 extern void fn_80052424(s32, s32, s32, s32);
 extern s32 fn_80054844(s32, s32);
@@ -53,24 +53,24 @@ extern void fn_800073DC(s32);
 
 s32 fn_80052900(void)
 {
-    TransitionState* state = &lbl_8030F540;
     TypeInfo* info;
-    if (state->active == 0) return 0;
-    if (state->option != 0) {
+    if (lbl_8030F540.active != 0) {
+    if (lbl_8030F540.option != 0) {
         fn_800B9454(0x20, 0);
         lbl_8030F540.timer = 0;
     }
-    if (state->option == 2) fn_8001D9FC(3);
+    if (lbl_8030F540.option == 2) fn_8001D9FC(3);
     else fn_8001D9FC(2);
-    if (state->type == 0x91 || state->type == 0xA8 || state->type == 0xA7) {
-        if (state->option == 0) {
+    if (lbl_8030F540.type == 0x91 || lbl_8030F540.type == 0xA8 || lbl_8030F540.type == 0xA7) {
+        if (lbl_8030F540.option == 0) {
             void* object = fn_800AD1D0(0);
             fn_8004525C();
             fn_80045200(object);
         }
     }
-    if (state->option == 0 && state->delay == 0) {
-        info = &lbl_80241DE8[state->type];
+    if (lbl_8030F540.option == 0 && lbl_8030F540.delay == 0) {
+        info = lbl_80241DE8;
+        info += lbl_8030F540.type;
         if (info->kind != 0x60 && info->kind != 0 && info->kind != 0x49 &&
             info->kind != 0x4A && info->kind != 0x4B && info->value1E != -1 &&
             lbl_803003C8.busy == 0) {
@@ -78,26 +78,26 @@ s32 fn_80052900(void)
             return 1;
         }
     }
-    if (state->option == 0) {
-        if (state->sound != -1) {
-            fn_8016B400(state->sound, 0, 0);
-            state->sound = -1;
-        } else if (state->delay == 0) {
-            info = &lbl_80241DE8[state->type];
+    if (lbl_8030F540.option == 0) {
+        if (lbl_8030F540.sound != -1) {
+            fn_8016B400(lbl_8030F540.sound, 0, 0);
+            lbl_8030F540.sound = -1;
+        } else if (lbl_8030F540.delay == 0) {
+            info = lbl_80241DE8;
+            info += lbl_8030F540.type;
             if (info->sound != -1) fn_8016B400(info->sound, 0, 0);
         }
-    } else if (state->delay == 0) {
-        info = &lbl_80241DE8[state->type];
-        if (info->action == 1) {
-            s16 argument = info->argument;
+    } else if (lbl_8030F540.delay == 0) {
+        if (lbl_80241DE8[lbl_8030F540.type].action == 1) {
+            s16 argument = lbl_80241DE8[lbl_8030F540.type].argument;
             fn_8001DA0C();
             fn_80052580(2, argument, 1, -1, 0);
-        } else if (info->action == 0) {
+        } else if (lbl_80241DE8[lbl_8030F540.type].action == 0) {
             fn_8001DA0C();
-            fn_80052424(info->argument, -1, 0, 0);
+            fn_80052424(lbl_80241DE8[lbl_8030F540.type].argument, -1, 0, 0);
         } else if (fn_80054844(0, 1) == 0) {
             fn_800B9454(0x20, 0);
-            state->option = 0;
+            lbl_8030F540.option = 0;
             lbl_8030F540.timer = 0;
         }
         fn_800E45F4();
@@ -105,4 +105,6 @@ s32 fn_80052900(void)
     fn_801EFE84(0);
     fn_800073DC(3);
     return 1;
+    }
+    return 0;
 }
