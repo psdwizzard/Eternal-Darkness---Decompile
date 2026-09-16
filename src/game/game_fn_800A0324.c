@@ -26,6 +26,11 @@ typedef struct State800A0324 {
     List800A0324* list;
 } State800A0324;
 
+typedef union Actor800A0324 {
+    void* ptr;
+    u32 raw;
+} Actor800A0324;
+
 extern Vec800A0324 lbl_802396D4;
 extern void *fn_80201814();
 extern void *fn_80201BC8();
@@ -44,7 +49,7 @@ int fn_800A0324(State800A0324* state)
     Vec800A0324 position;
     void* linked = 0;
     List800A0324* list;
-    void* actor;
+    Actor800A0324 actor;
     int i;
     void* owner;
     void* transform;
@@ -61,17 +66,17 @@ int fn_800A0324(State800A0324* state)
     }
 
     for (i = 0; i < list->count; i++) {
-        actor = fn_80201814(list->handles[i]);
-        if (actor != 0) {
-            transform = fn_80201BC8(actor);
+        actor.ptr = fn_80201814(list->handles[i]);
+        if (actor.ptr != 0) {
+            transform = fn_80201BC8(actor.ptr);
             if (transform != 0) {
                 fn_8011F114(&position, transform);
                 copy = position;
                 if (fn_80178F14((int)copy.x, (int)copy.y, (int)copy.z,
                                 (int)origin.x, (int)origin.y, (int)origin.z) <= 150) {
-                    fn_80067180(actor);
-                    actor = ((void*)fn_80201B54(linked));
-                    fn_8020123C(0x56, ((void*)fn_80201B54(linked)), actor, 0);
+                    fn_80067180(actor.ptr);
+                    actor.ptr = ((void*)fn_80201B54(linked));
+                    fn_8020123C(0x56, ((void*)fn_80201B54(linked)), actor.ptr, 0);
                 }
             }
         }
