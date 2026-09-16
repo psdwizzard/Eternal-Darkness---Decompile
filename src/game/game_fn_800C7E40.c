@@ -15,8 +15,8 @@ extern int fn_8011FB4C(void *);
 extern int lbl_8064D18C;
 extern int fn_8011F598(void *, int, int, int, void *, int);
 extern void* fn_80201B94();
-extern void *fn_80201C48(void *);
-extern void *fn_80201814();
+extern int fn_80201C48(void *);
+extern void *fn_80201814(int);
 #define FN_80201E78_RETURN void
 #define FN_80201E78_PARAMETERS void *, void *
 extern FN_80201E78_RETURN fn_80201E78(FN_80201E78_PARAMETERS);extern unsigned int fn_80178E94(void *, unsigned int *);
@@ -46,9 +46,9 @@ extern void fn_80067180(void *);
 void fn_800C7E40(void *object)
 {
     void *runtime;
-    void *parent;
     int kind;
     unsigned int distance;
+    int parent;
     unsigned int *distance_ptr;
     void *other;
     unsigned int limit;
@@ -110,7 +110,7 @@ void fn_800C7E40(void *object)
         fn_8014D478(runtime, distance_ptr, &direction, 5, 3,
                     constant, 3);
         fn_801A74A0(sound, relation);
-        fn_801A74A8(sound, parent);
+        fn_801A74A8(sound, (void *)parent);
         fn_801A7538(sound, 1);
         fn_801A7518(sound, 0x3C);
         fn_801A764C(sound, reference);
