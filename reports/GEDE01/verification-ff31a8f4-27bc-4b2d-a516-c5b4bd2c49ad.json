@@ -1,0 +1,2371 @@
+{
+  "version": 1,
+  "assignment_id": "ff31a8f4-27bc-4b2d-a516-c5b4bd2c49ad",
+  "target": "fn_8000F774",
+  "commands": [
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8000F774",
+        "fn_8000F774",
+        "-o",
+        "reports/GEDE01/objdiff-canonical-ff31a8f4-27bc-4b2d-a516-c5b4bd2c49ad.json",
+        "--format",
+        "json-pretty"
+      ],
+      "returncode": 0,
+      "raw_output": " INFO Writing to reports/GEDE01/objdiff-canonical-ff31a8f4-27bc-4b2d-a516-c5b4bd2c49ad.json\n"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8000F774",
+        "fn_8000F774",
+        "-o",
+        "reports/GEDE01/objdiff-ff31a8f4-27bc-4b2d-a516-c5b4bd2c49ad.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "returncode": 0,
+      "raw_output": " INFO Writing to reports/GEDE01/objdiff-ff31a8f4-27bc-4b2d-a516-c5b4bd2c49ad.json\n"
+    }
+  ],
+  "canonical": {
+    "left": {
+      "size": "1652",
+      "match_percent": 100.0,
+      "instruction_count": 413,
+      "diff_rows": 0
+    },
+    "right": {
+      "size": "1652",
+      "match_percent": 100.0,
+      "instruction_count": 413,
+      "diff_rows": 0
+    }
+  },
+  "strict": {
+    "left": {
+      "size": "1652",
+      "match_percent": 100.0,
+      "instruction_count": 413,
+      "diff_rows": 0
+    },
+    "right": {
+      "size": "1652",
+      "match_percent": 100.0,
+      "instruction_count": 413,
+      "diff_rows": 0
+    }
+  },
+  "retail": {
+    "path": "build/GEDE01/obj/game/game_fn_8000F774.o",
+    "size": 1652,
+    "text_sha256": "ebf1b4de3d465285d1a5a91dd92d683f29f6dd7d02974b10c65b4a24a0a79927",
+    "text_hex": "9421ff207c0802a6900100e4bf6100cc7c7e1b78480000012c03000b418200307fc3f378480000013c8000007c661b78388400007fc3f37838a0000b4cc631824800000138600000480006183861002c480000017fc3f3783880000148000001fc00081e7fc3f37838800002d80100688001006c9001003c48000001fc00081e7fc3f37838800003d8010070800100749001004048000001fc00081ed80100788001007c2c00ffff4082000880010058900100587fc3f3783880000448000001fc00081ed8010080800100842c00ffff4082000880010044900100447fc3f3783880000548000001fc00081ed80100888001008c2c00ffff4082000880010048900100487fc3f3783880000648000001fc00081ed8010090800100942c00ffff408200088001004c9001004c7fc3f3783880000748000001fc00081ed80100988001009c2c00ffff4082000880010050900100507fc3f3783880000848000001fc00081ed80100a0800100a42c00ffff4082000880010054900100547fc3f3783880000948000001fc0008187fc3f3783880000ad0010038480000017c7d1b787fc3f3783880000b48000001fc00081ed80100a8800100ac2c00ffff408200088001005c9001005c3c004330c82000003861002ca89d0000900100b06c848000908100b4c80100b0900100b8ec000828900100c0d001002ca81d00026c008000900100bcc80100b8ec000828d0010030a81d00046c008000900100c4c80100c0ec000828d0010034480000017c7f1b7941820424480000017c601b787fe3fb787c1c037848000001281c00007c7d1b78418200207f83e378480000012803000041820010c02100387f83e37848000001808100587fe3fb78480000017fe3fb78480000017fe3fb7848000001281c00004182002880610058800000007c030000408200188001005c2c0000094182000c7f83e378480000018001005c2c000001418200142c0000064182000c2c000008408200647fe4fb7838600001480000018001005c2c0000084182000c2c1d0002418203347f83e37848000001808000007f83e3788120000038a100288000000038c100249081002038e100203880000f39000004912100249001002848000001480002f42c000009408200147fe4fb783860001d48000001480002dc2c000005418202d42c000002408200a03860000338800000480000017c7d1b79418202b87f83e378480000012c0300003c800000388400004182000c3c600000388300003c6000003cc0000038a300007fa3eb7838c60000480000017fa3eb7838800000480000017fa3eb7838800000480000017fa3eb7838800000480000017fa3eb7838800000480000013c8000007fa3eb7838840000480000017fa3eb787fe4fb7848000001480002302c00000440820064480000017c7d1b787fe4fb7838600001480000017f83e37848000001808000007f83e3788120000038a1001c8000000038c100189081001438e100143880000f39000004912100189001001c480000017fe3fb787fa4eb7848000001480001c82c0000074082008c480000017c7d1b787fe4fb7838600001480000017f83e37848000001808000007f83e3788120000038a100108000000038c1000c9081000838e100083880000f390000049121000c90010010480000017fe3fb787fa4eb78480000017fe3fb7838800024480000017fe3fb7838800001480000017fe3fb78480000013880008048000001480001382c000003408201307fe3fb7848000001388000007c7c1b7838a00100480000017f83e378480000013860000338800000480000017c601b787f83e3787c1c0378480000012c0300003c800000388400004182000c3c600000388300003c6000003cc0000038a300007f83e37838c60000480000013c8000007f83e37838840000480000013c8000007f83e37838840000480000017f83e3787fe4fb7848000001938000004800000148000001480000017c641b79408200144800000148000001480000017c641b787fe3fb78480000017fe3fb78480000017c7c1b784800000138800000480000017c7b1b79418200407f84e37838a0000148000001839c00007c7d1b787fe3fb784800000180bc000057a0103a7c641b7880dc00187ca5002e7f63db7838e000004800000138000000900000007fe3fb78480000016c6380003c004330906100c47fc3f378c8200000900100c0c80100c0fc200828480000014800000c7fc3f3784800000138600001bb6100cc800100e47c0803a6382100e04e800020",
+    "relocations": [
+      {
+        "site": 20,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A598",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 36,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A598",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 42,
+        "type": 6,
+        "target": {
+          "name": "lbl_8023BEF8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 50,
+        "type": 4,
+        "target": {
+          "name": "lbl_8023BEF8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 64,
+        "type": 10,
+        "target": {
+          "name": "fn_80163BB4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 80,
+        "type": 10,
+        "target": {
+          "name": "fn_80043F44",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 92,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 120,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 148,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 188,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 228,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 268,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 308,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 348,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 388,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 408,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A784",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 424,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 460,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DCE8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 552,
+        "type": 10,
+        "target": {
+          "name": "fn_80034708",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 564,
+        "type": 10,
+        "target": {
+          "name": "fn_80201BC8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 580,
+        "type": 10,
+        "target": {
+          "name": "fn_80036E14",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 600,
+        "type": 10,
+        "target": {
+          "name": "fn_8011F950",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 620,
+        "type": 10,
+        "target": {
+          "name": "fn_8012B7A0",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 632,
+        "type": 10,
+        "target": {
+          "name": "fn_80201D54",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 640,
+        "type": 10,
+        "target": {
+          "name": "fn_802015A4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 648,
+        "type": 10,
+        "target": {
+          "name": "fn_800CCA44",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 664,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064D18C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 692,
+        "type": 10,
+        "target": {
+          "name": "fn_801261F4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 732,
+        "type": 10,
+        "target": {
+          "name": "fn_801E8328",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 760,
+        "type": 10,
+        "target": {
+          "name": "fn_801261F4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 764,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD10",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 772,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD0C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 780,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD08",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 812,
+        "type": 10,
+        "target": {
+          "name": "fn_8012C62C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 836,
+        "type": 10,
+        "target": {
+          "name": "fn_801E8328",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 868,
+        "type": 10,
+        "target": {
+          "name": "fn_80156DA0",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 884,
+        "type": 10,
+        "target": {
+          "name": "fn_8011FCB0",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 894,
+        "type": 6,
+        "target": {
+          "name": "fn_8002A590",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 898,
+        "type": 4,
+        "target": {
+          "name": "fn_8002A590",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 906,
+        "type": 6,
+        "target": {
+          "name": "fn_8002A508",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 910,
+        "type": 4,
+        "target": {
+          "name": "fn_8002A508",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 914,
+        "type": 6,
+        "target": {
+          "name": "fn_8002AC60",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 918,
+        "type": 6,
+        "target": {
+          "name": "fn_8002AA18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 922,
+        "type": 4,
+        "target": {
+          "name": "fn_8002AC60",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 930,
+        "type": 4,
+        "target": {
+          "name": "fn_8002AA18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 932,
+        "type": 10,
+        "target": {
+          "name": "fn_801568C8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 944,
+        "type": 10,
+        "target": {
+          "name": "fn_80156904",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 956,
+        "type": 10,
+        "target": {
+          "name": "fn_801568FC",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 968,
+        "type": 10,
+        "target": {
+          "name": "fn_801568C0",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 980,
+        "type": 10,
+        "target": {
+          "name": "fn_801568B8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 986,
+        "type": 6,
+        "target": {
+          "name": "fn_8002A4C8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 994,
+        "type": 4,
+        "target": {
+          "name": "fn_8002A4C8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 996,
+        "type": 10,
+        "target": {
+          "name": "fn_8015690C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1008,
+        "type": 10,
+        "target": {
+          "name": "fn_80156918",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1024,
+        "type": 10,
+        "target": {
+          "name": "fn_80204A8C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1040,
+        "type": 10,
+        "target": {
+          "name": "fn_801E8328",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1048,
+        "type": 10,
+        "target": {
+          "name": "fn_801261F4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1052,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD1C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1060,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1068,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD14",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1100,
+        "type": 10,
+        "target": {
+          "name": "fn_8012C62C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1112,
+        "type": 10,
+        "target": {
+          "name": "fn_80204CE4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1128,
+        "type": 10,
+        "target": {
+          "name": "fn_80204A8C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1144,
+        "type": 10,
+        "target": {
+          "name": "fn_801E8328",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1152,
+        "type": 10,
+        "target": {
+          "name": "fn_801261F4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1156,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD28",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1164,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD24",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1172,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD20",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1204,
+        "type": 10,
+        "target": {
+          "name": "fn_8012C62C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1216,
+        "type": 10,
+        "target": {
+          "name": "fn_80204CE4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1228,
+        "type": 10,
+        "target": {
+          "name": "fn_80201D2C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1240,
+        "type": 10,
+        "target": {
+          "name": "fn_80201D14",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1248,
+        "type": 10,
+        "target": {
+          "name": "fn_80201C24",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1256,
+        "type": 10,
+        "target": {
+          "name": "fn_80157B80",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1276,
+        "type": 10,
+        "target": {
+          "name": "fn_80201BC8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1292,
+        "type": 10,
+        "target": {
+          "name": "fn_8011FA8C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1300,
+        "type": 10,
+        "target": {
+          "name": "fn_801261F4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1312,
+        "type": 10,
+        "target": {
+          "name": "fn_80156DA0",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1328,
+        "type": 10,
+        "target": {
+          "name": "fn_8011FCB0",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1338,
+        "type": 6,
+        "target": {
+          "name": "fn_8002A590",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1342,
+        "type": 4,
+        "target": {
+          "name": "fn_8002A590",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1350,
+        "type": 6,
+        "target": {
+          "name": "fn_8002A508",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1354,
+        "type": 4,
+        "target": {
+          "name": "fn_8002A508",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1358,
+        "type": 6,
+        "target": {
+          "name": "fn_8002AC60",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1362,
+        "type": 6,
+        "target": {
+          "name": "fn_8002AA18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1366,
+        "type": 4,
+        "target": {
+          "name": "fn_8002AC60",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1374,
+        "type": 4,
+        "target": {
+          "name": "fn_8002AA18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1376,
+        "type": 10,
+        "target": {
+          "name": "fn_801568C8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1382,
+        "type": 6,
+        "target": {
+          "name": "fn_8002AA18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1390,
+        "type": 4,
+        "target": {
+          "name": "fn_8002AA18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1392,
+        "type": 10,
+        "target": {
+          "name": "fn_801568FC",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1398,
+        "type": 6,
+        "target": {
+          "name": "fn_8002A4C8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1406,
+        "type": 4,
+        "target": {
+          "name": "fn_8002A4C8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1408,
+        "type": 10,
+        "target": {
+          "name": "fn_8015690C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1420,
+        "type": 10,
+        "target": {
+          "name": "fn_80156918",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1424,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064C554",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1428,
+        "type": 10,
+        "target": {
+          "name": "fn_80201B44",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1432,
+        "type": 10,
+        "target": {
+          "name": "fn_80201814",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1436,
+        "type": 10,
+        "target": {
+          "name": "fn_80201C2C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1448,
+        "type": 10,
+        "target": {
+          "name": "fn_80201B44",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1452,
+        "type": 10,
+        "target": {
+          "name": "fn_80201814",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1456,
+        "type": 10,
+        "target": {
+          "name": "fn_80204C2C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1468,
+        "type": 10,
+        "target": {
+          "name": "fn_80204CE4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1476,
+        "type": 10,
+        "target": {
+          "name": "fn_80201C24",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1484,
+        "type": 10,
+        "target": {
+          "name": "fn_80201B44",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1492,
+        "type": 10,
+        "target": {
+          "name": "fn_80158598",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1512,
+        "type": 10,
+        "target": {
+          "name": "fn_80158264",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1528,
+        "type": 10,
+        "target": {
+          "name": "fn_80201B54",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1560,
+        "type": 10,
+        "target": {
+          "name": "fn_80157E34",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1568,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064C554",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1576,
+        "type": 10,
+        "target": {
+          "name": "fn_80201B54",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1596,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DCE8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1612,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A830",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1624,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A7D8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      }
+    ]
+  },
+  "compiled": {
+    "path": "build/GEDE01/src/game/game_fn_8000F774.o",
+    "size": 1652,
+    "text_sha256": "ebf1b4de3d465285d1a5a91dd92d683f29f6dd7d02974b10c65b4a24a0a79927",
+    "text_hex": "9421ff207c0802a6900100e4bf6100cc7c7e1b78480000012c03000b418200307fc3f378480000013c8000007c661b78388400007fc3f37838a0000b4cc631824800000138600000480006183861002c480000017fc3f3783880000148000001fc00081e7fc3f37838800002d80100688001006c9001003c48000001fc00081e7fc3f37838800003d8010070800100749001004048000001fc00081ed80100788001007c2c00ffff4082000880010058900100587fc3f3783880000448000001fc00081ed8010080800100842c00ffff4082000880010044900100447fc3f3783880000548000001fc00081ed80100888001008c2c00ffff4082000880010048900100487fc3f3783880000648000001fc00081ed8010090800100942c00ffff408200088001004c9001004c7fc3f3783880000748000001fc00081ed80100988001009c2c00ffff4082000880010050900100507fc3f3783880000848000001fc00081ed80100a0800100a42c00ffff4082000880010054900100547fc3f3783880000948000001fc0008187fc3f3783880000ad0010038480000017c7d1b787fc3f3783880000b48000001fc00081ed80100a8800100ac2c00ffff408200088001005c9001005c3c004330c82000003861002ca89d0000900100b06c848000908100b4c80100b0900100b8ec000828900100c0d001002ca81d00026c008000900100bcc80100b8ec000828d0010030a81d00046c008000900100c4c80100c0ec000828d0010034480000017c7f1b7941820424480000017c601b787fe3fb787c1c037848000001281c00007c7d1b78418200207f83e378480000012803000041820010c02100387f83e37848000001808100587fe3fb78480000017fe3fb78480000017fe3fb7848000001281c00004182002880610058800000007c030000408200188001005c2c0000094182000c7f83e378480000018001005c2c000001418200142c0000064182000c2c000008408200647fe4fb7838600001480000018001005c2c0000084182000c2c1d0002418203347f83e37848000001808000007f83e3788120000038a100288000000038c100249081002038e100203880000f39000004912100249001002848000001480002f42c000009408200147fe4fb783860001d48000001480002dc2c000005418202d42c000002408200a03860000338800000480000017c7d1b79418202b87f83e378480000012c0300003c800000388400004182000c3c600000388300003c6000003cc0000038a300007fa3eb7838c60000480000017fa3eb7838800000480000017fa3eb7838800000480000017fa3eb7838800000480000017fa3eb7838800000480000013c8000007fa3eb7838840000480000017fa3eb787fe4fb7848000001480002302c00000440820064480000017c7d1b787fe4fb7838600001480000017f83e37848000001808000007f83e3788120000038a1001c8000000038c100189081001438e100143880000f39000004912100189001001c480000017fe3fb787fa4eb7848000001480001c82c0000074082008c480000017c7d1b787fe4fb7838600001480000017f83e37848000001808000007f83e3788120000038a100108000000038c1000c9081000838e100083880000f390000049121000c90010010480000017fe3fb787fa4eb78480000017fe3fb7838800024480000017fe3fb7838800001480000017fe3fb78480000013880008048000001480001382c000003408201307fe3fb7848000001388000007c7c1b7838a00100480000017f83e378480000013860000338800000480000017c601b787f83e3787c1c0378480000012c0300003c800000388400004182000c3c600000388300003c6000003cc0000038a300007f83e37838c60000480000013c8000007f83e37838840000480000013c8000007f83e37838840000480000017f83e3787fe4fb7848000001938000004800000148000001480000017c641b79408200144800000148000001480000017c641b787fe3fb78480000017fe3fb78480000017c7c1b784800000138800000480000017c7b1b79418200407f84e37838a0000148000001839c00007c7d1b787fe3fb784800000180bc000057a0103a7c641b7880dc00187ca5002e7f63db7838e000004800000138000000900000007fe3fb78480000016c6380003c004330906100c47fc3f378c8200000900100c0c80100c0fc200828480000014800000c7fc3f3784800000138600001bb6100cc800100e47c0803a6382100e04e800020",
+    "relocations": [
+      {
+        "site": 20,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A598",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 36,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A598",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 42,
+        "type": 6,
+        "target": {
+          "name": "lbl_8023BEF8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 50,
+        "type": 4,
+        "target": {
+          "name": "lbl_8023BEF8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 64,
+        "type": 10,
+        "target": {
+          "name": "fn_80163BB4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 80,
+        "type": 10,
+        "target": {
+          "name": "fn_80043F44",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 92,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 120,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 148,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 188,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 228,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 268,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 308,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 348,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 388,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 408,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A784",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 424,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A694",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 460,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DCE8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 552,
+        "type": 10,
+        "target": {
+          "name": "fn_80034708",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 564,
+        "type": 10,
+        "target": {
+          "name": "fn_80201BC8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 580,
+        "type": 10,
+        "target": {
+          "name": "fn_80036E14",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 600,
+        "type": 10,
+        "target": {
+          "name": "fn_8011F950",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 620,
+        "type": 10,
+        "target": {
+          "name": "fn_8012B7A0",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 632,
+        "type": 10,
+        "target": {
+          "name": "fn_80201D54",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 640,
+        "type": 10,
+        "target": {
+          "name": "fn_802015A4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 648,
+        "type": 10,
+        "target": {
+          "name": "fn_800CCA44",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 664,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064D18C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 692,
+        "type": 10,
+        "target": {
+          "name": "fn_801261F4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 732,
+        "type": 10,
+        "target": {
+          "name": "fn_801E8328",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 760,
+        "type": 10,
+        "target": {
+          "name": "fn_801261F4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 764,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD10",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 772,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD0C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 780,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD08",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 812,
+        "type": 10,
+        "target": {
+          "name": "fn_8012C62C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 836,
+        "type": 10,
+        "target": {
+          "name": "fn_801E8328",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 868,
+        "type": 10,
+        "target": {
+          "name": "fn_80156DA0",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 884,
+        "type": 10,
+        "target": {
+          "name": "fn_8011FCB0",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 894,
+        "type": 6,
+        "target": {
+          "name": "fn_8002A590",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 898,
+        "type": 4,
+        "target": {
+          "name": "fn_8002A590",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 906,
+        "type": 6,
+        "target": {
+          "name": "fn_8002A508",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 910,
+        "type": 4,
+        "target": {
+          "name": "fn_8002A508",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 914,
+        "type": 6,
+        "target": {
+          "name": "fn_8002AC60",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 918,
+        "type": 6,
+        "target": {
+          "name": "fn_8002AA18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 922,
+        "type": 4,
+        "target": {
+          "name": "fn_8002AC60",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 930,
+        "type": 4,
+        "target": {
+          "name": "fn_8002AA18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 932,
+        "type": 10,
+        "target": {
+          "name": "fn_801568C8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 944,
+        "type": 10,
+        "target": {
+          "name": "fn_80156904",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 956,
+        "type": 10,
+        "target": {
+          "name": "fn_801568FC",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 968,
+        "type": 10,
+        "target": {
+          "name": "fn_801568C0",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 980,
+        "type": 10,
+        "target": {
+          "name": "fn_801568B8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 986,
+        "type": 6,
+        "target": {
+          "name": "fn_8002A4C8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 994,
+        "type": 4,
+        "target": {
+          "name": "fn_8002A4C8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 996,
+        "type": 10,
+        "target": {
+          "name": "fn_8015690C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1008,
+        "type": 10,
+        "target": {
+          "name": "fn_80156918",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1024,
+        "type": 10,
+        "target": {
+          "name": "fn_80204A8C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1040,
+        "type": 10,
+        "target": {
+          "name": "fn_801E8328",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1048,
+        "type": 10,
+        "target": {
+          "name": "fn_801261F4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1052,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD1C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1060,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1068,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD14",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1100,
+        "type": 10,
+        "target": {
+          "name": "fn_8012C62C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1112,
+        "type": 10,
+        "target": {
+          "name": "fn_80204CE4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1128,
+        "type": 10,
+        "target": {
+          "name": "fn_80204A8C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1144,
+        "type": 10,
+        "target": {
+          "name": "fn_801E8328",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1152,
+        "type": 10,
+        "target": {
+          "name": "fn_801261F4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1156,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD28",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1164,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD24",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1172,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DD20",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1204,
+        "type": 10,
+        "target": {
+          "name": "fn_8012C62C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1216,
+        "type": 10,
+        "target": {
+          "name": "fn_80204CE4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1228,
+        "type": 10,
+        "target": {
+          "name": "fn_80201D2C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1240,
+        "type": 10,
+        "target": {
+          "name": "fn_80201D14",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1248,
+        "type": 10,
+        "target": {
+          "name": "fn_80201C24",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1256,
+        "type": 10,
+        "target": {
+          "name": "fn_80157B80",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1276,
+        "type": 10,
+        "target": {
+          "name": "fn_80201BC8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1292,
+        "type": 10,
+        "target": {
+          "name": "fn_8011FA8C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1300,
+        "type": 10,
+        "target": {
+          "name": "fn_801261F4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1312,
+        "type": 10,
+        "target": {
+          "name": "fn_80156DA0",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1328,
+        "type": 10,
+        "target": {
+          "name": "fn_8011FCB0",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1338,
+        "type": 6,
+        "target": {
+          "name": "fn_8002A590",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1342,
+        "type": 4,
+        "target": {
+          "name": "fn_8002A590",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1350,
+        "type": 6,
+        "target": {
+          "name": "fn_8002A508",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1354,
+        "type": 4,
+        "target": {
+          "name": "fn_8002A508",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1358,
+        "type": 6,
+        "target": {
+          "name": "fn_8002AC60",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1362,
+        "type": 6,
+        "target": {
+          "name": "fn_8002AA18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1366,
+        "type": 4,
+        "target": {
+          "name": "fn_8002AC60",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1374,
+        "type": 4,
+        "target": {
+          "name": "fn_8002AA18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1376,
+        "type": 10,
+        "target": {
+          "name": "fn_801568C8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1382,
+        "type": 6,
+        "target": {
+          "name": "fn_8002AA18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1390,
+        "type": 4,
+        "target": {
+          "name": "fn_8002AA18",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1392,
+        "type": 10,
+        "target": {
+          "name": "fn_801568FC",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1398,
+        "type": 6,
+        "target": {
+          "name": "fn_8002A4C8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1406,
+        "type": 4,
+        "target": {
+          "name": "fn_8002A4C8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1408,
+        "type": 10,
+        "target": {
+          "name": "fn_8015690C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1420,
+        "type": 10,
+        "target": {
+          "name": "fn_80156918",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1424,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064C554",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1428,
+        "type": 10,
+        "target": {
+          "name": "fn_80201B44",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1432,
+        "type": 10,
+        "target": {
+          "name": "fn_80201814",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1436,
+        "type": 10,
+        "target": {
+          "name": "fn_80201C2C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1448,
+        "type": 10,
+        "target": {
+          "name": "fn_80201B44",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1452,
+        "type": 10,
+        "target": {
+          "name": "fn_80201814",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1456,
+        "type": 10,
+        "target": {
+          "name": "fn_80204C2C",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1468,
+        "type": 10,
+        "target": {
+          "name": "fn_80204CE4",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1476,
+        "type": 10,
+        "target": {
+          "name": "fn_80201C24",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1484,
+        "type": 10,
+        "target": {
+          "name": "fn_80201B44",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1492,
+        "type": 10,
+        "target": {
+          "name": "fn_80158598",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1512,
+        "type": 10,
+        "target": {
+          "name": "fn_80158264",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1528,
+        "type": 10,
+        "target": {
+          "name": "fn_80201B54",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1560,
+        "type": 10,
+        "target": {
+          "name": "fn_80157E34",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1568,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064C554",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1576,
+        "type": 10,
+        "target": {
+          "name": "fn_80201B54",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1596,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064DCE8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1612,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A830",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      },
+      {
+        "site": 1624,
+        "type": 10,
+        "target": {
+          "name": "fn_8016A7D8",
+          "value": 0,
+          "section": "UND"
+        },
+        "addend": 0
+      }
+    ]
+  },
+  "bytes_equal": true,
+  "relocations_equal": true,
+  "source_sha256": "e77c7d3461acbee442574b87362291e330141b7b166478e4f1b0201c0305ecda",
+  "compiler": "GC/1.3; canonical configure.py flags unchanged"
+}

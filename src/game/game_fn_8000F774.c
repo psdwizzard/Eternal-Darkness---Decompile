@@ -101,9 +101,9 @@ extern void fn_8002AC60(void);
 extern s32 fn_8002AA18(void*, void*, s32);
 extern void fn_8002A4C8(void*);
 
-/* NonMatching: remaining differences are register allocation only. */
 s32 fn_8000F774(void* script)
 {
+    void* object;
     void* script_reg;
     void* view;
     Vec3s* position;
@@ -111,6 +111,7 @@ s32 fn_8000F774(void* script)
     void* handle;
     void* callback;
     s32 controller;
+    void* attachment;
     void* found;
     ItemArray* array;
     s32 index;
@@ -247,13 +248,11 @@ s32 fn_8000F774(void* script)
         fn_80201D14(view, 1);
         fn_80157B80(fn_80201C24(view), 0x80);
     } else if (req.f30 == 3) {
-        void* object;
-
-        handle = fn_80201BC8(view);
-        fn_8011FA8C(handle, 0, 0x100);
-        fn_801261F4(handle);
+        attachment = fn_80201BC8(view);
+        fn_8011FA8C(attachment, 0, 0x100);
+        fn_801261F4(attachment);
         object = fn_80156DA0(3, 0);
-        if (fn_8011FCB0(handle) != 0) {
+        if (fn_8011FCB0(attachment) != 0) {
             callback = (void*)fn_8002A508;
         } else {
             callback = (void*)fn_8002A590;
@@ -264,11 +263,11 @@ s32 fn_8000F774(void* script)
         fn_8015690C(object, (void*)fn_8002A4C8);
         fn_80156918(object, view);
         lbl_8064C554 = object;
-        found = fn_80201C2C(fn_80201814(fn_80201B44()));
-        if (found == 0) {
-            found = fn_80204C2C(fn_80201814(fn_80201B44()));
+        attachment = fn_80201C2C(fn_80201814(fn_80201B44()));
+        if (attachment == 0) {
+            attachment = fn_80204C2C(fn_80201814(fn_80201B44()));
         }
-        fn_80204CE4(view, found);
+        fn_80204CE4(view, attachment);
         array = fn_80201C24(view);
         found = fn_80158598((void*)fn_80201B44(), 0);
         if (found != 0) {

@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "assignment_id": "ff31a8f4-27bc-4b2d-a516-c5b4bd2c49ad",
+  "conclusion": "Accepted base already contains preserved attempt 6 source and target bias registration. No transplant required. Earlier reports were read before forming the split-found-role hypothesis.",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "show",
+        "--stat",
+        "--oneline",
+        "f5325a0b7ffa60603f4f98059183635377bb26f1"
+      ],
+      "returncode": 0,
+      "raw_output": "f5325a0b7 decomp: improve fn_8000F774 register allocation\n eternal-darkness-decomp/configure.py               |    10 +-\n ...rable-c0661517-46fd-4987-8309-dd3e4197a673.json |    13 +\n ...jdiff-c0661517-46fd-4987-8309-dd3e4197a673.json | 25514 +++++++++++++++++++\n ...rials-c0661517-46fd-4987-8309-dd3e4197a673.json |    37 +\n .../src/game/game_fn_8000F774.c                    |    27 +-\n 5 files changed, 25583 insertions(+), 18 deletions(-)\n"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--exit-code",
+        "f5325a0b7ffa60603f4f98059183635377bb26f1",
+        "f7382393ba916acff6c8629b1a2323c53f44bf8d",
+        "--",
+        "src/game/game_fn_8000F774.c"
+      ],
+      "returncode": 0,
+      "raw_output": ""
+    },
+    {
+      "argv": [
+        "git",
+        "show",
+        "f5325a0b7ffa60603f4f98059183635377bb26f1:eternal-darkness-decomp/reports/GEDE01/trials-c0661517-46fd-4987-8309-dd3e4197a673.json"
+      ],
+      "returncode": 0,
+      "raw_output": "{\n  \"version\": 1,\n  \"target\": \"fn_8000F774\",\n  \"preserved_attempt_recovery\": {\n    \"command\": \"git show --stat --oneline --no-renames 8625747cb29ec8d37fb02d577e6fcc291cb74987; git diff --quiet 8625747cb29ec8d37fb02d577e6fcc291cb74987 HEAD -- src/game/game_fn_8000F774.c; printf 'preserved_vs_accepted_source_diff_exit=%s\\\\n' \\\"$?\\\"\",\n    \"raw_output\": \"8625747cb decomp: document fn_8000F774 attempt 5\\n ...rable-7679a123-986c-4c41-b5b3-2a636cf33f78.json |    12 +\\n ...jdiff-7679a123-986c-4c41-b5b3-2a636cf33f78.json | 25618 +++++++++++++++++++\\n ...rials-7679a123-986c-4c41-b5b3-2a636cf33f78.json |    34 +\\n 3 files changed, 25664 insertions(+)\\npreserved_vs_accepted_source_diff_exit=0\",\n    \"result\": \"The requested preserved commit contains reports only, and its parent source is already byte-identical to the accepted-base source; no transplant was needed.\"\n  },\n  \"baseline\": {\n    \"command\": \"python3 configure.py && .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8000F774.externalized build/tools/objdiff-cli; build/tools/objdiff-cli diff -p . -u main/game/game_fn_8000F774 fn_8000F774 -o build/GEDE01/fn_8000F774-attempt6-baseline.json --format json-pretty -c function_reloc_diffs=name_address\",\n    \"raw_output\": \"[1/2] MWCC build/GEDE01/src/game/game_fn_8000F774.o\\n[2/2] EXTERNALIZE build/GEDE01/src/game/game_fn_8000F774.o\\n INFO Writing to build/GEDE01/fn_8000F774-attempt6-baseline.json\\nleft size 1652 match 99.45521 instructions 413 diff_rows 44 relocations 114\\nright size 1652 match 99.45521 instructions 413 diff_rows 44 relocations 114\"\n  },\n  \"split_mode_controller_web\": {\n    \"hypothesis\": \"The source reused one s32 mode local for the initial mode enum and three later controller/effect pointers. Keeping a distinct s32 controller local could change MWCC's interference-web ordering while preserving the target instruction sequence and semantics.\",\n    \"change\": \"Retain mode for fn_80036E14 only and use controller for the fn_80156DA0/fn_80204A8C results in the f30 == 2, 4, and 7 branches.\",\n    \"command\": \".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8000F774.o; build/binutils/powerpc-eabi-objdump -t build/GEDE01/src/game/game_fn_8000F774.o | rg 'fn_8000F774|@[0-9]+'; diagnostic externalization of @97; build/tools/objdiff-cli diff -p . -u main/game/game_fn_8000F774 fn_8000F774 -o build/GEDE01/fn_8000F774-attempt6-split-mode.json --format json-pretty -c function_reloc_diffs=name_address\",\n    \"raw_output\": \"[1/1] MWCC build/GEDE01/src/game/game_fn_8000F774.o\\n00000000 l     O .sdata2 00000008 @97\\n00000000 g     F .text  00000674 fn_8000F774\\n INFO Writing to build/GEDE01/fn_8000F774-attempt6-split-mode.json\\n1652 99.539955\\nleft 37\\nright 37\",\n    \"result\": \"Retained. It fixes all seven differing rows in the parsed-position and initial-mode web, improving the score from 99.45521% to 99.539955% without changing size, instruction count, or relocations. The function-specific externalization registration now follows the compiler-local @97 symbol.\"\n  },\n  \"rejected_followups\": {\n    \"changes\": \"Separately add register storage hints, reorder controller ahead of handle, and split the f30 == 3 handle lookup into a branch-local scalar.\",\n    \"raw_output\": \"register-controller versus split-mode report cmp exit=0\\nregister-handle versus split-mode report cmp exit=0\\ncontroller-before-handle: size 1652 match 99.45521 diff_rows 44\\nbranch-local-handle: size 1652 match 99.539955 diff_rows 37\",\n    \"result\": \"None improved on the retained split-mode reconstruction; all were reverted.\"\n  },\n  \"final_relocation_strict\": {\n    \"command\": \"build/tools/objdiff-cli diff -p . -u main/game/game_fn_8000F774 fn_8000F774 -o reports/GEDE01/objdiff-c0661517-46fd-4987-8309-dd3e4197a673.json --format json-pretty -c function_reloc_diffs=name_address; normalize (instruction address, relocation type name, resolved target name, addend) tuples\",\n    \"raw_output\": \" INFO Writing to reports/GEDE01/objdiff-c0661517-46fd-4987-8309-dd3e4197a673.json\\nleft size 1652 match 99.539955 instructions 413 diff_rows 37 relocations 114\\nright size 1652 match 99.539955 instructions 413 diff_rows 37 relocations 114\\nnormalized_equal True\"\n  },\n  \"canonical_build\": {\n    \"command\": \"python3 configure.py && .tools/bin/ninja -j2\",\n    \"raw_output_tail\": \"[859/862] LINK build/GEDE01/main.elf\\n[860/862] DOL build/GEDE01/main.dol\\n[861/862] CHECK config/GEDE01/build.sha1\\nbuild/GEDE01/main.dol: OK\\n[862/862] PROGRESS\\nProgress:\\n  All: 56.30% fuzzy, 45.25% matched, 45.25% linked (6181 / 7068 files)\"\n  },\n  \"dol_and_legal_verification\": {\n    \"command\": \"sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; python3 tools/legal_audit.py\",\n    \"raw_output\": \"ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\\nlegal audit passed (15955 tracked project files inspected)\"\n  }\n}\n"
+    }
+  ]
+}
