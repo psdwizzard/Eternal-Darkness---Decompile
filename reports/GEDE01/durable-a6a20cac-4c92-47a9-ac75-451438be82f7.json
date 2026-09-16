@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a6a20cac-4c92-47a9-ac75-451438be82f7",
+  "attempt": 1,
+  "base_commit": "aaaaebc72cb88187d0075fe8086c8ca1ec603b12",
+  "target": "fn_801E2B28",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a6a20cac-4c92-47a9-ac75-451438be82f7.json"
+  ],
+  "divergence": "Canonical GC/1.3 output improves from 83.11539% to 87.07692% and remains exactly 208 bytes/52 instructions with all 8 retail relocation targets and addends represented. Instructions 0x50-0x78 remain scheduled differently: retail loads lbl_80651230 at 0x50, copies f1 to f2 at 0x68, loads lbl_80651234 at 0x74, and forms object+4 at 0x78; generated code emits those operations at 0x64, 0x74, 0x6C, and 0x68 respectively while advancing the duration/enabled/type constants. The raw objdiff records relocation locations shifting with those otherwise equivalent instructions, so this is not relocation-strict and remains NonMatching. Full build passed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

@@ -46,12 +46,14 @@ extern void fn_801E2BF8(Object*);
 void fn_801E2B28(Object* object, Vec3* position, s32* value, s32 kind, s32 byte36)
 {
     f32 scale;
+    f32 z_scale;
 
     object->field34 = lbl_8064D18C;
     object->timer = 100000;
     object->timer_copy = object->timer;
     object->random_value = (fn_800FBFB0() & 0xF) + 1;
     scale = lbl_80651230;
+    z_scale = lbl_80651234;
     object->position = *position;
     object->value = *value;
     object->callback = fn_801E2BF8;
@@ -60,6 +62,6 @@ void fn_801E2B28(Object* object, Vec3* position, s32* value, s32 kind, s32 byte3
     object->duration = 600;
     object->enabled = 1;
     object->byte38 = 4;
-    fn_801FE8DC(&object->timer, scale, scale, lbl_80651234);
+    fn_801FE8DC(&object->timer, scale, scale, z_scale);
     fn_801E8328(0x13, object);
 }
