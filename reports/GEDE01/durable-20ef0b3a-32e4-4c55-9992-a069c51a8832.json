@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "20ef0b3a-32e4-4c55-9992-a069c51a8832",
+  "attempt": 2,
+  "base_commit": "d29dd9ddd533558280a49d4df3164eb6fd91354f",
+  "target": "fn_801F1A38",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-20ef0b3a-32e4-4c55-9992-a069c51a8832.json"
+  ],
+  "divergence": "Fresh relocation-strict objdiff (function_reloc_diffs=name_address) is 83.78842%: retail .text is 1796 bytes and generated .text is 1776 bytes, with 39 relocation-bearing instructions on each side. The reconstruction now reproduces retail's 0x1E0 frame and grounded local layout (distinct clamped Vec3 at stack+0x2C, 0x7C-byte candidate at +0x38, and eight 0x14-byte EffectRec outputs at +0xB4), and the signed-conversion bias is externalized to lbl_80651360 with no generated .sdata2. The remaining divergence begins in persistent-register allocation (retail point/target/input/group/requested/flags use r15/r16/r17/r19/r18/r28; generated uses r17/r18/r19/r14/r20/r15) and propagates through scheduling; generated code is five instructions shorter. The complete build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f, but this NonMatching unit is excluded from that link gate."
+}

@@ -34,6 +34,10 @@ typedef struct Candidate {
     s32 intensity;
     u8 pad48[0x34];
 } Candidate;
+typedef struct PaddedVec3 {
+    s32 pad;
+    Vec3 value;
+} PaddedVec3;
 
 extern s32 lbl_8064C388;
 extern s32 lbl_8064CB48;
@@ -64,10 +68,11 @@ s32 fn_801F1A38(Vec3* point, Vec3* target, Input* input, s32 group,
 {
     s32 max_count;
     Candidate** candidates;
-    EffectRec effects[4];
+    EffectRec effects[8];
     Candidate candidate;
+    Vec3 clamped;
     Vec3 debug_color;
-    Vec3 fixed_color;
+    PaddedVec3 fixed_color;
     s32 effect_count = 0;
     s32 selected;
     s32 active_mask = 0;
@@ -82,14 +87,15 @@ s32 fn_801F1A38(Vec3* point, Vec3* target, Input* input, s32 group,
     s32 special_count;
     s32 scaled_count;
     s32 base;
+    s32 special_offset;
 
     max_count = fn_801FD258();
     candidates = fn_801FD240();
-    effects[0].pos = *point;
-    if (input->minimum.x > effects[0].pos.x) effects[0].pos.x = input->minimum.x;
-    if (input->minimum.y > effects[0].pos.y) effects[0].pos.y = input->minimum.y;
-    if (input->minimum.z > effects[0].pos.z) effects[0].pos.z = input->minimum.z;
-    selected = fn_801F15D0(&effects[0].pos, group, input, &effect_count, effects);
+    clamped = *point;
+    if (input->minimum.x > clamped.x) clamped.x = input->minimum.x;
+    if (input->minimum.y > clamped.y) clamped.y = input->minimum.y;
+    if (input->minimum.z > clamped.z) clamped.z = input->minimum.z;
+    selected = fn_801F15D0(&clamped, group, input, &effect_count, effects);
     if (selected == -1) {
         fn_801F3FD8(point, 3000);
         return 0;
@@ -181,16 +187,17 @@ s32 fn_801F1A38(Vec3* point, Vec3* target, Input* input, s32 group,
 
     seen_mask |= 0xF;
     if (selected != -1) {
-        fixed_color.x = lbl_8065134C;
-        fixed_color.y = lbl_8065134C;
-        fixed_color.z = lbl_806513C0;
+        special_offset = 0;
+        fixed_color.value.x = lbl_8065134C;
+        fixed_color.value.y = lbl_8065134C;
+        fixed_color.value.z = lbl_806513C0;
         for (i = 0; i < special_count; i++) {
             Entry* entry = (Entry*)(input->entries + base);
-            EffectRec* effect = (EffectRec*)((u8*)entry->effects + candidate_index);
+            EffectRec* effect = (EffectRec*)((u8*)entry->effects + special_offset);
             special_mask |= special_mask << i;
             active_mask |= special_mask;
             fn_801F0CB0(effect, point, target, cap + extra_count + 4 + i,
-                         0, &fixed_color, 0);
+                         0, &fixed_color.value, 0);
             if (lbl_8064CB48) {
                 s32 color = lbl_806513BC;
                 fn_800EBA80(1, effect, &color, lbl_806513C4, 64);
@@ -198,7 +205,7 @@ s32 fn_801F1A38(Vec3* point, Vec3* target, Input* input, s32 group,
                 fn_800EBA80(2, effect, &color,
                              (float)(effect->intensity / 100), 64);
             }
-            candidate_index += 0x14;
+            special_offset += 0x14;
         }
         seen_mask |= special_mask;
     }

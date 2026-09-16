@@ -3207,6 +3207,20 @@ config.custom_build_rules.append(
 
 config.custom_build_rules.append(
     {
+        "name": "externalize_game_801F1A38_signed_bias",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @113 lbl_80651360 "
+            "orig/GEDE01/sys/main.dol --require-whole-section && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@113=lbl_80651360 --remove-section=.sdata2 "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    }
+)
+
+config.custom_build_rules.append(
+    {
         "name": "externalize_game_801F55A0_signed_bias",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @14 lbl_80651360 "
@@ -5187,6 +5201,14 @@ config.custom_build_steps["post-compile"].append(
         "outputs": [f"build/{VERSION}/src/game/game_fn_8009E808.externalized"],
         "rule": "externalize_game_8009E808_sounds",
         "inputs": [f"build/{VERSION}/src/game/game_fn_8009E808.o"],
+    }
+)
+
+config.custom_build_steps["post-compile"].append(
+    {
+        "outputs": [f"build/{VERSION}/src/game/game_fn_801F1A38.externalized"],
+        "rule": "externalize_game_801F1A38_signed_bias",
+        "inputs": [f"build/{VERSION}/src/game/game_fn_801F1A38.o"],
     }
 )
 
