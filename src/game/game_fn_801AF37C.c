@@ -28,10 +28,11 @@ typedef struct Work {
     u8 pad174[2];
     u8 option;
     u8 pad177[2];
+    u8 parameter;
     u8 flag;
     u8 active;
     u8 type;
-    u8 pad17c[2];
+    u8 pad17d;
     u8 count;
     u8 pad17f;
     u8 style;
@@ -40,7 +41,7 @@ typedef struct Work {
 extern Work* lbl_8064D310;
 extern u32 lbl_8064D318;
 extern char lbl_80251808[];
-extern char lbl_8064C2D8[];
+extern char lbl_8064C2D8;
 extern int fn_801AE2F4(void);
 extern int fn_800F9D4C(char*, char*, char*, u32, char*, ...);
 extern int fn_80213394(char*, char*);
@@ -51,25 +52,29 @@ extern int fn_801ADEEC(WorkDesc*, u8, int, int, u8, u8);
 extern int fn_801ADFC4(WorkDesc*, char**, u8, u8, u8);
 extern void* memcpy(void*, const void*, unsigned long);
 
+/* NonMatching: behavior-complete reconstruction. Retail retains the format
+ * table base in r29; this compiler allocation uses r28 via one extra move. */
 int fn_801AF37C(Work* work)
 {
-    int result = -1;
+    int done;
+    char* format = lbl_80251808;
+    u32 result = -1;
 
     if (lbl_8064D310 == 0 || lbl_8064D310 == work) {
-        int done;
         lbl_8064D310 = work;
         if (work->state0 == 2) {
             if (fn_801AE2F4() >= work->count) {
                 done = 0;
                 if (work->count == 1) {
                     if (work->style == 1) {
-                        fn_800F9D4C(work->name0, lbl_80251808, lbl_80251808 + 0xc,
-                                    work->id, lbl_8064C2D8);
+                        fn_800F9D4C(work->name0, format, format + 0xc,
+                                    work->id, &lbl_8064C2D8);
+                        work->name1[0] = 0;
                     } else {
-                        fn_800F9D4C(work->name0, lbl_80251808 + 0x1c,
-                                    lbl_80251808 + 0xc, work->id, lbl_8064C2D8);
+                        fn_800F9D4C(work->name0, format + 0x1c,
+                                    format + 0xc, work->id, &lbl_8064C2D8);
+                        work->name1[0] = 0;
                     }
-                    work->name1[0] = 0;
                     work->state0 = 1;
                     work->state1 = 0;
                     work->mode0 = 1;
@@ -81,10 +86,10 @@ int fn_801AF37C(Work* work)
                         done = 1;
                     }
                 } else if (work->count == 2) {
-                    fn_800F9D4C(work->name0, lbl_80251808, lbl_80251808 + 0xc,
-                                work->id, lbl_8064C2D8);
-                    fn_800F9D4C(work->name1, lbl_80251808 + 0x28,
-                                lbl_80251808 + 0xc, work->id, lbl_8064C2D8);
+                    fn_800F9D4C(work->name0, format, format + 0xc,
+                                work->id, &lbl_8064C2D8);
+                    fn_800F9D4C(work->name1, format + 0x28,
+                                format + 0xc, work->id, &lbl_8064C2D8);
                     work->state0 = 1;
                     work->state1 = 1;
                     work->mode0 = 2;
@@ -112,15 +117,16 @@ int fn_801AF37C(Work* work)
                     work->mode1 = 0;
                 }
             }
-        } else if (work->state0 == 3) {
+        } else if (*(volatile u8*)&work->state0 == 3) {
             work->state0 = 1;
             while (!fn_80213704(work->buffer0, work->source[0], 0x60,
                                0, fn_801AF0E4, 2)) {}
-        } else if (work->state1 == 3) {
+        } else if (*(volatile u8*)&work->state1 == 3) {
             work->state1 = 1;
             while (!fn_80213704(work->buffer1, work->source[1], 0x60,
                                0, fn_801AF0E4, 2)) {}
-        } else if (work->state0 == 0 && work->state1 == 0) {
+        } else if (*(volatile u8*)&work->state0 == 0 &&
+                   *(volatile u8*)&work->state1 == 0) {
             int i;
             if (work->flag == 1) {
                 lbl_8064D310 = 0;
@@ -134,11 +140,11 @@ int fn_801AF37C(Work* work)
                 }
                 if (work->count == 1) {
                     result = fn_801ADEEC(work->desc, work->option, 0x40, 0,
-                                         work->pad177[1], work->active);
+                                         work->parameter, work->active);
                 } else {
                     work->desc[1].name = work->name1;
                     result = fn_801ADFC4(work->desc, &work->desc[1].name,
-                                        work->option, work->pad177[1], work->active);
+                                        work->option, work->parameter, work->active);
                 }
                 if (result != -1) {
                     lbl_8064D310 = 0;
