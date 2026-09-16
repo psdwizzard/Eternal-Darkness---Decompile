@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "f0e74cd2-e51c-4ba8-8f03-513ff18808e5",
+  "target": "fn_801FF9E4",
+  "compiler": "GC/1.3",
+  "compiler_flags": "-use_lmw_stmw on",
+  "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FF9E4 -o build/GEDE01/objdiff-f0e74cd2-canonical.json --format json-pretty fn_801FF9E4",
+  "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FF9E4 -o build/GEDE01/objdiff-f0e74cd2-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_801FF9E4",
+  "measurement_raw_output": "basis=canonical symbol=fn_801FF9E4 retail_bytes=764 generated_bytes=764 match_percent=97.37173 retail_instructions=192 generated_instructions=192 retail_relocations=43 generated_relocations=43 differing_rows=48\nbasis=reloc-strict symbol=fn_801FF9E4 retail_bytes=764 generated_bytes=764 match_percent=97.37173 retail_instructions=192 generated_instructions=192 retail_relocations=43 generated_relocations=43 differing_rows=48\ndiff_kinds=DIFF_ARG_MISMATCH:46,DIFF_DELETE:1,DIFF_INSERT:1\ndeleted_instruction=mr r21,r23",
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw_output": "[859/861] DOL build/GEDE01/main.dol\n[860/861] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[861/861] PROGRESS",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "source_audit": "Independent C translation unit; no asm statement, whole-function assembly, shared reconstruction, or neighboring-function edit. configure.py remains NonMatching with canonical GC/1.3 and -use_lmw_stmw on; the existing split remains 0x801FF9E4..0x801FFCE0.",
+  "divergence": "Size and instruction counts are exact and all 43 relocation-bearing instructions agree under relocation-strict comparison. The remaining 48 differing rows are 46 GPR operand mismatches from MWCC register allocation plus one delete/insert alignment pair around the loop-entry pointer move (retail includes mr r21,r23 while generated coalesces that alias)."
+}
