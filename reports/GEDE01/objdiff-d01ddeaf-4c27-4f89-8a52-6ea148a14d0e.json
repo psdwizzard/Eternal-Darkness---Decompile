@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "assignment_id": "d01ddeaf-4c27-4f89-8a52-6ea148a14d0e",
+  "target": "fn_800BFFDC",
+  "source": "eternal-darkness-decomp/src/game/game_fn_800BFFDC.c",
+  "compiler": "GC/1.3",
+  "registration": "Object(NonMatching, \"game/game_fn_800BFFDC.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": "build files regenerated successfully"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[867/869] DOL build/GEDE01/main.dol; [868/869] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [869/869] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800BFFDC fn_800BFFDC -o build/GEDE01/objdiff-d01ddeaf-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-d01ddeaf-canonical.raw.json; left size=612 match_percent=99.60784 instructions=153 diff_rows=1 relocation_instructions=34; right size=612 match_percent=99.60784 instructions=153 diff_rows=1 relocation_instructions=34"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800BFFDC fn_800BFFDC -o build/GEDE01/objdiff-d01ddeaf-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-d01ddeaf-reloc-strict.raw.json; left size=612 match_percent=99.60784 instructions=153 diff_rows=1 relocation_instructions=34; right size=612 match_percent=99.60784 instructions=153 diff_rows=1 relocation_instructions=34"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-d01ddeaf-canonical.raw.json build/GEDE01/objdiff-d01ddeaf-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "cmp_exit=0; both files are 238422 bytes"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    }
+  ],
+  "new_hypotheses_tested": [
+    {
+      "hypothesis": "Use a chained assignment expression, relevant = is_secondary = 0, so MWCC may materialize zero once into the long-lived secondary register and copy that assignment result into the temporary condition register.",
+      "result": "Rejected: size remained 612 bytes and canonical score remained 99.60784%; offset 0x58 was still li r0,0."
+    },
+    {
+      "hypothesis": "Express relevance directly as the short-circuit condition is_secondary || kind == 0x40 || kind == 0x80, allowing the front end to preserve the live secondary operand rather than folding an explicit snapshot variable.",
+      "result": "Rejected: canonical score regressed to 97.35294% because control-flow generation changed."
+    },
+    {
+      "hypothesis": "Apply plain register qualification (without volatile storage) to is_secondary so the front end may honor the live-register copy while avoiding the stack traffic observed for volatile.",
+      "result": "Rejected: size remained 612 bytes and canonical score remained 99.60784%; offset 0x58 was still li r0,0."
+    }
+  ],
+  "canonical": {
+    "match_percent": 99.60784,
+    "retail_bytes": 612,
+    "generated_bytes": 612,
+    "retail_instructions": 153,
+    "generated_instructions": 153,
+    "differing_rows": 1
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_relocation_associated_instructions": 34,
+    "generated_relocation_associated_instructions": 34,
+    "addresses_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true
+  },
+  "retail_difference": "At function offset 0x58 retail emits mr r0,r25; r25 is the secondary flag initialized to zero at offset 0x54.",
+  "generated_difference": "At function offset 0x58 canonical GC/1.3 emits the semantically equivalent li r0,0.",
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "compiler_policy_changed": false,
+    "neighboring_functions_edited": false,
+    "retained_translation_unit": "eternal-darkness-decomp/src/game/game_fn_800BFFDC.c"
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: retained the existing behavior-complete, size-exact, relocation-exact honest C reconstruction because all distinct new hypotheses regressed or tied without correcting the sole instruction."
+}
