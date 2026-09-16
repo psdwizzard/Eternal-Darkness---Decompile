@@ -13,10 +13,10 @@ typedef struct Entry {
 
 u32 fn_801EA900(const u8* source, Entry** output, u16 count)
 {
-    u32 offset = 0;
-    u32 size = (u32)*output;
     Entry* entries;
     Entry* entry;
+    u32 size = (u32)*output;
+    u32 offset = 0;
     int outer;
 
     if (size != 0) {
@@ -26,8 +26,8 @@ u32 fn_801EA900(const u8* source, Entry** output, u16 count)
         *output = 0;
     }
     entries = *output;
-    entry = entries;
-    for (outer = 0; outer < count; outer++, entry++) {
+    for (outer = 0; outer < count; outer++) {
+        entry = &entries[outer];
         size = entry->data2C;
         if (size != 0) {
             entry->data2C = (u32)(source + offset);
@@ -36,8 +36,8 @@ u32 fn_801EA900(const u8* source, Entry** output, u16 count)
             entry->data2C = 0;
         }
     }
-    entry = entries;
-    for (outer = 0; outer < count; outer++, entry++) {
+    for (outer = 0; outer < count; outer++) {
+        entry = &entries[outer];
         size = entry->data34;
         if (size != 0) {
             u32 byteOffset = 0;
