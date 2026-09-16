@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "assignment_id": "25492f61-8103-4e2e-bbf7-c918d113d7ec",
+  "target": "fn_800A3E94",
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[860/863] DOL build/GEDE01/main.dol\n[861/863] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK"
+    },
+    {
+      "command": "python3 tools/fndiff.py game/game_fn_800A3E94.c fn_800A3E94",
+      "exit_code": 0,
+      "raw_output": "target 560 bytes  base 536 bytes  match 95.71429"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    }
+  ],
+  "measurement": {
+    "retail_size": 560,
+    "generated_size": 536,
+    "match_percent": 95.71429,
+    "retail_relocation_instructions": 29,
+    "generated_relocation_instructions": 29,
+    "relocation_sequence": "All 29 relocation-bearing instructions align with the same relocation types, targets, and addends in the objdiff instruction stream; the candidate is still nonmatching because code is not 100%.",
+    "matching_prefix_bytes": 512,
+    "remaining_delta": [
+      "retail +0x200: li r3, 0x12",
+      "retail +0x204: subfic r0, r3, 0x13",
+      "retail +0x208: mtctr r0",
+      "retail +0x20c: cmpwi r3, 0x13",
+      "retail +0x210: bge 0x218",
+      "retail +0x214: bdnz 0x214"
+    ],
+    "generated_at_retail_0x200": "The generated object goes directly to the common epilogue; MWCC removes the source-level one-iteration empty loop instead of retaining the six-instruction counted-loop skeleton present in retail."
+  },
+  "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_actual": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "canonical_build_passed": true,
+  "relocation_strict_100_percent": false
+}

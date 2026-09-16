@@ -33,7 +33,14 @@ typedef struct Object800A3E94 {
     u8 pad294[8];
     u16 field29C;
     u8 pad29E[4];
-    u8 flags2A2;
+    u8 flag80 : 1;
+    u8 flag40 : 1;
+    u8 flag20 : 1;
+    u8 flag10 : 1;
+    u8 flag08 : 1;
+    u8 flag04 : 1;
+    u8 flag02 : 1;
+    u8 flag01 : 1;
 } Object800A3E94;
 
 extern int lbl_8064C940;
@@ -58,11 +65,14 @@ extern void fn_800D67A4(Object800A3E94*);
 
 /*
  * Behavior-complete reconstruction of the game-state object initializer and
- * callback-table setup. Objdiff evidence records the remaining MWCC ordering
- * differences; no inline assembly or register binding is used.
+ * callback-table setup. Objdiff evidence records the remaining compiler-
+ * retained terminal-loop difference; no inline assembly or register binding
+ * is used.
  */
 void fn_800A3E94(Object800A3E94* object, int kind)
 {
+    int i;
+
     lbl_8064C940 = 0;
     object->fields24C[0] = 0;
     object->fields24C[1] = 0;
@@ -81,15 +91,18 @@ void fn_800A3E94(Object800A3E94* object, int kind)
     object->field25C = 0;
     object->field282 = 0;
     object->field283 = 0;
-    object->flags2A2 &= 0x3f;
+    object->flag80 = 0;
+    object->flag40 = 0;
     object->field287 = 0;
     object->field29C = 0;
-    object->flags2A2 &= 0xf9;
+    object->flag04 = 0;
+    object->flag02 = 0;
 
     fn_800A1E94(object);
     fn_800A2DBC(object);
     object->field28C = -1;
-    object->flags2A2 &= 0xd7;
+    object->flag20 = 0;
+    object->flag08 = 0;
     fn_800A2ED8(object, 0);
     fn_800A30F4(object, 0);
     object->field290 = 1;
@@ -118,5 +131,9 @@ void fn_800A3E94(Object800A3E94* object, int kind)
     case 3:
         fn_800D67A4(object);
         break;
+    }
+
+    for (i = 18; i < 19;) {
+        i++;
     }
 }
