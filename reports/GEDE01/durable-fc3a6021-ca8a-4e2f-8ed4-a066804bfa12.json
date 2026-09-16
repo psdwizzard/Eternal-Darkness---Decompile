@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "fc3a6021-ca8a-4e2f-8ed4-a066804bfa12",
+  "attempt": 5,
+  "base_commit": "4f1685dbd54f15880b7fcc08ca33972c07e0a2a1",
+  "target": "fn_80182514",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-fc3a6021-ca8a-4e2f-8ed4-a066804bfa12.json"
+  ],
+  "divergence": "Size-exact 644-byte/161-instruction reconstruction scores 95.02484%, with 35 relocation-bearing instructions on each side. The remaining divergence is confined to pre-loop setup scheduling: retail loads lbl_80651CF0 into r0 at 0x2C, lbl_80651CF4 into r3 at 0x30, and lbl_806509BC into r0 at 0x38, while generated code loads lbl_80651CF4 into r7 at 0x2C, lbl_80651CF0 into r3 at 0x30, and lbl_806509BC into r0 at 0x34, with the corresponding stack stores reordered. Consequently relocation targets occur at different instruction offsets and relocation-strict match credit is not claimed. The canonical full build passed and build/GEDE01/main.dol was verified at SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
