@@ -59,8 +59,6 @@ extern u16 lbl_806519BC;
 extern void* lbl_8064C4E0;
 extern u8 lbl_802FC5BC[];
 
-/* NonMatching: size-exact; only the initial handle comparison uses r0 instead
- * of the retail r9. */
 int fn_8008A0B4(Work* work)
 {
     int index;
@@ -93,7 +91,8 @@ int fn_8008A0B4(Work* work)
         }
         memory->handle = fn_8006D548(2, 0x1000, 4, position, &config, 0, 0);
     } else {
-        memory->handle = fn_8006D548(2, 0x1000, 1, position, &config, 0);
+        memory->handle = fn_8006D548(2, 0x1000, 1, position, &config, 0,
+                                    memory->handle);
     }
 
     if (memory->handle != -1) {

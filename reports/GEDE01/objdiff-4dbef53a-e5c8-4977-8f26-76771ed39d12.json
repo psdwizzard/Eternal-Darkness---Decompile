@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "assignment_id": "4dbef53a-e5c8-4977-8f26-76771ed39d12",
+  "target": "fn_8008A0B4",
+  "compiler": "GC/1.3",
+  "commands": [
+    "python3 configure.py --non-matching",
+    ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8008A0B4.o",
+    "python3 tools/fndiff.py game/game_fn_8008A0B4.c fn_8008A0B4",
+    "readelf -rW build/GEDE01/obj/game/game_fn_8008A0B4.o",
+    "readelf -rW build/GEDE01/src/game/game_fn_8008A0B4.o",
+    "diff -u <(readelf -rW target.o | awk normalize) <(readelf -rW candidate.o | awk normalize)",
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "objdiff": {
+    "target_bytes": 556,
+    "candidate_bytes": 556,
+    "match_percent": 100.0,
+    "raw_output": [
+      "target 556 bytes  base 556 bytes  match 100.0"
+    ]
+  },
+  "relocations": {
+    "target_count": 24,
+    "candidate_count": 24,
+    "strict_equal_by_offset_type_symbol_name_addend": true,
+    "normalized_comparison_raw_output": [
+      "strict relocation tuples equal: 24/24 (offset type symbol addend)",
+      "raw .text words equal"
+    ],
+    "target_readelf_raw_output": [
+      "Relocation section '.rela.text' at offset 0x26c contains 24 entries:",
+      "00000024  0000046d R_PPC_EMB_SDA21        00000000   lbl_806519B8 + 0",
+      "00000028  0000056d R_PPC_EMB_SDA21        00000000   lbl_806519BC + 0",
+      "0000003c  0000060a R_PPC_REL24            00000000   fn_8006ED3C + 0",
+      "00000068  0000070a R_PPC_REL24            00000000   fn_80201814 + 0",
+      "00000074  0000080a R_PPC_REL24            00000000   fn_80201BC8 + 0",
+      "0000008c  0000090a R_PPC_REL24            00000000   fn_8011F6A4 + 0",
+      "000000cc  00000a0a R_PPC_REL24            00000000   fn_8006D548 + 0",
+      "000000f0  00000a0a R_PPC_REL24            00000000   fn_8006D548 + 0",
+      "00000108  00000b0a R_PPC_REL24            00000000   fn_8019BBF0 + 0",
+      "0000010e  00000c06 R_PPC_ADDR16_HA        00000000   fn_8019BC48 + 0",
+      "00000116  00000c04 R_PPC_ADDR16_LO        00000000   fn_8019BC48 + 0",
+      "00000144  00000d6d R_PPC_EMB_SDA21        00000000   lbl_8064C4E0 + 0",
+      "00000148  00000e0a R_PPC_REL24            00000000   fn_801E79FC + 0",
+      "00000156  00000f06 R_PPC_ADDR16_HA        00000000   lbl_802FC5BC + 0",
+      "0000015a  00000f04 R_PPC_ADDR16_LO        00000000   lbl_802FC5BC + 0",
+      "00000170  0000100a R_PPC_REL24            00000000   memcpy + 0",
+      "000001a0  0000110a R_PPC_REL24            00000000   fn_80147EC4 + 0",
+      "000001b4  0000120a R_PPC_REL24            00000000   fn_8008799C + 0",
+      "000001bc  0000130a R_PPC_REL24            00000000   fn_801809A0 + 0",
+      "000001c8  0000070a R_PPC_REL24            00000000   fn_80201814 + 0",
+      "000001cc  0000080a R_PPC_REL24            00000000   fn_80201BC8 + 0",
+      "000001e0  0000140a R_PPC_REL24            00000000   fn_8012FF34 + 0",
+      "000001f0  0000150a R_PPC_REL24            00000000   fn_800879E0 + 0",
+      "000001fc  0000160a R_PPC_REL24            00000000   fn_801302BC + 0"
+    ],
+    "candidate_readelf_raw_output": [
+      "Relocation section '.rela.text' at offset 0x260 contains 24 entries:",
+      "00000024  0000036d R_PPC_EMB_SDA21        00000000   lbl_806519B8 + 0",
+      "00000028  0000046d R_PPC_EMB_SDA21        00000000   lbl_806519BC + 0",
+      "0000003c  0000070a R_PPC_REL24            00000000   fn_8006ED3C + 0",
+      "00000068  0000080a R_PPC_REL24            00000000   fn_80201814 + 0",
+      "00000074  0000090a R_PPC_REL24            00000000   fn_80201BC8 + 0",
+      "0000008c  00000a0a R_PPC_REL24            00000000   fn_8011F6A4 + 0",
+      "000000cc  00000b0a R_PPC_REL24            00000000   fn_8006D548 + 0",
+      "000000f0  00000b0a R_PPC_REL24            00000000   fn_8006D548 + 0",
+      "00000108  00000c0a R_PPC_REL24            00000000   fn_8019BBF0 + 0",
+      "0000010e  00000d06 R_PPC_ADDR16_HA        00000000   fn_8019BC48 + 0",
+      "00000116  00000d04 R_PPC_ADDR16_LO        00000000   fn_8019BC48 + 0",
+      "00000144  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064C4E0 + 0",
+      "00000148  00000e0a R_PPC_REL24            00000000   fn_801E79FC + 0",
+      "00000156  00000606 R_PPC_ADDR16_HA        00000000   lbl_802FC5BC + 0",
+      "0000015a  00000604 R_PPC_ADDR16_LO        00000000   lbl_802FC5BC + 0",
+      "00000170  00000f0a R_PPC_REL24            00000000   memcpy + 0",
+      "000001a0  0000100a R_PPC_REL24            00000000   fn_80147EC4 + 0",
+      "000001b4  0000110a R_PPC_REL24            00000000   fn_8008799C + 0",
+      "000001bc  0000120a R_PPC_REL24            00000000   fn_801809A0 + 0",
+      "000001c8  0000080a R_PPC_REL24            00000000   fn_80201814 + 0",
+      "000001cc  0000090a R_PPC_REL24            00000000   fn_80201BC8 + 0",
+      "000001e0  0000130a R_PPC_REL24            00000000   fn_8012FF34 + 0",
+      "000001f0  0000140a R_PPC_REL24            00000000   fn_800879E0 + 0",
+      "000001fc  0000150a R_PPC_REL24            00000000   fn_801302BC + 0"
+    ]
+  },
+  "new_codegen_hypothesis": "The retail allocation of the initial handle value to r9 reflects a seventh integer argument on the direct non--1 path, not merely an arbitrary short-lived comparison temporary.",
+  "hypothesis_result": "Matched. Passing memory->handle directly as the seventh fn_8006D548 argument on the else path makes its initial load live into argument register r9 without adding an instruction; the branch compare then also uses r9.",
+  "canonical_build": {
+    "result": "success",
+    "raw_output": [
+      "[859/862] DOL build/GEDE01/main.dol",
+      "[860/862] CHECK config/GEDE01/build.sha1",
+      "build/GEDE01/main.dol: OK",
+      "[861/862] PROGRESS",
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    ],
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_ok": true
+  },
+  "legal_audit": {
+    "independent_translation_unit": "eternal-darkness-decomp/src/game/game_fn_8008A0B4.c",
+    "registration": "eternal-darkness-decomp/configure.py: Object(Matching, game/game_fn_8008A0B4.c)",
+    "split": "eternal-darkness-decomp/config/GEDE01/splits.txt: text 0x8008A0B4-0x8008A2E0",
+    "inline_or_whole_function_assembly": false,
+    "neighboring_function_edits": false,
+    "generated_or_private_inputs_staged": false
+  }
+}
