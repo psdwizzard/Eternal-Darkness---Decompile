@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "dbdacc2d-79eb-4290-ba13-7182a2352923",
+  "attempt": 1,
+  "base_commit": "d0eb403f2879c23b3a6a075281846db6379525d0",
+  "target": "fn_8012FF34",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-dbdacc2d-79eb-4290-ba13-7182a2352923.json"
+  ],
+  "divergence": "Canonical objdiff is size-exact at 172/172 bytes and 95.093025%. The only remaining codegen divergence is the equivalent scheduling/register allocation of the first two position words: retail emits lwz r5,0(r29); lwz r4,4(r29); lfs f0,lbl_806501DC@sda21; stw r5,0(r6); stw r4,4(r6), while the candidate emits lwz r5,4(r29); lfs f0,lbl_806501DC@sda21; lwz r4,0(r29); stw r4,0(r6); stw r5,4(r6). All three relocation-bearing instructions have the correct types and targets, but the candidate is not a 100% canonical/relocation-strict match."
+}
