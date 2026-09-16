@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "aeb7660f-0c13-445b-bddb-4135aaa10c4f",
+  "attempt": 1,
+  "base_commit": "c632f1b987f59c01c6121351df19afe48c17b908",
+  "target": "fn_801A85D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-aeb7660f-0c13-445b-bddb-4135aaa10c4f.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff measures 82.0% over size-equal 140-byte functions. Retail materializes the descriptor source in r11, copies words 0/2/6/7 before loading the saved input through r3, then loads words 1/3/4/5; canonical materializes the source in r10, loads the saved input into r11 before forming the stack destination, and assigns the descriptor words to different registers. Both relocation-bearing instructions retain the same targets/addends, but instruction scheduling and register assignment remain non-matching."
+}
