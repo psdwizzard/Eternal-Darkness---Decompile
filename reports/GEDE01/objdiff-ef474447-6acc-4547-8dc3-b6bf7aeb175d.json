@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "assignment_id": "ef474447-6acc-4547-8dc3-b6bf7aeb175d",
+  "target": "fn_800BFFDC",
+  "source": "eternal-darkness-decomp/src/game/game_fn_800BFFDC.c",
+  "registration": "Object(NonMatching, \"game/game_fn_800BFFDC.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": "[1/1] RUN configure.py; build files regenerated successfully"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[865/869] LINK build/GEDE01/main.elf; [866/869] DOL build/GEDE01/main.dol; [867/869] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [868/869] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800BFFDC fn_800BFFDC -o build/GEDE01/objdiff-ef474447-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=99.60784 retail_bytes=612 generated_bytes=612 retail_instructions=153 generated_instructions=153 differing_rows=1 retail_relocation_associated_instructions=34 generated_relocation_associated_instructions=34; retail offset 88 (0x58): mr r0, r25; generated offset 88 (0x58): li r0, 0x0"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800BFFDC fn_800BFFDC -o build/GEDE01/objdiff-ef474447-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=99.60784 retail_bytes=612 generated_bytes=612 retail_instructions=153 generated_instructions=153 differing_rows=1 retail_relocation_associated_instructions=34 generated_relocation_associated_instructions=34; retail offset 88 (0x58): mr r0, r25; generated offset 88 (0x58): li r0, 0x0"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-ef474447-canonical.raw.json build/GEDE01/objdiff-ef474447-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "cmp_exit=0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    }
+  ],
+  "canonical": {
+    "match_percent": 99.60784,
+    "retail_bytes": 612,
+    "generated_bytes": 612,
+    "retail_instructions": 153,
+    "generated_instructions": 153,
+    "differing_rows": 1
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_relocation_associated_instructions": 34,
+    "generated_relocation_associated_instructions": 34,
+    "addresses_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true
+  },
+  "retail_difference": "At function offset 0x58 retail emits mr r0,r25; r25 is the secondary flag initialized to zero at offset 0x54.",
+  "generated_difference": "At function offset 0x58 canonical GC/1.3 emits the semantically equivalent li r0,0.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "legal_audit": "The retained translation is an independently reconstructed C implementation. It contains no inline or whole-function assembly and no copied proprietary source or generated binary.",
+  "conclusion": "Attempted: the retained honest C reconstruction is behavior-complete, size-exact, and relocation-exact. It remains NonMatching because one code-generation instruction differs."
+}

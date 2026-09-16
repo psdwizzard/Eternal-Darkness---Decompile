@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "ef474447-6acc-4547-8dc3-b6bf7aeb175d",
+  "attempt": 2,
+  "base_commit": "d43a594590210a1f04032f5c7ce90657f3938519",
+  "target": "fn_800BFFDC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ef474447-6acc-4547-8dc3-b6bf7aeb175d.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits a size-exact 612-byte function at 99.60784%; canonical and relocation-strict objdiff reports are byte-identical, and all 34 relocation-associated instructions agree in address, type, target, and addend. The sole remaining code difference is at function offset 0x58: retail emits mr r0,r25 using the secondary flag initialized to zero at 0x54, while generated code emits the semantically equivalent li r0,0. The full build passed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
