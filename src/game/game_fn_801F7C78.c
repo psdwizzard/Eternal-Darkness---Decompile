@@ -44,6 +44,10 @@ extern void fn_801F7AD4(void*);
 
 #pragma use_lmw_stmw on
 #pragma opt_lifetimes off
+/* NonMatching: behavior-complete reconstruction. Retail keeps the global base
+ * in r31 throughout and schedules the two Vec3 aggregate copies as interleaved
+ * word stores; canonical GC/1.3 reloads the base around setup and emits the
+ * loop's aggregate stores in a different order. */
 void fn_801F7C78(void)
 {
     Vec3 initial = *(Vec3*)lbl_8023B7E4;

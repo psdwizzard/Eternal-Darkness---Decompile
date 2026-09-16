@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "7c59b647-88ae-4878-840d-c499eb39c525",
+  "attempt": 1,
+  "base_commit": "1c4e559464569f8334deec3db45854fd741e5818",
+  "target": "fn_801F7C78",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7c59b647-88ae-4878-840d-c499eb39c525.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff score is 76.92105%: retail is 456 bytes/114 instructions while GC/1.3 emits 460 bytes/115 instructions. Retail retains lbl_8063C6B8 in r31 from the first setup call and interleaves both Vec3 aggregate copies in the loop; generated code reloads the global base during setup, assigns the two loop pointers oppositely, and schedules each aggregate copy as a separate three-store group. Removing opt_lifetimes was codegen-neutral; declaring the global as a singleton regressed the strict score to 59.95614%, so the 76.92105% candidate was restored."
+}
