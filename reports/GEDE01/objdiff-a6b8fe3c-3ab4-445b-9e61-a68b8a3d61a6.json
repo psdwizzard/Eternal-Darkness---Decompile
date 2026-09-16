@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "assignment_id": "a6b8fe3c-3ab4-445b-9e61-a68b8a3d61a6",
+  "target": "fn_8019F00C",
+  "source": "eternal-darkness-decomp/src/game/game_fn_8019F00C.c",
+  "compiler": "GC/1.3",
+  "registration": "Object(NonMatching, \"game/game_fn_8019F00C.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8019F00C fn_8019F00C -o build/GEDE01/fn_8019F00C-a6-canonical.json --format json-pretty",
+    "raw_output": "target 420 bytes  base 420 bytes  match 99.28571",
+    "target_size": 420,
+    "candidate_size": 420,
+    "match_percent": 99.28571,
+    "raw_report_sha256": "ede22bd8683815966614d2eba8b3e4a798b3fc4c6b04c3aabb26b09b9f14ab21"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8019F00C fn_8019F00C -o build/GEDE01/fn_8019F00C-a6-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_output": "left size=420 match_percent=99.28571 relocation_count=18; right size=420 match_percent=99.28571 relocation_count=18; ordered address/type/target/addend tuples equal=true",
+    "target_relocation_count": 18,
+    "candidate_relocation_count": 18,
+    "ordered_relocation_type_target_addend_tuples_equal": true,
+    "ordered_relocations": [[44,10,2,null],[48,10,3,null],[64,10,2,null],[68,10,4,null],[84,10,2,null],[88,10,5,null],[104,10,2,null],[120,10,6,null],[132,10,7,null],[156,10,8,null],[200,10,9,null],[264,10,9,null],[300,10,10,null],[328,10,11,null],[336,10,12,null],[344,10,13,null],[364,10,14,null],[396,10,6,null]],
+    "raw_report_sha256": "ede22bd8683815966614d2eba8b3e4a798b3fc4c6b04c3aabb26b09b9f14ab21",
+    "canonical_report_byte_identical": true,
+    "cmp_raw_output": "cmp_exit=0"
+  },
+  "different_hypothesis_tested": {
+    "hypothesis": "Separate the raw int outer iterator from its converted latch value while keeping the window-base calculation as an int expression, so the allocator can reproduce retail's r27 raw iterator, r29 converted value, r28 window base, r30 entry table, and r31 count without the prior candidate's collapsed u16 lifetime.",
+    "u16_latch_raw_output": "target 420 bytes  base 420 bytes  match 98.7619",
+    "u16_latch_result": "Rejected: saved argument/count/table allocation improves, but GC/1.3 emits clrlslwi at 0x0090 and recolors the window loop; declaration-order and register-qualified variants score no higher.",
+    "widened_latch_raw_output": "target 420 bytes  base 420 bytes  match 98.7619",
+    "widened_latch_result": "Rejected: unsigned-int latch removes the clrlslwi but changes the saved-register permutation and leaves fourteen operand differences."
+  },
+  "instruction_differences": [
+    {"offset":"0x001c","target":"mr r31, r7","candidate":"mr r30, r7"},
+    {"offset":"0x007c","target":"li r27, 0x0","candidate":"li r31, 0x0"},
+    {"offset":"0x0088","target":"mr r30, r3","candidate":"mr r29, r3"},
+    {"offset":"0x008c","target":"mr r3, r27","candidate":"mr r3, r28"},
+    {"offset":"0x0090","target":"slwi r28, r29, 2","candidate":"slwi r28, r28, 2"},
+    {"offset":"0x00b0","target":"lwzx r0, r30, r0","candidate":"lwzx r0, r29, r0"},
+    {"offset":"0x00f0","target":"lwzx r0, r30, r0","candidate":"lwzx r0, r29, r0"},
+    {"offset":"0x0138","target":"clrlwi r30, r0, 16","candidate":"clrlwi r27, r0, 16"},
+    {"offset":"0x0164","target":"cmplw r0, r30","candidate":"cmplw r0, r27"},
+    {"offset":"0x0170","target":"addi r27, r27, 0x1","candidate":"addi r31, r31, 0x1"},
+    {"offset":"0x0174","target":"clrlwi r29, r27, 16","candidate":"clrlwi r28, r31, 16"},
+    {"offset":"0x0178","target":"cmpw r29, r31","candidate":"cmpw r28, r30"}
+  ],
+  "full_build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changed": false,
+    "neighboring_functions_edited": false,
+    "global_progress_edited": false
+  }
+}
