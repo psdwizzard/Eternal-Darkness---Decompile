@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "7c596f43-b92d-4b2d-9ba0-01287af79930",
+  "attempt": 8,
+  "base_commit": "0b47b410199fd2a089bab99c790623f2edf17f66",
+  "target": "fn_801E6814",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7c596f43-b92d-4b2d-9ba0-01287af79930.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7c596f43-b92d-4b2d-9ba0-01287af79930-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-7c596f43-b92d-4b2d-9ba0-01287af79930.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-7c596f43-b92d-4b2d-9ba0-01287af79930.json",
+    "eternal-darkness-decomp/reports/GEDE01/notes-7c596f43-b92d-4b2d-9ba0-01287af79930.json"
+  ],
+  "divergence": "Recovered best canonical and relocation-strict score 99.525314%; both functions are 632 bytes / 158 instructions. Ten instructions (11 bytes) differ in the numeric parser: accumulator allocated to r5 instead of retail r4, digit count to r4 instead of r5, add operand order at 0x88, and downstream font base/index allocations. Differing offsets: 0x78, 0x80, 0x88, 0x8c, 0xa8, 0xb0, 0xb8, 0xc0, 0xc4, 0xd0. All 20 ELF relocation records match exactly in offset, type, target and addend. Sixteen new parser CFG variants did not improve the recovered candidate. Registration remains NonMatching; required DOL hash verifies the retail-linked build, not a matching candidate."
+}

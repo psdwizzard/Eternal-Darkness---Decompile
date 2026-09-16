@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "assignment_id": "7c596f43-b92d-4b2d-9ba0-01287af79930",
+  "target": "fn_801E6814",
+  "accepted_base": "0b47b410199fd2a089bab99c790623f2edf17f66",
+  "actual_head": "0b47b410199fd2a089bab99c790623f2edf17f66",
+  "reviewed_history": [
+    {
+      "commit": "f696af3fb7eee1af2161da125872b2813bf61757",
+      "finding": "Attempt 7: validation branch polarity, font-consumer lifetimes and accumulator snapshots; best 99.525314%."
+    },
+    {
+      "commit": "4dc886c365ceac7c21102935d133b4da3a9299b1",
+      "finding": "Attempt 6: recovered typed widths indexing resolves seven r-path differences; extensive arithmetic, declaration, initialization, character temporaries and aggregate parser trials."
+    },
+    {
+      "commit": "c65b445cb6f010cbbe8dc21d5cd24af2a2d87dd9",
+      "finding": "Attempt 5: block scope, for-loop updates and volatile r-path load ordering did not improve 99.24051%."
+    },
+    {
+      "commit": "867d6583914de9b8fcd4ae99e6b66021f67774d2",
+      "finding": "Attempt 3 retained 99.11392% reconstruction."
+    },
+    {
+      "commit": "fb95972d8e8705dea61d0c93d0bcc2e6e6534ef4",
+      "finding": "Attempt 2 retained 99.11392% reconstruction."
+    }
+  ],
+  "hypothesis": "Explicit parser loop exits and backward edges can change MWCC CFG traversal, block layout and register assignment independently of prior arithmetic and declaration trials.",
+  "trial_count": 17,
+  "new_variant_count": 16,
+  "selected_trial": "recovered_baseline",
+  "recovered_source_identical": true,
+  "source_sha256": "66a5b30ee71953b868898a045ad429488913768a1f5585698ab8685561ff669f",
+  "findings": "Explicit-break loops become 628 bytes; guarded-do loops become 656 bytes. Backward-goto variants retain 632 bytes and the same 99.525314% score. Mixed while/break forms retain size but regress. Commuting the addition with these new CFG forms does not solve allocation.",
+  "constant_externalization": "Trials used the existing per-function mapping only. Changed compiler-local labels were mapped after confirming the two exact constant bit patterns. Final configure.py is unchanged.",
+  "canonical_settings": "GC/1.3, existing game flags, existing -use_lmw_stmw on; no policy, compiler flag, split or status change.",
+  "scope": "Only the target C source and assignment-specific reports are retained. Pre-existing CLAUDE.md changes are not staged. NonMatching registration remains; DOL build links retail function."
+}

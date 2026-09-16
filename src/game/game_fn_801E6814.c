@@ -81,8 +81,8 @@ void fn_801E6814(TextDescriptor* descriptor, unsigned int font_index)
                 }
             } else if (*text == 'r') {
                 value = lbl_8064D564;
-                value += 31;
-                width += (int)(((u8*)lbl_8064D59C)[value] * lbl_8064C314);
+                value += 26;
+                width += (int)(lbl_8064D59C->widths[value] * lbl_8064C314);
                 text += fn_801E41AC(text) + 1;
             } else {
                 text += fn_801E41AC(text) + 1;

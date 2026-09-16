@@ -1,0 +1,469 @@
+{
+  "version": 1,
+  "assignment_id": "7c596f43-b92d-4b2d-9ba0-01287af79930",
+  "target": "fn_801E6814",
+  "checks": [
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801E6814",
+        "fn_801E6814",
+        "-o",
+        "reports/GEDE01/objdiff-7c596f43-b92d-4b2d-9ba0-01287af79930.json",
+        "--format",
+        "json-pretty"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-7c596f43-b92d-4b2d-9ba0-01287af79930.json\n",
+      "match_percent": 99.525314,
+      "diff_rows": [
+        {
+          "offset": "0x78",
+          "retail": "mulli r4, r4, 0xa",
+          "generated": "mulli r5, r5, 0xa"
+        },
+        {
+          "offset": "0x80",
+          "retail": "addi r5, r5, 0x1",
+          "generated": "addi r4, r4, 0x1"
+        },
+        {
+          "offset": "0x88",
+          "retail": "add r4, r0, r4",
+          "generated": "add r5, r5, r0"
+        },
+        {
+          "offset": "0x8c",
+          "retail": "subi r4, r4, 0x30",
+          "generated": "subi r5, r5, 0x30"
+        },
+        {
+          "offset": "0xa8",
+          "retail": "cmpwi r5, 0x3",
+          "generated": "cmpwi r4, 0x3"
+        },
+        {
+          "offset": "0xb0",
+          "retail": "cmpwi r4, 0x0",
+          "generated": "cmpwi r5, 0x0"
+        },
+        {
+          "offset": "0xb8",
+          "retail": "cmpwi r4, 0x20",
+          "generated": "cmpwi r5, 0x20"
+        },
+        {
+          "offset": "0xc0",
+          "retail": "lwz r5, lbl_8064D59C@sda21",
+          "generated": "lwz r4, lbl_8064D59C@sda21"
+        },
+        {
+          "offset": "0xc4",
+          "retail": "addi r3, r4, 0x5",
+          "generated": "addi r3, r5, 0x5"
+        },
+        {
+          "offset": "0xd0",
+          "retail": "lbzx r3, r5, r3",
+          "generated": "lbzx r3, r4, r3"
+        }
+      ]
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801E6814",
+        "fn_801E6814",
+        "-o",
+        "reports/GEDE01/objdiff-7c596f43-b92d-4b2d-9ba0-01287af79930-reloc-strict.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-7c596f43-b92d-4b2d-9ba0-01287af79930-reloc-strict.json\n",
+      "match_percent": 99.525314,
+      "diff_rows": [
+        {
+          "offset": "0x78",
+          "retail": "mulli r4, r4, 0xa",
+          "generated": "mulli r5, r5, 0xa"
+        },
+        {
+          "offset": "0x80",
+          "retail": "addi r5, r5, 0x1",
+          "generated": "addi r4, r4, 0x1"
+        },
+        {
+          "offset": "0x88",
+          "retail": "add r4, r0, r4",
+          "generated": "add r5, r5, r0"
+        },
+        {
+          "offset": "0x8c",
+          "retail": "subi r4, r4, 0x30",
+          "generated": "subi r5, r5, 0x30"
+        },
+        {
+          "offset": "0xa8",
+          "retail": "cmpwi r5, 0x3",
+          "generated": "cmpwi r4, 0x3"
+        },
+        {
+          "offset": "0xb0",
+          "retail": "cmpwi r4, 0x0",
+          "generated": "cmpwi r5, 0x0"
+        },
+        {
+          "offset": "0xb8",
+          "retail": "cmpwi r4, 0x20",
+          "generated": "cmpwi r5, 0x20"
+        },
+        {
+          "offset": "0xc0",
+          "retail": "lwz r5, lbl_8064D59C@sda21",
+          "generated": "lwz r4, lbl_8064D59C@sda21"
+        },
+        {
+          "offset": "0xc4",
+          "retail": "addi r3, r4, 0x5",
+          "generated": "addi r3, r5, 0x5"
+        },
+        {
+          "offset": "0xd0",
+          "retail": "lbzx r3, r5, r3",
+          "generated": "lbzx r3, r4, r3"
+        }
+      ]
+    }
+  ],
+  "elf_comparison": {
+    "retail": {
+      "path": "build/GEDE01/obj/game/game_fn_801E6814.o",
+      "bytes": 632,
+      "instructions": 158,
+      "text_sha256": "50136e089df5ab5c3393fbbff210be26fc2068e4291137c2da7929e9cdf4cef6",
+      "relocations": [
+        {
+          "offset": 32,
+          "type": 109,
+          "target": "lbl_8064D584",
+          "addend": 0
+        },
+        {
+          "offset": 54,
+          "type": 6,
+          "target": "lbl_80633418",
+          "addend": 0
+        },
+        {
+          "offset": 62,
+          "type": 4,
+          "target": "lbl_80633418",
+          "addend": 0
+        },
+        {
+          "offset": 80,
+          "type": 109,
+          "target": "lbl_8064D57C",
+          "addend": 0
+        },
+        {
+          "offset": 192,
+          "type": 109,
+          "target": "lbl_8064D59C",
+          "addend": 0
+        },
+        {
+          "offset": 204,
+          "type": 109,
+          "target": "lbl_80651268",
+          "addend": 0
+        },
+        {
+          "offset": 216,
+          "type": 109,
+          "target": "lbl_8064C314",
+          "addend": 0
+        },
+        {
+          "offset": 258,
+          "type": 6,
+          "target": "lbl_8026461C",
+          "addend": 0
+        },
+        {
+          "offset": 262,
+          "type": 4,
+          "target": "lbl_8026461C",
+          "addend": 0
+        },
+        {
+          "offset": 268,
+          "type": 10,
+          "target": "fn_801E7DCC",
+          "addend": 0
+        },
+        {
+          "offset": 284,
+          "type": 109,
+          "target": "lbl_8064D564",
+          "addend": 0
+        },
+        {
+          "offset": 292,
+          "type": 109,
+          "target": "lbl_8064D59C",
+          "addend": 0
+        },
+        {
+          "offset": 312,
+          "type": 109,
+          "target": "lbl_80651268",
+          "addend": 0
+        },
+        {
+          "offset": 320,
+          "type": 109,
+          "target": "lbl_8064C314",
+          "addend": 0
+        },
+        {
+          "offset": 352,
+          "type": 10,
+          "target": "fn_801E41AC",
+          "addend": 0
+        },
+        {
+          "offset": 372,
+          "type": 10,
+          "target": "fn_801E41AC",
+          "addend": 0
+        },
+        {
+          "offset": 396,
+          "type": 109,
+          "target": "lbl_8064D57C",
+          "addend": 0
+        },
+        {
+          "offset": 484,
+          "type": 109,
+          "target": "lbl_80651268",
+          "addend": 0
+        },
+        {
+          "offset": 492,
+          "type": 109,
+          "target": "lbl_80651288",
+          "addend": 0
+        },
+        {
+          "offset": 508,
+          "type": 109,
+          "target": "lbl_8064C314",
+          "addend": 0
+        }
+      ]
+    },
+    "generated": {
+      "path": "build/GEDE01/src/game/game_fn_801E6814.o",
+      "bytes": 632,
+      "instructions": 158,
+      "text_sha256": "024f79bab44f6c37d060baa64287c09d6975594f5ee3e83149570f02949f544f",
+      "relocations": [
+        {
+          "offset": 32,
+          "type": 109,
+          "target": "lbl_8064D584",
+          "addend": 0
+        },
+        {
+          "offset": 54,
+          "type": 6,
+          "target": "lbl_80633418",
+          "addend": 0
+        },
+        {
+          "offset": 62,
+          "type": 4,
+          "target": "lbl_80633418",
+          "addend": 0
+        },
+        {
+          "offset": 80,
+          "type": 109,
+          "target": "lbl_8064D57C",
+          "addend": 0
+        },
+        {
+          "offset": 192,
+          "type": 109,
+          "target": "lbl_8064D59C",
+          "addend": 0
+        },
+        {
+          "offset": 204,
+          "type": 109,
+          "target": "lbl_80651268",
+          "addend": 0
+        },
+        {
+          "offset": 216,
+          "type": 109,
+          "target": "lbl_8064C314",
+          "addend": 0
+        },
+        {
+          "offset": 258,
+          "type": 6,
+          "target": "lbl_8026461C",
+          "addend": 0
+        },
+        {
+          "offset": 262,
+          "type": 4,
+          "target": "lbl_8026461C",
+          "addend": 0
+        },
+        {
+          "offset": 268,
+          "type": 10,
+          "target": "fn_801E7DCC",
+          "addend": 0
+        },
+        {
+          "offset": 284,
+          "type": 109,
+          "target": "lbl_8064D564",
+          "addend": 0
+        },
+        {
+          "offset": 292,
+          "type": 109,
+          "target": "lbl_8064D59C",
+          "addend": 0
+        },
+        {
+          "offset": 312,
+          "type": 109,
+          "target": "lbl_80651268",
+          "addend": 0
+        },
+        {
+          "offset": 320,
+          "type": 109,
+          "target": "lbl_8064C314",
+          "addend": 0
+        },
+        {
+          "offset": 352,
+          "type": 10,
+          "target": "fn_801E41AC",
+          "addend": 0
+        },
+        {
+          "offset": 372,
+          "type": 10,
+          "target": "fn_801E41AC",
+          "addend": 0
+        },
+        {
+          "offset": 396,
+          "type": 109,
+          "target": "lbl_8064D57C",
+          "addend": 0
+        },
+        {
+          "offset": 484,
+          "type": 109,
+          "target": "lbl_80651268",
+          "addend": 0
+        },
+        {
+          "offset": 492,
+          "type": 109,
+          "target": "lbl_80651288",
+          "addend": 0
+        },
+        {
+          "offset": 508,
+          "type": 109,
+          "target": "lbl_8064C314",
+          "addend": 0
+        }
+      ]
+    },
+    "raw_text_equal": false,
+    "raw_differing_bytes": 11,
+    "raw_differing_instructions": [
+      "0x78",
+      "0x80",
+      "0x88",
+      "0x8c",
+      "0xa8",
+      "0xb0",
+      "0xb8",
+      "0xc0",
+      "0xc4",
+      "0xd0"
+    ],
+    "exact_relocation_offsets_types_targets_and_addends_equal": true
+  },
+  "dol_sha1": {
+    "command": [
+      "sha1sum",
+      "build/GEDE01/main.dol"
+    ],
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "stderr": "",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  },
+  "legal_audit": {
+    "command": [
+      "python3",
+      "tools/legal_audit.py"
+    ],
+    "exit_code": 0,
+    "stdout": "legal audit passed (16045 tracked project files inspected)\n",
+    "stderr": ""
+  },
+  "source_assembly_audit": {
+    "command": [
+      "rg",
+      "-n",
+      "asm|__asm|#pragma",
+      "src/game/game_fn_801E6814.c"
+    ],
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "source_sha256": "66a5b30ee71953b868898a045ad429488913768a1f5585698ab8685561ff669f",
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "configure_log": "eternal-darkness-decomp/reports/GEDE01/configure-7c596f43-b92d-4b2d-9ba0-01287af79930.log",
+    "full_log": "eternal-darkness-decomp/reports/GEDE01/build-final-7c596f43-b92d-4b2d-9ba0-01287af79930.log",
+    "dol_gate_lines": [
+      "build/GEDE01/main.dol: OK"
+    ]
+  },
+  "interpretation": "The function remains NonMatching. The complete build links the retail function; the matching DOL hash does not imply the candidate object matches. Typed widths indexing fixes all seven r-path differences recovered from commit 4dc886. Attempt 8 explicit parser exits, backward-goto and guarded-do loop trials did not improve the recovered best. Ten numeric-parser register allocation/operand rows remain."
+}
