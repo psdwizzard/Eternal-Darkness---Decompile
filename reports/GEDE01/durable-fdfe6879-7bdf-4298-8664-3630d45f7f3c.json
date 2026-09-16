@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "fdfe6879-7bdf-4298-8664-3630d45f7f3c",
+  "attempt": 1,
+  "base_commit": "899454183f290fb44bc4e75108ec21d9fca67d74",
+  "target": "fn_80182514",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-fdfe6879-7bdf-4298-8664-3630d45f7f3c.json"
+  ],
+  "divergence": "Size-exact 644-byte/161-instruction reconstruction scores 95.02484%. The remaining divergence is confined to pre-loop setup scheduling: retail loads lbl_80651CF0 into r0 then lbl_80651CF4 into r3 and interleaves their stores with lbl_806509BC, item, and count setup; generated code loads lbl_80651CF4 into r7 before lbl_80651CF0 into r3 and schedules the same stores differently. Consequently the relocation-bearing constant loads occur at different offsets, so relocation-strict match credit is not claimed. The required full build passed and build/GEDE01/main.dol was verified at SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
