@@ -12,10 +12,14 @@ typedef struct Entry {
     List* list;
 } Entry;
 
+typedef struct Flag {
+    u16 bits;
+    u8 pad[6];
+} Flag;
+
 typedef struct Object {
     u8 pad[0x180];
-    u16 flags[96];
-    u8 pad240[0xC0];
+    Flag flags[24];
     Entry** entries;
 } Object;
 
@@ -24,19 +28,21 @@ extern void fn_80125ECC(void *);
 void fn_8012FB50(Object* object, int index)
 {
     Entry* entry;
+    int offset;
     int i;
+    u16 value;
 
     fn_80125ECC(object);
     entry = object->entries[index];
     if (entry != 0) {
         List* list = entry->list;
-        for (i = 0; i < list->count; i++) {
-            u16 value = list->values[i];
+        for (i = 0, offset = 0; i < list->count; i++, offset += 2) {
+            value = *(u16*)((u8*)list->values + offset);
             if (!(value & 0x8000)) {
-                object->flags[value & 0x1FFF] |= 2;
+                object->flags[value].bits |= 2;
             }
         }
     } else if (index == -1) {
-        /* Retail accepts the sentinel as a no-op. */
+        return;
     }
 }

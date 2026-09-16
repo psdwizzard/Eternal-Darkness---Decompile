@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "ee49f273-2ed1-4727-a770-e80c6395d32b",
+  "attempt": 2,
+  "base_commit": "11de7203ec1444dc4109015f5b3e949aa5647c53",
+  "target": "fn_8012FB50",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ee49f273-2ed1-4727-a770-e80c6395d32b.json"
+  ],
+  "divergence": "Best canonical and relocation-strict direct objdiff score is 89.51219%: retail is 164 bytes and GC/1.3 emits 156 bytes. The explicit return recovers retail's cmpwi r31,-1. The residual sentinel tail is retail bne plus nop versus generated fallthrough. In the loop, retail assigns byte offset/value to r3/r4 while generated assigns r4/r3; retail then scales into r0, adds the object base into r4, and uses displacement-0x180 lhz/sth, while generated uses addi 0x180 and indexed lhzx/sthx. Declaration reorder, Flag pointer hoist, and byte-cast base experiments from the preserved attempt did not close this compiler-shape divergence. The sole R_PPC_REL24 relocation at offset 28 targets fn_80125ECC with addend 0 on both sides."
+}
