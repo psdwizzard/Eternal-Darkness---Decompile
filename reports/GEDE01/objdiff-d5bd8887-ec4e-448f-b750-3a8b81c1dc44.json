@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "assignment_id": "d5bd8887-ec4e-448f-b750-3a8b81c1dc44",
+  "target": "fn_8015E9EC",
+  "tool": "objdiff-cli 3.6.1",
+  "canonical": {
+    "command": "python3 tools/fndiff.py game/game_fn_8015E9EC.c fn_8015E9EC",
+    "raw_summary": "target 144 bytes  base 144 bytes  match 87.75",
+    "target_size_bytes": 144,
+    "base_size_bytes": 144,
+    "match_percent": 87.75,
+    "generated_raw_json": "build/GEDE01/fndiff_fn_8015E9EC.json"
+  },
+  "relocation_strict": {
+    "matched": 9,
+    "total": 9,
+    "raw_measured_rows": [
+      "0x0038 R_PPC_REL24 DCInvalidateRange addend 0",
+      "0x003c R_PPC_ADDR16_HA lbl_805FAA40 addend 0",
+      "0x0040 R_PPC_ADDR16_HA fn_8015E8E8 addend 0",
+      "0x0044 R_PPC_ADDR16_LO fn_8015E8E8 addend 0",
+      "0x004c R_PPC_ADDR16_LO lbl_805FAA40 addend 0",
+      "0x0064 R_PPC_REL24 fn_8021B730 addend 0",
+      "0x0068 R_PPC_ADDR16_HA lbl_805E2BDC addend 0",
+      "0x0070 R_PPC_ADDR16_LO lbl_805E2BDC addend 0",
+      "0x0078 R_PPC_REL24 fn_8020D318 addend 0"
+    ]
+  },
+  "raw_codegen_divergence": [
+    "retail 0x0014: stw r30, 0x18(r1); canonical has no corresponding instruction at this position",
+    "retail 0x0018: mr r30, r4; canonical has no corresponding instruction at this position",
+    "retail 0x001c: clrrwi r4, r0, 5; canonical 0x001c: clrrwi r31, r0, 5",
+    "retail 0x0020: stw r29, 0x14(r1); canonical 0x0020: stw r30, 0x18(r1)",
+    "retail 0x0024: mr r29, r3; canonical 0x0024: mr r30, r4",
+    "retail 0x0028: mr r3, r30; canonical 0x0028: mr r4, r31",
+    "canonical 0x002c: stw r29, 0x14(r1); retail has no corresponding instruction at this position",
+    "canonical 0x0030: mr r29, r3; retail has no corresponding instruction at this position",
+    "retail 0x0034: mr r31, r4; canonical 0x0034: mr r3, r30"
+  ],
+  "variants_measured": [
+    "assignment expression in DCInvalidateRange argument: 87.75%",
+    "separate size assignment before DCInvalidateRange: 87.75%",
+    "compound += and &= assignment expression: 87.75%",
+    "separate aligned local assigned in DCInvalidateRange argument: 87.75%",
+    "signed size parameter with assignment expression: 87.75%"
+  ],
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol",
+      "python3 tools/legal_audit.py"
+    ],
+    "raw_outputs": [
+      "[860/860] PROGRESS",
+      "build/GEDE01/main.dol: OK",
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+      "legal audit passed (15783 tracked project files inspected)"
+    ]
+  }
+}

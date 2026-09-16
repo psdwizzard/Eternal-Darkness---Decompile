@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d5bd8887-ec4e-448f-b750-3a8b81c1dc44",
+  "attempt": 1,
+  "base_commit": "acc511e6434c90eb39fdab3d06b8e9f01b711fd1",
+  "target": "fn_8015E9EC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d5bd8887-ec4e-448f-b750-3a8b81c1dc44.json"
+  ],
+  "divergence": "Canonical objdiff is size-exact at 144/144 bytes and scores 87.75%, with all 9/9 relocation-bearing instructions matching in offset, type, target, and addend. The remaining divergence is confined to prologue/argument register scheduling at 0x14-0x34: retail computes the aligned size in r4 and delays mr r31,r4 until immediately before DCInvalidateRange, whereas canonical MWCC computes it directly in r31 and then copies r31 to r4."
+}
