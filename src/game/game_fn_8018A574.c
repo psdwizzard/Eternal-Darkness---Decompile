@@ -62,7 +62,7 @@ void fn_8018A574(u8* transform, u8* object, void* context, s16* out)
         y = dims[1];
         z = dims[2];
         x0 = x - radius;
-        y1 = y + radius;
+        y1 = radius + y;
         x1 = x + radius;
         y0 = y - radius;
         output[0] = x0;

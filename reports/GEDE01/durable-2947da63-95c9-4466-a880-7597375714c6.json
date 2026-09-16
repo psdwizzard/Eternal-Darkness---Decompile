@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "2947da63-95c9-4466-a880-7597375714c6",
+  "attempt": 6,
+  "base_commit": "1244ae534ab9daf49437ad60c04e4b12e3689e70",
+  "target": "fn_8018A574",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2947da63-95c9-4466-a880-7597375714c6.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2947da63-95c9-4466-a880-7597375714c6-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-2947da63-95c9-4466-a880-7597375714c6.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-2947da63-95c9-4466-a880-7597375714c6.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-2947da63-95c9-4466-a880-7597375714c6.json"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff score 99.72222% at 792/792 bytes (191/198 instruction pairs exact). Seven real instruction differences remain at offsets 0x298, 0x2A0, 0x2A4, 0x2B4, 0x2B8, 0x2BC, and 0x2C4. Retail uses r8 for radius and r3 for x; compiled C uses r3 for radius and r5 for x. Retail computes x1 before y1, while compiled C computes y1 before x1. Reversing the commutative y1 addition operands raises the fuzzy score from 99.69697% to 99.72222% without reducing the seven instruction differences; this one-line equivalent C change is preserved as NonMatching. All 12 real ELF relocations match in offset, type, target name, and addend. Distinct aggregate-scalarization, short-coordinate-type, outer-scope, and liveness-order hypotheses did not resolve allocation. The canonical full build passed with DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f; because the target remains NonMatching, the DOL uses its retail split."
+}
