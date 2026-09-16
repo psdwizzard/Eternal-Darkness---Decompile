@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "assignment_id": "453fc7a7-2624-43a6-a4bc-ea16b76c951a",
+  "target": "fn_801FABA4",
+  "compiler": "GC/1.3",
+  "compiler_flags": ["-use_lmw_stmw on"],
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_801FABA4.c fn_801FABA4",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measured_output": {
+    "build": "build/GEDE01/main.dol: OK",
+    "fndiff": "target 424 bytes  base 428 bytes  match 82.40566",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "canonical": {
+    "match_percent": 82.40566,
+    "target_bytes": 424,
+    "generated_bytes": 428,
+    "aligned_instruction_rows": 112,
+    "equal_rows": 67,
+    "argument_mismatches": 24,
+    "deletions": 5,
+    "insertions": 6,
+    "replacements": 10
+  },
+  "relocation_strict": {
+    "match_percent": 82.40566,
+    "passed": false,
+    "canonical_base_target": "lbl_8063C6B8",
+    "retail_real_relocation_counts": {
+      "R_PPC_ADDR16_HA": 1,
+      "R_PPC_ADDR16_LO": 1,
+      "R_PPC_EMB_SDA21": 10,
+      "R_PPC_REL24": 9
+    },
+    "generated_real_relocation_counts": {
+      "R_PPC_ADDR16_HA": 2,
+      "R_PPC_ADDR16_LO": 2,
+      "R_PPC_EMB_SDA21": 10,
+      "R_PPC_REL24": 9
+    },
+    "observed_extra_relocations": [
+      {"generated_offset": "0x64", "type": "R_PPC_ADDR16_HA", "target": "lbl_8063C6B8", "addend": 0},
+      {"generated_offset": "0x6c", "type": "R_PPC_ADDR16_LO", "target": "lbl_8063C6B8", "addend": 0}
+    ],
+    "note": "The retained aggregate-pointer reconstruction uses lbl_8063C6B8 as the canonical relocation target with retail addends, but canonical GC/1.3 rematerializes the base after memcpy and shifts the subsequent stream."
+  },
+  "preserved_attempt": {
+    "source": "src/game/game_fn_801FABA4.c",
+    "registration": "configure.py: Object(NonMatching, game/game_fn_801FABA4.c, mw_version=GC/1.3, extra_cflags=-use_lmw_stmw on)",
+    "split": ".text 0x801FABA4..0x801FAD4C",
+    "historical_probe_range_percent": "55.415092..82.40566",
+    "historical_source_commit": "53bcc8d64478d1514b593a4e6f1208b49253ffee"
+  },
+  "divergence": "Retail retains lbl_8063C6B8 in r31, forms the entries pointer in r30 with addi r30,r31,0xDD0 immediately after memcpy, and keeps the u16 output offset in r28. Canonical GC/1.3 emits an extra lis/addi pair at generated offsets 0x64/0x6C to rematerialize lbl_8063C6B8, assigns the entries pointer to r28 and output offset to r30, and consequently changes address folding and instruction scheduling through the loop and tail calls. The historical interior-symbol form is byte-identical but relocation-invalid because it targets lbl_8063CD18, lbl_8063D378, lbl_8063D400, and lbl_8063D488 rather than lbl_8063C6B8 plus addends."
+}

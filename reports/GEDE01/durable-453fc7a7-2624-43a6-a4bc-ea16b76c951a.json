@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "453fc7a7-2624-43a6-a4bc-ea16b76c951a",
+  "attempt": 2,
+  "base_commit": "aec76480d5c5d87592b31b06108b737ea5882f03",
+  "target": "fn_801FABA4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-453fc7a7-2624-43a6-a4bc-ea16b76c951a.json"
+  ],
+  "divergence": "Best fresh canonical and relocation-strict objdiff remains 82.40566%: retail is 424 bytes and retains lbl_8063C6B8 in r31, with the entries pointer in r30 and u16 output offset in r28; canonical GC/1.3 is 428 bytes, rematerializes lbl_8063C6B8 after memcpy with an extra HA/LO relocation pair, and rotates entries/offset into r28/r30, changing address folding and scheduling. The historical interior-symbol form is byte-identical but invalid under relocation-strict comparison because it targets lbl_8063CD18, lbl_8063D378, lbl_8063D400, and lbl_8063D488 rather than lbl_8063C6B8 plus addends. Fresh configure/build passed and main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
