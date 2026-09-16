@@ -19,7 +19,7 @@ u32 fn_8015E7C8(u32 size)
 
     if (position + size >= end)
         result = 0;
-    if (position + size < end)
+    if ((u32)(position + size >= end) <= 0)
         lbl_8064D1B4 += size;
     return result;
 }
