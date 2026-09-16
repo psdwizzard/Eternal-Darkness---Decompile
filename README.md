@@ -56,7 +56,7 @@ Verified DOL SHA-1: `ea24b6af954876ce072562ff39cdb4c81d32be1f`.
 | --- | ---: | ---: | ---: |
 | Code bytes | 1040976 | 2300692 | 45.25% |
 | Functions | 5946 | 8214 | 72.39% |
-| Objects (TUs) | 6181 | 7067 | 87.46% |
+| Objects (TUs) | 6181 | 7068 | 87.45% |
 <!-- progress:end -->
 
 <!-- contributors:start -->
