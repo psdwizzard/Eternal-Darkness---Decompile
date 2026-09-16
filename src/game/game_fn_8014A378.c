@@ -40,13 +40,6 @@ extern int fn_80157034(void*);
 
 void fn_8014A378(void* left, void* right)
 {
-    int count;
-    SlotSet* rightSet;
-    SlotSet* leftSet;
-    int rightFlags;
-    u16 bit;
-    int i;
-
     if (left == 0) {
         return;
     }
@@ -54,16 +47,26 @@ void fn_8014A378(void* left, void* right)
         return;
     }
 
+    {
+    u16 slotBit;
+    int rightFlags;
+    u16 bit;
+    int i;
+    int count;
+    SlotSet* leftSet;
+    SlotSet* rightSet;
+
     rightSet = fn_80156938(right);
     leftSet = fn_80156938(left);
     rightFlags = rightSet != 0 ? fn_80193860(rightSet) : 0x40000;
     count = leftSet->count;
 
-    for (i = 0, bit = 1; i < count; i++, bit <<= 1) {
+    for (bit = 1, i = 0; i < count; bit = slotBit << 1, i++) {
         void* object;
         u32 flags;
 
-        if ((leftSet->mask & bit) == 0 || (object = leftSet->objects[i]) == 0) {
+        slotBit = bit;
+        if ((leftSet->mask & slotBit) == 0 || (object = leftSet->objects[i]) == 0) {
             continue;
         }
         flags = fn_80193860(object);
@@ -75,7 +78,7 @@ void fn_8014A378(void* left, void* right)
                 fn_801938D8(object, (flags | 0x40000) & ~0x200);
             } else {
                 fn_8017FD6C(object);
-                leftSet->mask &= ~bit;
+                leftSet->mask &= ~slotBit;
             }
         } else if (!fn_801562DC(left)) {
             u8 lower = fn_80193870(rightSet);
@@ -121,12 +124,14 @@ void fn_8014A378(void* left, void* right)
 
     if (fn_80157034(right)) {
         leftSet->active = 1;
-        for (i = 0, bit = 1; i < count; i++, bit <<= 1) {
+        for (bit = 1, i = 0; i < count; bit = slotBit << 1, i++) {
             void* object;
-            if ((leftSet->mask & bit) != 0 && (object = leftSet->objects[i]) != 0) {
+            slotBit = bit;
+            if ((leftSet->mask & slotBit) != 0 && (object = leftSet->objects[i]) != 0) {
                 fn_8017FD6C(object);
-                leftSet->mask &= ~bit;
+                leftSet->mask &= ~slotBit;
             }
         }
+    }
     }
 }

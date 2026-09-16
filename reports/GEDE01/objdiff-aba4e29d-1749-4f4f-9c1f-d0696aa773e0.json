@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "assignment_id": "aba4e29d-1749-4f4f-9c1f-d0696aa773e0",
+  "target": "fn_8014A378",
+  "tool": "objdiff-cli via tools/fndiff.py",
+  "canonical_command": "python3 tools/fndiff.py game/game_fn_8014A378.c fn_8014A378",
+  "canonical_raw_stdout": "target 836 bytes  base 836 bytes  match 100.0",
+  "canonical": {
+    "retail_bytes": 836,
+    "generated_bytes": 836,
+    "retail_instruction_count": 209,
+    "generated_instruction_count": 209,
+    "differing_instructions": 0,
+    "match_percent": 100.0
+  },
+  "relocation_strict": {
+    "method": "Compared the raw relocation tuple (instruction offset, relocation type, target_symbol, addend) for every relocation-bearing retail and generated instruction in build/GEDE01/fndiff_fn_8014A378.json.",
+    "raw_stdout": "retail_relocations=38 generated_relocations=38 exact_arrays_equal=true",
+    "retail_relocations": 38,
+    "generated_relocations": 38,
+    "exact_arrays_equal": true,
+    "targets_and_addends_equal": true,
+    "raw_equal_tuples": [
+      [40, 10, 2, 0], [56, 10, 2, 0], [76, 10, 3, 0],
+      [144, 10, 3, 0], [176, 10, 4, 0], [184, 10, 5, 0],
+      [208, 10, 6, 0], [220, 10, 7, 0], [244, 10, 8, 0],
+      [260, 10, 9, 0], [272, 10, 10, 0], [300, 10, 11, 0],
+      [316, 10, 12, 0], [344, 10, 13, 0], [356, 10, 14, 0],
+      [372, 10, 15, 0], [408, 10, 13, 0], [412, 10, 15, 0],
+      [448, 10, 14, 0], [480, 10, 13, 0], [496, 10, 14, 0],
+      [500, 6, 16, 0], [508, 4, 16, 0], [512, 10, 17, 0],
+      [520, 10, 18, 0], [540, 10, 19, 0], [548, 10, 20, 0],
+      [560, 10, 4, 0], [580, 10, 4, 0], [596, 10, 5, 0],
+      [612, 10, 21, 0], [624, 10, 22, 0], [648, 10, 23, 0],
+      [656, 10, 24, 0], [668, 10, 25, 0], [692, 10, 23, 0],
+      [720, 10, 26, 0], [780, 10, 7, 0]
+    ]
+  },
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "exit_code": 0,
+    "ninja_check_raw_stdout": "build/GEDE01/main.dol: OK",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_raw_stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_verified": true
+  },
+  "legal_audit": {
+    "translation": "independent C reconstruction",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "private_or_retail_input_committed": false,
+    "generated_binary_committed": false
+  },
+  "result": "matched"
+}
