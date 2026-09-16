@@ -1,0 +1,315 @@
+{
+  "assignment_id": "92e68216-a925-41e2-929c-1eb5a4a81fa4",
+  "target": "fn_8018ABD4",
+  "preserved_attempts_reviewed": [
+    "61cf4a21b0fb003db7101d1aa3fbbfb15bba2af2",
+    "a7549babb029913ad6e063b5b52dab953768bc1f",
+    "35f7c244755f78f10ca3c34a67e242c69f4b1148",
+    "7883c1c3847594eb12c657eb34173d78ce284b6a",
+    "8c88b09899ef93b5da547ec314bf819f9b47a717",
+    "d045f5b4d5d1fe9acf4b252e43ae09067481a600"
+  ],
+  "history_review": "Reviewed supplied diagnoses for all six preserved attempts, plus the preserved attempt-6 envelope, raw baseline objdiff, and original session-1355 frontier and verification reports through git show. Did not rerun the documented declaration-order, narrow-counter, callback-outer-local, initializer-order, fake ABI, or multiplication-derived variants.",
+  "new_hypothesis": "An explicit C register storage hint might prioritize the byte-offset live range over the compiler-hoisted callback constant. Follow-up expression-local and increment-placement experiments test whether optimizer temporary construction or loop liveness controls that allocation without adding dead state or changing compiler flags.",
+  "experiments": [
+    {
+      "name": "register_byte_offset",
+      "canonical_percent": 99.625,
+      "generated_bytes": 320,
+      "retained": false
+    },
+    {
+      "name": "unsigned_byte_offset",
+      "canonical_percent": 99.625,
+      "generated_bytes": 320,
+      "retained": false
+    },
+    {
+      "name": "increment_in_body",
+      "canonical_percent": 99.625,
+      "generated_bytes": 320,
+      "retained": false
+    },
+    {
+      "name": "increment_before_object",
+      "canonical_percent": 99.475,
+      "generated_bytes": 320,
+      "retained": false
+    },
+    {
+      "name": "loop_local_vertex",
+      "canonical_percent": 99.625,
+      "generated_bytes": 320,
+      "retained": false
+    },
+    {
+      "name": "loop_local_callback",
+      "canonical_percent": 99.625,
+      "generated_bytes": 320,
+      "retained": false
+    },
+    {
+      "name": "reverse_add_operands",
+      "canonical_percent": 99.625,
+      "generated_bytes": 320,
+      "retained": false
+    },
+    {
+      "name": "reverse_increment_order",
+      "canonical_percent": 99.475,
+      "generated_bytes": 320,
+      "retained": false
+    }
+  ],
+  "conclusion": "None improved the preserved baseline. Restore the accepted-base source verbatim and keep its existing NonMatching registration. All candidates retained the honest one-argument ABI and typed callback. Only one C translation unit survives; discarded changes are recorded as experimental diffs, not additional source files.",
+  "dol_interpretation": "For this NonMatching function the matching DOL uses the retail fallback; a correct DOL hash does not establish a C match.",
+  "canonical_percent": 99.625,
+  "relocation_strict_percent": 99.625,
+  "text_size": 320,
+  "instruction_count": 80,
+  "exact_instruction_words": 75,
+  "word_differences": [
+    {
+      "offset": "0x6c",
+      "retail_word": "3b430000",
+      "generated_word": "3b630000"
+    },
+    {
+      "offset": "0x70",
+      "retail_word": "3b600000",
+      "generated_word": "3b400000"
+    },
+    {
+      "offset": "0x7c",
+      "retail_word": "7f45d378",
+      "generated_word": "7f65db78"
+    },
+    {
+      "offset": "0x80",
+      "retail_word": "7c9fda14",
+      "generated_word": "7c9fd214"
+    },
+    {
+      "offset": "0xb0",
+      "retail_word": "3b7b0018",
+      "generated_word": "3b5a0018"
+    }
+  ],
+  "relocation_count": 13,
+  "relocations_equal": true,
+  "normalized_relocations": [
+    [
+      [
+        "00000016",
+        "R_PPC_ADDR16_HA",
+        "00000000",
+        "lbl_80607120",
+        "+",
+        "0"
+      ],
+      [
+        "0000001a",
+        "R_PPC_ADDR16_LO",
+        "00000000",
+        "lbl_80607120",
+        "+",
+        "0"
+      ],
+      [
+        "0000001c",
+        "R_PPC_EMB_SDA21",
+        "00000000",
+        "lbl_8064D738",
+        "+",
+        "0"
+      ],
+      [
+        "0000005e",
+        "R_PPC_ADDR16_HA",
+        "00000000",
+        "fn_8018D020",
+        "+",
+        "0"
+      ],
+      [
+        "0000006e",
+        "R_PPC_ADDR16_LO",
+        "00000000",
+        "fn_8018D020",
+        "+",
+        "0"
+      ],
+      [
+        "00000084",
+        "R_PPC_REL24",
+        "00000000",
+        "fn_80188A7C",
+        "+",
+        "0"
+      ],
+      [
+        "000000c8",
+        "R_PPC_REL24",
+        "00000000",
+        "DCFlushRange",
+        "+",
+        "0"
+      ],
+      [
+        "000000d4",
+        "R_PPC_REL24",
+        "00000000",
+        "DCFlushRange",
+        "+",
+        "0"
+      ],
+      [
+        "000000e0",
+        "R_PPC_REL24",
+        "00000000",
+        "DCFlushRange",
+        "+",
+        "0"
+      ],
+      [
+        "000000e8",
+        "R_PPC_REL24",
+        "00000000",
+        "fn_801ED57C",
+        "+",
+        "0"
+      ],
+      [
+        "000000fc",
+        "R_PPC_REL24",
+        "00000000",
+        "fn_8018D0D0",
+        "+",
+        "0"
+      ],
+      [
+        "00000110",
+        "R_PPC_REL24",
+        "00000000",
+        "fn_80188868",
+        "+",
+        "0"
+      ],
+      [
+        "00000128",
+        "R_PPC_REL24",
+        "00000000",
+        "fn_801ED57C",
+        "+",
+        "0"
+      ]
+    ],
+    [
+      [
+        "00000016",
+        "R_PPC_ADDR16_HA",
+        "00000000",
+        "lbl_80607120",
+        "+",
+        "0"
+      ],
+      [
+        "0000001a",
+        "R_PPC_ADDR16_LO",
+        "00000000",
+        "lbl_80607120",
+        "+",
+        "0"
+      ],
+      [
+        "0000001c",
+        "R_PPC_EMB_SDA21",
+        "00000000",
+        "lbl_8064D738",
+        "+",
+        "0"
+      ],
+      [
+        "0000005e",
+        "R_PPC_ADDR16_HA",
+        "00000000",
+        "fn_8018D020",
+        "+",
+        "0"
+      ],
+      [
+        "0000006e",
+        "R_PPC_ADDR16_LO",
+        "00000000",
+        "fn_8018D020",
+        "+",
+        "0"
+      ],
+      [
+        "00000084",
+        "R_PPC_REL24",
+        "00000000",
+        "fn_80188A7C",
+        "+",
+        "0"
+      ],
+      [
+        "000000c8",
+        "R_PPC_REL24",
+        "00000000",
+        "DCFlushRange",
+        "+",
+        "0"
+      ],
+      [
+        "000000d4",
+        "R_PPC_REL24",
+        "00000000",
+        "DCFlushRange",
+        "+",
+        "0"
+      ],
+      [
+        "000000e0",
+        "R_PPC_REL24",
+        "00000000",
+        "DCFlushRange",
+        "+",
+        "0"
+      ],
+      [
+        "000000e8",
+        "R_PPC_REL24",
+        "00000000",
+        "fn_801ED57C",
+        "+",
+        "0"
+      ],
+      [
+        "000000fc",
+        "R_PPC_REL24",
+        "00000000",
+        "fn_8018D0D0",
+        "+",
+        "0"
+      ],
+      [
+        "00000110",
+        "R_PPC_REL24",
+        "00000000",
+        "fn_80188868",
+        "+",
+        "0"
+      ],
+      [
+        "00000128",
+        "R_PPC_REL24",
+        "00000000",
+        "fn_801ED57C",
+        "+",
+        "0"
+      ]
+    ]
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+}
