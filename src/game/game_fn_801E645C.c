@@ -19,26 +19,27 @@ extern char lbl_8026461C[];
 
 s8* fn_801E645C(s8* text, int font_index, int* width, int* height)
 {
-    u32 font;
-    int value;
     int digits;
+    int value;
 
     *width = 0;
-    font = (u32)lbl_80633418 + (font_index << 2);
-    *height = (int)(lbl_8064C314 * (*(FontDescriptor**)font)->height);
+    font_index <<= 2;
+    *height = (int)(lbl_8064C314 * (*(FontDescriptor**)((u8*)lbl_80633418 + font_index))->height);
 
     while (text[0] != 0 || text[1] != 0) {
         lbl_8064D57C = 0;
         while (*text == '\\' && lbl_8064D57C == 0) {
             ++text;
             if (*text == 'i') {
-                value = 0;
                 digits = 0;
+                value = 0;
                 text++;
                 while (*text >= '0' && *text <= '9' && digits < 3) {
-                    value = value * 10 + *text - '0';
+                    value *= 10;
+                    value += *text;
                     digits++;
                     text++;
+                    value -= '0';
                 }
                 if (value >= 0 && value < 32) {
                     *width += (int)(lbl_8064C314 * lbl_8064D59C->widths[value]);
@@ -62,7 +63,7 @@ s8* fn_801E645C(s8* text, int font_index, int* width, int* height)
                 text += fn_801E41AC(text) + 1;
             }
 
-            value = (int)(lbl_8064C314 * (*(FontDescriptor**)font)->height);
+            value = (int)(lbl_8064C314 * (*(FontDescriptor**)((u8*)lbl_80633418 + font_index))->height);
             if (value > *height)
                 *height = value;
         }
@@ -72,7 +73,7 @@ s8* fn_801E645C(s8* text, int font_index, int* width, int* height)
         if (*text == '\n')
             return text + 1;
 
-        *width = (int)(*width + lbl_8064C314 * (*(FontDescriptor**)font)->widths[*text]);
+        *width = (int)(*width + lbl_8064C314 * (*(FontDescriptor**)((u8*)lbl_80633418 + font_index))->widths[*text]);
         text++;
     }
     return text;
