@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "0d6d131c-821b-4700-b444-49a5c4861fd1",
+  "attempt": 3,
+  "base_commit": "2ed8d28639a99dbb7f4fa3284482ee253ca5418f",
+  "target": "fn_8014D100",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0d6d131c-821b-4700-b444-49a5c4861fd1.json"
+  ],
+  "divergence": "Canonical objdiff is 99.97748% at equal 888-byte size. All 222 instructions agree, but relocation-strict comparison is 44/45: at text offset 0x4c the retail R_PPC_EMB_SDA21 relocation targets lbl_80651BF4 with addend 0, while the aggregate Vec3s initializer emits lbl_80651BF0 with addend 4. Directly naming lbl_80651BF4 corrects the relocation but perturbs instruction scheduling and lowers the measured match to 97.297295%."
+}

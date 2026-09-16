@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "assignment_id": "0d6d131c-821b-4700-b444-49a5c4861fd1",
+  "target": "fn_8014D100",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_8014D100.c fn_8014D100",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "build_exit_code": 0,
+  "build_raw_tail": [
+    "[858/860] DOL build/GEDE01/main.dol",
+    "[859/860] CHECK config/GEDE01/build.sha1",
+    "build/GEDE01/main.dol: OK",
+    "[860/860] PROGRESS"
+  ],
+  "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_ok": true,
+  "legal_audit_exit_code": 0,
+  "legal_audit_raw": "legal audit passed (15891 tracked project files inspected)",
+  "objdiff_raw_summary": "target 888 bytes  base 888 bytes  match 99.97748",
+  "objdiff_raw_difference": "* 0x004c  lhz r0, lbl_80651BF4@sda21 [None+0 t109] | lhz r0, lbl_80651BF0+0x4@sda21 [None+0 t109]",
+  "target_size": 888,
+  "candidate_size": 888,
+  "match_percent": 99.97748,
+  "instruction_count_target": 222,
+  "instruction_count_candidate": 222,
+  "relocation_count_target": 45,
+  "relocation_count_candidate": 45,
+  "relocation_strict_matches": 44,
+  "relocation_strict_total": 45,
+  "relocation_strict_100_percent": false,
+  "differences": [
+    {
+      "offset": 76,
+      "type": "R_PPC_EMB_SDA21",
+      "target": "lhz r0, lbl_80651BF4@sda21",
+      "candidate": "lhz r0, lbl_80651BF0+0x4@sda21",
+      "target_relocation_symbol": "lbl_80651BF4",
+      "target_addend": 0,
+      "candidate_relocation_symbol": "lbl_80651BF0",
+      "candidate_addend": 4,
+      "objdiff_kind": "DIFF_ARG_MISMATCH"
+    }
+  ],
+  "experiments": [
+    {
+      "source_form": "Load lbl_80651BF0 as u32 and lbl_80651BF4 as u16 into the Vec3s local",
+      "raw_summary": "target 888 bytes  base 888 bytes  match 97.297295",
+      "result": "Relocation identity was corrected, but compiler scheduling moved the basis-vector third-word load and both range loads around the floating-point comparison."
+    }
+  ],
+  "assessment": "All 222 final generated instructions and their ordering agree with retail, and the linked address is equivalent. The candidate is not accepted as matching because one of 45 relocations names the aggregate base plus addend 4 instead of the retail subobject symbol with addend 0."
+}

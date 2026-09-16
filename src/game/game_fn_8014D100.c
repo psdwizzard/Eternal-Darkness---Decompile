@@ -67,7 +67,8 @@ extern int fn_80052310(int, const s16*);
 /*
  * Honest NonMatching reconstruction of both effect-spawn paths. The generated
  * code is byte-identical; its remaining difference is the relocation identity
- * for the trailing halfword of the aggregate range initializer.
+ * for the trailing halfword of the aggregate range initializer. Naming that
+ * halfword separately fixes its relocation but perturbs instruction scheduling.
  */
 void fn_8014D100(void* context, int* source, int first_kind, int second_kind)
 {
