@@ -24,10 +24,10 @@ extern float lbl_806501DC;
 extern void fn_80125ECC(void *);
 extern int fn_8012FFE0(void*, int, int);
 
-int fn_8012FF34(Object* object, Vec3* position, int flags, int index)
+int fn_8012FF34(Object* object, volatile Vec3* position, int flags, int index)
 {
-    register u32 x;
     register u32 y;
+    register u32 x;
     register Vec3* destination;
     float one;
     int result;

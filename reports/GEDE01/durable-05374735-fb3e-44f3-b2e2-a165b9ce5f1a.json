@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "05374735-fb3e-44f3-b2e2-a165b9ce5f1a",
+  "attempt": 2,
+  "base_commit": "b8106a9864b8516c0a26ed3f7b6bf19020e73c6e",
+  "target": "fn_8012FF34",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-05374735-fb3e-44f3-b2e2-a165b9ce5f1a.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff is size-exact at 172/172 bytes and 99.48837%. The sole remaining codegen divergence is an equivalent scheduling swap: retail emits lwz r6,0x290(r28); li r0,2; lwz r5,0(r29), while the candidate emits lwz r5,0(r29); li r0,2; lwz r6,0x290(r28). Every other instruction agrees, and all three relocation-bearing instructions agree in offset, type, target, and addend. The final linked DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
