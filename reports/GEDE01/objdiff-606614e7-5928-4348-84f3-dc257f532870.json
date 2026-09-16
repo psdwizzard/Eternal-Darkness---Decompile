@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "assignment_id": "606614e7-5928-4348-84f3-dc257f532870",
+  "target": "fn_800BFFDC",
+  "source": "eternal-darkness-decomp/src/game/game_fn_800BFFDC.c",
+  "registration": "Object(NonMatching, \"game/game_fn_800BFFDC.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": "INFO Loading and analyzing 1 module; INFO Rebuilding relocations and splitting; build files regenerated successfully"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[864/867] LINK build/GEDE01/main.elf; [865/867] DOL build/GEDE01/main.dol; [866/867] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [867/867] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800BFFDC fn_800BFFDC -o build/GEDE01/objdiff-606614e7-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=99.60784 retail_bytes=612 generated_bytes=612 retail_instructions=153 generated_instructions=153 differing_rows=1 retail_relocation_associated_instructions=34 generated_relocation_associated_instructions=34"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800BFFDC fn_800BFFDC -o build/GEDE01/objdiff-606614e7-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=99.60784 retail_bytes=612 generated_bytes=612 retail_instructions=153 generated_instructions=153 differing_rows=1 retail_relocation_associated_instructions=34 generated_relocation_associated_instructions=34"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-606614e7-canonical.raw.json build/GEDE01/objdiff-606614e7-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "cmp_exit=0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    }
+  ],
+  "canonical": {
+    "match_percent": 99.60784,
+    "retail_bytes": 612,
+    "generated_bytes": 612,
+    "retail_instructions": 153,
+    "generated_instructions": 153,
+    "differing_rows": 1
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_relocation_associated_instructions": 34,
+    "generated_relocation_associated_instructions": 34,
+    "addresses_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true
+  },
+  "retail_difference": "At function offset 0x58 retail emits mr r0,r25; r25 is the secondary flag initialized to zero at offset 0x54.",
+  "generated_difference": "At function offset 0x58 GC/1.3 emits the semantically equivalent li r0,0.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: the retained honest C reconstruction is behavior-complete, size-exact, and relocation-exact. It is not marked Matching because one code-generation instruction remains different."
+}
