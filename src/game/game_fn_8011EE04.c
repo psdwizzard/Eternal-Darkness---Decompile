@@ -20,7 +20,7 @@ extern void fn_8011FB44(void*, int);
 extern void fn_80128C50(void*);
 extern void fn_8012260C(void*);
 extern int fn_801261F4(void*);
-extern void fn_80120AD0(void*, float, float, int, int);
+extern void fn_80120AD0(void*, const void*, u16, u32, float, float);
 extern const u32 lbl_8023A680[4];
 extern u8 lbl_8024EDD4[];
 extern float lbl_80650068;
@@ -50,10 +50,11 @@ void* fn_8011EE04(void* parent, float x, float y, float z)
     if (parent != 0) {
         sample = fn_80140E58();
         if (*(float*)((u8*)parent + 248) > sample) {
-            bound = *(float*)((u8*)parent + 248);
+            sample = *(float*)((u8*)parent + 248);
         } else {
-            bound = fn_80140E58();
+            sample = fn_80140E58();
         }
+        bound = sample;
     }
     *(float*)(object + 624) = bound;
     *(float*)(object + 628) = bound;
@@ -70,18 +71,19 @@ void* fn_8011EE04(void* parent, float x, float y, float z)
     *(u32*)(object + 16) = lbl_8023A680[1];
     *(u32*)(object + 20) = lbl_8023A680[2];
     fn_8011F890(object, lbl_80650068, lbl_80650068, lbl_8065006C);
-    *(float*)(object + 612) = lbl_80650068;
-    *(float*)(object + 616) = lbl_80650068;
+    sample = lbl_80650068;
+    *(float*)(object + 612) = sample;
+    *(float*)(object + 616) = sample;
     *(float*)(object + 620) = *(float*)(object + 628);
     *(float*)(object + 632) = lbl_80650070;
     *(u32*)(object + 600) = 0x10000;
     fn_80179F48(lbl_8024EDD4, object + 44);
 
     *(void**)(object + 372) = object;
-    entry = object + 384;
+    entry = object;
     for (i = 0; i < 24; i++) {
-        *(u16*)entry = 1;
-        *(u32*)(entry - 4) = 0;
+        *(u16*)(entry + 384) = 1;
+        *(u32*)(entry + 380) = 0;
         entry += 8;
     }
 
@@ -93,16 +95,17 @@ void* fn_8011EE04(void* parent, float x, float y, float z)
     *(u32*)(object + 608) = 0;
     fn_80128C50(object + 68);
     object[730] = 0;
+    sample = lbl_80650074;
     object[731] = 5;
     object[732] = 18;
     object[733] = 150;
-    *(float*)(object + 636) = lbl_80650074;
-    *(float*)(object + 640) = lbl_80650074;
+    *(float*)(object + 636) = sample;
+    *(float*)(object + 640) = sample;
     *(u16*)(object + 722) = 0;
     fn_8012260C(object);
     if (*(int*)(object + 580) == 205) {
         fn_801261F4(object);
-        fn_80120AD0(object, lbl_80650070, lbl_80650068, 100, 522);
+        fn_80120AD0(object, 0, 100, 522, lbl_80650070, lbl_80650068);
     }
     return object;
 }
