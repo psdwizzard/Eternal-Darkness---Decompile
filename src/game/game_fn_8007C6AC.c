@@ -24,12 +24,12 @@ extern void fn_8007D0F0(void);
 s32 fn_8007C6AC(void *object)
 {
     s32 object_id;
+    s32 shifted_id;
     void *resource;
     void *manager;
+    void *created;
     void *current;
     u32 kind;
-    void *created;
-    s32 shifted_id;
     s32 result;
 
     object_id = fn_80201B54(object);
