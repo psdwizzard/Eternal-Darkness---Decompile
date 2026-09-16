@@ -18,14 +18,13 @@ int fn_800CD84C(void *object)
 
     if (object != 0) {
         RuntimeState *state = ((RuntimeState *)fn_80201B8C(object));
-        if (state->resource->slots[0] != 0) {
-            count = 1;
-        }
-        if (state->resource->slots[1] != 0) {
-            count++;
-        }
-        if (state->resource->slots[2] != 0) {
-            count++;
+        int i;
+
+        /* The cast separates the field offset from the index before unrolling. */
+        for (i = 0; i < 3; ++i) {
+            if (((volatile int *)state->resource->slots)[i] != 0) {
+                count++;
+            }
         }
     }
     return count;
