@@ -10,7 +10,7 @@ typedef struct Event800A78E0 {
     s8 index;
 } Event800A78E0;
 
-extern const u32 lbl_8023975C[3];
+extern u32 lbl_8023975C[3];
 extern int lbl_8064B81C;
 extern int fn_800CA6DC(void*, int, u32, void*, int);
 extern int fn_800CD84C(void*);
@@ -27,12 +27,8 @@ int fn_800A78E0(void* context, Event800A78E0* event, void* extra)
     mapped = values[event->index - 1];
 
     if (lbl_8064B81C == 0) {
-        int timer = 200;
         event->kind = 0;
-        if (event->timer >= 200) {
-            timer = event->timer;
-        }
-        event->timer = timer;
+        event->timer = event->timer >= 200 ? event->timer : 200;
     }
 
     switch (event->kind) {

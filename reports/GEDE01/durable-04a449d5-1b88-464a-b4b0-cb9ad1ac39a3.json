@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "04a449d5-1b88-464a-b4b0-cb9ad1ac39a3",
+  "attempt": 1,
+  "base_commit": "1f82d85658df3b9e504d020f3418c882735c1c13",
+  "target": "fn_800A78E0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-04a449d5-1b88-464a-b4b0-cb9ad1ac39a3.json"
+  ],
+  "divergence": "Canonical objdiff is size-exact at 392/392 bytes and 94.63265%. All 10 relocation-bearing instructions agree by type, target, and addend. The remaining differences are confined to scheduling in the three-word lbl_8023975C local copy/index setup: retail loads word 2 before lbl_8064B81C, then interleaves the three stack stores before lwzx; MWCC schedules lbl_8064B81C before word 2 and delays all three stores until around/after lwzx."
+}
