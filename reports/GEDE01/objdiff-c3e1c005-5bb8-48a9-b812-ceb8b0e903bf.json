@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "assignment_id": "c3e1c005-5bb8-48a9-b812-ceb8b0e903bf",
+  "target": "fn_8019F00C",
+  "compiler": "GC/1.3",
+  "compiler_flags_delta": "-use_lmw_stmw on",
+  "canonical_objdiff": {
+    "command": "python3 tools/fndiff.py game/game_fn_8019F00C.c fn_8019F00C",
+    "raw_output": "target 420 bytes  base 420 bytes  match 99.28571",
+    "target_size": 420,
+    "candidate_size": 420,
+    "match_percent": 99.28571
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8019F00C fn_8019F00C -o build/GEDE01/fndiff_fn_8019F00C_reloc_attempt4.json --format json -c function_reloc_diffs=name_address",
+    "raw_output": "left fn_8019F00C size 420 match_percent 99.28571; right fn_8019F00C size 420 match_percent 99.28571; left_count=18 right_count=18 tuples_equal=true; left=[[10,2,null],[10,3,null],[10,2,null],[10,4,null],[10,2,null],[10,5,null],[10,2,null],[10,6,null],[10,7,null],[10,8,null],[10,9,null],[10,9,null],[10,10,null],[10,11,null],[10,12,null],[10,13,null],[10,14,null],[10,6,null]]; right=[[10,2,null],[10,3,null],[10,2,null],[10,4,null],[10,2,null],[10,5,null],[10,2,null],[10,6,null],[10,7,null],[10,8,null],[10,9,null],[10,9,null],[10,10,null],[10,11,null],[10,12,null],[10,13,null],[10,14,null],[10,6,null]]",
+    "target_size": 420,
+    "candidate_size": 420,
+    "match_percent": 99.28571,
+    "target_relocation_count": 18,
+    "candidate_relocation_count": 18,
+    "ordered_relocation_type_target_addend_tuples_equal": true,
+    "relocation_targets_in_order": [
+      "fn_80225F4C", "fn_8017FFB8", "fn_80225F4C", "fn_8017FF98",
+      "fn_80225F4C", "fn_8017FFB0", "fn_80225F4C", "fn_8022A75C",
+      "fn_801EF2B0", "fn_8022B7CC", "fn_801EDEC4", "fn_801EDEC4",
+      "fn_80226AB4", "fn_8019F1CC", "fn_8019F1C0", "fn_8019F1B4",
+      "fn_8019F1B0", "fn_8022A75C"
+    ],
+    "relocation_types_in_order": [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+    "relocation_addends_in_order": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+  },
+  "verification": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2", "sha1sum build/GEDE01/main.dol"],
+    "raw_output": "build/GEDE01/main.dol: OK\nea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "bounded_variants": [
+    {"description": "separate int outer and assigned u16 outer16", "raw_output": "target 420 bytes  base 420 bytes  match 98.7619"},
+    {"description": "separate outer/outer16 with narrowed entry-table lexical scope", "raw_output": "target 420 bytes  base 420 bytes  match 98.7619"},
+    {"description": "outer-first declaration order", "raw_output": "target 420 bytes  base 420 bytes  match 98.57143"},
+    {"description": "u16 first with separate int outer/u16 outer16", "raw_output": "target 420 bytes  base 440 bytes  match 86.47619"},
+    {"description": "register priority and count alias variants", "raw_output": "target 420 bytes  base 420 bytes  match 99.28571 (byte-identical to retained candidate)"}
+  ],
+  "divergence": "Both sides are 420 bytes with identical instruction order, control flow, call relocations, prologue, and epilogue. Twelve instructions differ only in register operands at offsets 0x001c, 0x007c, 0x0088, 0x008c, 0x0090, 0x00b0, 0x00f0, 0x0138, 0x0164, 0x0170, 0x0174, and 0x0178. Retail colors count/outer/entry-table-or-end as r31/r27/r30 and uses r29 for the converted outer/call cursor; canonical GC/1.3 colors the retained C lifetimes as r30/r31/r29-or-r27 while keeping the window base in r28 and call cursor in r29."
+}
