@@ -29,20 +29,24 @@ extern void fn_801ACC94(int);
 void fn_801AAA28(void)
 {
     float value = lbl_80650E60;
-    volatile Vec3* first = &lbl_80608020.first;
-    volatile Vec3* second = &lbl_80608020.second;
-    volatile Vec3* third = &lbl_80608020.third;
-    volatile Vec3* fourth = &lbl_80608020.fourth;
+    volatile Vec3* first;
+    volatile Vec3* second;
+    volatile Vec3* third;
+    volatile Vec3* fourth;
 
+    first = &lbl_80608020.first;
     first->x = value;
     first->y = value;
     first->z = value;
+    second = &lbl_80608020.second;
     second->x = value;
     second->y = value;
     second->z = value;
+    third = &lbl_80608020.third;
     third->x = value;
     third->y = value;
     third->z = lbl_80650E64;
+    fourth = &lbl_80608020.fourth;
     fourth->x = value;
     fourth->y = lbl_80650E68;
     fourth->z = value;

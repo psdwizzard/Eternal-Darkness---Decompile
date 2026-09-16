@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "target": "fn_801AAA28",
+  "compiler": "GC/1.3 with canonical flags, including -schedule off",
+  "commands": {
+    "build": "python3 configure.py && .tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801AAA28 -o build/GEDE01/objdiff-955c7523-canonical.raw.json --format json-pretty fn_801AAA28",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801AAA28 -o build/GEDE01/objdiff-955c7523-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_801AAA28",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measured_outputs": {
+    "build_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical": {
+      "retail_size": 176,
+      "generated_size": 176,
+      "match_percent": 99.454544,
+      "retail_instructions": 44,
+      "generated_instructions": 44,
+      "differing_retail_rows": 4,
+      "retail_relocations": 13,
+      "generated_relocations": 13
+    },
+    "relocation_strict": {
+      "config": "function_reloc_diffs=name_address",
+      "retail_size": 176,
+      "generated_size": 176,
+      "match_percent": 99.454544,
+      "retail_instructions": 44,
+      "generated_instructions": 44,
+      "differing_retail_rows": 4,
+      "retail_relocations": 13,
+      "generated_relocations": 13
+    }
+  },
+  "differing_instructions": [
+    {"offset": 28, "retail": "stfs f1, 0x0(r4)", "generated": "stfs f1, 0x90(r3)"},
+    {"offset": 44, "retail": "stfs f1, 0x0(r5)", "generated": "stfs f1, 0x9c(r3)"},
+    {"offset": 60, "retail": "stfs f1, 0x0(r6)", "generated": "stfs f1, 0xa8(r3)"},
+    {"offset": 80, "retail": "stfs f1, 0x0(r7)", "generated": "stfs f1, 0xb4(r3)"}
+  ],
+  "conclusion": "Size, control flow, instruction count, and all relocation-bearing instructions align. The remaining four argument mismatches are equivalent first-component stores: retail uses each newly materialized Vec3 pointer in r4-r7, while GC/1.3 folds each generated store back to the common r3 base plus the same field offset."
+}
