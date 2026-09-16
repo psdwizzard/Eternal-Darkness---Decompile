@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "assignment_id": "dd9e22a6-ac95-47f0-a231-781f80e62d78",
+  "target": "fn_8014D100",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_8014D100.c fn_8014D100",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "build_exit_code": 0,
+  "build_raw_tail": [
+    "[858/861] DOL build/GEDE01/main.dol",
+    "[859/861] CHECK config/GEDE01/build.sha1",
+    "build/GEDE01/main.dol: OK",
+    "[860/861] PROGRESS"
+  ],
+  "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_ok": true,
+  "legal_audit_exit_code": 0,
+  "legal_audit_raw": "legal audit passed (15901 tracked project files inspected)",
+  "objdiff_raw_summary": "target 888 bytes  base 888 bytes  match 100.0",
+  "target_size": 888,
+  "candidate_size": 888,
+  "match_percent": 100.0,
+  "instruction_count_target": 222,
+  "instruction_count_candidate": 222,
+  "instruction_differences": 0,
+  "relocation_count_target": 45,
+  "relocation_count_candidate": 45,
+  "relocation_strict_matches": 45,
+  "relocation_strict_total": 45,
+  "relocation_strict_100_percent": true,
+  "critical_relocation_raw": "0x004c  lhz r0, lbl_80651BF4@sda21 [None+0 t109] | lhz r0, lbl_80651BF4@sda21 [None+0 t109]",
+  "hypothesis": "Model the contiguous six-byte initializer as independent two-halfword and one-halfword aggregate objects. Aggregate copies retain MWCC's raw lwz/lhz loads and scheduling while naming each retail symbol directly.",
+  "assessment": "Canonical and relocation-strict objdiff are 100%; all 222 instructions and all 45 relocation targets and addends agree with retail."
+}

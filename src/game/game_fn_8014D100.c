@@ -11,6 +11,14 @@ typedef struct Vec3s {
     s16 x, y, z;
 } Vec3s;
 
+typedef struct Vec2s {
+    s16 x, y;
+} Vec2s;
+
+typedef struct Vec1s {
+    s16 z;
+} Vec1s;
+
 #pragma pack(1)
 typedef struct FirstDescriptor {
     u8 pad[0x1D];
@@ -44,7 +52,8 @@ extern const float lbl_80650500;
 extern const float lbl_80650504;
 extern void* lbl_8064C4E0;
 extern int lbl_802FC5BC[];
-extern Vec3s lbl_80651BF0;
+extern Vec2s lbl_80651BF0;
+extern Vec1s lbl_80651BF4;
 
 extern int fn_8011F6A4(void*, int, int, int, SearchResult*, int);
 extern void fn_8012B690(void*, Vec3*, Vec3*);
@@ -64,12 +73,7 @@ extern void *fn_80201B8C();
 extern int fn_800676C8(u8);
 extern int fn_80052310(int, const s16*);
 
-/*
- * Honest NonMatching reconstruction of both effect-spawn paths. The generated
- * code is byte-identical; its remaining difference is the relocation identity
- * for the trailing halfword of the aggregate range initializer. Naming that
- * halfword separately fixes its relocation but perturbs instruction scheduling.
- */
+/* Reconstructed effect-spawn paths. */
 void fn_8014D100(void* context, int* source, int first_kind, int second_kind)
 {
     Vec3s range;
@@ -86,7 +90,8 @@ void fn_8014D100(void* context, int* source, int first_kind, int second_kind)
     unsigned int kind;
     int sound;
 
-    range = lbl_80651BF0;
+    *(Vec2s*)&range = lbl_80651BF0;
+    *(Vec1s*)&range.z = lbl_80651BF4;
 
     if (lbl_8064CF04 >= lbl_806504F8)
         return;
