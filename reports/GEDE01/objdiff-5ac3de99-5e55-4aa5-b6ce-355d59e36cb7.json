@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "assignment_id": "5ac3de99-5e55-4aa5-b6ce-355d59e36cb7",
+  "target": "fn_80087D64",
+  "compiler": "GC/1.3",
+  "compiler_flags_delta": ["-use_lmw_stmw on"],
+  "source_sha256": "7c49f93d14efd57c22437b158ef4718f5c0ed5c5dda8d21419c6efcc31fa880c",
+  "object_sha256": "b2654183a634d328e419d5d9b8588f18c45c6ff608404c74655c091a28d5e726",
+  "objdiff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80087D64 -o build/GEDE01/objdiff_fn_80087D64.json --format json fn_80087D64",
+  "objdiff_raw_summary": "left/retail fn_80087D64 size=352 match_percent=93.21591; right/candidate fn_80087D64 size=360 match_percent=93.21591",
+  "match_percent": 93.21591,
+  "retail_size": 352,
+  "candidate_size": 360,
+  "relocation_strict": {
+    "passed": false,
+    "retail_relocation_instruction_count": 14,
+    "candidate_relocation_instruction_count": 14,
+    "retail_sites": [20, 36, 64, 76, 108, 116, 120, 124, 128, 148, 188, 224, 268, 316],
+    "candidate_sites": [20, 36, 64, 76, 108, 116, 120, 124, 128, 148, 188, 224, 268, 324],
+    "types_in_order": ["R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_ADDR16_HA", "R_PPC_ADDR16_LO", "R_PPC_REL24", "R_PPC_EMB_SDA21", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24"],
+    "targets_in_order": ["fn_8006ED98", "fn_80201814", "fn_80088A04", "fn_8006ECD4", "fn_8006EA4C", "fn_8006EA4C", "fn_8006BEE4", "lbl_8064C824", "fn_801A6D94", "fn_8006ECD4", "fn_8006DEF8", "fn_8006DEF8", "fn_8006ED3C", "fn_800496EC"],
+    "addends_in_order": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "raw_observation": "Types, targets, and zero addends agree in order, but relocation-strict does not pass: the final fn_800496EC R_PPC_REL24 site is retail +316 and candidate +324. The other 13 sites agree exactly."
+  },
+  "build_commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+  "build_raw_result": "Fresh canonical build completed 872/872 with exit status 0, including LINK main.elf, DOL main.dol, CHECK config/GEDE01/build.sha1, and build/GEDE01/main.dol: OK. The final rebuild after restoring the preserved source spelling completed 870/870 with exit status 0 and repeated the same CHECK success.",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_sha1_raw_output": [
+    "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  ],
+  "divergence": "Candidate is 8 bytes longer. Instruction differences are an extra r26 save/restore caused by local lifetime, swapped r29/r30 object/owner allocation, indexed halfword-store formation at retail +0x50..+0x5c, mode-6 offset/entry scheduling at +0x98..+0xf8, and the mode-7 else-path entry setup at +0x110..+0x140. The final relocation is shifted by 8 bytes (+316 retail, +324 candidate), so relocation-strict fails."
+}

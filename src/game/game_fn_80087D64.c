@@ -36,26 +36,29 @@ int fn_80087D64(Work* work)
     Owner* owner;
     void* object;
     State* state;
-    int i;
-    int index;
-    int offset;
-    u8* entry;
 
     state = fn_8006ED98(work);
     object = fn_80201814(work->object_id);
     owner = work->owner;
 
     if (state->mode == 7) {
+        int slot;
+        u8* temp;
+
         fn_80088A04(work);
-        index = fn_8006ECD4(work, 7);
-        ((u16*)((u8*)work + index * 0x2C))[0x60 / 2] = 1;
+        slot = fn_8006ECD4(work, 7);
+        temp = (u8*)work + slot * 0x2C;
+        *(u16*)(temp + 0x60) = 1;
     }
 
     if (state->mode == 6) {
         fn_8006BEE4(state, fn_8006EA4C);
         if (fn_801A6D94(lbl_8064C824)) {
-            index = fn_8006ECD4(work, 6);
-            offset = index * 0x2C;
+            int i;
+            int offset;
+            u8* entry;
+
+            offset = fn_8006ECD4(work, 6) * 0x2C;
             entry = (u8*)work + offset;
             entry[0x68] = 4;
             fn_8006DEF8(work, 6, 0, 0, 0);
@@ -67,11 +70,14 @@ int fn_80087D64(Work* work)
             owner->active = 0;
         }
     } else {
+        int index;
+        u8* entry;
+
         fn_8006ED3C(work, 7, &index);
+        ((u8*)work)[index * 0x2C + 0x6A] = 0;
         entry = (u8*)work + index * 0x2C;
-        entry[0x6A] = 0;
         entry[0x6B] = 4;
-        owner->value160 = fn_800496EC(object, entry, 4, 0);
+        work->owner->value160 = fn_800496EC(object, entry, 4, 0);
     }
     return 1;
 }
