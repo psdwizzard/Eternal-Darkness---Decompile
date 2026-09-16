@@ -1,0 +1,314 @@
+{
+  "version": 1,
+  "assignment_id": "505437c5-5df5-4879-9cbe-d4f4c1740fd1",
+  "target": "fn_8019F00C",
+  "measured_at_utc": "2026-09-16T22:05:02.227052+00:00",
+  "source": "eternal-darkness-decomp/src/game/game_fn_8019F00C.c",
+  "source_sha256": "077416960ffbea367628a01cd357f54ae2b77baf0f14fe4555b466f04a3874e3",
+  "reconciliation": "The accepted base already contains the identical best C source and NonMatching registration from preserved commit 798d7e0cbc801be74cf7ffe19d6d12234b1d9c77. No registration or split change was needed. All experimental source changes were reverted.",
+  "compiler": "GC/1.3",
+  "canonical_compile_command": "tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8019F00C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8019F00C.d build/GEDE01/src/game/game_fn_8019F00C.d",
+  "canonical": {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_8019F00C",
+      "fn_8019F00C",
+      "-o",
+      "reports/GEDE01/canonical-505437c5-5df5-4879-9cbe-d4f4c1740fd1.json",
+      "--format",
+      "json-pretty"
+    ],
+    "raw_output": " INFO Writing to reports/GEDE01/canonical-505437c5-5df5-4879-9cbe-d4f4c1740fd1.json\n",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/canonical-505437c5-5df5-4879-9cbe-d4f4c1740fd1.json",
+    "raw_report_sha256": "ede22bd8683815966614d2eba8b3e4a798b3fc4c6b04c3aabb26b09b9f14ab21",
+    "target_size": 420,
+    "candidate_size": 420,
+    "match_percent": 99.28571
+  },
+  "relocation_strict": {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_8019F00C",
+      "fn_8019F00C",
+      "-o",
+      "reports/GEDE01/strict-505437c5-5df5-4879-9cbe-d4f4c1740fd1.json",
+      "--format",
+      "json-pretty",
+      "-c",
+      "function_reloc_diffs=name_address"
+    ],
+    "raw_output": " INFO Writing to reports/GEDE01/strict-505437c5-5df5-4879-9cbe-d4f4c1740fd1.json\n",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/strict-505437c5-5df5-4879-9cbe-d4f4c1740fd1.json",
+    "raw_report_sha256": "ede22bd8683815966614d2eba8b3e4a798b3fc4c6b04c3aabb26b09b9f14ab21",
+    "target_size": 420,
+    "candidate_size": 420,
+    "match_percent": 99.28571
+  },
+  "elf_relocations": {
+    "target_object": "eternal-darkness-decomp/build/GEDE01/obj/game/game_fn_8019F00C.o",
+    "candidate_object": "eternal-darkness-decomp/build/GEDE01/src/game/game_fn_8019F00C.o",
+    "comparison": "Ordered offset/type/target name/target value/signed RELA addend tuples, decoded directly from ELF32 big-endian section and symbol tables. Symbol-table indices are deliberately resolved to names.",
+    "equal": true,
+    "target_count": 18,
+    "candidate_count": 18,
+    "tuples": [
+      {
+        "offset": 44,
+        "type": 10,
+        "target": "fn_80225F4C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 48,
+        "type": 10,
+        "target": "fn_8017FFB8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 64,
+        "type": 10,
+        "target": "fn_80225F4C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 68,
+        "type": 10,
+        "target": "fn_8017FF98",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 84,
+        "type": 10,
+        "target": "fn_80225F4C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 88,
+        "type": 10,
+        "target": "fn_8017FFB0",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 104,
+        "type": 10,
+        "target": "fn_80225F4C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 120,
+        "type": 10,
+        "target": "fn_8022A75C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 132,
+        "type": 10,
+        "target": "fn_801EF2B0",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 156,
+        "type": 10,
+        "target": "fn_8022B7CC",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 200,
+        "type": 10,
+        "target": "fn_801EDEC4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 264,
+        "type": 10,
+        "target": "fn_801EDEC4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 300,
+        "type": 10,
+        "target": "fn_80226AB4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 328,
+        "type": 10,
+        "target": "fn_8019F1CC",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 336,
+        "type": 10,
+        "target": "fn_8019F1C0",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 344,
+        "type": 10,
+        "target": "fn_8019F1B4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 364,
+        "type": 10,
+        "target": "fn_8019F1B0",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 396,
+        "type": 10,
+        "target": "fn_8022A75C",
+        "target_value": 0,
+        "addend": 0
+      }
+    ],
+    "target_readelf_raw_output": "\nRelocation section '.rela.text' at offset 0x1e4 contains 18 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000002c  0000040a R_PPC_REL24            00000000   fn_80225F4C + 0\n00000030  0000050a R_PPC_REL24            00000000   fn_8017FFB8 + 0\n00000040  0000040a R_PPC_REL24            00000000   fn_80225F4C + 0\n00000044  0000060a R_PPC_REL24            00000000   fn_8017FF98 + 0\n00000054  0000040a R_PPC_REL24            00000000   fn_80225F4C + 0\n00000058  0000070a R_PPC_REL24            00000000   fn_8017FFB0 + 0\n00000068  0000040a R_PPC_REL24            00000000   fn_80225F4C + 0\n00000078  0000080a R_PPC_REL24            00000000   fn_8022A75C + 0\n00000084  0000090a R_PPC_REL24            00000000   fn_801EF2B0 + 0\n0000009c  00000a0a R_PPC_REL24            00000000   fn_8022B7CC + 0\n000000c8  00000b0a R_PPC_REL24            00000000   fn_801EDEC4 + 0\n00000108  00000b0a R_PPC_REL24            00000000   fn_801EDEC4 + 0\n0000012c  00000c0a R_PPC_REL24            00000000   fn_80226AB4 + 0\n00000148  00000d0a R_PPC_REL24            00000000   fn_8019F1CC + 0\n00000150  00000e0a R_PPC_REL24            00000000   fn_8019F1C0 + 0\n00000158  00000f0a R_PPC_REL24            00000000   fn_8019F1B4 + 0\n0000016c  0000100a R_PPC_REL24            00000000   fn_8019F1B0 + 0\n0000018c  0000080a R_PPC_REL24            00000000   fn_8022A75C + 0\n",
+    "candidate_readelf_raw_output": "\nRelocation section '.rela.text' at offset 0x1d8 contains 18 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000002c  0000030a R_PPC_REL24            00000000   fn_80225F4C + 0\n00000030  0000040a R_PPC_REL24            00000000   fn_8017FFB8 + 0\n00000040  0000030a R_PPC_REL24            00000000   fn_80225F4C + 0\n00000044  0000050a R_PPC_REL24            00000000   fn_8017FF98 + 0\n00000054  0000030a R_PPC_REL24            00000000   fn_80225F4C + 0\n00000058  0000060a R_PPC_REL24            00000000   fn_8017FFB0 + 0\n00000068  0000030a R_PPC_REL24            00000000   fn_80225F4C + 0\n00000078  0000070a R_PPC_REL24            00000000   fn_8022A75C + 0\n00000084  0000080a R_PPC_REL24            00000000   fn_801EF2B0 + 0\n0000009c  0000090a R_PPC_REL24            00000000   fn_8022B7CC + 0\n000000c8  00000a0a R_PPC_REL24            00000000   fn_801EDEC4 + 0\n00000108  00000a0a R_PPC_REL24            00000000   fn_801EDEC4 + 0\n0000012c  00000b0a R_PPC_REL24            00000000   fn_80226AB4 + 0\n00000148  00000c0a R_PPC_REL24            00000000   fn_8019F1CC + 0\n00000150  00000d0a R_PPC_REL24            00000000   fn_8019F1C0 + 0\n00000158  00000e0a R_PPC_REL24            00000000   fn_8019F1B4 + 0\n0000016c  00000f0a R_PPC_REL24            00000000   fn_8019F1B0 + 0\n0000018c  0000070a R_PPC_REL24            00000000   fn_8022A75C + 0\n"
+  },
+  "text_bytes": {
+    "equal": false,
+    "target_size": 420,
+    "candidate_size": 420,
+    "different_instruction_words": 12,
+    "target_sha256": "225568565aaf5fa219355c06242fb2e64054fe73af92dfef94b5eda381157645",
+    "candidate_sha256": "66d4e0cb00f818d4e93bfa591532bad37e57dc57a86df58ecbdbf2a1a3b0bdbb",
+    "differences": [
+      {
+        "offset": "0x001c",
+        "target_word": "7cff3b78",
+        "candidate_word": "7cfe3b78",
+        "target_instruction": "mr r31, r7",
+        "candidate_instruction": "mr r30, r7"
+      },
+      {
+        "offset": "0x007c",
+        "target_word": "3b600000",
+        "candidate_word": "3be00000",
+        "target_instruction": "li r27, 0x0",
+        "candidate_instruction": "li r31, 0x0"
+      },
+      {
+        "offset": "0x0088",
+        "target_word": "7c7e1b78",
+        "candidate_word": "7c7d1b78",
+        "target_instruction": "mr r30, r3",
+        "candidate_instruction": "mr r29, r3"
+      },
+      {
+        "offset": "0x008c",
+        "target_word": "7f63db78",
+        "candidate_word": "7f83e378",
+        "target_instruction": "mr r3, r27",
+        "candidate_instruction": "mr r3, r28"
+      },
+      {
+        "offset": "0x0090",
+        "target_word": "57bc103a",
+        "candidate_word": "579c103a",
+        "target_instruction": "slwi r28, r29, 2",
+        "candidate_instruction": "slwi r28, r28, 2"
+      },
+      {
+        "offset": "0x00b0",
+        "target_word": "7c1e002e",
+        "candidate_word": "7c1d002e",
+        "target_instruction": "lwzx r0, r30, r0",
+        "candidate_instruction": "lwzx r0, r29, r0"
+      },
+      {
+        "offset": "0x00f0",
+        "target_word": "7c1e002e",
+        "candidate_word": "7c1d002e",
+        "target_instruction": "lwzx r0, r30, r0",
+        "candidate_instruction": "lwzx r0, r29, r0"
+      },
+      {
+        "offset": "0x0138",
+        "target_word": "541e043e",
+        "candidate_word": "541b043e",
+        "target_instruction": "clrlwi r30, r0, 16",
+        "candidate_instruction": "clrlwi r27, r0, 16"
+      },
+      {
+        "offset": "0x0164",
+        "target_word": "7c00f040",
+        "candidate_word": "7c00d840",
+        "target_instruction": "cmplw r0, r30",
+        "candidate_instruction": "cmplw r0, r27"
+      },
+      {
+        "offset": "0x0170",
+        "target_word": "3b7b0001",
+        "candidate_word": "3bff0001",
+        "target_instruction": "addi r27, r27, 0x1",
+        "candidate_instruction": "addi r31, r31, 0x1"
+      },
+      {
+        "offset": "0x0174",
+        "target_word": "577d043e",
+        "candidate_word": "57fc043e",
+        "target_instruction": "clrlwi r29, r27, 16",
+        "candidate_instruction": "clrlwi r28, r31, 16"
+      },
+      {
+        "offset": "0x0178",
+        "target_word": "7c1df800",
+        "candidate_word": "7c1cf000",
+        "target_instruction": "cmpw r29, r31",
+        "candidate_instruction": "cmpw r28, r30"
+      }
+    ]
+  },
+  "new_hypothesis": "Reuse one widened int current local for the outer-loop conversion and the later three-call window cursor, rather than the separately assigned outer16 tried previously. This tests whether the shared phase value reproduces retail r29 without a clrlslwi.",
+  "new_hypothesis_result": "Equal 420-byte size and 99.28571%, but 14 differing instructions rather than baseline 12. Other declaration orders regress.",
+  "experiments_report": "eternal-darkness-decomp/reports/GEDE01/trials-505437c5-5df5-4879-9cbe-d4f4c1740fd1.json",
+  "measured_compile_and_diff_runs_including_controls": 545,
+  "full_build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/build-505437c5-5df5-4879-9cbe-d4f4c1740fd1.log",
+    "dol_check_line": "build/GEDE01/main.dol: OK",
+    "log_normalization": "Compiler CRLF line endings normalized to LF; log text otherwise unchanged."
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "note": "The target remains NonMatching; the full DOL links its retail object. This DOL check does not imply the C candidate matches."
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (16126 tracked project files inspected)\n",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "compiler_or_gate_policy_changed": false,
+    "neighboring_functions_edited": false,
+    "global_progress_edited": false,
+    "private_or_generated_binary_committed": false
+  },
+  "scope_note": "Only assignment-specific reports are committed. The pre-existing CLAUDE.md change is excluded."
+}
