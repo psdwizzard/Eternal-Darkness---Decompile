@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "17991094-1d29-490c-8ebb-7b12173e35de",
+  "attempt": 1,
+  "base_commit": "4bd5325cc550d40060c5bdcffbb9b4c474c56b64",
+  "target": "fn_801FABA4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-17991094-1d29-490c-8ebb-7b12173e35de.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff remains 82.40566%: retail is 424 bytes and retains lbl_8063C6B8 in r31, with the entry pointer in r30 and u16 output offset in r28; canonical GC/1.3 is 428 bytes, rematerializes lbl_8063C6B8 after memcpy, and rotates entry/offset into r28/r30, changing address folding and scheduling. Direct-base and lifetime-order probes scored 55.415092% to 82.34906%. The prior byte-matching interior-symbol form is invalid under relocation-strict comparison because it targets lbl_8063CD18/lbl_8063D378/lbl_8063D400/lbl_8063D488 rather than lbl_8063C6B8 plus addends. Fresh configure/build passed and main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

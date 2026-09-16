@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "assignment_id": "17991094-1d29-490c-8ebb-7b12173e35de",
+  "target": "fn_801FABA4",
+  "compiler": "GC/1.3",
+  "compiler_flags": ["-use_lmw_stmw on"],
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_801FABA4.c fn_801FABA4",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measured_output": {
+    "build": "build/GEDE01/main.dol: OK",
+    "fndiff": "target 424 bytes  base 428 bytes  match 82.40566",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "canonical": {
+    "match_percent": 82.40566,
+    "target_bytes": 424,
+    "generated_bytes": 428,
+    "aligned_instruction_rows": 112,
+    "equal_rows": 67,
+    "argument_mismatches": 24,
+    "deletions": 5,
+    "insertions": 6,
+    "replacements": 10
+  },
+  "relocation_strict": {
+    "match_percent": 82.40566,
+    "passed": false,
+    "canonical_base_target": "lbl_8063C6B8",
+    "observed_extra_relocations": [
+      {"generated_offset": "0x64", "type": "R_PPC_ADDR16_HA", "target": "lbl_8063C6B8", "addend": 0},
+      {"generated_offset": "0x6c", "type": "R_PPC_ADDR16_LO", "target": "lbl_8063C6B8", "addend": 0}
+    ],
+    "note": "All intended aggregate references use lbl_8063C6B8 plus the retail addends, but the generated stream rematerializes that base after memcpy, shifting subsequent relocation offsets."
+  },
+  "probes": [
+    {"source_shape": "Initialize entry before memcpy", "generated_bytes": 420, "match_percent": 78.820755},
+    {"source_shape": "Initialize entry, loop index, and offset in the for initializer", "generated_bytes": 428, "match_percent": 82.34906},
+    {"source_shape": "Use direct lbl_8063C6B8 array plus canonical addends", "generated_bytes": 492, "match_percent": 55.415092},
+    {"source_shape": "Retained aggregate-pointer reconstruction", "generated_bytes": 428, "match_percent": 82.40566}
+  ],
+  "divergence": "Retail keeps lbl_8063C6B8 in r31 and emits addi r30,r31,0xDD0 immediately after memcpy, with r28 holding the u16 output offset. Canonical GC/1.3 redundantly rematerializes lbl_8063C6B8 using lis/addi after memcpy, assigns the output offset to r30 and entry pointer to r28, and consequently emits four extra bytes plus different address-folding and scheduling through the loop and tail calls. The historical interior-symbol source shape byte-matches only by relocating against lbl_8063CD18/lbl_8063D378/lbl_8063D400/lbl_8063D488, so it is not a relocation-strict solution and was not retained."
+}
