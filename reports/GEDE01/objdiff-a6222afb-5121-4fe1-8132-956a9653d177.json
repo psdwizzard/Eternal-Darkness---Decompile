@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "assignment_id": "a6222afb-5121-4fe1-8132-956a9653d177",
+  "target": "fn_801AAA28",
+  "compiler": "GC/1.3 with canonical flags, including -schedule off",
+  "commands": {
+    "build": "python3 configure.py && .tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801AAA28 -o build/GEDE01/objdiff-a6222afb-canonical.raw.json --format json-pretty fn_801AAA28",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801AAA28 -o build/GEDE01/objdiff-a6222afb-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_801AAA28",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "legal_audit": "python3 tools/legal_audit.py"
+  },
+  "raw_measured_outputs": {
+    "build_exit_code": 0,
+    "build_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "legal_audit": "legal audit passed (15969 tracked project files inspected)",
+    "canonical": {
+      "retail_size": 176,
+      "generated_size": 176,
+      "match_percent": 99.454544,
+      "retail_instructions": 44,
+      "generated_instructions": 44,
+      "differing_retail_rows": 4,
+      "retail_relocations": 13,
+      "generated_relocations": 13
+    },
+    "relocation_strict": {
+      "config": "function_reloc_diffs=name_address",
+      "retail_size": 176,
+      "generated_size": 176,
+      "match_percent": 99.454544,
+      "retail_instructions": 44,
+      "generated_instructions": 44,
+      "differing_retail_rows": 4,
+      "retail_relocations": 13,
+      "generated_relocations": 13,
+      "relocation_targets_and_addends": "All 13 relocation-bearing instructions have equal named targets and equal addends on retail and generated sides."
+    }
+  },
+  "different_codegen_hypothesis": {
+    "hypothesis": "The retail first-component stores may come from a pointer-producing assignment expression or a source-level pointer/integer cast that prevents GC/1.3 from reassociating the immediately dependent store to the common State base.",
+    "tests": [
+      "Combined each pointer assignment with its first component store as (pointer = &field)->x = value.",
+      "Stored each first component through an integer-round-tripped pointer cast.",
+      "Tested an inlined Vec3 setter and, separately, volatile pointer objects as stronger optimization barriers."
+    ],
+    "result": "The assignment-expression and integer-cast variants reproduced the same 99.454544% output and the same four folded stores. The inline-setter variant dropped to 90.36364%; a one-call inline-setter test dropped to 94.90909%. Volatile pointer objects dropped to 37.636364% by introducing unwanted pointer materialization and stack traffic. The best honest reconstruction was restored."
+  },
+  "differing_instructions": [
+    {
+      "offset": 28,
+      "retail": "stfs f1, 0x0(r4)",
+      "generated": "stfs f1, 0x90(r3)"
+    },
+    {
+      "offset": 44,
+      "retail": "stfs f1, 0x0(r5)",
+      "generated": "stfs f1, 0x9c(r3)"
+    },
+    {
+      "offset": 60,
+      "retail": "stfs f1, 0x0(r6)",
+      "generated": "stfs f1, 0xa8(r3)"
+    },
+    {
+      "offset": 80,
+      "retail": "stfs f1, 0x0(r7)",
+      "generated": "stfs f1, 0xb4(r3)"
+    }
+  ],
+  "conclusion": "The independent honest-C translation unit remains size-exact with identical control flow, instruction count, and all 13 relocation targets and addends. Only four equivalent first-component stores differ because canonical GC/1.3 folds them to the common r3 base."
+}
