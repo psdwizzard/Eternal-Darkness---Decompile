@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "assignment_id": "7ef91bfe-4a12-4fe4-bbd7-ddff08d3778d",
+  "target": "fn_800173CC",
+  "source": "eternal-darkness-decomp/src/game/game_fn_800173CC.c",
+  "compiler": "mwcc_242_53 (canonical GC/1.3 settings from configure.py)",
+  "hypothesis": "Retail reused one signed scalar temporary for the first truncated ID, the quantity value, and the second truncated ID. This differs from the preserved dedicated-compare-ID and split-live-range trials; it changes the interference webs while retaining the exact schedule and size.",
+  "raw_trials": [
+    "preserved source after externalization: size=564, direct match_percent=99.39716, operand_diffs=14",
+    "split nested iterator initialization into two assignments: no instruction-pattern change",
+    "express iterator as a for loop: no instruction-pattern change",
+    "reuse value scalar for both comparison IDs and the quantity: size=564, raw-object match_percent=99.50355, diffs=11",
+    "move related ahead of the reused scalar/pointer declarations: size=564, raw-object match_percent=99.57447, diffs=9",
+    "externalize the resulting @39 unsigned-conversion bias as lbl_8064DE60: size=564, canonical and strict match_percent=99.60993, diffs=8"
+  ],
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": [
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+    ]
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (15991 tracked project files inspected)"
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800173CC fn_800173CC -o build/GEDE01/fn_800173CC-attempt5-canonical.json --format json-pretty",
+    "exit_code": 0,
+    "raw_measurement": "canonical left=564 right=564 left_match=99.60993 right_match=99.60993 left_diffs=8 right_diffs=8"
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800173CC fn_800173CC -c function_reloc_diffs=name_address -o build/GEDE01/fn_800173CC-attempt5-strict.json --format json-pretty",
+    "exit_code": 0,
+    "raw_measurement": "strict left=564 right=564 left_match=99.60993 right_match=99.60993",
+    "relocation_validation": "left_count=39 right_count=39 normalized_relocations_equal=true cmp_exit=0",
+    "normalization": "instruction address, formatted instruction/target, relocation type name, and addend (absent addends normalized to zero)"
+  },
+  "differences": {
+    "count": 8,
+    "retail_offsets_hex": ["0x9c", "0xac", "0xb0", "0xbc", "0xd4", "0xe4", "0x170", "0x1ac"],
+    "diff_kinds": "8 x DIFF_ARG_MISMATCH",
+    "raw_retail_instructions": ["mr. r26, r3", "clrlwi r27, r3, 16", "mr r3, r26", "cmplw r0, r27", "mr r3, r26", "mr r3, r26", "add r0, r3, r27", "cmplw r0, r27"],
+    "raw_generated_instructions": ["mr. r27, r3", "clrlwi r26, r3, 16", "mr r3, r27", "cmplw r26, r0", "mr r3, r27", "mr r3, r27", "add r0, r27, r3", "cmplw r27, r0"],
+    "summary": "The reused scalar web fixes the collection/iterator coloring and reduces the prior fourteen operand mismatches to eight. Canonical MWCC still swaps the first temporary-object and first truncated-ID live ranges across r26/r27 at 0x9c-0xe4. The commutative compare/add spellings at 0xbc, 0x170, and 0x1ac are reversed; 0xbc overlaps the same r26/r27 swap. Control flow, instruction schedule, function size, and all 39 relocation tuples agree."
+  }
+}

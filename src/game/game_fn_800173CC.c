@@ -35,10 +35,9 @@ s32 fn_800173CC(void* arg)
     register void* target_data;
     register void* script;
     register void* entry;
-    register s32 value;
-    register u16 compare_id;
-    register void* temp;
     register void* related;
+    register void* temp;
+    register s32 value;
     register void* object;
 
     script = arg;
@@ -56,8 +55,8 @@ s32 fn_800173CC(void* arg)
         target_data = fn_80201C24(target);
         temp = fn_801A7778(fn_8004918C());
         if (temp != 0) {
-            compare_id = (u16)fn_80158234(target_data);
-            if ((u16)fn_80158234(temp) == compare_id &&
+            value = (u16)fn_80158234(target_data);
+            if ((u16)fn_80158234(temp) == (u16)value &&
                 (u16)fn_80157994(target_data) != 0 &&
                 (u16)fn_80157994(temp) == 0) {
                 fn_80157C98(temp, 0x80, 0x20);
@@ -79,8 +78,8 @@ s32 fn_800173CC(void* arg)
                                    (u8)(fn_80157994(target_data) + value));
                     }
                 } else if (fn_80157BF4(object) == 3) {
-                    temp = (void*)(u16)fn_80158234(target_data);
-                    if ((u32)(u16)fn_80158234(object) == (u32)temp &&
+                    value = (u16)fn_80158234(target_data);
+                    if ((u16)fn_80158234(object) == (u16)value &&
                         (u16)fn_80157994(target_data) != 0 &&
                         (u16)fn_80157994(object) == 0) {
                         fn_80157C98(object, 0x80, 0x20);
