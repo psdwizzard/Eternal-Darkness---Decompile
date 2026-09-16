@@ -15,19 +15,17 @@ typedef struct Object {
 
 int fn_8012F700(Object* object)
 {
-    Item* items = object->items;
     int count = 0;
     int i;
 
-    if (items == 0) {
-        return 0;
-    }
-    for (i = 0; i < 12; i++) {
-        Item* item = &items[i];
-        if (item != 0 && item->id != -1) {
-            u16 flags = item->flags;
-            if (!(flags & 1) || (flags & 2) || (flags & 4)) {
-                count++;
+    if (object->items != 0) {
+        for (i = 0; i < 12; i++) {
+            Item* item = &object->items[i];
+            if (item != 0 && item->id != -1) {
+                u16 flags = item->flags;
+                if (!(flags & 1) || (flags & 2) || (flags & 4)) {
+                    count++;
+                }
             }
         }
     }
