@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9c05f6be-8252-4c6e-b89d-19121b7f6289",
+  "attempt": 4,
+  "base_commit": "8e0c0283779de04e2486c7300a04c1bdf5c80808",
+  "target": "fn_800601FC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9c05f6be-8252-4c6e-b89d-19121b7f6289.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both measure 99.27404%; their raw JSON outputs are byte-identical (SHA-1 82dc5a9ed193a5ca7891b762974fac83171daf9f). Retail and generated C are each 832 bytes and 208 instructions. Strict comparison preserves all 48 relocation-bearing instructions at identical sites with no relocation-target or addend divergence. The remaining aligned diff is exactly 31 DIFF_ARG_MISMATCH rows: 27 equivalent callee-saved register operand differences and four stack-slot operand differences around fn_801292E0 and the count/entries loop. Attempt 4 tested a distinct lexical-scope/live-range hypothesis: moving source_resource and target_resource into their natural nested scopes regressed the score to 98.67308%, so that variant was rejected and the 99.27404% best honest C reconstruction was restored. The canonical build passed, legal_audit.py passed for 16049 tracked project files, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
