@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e14b1df4-cb7b-4b32-89df-2784dc3c44d8",
+  "attempt": 7,
+  "base_commit": "198b077a2c34b88e9312acb2184cd23d8fd20775",
+  "target": "fn_80088D04",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e14b1df4-cb7b-4b32-89df-2784dc3c44d8.json"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff: 99.25%, 320/320 bytes, 80/80 instructions. Sole retained difference at 0x30: retail addi r28,r5,0 (3b850000) versus generated mr r28,r5 (7cbc2b78); no ELF relocation there, and all 22 real relocations agree. New advance/decrement cursor hypothesis emits addi r28,r5,0, but best such variant scores 98.5% because instructions at 0x30 and 0x3c are exchanged; retain the stronger existing NonMatching source."
+}
