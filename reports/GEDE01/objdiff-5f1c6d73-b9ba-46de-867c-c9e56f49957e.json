@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "assignment_id": "5f1c6d73-b9ba-46de-867c-c9e56f49957e",
+  "target": "fn_8019F00C",
+  "source": "eternal-darkness-decomp/src/game/game_fn_8019F00C.c",
+  "compiler": "GC/1.3",
+  "registration": "Object(NonMatching, \"game/game_fn_8019F00C.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8019F00C fn_8019F00C -o build/GEDE01/fn_8019F00C-attempt5-canonical.json --format json-pretty",
+    "raw_output": "target 420 bytes  base 420 bytes  match 99.28571",
+    "target_size": 420,
+    "candidate_size": 420,
+    "match_percent": 99.28571,
+    "raw_report_sha256": "ede22bd8683815966614d2eba8b3e4a798b3fc4c6b04c3aabb26b09b9f14ab21"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8019F00C fn_8019F00C -o build/GEDE01/fn_8019F00C-attempt5-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_output": "left size=420 match_percent=99.28571 relocation_count=18; right size=420 match_percent=99.28571 relocation_count=18; ordered address/type/target/addend tuples equal=true",
+    "target_relocation_count": 18,
+    "candidate_relocation_count": 18,
+    "ordered_relocation_type_target_addend_tuples_equal": true,
+    "ordered_relocations": [[44,10,2,null],[48,10,3,null],[64,10,2,null],[68,10,4,null],[84,10,2,null],[88,10,5,null],[104,10,2,null],[120,10,6,null],[132,10,7,null],[156,10,8,null],[200,10,9,null],[264,10,9,null],[300,10,10,null],[328,10,11,null],[336,10,12,null],[344,10,13,null],[364,10,14,null],[396,10,6,null]],
+    "raw_report_sha256": "ede22bd8683815966614d2eba8b3e4a798b3fc4c6b04c3aabb26b09b9f14ab21",
+    "canonical_report_byte_identical": true,
+    "cmp_raw_output": "cmp_exit=0"
+  },
+  "different_hypotheses_tested": [
+    {
+      "hypothesis": "Use an int loop counter with an implicit u16 conversion in the condition and multiplication, allowing common-subexpression reuse of the converted value without the separately assigned outer16 local tried previously.",
+      "raw_output": "target 420 bytes  base 420 bytes  match 99.28571",
+      "result": "Rejected: equal headline score but additional operand differences moved the entry table and window base; it did not produce retail coloring."
+    },
+    {
+      "hypothesis": "Reuse the third scalar parameter as the outer counter after its last setup use, inducing the observed r27 counter lifetime and freeing r31 for count.",
+      "raw_output": "target 420 bytes  base 420 bytes  match 99.09524",
+      "result": "Rejected: count and the final compare moved to retail registers, but extending the third parameter lifetime displaced all three saved setup arguments and regressed the score."
+    }
+  ],
+  "instruction_differences": ["0x001c","0x007c","0x0088","0x008c","0x0090","0x00b0","0x00f0","0x0138","0x0164","0x0170","0x0174","0x0178"],
+  "full_build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changed": false,
+    "neighboring_functions_edited": false,
+    "global_progress_edited": false
+  }
+}
