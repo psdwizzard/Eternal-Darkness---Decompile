@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "8781cb35-a60d-4ee3-bd56-480a92d6ec03",
+  "attempt": 3,
+  "base_commit": "53475337d19ac6f9dd042f42a972f8de58e0b03f",
+  "target": "fn_800A0324",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8781cb35-a60d-4ee3-bd56-480a92d6ec03.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.60784% with equal 408-byte .text and 19 relocations per side. Seven non-relocating argument-register mismatches remain at offsets 0x7C, 0x88, 0x90, 0x134, 0x144, 0x154, and 0x164: retail uses r27 for the handle iterator and r28 for the actor, while generated code uses r28 for the iterator and r27 for the actor. Attempt 3 tested a distinct lifetime-presentation hypothesis: assignment-in-condition, loop-local actor scope, and register-qualified actor all preserved the same allocation and score; separating the post-call temporary regressed to 98.28432%. The 99.60784% reconstruction was retained."
+}
