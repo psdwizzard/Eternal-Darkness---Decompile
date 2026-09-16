@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "assignment_id": "5b589918-459e-44a8-8bc3-e1bea0393210",
+  "target": "fn_801E6814",
+  "hypothesis": "Register the compiler-emitted unsigned and signed integer-to-double conversion constants through the existing game_section_externalizations mechanism, mapping local @54/@56 to the retail lbl_80651268/lbl_80651288 symbols without changing compiler settings or source semantics.",
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_result": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E6814 fn_801E6814 -o reports/GEDE01/objdiff-5b589918-459e-44a8-8bc3-e1bea0393210.json --format json-pretty",
+    "exit_code": 0,
+    "report": "reports/GEDE01/objdiff-5b589918-459e-44a8-8bc3-e1bea0393210.json",
+    "raw_measurement": {
+      "match_percent": 99.24051,
+      "retail_bytes": 632,
+      "generated_bytes": 632,
+      "retail_instructions": 158,
+      "generated_instructions": 158,
+      "retail_relocations": 21,
+      "generated_relocations": 21,
+      "diff_rows": 17
+    }
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E6814 fn_801E6814 -o reports/GEDE01/objdiff-5b589918-459e-44a8-8bc3-e1bea0393210-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "report": "reports/GEDE01/objdiff-5b589918-459e-44a8-8bc3-e1bea0393210-reloc-strict.json",
+    "raw_measurement": {
+      "match_percent": 99.24051,
+      "retail_bytes": 632,
+      "generated_bytes": 632,
+      "retail_instructions": 158,
+      "generated_instructions": 158,
+      "retail_relocations": 21,
+      "generated_relocations": 21,
+      "diff_rows": 17
+    }
+  },
+  "improvement": {
+    "previous_match_percent": 99.11392,
+    "current_match_percent": 99.24051,
+    "result": "The relocation identities at text offsets 0xCC, 0x1E4, and 0x1EC now exactly name lbl_80651268/lbl_80651288 on both sides. The remaining 17 rows contain only instruction register allocation or scheduling differences."
+  },
+  "legal_audit": {
+    "command": "rg -n 'asm|__asm|#pragma' src/game/game_fn_801E6814.c",
+    "exit_code": 1,
+    "stdout": "",
+    "conclusion": "No inline assembly, whole-function assembly, or pragmas are present in the assigned translation unit."
+  }
+}
