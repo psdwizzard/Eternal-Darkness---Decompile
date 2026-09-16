@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "assignment_id": "d168254e-5a5b-4e28-acaa-32ce61f16f7a",
+  "target": "fn_800BFFDC",
+  "source": "eternal-darkness-decomp/src/game/game_fn_800BFFDC.c",
+  "compiler": "GC/1.3",
+  "registration": "Object(NonMatching, \"game/game_fn_800BFFDC.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": "build files regenerated successfully"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[866/869] LINK build/GEDE01/main.elf; [867/869] DOL build/GEDE01/main.dol; [868/869] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [869/869] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800BFFDC fn_800BFFDC -o build/GEDE01/objdiff-d168254e-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "left size=612 match_percent=99.60784 instructions=153 diff_rows=1 relocation_instructions=34; right size=612 match_percent=99.60784 instructions=153 diff_rows=1 relocation_instructions=34"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800BFFDC fn_800BFFDC -o build/GEDE01/objdiff-d168254e-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "left size=612 match_percent=99.60784 instructions=153 diff_rows=1 relocation_instructions=34; right size=612 match_percent=99.60784 instructions=153 diff_rows=1 relocation_instructions=34"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-d168254e-canonical.raw.json build/GEDE01/objdiff-d168254e-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "cmp_exit=0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    }
+  ],
+  "new_hypotheses_tested": [
+    {
+      "hypothesis": "Represent both flags as pointer-valued booleans so the pointer-to-integer category boundary might inhibit constant propagation while retaining register allocation.",
+      "result": "Rejected: canonical match_percent=98.43137; the offset-0x58 instruction remained li r0,0 and later truth tests also diverged."
+    },
+    {
+      "hypothesis": "Use narrow signed-char flags so integer-promotion boundaries might retain the r25-to-r0 copy without the unsigned-flag comparison changes from prior attempts.",
+      "result": "Rejected: canonical match_percent=98.43137; the offset-0x58 instruction remained li r0,0 and later truth tests also diverged."
+    },
+    {
+      "hypothesis": "Initialize one union member and copy through the other member so scalar type-punning might block the constant-propagation pass but still optimize to registers.",
+      "result": "Rejected: canonical match_percent=95.581696; aggregate handling disrupted register allocation and did not produce the required instruction sequence."
+    }
+  ],
+  "canonical": {
+    "match_percent": 99.60784,
+    "retail_bytes": 612,
+    "generated_bytes": 612,
+    "retail_instructions": 153,
+    "generated_instructions": 153,
+    "differing_rows": 1
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_relocation_associated_instructions": 34,
+    "generated_relocation_associated_instructions": 34,
+    "addresses_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true
+  },
+  "retail_difference": "At function offset 0x58 retail emits mr r0,r25; r25 is the secondary flag initialized to zero at offset 0x54.",
+  "generated_difference": "At function offset 0x58 canonical GC/1.3 emits the semantically equivalent li r0,0.",
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "compiler_policy_changed": false,
+    "neighboring_functions_edited": false,
+    "retained_translation_unit": "eternal-darkness-decomp/src/game/game_fn_800BFFDC.c"
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: retained the existing behavior-complete, size-exact, and relocation-exact honest C reconstruction because all new hypotheses regressed. One code-generation instruction remains different, so the unit remains NonMatching."
+}
