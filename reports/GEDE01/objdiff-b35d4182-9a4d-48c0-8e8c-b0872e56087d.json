@@ -1,0 +1,187 @@
+{
+  "version": 1,
+  "assignment_id": "b35d4182-9a4d-48c0-8e8c-b0872e56087d",
+  "attempt": 5,
+  "target": "fn_801AAA28",
+  "base_commit": "c632f1b987f59c01c6121351df19afe48c17b908",
+  "preserved_attempts_reviewed": [
+    "4059d14f01d64010d3a4c846e38bbc6e0ff9cd81",
+    "9cb393011a4bdcb0c40b16d3f9163548eec53bd5",
+    "83673a50ee82a34ea9bedc31d2bdd099d3cb60bb",
+    "eff922510b8cec1c8d01a763d37df8a2920a0643"
+  ],
+  "hypothesis": "Chained assignment value propagation, post-increment cursor lowering, array member access, unrolled component loops, and aggregate copy lowering might prevent folding the first component store back to the State base. These mechanisms are not recorded among the preserved failed variants.",
+  "compiler": "Canonical GC/1.3, -O4,p, -lang=c, -schedule off; full compiler commands preserved in experiment evidence.",
+  "source_reconciliation": "The accepted base already contains exactly the source from 4059d14f and its independent NonMatching registration. All experimental source edits were restored; no registration or split change is necessary.",
+  "experiments": [
+    {
+      "variant": "chained_stores",
+      "score": 99.454544,
+      "compiler_exit": 0
+    },
+    {
+      "variant": "incrementing_cursor",
+      "score": 99.454544,
+      "compiler_exit": 0
+    },
+    {
+      "variant": "array_first_member",
+      "score": 99.454544,
+      "compiler_exit": 0
+    },
+    {
+      "variant": "nonvolatile_first_store",
+      "score": 99.454544,
+      "compiler_exit": 0
+    },
+    {
+      "variant": "component_loops",
+      "score": 99.454544,
+      "compiler_exit": 0
+    },
+    {
+      "variant": "array_vector",
+      "score": 99.454544,
+      "compiler_exit": 0
+    },
+    {
+      "variant": "one_component_loops",
+      "score": 99.454544,
+      "compiler_exit": 0
+    },
+    {
+      "variant": "scalar_aggregate_copy",
+      "score": 86.431816,
+      "compiler_exit": 0
+    },
+    {
+      "variant": "vector_aggregate_copy",
+      "score": 77.818184,
+      "compiler_exit": 0
+    }
+  ],
+  "measurements": {
+    "canonical": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801AAA28",
+        "-o",
+        "reports/GEDE01/objdiff-b35d4182-9a4d-48c0-8e8c-b0872e56087d-canonical.raw.json",
+        "--format",
+        "json-pretty",
+        "fn_801AAA28"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-b35d4182-9a4d-48c0-8e8c-b0872e56087d-canonical.raw.json\n",
+      "match_percent": 99.454544,
+      "raw_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-b35d4182-9a4d-48c0-8e8c-b0872e56087d-canonical.raw.json"
+    },
+    "reloc-strict": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801AAA28",
+        "-o",
+        "reports/GEDE01/objdiff-b35d4182-9a4d-48c0-8e8c-b0872e56087d-reloc-strict.raw.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "fn_801AAA28"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-b35d4182-9a4d-48c0-8e8c-b0872e56087d-reloc-strict.raw.json\n",
+      "match_percent": 99.454544,
+      "raw_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-b35d4182-9a4d-48c0-8e8c-b0872e56087d-reloc-strict.raw.json"
+    }
+  },
+  "raw_relocation_tables": [
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/obj/game/game_fn_801AAA28.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0xf0 contains 13 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000c  0000046d R_PPC_EMB_SDA21        00000000   lbl_80650E60 + 0\n00000012  00000506 R_PPC_ADDR16_HA        00000000   lbl_80608020 + 0\n00000016  00000504 R_PPC_ADDR16_LO        00000000   lbl_80608020 + 0\n00000044  0000066d R_PPC_EMB_SDA21        00000000   lbl_80650E64 + 0\n00000054  0000076d R_PPC_EMB_SDA21        00000000   lbl_80650E68 + 0\n00000060  0000086d R_PPC_EMB_SDA21        00000000   lbl_80650E6C + 0\n00000068  0000096d R_PPC_EMB_SDA21        00000000   lbl_80650E70 + 0\n00000078  00000a0a R_PPC_REL24            00000000   fn_801C9914 + 0\n0000007e  00000b06 R_PPC_ADDR16_HA        00000000   lbl_806080E0 + 0\n00000082  00000b04 R_PPC_ADDR16_LO        00000000   lbl_806080E0 + 0\n0000008c  00000c0a R_PPC_REL24            00000000   memset + 0\n00000094  00000d6d R_PPC_EMB_SDA21        00000000   lbl_8064D2F4 + 0\n0000009c  00000e0a R_PPC_REL24            00000000   fn_801ACC94 + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/src/game/game_fn_801AAA28.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0xe4 contains 13 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000c  0000036d R_PPC_EMB_SDA21        00000000   lbl_80650E60 + 0\n00000012  00000406 R_PPC_ADDR16_HA        00000000   lbl_80608020 + 0\n00000016  00000404 R_PPC_ADDR16_LO        00000000   lbl_80608020 + 0\n00000044  0000056d R_PPC_EMB_SDA21        00000000   lbl_80650E64 + 0\n00000054  0000066d R_PPC_EMB_SDA21        00000000   lbl_80650E68 + 0\n00000060  0000076d R_PPC_EMB_SDA21        00000000   lbl_80650E6C + 0\n00000068  0000086d R_PPC_EMB_SDA21        00000000   lbl_80650E70 + 0\n00000078  00000b0a R_PPC_REL24            00000000   fn_801C9914 + 0\n0000007e  00000906 R_PPC_ADDR16_HA        00000000   lbl_806080E0 + 0\n00000082  00000904 R_PPC_ADDR16_LO        00000000   lbl_806080E0 + 0\n0000008c  00000c0a R_PPC_REL24            00000000   memset + 0\n00000094  00000a6d R_PPC_EMB_SDA21        00000000   lbl_8064D2F4 + 0\n0000009c  00000d0a R_PPC_REL24            00000000   fn_801ACC94 + 0\n",
+      "stderr": ""
+    }
+  ],
+  "relocations_equal_including_offset_type_target_and_addend": true,
+  "relocation_count_each": 13,
+  "text_comparison": {
+    "retail_size": 176,
+    "generated_size": 176,
+    "equal_bytes": 168,
+    "equal_instruction_words": 40,
+    "total_instruction_words": 44,
+    "differences": [
+      {
+        "offset": "0x1c",
+        "retail_word": "d0240000",
+        "generated_word": "d0230090"
+      },
+      {
+        "offset": "0x2c",
+        "retail_word": "d0250000",
+        "generated_word": "d023009c"
+      },
+      {
+        "offset": "0x3c",
+        "retail_word": "d0260000",
+        "generated_word": "d02300a8"
+      },
+      {
+        "offset": "0x50",
+        "retail_word": "d0270000",
+        "generated_word": "d02300b4"
+      }
+    ]
+  },
+  "retained_status": "NonMatching",
+  "conclusion": "No improvement. Seven scalar/loop variants reproduce 99.454544%; scalar aggregate copy scores 86.431816% and vector aggregate copy 77.818184%, adding stack spills and integer stores.",
+  "dol_verification_scope": "The canonical DOL uses the retail split object for this NonMatching function. Its checksum verifies the complete build but does not establish that the C candidate matches.",
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_stdout_excerpt": "[860/862] DOL build/GEDE01/main.dol\n[861/862] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK",
+    "linker_warning": "Section '.ignored' is unknown. Section ignored."
+  },
+  "dol_sha1": {
+    "command": [
+      "sha1sum",
+      "build/GEDE01/main.dol"
+    ],
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "stderr": ""
+  },
+  "legal_audit": {
+    "command": [
+      "python3",
+      "tools/legal_audit.py"
+    ],
+    "exit_code": 0,
+    "stdout": "legal audit passed (15989 tracked project files inspected)\n",
+    "stderr": ""
+  }
+}
