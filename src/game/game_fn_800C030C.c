@@ -1,11 +1,13 @@
 typedef unsigned char u8;
+typedef signed char s8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
 extern float lbl_8064B720;
 extern u32 lbl_8064B71C;
 extern float lbl_8064F110, lbl_8064F114, lbl_8064F140, lbl_8064F144;
-extern float lbl_8064F148, lbl_8064F14C, lbl_8064F150;
+extern float lbl_8064F148, lbl_8064F14C;
+extern double lbl_8064F150, lbl_8064F158;
 
 extern int fn_80200C38();
 extern u16 fn_801A6DE4(void *);
@@ -16,13 +18,13 @@ extern int fn_801A6DCC(void *);
 extern u32 fn_801A6D9C(void *);
 extern void *fn_80201BC8();
 extern void *fn_80201B8C();
-extern u32 fn_80128EE4(void *);
+extern u8 fn_80128EE4(void *);
 extern void *fn_801294DC(void *, int, int, int);
 extern u32 fn_8011FAEC(void *);
 extern int fn_80129228(void *);
 extern int fn_80128608(void);
 extern int fn_80128EAC(void *);
-extern int fn_80128600(void);
+extern s8 fn_80128600(void);
 extern int fn_80128F40(void *);
 extern int fn_8012A1FC(void *, int);
 extern int fn_8012A1BC(void *, int);
@@ -47,15 +49,16 @@ void fn_800C030C(void *context, void *encoded, float scale)
     int amount = fn_801A6DC4(parsed);
     int selection = fn_801A6DCC(parsed);
     u32 parsed_flags = fn_801A6D9C(parsed);
-    void *object = fn_80201BC8(context);
-    void **state = ((void **)fn_80201B8C(context));
-    u32 status = fn_80128EE4(object);
     int action_flags = 0x21;
+    void *object = fn_80201BC8(context);
     int changed = 0;
+    void **state = ((void **)fn_80201B8C(context));
+    u8 status = fn_80128EE4(object);
     int source;
+    int position;
     int low;
     int high;
-    float fraction = 0.0f;
+    float fraction;
 
     if (selection == 0x16) {
         fn_801294DC(object, 2, 0x25, 1);
@@ -71,10 +74,9 @@ void fn_800C030C(void *context, void *encoded, float scale)
     }
 
     if ((parsed_flags & 0x10) != 0 && (status & 0x0A) != 0) {
-        float timer = lbl_8064B720 - lbl_8064F140;
-        if (timer < lbl_8064F144) {
-            timer = lbl_8064F144;
-        }
+        float timer;
+        lbl_8064B720 = lbl_8064B720 - lbl_8064F140;
+        timer = lbl_8064B720 > lbl_8064F144 ? lbl_8064B720 : lbl_8064F144;
         lbl_8064B720 = timer;
         fraction = timer / lbl_8064F148;
         if (fraction < lbl_8064F140) {
@@ -88,11 +90,13 @@ void fn_800C030C(void *context, void *encoded, float scale)
     if ((fn_8011FAEC(object) & 0x400) != 0 &&
         (fn_80129228(object) != 0 || fn_80128608() != -1)) {
         source = fn_80128EAC(object);
-        if (fn_80128600() != 0 || selection == source ||
-            (selection != 1 && (unsigned)(selection - 2) > 1)) {
+        if (fn_80128600() != 0 ||
+            (selection != source &&
+             ((unsigned)(selection - 2) <= 1 || selection == 1))) {
             if (fn_80128600() != 0) {
                 source = fn_80128608();
             }
+            position = fn_80128F40(object);
             low = fn_8012A1FC(object, source);
             high = fn_8012A1BC(object, source);
             if (fn_80128600() != 0) {
@@ -100,8 +104,8 @@ void fn_800C030C(void *context, void *encoded, float scale)
             } else {
                 source = fn_800C07E0(object, source, fn_8011FCE4(object));
             }
-            fraction = (float)(((fn_80128F40(object) >> 17) - low) -
-                               (source - low)) / (float)(high - low);
+            fraction = ((float)((position >> 17) - low) -
+                        (float)(source - low)) / (float)(high - low);
             if (fraction < lbl_8064F150) {
                 fraction += lbl_8064F140;
             }
@@ -130,7 +134,7 @@ finish:
     if (mode != 0 && (status & 0x0F) != 0 && fn_8012AFC4(object) == 0) {
         float value = fn_8012B750(object);
         if (mode == 1) {
-            float magnitude = range < 0.0f ? -range : range;
+            float magnitude = range < lbl_8064F110 ? -range : range;
             fn_8017A010(&value, 0, value + range, magnitude, lbl_8064F114);
         } else {
             fn_8017A010(&value, 0, base, range, lbl_8064F114);
