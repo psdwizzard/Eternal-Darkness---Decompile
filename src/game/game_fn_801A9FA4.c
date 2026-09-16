@@ -41,15 +41,15 @@ extern u32 lbl_8064D18C;
 extern void* lbl_8064C4E4;
 extern f32 lbl_80650E50;
 
-/* NonMatching: behavior-complete and size-exact. The remaining code differences
- * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus
- * the compiler-local unsigned-conversion bias symbol. */
-s32 fn_801A9FA4(void* object, u32 value)
+/* Keep the typed emitter alias and scalar declaration order: they preserve
+ * the original compiler register allocation. */
+s32 fn_801A9FA4(void* input, u32 value)
 {
-    u8 scale = (value & 0xFF000000) >> 24;
+    u8 scale;
     u16 sound;
-    u8 divisor;
+    struct SoundEmitter* object = (struct SoundEmitter*)input;
     u16 packed;
+    u8 divisor;
     u8 volume;
     u8 mode;
     u16 parameter;
@@ -57,6 +57,7 @@ s32 fn_801A9FA4(void* object, u32 value)
     s32 adjusted;
     SoundRequest request;
 
+    scale = (value & 0xFF000000) >> 24;
     divisor = (value & 0x00FF0000) >> 16;
     packed = value;
     sound = fn_8004A608(object, packed, &volume, &mode, &parameter, &flags);

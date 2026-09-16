@@ -1,0 +1,3045 @@
+[
+  {
+    "name": "emitter-lifetime",
+    "patch": "--- \n+++ \n@@ -133,7 +133,9 @@\n             }\n         }\n \n-        if (object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n+        {\n+        void* emitter = object;\n+        if (emitter == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n             s32 first = fn_8005099C();\n             s32 second = fn_80050950();\n             sound = fn_80050B08(first, second, 77, &volume, 0, 0, 0);\n@@ -145,7 +147,7 @@\n             goto done;\n         }\n \n-        if ((flags & 0x20) && object == lbl_8064C4E4) {\n+        if ((flags & 0x20) && emitter == lbl_8064C4E4) {\n             fn_801AA388(1);\n             if (fn_80052228() && !fn_800522A4()) {\n                 sound = fn_80052250();\n@@ -167,6 +169,7 @@\n             }\n         }\n     }\n+        }\n done:\n     return 1;\n }\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-emitter-lifetime.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-emitter-lifetime.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "object-integer",
+    "patch": "--- \n+++ \n@@ -44,7 +44,7 @@\n /* NonMatching: behavior-complete and size-exact. The remaining code differences\n  * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus\n  * the compiler-local unsigned-conversion bias symbol. */\n-s32 fn_801A9FA4(void* object, u32 value)\n+s32 fn_801A9FA4(u32 object, u32 value)\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n@@ -59,7 +59,7 @@\n \n     divisor = (value & 0x00FF0000) >> 16;\n     packed = value;\n-    sound = fn_8004A608(object, packed, &volume, &mode, &parameter, &flags);\n+    sound = fn_8004A608((void*)object, packed, &volume, &mode, &parameter, &flags);\n \n     if (scale != 0 && divisor != 0) {\n         f32 ratio = (f32)scale / (f32)divisor;\n@@ -112,15 +112,15 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        void* position = fn_8011F130((void*)object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n-        fn_80201A84(object);\n+        fn_80201A84((void*)object);\n         {\n             void* queue = fn_80201814();\n             if (queue != 0) {\n-                request.object = object;\n+                request.object = (void*)object;\n                 request.value = packed;\n                 request.volume = volume;\n                 request.scale = scale;\n@@ -133,7 +133,7 @@\n             }\n         }\n \n-        if (object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n+        if ((void*)object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n             s32 first = fn_8005099C();\n             s32 second = fn_80050950();\n             sound = fn_80050B08(first, second, 77, &volume, 0, 0, 0);\n@@ -145,7 +145,7 @@\n             goto done;\n         }\n \n-        if ((flags & 0x20) && object == lbl_8064C4E4) {\n+        if ((flags & 0x20) && (void*)object == lbl_8064C4E4) {\n             fn_801AA388(1);\n             if (fn_80052228() && !fn_800522A4()) {\n                 sound = fn_80052250();\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-object-integer.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-object-integer.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "object-typed",
+    "patch": "--- \n+++ \n@@ -44,7 +44,7 @@\n /* NonMatching: behavior-complete and size-exact. The remaining code differences\n  * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus\n  * the compiler-local unsigned-conversion bias symbol. */\n-s32 fn_801A9FA4(void* object, u32 value)\n+s32 fn_801A9FA4(SoundRequest* object, u32 value)\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-object-typed.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-object-typed.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "position-assigned",
+    "patch": "--- \n+++ \n@@ -112,7 +112,8 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        void* position;\n+        position = fn_8011F130(object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-position-assigned.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-position-assigned.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "guard-clauses",
+    "patch": "--- \n+++ \n@@ -111,7 +111,8 @@\n         goto done;\n     }\n \n-    if (sound != 0xFFFF && volume != 0) {\n+    if (sound == 0xFFFF || volume == 0) goto done;\n+    {\n         void* position = fn_8011F130(object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-guard-clauses.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-guard-clauses.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "nested-guards",
+    "patch": "--- \n+++ \n@@ -111,7 +111,8 @@\n         goto done;\n     }\n \n-    if (sound != 0xFFFF && volume != 0) {\n+    if (sound != 0xFFFF) {\n+      if (volume != 0) {\n         void* position = fn_8011F130(object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n@@ -167,6 +168,7 @@\n             }\n         }\n     }\n+    }\n done:\n     return 1;\n }\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-nested-guards.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-nested-guards.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @68@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "register-divisor",
+    "patch": "--- \n+++ \n@@ -9,7 +9,7 @@\n     u32 value;\n     u8 volume;\n     u8 scale;\n-    u8 divisor;\n+    register u8 divisor;\n     u8 mode;\n     u16 parameter;\n     u32 flags;\n@@ -48,7 +48,7 @@\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n-    u8 divisor;\n+    register u8 divisor;\n     u16 packed;\n     u8 volume;\n     u8 mode;\n",
+    "build_exit": 2,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_801A9FA4.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -schedule off -opt nopeephole -use_lmw_stmw on -MMD -c src/game/game_fn_801A9FA4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801A9FA4.d build/GEDE01/src/game/game_fn_801A9FA4.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_801A9FA4.c\n# ------------------------------------\n#      12: register u8 divisor;\n#   Error:             ^^^^^^^\n#   illegal struct/union/enum/class definition\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+    "hypothesis_result": "compile rejected"
+  },
+  {
+    "name": "register-sound",
+    "patch": "--- \n+++ \n@@ -13,7 +13,7 @@\n     u8 mode;\n     u16 parameter;\n     u32 flags;\n-    u16 sound;\n+    register u16 sound;\n } SoundRequest;\n \n extern u16 fn_8004A608(void*, u16, u8*, u8*, u16*, u32*);\n@@ -47,7 +47,7 @@\n s32 fn_801A9FA4(void* object, u32 value)\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n-    u16 sound;\n+    register u16 sound;\n     u8 divisor;\n     u16 packed;\n     u8 volume;\n",
+    "build_exit": 2,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_801A9FA4.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -schedule off -opt nopeephole -use_lmw_stmw on -MMD -c src/game/game_fn_801A9FA4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801A9FA4.d build/GEDE01/src/game/game_fn_801A9FA4.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_801A9FA4.c\n# ------------------------------------\n#      16: register u16 sound;\n#   Error:              ^^^^^\n#   illegal struct/union/enum/class definition\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+    "hypothesis_result": "compile rejected"
+  },
+  {
+    "name": "register-scale",
+    "patch": "--- \n+++ \n@@ -46,7 +46,7 @@\n  * the compiler-local unsigned-conversion bias symbol. */\n s32 fn_801A9FA4(void* object, u32 value)\n {\n-    u8 scale = (value & 0xFF000000) >> 24;\n+    register u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n     u8 divisor;\n     u16 packed;\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-register-scale.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-register-scale.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "register-position",
+    "patch": "--- \n+++ \n@@ -112,7 +112,7 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        register void* position = fn_8011F130(object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-register-position.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-register-position.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "register-packed",
+    "patch": "--- \n+++ \n@@ -49,7 +49,7 @@\n     u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n     u8 divisor;\n-    u16 packed;\n+    register u16 packed;\n     u8 volume;\n     u8 mode;\n     u16 parameter;\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-register-packed.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-register-packed.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "position-after-packed",
+    "patch": "--- \n+++ \n@@ -50,6 +50,7 @@\n     u16 sound;\n     u8 divisor;\n     u16 packed;\n+    void* position;\n     u8 volume;\n     u8 mode;\n     u16 parameter;\n@@ -112,7 +113,7 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        position = fn_8011F130(object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-position-after-packed.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-position-after-packed.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "position-after-volume",
+    "patch": "--- \n+++ \n@@ -8,6 +8,7 @@\n     void* object;\n     u32 value;\n     u8 volume;\n+    void* position;\n     u8 scale;\n     u8 divisor;\n     u8 mode;\n@@ -51,6 +52,7 @@\n     u8 divisor;\n     u16 packed;\n     u8 volume;\n+    void* position;\n     u8 mode;\n     u16 parameter;\n     u32 flags;\n@@ -112,7 +114,7 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        position = fn_8011F130(object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-position-after-volume.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-position-after-volume.json\n",
+    "score": 99.59036,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 24,
+        "retail": "stw r0, 0x34(r1)",
+        "generated": "stw r0, 0x3c(r1)"
+      },
+      {
+        "row": 26,
+        "retail": "stw r3, 0x30(r1)",
+        "generated": "stw r3, 0x38(r1)"
+      },
+      {
+        "row": 27,
+        "retail": "lfd f0, 0x30(r1)",
+        "generated": "lfd f0, 0x38(r1)"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x44(r1)"
+      },
+      {
+        "row": 30,
+        "retail": "stw r3, 0x38(r1)",
+        "generated": "stw r3, 0x40(r1)"
+      },
+      {
+        "row": 31,
+        "retail": "lfd f0, 0x38(r1)",
+        "generated": "lfd f0, 0x40(r1)"
+      },
+      {
+        "row": 35,
+        "retail": "stw r0, 0x44(r1)",
+        "generated": "stw r0, 0x4c(r1)"
+      },
+      {
+        "row": 36,
+        "retail": "stw r3, 0x40(r1)",
+        "generated": "stw r3, 0x48(r1)"
+      },
+      {
+        "row": 37,
+        "retail": "lfd f0, 0x40(r1)",
+        "generated": "lfd f0, 0x48(r1)"
+      },
+      {
+        "row": 41,
+        "retail": "stfd f0, 0x48(r1)",
+        "generated": "stfd f0, 0x50(r1)"
+      },
+      {
+        "row": 42,
+        "retail": "lwz r3, 0x4c(r1)",
+        "generated": "lwz r3, 0x54(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 135,
+        "retail": "stb r31, 0x21(r1)",
+        "generated": "stb r31, 0x28(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x29(r1)"
+      },
+      {
+        "row": 138,
+        "retail": "stb r0, 0x23(r1)",
+        "generated": "stb r0, 0x2a(r1)"
+      },
+      {
+        "row": 140,
+        "retail": "sth r4, 0x24(r1)",
+        "generated": "sth r4, 0x2c(r1)"
+      },
+      {
+        "row": 142,
+        "retail": "stw r0, 0x28(r1)",
+        "generated": "stw r0, 0x30(r1)"
+      },
+      {
+        "row": 143,
+        "retail": "sth r30, 0x2c(r1)",
+        "generated": "sth r30, 0x34(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "position-after-adjusted",
+    "patch": "--- \n+++ \n@@ -55,6 +55,7 @@\n     u16 parameter;\n     u32 flags;\n     s32 adjusted;\n+    void* position;\n     SoundRequest request;\n \n     divisor = (value & 0x00FF0000) >> 16;\n@@ -112,7 +113,7 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        position = fn_8011F130(object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-position-after-adjusted.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-position-after-adjusted.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "position-after-sound",
+    "patch": "--- \n+++ \n@@ -14,6 +14,7 @@\n     u16 parameter;\n     u32 flags;\n     u16 sound;\n+    void* position;\n } SoundRequest;\n \n extern u16 fn_8004A608(void*, u16, u8*, u8*, u16*, u32*);\n@@ -48,6 +49,7 @@\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n+    void* position;\n     u8 divisor;\n     u16 packed;\n     u8 volume;\n@@ -112,7 +114,7 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        position = fn_8011F130(object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-position-after-sound.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-position-after-sound.json\n",
+    "score": 99.554214,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r28, r0, 24"
+      },
+      {
+        "row": 10,
+        "retail": "clrlwi r28, r4, 16",
+        "generated": "clrlwi r27, r4, 16"
+      },
+      {
+        "row": 11,
+        "retail": "mr r4, r28",
+        "generated": "mr r4, r27"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r28, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 24,
+        "retail": "stw r0, 0x34(r1)",
+        "generated": "stw r0, 0x3c(r1)"
+      },
+      {
+        "row": 26,
+        "retail": "stw r3, 0x30(r1)",
+        "generated": "stw r3, 0x38(r1)"
+      },
+      {
+        "row": 27,
+        "retail": "lfd f0, 0x30(r1)",
+        "generated": "lfd f0, 0x38(r1)"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r28, 0x44(r1)"
+      },
+      {
+        "row": 30,
+        "retail": "stw r3, 0x38(r1)",
+        "generated": "stw r3, 0x40(r1)"
+      },
+      {
+        "row": 31,
+        "retail": "lfd f0, 0x38(r1)",
+        "generated": "lfd f0, 0x40(r1)"
+      },
+      {
+        "row": 35,
+        "retail": "stw r0, 0x44(r1)",
+        "generated": "stw r0, 0x4c(r1)"
+      },
+      {
+        "row": 36,
+        "retail": "stw r3, 0x40(r1)",
+        "generated": "stw r3, 0x48(r1)"
+      },
+      {
+        "row": 37,
+        "retail": "lfd f0, 0x40(r1)",
+        "generated": "lfd f0, 0x48(r1)"
+      },
+      {
+        "row": 41,
+        "retail": "stfd f0, 0x48(r1)",
+        "generated": "stfd f0, 0x50(r1)"
+      },
+      {
+        "row": 42,
+        "retail": "lwz r3, 0x4c(r1)",
+        "generated": "lwz r3, 0x54(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r29, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r29"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 132,
+        "retail": "stw r28, 0x1c(r1)",
+        "generated": "stw r27, 0x1c(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r28, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r29"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r29"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "position-after-scale",
+    "patch": "--- \n+++ \n@@ -47,6 +47,7 @@\n s32 fn_801A9FA4(void* object, u32 value)\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n+    void* position;\n     u16 sound;\n     u8 divisor;\n     u16 packed;\n@@ -112,7 +113,7 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        position = fn_8011F130(object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-position-after-scale.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-position-after-scale.json\n",
+    "score": 99.5984,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r28, r0, 24"
+      },
+      {
+        "row": 10,
+        "retail": "clrlwi r28, r4, 16",
+        "generated": "clrlwi r27, r4, 16"
+      },
+      {
+        "row": 11,
+        "retail": "mr r4, r28",
+        "generated": "mr r4, r27"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r28, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r28, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r29, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r29"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 132,
+        "retail": "stw r28, 0x1c(r1)",
+        "generated": "stw r27, 0x1c(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r28, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r29"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r29"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "object-after-packed",
+    "patch": "--- \n+++ \n@@ -44,12 +44,13 @@\n /* NonMatching: behavior-complete and size-exact. The remaining code differences\n  * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus\n  * the compiler-local unsigned-conversion bias symbol. */\n-s32 fn_801A9FA4(void* object, u32 value)\n+s32 fn_801A9FA4(void* input, u32 value)\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n     u8 divisor;\n     u16 packed;\n+    void* object = input;\n     u8 volume;\n     u8 mode;\n     u16 parameter;\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-object-after-packed.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-object-after-packed.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "object-after-sound",
+    "patch": "--- \n+++ \n@@ -14,6 +14,7 @@\n     u16 parameter;\n     u32 flags;\n     u16 sound;\n+    void* object = input;\n } SoundRequest;\n \n extern u16 fn_8004A608(void*, u16, u8*, u8*, u16*, u32*);\n@@ -44,10 +45,11 @@\n /* NonMatching: behavior-complete and size-exact. The remaining code differences\n  * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus\n  * the compiler-local unsigned-conversion bias symbol. */\n-s32 fn_801A9FA4(void* object, u32 value)\n+s32 fn_801A9FA4(void* input, u32 value)\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n+    void* object = input;\n     u8 divisor;\n     u16 packed;\n     u8 volume;\n",
+    "build_exit": 2,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_801A9FA4.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -schedule off -opt nopeephole -use_lmw_stmw on -MMD -c src/game/game_fn_801A9FA4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801A9FA4.d build/GEDE01/src/game/game_fn_801A9FA4.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_801A9FA4.c\n# ------------------------------------\n#      17: void* object = input;\n#   Error:              ^\n#   struct/union/class member 'object' redefined\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+    "hypothesis_result": "compile rejected"
+  },
+  {
+    "name": "object-after-scale",
+    "patch": "--- \n+++ \n@@ -44,9 +44,10 @@\n /* NonMatching: behavior-complete and size-exact. The remaining code differences\n  * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus\n  * the compiler-local unsigned-conversion bias symbol. */\n-s32 fn_801A9FA4(void* object, u32 value)\n+s32 fn_801A9FA4(void* input, u32 value)\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n+    void* object = input;\n     u16 sound;\n     u8 divisor;\n     u16 packed;\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-object-after-scale.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-object-after-scale.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "single-pass-loop",
+    "patch": "--- \n+++ \n@@ -111,7 +111,7 @@\n         goto done;\n     }\n \n-    if (sound != 0xFFFF && volume != 0) {\n+    while (sound != 0xFFFF && volume != 0) {\n         void* position = fn_8011F130(object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n@@ -166,6 +166,7 @@\n                 fn_801ACACC(sound, volume, 0, (short)((fn_800FBFB0() & 15) + 120));\n             }\n         }\n+        break;\n     }\n done:\n     return 1;\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-single-pass-loop.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-single-pass-loop.json\n",
+    "score": 94.41767,
+    "size": "1000",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @69@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 69,
+        "retail": "beq 0x188",
+        "generated": "beq 0x3b8"
+      },
+      {
+        "row": 98,
+        "retail": "clrlwi r0, r30, 16",
+        "generated": null
+      },
+      {
+        "row": 99,
+        "retail": "cmplwi r0, 0xffff",
+        "generated": null
+      },
+      {
+        "row": 100,
+        "retail": "beq 0x3cc",
+        "generated": null
+      },
+      {
+        "row": 101,
+        "retail": "lbz r0, 0x11(r1)",
+        "generated": null
+      },
+      {
+        "row": 102,
+        "retail": "cmplwi r0, 0x0",
+        "generated": null
+      },
+      {
+        "row": 103,
+        "retail": "beq 0x3cc",
+        "generated": null
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 243,
+        "retail": null,
+        "generated": "b 0x3d0"
+      },
+      {
+        "row": 244,
+        "retail": null,
+        "generated": "clrlwi r0, r30, 16"
+      },
+      {
+        "row": 245,
+        "retail": null,
+        "generated": "cmplwi r0, 0xffff"
+      },
+      {
+        "row": 246,
+        "retail": null,
+        "generated": "beq 0x3d0"
+      },
+      {
+        "row": 247,
+        "retail": null,
+        "generated": "lbz r0, 0x11(r1)"
+      },
+      {
+        "row": 248,
+        "retail": null,
+        "generated": "cmplwi r0, 0x0"
+      },
+      {
+        "row": 249,
+        "retail": null,
+        "generated": "bne 0x188"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "flags-reordered",
+    "patch": "--- \n+++ \n@@ -145,7 +145,7 @@\n             goto done;\n         }\n \n-        if ((flags & 0x20) && object == lbl_8064C4E4) {\n+        if (object == lbl_8064C4E4 && (flags & 0x20)) {\n             fn_801AA388(1);\n             if (fn_80052228() && !fn_800522A4()) {\n                 sound = fn_80052250();\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-flags-reordered.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-flags-reordered.json\n",
+    "score": 97.00803,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 188,
+        "retail": "lwz r0, 0x14(r1)",
+        "generated": "lwz r0, lbl_8064C4E4@sda21"
+      },
+      {
+        "row": 189,
+        "retail": null,
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 190,
+        "retail": null,
+        "generated": "bne 0x3cc"
+      },
+      {
+        "row": 191,
+        "retail": null,
+        "generated": "lwz r0, 0x14(r1)"
+      },
+      {
+        "row": 194,
+        "retail": "beq 0x3cc",
+        "generated": null
+      },
+      {
+        "row": 195,
+        "retail": "lwz r0, lbl_8064C4E4@sda21",
+        "generated": null
+      },
+      {
+        "row": 196,
+        "retail": "cmplw r29, r0",
+        "generated": null
+      },
+      {
+        "row": 197,
+        "retail": "bne 0x3cc",
+        "generated": "beq 0x3cc"
+      },
+      {
+        "row": 221,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "word-explicit-byte",
+    "patch": "--- \n+++ \n@@ -48,7 +48,7 @@\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n-    u8 divisor;\n+    u32 divisor;\n     u16 packed;\n     u8 volume;\n     u8 mode;\n@@ -57,7 +57,7 @@\n     s32 adjusted;\n     SoundRequest request;\n \n-    divisor = (value & 0x00FF0000) >> 16;\n+    divisor = (u8)((value & 0x00FF0000) >> 16);\n     packed = value;\n     sound = fn_8004A608(object, packed, &volume, &mode, &parameter, &flags);\n \n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-word-explicit-byte.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-word-explicit-byte.json\n",
+    "score": 99.41767,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 6,
+        "retail": "srwi r31, r0, 24",
+        "generated": "srwi r30, r0, 24"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r31, r0, 24"
+      },
+      {
+        "row": 17,
+        "retail": "mr r30, r3",
+        "generated": "mr r29, r3"
+      },
+      {
+        "row": 18,
+        "retail": "clrlwi r0, r31, 24",
+        "generated": "clrlwi r0, r30, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r31, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r31, 0x3c(r1)"
+      },
+      {
+        "row": 64,
+        "retail": "clrlwi r4, r30, 16",
+        "generated": "clrlwi r4, r29, 16"
+      },
+      {
+        "row": 70,
+        "retail": "clrlwi r26, r30, 16",
+        "generated": "clrlwi r26, r29, 16"
+      },
+      {
+        "row": 98,
+        "retail": "clrlwi r0, r30, 16",
+        "generated": "clrlwi r0, r29, 16"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 115,
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r29"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 135,
+        "retail": "stb r31, 0x21(r1)",
+        "generated": "stb r30, 0x21(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r31, 0x22(r1)"
+      },
+      {
+        "row": 143,
+        "retail": "sth r30, 0x2c(r1)",
+        "generated": "sth r29, 0x2c(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 204,
+        "retail": "mr r30, r3",
+        "generated": "mr r29, r3"
+      },
+      {
+        "row": 214,
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r29"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 239,
+        "retail": "mr r3, r30",
+        "generated": "mr r3, r29"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "phase-reuse",
+    "patch": "--- \n+++ \n@@ -48,7 +48,7 @@\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n-    u8 divisor;\n+    u32 divisor;\n     u16 packed;\n     u8 volume;\n     u8 mode;\n@@ -57,7 +57,7 @@\n     s32 adjusted;\n     SoundRequest request;\n \n-    divisor = (value & 0x00FF0000) >> 16;\n+    divisor = (u8)((value & 0x00FF0000) >> 16);\n     packed = value;\n     sound = fn_8004A608(object, packed, &volume, &mode, &parameter, &flags);\n \n@@ -134,9 +134,9 @@\n         }\n \n         if (object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n-            s32 first = fn_8005099C();\n+            divisor = fn_8005099C();\n             s32 second = fn_80050950();\n-            sound = fn_80050B08(first, second, 77, &volume, 0, 0, 0);\n+            sound = fn_80050B08(divisor, second, 77, &volume, 0, 0, 0);\n             if (sound == 0xFFFF) {\n                 goto done;\n             }\n",
+    "build_exit": 2,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_801A9FA4.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -schedule off -opt nopeephole -use_lmw_stmw on -MMD -c src/game/game_fn_801A9FA4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801A9FA4.d build/GEDE01/src/game/game_fn_801A9FA4.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_801A9FA4.c\n# ------------------------------------\n#     138: s32 second = fn_80050950();\n#   Error: ^^^\n#   expression syntax error\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+    "hypothesis_result": "compile rejected"
+  },
+  {
+    "name": "parameter-position-reuse",
+    "patch": "--- \n+++ \n@@ -44,10 +44,11 @@\n /* NonMatching: behavior-complete and size-exact. The remaining code differences\n  * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus\n  * the compiler-local unsigned-conversion bias symbol. */\n-s32 fn_801A9FA4(void* object, u32 value)\n+s32 fn_801A9FA4(void* position, u32 value)\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n+    void* object = position;\n     u8 divisor;\n     u16 packed;\n     u8 volume;\n@@ -112,7 +113,7 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        position = fn_8011F130(object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-parameter-position-reuse.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-parameter-position-reuse.json\n",
+    "score": 99.39759,
+    "size": "1000",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 7,
+        "retail": null,
+        "generated": "mr r29, r26"
+      },
+      {
+        "row": 10,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r28, r0, 24"
+      },
+      {
+        "row": 11,
+        "retail": "clrlwi r28, r4, 16",
+        "generated": "clrlwi r27, r4, 16"
+      },
+      {
+        "row": 12,
+        "retail": "mr r4, r28",
+        "generated": "mr r4, r27"
+      },
+      {
+        "row": 22,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r28, 0x0"
+      },
+      {
+        "row": 24,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 30,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r28, 0x3c(r1)"
+      },
+      {
+        "row": 105,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 133,
+        "retail": "stw r28, 0x1c(r1)",
+        "generated": "stw r27, 0x1c(r1)"
+      },
+      {
+        "row": 137,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r28, 0x22(r1)"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "local-register-divisor",
+    "patch": "--- \n+++ \n@@ -48,7 +48,7 @@\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n-    u8 divisor;\n+    register u8 divisor;\n     u16 packed;\n     u8 volume;\n     u8 mode;\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-local-register-divisor.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-local-register-divisor.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "local-register-sound",
+    "patch": "--- \n+++ \n@@ -47,7 +47,7 @@\n s32 fn_801A9FA4(void* object, u32 value)\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n-    u16 sound;\n+    register u16 sound;\n     u8 divisor;\n     u16 packed;\n     u8 volume;\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-local-register-sound.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-local-register-sound.json\n",
+    "score": 99.65864,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r29, r0, 24"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r29, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r29, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r29, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "integer-local-alias",
+    "patch": "--- \n+++ \n@@ -44,10 +44,11 @@\n /* NonMatching: behavior-complete and size-exact. The remaining code differences\n  * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus\n  * the compiler-local unsigned-conversion bias symbol. */\n-s32 fn_801A9FA4(void* object, u32 value)\n+s32 fn_801A9FA4(void* input, u32 value)\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n+    u32 object = (u32)input;\n     u8 divisor;\n     u16 packed;\n     u8 volume;\n@@ -59,7 +60,7 @@\n \n     divisor = (value & 0x00FF0000) >> 16;\n     packed = value;\n-    sound = fn_8004A608(object, packed, &volume, &mode, &parameter, &flags);\n+    sound = fn_8004A608((void*)object, packed, &volume, &mode, &parameter, &flags);\n \n     if (scale != 0 && divisor != 0) {\n         f32 ratio = (f32)scale / (f32)divisor;\n@@ -112,15 +113,15 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        void* position = fn_8011F130((void*)object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n-        fn_80201A84(object);\n+        fn_80201A84((void*)object);\n         {\n             void* queue = fn_80201814();\n             if (queue != 0) {\n-                request.object = object;\n+                request.object = (void*)object;\n                 request.value = packed;\n                 request.volume = volume;\n                 request.scale = scale;\n@@ -133,7 +134,7 @@\n             }\n         }\n \n-        if (object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n+        if ((void*)object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n             s32 first = fn_8005099C();\n             s32 second = fn_80050950();\n             sound = fn_80050B08(first, second, 77, &volume, 0, 0, 0);\n@@ -145,7 +146,7 @@\n             goto done;\n         }\n \n-        if ((flags & 0x20) && object == lbl_8064C4E4) {\n+        if ((flags & 0x20) && (void*)object == lbl_8064C4E4) {\n             fn_801AA388(1);\n             if (fn_80052228() && !fn_800522A4()) {\n                 sound = fn_80052250();\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-integer-local-alias.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-integer-local-alias.json\n",
+    "score": 99.03615,
+    "size": "996",
+    "raw": "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-integer-local-alias.json",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": null
+      },
+      {
+        "row": 7,
+        "retail": null,
+        "generated": "mr r29, r3"
+      },
+      {
+        "row": 10,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r28, r0, 24"
+      },
+      {
+        "row": 11,
+        "retail": "clrlwi r28, r4, 16",
+        "generated": "clrlwi r27, r4, 16"
+      },
+      {
+        "row": 12,
+        "retail": "mr r4, r28",
+        "generated": "mr r4, r27"
+      },
+      {
+        "row": 22,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r28, 0x0"
+      },
+      {
+        "row": 24,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 30,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r28, 0x3c(r1)"
+      },
+      {
+        "row": 133,
+        "retail": "stw r28, 0x1c(r1)",
+        "generated": "stw r27, 0x1c(r1)"
+      },
+      {
+        "row": 137,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r28, 0x22(r1)"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "integer-alias-swap-locals",
+    "patch": "--- \n+++ \n@@ -44,12 +44,13 @@\n /* NonMatching: behavior-complete and size-exact. The remaining code differences\n  * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus\n  * the compiler-local unsigned-conversion bias symbol. */\n-s32 fn_801A9FA4(void* object, u32 value)\n+s32 fn_801A9FA4(void* input, u32 value)\n {\n     u8 scale = (value & 0xFF000000) >> 24;\n     u16 sound;\n+    u32 object = (u32)input;\n+    u16 packed;\n     u8 divisor;\n-    u16 packed;\n     u8 volume;\n     u8 mode;\n     u16 parameter;\n@@ -59,7 +60,7 @@\n \n     divisor = (value & 0x00FF0000) >> 16;\n     packed = value;\n-    sound = fn_8004A608(object, packed, &volume, &mode, &parameter, &flags);\n+    sound = fn_8004A608((void*)object, packed, &volume, &mode, &parameter, &flags);\n \n     if (scale != 0 && divisor != 0) {\n         f32 ratio = (f32)scale / (f32)divisor;\n@@ -112,15 +113,15 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        void* position = fn_8011F130((void*)object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n-        fn_80201A84(object);\n+        fn_80201A84((void*)object);\n         {\n             void* queue = fn_80201814();\n             if (queue != 0) {\n-                request.object = object;\n+                request.object = (void*)object;\n                 request.value = packed;\n                 request.volume = volume;\n                 request.scale = scale;\n@@ -133,7 +134,7 @@\n             }\n         }\n \n-        if (object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n+        if ((void*)object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n             s32 first = fn_8005099C();\n             s32 second = fn_80050950();\n             sound = fn_80050B08(first, second, 77, &volume, 0, 0, 0);\n@@ -145,7 +146,7 @@\n             goto done;\n         }\n \n-        if ((flags & 0x20) && object == lbl_8064C4E4) {\n+        if ((flags & 0x20) && (void*)object == lbl_8064C4E4) {\n             fn_801AA388(1);\n             if (fn_80052228() && !fn_800522A4()) {\n                 sound = fn_80052250();\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-integer-alias-swap-locals.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-integer-alias-swap-locals.json\n",
+    "score": 99.176704,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": null
+      },
+      {
+        "row": 7,
+        "retail": null,
+        "generated": "mr r29, r3"
+      },
+      {
+        "row": 24,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "integer-alias-first-definition",
+    "patch": "--- \n+++ \n@@ -44,12 +44,13 @@\n /* NonMatching: behavior-complete and size-exact. The remaining code differences\n  * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus\n  * the compiler-local unsigned-conversion bias symbol. */\n-s32 fn_801A9FA4(void* object, u32 value)\n+s32 fn_801A9FA4(void* input, u32 value)\n {\n-    u8 scale = (value & 0xFF000000) >> 24;\n+    u8 scale;\n     u16 sound;\n+    u32 object = (u32)input;\n+    u16 packed;\n     u8 divisor;\n-    u16 packed;\n     u8 volume;\n     u8 mode;\n     u16 parameter;\n@@ -57,9 +58,10 @@\n     s32 adjusted;\n     SoundRequest request;\n \n+    scale = (value & 0xFF000000) >> 24;\n     divisor = (value & 0x00FF0000) >> 16;\n     packed = value;\n-    sound = fn_8004A608(object, packed, &volume, &mode, &parameter, &flags);\n+    sound = fn_8004A608((void*)object, packed, &volume, &mode, &parameter, &flags);\n \n     if (scale != 0 && divisor != 0) {\n         f32 ratio = (f32)scale / (f32)divisor;\n@@ -112,15 +114,15 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        void* position = fn_8011F130((void*)object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n-        fn_80201A84(object);\n+        fn_80201A84((void*)object);\n         {\n             void* queue = fn_80201814();\n             if (queue != 0) {\n-                request.object = object;\n+                request.object = (void*)object;\n                 request.value = packed;\n                 request.volume = volume;\n                 request.scale = scale;\n@@ -133,7 +135,7 @@\n             }\n         }\n \n-        if (object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n+        if ((void*)object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n             s32 first = fn_8005099C();\n             s32 second = fn_80050950();\n             sound = fn_80050B08(first, second, 77, &volume, 0, 0, 0);\n@@ -145,7 +147,7 @@\n             goto done;\n         }\n \n-        if ((flags & 0x20) && object == lbl_8064C4E4) {\n+        if ((flags & 0x20) && (void*)object == lbl_8064C4E4) {\n             fn_801AA388(1);\n             if (fn_80052228() && !fn_800522A4()) {\n                 sound = fn_80052250();\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-integer-alias-first-definition.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-integer-alias-first-definition.json\n",
+    "score": 99.97992,
+    "size": "996",
+    "raw": "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-integer-alias-first-definition.json",
+    "differences": [
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "signed-alias-first-definition",
+    "patch": "--- \n+++ \n@@ -44,12 +44,13 @@\n /* NonMatching: behavior-complete and size-exact. The remaining code differences\n  * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus\n  * the compiler-local unsigned-conversion bias symbol. */\n-s32 fn_801A9FA4(void* object, u32 value)\n+s32 fn_801A9FA4(void* input, u32 value)\n {\n-    u8 scale = (value & 0xFF000000) >> 24;\n+    u8 scale;\n     u16 sound;\n+    s32 object = (s32)input;\n+    u16 packed;\n     u8 divisor;\n-    u16 packed;\n     u8 volume;\n     u8 mode;\n     u16 parameter;\n@@ -57,9 +58,10 @@\n     s32 adjusted;\n     SoundRequest request;\n \n+    scale = (value & 0xFF000000) >> 24;\n     divisor = (value & 0x00FF0000) >> 16;\n     packed = value;\n-    sound = fn_8004A608(object, packed, &volume, &mode, &parameter, &flags);\n+    sound = fn_8004A608((void*)object, packed, &volume, &mode, &parameter, &flags);\n \n     if (scale != 0 && divisor != 0) {\n         f32 ratio = (f32)scale / (f32)divisor;\n@@ -112,15 +114,15 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        void* position = fn_8011F130((void*)object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n-        fn_80201A84(object);\n+        fn_80201A84((void*)object);\n         {\n             void* queue = fn_80201814();\n             if (queue != 0) {\n-                request.object = object;\n+                request.object = (void*)object;\n                 request.value = packed;\n                 request.volume = volume;\n                 request.scale = scale;\n@@ -133,7 +135,7 @@\n             }\n         }\n \n-        if (object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n+        if ((void*)object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n             s32 first = fn_8005099C();\n             s32 second = fn_80050950();\n             sound = fn_80050B08(first, second, 77, &volume, 0, 0, 0);\n@@ -145,7 +147,7 @@\n             goto done;\n         }\n \n-        if ((flags & 0x20) && object == lbl_8064C4E4) {\n+        if ((flags & 0x20) && (void*)object == lbl_8064C4E4) {\n             fn_801AA388(1);\n             if (fn_80052228() && !fn_800522A4()) {\n                 sound = fn_80052250();\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-signed-alias-first-definition.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-signed-alias-first-definition.json\n",
+    "score": 99.97992,
+    "size": "996",
+    "differences": [
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "typed-alias-first-definition",
+    "patch": "--- \n+++ \n@@ -44,12 +44,13 @@\n /* NonMatching: behavior-complete and size-exact. The remaining code differences\n  * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus\n  * the compiler-local unsigned-conversion bias symbol. */\n-s32 fn_801A9FA4(void* object, u32 value)\n+s32 fn_801A9FA4(void* input, u32 value)\n {\n-    u8 scale = (value & 0xFF000000) >> 24;\n+    u8 scale;\n     u16 sound;\n+    SoundRequest* object = (SoundRequest*)input;\n+    u16 packed;\n     u8 divisor;\n-    u16 packed;\n     u8 volume;\n     u8 mode;\n     u16 parameter;\n@@ -57,9 +58,10 @@\n     s32 adjusted;\n     SoundRequest request;\n \n+    scale = (value & 0xFF000000) >> 24;\n     divisor = (value & 0x00FF0000) >> 16;\n     packed = value;\n-    sound = fn_8004A608(object, packed, &volume, &mode, &parameter, &flags);\n+    sound = fn_8004A608((void*)object, packed, &volume, &mode, &parameter, &flags);\n \n     if (scale != 0 && divisor != 0) {\n         f32 ratio = (f32)scale / (f32)divisor;\n@@ -112,15 +114,15 @@\n     }\n \n     if (sound != 0xFFFF && volume != 0) {\n-        void* position = fn_8011F130(object);\n+        void* position = fn_8011F130((void*)object);\n         fn_801AAE68(sound, volume, 0, lbl_80650E50, position, 2, mode, 0,\n                     (u16)lbl_8064D18C, (flags & 0x40) ? 0x40 : 0);\n \n-        fn_80201A84(object);\n+        fn_80201A84((void*)object);\n         {\n             void* queue = fn_80201814();\n             if (queue != 0) {\n-                request.object = object;\n+                request.object = (void*)object;\n                 request.value = packed;\n                 request.volume = volume;\n                 request.scale = scale;\n@@ -133,7 +135,7 @@\n             }\n         }\n \n-        if (object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n+        if ((void*)object == lbl_8064C4E4 && (flags & 1) && (flags & 2) && fn_80205630()) {\n             s32 first = fn_8005099C();\n             s32 second = fn_80050950();\n             sound = fn_80050B08(first, second, 77, &volume, 0, 0, 0);\n@@ -145,7 +147,7 @@\n             goto done;\n         }\n \n-        if ((flags & 0x20) && object == lbl_8064C4E4) {\n+        if ((flags & 0x20) && (void*)object == lbl_8064C4E4) {\n             fn_801AA388(1);\n             if (fn_80052228() && !fn_800522A4()) {\n                 sound = fn_80052250();\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-typed-alias-first-definition.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-typed-alias-first-definition.json\n",
+    "score": 99.97992,
+    "size": "996",
+    "differences": [
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "clean-pointer-alias",
+    "patch": "--- \n+++ \n@@ -44,12 +44,13 @@\n /* NonMatching: behavior-complete and size-exact. The remaining code differences\n  * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus\n  * the compiler-local unsigned-conversion bias symbol. */\n-s32 fn_801A9FA4(void* object, u32 value)\n+s32 fn_801A9FA4(void* input, u32 value)\n {\n-    u8 scale = (value & 0xFF000000) >> 24;\n+    u8 scale;\n     u16 sound;\n+    void* object = input;\n+    u16 packed;\n     u8 divisor;\n-    u16 packed;\n     u8 volume;\n     u8 mode;\n     u16 parameter;\n@@ -57,6 +58,7 @@\n     s32 adjusted;\n     SoundRequest request;\n \n+    scale = (value & 0xFF000000) >> 24;\n     divisor = (value & 0x00FF0000) >> 16;\n     packed = value;\n     sound = fn_8004A608(object, packed, &volume, &mode, &parameter, &flags);\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-clean-pointer-alias.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-clean-pointer-alias.json\n",
+    "score": 99.5984,
+    "size": "996",
+    "differences": [
+      {
+        "row": 4,
+        "retail": "mr r29, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 9,
+        "retail": "clrlwi r27, r0, 24",
+        "generated": "clrlwi r28, r0, 24"
+      },
+      {
+        "row": 10,
+        "retail": "clrlwi r28, r4, 16",
+        "generated": "clrlwi r29, r4, 16"
+      },
+      {
+        "row": 11,
+        "retail": "mr r4, r28",
+        "generated": "mr r4, r29"
+      },
+      {
+        "row": 21,
+        "retail": "cmplwi r27, 0x0",
+        "generated": "cmplwi r28, 0x0"
+      },
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      },
+      {
+        "row": 29,
+        "retail": "stw r27, 0x3c(r1)",
+        "generated": "stw r28, 0x3c(r1)"
+      },
+      {
+        "row": 104,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 106,
+        "retail": "mr r26, r3",
+        "generated": "mr r27, r3"
+      },
+      {
+        "row": 119,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 126,
+        "retail": "mr r3, r29",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 131,
+        "retail": "stw r29, 0x18(r1)",
+        "generated": "stw r26, 0x18(r1)"
+      },
+      {
+        "row": 132,
+        "retail": "stw r28, 0x1c(r1)",
+        "generated": "stw r29, 0x1c(r1)"
+      },
+      {
+        "row": 136,
+        "retail": "stb r27, 0x22(r1)",
+        "generated": "stb r28, 0x22(r1)"
+      },
+      {
+        "row": 148,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 162,
+        "retail": "mr r27, r3",
+        "generated": "mr r26, r3"
+      },
+      {
+        "row": 165,
+        "retail": "mr r3, r27",
+        "generated": "mr r3, r26"
+      },
+      {
+        "row": 180,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      },
+      {
+        "row": 193,
+        "retail": "cmplw r29, r0",
+        "generated": "cmplw r26, r0"
+      },
+      {
+        "row": 218,
+        "retail": "mr r6, r26",
+        "generated": "mr r6, r27"
+      }
+    ],
+    "hypothesis_result": "measured"
+  },
+  {
+    "name": "opaque-pointer-alias",
+    "patch": "--- \n+++ \n@@ -44,12 +44,13 @@\n /* NonMatching: behavior-complete and size-exact. The remaining code differences\n  * are the r26/r27/r29 allocation cycle for object, position, and divisor, plus\n  * the compiler-local unsigned-conversion bias symbol. */\n-s32 fn_801A9FA4(void* object, u32 value)\n+s32 fn_801A9FA4(void* input, u32 value)\n {\n-    u8 scale = (value & 0xFF000000) >> 24;\n+    u8 scale;\n     u16 sound;\n+    struct SoundEmitter* object = (struct SoundEmitter*)input;\n+    u16 packed;\n     u8 divisor;\n-    u16 packed;\n     u8 volume;\n     u8 mode;\n     u16 parameter;\n@@ -57,6 +58,7 @@\n     s32 adjusted;\n     SoundRequest request;\n \n+    scale = (value & 0xFF000000) >> 24;\n     divisor = (value & 0x00FF0000) >> 16;\n     packed = value;\n     sound = fn_8004A608(object, packed, &volume, &mode, &parameter, &flags);\n",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A9FA4.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_801A9FA4.o",
+      "-o",
+      "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-opaque-pointer-alias.json",
+      "fn_801A9FA4"
+    ],
+    "objdiff_output": " INFO Writing to reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-opaque-pointer-alias.json\n",
+    "score": 99.97992,
+    "size": "996",
+    "raw": "reports/GEDE01/trial-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-opaque-pointer-alias.json",
+    "differences": [
+      {
+        "row": 23,
+        "retail": "lfd f2, lbl_80650E58@sda21",
+        "generated": "lfd f2, @67@sda21"
+      }
+    ],
+    "hypothesis_result": "measured"
+  }
+]

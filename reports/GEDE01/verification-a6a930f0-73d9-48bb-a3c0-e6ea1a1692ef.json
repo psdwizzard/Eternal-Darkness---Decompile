@@ -1,0 +1,648 @@
+{
+  "linked_dol_ranges": [
+    {
+      "address": "0x801a9fa4",
+      "size": 996,
+      "bytes_equal": true,
+      "sha256": "d916d95f4c466f3a539657053e70022d133dd1454b5dfd08e2a020e53d48d931"
+    },
+    {
+      "address": "0x80650e58",
+      "size": 8,
+      "bytes_equal": true,
+      "sha256": "2b2979f362d94c89fe17a6e01637f14332de063fe7a544bdc5facfc046f4169f"
+    }
+  ],
+  "objdiff_runs": [
+    {
+      "mode": "canonical",
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_801A9FA4.o",
+        "-o",
+        "reports/GEDE01/objdiff-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-canonical.json",
+        "fn_801A9FA4"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef-canonical.json\n"
+    },
+    {
+      "mode": "strict",
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_801A9FA4.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_801A9FA4.o",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "reports/GEDE01/objdiff-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef.json",
+        "fn_801A9FA4"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-a6a930f0-73d9-48bb-a3c0-e6ea1a1692ef.json\n"
+    }
+  ],
+  "retail_elf": {
+    "sections": {
+      ".text": "9421ff907c0802a690010074bf4100587c7d1b785480000e541f463e5480021e5400843e541b063e549c043e7f84e37838a1001138c1001038e1001239010014480000017c7e1b7857e0063e280000004182009c281b000041820094c8400000900100343c60433090610030c8010030ec2010289361003c90610038c8010038ec001028ec210024880100119001004490610040c8010040ec001028ec010032fc00001ed80100488061004c5460063e280000004182000848000008380000002c0000644081000c38000064480000185460063e280000004182000848000008380000005400063e9801001180610014546006f628000000418200143860ffff57c4043e48000001480002c454600738280000004182007457da043e2c1a005b408000102c1a001c41820014480000342c1a005f4080002c48000020480000012c0300004182000c38a000044800001838a000064800001038a000044800000838a000027f43d3788881001138c0000138e00000390000053920000039400000480000014800024857c0043e2800ffff4182023c8801001128000000418202307fa3eb78480000017c7a1b788001001454000672280000004182000c380000404800000838000000900100087fc3f3788881001138a00000c02000007f46d37838e00002890100103920000080000000540a043e480000017fa3eb784800000148000001280300004182004493a100189381001c88010011980100209be100219b6100228801001098010023a0810012b08100248001001490010028b3c1002c38a0000038c1001848000001800000007c1d00404082009c80610014546007fe280000004182008c546007bc2800000041820080480000015460063e2800000041820070480000017c7b1b78480000017c641b787f63db7838a0004d38c1001138e000003900000039200000480000015460043e2800ffff4182011438000000900100088881001138a00000c02000007f46d37838e00002890100103920000080000000540a043e48000001480000e080010014540006b428000000418200d0800000007c1d0040408200c43860000148000001480000012c03000041820068480000012c0300004082005c480000017c7e1b78886100113803001e2c00007f408100083800007f5400063e9801001138000000900100087fc3f3788881001138a00000c02000007f46d37838e00002890100103920000080000000540a043e48000001480000012c03000041820040886100113803000f2c00007f408100083800007f5400063e98010011480000015463073e380300787c0607347fc3f3788881001138a000004800000138600001bb410058800100747c0803a6382100704e800020",
+      ".sdata2": "4330000000000000"
+    },
+    "relocations": [
+      {
+        "offset": 64,
+        "type": 10,
+        "target": {
+          "name": "fn_8004A608",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 92,
+        "type": 109,
+        "target": {
+          "name": "lbl_80650E58",
+          "symbol_value": 0,
+          "addend": 0,
+          "section": ".sdata2",
+          "section_offset": 0,
+          "section_hex": "4330000000000000"
+        }
+      },
+      {
+        "offset": 260,
+        "type": 10,
+        "target": {
+          "name": "fn_801B0CA4",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 316,
+        "type": 10,
+        "target": {
+          "name": "fn_800A1060",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 384,
+        "type": 10,
+        "target": {
+          "name": "fn_801B05E8",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 420,
+        "type": 10,
+        "target": {
+          "name": "fn_8011F130",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 472,
+        "type": 109,
+        "target": {
+          "name": "lbl_80650E50",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 492,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064D18C",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 500,
+        "type": 10,
+        "target": {
+          "name": "fn_801AAE68",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 508,
+        "type": 10,
+        "target": {
+          "name": "fn_80201A84",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 512,
+        "type": 10,
+        "target": {
+          "name": "fn_80201814",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 584,
+        "type": 10,
+        "target": {
+          "name": "fn_80204028",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 588,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064C4E4",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 628,
+        "type": 10,
+        "target": {
+          "name": "fn_80205630",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 644,
+        "type": 10,
+        "target": {
+          "name": "fn_8005099C",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 652,
+        "type": 10,
+        "target": {
+          "name": "fn_80050950",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 684,
+        "type": 10,
+        "target": {
+          "name": "fn_80050B08",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 716,
+        "type": 109,
+        "target": {
+          "name": "lbl_80650E50",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 736,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064D18C",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 744,
+        "type": 10,
+        "target": {
+          "name": "fn_801AAE68",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 768,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064C4E4",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 784,
+        "type": 10,
+        "target": {
+          "name": "fn_801AA388",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 788,
+        "type": 10,
+        "target": {
+          "name": "fn_80052228",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 800,
+        "type": 10,
+        "target": {
+          "name": "fn_800522A4",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 812,
+        "type": 10,
+        "target": {
+          "name": "fn_80052250",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 868,
+        "type": 109,
+        "target": {
+          "name": "lbl_80650E50",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 888,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064D18C",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 896,
+        "type": 10,
+        "target": {
+          "name": "fn_801AAE68",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 900,
+        "type": 10,
+        "target": {
+          "name": "fn_8005227C",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 940,
+        "type": 10,
+        "target": {
+          "name": "fn_800FBFB0",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 968,
+        "type": 10,
+        "target": {
+          "name": "fn_801ACACC",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      }
+    ]
+  },
+  "compiled_elf": {
+    "sections": {
+      ".text": "9421ff907c0802a690010074bf4100587c7d1b785480000e541f463e5480021e5400843e541b063e549c043e7f84e37838a1001138c1001038e1001239010014480000017c7e1b7857e0063e280000004182009c281b000041820094c8400000900100343c60433090610030c8010030ec2010289361003c90610038c8010038ec001028ec210024880100119001004490610040c8010040ec001028ec010032fc00001ed80100488061004c5460063e280000004182000848000008380000002c0000644081000c38000064480000185460063e280000004182000848000008380000005400063e9801001180610014546006f628000000418200143860ffff57c4043e48000001480002c454600738280000004182007457da043e2c1a005b408000102c1a001c41820014480000342c1a005f4080002c48000020480000012c0300004182000c38a000044800001838a000064800001038a000044800000838a000027f43d3788881001138c0000138e00000390000053920000039400000480000014800024857c0043e2800ffff4182023c8801001128000000418202307fa3eb78480000017c7a1b788001001454000672280000004182000c380000404800000838000000900100087fc3f3788881001138a00000c02000007f46d37838e00002890100103920000080000000540a043e480000017fa3eb784800000148000001280300004182004493a100189381001c88010011980100209be100219b6100228801001098010023a0810012b08100248001001490010028b3c1002c38a0000038c1001848000001800000007c1d00404082009c80610014546007fe280000004182008c546007bc2800000041820080480000015460063e2800000041820070480000017c7b1b78480000017c641b787f63db7838a0004d38c1001138e000003900000039200000480000015460043e2800ffff4182011438000000900100088881001138a00000c02000007f46d37838e00002890100103920000080000000540a043e48000001480000e080010014540006b428000000418200d0800000007c1d0040408200c43860000148000001480000012c03000041820068480000012c0300004082005c480000017c7e1b78886100113803001e2c00007f408100083800007f5400063e9801001138000000900100087fc3f3788881001138a00000c02000007f46d37838e00002890100103920000080000000540a043e48000001480000012c03000041820040886100113803000f2c00007f408100083800007f5400063e98010011480000015463073e380300787c0607347fc3f3788881001138a000004800000138600001bb410058800100747c0803a6382100704e800020",
+      ".sdata2": "4330000000000000"
+    },
+    "relocations": [
+      {
+        "offset": 64,
+        "type": 10,
+        "target": {
+          "name": "fn_8004A608",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 92,
+        "type": 109,
+        "target": {
+          "name": "@67",
+          "symbol_value": 0,
+          "addend": 0,
+          "section": ".sdata2",
+          "section_offset": 0,
+          "section_hex": "4330000000000000"
+        }
+      },
+      {
+        "offset": 260,
+        "type": 10,
+        "target": {
+          "name": "fn_801B0CA4",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 316,
+        "type": 10,
+        "target": {
+          "name": "fn_800A1060",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 384,
+        "type": 10,
+        "target": {
+          "name": "fn_801B05E8",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 420,
+        "type": 10,
+        "target": {
+          "name": "fn_8011F130",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 472,
+        "type": 109,
+        "target": {
+          "name": "lbl_80650E50",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 492,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064D18C",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 500,
+        "type": 10,
+        "target": {
+          "name": "fn_801AAE68",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 508,
+        "type": 10,
+        "target": {
+          "name": "fn_80201A84",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 512,
+        "type": 10,
+        "target": {
+          "name": "fn_80201814",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 584,
+        "type": 10,
+        "target": {
+          "name": "fn_80204028",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 588,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064C4E4",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 628,
+        "type": 10,
+        "target": {
+          "name": "fn_80205630",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 644,
+        "type": 10,
+        "target": {
+          "name": "fn_8005099C",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 652,
+        "type": 10,
+        "target": {
+          "name": "fn_80050950",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 684,
+        "type": 10,
+        "target": {
+          "name": "fn_80050B08",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 716,
+        "type": 109,
+        "target": {
+          "name": "lbl_80650E50",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 736,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064D18C",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 744,
+        "type": 10,
+        "target": {
+          "name": "fn_801AAE68",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 768,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064C4E4",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 784,
+        "type": 10,
+        "target": {
+          "name": "fn_801AA388",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 788,
+        "type": 10,
+        "target": {
+          "name": "fn_80052228",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 800,
+        "type": 10,
+        "target": {
+          "name": "fn_800522A4",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 812,
+        "type": 10,
+        "target": {
+          "name": "fn_80052250",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 868,
+        "type": 109,
+        "target": {
+          "name": "lbl_80650E50",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 888,
+        "type": 109,
+        "target": {
+          "name": "lbl_8064D18C",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 896,
+        "type": 10,
+        "target": {
+          "name": "fn_801AAE68",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 900,
+        "type": 10,
+        "target": {
+          "name": "fn_8005227C",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 940,
+        "type": 10,
+        "target": {
+          "name": "fn_800FBFB0",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      },
+      {
+        "offset": 968,
+        "type": 10,
+        "target": {
+          "name": "fn_801ACACC",
+          "symbol_value": 0,
+          "addend": 0
+        }
+      }
+    ]
+  },
+  "raw_text_equal": true,
+  "raw_sdata2_equal": true,
+  "relocation_targets_and_addends_equal": true,
+  "relocation_count": 31,
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "legal_audit": {
+    "command": [
+      "python3",
+      "tools/legal_audit.py"
+    ],
+    "returncode": 0,
+    "stdout": "legal audit passed (15925 tracked project files inspected)\n",
+    "stderr": ""
+  }
+}
