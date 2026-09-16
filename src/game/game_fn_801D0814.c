@@ -42,56 +42,59 @@ void* fn_801D0814(u32 flags, u32 arg1, s32 subject, void* data, u32 arg4,
         resource = fn_801B05E8(kind, 0x7f, 4, 1, stack_arg, 6, resource, 1);
     }
 
-    switch (flags & 0x1ff0) {
-    case 0x300:
-        result = fn_801D18FC(resource, flags, subject, ((u32*)data)[1], stack_arg,
-                             arg1, ((u32*)data)[0], arg4, arg5, arg6, arg7);
-        break;
-    case 0x1040:
-        result = fn_801D8760(resource, flags, subject, stack_arg, arg1, arg4,
-                             arg5, arg6, arg7);
-        break;
-    case 0x410:
-        result = fn_801D70B0(resource, flags, subject, stack_arg, *(u8*)data,
-                             arg1, arg4, arg5, arg6, arg7);
-        break;
-    case 0x810:
-        result = fn_801E2F04(resource, flags, subject, stack_arg, arg1,
-                             ((u32*)data)[0], arg4, arg5, arg6, arg7);
-        break;
-    case 0x1010:
-        if (((s32*)data)[0] > 0) {
-            result = fn_801DA794(resource, flags, subject, ((s32*)data)[0], stack_arg,
-                                 ((u8*)data)[4], arg1, arg4, arg5, arg6, arg7);
-        } else {
-            result = fn_801DA2C0(resource, flags, subject, stack_arg, ((u8*)data)[4],
+    {
+        u32 handle = resource;
+        switch (flags & 0x1ff0) {
+        case 0x300:
+            result = fn_801D18FC(handle, flags, subject, ((u32*)data)[1], stack_arg,
+                                 arg1, ((u32*)data)[0], arg4, arg5, arg6, arg7);
+            break;
+        case 0x1040:
+            result = fn_801D8760(handle, flags, subject, stack_arg, arg1, arg4,
+                                 arg5, arg6, arg7);
+            break;
+        case 0x410:
+            result = fn_801D70B0(handle, flags, subject, stack_arg, *(u8*)data,
                                  arg1, arg4, arg5, arg6, arg7);
+            break;
+        case 0x810:
+            result = fn_801E2F04(handle, flags, subject, stack_arg, arg1,
+                                 ((u32*)data)[0], arg4, arg5, arg6, arg7);
+            break;
+        case 0x1010:
+            if (((s32*)data)[0] > 0) {
+                result = fn_801DA794(handle, flags, subject, ((s32*)data)[0], stack_arg,
+                                     ((u8*)data)[4], arg1, arg4, arg5, arg6, arg7);
+            } else {
+                result = fn_801DA2C0(handle, flags, subject, stack_arg, ((u8*)data)[4],
+                                     arg1, arg4, arg5, arg6, arg7);
+            }
+            break;
+        case 0x480:
+            result = fn_801DB7B0(handle, flags, subject, stack_arg, arg1, arg4,
+                                 arg5, arg6, arg7);
+            break;
+        case 0x500:
+            result = fn_801D997C(handle, flags, subject, stack_arg, arg1, arg4,
+                                 arg5, arg6, arg7);
+            break;
+        case 0x820:
+            result = fn_801DE4A8(handle, flags, subject, stack_arg, arg1, arg4,
+                                 arg5, arg6, arg7);
+            break;
+        case 0x440:
+            result = fn_801E1F18(handle, flags, subject, stack_arg, arg1, arg4,
+                                 arg5, arg6, arg7);
+            break;
+        case 0x420:
+            result = fn_801E1A18(handle, flags, subject, stack_arg, arg1, arg4,
+                                 arg5, arg6, arg7);
+            break;
         }
-        break;
-    case 0x480:
-        result = fn_801DB7B0(resource, flags, subject, stack_arg, arg1, arg4,
-                             arg5, arg6, arg7);
-        break;
-    case 0x500:
-        result = fn_801D997C(resource, flags, subject, stack_arg, arg1, arg4,
-                             arg5, arg6, arg7);
-        break;
-    case 0x820:
-        result = fn_801DE4A8(resource, flags, subject, stack_arg, arg1, arg4,
-                             arg5, arg6, arg7);
-        break;
-    case 0x440:
-        result = fn_801E1F18(resource, flags, subject, stack_arg, arg1, arg4,
-                             arg5, arg6, arg7);
-        break;
-    case 0x420:
-        result = fn_801E1A18(resource, flags, subject, stack_arg, arg1, arg4,
-                             arg5, arg6, arg7);
-        break;
-    }
-    if (result == 0 && resource != 0) {
-        fn_801B08BC(resource, -2, 0);
-        fn_801A9E40(-1);
+        if (result == 0 && (s32)handle != 0) {
+            fn_801B08BC(handle, -2, 0);
+            fn_801A9E40(-1);
+        }
     }
 done:
     return result;
