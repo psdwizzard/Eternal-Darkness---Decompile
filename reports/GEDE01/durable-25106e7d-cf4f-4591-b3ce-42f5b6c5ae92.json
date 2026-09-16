@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "25106e7d-cf4f-4591-b3ce-42f5b6c5ae92",
+  "attempt": 2,
+  "base_commit": "107286f86eba49c403cb784acf2f08deab31b29d",
+  "target": "fn_801BB3A0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-25106e7d-cf4f-4591-b3ce-42f5b6c5ae92.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-25106e7d-cf4f-4591-b3ce-42f5b6c5ae92-canonical.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff artifacts both measure 87.47857%: retail is 560 bytes with 51 relocation annotations, while generated C is 576 bytes with 47. The requested -use_lmw_stmw on lever was added and confirmed in build.ninja's emitted GC/1.2.5n command, but it did not alter codegen because this reconstruction allocates only four saved registers (r28-r31), below the form needed to emit retail's five-register stmw r27,0x14(r1) / lmw r27,0x14(r1). Generated code therefore retains a 32-byte frame with four individual stw/lwz pairs versus retail's 40-byte frame, and the resulting r27/r28 register shift persists. In the two stream paths, generated code also folds the cache and voice address expressions into lwzx while retail emits add followed by lwz. The fresh diff contains 25 argument mismatches, 7 replacements, 8 inserts, and 4 deletes. python3 configure.py and .tools/bin/ninja -j2 completed successfully; tools/legal_audit.py passed 15808 tracked files; build/GEDE01/main.dol and retail both have SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
