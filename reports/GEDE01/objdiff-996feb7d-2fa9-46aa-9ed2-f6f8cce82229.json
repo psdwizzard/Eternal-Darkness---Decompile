@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "assignment_id": "996feb7d-2fa9-46aa-9ed2-f6f8cce82229",
+  "target": "fn_8014A378",
+  "tool": "objdiff-cli via tools/fndiff.py",
+  "canonical_command": "python3 tools/fndiff.py game/game_fn_8014A378.c fn_8014A378",
+  "canonical_stdout": "target 836 bytes  base 836 bytes  match 98.8421",
+  "canonical": {
+    "retail_bytes": 836,
+    "generated_bytes": 836,
+    "instruction_count_retail": 209,
+    "instruction_count_generated": 209,
+    "differing_instructions": 42,
+    "match_percent": 98.8421
+  },
+  "relocation_strict": {
+    "method": "Compared every relocation-bearing instruction in build/GEDE01/fndiff_fn_8014A378.json by instruction offset, relocation type, resolved target and addend",
+    "retail_relocations": 38,
+    "generated_relocations": 38,
+    "equal_relocation_instructions": 38,
+    "targets_and_addends_equal": true
+  },
+  "build_commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2"
+  ],
+  "build_exit_code": 0,
+  "dol_sha1_stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_verified": true,
+  "result": "attempted"
+}

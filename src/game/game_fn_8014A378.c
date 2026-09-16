@@ -11,10 +11,10 @@ typedef struct SlotSet {
     void* objects[16];
 } SlotSet;
 
-extern void *fn_80156938();
+extern SlotSet* fn_80156938(void*);
 extern u32 fn_80193860(void*);
 extern void fn_801938C8(void*, u8);
-extern int fn_8017FD98(void*);
+extern u32 fn_8017FD98(void*);
 extern void fn_801938D8(void*, u32);
 extern void fn_8017FD6C(void*);
 extern int fn_801562DC(void*);
@@ -31,30 +31,35 @@ extern void fn_801939DC(void);
 extern u8 fn_80193890(void*);
 extern void fn_801938C0(void*, u8);
 extern u8 fn_80193898(void*);
-extern u8 fn_80193858(void*);
+extern u32 fn_80193858(void*);
 extern void* fn_8017FDE4(void*);
 extern void fn_8014B454(void*, void*, u8, int, int);
-extern u8 fn_80193850(void*);
+extern u32 fn_80193850(void*);
 extern void* fn_801938A8(void*);
 extern int fn_80157034(void*);
 
 void fn_8014A378(void* left, void* right)
 {
+    int count;
     SlotSet* rightSet;
     SlotSet* leftSet;
-    u32 rightFlags;
+    int rightFlags;
     u16 bit;
     int i;
 
-    if (left == 0 || right == 0) {
+    if (left == 0) {
+        return;
+    }
+    if (right == 0) {
         return;
     }
 
     rightSet = fn_80156938(right);
     leftSet = fn_80156938(left);
     rightFlags = rightSet != 0 ? fn_80193860(rightSet) : 0x40000;
+    count = leftSet->count;
 
-    for (i = 0, bit = 1; i < leftSet->count; i++, bit <<= 1) {
+    for (i = 0, bit = 1; i < count; i++, bit <<= 1) {
         void* object;
         u32 flags;
 
@@ -67,7 +72,7 @@ void fn_8014A378(void* left, void* right)
             leftSet->active = 1;
             fn_801938C8(object, 0);
             if (fn_8017FD98(object)) {
-                fn_801938D8(object, (flags | 0x40000) & ~0x400);
+                fn_801938D8(object, (flags | 0x40000) & ~0x200);
             } else {
                 fn_8017FD6C(object);
                 leftSet->mask &= ~bit;
@@ -84,8 +89,9 @@ void fn_8014A378(void* left, void* right)
                             fn_801938B8(object, 0);
                             fn_801938B0(object, 2);
                         } else if (flags & 2) {
+                            int random = fn_800FBFB0();
                             int span = (u8)upper - 4;
-                            u8 first = fn_800FBFB0() % span;
+                            u8 first = random % span;
                             int remainder;
                             fn_801938B8(object, first);
                             remainder = span - first;
@@ -95,11 +101,12 @@ void fn_8014A378(void* left, void* right)
                             fn_801938B0(object, (u8)(upper - 3));
                         }
                         fn_8017FE1C(object, fn_801939DC);
-                        fn_801938C0(object, fn_80193890(object));
-                        fn_801938C8(object, fn_80193898(object));
+                        state = fn_80193890(object);
                     } else {
-                        fn_801938C0(object, state - 1);
+                        state--;
                     }
+                    fn_801938C0(object, state);
+                    fn_801938C8(object, fn_80193898(object));
                 } else {
                     fn_801938C8(object, state - 1);
                 }
@@ -107,18 +114,14 @@ void fn_8014A378(void* left, void* right)
         }
 
         if (rightSet != 0 && fn_8017FD98(object)) {
-            u8 value = fn_80193858(object);
-            void* data = fn_8017FDE4(object);
-            fn_8014B454(rightSet, data, value, 0, 0);
-            value = fn_80193850(object);
-            data = fn_801938A8(object);
-            fn_8014B454(rightSet, data, value, 0, 0);
+            fn_8014B454(rightSet, fn_8017FDE4(object), fn_80193858(object), 0, 0);
+            fn_8014B454(rightSet, fn_801938A8(object), fn_80193850(object), 0, 0);
         }
     }
 
     if (fn_80157034(right)) {
         leftSet->active = 1;
-        for (i = 0, bit = 1; i < leftSet->count; i++, bit <<= 1) {
+        for (i = 0, bit = 1; i < count; i++, bit <<= 1) {
             void* object;
             if ((leftSet->mask & bit) != 0 && (object = leftSet->objects[i]) != 0) {
                 fn_8017FD6C(object);
