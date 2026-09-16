@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a5b95f97-ddb6-4afc-a207-c85f6a381e04",
+  "attempt": 3,
+  "base_commit": "2ed8d28639a99dbb7f4fa3284482ee253ca5418f",
+  "target": "fn_8008A0B4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a5b95f97-ddb6-4afc-a207-c85f6a381e04.json"
+  ],
+  "divergence": "Canonical GC/1.3 output is size-exact at 556 bytes and 99.928055%. The only instruction differences are at function offsets 0x58 and 0x5c: retail loads and compares the handle in r9, while the compiler selects r0. Symbol-resolved readelf output confirms all 24 relocations match by offset, type, symbol name, and addend. New control-flow, lvalue, comparison, zero-initialization, and live-range/coalescing hypotheses either retained r0 or worsened code generation."
+}
