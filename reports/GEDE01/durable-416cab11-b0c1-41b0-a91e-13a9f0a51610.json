@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "416cab11-b0c1-41b0-a91e-13a9f0a51610",
+  "attempt": 5,
+  "base_commit": "e13f38df99b3da3796e28345c1fa0a8eea62bee0",
+  "target": "fn_801F08B8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-416cab11-b0c1-41b0-a91e-13a9f0a51610.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-416cab11-b0c1-41b0-a91e-13a9f0a51610-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-416cab11-b0c1-41b0-a91e-13a9f0a51610.txt",
+    "eternal-darkness-decomp/src/game/game_fn_801F08B8.c"
+  ],
+  "divergence": "Canonical and relocation-strict GC/1.3 objdiff are 93.15862%: retail .text is 580 bytes and generated .text is 568 bytes. Generated code retains the selected Entry address instead of repeating the retail index load and address calculation; persistent entries, format, and loop-offset values use different registers, and the fourth vertex halfword address and loop updates are scheduled differently. All 22 relocations are present on each side, but the function is not a code match. Full build passes and the DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

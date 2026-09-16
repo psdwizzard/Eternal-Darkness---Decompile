@@ -1,0 +1,15 @@
+assignment_id=416cab11-b0c1-41b0-a91e-13a9f0a51610
+target=fn_801F08B8
+compiler=GC/1.3
+configure_command=python3 configure.py
+build_command=.tools/bin/ninja -j2
+build_result=success (866/866; build/GEDE01/main.dol: OK)
+dol_sha1_command=sha1sum build/GEDE01/main.dol
+dol_sha1_output=ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol
+canonical_command=build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F08B8 -o reports/GEDE01/objdiff-416cab11-b0c1-41b0-a91e-13a9f0a51610.json --format json-pretty fn_801F08B8
+canonical_output=retail_bytes=580 generated_bytes=568 match_percent=93.15862 relocations_left=22 relocations_right=22
+relocation_strict_command=build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F08B8 -o reports/GEDE01/objdiff-416cab11-b0c1-41b0-a91e-13a9f0a51610-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_801F08B8
+relocation_strict_output=retail_bytes=580 generated_bytes=568 match_percent=93.15862 relocations_left=22 relocations_right=22
+source=src/game/game_fn_801F08B8.c
+source_change=Corrected field_e sentinel predicate from == -1 to != -1; removed the over-persistent selected Entry pointer; enabled TU-local use_lmw_stmw and disabled propagation for the closest measured canonical code shape.
+divergence=Generated code is 12 bytes shorter. It retains the selected Entry address across the first predicate chain rather than reloading input->index and recomputing the address as retail does. Persistent entries/format/offset values are allocated to r30/r31/r30 instead of retail r31/r30/r29, and the fourth vertex halfword uses a different base/index formation and loop update schedule.

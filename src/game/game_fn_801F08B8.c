@@ -38,6 +38,9 @@ extern void fn_801F0B0C(u16);
 extern void fn_801F0B00(u16);
 extern void fn_801F0AFC(void);
 
+#pragma use_lmw_stmw on
+#pragma opt_propagation off
+
 void fn_801F08B8(DrawInput* input, EntryOwner* owner, void* value)
 {
     int special;
@@ -45,15 +48,15 @@ void fn_801F08B8(DrawInput* input, EntryOwner* owner, void* value)
     int i;
     int offset;
     Entry* entries = owner->entries;
-    Entry* entry = &entries[input->index];
 
     lbl_8064D728++;
-    special = entry->field_e == -1;
-    if (entry->field_a != -1 || entry->field_1f != 0xFF) {
+    special = entries[input->index].field_e != -1;
+    if (entries[input->index].field_a != -1 ||
+        entries[input->index].field_1f != 0xFF) {
         fn_801ECEC8(1, 3, 0);
         if (fn_801ED59C(1, 0) != 1)
             fn_8022A044(7, 0, 0, 3, 0xFF);
-    } else if (entry->flags & 0x20000000) {
+    } else if (entries[input->index].flags & 0x20000000) {
         fn_801ECEC8(1, 3, 1);
         if (fn_801ED59C(0, 0) != 0)
             fn_8022A044(4, 0x80, 0, 3, 0xFF);
@@ -75,7 +78,7 @@ void fn_801F08B8(DrawInput* input, EntryOwner* owner, void* value)
         special = 0;
         fn_801ECF50(2);
     }
-    fn_801EDA7C(entry, value, 0x2B3, 0);
+    fn_801EDA7C(&entries[input->index], value, 0x2B3, 0);
     fn_801EB8AC(input);
     fn_80226AB4(0x98, special, input->count);
     format <<= 1;
