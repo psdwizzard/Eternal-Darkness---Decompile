@@ -28,20 +28,20 @@ int fn_8012FF34(Object* object, volatile Vec3* position, int flags, int index)
 {
     register u32 y;
     register u32 x;
-    register Vec3* destination;
+    register RuntimeState* destination;
     float one;
     int result;
 
     fn_80125ECC(object);
     result = fn_8012FFE0(object, flags, index);
     if (result) {
-        destination = &object->runtime->position;
+        destination = *(RuntimeState* volatile*)((u8*)object + 0x290);
         x = position->x;
         y = position->y;
         one = lbl_806501DC;
-        destination->x = x;
-        destination->y = y;
-        destination->z = position->z;
+        destination->position.x = x;
+        destination->position.y = y;
+        destination->position.z = position->z;
         object->runtime->flags = flags;
         object->runtime->state = 2;
         object->runtime->index = index;
