@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "24845a3c-bad7-48ac-bb5c-148f018564ff",
+  "attempt": 4,
+  "base_commit": "16064d46b3a1daee9800fa07606cac643b3bfb37",
+  "target": "fn_800D322C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-24845a3c-bad7-48ac-bb5c-148f018564ff.json"
+  ],
+  "divergence": "Size-exact 328/328-byte relocation-strict objdiff is 97.560974%, with all 13 relocation-bearing instructions equal in target, type, and addend. The sole remaining codegen difference is an adjacent instruction-scheduling transposition before fn_8012DBE8: canonical GC/1.3 emits addi r5,r1,0x1c at function offset 0x78 before mr r3,r28, while retail emits the same addi at 0x7c after mr r3,r28; all other instructions agree. Direct aggregate-field initialization eliminated the prior six r5/r8 operand-coloring differences. Nested versus flat aggregate spelling, an explicit pointer temporary, a comma-expression sequencing variant, declaration reversal, register qualification, leading padding, and separate volatile/nonvolatile vector layouts were tried or recovered from preserved evidence and did not resolve the remaining schedule without regression. Fresh full build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
