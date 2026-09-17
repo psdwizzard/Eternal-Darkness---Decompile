@@ -39,12 +39,11 @@ void fn_8017A7D4(const Vec4* left, const Vec4* right, float amount,
         output->z = left_scale * left->z + right_scale * right->z;
         output->w = left_scale * left->w + right_scale * right->w;
     } else {
-        left_scale = lbl_80650870 * amount;
-        right_scale = lbl_80650870 - left_scale;
-
         output->x = -right_y;
         output->y = right->x;
+        left_scale = lbl_80650870 * amount;
         output->z = -right->w;
+        right_scale = lbl_80650870 - left_scale;
         output->w = right->z;
 
         right_scale = fn_80048C2C(right_scale);

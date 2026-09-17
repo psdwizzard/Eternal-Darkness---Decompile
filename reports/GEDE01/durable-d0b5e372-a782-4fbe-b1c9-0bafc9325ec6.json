@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "d0b5e372-a782-4fbe-b1c9-0bafc9325ec6",
+  "attempt": 7,
+  "base_commit": "ce077e920c5fbbd2eeb977c592b149638fcba3bd",
+  "target": "fn_8017A7D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d0b5e372-a782-4fbe-b1c9-0bafc9325ec6.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d0b5e372-a782-4fbe-b1c9-0bafc9325ec6-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-d0b5e372-a782-4fbe-b1c9-0bafc9325ec6.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-d0b5e372-a782-4fbe-b1c9-0bafc9325ec6.json"
+  ],
+  "divergence": "Improved from 99.09091% to 99.380165% on both canonical and relocation-strict name_address objdiff. Both objects contain 484 bytes and 121 instructions, with 107 identical instruction words. The remaining 14 differences are exclusively FPR operands at offsets 0x40, 0x4c, 0x54, 0x58, 0x60, 0x68, 0x6c, 0x70, 0x74, 0x78, 0x7c, 0x84, 0x88, and 0x120. Retail keeps right->y in f7; candidate uses f6, with related prelude allocation differences. All ten relocation sites, types, target names, resolved addresses and addends agree, verified from ELF records and config/GEDE01/symbols.txt. The candidate remains NonMatching. The full build passes with DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f; this object is excluded from the link, so the hash does not validate the reconstruction."
+}
