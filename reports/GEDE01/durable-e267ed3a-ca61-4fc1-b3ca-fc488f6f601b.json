@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e267ed3a-ca61-4fc1-b3ca-fc488f6f601b",
+  "attempt": 6,
+  "base_commit": "f80c0854f914620128eae8d6f1e24695d91da23c",
+  "target": "fn_8019753C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e267ed3a-ca61-4fc1-b3ca-fc488f6f601b.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.16318%, with exact size 956/956 bytes. The sole remaining divergence is scheduling of addi r10, r10, 8: retail function offset 0x1E8 versus generated 0x160 (238 equal instructions, one insertion, one deletion). Both actual ELF relocations match in offset, type, target name/address, and addend; all three objdiff relocation-bearing instruction rows also match, including its inferred R_PPC_NONE reference. Earlier 0x1EC reports used the aligned diff-row position rather than the actual instruction address. Distinct byte-copy lowering hypotheses (pointer steps, byte temporaries, nested copy loops, aggregate byte views, volatile accesses, and comma grouping) did not improve the preserved candidate; required unrolling was either unchanged or suppressed. The original NonMatching C candidate was restored. DOL SHA-1: ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
