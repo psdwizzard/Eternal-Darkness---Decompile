@@ -11172,7 +11172,7 @@ config.libs = [
             Object(Matching, "game/game_fn_801A9A40.c", cflags=cflags_with_optimization("-O1,p")),
             Object(Matching, "game/game_fn_801A9B28.c"),
             Object(Matching, "game/game_fn_801A9B30.c"),
-            Object(NonMatching, "game/game_fn_801A9B38.c", extra_cflags=["-schedule off"]),
+            Object(Matching, "game/game_fn_801A9B38.c", extra_cflags=["-schedule off", "-opt nopeephole"]),
             Object(Matching, "game/game_fn_801A9B94.c", cflags=cflags_with_optimization("-O1,p")),
             Object(Matching, "game/game_fn_801A9C78.c", extra_cflags=["-schedule off", "-opt nopeephole"]),
             Object(NonMatching, "game/game_fn_801A9CDC.c", extra_cflags=["-schedule off", "-opt nopeephole"]),

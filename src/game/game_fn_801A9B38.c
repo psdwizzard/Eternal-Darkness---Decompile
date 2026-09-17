@@ -16,25 +16,15 @@ int fn_801A9B38(void)
     int result = 100;
     volatile Entry* entry = lbl_80607CB0;
     int value;
+    int i;
 
-    value = entry->value;
-    if (value < result) {
-        result = value;
-    }
-    entry++;
-    value = entry->value;
-    if (value < result) {
-        result = value;
-    }
-    entry++;
-    value = entry->value;
-    if (value < result) {
-        result = value;
-    }
-    entry++;
-    value = entry->value;
-    if (value < result) {
-        result = value;
+    #pragma unroll 4
+    for (i = 0; i < 4; i++) {
+        value = entry->value;
+        if (value < result) {
+            result = value;
+        }
+        entry++;
     }
     return result;
 }
