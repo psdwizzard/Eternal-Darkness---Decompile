@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b97c3582-4bdd-46ba-a631-f2a80f33c089",
+  "attempt": 7,
+  "base_commit": "8064a60da43475bb0d65439bbe2dadc8ad89ebec",
+  "target": "fn_80160B18",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b97c3582-4bdd-46ba-a631-f2a80f33c089.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff is 99.08696% with equal 460-byte code size and 115 instructions per side. All 12 relocation-bearing instructions agree in offset, type, resolved target expression, and zero addend. Exactly 19 instructions differ solely because retail uses r27 for the source/result pointer and r28 for the callback context from offsets 0x70 through 0x160, while generated code uses r28 and r27 respectively. A new opaque byte-pointer source representation canonicalized to the same codegen; an original-Lua-style split closure/first-result hypothesis regressed to 98.95652%, so the cleaner preserved honest C reconstruction remains retained."
+}
