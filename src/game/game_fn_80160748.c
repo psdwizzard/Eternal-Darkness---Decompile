@@ -14,17 +14,18 @@ extern void fn_8016057C(Object*, int);
 
 void fn_80160748(Object* object, Entry* allocation)
 {
-    int count = object->current - allocation;
-    Entry* entry = allocation + count;
+    Entry* entry;
+    int count;
 
-    for (;;) {
-        if (count == 0)
-            break;
-        entry[1] = entry[0];
-        count--;
-        entry--;
-    }
-
+    count = object->current - allocation;
+    entry = allocation + count;
+    goto check;
+copy:
+    entry[1] = entry[0];
+check:
+    entry--;
+    if (count-- != 0)
+        goto copy;
     if (object->current == object->end)
         fn_8016057C(object, 1);
     object->current++;
