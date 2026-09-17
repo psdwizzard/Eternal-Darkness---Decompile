@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "5620f665-5a59-4187-a445-df5054ae5b72",
+  "attempt": 1,
+  "base_commit": "7293cad36ea0b71e7d78fbe67d823e373fc8e764",
+  "target": "fn_801941EC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-5620f665-5a59-4187-a445-df5054ae5b72.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits the same 724-byte function and the same three R_PPC_REL24 relocations at 0x54, 0x15C, and 0x190 targeting fn_801870D0, fn_80187120, and fn_80193F3C with zero addends, but relocation-strict objdiff remains 93.61878% because MWCC colors the long-lived input, derived unsigned-byte bounds, point-component bases, loop index, offset, and step registers differently and schedules the final y/z extrapolation loads and arithmetic differently."
+}
