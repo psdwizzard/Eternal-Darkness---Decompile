@@ -32,7 +32,7 @@ int fn_801F85A4(void)
     int count = lbl_8064D7BC;
 
     if (count > 0) {
-        SavedState* saved;
+        volatile SavedState* saved;
         LiveState* first;
         LiveState* second;
         float first_value;
@@ -42,7 +42,8 @@ int fn_801F85A4(void)
         unsigned int token;
 
         count--;
-        saved = &globals->saved[count];
+        saved = globals->saved;
+        saved += count;
         first = &globals->first;
         second = &globals->second;
         lbl_8064D7BC = count;

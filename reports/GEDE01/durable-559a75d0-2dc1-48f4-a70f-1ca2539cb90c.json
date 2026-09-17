@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "559a75d0-2dc1-48f4-a70f-1ca2539cb90c",
+  "attempt": 2,
+  "base_commit": "142948085112b5b8ce647760aa7cb936c5915c14",
+  "target": "fn_801F85A4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-559a75d0-2dc1-48f4-a70f-1ca2539cb90c.json"
+  ],
+  "divergence": "Best canonical objdiff improved from 73.90323% to 83.09677% by making the volatile saved-array base formation and index addition explicit. GC/1.3 still emits 116 bytes versus retail's 124 bytes: it omits retail's addi pointer materializations for the first and second live states at lbl_8063C6B8+0xCC0 and +0xD48, instead using +0xCF0/+0xD78/+0xD30/+0xDB8 displacements from the shared base; the resulting registers and five saved-state load/four live-state store schedule also differ. The real R_PPC_ADDR16_HA/LO, R_PPC_EMB_SDA21, and R_PPC_REL24 relocation targets remain correct, and the saved-base derived addend +0xDD0 is now present. Full rebuild passed and main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f, but this NonMatching unit is linked false, so that DOL check validates the unchanged linked build rather than this function's candidate code. Tested and rejected variants included full pointee volatility (75.354836%), direct/live-array pointer arithmetic (83.09677% with the same missing two addi instructions), and distinct external-object spelling (55.387096% with extra lis/addi relocations)."
+}
