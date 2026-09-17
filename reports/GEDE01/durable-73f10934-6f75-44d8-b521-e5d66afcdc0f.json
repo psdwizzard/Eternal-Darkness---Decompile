@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "73f10934-6f75-44d8-b521-e5d66afcdc0f",
+  "attempt": 5,
+  "base_commit": "d23d8e28a52086c5fa95f496aee4fde2ab0fddfc",
+  "target": "fn_801E8D54",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-73f10934-6f75-44d8-b521-e5d66afcdc0f.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-73f10934-6f75-44d8-b521-e5d66afcdc0f-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-73f10934-6f75-44d8-b521-e5d66afcdc0f.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are size-exact at 96 bytes and score 99.166664%; all 11 relocation-bearing instructions match in type, target, and addend. Exactly two instruction encodings differ: at .text+0x34 retail has addc r3,r4,r6 while GC/1.3 has addc r3,r6,r4, and at .text+0x38 retail has adde r0,r0,r5 while GC/1.3 has adde r0,r5,r0. These commutative operand reversals prevent a byte match."
+}

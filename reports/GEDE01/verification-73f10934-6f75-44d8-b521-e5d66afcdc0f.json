@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "assignment_id": "73f10934-6f75-44d8-b521-e5d66afcdc0f",
+  "target": "fn_801E8D54",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "output": "configuration generated successfully"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "output": "build/GEDE01/main.dol: OK"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E8D54 fn_801E8D54 -o reports/GEDE01/objdiff-73f10934-6f75-44d8-b521-e5d66afcdc0f.json --format json-pretty",
+      "exit_code": 0,
+      "output": "INFO Writing to reports/GEDE01/objdiff-73f10934-6f75-44d8-b521-e5d66afcdc0f.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E8D54 fn_801E8D54 -o reports/GEDE01/objdiff-73f10934-6f75-44d8-b521-e5d66afcdc0f-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "output": "INFO Writing to reports/GEDE01/objdiff-73f10934-6f75-44d8-b521-e5d66afcdc0f-reloc-strict.json"
+    },
+    {
+      "command": "cmp -s reports/GEDE01/objdiff-73f10934-6f75-44d8-b521-e5d66afcdc0f.json reports/GEDE01/objdiff-73f10934-6f75-44d8-b521-e5d66afcdc0f-reloc-strict.json",
+      "exit_code": 0,
+      "output": "canonical and relocation-strict raw reports are byte-for-byte identical"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "if rg -n '__asm|asm[[:space:]]*\\(' src/game/game_fn_801E8D54.c; then exit 1; else echo 'legal audit: no inline or whole-function assembly'; fi",
+      "exit_code": 0,
+      "output": "legal audit: no inline or whole-function assembly"
+    }
+  ],
+  "measurements": {
+    "canonical": {
+      "match_percent": 99.166664,
+      "retail_bytes": 96,
+      "rebuilt_bytes": 96,
+      "retail_instructions": 24,
+      "rebuilt_instructions": 24
+    },
+    "relocation_strict": {
+      "config": "function_reloc_diffs=name_address",
+      "match_percent": 99.166664,
+      "retail_bytes": 96,
+      "rebuilt_bytes": 96,
+      "relocation_bearing_instructions_per_side": 11,
+      "relocation_types_targets_and_addends_equal": true
+    },
+    "differing_instruction_slots": [
+      {
+        "text_offset": "0x34",
+        "retail": "addc r3, r4, r6",
+        "rebuilt": "addc r3, r6, r4"
+      },
+      {
+        "text_offset": "0x38",
+        "retail": "adde r0, r0, r5",
+        "rebuilt": "adde r0, r5, r0"
+      }
+    ],
+    "new_codegen_hypothesis": {
+      "description": "Change split-word 64-bit value construction and locally disable optimizer phases to determine whether pre-lowering tree canonicalization or scheduling selects the paired add source order.",
+      "tested_forms": [
+        "construct both split-word values with shifted-high + low",
+        "construct the accumulator with low ^ shifted-high",
+        "#pragma schedule off around the function",
+        "#pragma peephole off around the function"
+      ],
+      "result": "The addition construction grew the function from 96 to 116 bytes; XOR construction grew it to 112 bytes. Both optimizer-phase controls preserved the exact 96-byte 99.166664% output and the same two reversed commutative operand encodings. The original OR construction was restored as the unique best result."
+    }
+  }
+}
