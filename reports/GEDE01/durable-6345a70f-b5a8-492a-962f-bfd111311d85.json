@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "6345a70f-b5a8-492a-962f-bfd111311d85",
+  "attempt": 3,
+  "base_commit": "ce077e920c5fbbd2eeb977c592b149638fcba3bd",
+  "target": "fn_801FA66C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6345a70f-b5a8-492a-962f-bfd111311d85.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff scores are both 87.472725%; GC/1.3 emits 212 bytes versus retail's 220. Retail keeps the object-array offset in r8 and separately forms both r31+0 and r31+0x660 before indexed adds, while the candidate uses r7 and folds r31+0 into its indexed add. Retail also forms the saved-object base r5=r31+0xCC0 and stores at +0x48/+0x4C/+0x50, while the candidate folds these into +0xD08/+0xD0C/+0xD10. Register allocation and scheduling consequently differ across r3/r5/r6/r7/r8; relocation targets and addends are present in the raw evidence."
+}
