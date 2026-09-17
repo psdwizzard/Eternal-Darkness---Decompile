@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e06225be-d9b6-4d65-9b60-46876edc8f77",
+  "attempt": 2,
+  "base_commit": "a132fe9510f197021e5e2b80151e38eb871411c9",
+  "target": "fn_8017D1E0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e06225be-d9b6-4d65-9b60-46876edc8f77.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is 95.28302%: generated and retail .text are both exactly 212 bytes (53 instructions) with 0/0 relocations, and branch layout/opcodes agree. The remaining mismatches are register allocation: generated assigns the long-lived result to r10 instead of retail r0, uses r0 for each signed axis delta instead of retail r9/r3, and consequently colors the distance/axis comparison web through r0/r9/r3 rather than retail r9/r10/r11/r4; the counter increment likewise uses r0 instead of retail r3. The full canonical Ninja build, DOL checksum gate, and legal audit all exit 0; build/GEDE01/main.dol has retail SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
