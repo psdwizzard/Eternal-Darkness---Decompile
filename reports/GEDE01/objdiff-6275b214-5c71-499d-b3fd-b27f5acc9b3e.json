@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "assignment_id": "6275b214-5c71-499d-b3fd-b27f5acc9b3e",
+  "target": "fn_800D607C",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_800D607C.c fn_800D607C",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measurements": {
+    "fndiff_header": "target 328 bytes  base 328 bytes  match 99.743904",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "ninja_sha1_gate": "build/GEDE01/main.dol: OK",
+    "objdiff_version": "v3.6.1",
+    "relocation_records_per_side": 13,
+    "relocation_note": "The JSON emitted by objdiff exposes matching relocation offsets, types, rendered target names, and raw target_symbol indices on both sides, but exposes no addend field. Therefore this attempted result makes no relocation-addend equality claim."
+  },
+  "instruction_differences": [
+    {"offset": "0x34", "retail": "stw r8, 0x2c(r1)", "generated": "stw r8, 0x24(r1)"},
+    {"offset": "0x38", "retail": "stw r7, 0x24(r1)", "generated": "stw r7, 0x28(r1)"},
+    {"offset": "0x3c", "retail": "stw r5, 0x20(r1)", "generated": "stw r5, 0x30(r1)"},
+    {"offset": "0x40", "retail": "stw r3, 0x18(r1)", "generated": "stw r3, 0x2c(r1)"},
+    {"offset": "0x54", "retail": "stw r5, 0x28(r1)", "generated": "stw r5, 0x20(r1)"},
+    {"offset": "0x68", "retail": "stw r7, 0x28(r1)", "generated": "stw r7, 0x20(r1)"},
+    {"offset": "0x90", "retail": "lwz r0, 0x28(r1)", "generated": "lwz r0, 0x20(r1)"},
+    {"offset": "0x98", "retail": "stw r4, 0xc(r1)", "generated": "stw r4, 0x18(r1)"},
+    {"offset": "0xa8", "retail": "stw r0, 0x10(r1)", "generated": "stw r4, 0x14(r1)"},
+    {"offset": "0xb0", "retail": "addi r9, r1, 0xc", "generated": "addi r9, r1, 0x18"},
+    {"offset": "0xb4", "retail": "stw r4, 0x14(r1)", "generated": "stw r0, 0x10(r1)"}
+  ],
+  "distinct_hypothesis_measurements": [
+    {
+      "hypothesis": "nine independent scalar locals in the retail slot order",
+      "raw_fndiff_header": "target 328 bytes  base 308 bytes  match 83.54878",
+      "outcome": "MWCC promoted the non-address-taken initializer scalars to registers."
+    },
+    {
+      "hypothesis": "two Vec3 initializer records plus three address-taken scalar call locals, modeled after sibling fn_800D322C",
+      "raw_fndiff_header": "target 328 bytes  base 328 bytes  match 97.256096",
+      "outcome": "MWCC left 0xc unused, placed call locals at 0x10..0x18, and shifted the initializer aggregate to 0x1c..0x30."
+    }
+  ]
+}
