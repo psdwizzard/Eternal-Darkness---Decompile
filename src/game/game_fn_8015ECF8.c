@@ -18,7 +18,7 @@ int fn_8015ECF8(Object* object, double value)
     int last_index = table->last_index;
     int index = last_index;
     int offset = last_index * 8;
-    int first = last_index - 20 > 0 ? last_index - 20 : 0;
+    int first = (last_index - 20) & ~-(last_index < 20);
 
     for (; index >= first; index--, offset -= 8) {
         if (*(double*)((unsigned char*)table->values + offset) == value)
