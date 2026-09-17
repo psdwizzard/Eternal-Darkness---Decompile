@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "assignment_id": "f45d354e-e00a-4d13-9355-72a0d30b0009",
+  "target": "fn_8019E0B0",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "sha1sum build/GEDE01/main.dol",
+    "build/binutils/powerpc-eabi-size -A build/GEDE01/obj/game/game_fn_8019E0B0.o build/GEDE01/src/game/game_fn_8019E0B0.o",
+    "build/binutils/powerpc-eabi-objdump -r build/GEDE01/obj/game/game_fn_8019E0B0.o",
+    "build/binutils/powerpc-eabi-objdump -r build/GEDE01/src/game/game_fn_8019E0B0.o"
+  ],
+  "raw_measurements": {
+    "canonical_objdiff_fuzzy_match_percent": 82.99351,
+    "retail_text_bytes": 1232,
+    "candidate_text_bytes": 1252,
+    "retail_relocation_records": 46,
+    "candidate_relocation_records": 46,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_check": "build/GEDE01/main.dol: OK",
+    "build_exit_code": 0
+  },
+  "relocation_strict": {
+    "match": false,
+    "summary": "Both objects contain 46 relocation records, but instruction offsets differ and the candidate's signed-integer-to-double conversion constant is emitted as local @73 rather than retail lbl_80650C60; therefore relocation targets/addends are not 100% equal."
+  },
+  "codegen_divergence": "Candidate .text is 1252 bytes versus retail 1232. The 0xB0 stack frame and f30/f31 saves now agree, but retail saves r22-r31 while the candidate saves r21-r31, and register allocation plus call/loop scheduling remain different."
+}
