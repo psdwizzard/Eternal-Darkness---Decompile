@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "06a0c392-e31b-4151-8aca-4e466ed1e087",
+  "attempt": 5,
+  "base_commit": "ec1daa9789e915c2c017b90e33dc44d221be6924",
+  "target": "fn_8019753C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-06a0c392-e31b-4151-8aca-4e466ed1e087.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are 99.16318% with exact size 956/956 bytes and all 3 relocation-bearing instructions equal in type, target, and addend. The only remaining codegen divergence is one compiler-scheduled addi r10, r10, 8 unrolled induction update: retail places it at function offset 0x1E8, while generated code places it at 0x160, measured as 238 equal instructions, 1 insertion, and 1 deletion. A distinct source-shaping hypothesis moved destination += 8 into the first for loop's comma-separated iteration expression to couple the two induction updates; canonical GC/1.3 then suppressed the required unroll, producing 540 bytes at 51.682007%, so the 956-byte best candidate was restored. The rebuilt DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
