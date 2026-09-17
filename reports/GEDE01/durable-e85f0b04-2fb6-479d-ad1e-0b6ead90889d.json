@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "e85f0b04-2fb6-479d-ad1e-0b6ead90889d",
+  "attempt": 4,
+  "base_commit": "1c40b4ef2b316c3c6fbbd78d38d63ce7d2d588c6",
+  "target": "fn_801AF37C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e85f0b04-2fb6-479d-ad1e-0b6ead90889d.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e85f0b04-2fb6-479d-ad1e-0b6ead90889d-relocation-strict.json"
+  ],
+  "divergence": "Best canonical and relocation-strict score is 98.97591%: retail is 996 bytes and generated code is 1000 bytes. Retail forms lbl_80251808 directly in r29 at 0x14/0x18 and later reuses r29 for fn_801AF0E4; GC/1.3 forms the table address in r0, moves it to r28 at 0x1c, and uses r28 at the four formatting calls. Relocation targets and addends otherwise agree. Attempt 4 tested a different coupled-initialization/coalescing hypothesis: format = (result = -1, lbl_80251808) selected r29 and removed the extra move for an exact 996-byte output, but placed li r31,-1 at 0x14 before the lis/addi pair and allocated the later callback to r28, reducing the measured score to 98.47389%. Pointer-to-array typing, declaration reordering, and explicit register preference did not improve the retained 98.97591% form."
+}

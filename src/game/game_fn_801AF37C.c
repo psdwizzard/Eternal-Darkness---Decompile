@@ -52,14 +52,14 @@ extern int fn_801ADEEC(WorkDesc*, u8, int, int, u8, u8);
 extern int fn_801ADFC4(WorkDesc*, char**, u8, u8, u8);
 extern void* memcpy(void*, const void*, unsigned long);
 
-/* NonMatching: behavior-complete reconstruction. A block-scoped format base
- * selected retail's r29 but moved its load to 0x54; keeping the early load
- * leaves GC/1.3's sole extra instruction, the r0-to-r28 move at 0x1c. */
+/* NonMatching: behavior-complete reconstruction. Explicit register preference
+ * and result-before-format declaration order retain the best early-load form;
+ * GC/1.3 still inserts an r0-to-r28 move where retail forms the base in r29. */
 int fn_801AF37C(Work* work)
 {
     int done;
-    char* format;
     u32 result;
+    register char* format;
 
     format = lbl_80251808;
     result = -1;
