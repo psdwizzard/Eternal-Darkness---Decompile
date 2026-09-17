@@ -39,6 +39,8 @@ int fn_80088E44(FullWork* work)
     int value;
     Child* child;
     u8* entry;
+    Callback callback;
+    void* argument;
 
     base = &work->state;
     child = work->child;
@@ -49,10 +51,11 @@ int fn_80088E44(FullWork* work)
         current = entry[0x28];
         first = entry[0x2A];
         last = entry[0x2B];
+        callback = *(Callback*)(entry + current * 4);
+        argument = *(void**)(entry + 0x10 + current * 4);
         if (value == *(u16*)(entry + 0x20 + current * 2) && current < 4 &&
-            *(Callback*)(entry + current * 4) != 0 &&
-            *(void**)(entry + 0x10 + current * 4) != 0) {
-            (*(Callback*)(entry + current * 4))(*(void**)(entry + 0x10 + current * 4));
+            callback != 0 && argument != 0) {
+            callback(argument);
             fn_8006C9E4(child, 0);
             base->previous = current;
             current++;

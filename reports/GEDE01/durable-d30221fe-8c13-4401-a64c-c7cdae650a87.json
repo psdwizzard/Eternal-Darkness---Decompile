@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d30221fe-8c13-4401-a64c-c7cdae650a87",
+  "attempt": 1,
+  "base_commit": "c403ee1b46d85016ff399d404c0d250f49231a64",
+  "target": "fn_80088E44",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d30221fe-8c13-4401-a64c-c7cdae650a87.json"
+  ],
+  "divergence": "Best relocation-strict objdiff is size-exact at 196/196 bytes and 95.65306%. All control flow, instruction scheduling, and both R_PPC_REL24 calls align; the remaining 23 instruction rows differ only because GC/1.3 retains the incoming work pointer in r25 and rotates the child, entry, value, current, first, and last lifetimes through r27-r31, while retail materializes the state base in r31 and assigns those lifetimes to r25-r30."
+}
