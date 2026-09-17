@@ -11163,7 +11163,12 @@ config.libs = [
             Object(Matching, "game/game_fn_801A9480.c"),
             Object(Matching, "game/game_fn_801A9488.c"),
             Object(Matching, "game/game_fn_801A94B8.c", extra_cflags=["-schedule off"]),
-            Object(NonMatching, "game/game_fn_801A94E4.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(
+                NonMatching,
+                "game/game_fn_801A94E4.c",
+                cflags=cflags_with_optimization("-O1,p"),
+                extra_cflags=["-use_lmw_stmw on", "-schedule off"],
+            ),
             Object(Matching, "game/game_fn_801A96A8.c", extra_cflags=["-schedule off"]),
             Object(Matching, "game/game_fn_801A9758.c"),
             Object(Matching, "game/game_fn_801A977C.c", extra_cflags=["-schedule off"]),

@@ -58,10 +58,14 @@ s32 fn_801A94E4(s32 arg0, s32 enabled, s32 next, s32 fade)
     if (next != -1 && lbl_8064D298 != next) {
         changed = 1;
         if (enabled != 1) {
-            s32 discriminator = enabled == 1 ? 10 : 29;
-            fn_801AA6D0(next, arg0,
-                        lbl_8064D298 == 0 ? 0 : lbl_8064D290,
-                        discriminator);
+            s32 discriminator;
+            changed = 1;
+            discriminator = enabled == 1 ? 10 : 29;
+            if (lbl_8064D298 == 0) {
+                fn_801AA6D0(next, arg0, 0, discriminator);
+            } else {
+                fn_801AA6D0(next, arg0, lbl_8064D290, discriminator);
+            }
             lbl_8064D298 = next;
         }
     }
