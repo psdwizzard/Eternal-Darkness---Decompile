@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "assignment_id": "28793771-165f-4eb0-af32-2e73182de5ac",
+  "target": "fn_80017FF8",
+  "compiler": "GC/1.3",
+  "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80017FF8 fn_80017FF8 -o build/GEDE01/fndiff_fn_80017FF8.json --format json",
+  "canonical": {
+    "target_size": 1440,
+    "candidate_size": 1456,
+    "match_percent": 93.9,
+    "aligned_instruction_rows": 370,
+    "row_kinds": {
+      "equal": 250,
+      "arg_mismatch": 100,
+      "insert": 10,
+      "delete": 6,
+      "replace": 4
+    }
+  },
+  "relocation_strict": {
+    "target_relocation_instructions": 47,
+    "candidate_relocation_instructions": 47,
+    "equal_instruction_rows": 41,
+    "argument_mismatch_rows": 6,
+    "accepted": false,
+    "reason": "The function is not a 100% code match. Six relocation-bearing rows retain instruction-argument differences, so the candidate is not eligible for relocation-strict matching status."
+  },
+  "data": {
+    "symbol": "lbl_8023CBC8",
+    "target_size": 104,
+    "candidate_size": 104,
+    "relocations": 0
+  },
+  "dol": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  },
+  "legal_audit": {
+    "whole_function_assembly": false,
+    "inline_assembly": false,
+    "translation_unit": "src/game/game_fn_80017FF8.c"
+  },
+  "divergence": "Candidate emits 1456 bytes versus retail's 1440 and scores 93.9%. The remaining differences are register allocation and scheduling around the 0x210-versus-0x220 frame, descriptor source at stack 0xD4 versus 0xD0, loop registers, and width/end-point conversion scheduling after fn_80147EC4."
+}

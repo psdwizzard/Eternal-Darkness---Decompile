@@ -12,12 +12,23 @@ typedef struct {
 } Vec3s;
 
 typedef struct {
-    u8 bytes[40];
+    u8 bytes[144];
 } SpawnHeader;
 
 typedef struct {
-    u8 bytes[144];
+    u8 bytes[172];
 } SpawnInfo;
+
+typedef struct {
+    s32 first;
+    s32 second;
+} ValuePair;
+
+typedef struct {
+    f32 direction[3];
+    Vec3s first;
+    Vec3s last;
+} MarkerGeometry;
 
 typedef struct {
     char invalid_count[52];
@@ -52,17 +63,19 @@ extern void fn_801964E8(void*, s32, s32);
 extern void fn_801978F8(void*, u16);
 extern s32 fn_80142A70(s32, Vec3s*, s32, s32, s32, s32, s32, s32);
 extern s32 fn_8014B8D0(void*, s32);
-extern void fn_801966E0(void);
+extern void* fn_801966E0(void*, int, int);
 extern void fn_8014BA14(void);
 
+/* NonMatching: behavior-complete marker descriptor reconstruction. The
+ * canonical candidate is 93.9%; remaining differences are local/register
+ * allocation and width/end-point conversion scheduling after object spawn. */
 s32 fn_80017FF8(void* script)
 {
-    SpawnInfo info;
     SpawnHeader header;
-    Vec3s first;
-    Vec3s last;
-    Vec3s points[24];
-    f32 direction[3];
+    SpawnInfo info;
+    MarkerGeometry geometry;
+    ValuePair values;
+    u8* body;
     s32 count;
     s32 kind;
     s32 mode;
@@ -84,6 +97,8 @@ s32 fn_80017FF8(void* script)
         return 1;
     }
 
+    body = &header.bytes[40];
+    flags = 0;
     kind = (s32)fn_8016A694(script, 2);
     mode = (s32)fn_8016A694(script, 3);
     user_value = (s32)fn_8016A694(script, 4);
@@ -92,16 +107,19 @@ s32 fn_80017FF8(void* script)
     *(s16*)&header.bytes[4] = -1;
     fn_8018F81C(&header, (u8)count);
 
-    *(u16*)&info.bytes[8] = 15;
-    info.bytes[1] = 9;
-    info.bytes[2] = (u8)count;
-    info.bytes[0] = 0;
+    *(u16*)&header.bytes[48] = 15;
+    header.bytes[41] = 9;
+    header.bytes[42] = (u8)count;
     if (lbl_8064D1BC == 0x89C || lbl_8064D1BC == 0xADE ||
         lbl_8064D1BC == 0x33D || lbl_8064D1BC == 0x395) {
         *(u16*)&header.bytes[28] = 100;
     }
+    header.bytes[40] = 0;
 
-    flags = 0;
+    values.second = values.first = fn_801D3974(kind);
+    ((u8*)&values.second)[3] = 60;
+    ((u8*)&values.first)[3] = 150;
+
     switch (kind) {
     case 0:
         flags = 0x100;
@@ -120,27 +138,23 @@ s32 fn_80017FF8(void* script)
         break;
     }
 
-    *(s32*)&header.bytes[20] = fn_801D3974(kind);
-    *(s32*)&header.bytes[24] = *(s32*)&header.bytes[20];
-    header.bytes[27] = 60;
-    header.bytes[23] = 150;
-    *(s32*)&info.bytes[12] = *(s32*)&header.bytes[24];
-    *(s32*)&info.bytes[16] = *(s32*)&header.bytes[20];
-    info.bytes[25] = 9;
-    info.bytes[28] = 3;
-    *(u16*)&info.bytes[22] = (u16)flags;
-    info.bytes[4] |= 0x81;
-    info.bytes[3] = 0;
+    *(s32*)&header.bytes[20] = values.second;
+    *(s32*)&header.bytes[24] = values.first;
+    header.bytes[33] = 9;
+    header.bytes[36] = 3;
+    *(u16*)&header.bytes[30] = (u16)flags;
+    header.bytes[44] |= 0x81;
+    header.bytes[43] = 0;
 
-    first = *fn_80158ABC(fn_8015C4A4(fn_800F5C54(fn_8016A694(script, 5)), 2), 2, 0);
-    last = *fn_80158ABC(fn_8015C4A4(fn_800F5C54(fn_8016A694(script, 7)), 2), 2, 0);
-    direction[0] = (f32)(last.x - first.x);
-    direction[1] = (f32)(last.y - first.y);
-    direction[2] = 0.0f;
-    fn_80211AAC(direction, direction);
+    geometry.first = *fn_80158ABC(fn_8015C4A4(fn_800F5C54(fn_8016A694(script, 5)), 2), 2, 0);
+    geometry.last = *fn_80158ABC(fn_8015C4A4(fn_800F5C54(fn_8016A694(script, 7)), 2), 2, 0);
+    geometry.direction[0] = (f32)(geometry.last.x - geometry.first.x);
+    geometry.direction[1] = (f32)(geometry.last.y - geometry.first.y);
+    geometry.direction[2] = 0.0f;
+    fn_80211AAC(geometry.direction, geometry.direction);
 
-    min_z = (f32)first.z;
-    max_z = (f32)first.z;
+    min_z = (f32)geometry.first.z;
+    max_z = (f32)geometry.first.z;
     best_low = 1000000.0f;
     best_high = -1000000.0f;
     for (i = 0; i < count; i++) {
@@ -150,8 +164,9 @@ s32 fn_80017FF8(void* script)
         point = fn_80158ABC(
             fn_8015C4A4(fn_800F5C54(fn_8016A694(script, i + 5)), 2),
             2, 0);
-        distance = direction[0] * point->x + direction[1] * point->y +
-                   direction[2] * point->z;
+        distance = geometry.direction[0] * point->x +
+                   geometry.direction[1] * point->y +
+                   geometry.direction[2] * point->z;
         if ((f32)point->z < min_z) {
             min_z = point->z;
         }
@@ -160,28 +175,32 @@ s32 fn_80017FF8(void* script)
         }
         if (distance > best_high) {
             best_high = distance;
-            last = *point;
+            geometry.last = *point;
         }
         if (distance < best_low) {
             best_low = distance;
-            first = *point;
+            geometry.first = *point;
         }
-        points[i] = *point;
+        *(Vec3s*)&body[64] = *point;
+        body += 6;
     }
 
+    *(SpawnHeader*)&info = header;
+    *(void**)&info.bytes[144] = (void*)fn_801966E0;
+    info.bytes[170] = 0x84;
     if (fn_80147EC4(&info) != 0) {
-        void* object = *(void**)&info.bytes[92];
+        void* object = *(void**)&info.bytes[148];
         s16 width = (s16)(max_z - min_z);
 
         fn_801964E8(object, 1, 0);
         fn_801978F8(object, 0);
-        first.y = (s16)min_z;
-        last.y = (s16)max_z;
+        geometry.first.y = (s16)min_z;
+        geometry.last.y = (s16)max_z;
         if (mode != 0) {
-            handle = fn_80142A70(2, &first, width, lbl_8064D18C, 0,
+            handle = fn_80142A70(2, &geometry.first, width, lbl_8064D18C, 0,
                                  (s32)fn_8014BA14, (s32)object, user_value);
         } else {
-            handle = fn_80142A70(2, &first, width, lbl_8064D18C, 0,
+            handle = fn_80142A70(2, &geometry.first, width, lbl_8064D18C, 0,
                                  0, 0, user_value);
         }
         handle = fn_8014B8D0(object, handle);
