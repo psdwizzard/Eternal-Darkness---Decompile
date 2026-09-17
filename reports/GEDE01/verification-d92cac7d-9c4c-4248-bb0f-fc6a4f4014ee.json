@@ -1,0 +1,117 @@
+{
+  "assignment_id": "d92cac7d-9c4c-4248-bb0f-fc6a4f4014ee",
+  "hypothesis": "Explicit two-double payload copies and alternate copy/increment sequencing may alter MWCC pointer live ranges and allocation priority, independently of earlier type and local-scope hypotheses.",
+  "outcome": "Seven variants measured; none improved the retained baseline. Reverted all experimental source edits.",
+  "preserved_source_equals_commit": "c645d61a9df4c40a76cb53936d2c8f4afd1e23e9",
+  "source_sha256": "b59ad6b60c541343b07bfc10e48b41eb0adb4235e9a5cb309998e825507ccae9",
+  "compiler_command": "tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80160B18.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80160B18.d build/GEDE01/src/game/game_fn_80160B18.d",
+  "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80160B18 fn_80160B18 -o reports/GEDE01/canonical-d92cac7d-9c4c-4248-bb0f-fc6a4f4014ee.json --format json",
+  "strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80160B18 fn_80160B18 -c function_reloc_diffs=name_address -o reports/GEDE01/objdiff-d92cac7d-9c4c-4248-bb0f-fc6a4f4014ee.json --format json",
+  "canonical_score": 99.08696,
+  "relocation_strict_score": 99.08696,
+  "target_size": 460,
+  "generated_size": 460,
+  "target_instructions": 115,
+  "generated_instructions": 115,
+  "instruction_differences": [
+    {
+      "offset": "0x70",
+      "target": "lwz r27, 0x8(r30)",
+      "generated": "lwz r28, 0x8(r30)"
+    },
+    {
+      "offset": "0x7c",
+      "target": "stw r27, 0x8(r1)",
+      "generated": "stw r28, 0x8(r1)"
+    },
+    {
+      "offset": "0x88",
+      "target": "lwz r28, 0x64(r29)",
+      "generated": "lwz r27, 0x64(r29)"
+    },
+    {
+      "offset": "0x8c",
+      "target": "cmplwi r28, 0x0",
+      "generated": "cmplwi r27, 0x0"
+    },
+    {
+      "offset": "0x9c",
+      "target": "mr r5, r28",
+      "generated": "mr r5, r27"
+    },
+    {
+      "offset": "0xa8",
+      "target": "lha r0, 0xc(r27)",
+      "generated": "lha r0, 0xc(r28)"
+    },
+    {
+      "offset": "0xb8",
+      "target": "mr r4, r27",
+      "generated": "mr r4, r28"
+    },
+    {
+      "offset": "0xcc",
+      "target": "mr r4, r27",
+      "generated": "mr r4, r28"
+    },
+    {
+      "offset": "0xd8",
+      "target": "cmplwi r28, 0x0",
+      "generated": "cmplwi r27, 0x0"
+    },
+    {
+      "offset": "0xdc",
+      "target": "mr r27, r3",
+      "generated": "mr r28, r3"
+    },
+    {
+      "offset": "0xec",
+      "target": "mr r5, r28",
+      "generated": "mr r5, r27"
+    },
+    {
+      "offset": "0x104",
+      "target": "lfd f1, 0x0(r27)",
+      "generated": "lfd f1, 0x0(r28)"
+    },
+    {
+      "offset": "0x10c",
+      "target": "lfd f0, 0x8(r27)",
+      "generated": "lfd f0, 0x8(r28)"
+    },
+    {
+      "offset": "0x114",
+      "target": "addi r27, r27, 0x10",
+      "generated": "addi r28, r28, 0x10"
+    },
+    {
+      "offset": "0x124",
+      "target": "cmplw r27, r0",
+      "generated": "cmplw r28, r0"
+    },
+    {
+      "offset": "0x138",
+      "target": "lfd f1, 0x0(r27)",
+      "generated": "lfd f1, 0x0(r28)"
+    },
+    {
+      "offset": "0x140",
+      "target": "lfd f0, 0x8(r27)",
+      "generated": "lfd f0, 0x8(r28)"
+    },
+    {
+      "offset": "0x144",
+      "target": "addi r27, r27, 0x10",
+      "generated": "addi r28, r28, 0x10"
+    },
+    {
+      "offset": "0x160",
+      "target": "cmplw r27, r0",
+      "generated": "cmplw r28, r0"
+    }
+  ],
+  "relocations_equal": 12,
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_scope": "Full canonical build retains retail object for this NonMatching unit; DOL equality does not imply candidate matching.",
+  "source_audit": "Independent C translation unit; no inline/whole-function assembly, compiler-policy changes, reconstruction helpers, or neighboring edits. Existing NonMatching registration retained."
+}

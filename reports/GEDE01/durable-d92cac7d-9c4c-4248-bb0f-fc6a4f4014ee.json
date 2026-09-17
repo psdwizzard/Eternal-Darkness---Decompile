@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "assignment_id": "d92cac7d-9c4c-4248-bb0f-fc6a4f4014ee",
+  "attempt": 8,
+  "base_commit": "b105d4be5adaf48fc3e16bb8fe977897d7ab9249",
+  "target": "fn_80160B18",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d92cac7d-9c4c-4248-bb0f-fc6a4f4014ee.json",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-d92cac7d-9c4c-4248-bb0f-fc6a4f4014ee.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-d92cac7d-9c4c-4248-bb0f-fc6a4f4014ee.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-d92cac7d-9c4c-4248-bb0f-fc6a4f4014ee.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-d92cac7d-9c4c-4248-bb0f-fc6a4f4014ee.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-d92cac7d-9c4c-4248-bb0f-fc6a4f4014ee.log",
+    "eternal-darkness-decomp/reports/GEDE01/legal-audit-d92cac7d-9c4c-4248-bb0f-fc6a4f4014ee.log"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.08696%, 460 bytes and 115 instructions per side. All 12 ELF relocations agree in offset, type, target symbol, symbol value, and zero addend. Exactly 19 instructions at offsets 0x70 through 0x160 differ solely by r27/r28 coloring: retail source/result uses r27 and callback uses r28; generated code reverses these. Seven new payload-copy/increment-sequencing variants either reproduced the baseline or regressed (92.67826% to 99.08696%); preserved clean NonMatching C retained."
+}
