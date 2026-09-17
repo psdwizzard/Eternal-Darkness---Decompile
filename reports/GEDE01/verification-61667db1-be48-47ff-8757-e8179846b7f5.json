@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "assignment_id": "61667db1-be48-47ff-8757-e8179846b7f5",
+  "target": "fn_8017A7D4",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017A7D4 fn_8017A7D4 -o reports/GEDE01/objdiff-61667db1-be48-47ff-8757-e8179846b7f5.json --format json-pretty",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017A7D4 fn_8017A7D4 -o reports/GEDE01/objdiff-61667db1-be48-47ff-8757-e8179846b7f5-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_results": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "build_sha1_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical": {
+      "retail_bytes": 484,
+      "generated_bytes": 484,
+      "retail_instructions": 121,
+      "generated_instructions": 121,
+      "identical_instruction_words": 101,
+      "different_instruction_words": 20,
+      "match_percent": 99.09091,
+      "relocation_bearing_instructions_retail": 10,
+      "relocation_bearing_instructions_generated": 10
+    },
+    "relocation_strict_name_address": {
+      "retail_bytes": 484,
+      "generated_bytes": 484,
+      "retail_instructions": 121,
+      "generated_instructions": 121,
+      "identical_instruction_words": 101,
+      "different_instruction_words": 20,
+      "match_percent": 99.09091,
+      "relocation_bearing_instructions_retail": 10,
+      "relocation_bearing_instructions_generated": 10
+    },
+    "different_instruction_offsets_hex": [
+      "0x40", "0x4c", "0x54", "0x58", "0x60", "0x68", "0x6c",
+      "0x70", "0x74", "0x78", "0x7c", "0x84", "0x88", "0x120",
+      "0x124", "0x128", "0x12c", "0x130", "0x134", "0x138"
+    ]
+  },
+  "attempt_6_hypothesis": {
+    "description": "Pointer alias and access qualification may change the allocator interference graph enough to assign the long-lived right_y value to retail f7 without changing the arithmetic expression.",
+    "all_parameters_restrict": "79.23967%; right_y moved to retail f7, but non-aliasing enabled broad output-path load/store rescheduling and reduced generated size to 472 bytes.",
+    "input_parameters_restrict": "99.09091%; byte-neutral against the accepted candidate.",
+    "volatile_output": "99.09091%; byte-neutral against the accepted candidate.",
+    "volatile_right_input": "96.56198%; volatile access moved right-side loads ahead of the retail schedule.",
+    "restrict_volatile_output": "99.09091%; byte-neutral against the accepted candidate.",
+    "disposition": "All qualification variants were discarded and the accepted-base 99.09091% candidate was restored exactly."
+  },
+  "dol_caveat": "fn_8017A7D4 remains Object(NonMatching) and is excluded from the linked DOL; the SHA-1 verifies the required whole-project gate, not this reconstruction."
+}

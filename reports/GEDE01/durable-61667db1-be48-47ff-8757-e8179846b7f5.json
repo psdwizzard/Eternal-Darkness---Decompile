@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "61667db1-be48-47ff-8757-e8179846b7f5",
+  "attempt": 6,
+  "base_commit": "ce9af29ba4bfd8afef4e5161347ea309bf74a3de",
+  "target": "fn_8017A7D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-61667db1-be48-47ff-8757-e8179846b7f5.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-61667db1-be48-47ff-8757-e8179846b7f5-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-61667db1-be48-47ff-8757-e8179846b7f5.json"
+  ],
+  "divergence": "Canonical and separately recorded relocation-strict name_address measurements both score 99.09091%: both sides contain 484 bytes and 121 instructions, with 101/121 instruction words identical and 10 relocation-bearing instructions per side. The 20 differences are FPR allocation at offsets 0x40, 0x4C, 0x54-0x58, 0x60, 0x68-0x7C, 0x84-0x88, and 0x120-0x138. Retail keeps right->y in f7 while canonical assigns f6, cascading through the dot-product prelude and antipodal setup; control flow, instruction count, stack layout, branch destinations, opcodes, and relocation sites align. Attempt 6 tested a new alias/access-qualification hypothesis: full restrict moved right->y to f7 but rescheduled the output path and regressed to 79.23967%; volatile right input regressed to 96.56198%; restricted inputs and volatile/restricted output variants were byte-neutral. The 99.09091% accepted-base candidate was restored exactly. The full build passes and main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f, but this NonMatching unit is excluded from the link, so the DOL check does not validate the reconstruction."
+}
