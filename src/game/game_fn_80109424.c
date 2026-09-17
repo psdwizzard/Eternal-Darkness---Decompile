@@ -20,6 +20,7 @@ int fn_80109424(void* state, u32 base)
     u8 y_tiles;
     u32 row_size;
     u32 pixels;
+    u32 dimensions;
     u32* s = (u32*)state;
 
     if (state == 0) {
@@ -33,22 +34,19 @@ int fn_80109424(void* state, u32 base)
     arena_size = ((ALIGN32(U32(state, 0x30)) + 0xFFF) >> 12) * 0x1C000;
 
     fn_80106B34((u8*)state + 0xA0);
-    U32(state, 0x164) = base + ALIGN32(fn_80106AC0((u8*)state + 0xA0));
+    U32(state, 0x164) = base + ALIGN32(fn_80106AC0((u8*)s + 0xA0));
     U32(state, 0x168) = U32(state, 0x164) + ALIGN32(U32(state, 0x28));
     memset((void*)U32(state, 0x168), 0, arena_size);
 
     pixels = x_tiles * y_tiles;
-    U32(state, 0x154) = U32(state, 0x168) + ALIGN32(U32(state, 0x30));
-    U32(state, 0xE8) = U32(state, 0x154);
-    U32(state, 0xD0) = U32(state, 0x154);
-    U32(state, 0x160) = U32(state, 0x154);
-    U32(state, 0x158) = U32(state, 0x154);
-    U32(state, 0xF0) = U32(state, 0x154) + arena_size;
-    U32(state, 0x15C) = U32(state, 0xF0);
-    U32(state, 0xEC) = U32(state, 0xF0);
-    U32(state, 0xD4) = U32(state, 0xF0);
+    U32(state, 0xD0) = U32(state, 0xE8) = U32(state, 0x154) =
+        U32(state, 0x168) + ALIGN32(U32(state, 0x30));
+    U32(state, 0x158) = U32(state, 0x160) = U32(state, 0x154);
+    U32(state, 0xD4) = U32(state, 0xEC) = U32(state, 0x15C) =
+        U32(state, 0xF0) = U32(state, 0x154) + arena_size;
 
-    row_size = ALIGN32((width * height * (pixels + 2)) / pixels);
+    dimensions = width * height;
+    row_size = ALIGN32((dimensions * (pixels + 2)) / pixels);
     U32(state, 0xFC) = U32(state, 0xF0) + row_size;
     U32(state, 0x108) = U32(state, 0xFC) + row_size;
     U32(state, 0x114) = U32(state, 0x108) + row_size;
