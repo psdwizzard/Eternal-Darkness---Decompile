@@ -56,7 +56,7 @@ s32 fn_801931C4(void* argument)
             count = object[1];
             while (i < count) {
                 if (fn_80180430(object + 0x24, (u8)i)) {
-                    saved = flags[0];
+                    saved = flags[i];
                     if ((*(u16*)(object + 0xA) & object[0xB2]) == 0) {
                         u16 value = (u16)(320 - *(u16*)(entry + 8) +
                                           *(u16*)(object + 0xA));
@@ -77,7 +77,7 @@ s32 fn_801931C4(void* argument)
                                          *(u16*)(object + 0xA)) < 305) {
                             fn_8017D508(entry + 0xA, object + 0xC0,
                                         *(s16*)(entry + 0x1C), entry + 0x10,
-                                        flags[0], direction);
+                                        flags[i], direction);
                         } else {
                             fn_8017E1B0(entry + 0xA, entry + 0x10);
                         }
@@ -87,7 +87,7 @@ s32 fn_801931C4(void* argument)
                         entry[0x2B] = 0;
                         fn_80180518(object + 0x24, (u8)i, 0);
                     } else {
-                        flags[0] = saved;
+                        flags[i] = saved;
                         if (entry[0] != 0) {
                             if (fn_8018E26C(entry, entry + 0x2B) == 0)
                                 fn_80180518(object + 0x24, (u8)i, 0);
@@ -113,7 +113,6 @@ s32 fn_801931C4(void* argument)
                 }
                 entry += 0x38;
                 i++;
-                flags++;
             }
 
             if (*(s32*)(object + 0xBC) != 0 &&

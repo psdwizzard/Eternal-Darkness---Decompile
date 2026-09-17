@@ -1,0 +1,73 @@
+{
+  "assignment_id": "6f1b5e2b-4ee8-43a7-bc0e-c20362c68774",
+  "configure_exit_code": 0,
+  "full_ninja_exit_code": 0,
+  "commands": [
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_801931C4.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_801931C4.o",
+        "fn_801931C4",
+        "-o",
+        "reports/GEDE01/objdiff-6f1b5e2b-4ee8-43a7-bc0e-c20362c68774.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-6f1b5e2b-4ee8-43a7-bc0e-c20362c68774.json\n"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_801931C4.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_801931C4.o",
+        "fn_801931C4",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "reports/GEDE01/strict-6f1b5e2b-4ee8-43a7-bc0e-c20362c68774.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/strict-6f1b5e2b-4ee8-43a7-bc0e-c20362c68774.json\n"
+    },
+    {
+      "command": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "exit_code": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "stdout": "legal audit passed (16351 tracked project files inspected)\n",
+      "stderr": ""
+    }
+  ]
+}
