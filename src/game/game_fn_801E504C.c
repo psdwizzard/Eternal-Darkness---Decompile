@@ -12,9 +12,10 @@ typedef struct TextState {
     s16 width;
     s16 height;
     u32 flags;
+    u32 unk14;
     u8 font;
     s8 align;
-    char text[1];
+    s8 text[1];
 } TextState;
 
 typedef struct FontInfo {
@@ -35,7 +36,7 @@ extern int lbl_8064D580;
 extern float lbl_80651260;
 
 extern void fn_801E5AD0(u8);
-extern char* fn_801E645C(char*, int, int*, int*);
+extern s8* fn_801E645C(s8*, int, int*, int*);
 extern void fn_80226AB4(int, int, int);
 extern void fn_801E4198(s16, s16, int);
 extern void fn_801E418C(u16);
@@ -45,7 +46,7 @@ void fn_801E504C(TextState* state)
 {
     int measured = 0;
     int command = 0;
-    char* cursor = state->text;
+    s8* cursor = state->text;
 
     lbl_8064D594 = state->color;
     lbl_8064C314 = state->scale;
@@ -61,20 +62,23 @@ void fn_801E504C(TextState* state)
         lbl_8064D574 = state->x + state->width - (s16)measured;
         break;
     case 'c':
-        lbl_8064D574 = state->x + state->width / 2 - (s16)measured / 2;
+        lbl_8064D574 = state->x + (state->width >> 1) - ((s16)measured >> 1);
         break;
     }
 
     while (cursor[0] != 0 || cursor[1] != 0) {
-        int glyph_height = (s16)(lbl_8064C314 *
+        float scale = lbl_8064C314;
+        int glyph_height = (s16)(scale *
             lbl_80633418[(s8)state->align]->height);
+        int current;
         if (glyph_height > lbl_8064C318)
             lbl_8064C318 = glyph_height;
         lbl_8064D57C = 0;
         while (*cursor == '\\')
             ++cursor;
+        current = (s8)*cursor;
 
-        if (*cursor == '\n') {
+        if (current == '\n') {
             int advance = lbl_8064C318 ? lbl_8064C318 : glyph_height;
             lbl_8064D578 += advance;
             lbl_8064D574 = state->x;
@@ -86,28 +90,42 @@ void fn_801E504C(TextState* state)
                 break;
             measured = command = 0;
             fn_801E645C(cursor, lbl_8064D580, &measured, &command);
-            lbl_8064C314 = state->scale;
+            lbl_8064C314 = scale;
+            switch ((s8)lbl_8064C31A - 'c') {
+            case 'l' - 'c':
+                lbl_8064D574 = state->x;
+                break;
+            case 'r' - 'c':
+                lbl_8064D574 = state->x + state->width - (s16)measured;
+                break;
+            case 0:
+                lbl_8064D574 = state->x + (state->width >> 1) - ((s16)measured >> 1);
+                break;
+            }
             continue;
         }
 
         if (lbl_8064D578 + glyph_height >= state->y) {
-            float size = lbl_80651260 * lbl_8064C314;
-            s16 extent;
-            u16 glyph = (u8)*cursor * 4;
+            float size = lbl_80651260 * scale;
+            int xextent;
+            int yextent;
+            u16 glyph;
             fn_80226AB4(0x80, 5, 4);
-            extent = (s16)size;
-            fn_801E4198(lbl_8064D574, lbl_8064D578 + extent, -1);
+            yextent = (s16)size;
+            fn_801E4198(lbl_8064D574, lbl_8064D578 + yextent, -1);
+            glyph = (u8)current * 4;
             fn_801E418C(glyph + 3);
             fn_801E4198(lbl_8064D574, lbl_8064D578, -1);
             fn_801E418C(glyph);
-            fn_801E4198(lbl_8064D574 + extent, lbl_8064D578, -1);
+            xextent = (s16)size;
+            fn_801E4198(lbl_8064D574 + xextent, lbl_8064D578, -1);
             fn_801E418C(glyph + 1);
-            fn_801E4198(lbl_8064D574 + extent, lbl_8064D578 + extent, -1);
+            fn_801E4198(lbl_8064D574 + xextent, lbl_8064D578 + yextent, -1);
             fn_801E418C(glyph + 2);
             fn_801E4188();
         }
         lbl_8064D574 += (s16)(lbl_8064C314 *
-            lbl_80633418[lbl_8064D580]->glyph_width[(u8)*cursor + 5]);
+            lbl_80633418[lbl_8064D580]->glyph_width[current]);
         ++cursor;
     }
 }
