@@ -11,33 +11,42 @@ int fn_8017D1E0(Vec3s* first, Vec3s* second, u16 distance, u16 close,
                 u16 limit, s16* counter)
 {
     int result = 0;
-    s16 dx;
-    s16 dy;
-    s16 dz;
+    u16 dx;
+    u16 dy;
+    u16 dz;
 
     if (distance < close) {
         distance = close;
     }
-    dx = second->x - first->x;
-    if (dx < 0) {
-        dx = -dx;
+    {
+        int delta = second->x - first->x;
+        if (delta >= 0) goto x_positive;
+        delta = -delta;
+x_positive:
+        dx = delta;
     }
     if (dx < distance) {
-        dy = second->y - first->y;
-        if (dy < 0) {
-            dy = -dy;
+        {
+            int delta = second->y - first->y;
+            if (delta >= 0) goto y_positive;
+            delta = -delta;
+y_positive:
+            dy = delta;
         }
         if (dy < distance) {
-            dz = second->z - first->z;
-            if (dz < 0) {
-                dz = -dz;
+            {
+                int delta = second->z - first->z;
+                if (delta >= 0) goto z_positive;
+                delta = -delta;
+z_positive:
+                dz = delta;
             }
             if (dz < distance) {
                 if (dx <= close && dy <= close && dz <= close) {
                     result = 1;
                 } else if (counter != 0) {
                     int next = *counter + 1;
-                    u16 value = limit;
+                    int value = limit;
                     if (next < value) {
                         value = next;
                     }
