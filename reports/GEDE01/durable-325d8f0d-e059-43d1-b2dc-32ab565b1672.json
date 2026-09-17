@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "325d8f0d-e059-43d1-b2dc-32ab565b1672",
+  "attempt": 2,
+  "base_commit": "b894bc6e161db641194bf5a8515aeb73a13ceda5",
+  "target": "fn_8014ACDC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-325d8f0d-e059-43d1-b2dc-32ab565b1672.json"
+  ],
+  "divergence": "Relocation-strict objdiff is size-exact at 376/376 bytes and structurally exact at 94/94 instructions, with all 18 relocation-bearing instructions equal in offset, type, target, and addend, but scores 98.67021% because 24 instructions retain an equivalent r27-r31 allocation rotation: generated uses r30 for the advancing entry, r29/r28/r27 for the three transform component addresses, and r31 for the returned short-vector pointer, while retail uses r31, r30/r29/r28, and r27 respectively. Focused lifetime, scope, declaration-order, register-hint, type, and assignment-expression variants did not improve the preserved honest C reconstruction."
+}
