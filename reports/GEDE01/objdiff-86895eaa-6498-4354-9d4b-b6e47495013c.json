@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "assignment_id": "86895eaa-6498-4354-9d4b-b6e47495013c",
+  "target": "fn_800D082C",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "objdiff": "python3 tools/fndiff.py game/game_fn_800D082C.c fn_800D082C",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "legal_audit": "python3 tools/legal_audit.py --help"
+  },
+  "raw_measured_outputs": {
+    "build_tail": "[873/875] DOL build/GEDE01/main.dol\n[874/875] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[875/875] PROGRESS",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "objdiff": "target 472 bytes  base 472 bytes  match 98.98305",
+    "objdiff_counts": "left size 472 match_percent 98.98305 instructions 118 diff_instructions 24 relocations 21; right size 472 match_percent 98.98305 instructions 118 diff_instructions 24 relocations 21",
+    "collapsed_temporaries_experiment": "target 472 bytes  base 464 bytes  match 89.95763",
+    "id_only_temporary_experiment": "target 472 bytes  base 468 bytes  match 90.72034",
+    "legal_audit": "legal audit passed (16475 tracked project files inspected)"
+  },
+  "canonical": {
+    "match_percent": 98.98305,
+    "target_size": 472,
+    "generated_size": 472,
+    "instruction_count": 118,
+    "differing_instructions": 24
+  },
+  "relocation_strict": {
+    "matched": true,
+    "retail_count": 21,
+    "generated_count": 21,
+    "type": "R_PPC_REL24",
+    "addend": 0,
+    "targets_and_addends": "All 21 paired call relocations have identical offsets, targets, type 10/R_PPC_REL24, and implicit addend 0."
+  },
+  "experiments": [
+    {
+      "hypothesis": "Nested call expressions for the owner-to-ID and target dataflow would alter pseudo creation order and fix the callee-saved coloring while preserving calls.",
+      "result": "Collapsing both temporaries changed parameter coloring but generated 464 bytes at 89.95763%; retaining only the ID temporary generated 468 bytes at 90.72034%. Both changed scheduling, so neither was retained."
+    },
+    {
+      "hypothesis": "Correct explicit prototypes and the fn_801A7498 return-to-fn_80201814 dataflow should be retained from the preserved attempt.",
+      "result": "They compile to the size-exact 472-byte 98.98305% stream and document the actual argument flow; retained."
+    }
+  ],
+  "divergence": "All instruction scheduling, stack layout, non-register operands, and 21/21 relocations match. The remaining 24 instructions use the retail-to-generated callee-saved permutation context/object/owner-or-id/variant r29/r28/r27/r31 versus r27/r31/r29/r28."
+}
