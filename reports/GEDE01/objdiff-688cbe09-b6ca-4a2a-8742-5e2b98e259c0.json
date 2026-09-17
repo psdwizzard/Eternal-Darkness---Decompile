@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "assignment_id": "688cbe09-b6ca-4a2a-8742-5e2b98e259c0",
+  "target": "fn_801BE354",
+  "compiler": "GC/1.2.5n",
+  "source": "eternal-darkness-decomp/src/game/game_fn_801BE354.c",
+  "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801BE354 --format json-pretty -o build/GEDE01/objdiff-688cbe09-canonical.json",
+  "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801BE354 --format json-pretty -c function_reloc_diffs=name_address -o build/GEDE01/objdiff-688cbe09-reloc-strict.json",
+  "canonical_raw_measurement": {
+    "retail": {"size": "160", "match_percent": 95.0, "real_instruction_count": 40},
+    "generated": {"size": "160", "match_percent": 95.0, "real_instruction_count": 40},
+    "text_section_match_percent": 95.0
+  },
+  "relocation_strict_raw_measurement": {
+    "retail": {"size": "160", "match_percent": 95.0, "real_instruction_count": 40},
+    "generated": {"size": "160", "match_percent": 95.0, "real_instruction_count": 40},
+    "text_section_match_percent": 95.0,
+    "retail_call_instruction": {"address": "52", "size": 4, "formatted": "bl fn_801CC408", "relocation": {"type": 10, "type_name": "R_PPC_REL24", "target_symbol": 6}},
+    "generated_call_instruction": {"address": "52", "size": 4, "formatted": "bl fn_801CC408", "relocation": {"type": 10, "type_name": "R_PPC_REL24", "target_symbol": 6}},
+    "relocation_target_and_addend_result": "Both raw strict instruction records identify fn_801CC408 at address 52 with R_PPC_REL24 and omit an addend field, objdiff's representation of addend 0."
+  },
+  "raw_epilogue_diff": {
+    "retail": ["140: lmw r27, 0x1c(r1)", "144: lwz r0, 0x34(r1)"],
+    "generated": ["140: lwz r0, 0x34(r1)", "144: lmw r27, 0x1c(r1)"],
+    "unchanged_tail": ["148: addi r1, r1, 0x30", "152: mtlr r0", "156: blr"]
+  },
+  "attempt_log": [
+    {"variant": "recovered corrected array layout and source ordering", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "value and adjustment locals declared long", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "#pragma peephole off only", "score": 67.325, "retail_size": 160, "generated_size": 172},
+    {"variant": "#pragma scheduling off only", "score": 53.2, "retail_size": 160, "generated_size": 160},
+    {"variant": "#pragma peephole off plus #pragma scheduling off", "score": 37.825, "retail_size": 160, "generated_size": 172},
+    {"variant": "u32 typedef changed from unsigned int to unsigned long", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "s32 typedef changed from signed int to signed long together with unsigned-long u32", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "index parameter declared long and narrowed through local u8 slot", "score": 95.0, "retail_size": 160, "generated_size": 160}
+  ],
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw_tail": ["[870/872] DOL build/GEDE01/main.dol", "[871/872] CHECK config/GEDE01/build.sha1", "build/GEDE01/main.dol: OK", "[872/872] PROGRESS"],
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_sha1_raw_output": ["ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol", "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"],
+  "legal_audit_command": "rg -n 'asm\\s*\\(|__asm|#pragma.*asm' src/game/game_fn_801BE354.c",
+  "legal_audit_raw_output": "",
+  "legal_audit_exit": 1,
+  "divergence": "All 35 body instructions, the five non-divergent prologue/tail instructions, function size, and the sole call relocation match. Only the independent epilogue restore order differs: retail lmw then lwz LR, generated lwz LR then lmw."
+}
