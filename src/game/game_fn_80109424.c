@@ -2,7 +2,7 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-extern void fn_80106B34(void*);
+extern void fn_80106B34(void*, u32);
 extern u32 fn_80106AC0(void*);
 extern void* memset(void*, int, unsigned long);
 
@@ -33,7 +33,7 @@ int fn_80109424(void* state, u32 base)
     y_tiles = U8(state, 0xA9);
     arena_size = ((ALIGN32(U32(state, 0x30)) + 0xFFF) >> 12) * 0x1C000;
 
-    fn_80106B34((u8*)state + 0xA0);
+    fn_80106B34((u8*)state + 0xA0, base);
     U32(state, 0x164) = base + ALIGN32(fn_80106AC0((u8*)s + 0xA0));
     U32(state, 0x168) = U32(state, 0x164) + ALIGN32(U32(state, 0x28));
     memset((void*)U32(state, 0x168), 0, arena_size);

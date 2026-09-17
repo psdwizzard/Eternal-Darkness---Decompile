@@ -1,0 +1,86 @@
+ INFO Writing to /home/rabbit/src/darkfoundry-new/.darkfoundry/worktrees/50c29326-0acb-40d9-995f-1837de479183/eternal-darkness-decomp/build/GEDE01/fndiff_fn_80109424.json
+target 336 bytes  base 336 bytes  match 100.0
+  0x0000  stwu r1, -0x30(r1)                                   | stwu r1, -0x30(r1)
+  0x0004  mflr r0                                              | mflr r0
+  0x0008  stw r0, 0x34(r1)                                     | stw r0, 0x34(r1)
+  0x000c  stmw r25, 0x14(r1)                                   | stmw r25, 0x14(r1)
+  0x0010  mr. r28, r3                                          | mr. r28, r3
+  0x0014  mr r25, r4                                           | mr r25, r4
+  0x0018  bne 0x24                                             | bne 0x24
+  0x001c  li r3, 0x1                                           | li r3, 0x1
+  0x0020  b 0x13c                                              | b 0x13c
+  0x0024  lwz r5, 0x30(r28)                                    | lwz r5, 0x30(r28)
+  0x0028  lis r3, 0x2                                          | lis r3, 0x2
+  0x002c  subi r0, r3, 0x4000                                  | subi r0, r3, 0x4000
+  0x0030  lhz r31, 0xa4(r28)                                   | lhz r31, 0xa4(r28)
+  0x0034  addi r3, r5, 0x1f                                    | addi r3, r5, 0x1f
+  0x0038  lhz r30, 0xa6(r28)                                   | lhz r30, 0xa6(r28)
+  0x003c  clrrwi r3, r3, 5                                     | clrrwi r3, r3, 5
+  0x0040  lbz r27, 0xa8(r28)                                   | lbz r27, 0xa8(r28)
+  0x0044  addi r3, r3, 0xfff                                   | addi r3, r3, 0xfff
+  0x0048  lbz r26, 0xa9(r28)                                   | lbz r26, 0xa9(r28)
+  0x004c  srwi r5, r3, 12                                      | srwi r5, r3, 12
+  0x0050  addi r3, r28, 0xa0                                   | addi r3, r28, 0xa0
+  0x0054  mullw r29, r5, r0                                    | mullw r29, r5, r0
+  0x0058  bl fn_80106B34 [None+0 t10]                          | bl fn_80106B34 [None+0 t10]
+  0x005c  addi r3, r28, 0xa0                                   | addi r3, r28, 0xa0
+  0x0060  bl fn_80106AC0 [None+0 t10]                          | bl fn_80106AC0 [None+0 t10]
+  0x0064  addi r0, r3, 0x1f                                    | addi r0, r3, 0x1f
+  0x0068  mr r5, r29                                           | mr r5, r29
+  0x006c  clrrwi r0, r0, 5                                     | clrrwi r0, r0, 5
+  0x0070  li r4, 0x0                                           | li r4, 0x0
+  0x0074  add r0, r25, r0                                      | add r0, r25, r0
+  0x0078  stw r0, 0x164(r28)                                   | stw r0, 0x164(r28)
+  0x007c  lwz r3, 0x28(r28)                                    | lwz r3, 0x28(r28)
+  0x0080  lwz r6, 0x164(r28)                                   | lwz r6, 0x164(r28)
+  0x0084  addi r0, r3, 0x1f                                    | addi r0, r3, 0x1f
+  0x0088  clrrwi r0, r0, 5                                     | clrrwi r0, r0, 5
+  0x008c  add r0, r6, r0                                       | add r0, r6, r0
+  0x0090  stw r0, 0x168(r28)                                   | stw r0, 0x168(r28)
+  0x0094  lwz r3, 0x168(r28)                                   | lwz r3, 0x168(r28)
+  0x0098  bl memset [None+0 t10]                               | bl memset [None+0 t10]
+  0x009c  mullw r6, r27, r26                                   | mullw r6, r27, r26
+  0x00a0  lwz r4, 0x30(r28)                                    | lwz r4, 0x30(r28)
+  0x00a4  lwz r5, 0x168(r28)                                   | lwz r5, 0x168(r28)
+  0x00a8  li r3, 0x0                                           | li r3, 0x0
+  0x00ac  addi r0, r4, 0x1f                                    | addi r0, r4, 0x1f
+  0x00b0  clrrwi r0, r0, 5                                     | clrrwi r0, r0, 5
+  0x00b4  add r5, r5, r0                                       | add r5, r5, r0
+  0x00b8  addi r0, r6, 0x2                                     | addi r0, r6, 0x2
+  0x00bc  mullw r4, r31, r30                                   | mullw r4, r31, r30
+  0x00c0  stw r5, 0x154(r28)                                   | stw r5, 0x154(r28)
+  0x00c4  stw r5, 0xe8(r28)                                    | stw r5, 0xe8(r28)
+  0x00c8  stw r5, 0xd0(r28)                                    | stw r5, 0xd0(r28)
+  0x00cc  mullw r0, r4, r0                                     | mullw r0, r4, r0
+  0x00d0  lwz r5, 0x154(r28)                                   | lwz r5, 0x154(r28)
+  0x00d4  stw r5, 0x160(r28)                                   | stw r5, 0x160(r28)
+  0x00d8  divwu r4, r0, r6                                     | divwu r4, r0, r6
+  0x00dc  stw r5, 0x158(r28)                                   | stw r5, 0x158(r28)
+  0x00e0  lwz r0, 0x154(r28)                                   | lwz r0, 0x154(r28)
+  0x00e4  add r5, r0, r29                                      | add r5, r0, r29
+  0x00e8  stw r5, 0xf0(r28)                                    | stw r5, 0xf0(r28)
+  0x00ec  stw r5, 0x15c(r28)                                   | stw r5, 0x15c(r28)
+  0x00f0  stw r5, 0xec(r28)                                    | stw r5, 0xec(r28)
+  0x00f4  addi r0, r4, 0x1f                                    | addi r0, r4, 0x1f
+  0x00f8  clrrwi r4, r0, 5                                     | clrrwi r4, r0, 5
+  0x00fc  stw r5, 0xd4(r28)                                    | stw r5, 0xd4(r28)
+  0x0100  lwz r0, 0xf0(r28)                                    | lwz r0, 0xf0(r28)
+  0x0104  add r0, r0, r4                                       | add r0, r0, r4
+  0x0108  stw r0, 0xfc(r28)                                    | stw r0, 0xfc(r28)
+  0x010c  lwz r0, 0xfc(r28)                                    | lwz r0, 0xfc(r28)
+  0x0110  add r0, r0, r4                                       | add r0, r0, r4
+  0x0114  stw r0, 0x108(r28)                                   | stw r0, 0x108(r28)
+  0x0118  lwz r0, 0x108(r28)                                   | lwz r0, 0x108(r28)
+  0x011c  add r0, r0, r4                                       | add r0, r0, r4
+  0x0120  stw r0, 0x114(r28)                                   | stw r0, 0x114(r28)
+  0x0124  lwz r0, 0x114(r28)                                   | lwz r0, 0x114(r28)
+  0x0128  add r0, r0, r4                                       | add r0, r0, r4
+  0x012c  stw r0, 0x120(r28)                                   | stw r0, 0x120(r28)
+  0x0130  lwz r0, 0x120(r28)                                   | lwz r0, 0x120(r28)
+  0x0134  add r0, r0, r4                                       | add r0, r0, r4
+  0x0138  stw r0, 0x12c(r28)                                   | stw r0, 0x12c(r28)
+  0x013c  lmw r25, 0x14(r1)                                    | lmw r25, 0x14(r1)
+  0x0140  lwz r0, 0x34(r1)                                     | lwz r0, 0x34(r1)
+  0x0144  mtlr r0                                              | mtlr r0
+  0x0148  addi r1, r1, 0x30                                    | addi r1, r1, 0x30
+  0x014c  blr                                                  | blr

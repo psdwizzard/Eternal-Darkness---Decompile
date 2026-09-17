@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "assignment_id": "56520cfd-15d9-4856-94f1-3223615ba44c",
+  "attempt": 5,
+  "base_commit": "688946655c5891c1e6873592eba1ea2ee3f3ea9f",
+  "target": "fn_80109424",
+  "status": "matched",
+  "recovered_source": "Accepted base source was already byte-for-byte identical to preserved commit a60913dcea0e7498a8a48436e2ab6074e46c4b57; no cherry-pick needed. Prior attempt evidence inspected and summarized in the prior report.",
+  "hypothesis": "The live range of incoming base in r4 extends to fn_80106B34 because that callee takes a second argument. Retail callee copies incoming r4 to r31 at 0x80106B4C, stores it through r3 at 0x80106B5C, and subsequently uses it as a workspace pointer. Correcting the local extern declaration and passing base prevents arena temporaries from clobbering r4. This is an ABI/semantic correction, not an artificial register-allocation constraint.",
+  "changes": [
+    "Local extern fn_80106B34(void*, u32) and call fn_80106B34((u8*)state + 0xA0, base).",
+    "Only this function registration changed from NonMatching to Matching; canonical flags unchanged."
+  ],
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "python3 tools/fndiff.py game/game_fn_80109424.c fn_80109424",
+    "strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80109424 fn_80109424 -o reports/GEDE01/strict-56520cfd-15d9-4856-94f1-3223615ba44c.raw.json --format json -c functionRelocDiffs=name_address",
+    "relocations": [
+      "readelf -rW build/GEDE01/obj/game/game_fn_80109424.o",
+      "readelf -rW build/GEDE01/src/game/game_fn_80109424.o"
+    ],
+    "legal": "python3 tools/legal_audit.py",
+    "dol": "sha1sum build/GEDE01/main.dol"
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on"
+  },
+  "measurements": {
+    "canonical_percent": 100.0,
+    "relocation_strict_percent": 100.0,
+    "target_size": 336,
+    "generated_size": 336,
+    "raw_text_bytes_equal": true,
+    "relocation_offsets_types_targets_addends_match": true,
+    "relocations": [
+      {
+        "offset": 88,
+        "type": "R_PPC_REL24",
+        "target": "fn_80106B34",
+        "addend": 0
+      },
+      {
+        "offset": 96,
+        "type": "R_PPC_REL24",
+        "target": "fn_80106AC0",
+        "addend": 0
+      },
+      {
+        "offset": 152,
+        "type": "R_PPC_REL24",
+        "target": "memset",
+        "addend": 0
+      }
+    ],
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "linked_generated_object": true
+  },
+  "attempted_variants": [
+    {
+      "name": "constant_first_arena_multiply",
+      "match_percent": 99.7619,
+      "size": "336",
+      "build_exit": 0
+    },
+    {
+      "name": "unsigned_int_dimension_locals",
+      "match_percent": 99.7619,
+      "size": "336",
+      "build_exit": 0
+    },
+    {
+      "name": "unsigned_int_tile_locals",
+      "match_percent": 99.7619,
+      "size": "336",
+      "build_exit": 0
+    },
+    {
+      "name": "signed_arena_result",
+      "match_percent": 99.7619,
+      "size": "336",
+      "build_exit": 0
+    },
+    {
+      "name": "signed_base_parameter",
+      "match_percent": 99.7619,
+      "size": "336",
+      "build_exit": 0
+    },
+    {
+      "name": "base_addend_order",
+      "match_percent": 99.7619,
+      "size": "336",
+      "build_exit": 0
+    },
+    {
+      "name": "unsigned_long_arena_result",
+      "match_percent": 99.7619,
+      "size": "336",
+      "build_exit": 0
+    },
+    {
+      "name": "arena_size_reuses_base_after_saved_copy",
+      "match_percent": 98.21429,
+      "size": "340",
+      "build_exit": 0
+    },
+    {
+      "name": "signed_load_unsigned_alignment",
+      "match_percent": 99.7619,
+      "size": "336",
+      "build_exit": 0
+    },
+    {
+      "name": "u32_width_times_height",
+      "match_percent": 99.7619,
+      "size": "336",
+      "build_exit": 0
+    },
+    {
+      "name": "reverse_dimensions_multiply",
+      "match_percent": 99.64286,
+      "size": "336",
+      "build_exit": 0
+    },
+    {
+      "name": "reverse_pixels_multiply",
+      "match_percent": 99.64286,
+      "size": "336",
+      "build_exit": 0
+    },
+    {
+      "name": "callee_second_parameter_base_keeps_r4_live",
+      "match_percent": 100.0,
+      "size": "336",
+      "build_exit": 0
+    }
+  ],
+  "raw_evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/build-56520cfd-15d9-4856-94f1-3223615ba44c.log",
+    "eternal-darkness-decomp/reports/GEDE01/build-matched-56520cfd-15d9-4856-94f1-3223615ba44c.log",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-56520cfd-15d9-4856-94f1-3223615ba44c.txt",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-56520cfd-15d9-4856-94f1-3223615ba44c.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/strict-56520cfd-15d9-4856-94f1-3223615ba44c.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-target-56520cfd-15d9-4856-94f1-3223615ba44c.txt",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-generated-56520cfd-15d9-4856-94f1-3223615ba44c.txt",
+    "eternal-darkness-decomp/reports/GEDE01/byte-compare-56520cfd-15d9-4856-94f1-3223615ba44c.json",
+    "eternal-darkness-decomp/reports/GEDE01/callee-abi-56520cfd-15d9-4856-94f1-3223615ba44c.txt",
+    "eternal-darkness-decomp/reports/GEDE01/variants-56520cfd-15d9-4856-94f1-3223615ba44c.json",
+    "eternal-darkness-decomp/reports/GEDE01/prior-56520cfd-15d9-4856-94f1-3223615ba44c.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-56520cfd-15d9-4856-94f1-3223615ba44c.txt"
+  ],
+  "legal_audit": {
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "compiler_policy_changes": false,
+    "neighbor_edits": false,
+    "private_or_generated_binaries_tracked": false
+  },
+  "preexisting_workspace_change": "CLAUDE.md was already modified at start. Task explicitly allows only target source, registration, and assignment reports; left untouched and excluded from commit.",
+  "divergence": ""
+}
