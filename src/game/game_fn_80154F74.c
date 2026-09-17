@@ -29,13 +29,13 @@ typedef struct Batch {
 
 extern void fn_801A1A4C(Batch* batch);
 extern u32 fn_8015E780(void);
-extern void fn_801550C8(Batch* batch, u8 flag);
+extern void fn_801550C8(Batch* batch, int flag);
 
-void fn_80154F74(Entry* entries, u16 first, u16 last, int kind, u8 flag)
+void fn_80154F74(Entry* entries, u16 first, u16 last, int kind, int flag)
 {
     Batch batch;
     Batch* batch_ptr = &batch;
-    u16 span;
+    int span;
     u16 index;
     u32 stamp;
     float value;
@@ -56,20 +56,21 @@ void fn_80154F74(Entry* entries, u16 first, u16 last, int kind, u8 flag)
         span = last - first;
         for (index = 0; index < span; index++) {
             Entry* entry = &entries[index];
-            if (entry->kind == kind && entry->value == value) {
-                batch.indices[batch.index_count++] = index;
+            if (kind == entry->kind && value == entry->value) {
+                batch.indices[batch.index_count] = index;
+                batch.index_count++;
                 if (batch.index_count >= 32) {
-                    fn_80154F74(entries, index, span, kind, flag);
+                    fn_80154F74(entry, index, span, kind, flag);
                     break;
                 }
-            } else if (entry->kind == kind) {
-                fn_80154F74(entries, index, span, kind, flag);
+            } else if (kind == entry->kind) {
+                fn_80154F74(entry, index, span, kind, flag);
                 break;
             }
         }
         if (batch.index_count != 0) {
             batch.count = batch.index_count;
-            batch.value = value / 255.0f;
+            batch.value = value / 72.0f;
             fn_801550C8(&batch, flag);
         }
     }

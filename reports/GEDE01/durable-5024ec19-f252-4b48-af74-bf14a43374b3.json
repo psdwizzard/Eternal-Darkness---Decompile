@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "5024ec19-f252-4b48-af74-bf14a43374b3",
+  "attempt": 2,
+  "base_commit": "9f1bb05513893dff66ebd8160e883bc6cd41b330",
+  "target": "fn_80154F74",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-5024ec19-f252-4b48-af74-bf14a43374b3.json"
+  ],
+  "divergence": "Size-exact 340/340-byte honest C reaches 92.89412% in relocation-strict objdiff with the 72.0f divisor externalized to the equal lbl_80650608 target and all six relocation-bearing operations represented. GC/1.3 retains only r27-r31 and recomputes &batch in a volatile GPR, while retail retains r26-r31 and anchors r31=&batch.entries; this rotates entries/first/last/kind/flag and loop-index registers, shifts the first recursive call by one instruction, and changes the batch-index store address schedule."
+}
