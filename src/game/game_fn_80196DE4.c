@@ -8,8 +8,9 @@ typedef struct Vec3 {
 
 extern Vec3 lbl_8023B088;
 extern u8 lbl_80607120[];
-extern void* lbl_8064AD48;
+extern void* lbl_8064C4E4;
 extern int lbl_8064D738;
+extern float lbl_80650B88;
 
 void fn_8011F114(Vec3* value);
 void fn_801F68B0(Vec3* value);
@@ -31,15 +32,15 @@ int fn_80196DE4(u8* object)
     Vec3 position = lbl_8023B088;
     void* output;
     u8* entry;
-    u8 count;
+    int count;
     int tick;
     int i;
     u8* state = object + 0xd4;
 
     entry = *(u8**)(object + 0x4c);
-    if (lbl_8064AD48 != 0) {
+    if (lbl_8064C4E4 != 0) {
         fn_8011F114(&position);
-        position.z += 0.5f;
+        position.z += lbl_80650B88;
     } else {
         fn_801F68B0(&position);
     }
