@@ -15,26 +15,42 @@ extern void fn_80139F28(void*, const Vec8012AC74*, const Vec8012AC74*,
                        Vec8012AC74*, int);
 extern void fn_8013A140(void*);
 
-void fn_8012AC74(void* owner, const Vec8012AC74* value, int flags)
+/* NonMatching: behavior-complete reconstruction. */
+void fn_8012AC74(void* owner, const void* value, int flags)
 {
+    Vec8012AC74* object = (Vec8012AC74*)owner;
+    const Vec8012AC74* input = (const Vec8012AC74*)value;
     int mode;
     int type;
+    int condition;
     void* transform;
     Vec8012AC74 current;
     Vec8012AC74 target;
     Vec8012AC74 result;
 
-    mode = fn_8011EB1C(owner);
-    type = fn_8011EB04(owner);
-    if (mode == 3 &&
-        (type == 1 || type == 2 || type == 3 || type == 0x57)) {
-        *(Vec8012AC74*)owner = *value;
-        fn_8013A140(owner);
+    mode = fn_8011EB1C(object);
+    type = fn_8011EB04(object);
+    condition = 0;
+    if (mode == 3) {
+        int a = 1;
+        int b = a;
+        if (!((unsigned int)(type - 2) <= 1))
+            b = condition;
+        if (!b) {
+            if (type != 0x57)
+                a = 0;
+        }
+        if (a)
+            condition = 1;
+    }
+    if (condition) {
+        *object = *input;
+        fn_8013A140(object);
     } else {
-        transform = fn_8011F770(owner);
-        fn_80211A48((Vec8012AC74*)owner, transform, &current);
-        fn_80211A48(value, transform, &target);
-        fn_80139F28(owner, &current, &target, &result, flags);
-        fn_80211A6C(&result, transform, (Vec8012AC74*)owner);
+        transform = fn_8011F770(object);
+        fn_80211A48(object, transform, &current);
+        fn_80211A48(input, transform, &target);
+        fn_80139F28(object, &current, &target, &result, flags);
+        fn_80211A6C(&result, transform, object);
     }
 }
