@@ -1,4 +1,5 @@
 typedef unsigned char u8;
+typedef unsigned int u32;
 typedef signed int s32;
 
 typedef struct Vec3 {
@@ -25,7 +26,9 @@ void fn_8008A5B8(void* object)
     while (done == 0) {
         Vec3 found;
         s32 query = 0;
+        Vec3 resolved;
         Vec3 current;
+        u32 color;
         s32 dx;
         s32 dz;
         s32 fx;
@@ -38,13 +41,16 @@ void fn_8008A5B8(void* object)
 
         if (lbl_8064C4E4 != 0) {
             fn_8011F114(&current, lbl_8064C4E4);
+            resolved = current;
             dx = (s32)found.x;
             dz = (s32)found.y;
-            fx = (s32)current.x;
-            fz = (s32)current.y;
-            if (__builtin_abs(fn_80179064(dx, dz, fx, fz)) < 500)
-                fn_800EBA80(2, &found, lbl_802FC5BC + 0x14, 0x40,
+            fx = (s32)resolved.x;
+            fz = (s32)resolved.y;
+            if (__abs(fn_80179064(dx, dz, fx, fz)) < 500) {
+                color = *(u32*)(lbl_802FC5BC + 0x14);
+                fn_800EBA80(2, &found, &color, 0x40,
                             lbl_8064EBBC);
+            }
         }
         done = 0;
         index++;

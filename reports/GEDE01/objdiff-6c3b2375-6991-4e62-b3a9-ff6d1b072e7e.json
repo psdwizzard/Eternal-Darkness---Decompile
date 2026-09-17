@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "assignment_id": "6c3b2375-6991-4e62-b3a9-ff6d1b072e7e",
+  "target": "fn_8008A5B8",
+  "basis": "canonical direct object diff with relocation data enabled",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_8008A5B8.c fn_8008A5B8",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_outputs": {
+    "baseline_fndiff": "target 320 bytes  base 268 bytes  match 66.575",
+    "final_fndiff": "target 320 bytes  base 304 bytes  match 89.2625",
+    "final_objdiff_summary": {
+      "retail_size": "320",
+      "generated_size": "304",
+      "match_percent": 89.2625,
+      "retail_instruction_rows": 81,
+      "generated_instruction_rows": 81,
+      "retail_relocation_bearing_rows": 9,
+      "generated_relocation_bearing_rows": 9
+    },
+    "retail_relocation_types_and_addends": [[6, null], [4, null], [10, null], [109, null], [10, null], [10, null], [null, "20"], [109, null], [10, null]],
+    "generated_relocation_types_and_addends": [[6, null], [4, null], [10, null], [109, null], [10, null], [10, null], [null, "20"], [109, null], [10, null]],
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "matching_span": "The computation from fn_8011F114 through the absolute-distance comparison is instruction-identical, including the aggregate copy, four float-to-int conversions, spill slots, fn_80179064 call, and branchless integer absolute value.",
+  "divergence": "GC/1.3 emits 304 bytes versus retail's 320. Retail keeps the global base, iterator, loop flag, and object in r31/r30/r29/r28 and moves the iterator through r9 each iteration; generated code keeps only the global base, iterator, and object in r30/r31/r29, constant-propagates the loop flag through r0, and carries the next iterator in r9. This removes the r28 save/restore and four loop-scheduling instructions. The nine relocation-bearing rows have equal relocation type/addend sequences, but the function is not a strict match."
+}
