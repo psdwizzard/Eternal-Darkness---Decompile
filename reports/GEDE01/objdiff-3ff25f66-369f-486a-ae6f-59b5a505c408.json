@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "assignment_id": "3ff25f66-369f-486a-ae6f-59b5a505c408",
+  "target": "fn_800D082C",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "objdiff": "python3 tools/fndiff.py game/game_fn_800D082C.c fn_800D082C",
+    "relocation_strict": "extract address, formatted target, type, target_symbol, and addend (default 0) for every instruction.relocation from left and right in build/GEDE01/fndiff_fn_800D082C.json; compare with cmp"
+  },
+  "raw_measured_outputs": {
+    "build_tail": "Game Code: 91.21% fuzzy, 74.30% matched, 74.30% linked (6200 / 6633 files)\nCode: 1058808 / 1425104 bytes (5921 / 6354 functions)\nData: 39270 / 40426 bytes (97.14%)\nSDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\nCode: 3028 / 3028 bytes (62 / 62 functions)\nData: 224 / 224 bytes (100.00%)",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "objdiff": "target 472 bytes  base 472 bytes  match 98.98305",
+    "instruction_diff_count": "24",
+    "relocation_strict": "relocation_cmp_exit=0\nleft_count=21\nright_count=21"
+  },
+  "canonical": {
+    "match_percent": 98.98305,
+    "target_size": 472,
+    "generated_size": 472,
+    "instruction_count": 118,
+    "differing_instructions": 24
+  },
+  "relocation_strict": {
+    "matched": true,
+    "retail_count": 21,
+    "generated_count": 21,
+    "type": "R_PPC_REL24",
+    "targets_and_addends": "All extracted tuples (instruction address, formatted call target, relocation type 10/R_PPC_REL24, target-symbol index, addend 0) compare byte-identically."
+  },
+  "experiments": [
+    {
+      "hypothesis": "Make the allocator encounter long-lived values in the retail color order by adding explicit object/context parameter aliases and declaring owner before object before context, while moving id/kind/variant/target into the conditional block.",
+      "source_shape": "Rename parameters to object_arg/context_arg; declare owner, object, context, and state in that order; assign object = object_arg and context = context_arg before the first call; declare id, kind, variant, and target at the start of the timer conditional.",
+      "result": "target 472 bytes  base 472 bytes  match 98.98305; generated object remained r31, context r27, owner/id r29, variant r28. Object code was byte-identical to the accepted baseline."
+    },
+    {
+      "hypothesis": "Metrowerks register-priority hints or integer signedness may alter graph-color tie-breaking without changing emitted operations.",
+      "source_shape": "Test register-qualified scalar locals and register-qualified pointer parameters; separately test variant as unsigned int. Each was built independently from the typed-prototype baseline.",
+      "result": "Each variant produced target 472 bytes  base 472 bytes  match 98.98305 and the same 24 register-operand differences; none changed generated object code."
+    }
+  ],
+  "retained_source": "The cleaner typed-prototype reconstruction already present at the accepted base was restored; no speculative experiment was retained.",
+  "divergence": "Canonical code is size-exact at 472 bytes and scores 98.98305%. All 21 strict relocations match targets and addends. The remaining 24 instructions consistently permute retail context/object/owner-or-id/variant r29/r28/r27/r31 to generated r27/r31/r29/r28; opcode order, stack layout, branches, and r30 allocation match."
+}
