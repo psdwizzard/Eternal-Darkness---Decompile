@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f232d00e-d16b-4449-a0e4-16d84ec468a4",
+  "attempt": 6,
+  "base_commit": "4af0df89d6e67c70b1007e562f35bb414efe852a",
+  "target": "fn_801931C4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f232d00e-d16b-4449-a0e4-16d84ec468a4.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff are size-exact at 99.07185% (1336/1336 bytes, 334/334 instructions): 274 instructions are identical and 60 are DIFF_ARG_MISMATCH. All 38 relocation tuples match in offset, type, target, and addend. Retail assigns the long-lived object pointer to r26 and the per-entry flags pointer to r25; canonical GC/1.3 assigns them oppositely, cascading operand-only differences while preserving instruction order and control flow. A distinct explicit-register storage-class hypothesis was tested on each pointer and was codegen-neutral at 99.07185%; a signed flags-pointer variant regressed to 97.12575% and 336 instructions by adding sign-extension code while retaining object in r25, so the accepted unsigned size-exact reconstruction was preserved unchanged. The full assigned build passed config/GEDE01/build.sha1, build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f, and tools/legal_audit.py passed all 16275 tracked project files."
+}
