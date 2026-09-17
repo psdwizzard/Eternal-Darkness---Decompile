@@ -13,27 +13,25 @@ Entry *fn_8006D1DC(s32 kind)
     Entry *result = 0;
     s32 i;
 
-    for (i = 0; i < 33; i += 3) {
+    for (i = 0; i < 33;) {
         if (entry->kind == kind) {
             result = entry;
             break;
         }
-        entry++;
-        if (entry->kind == kind) {
+        if ((++entry)->kind == kind) {
+            result = entry;
+            break;
+        }
+        if ((++entry)->kind == kind) {
+            result = entry;
+            break;
+        }
+        if ((++entry)->kind == kind) {
             result = entry;
             break;
         }
         entry++;
-        if (entry->kind == kind) {
-            result = entry;
-            break;
-        }
-        entry++;
-        if (entry->kind == kind) {
-            result = entry;
-            break;
-        }
-        entry++;
+        i += 3;
     }
     return result;
 }

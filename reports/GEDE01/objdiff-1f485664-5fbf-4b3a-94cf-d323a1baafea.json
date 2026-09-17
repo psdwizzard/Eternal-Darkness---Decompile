@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "assignment_id": "1f485664-5fbf-4b3a-94cf-d323a1baafea",
+  "target": "fn_8006D1DC",
+  "command": "python3 tools/fndiff.py game/game_fn_8006D1DC.c fn_8006D1DC",
+  "canonical_compiler": "GC/1.3 mwcceppc.exe",
+  "target_size": 120,
+  "candidate_size": 112,
+  "match_percent": 93.333336,
+  "relocations": {
+    "target_count": 1,
+    "candidate_count": 1,
+    "strict_matches": 1,
+    "entries": [
+      {
+        "offset": 4,
+        "type": 109,
+        "type_name": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064C8D4",
+        "addend": 0,
+        "match": true
+      }
+    ]
+  },
+  "raw_output": [
+    "target 120 bytes  base 112 bytes  match 93.333336",
+    "0x0000 li r0, 0xb | li r0, 0xb",
+    "0x0004 lwz r4, lbl_8064C8D4@sda21 [None+0 t109] | lwz r4, lbl_8064C8D4@sda21 [None+0 t109]",
+    "0x0008 li r5, 0x0 | li r5, 0x0",
+    "0x000c li r6, 0x0 | <missing>",
+    "0x0010 mtctr r0 | mtctr r0",
+    "0x0014..0x0064 all table loads, comparisons, conditional branches, result moves, and pointer updates match after alignment",
+    "0x0068 addi r6, r6, 0x3 | <missing>",
+    "0x006c bdnz 0x14 | bdnz 0x10",
+    "0x0070 mr r3, r5 | mr r3, r5",
+    "0x0074 blr | blr",
+    "python3 configure.py && .tools/bin/ninja -j2: exit 0; build/GEDE01/main.dol: OK",
+    "sha1sum build/GEDE01/main.dol: ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  ],
+  "divergence": "Retail retains li r6,0 at target +0x0c and addi r6,r6,3 at target +0x68. Canonical MWCC removes this dead integer induction variable, producing 112 rather than 120 bytes; all remaining instructions align after those omissions, and the sole SDA21 relocation target/addend matches."
+}
