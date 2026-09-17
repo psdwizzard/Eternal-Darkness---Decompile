@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "assignment_id": "b3f46248-075f-4d4f-8e1d-293814629ef7",
+  "attempt": 1,
+  "target": "fn_80063E64",
+  "source": "src/game/game_fn_80063E64.c",
+  "compiler": "canonical project configuration (GC/1.3)",
+  "registration": "Object(NonMatching, \"game/game_fn_80063E64.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80063E64.c fn_80063E64",
+    "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+  ],
+  "raw_measured_outputs": {
+    "objdiff": "target 3284 bytes  base 3292 bytes  match 99.058464",
+    "relocations": "left 3284 99.058464 184; right 3292 99.058464 184; ordinal_exact 184 of 184; offset_semantic_exact 182 of 184",
+    "relocation_offset_differences": [
+      "ordinal 21: retail offset 368 type 109 target None addend 0; generated offset 388 type 109 target None addend 0",
+      "ordinal 22: retail offset 388 type 109 target None addend 0; generated offset 396 type 109 target None addend 0"
+    ],
+    "build": "build/GEDE01/main.dol: OK; [871/871] PROGRESS",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol; ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  },
+  "canonical_match": false,
+  "relocation_strict_match": false,
+  "retail_size": 3284,
+  "generated_size": 3292,
+  "match_percent": 99.058464,
+  "retail_relocations": 184,
+  "generated_relocations": 184,
+  "ordinal_relocation_target_type_addend_matches": 184,
+  "same_offset_relocation_matches": 182,
+  "divergence": "Generated code is 8 bytes larger. Remaining differences are instruction scheduling around fn_801AAE68, two temporary moves in the 0xED event path, temporary-register allocation in the 0x3A path and three effect loops, one constant-load ordering pair, and argument-address register selection around fn_80128C28/fn_80128C44. All 184 relocation type/target/addend tuples agree in ordinal order, but two are shifted because code bytes still differ, so relocation-strict status is not claimed.",
+  "legal_audit": {
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_in_commit": false,
+    "private_inputs_in_commit": false
+  }
+}
