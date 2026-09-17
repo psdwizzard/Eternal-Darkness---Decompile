@@ -9,26 +9,30 @@ extern u32 fn_800FBFB0(void);
 void fn_8018CEC0(u32* dest, u8 count)
 {
     u32 values[4];
-    u32* second;
     int i;
+    u32* first;
+    u32* second;
 
     values[0] = lbl_8023B078[0];
     values[1] = lbl_8023B078[1];
     values[2] = lbl_8023B078[2];
     values[3] = lbl_8023B078[3];
     second = dest + lbl_80607120[1];
-
+    first = dest;
     for (i = 0; i < count; i++) {
-        u32 random = fn_800FBFB0();
-        dest[0] = values[random & 3];
-        second[0] = dest[0];
-        dest[1] = values[(random + 1) & 3];
-        second[1] = dest[1];
-        dest[2] = values[(random + 2) & 3];
-        second[2] = dest[2];
-        dest[3] = values[(random + 3) & 3];
-        second[3] = dest[3];
-        dest += 4;
+        u32 random = fn_800FBFB0() & 3;
+        first[0] = values[random];
+        second[0] = first[0];
+        random = (random + 1) & 3;
+        first[1] = values[random];
+        second[1] = first[1];
+        random = (random + 1) & 3;
+        first[2] = values[random];
+        second[2] = first[2];
+        random = (random + 1) & 3;
+        first[3] = values[random];
+        second[3] = first[3];
+        first += 4;
         second += 4;
     }
 }
