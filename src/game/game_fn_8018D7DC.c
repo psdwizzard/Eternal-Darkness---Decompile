@@ -29,8 +29,8 @@ void fn_8018D7DC(u8* object)
     u8* destination;
     u8* source;
     u8* color;
-    u8* object_data;
     int byte_offset;
+    u8* object_data;
     int saved;
 
     state = object + 0x8C;

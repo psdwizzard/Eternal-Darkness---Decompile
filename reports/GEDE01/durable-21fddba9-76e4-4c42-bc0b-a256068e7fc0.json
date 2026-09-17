@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "21fddba9-76e4-4c42-bc0b-a256068e7fc0",
+  "attempt": 4,
+  "base_commit": "e346d5a4e1b6a4f9a8152d18cb3cbfcb2b1df094",
+  "target": "fn_8018D7DC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-21fddba9-76e4-4c42-bc0b-a256068e7fc0.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff improves the retained reconstruction from 99.0991% to 99.324326% and is size-exact at 444/444 bytes, with 99 identical instructions and 12 DIFF_ARG_MISMATCH instructions. Swapping only the byte_offset and object_data declarations fixes every prior object-data register mismatch. The remaining differences are register allocation: the first-loop byte offset uses generated r23 instead of retail r28; the second loop uses generated index/color-destination r26/r25 instead of retail r25/r26, accounting for nine further argument mismatches. Both objects have equal 300-byte .rela.text sections, and relocation-strict comparison with function_reloc_diffs=name_address reports no relocation target/addend mismatch. The canonical build succeeds and main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
