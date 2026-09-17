@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "assignment_id": "092cf1eb-6241-4b5e-a8b3-218759310ab1",
+  "target": "fn_8006EB60",
+  "source": "src/game/game_fn_8006EB60.c",
+  "registration": "Object(Matching, \"game/game_fn_8006EB60.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[834/838] LINK build/GEDE01/main.elf\n[835/838] DOL build/GEDE01/main.dol\n[836/838] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[837/838] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8006EB60 fn_8006EB60 -o build/GEDE01/objdiff-092cf1eb-final-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=100.0 retail_bytes=276 generated_bytes=276 retail_instructions=69 generated_instructions=69 differing_rows=0 retail_relocations=13 generated_relocations=13"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8006EB60 fn_8006EB60 -o build/GEDE01/objdiff-092cf1eb-final-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=100.0 retail_bytes=276 generated_bytes=276 retail_instructions=69 generated_instructions=69 differing_rows=0 retail_relocations=13 generated_relocations=13"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-092cf1eb-final-canonical.raw.json build/GEDE01/objdiff-092cf1eb-final-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "canonical_strict_cmp_exit=0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    }
+  ],
+  "canonical": {
+    "match_percent": 100.0,
+    "retail_bytes": 276,
+    "generated_bytes": 276,
+    "retail_instructions": 69,
+    "generated_instructions": 69,
+    "differing_rows": 0
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 13,
+    "generated_count": 13,
+    "records_equal": true,
+    "addresses_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Matched: canonical and relocation-strict objdiff both report 100.0% for all 276 bytes and 69 instructions, with all relocation targets and addends equal. The full relink is byte-identical to retail."
+}

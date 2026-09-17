@@ -32,24 +32,30 @@ extern const float lbl_8064E820;
 
 int fn_8006EB60(Owner *owner)
 {
+    int id;
     u8 index;
-    unsigned char *text;
     u8 reset_index;
     u8 limit;
     void *resource;
-    int i;
-    int id;
     int value;
+    Callback *callbacks;
+    int i;
+    Callback callback;
+    void *argument;
+    u16 expected_id;
 
+    callbacks = owner->callbacks;
     resource = owner->resource;
     index = owner->index;
     reset_index = owner->reset_index;
     limit = owner->limit;
     id = *(unsigned int *)((unsigned char *)resource + 0x14) >> 16;
     fn_8006C9C0(resource);
-    if (id == owner->ids[index] && index < 4 && owner->callbacks[index] != 0 &&
-        owner->arguments[index] != 0) {
-        owner->callbacks[index](owner->arguments[index]);
+    expected_id = ((u16 *)(callbacks + 8))[index];
+    callback = callbacks[index];
+    argument = ((void **)(callbacks + 4))[index];
+    if (id == expected_id && index < 4 && callback != 0 && argument != 0) {
+        callback(argument);
         fn_8006C9E4(resource, 0);
         owner->last_index = index;
         index++;
@@ -60,13 +66,10 @@ int fn_8006EB60(Owner *owner)
     owner->index = index;
 
     if (lbl_8064C8B0 != 0) {
-        text = lbl_80312888;
-        i = 0;
-        while (i < lbl_8064C8B4) {
-            value = lbl_802FC5BC[i].value;
-            fn_800EBA80(2, text, &value, 0x40, lbl_8064E820);
-            text += 0xC;
-            i++;
+        for (i = 0; i < lbl_8064C8B4; i++) {
+            value = lbl_802FC5BC->value;
+            fn_800EBA80(2, lbl_80312888 + i * 0xC, &value, 0x40,
+                        lbl_8064E820);
         }
     }
     return 0;
