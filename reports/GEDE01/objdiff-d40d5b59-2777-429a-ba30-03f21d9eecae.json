@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "assignment_id": "d40d5b59-2777-429a-ba30-03f21d9eecae",
+  "target": "fn_801396A4",
+  "tool": "objdiff-cli v3.6.1 via tools/fndiff.py",
+  "command": "python3 tools/fndiff.py game/game_fn_801396A4.c fn_801396A4",
+  "raw_summary": "target 216 bytes  base 216 bytes  match 100.0",
+  "canonical": {
+    "match_percent": 100.0,
+    "target_bytes": 216,
+    "base_bytes": 216,
+    "target_instructions": 54,
+    "base_instructions": 54
+  },
+  "relocation_strict": {
+    "match_percent": 100.0,
+    "target_count": 6,
+    "base_count": 6,
+    "all_offsets_types_targets_addends_equal": true,
+    "raw_target_readelf": [
+      "0000000a R_PPC_ADDR16_HA lbl_805AE020 + 0",
+      "0000001a R_PPC_ADDR16_LO lbl_805AE020 + 0",
+      "00000060 R_PPC_REL24 fn_8013977C + 0",
+      "00000066 R_PPC_ADDR16_HA lbl_805AE020 + 0",
+      "0000006a R_PPC_ADDR16_LO lbl_805AE020 + 0",
+      "000000b4 R_PPC_REL24 fn_8013977C + 0"
+    ],
+    "raw_base_readelf": [
+      "0000000a R_PPC_ADDR16_HA lbl_805AE020 + 0",
+      "0000001a R_PPC_ADDR16_LO lbl_805AE020 + 0",
+      "00000060 R_PPC_REL24 fn_8013977C + 0",
+      "00000066 R_PPC_ADDR16_HA lbl_805AE020 + 0",
+      "0000006a R_PPC_ADDR16_LO lbl_805AE020 + 0",
+      "000000b4 R_PPC_REL24 fn_8013977C + 0"
+    ]
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "raw_dol_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_801396A4.c",
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_functions_edited": false
+  }
+}

@@ -1,7 +1,7 @@
 typedef struct Slot {
     int id;
-    unsigned char pad04[0x4C];
-    signed char flag;
+    unsigned char pad04[0x49];
+    volatile signed char flag;
     unsigned char pad4E[2];
 } Slot;
 
@@ -19,22 +19,21 @@ extern int fn_8013977C(Slot*);
 
 void fn_801396A4(int id)
 {
-    State* state = &lbl_805AE020;
-    int other = state->current ^ 1;
+    int other = lbl_805AE020.current ^ 1;
 
-    if (state->slots[other].id == id) {
-        if (state->slots[state->current].id != state->wanted) {
-            if (state->slots[state->current].flag != 0) {
-                fn_8013977C(&state->slots[state->current]);
+    if (lbl_805AE020.slots[other].id == id) {
+        if (lbl_805AE020.slots[lbl_805AE020.current].id != lbl_805AE020.wanted) {
+            if (lbl_805AE020.slots[lbl_805AE020.current].flag != 0) {
+                fn_8013977C(&lbl_805AE020.slots[lbl_805AE020.current]);
             }
-            state->slots[state->current].flag = 0;
-            state->current = other;
+            lbl_805AE020.slots[lbl_805AE020.current].flag = 0;
+            *(volatile int*)&lbl_805AE020.current = other;
         }
-    } else if (state->slots[state->current].id == id &&
-               state->slots[other].id != state->wanted) {
-        if (state->slots[other].flag != 0) {
-            fn_8013977C(&state->slots[other]);
+    } else if (lbl_805AE020.slots[lbl_805AE020.current].id == id &&
+               lbl_805AE020.slots[other].id != lbl_805AE020.wanted) {
+        if (lbl_805AE020.slots[other].flag != 0) {
+            fn_8013977C(&lbl_805AE020.slots[other]);
         }
-        state->slots[other].flag = 0;
+        lbl_805AE020.slots[other].flag = 0;
     }
 }
