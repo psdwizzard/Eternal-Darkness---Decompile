@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "d483c537-e24d-4f4a-8f89-33fda7ff4a19",
+  "attempt": 2,
+  "base_commit": "ce077e920c5fbbd2eeb977c592b149638fcba3bd",
+  "target": "fn_801F7AF8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d483c537-e24d-4f4a-8f89-33fda7ff4a19.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d483c537-e24d-4f4a-8f89-33fda7ff4a19-reloc-strict.json"
+  ],
+  "divergence": "Fresh canonical and function_reloc_diffs=all objdiff are both 72.01492%, with 268 retail bytes versus 264 generated. GC/1.3 saves only r29-r31: it folds first into the r31 base as +0xBB0, assigns second/third to r30/r29, and rematerializes lbl_8063C6B8 four times after calls. Retail materializes the global once into r31, derives and retains first/second/third in r29/r30/r28, and includes the r28 save/restore. The recovered three-argument fn_801F8994 calls and no-argument fn_801F8620 call now represent the retail call semantics."
+}
