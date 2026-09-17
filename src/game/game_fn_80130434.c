@@ -2,7 +2,6 @@ typedef unsigned char u8;
 typedef unsigned int u32;
 
 typedef struct Vec4 { u32 word[4]; } Vec4;
-typedef struct Matrix { u32 word[12]; } Matrix;
 typedef struct RuntimeState {
     u8 pad[0xC];
     int ids[4];
@@ -26,29 +25,31 @@ typedef struct Object {
 extern float lbl_806501DC;
 extern void fn_80125ECC(void *);
 extern void fn_8012CEA4(Object*, int, Vec4*);
-extern void fn_8012CF08(Object*, int, Vec4*, Matrix*, int, int);
-extern void fn_8017A5A8(Vec4*, Matrix*, float);
-extern void fn_8017A630(Matrix*);
+extern void fn_8012CF08(Object*, int, Vec4, Vec4, int, int, float);
+extern float fn_8017A5A8(const Vec4*, const Vec4*, float);
+extern void fn_8017A630(Vec4*);
 
 void fn_80130434(Object* object, int clear)
 {
-    int i;
-    Matrix matrix;
+    Vec4 rotation;
     Vec4 vector;
+    int i;
 
     if ((object->runtime->flags & 0x70) == 0) {
         fn_80125ECC(object);
         if (object->active != 0) {
-            fn_8017A630(&matrix);
+            fn_8017A630(&rotation);
             for (i = 0; i < 4; i++) {
-                int id = object->runtime->ids[i];
-                if (id != -1) {
-                    fn_8012CEA4(object, id, &vector);
-                    fn_8017A5A8(&vector, &matrix,
-                                object->runtime->amount[i] *
-                                object->runtime->scale *
-                                object->runtime->multiplier);
-                    fn_8012CF08(object, id, &vector, &matrix, 0, 0);
+                if (object->runtime->ids[i] != -1) {
+                    float scale;
+
+                    fn_8012CEA4(object, object->runtime->ids[i], &vector);
+                    scale = fn_8017A5A8(&vector, &rotation,
+                                        object->runtime->amount[i] *
+                                        object->runtime->scale *
+                                        object->runtime->multiplier);
+                    fn_8012CF08(object, object->runtime->ids[i], vector,
+                                rotation, 0, 0, scale);
                 }
             }
         }
