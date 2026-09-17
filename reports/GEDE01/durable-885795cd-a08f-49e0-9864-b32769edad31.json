@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "885795cd-a08f-49e0-9864-b32769edad31",
+  "attempt": 2,
+  "base_commit": "cb19f3f40fee98c3346cd04aee09a4836cbcc1a3",
+  "target": "fn_801F8748",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-885795cd-a08f-49e0-9864-b32769edad31.json"
+  ],
+  "divergence": "Best canonical relocation-strict objdiff score is 89.35172%: retail is 580 bytes and generated code is 552 bytes. Both objects carry 25 R_PPC relocations (300-byte .rela.text sections), but instruction locations differ. GC/1.3 emits a 0x90-byte frame with saves at 0x74 instead of retail's 0xB0-byte frame with saves at 0x94; it folds each two-step derived global base into one addi and folds the temporary store bases into r31-relative stores. The final arithmetic now matches retail's fmadds followed by fneg, but generated code adds one frsp before the two float stores. Fresh python3 configure.py and .tools/bin/ninja -j2 completed successfully; build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
