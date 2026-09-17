@@ -33,11 +33,11 @@ void fn_800AA7F0(Effect* effect, Vec3i* position, int* value, int kind,
         float third;
 
         fn_8014CBC0(effect);
-        first = lbl_8064EF18;
-        second = first;
-        third = lbl_8064EF78;
         effect->handle = 0;
+        first = lbl_8064EF18;
+        third = lbl_8064EF78;
         effect->position = *position;
+        second = first;
         effect->value = *value;
         effect->callback = fn_800AA6F4;
         effect->kind = kind;
