@@ -7556,7 +7556,7 @@ config.libs = [
             Object(Matching, "game/game_fn_800BE158.c"),
             Object(Matching, "game/game_fn_800BE1F4.c"),
             Object(Matching, "game/game_fn_800BE260.c"),
-            Object(NonMatching, "game/game_fn_800BE2CC.c"),
+            Object(Matching, "game/game_fn_800BE2CC.c"),
             Object(Matching, "game/game_fn_800BE390.c"),
             Object(Matching, "game/game_fn_800BE70C.c", mw_version="GC/1.3.2"),
             Object(Matching, "game/game_fn_800BE86C.c"),
