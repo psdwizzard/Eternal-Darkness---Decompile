@@ -15,22 +15,20 @@ typedef struct Vec3 {
 
 extern unsigned long long fn_8020123C();
 extern void* fn_80201B3C();
-#define FN_80201E78_RETURN Vec3
-#define FN_80201E78_PARAMETERS void *
-extern FN_80201E78_RETURN fn_80201E78(FN_80201E78_PARAMETERS);extern int fn_801AC9F4(int, int, Vec3 *, int);
+extern Vec3 fn_80201E78(void *);
+extern int fn_801AC9F4(int, int, Vec3 *, int);
 
 int fn_800D61C4(Actor *actor, void *object)
 {
     int result = 0;
-    int mask = -1;
 
     while ((unsigned int)actor->slot_index < 4) {
         void *slot = actor->slots[actor->slot_index];
         actor->slot_index++;
-        if (slot != 0) {
-            fn_8020123C(0x91, object, slot, 0);
-            if (mask & -1) {
-                Vec3 position = fn_80201E78(fn_80201B3C());
+        if ((int)slot != 0) {
+            if ((u32)(fn_8020123C(0x91, object, slot, 0) & 0xFFFFFFFFULL)) {
+                void *source = fn_80201B3C();
+                Vec3 position = fn_80201E78(source);
                 fn_801AC9F4(0x2b8, 100, &position, 2);
                 result = 1;
                 break;
