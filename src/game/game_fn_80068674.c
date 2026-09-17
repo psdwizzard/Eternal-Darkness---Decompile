@@ -16,17 +16,19 @@ s32 fn_80068674(void *object, s32 excluded_id)
     if (objects != 0) {
         for (i = 0; i < 12; i++) {
             void *candidate;
+            s32 object_id;
 
-            if (objects[i] == 0 || objects[i] == excluded_id) {
+            object_id = objects[i];
+            if (object_id == 0 || excluded_id == object_id) {
                 continue;
             }
-            candidate = fn_80201814(objects[i]);
-            if (candidate == 0) {
+            candidate = fn_80201814(object_id);
+            if (candidate != 0) {
+                total += fn_80201B64(candidate) == 0x22;
+                total += fn_80068674(candidate, fn_80201B54(object));
+            } else {
                 objects[i] = 0;
-                continue;
             }
-            total += fn_80201B64(candidate) == 0x22;
-            total += fn_80068674(candidate, fn_80201B54(object));
         }
     }
     return total;

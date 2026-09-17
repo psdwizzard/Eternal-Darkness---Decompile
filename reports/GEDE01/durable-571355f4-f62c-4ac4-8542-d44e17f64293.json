@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "571355f4-f62c-4ac4-8542-d44e17f64293",
+  "attempt": 1,
+  "base_commit": "93da06c0ee7f5307fd5d8568efe915d2b8fb9ebb",
+  "target": "fn_80068674",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-571355f4-f62c-4ac4-8542-d44e17f64293.json"
+  ],
+  "divergence": "Canonical and relocation-aware objdiff measured 88.67391% (retail 184 bytes, reconstruction 176 bytes). All five branch-call relocation targets/addends agree. Remaining codegen divergence is the retail r25-r31 allocation with separate r30 array base and r31 byte-offset induction (lwzx/stwx), versus canonical r26-r31 with an r31 walking pointer (lwz/stw), plus retail's terminal branch-over-nop assertion site."
+}
