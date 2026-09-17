@@ -248,17 +248,13 @@ s32 fn_80063E64(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (event_type == 0xED) {
-            result = (s32 *)fn_80200C38(event);
-            context = fn_80200C28(event);
-            fn_8020123C(0xB, fn_80200C20(event), context, (s32)result);
+            fn_8020123C(0xB, fn_80200C20(event), fn_80200C28(event), fn_80200C38(event));
             fn_80200C38(event);
             fn_801A7228();
             return 1;
         }
         if (event_type == 0x3A) {
-            result = (s32 *)fn_80200C38(event);
-            context = fn_80200C28(event);
-            fn_8020123C(0x27, fn_80200C20(event), context, (s32)result);
+            fn_8020123C(0x27, fn_80200C20(event), fn_80200C28(event), fn_80200C38(event));
             fn_80200C38(event);
             fn_801A7228();
             return 1;

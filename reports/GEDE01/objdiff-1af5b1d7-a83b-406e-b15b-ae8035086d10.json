@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "assignment_id": "1af5b1d7-a83b-406e-b15b-ae8035086d10",
+  "attempt": 3,
+  "target": "fn_80063E64",
+  "source": "src/game/game_fn_80063E64.c",
+  "compiler": "canonical project configuration (GC/1.3)",
+  "registration": "Object(NonMatching, \"game/game_fn_80063E64.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "hypothesis": "Express the three event decoders as nested call arguments so CodeWarrior can keep their return values directly in r28 and r26 instead of first bouncing each through r0; this also gives the following 0x3A path the same r28/r26 coloring as retail.",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80063E64.c fn_80063E64",
+    "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+  ],
+  "raw_measured_outputs": {
+    "fndiff_summary": "target 3284 bytes  base 3284 bytes  match 99.51523",
+    "build_tail": "[870/872] DOL build/GEDE01/main.dol; [871/872] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [872/872] PROGRESS",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol; ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+    "fixed_0xED_rows": "retail/generated: 0x031c mr r28,r3; 0x0328 mr r26,r3; 0x0334 mr r4,r3; 0x0338 mr r5,r26; 0x033c mr r6,r28",
+    "fixed_0x3A_rows": "retail/generated: 0x036c mr r28,r3; 0x0378 mr r26,r3; 0x0384 mr r4,r3; 0x0388 mr r5,r26; 0x038c mr r6,r28",
+    "remaining_schedule_rows": "retail 0x0170 lfs f1,lbl_8064E648@sda21 and 0x0184 lwz r0,lbl_8064D18C@sda21; generated 0x0184 lwz r0,lbl_8064D18C@sda21 and 0x018c lfs f1,lbl_8064E648@sda21",
+    "remaining_register_clusters": "0x0530-0x0604 first effect loop r23/r24 vs r24/r25; 0x06b8-0x0744 second effect loop r23/r24/r25 vs r25/r27/r24; 0x0794-0x0868 third effect loop r23/r24 vs r24/r25; 0x0A2C-0x0A60 allocated object r23 vs r27 plus fn_80128C28 argument setup",
+    "relocations": "retail 184; generated 184; semantic type/target/addend multiset exact 184 of 184; same-offset semantic matches 183 of 184; lbl_8064E648 R_PPC_EMB_SDA21 addend 0 is retail offset 368 and generated offset 396"
+  },
+  "canonical_match": false,
+  "relocation_strict_match": false,
+  "retail_size": 3284,
+  "generated_size": 3284,
+  "match_percent": 99.51523,
+  "retail_relocations": 184,
+  "generated_relocations": 184,
+  "relocation_semantic_multiset_matches": 184,
+  "same_offset_relocation_matches": 183,
+  "divergence": "The nested-call source shape removes the two r0 bounce pairs and the 8-byte overage, making both 0xED and 0x3A paths exact. Remaining differences are the lbl_8064E648 float load scheduled at 0x018C instead of 0x0170, register coloring in the three effect loops, the order of two constant loads at 0x065C/0x0664, and allocated-object/argument registers at 0x0A2C-0x0A60. The shifted float relocation prevents relocation-strict 100%.",
+  "legal_audit": {
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_in_commit": false,
+    "private_inputs_in_commit": false
+  }
+}
