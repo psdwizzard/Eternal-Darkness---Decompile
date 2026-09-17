@@ -169,6 +169,17 @@ config.custom_build_rules = [
         "description": "EXTERNALIZE $in",
     },
     {
+        "name": "externalize_game_80066E78_jumptable",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @81 jumptable_80243E48 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@81=jumptable_80243E48 --remove-section=.data "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    },
+    {
         "name": "externalize_game_801FC204_local_data",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @101 jumptable_802FC7C8 "
@@ -3368,6 +3379,11 @@ for rule in config.custom_build_rules:
 guarded_externalize_rules.add("externalize_string_pool_80250588")
 config.custom_build_steps = {
     "post-compile": [
+        {
+            "outputs": [f"build/{VERSION}/src/game/game_fn_80066E78.externalized"],
+            "rule": "externalize_game_80066E78_jumptable",
+            "inputs": [f"build/{VERSION}/src/game/game_fn_80066E78.o"],
+        },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801247F8.externalized"],
             "rule": "externalize_game_801247F8_signed_bias",
@@ -6783,7 +6799,7 @@ config.libs = [
     Object(Matching, "game/game_fn_80066BB8.c", extra_cflags=["-use_lmw_stmw on"]),
     Object(Matching, "game/game_fn_80066D04.c", extra_cflags=["-use_lmw_stmw on"]),
     Object(Matching, "game/game_fn_80066D80.c", extra_cflags=["-use_lmw_stmw on"]),
-    Object(NonMatching, "game/game_fn_80066E78.c", extra_cflags=["-use_lmw_stmw on"]),
+    Object(Matching, "game/game_fn_80066E78.c", extra_cflags=["-use_lmw_stmw on"]),
     Object(Matching, "game/game_fn_80067180.c", extra_cflags=["-use_lmw_stmw on"]),
     Object(Matching, "game/game_fn_8006749C.c"),
     Object(Matching, "game/game_fn_800674E4.c", extra_cflags=["-use_lmw_stmw on"]),
