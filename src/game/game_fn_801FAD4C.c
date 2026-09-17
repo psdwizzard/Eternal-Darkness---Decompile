@@ -34,7 +34,7 @@ extern u32 lbl_8064C3A0;
 extern u32 lbl_8064D798;
 extern u32 lbl_8064C3A4;
 extern u32 lbl_8064D79C;
-extern u32 lbl_8064D18C;
+extern int lbl_8064D18C;
 typedef struct BlockGlobals {
     Block first[12];
     Block second[12];
@@ -53,13 +53,14 @@ u32 fn_801FAD4C(void* input)
 {
     Header header;
     Record record;
-    int valid = 1;
-    u16 offset = 0x40;
-    int i;
     u8* entry;
+    int i;
+    u16 offset;
+    int valid = 1;
     BlockGlobals* globals = &lbl_8063C6B8;
 
     memcpy(&header, input, 0x40);
+    offset = 0x40;
     if (header.version != lbl_8064D18C) {
         valid = 0;
     }
@@ -73,19 +74,21 @@ u32 fn_801FAD4C(void* input)
     }
 
     entry = globals->entries;
-    for (i = 0; i < (int)lbl_8064D7BC; i++, entry += 0x14) {
+    for (i = 0; i < (int)lbl_8064D7BC; entry += 0x14, i++) {
         memcpy(&record, (u8*)input + offset, 0x10);
         offset += 0x10;
         if (valid) {
             fn_801FBB84(&record, entry);
         }
         if (record.flags & 1) {
-            offset += fn_801FB6A4((u8*)input + offset,
-                                  &globals->second[record.first_index], 0, valid);
+            Block* block = globals->second;
+            block = (Block*)((u8*)block + record.first_index * sizeof(Block));
+            offset += fn_801FB6A4((u8*)input + offset, block, 0, valid);
         }
         if (record.flags & 2) {
-            offset += fn_801FB6A4((u8*)input + offset,
-                                  &globals->first[record.second_index], 1, valid);
+            Block* block = globals->first;
+            block = (Block*)((u8*)block + record.second_index * sizeof(Block));
+            offset += fn_801FB6A4((u8*)input + offset, block, 1, valid);
         }
     }
 
