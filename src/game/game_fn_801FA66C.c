@@ -8,7 +8,8 @@ typedef struct Vec3 {
 } Vec3;
 
 typedef struct ObjectState {
-    u8 pad00[0x48];
+    Vec3 origin;
+    u8 pad0C[0x3C];
     Vec3 position;
     u8 pad54[0x34];
 } ObjectState;
@@ -22,7 +23,7 @@ typedef struct Globals {
 typedef float Matrix34[3][4];
 
 extern Globals lbl_8063C6B8;
-extern const volatile u32 lbl_8023B814[3];
+extern const u32 lbl_8023B814[3];
 extern const float lbl_806514C4;
 
 extern void fn_801795A4(Vec3*, Vec3*, Vec3*);
@@ -35,19 +36,20 @@ void fn_801FA66C(int index, int save, float amount)
     Vec3 axis;
     Matrix34 transform;
     Globals* data = &lbl_8063C6B8;
-    int offset = index * 0x88;
-    ObjectState* target = (ObjectState*)((u8*)data + 0x660 + offset);
+    int offset = index * sizeof(ObjectState);
+    ObjectState* target = data->second;
+    target = (ObjectState*)((u8*)target + offset);
 
-    axis.x = ((const Vec3*)lbl_8023B814)->x;
-    axis.y = ((const Vec3*)lbl_8023B814)->y;
-    axis.z = ((const Vec3*)lbl_8023B814)->z;
+    *(u32*)&axis.x = lbl_8023B814[0];
+    *(u32*)&axis.y = lbl_8023B814[1];
+    *(u32*)&axis.z = lbl_8023B814[2];
 
-    fn_801795A4((Vec3*)((u8*)data + offset), (Vec3*)target, &difference);
+    fn_801795A4((Vec3*)((u8*)data->first + offset), &target->origin, &difference);
     fn_80211380(transform, &difference, lbl_806514C4 * amount);
     fn_80211710(transform, &axis, &target->position);
 
     if (save != 0) {
-        ObjectState* saved = (ObjectState*)((u8*)data + 0xCC0);
+        ObjectState* saved = &data->third;
         saved->position = target->position;
     }
 }
