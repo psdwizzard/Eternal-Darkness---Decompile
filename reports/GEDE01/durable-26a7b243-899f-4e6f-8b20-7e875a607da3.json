@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "26a7b243-899f-4e6f-8b20-7e875a607da3",
+  "attempt": 1,
+  "base_commit": "58ed4d3b96a53f067c2e29d326ed2389b0f57683",
+  "target": "fn_80150A24",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-26a7b243-899f-4e6f-8b20-7e875a607da3.json"
+  ],
+  "divergence": "Best canonical relocation-aware objdiff is 87.09405% with size-exact 1276-byte retail and generated functions, 163 differing aligned instruction rows, and 43 retail versus 44 generated relocation-bearing instructions. Remaining codegen divergence is primarily the nonvolatile-register cycle and stack-slot allocation; GC/1.3 also emits branchless three-axis absolute values where retail uses conditional negation, targets compiler-local signed-conversion constant @72 instead of retail lbl_80650588, and materializes lbl_8023A760 with a different HA/LO address schedule."
+}
