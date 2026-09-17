@@ -22,7 +22,7 @@ extern void *fn_80201814(int);
 extern FN_80201E78_RETURN fn_80201E78(FN_80201E78_PARAMETERS);extern unsigned int fn_80178E94(void *, unsigned int *);
 extern int fn_8011EB04(void *);
 extern int fn_80201B54();
-extern int fn_80201B44();
+extern int fn_80201B44(void);
 extern unsigned long long fn_8020123C();
 extern Vec3 lbl_8023989C;
 extern void *fn_801A717C(void);
@@ -49,7 +49,6 @@ void fn_800C7E40(void *object)
     unsigned int distance;
     int parent;
     int kind;
-    unsigned int *distance_ptr;
     void *other;
     unsigned int limit;
     void *relation;
@@ -75,8 +74,7 @@ void fn_800C7E40(void *object)
 
     limit = 400;
     fn_80201E78(reference, other);
-    distance_ptr = &search.distance;
-    distance = fn_80178E94(reference, distance_ptr);
+    distance = fn_80178E94(reference, &search.distance);
     kind = fn_8011EB04(runtime);
     if (kind == 0xFB) {
         limit = 100;
@@ -87,7 +85,7 @@ void fn_800C7E40(void *object)
 
     relation = ((void *)fn_80201B54(object));
     if (kind != 0xFB) {
-        if ((int)parent != (int)((void *)fn_80201B44(relation))) {
+        if ((int)parent != (int)((void *)fn_80201B44())) {
             fn_8020123C(0xD8, relation, relation, 0);
             return;
         }
@@ -101,11 +99,11 @@ void fn_800C7E40(void *object)
     }
 
     direction = lbl_8023989C;
-    if ((int)parent == (int)((void *)fn_80201B44(relation))) {
+    if ((int)parent == (int)((void *)fn_80201B44())) {
         sound = fn_801A717C();
         fn_800CEA1C(0x17, 3, reference, 0, 5, 5, lbl_8064F22C,
                     lbl_8064F21C, lbl_8064F224, lbl_802FC5BC + 0x18);
-        fn_8014D478(runtime, distance_ptr, &direction, 5, 3,
+        fn_8014D478(runtime, &search.distance, &direction, 5, 3,
                     lbl_802FC5BC + 0x18, 3);
         fn_801A74A0(sound, relation);
         fn_801A74A8(sound, (void *)parent);
@@ -119,7 +117,7 @@ void fn_800C7E40(void *object)
         fn_80067180(other);
         fn_800CEA1C(0x17, 3, reference, 0, 5, 15, lbl_8064F23C,
                     lbl_8064F21C, lbl_8064F224, lbl_802FC5BC + 0x18);
-        fn_8014D478(runtime, distance_ptr, &direction, 10, 3,
+        fn_8014D478(runtime, &search.distance, &direction, 10, 3,
                     lbl_802FC5BC + 0x18, 3);
     }
 }
