@@ -23,14 +23,12 @@ void fn_8018D7DC(u8* object)
     u8* config;
     int zero1;
     int zero2;
-    u8* color_destination;
     int i;
     int copies;
+    u8* object_data;
     u8* destination;
     u8* source;
     u8* color;
-    int byte_offset;
-    u8* object_data;
     int saved;
 
     state = object + 0x8C;
@@ -40,12 +38,10 @@ void fn_8018D7DC(u8* object)
     fn_8018D788(lbl_8064D738, self, &buffers, *(u16*)(config + 2));
     color = buffers.indices;
     i = 0;
-    byte_offset = 0;
     while (i < self[1]) {
-        memcpy(buffers.vertices + byte_offset, object_data + 0xA, 6);
+        memcpy(buffers.vertices + i * 6, object_data + 0xA, 6);
         color[3] = object_data[0x2B];
         object_data += 0x38;
-        byte_offset += 6;
         i++;
         color += 4;
     }
@@ -54,16 +50,16 @@ void fn_8018D7DC(u8* object)
     zero2 = 0;
     source = buffers.vertices + (self[1] - 2) * 6;
     destination = buffers.vertices + self[1] * 6;
-    color_destination = buffers.indices + (u16)self[1] * 4;
+    color = buffers.indices + (u16)self[1] * 4;
     copies = ((int)*(u16*)(config + 2) - self[1]) >> 1;
     while (i < copies) {
         memcpy(destination, source, 6);
         memcpy(destination + 6, source + 6, 6);
-        color_destination[3] = zero1;
-        color_destination[7] = zero2;
+        color[3] = zero1;
+        color[7] = zero2;
         i++;
         destination += 12;
-        color_destination += 8;
+        color += 8;
     }
     DCFlushRange(buffers.vertices, *(u16*)(config + 0xA));
     DCFlushRange(buffers.colors, *(u16*)(config + 0xE));
