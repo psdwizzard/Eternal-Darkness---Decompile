@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "assignment_id": "73bb488b-7428-4596-86be-db52a89adaa8",
+  "target": "fn_801FAD4C",
+  "source": "src/game/game_fn_801FAD4C.c",
+  "registration": "Object(NonMatching, \"game/game_fn_801FAD4C.c\", mw_version=\"GC/1.3\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[868/870] DOL build/GEDE01/main.dol\n[869/870] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[870/870] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FAD4C fn_801FAD4C -o build/GEDE01/objdiff-73bb488b-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "canonical match_percent=80.309944 retail_bytes=684 generated_bytes=664 retail_rows=180 generated_rows=180 differing_rows=84 diff_kinds={DIFF_ARG_MISMATCH:52,DIFF_DELETE:14,DIFF_INSERT:9,DIFF_REPLACE:9}"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FAD4C fn_801FAD4C -o build/GEDE01/objdiff-73bb488b-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "strict match_percent=80.309944 retail_bytes=684 generated_bytes=664 retail_rows=180 generated_rows=180 differing_rows=84"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-73bb488b-canonical.raw.json build/GEDE01/objdiff-73bb488b-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "canonical_strict_cmp_exit=0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+    }
+  ],
+  "canonical": {
+    "match_percent": 80.309944,
+    "retail_bytes": 684,
+    "generated_bytes": 664,
+    "retail_rows": 180,
+    "generated_rows": 180,
+    "differing_rows": 84,
+    "diff_arg_mismatch": 52,
+    "diff_delete": 14,
+    "diff_insert": 9,
+    "diff_replace": 9
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "match_percent": 80.309944,
+    "canonical_report_byte_identical": true
+  },
+  "attempt_2_experiments": [
+    {
+      "change": "Represent adjacent block arrays and trailing objects as separate extern symbols while retaining the established local ordering",
+      "retained": false,
+      "raw_output": "match_percent=65.59649 retail_bytes=684 generated_bytes=724"
+    },
+    {
+      "change": "Spell the final twelve-element link initialization with two pointer induction variables",
+      "retained": false,
+      "raw_output": "match_percent=68.02924 retail_bytes=684 generated_bytes=624"
+    }
+  ],
+  "divergence": "GC/1.3 emits 664 bytes versus retail's 684. The prologue, nonvolatile register roles, version check, header stores, parser setup, and parser loop structure align. The 84 differing aligned rows remain concentrated in indexed Block address construction and call-argument scheduling, aggregate link-field address lowering, the unrolled twelve-element link initialization, and final u16 rounding codegen. Canonical and relocation-strict raw reports are byte-identical.",
+  "legal_audit": "Independent behavior-level C reconstruction only; no inline or whole-function assembly, shared reconstruction, compiler-policy change, gate change, neighboring-function edit, private-input modification, or generated binary is included.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: preserved the best measured honest-C reconstruction at 80.309944%; it does not satisfy the 100% canonical and relocation-strict match gate."
+}
