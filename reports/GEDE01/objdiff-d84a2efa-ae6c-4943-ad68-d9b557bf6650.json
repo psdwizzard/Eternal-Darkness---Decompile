@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "assignment_id": "d84a2efa-ae6c-4943-ad68-d9b557bf6650",
+  "target": "fn_80109424",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "python3 tools/fndiff.py game/game_fn_80109424.c fn_80109424",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80109424 fn_80109424 -o build/GEDE01/strict-d84a.json --format json-pretty -c function_reloc_diffs=name_address",
+    "generated_relocations": "readelf -rW build/GEDE01/src/game/game_fn_80109424.o",
+    "target_relocations": "readelf -rW build/GEDE01/obj/game/game_fn_80109424.o",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measured_outputs": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "build_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical_summary": "target 336 bytes  base 336 bytes  match 99.7619",
+    "relocation_strict_objdiff_exit": 0,
+    "relocation_strict_text_match_percent": 99.7619,
+    "generated_readelf": [
+      "00000058  0000030a R_PPC_REL24  00000000   fn_80106B34 + 0",
+      "00000060  0000040a R_PPC_REL24  00000000   fn_80106AC0 + 0",
+      "00000098  0000050a R_PPC_REL24  00000000   memset + 0"
+    ],
+    "target_readelf": [
+      "00000058  0000040a R_PPC_REL24  00000000   fn_80106B34 + 0",
+      "00000060  0000050a R_PPC_REL24  00000000   fn_80106AC0 + 0",
+      "00000098  0000060a R_PPC_REL24  00000000   memset + 0"
+    ],
+    "relocation_targets_and_addends_match": true,
+    "relocation_strict_100_percent": false,
+    "instruction_differences": [
+      "0x24: retail lwz r5, 0x30(r28); generated lwz r4, 0x30(r28)",
+      "0x34: retail addi r3, r5, 0x1f; generated addi r3, r4, 0x1f",
+      "0x4c: retail srwi r5, r3, 12; generated srwi r4, r3, 12",
+      "0x54: retail mullw r29, r5, r0; generated mullw r29, r4, r0"
+    ]
+  },
+  "attempted_variants": [
+    {
+      "name": "recovered_assignment_chains_and_named_dimensions_product",
+      "size": 336,
+      "match_percent": 99.7619
+    },
+    {
+      "name": "register_qualified_base_parameter",
+      "size": 336,
+      "match_percent": 99.7619,
+      "result": "identical four r4/r5 differences"
+    },
+    {
+      "name": "named_raw_arena_word_lifetime",
+      "size": 336,
+      "match_percent": 99.7619,
+      "result": "identical four r4/r5 differences"
+    }
+  ],
+  "legal_audit": {
+    "translation_unit": "src/game/game_fn_80109424.c",
+    "independent_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "neighboring_functions_modified": false,
+    "compiler_policy_modified": false
+  },
+  "divergence": "Exact 336-byte size and all three REL24 targets/addends match. Four instructions differ only in transient register coloring: retail uses r5 for the arena-size load/add/shift/multiply at offsets 0x24, 0x34, 0x4c, and 0x54, while generated code uses r4."
+}
