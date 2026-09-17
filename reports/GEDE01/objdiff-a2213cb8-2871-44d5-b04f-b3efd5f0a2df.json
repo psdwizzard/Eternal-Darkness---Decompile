@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "assignment_id": "a2213cb8-2871-44d5-b04f-b3efd5f0a2df",
+  "attempt": 4,
+  "target": "fn_80063E64",
+  "source": "src/game/game_fn_80063E64.c",
+  "compiler": "canonical project configuration (GC/1.3)",
+  "registration": "Object(NonMatching, \"game/game_fn_80063E64.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "hypothesis": "Recover the missing first argument of fn_80128C28 from retail's r3/r4/r5 call ABI, and reuse one branch-local result temporary across the mutually exclusive effect loops so CodeWarrior can reuse the same register lifetime.",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80063E64.c fn_80063E64",
+    "build/binutils/powerpc-eabi-readelf -rW build/GEDE01/obj/game/game_fn_80063E64.o",
+    "build/binutils/powerpc-eabi-readelf -rW build/GEDE01/src/game/game_fn_80063E64.o",
+    "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+  ],
+  "raw_measured_outputs": {
+    "fndiff_summary": "target 3284 bytes  base 3284 bytes  match 99.551765",
+    "build_tail": "[7078/7082] DOL build/GEDE01/main.dol; [7079/7082] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [7082/7082] PROGRESS",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol; ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+    "relocation_headers": "retail: Relocation section '.rela.text' at offset 0xd14 contains 184 entries; generated: Relocation section '.rela.text' at offset 0xd08 contains 184 entries",
+    "relocation_counter_output": "semantic 184 184 184; strict 181 184 184",
+    "relocation_differences": "retail (368,R_PPC_EMB_SDA21,lbl_8064E648,0), generated (396,R_PPC_EMB_SDA21,lbl_8064E648,0); offsets 1628 and 1636 exchange lbl_8064E66C and lbl_8064E668",
+    "remaining_fndiff_clusters": "0x0170-0x018C float-load scheduling; 0x0530-0x0604 first effect-loop coloring; 0x065C/0x0664 constant-load order; 0x06B8-0x0744 second effect-loop coloring; 0x0794-0x0868 third effect-loop coloring; 0x0A2C/0x0A4C/0x0A60 allocated-object register r23 versus r27"
+  },
+  "canonical_match": false,
+  "relocation_strict_match": false,
+  "retail_size": 3284,
+  "generated_size": 3284,
+  "match_percent": 99.551765,
+  "retail_relocations": 184,
+  "generated_relocations": 184,
+  "relocation_semantic_multiset_matches": 184,
+  "same_offset_relocation_matches": 181,
+  "divergence": "The recovered three-argument fn_80128C28 call fixes its entire r3/r4/r5 setup and the shared loop temporary fixes two runtime-result moves. Remaining differences are one float-load schedule and shifted relocation, two swapped constant loads and relocations, register coloring in three effect loops, and r23-versus-r27 coloring for the allocated object.",
+  "legal_audit": {
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_in_commit": false,
+    "private_inputs_in_commit": false
+  }
+}

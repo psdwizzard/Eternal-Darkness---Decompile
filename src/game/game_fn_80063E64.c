@@ -46,7 +46,7 @@ unsigned int fn_8011FA8C(u32, s32, s32);         /* extern */
 s32 fn_8011FB4C(u32);                               /* extern */
 s32 fn_8011FF38();                                  /* extern */
 s32 fn_801287C4(u32, s32 *, s32, s32);      /* extern */
-s32 fn_80128C28();                /* extern */
+s32 fn_80128C28(u32, s32 *, s32);            /* extern */
 s32 fn_80128C44(u32, s32 *, s32);           /* extern */
 void *fn_801294DC(void *, s32, s32, s32);    /* extern */
 #define fn_801294DC(a, b, c, d) fn_801294DC((void *)(a), (b), (c), (d))
@@ -153,8 +153,6 @@ s32 fn_80063E64(s32 context, s32 state, s32 event, s32 *result) {
     s32 owner;
     s32 temp_r3;
     s32 temp_r3_2;
-    s32 temp_r3_3;
-    s32 temp_r3_5;
     s32 var_r24;
     s32 var_r24_2;
     s32 var_r24_3;
@@ -349,13 +347,13 @@ loop_75_check:
                 sp3C = lbl_8064E664;
                 fn_8012C62C(runtime, (s32 *)0xF, &sp3C, &sp38, &sp34, 6, lbl_8064E668);
                 fn_8012F58C(runtime, 0xF, 0, 1, 0x1E, 8);
-                temp_r3_3 = fn_80158598(owner, 0);
-                if (temp_r3_3 != 0) {
+                temp_r3_2 = fn_80158598(owner, 0);
+                if (temp_r3_2 != 0) {
                     temp_r26_4 = fn_80157E1C();
                     var_r24_2 = 0;
                     goto loop_87_check;
 loop_87:
-                        fn_80157E24(temp_r3_3, var_r24_2);
+                        fn_80157E24(temp_r3_2, var_r24_2);
                         if (fn_80201814() != 0U) {
                             temp_r3_4 = fn_80201BC8();
                             if (temp_r3_4 != 0U) {
@@ -387,13 +385,13 @@ loop_87_check:
                 if (fn_801F6228(context_data_3, 0, 2) != 0) {
                     fn_801F63E4(context_data_3, 0);
                 }
-                temp_r3_5 = fn_80158598(owner, 0);
-                if (temp_r3_5 != 0) {
+                temp_r3_2 = fn_80158598(owner, 0);
+                if (temp_r3_2 != 0) {
                     temp_r26_5 = fn_80157E1C();
                     var_r24_3 = 0;
                     goto loop_100_check;
 loop_100:
-                        fn_80157E24(temp_r3_5, var_r24_3);
+                        fn_80157E24(temp_r3_2, var_r24_3);
                         if ((fn_80201814() != 0U) && ((temp_r3_4 = fn_80201BC8()) != 0U)) {
                             sp10 = lbl_8064E690;
                             sp14 = lbl_8064E68C;
@@ -457,7 +455,7 @@ loop_100_check:
             temp_r3_6 = (u32)fn_801294DC(runtime, 0x27, 0x24, 8);
             if (temp_r3_6 != 0U) {
                 event_type_2 = owner << 8;
-                fn_80128C28(fn_80204810, event_type_2 | 6);
+                fn_80128C28(temp_r3_6, fn_80204810, event_type_2 | 6);
                 fn_80128C44(temp_r3_6, fn_80204810, event_type_2 | 7);
                 fn_801287C4(temp_r3_6, fn_80063030, owner, current_mode_2);
                 fn_8020123C(0x25, owner, object_state->target, 0);
