@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d2063448-54e4-4334-b5db-e4d4d2956cc2",
+  "attempt": 8,
+  "base_commit": "a17ff9ab23cd131288f59982dce7dbed0846e3db",
+  "target": "fn_801931C4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d2063448-54e4-4334-b5db-e4d4d2956cc2.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict direct objdiff reports are byte-identical (SHA-256 4e9192dfdfd3a85be666b4760ef1fdf057a42be6d71934d40aebd6b486e520e1) and size-exact at 99.07185%: 1336/1336 bytes, 334/334 instructions, 274 identical instructions, and 60 DIFF_ARG_MISMATCH rows with no opcode or control-flow differences. All 38 normalized relocation tuples match in offset, type, target name, and addend. Retail assigns the persistent object pointer to r26 and the per-entry flags pointer to r25; canonical GC/1.3 assigns them oppositely, cascading operand-only register differences. A new one-byte flag-record type-shape hypothesis was tested: replacing the u8 flags pointer with a pointer to a one-byte struct, using member accesses, and advancing that typed record pointer was codegen-neutral at the same 99.07185% and did not alter interference ordering, so the accepted unsigned-byte reconstruction was restored unchanged. The full assigned python3 configure.py and .tools/bin/ninja -j2 build passed config/GEDE01/build.sha1; build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f; tools/legal_audit.py passed all 16339 tracked project files."
+}
