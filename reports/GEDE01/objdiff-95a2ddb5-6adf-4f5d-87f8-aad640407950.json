@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "assignment_id": "95a2ddb5-6adf-4f5d-87f8-aad640407950",
+  "target": "fn_80151D00",
+  "source": "src/game/game_fn_80151D00.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80151D00.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[869/872] LINK build/GEDE01/main.elf\n[870/872] DOL build/GEDE01/main.dol\n[871/872] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[872/872] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80151D00 fn_80151D00 -o build/GEDE01/objdiff-95a2ddb5-final-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=92.05232 retail_bytes=1376 generated_bytes=1376 retail_instructions=353 generated_instructions=353 retail_relocations=40 generated_relocations=40 DIFF_ARG_MISMATCH=108 DIFF_DELETE=9 DIFF_INSERT=9 DIFF_REPLACE=6"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80151D00 fn_80151D00 -o build/GEDE01/objdiff-95a2ddb5-final-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=92.05232 retail_bytes=1376 generated_bytes=1376 retail_instructions=353 generated_instructions=353 retail_relocations=40 generated_relocations=40"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-95a2ddb5-final-canonical.raw.json build/GEDE01/objdiff-95a2ddb5-final-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "canonical_strict_cmp_exit=0"
+    },
+    {
+      "command": "diff -u build/GEDE01/95a2ddb5-left-relocs.txt build/GEDE01/95a2ddb5-right-relocs.txt",
+      "exit_code": 1,
+      "raw_output": "40 relocation-bearing instructions per side; 35 records have equal instruction addresses, types, displayed targets, and addends. fn_8019ADE4@ha is retail 0xE0 versus generated 0xEC; fn_8019ADE4@l is retail 0xE8 versus generated 0xF8; lbl_80650584@sda21 is retail 0xEC versus generated 0xF0. The two lbl_80650588@sda21 records at 0x2F8 and 0x47C are emitted as the generated local alias @74@sda21 at the same addresses. Every measured addend is 0."
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (16299 tracked project files inspected)"
+    }
+  ],
+  "canonical": {
+    "match_percent": 92.05232,
+    "retail_bytes": 1376,
+    "generated_bytes": 1376,
+    "retail_instructions": 353,
+    "generated_instructions": 353,
+    "diff_arg_mismatch": 108,
+    "diff_delete": 9,
+    "diff_insert": 9,
+    "diff_replace": 6
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 40,
+    "generated_count": 40,
+    "canonical_report_byte_identical": true,
+    "fully_equal_records": 35,
+    "remaining_differences": "Three callback/float relocations are scheduled at different instruction offsets; two lbl_80650588 references use generated local alias @74 at the same instruction addresses. Relocation types and addends agree."
+  },
+  "bounded_experiments": [
+    {
+      "change": "baseline inherited reconstruction",
+      "retained": false,
+      "raw_output": "match_percent=74.43604 retail_bytes=1376 generated_bytes=1344"
+    },
+    {
+      "change": "split the compound Vec3f conversion into scalar stores",
+      "retained": true,
+      "raw_output": "intermediate match_percent=83.25 retail_bytes=1376 generated_bytes=1292"
+    },
+    {
+      "change": "reload frame/end counters, recover MAX(0, delta) u8 fade value, and retain the amount argument",
+      "retained": true,
+      "raw_output": "intermediate match_percent=91.906975 retail_bytes=1376 generated_bytes=1376; fade/clamp block instruction-identical"
+    },
+    {
+      "change": "recover three six-byte key slots, separate four-byte effect key, two Vec3f locals, and the 0x94-byte descriptor object",
+      "retained": true,
+      "raw_output": "final match_percent=92.05232 retail_bytes=1376 generated_bytes=1376; stack frame and all recovered local offsets exact"
+    }
+  ],
+  "divergence": "The retained independent C reconstruction is size-exact and preserves the observed control flow. Its stack frame and recovered local addresses agree with retail, and the fade/clamp block matches instruction-for-instruction. The dominant residual is a persistent-register rotation: retail keeps instance/work/transient in r31/r30/r29, while generated code uses r29/r31/r30, producing 108 argument mismatches. Descriptor field initialization is also scheduled differently, accounting for nine inserts, nine deletes, six replacements, and three shifted relocation-bearing instructions. Two double-constant relocations resolve through generated local alias @74 rather than retail name lbl_80650588.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: a materially improved, behavior-complete honest C reconstruction is retained as NonMatching; it is not a canonical or relocation-strict 100% match."
+}
