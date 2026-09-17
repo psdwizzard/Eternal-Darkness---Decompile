@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "assignment_id": "0c11c911-4695-4b8c-97ec-04f0e6a48d19",
+  "target": "fn_801DE5DC",
+  "source": "src/game/game_fn_801DE5DC.c",
+  "registration": "Object(Matching, \"game/game_fn_801DE5DC.c\", mw_version=\"GC/1.3\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[873/876] DOL build/GEDE01/main.dol\n[874/876] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[875/876] PROGRESS\nGame Code: 91.21% fuzzy, 74.30% matched, 74.30% linked"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801DE5DC fn_801DE5DC -o build/GEDE01/objdiff-0c11-final-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "match_percent=100.0 retail_bytes=452 generated_bytes=452 retail_instructions=113 generated_instructions=113 differing_rows=0 retail_relocations=19 generated_relocations=19"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801DE5DC fn_801DE5DC -o build/GEDE01/objdiff-0c11-final-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "match_percent=100.0 retail_bytes=452 generated_bytes=452 retail_instructions=113 generated_instructions=113 differing_rows=0 retail_relocations=19 generated_relocations=19"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-0c11-final-canonical.raw.json build/GEDE01/objdiff-0c11-final-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": "canonical_strict_cmp_exit=0"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (16477 tracked project files inspected)"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    }
+  ],
+  "canonical": {
+    "match_percent": 100.0,
+    "retail_bytes": 452,
+    "generated_bytes": 452,
+    "retail_instructions": 113,
+    "generated_instructions": 113,
+    "differing_rows": 0
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 19,
+    "generated_count": 19,
+    "records_equal": true,
+    "targets_equal": true,
+    "addends_equal": true,
+    "canonical_report_byte_identical": true
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Matched: canonical and relocation-strict objdiff both report a 452-byte, 113-instruction 100.0% match with all 19 relocation records, targets, and addends equal."
+}

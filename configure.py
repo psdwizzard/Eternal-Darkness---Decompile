@@ -11893,9 +11893,7 @@ config.libs = [
             Object(Matching, "game/game_fn_801DE5C4.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801DE5CC.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801DE5D4.c", mw_version="GC/1.3"),
-            # Honest C preserves both packet-construction branches; the retail
-            # stack layout and aggregate-store scheduling remain divergent.
-            Object(NonMatching, "game/game_fn_801DE5DC.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801DE5DC.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801DE7A0.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801DE7FC.c", mw_version="GC/1.3"),
             Object(Matching, "game/game_fn_801DE8AC.c", mw_version="GC/1.3"),
