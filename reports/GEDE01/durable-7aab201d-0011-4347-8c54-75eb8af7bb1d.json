@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "7aab201d-0011-4347-8c54-75eb8af7bb1d",
+  "attempt": 4,
+  "base_commit": "f867557ec42ca349eb4875b6faa94bd09a43fc1a",
+  "target": "fn_8017A7D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7aab201d-0011-4347-8c54-75eb8af7bb1d.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7aab201d-0011-4347-8c54-75eb8af7bb1d-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-7aab201d-0011-4347-8c54-75eb8af7bb1d.json"
+  ],
+  "divergence": "Canonical and explicitly recorded relocation-strict name_address measurements both score 99.09091%: 484/484 bytes, 121/121 instructions, and 101 identical instruction words. All 10 relocation-bearing instructions align under name/address comparison. The 20 remaining differences are FPR allocation at offsets 0x40, 0x4C, 0x54-0x58, 0x60, 0x68-0x7C, 0x84-0x88, and 0x120-0x138: retail keeps right->y in f7 while canonical assigns f6, cascading through the dot-product prelude and antipodal setup. Attempt-4 expression-lifetime variants each regressed to 98.96694%, so the 99.09091% honest-C candidate was retained. The full build passes and main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f; because this unit remains Object(NonMatching) and is excluded from the link, that DOL check does not validate this reconstruction."
+}
