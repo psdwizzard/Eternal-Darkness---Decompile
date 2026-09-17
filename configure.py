@@ -8821,7 +8821,8 @@ config.libs = [
             Object(Matching, "game/game_fn_801391AC.c"),
             Object(Matching, "game/game_fn_801391D4.c"),
             Object(Matching, "game/game_fn_80139298.c"),
-            Object(NonMatching, "game/game_fn_801392A8.c", extra_cflags=["-use_lmw_stmw on"]),
+            # Canonical and relocation-strict 100%; exact 444-byte function.
+            Object(Matching, "game/game_fn_801392A8.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_80139464.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/game_fn_801396A4.c"),
             Object(Matching, "game/game_fn_8013977C.c", extra_cflags=["-use_lmw_stmw on"]),

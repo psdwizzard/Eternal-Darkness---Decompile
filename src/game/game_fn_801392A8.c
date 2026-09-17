@@ -28,15 +28,15 @@ typedef struct State {
 
 typedef struct Selection {
     int file;
-    short pad;
     short id;
+    char name[14];
 } Selection;
 
 extern State lbl_805AE020;
 extern Selection lbl_805AE780;
-extern void* lbl_8064A65C;
+extern void* lbl_8064CFDC;
 extern int lbl_8064B9E0;
-extern short lbl_8064B9E4;
+extern int lbl_8064B9E4;
 extern char fn_801390D4[];
 
 extern Entry* fn_80138950(void*, u16);
@@ -52,37 +52,44 @@ extern void fn_8021345C(void*);
 
 void fn_801392A8(int index, int async)
 {
-    Slot* slot = &lbl_805AE020.slots[index];
-    Entry* entry = fn_80138950(lbl_8064A65C, (u16)slot->id);
-    u32 amount;
+    Entry* entry = fn_80138950(lbl_8064CFDC, (u16)lbl_805AE020.slots[index].id);
     void* data;
+    u32 entry_data;
+    u32 amount;
 
     if (entry == 0) {
         return;
     }
+    data = lbl_805AE020.slots[index].buffer;
+    entry_data = (u32)entry->data;
     amount = (entry->size + 31) & ~31;
-    data = slot->buffer;
-    slot->state = 1;
-    slot->flag = 1;
+    lbl_805AE020.slots[index].state = 1;
+    lbl_805AE020.slots[index].flag = 1;
 
-    if (async == 0 && slot->id == lbl_8064B9E0 && lbl_8064B9E4 == lbl_805AE780.id) {
+    if (async == 0 && lbl_805AE020.slots[index].id == lbl_8064B9E0 &&
+        lbl_8064B9E4 == lbl_805AE780.id) {
         fn_801397F8(0, 1, 1, 2);
         fn_8015E9EC(0xEA5E40, data, amount);
         fn_80138FE4(index, (u32)data + amount);
         fn_8013915C();
         fn_80139940(0);
-    } else if (lbl_805AE780.file != -1 && fn_80213320(lbl_805AE780.file, slot->handle)) {
+    } else if (lbl_805AE780.file != -1 &&
+               fn_80213320(lbl_805AE780.file, lbl_805AE020.slots[index].handle)) {
         fn_801397F8(0, 1, 1, 2);
         if (async == 0) {
+            async = entry_data;
             do {
-            } while (fn_802137F4(slot->handle, data, amount, entry->size, 2) == -1);
+            } while (fn_802137F4(lbl_805AE020.slots[index].handle, data, amount,
+                                  async, 2) == -1);
             fn_80138FE4(index, (u32)data + amount);
             fn_8013915C();
-            fn_8021345C(slot->handle);
+            fn_8021345C(lbl_805AE020.slots[index].handle);
             fn_80139940(0);
         } else {
+            async = entry_data;
             do {
-            } while (fn_80213704(slot->handle, data, amount, entry->size,
+            } while (fn_80213704(lbl_805AE020.slots[index].handle, data, amount,
+                                  async,
                                   fn_801390D4, 2) == 0);
         }
     }
