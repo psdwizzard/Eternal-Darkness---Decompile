@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "assignment_id": "70a37a96-79ed-413b-8523-f005ac288a70",
+  "target": "fn_800C7E40",
+  "compiler": "GC/1.3 canonical project configuration",
+  "hypothesis": "The retail source passed lbl_802FC5BC + 0x18 directly at each call site instead of retaining a named constant pointer local; removing that long-lived virtual register should change the allocator interference graph.",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_800C7E40.c fn_800C7E40",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "configure_output": "Project configured in build/GEDE01",
+  "build_output": "[7075/7079] DOL build/GEDE01/main.dol\n[7076/7079] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[7079/7079] PROGRESS",
+  "objdiff_output": "target 680 bytes  base 680 bytes  match 99.26471",
+  "instruction_measurement": {
+    "target_instructions": 170,
+    "base_instructions": 170,
+    "exact_instructions": 148,
+    "argument_mismatch_instructions": 22
+  },
+  "relocation_measurement": {
+    "target_relocation_bearing_instructions": 52,
+    "base_relocation_bearing_instructions": 52,
+    "same_offsets_types_targets_and_addends": 52,
+    "byte_exact_relocation_bearing_instructions": 41,
+    "strict_100_percent": false
+  },
+  "representative_raw_diff": [
+    "0x005c mr r30, r3 | mr r30, r3",
+    "0x007c addi r27, r1, 0x28 | addi r29, r1, 0x28",
+    "0x008c mr r28, r3 | mr r27, r3",
+    "0x0098 mr r29, r3 | mr r28, r3",
+    "0x0180 addi r28, r4, 0x18 | addi r27, r4, 0x18",
+    "0x01b0 mr r4, r27 | mr r4, r29",
+    "0x01b4 mr r8, r28 | mr r8, r27"
+  ],
+  "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "legal_audit_output": "legal audit passed (16166 tracked project files inspected)",
+  "result": "attempted",
+  "divergence": "The direct-expression hypothesis improved the score from 99.17647% to 99.26471% and made the parent handle exactly match retail r30. Size, 0x70-byte frame, stack offsets, opcodes, branches, scheduling, calls, and all 52 relocation offsets/types/targets/addends agree. The remaining 22 instructions are register-encoding differences: retail distance pointer/distance/kind/constant use r27/r28/r29/r28, while generated code uses r29/r27/r28/r27, with associated vector-copy scratch choices. Eleven relocation-bearing instructions are not byte exact, so canonical and relocation-strict comparison are not 100%."
+}

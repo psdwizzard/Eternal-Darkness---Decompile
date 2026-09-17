@@ -46,15 +46,14 @@ extern void fn_80067180(void *);
 void fn_800C7E40(void *object)
 {
     void *runtime;
-    int kind;
     unsigned int distance;
     int parent;
+    int kind;
     unsigned int *distance_ptr;
     void *other;
     unsigned int limit;
     void *relation;
     void *sound;
-    void *constant;
     unsigned long long result;
     unsigned char reference[12];
     Vec3 direction;
@@ -104,11 +103,10 @@ void fn_800C7E40(void *object)
     direction = lbl_8023989C;
     if ((int)parent == (int)((void *)fn_80201B44(relation))) {
         sound = fn_801A717C();
-        constant = lbl_802FC5BC + 0x18;
         fn_800CEA1C(0x17, 3, reference, 0, 5, 5, lbl_8064F22C,
-                    lbl_8064F21C, lbl_8064F224, constant);
+                    lbl_8064F21C, lbl_8064F224, lbl_802FC5BC + 0x18);
         fn_8014D478(runtime, distance_ptr, &direction, 5, 3,
-                    constant, 3);
+                    lbl_802FC5BC + 0x18, 3);
         fn_801A74A0(sound, relation);
         fn_801A74A8(sound, (void *)parent);
         fn_801A7538(sound, 1);
@@ -119,10 +117,9 @@ void fn_800C7E40(void *object)
         fn_801A7228(sound);
     } else {
         fn_80067180(other);
-        constant = lbl_802FC5BC + 0x18;
         fn_800CEA1C(0x17, 3, reference, 0, 5, 15, lbl_8064F23C,
-                    lbl_8064F21C, lbl_8064F224, constant);
+                    lbl_8064F21C, lbl_8064F224, lbl_802FC5BC + 0x18);
         fn_8014D478(runtime, distance_ptr, &direction, 10, 3,
-                    constant, 3);
+                    lbl_802FC5BC + 0x18, 3);
     }
 }
