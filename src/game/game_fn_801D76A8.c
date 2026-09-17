@@ -28,15 +28,14 @@ extern u32 fn_80179004(Vec3*, Vec3*);
 extern void fn_801A764C(void*, Vec3*);
 extern void fn_801A74D8(void*, u32);
 extern void fn_801A7668(void*, int);
-extern void fn_801A7670(void*, int);
+extern void fn_801A7670(void*, u8);
 extern void fn_8020104C(int, int, int, int, float);
 extern float lbl_806510E0;
 
 int fn_801D76A8(void* item, Object* object, s16* first, s16* second)
 {
-    int result;
+    struct { int result; void* effect; } state;
     int kind;
-    void* effect;
     u8 count;
     Vec3 item_position;
     Vec3 first_position;
@@ -47,24 +46,24 @@ int fn_801D76A8(void* item, Object* object, s16* first, s16* second)
     u32 midpoint_distance;
     Vec3* position;
 
-    effect = fn_801A717C();
-    result = 0;
-    if (effect != 0) {
+    state.effect = fn_801A717C();
+    state.result = 0;
+    if (state.effect != 0) {
         kind = fn_80201B54(item);
-        fn_801A74A0(effect, object->owner);
-        fn_801A74A8(effect, kind);
-        fn_801A7538(effect, 1);
+        fn_801A74A0(state.effect, object->owner);
+        fn_801A74A8(state.effect, kind);
+        fn_801A7538(state.effect, 1);
         count = (u8)(((s16)fn_801CEB2C(object->flags) >> 1) + 1);
-        result = fn_801D38E8(object->flags);
+        state.result = fn_801D38E8(object->flags);
         {
             int item_value = fn_80035628(item);
-            result = fn_801D1B10(5, item_value, result, count);
+            state.result = fn_801D1B10(5, item_value, state.result, count);
         }
-        if (kind != fn_80201B44(result) && fn_80071DD8() != 0)
-            fn_801A7518(effect, 0);
+        if (kind != fn_80201B44(state.result) && fn_80071DD8() != 0)
+            fn_801A7518(state.effect, 0);
         else
-            fn_801A7518(effect, result);
-        fn_801A7588(effect, 2);
+            fn_801A7518(state.effect, state.result);
+        fn_801A7588(state.effect, 2);
 
         fn_80201E78(&item_position, item);
         first_position.x = first[0];
@@ -89,11 +88,11 @@ int fn_801D76A8(void* item, Object* object, s16* first, s16* second)
         } else {
             position = &midpoint;
         }
-        fn_801A764C(effect, position);
-        fn_801A74D8(effect, 0x1800);
-        fn_801A7668(effect, fn_801D38E8(object->flags));
-        fn_801A7670(effect, count);
-        fn_8020104C(237, object->owner, kind, (int)effect, lbl_806510E0);
+        fn_801A764C(state.effect, position);
+        fn_801A74D8(state.effect, 0x1800);
+        fn_801A7668(state.effect, fn_801D38E8(object->flags));
+        fn_801A7670(state.effect, count);
+        fn_8020104C(237, object->owner, kind, (int)state.effect, lbl_806510E0);
     }
-    return result;
+    return state.result;
 }

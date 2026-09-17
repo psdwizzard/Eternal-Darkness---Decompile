@@ -1,0 +1,453 @@
+{
+  "assignment_id": "c010e819-de0c-4571-9ff6-e1b5de78aa5d",
+  "commands": [
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801D76A8",
+        "fn_801D76A8",
+        "-o",
+        "reports/GEDE01/objdiff-c010e819-de0c-4571-9ff6-e1b5de78aa5d-canonical.json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/objdiff-c010e819-de0c-4571-9ff6-e1b5de78aa5d-canonical.json\n"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801D76A8",
+        "fn_801D76A8",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "reports/GEDE01/objdiff-c010e819-de0c-4571-9ff6-e1b5de78aa5d.json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/objdiff-c010e819-de0c-4571-9ff6-e1b5de78aa5d.json\n"
+    },
+    {
+      "argv": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "exit_code": 0,
+      "output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n"
+    },
+    {
+      "argv": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "output": "legal audit passed (16390 tracked project files inspected)\n"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "compiler": "GC/1.3",
+  "compiler_policy": "Unchanged canonical settings, including -use_lmw_stmw on.",
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/build-c010e819-de0c-4571-9ff6-e1b5de78aa5d.log"
+  },
+  "preexisting_unrelated_change": "CLAUDE.md was modified before work began and was not edited or staged.",
+  "canonical": {
+    "left": {
+      "match_percent": 100.0,
+      "size": 752,
+      "instructions": 188
+    },
+    "right": {
+      "match_percent": 100.0,
+      "size": 752,
+      "instructions": 188
+    }
+  },
+  "relocation_strict": {
+    "left": {
+      "match_percent": 100.0,
+      "size": 752,
+      "instructions": 188
+    },
+    "right": {
+      "match_percent": 100.0,
+      "size": 752,
+      "instructions": 188
+    }
+  },
+  "raw_elf": {
+    "retail": {
+      "text_size": 752,
+      "text_sha256": "4a8c5573b7e79b8df58aca4a5b5334f16a7f564fc0bfd43ec035e0839785019a",
+      "relocations": [
+        {
+          "offset": 32,
+          "type": 10,
+          "target": "fn_801A717C",
+          "addend": 0
+        },
+        {
+          "offset": 52,
+          "type": 10,
+          "target": "fn_80201B54",
+          "addend": 0
+        },
+        {
+          "offset": 68,
+          "type": 10,
+          "target": "fn_801A74A0",
+          "addend": 0
+        },
+        {
+          "offset": 80,
+          "type": 10,
+          "target": "fn_801A74A8",
+          "addend": 0
+        },
+        {
+          "offset": 92,
+          "type": 10,
+          "target": "fn_801A7538",
+          "addend": 0
+        },
+        {
+          "offset": 100,
+          "type": 10,
+          "target": "fn_801CEB2C",
+          "addend": 0
+        },
+        {
+          "offset": 124,
+          "type": 10,
+          "target": "fn_801D38E8",
+          "addend": 0
+        },
+        {
+          "offset": 136,
+          "type": 10,
+          "target": "fn_80035628",
+          "addend": 0
+        },
+        {
+          "offset": 156,
+          "type": 10,
+          "target": "fn_801D1B10",
+          "addend": 0
+        },
+        {
+          "offset": 164,
+          "type": 10,
+          "target": "fn_80201B44",
+          "addend": 0
+        },
+        {
+          "offset": 176,
+          "type": 10,
+          "target": "fn_80071DD8",
+          "addend": 0
+        },
+        {
+          "offset": 196,
+          "type": 10,
+          "target": "fn_801A7518",
+          "addend": 0
+        },
+        {
+          "offset": 212,
+          "type": 10,
+          "target": "fn_801A7518",
+          "addend": 0
+        },
+        {
+          "offset": 224,
+          "type": 10,
+          "target": "fn_801A7588",
+          "addend": 0
+        },
+        {
+          "offset": 236,
+          "type": 10,
+          "target": "fn_80201E78",
+          "addend": 0
+        },
+        {
+          "offset": 260,
+          "type": 109,
+          "target": "lbl_806510D8",
+          "addend": 0
+        },
+        {
+          "offset": 424,
+          "type": 10,
+          "target": "fn_80179004",
+          "addend": 0
+        },
+        {
+          "offset": 440,
+          "type": 10,
+          "target": "fn_80179004",
+          "addend": 0
+        },
+        {
+          "offset": 472,
+          "type": 109,
+          "target": "lbl_806510D8",
+          "addend": 0
+        },
+        {
+          "offset": 596,
+          "type": 10,
+          "target": "fn_80179004",
+          "addend": 0
+        },
+        {
+          "offset": 656,
+          "type": 10,
+          "target": "fn_801A764C",
+          "addend": 0
+        },
+        {
+          "offset": 668,
+          "type": 10,
+          "target": "fn_801A74D8",
+          "addend": 0
+        },
+        {
+          "offset": 676,
+          "type": 10,
+          "target": "fn_801D38E8",
+          "addend": 0
+        },
+        {
+          "offset": 688,
+          "type": 10,
+          "target": "fn_801A7668",
+          "addend": 0
+        },
+        {
+          "offset": 700,
+          "type": 10,
+          "target": "fn_801A7670",
+          "addend": 0
+        },
+        {
+          "offset": 712,
+          "type": 109,
+          "target": "lbl_806510E0",
+          "addend": 0
+        },
+        {
+          "offset": 724,
+          "type": 10,
+          "target": "fn_8020104C",
+          "addend": 0
+        }
+      ]
+    },
+    "generated": {
+      "text_size": 752,
+      "text_sha256": "4a8c5573b7e79b8df58aca4a5b5334f16a7f564fc0bfd43ec035e0839785019a",
+      "relocations": [
+        {
+          "offset": 32,
+          "type": 10,
+          "target": "fn_801A717C",
+          "addend": 0
+        },
+        {
+          "offset": 52,
+          "type": 10,
+          "target": "fn_80201B54",
+          "addend": 0
+        },
+        {
+          "offset": 68,
+          "type": 10,
+          "target": "fn_801A74A0",
+          "addend": 0
+        },
+        {
+          "offset": 80,
+          "type": 10,
+          "target": "fn_801A74A8",
+          "addend": 0
+        },
+        {
+          "offset": 92,
+          "type": 10,
+          "target": "fn_801A7538",
+          "addend": 0
+        },
+        {
+          "offset": 100,
+          "type": 10,
+          "target": "fn_801CEB2C",
+          "addend": 0
+        },
+        {
+          "offset": 124,
+          "type": 10,
+          "target": "fn_801D38E8",
+          "addend": 0
+        },
+        {
+          "offset": 136,
+          "type": 10,
+          "target": "fn_80035628",
+          "addend": 0
+        },
+        {
+          "offset": 156,
+          "type": 10,
+          "target": "fn_801D1B10",
+          "addend": 0
+        },
+        {
+          "offset": 164,
+          "type": 10,
+          "target": "fn_80201B44",
+          "addend": 0
+        },
+        {
+          "offset": 176,
+          "type": 10,
+          "target": "fn_80071DD8",
+          "addend": 0
+        },
+        {
+          "offset": 196,
+          "type": 10,
+          "target": "fn_801A7518",
+          "addend": 0
+        },
+        {
+          "offset": 212,
+          "type": 10,
+          "target": "fn_801A7518",
+          "addend": 0
+        },
+        {
+          "offset": 224,
+          "type": 10,
+          "target": "fn_801A7588",
+          "addend": 0
+        },
+        {
+          "offset": 236,
+          "type": 10,
+          "target": "fn_80201E78",
+          "addend": 0
+        },
+        {
+          "offset": 260,
+          "type": 109,
+          "target": "lbl_806510D8",
+          "addend": 0
+        },
+        {
+          "offset": 424,
+          "type": 10,
+          "target": "fn_80179004",
+          "addend": 0
+        },
+        {
+          "offset": 440,
+          "type": 10,
+          "target": "fn_80179004",
+          "addend": 0
+        },
+        {
+          "offset": 472,
+          "type": 109,
+          "target": "lbl_806510D8",
+          "addend": 0
+        },
+        {
+          "offset": 596,
+          "type": 10,
+          "target": "fn_80179004",
+          "addend": 0
+        },
+        {
+          "offset": 656,
+          "type": 10,
+          "target": "fn_801A764C",
+          "addend": 0
+        },
+        {
+          "offset": 668,
+          "type": 10,
+          "target": "fn_801A74D8",
+          "addend": 0
+        },
+        {
+          "offset": 676,
+          "type": 10,
+          "target": "fn_801D38E8",
+          "addend": 0
+        },
+        {
+          "offset": 688,
+          "type": 10,
+          "target": "fn_801A7668",
+          "addend": 0
+        },
+        {
+          "offset": 700,
+          "type": 10,
+          "target": "fn_801A7670",
+          "addend": 0
+        },
+        {
+          "offset": 712,
+          "type": 109,
+          "target": "lbl_806510E0",
+          "addend": 0
+        },
+        {
+          "offset": 724,
+          "type": 10,
+          "target": "fn_8020104C",
+          "addend": 0
+        }
+      ]
+    },
+    "text_bytes_equal": true,
+    "relocation_offsets_types_targets_addends_equal": true
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "compiled_object_linked": true,
+  "source_sha256": {
+    "src/game/game_fn_801D76A8.c": "bd1e21e08f11b614036ed809d5faa05ad9f5fa070dbb153db0e6669f9ff1bb63",
+    "configure.py": "c9a40b814c81e11165acc9f70506df0d80660fe1962d15d61d80926d0acb089f"
+  }
+}

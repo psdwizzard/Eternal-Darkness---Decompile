@@ -225,10 +225,10 @@ config.custom_build_rules = [
     {
         "name": "externalize_game_801D76A8_signed_bias",
         "command": (
-            "python3 tools/externalize_elf_symbol.py $in @26 lbl_806510D8 "
+            "python3 tools/externalize_elf_symbol.py $in @27 lbl_806510D8 "
             "orig/GEDE01/sys/main.dol --require-whole-section && "
             "build/binutils/powerpc-eabi-objcopy "
-            "--redefine-sym=@26=lbl_806510D8 --remove-section=.sdata2 "
+            "--redefine-sym=@27=lbl_806510D8 --remove-section=.sdata2 "
             "--rename-section=.comment=.ignored $in && touch $out"
         ),
         "description": "EXTERNALIZE $in",
@@ -11807,7 +11807,7 @@ config.libs = [
             Object(Matching, "game/game_fn_801D72D0.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801D7380.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/game_fn_801D73D0.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
-            Object(NonMatching, "game/game_fn_801D76A8.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801D76A8.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801D7998.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801D7B78.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801D7C24.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
