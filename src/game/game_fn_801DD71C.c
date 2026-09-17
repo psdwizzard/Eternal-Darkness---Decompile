@@ -33,8 +33,8 @@ void* fn_801DD71C(int object_id, int kind, void* source_a, int count,
                   void (*callback)(void), u32 tag, s16 duration)
 {
     void* result;
-    u32 flags;
     int handle;
+    int flags;
     int low_index;
     int high_index;
     int owner;
@@ -45,16 +45,20 @@ void* fn_801DD71C(int object_id, int kind, void* source_a, int count,
     handle = (int)fn_80201814(object_id);
     if (handle != 0 && fn_80201B64((void*)handle) != 8) {
         flags = 0x820;
-        switch (fn_80035628((void*)handle)) {
+        low_index = handle;
+        handle = -1;
+        switch (fn_80035628((void*)low_index)) {
         case 1: flags |= 1; low_index = 0; break;
         case 2: flags |= 2; low_index = 1; break;
         case 3: flags |= 4; low_index = 2; break;
+        case 4:
         default: flags |= 8; low_index = 3; break;
         }
 
         switch (kind) {
         case 5: flags |= 0x20000; high_index = 1; break;
         case 7: flags |= 0x40000; high_index = 2; break;
+        case 3:
         default: flags |= 0x10000; high_index = 0; break;
         }
 
@@ -69,7 +73,6 @@ void* fn_801DD71C(int object_id, int kind, void* source_a, int count,
                              fn_801DEEBC, fn_801D0C9C, 0, callback, tag, 0);
         if (result != 0) {
             u8* p = result;
-            int n = (u8)count;
             *(int*)(p + 0xbc) = 0;
             *(int*)(p + 0xd0) = 1;
             *(int*)(p + 0xc8) = 0;
@@ -81,9 +84,9 @@ void* fn_801DD71C(int object_id, int kind, void* source_a, int count,
             p[0xd8] = count;
             *(int*)(p + 0xf4) = 0;
             *(int*)(p + 0xf0) = -1;
-            memcpy(p + 0xf8, source_b, n * 4);
-            memcpy(p + 0x114, source_c, n * 12);
-            total = (u8)rows * n;
+            memcpy(p + 0xf8, source_b, (u8)count * 4);
+            memcpy(p + 0x114, source_c, (u8)count * 12);
+            total = (u8)rows * (u8)count;
             fn_801D38BC(fn_801D38E8(flags), &outputs.word_value,
                          &outputs.short_value);
             outputs.copied_word = outputs.word_value;

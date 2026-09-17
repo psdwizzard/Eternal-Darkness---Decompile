@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "2c5d7071-7bd6-4606-9a6e-b89344e030d2",
+  "attempt": 2,
+  "base_commit": "b894bc6e161db641194bf5a8515aeb73a13ceda5",
+  "target": "fn_801DD71C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2c5d7071-7bd6-4606-9a6e-b89344e030d2.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2c5d7071-7bd6-4606-9a6e-b89344e030d2-canonical.json"
+  ],
+  "divergence": "87.5% on both canonical project-unit and explicit-path relocation-strict objdiff; retail and generated are both 696 bytes with 26 relocations. The signed int flags fix now emits retail's three oris immediates, and explicit fall-through case 4/case 3 labels reproduce both retail switch trees. Remaining code differences begin with a flags/handle/result-owner register-allocation rotation (retail r28/r27/r29 versus generated r27/r29/r28), followed by table-address register assignment, memcpy setup scheduling, total-product register lifetime, and fn_801CE594 argument construction/scheduling. Relocation targets/types/addends agree, while several relocation instruction offsets differ because of those scheduled instruction positions."
+}
