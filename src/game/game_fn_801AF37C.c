@@ -52,13 +52,17 @@ extern int fn_801ADEEC(WorkDesc*, u8, int, int, u8, u8);
 extern int fn_801ADFC4(WorkDesc*, char**, u8, u8, u8);
 extern void* memcpy(void*, const void*, unsigned long);
 
-/* NonMatching: behavior-complete reconstruction. Retail retains the format
- * table base in r29; this compiler allocation uses r28 via one extra move. */
+/* NonMatching: behavior-complete reconstruction. A block-scoped format base
+ * selected retail's r29 but moved its load to 0x54; keeping the early load
+ * leaves GC/1.3's sole extra instruction, the r0-to-r28 move at 0x1c. */
 int fn_801AF37C(Work* work)
 {
     int done;
-    char* format = lbl_80251808;
-    u32 result = -1;
+    char* format;
+    u32 result;
+
+    format = lbl_80251808;
+    result = -1;
 
     if (lbl_8064D310 == 0 || lbl_8064D310 == work) {
         lbl_8064D310 = work;
