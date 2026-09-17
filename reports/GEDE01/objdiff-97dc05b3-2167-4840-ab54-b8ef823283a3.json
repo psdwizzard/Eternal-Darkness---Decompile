@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "assignment_id": "97dc05b3-2167-4840-ab54-b8ef823283a3",
+  "attempt": 5,
+  "base_commit": "58f2804e2c36a74f65f61072e18b243c35f9223d",
+  "target": "fn_80063E64",
+  "status": "matched",
+  "source": "eternal-darkness-decomp/src/game/game_fn_80063E64.c",
+  "preserved_attempts_studied": [
+    "82bed50b57014703524703876dafddf5340cb4be",
+    "d46ffef57dd956638347f37a2ace72584facc0fa",
+    "7b467ee19a55b93f78960535451397bc641021b2"
+  ],
+  "starting_match_percent": 99.551765,
+  "canonical_match_percent": 100.0,
+  "relocation_strict_match_percent": 100.0,
+  "retail_size": 3284,
+  "generated_size": 3284,
+  "instructions_per_side": 821,
+  "relocations_per_side": 184,
+  "same_offset_type_target_symbol_value_addend_matches": 184,
+  "text_bytes_equal": true,
+  "text_sha256": "807c0b8eee96e86e1a2a5e4e1c4ac1133d6fb69f6070624222e88b2b52612817",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_bytes_equal": true,
+  "compiler": "GC/1.3",
+  "compiler_sha256": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715",
+  "compiler_settings_changed": false,
+  "registration": "Object(Matching, \"game/game_fn_80063E64.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "independent_split": {
+    "start": "0x80063E64",
+    "end": "0x80064B38",
+    "changed": false
+  },
+  "new_hypotheses_and_results": [
+    {
+      "hypothesis": "The .sdata2 float is read-only; declaring it mutable imposes an unnecessary memory dependency on the outgoing stack-argument store.",
+      "change": "Declare lbl_8064E648 const, supported by config/GEDE01/symbols.txt.",
+      "result": "Restores lfs f1 at +0x170 and every instruction in the call setup, including the relocation offset."
+    },
+    {
+      "hypothesis": "The seventh fn_8012C62C argument is a decompiler artifact that forces an extra value live in r9.",
+      "change": "Remove that argument; the existing callee definition confirms exactly six arguments.",
+      "result": "Restores the constant load order and both relocation targets at +0x65c/+0x664."
+    },
+    {
+      "hypothesis": "Loop index lifetime and event-local scope, rather than compiler revision, explain the remaining coloring.",
+      "change": "Reuse event_type as index after its final dispatch comparison; scope scene and effect-list handles to each event arm, and the allocation result to event 37.",
+      "result": "All remaining register differences disappear; 100% canonical and strict."
+    },
+    {
+      "hypothesis": "The float argument position might affect scheduling.",
+      "change": "Tested float-first and float-last declarations, a local float, and double parameter; finalized the declaration using the existing fn_801AAE68 definition with float fourth and correct narrow integer argument types.",
+      "result": "Argument positioning alone did not fix scheduling. The final callee-grounded declaration preserves 100%."
+    }
+  ],
+  "score_progression": [
+    99.551765,
+    99.576126,
+    99.6553,
+    99.89647,
+    99.93301,
+    99.98173,
+    100.0
+  ],
+  "rejected_variants": "Captured in the trial report: shared counts/handles, broad const qualification, pointer merging, outer switch, register keyword, declaration ordering, and overly broad local-scope changes. Only the final matching C reconstruction is retained.",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 reports/GEDE01/verify-97dc05b3-2167-4840-ab54-b8ef823283a3.py"
+  ],
+  "raw_evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/canonical-97dc05b3-2167-4840-ab54-b8ef823283a3.json",
+    "eternal-darkness-decomp/reports/GEDE01/strict-97dc05b3-2167-4840-ab54-b8ef823283a3.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-97dc05b3-2167-4840-ab54-b8ef823283a3.json",
+    "eternal-darkness-decomp/reports/GEDE01/fndiff-97dc05b3-2167-4840-ab54-b8ef823283a3.log",
+    "eternal-darkness-decomp/reports/GEDE01/build-97dc05b3-2167-4840-ab54-b8ef823283a3.log",
+    "eternal-darkness-decomp/reports/GEDE01/trials-97dc05b3-2167-4840-ab54-b8ef823283a3.json",
+    "eternal-darkness-decomp/reports/GEDE01/verify-97dc05b3-2167-4840-ab54-b8ef823283a3.py",
+    "eternal-darkness-decomp/reports/GEDE01/baseline-97dc05b3-2167-4840-ab54-b8ef823283a3.log",
+    "eternal-darkness-decomp/reports/GEDE01/float-first-97dc05b3-2167-4840-ab54-b8ef823283a3.log",
+    "eternal-darkness-decomp/reports/GEDE01/six-args-97dc05b3-2167-4840-ab54-b8ef823283a3.log",
+    "eternal-darkness-decomp/reports/GEDE01/retail-relocations-97dc05b3-2167-4840-ab54-b8ef823283a3.log",
+    "eternal-darkness-decomp/reports/GEDE01/generated-relocations-97dc05b3-2167-4840-ab54-b8ef823283a3.log",
+    "eternal-darkness-decomp/reports/GEDE01/configure-97dc05b3-2167-4840-ab54-b8ef823283a3.log"
+  ],
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "passed": true,
+    "raw_output_in": "eternal-darkness-decomp/reports/GEDE01/verification-97dc05b3-2167-4840-ab54-b8ef823283a3.json",
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "compiler_policy_or_gate_changes": false,
+    "runtime_code_or_global_progress_edits": false,
+    "private_inputs_or_generated_binaries_in_commit": false,
+    "remote_push": false
+  },
+  "divergence": "",
+  "build_log_note": "Compiler stdout/stderr retained; Windows CRLF line endings normalized to LF for the checked-in text log."
+}

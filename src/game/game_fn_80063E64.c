@@ -62,7 +62,7 @@ u32 fn_8015C910();                                  /* extern */
 s32 fn_8016B400(s32, s32, s32);             /* extern */
 s32 fn_801A5910();                              /* extern */
 s32 fn_801A7228();                              /* extern */
-s32 fn_801AAE68(s32, s32, s32, s32 *, s32, s32, s32, u16, s32, f32); /* extern */
+s32 fn_801AAE68(u16, u8, u8, f32, void *, signed char, u8, u8, u16, u32); /* extern */
 s32 fn_801E741C(s32 *);                         /* extern */
 s32 fn_801E7974(s32, s32);                      /* extern */
 s32 fn_801E79A0(s32, s32);                      /* extern */
@@ -94,7 +94,7 @@ extern s32 lbl_8064D5A8;
 extern f32 lbl_8064E63C;
 extern f32 lbl_8064E640;
 extern f32 lbl_8064E644;
-extern f32 lbl_8064E648;
+extern const f32 lbl_8064E648;
 extern s32 lbl_8064E64C;
 extern s32 lbl_8064E650;
 extern s32 lbl_8064E654;
@@ -135,8 +135,6 @@ s32 fn_80063E64(s32 context, s32 state, s32 event, s32 *result) {
     s32 sp18;
     s32 sp14;
     s32 sp10;
-    s32 context_data_2;
-    s32 context_data_3;
     s32 event_type;
     s32 event_type_2;
     s32 current_mode;
@@ -152,12 +150,7 @@ s32 fn_80063E64(s32 context, s32 state, s32 event, s32 *result) {
     u32 runtime;
     s32 owner;
     s32 temp_r3;
-    s32 temp_r3_2;
-    s32 var_r24;
-    s32 var_r24_2;
-    s32 var_r24_3;
     u32 temp_r3_4;
-    u32 temp_r3_6;
     ContextState *context_data;
 
     event_type = fn_80200C10(event);
@@ -199,7 +192,7 @@ s32 fn_80063E64(s32 context, s32 state, s32 event, s32 *result) {
         if (event_type == 0xC9) {
             if (fn_8011FF38() != 0) {
                 fn_8011FA8C(runtime, 0, 0x20000000);
-                fn_801AAE68(0x1F1, 0x64, 0, sp58, 2, 2, 0, (u16) lbl_8064D18C, 0, lbl_8064E648);
+                fn_801AAE68(0x1F1, 0x64, 0, lbl_8064E648, sp58, 2, 2, 0, (u16) lbl_8064D18C, 0);
             }
             return 1;
         }
@@ -307,7 +300,8 @@ s32 fn_80063E64(s32 context, s32 state, s32 event, s32 *result) {
             if (current_mode != (s32) lbl_8064D18C) {
                 fn_8020104C(0x8A, owner, owner, 0, lbl_8064E640);
             } else {
-                context_data_2 = fn_801E741C(lbl_80243E38);
+                s32 temp_r3_2;
+                s32 context_data_2 = fn_801E741C(lbl_80243E38);
                 sp4C = lbl_8064E654;
                 sp50 = lbl_8064E650;
                 sp54 = lbl_8064E64C;
@@ -318,19 +312,19 @@ s32 fn_80063E64(s32 context, s32 state, s32 event, s32 *result) {
                 temp_r3_2 = fn_80158598(owner, 0);
                 if (temp_r3_2 != 0) {
                     temp_r26_3 = fn_80157E1C();
-                    var_r24 = 0;
+                    event_type = 0;
                     goto loop_75_check;
 loop_75:
-                        fn_80157E24(temp_r3_2, var_r24);
+                        fn_80157E24(temp_r3_2, event_type);
                         if ((fn_80201814() != 0U) && ((temp_r3_4 = fn_80201BC8()) != 0U)) {
                             sp40 = lbl_8064E660;
                             sp44 = lbl_8064E65C;
                             sp48 = lbl_8064E658;
                             fn_8012C62C(temp_r3_4, (s32 *)0xF, &sp48, &sp44, &sp40, 6);
                         }
-                        var_r24 += 1;
+                        event_type += 1;
 loop_75_check:
-                    if (var_r24 < temp_r26_3) {
+                    if (event_type < temp_r26_3) {
                         goto loop_75;
                     }
                 }
@@ -342,18 +336,19 @@ loop_75_check:
             if (current_mode != (s32) lbl_8064D18C) {
                 fn_8020104C(0x8B, owner, owner, 0, lbl_8064E640);
             } else {
+                s32 temp_r3_2;
                 sp34 = lbl_8064E66C;
                 sp38 = lbl_8064E668;
                 sp3C = lbl_8064E664;
-                fn_8012C62C(runtime, (s32 *)0xF, &sp3C, &sp38, &sp34, 6, lbl_8064E668);
+                fn_8012C62C(runtime, (s32 *)0xF, &sp3C, &sp38, &sp34, 6);
                 fn_8012F58C(runtime, 0xF, 0, 1, 0x1E, 8);
                 temp_r3_2 = fn_80158598(owner, 0);
                 if (temp_r3_2 != 0) {
                     temp_r26_4 = fn_80157E1C();
-                    var_r24_2 = 0;
+                    event_type = 0;
                     goto loop_87_check;
 loop_87:
-                        fn_80157E24(temp_r3_2, var_r24_2);
+                        fn_80157E24(temp_r3_2, event_type);
                         if (fn_80201814() != 0U) {
                             temp_r3_4 = fn_80201BC8();
                             if (temp_r3_4 != 0U) {
@@ -364,9 +359,9 @@ loop_87:
                                 fn_8012F58C(temp_r3_4, 0xF, 0, 1, 0x1E, 8);
                             }
                         }
-                        var_r24_2 += 1;
+                        event_type += 1;
 loop_87_check:
-                    if (var_r24_2 < temp_r26_4) {
+                    if (event_type < temp_r26_4) {
                         goto loop_87;
                     }
                 }
@@ -377,7 +372,8 @@ loop_87_check:
             if (current_mode != (s32) lbl_8064D18C) {
                 fn_8020104C(0x8C, owner, owner, 0, lbl_8064E640);
             } else {
-                context_data_3 = fn_801E741C(lbl_80243E38);
+                s32 temp_r3_2;
+                s32 context_data_3 = fn_801E741C(lbl_80243E38);
                 sp1C = lbl_8064E684;
                 sp20 = lbl_8064E680;
                 sp24 = lbl_8064E67C;
@@ -388,19 +384,19 @@ loop_87_check:
                 temp_r3_2 = fn_80158598(owner, 0);
                 if (temp_r3_2 != 0) {
                     temp_r26_5 = fn_80157E1C();
-                    var_r24_3 = 0;
+                    event_type = 0;
                     goto loop_100_check;
 loop_100:
-                        fn_80157E24(temp_r3_2, var_r24_3);
+                        fn_80157E24(temp_r3_2, event_type);
                         if ((fn_80201814() != 0U) && ((temp_r3_4 = fn_80201BC8()) != 0U)) {
                             sp10 = lbl_8064E690;
                             sp14 = lbl_8064E68C;
                             sp18 = lbl_8064E688;
                             fn_8012C62C(temp_r3_4, (s32 *)0xF, &sp18, &sp14, &sp10, 6);
                         }
-                        var_r24_3 += 1;
+                        event_type += 1;
 loop_100_check:
-                    if (var_r24_3 < temp_r26_5) {
+                    if (event_type < temp_r26_5) {
                         goto loop_100;
                     }
                 }
@@ -450,6 +446,7 @@ loop_100_check:
             return 1;
         }
         if (event_type == 37) {
+            u32 temp_r3_6;
             fn_80204508(context, fn_80201814(object_state->target));
             current_mode_2 = fn_8012A1FC(runtime, 0x27) + 0x1E;
             temp_r3_6 = (u32)fn_801294DC(runtime, 0x27, 0x24, 8);
@@ -521,7 +518,5 @@ loop_100_check:
     } else {
         return 0;
     }
-    /* bug: did not emit code for node #156; contents below: */
-    /* bug: did not emit code for node #157; contents below: */
     return 0;
 }
