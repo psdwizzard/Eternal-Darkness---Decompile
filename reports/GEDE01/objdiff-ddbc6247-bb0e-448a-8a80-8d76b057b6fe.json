@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "assignment_id": "ddbc6247-bb0e-448a-8a80-8d76b057b6fe",
+  "target": "fn_800D082C",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "objdiff": "python3 tools/fndiff.py game/game_fn_800D082C.c fn_800D082C",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measured_outputs": {
+    "build": "[870/872] DOL build/GEDE01/main.dol\n[871/872] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[872/872] PROGRESS",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "objdiff": "target 472 bytes  base 472 bytes  match 98.98305",
+    "objdiff_counts": "left size 472 match_percent 98.98305 instructions 118 diff_instructions 24 relocations 21\nright size 472 match_percent 98.98305 instructions 118 diff_instructions 24 relocations 21"
+  },
+  "canonical": {
+    "match_percent": 98.98305,
+    "target_size": 472,
+    "generated_size": 472,
+    "instruction_count": 118,
+    "differing_instructions": 24
+  },
+  "relocation_strict": {
+    "matched": true,
+    "retail_count": 21,
+    "generated_count": 21,
+    "type": "R_PPC_REL24",
+    "targets_and_addends": "All 21 paired call relocations have identical offsets, formatted call targets, type 10/R_PPC_REL24, target-symbol indices, and implicit addend 0."
+  },
+  "divergence": "Size-exact 472-byte code with identical control flow, stack layout, opcodes outside register operands, and 21/21 relocations. The remaining 24 instruction differences are a consistent callee-saved register-allocation permutation: retail context/object/owner-or-id/variant use r29/r28/r27/r31, while generated code uses r27/r31/r29/r28; r30 allocation matches."
+}
