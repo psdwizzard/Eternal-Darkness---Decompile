@@ -22,7 +22,7 @@ extern u8 fn_800FBFB0(void); extern void fn_801850FC(void*,void*);
 extern void fn_80185108(void*); extern void fn_801851A0(void*,void*);
 extern void fn_801D0E78(void*);
 
-static void alter(Object* o, void* state, void* actor, u8* table, int index, int count)
+static inline void alter(Object* o, void* state, void* actor, u8* table, int index, int count)
 {
     s16* source; s16* dest; float angle;
     if (fn_801911B0(state,index)) return;
@@ -48,9 +48,12 @@ void fn_801DB140(Object* o)
     special=fn_80201EB8(actor)==lbl_8064D18C;
     if (state && actor && o->b[0xC6]) {
         u8* info=fn_80201B8C(actor);
-        if (info && *(void**)(info+0x8C) && fn_80201814(*(u32*)(*(u8**)(info+0x8C)+0x24))) {
-            info=fn_80201B8C(fn_80201814(*(u32*)(*(u8**)(info+0x8C)+0x24)));
-            if (info && *(void**)(info+0x24)) fn_801911D8(state,info+0xEC);
+        if (info && *(void**)(info+0x8C)) {
+            void* child=fn_80201814(*(u32*)(*(u8**)(info+0x8C)+0x24));
+            if (child) {
+                info=fn_80201B8C(child);
+                if (info && *(void**)(info+0x24)) fn_801911D8(state,*(u8**)(info+0x24)+0xC8);
+            }
         }
         table=fn_801911C8(state);
         for(i=(u8)fn_80180130(state)-1;i>=0 && changed<o->b[0xC6];i--)
