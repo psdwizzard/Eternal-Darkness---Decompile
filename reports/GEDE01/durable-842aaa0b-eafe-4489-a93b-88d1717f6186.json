@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "842aaa0b-eafe-4489-a93b-88d1717f6186",
+  "attempt": 6,
+  "base_commit": "5130587b9e3d44aac8dedacafadbbd897f5ee5bb",
+  "target": "fn_80160B18",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-842aaa0b-eafe-4489-a93b-88d1717f6186.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff is 99.08696% with equal 460-byte code size and 115 instructions per side. All 12 relocation-bearing instructions agree in offset, type, resolved target expression, and addend (zero). Exactly 19 instructions differ solely because retail keeps the source/result pointer in r27 and callback context in r28 from offsets 0x70 through 0x160, while generated code uses r28 and r27 respectively. A new stack-holder-mediated value-flow hypothesis and a conditional-expression result-phi variant both canonicalized to the same 99.08696% codegen."
+}
