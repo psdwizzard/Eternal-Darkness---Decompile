@@ -1,13 +1,18 @@
 /*
  * Honest-C reconstruction of the effect/resource dispatch callback.
- * This remains NonMatching: the retail routine's large copied descriptor,
- * floating-point temporaries, and register allocation still differ.
+ * This remains NonMatching: floating-point temporaries and register allocation
+ * still differ.
  */
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 typedef struct Vec3 { float x, y, z; } Vec3;
 typedef struct Work { u8 bytes[0xC4]; void* runtime; } Work;
+typedef struct PositionTable { Vec3 positions[16]; } PositionTable;
+typedef struct EffectDescriptor {
+    u8 header[0x28];
+    PositionTable table;
+} EffectDescriptor;
 
 extern void* fn_801A717C(void);
 extern void fn_801A7228(void*);
@@ -31,9 +36,9 @@ extern void fn_8011E174(int, int);
 extern void* fn_80036D38(void*);
 extern void fn_8012B690(void*, Vec3*, Vec3*);
 extern void fn_8006DEF8(Work*, int, void*, Work*, u16);
-extern u32 lbl_8064B820;
+extern int lbl_8064B820;
 extern const Vec3 lbl_80239554;
-extern const u8 lbl_80239560[];
+extern const PositionTable lbl_80239560;
 extern const u8 lbl_802FC5BC[];
 
 int fn_80089A34(Work* work)
@@ -42,25 +47,28 @@ int fn_80089A34(Work* work)
     u8* runtime = *(u8**)(work->bytes + 0xC4);
     int index;
     int result = 0;
-    void* context;
     void* owner;
 
     fn_8006ED3C(work, 0xB, &index);
     owner = fn_80201814(*(void**)(work->bytes + 0x38));
     if (owner != 0) {
+        Vec3 position;
         Vec3 direction = lbl_80239554;
-        u8 descriptor[0xC4];
-        u8* memory = *(u8**)(runtime + 0x15C);
-        int slot = *(int*)(memory + 0x1780);
-        int identifier = *(int*)(memory + 0x1740 + slot * 4);
-        void* scene = fn_80201BC8(owner);
-        void* model;
+        EffectDescriptor descriptor;
+        u8* memory;
+        int slot;
+        int identifier;
+        void* scene;
         void* spawned = 0;
+        u32 flags;
         int i;
 
-        __builtin_memcpy(descriptor, lbl_80239560, sizeof descriptor);
+        descriptor.table = lbl_80239560;
+        memory = *(u8**)(runtime + 0x15C);
+        slot = *(int*)(memory + 0x1780);
+        identifier = *(int*)(memory + 0x1740 + slot * 4);
+        scene = fn_80201BC8(owner);
         fn_80201B8C(owner);
-        model = ((void*)fn_80201B54(owner));
         if (lbl_8064B820 != 0) {
             spawned = fn_80205868(scene, identifier, &direction, 0x2000);
             if (spawned != 0)
@@ -74,28 +82,47 @@ int fn_80089A34(Work* work)
         direction.x = (float)(8 - (int)(fn_800FBFB0() & 15));
         direction.y = (float)(8 - (int)(fn_800FBFB0() & 15));
         direction.z = 0.0f;
-        if (fn_8011F6A4(scene, 0x14, identifier, -1, descriptor, 1) != -1)
-            fn_8014D478(scene, (Vec3*)(descriptor + 0xC), &direction,
-                        0x10, 4, (void*)(lbl_802FC5BC + 0x18), 3);
+        if (fn_8011F6A4(scene, 0x14, identifier, -1, &descriptor, 1) != -1) {
+            position = *(Vec3*)(descriptor.header + 8);
+            fn_8014D478(scene, &position, &direction, 0x10, 4,
+                        (void*)(lbl_802FC5BC + 0x18), 3);
+        }
 
         fn_801A7470(guard, 0xB);
         fn_8020123C(0x35, 0, *(void**)(work->bytes + 0x38), guard);
 
-        if (identifier >= 2 && identifier < 4) {
+        if (identifier == 1)
+            goto identifier_one;
+        if (identifier < 1 || identifier >= 4)
+            goto identifier_other;
+        {
             if (spawned != 0) {
                 void* animation = fn_80158598(((void*)fn_80201B54(owner)), 0);
-                int handle = fn_80157FE0(animation, identifier == 2 ? 1 : 2, 0);
-                *(int*)(runtime + (identifier == 2 ? 0x9C : 0xA0)) = handle;
+                int handle;
+                if (identifier == 2) {
+                    handle = fn_80157FE0(animation, 1, 0);
+                    *(int*)(runtime + 0x9C) = handle;
+                } else {
+                    handle = fn_80157FE0(animation, 2, 0);
+                    *(int*)(runtime + 0xA0) = handle;
+                }
                 if (handle != -1)
                     fn_80158038(animation, handle);
             }
             if (lbl_8064B820 != 0)
                 fn_8014CBE8(owner, 0x14, (void*)lbl_802FC5BC, identifier,
                             (void*)(lbl_802FC5BC + 0x18));
-            *(u32*)(runtime + 0x20) |= 0x10001200;
+            flags = *(u32*)(runtime + 0x20);
+            flags |= 0x10000000;
+            flags |= 0x1200;
+            *(u32*)(runtime + 0x20) = flags;
             fn_8011E174(0x100, 1);
-        } else if (identifier == 1) {
+            goto identifier_done;
+        }
+identifier_one:
+        {
             void* state = fn_80036D38(owner);
+            int stateValue = *(int*)((u8*)state + 0x44);
             *(u32*)(runtime + 0x20) |= 3;
             if (spawned != 0) {
                 void* animation = fn_80158598(((void*)fn_80201B54(owner)), 0);
@@ -105,27 +132,31 @@ int fn_80089A34(Work* work)
                     fn_80158038(animation, handle);
             }
             for (i = 0; i < 16; i++) {
-                Vec3 position;
                 direction.x = (float)(8 - (int)(fn_800FBFB0() & 15));
                 direction.y = (float)(8 - (int)(fn_800FBFB0() & 15));
                 direction.z = 0.0f;
-                fn_8012B690(scene, (Vec3*)(descriptor + i * 12), &position);
+                fn_8012B690(scene, &descriptor.table.positions[i], &position);
                 fn_8014D478(scene, &position, &direction, 0, 4,
                             (void*)(lbl_802FC5BC + 0x18), 1);
             }
             work->bytes[index * 0x2C + 0x6A] = 0;
             work->bytes[index * 0x2C + 0x6B] = 0;
             work->bytes[index * 0x2C + 0x68] = 4;
-            fn_8006DEF8(work, 0xB, 0, work, 0);
-            fn_8020123C(8, *(int*)((u8*)state + 0x44),
-                        *(void**)(work->bytes + 0x38), 0);
-        } else if (lbl_8064B820 != 0) {
+            fn_8006DEF8(work, 0xB, 0, 0, 0);
+            fn_8020123C(8, stateValue, *(void**)(work->bytes + 0x38), 0);
+            goto identifier_done;
+        }
+identifier_other:
+        if (lbl_8064B820 != 0) {
             fn_8014CBE8(owner, 0x14, (void*)lbl_802FC5BC, identifier,
                         (void*)(lbl_802FC5BC + 0x18));
         }
 
-        *(int*)(memory + 0x1780) = (slot + 1) & 15;
+identifier_done:
+        (*(int*)(memory + 0x1780))++;
         result = 1;
+        slot = *(int*)(memory + 0x1780);
+        *(int*)(memory + 0x1780) = slot >= 16 ? 0 : slot;
     }
     fn_801A7228(guard);
     return result;
