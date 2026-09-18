@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "2ba0d324-75e8-4b5a-8120-6b1df454ceb2",
+  "attempt": 2,
+  "base_commit": "f017849ad758f4fb575e4a459b9f6ae68446e76f",
+  "target": "fn_80181870",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2ba0d324-75e8-4b5a-8120-6b1df454ceb2.json"
+  ],
+  "divergence": "Best fresh canonical and relocation-strict objdiff score is 50.88889%: retail is 180 bytes with a 0x30-byte frame and keeps the three-word lbl_8023B028 aggregate in callee-saved r29-r31 across the scalar initializer stores, while canonical GC/1.3 emits 160 bytes with a 0x20-byte frame, uses volatile r10-r12, interleaves aggregate loads with scalar stores, and places the two real lbl_8023B028 relocations at generated offsets 0x8/0x14 instead of retail offsets 0x4/0x38. The canonical and strict raw payloads are byte-identical. The full build passed and build/GEDE01/main.dol matched retail at SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
