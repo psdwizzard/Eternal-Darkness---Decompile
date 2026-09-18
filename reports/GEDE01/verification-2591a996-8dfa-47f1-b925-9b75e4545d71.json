@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "assignment_id": "2591a996-8dfa-47f1-b925-9b75e4545d71",
+  "target": "fn_801C79C8",
+  "compiler": "GC/1.2.5n",
+  "compiler_flags": ["-Cpp_exceptions on", "-use_lmw_stmw on"],
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_final_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801C79C8 -o reports/GEDE01/objdiff-2591a996-8dfa-47f1-b925-9b75e4545d71-canonical.json --format json-pretty fn_801C79C8",
+    "retail_size": 1944,
+    "generated_size": 932,
+    "match_percent": 33.07819
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801C79C8 -o reports/GEDE01/objdiff-2591a996-8dfa-47f1-b925-9b75e4545d71.json --format json-pretty -c function_reloc_diffs=name_address fn_801C79C8",
+    "retail_size": 1944,
+    "generated_size": 932,
+    "match_percent": 33.07819,
+    "relocations_equal": false
+  },
+  "strict_instruction_diff_counts": {
+    "DIFF_ARG_MISMATCH": 128,
+    "DIFF_DELETE": 274,
+    "DIFF_INSERT": 21,
+    "DIFF_OP_MISMATCH": 7,
+    "DIFF_REPLACE": 33
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (17140 tracked project files inspected)"
+  }
+}
