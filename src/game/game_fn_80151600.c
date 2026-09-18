@@ -1,4 +1,7 @@
-/* NonMatching: independent honest-C reconstruction from retail control flow. */
+/* NonMatching: independent behavior-complete reconstruction from retail control
+ * flow. GC/1.3 emits a 0x70-byte frame and saves r22-r31, while retail uses a
+ * 0xC0-byte frame and saves r21-r31; local lifetime and register-allocation
+ * differences then persist through the iterator/reaction path. */
 #include "src/game/game_targeting_types.h"
 
 #define fn_80201B54(...) ((void *)fn_80201B54(__VA_ARGS__))
