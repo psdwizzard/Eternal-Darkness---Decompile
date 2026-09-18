@@ -1,14 +1,5 @@
 typedef short s16;
 
-/*
- * NonMatching: the recovered state layout and call semantics are honest, but
- * The const-qualified inputs recover retail scheduling and all integer code.
- * MWCC still assigns the two float values to the opposite registers. Current
- * objdiff: 99.21875%, 128 bytes on both sides.
- * Reversing local creation order, a comma expression, register-qualified
- * locals, and scalar-wrapper aggregates all canonicalize to this same output.
- */
-
 typedef struct State {
     float x;
     float y;
@@ -45,8 +36,7 @@ void fn_800719D8(void)
     State *state = &lbl_80312FD8;
 
     state->x = lbl_8064E850;
-    state->y = lbl_8064E7E8;
-    state->z = lbl_8064E7E8;
+    state->z = state->y = lbl_8064E7E8;
     state->a = 200;
     state->b = 250;
     state->c = 1;

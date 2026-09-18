@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "assignment_id": "fc82a94c-0ddc-4fbc-9bb3-6d1775956874",
+  "target": "fn_800719D8",
+  "hypothesis": "Expressing the duplicated lbl_8064E7E8 stores as the chained assignment state->z = state->y = lbl_8064E7E8 changes MWCC's expression DAG and float live-range coloring while preserving retail's y-then-z store order. This differs from the previously tested local-order, comma-expression, register-qualified, aggregate, wrapper, reversed-store, and array variants.",
+  "compiler": {
+    "identity": "GC/1.3",
+    "command": ".tools/bin/ninja -t commands build/GEDE01/src/game/game_fn_800719D8.o",
+    "exit_code": 0,
+    "raw_output": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800719D8.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800719D8.d build/GEDE01/src/game/game_fn_800719D8.d\n"
+  },
+  "objdiff": {
+    "canonical": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800719D8 fn_800719D8 -o reports/GEDE01/objdiff-canonical-fc82a94c-0ddc-4fbc-9bb3-6d1775956874.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": " INFO Writing to reports/GEDE01/objdiff-canonical-fc82a94c-0ddc-4fbc-9bb3-6d1775956874.json\n",
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-fc82a94c-0ddc-4fbc-9bb3-6d1775956874.json",
+      "sha256": "4df1808bcbf174eccfd0879a6bff1cd6d3e3cc7381f96650d44754d6b6a45e40",
+      "left": {"size": "128", "match_percent": 100.0, "instruction_rows": 32},
+      "right": {"size": "128", "match_percent": 100.0, "instruction_rows": 32}
+    },
+    "relocation_strict": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800719D8 fn_800719D8 -o reports/GEDE01/objdiff-reloc-strict-fc82a94c-0ddc-4fbc-9bb3-6d1775956874.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": " INFO Writing to reports/GEDE01/objdiff-reloc-strict-fc82a94c-0ddc-4fbc-9bb3-6d1775956874.json\n",
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-reloc-strict-fc82a94c-0ddc-4fbc-9bb3-6d1775956874.json",
+      "sha256": "4df1808bcbf174eccfd0879a6bff1cd6d3e3cc7381f96650d44754d6b6a45e40",
+      "left": {"size": "128", "match_percent": 100.0, "instruction_rows": 32},
+      "right": {"size": "128", "match_percent": 100.0, "instruction_rows": 32}
+    }
+  },
+  "relocations": {
+    "equal": true,
+    "count_each": 7,
+    "resolved": [
+      {"offset": "0000000a", "type": "R_PPC_ADDR16_HA", "target": "lbl_80606328", "addend": 0},
+      {"offset": "0000000c", "type": "R_PPC_EMB_SDA21", "target": "lbl_8064E850", "addend": 0},
+      {"offset": "00000016", "type": "R_PPC_ADDR16_HA", "target": "lbl_80312FD8", "addend": 0},
+      {"offset": "0000001a", "type": "R_PPC_ADDR16_LO", "target": "lbl_80606328", "addend": 0},
+      {"offset": "0000001c", "type": "R_PPC_EMB_SDA21", "target": "lbl_8064E7E8", "addend": 0},
+      {"offset": "00000022", "type": "R_PPC_ADDR16_LO", "target": "lbl_80312FD8", "addend": 0},
+      {"offset": "0000006c", "type": "R_PPC_REL24", "target": "fn_8015AA58", "addend": 0}
+    ],
+    "raw_output": "retail: 0000000a R_PPC_ADDR16_HA lbl_80606328 + 0; 0000000c R_PPC_EMB_SDA21 lbl_8064E850 + 0; 00000016 R_PPC_ADDR16_HA lbl_80312FD8 + 0; 0000001a R_PPC_ADDR16_LO lbl_80606328 + 0; 0000001c R_PPC_EMB_SDA21 lbl_8064E7E8 + 0; 00000022 R_PPC_ADDR16_LO lbl_80312FD8 + 0; 0000006c R_PPC_REL24 fn_8015AA58 + 0\ngenerated: 0000000a R_PPC_ADDR16_HA lbl_80606328 + 0; 0000000c R_PPC_EMB_SDA21 lbl_8064E850 + 0; 00000016 R_PPC_ADDR16_HA lbl_80312FD8 + 0; 0000001a R_PPC_ADDR16_LO lbl_80606328 + 0; 0000001c R_PPC_EMB_SDA21 lbl_8064E7E8 + 0; 00000022 R_PPC_ADDR16_LO lbl_80312FD8 + 0; 0000006c R_PPC_REL24 fn_8015AA58 + 0\n"
+  },
+  "verification": {
+    "configure": {"command": "python3 configure.py", "exit_code": 0, "raw_output": ""},
+    "build": {"command": ".tools/bin/ninja -j2", "exit_code": 0, "raw_output": "[876/879] DOL build/GEDE01/main.dol\n[877/879] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[878/879] PROGRESS\nGame Code: 91.39% fuzzy, 74.61% matched, 74.61% linked (6210 / 6633 files)\n"},
+    "dol_sha1": {"command": "sha1sum build/GEDE01/main.dol", "exit_code": 0, "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n", "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f", "equal": true},
+    "legal_audit": {"command": "python3 tools/legal_audit.py", "exit_code": 0, "raw_output": "legal audit passed (16693 tracked project files inspected)\n"}
+  },
+  "scope": "Changed only the assigned function source and its existing configure.py registration; the independent split was already present and unchanged. Pre-existing CLAUDE.md modification excluded."
+}
