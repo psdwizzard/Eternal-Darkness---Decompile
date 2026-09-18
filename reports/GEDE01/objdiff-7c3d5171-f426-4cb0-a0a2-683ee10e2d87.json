@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "assignment_id": "7c3d5171-f426-4cb0-a0a2-683ee10e2d87",
+  "target": "fn_8007D744",
+  "source": "eternal-darkness-decomp/src/game/game_fn_8007D744.c",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8007D744 fn_8007D744 -o build/GEDE01/objdiff-7c3d5171-f426-4cb0-a0a2-683ee10e2d87-canonical.raw.json --format json",
+    "raw_json": "eternal-darkness-decomp/reports/GEDE01/objdiff-7c3d5171-f426-4cb0-a0a2-683ee10e2d87-canonical.raw.json",
+    "raw_json_sha256": "9f3c34164809f2f4e41e3b9d80cbfbbb32a2e57229b1126da8ac410fa5ecb2b6",
+    "match_percent": 98.333336,
+    "retail_size": 240,
+    "generated_size": 236,
+    "retail_relocations": 9,
+    "generated_relocations": 9
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8007D744 fn_8007D744 -o build/GEDE01/objdiff-7c3d5171-f426-4cb0-a0a2-683ee10e2d87-reloc-strict.raw.json --format json -c function_reloc_diffs=name_address",
+    "raw_json": "eternal-darkness-decomp/reports/GEDE01/objdiff-7c3d5171-f426-4cb0-a0a2-683ee10e2d87-reloc-strict.raw.json",
+    "raw_json_sha256": "9f3c34164809f2f4e41e3b9d80cbfbbb32a2e57229b1126da8ac410fa5ecb2b6",
+    "match_percent": 98.333336,
+    "retail_size": 240,
+    "generated_size": 236,
+    "retail_relocations": 9,
+    "generated_relocations": 9,
+    "relocation_targets_and_addends": "All nine relocation types, resolved target names, and addends match under function_reloc_diffs=name_address; the raw JSON records the retail and generated relocation-bearing instructions."
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "result": "878/878 completed; build/GEDE01/main.dol: OK"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "built_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "cmp_exit": 0
+  },
+  "legal_audit": "Independent C translation unit only; no inline or whole-function assembly, shared reconstruction, fallback jump, private input, gate change, compiler-policy change, or neighboring-function edit.",
+  "divergence": "Retail has one additional unreachable instruction at function offset 0x28 (address 0x8007D76C): b 0x8007D824. Objdiff reports it as DIFF_DELETE. All other instructions align; generated size is 236 bytes versus 240 retail."
+}
