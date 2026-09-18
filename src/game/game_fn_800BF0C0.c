@@ -27,17 +27,18 @@ extern void fn_80157C98(void *, int, int);
 
 void *fn_800BF0C0(void *unused, void *event)
 {
-    void *event_object = event;
     void *state;
     void *world;
     int owner;
     int maximum;
     int current;
     void **holder;
+    void *event_object;
 
-    owner = fn_801A7498(event_object);
+    owner = fn_801A7498(event);
     world = fn_80201814(owner);
     holder = fn_80201B8C();
+    event_object = event;
     state = fn_801A7778(event_object);
     maximum = fn_80157994(state);
     current = fn_801A76B8(event_object) & 0xFF;
