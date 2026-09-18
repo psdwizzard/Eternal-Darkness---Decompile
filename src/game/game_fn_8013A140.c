@@ -27,6 +27,7 @@ void fn_8013A140(void* object)
 {
     if ((fn_8011FAEC(object) & 0x40) && lbl_8064B7EC != 0) {
         void* iterator = fn_80201B9C();
+        void* other;
         Vec3* facing;
         int group;
         float radius;
@@ -35,7 +36,7 @@ void fn_8013A140(void* object)
         radius = fn_8011F6F0(object);
 
         while (iterator != 0) {
-            void* other = fn_80201BC8(iterator);
+            other = fn_80201BC8(iterator);
             if (other != 0 && object != other && fn_8011FB4C(other) == group &&
                 (fn_8011FAEC(other) & 0x80)) {
                 Plane contact;
@@ -56,15 +57,15 @@ void fn_8013A140(void* object)
                     fn_80211A6C(&position, &up, fn_8011F130(other));
                 } else {
                     Vec3 position;
+                    Vec3 normal;
+                    Vec3 up;
+                    Vec3 adjusted;
                     Vec3 original;
                     fn_8011F114(&original, other);
                     position = original;
                     fn_8011F104(position.x, position.y,
                                 position.z - lbl_806502C0, other);
                     if (fn_80137658(radius, object, facing, other, &contact)) {
-                        Vec3 normal;
-                        Vec3 up;
-                        Vec3 adjusted;
                         float distance;
                         float other_radius = fn_8011F6F0(other);
 
