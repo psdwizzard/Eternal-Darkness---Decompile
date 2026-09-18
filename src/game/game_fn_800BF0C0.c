@@ -33,19 +33,17 @@ void *fn_800BF0C0(void *unused, void *event)
     int maximum;
     int current;
     void **holder;
-    void *event_object;
 
     owner = fn_801A7498(event);
     world = fn_80201814(owner);
     holder = fn_80201B8C();
-    event_object = event;
-    state = fn_801A7778(event_object);
+    state = fn_801A7778(event);
     maximum = fn_80157994(state);
-    current = fn_801A76B8(event_object) & 0xFF;
+    current = fn_801A76B8(event) & 0xFF;
 
     if (current > maximum) {
         current = maximum;
-        fn_801A75B0(event_object, (u8)maximum);
+        fn_801A75B0(event, (u8)maximum);
     }
 
     if ((fn_8020216C(world) & 0x10000) == 0 && maximum != 0) {

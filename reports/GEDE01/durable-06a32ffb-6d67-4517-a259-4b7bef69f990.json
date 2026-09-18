@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "06a32ffb-6d67-4517-a259-4b7bef69f990",
+  "attempt": 5,
+  "base_commit": "bec33d17815399c5a73433ade1088b6fd75761a4",
+  "target": "fn_800BF0C0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-06a32ffb-6d67-4517-a259-4b7bef69f990.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff (-c function_reloc_diffs=name_address) are size-exact at 376/376 bytes and score 98.67021%. All 23 relocation-bearing instructions agree under the strict comparison. The distinct direct-formal-parameter hypothesis (removing the separate event_object local entirely) is coalesced unchanged by canonical GC/1.3: retail assigns event/current/maximum/owner/world to r30/r25/r26/r27/r28, while generated code assigns them to r25/r26/r27/r28/r30; state and holder agree in r29/r31. All 23 differing instructions are GPR-operand mismatches. A fresh python3 configure.py plus .tools/bin/ninja -j2 build succeeds, and build/GEDE01/main.dol has verified SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
