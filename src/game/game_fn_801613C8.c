@@ -12,12 +12,28 @@ typedef struct Object {
 
 void* fn_801613C8(Object* object, int ordinal, int key)
 {
+    int offset;
+    int count;
+    Entry* entry;
+    Entry* entries;
     int i;
 
-    for (i = 0; i < object->count; i++) {
-        Entry* entry = &object->entries[i];
-        if (key >= entry->minimum && key < entry->maximum && --ordinal == 0)
-            return (char*)object->entries[i].value + 0x14;
+    count = object->count;
+    i = 0;
+    offset = 0;
+
+    goto test;
+loop:
+    if (key < entry->maximum && --ordinal == 0)
+        return (char*)entries[i].value + 0x14;
+    offset += sizeof(Entry);
+    i++;
+test:
+    if (i < count) {
+        entries = object->entries;
+        entry = (Entry*)((char*)entries + offset);
+        if (entry->minimum <= key)
+            goto loop;
     }
     return 0;
 }
