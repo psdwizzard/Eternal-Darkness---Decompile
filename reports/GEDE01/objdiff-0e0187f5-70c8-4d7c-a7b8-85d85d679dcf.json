@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "assignment_id": "0e0187f5-70c8-4d7c-a7b8-85d85d679dcf",
+  "target": "fn_80124DBC",
+  "compiler_settings": {
+    "registration": "Object(NonMatching, \"game/game_fn_80124DBC.c\")",
+    "extra_cflags": [],
+    "canonical_settings_preserved": true
+  },
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80124DBC.c fn_80124DBC",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "canonical": {
+    "target_bytes": 840,
+    "candidate_bytes": 864,
+    "match_percent": 89.78571,
+    "matched": false,
+    "raw_summary": "target 840 bytes  base 864 bytes  match 89.78571"
+  },
+  "relocation_strict": {
+    "target_relocation_instructions": 35,
+    "candidate_relocation_instructions": 37,
+    "matched": false,
+    "reason": "The candidate is not byte-identical, has a different size, and has two additional R_PPC_REL24 relocations for _savegpr_27 and _restgpr_27; relocation offsets after the prologue also diverge."
+  },
+  "build": {
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "raw_check_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "built": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matched": true
+  },
+  "divergence": "With the pre-existing canonical settings, GC/1.3 emits addi/bl _savegpr_27 and addi/bl _restgpr_27 instead of retail stmw r27,0x8c(r1) and lmw r27,0x8c(r1), introducing two call relocations. The candidate is 24 bytes larger overall. It rotates table/first_count/second_count through r31/r30/r29 instead of retail r29/r31/r30 and scale/frame through f31/f30 instead of retail f30/f31. Four flag clears lower to constant materialization plus and rather than retail rlwinm, the frame-equality test has a shorter branch shape, and several slot-array accesses use indexed addressing instead of retail add-plus-displacement."
+}
