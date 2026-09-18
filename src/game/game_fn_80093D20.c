@@ -45,14 +45,15 @@ void fn_80093D20(register void* object, register void* source)
     register int id = fn_80201B54(object);
     register int room = fn_80201EB8(object);
     register u32 flags = fn_80036D5C(object);
+    register void* converted_resource;
 
     if ((flags & 0x80) != 0 || (flags & 0x8000) != 0) {
-        resource = fn_801294DC(resource, 0x92, 0x20, 10);
-        if (resource != 0) {
+        converted_resource = fn_801294DC(resource, 0x92, 0x20, 10);
+        if (converted_resource != 0) {
             int value = id << 8;
-            fn_801287C4(resource, fn_80204810, value | 0xA9, 0x14);
-            fn_80128C28(resource, fn_80204810, value | 0x77);
-            fn_80128C44(resource, fn_80204810, value | 0x77);
+            fn_801287C4(converted_resource, fn_80204810, value | 0xA9, 0x14);
+            fn_80128C28(converted_resource, fn_80204810, value | 0x77);
+            fn_80128C44(converted_resource, fn_80204810, value | 0x77);
             fn_80201D2C(object, 0x37);
             fn_80201D14(object, 1);
         }
@@ -64,8 +65,8 @@ void fn_80093D20(register void* object, register void* source)
         return;
     }
 
-    resource = fn_801294DC(resource, 0x18, 0x20, 10);
-    if (resource != 0) {
+    converted_resource = fn_801294DC(resource, 0x18, 0x20, 10);
+    if (converted_resource != 0) {
         if (runtime->kind == 10 || runtime->kind == 0x18) {
             int source_id = fn_80200C20(source);
             int current_id = fn_80201B44();
@@ -85,7 +86,7 @@ void fn_80093D20(register void* object, register void* source)
                 fn_801A7228(effect);
             }
         }
-        fn_80128C28(resource, fn_8003CB6C, id);
+        fn_80128C28(converted_resource, fn_8003CB6C, id);
         fn_800389E0(object, 0, 0, 1);
         fn_80201D2C(object, 8);
         fn_80201D14(object, 1);

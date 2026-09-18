@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "assignment_id": "721069b3-c362-46bc-bd8b-92259a0960f5",
+  "target": "fn_80093D20",
+  "retained_source": "src/game/game_fn_80093D20.c",
+  "hypothesis": "The conversion return value was originally represented by a distinct outer local rather than assigned back to the input resource local. This changes the GC/1.3 interference graph without changing behavior or instruction count.",
+  "experiments": [
+    {
+      "name": "preserved_baseline",
+      "source_delta": "No delta from base: both fn_801294DC calls assign back to resource and all later calls use resource.",
+      "command": "python3 tools/fndiff.py game/game_fn_80093D20.c fn_80093D20",
+      "raw_measurement": "target 588 bytes  base 588 bytes  match 98.91157; 31 DIFF_ARG_MISMATCH instructions",
+      "retained": false
+    },
+    {
+      "name": "block_local_converted_resource",
+      "source_delta": "Replace each resource = fn_801294DC(...) with a separate void* converted_resource declared inside that branch and use it for the null test and downstream calls.",
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_80093D20.o && python3 tools/fndiff.py game/game_fn_80093D20.c fn_80093D20",
+      "raw_measurement": "target 588 bytes  base 588 bytes  match 98.87755; 33 DIFF_ARG_MISMATCH instructions",
+      "retained": false
+    },
+    {
+      "name": "shared_outer_converted_resource",
+      "source_delta": "Declare register void* converted_resource after flags; assign both fn_801294DC returns to it and use it for each null test and downstream converted-resource call.",
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_80093D20.o && python3 tools/fndiff.py game/game_fn_80093D20.c fn_80093D20",
+      "raw_measurement": "target 588 bytes  base 588 bytes  match 99.11565; 26 DIFF_ARG_MISMATCH instructions; 38 relocation-bearing instructions per side and zero relocation-bearing diffs",
+      "retained": true
+    },
+    {
+      "name": "shared_outer_converted_resource_plus_inner_amount",
+      "source_delta": "Starting from shared_outer_converted_resource, move register short amount from function scope into the runtime-kind block immediately before source_id.",
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_80093D20.o && python3 tools/fndiff.py game/game_fn_80093D20.c fn_80093D20",
+      "raw_measurement": "target 588 bytes  base 588 bytes  match 98.809525; 35 DIFF_ARG_MISMATCH instructions",
+      "retained": false
+    }
+  ],
+  "verification": {
+    "configure_command": "python3 configure.py",
+    "build_command": ".tools/bin/ninja -j2",
+    "build_exit_code": 0,
+    "build_raw_tail": [
+      "[875/878] LINK build/GEDE01/main.elf",
+      "[876/878] DOL build/GEDE01/main.dol",
+      "[877/878] CHECK config/GEDE01/build.sha1",
+      "build/GEDE01/main.dol: OK",
+      "[878/878] PROGRESS"
+    ],
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "legal_audit_command": "python3 tools/legal_audit.py",
+    "legal_audit_raw": "legal audit passed (16567 tracked project files inspected)",
+    "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80093D20 fn_80093D20 -o reports/GEDE01/objdiff-721069b3-c362-46bc-bd8b-92259a0960f5-canonical.raw.json --format json-pretty",
+    "canonical_report": "reports/GEDE01/objdiff-721069b3-c362-46bc-bd8b-92259a0960f5-canonical.raw.json",
+    "canonical_sha1_raw": "e59ce10c6e882a516945ff1a24b026c5e0ef63f9  reports/GEDE01/objdiff-721069b3-c362-46bc-bd8b-92259a0960f5-canonical.raw.json",
+    "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80093D20 fn_80093D20 -o reports/GEDE01/objdiff-721069b3-c362-46bc-bd8b-92259a0960f5-relocation-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "relocation_strict_report": "reports/GEDE01/objdiff-721069b3-c362-46bc-bd8b-92259a0960f5-relocation-strict.raw.json",
+    "relocation_strict_sha1_raw": "e59ce10c6e882a516945ff1a24b026c5e0ef63f9  reports/GEDE01/objdiff-721069b3-c362-46bc-bd8b-92259a0960f5-relocation-strict.raw.json",
+    "objdiff_raw_summary": "canonical: left size 588 match 99.11565 relocations 38 diffs 26; right size 588 match 99.11565 relocations 38 diffs 26; relocation-strict: left size 588 match 99.11565 relocations 38 diffs 26; right size 588 match 99.11565 relocations 38 diffs 26",
+    "relocation_raw_summary": "left relocation-bearing 38 relocation-bearing-diffs 0; right relocation-bearing 38 relocation-bearing-diffs 0; canonical and relocation-strict reports are byte-identical",
+    "remaining_diff_kind_raw": "DIFF_ARG_MISMATCH=26; all other diff kinds=0"
+  },
+  "divergence": "Size-exact 99.11565% match. The remaining 26 differences are only GC/1.3 argument-register allocation mismatches. Retail/generated allocations remain runtime r27/r28, room-or-source-id r28/r29, signed amount r29/r26, and the second converted-resource/effect live range r26-or-r27/r27-or-r28. The first conversion branch now matches except for the value temporary at three uses. All 38 relocation-bearing instructions agree in strict mode, including names/addresses, types, targets, and addends."
+}
