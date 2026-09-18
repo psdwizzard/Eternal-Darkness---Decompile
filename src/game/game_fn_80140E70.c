@@ -30,7 +30,7 @@ extern void fn_80226AB4(int, int, u16);
 extern void fn_801409AC(float, float, float);
 extern void fn_801409A8(void);
 
-static void emit_point(const s16* points, u16 index, const DebugMesh* mesh)
+static inline void emit_point(const s16* points, u16 index, const DebugMesh* mesh)
 {
     const s16* p = points + index * 3;
     fn_801409AC(mesh->offset[0] + p[0],
@@ -42,19 +42,27 @@ static void emit_point(const s16* points, u16 index, const DebugMesh* mesh)
  * This intentionally remains portable honest C: the retail routine's five
  * saved FPRs and unrolled small-count accumulation are compiler codegen
  * details, not hand-written assembly. */
-void fn_80140E70(const s16* points, DebugMesh* mesh, u8 color, int unused, u8 alpha)
+void fn_80140E70(const s16* points, DebugMesh* mesh, u8 color, int part_color, u8 alpha)
 {
-    u32 rgba = lbl_802FC5BC[color];
+    u32 rgba;
     u16 i;
     u16 first;
     s8 part;
-    (void)unused;
+    float first_x;
+    float first_y;
+    float first_z;
+    const s16* first_point;
+    first = mesh->indices[mesh->count - 1];
+    rgba = lbl_802FC5BC[color];
+    first_point = points + first * 3;
+    first_x = mesh->offset[0] + first_point[0];
+    first_y = mesh->offset[1] + first_point[1];
+    first_z = mesh->offset[2] + first_point[2];
     ((u8*)&rgba)[3] = alpha;
     fn_801ECD74(&rgba);
 
-    first = mesh->indices[mesh->count - 1];
     fn_80226AB4(0xB0, 3, mesh->count + 1);
-    emit_point(points, first, mesh);
+    fn_801409AC(first_x, first_y, first_z);
     for (i = 0; i < mesh->count; i++)
         emit_point(points, mesh->indices[i], mesh);
     fn_801409A8();
@@ -74,20 +82,24 @@ void fn_80140E70(const s16* points, DebugMesh* mesh, u8 color, int unused, u8 al
 
     if (mesh->part_count == 0)
         return;
-    rgba = lbl_802FC5BC[color];
+    rgba = lbl_802FC5BC[(u8)part_color];
     ((u8*)&rgba)[3] = alpha;
     fn_801ECD74(&rgba);
     for (part = 0; part < mesh->part_count; part++) {
         DebugMeshPart* p = &mesh->parts[part];
         first = p->indices[p->count - 1];
+        first_point = points + first * 3;
+        first_x = mesh->offset[0] + first_point[0];
+        first_y = mesh->offset[1] + first_point[1];
+        first_z = mesh->offset[2] + first_point[2];
         fn_80226AB4(0xB0, 3, p->count + 1);
-        emit_point(points, first, mesh);
+        fn_801409AC(first_x, first_y, first_z);
         for (i = 0; i < p->count; i++)
             emit_point(points, p->indices[i], mesh);
         fn_801409A8();
     }
 
-    rgba = lbl_802FC5BC[color];
+    rgba = lbl_802FC5BC[(u8)part_color];
     ((u8*)&rgba)[3] = alpha;
     fn_801ECD74(&rgba);
     {
