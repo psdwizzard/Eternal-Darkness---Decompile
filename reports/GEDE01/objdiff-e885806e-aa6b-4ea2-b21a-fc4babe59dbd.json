@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "assignment_id": "e885806e-aa6b-4ea2-b21a-fc4babe59dbd",
+  "target": "fn_8017B4F4",
+  "result": "attempted",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017B4F4 -o build/GEDE01/fn_8017B4F4-canonical.json --format json-pretty",
+    "raw_stdout": "INFO Writing to build/GEDE01/fn_8017B4F4-canonical.json",
+    "retail_text_size": 708,
+    "generated_text_size": 708,
+    "function_match_percent": 99.77401,
+    "retail_data_size": 36,
+    "generated_data_size": 36,
+    "data_match_percent": 100.0
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017B4F4 -o build/GEDE01/fn_8017B4F4-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_stdout": "INFO Writing to build/GEDE01/fn_8017B4F4-reloc-strict.json",
+    "function_match_percent": 99.77401,
+    "instruction_relocations": {
+      "retail": 35,
+      "generated": 35
+    },
+    "jump_table_relocations": {
+      "retail": 9,
+      "generated": 9,
+      "retail_addends_decimal": [624, 64, 624, 624, 148, 456, 232, 344, 540],
+      "generated_addends_decimal": [624, 64, 624, 624, 148, 456, 232, 344, 540],
+      "target_difference": "The two .text references use retail jumptable_80250F44 versus generated compiler-local @28; all nine .data R_PPC_ADDR32 targets are fn_8017B4F4 and all addends match."
+    },
+    "conversion_constant_difference": "Eight R_PPC_EMB_SDA21 relocations use retail lbl_80650910 versus generated compiler-local @30.",
+    "other_instruction_relocations": "All remaining relocation types, targets, and addends agree after symbol-table-index normalization."
+  },
+  "raw_text_comparison": {
+    "commands": [
+      "build/binutils/powerpc-eabi-objcopy -O binary --only-section=.text build/GEDE01/obj/game/game_fn_8017B4F4.o build/GEDE01/fn_8017B4F4-retail.text",
+      "build/binutils/powerpc-eabi-objcopy -O binary --only-section=.text build/GEDE01/src/game/game_fn_8017B4F4.o build/GEDE01/fn_8017B4F4-generated.text",
+      "wc -c build/GEDE01/fn_8017B4F4-retail.text build/GEDE01/fn_8017B4F4-generated.text",
+      "cmp -l build/GEDE01/fn_8017B4F4-retail.text build/GEDE01/fn_8017B4F4-generated.text"
+    ],
+    "raw_stdout": " 708 build/GEDE01/fn_8017B4F4-retail.text\n 708 build/GEDE01/fn_8017B4F4-generated.text\n1416 total\nTEXT_CMP_EXIT=0",
+    "conclusion": "All 708 generated .text bytes equal retail; the strict failure is relocation identity, not opcode bytes."
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "raw_final_output": "[876/878] DOL build/GEDE01/main.dol\n[877/878] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[878/878] PROGRESS"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+    "verified": true
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_stdout": "legal audit passed (16947 tracked project files inspected)",
+    "passed": true
+  },
+  "registration": "Object(NonMatching, \"game/game_fn_8017B4F4.c\")",
+  "divergence": "Canonical GC/1.3 emits byte-identical .text and the exact nine-entry jump table, but independently owns the jump table as @28 and the compiler-generated signed-int conversion constant as @30. Retail expects external jumptable_80250F44 and lbl_80650910 relocation targets. No symbol rewriting, section stripping, custom build rule, or matching promotion is retained."
+}
