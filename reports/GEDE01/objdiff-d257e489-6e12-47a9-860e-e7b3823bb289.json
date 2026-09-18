@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "assignment_id": "d257e489-6e12-47a9-860e-e7b3823bb289",
+  "target": "fn_800D6A28",
+  "compiler": "GC/1.3",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "objdiff_relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800D6A28 -o - --format json-pretty -c function_reloc_diffs=name_address fn_800D6A28",
+    "dol_hash": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measurements": {
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_final_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "objdiff_match_percent": 59.0,
+    "retail_size": 20,
+    "generated_size": 12,
+    "retail_instructions": [
+      "cmpwi r3, 0x0",
+      "li r3, 0x1",
+      "beqlr",
+      "li r3, 0x1",
+      "blr"
+    ],
+    "generated_instructions": [
+      "cmpwi r3, 0x0",
+      "li r3, 0x1",
+      "blr"
+    ],
+    "retail_relocations": [],
+    "generated_relocations": [],
+    "objdiff_difference_kinds": [
+      "DIFF_OP_MISMATCH at retail offset 8: beqlr versus generated blr",
+      "DIFF_DELETE at retail offset 12: li r3, 0x1",
+      "DIFF_DELETE at retail offset 16: blr"
+    ]
+  },
+  "trials": [
+    {
+      "source_shape": "if (value == 0) return 1; return 1;",
+      "score": 59.0,
+      "generated_size": 12,
+      "generated_instructions": "cmpwi r3,0; li r3,1; blr",
+      "retained": true
+    },
+    {
+      "source_shape": "if (value == 0) return 1; return value != 0;",
+      "score": 27.0,
+      "generated_size": 32,
+      "generated_instructions": "cmpwi r3,0; bne; li r3,1; blr; neg r0,r3; or r0,r0,r3; srwi r3,r0,31; blr",
+      "retained": false
+    }
+  ],
+  "conclusion": "The retained independent C translation unit honestly reconstructs the observed always-one return behavior. Canonical GC/1.3 merges the two equal-result exits, producing 12 bytes instead of retail's 20 bytes. Strict comparison finds zero relocations on both sides, so the sole remaining divergence is code instruction layout."
+}
