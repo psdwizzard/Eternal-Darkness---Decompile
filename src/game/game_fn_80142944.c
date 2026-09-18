@@ -10,9 +10,14 @@ extern void* memset(void*, int, unsigned int);
 
 void fn_80142944(void)
 {
-    Pools* pools = &lbl_805B1310;
-    memset(pools->slots, 0, 0xF0);
-    memset(pools->work, 0, 0x24C0);
-    memset(pools->quads, 0, 0x7E0);
+    u8* pools = (u8*)&lbl_805B1310;
+    /* NonMatching: the running pointer recovers retail's r31 allocation and
+     * all three pool offsets. GC/1.3 emits mr r3,r31 for the first call where
+     * retail uses the equivalent addi r3,r31,0. */
+    memset(pools, 0, 0xF0);
+    pools += 0xF0;
+    memset(pools, 0, 0x24C0);
+    pools += 0x24C0;
+    memset(pools, 0, 0x7E0);
     lbl_8064D038 = 0;
 }
