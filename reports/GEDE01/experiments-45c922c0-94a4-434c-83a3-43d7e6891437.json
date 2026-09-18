@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "assignment_id": "45c922c0-94a4-434c-83a3-43d7e6891437",
+  "target": "fn_80175BB8",
+  "reviewed_commits": [
+    "82d343158d3e2523832e8351186a598cbd571948",
+    "65ae3b0c8464d2f37af928060f003030f79eb549",
+    "2d153208b14425525e5b180cfab922bf747bcac2",
+    "813ead3115f3e41491855b30c9107459b0e32134",
+    "4f01863badefb44f8aac88164bd24906b0aa7bfa"
+  ],
+  "prior_attempt_findings": "Accepted base already has the best declaration-order reconstruction. Earlier attempts tested local ordering, scalar-address/sdata override, lifetime pragma, direct repeated array expressions, strings + 0, and register qualifier. No compiler setting or pragma experiment was repeated. The prior rejected reports lacked raw per-variant commands and explicit strict invocation.",
+  "hypothesis": "Replace char-pointer local with pointer-to-character-array and dereference at uses. Array-to-pointer conversion may preserve address formation instead of folding to mr and may alter the address temporary lifetime. This changes source types only, preserving actual string addresses and canonical GC/1.3 options.",
+  "result": "Codegen-neutral. Both variants measure 98.391815 percent on canonical and function_reloc_diffs=name_address comparison. Accepted source restored unchanged; existing NonMatching registration retained.",
+  "strict_policy": "Every strict command explicitly passes -c function_reloc_diffs=name_address. Raw output retains instruction relocations and comparison mismatches. No claim of a match or successful relocation equality.",
+  "measurements": [
+    {
+      "variant": "baseline",
+      "basis": "canonical",
+      "raw_evidence": "eternal-darkness-decomp/reports/GEDE01/objdiff-45c922c0-94a4-434c-83a3-43d7e6891437-baseline-canonical.json",
+      "score": 98.391815,
+      "target_size": "684",
+      "generated_size": "688"
+    },
+    {
+      "variant": "baseline",
+      "basis": "strict",
+      "raw_evidence": "eternal-darkness-decomp/reports/GEDE01/objdiff-45c922c0-94a4-434c-83a3-43d7e6891437-baseline-strict.json",
+      "score": 98.391815,
+      "target_size": "684",
+      "generated_size": "688"
+    },
+    {
+      "variant": "array_pointer",
+      "basis": "canonical",
+      "raw_evidence": "eternal-darkness-decomp/reports/GEDE01/objdiff-45c922c0-94a4-434c-83a3-43d7e6891437-array_pointer-canonical.json",
+      "score": 98.391815,
+      "target_size": "684",
+      "generated_size": "688"
+    },
+    {
+      "variant": "array_pointer",
+      "basis": "strict",
+      "raw_evidence": "eternal-darkness-decomp/reports/GEDE01/objdiff-45c922c0-94a4-434c-83a3-43d7e6891437-array_pointer-strict.json",
+      "score": 98.391815,
+      "target_size": "684",
+      "generated_size": "688"
+    }
+  ]
+}

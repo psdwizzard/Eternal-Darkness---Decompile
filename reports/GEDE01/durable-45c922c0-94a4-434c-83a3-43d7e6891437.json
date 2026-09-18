@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "assignment_id": "45c922c0-94a4-434c-83a3-43d7e6891437",
+  "attempt": 6,
+  "base_commit": "88b287d89c67f9ac4119cdaacb8ea5a6981264f1",
+  "target": "fn_80175BB8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-45c922c0-94a4-434c-83a3-43d7e6891437.json",
+    "eternal-darkness-decomp/reports/GEDE01/commands-45c922c0-94a4-434c-83a3-43d7e6891437.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-45c922c0-94a4-434c-83a3-43d7e6891437.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-45c922c0-94a4-434c-83a3-43d7e6891437-array_pointer-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-45c922c0-94a4-434c-83a3-43d7e6891437-array_pointer-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-45c922c0-94a4-434c-83a3-43d7e6891437-baseline-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-45c922c0-94a4-434c-83a3-43d7e6891437-baseline-strict.json"
+  ],
+  "divergence": "Canonical GC/1.3 and explicit relocation-strict function_reloc_diffs=name_address scores remain 98.391815%. The distinct pointer-to-character-array source hypothesis is codegen-neutral; accepted NonMatching source retained unchanged. Retail is 684 bytes/171 instructions; generated is 688 bytes/172 instructions. Generated +0x10 addi r0,r4,lbl_8024FF00@l and +0x20 mr r30,r0 replace retail +0x1c addi r30,r4,lbl_8024FF00@l. Generated +0x48 mr r4,r30 differs from retail +0x44 addi r4,r30,0; downstream offsets shift by four bytes. Strict comparison also flags @22 versus jumptable_80250504 and @23/@24 versus lbl_806506A8/lbl_806506B0. No relocation equality or byte match claimed. Full configure/Ninja build passed; DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f verified."
+}
