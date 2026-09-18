@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "assignment_id": "bb424132-f0e0-4600-88a9-76c8f2823779",
+  "target": "fn_800D9064",
+  "unit": "main/game/game_fn_800D9064",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_800D9064.externalized",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800D9064 fn_800D9064 -o build/GEDE01/fndiff_fn_800D9064.json --format json",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "canonical_objdiff": {
+    "objdiff_version": "3.6.1",
+    "retail_size": 328,
+    "generated_size": 328,
+    "match_percent": 99.32927,
+    "raw_summary": "target 328 bytes  base 328 bytes  match 99.32927",
+    "differing_instruction_offsets": [
+      "0x0100",
+      "0x0104",
+      "0x0108",
+      "0x010c",
+      "0x0114",
+      "0x011c",
+      "0x0120",
+      "0x0124"
+    ],
+    "raw_difference": [
+      "0x0100 retail: lis r6, fn_8014CA98@ha | generated: lis r5, fn_8014CA98@ha",
+      "0x0104 retail: addi r4, r4, lbl_803254C8@l | generated: addi r6, r4, lbl_803254C8@l",
+      "0x0108 retail: li r5, 0x0 | generated: li r4, 0x0",
+      "0x010c retail: addi r6, r6, fn_8014CA98@l | generated: addi r5, r5, fn_8014CA98@l",
+      "0x0114 retail: stw r3, 0x64(r4) | generated: stw r3, 0x64(r6)",
+      "0x011c retail: stw r6, 0x68(r4) | generated: stw r5, 0x68(r6)",
+      "0x0120 retail: stb r5, 0x37(r4) | generated: stb r4, 0x37(r6)",
+      "0x0124 retail: stb r0, 0x38(r4) | generated: stb r0, 0x38(r6)"
+    ]
+  },
+  "relocation_strict": {
+    "match_percent": 99.32927,
+    "retail_relocations": 20,
+    "generated_relocations": 20,
+    "equal_offset_type_target_addend": 20,
+    "unequal_offset_type_target_addend": 0,
+    "raw_relocations": [
+      "0x0008 R_PPC_ADDR16_HA lbl_803254C8 + 0",
+      "0x0018 R_PPC_ADDR16_LO lbl_803254C8 + 0",
+      "0x002c R_PPC_REL24 fn_8014CBC0 + 0",
+      "0x0044 R_PPC_REL24 fn_80149CC4 + 0",
+      "0x0048 R_PPC_ADDR16_HA lbl_803254C8 + 0",
+      "0x0050 R_PPC_ADDR16_LO lbl_803254C8 + 0",
+      "0x0074 R_PPC_REL24 fn_801D39E0 + 0",
+      "0x0084 R_PPC_ADDR16_HA lbl_803254C8 + 0",
+      "0x008c R_PPC_ADDR16_LO lbl_803254C8 + 0",
+      "0x0090 R_PPC_ADDR16_HA fn_801FDA7C + 0",
+      "0x009c R_PPC_ADDR16_LO fn_801FDA7C + 0",
+      "0x00a0 R_PPC_EMB_SDA21 lbl_8064F438 + 0",
+      "0x00b0 R_PPC_EMB_SDA21 lbl_8064F434 + 0",
+      "0x00c0 R_PPC_EMB_SDA21 lbl_8064F430 + 0",
+      "0x00f8 R_PPC_REL24 fn_80201B54 + 0",
+      "0x00fc R_PPC_ADDR16_HA lbl_803254C8 + 0",
+      "0x0100 R_PPC_ADDR16_HA fn_8014CA98 + 0",
+      "0x0104 R_PPC_ADDR16_LO lbl_803254C8 + 0",
+      "0x010c R_PPC_ADDR16_LO fn_8014CA98 + 0",
+      "0x0128 R_PPC_REL24 fn_801E8328 + 0"
+    ]
+  },
+  "build_verification": {
+    "configure_exit": 0,
+    "target_externalized_build_exit": 0,
+    "full_ninja_exit": 1,
+    "full_ninja_note": "The required .tools/bin/ninja -j2 was run twice; it stopped in pre-existing unrelated units game_fn_8019E8C8, game_fn_801B5228, and game_fn_801B4FB4. The assigned externalized object builds successfully.",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_matches": true,
+    "raw_sha1sum": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  }
+}

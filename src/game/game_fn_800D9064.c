@@ -36,7 +36,7 @@ extern void fn_8014CA98(void);
 extern void fn_8014CBC0(Descriptor *);
 extern void fn_80149CC4(void *, Vec3 *, void *, void *, int);
 extern int fn_801D39E0(int);
-extern int fn_80201B54();
+extern void *fn_80201B54(void *);
 extern int fn_801E8328();
 
 void fn_800D9064(void *object, void *arg1, void *arg2)
@@ -55,8 +55,8 @@ void fn_800D9064(void *object, void *arg1, void *arg2)
     lbl_803254C8.field32 = 50;
     lbl_803254C8.update = fn_801FDA7C;
     lbl_803254C8.field2C = 100;
-    lbl_803254C8.scaled_limit = (u16)(lbl_8064F430 + (float)limit / lbl_8064F434);
-    lbl_803254C8.owner = ((void *)fn_80201B54(object));
+    lbl_803254C8.scaled_limit = (u16)(lbl_8064F430 + (float)lbl_803254C8.limit / lbl_8064F434);
+    lbl_803254C8.owner = fn_80201B54(object);
     lbl_803254C8.callback = fn_8014CA98;
     lbl_803254C8.enabled = 0;
     lbl_803254C8.mode = 4;
