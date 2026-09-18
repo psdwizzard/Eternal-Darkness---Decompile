@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c1023bb9-92f9-4e01-8283-28cd900afb90",
+  "attempt": 1,
+  "base_commit": "1b7b51a48b3c5a77d981b2c07d5516c5b8a13e03",
+  "target": "fn_800719D8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c1023bb9-92f9-4e01-8283-28cd900afb90.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.21875% with equal 128-byte functions. Retail uses f1 for lbl_8064E850 and f0 for lbl_8064E7E8, while generated code uses f0 and f1 respectively; this changes the two lfs instructions at offsets 0x0C and 0x1C and the three stfs/stfsu instructions at 0x20, 0x3C, and 0x40. All remaining instructions and all eight relocation offsets, types, targets, and addends agree. The full build passed and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

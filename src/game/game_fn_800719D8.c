@@ -2,8 +2,9 @@ typedef short s16;
 
 /*
  * NonMatching: the recovered state layout and call semantics are honest, but
- * MWCC keeps the integer literals in r5-r8 and schedules the two float loads
- * differently in retail. Current objdiff: 57.96875%, 128 target / 144 base.
+ * The const-qualified inputs recover retail scheduling and all integer code.
+ * MWCC still assigns the two float values to the opposite registers. Current
+ * objdiff: 99.21875%, 128 bytes on both sides.
  */
 
 typedef struct State {
@@ -31,11 +32,11 @@ typedef struct Global {
     Owner *owner;
 } Global;
 
-extern float lbl_8064E850;
-extern float lbl_8064E7E8;
+extern const float lbl_8064E850;
+extern const float lbl_8064E7E8;
 extern State lbl_80312FD8;
 extern Global lbl_80606328;
-extern void fn_8015AA58(State *, Owner *, int, int, int, int);
+extern void fn_8015AA58(State *);
 
 void fn_800719D8(void)
 {
@@ -53,6 +54,5 @@ void fn_800719D8(void)
     state->g = lbl_80606328.owner->value;
     state->h = 2;
     state->i = 1;
-    fn_8015AA58(state, lbl_80606328.owner, state->d, state->c, state->b,
-                state->a);
+    fn_8015AA58(state);
 }
