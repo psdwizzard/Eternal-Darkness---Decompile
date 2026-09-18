@@ -1,0 +1,132 @@
+0000                      stwu r1, -0x60(r1)                               | stwu r1, -0x60(r1)
+0004                      mflr r0                                          | mflr r0
+0008                      stw r0, 0x64(r1)                                 | stw r0, 0x64(r1)
+000c                      stfd f31, 0x50(r1)                               | stfd f31, 0x50(r1)
+0010                      psq_st f31, 0x58(r1), 0, qr0                     | psq_st f31, 0x58(r1), 0, qr0
+0014                      stmw r18, 0x18(r1)                               | stmw r18, 0x18(r1)
+0018                      lwz r0, lbl_8064D738@sda21                       | lwz r0, lbl_8064D738@sda21
+001c                      mr r22, r3                                       | mr r22, r3
+0020                      lis r3, lbl_80607120@ha                          | lis r3, lbl_80607120@ha
+0024                      lbz r31, 0x1(r22)                                | lbz r31, 0x1(r22)
+0028                      addi r3, r3, lbl_80607120@l                      | addi r3, r3, lbl_80607120@l
+002c                      cmpwi r0, 0x0                                    | cmpwi r0, 0x0
+0030                      lhz r4, 0x2(r3)                                  | lhz r4, 0x2(r3)
+0034                      lhz r30, 0xa(r3)                                 | lhz r30, 0xa(r3)
+0038                      lhz r29, 0xe(r3)                                 | lhz r29, 0xe(r3)
+003c                      lhz r28, 0xc(r3)                                 | lhz r28, 0xc(r3)
+0040 DIFF_ARG_MISMATCH    lwz r26, 0x50(r22)                               | lwz r27, 0x50(r22)
+0044 DIFF_ARG_MISMATCH    lwz r25, 0x54(r22)                               | lwz r26, 0x54(r22)
+0048 DIFF_ARG_MISMATCH    lwz r24, 0x58(r22)                               | lwz r25, 0x58(r22)
+004c                      beq 0x64                                         | beq 0x64
+0050                      mulli r0, r4, 0x6                                | mulli r0, r4, 0x6
+0054                      clrlslwi r3, r4, 16, 2                           | clrlslwi r3, r4, 16, 2
+0058 DIFF_ARG_MISMATCH    add r25, r25, r3                                 | add r26, r26, r3
+005c DIFF_ARG_MISMATCH    add r26, r26, r0                                 | add r27, r27, r0
+0060 DIFF_ARG_MISMATCH    add r24, r24, r3                                 | add r25, r25, r3
+0064                      lis r4, lbl_802FC5BC@ha                          | lis r4, lbl_802FC5BC@ha
+0068                      lis r3, fn_8018D020@ha                           | lis r3, fn_8018D020@ha
+006c DIFF_ARG_MISMATCH    lwz r27, 0x4c(r22)                               | lwz r24, 0x4c(r22)
+0070 DIFF_ARG_MISMATCH    mr r23, r24                                      | mr r23, r25
+0074                      lfs f31, lbl_80650D34@sda21                      | lfs f31, lbl_80650D34@sda21
+0078 DIFF_ARG_MISMATCH    addi r19, r4, lbl_802FC5BC@l                     | addi r20, r4, lbl_802FC5BC@l
+007c DIFF_ARG_MISMATCH    addi r20, r3, fn_8018D020@l                      | addi r21, r3, fn_8018D020@l
+0080                      li r18, 0x0                                      | li r18, 0x0
+0084 DIFF_ARG_MISMATCH    li r21, 0x0                                      | li r19, 0x0
+0088                      b 0xe4                                           | b 0xe4
+008c                      lfs f0, 0x90(r22)                                | lfs f0, 0x90(r22)
+0090 DIFF_ARG_MISMATCH    mr r3, r27                                       | mr r3, r24
+0094 DIFF_ARG_MISMATCH    mr r5, r20                                       | mr r5, r21
+0098 DIFF_ARG_MISMATCH    add r4, r26, r21                                 | add r4, r27, r19
+009c                      fmuls f0, f31, f0                                | fmuls f0, f31, f0
+00a0                      fctiwz f0, f0                                    | fctiwz f0, f0
+00a4                      stfd f0, 0x8(r1)                                 | stfd f0, 0x8(r1)
+00a8                      lwz r0, 0xc(r1)                                  | lwz r0, 0xc(r1)
+00ac DIFF_ARG_MISMATCH    stb r0, 0x21(r27)                                | stb r0, 0x21(r24)
+00b0                      bl fn_80188C1C                                   | bl fn_80188C1C
+00b4                      li r3, 0x0                                       | li r3, 0x0
+00b8                      b 0xcc                                           | b 0xcc
+00bc DIFF_ARG_MISMATCH    lwz r0, 0xc(r19)                                 | lwz r0, 0xc(r20)
+00c0                      addi r3, r3, 0x1                                 | addi r3, r3, 0x1
+00c4                      stw r0, 0x0(r23)                                 | stw r0, 0x0(r23)
+00c8                      addi r23, r23, 0x4                               | addi r23, r23, 0x4
+00cc DIFF_ARG_MISMATCH    lbz r0, 0x20(r27)                                | lbz r0, 0x20(r24)
+00d0                      cmpw r3, r0                                      | cmpw r3, r0
+00d4                      blt 0xbc                                         | blt 0xbc
+00d8 DIFF_ARG_MISMATCH    addi r27, r27, 0x38                              | addi r24, r24, 0x38
+00dc DIFF_ARG_MISMATCH    addi r21, r21, 0x18                              | addi r19, r19, 0x18
+00e0                      addi r18, r18, 0x1                               | addi r18, r18, 0x1
+00e4                      cmpw r18, r31                                    | cmpw r18, r31
+00e8                      blt 0x8c                                         | blt 0x8c
+00ec DIFF_ARG_MISMATCH    mr r3, r26                                       | mr r3, r27
+00f0                      mr r4, r30                                       | mr r4, r30
+00f4                      bl DCFlushRange                                  | bl DCFlushRange
+00f8 DIFF_ARG_MISMATCH    mr r3, r25                                       | mr r3, r26
+00fc                      mr r4, r29                                       | mr r4, r29
+0100                      bl DCFlushRange                                  | bl DCFlushRange
+0104 DIFF_ARG_MISMATCH    mr r3, r24                                       | mr r3, r25
+0108                      mr r4, r28                                       | mr r4, r28
+010c                      bl DCFlushRange                                  | bl DCFlushRange
+0110                      li r3, 0x0                                       | li r3, 0x0
+0114                      bl fn_801ED57C                                   | bl fn_801ED57C
+0118                      mr r0, r3                                        | mr r0, r3
+011c                      li r3, 0x3                                       | li r3, 0x3
+0120                      mr r18, r0                                       | mr r18, r0
+0124                      bl fn_801ECF50                                   | bl fn_801ECF50
+0128                      lha r5, 0xe(r22)                                 | lha r5, 0xe(r22)
+012c                      mr r3, r22                                       | mr r3, r22
+0130                      addi r4, r22, 0x5c                               | addi r4, r22, 0x5c
+0134                      bl fn_8018D0D0                                   | bl fn_8018D0D0
+0138                      bl fn_801EF384                                   | bl fn_801EF384
+013c                      cmpwi r3, 0x0                                    | cmpwi r3, 0x0
+0140                      beq 0x188                                        | beq 0x188
+0144                      li r3, 0x3                                       | li r3, 0x3
+0148                      li r4, 0x0                                       | li r4, 0x0
+014c                      li r5, 0x0                                       | li r5, 0x0
+0150                      li r6, 0x0                                       | li r6, 0x0
+0154                      li r7, 0x3                                       | li r7, 0x3
+0158                      bl fn_801ED494                                   | bl fn_801ED494
+015c                      li r3, 0x0                                       | li r3, 0x0
+0160                      li r4, 0x0                                       | li r4, 0x0
+0164                      li r5, 0x1                                       | li r5, 0x1
+0168                      li r6, 0x2                                       | li r6, 0x2
+016c                      li r7, 0x1                                       | li r7, 0x1
+0170                      li r8, 0x0                                       | li r8, 0x0
+0174                      bl fn_80229C0C                                   | bl fn_80229C0C
+0178                      li r3, 0x0                                       | li r3, 0x0
+017c                      li r4, 0x3                                       | li r4, 0x3
+0180                      li r5, 0x3                                       | li r5, 0x3
+0184                      bl fn_801ED510                                   | bl fn_801ED510
+0188 DIFF_ARG_MISMATCH    mr r3, r26                                       | mr r3, r27
+018c DIFF_ARG_MISMATCH    mr r4, r25                                       | mr r4, r26
+0190 DIFF_ARG_MISMATCH    mr r5, r24                                       | mr r5, r25
+0194                      bl fn_8018865C                                   | bl fn_8018865C
+0198                      bl fn_801EF384                                   | bl fn_801EF384
+019c                      cmpwi r3, 0x0                                    | cmpwi r3, 0x0
+01a0                      beq 0x1ec                                        | beq 0x1ec
+01a4                      li r3, 0x0                                       | li r3, 0x0
+01a8                      li r4, 0x0                                       | li r4, 0x0
+01ac                      li r5, 0x0                                       | li r5, 0x0
+01b0                      li r6, 0x0                                       | li r6, 0x0
+01b4                      li r7, 0x1                                       | li r7, 0x1
+01b8                      li r8, 0x0                                       | li r8, 0x0
+01bc                      bl fn_80229C0C                                   | bl fn_80229C0C
+01c0                      li r3, 0x0                                       | li r3, 0x0
+01c4                      li r4, 0x0                                       | li r4, 0x0
+01c8                      li r5, 0x0                                       | li r5, 0x0
+01cc                      bl fn_801ED510                                   | bl fn_801ED510
+01d0                      li r3, 0x0                                       | li r3, 0x0
+01d4                      li r4, 0x0                                       | li r4, 0x0
+01d8                      li r5, 0x1                                       | li r5, 0x1
+01dc                      li r6, 0x2                                       | li r6, 0x2
+01e0                      li r7, 0x1                                       | li r7, 0x1
+01e4                      li r8, 0x0                                       | li r8, 0x0
+01e8                      bl fn_80229C0C                                   | bl fn_80229C0C
+01ec                      mr r3, r18                                       | mr r3, r18
+01f0                      bl fn_801ED57C                                   | bl fn_801ED57C
+01f4                      psq_l f31, 0x58(r1), 0, qr0                      | psq_l f31, 0x58(r1), 0, qr0
+01f8                      lfd f31, 0x50(r1)                                | lfd f31, 0x50(r1)
+01fc                      lmw r18, 0x18(r1)                                | lmw r18, 0x18(r1)
+0200                      lwz r0, 0x64(r1)                                 | lwz r0, 0x64(r1)
+0204                      mtlr r0                                          | mtlr r0
+0208                      addi r1, r1, 0x60                                | addi r1, r1, 0x60
+020c                      blr                                              | blr 

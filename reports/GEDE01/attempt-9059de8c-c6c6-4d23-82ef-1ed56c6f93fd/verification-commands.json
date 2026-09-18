@@ -1,0 +1,118 @@
+[
+  {
+    "argv": [
+      "python3",
+      "configure.py"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit": 0,
+    "raw_output": "reports/GEDE01/attempt-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd/final-configure.log"
+  },
+  {
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit": 0,
+    "raw_output": "reports/GEDE01/attempt-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd/final-build.log"
+  },
+  {
+    "argv": [
+      ".tools/bin/ninja",
+      "-t",
+      "commands",
+      "build/GEDE01/src/game/game_fn_801A36C0.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit": 0,
+    "raw_output": "reports/GEDE01/attempt-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd/canonical-compiler-command.log"
+  },
+  {
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_801A36C0",
+      "fn_801A36C0",
+      "--format",
+      "json-pretty",
+      "-o",
+      "reports/GEDE01/attempt-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd/final-canonical.json"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit": 0,
+    "raw_output": "reports/GEDE01/attempt-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd/final-canonical.log"
+  },
+  {
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_801A36C0",
+      "fn_801A36C0",
+      "--format",
+      "json-pretty",
+      "-o",
+      "reports/GEDE01/objdiff-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd.json",
+      "-c",
+      "function_reloc_diffs=name_address"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit": 0,
+    "raw_output": "reports/GEDE01/attempt-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd/final-strict.log"
+  },
+  {
+    "argv": [
+      "readelf",
+      "-Wr",
+      "build/GEDE01/obj/game/game_fn_801A36C0.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit": 0,
+    "raw_output": "reports/GEDE01/attempt-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd/retail-readelf.txt"
+  },
+  {
+    "argv": [
+      "readelf",
+      "-Wr",
+      "build/GEDE01/src/game/game_fn_801A36C0.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit": 0,
+    "raw_output": "reports/GEDE01/attempt-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd/generated-readelf.txt"
+  },
+  {
+    "argv": [
+      "diff",
+      "-u",
+      "reports/GEDE01/attempt-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd/retail-relocations.normalized.txt",
+      "reports/GEDE01/attempt-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd/generated-relocations.normalized.txt"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit": 0,
+    "raw_output": "reports/GEDE01/attempt-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd/relocations.diff"
+  },
+  {
+    "argv": [
+      "sha1sum",
+      "build/GEDE01/main.dol"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit": 0,
+    "raw_output": "reports/GEDE01/attempt-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd/dol-sha1.txt"
+  },
+  {
+    "argv": [
+      "python3",
+      "tools/legal_audit.py"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit": 0,
+    "raw_output": "reports/GEDE01/attempt-9059de8c-c6c6-4d23-82ef-1ed56c6f93fd/legal-audit.txt"
+  }
+]

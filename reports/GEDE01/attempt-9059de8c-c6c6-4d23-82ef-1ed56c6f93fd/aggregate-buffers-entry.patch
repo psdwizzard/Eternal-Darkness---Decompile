@@ -1,0 +1,81 @@
+--- a/src/game/game_fn_801A36C0.c
++++ b/src/game/game_fn_801A36C0.c
+@@ -21,17 +21,14 @@
+ 
+ void fn_801A36C0(u8* object)
+ {
++    struct { u8* vertex_data; u8* index_data; u8* color_data; u8* entries; } state;
+     u8 count;
+     u16 vertex_size;
+     u16 index_size;
+     u16 color_size;
+-    u8* vertex_data;
+-    u8* index_data;
+-    u8* color_data;
+     register u8* self;
+     int vertex_offset;
+     int i;
+-    u8* entries;
+     u8* color;
+     u16 offset;
+     int saved;
+@@ -42,34 +39,33 @@
+     vertex_size = *(u16*)(lbl_80607120 + 0xA);
+     index_size = *(u16*)(lbl_80607120 + 0xE);
+     color_size = *(u16*)(lbl_80607120 + 0xC);
+-    vertex_data = *(u8**)(self + 0x50);
+-    index_data = *(u8**)(self + 0x54);
+-    color_data = *(u8**)(self + 0x58);
++    state.vertex_data = *(u8**)(self + 0x50);
++    state.index_data = *(u8**)(self + 0x54);
++    state.color_data = *(u8**)(self + 0x58);
+ 
+     if (lbl_8064D738 != 0) {
+-        index_data += offset * 4;
+-        vertex_data += offset * 6;
+-        color_data += offset * 4;
++        state.index_data += offset * 4;
++        state.vertex_data += offset * 6;
++        state.color_data += offset * 4;
+     }
+ 
+-    entries = *(u8**)(self + 0x4C);
+-    color = color_data;
+-    vertex_offset = 0;
+-    for (i = 0; i < count; i++) {
++    state.entries = *(u8**)(self + 0x4C);
++    color = state.color_data;
++    for (i = 0, vertex_offset = 0; i < count; i++) {
+         int j;
+-        entries[0x21] = (u8)(lbl_80650D34 * *(float*)(self + 0x90));
+-        fn_80188C1C(entries, vertex_data + vertex_offset, fn_8018D020);
+-        for (j = 0; j < entries[0x20]; j++) {
++        state.entries[0x21] = (u8)(lbl_80650D34 * *(float*)(self + 0x90));
++        fn_80188C1C(state.entries, state.vertex_data + vertex_offset, fn_8018D020);
++        for (j = 0; j < state.entries[0x20]; j++) {
+             *(unsigned long*)color = *(unsigned long*)(lbl_802FC5BC + 0xC);
+             color += 4;
+         }
+-        entries += 0x38;
++        state.entries += 0x38;
+         vertex_offset += 0x18;
+     }
+ 
+-    DCFlushRange(vertex_data, vertex_size);
+-    DCFlushRange(index_data, index_size);
+-    DCFlushRange(color_data, color_size);
++    DCFlushRange(state.vertex_data, vertex_size);
++    DCFlushRange(state.index_data, index_size);
++    DCFlushRange(state.color_data, color_size);
+     saved = fn_801ED57C(0);
+     fn_801ECF50(3);
+     fn_8018D0D0(self, self + 0x5C, *(s16*)(self + 0xE));
+@@ -78,7 +74,7 @@
+         fn_80229C0C(0, 0, 1, 2, 1, 0);
+         fn_801ED510(0, 3, 3);
+     }
+-    fn_8018865C(vertex_data, index_data, color_data);
++    fn_8018865C(state.vertex_data, state.index_data, state.color_data);
+     if (fn_801EF384() != 0) {
+         fn_80229C0C(0, 0, 0, 0, 1, 0);
+         fn_801ED510(0, 0, 0);
