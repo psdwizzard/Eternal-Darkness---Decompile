@@ -1,0 +1,177 @@
+{
+  "version": 1,
+  "assignment_id": "2b641f5c-55e8-47f6-8a73-b1b3757163c0",
+  "attempt": 6,
+  "target": "fn_80093D20",
+  "base_commit": "0433a0513c00e533d6912ea87bf6daca38e39555",
+  "retained_source": "eternal-darkness-decomp/src/game/game_fn_80093D20.c",
+  "prior_attempts_reviewed": [
+    "0a26c1997a52bc0b24f9e0464b1b06c29bd6043b",
+    "cd1f21446307b21363d6d7067d18de5be8fafaae",
+    "482c503ce4dd84c2a4c40c059eef2e28d87b64c5",
+    "6a12848784b02cc90a071cbbcb1556aa4b767b29",
+    "2a0fdc2a3a81ec1a18b5394ccf60b7a33046646d"
+  ],
+  "hypothesis": "Equivalent control-flow forms can change GC/1.3 virtual-register allocation even when optimization ultimately produces the same instruction count and branch layout. Test guard clauses/shared cleanup and then the amount-selection diamond, rather than moving declarations or changing resource ownership as in preserved attempts.",
+  "successful_change": "Replace amount = -0x23; if (runtime->kind == 10) amount = 0x32; with if (runtime->kind == 10) amount = 0x32; else amount = -0x23;. Retain the existing short type, scope, prototypes, resource locals and canonical compiler flags.",
+  "codegen_finding": "The explicit two-arm assignment produces exactly the retail register operands at all 26 formerly differing instructions. The resulting bytes support a different register-allocation result; the internal compiler IR mechanism is an inference, not instrumented evidence. Equivalent guard clauses emitted the baseline bytes, while conditional-expression forms added an instruction and regressed.",
+  "prototype_probe": "The narrow prototype probe was motivated by the local fn_801A7518 reconstruction storing a signed short. It was not retained: a short argument removed the required extsh, while int amount plus a short prototype only tied baseline.",
+  "experiment_results": [
+    {
+      "name": "baseline",
+      "score": 99.11565,
+      "size": "588",
+      "differences": 26,
+      "build_exit_code": 0,
+      "retained": false
+    },
+    {
+      "name": "null_guard",
+      "score": 99.11565,
+      "size": "588",
+      "differences": 26,
+      "build_exit_code": 0,
+      "retained": false
+    },
+    {
+      "name": "shared_cleanup",
+      "score": 99.11565,
+      "size": "588",
+      "differences": 26,
+      "build_exit_code": 0,
+      "retained": false
+    },
+    {
+      "name": "guards_combined",
+      "score": 99.11565,
+      "size": "588",
+      "differences": 26,
+      "build_exit_code": 0,
+      "retained": false
+    },
+    {
+      "name": "else_ladder",
+      "score": 99.11565,
+      "size": "588",
+      "differences": 26,
+      "build_exit_code": 0,
+      "retained": false
+    },
+    {
+      "name": "short_prototype",
+      "score": 98.74149,
+      "size": "588",
+      "differences": 26,
+      "build_exit_code": 0,
+      "retained": false
+    },
+    {
+      "name": "short_prototype_int_amount",
+      "score": 99.11565,
+      "size": "588",
+      "differences": 26,
+      "build_exit_code": 0,
+      "retained": false
+    },
+    {
+      "name": "short_prototype_unhinted_amount",
+      "score": 98.74149,
+      "size": "588",
+      "differences": 26,
+      "build_exit_code": 0,
+      "retained": false
+    },
+    {
+      "name": "unhinted_locals",
+      "score": 99.11565,
+      "size": "588",
+      "differences": 26,
+      "build_exit_code": 0,
+      "retained": false
+    },
+    {
+      "name": "explicit_event_id",
+      "score": 99.11565,
+      "size": "588",
+      "differences": 26,
+      "build_exit_code": 0,
+      "retained": false
+    },
+    {
+      "name": "context_id_coalescing",
+      "score": null,
+      "size": null,
+      "differences": null,
+      "build_exit_code": 2,
+      "retained": false
+    },
+    {
+      "name": "conditional_amount",
+      "score": 65.61224,
+      "size": "592",
+      "differences": 77,
+      "build_exit_code": 0,
+      "retained": false
+    },
+    {
+      "name": "conditional_amount_inverted",
+      "score": 65.56463,
+      "size": "592",
+      "differences": 78,
+      "build_exit_code": 0,
+      "retained": false
+    },
+    {
+      "name": "two_branch_amount",
+      "score": 100.0,
+      "size": "588",
+      "differences": 0,
+      "build_exit_code": 0,
+      "retained": true
+    }
+  ],
+  "experiment_failure": "context_id_coalescing did not compile because the compiler rejects a declaration after a statement in that block. The raw diagnostic and exact patch are retained; no score is claimed and the variant was discarded.",
+  "reproduction": "Run the three assignment experiment scripts in order: experiment, prototype-experiment, coalescing-experiment, from eternal-darkness-decomp. They reconstruct variants from the fixed base commit and restore the source present at invocation. Each exact tested patch and compiler/diff stdout is in experiments JSON; complete objdiff measurements are separate raw reports. Then run verify script to rebuild the restored retained source and perform the final gates. The verification JSON additionally records compiler SHA-1 and ninja -t commands.",
+  "verification": {
+    "canonical_percent": 100.0,
+    "relocation_strict_percent": 100.0,
+    "target_size": 588,
+    "candidate_size": 588,
+    "different_instructions": 0,
+    "text_bytes_equal": true,
+    "relocation_count": 38,
+    "relocation_offsets_types_target_names_values_sections_addends_equal": true,
+    "compiler": "GC/1.3/mwcceppc.exe",
+    "compiler_sha1": "b18d7887262e6b591c146c9dc4f58a4be7c0e939",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "legal_audit_exit_code": 0
+  },
+  "scope": "Only target source, its Matching registration and assignment-specific reports changed. No compiler flags, neighboring source, splits, global progress, shared inputs or runtime code changed. Pre-existing CLAUDE.md modification excluded from commit.",
+  "artifacts": [
+    "eternal-darkness-decomp/reports/GEDE01/coalescing-experiment-2b641f5c-55e8-47f6-8a73-b1b3757163c0.py",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-2b641f5c-55e8-47f6-8a73-b1b3757163c0.py",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-2b641f5c-55e8-47f6-8a73-b1b3757163c0.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-baseline.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-canonical.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-conditional_amount.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-conditional_amount_inverted.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-else_ladder.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-explicit_event_id.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-guards_combined.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-null_guard.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-relocation-strict.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-shared_cleanup.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-short_prototype.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-short_prototype_int_amount.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-short_prototype_unhinted_amount.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-two_branch_amount.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-unhinted_locals.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/prototype-experiment-2b641f5c-55e8-47f6-8a73-b1b3757163c0.py",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-2b641f5c-55e8-47f6-8a73-b1b3757163c0.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-2b641f5c-55e8-47f6-8a73-b1b3757163c0.json",
+    "eternal-darkness-decomp/reports/GEDE01/verify-2b641f5c-55e8-47f6-8a73-b1b3757163c0.py"
+  ],
+  "divergence": ""
+}

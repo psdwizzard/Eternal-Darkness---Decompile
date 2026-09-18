@@ -70,9 +70,10 @@ void fn_80093D20(register void* object, register void* source)
         if (runtime->kind == 10 || runtime->kind == 0x18) {
             int source_id = fn_80200C20(source);
             int current_id = fn_80201B44();
-            amount = -0x23;
             if (runtime->kind == 10) {
                 amount = 0x32;
+            } else {
+                amount = -0x23;
             }
             if (source_id == current_id && runtime->state != 0 &&
                 ((*runtime->state & 0x00020000) == 0)) {

@@ -1,0 +1,417 @@
+[
+  {
+    "name": "baseline",
+    "source_patch_from_base": "",
+    "source_sha256": "7e4f0cd80e9cf71975ff27190556cc117c79f0b44426c10768d1aa923d4dea86",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\n",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80093D20",
+      "fn_80093D20",
+      "-o",
+      "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-baseline.raw.json",
+      "--format",
+      "json"
+    ],
+    "diff_exit_code": 0,
+    "diff_raw": " INFO Writing to reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-baseline.raw.json\n",
+    "raw_report": "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-baseline.raw.json",
+    "score": 99.11565,
+    "size": "588",
+    "differences": 26
+  },
+  {
+    "name": "null_guard",
+    "source_patch_from_base": "--- base\n+++ null_guard\n@@ -66,7 +66,8 @@\n     }\n \n     converted_resource = fn_801294DC(resource, 0x18, 0x20, 10);\n-    if (converted_resource != 0) {\n+    if (converted_resource == 0) return;\n+    {\n         if (runtime->kind == 10 || runtime->kind == 0x18) {\n             int source_id = fn_80200C20(source);\n             int current_id = fn_80201B44();\n",
+    "source_sha256": "99da760982900824fa889a1904af00656fed39391bd79c011ec94eec06e77648",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\n",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80093D20",
+      "fn_80093D20",
+      "-o",
+      "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-null_guard.raw.json",
+      "--format",
+      "json"
+    ],
+    "diff_exit_code": 0,
+    "diff_raw": " INFO Writing to reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-null_guard.raw.json\n",
+    "raw_report": "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-null_guard.raw.json",
+    "score": 99.11565,
+    "size": "588",
+    "differences": 26
+  },
+  {
+    "name": "shared_cleanup",
+    "source_patch_from_base": "--- base\n+++ shared_cleanup\n@@ -74,8 +74,10 @@\n             if (runtime->kind == 10) {\n                 amount = 0x32;\n             }\n-            if (source_id == current_id && runtime->state != 0 &&\n-                ((*runtime->state & 0x00020000) == 0)) {\n+            if (source_id != current_id) goto finish_resource;\n+            if (runtime->state == 0) goto finish_resource;\n+            if ((*runtime->state & 0x00020000) != 0) goto finish_resource;\n+            {\n                 void* effect = fn_801A717C();\n                 int object_id = fn_80201B54(object);\n                 fn_801A74A0(effect, object_id);\n@@ -86,6 +88,7 @@\n                 fn_801A7228(effect);\n             }\n         }\n+finish_resource:\n         fn_80128C28(converted_resource, fn_8003CB6C, id);\n         fn_800389E0(object, 0, 0, 1);\n         fn_80201D2C(object, 8);\n",
+    "source_sha256": "9033d29e5da068d4f24e6db6a9fbaee02714c0e8ea4b6a0825a76577d24a7e97",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\n",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80093D20",
+      "fn_80093D20",
+      "-o",
+      "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-shared_cleanup.raw.json",
+      "--format",
+      "json"
+    ],
+    "diff_exit_code": 0,
+    "diff_raw": " INFO Writing to reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-shared_cleanup.raw.json\n",
+    "raw_report": "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-shared_cleanup.raw.json",
+    "score": 99.11565,
+    "size": "588",
+    "differences": 26
+  },
+  {
+    "name": "guards_combined",
+    "source_patch_from_base": "--- base\n+++ guards_combined\n@@ -66,7 +66,8 @@\n     }\n \n     converted_resource = fn_801294DC(resource, 0x18, 0x20, 10);\n-    if (converted_resource != 0) {\n+    if (converted_resource == 0) return;\n+    {\n         if (runtime->kind == 10 || runtime->kind == 0x18) {\n             int source_id = fn_80200C20(source);\n             int current_id = fn_80201B44();\n@@ -74,8 +75,10 @@\n             if (runtime->kind == 10) {\n                 amount = 0x32;\n             }\n-            if (source_id == current_id && runtime->state != 0 &&\n-                ((*runtime->state & 0x00020000) == 0)) {\n+            if (source_id != current_id) goto finish_resource;\n+            if (runtime->state == 0) goto finish_resource;\n+            if ((*runtime->state & 0x00020000) != 0) goto finish_resource;\n+            {\n                 void* effect = fn_801A717C();\n                 int object_id = fn_80201B54(object);\n                 fn_801A74A0(effect, object_id);\n@@ -86,6 +89,7 @@\n                 fn_801A7228(effect);\n             }\n         }\n+finish_resource:\n         fn_80128C28(converted_resource, fn_8003CB6C, id);\n         fn_800389E0(object, 0, 0, 1);\n         fn_80201D2C(object, 8);\n",
+    "source_sha256": "5275641b988e2050ae9d59626a11df158e25d3718c8101d3bbe8df8ceafbf9c4",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\n",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80093D20",
+      "fn_80093D20",
+      "-o",
+      "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-guards_combined.raw.json",
+      "--format",
+      "json"
+    ],
+    "diff_exit_code": 0,
+    "diff_raw": " INFO Writing to reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-guards_combined.raw.json\n",
+    "raw_report": "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-guards_combined.raw.json",
+    "score": 99.11565,
+    "size": "588",
+    "differences": 26
+  },
+  {
+    "name": "else_ladder",
+    "source_patch_from_base": "--- base\n+++ else_ladder\n@@ -57,14 +57,9 @@\n             fn_80201D2C(object, 0x37);\n             fn_80201D14(object, 1);\n         }\n-        return;\n-    }\n-\n-    if (room != lbl_8064D18C) {\n+    } else if (room != lbl_8064D18C) {\n         fn_801E8328(2, object);\n-        return;\n-    }\n-\n+    } else {\n     converted_resource = fn_801294DC(resource, 0x18, 0x20, 10);\n     if (converted_resource != 0) {\n         if (runtime->kind == 10 || runtime->kind == 0x18) {\n@@ -92,4 +87,5 @@\n         fn_80201D14(object, 1);\n         fn_80201138(lbl_8064EC98, 0x11, object, 8, -1, 0);\n     }\n+    }\n }\n",
+    "source_sha256": "09b9fb3a60c09a9bc75cbf9930edf93011d6f9ed6d98e14d1a47a2b8557a4ca8",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\n",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80093D20",
+      "fn_80093D20",
+      "-o",
+      "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-else_ladder.raw.json",
+      "--format",
+      "json"
+    ],
+    "diff_exit_code": 0,
+    "diff_raw": " INFO Writing to reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-else_ladder.raw.json\n",
+    "raw_report": "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-else_ladder.raw.json",
+    "score": 99.11565,
+    "size": "588",
+    "differences": 26
+  },
+  {
+    "name": "short_prototype",
+    "source_patch_from_base": "--- base\n+++ short_prototype\n@@ -30,7 +30,7 @@\n extern void fn_801A74A0(void*, int);\n extern void fn_801A74A8(void*, int);\n extern void fn_801A7538(void*, int);\n-extern void fn_801A7518();\n+extern void fn_801A7518(void*, short);\n extern unsigned long long fn_8020123C();\n extern void fn_801A7228(void*);\n extern void fn_8003CB6C(void);\n",
+    "source_sha256": "53a847c861e95ff191462a3c0bcf4bb02240b77222d217277ca33366b1be8684",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\n",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80093D20",
+      "fn_80093D20",
+      "-o",
+      "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-short_prototype.raw.json",
+      "--format",
+      "json"
+    ],
+    "diff_exit_code": 0,
+    "diff_raw": " INFO Writing to reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-short_prototype.raw.json\n",
+    "raw_report": "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-short_prototype.raw.json",
+    "score": 98.74149,
+    "size": "588",
+    "differences": 26
+  },
+  {
+    "name": "short_prototype_int_amount",
+    "source_patch_from_base": "--- base\n+++ short_prototype_int_amount\n@@ -30,7 +30,7 @@\n extern void fn_801A74A0(void*, int);\n extern void fn_801A74A8(void*, int);\n extern void fn_801A7538(void*, int);\n-extern void fn_801A7518();\n+extern void fn_801A7518(void*, short);\n extern unsigned long long fn_8020123C();\n extern void fn_801A7228(void*);\n extern void fn_8003CB6C(void);\n@@ -40,7 +40,7 @@\n void fn_80093D20(register void* object, register void* source)\n {\n     register Runtime80093D20* runtime = ((Runtime80093D20*)fn_80201B8C(object));\n-    register short amount;\n+    register int amount;\n     register void* resource = fn_80201BC8(object);\n     register int id = fn_80201B54(object);\n     register int room = fn_80201EB8(object);\n",
+    "source_sha256": "69f430aa852845e460e1df16873a6822d6eeaf0e1063b16495be978facb0242f",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\n",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80093D20",
+      "fn_80093D20",
+      "-o",
+      "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-short_prototype_int_amount.raw.json",
+      "--format",
+      "json"
+    ],
+    "diff_exit_code": 0,
+    "diff_raw": " INFO Writing to reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-short_prototype_int_amount.raw.json\n",
+    "raw_report": "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-short_prototype_int_amount.raw.json",
+    "score": 99.11565,
+    "size": "588",
+    "differences": 26
+  },
+  {
+    "name": "short_prototype_unhinted_amount",
+    "source_patch_from_base": "--- base\n+++ short_prototype_unhinted_amount\n@@ -30,7 +30,7 @@\n extern void fn_801A74A0(void*, int);\n extern void fn_801A74A8(void*, int);\n extern void fn_801A7538(void*, int);\n-extern void fn_801A7518();\n+extern void fn_801A7518(void*, short);\n extern unsigned long long fn_8020123C();\n extern void fn_801A7228(void*);\n extern void fn_8003CB6C(void);\n@@ -40,7 +40,7 @@\n void fn_80093D20(register void* object, register void* source)\n {\n     register Runtime80093D20* runtime = ((Runtime80093D20*)fn_80201B8C(object));\n-    register short amount;\n+    short amount;\n     register void* resource = fn_80201BC8(object);\n     register int id = fn_80201B54(object);\n     register int room = fn_80201EB8(object);\n",
+    "source_sha256": "90ffafaf541266d1d94397fb2d3edbc0da7685e01e209f094f639612d4a9d145",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\n",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80093D20",
+      "fn_80093D20",
+      "-o",
+      "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-short_prototype_unhinted_amount.raw.json",
+      "--format",
+      "json"
+    ],
+    "diff_exit_code": 0,
+    "diff_raw": " INFO Writing to reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-short_prototype_unhinted_amount.raw.json\n",
+    "raw_report": "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-short_prototype_unhinted_amount.raw.json",
+    "score": 98.74149,
+    "size": "588",
+    "differences": 26
+  },
+  {
+    "name": "unhinted_locals",
+    "source_patch_from_base": "--- base\n+++ unhinted_locals\n@@ -37,15 +37,15 @@\n extern int fn_800389E0(void*, int, int, int);\n extern void fn_80201138(float, int, void*, int, int, int);\n \n-void fn_80093D20(register void* object, register void* source)\n+void fn_80093D20(void* object, void* source)\n {\n-    register Runtime80093D20* runtime = ((Runtime80093D20*)fn_80201B8C(object));\n-    register short amount;\n-    register void* resource = fn_80201BC8(object);\n-    register int id = fn_80201B54(object);\n-    register int room = fn_80201EB8(object);\n-    register u32 flags = fn_80036D5C(object);\n-    register void* converted_resource;\n+    Runtime80093D20* runtime = ((Runtime80093D20*)fn_80201B8C(object));\n+    short amount;\n+    void* resource = fn_80201BC8(object);\n+    int id = fn_80201B54(object);\n+    int room = fn_80201EB8(object);\n+    u32 flags = fn_80036D5C(object);\n+    void* converted_resource;\n \n     if ((flags & 0x80) != 0 || (flags & 0x8000) != 0) {\n         converted_resource = fn_801294DC(resource, 0x92, 0x20, 10);\n",
+    "source_sha256": "302661e187c2b4b7393266aea185da73c257e8f08361fffc0bc8a16eaa93c2ed",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\n",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80093D20",
+      "fn_80093D20",
+      "-o",
+      "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-unhinted_locals.raw.json",
+      "--format",
+      "json"
+    ],
+    "diff_exit_code": 0,
+    "diff_raw": " INFO Writing to reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-unhinted_locals.raw.json\n",
+    "raw_report": "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-unhinted_locals.raw.json",
+    "score": 99.11565,
+    "size": "588",
+    "differences": 26
+  },
+  {
+    "name": "explicit_event_id",
+    "source_patch_from_base": "--- base\n+++ explicit_event_id\n@@ -52,8 +52,9 @@\n         if (converted_resource != 0) {\n             int value = id << 8;\n             fn_801287C4(converted_resource, fn_80204810, value | 0xA9, 0x14);\n-            fn_80128C28(converted_resource, fn_80204810, value | 0x77);\n-            fn_80128C44(converted_resource, fn_80204810, value | 0x77);\n+            value |= 0x77;\n+            fn_80128C28(converted_resource, fn_80204810, value);\n+            fn_80128C44(converted_resource, fn_80204810, value);\n             fn_80201D2C(object, 0x37);\n             fn_80201D14(object, 1);\n         }\n",
+    "source_sha256": "9b3d513d3884d196aaf0cf1300a77fb79a4b0aa0fd96c03bab08ab44c0244ecf",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\n",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80093D20",
+      "fn_80093D20",
+      "-o",
+      "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-explicit_event_id.raw.json",
+      "--format",
+      "json"
+    ],
+    "diff_exit_code": 0,
+    "diff_raw": " INFO Writing to reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-explicit_event_id.raw.json\n",
+    "raw_report": "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-explicit_event_id.raw.json",
+    "score": 99.11565,
+    "size": "588",
+    "differences": 26
+  },
+  {
+    "name": "context_id_coalescing",
+    "source_patch_from_base": "--- base\n+++ context_id_coalescing\n@@ -68,21 +68,21 @@\n     converted_resource = fn_801294DC(resource, 0x18, 0x20, 10);\n     if (converted_resource != 0) {\n         if (runtime->kind == 10 || runtime->kind == 0x18) {\n-            int source_id = fn_80200C20(source);\n+            room = fn_80200C20(source);\n             int current_id = fn_80201B44();\n             amount = -0x23;\n             if (runtime->kind == 10) {\n                 amount = 0x32;\n             }\n-            if (source_id == current_id && runtime->state != 0 &&\n+            if (room == current_id && runtime->state != 0 &&\n                 ((*runtime->state & 0x00020000) == 0)) {\n                 void* effect = fn_801A717C();\n-                int object_id = fn_80201B54(object);\n-                fn_801A74A0(effect, object_id);\n+                room = fn_80201B54(object);\n+                fn_801A74A0(effect, room);\n                 fn_801A74A8(effect, current_id);\n                 fn_801A7538(effect, 2);\n                 fn_801A7518(effect, amount);\n-                fn_8020123C(0x27, object_id, current_id, effect);\n+                fn_8020123C(0x27, room, current_id, effect);\n                 fn_801A7228(effect);\n             }\n         }\n",
+    "source_sha256": "9e4fb0ccbdc10b5596979703f235f07c67de46b48a9b469a73b1c114c39179aa",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 2,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_80093D20.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80093D20.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80093D20.d build/GEDE01/src/game/game_fn_80093D20.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_80093D20.c\n# ------------------------------------\n#      72: int current_id = fn_80201B44();\n#   Error: ^^^\n#   expression syntax error\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n"
+  },
+  {
+    "name": "conditional_amount",
+    "source_patch_from_base": "--- base\n+++ conditional_amount\n@@ -70,10 +70,7 @@\n         if (runtime->kind == 10 || runtime->kind == 0x18) {\n             int source_id = fn_80200C20(source);\n             int current_id = fn_80201B44();\n-            amount = -0x23;\n-            if (runtime->kind == 10) {\n-                amount = 0x32;\n-            }\n+            amount = runtime->kind == 10 ? 0x32 : -0x23;\n             if (source_id == current_id && runtime->state != 0 &&\n                 ((*runtime->state & 0x00020000) == 0)) {\n                 void* effect = fn_801A717C();\n",
+    "source_sha256": "88df1b52eabd22edc826d70710906f1faebd9eb36f39949b577c74514d434b7e",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\n",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80093D20",
+      "fn_80093D20",
+      "-o",
+      "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-conditional_amount.raw.json",
+      "--format",
+      "json"
+    ],
+    "diff_exit_code": 0,
+    "diff_raw": " INFO Writing to reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-conditional_amount.raw.json\n",
+    "raw_report": "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-conditional_amount.raw.json",
+    "score": 65.61224,
+    "size": "592",
+    "differences": 77
+  },
+  {
+    "name": "conditional_amount_inverted",
+    "source_patch_from_base": "--- base\n+++ conditional_amount_inverted\n@@ -70,10 +70,7 @@\n         if (runtime->kind == 10 || runtime->kind == 0x18) {\n             int source_id = fn_80200C20(source);\n             int current_id = fn_80201B44();\n-            amount = -0x23;\n-            if (runtime->kind == 10) {\n-                amount = 0x32;\n-            }\n+            amount = runtime->kind != 10 ? -0x23 : 0x32;\n             if (source_id == current_id && runtime->state != 0 &&\n                 ((*runtime->state & 0x00020000) == 0)) {\n                 void* effect = fn_801A717C();\n",
+    "source_sha256": "2d88e7d8abc7a10e38e89e1e260fff489e0bcb0b7915308924cec429f37e3c2b",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\n",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80093D20",
+      "fn_80093D20",
+      "-o",
+      "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-conditional_amount_inverted.raw.json",
+      "--format",
+      "json"
+    ],
+    "diff_exit_code": 0,
+    "diff_raw": " INFO Writing to reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-conditional_amount_inverted.raw.json\n",
+    "raw_report": "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-conditional_amount_inverted.raw.json",
+    "score": 65.56463,
+    "size": "592",
+    "differences": 78
+  },
+  {
+    "name": "two_branch_amount",
+    "source_patch_from_base": "--- base\n+++ two_branch_amount\n@@ -70,9 +70,10 @@\n         if (runtime->kind == 10 || runtime->kind == 0x18) {\n             int source_id = fn_80200C20(source);\n             int current_id = fn_80201B44();\n-            amount = -0x23;\n             if (runtime->kind == 10) {\n                 amount = 0x32;\n+            } else {\n+                amount = -0x23;\n             }\n             if (source_id == current_id && runtime->state != 0 &&\n                 ((*runtime->state & 0x00020000) == 0)) {\n",
+    "source_sha256": "32b788da11c1bad5b63266f5bf58dd050370065437b3bdc09bec6a7f17c2ab9d",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80093D20.o"
+    ],
+    "build_exit_code": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_80093D20.o\n",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80093D20",
+      "fn_80093D20",
+      "-o",
+      "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-two_branch_amount.raw.json",
+      "--format",
+      "json"
+    ],
+    "diff_exit_code": 0,
+    "diff_raw": " INFO Writing to reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-two_branch_amount.raw.json\n",
+    "raw_report": "reports/GEDE01/objdiff-2b641f5c-55e8-47f6-8a73-b1b3757163c0-two_branch_amount.raw.json",
+    "score": 100.0,
+    "size": "588",
+    "differences": 0
+  }
+]
