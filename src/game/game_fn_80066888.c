@@ -37,6 +37,8 @@ void fn_80066888(s32 context, s32 event, f32 first, f32 second)
     u32 mask;
     s32 index;
     s32 any_active;
+    f32 scale;
+    f32 bounded;
 
     mask = fn_801A7590(event);
     any_active = 0;
@@ -46,18 +48,10 @@ void fn_80066888(s32 context, s32 event, f32 first, f32 second)
         copied_position = vectors.direction;
         for (index = 0; index < 15; index++) {
             if ((mask & (1U << index)) && fn_80066D80(context, index)) {
-                f32 scale = (f32)(s16)fn_801A74F8(event) / lbl_8064E6E8;
-                f32 bounded = lbl_8064E6EC;
-                f32 upper = lbl_8064E698;
-
-                if (scale > bounded) {
-                    bounded = scale;
-                }
-                if (upper < bounded) {
-                    bounded = lbl_8064E698;
-                } else if (scale > lbl_8064E6EC) {
-                    bounded = scale;
-                }
+                scale = (f32)(s16)fn_801A74F8(event) / lbl_8064E6E8;
+                bounded = lbl_8064E698 < (scale > lbl_8064E6EC ? scale : lbl_8064E6EC)
+                              ? lbl_8064E698
+                              : (scale > lbl_8064E6EC ? scale : lbl_8064E6EC);
 
                 fn_8012EDB0(context, index, &copied_position,
                             first * bounded, second * bounded);

@@ -1,0 +1,239 @@
+{
+  "raw_readelf": {
+    "retail": {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-sWr",
+        "build/GEDE01/obj/game/game_fn_80066888.o"
+      ],
+      "exit_code": 0,
+      "raw_output": "\nRelocation section '.rela.text' at offset 0x1c4 contains 15 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000034  0000040a R_PPC_REL24            00000000   fn_801A7590 + 0\n00000048  0000050a R_PPC_REL24            00000000   fn_801A76F4 + 0\n00000050  0000060a R_PPC_REL24            00000000   fn_80211B08 + 0\n00000054  0000076d R_PPC_EMB_SDA21        00000000   lbl_8064E6C0 + 0\n00000094  0000080a R_PPC_REL24            00000000   fn_80066D80 + 0\n000000a4  0000090a R_PPC_REL24            00000000   fn_801A74F8 + 0\n000000b8  00000a6d R_PPC_EMB_SDA21        00000000   lbl_8064E6E0 + 0\n000000c0  00000b6d R_PPC_EMB_SDA21        00000000   lbl_8064E6E8 + 0\n000000c8  00000c6d R_PPC_EMB_SDA21        00000000   lbl_8064E6EC + 0\n000000d0  00000d6d R_PPC_EMB_SDA21        00000000   lbl_8064E698 + 0\n000000ec  00000d6d R_PPC_EMB_SDA21        00000000   lbl_8064E698 + 0\n000000f4  00000c6d R_PPC_EMB_SDA21        00000000   lbl_8064E6EC + 0\n00000118  00000e0a R_PPC_REL24            00000000   fn_8012EDB0 + 0\n0000012c  00000f0a R_PPC_REL24            00000000   fn_8013057C + 0\n0000015c  0000100a R_PPC_REL24            00000000   fn_801301B0 + 0\n\nSymbol table '.symtab' contains 17 entries:\n   Num:    Value  Size Type    Bind   Vis      Ndx Name\n     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND \n     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS game_fn_80066888.c\n     2: 00000000     0 SECTION LOCAL  DEFAULT    1 .text\n     3: 00000000   388 FUNC    GLOBAL DEFAULT    1 fn_80066888\n     4: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801A7590\n     5: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801A76F4\n     6: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_80211B08\n     7: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064E6C0\n     8: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_80066D80\n     9: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801A74F8\n    10: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064E6E0\n    11: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064E6E8\n    12: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064E6EC\n    13: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064E698\n    14: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_8012EDB0\n    15: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_8013057C\n    16: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801301B0\n"
+    },
+    "generated": {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-sWr",
+        "build/GEDE01/src/game/game_fn_80066888.o"
+      ],
+      "exit_code": 0,
+      "raw_output": "\nRelocation section '.rela.text' at offset 0x448 contains 15 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000034  0000080a R_PPC_REL24            00000000   fn_801A7590 + 0\n00000048  0000090a R_PPC_REL24            00000000   fn_801A76F4 + 0\n00000050  00000a0a R_PPC_REL24            00000000   fn_80211B08 + 0\n00000054  0000046d R_PPC_EMB_SDA21        00000000   lbl_8064E6C0 + 0\n00000094  00000b0a R_PPC_REL24            00000000   fn_80066D80 + 0\n000000a4  00000c0a R_PPC_REL24            00000000   fn_801A74F8 + 0\n000000b8  0000036d R_PPC_EMB_SDA21        00000000   lbl_8064E6E0 + 0\n000000c0  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064E6E8 + 0\n000000c8  0000076d R_PPC_EMB_SDA21        00000000   lbl_8064E6EC + 0\n000000d0  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064E698 + 0\n000000ec  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064E698 + 0\n000000f4  0000076d R_PPC_EMB_SDA21        00000000   lbl_8064E6EC + 0\n00000118  00000d0a R_PPC_REL24            00000000   fn_8012EDB0 + 0\n0000012c  00000e0a R_PPC_REL24            00000000   fn_8013057C + 0\n0000015c  00000f0a R_PPC_REL24            00000000   fn_801301B0 + 0\n\nSymbol table '.symtab' contains 17 entries:\n   Num:    Value  Size Type    Bind   Vis      Ndx Name\n     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND \n     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS game_fn_80066888.c\n     2: 00000000     0 SECTION LOCAL  DEFAULT    1 .text\n     3: 00000000     8 OBJECT  GLOBAL DEFAULT  UND lbl_8064E6E0\n     4: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064E6C0\n     5: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064E6E8\n     6: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064E698\n     7: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064E6EC\n     8: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801A7590\n     9: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801A76F4\n    10: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_80211B08\n    11: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_80066D80\n    12: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801A74F8\n    13: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_8012EDB0\n    14: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_8013057C\n    15: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801301B0\n    16: 00000000   388 FUNC    GLOBAL DEFAULT    1 fn_80066888\n"
+    }
+  },
+  "resolved_relocations": {
+    "retail": [
+      {
+        "offset": 52,
+        "type": "R_PPC_REL24",
+        "target": "fn_801A7590",
+        "addend": 0,
+        "symbol_index": 4
+      },
+      {
+        "offset": 72,
+        "type": "R_PPC_REL24",
+        "target": "fn_801A76F4",
+        "addend": 0,
+        "symbol_index": 5
+      },
+      {
+        "offset": 80,
+        "type": "R_PPC_REL24",
+        "target": "fn_80211B08",
+        "addend": 0,
+        "symbol_index": 6
+      },
+      {
+        "offset": 84,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E6C0",
+        "addend": 0,
+        "symbol_index": 7
+      },
+      {
+        "offset": 148,
+        "type": "R_PPC_REL24",
+        "target": "fn_80066D80",
+        "addend": 0,
+        "symbol_index": 8
+      },
+      {
+        "offset": 164,
+        "type": "R_PPC_REL24",
+        "target": "fn_801A74F8",
+        "addend": 0,
+        "symbol_index": 9
+      },
+      {
+        "offset": 184,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E6E0",
+        "addend": 0,
+        "symbol_index": 10
+      },
+      {
+        "offset": 192,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E6E8",
+        "addend": 0,
+        "symbol_index": 11
+      },
+      {
+        "offset": 200,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E6EC",
+        "addend": 0,
+        "symbol_index": 12
+      },
+      {
+        "offset": 208,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E698",
+        "addend": 0,
+        "symbol_index": 13
+      },
+      {
+        "offset": 236,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E698",
+        "addend": 0,
+        "symbol_index": 13
+      },
+      {
+        "offset": 244,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E6EC",
+        "addend": 0,
+        "symbol_index": 12
+      },
+      {
+        "offset": 280,
+        "type": "R_PPC_REL24",
+        "target": "fn_8012EDB0",
+        "addend": 0,
+        "symbol_index": 14
+      },
+      {
+        "offset": 300,
+        "type": "R_PPC_REL24",
+        "target": "fn_8013057C",
+        "addend": 0,
+        "symbol_index": 15
+      },
+      {
+        "offset": 348,
+        "type": "R_PPC_REL24",
+        "target": "fn_801301B0",
+        "addend": 0,
+        "symbol_index": 16
+      }
+    ],
+    "generated": [
+      {
+        "offset": 52,
+        "type": "R_PPC_REL24",
+        "target": "fn_801A7590",
+        "addend": 0,
+        "symbol_index": 8
+      },
+      {
+        "offset": 72,
+        "type": "R_PPC_REL24",
+        "target": "fn_801A76F4",
+        "addend": 0,
+        "symbol_index": 9
+      },
+      {
+        "offset": 80,
+        "type": "R_PPC_REL24",
+        "target": "fn_80211B08",
+        "addend": 0,
+        "symbol_index": 10
+      },
+      {
+        "offset": 84,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E6C0",
+        "addend": 0,
+        "symbol_index": 4
+      },
+      {
+        "offset": 148,
+        "type": "R_PPC_REL24",
+        "target": "fn_80066D80",
+        "addend": 0,
+        "symbol_index": 11
+      },
+      {
+        "offset": 164,
+        "type": "R_PPC_REL24",
+        "target": "fn_801A74F8",
+        "addend": 0,
+        "symbol_index": 12
+      },
+      {
+        "offset": 184,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E6E0",
+        "addend": 0,
+        "symbol_index": 3
+      },
+      {
+        "offset": 192,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E6E8",
+        "addend": 0,
+        "symbol_index": 5
+      },
+      {
+        "offset": 200,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E6EC",
+        "addend": 0,
+        "symbol_index": 7
+      },
+      {
+        "offset": 208,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E698",
+        "addend": 0,
+        "symbol_index": 6
+      },
+      {
+        "offset": 236,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E698",
+        "addend": 0,
+        "symbol_index": 6
+      },
+      {
+        "offset": 244,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064E6EC",
+        "addend": 0,
+        "symbol_index": 7
+      },
+      {
+        "offset": 280,
+        "type": "R_PPC_REL24",
+        "target": "fn_8012EDB0",
+        "addend": 0,
+        "symbol_index": 13
+      },
+      {
+        "offset": 300,
+        "type": "R_PPC_REL24",
+        "target": "fn_8013057C",
+        "addend": 0,
+        "symbol_index": 14
+      },
+      {
+        "offset": 348,
+        "type": "R_PPC_REL24",
+        "target": "fn_801301B0",
+        "addend": 0,
+        "symbol_index": 15
+      }
+    ]
+  },
+  "all_15_targets_types_offsets_addends_equal": true
+}

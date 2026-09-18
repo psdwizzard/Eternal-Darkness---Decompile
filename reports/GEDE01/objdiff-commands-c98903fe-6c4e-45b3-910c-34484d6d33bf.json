@@ -1,0 +1,40 @@
+[
+  {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80066888",
+      "fn_80066888",
+      "-o",
+      "reports/GEDE01/objdiff-canonical-c98903fe-6c4e-45b3-910c-34484d6d33bf.json",
+      "--format",
+      "json-pretty"
+    ],
+    "exit_code": 0,
+    "raw_output": " INFO Writing to reports/GEDE01/objdiff-canonical-c98903fe-6c4e-45b3-910c-34484d6d33bf.json\n",
+    "output": "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-c98903fe-6c4e-45b3-910c-34484d6d33bf.json"
+  },
+  {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80066888",
+      "fn_80066888",
+      "-o",
+      "reports/GEDE01/objdiff-reloc-strict-c98903fe-6c4e-45b3-910c-34484d6d33bf.json",
+      "--format",
+      "json-pretty",
+      "-c",
+      "function_reloc_diffs=name_address"
+    ],
+    "exit_code": 0,
+    "raw_output": " INFO Writing to reports/GEDE01/objdiff-reloc-strict-c98903fe-6c4e-45b3-910c-34484d6d33bf.json\n",
+    "output": "eternal-darkness-decomp/reports/GEDE01/objdiff-reloc-strict-c98903fe-6c4e-45b3-910c-34484d6d33bf.json"
+  }
+]

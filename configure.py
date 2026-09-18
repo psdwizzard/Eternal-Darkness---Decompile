@@ -1969,9 +1969,9 @@ config.custom_build_rules = [
     {
         "name": "externalize_game_80066888_bias",
         "command": (
-            "python3 tools/externalize_elf_symbol.py $in @28 && "
+            "python3 tools/externalize_elf_symbol.py $in @30 && "
             "build/binutils/powerpc-eabi-objcopy "
-            "--redefine-sym=@28=lbl_8064E6E0 --remove-section=.sdata2 $in "
+            "--redefine-sym=@30=lbl_8064E6E0 --remove-section=.sdata2 $in "
             "&& touch $out"
         ),
         "description": "EXTERNALIZE $in",
@@ -6794,7 +6794,7 @@ config.libs = [
     Object(Matching, "game/game_data_8023B940.c"),
     Object(Matching, "game/game_data_8023BED8.c"),
     Object(Matching, "game/game_fn_80066754.c", extra_cflags=["-use_lmw_stmw on"]),
-    Object(NonMatching, "game/game_fn_80066888.c", extra_cflags=["-use_lmw_stmw on"]),
+    Object(Matching, "game/game_fn_80066888.c", extra_cflags=["-use_lmw_stmw on"]),
     Object(Matching, "game/game_fn_80066A0C.c", extra_cflags=["-use_lmw_stmw on"]),
     Object(Matching, "game/game_fn_80066AEC.c", extra_cflags=["-use_lmw_stmw on"]),
     Object(Matching, "game/game_fn_80066BB8.c", extra_cflags=["-use_lmw_stmw on"]),
