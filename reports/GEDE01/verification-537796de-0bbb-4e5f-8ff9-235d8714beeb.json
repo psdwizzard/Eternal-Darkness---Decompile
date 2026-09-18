@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "assignment_id": "537796de-0bbb-4e5f-8ff9-235d8714beeb",
+  "configuration": {
+    "command": "python3 configure.py",
+    "exit_code": 0,
+    "stdout": "",
+    "compiler": "GC/1.3",
+    "cflags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c",
+    "configure_registration": "Object(NonMatching, game/game_fn_800EEC44.c)",
+    "compiler_override": false
+  },
+  "build": {
+    "command": ".tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_terminal_output": [
+      "[873/878] MWCC build/GEDE01/src/game/game_fn_800EEC44.o",
+      "[874/878] REPORT",
+      "[875/878] LINK build/GEDE01/main.elf",
+      "[876/878] DOL build/GEDE01/main.dol",
+      "[877/878] CHECK config/GEDE01/build.sha1",
+      "build/GEDE01/main.dol: OK",
+      "[878/878] PROGRESS"
+    ]
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'dol_cmp_exit=%s\\n' $?",
+    "raw_output": [
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+      "dol_cmp_exit=0"
+    ]
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800EEC44 fn_800EEC44 -o reports/GEDE01/canonical-537796de-0bbb-4e5f-8ff9-235d8714beeb.json --format json-pretty",
+    "exit_code": 0,
+    "raw_summary": "retail_bytes=444 generated_bytes=444 match_percent=64.81982 left_relocations=10 right_relocations=12"
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800EEC44 fn_800EEC44 -o reports/GEDE01/objdiff-537796de-0bbb-4e5f-8ff9-235d8714beeb.json --format json-pretty -c function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "raw_summary": "retail_bytes=444 generated_bytes=444 match_percent=64.81982 left_relocations=10 right_relocations=12"
+  }
+}

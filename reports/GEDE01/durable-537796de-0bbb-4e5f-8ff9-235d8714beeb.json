@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "537796de-0bbb-4e5f-8ff9-235d8714beeb",
+  "attempt": 2,
+  "base_commit": "ed9b1550c7a06ea74214826b43034be1768fb5e0",
+  "target": "fn_800EEC44",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-537796de-0bbb-4e5f-8ff9-235d8714beeb.json",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-537796de-0bbb-4e5f-8ff9-235d8714beeb.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-537796de-0bbb-4e5f-8ff9-235d8714beeb.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are both 64.81982% with size-exact 444-byte text. Under the unchanged GC/1.3 canonical flags, generated code calls _savegpr_14 and _restgpr_14 while retail uses inline stmw/lmw, accounting for two additional R_PPC_REL24 relocations (12 generated versus 10 retail); long-lived source, width, row/column counters, chroma pointers, destination pointers, and color terms also receive different r14-r31 assignments and arithmetic scheduling."
+}
