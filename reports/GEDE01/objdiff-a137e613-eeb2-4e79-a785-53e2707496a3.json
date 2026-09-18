@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "assignment_id": "a137e613-eeb2-4e79-a785-53e2707496a3",
+  "target": "fn_801FA410",
+  "compiler_policy": {
+    "registration": "Object(NonMatching, \"game/game_fn_801FA410.c\", mw_version=\"GC/1.3\")",
+    "extra_cflags": [],
+    "canonical": true
+  },
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_801FA410.c fn_801FA410",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FA410 fn_801FA410 -o build/GEDE01/a137-strict.json --format json -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "build": {
+    "result": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "canonical": {
+    "target_bytes": 60,
+    "candidate_bytes": 44,
+    "match_percent": 40.533333,
+    "matched": false,
+    "raw_output": "target 60 bytes  base 44 bytes  match 40.533333"
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "match_percent": 40.533333,
+    "matched": false,
+    "target_relocations": ["0x00 R_PPC_ADDR16_HA lbl_8063C6B8+0", "0x04 R_PPC_EMB_SDA21 lbl_8064C3A8+0", "0x08 R_PPC_ADDR16_LO lbl_8063C6B8+0", "0x10 R_PPC_EMB_SDA21 lbl_8064C3A8+0"],
+    "candidate_relocations": ["0x04 R_PPC_ADDR16_HA lbl_8063C6B8+0", "0x08 R_PPC_EMB_SDA21 lbl_8064C3A8+0", "0x0c R_PPC_ADDR16_LO lbl_8063C6B8+0", "0x14 R_PPC_EMB_SDA21 lbl_8064C3A8+0"],
+    "raw_output": "target_size 60 candidate_size 44 match 40.533333; relocation targets and addends agree but relocation instruction offsets differ"
+  },
+  "instruction_comparison": [
+    "target 0x00 lis r4,lbl_8063C6B8@ha | candidate 0x00 mulli r0,r3,0x88",
+    "target 0x04 lwz r7,lbl_8064C3A8@sda21 | candidate 0x04 lis r4,lbl_8063C6B8@ha",
+    "target 0x08 addi r4,r4,lbl_8063C6B8@l | candidate 0x08 lwz r6,lbl_8064C3A8@sda21",
+    "target 0x0c mulli r6,r3,0x88 | candidate 0x0c addi r4,r4,lbl_8063C6B8@l",
+    "target 0x10 stw r3,lbl_8064C3A8@sda21 | candidate 0x10 add r5,r4,r0",
+    "target 0x14 addi r3,r4,0x660 | candidate 0x14 stw r3,lbl_8064C3A8@sda21",
+    "target 0x18 addi r0,r4,0 | candidate 0x18 addi r0,r5,0x660",
+    "target 0x1c add r5,r3,r6 | candidate 0x1c mr r3,r6",
+    "target 0x20 addi r3,r4,0xcc0 | candidate 0x20 stw r0,0xd30(r4)",
+    "target 0x24 add r0,r0,r6 | candidate 0x24 stw r5,0xdb8(r4)",
+    "target 0x28 addi r4,r4,0xd48 | candidate 0x28 blr",
+    "target 0x2c stw r5,0x70(r3) | candidate end",
+    "target 0x30 mr r3,r7 | candidate end",
+    "target 0x34 stw r0,0x70(r4) | candidate end",
+    "target 0x38 blr | candidate end"
+  ],
+  "best_trial": {
+    "description": "Explicit typed local pointers for both arrays and destination states",
+    "match_percent": 40.2,
+    "disposition": "reverted because it regressed from the retained honest reconstruction"
+  },
+  "divergence": "GC/1.3 emits 44 bytes instead of retail's 60: it folds the four retail aggregate base/add instructions into indexed base expressions, moves mulli before global-address formation, allocates the saved return value in r6 rather than r7, and schedules the four real relocation-bearing instructions four bytes later."
+}
