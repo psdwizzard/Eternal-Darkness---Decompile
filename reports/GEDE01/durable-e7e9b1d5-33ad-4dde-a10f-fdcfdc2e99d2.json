@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e7e9b1d5-33ad-4dde-a10f-fdcfdc2e99d2",
+  "attempt": 2,
+  "base_commit": "fcd0e065b6871f17ce89e42456f7b764d5a19679",
+  "target": "fn_80141EA8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e7e9b1d5-33ad-4dde-a10f-fdcfdc2e99d2.json"
+  ],
+  "divergence": "Canonical relocation-aware objdiff measures 73.97298%: retail is 592 bytes and generated code is 536 bytes. The recovered behavior and external relocation kinds/targets are represented, but MWCC still selects different indexed address construction and nonvolatile registers, a different floating-point load/arithmetic schedule, and omits retail's repeated loads of lbl_80650410. Full python3 configure.py plus .tools/bin/ninja -j2 passed, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
