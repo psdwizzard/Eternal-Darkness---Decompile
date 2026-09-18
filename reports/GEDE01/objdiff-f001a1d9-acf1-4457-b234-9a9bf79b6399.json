@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "assignment_id": "f001a1d9-acf1-4457-b234-9a9bf79b6399",
+  "target": "fn_801DE8B4",
+  "candidate_source": "eternal-darkness-decomp/src/game/game_fn_801DE8B4.c",
+  "compiler": "GC/1.3",
+  "compiler_flags_note": "Canonical configure.py registration includes -use_lmw_stmw on.",
+  "build": {
+    "command": "cd eternal-darkness-decomp && python3 configure.py && .tools/bin/ninja -j2",
+    "result": "build/GEDE01/main.dol: OK",
+    "status": "success"
+  },
+  "dol_verification": {
+    "command": "cd eternal-darkness-decomp && sha1sum build/GEDE01/main.dol",
+    "output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matches": true
+  },
+  "canonical_objdiff": {
+    "command": "cd eternal-darkness-decomp && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801DE8B4 -o reports/GEDE01/objdiff-f001a1d9-acf1-4457-b234-9a9bf79b6399-canonical.json --format json-pretty fn_801DE8B4",
+    "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-f001a1d9-acf1-4457-b234-9a9bf79b6399-canonical.json",
+    "match_percent": 58.45596,
+    "retail_bytes": 1544,
+    "generated_bytes": 1112,
+    "retail_instructions": 386,
+    "generated_instructions": 278,
+    "differing_rows": 306,
+    "retail_relocations": 51,
+    "generated_relocations": 35
+  },
+  "relocation_strict_objdiff": {
+    "command": "cd eternal-darkness-decomp && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801DE8B4 -o reports/GEDE01/objdiff-f001a1d9-acf1-4457-b234-9a9bf79b6399-reloc-strict.json --format json-pretty -c function_reloc_diffs=all fn_801DE8B4",
+    "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-f001a1d9-acf1-4457-b234-9a9bf79b6399-reloc-strict.json",
+    "match_percent": 58.45596,
+    "retail_bytes": 1544,
+    "generated_bytes": 1112,
+    "retail_instructions": 386,
+    "generated_instructions": 278,
+    "differing_rows": 306,
+    "retail_relocations": 51,
+    "generated_relocations": 35,
+    "relocation_policy": "all (target names/addresses and data values/addends)"
+  },
+  "legal_audit": {
+    "command": "cd eternal-darkness-decomp && python3 tools/legal_audit.py",
+    "output": "legal audit passed (16610 tracked project files inspected)",
+    "status": "passed"
+  },
+  "status": "attempted",
+  "divergence": "Retail uses a 0xD0 stack frame and 386 instructions, while GC/1.3 emits a smaller frame and 278 instructions. The honest C candidate omits exact spawn-setup lowering and consequently differs in r21-r31 allocation, Vec3 aggregate-copy scheduling, and relocation population (51 retail versus 35 generated)."
+}
