@@ -11,8 +11,8 @@ typedef struct TextDescriptor {
     s16 y;
     u32 reserved;
     u32 flags;
-    s16 width;
     u16 phase;
+    s16 width;
     s8 align;
     u8 font;
     s8 text[1510];
@@ -23,36 +23,50 @@ extern char lbl_80264994[];
 
 extern void* memset(void*, int, unsigned long);
 extern void* memcpy(void*, const void*, unsigned long);
-extern void fn_8015CBB0(void*, u32, void*);
+extern void fn_8015CBB0(void*, int, void*);
 extern void fn_801E5920(char*);
 extern void fn_801E6A8C(TextDescriptor*);
 extern void fn_801E7DCC(const char*, ...);
 extern void* fn_801E880C(void*, u32, u32);
-extern u32 fn_801E8878(void*, u32, u32);
+extern int fn_801E8878(void*, u32, u32);
 
 TextDescriptor* fn_801E6CA0(void* resource, u32 group, u32 index, u32 flags,
                              int compressed)
 {
     TextDescriptor* text_ptr;
     void* source;
+    int source_size;
     int slot;
+    int pass;
 
     text_ptr = lbl_80633440;
     slot = 0;
-    while (slot < 10 && (text_ptr->text[0] != 0 || text_ptr->text[1] != 0)) {
-        slot++;
-        if (slot < 10) {
-            text_ptr++;
+    for (pass = 2; pass != 0; pass--) {
+#define TRY_SLOT(n)                                                            \
+        if (text_ptr->text[0] != 0 || text_ptr->text[1] != 0) {                \
+            if (slot + (n) < 10) {                                             \
+                text_ptr++;                                                    \
+            }                                                                  \
+        } else {                                                               \
+            goto found_slot;                                                   \
         }
+        TRY_SLOT(1)
+        TRY_SLOT(2)
+        TRY_SLOT(3)
+        TRY_SLOT(4)
+        TRY_SLOT(5)
+#undef TRY_SLOT
+        slot += 5;
     }
+found_slot:
     if (text_ptr->text[0] != 0 || text_ptr->text[1] != 0) {
         fn_801E7DCC(lbl_80264994);
     }
     memset(text_ptr, 0, sizeof(*text_ptr));
     source = fn_801E880C(resource, group, index);
     if (compressed) {
-        fn_8015CBB0((u8*)source + 4,
-                    fn_801E8878(resource, group, index) - 4, text_ptr);
+        source_size = fn_801E8878(resource, group, index) - 4;
+        fn_8015CBB0((u8*)source + 4, source_size, text_ptr);
         text_ptr->flags = *(u32*)source;
         *(u32*)source |= 0x4000;
     } else {
