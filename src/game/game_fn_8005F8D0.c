@@ -39,8 +39,6 @@ typedef struct EffectConfig {
 } EffectConfig;
 
 extern EffectConfig lbl_80243C30[];
-extern Pair lbl_80243CE4[];
-extern Pair lbl_80243D24[];
 extern u8 lbl_8030F820[];
 extern s32 lbl_8064C888;
 extern s8 lbl_8064C590;
@@ -71,54 +69,64 @@ extern void fn_8020104C(int, void*, void*, int, float);
 #define fn_8020104C(a, b, c, d, e) fn_8020104C((a), (void *)(b), (void *)(c), (int)(d), (e))
 
 void fn_8005F8D0(s32 owner, void *entry, void *manager, SourceObject *source,
-                 u8 *state_object, s32 unused, Vec3 *position, s8 config_kind,
-                 s32 alternate, s32 final_value, s32 force_mode)
+                 u8 *state_object, s8 config_kind, Vec3 *position,
+                 s32 final_value, s32 force_mode)
 {
     QueryResult primary;
     QueryResult secondary;
-    Vec3 source_position;
     Vec3 copied_direction;
+    Vec3 source_position;
     Vec3 direction;
-    Vec3 destination;
     EffectConfig *config;
+    Pair *pairs_a;
+    Pair *pairs_b;
     s32 state;
     s32 range;
+
+    pairs_a = (Pair *)((u8 *)lbl_80243C30 + 0xB4);
+    pairs_b = (Pair *)((u8 *)lbl_80243C30 + 0xF4);
 
     state = fn_8005EE9C(!fn_80066D04(entry, 3), !fn_80066D04(entry, 2),
                         (s32 *)(state_object + 0x78));
     fn_8011F114(&source_position, manager);
 
-    if (fn_8011F6A4(manager, lbl_80243D24[state].first,
-                    lbl_80243CE4[state].first, -1, &primary, 1) == -1) {
+    if (position != 0) {
+        secondary.direction.x = position->x;
+        secondary.direction.x = position->y;
+        secondary.direction.x = position->z;
+    }
+
+    if (fn_8011F6A4(manager, pairs_b[state].first,
+                    pairs_a[state].first, -1, &primary, 1) == -1) {
         return;
     }
     if (position == 0 &&
-        fn_8011F6A4(manager, lbl_80243D24[state].second,
-                    lbl_80243CE4[state].second, -1, &secondary, 1) == -1) {
+        fn_8011F6A4(manager, pairs_b[state].second,
+                    pairs_a[state].second, -1, &secondary, 1) == -1) {
         return;
     }
 
     config = &lbl_80243C30[config_kind];
     range = config->random_max - config->random_min;
-    range = config->random_min + fn_800FBFB0() % range;
+    range = (u16)(config->random_min + fn_800FBFB0() % range);
 
     if (position != 0) {
-        s32 bad = ++lbl_8064C888;
-        if (bad < 0 || bad >= 5) {
-            lbl_8064C888 = 0;
-        }
+        s32 bad;
+        ++lbl_8064C888;
+        bad = lbl_8064C888;
+        bad &= ~-((bad < 0) || (bad >= 5));
+        lbl_8064C888 = bad;
         fn_8005F758(lbl_8030F820 + lbl_8064C888 * 0xC4, source->object_id,
-                    position, owner, lbl_80243D24[state].first,
-                    lbl_80243CE4[state].first, 5, 2, 0, 4);
+                    position, owner, pairs_b[state].first,
+                    pairs_a[state].first, 5, 2, 0, 4);
         fn_801AAE68(lbl_8064E5BC, 0x289, 0x5A, 0, &source_position, 2, 2,
                     0, (u16)lbl_8064D18C, 0);
     } else {
-        fn_801D62D0(owner, lbl_80243D24[state].first,
-                    lbl_80243CE4[state].first, owner,
-                    lbl_80243D24[state].second,
-                    lbl_80243CE4[state].second, source->object_id, 0, 0, 0,
-                    0x2030, 0x42040, 0x20, 4, config->pad20, 4, 2, 2, 1, 0,
-                    1, 0x11, 8, 4, 0, range);
+        fn_801D62D0(owner, pairs_b[state].first,
+                    pairs_a[state].first, owner, pairs_b[state].second,
+                    pairs_a[state].second, source->object_id, 0, 0,
+                    config->pad20, 4, 2, 2, 1, 0, 1, 0x11, 8, 4, 0x20, 0,
+                    0, range, 0x42040, 0x2030, force_mode ? 4 : 0xC);
         if (lbl_8064C590++ < 2) {
             fn_801AAE68(lbl_8064E5BC, 0xBE, config->sound, 0,
                         &source_position, 2, 2, 0, (u16)lbl_8064D18C, 0);
@@ -126,9 +134,9 @@ void fn_8005F8D0(s32 owner, void *entry, void *manager, SourceObject *source,
     }
 
     copied_direction = primary.direction;
-    fn_80211A6C(&destination, &primary.direction, &direction);
-    if (direction.x != lbl_8064E5DC || direction.y != lbl_8064E5DC ||
-        direction.z != lbl_8064E5DC) {
+    fn_80211A6C(&secondary.direction, &primary.direction, &direction);
+    if (lbl_8064E5DC != direction.x || lbl_8064E5DC != direction.y ||
+        lbl_8064E5DC != direction.z) {
         fn_80211AAC(&direction, &direction);
         fn_80211A90(&direction, &direction, lbl_8064E5B8);
         fn_80211A48(&primary.direction, &direction, &copied_direction);
