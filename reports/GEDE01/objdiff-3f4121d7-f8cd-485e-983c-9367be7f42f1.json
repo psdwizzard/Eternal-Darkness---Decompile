@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "assignment_id": "3f4121d7-f8cd-485e-983c-9367be7f42f1",
+  "target": "fn_80160480",
+  "source": "eternal-darkness-decomp/src/game/game_fn_80160480.c",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    ".tools/bin/ninja build/GEDE01/src/game/game_fn_80160480.o",
+    "python3 tools/fndiff.py game/game_fn_80160480.c fn_80160480",
+    "readelf -rW build/GEDE01/obj/game/game_fn_80160480.o",
+    "readelf -rW build/GEDE01/src/game/game_fn_80160480.o",
+    "python3 tools/legal_audit.py",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "build": {
+    "configure_exit": 0,
+    "full_ninja_exit": 0,
+    "full_ninja_raw_tail": "[873/875] DOL build/GEDE01/main.dol; [874/875] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [875/875] PROGRESS",
+    "target_object_ninja_exit": 0,
+    "target_object_ninja_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80160480.o",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_sha1_verified": true,
+    "legal_audit_exit": 0,
+    "legal_audit_output": "legal audit passed (16516 tracked project files inspected)"
+  },
+  "canonical_objdiff": {
+    "tool": "objdiff-cli v3.6.1 via tools/fndiff.py",
+    "expected_size_bytes": 120,
+    "actual_size_bytes": 120,
+    "match_percent": 99.0,
+    "raw_summary": "target 120 bytes  base 120 bytes  match 99.0",
+    "mismatches": [
+      {"offset": "0x24", "expected": "lwzx r6, r4, r0", "actual": "lwzx r5, r4, r5"},
+      {"offset": "0x28", "expected": "lwzx r5, r4, r5", "actual": "lwzx r4, r4, r0"},
+      {"offset": "0x2c", "expected": "lbz r0, 0x2(r6)", "actual": "lbz r0, 0x2(r5)"},
+      {"offset": "0x30", "expected": "lbz r4, 0x2(r5)", "actual": "lbz r4, 0x2(r4)"}
+    ]
+  },
+  "relocation_strict": {
+    "status": "pass",
+    "elf_relocations_expected": 8,
+    "elf_relocations_actual": 8,
+    "all_offsets_types_targets_addends_equal": true,
+    "raw_entries_expected": [
+      "0000000a R_PPC_ADDR16_HA lbl_8023A878 + 0",
+      "0000001a R_PPC_ADDR16_LO lbl_8023A878 + 0",
+      "00000046 R_PPC_ADDR16_HA lbl_8024F554 + 0",
+      "0000004a R_PPC_ADDR16_LO lbl_8024F554 + 0",
+      "00000050 R_PPC_REL24 fn_80163BB4 + 0",
+      "0000005a R_PPC_ADDR16_HA lbl_8024F578 + 0",
+      "0000005e R_PPC_ADDR16_LO lbl_8024F578 + 0",
+      "00000064 R_PPC_REL24 fn_80163BB4 + 0"
+    ],
+    "raw_entries_actual": [
+      "0000000a R_PPC_ADDR16_HA lbl_8023A878 + 0",
+      "0000001a R_PPC_ADDR16_LO lbl_8023A878 + 0",
+      "00000046 R_PPC_ADDR16_HA lbl_8024F554 + 0",
+      "0000004a R_PPC_ADDR16_LO lbl_8024F554 + 0",
+      "00000050 R_PPC_REL24 fn_80163BB4 + 0",
+      "0000005a R_PPC_ADDR16_HA lbl_8024F578 + 0",
+      "0000005e R_PPC_ADDR16_LO lbl_8024F578 + 0",
+      "00000064 R_PPC_REL24 fn_80163BB4 + 0"
+    ]
+  },
+  "new_hypothesis": {
+    "description": "Decouple source declaration order from equality-operand order: declare the previous descriptor before the current descriptor, but compare current against previous. This changes MWCC's live-range coloring without volatile entry accesses or compiler-policy changes.",
+    "result": "The exact-size score improved from 98.933334% to 99.0%. Entry loads at 0x10 and 0x14 now match retail, as do the shifts and final compare. The remaining divergence is the descriptor lookup schedule/register allocation at 0x24-0x30: generated code fetches previous then current, while retail fetches current then previous. Cursor, direct-index, and mirrored declaration variants measured during this attempt scored 98.933334%, 98.0%, and 97.933334% respectively and were rejected."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3f4121d7-f8cd-485e-983c-9367be7f42f1",
+  "attempt": 5,
+  "base_commit": "9c797088b08207ec7560054543e46d5d952a2040",
+  "target": "fn_80160480",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3f4121d7-f8cd-485e-983c-9367be7f42f1.json"
+  ],
+  "divergence": "Best canonical objdiff is 99.0% at the exact 120-byte size. All 8 relocations pass strict offset/type/target/addend comparison. Generated code still performs the two descriptor-table loads in the opposite order at 0x24-0x28, assigning current/previous descriptors to r5/r4 instead of retail r6/r5 and consequently differing at the dependent byte loads at 0x2c-0x30."
+}
