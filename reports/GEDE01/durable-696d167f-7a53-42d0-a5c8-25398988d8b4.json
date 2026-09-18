@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "696d167f-7a53-42d0-a5c8-25398988d8b4",
+  "attempt": 2,
+  "base_commit": "c168382dc69edd0a12aa515bd11b5528954d588c",
+  "target": "fn_800DC9A8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-696d167f-7a53-42d0-a5c8-25398988d8b4.json"
+  ],
+  "divergence": "Relocation-strict objdiff measures 96.41791%: retail is 536 bytes and generated C is 532 bytes, with 27 relocation-bearing instructions on each side. Retail preserves the initial list head in r24 and copies it to the r23 iterator (one extra mr), while GC/1.3 coalesces them; remaining instruction deltas are nonvolatile-register allocation. The generated unsigned-short conversion bias relocates to split-TU local @29 rather than retail lbl_8064F4F0; all call relocations and the two explicitly referenced vertical-bound constants agree. Full build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
