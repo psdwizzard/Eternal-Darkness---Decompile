@@ -1,0 +1,23 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_801A82FC.c
++++ b/eternal-darkness-decomp/src/game/game_fn_801A82FC.c
+@@ -29,16 +29,15 @@
+     if (context != 0 && context->active != 0 && context->ready != 0) {
+         Buffer801A82FC* buffer = &context->buffer;
+         if (buffer != 0) {
+-            u32 offset = 0;
+-            int index = 0;
++            u32 offset;
++            int index;
+ 
+-            while (index < buffer->count) {
++            for (offset = 0, index = 0; index < buffer->count;
++                 offset += 0x74, index++) {
+                 if (value == *(u32*)((u8*)buffer->data + offset + 0x2C)) {
+                     result = (u8*)buffer->data + index * 0x74;
+                     break;
+                 }
+-                offset += 0x74;
+-                index++;
+             }
+         }
+     }

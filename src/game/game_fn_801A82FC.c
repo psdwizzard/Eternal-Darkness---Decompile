@@ -2,11 +2,17 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned long u32;
 
+typedef struct Record801A82FC {
+    u8 pad[0x2C];
+    u32 key;
+    u8 rest[0x44];
+} Record801A82FC;
+
 typedef struct Buffer801A82FC {
     u8 pad[0x10];
     u16 count;
     u8 pad12[2];
-    void* data;
+    Record801A82FC* data;
 } Buffer801A82FC;
 
 typedef struct Context801A82FC {
@@ -19,8 +25,7 @@ typedef struct Context801A82FC {
 
 extern Context801A82FC* fn_8015C28C(int);
 
-/* NonMatching: size-exact honest C at 98.690475%. Canonical GC/1.3 uses
- * buffer/data-base/byte-offset in r4/r3/r6; retail uses r6/r4/r3. */
+/* Typed record indexing lets GC/1.3 generate the retail induction variables. */
 void* fn_801A82FC(u32 value)
 {
     Context801A82FC* context = fn_8015C28C(2);
@@ -29,15 +34,13 @@ void* fn_801A82FC(u32 value)
     if (context != 0 && context->active != 0 && context->ready != 0) {
         Buffer801A82FC* buffer = &context->buffer;
         if (buffer != 0) {
-            u32 offset = 0;
             int index = 0;
 
             while (index < buffer->count) {
-                if (value == *(u32*)((u8*)buffer->data + offset + 0x2C)) {
-                    result = (u8*)buffer->data + index * 0x74;
+                if (value == buffer->data[index].key) {
+                    result = &buffer->data[index];
                     break;
                 }
-                offset += 0x74;
                 index++;
             }
         }

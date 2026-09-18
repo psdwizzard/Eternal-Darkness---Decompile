@@ -1,0 +1,11 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_801A82FC.c
++++ b/eternal-darkness-decomp/src/game/game_fn_801A82FC.c
+@@ -33,7 +33,7 @@
+             int index = 0;
+ 
+             while (index < buffer->count) {
+-                if (value == *(u32*)((u8*)buffer->data + offset + 0x2C)) {
++                if (value == *(u32*)((u8*)buffer->data + 0x2C + offset)) {
+                     result = (u8*)buffer->data + index * 0x74;
+                     break;
+                 }

@@ -1,0 +1,67 @@
+[
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "python3",
+      "configure.py"
+    ],
+    "exit_code": 0,
+    "raw_output": "reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/final-configure.log"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2"
+    ],
+    "exit_code": 0,
+    "raw_output": "reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/final-build.log"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "sha1sum",
+      "build/GEDE01/main.dol"
+    ],
+    "exit_code": 0,
+    "raw_output": "reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/final-sha1.log"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_801A82FC",
+      "fn_801A82FC",
+      "-o",
+      "reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/final-canonical.json",
+      "--format",
+      "json-pretty"
+    ],
+    "exit_code": 0,
+    "raw_output": "reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/final-canonical.log"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_801A82FC",
+      "fn_801A82FC",
+      "-o",
+      "reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/final-strict.json",
+      "--format",
+      "json-pretty",
+      "-c",
+      "function_reloc_diffs=name_address"
+    ],
+    "exit_code": 0,
+    "raw_output": "reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/final-strict.log"
+  }
+]

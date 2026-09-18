@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "assignment_id": "e11b057e-69b6-4c87-b03b-7732ad8af301",
+  "target": "fn_801A82FC",
+  "base_commit": "9b2d1399073021f018e13bdbd999e0f255c8bfda",
+  "status": "matched",
+  "hypothesis": "Represent the 0x74-byte records explicitly and use one signed record index. MWCC strength reduction generates the retail byte-offset induction variable and register allocation. Typed u32 word indexing also matches; only the clearer record representation is retained.",
+  "recovery": {
+    "preserved_attempt5_commit": "b9eda4c8830e6be901e12bde9581c22c6bade0f8",
+    "preserved_attempt4_commit": "8c9779edc39105648f8f4449ace8cedba37fb12f",
+    "source_reconciliation": "Accepted base already contains the same executable reconstruction as attempt 5; historical comment-only changes were superseded by the matching implementation.",
+    "evidence_repair": "Attempt 4 signed-offset and unsigned-both variants and all four attempt 5 variants were freshly remeasured to replace missing raw data and malformed patches. Historical scores reproduced. Repetition was solely evidence recovery, separate from the new typed-index hypothesis."
+  },
+  "variants": [
+    {
+      "name": "baseline",
+      "score": 98.690475,
+      "size": "168",
+      "raw_canonical": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/baseline-canonical.json",
+      "raw_strict": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/baseline-strict.json",
+      "patch": null
+    },
+    {
+      "name": "final",
+      "score": 100.0,
+      "size": "168",
+      "raw_canonical": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/final-canonical.json",
+      "raw_strict": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/final-strict.json",
+      "patch": null
+    },
+    {
+      "name": "new_commuted_address",
+      "score": 98.690475,
+      "size": "168",
+      "raw_canonical": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/new_commuted_address-canonical.json",
+      "raw_strict": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/new_commuted_address-strict.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/new_commuted_address.patch"
+    },
+    {
+      "name": "new_field_first_address",
+      "score": 98.690475,
+      "size": "168",
+      "raw_canonical": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/new_field_first_address-canonical.json",
+      "raw_strict": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/new_field_first_address-strict.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/new_field_first_address.patch"
+    },
+    {
+      "name": "new_typed_records",
+      "score": 100.0,
+      "size": "168",
+      "raw_canonical": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/new_typed_records-canonical.json",
+      "raw_strict": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/new_typed_records-strict.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/new_typed_records.patch"
+    },
+    {
+      "name": "new_word_index",
+      "score": 100.0,
+      "size": "168",
+      "raw_canonical": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/new_word_index-canonical.json",
+      "raw_strict": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/new_word_index-strict.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/new_word_index.patch"
+    },
+    {
+      "name": "recovered4_signed_offset",
+      "score": 98.690475,
+      "size": "168",
+      "raw_canonical": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered4_signed_offset-canonical.json",
+      "raw_strict": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered4_signed_offset-strict.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered4_signed_offset.patch"
+    },
+    {
+      "name": "recovered4_unsigned_both",
+      "score": 97.2619,
+      "size": "168",
+      "raw_canonical": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered4_unsigned_both-canonical.json",
+      "raw_strict": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered4_unsigned_both-strict.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered4_unsigned_both.patch"
+    },
+    {
+      "name": "recovered5_for_loop",
+      "score": 98.690475,
+      "size": "168",
+      "raw_canonical": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered5_for_loop-canonical.json",
+      "raw_strict": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered5_for_loop-strict.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered5_for_loop.patch"
+    },
+    {
+      "name": "recovered5_register_both",
+      "score": 98.690475,
+      "size": "168",
+      "raw_canonical": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered5_register_both-canonical.json",
+      "raw_strict": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered5_register_both-strict.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered5_register_both.patch"
+    },
+    {
+      "name": "recovered5_register_index",
+      "score": 98.690475,
+      "size": "168",
+      "raw_canonical": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered5_register_index-canonical.json",
+      "raw_strict": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered5_register_index-strict.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered5_register_index.patch"
+    },
+    {
+      "name": "recovered5_register_offset",
+      "score": 98.690475,
+      "size": "168",
+      "raw_canonical": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered5_register_offset-canonical.json",
+      "raw_strict": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered5_register_offset-strict.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/recovered5_register_offset.patch"
+    }
+  ],
+  "commands": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/commands.json",
+  "final_commands": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/final-commands.json",
+  "compiler_configuration": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/configuration.json",
+  "final_configuration": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/final-configuration.json",
+  "patch_replay": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/patch-replay.json",
+  "patch_baseline": "All variant patches apply to accepted base commit; final.patch includes source plus Matching registration.",
+  "byte_and_relocation_verification": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/byte-relocation-verification.json",
+  "legal_audit": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/legal-audit.json",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "build_output": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/final-build.log",
+  "hash_output": "eternal-darkness-decomp/reports/GEDE01/e11b057e-69b6-4c87-b03b-7732ad8af301/final-sha1.log",
+  "conclusion": "Canonical and relocation-strict objdiff both 100%; all 168 text bytes identical; R_PPC_REL24 at offset 24 targets fn_8015C28C with addend zero in both objects. Full DOL verification passes.",
+  "divergence": ""
+}
