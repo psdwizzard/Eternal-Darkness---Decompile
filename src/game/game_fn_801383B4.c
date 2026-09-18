@@ -59,7 +59,7 @@ void fn_801383B4(int slot_index, int mode)
     header = (ResourceHeader*)scratch;
     if (read_size == 0x20) {
         parent = header->parent;
-    } else if (read_size != 0) {
+    } else if ((int)read_size != 0) {
         count = header->count;
         data_offset = 0;
         data_index = 0;

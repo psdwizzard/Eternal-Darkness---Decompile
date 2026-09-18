@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "assignment_id": "0b6a10bd-4a8c-4eba-87b6-a06f5fb8bfc2",
+  "target": "fn_801383B4",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_801383B4.c fn_801383B4",
+    "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+  ],
+  "canonical": {
+    "target_bytes": 436,
+    "candidate_bytes": 436,
+    "match_percent": 97.15596,
+    "matched": false
+  },
+  "relocation_strict": {
+    "target_relocation_instructions": 17,
+    "candidate_relocation_instructions": 17,
+    "relocation_offsets_types_targets_addends_aligned": 17,
+    "matched": false,
+    "reason": "All 17 relocation-bearing instructions retain equal offsets, types, targets, and zero addends, but code bytes are below 100%; strict match is therefore not claimable."
+  },
+  "dol_sha1": {
+    "built": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matched": true
+  },
+  "raw_outputs": {
+    "configure": "exit 0; no stdout",
+    "build": "[876/877] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK",
+    "fndiff": "target 436 bytes  base 436 bytes  match 97.15596",
+    "sha1sum": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  },
+  "baseline": {
+    "preserved_commit": "c7b70413e6f5cb131cabb4f9dda4805efcdc9ba8",
+    "match_percent": 96.651375,
+    "improvement": "Casting only the nonzero test to signed int changes the generated zero comparison from cmplwi to retail's cmpwi."
+  },
+  "divergence": "The recovered control flow and 436-byte object size are exact. The remaining instruction mismatches are nonvolatile-register allocation: retail assigns slot_index/mode to r24/r25, scratch/header to r29, parent to r30, count to r27, data index/read size to r26, source data to r28, and loop/data pointers across r21-r23/r31; canonical GC/1.3 assigns those live ranges to different registers."
+}
