@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "assignment_id": "19d4ab53-7171-49d0-a595-d17fa16596f8",
+  "target": "fn_80060F9C",
+  "compiler": "GC/1.3 (canonical configure.py settings; -use_lmw_stmw on)",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80060F9C -o build/GEDE01/fndiff-19d4ab53-canonical-final.json --format json-pretty fn_80060F9C",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80060F9C -o build/GEDE01/fndiff-19d4ab53-reloc-strict-final.json --format json-pretty -c function_reloc_diffs=name_address fn_80060F9C",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "legal_audit": "python3 tools/legal_audit.py"
+  },
+  "raw_measured_outputs": {
+    "build": "exit_code=0; build/GEDE01/main.dol: OK",
+    "canonical": "left_size=1292 right_size=1292 left_instructions=323 right_instructions=323 match_percent=100.0 DIFF_NONE=323",
+    "relocation_strict": "left_size=1292 right_size=1292 left_instructions=323 right_instructions=323 match_percent=100.0 DIFF_NONE=323; left_relocations=63 right_relocations=63 exact_address_type_formatted_target_addend_sequence_equal=True all_addends=[0]",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "legal_audit": "legal audit passed (16644 tracked project files inspected)"
+  },
+  "hypothesis": "The initial handle returned by fn_80201B94 and the post-fn_80201C48 iterator are distinct non-overlapping source variables that the compiler coalesces into one physical register. Splitting their lifetimes changes allocator priority so owner/resource/probe/target/alternate occupy retail r24-r28 and the coalesced iterator occupies retail r29, without changing the instruction stream.",
+  "result": {
+    "status": "matched",
+    "match_percent": 100.0,
+    "retail_bytes": 1292,
+    "generated_bytes": 1292,
+    "retail_instructions": 323,
+    "generated_instructions": 323,
+    "difference_kinds": {
+      "DIFF_NONE": 323
+    },
+    "relocations_each": 63,
+    "relocation_semantics_equal": true,
+    "relocations_at_exact_offsets": 63,
+    "relocation_addends": "all zero or absent on both sides"
+  }
+}

@@ -68,7 +68,7 @@ s32 fn_80060F9C(void *owner, void *resource, void *probe, void *target,
                 void *alternate, s32 mask, s32 flags)
 {
     OwnerData *owner_data;
-    s32 iterator;
+    s32 initial_iterator;
     Vec3 resource_position;
     s32 relaxed;
     s32 result;
@@ -84,10 +84,11 @@ s32 fn_80060F9C(void *owner, void *resource, void *probe, void *target,
     s32 ready;
     s32 created;
     u16 state;
+    s32 iterator;
 
     result = 0;
     owner_data = fn_80201B8C(owner);
-    iterator = (s32)fn_80201B94(owner);
+    initial_iterator = (s32)fn_80201B94(owner);
     fn_8011F114(&resource_position, resource);
     relaxed = 0;
     if (fn_80066D04(owner, 3) == 0 && fn_80066D04(owner, 2) == 0) {
@@ -97,9 +98,9 @@ s32 fn_80060F9C(void *owner, void *resource, void *probe, void *target,
         fn_800359A0(owner, 0);
     }
 
-    fn_80201CD4((void *)iterator);
-    value = fn_80201C48((void *)iterator);
-    if ((s32)fn_80201C48((void *)iterator) == 1 &&
+    fn_80201CD4((void *)initial_iterator);
+    value = fn_80201C48((void *)initial_iterator);
+    if ((s32)fn_80201C48((void *)initial_iterator) == 1 &&
         ((((u8 *)owner_data->state)[0x89] & 2) == 0)) {
         fn_80060C28((void *)fn_80201B54(owner), resource, owner_data);
         goto done;
