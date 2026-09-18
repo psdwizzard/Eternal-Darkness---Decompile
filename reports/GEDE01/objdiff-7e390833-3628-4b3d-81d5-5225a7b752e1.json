@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "assignment_id": "7e390833-3628-4b3d-81d5-5225a7b752e1",
+  "target": "fn_801383B4",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_801383B4.c fn_801383B4",
+    "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+  ],
+  "canonical": {
+    "target_bytes": 436,
+    "candidate_bytes": 436,
+    "match_percent": 96.651375,
+    "matched": false
+  },
+  "relocation_strict": {
+    "target_relocation_instructions": 17,
+    "candidate_relocation_instructions": 17,
+    "relocation_offsets_types_targets_addends_aligned": 17,
+    "matched": false,
+    "reason": "Code bytes are below 100%; strict match is therefore not claimable."
+  },
+  "dol_sha1": {
+    "built": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matched": true
+  },
+  "raw_summary": "target 436 bytes  base 436 bytes  match 96.651375",
+  "divergence": "The recovered control flow and object size are exact. Remaining instruction mismatches are almost entirely nonvolatile-register allocation: retail assigns slot_index/mode to r24/r25, scratch/header to r29, parent to r30, count to r27, data index to r26, and loop pointers to r22/r23; generated code assigns the same values to different registers. The generated read_size != 0 test is cmplwi because the reconstructed return type is unsigned, while retail uses cmpwi."
+}
