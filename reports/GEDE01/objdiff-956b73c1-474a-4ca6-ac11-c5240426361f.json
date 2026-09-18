@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "target": "fn_80158E7C",
+  "unit": "main/game/game_fn_80158E7C",
+  "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80158E7C fn_80158E7C -o build/GEDE01/fndiff_fn_80158E7C.json --format json",
+  "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80158E7C fn_80158E7C -o build/GEDE01/fndiff_fn_80158E7C_reloc.json --format json -c function_reloc_diffs=name_address",
+  "canonical_relocation_strict_cmp_exit": 0,
+  "measurement": {
+    "target_bytes": 8,
+    "base_bytes": 8,
+    "match_percent": 100.0,
+    "target_relocations": 0,
+    "base_relocations": 0
+  },
+  "raw_objdiff": {
+    "left": {
+      "sections": [
+        {"name": ".text", "kind": "SECTION_CODE", "size": "8", "match_percent": 100.0},
+        {"name": ".symtab", "size": "64"},
+        {"name": ".strtab", "size": "32"},
+        {"name": ".shstrtab", "size": "33"}
+      ],
+      "symbols": [{
+        "name": "fn_80158E7C",
+        "size": "8",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 100.0,
+        "instructions": [
+          {"instruction": {"size": 4, "formatted": "cmpwi r3, 0x0", "parts": [{"opcode": {"mnemonic": "cmpwi", "opcode": 260}}, {"arg": {"opaque": "r3"}}, {"separator": true}, {"arg": {"signed": "0"}}]}},
+          {"instruction": {"address": "4", "size": 4, "formatted": "blr ", "parts": [{"opcode": {"mnemonic": "blr", "opcode": 269}}]}}
+        ]
+      }]
+    },
+    "right": {
+      "sections": [
+        {"name": ".text", "kind": "SECTION_CODE", "size": "8"},
+        {"name": ".symtab", "size": "64"},
+        {"name": ".strtab", "size": "32"},
+        {"name": ".shstrtab", "size": "42"},
+        {"name": ".comment", "size": "76"}
+      ],
+      "symbols": [{
+        "name": "fn_80158E7C",
+        "size": "8",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 100.0,
+        "instructions": [
+          {"instruction": {"size": 4, "formatted": "cmpwi r3, 0x0", "parts": [{"opcode": {"mnemonic": "cmpwi", "opcode": 260}}, {"arg": {"opaque": "r3"}}, {"separator": true}, {"arg": {"signed": "0"}}]}},
+          {"instruction": {"address": "4", "size": 4, "formatted": "blr ", "parts": [{"opcode": {"mnemonic": "blr", "opcode": 269}}]}}
+        ]
+      }]
+    }
+  },
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_result": "success; build/GEDE01/main.dol: OK",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+}
