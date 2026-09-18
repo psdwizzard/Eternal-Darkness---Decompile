@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "assignment_id": "b513ab27-2d9b-45c7-aa30-2487b7441030",
+  "target": "fn_8008CEF0",
+  "compiler": "MWCC GC/1.3 (canonical game configuration, -use_lmw_stmw on)",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8008CEF0 fn_8008CEF0 -o build/GEDE01/fndiff_fn_8008CEF0.json --format json",
+    "raw_summary": "target 1068 bytes  base 1072 bytes  match 94.865166",
+    "retail_instructions": 267,
+    "generated_instructions": 268,
+    "retail_relocations": 53,
+    "generated_relocations": 53,
+    "aligned_rows": 272,
+    "equal_rows": 150,
+    "argument_mismatch_rows": 113,
+    "delete_rows": 4,
+    "insert_rows": 5
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8008CEF0 fn_8008CEF0 -o build/GEDE01/fndiff_fn_8008CEF0_reloc_strict.json --format json -c function_reloc_diffs=name_address",
+    "raw_summary": "target 1068 bytes  base 1072 bytes  match 94.865166",
+    "retail_relocations": 53,
+    "generated_relocations": 53,
+    "raw_cmp": "canonical and relocation-strict JSON outputs are byte-identical (cmp exit 0)",
+    "result": "nonmatching; score and aligned diff rows are identical to canonical"
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol",
+      "python3 tools/legal_audit.py"
+    ],
+    "ninja_raw_final": "build/GEDE01/main.dol: OK",
+    "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_verified": true,
+    "legal_audit_raw": "legal audit passed (16667 tracked project files inspected)"
+  },
+  "reconstruction": "The accepted base already contains the behavior-complete honest C reconstruction from preserved commit 702cb78fbc430ac64de994527409d5b2eb94c110, covering ratio/resource selection, all three primary interaction paths, default state transition, camera/vector angle fallback, transform update, and periodic event construction.",
+  "divergence": "GC/1.3 emits a 0xB0 frame versus retail's 0xA0 frame, rotates the long-lived argument/runtime/target/state values across r19-r31, emits 268 instructions versus retail's 267, and schedules an additional Vec3 aggregate copy differently. Relocation counts are equal at 53/53, but instruction operands and layout remain nonmatching."
+}
