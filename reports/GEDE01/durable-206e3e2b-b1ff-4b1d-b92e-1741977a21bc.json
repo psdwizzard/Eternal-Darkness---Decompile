@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "206e3e2b-b1ff-4b1d-b92e-1741977a21bc",
+  "attempt": 3,
+  "base_commit": "e841a811017c3fb254c851540beb78ad0b103ddc",
+  "target": "fn_800719D8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-206e3e2b-b1ff-4b1d-b92e-1741977a21bc.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.21875% with equal 128-byte functions and eight agreeing relocation offsets, types, targets, and addends. Retail uses f1 for lbl_8064E850 and f0 for lbl_8064E7E8, while generated code uses f0 and f1 respectively; only the two lfs instructions at offsets 0x0C and 0x1C and the three stfs/stfsu instructions at 0x20, 0x3C, and 0x40 differ. Attempt 3 tested reversed local creation order, a comma-expression lifetime, register-qualified locals, an aggregate initialized in reversed value order, and scalar-wrapper declarations. The exact-schedule variants canonicalized to the retained coloring; reversed field stores and array-shaped declarations did swap the colors but introduced different address/store schedules and regressed below the retained score. The full build passed and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

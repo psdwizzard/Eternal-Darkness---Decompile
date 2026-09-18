@@ -5,6 +5,8 @@ typedef short s16;
  * The const-qualified inputs recover retail scheduling and all integer code.
  * MWCC still assigns the two float values to the opposite registers. Current
  * objdiff: 99.21875%, 128 bytes on both sides.
+ * Reversing local creation order, a comma expression, register-qualified
+ * locals, and scalar-wrapper aggregates all canonicalize to this same output.
  */
 
 typedef struct State {
