@@ -11,7 +11,7 @@ extern void fn_80198C8C(void*, int, int, int, int, int);
 extern void* fn_8011FE4C(void*);
 extern int fn_80201A84(int);
 extern void *fn_80201814();
-extern unsigned long long fn_8020123C();
+extern long long fn_8020123C();
 extern int fn_80201B64(void*);
 extern int fn_80201B44();
 extern void* fn_801A717C(void);
@@ -40,31 +40,54 @@ void fn_8014BA14(s16* first, s16* second, int id, void* owner)
     Vec3 a;
     Vec3 b;
     Vec3 middle;
+    float ax, ay, az, bx, by, bz;
+    int mx, my, mz;
     u32 da, db, dm;
 
     if (id == 0)
         return;
-    if (id == -1 || id == -2) {
+    switch (id) {
+    case -1:
         special = 1;
-    } else if (id == -3) {
+        break;
+    case -2:
+        effect = 0;
+        special = 1;
+        break;
+    case -3:
         effect = 1;
         special = 1;
-    } else if (id == -4) {
+        break;
+    case -4:
         effect = 2;
         special = 1;
+        break;
     }
 
     if (owner != 0) {
-        int type = fn_8018F764(owner);
-        int kind = type == 9 ? 6 : 1;
-        int strength = type == 9 ? 150 : 90;
-        if (id == -1) {
-            fn_80198C8C(owner, kind, 255, -3, strength, 0);
-        } else if (id >= -4 && id <= -2) {
-            fn_80198C8C(owner, kind, 255, -3, strength,
-                        (effect + 1) * 17 - 5);
-        } else {
-            fn_80198C8C(owner, kind, 220, -2, strength, 0);
+        switch (id) {
+        case -1:
+            if (fn_8018F764(owner) == 9)
+                fn_80198C8C(owner, 6, 255, -3, 150, 0);
+            else
+                fn_80198C8C(owner, 1, 255, -3, 90, 0);
+            break;
+        case -4:
+        case -3:
+        case -2: {
+            unsigned char color = (effect + 1) * 17 - 5;
+            if (fn_8018F764(owner) == 9)
+                fn_80198C8C(owner, 6, 255, -3, 150, color);
+            else
+                fn_80198C8C(owner, 1, 255, -3, 90, color);
+            break;
+        }
+        default:
+            if (fn_8018F764(owner) == 9)
+                fn_80198C8C(owner, 6, 220, -2, 150, 0);
+            else
+                fn_80198C8C(owner, 1, 220, -2, 90, 0);
+            break;
         }
     }
     if (special)
@@ -76,17 +99,25 @@ void fn_8014BA14(s16* first, s16* second, int id, void* owner)
         zone = fn_80201A84((int)fn_8011FE4C((void*)id));
         room = fn_80201814();
     }
-    fn_8020123C(59, -1, zone, 4);
-    if (room == 0 || fn_80201B64(room) == 8)
+    if ((u32)(fn_8020123C(59, -1, zone, 4) & 0xffffffffULL) != 1)
+        return;
+    if (room == 0)
+        return;
+    if (fn_80201B64(room) == 8)
         return;
     if (zone == fn_80201B44()) {
-        int elapsed = (int)(lbl_8064D5A8 - lbl_8064D0AC);
+        u32 now = lbl_8064D5A8;
+        u32 last = lbl_8064D0AC;
+        int elapsed = (int)(now - last);
         if (elapsed > 120 || (elapsed < 0 && (int)(elapsed + 0x80000000U - 1) > 119))
-            lbl_8064D0AC = lbl_8064D5A8;
+            lbl_8064D0AC = now;
         else
             allowed = 0;
     }
-    if (!allowed || (spawn = fn_801A717C()) == 0)
+    if (!allowed)
+        return;
+    spawn = fn_801A717C();
+    if (spawn == 0)
         return;
 
     fn_801A74A0(spawn, 0);
@@ -95,18 +126,20 @@ void fn_8014BA14(s16* first, s16* second, int id, void* owner)
     fn_801A7518(spawn, 10);
     fn_801A7588(spawn, 2);
     fn_80201E78(&point, room);
-    a.x = first[0]; a.y = first[1]; a.z = first[2];
-    b.x = second[0]; b.y = second[1]; b.z = second[2];
+    ay = first[0]; az = first[1]; bx = first[2];
+    by = second[0]; bz = second[1]; ax = second[2];
+    a.x = ay; a.y = az; a.z = bx;
+    b.x = by; b.y = bz; b.z = ax;
     da = fn_80179004(&point, &a);
     db = fn_80179004(&point, &b);
-    middle.x = first[0] + ((second[0] - first[0]) >> 1);
-    middle.y = first[1] + ((second[1] - first[1]) >> 1);
-    middle.z = first[2] + ((second[2] - first[2]) >> 1);
+    my = first[0] + ((second[0] - first[0]) >> 1);
+    mz = first[1] + ((second[1] - first[1]) >> 1);
+    mx = first[2] + ((second[2] - first[2]) >> 1);
+    middle.x = my; middle.y = mz; middle.z = mx;
     dm = fn_80179004(&point, &middle);
-    if (da < db)
-        fn_801A764C(spawn, da < dm ? &a : &middle);
-    else
-        fn_801A764C(spawn, db < dm ? &b : &middle);
+    fn_801A764C(spawn,
+                da < db ? (da < dm ? &a : &middle)
+                        : (db < dm ? &b : &middle));
     fn_801A7670(spawn, 0);
     fn_8020104C(237, (void *)-1, (void *)zone, (int)spawn, lbl_806504AC);
     fn_801A98F4(552, 100);
