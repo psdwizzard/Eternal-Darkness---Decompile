@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "769303ff-e981-4d66-a407-c0fb9c22e3e5",
+  "attempt": 2,
+  "base_commit": "8ad5a3cc8c7b5f77f8434758a1428dcdc1078447",
+  "target": "fn_8005F8D0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-769303ff-e981-4d66-a407-c0fb9c22e3e5.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both measure 77.28405%: retail is 1028 bytes/257 instructions/68 relocation-bearing instructions while GC/1.3 emits 988 bytes/247 instructions/61 relocation-bearing instructions. The honest C recovers the nine-argument ABI, shared table-base addressing, position scratch initialization, u16 random result, complete 26-argument effect dispatch, force-mode selection, vector stack layout, and bounded global-index mask. Remaining codegen divergence is the retail r20-r31 long-lived allocation and single hoisted table base versus generated r21-r31 allocation and a re-materialized config base, retail's longer boolean-mask sequence, and call-argument scheduling/relocation placement."
+}
