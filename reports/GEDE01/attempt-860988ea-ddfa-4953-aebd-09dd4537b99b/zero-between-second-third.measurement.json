@@ -1,0 +1,38 @@
+{
+  "name": "zero-between-second-third",
+  "hypothesis": "Interleave the zero-store chain between quotient statements to change interference with the final numerator; previous attempt only moved zeros before all quotients.",
+  "base_commit": "f3b6f8b90a4f23e609b0b7783934b4cd404a95e4",
+  "source_sha256": "26fdf81f4fc809dc9ac41532753708c917f76692e76f893c7e897c7bd5ddaada",
+  "commands": [
+    {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801ED5F4.externalized"
+      ],
+      "exit_code": 0,
+      "output": "[1/2] MWCC build/GEDE01/src/game/game_fn_801ED5F4.o\n[2/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801ED5F4.o\n"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801ED5F4",
+        "fn_801ED5F4",
+        "-o",
+        "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-between-second-third.objdiff.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-between-second-third.objdiff.json\n"
+    }
+  ],
+  "score": 100.0,
+  "target_size": "1140",
+  "candidate_size": "1140",
+  "differences": []
+}

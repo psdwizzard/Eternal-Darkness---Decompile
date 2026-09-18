@@ -1,0 +1,20 @@
+[
+  {
+    "command": [
+      ".tools/bin/ninja",
+      "-t",
+      "commands",
+      "build/GEDE01/src/game/game_fn_801ED5F4.externalized"
+    ],
+    "exit_code": 0,
+    "output": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_801ED5F4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801ED5F4.d build/GEDE01/src/game/game_fn_801ED5F4.d\npython3 tools/externalize_elf_symbol.py build/GEDE01/src/game/game_fn_801ED5F4.o @52 lbl_80651320 orig/GEDE01/sys/main.dol --require-whole-section && build/binutils/powerpc-eabi-objcopy --redefine-sym=@52=lbl_80651320 --remove-section=.sdata2 --rename-section=.comment=.ignored build/GEDE01/src/game/game_fn_801ED5F4.o && touch build/GEDE01/src/game/game_fn_801ED5F4.externalized\n"
+  },
+  {
+    "command": [
+      "sha256sum",
+      "compilers/GC/1.3/mwcceppc.exe"
+    ],
+    "exit_code": 0,
+    "output": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715  compilers/GC/1.3/mwcceppc.exe\n"
+  }
+]

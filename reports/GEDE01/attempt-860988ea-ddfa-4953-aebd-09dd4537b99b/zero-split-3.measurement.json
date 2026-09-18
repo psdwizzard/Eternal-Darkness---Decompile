@@ -1,0 +1,17 @@
+{
+  "name": "zero-split-3",
+  "hypothesis": "Split the existing zero-store chain without changing store order to test expression-tree effects on floating register allocation.",
+  "base_commit": "f3b6f8b90a4f23e609b0b7783934b4cd404a95e4",
+  "source_sha256": "405b5b300d3ebe735683d5b34653d92f03613fa7e99101e24a0305cac6621b42",
+  "commands": [
+    {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801ED5F4.externalized"
+      ],
+      "exit_code": 1,
+      "output": "[1/2] MWCC build/GEDE01/src/game/game_fn_801ED5F4.o\n[2/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801ED5F4.o\nFAILED: [code=1] build/GEDE01/src/game/game_fn_801ED5F4.externalized \npython3 tools/externalize_elf_symbol.py build/GEDE01/src/game/game_fn_801ED5F4.o @52 lbl_80651320 orig/GEDE01/sys/main.dol --require-whole-section && build/binutils/powerpc-eabi-objcopy --redefine-sym=@52=lbl_80651320 --remove-section=.sdata2 --rename-section=.comment=.ignored build/GEDE01/src/game/game_fn_801ED5F4.o && touch build/GEDE01/src/game/game_fn_801ED5F4.externalized\nbuild/GEDE01/src/game/game_fn_801ED5F4.o: symbol '@52' not found\nninja: build stopped: subcommand failed.\n"
+    }
+  ]
+}

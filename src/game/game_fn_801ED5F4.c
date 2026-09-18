@@ -88,9 +88,9 @@ void fn_801ED5F4(int object, int flags, s16 value, float* direction,
                 changed = 1;
                 transform[0][0] = lbl_8065131C / divisor;
                 transform[0][1] = lbl_80651330 / divisor;
-                transform[1][0] = lbl_80651334 / divisor;
                 transform[1][3] = transform[1][2] = transform[1][1] =
                     transform[0][3] = transform[0][2] = lbl_80651318;
+                transform[1][0] = lbl_80651334 / divisor;
             } else if (lbl_8064D620 != divisor) {
                 float scale = lbl_80651338 / divisor;
                 changed = 1;

@@ -1,0 +1,218 @@
+{
+  "assignment_id": "860988ea-ddfa-4953-aebd-09dd4537b99b",
+  "target": "fn_801ED5F4",
+  "baseline_source_sha256": "b8fb4166e014f94f8190c63003c859dbf293becedb0604f866f661992aa46ace",
+  "preserved_attempt_5_source_sha256": "b8fb4166e014f94f8190c63003c859dbf293becedb0604f866f661992aa46ace",
+  "baseline_equals_preserved_attempt_5": true,
+  "prior_work_reviewed": [
+    "2f23cd97961c6a63cc593a8892edac7b7661479e",
+    "dc4ac705ca6304d7c6f73f90a66e3c34e1a68af7",
+    "b37dbf3b50ab77857fce107e73c6b784d798601e",
+    "63e46d11ea56fa36e45b0354d072cf7b785aa9cf",
+    "3132925010de7a050a6c90abba42d2f2602c57a1"
+  ],
+  "prior_failed_variants_not_repeated": [
+    "three explicit numerator temporaries",
+    "reversing numerator assignment order",
+    "moving all zero stores before all quotients"
+  ],
+  "new_hypotheses": [
+    "matrix-field in-place division to change operand/result coalescing",
+    "local divisor and zero scalar live ranges",
+    "reuse a scalar input for the final quotient",
+    "interleave zero stores between quotient assignments or split their expression chain"
+  ],
+  "winning_trial": "zero-between-second-third",
+  "explanation": "Move only the third quotient assignment after the existing zero-store chain. GC/1.3 now allocates the first numerator and zeros to f1, and the third numerator to f0, exactly reproducing all ten formerly differing operands without any size or relocation changes.",
+  "trials": [
+    {
+      "name": "baseline",
+      "score": 99.82456,
+      "candidate_size": "1140",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/baseline.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/baseline.measurement.json"
+    },
+    {
+      "name": "compound-all",
+      "score": null,
+      "candidate_size": null,
+      "result": "rejected by unchanged externalization gate",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/compound-all.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/compound-all.measurement.json"
+    },
+    {
+      "name": "compound-first",
+      "score": 99.38596,
+      "candidate_size": "1144",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/compound-first.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/compound-first.measurement.json"
+    },
+    {
+      "name": "compound-last",
+      "score": null,
+      "candidate_size": null,
+      "result": "rejected by unchanged externalization gate",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/compound-last.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/compound-last.measurement.json"
+    },
+    {
+      "name": "denominator-const-float",
+      "score": null,
+      "candidate_size": null,
+      "result": "rejected by unchanged externalization gate",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/denominator-const-float.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/denominator-const-float.measurement.json"
+    },
+    {
+      "name": "denominator-float",
+      "score": 99.82456,
+      "candidate_size": "1140",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/denominator-float.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/denominator-float.measurement.json"
+    },
+    {
+      "name": "denominator-register-float",
+      "score": 99.82456,
+      "candidate_size": "1140",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/denominator-register-float.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/denominator-register-float.measurement.json"
+    },
+    {
+      "name": "last-denominator-self",
+      "score": 99.82456,
+      "candidate_size": "1140",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/last-denominator-self.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/last-denominator-self.measurement.json"
+    },
+    {
+      "name": "last-local-compound",
+      "score": 99.65614,
+      "candidate_size": "1140",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/last-local-compound.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/last-local-compound.measurement.json"
+    },
+    {
+      "name": "last-local-self",
+      "score": 99.65614,
+      "candidate_size": "1140",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/last-local-self.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/last-local-self.measurement.json"
+    },
+    {
+      "name": "last-register-compound",
+      "score": 99.65614,
+      "candidate_size": "1140",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/last-register-compound.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/last-register-compound.measurement.json"
+    },
+    {
+      "name": "quotient-float",
+      "score": 99.82456,
+      "candidate_size": "1140",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/quotient-float.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/quotient-float.measurement.json"
+    },
+    {
+      "name": "quotient-register",
+      "score": 99.82456,
+      "candidate_size": "1140",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/quotient-register.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/quotient-register.measurement.json"
+    },
+    {
+      "name": "reuse-addressed-divisor",
+      "score": 99.4,
+      "candidate_size": "1144",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/reuse-addressed-divisor.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/reuse-addressed-divisor.measurement.json"
+    },
+    {
+      "name": "reused-scalar-compound",
+      "score": null,
+      "candidate_size": null,
+      "result": "rejected by unchanged externalization gate",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/reused-scalar-compound.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/reused-scalar-compound.measurement.json"
+    },
+    {
+      "name": "zero-between-first-second",
+      "score": 99.789474,
+      "candidate_size": "1140",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-between-first-second.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-between-first-second.measurement.json"
+    },
+    {
+      "name": "zero-between-second-third",
+      "score": 100.0,
+      "candidate_size": "1140",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-between-second-third.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-between-second-third.measurement.json"
+    },
+    {
+      "name": "zero-local",
+      "score": 99.82456,
+      "candidate_size": "1140",
+      "result": "measured",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-local.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-local.measurement.json"
+    },
+    {
+      "name": "zero-split-1",
+      "score": null,
+      "candidate_size": null,
+      "result": "rejected by unchanged externalization gate",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-split-1.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-split-1.measurement.json"
+    },
+    {
+      "name": "zero-split-2",
+      "score": null,
+      "candidate_size": null,
+      "result": "rejected by unchanged externalization gate",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-split-2.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-split-2.measurement.json"
+    },
+    {
+      "name": "zero-split-3",
+      "score": null,
+      "candidate_size": null,
+      "result": "rejected by unchanged externalization gate",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-split-3.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-split-3.measurement.json"
+    },
+    {
+      "name": "zero-split-4",
+      "score": null,
+      "candidate_size": null,
+      "result": "rejected by unchanged externalization gate",
+      "patch": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-split-4.patch",
+      "measurement": "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/zero-split-4.measurement.json"
+    }
+  ],
+  "reproduce_trial": "From eternal-darkness-decomp, restore the target source from the recorded base commit, then apply the named unified diff using patch -p0 (empty baseline.patch needs no application). Run the exact Ninja and objdiff commands recorded in that trial measurement. Do not adjust pool-symbol policy for rejected trials. Restore the winning source before running verify.py.",
+  "limitations": "Earlier attempt-5 experiment outputs were not present in the preserved commit; their reported scores are historical context only. Every experiment performed in attempt 6 has its own exact source patch and raw command output here.",
+  "scope": "Only the claimed independent C translation unit and its Matching registration change. Existing GC/1.3 settings, externalization policy and splits are unchanged.",
+  "final_verification": {
+    "canonical_percent": 100.0,
+    "relocation_strict_percent": 100.0,
+    "text_bytes_equal": true,
+    "text_size": 1140,
+    "relocation_records_equal": 39,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "legal_audit": "passed",
+    "elapsed_minutes_at_verification": 8
+  }
+}

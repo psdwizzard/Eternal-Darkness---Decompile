@@ -1,0 +1,89 @@
+{
+  "name": "denominator-register-float",
+  "hypothesis": "Copy address-taken divisor into a scalar local inside the branch to change denominator live-range formation.",
+  "base_commit": "f3b6f8b90a4f23e609b0b7783934b4cd404a95e4",
+  "source_sha256": "45634df97a615bffc6b745df519f4e314720676f24d98363c26439e381b926a0",
+  "commands": [
+    {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801ED5F4.externalized"
+      ],
+      "exit_code": 0,
+      "output": "[1/2] MWCC build/GEDE01/src/game/game_fn_801ED5F4.o\n[2/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801ED5F4.o\n"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801ED5F4",
+        "fn_801ED5F4",
+        "-o",
+        "reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/denominator-register-float.objdiff.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/attempt-860988ea-ddfa-4953-aebd-09dd4537b99b/denominator-register-float.objdiff.json\n"
+    }
+  ],
+  "score": 99.82456,
+  "target_size": "1140",
+  "candidate_size": "1140",
+  "differences": [
+    {
+      "offset": "0x198",
+      "target": "lfs f1, lbl_8065131C@sda21",
+      "candidate": "lfs f0, lbl_8065131C@sda21"
+    },
+    {
+      "offset": "0x1a8",
+      "target": "lfs f0, lbl_80651334@sda21",
+      "candidate": "lfs f1, lbl_80651334@sda21"
+    },
+    {
+      "offset": "0x1ac",
+      "target": "fdivs f3, f1, f4",
+      "candidate": "fdivs f3, f0, f4"
+    },
+    {
+      "offset": "0x1b0",
+      "target": "lfs f1, lbl_80651318@sda21",
+      "candidate": "lfs f0, lbl_80651318@sda21"
+    },
+    {
+      "offset": "0x1b4",
+      "target": "stfs f1, 0x4c(r1)",
+      "candidate": "stfs f0, 0x4c(r1)"
+    },
+    {
+      "offset": "0x1b8",
+      "target": "stfs f1, 0x50(r1)",
+      "candidate": "stfs f0, 0x50(r1)"
+    },
+    {
+      "offset": "0x1bc",
+      "target": "stfs f1, 0x58(r1)",
+      "candidate": "stfs f0, 0x58(r1)"
+    },
+    {
+      "offset": "0x1c0",
+      "target": "stfs f1, 0x5c(r1)",
+      "candidate": "stfs f0, 0x5c(r1)"
+    },
+    {
+      "offset": "0x1cc",
+      "target": "stfs f1, 0x60(r1)",
+      "candidate": "stfs f0, 0x60(r1)"
+    },
+    {
+      "offset": "0x1d0",
+      "target": "fdivs f0, f0, f4",
+      "candidate": "fdivs f0, f1, f4"
+    }
+  ]
+}
