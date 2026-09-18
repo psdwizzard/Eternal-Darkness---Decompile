@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "assignment_id": "6062753f-39a0-4ec2-b69c-72e840014518",
+  "target": "fn_80191034",
+  "hypothesis": "Unlike prior declaration-order, initialization-order, and explicit lifetime/alias probes, test whether an explicit C register storage-class hint on the long-lived data parameter changes MWCC GC/1.3 allocator priority and assigns data to retail r21, freeing r20 for buffer_offset and the later token.",
+  "probe_source_patch": "@@\n-void fn_80191034(u8* data)\n+void fn_80191034(register u8* data)",
+  "probe_compile_command": ".tools/bin/ninja -v build/GEDE01/src/game/game_fn_80191034.o",
+  "probe_compile_output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80191034.c -o build/GEDE01/src/game && /usr/bin/python3 tools/transform_dep.py build/GEDE01/src/game/game_fn_80191034.d build/GEDE01/src/game/game_fn_80191034.d",
+  "probe_objdiff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80191034 -o build/GEDE01/fn_80191034-attempt4-register-param.json --format json-pretty fn_80191034",
+  "probe_objdiff_output": "INFO Writing to build/GEDE01/fn_80191034-attempt4-register-param.json; .text size=380; fn_80191034 size=380; match_percent=98.8421",
+  "probe_result": "The explicit register hint produced byte-identical generated code to the baseline, leaving data in r20 and buffer_offset/token in r21. The hint was removed and the cleaner best reconstruction restored.",
+  "final_build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "final_build_output": "exit 0; [875/878] LINK build/GEDE01/main.elf; [876/878] DOL build/GEDE01/main.dol; [877/878] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [878/878] PROGRESS",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "legal_audit_command": "python3 tools/legal_audit.py",
+  "legal_audit_output": "legal audit passed (16652 tracked project files inspected)",
+  "canonical_objdiff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80191034 -o build/GEDE01/fn_80191034-attempt4-final-canonical.json --format json-pretty fn_80191034",
+  "relocation_strict_objdiff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80191034 -o reports/GEDE01/objdiff-6062753f-39a0-4ec2-b69c-72e840014518.json --format json-pretty -c function_reloc_diffs=name_address fn_80191034",
+  "objdiff_measurement_output": ".text retail size=380 generated size=380; fn_80191034 retail size=380 generated size=380; canonical match_percent=98.8421; relocation-strict match_percent=98.8421; 95 instructions per side; 21 DIFF_ARG_MISMATCH rows per side; 22 relocation-bearing instructions per side; canonical and relocation-strict JSON compare byte-identical (cmp exit 0)",
+  "relocation_result": "All 22 relocation-bearing instructions have equal relocation types, name/address targets, and addends under function_reloc_diffs=name_address.",
+  "remaining_divergence": "Exactly 21 instruction-argument mismatches remain, all caused by one r20/r21 allocation swap: retail assigns data to r21 and the buffer offset/final token web to r20, while canonical GC/1.3 assigns data to r20 and the offset/token web to r21. Instruction sequence, control flow, sizes, and relocations otherwise agree."
+}
