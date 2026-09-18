@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "945a5875-4156-440a-b190-53365a213215",
+  "attempt": 5,
+  "base_commit": "f15579dc125bbd2e6f088e1c6a5f744031af2f21",
+  "target": "fn_8017B4F4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-945a5875-4156-440a-b190-53365a213215.json"
+  ],
+  "divergence": "Restored NonMatching baseline scores 99.77401% canonical and relocation-strict. All 708 .text bytes and all nine jump-table relocation addends match. Two table references target generated @28 instead of retail jumptable_80250F44; eight signed-conversion loads target generated @30 instead of retail lbl_80650910. Distinct explicit union-based conversion experiment references the retail bias symbol but scores 80.64972%, emits 764 bytes, changes stack/register allocation, and uses fsub plus frsp instead of fsubs; exact patch and raw experimental outputs are preserved."
+}
