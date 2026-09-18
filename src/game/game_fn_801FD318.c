@@ -24,20 +24,12 @@ extern void* memset(void*, int, unsigned int);
 void fn_801FD318(void)
 {
     State* state = &lbl_8063EA00;
+    u32 i;
 
     memset(state->entries, 0, sizeof(state->entries));
-    state->pointers[0] = state->entries[0];
-    state->pointers[1] = state->entries[1];
-    state->pointers[2] = state->entries[2];
-    state->pointers[3] = state->entries[3];
-    state->pointers[4] = state->entries[4];
-    state->pointers[5] = state->entries[5];
-    state->pointers[6] = state->entries[6];
-    state->pointers[7] = state->entries[7];
-    state->pointers[8] = state->entries[8];
-    state->pointers[9] = state->entries[9];
-    state->pointers[10] = state->entries[10];
-    state->pointers[11] = state->entries[11];
+    for (i = 0; i < 12; i++) {
+        state->pointers[i] = state->entries[i];
+    }
     lbl_8064D7D0 = state->entries;
     lbl_8064D7CC = 0;
     lbl_8064D7C8 = 0x10000;
