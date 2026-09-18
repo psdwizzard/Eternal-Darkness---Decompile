@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "82f82398-b500-461a-a37a-f29b6f873dc0",
+  "attempt": 6,
+  "base_commit": "151387b99e2a947d9d497e1304d24f9346240bbb",
+  "target": "fn_80187320",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-82f82398-b500-461a-a37a-f29b6f873dc0.json"
+  ],
+  "divergence": "Retained the pre-existing NonMatching C reconstruction unchanged; this attempt adds evidence, not a source improvement. Canonical GC/1.3 and relocation-strict objdiff both measure 98.94444%, 360 bytes, with 19 argument-only mismatches. Eight mismatches at 0x20-0x68 arise from opposite r0/r9 temporary allocation in integer-to-float conversion, mask setup and bounds addressing. Eleven at 0x84-0xFC arise from reassociation of entry + 0xA + offset: retail adds 0xA to entry (r23), then indexes with offset (r30); compiled C adds 0xA to offset (r30), then indexes with entry (r23). Contrary to historical summaries, entry and offset occupy the same respective registers in both objects. Control flow, instruction count, frame and saved registers align. Both relocations align after the existing canonical externalization: R_PPC_EMB_SDA21 at 0x30 to lbl_80650A38 + 0 and R_PPC_REL24 at 0xF8 to fn_80186F70 + 0. A distinct integer-type/codegen hypothesis tested unsigned offset, unsigned axis product, unsigned mask construction, combined unsigned offset/mask, and unsigned bounds indexing; all five emitted the exact same externalized object as baseline. No compiler policy or registration change was made. The required linked DOL hash verifies the Matching set only, because this NonMatching function is excluded from the link."
+}
