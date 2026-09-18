@@ -8229,8 +8229,8 @@ config.libs = [
             # Honest mode dispatch; remaining differences are selection-table
             # argument-register scheduling.
             Object(Matching, "game/game_fn_8010FB5C.c"),
-            # Honest signed selection cursor update at 97.77109%; remaining
-            # differences are an index/offset register swap and clamp branches.
+            # Honest signed selection cursor update at 98.64458%; remaining
+            # differences are two clamp-control-flow branches.
             Object(NonMatching, "game/game_fn_8010FC3C.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_8010FED4.c"),
             # Large mode dispatcher retained as assembly after bounded triage.

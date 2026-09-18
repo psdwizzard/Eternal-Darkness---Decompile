@@ -21,8 +21,8 @@ extern int fn_801E7B24(unsigned int*, int, int);
 
 void fn_8010FC3C(short amount)
 {
-    int selected;
     int index;
+    int scan;
     int next;
     int found;
     int value;
@@ -45,8 +45,6 @@ void fn_8010FC3C(short amount)
     if (index == -1) {
         return;
     }
-    selected = index;
-
     if (amount > 0) {
         lbl_8064CD1C = lbl_8024C0CC[index].value;
         fn_80201B44();
@@ -55,26 +53,26 @@ void fn_8010FC3C(short amount)
             lbl_8064CD1C = lbl_8024C0CC[index].value + 1;
         } else {
             next = fn_801E8D34(lbl_80331738[2]) + 1;
-            index = fn_801E7B24(lbl_8024E388, 3, next);
-            if (index < 0) {
+            scan = fn_801E7B24(lbl_8024E388, 3, next);
+            if (scan < 0) {
                 goto no_next;
             }
             found = 0;
-            while (index >= 0) {
-                if (lbl_8024C0CC[index].value > lbl_8064CD1C) {
-                    lbl_8064CD1C = lbl_8024C0CC[index].value;
+            while (scan >= 0) {
+                if (lbl_8024C0CC[scan].value > lbl_8064CD1C) {
+                    lbl_8064CD1C = lbl_8024C0CC[scan].value;
                     found = 1;
                     break;
                 }
                 next++;
-                index = fn_801E7B24(lbl_8024E388, 3, next);
+                scan = fn_801E7B24(lbl_8024E388, 3, next);
             }
             if (!found) {
 no_next:
                 lbl_8064CD1C = lbl_8024C0CC[53].value + 1;
             }
         }
-        if (lbl_8064CD1C == lbl_8024C0CC[selected].value) {
+        if (lbl_8064CD1C == lbl_8024C0CC[index].value) {
             lbl_8064CD1C = -1;
         } else {
             value = lbl_8064CD1C;
@@ -100,7 +98,7 @@ no_next:
                               ? (value > 0 ? value : 0)
                               : lbl_8024C0CC[53].value;
         } else {
-            lbl_8064CD1C = lbl_8024C0CC[selected].value;
+            lbl_8064CD1C = lbl_8024C0CC[index].value;
         }
     }
 }
