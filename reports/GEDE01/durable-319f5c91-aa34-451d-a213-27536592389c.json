@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "319f5c91-aa34-451d-a213-27536592389c",
+  "attempt": 1,
+  "base_commit": "6e8117726ea6fe62495d5208361a5896a5952418",
+  "target": "fn_8015F9D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-319f5c91-aa34-451d-a213-27536592389c.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff measures 57.785954%: retail fn_8015F9D4 is 1196 bytes while the retained independent honest-C reconstruction generates 800 bytes. The reconstruction emits an 11-entry, 44-byte compiler switch table and does not recover retail's 49-way jump-table/control-flow shape; branch layout and r25-r31 lifetime allocation consequently diverge."
+}
