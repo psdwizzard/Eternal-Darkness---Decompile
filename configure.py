@@ -8234,9 +8234,7 @@ config.libs = [
             Object(NonMatching, "game/game_fn_8010FC3C.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_8010FED4.c"),
             # Large mode dispatcher retained as assembly after bounded triage.
-            # Honest event callback reconstruction; remaining differences are
-            # saved-register allocation around the selection helpers.
-            Object(NonMatching, "game/game_fn_8011038C.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_8011038C.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_80110534.c"),
             Object(Matching, "game/game_fn_801116A4.c"),
             Object(Matching, "game/game_fn_80111724.c"),
