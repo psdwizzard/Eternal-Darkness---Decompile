@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "assignment_id": "5a16e1bc-817a-40c2-bbb9-a02538e2cf8a",
+  "target": "fn_80191034",
+  "prior_attempts_studied": [
+    "d1bd01c051224be66cfbb07e8707ea639ad4403b",
+    "f9386860d9473fd786d150db07a4560d5b327cd0",
+    "5c218092752939a69e1530be907b6f95b6067ec0 (handoff diagnosis)",
+    "8bce9126b731ad947f506824448d99d4119aacb1"
+  ],
+  "hypothesis": "Derive buffer_a offset as i * 0x18 rather than maintaining a separate induction variable. Test whether GC/1.3 strength reduction constructs a different register allocation web that assigns data to r21 and offset/token to r20. This is distinct from declaration/initialization ordering, explicit aliases/lifetime merging, and register storage-class hints.",
+  "probe_patch": "eternal-darkness-decomp/reports/GEDE01/5a16e1bc-817a-40c2-bbb9-a02538e2cf8a/strength-reduction.patch",
+  "probe_score": 94.947365,
+  "probe_divergence": "Compiler strength-reduces the entire buffer_a + i * 0x18 expression into advancing pointer r31. This replaces li offset,0 with mr r31,buffer_a and the two add argument preparations with mr r4,r31. Many saved registers shift down; data stays r20. Both objects remain 380 bytes; score regresses to 94.947365%.",
+  "decision": "Discard probe and preserve existing best independent NonMatching C source unchanged. No registration or compiler-policy changes.",
+  "source_sha256": "438eebd66bbd96be139416b42b17cb2d8f878e443e3bcc6923def02081e013e8",
+  "final_measurements": "eternal-darkness-decomp/reports/GEDE01/5a16e1bc-817a-40c2-bbb9-a02538e2cf8a/measurements.json",
+  "relocations": "All 18 actual ELF relocation records match in offset, type, symbol name/value, and addend. Objdiff reports 22 relocation-bearing instruction rows per side, including four inferred R_PPC_NONE references.",
+  "dol_note": "NonMatching registration links retail code for this function; the matching DOL hash verifies integration integrity, not a C match.",
+  "existing_unrelated_change": "CLAUDE.md was modified before work began and is excluded from this commit."
+}

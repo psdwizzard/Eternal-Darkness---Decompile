@@ -1,0 +1,14 @@
+--- a/src/game/game_fn_80191034.c
++++ b/src/game/game_fn_80191034.c
+@@ -32 +31,0 @@
+-    int buffer_offset;
+@@ -45 +43,0 @@
+-    buffer_offset = 0;
+@@ -48 +46 @@
+-            fn_80188A7C(element, buffer_a + buffer_offset, fn_8018D020);
++            fn_80188A7C(element, buffer_a + i * 0x18, fn_8018D020);
+@@ -50 +48 @@
+-            fn_8018E0D8(element, buffer_a + buffer_offset, fn_8018D020);
++            fn_8018E0D8(element, buffer_a + i * 0x18, fn_8018D020);
+@@ -60 +57,0 @@
+-        buffer_offset += 0x18;

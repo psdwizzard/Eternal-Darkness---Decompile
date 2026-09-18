@@ -1,0 +1,404 @@
+{
+  "canonical_score": 98.8421,
+  "strict_score": 98.8421,
+  "sizes": [
+    "380",
+    "380"
+  ],
+  "canonical_equals_strict": true,
+  "mismatch_count": 21,
+  "mismatches": [
+    {
+      "offset": "16",
+      "retail": "mr r21, r3",
+      "generated": "mr r20, r3"
+    },
+    {
+      "offset": "32",
+      "retail": "lbz r30, 0x1(r21)",
+      "generated": "lbz r30, 0x1(r20)"
+    },
+    {
+      "offset": "56",
+      "retail": "lwz r25, 0x50(r21)",
+      "generated": "lwz r25, 0x50(r20)"
+    },
+    {
+      "offset": "60",
+      "retail": "lwz r24, 0x54(r21)",
+      "generated": "lwz r24, 0x54(r20)"
+    },
+    {
+      "offset": "64",
+      "retail": "lwz r23, 0x58(r21)",
+      "generated": "lwz r23, 0x58(r20)"
+    },
+    {
+      "offset": "92",
+      "retail": "lwz r26, 0x4c(r21)",
+      "generated": "lwz r26, 0x4c(r20)"
+    },
+    {
+      "offset": "104",
+      "retail": "li r20, 0x0",
+      "generated": "li r21, 0x0"
+    },
+    {
+      "offset": "112",
+      "retail": "addi r3, r21, 0x24",
+      "generated": "addi r3, r20, 0x24"
+    },
+    {
+      "offset": "132",
+      "retail": "mr r3, r21",
+      "generated": "mr r3, r20"
+    },
+    {
+      "offset": "164",
+      "retail": "add r4, r25, r20",
+      "generated": "add r4, r25, r21"
+    },
+    {
+      "offset": "188",
+      "retail": "add r4, r25, r20",
+      "generated": "add r4, r25, r21"
+    },
+    {
+      "offset": "236",
+      "retail": "addi r20, r20, 0x18",
+      "generated": "addi r21, r21, 0x18"
+    },
+    {
+      "offset": "296",
+      "retail": "lha r5, 0xe(r21)",
+      "generated": "lha r5, 0xe(r20)"
+    },
+    {
+      "offset": "300",
+      "retail": "mr r20, r3",
+      "generated": "mr r21, r3"
+    },
+    {
+      "offset": "304",
+      "retail": "mr r3, r21",
+      "generated": "mr r3, r20"
+    },
+    {
+      "offset": "308",
+      "retail": "addi r4, r21, 0x5c",
+      "generated": "addi r4, r20, 0x5c"
+    },
+    {
+      "offset": "316",
+      "retail": "lfs f1, 0x3c(r21)",
+      "generated": "lfs f1, 0x3c(r20)"
+    },
+    {
+      "offset": "336",
+      "retail": "lfs f1, 0x3c(r21)",
+      "generated": "lfs f1, 0x3c(r20)"
+    },
+    {
+      "offset": "340",
+      "retail": "mr r3, r20",
+      "generated": "mr r3, r21"
+    },
+    {
+      "offset": "344",
+      "retail": "lfs f0, 0x40(r21)",
+      "generated": "lfs f0, 0x40(r20)"
+    },
+    {
+      "offset": "352",
+      "retail": "stfs f0, 0x3c(r21)",
+      "generated": "stfs f0, 0x3c(r20)"
+    }
+  ],
+  "all_mismatches_are_r20_r21_swap": true,
+  "real_elf_relocations": [
+    [
+      {
+        "offset": 22,
+        "type": 6,
+        "target": "lbl_80607120",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 26,
+        "type": 4,
+        "target": "lbl_80607120",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 28,
+        "type": 109,
+        "target": "lbl_8064D738",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 120,
+        "type": 10,
+        "target": "fn_80180430",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 140,
+        "type": 10,
+        "target": "fn_801911B0",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 154,
+        "type": 6,
+        "target": "fn_8018D020",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 162,
+        "type": 4,
+        "target": "fn_8018D020",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 168,
+        "type": 10,
+        "target": "fn_80188A7C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 178,
+        "type": 6,
+        "target": "fn_8018D020",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 186,
+        "type": 4,
+        "target": "fn_8018D020",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 192,
+        "type": 10,
+        "target": "fn_8018E0D8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 260,
+        "type": 10,
+        "target": "DCFlushRange",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 272,
+        "type": 10,
+        "target": "DCFlushRange",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 284,
+        "type": 10,
+        "target": "DCFlushRange",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 292,
+        "type": 10,
+        "target": "fn_801ED57C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 312,
+        "type": 10,
+        "target": "fn_8018D0D0",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 332,
+        "type": 10,
+        "target": "fn_80188868",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 356,
+        "type": 10,
+        "target": "fn_801ED57C",
+        "target_value": 0,
+        "addend": 0
+      }
+    ],
+    [
+      {
+        "offset": 22,
+        "type": 6,
+        "target": "lbl_80607120",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 26,
+        "type": 4,
+        "target": "lbl_80607120",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 28,
+        "type": 109,
+        "target": "lbl_8064D738",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 120,
+        "type": 10,
+        "target": "fn_80180430",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 140,
+        "type": 10,
+        "target": "fn_801911B0",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 154,
+        "type": 6,
+        "target": "fn_8018D020",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 162,
+        "type": 4,
+        "target": "fn_8018D020",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 168,
+        "type": 10,
+        "target": "fn_80188A7C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 178,
+        "type": 6,
+        "target": "fn_8018D020",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 186,
+        "type": 4,
+        "target": "fn_8018D020",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 192,
+        "type": 10,
+        "target": "fn_8018E0D8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 260,
+        "type": 10,
+        "target": "DCFlushRange",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 272,
+        "type": 10,
+        "target": "DCFlushRange",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 284,
+        "type": 10,
+        "target": "DCFlushRange",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 292,
+        "type": 10,
+        "target": "fn_801ED57C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 312,
+        "type": 10,
+        "target": "fn_8018D0D0",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 332,
+        "type": 10,
+        "target": "fn_80188868",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 356,
+        "type": 10,
+        "target": "fn_801ED57C",
+        "target_value": 0,
+        "addend": 0
+      }
+    ]
+  ],
+  "real_elf_relocations_equal": true,
+  "objdiff_relocation_bearing_rows": [
+    22,
+    22
+  ],
+  "differing_instruction_byte_offsets": [
+    16,
+    32,
+    56,
+    60,
+    64,
+    92,
+    104,
+    112,
+    132,
+    164,
+    188,
+    236,
+    296,
+    300,
+    304,
+    308,
+    316,
+    336,
+    340,
+    344,
+    352
+  ]
+}
