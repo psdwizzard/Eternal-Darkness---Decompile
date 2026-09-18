@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "455dfaca-72f2-498f-a6e7-c7b41b0d7471",
+  "attempt": 1,
+  "base_commit": "03121a5a3e741ae907e861a2acd4f0fbd823d1b9",
+  "target": "fn_801E47B8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-455dfaca-72f2-498f-a6e7-c7b41b0d7471.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 62.779438%: generated .text is 1904 bytes versus 2140 retail bytes, with 99 generated versus 127 retail relocation-bearing instructions. The remaining divergence spans the frame/register allocation (retail saves r23-r31 and f30-f31), escape/control-flow lowering and instruction scheduling, producing 213 argument mismatches, 111 deletes, 52 inserts, 4 opcode mismatches, and 38 replacements in the strict report. The canonical build succeeds and build/GEDE01/main.dol has the required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
