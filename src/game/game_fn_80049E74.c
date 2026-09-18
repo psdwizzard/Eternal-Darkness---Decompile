@@ -5,7 +5,7 @@ typedef unsigned int u32;
 extern int fn_8011EB04(void *);
 #define fn_8011EB04(a) fn_8011EB04((void *)(a))
 extern int fn_8011EB14(u32 object);
-extern short fn_80050A20();
+extern unsigned int fn_80050A20(void);
 extern short fn_800509DC();
 
 extern void* lbl_8064C4E4;
@@ -17,13 +17,19 @@ u16 fn_80049E74(u32 object, int mode, u8* out_level, u8* out_flags,
                 u16* out_time)
 {
     int type;
-    short condition;
-    u16 result = 0xFFFF;
-    u16 time = 0;
-    u8 level = 0;
-    u8 flags = 0;
-    u32 current = (u32)lbl_8064C4E4;
-    int base = lbl_8064D5A8;
+    int condition;
+    u16 result;
+    u16 time;
+    u32 current;
+    int base;
+    u8 level;
+    u8 flags;
+    result = 0xFFFF;
+    time = 0;
+    level = 0;
+    flags = 0;
+    current = (u32)lbl_8064C4E4;
+    base = lbl_8064D5A8;
 
     if (object == current) {
         int next = 30;
