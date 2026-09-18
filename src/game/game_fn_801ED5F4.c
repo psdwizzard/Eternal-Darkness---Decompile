@@ -58,13 +58,9 @@ void fn_801ED5F4(int object, int flags, s16 value, float* direction,
             flags &= ~0x1800;
             fn_80211484(temporary, alpha, lbl_80651318, lbl_80651318);
             transform[0][0] = lbl_80651328;
-            transform[0][1] = lbl_80651318;
-            transform[0][2] = lbl_80651318;
-            transform[0][3] = lbl_80651318;
-            transform[1][0] = lbl_80651318;
-            transform[1][1] = lbl_80651318;
-            transform[1][2] = lbl_80651318;
-            transform[1][3] = lbl_80651318;
+            transform[1][3] = transform[1][2] = transform[1][1] =
+                transform[1][0] = transform[0][3] = transform[0][2] =
+                    transform[0][1] = lbl_80651318;
             fn_80210FDC(transform, temporary, transform);
             fn_80226D28(0);
             alpha = lbl_8065131C;
@@ -77,10 +73,8 @@ void fn_801ED5F4(int object, int flags, s16 value, float* direction,
             transform[0][1] = -direction[1] / lbl_8065132C;
             transform[0][2] = -direction[2] / lbl_8065132C;
             transform[0][3] = alpha / lbl_8065132C;
-            transform[1][0] = lbl_80651318;
-            transform[1][1] = lbl_80651318;
-            transform[1][2] = lbl_80651318;
-            transform[1][3] = lbl_80651318;
+            transform[1][3] = transform[1][2] = transform[1][1] =
+                transform[1][0] = lbl_80651318;
             fn_80210FDC(transform, input, transform);
             fn_80226D28(0);
             alpha = lbl_8065131C;
@@ -94,23 +88,16 @@ void fn_801ED5F4(int object, int flags, s16 value, float* direction,
                 changed = 1;
                 transform[0][0] = lbl_8065131C / divisor;
                 transform[0][1] = lbl_80651330 / divisor;
-                transform[0][2] = lbl_80651318;
-                transform[0][3] = lbl_80651318;
                 transform[1][0] = lbl_80651334 / divisor;
-                transform[1][1] = lbl_80651318;
-                transform[1][2] = lbl_80651318;
-                transform[1][3] = lbl_80651318;
+                transform[1][3] = transform[1][2] = transform[1][1] =
+                    transform[0][3] = transform[0][2] = lbl_80651318;
             } else if (lbl_8064D620 != divisor) {
                 float scale = lbl_80651338 / divisor;
                 changed = 1;
-                transform[0][0] = scale;
-                transform[0][1] = scale;
-                transform[0][2] = lbl_80651318;
-                transform[0][3] = lbl_80651318;
-                transform[1][0] = lbl_80651318;
-                transform[1][1] = lbl_80651318;
-                transform[1][2] = scale;
-                transform[1][3] = scale;
+                transform[1][2] = transform[1][1] = transform[0][1] =
+                    transform[0][0] = scale;
+                transform[1][3] = transform[1][0] = transform[0][3] =
+                    transform[0][2] = lbl_80651318;
             }
             break;
         }

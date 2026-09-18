@@ -3162,7 +3162,7 @@ game_section_externalizations = {
         ],
     ),
     "801ECD74": (".sdata2", [("@25", "lbl_80651320")]),
-    "801ED5F4": (".sdata2", [("@56", "lbl_80651320")]),
+    "801ED5F4": (".sdata2", [("@52", "lbl_80651320")]),
     "801F6BD8": (
         ".sdata2",
         [
