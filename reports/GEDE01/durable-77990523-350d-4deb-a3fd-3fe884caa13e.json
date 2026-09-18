@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "77990523-350d-4deb-a3fd-3fe884caa13e",
+  "attempt": 6,
+  "base_commit": "4644786f0fbd1601724898ba56a7ee92fcf46489",
+  "target": "fn_80160480",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-77990523-350d-4deb-a3fd-3fe884caa13e.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both remain 99.0% at the exact 120-byte size. All 8 relocations match in offset, type, target, and addend. At 0x24-0x28 the compiler loads previous/current descriptors in the opposite order from retail, using r5/r4 instead of r6/r5; the dependent byte loads differ at 0x2c-0x30."
+}

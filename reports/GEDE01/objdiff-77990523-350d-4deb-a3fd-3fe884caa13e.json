@@ -1,0 +1,263 @@
+{
+  "version": 1,
+  "assignment_id": "77990523-350d-4deb-a3fd-3fe884caa13e",
+  "attempt": 6,
+  "base_commit": "4644786f0fbd1601724898ba56a7ee92fcf46489",
+  "target": "fn_80160480",
+  "status": "attempted",
+  "source": "eternal-darkness-decomp/src/game/game_fn_80160480.c",
+  "source_sha256": "463a7e89900ee5b771e6d10cd03ef43a3a5d7651bbdcb0c2e2b52214f259b147",
+  "source_recovery": {
+    "preserved_commit": "66bc8086187c58bccb29b2c3b45735dadb438bd3",
+    "note": "The assigned base already contains the preserved best reconstruction verbatim. All rejected experiments were reverted; the existing independent C translation unit and NonMatching registration are retained unchanged."
+  },
+  "canonical_compiler": {
+    "compiler": "GC/1.3",
+    "command": "tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_80160480.c -o build/GEDE01/src/game",
+    "policy_changed": false
+  },
+  "build": {
+    "working_directory": "eternal-darkness-decomp",
+    "configure_command": "python3 configure.py",
+    "configure_exit_code": 0,
+    "ninja_command": ".tools/bin/ninja -j2",
+    "ninja_exit_code": 0,
+    "raw_full_build_log": "eternal-darkness-decomp/reports/GEDE01/build-77990523-350d-4deb-a3fd-3fe884caa13e.log",
+    "target_build": {
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_80160480.o",
+      "exit_code": 0,
+      "stdout": "ninja: no work to do.\n",
+      "stderr": ""
+    },
+    "dol_verification": {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    },
+    "note": "NonMatching source remains excluded from the retail DOL link. The passing whole-DOL hash is an integration invariant, not evidence of a source match."
+  },
+  "canonical_objdiff": {
+    "expected_size_bytes": "120",
+    "actual_size_bytes": "120",
+    "match_percent": 99.0,
+    "raw_json": "eternal-darkness-decomp/reports/GEDE01/canonical-77990523-350d-4deb-a3fd-3fe884caa13e.json",
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80160480 fn_80160480 -o reports/GEDE01/canonical-77990523-350d-4deb-a3fd-3fe884caa13e.json --format json",
+    "instruction_comparison": {
+      "command": "python3 tools/fndiff.py game/game_fn_80160480.c fn_80160480",
+      "exit_code": 0,
+      "stdout": "target 120 bytes  base 120 bytes  match 99.0\n  0x0000  stwu r1, -0x10(r1)                                   | stwu r1, -0x10(r1)\n  0x0004  mflr r0                                              | mflr r0\n  0x0008  lis r5, lbl_8023A878@ha [None+0 t6]                  | lis r5, lbl_8023A878@ha [None+0 t6]\n  0x000c  stw r0, 0x14(r1)                                     | stw r0, 0x14(r1)\n  0x0010  lwz r0, -0x10(r4)                                    | lwz r0, -0x10(r4)\n  0x0014  lwz r6, -0x20(r4)                                    | lwz r6, -0x20(r4)\n  0x0018  addi r4, r5, lbl_8023A878@l [None+0 t4]              | addi r4, r5, lbl_8023A878@l [None+0 t4]\n  0x001c  slwi r0, r0, 2                                       | slwi r0, r0, 2\n  0x0020  slwi r5, r6, 2                                       | slwi r5, r6, 2\n* 0x0024  lwzx r6, r4, r0 [None+0 tNone]                       | lwzx r5, r4, r5 [None+0 tNone]\n* 0x0028  lwzx r5, r4, r5 [None+0 tNone]                       | lwzx r4, r4, r0 [None+0 tNone]\n* 0x002c  lbz r0, 0x2(r6)                                      | lbz r0, 0x2(r5)\n* 0x0030  lbz r4, 0x2(r5)                                      | lbz r4, 0x2(r4)\n  0x0034  extsb r0, r0                                         | extsb r0, r0\n  0x0038  extsb r4, r4                                         | extsb r4, r4\n  0x003c  cmpw r4, r0                                          | cmpw r4, r0\n  0x0040  bne 0x58                                             | bne 0x58\n  0x0044  lis r4, lbl_8024F554@ha [None+0 t6]                  | lis r4, lbl_8024F554@ha [None+0 t6]\n  0x0048  addi r4, r4, lbl_8024F554@l [None+0 t4]              | addi r4, r4, lbl_8024F554@l [None+0 t4]\n  0x004c  crclr cr1eq                                          | crclr cr1eq\n  0x0050  bl fn_80163BB4 [None+0 t10]                          | bl fn_80163BB4 [None+0 t10]\n  0x0054  b 0x68                                               | b 0x68\n  0x0058  lis r4, lbl_8024F578@ha [None+0 t6]                  | lis r4, lbl_8024F578@ha [None+0 t6]\n  0x005c  addi r4, r4, lbl_8024F578@l [None+0 t4]              | addi r4, r4, lbl_8024F578@l [None+0 t4]\n  0x0060  crclr cr1eq                                          | crclr cr1eq\n  0x0064  bl fn_80163BB4 [None+0 t10]                          | bl fn_80163BB4 [None+0 t10]\n  0x0068  lwz r0, 0x14(r1)                                     | lwz r0, 0x14(r1)\n  0x006c  mtlr r0                                              | mtlr r0\n  0x0070  addi r1, r1, 0x10                                    | addi r1, r1, 0x10\n  0x0074  blr                                                  | blr\n",
+      "stderr": " INFO Writing to eternal-darkness-decomp/build/GEDE01/fndiff_fn_80160480.json\n"
+    },
+    "mismatches": [
+      {
+        "offset": "0x24",
+        "expected": "lwzx r6, r4, r0",
+        "actual": "lwzx r5, r4, r5"
+      },
+      {
+        "offset": "0x28",
+        "expected": "lwzx r5, r4, r5",
+        "actual": "lwzx r4, r4, r0"
+      },
+      {
+        "offset": "0x2c",
+        "expected": "lbz r0, 0x2(r6)",
+        "actual": "lbz r0, 0x2(r5)"
+      },
+      {
+        "offset": "0x30",
+        "expected": "lbz r4, 0x2(r5)",
+        "actual": "lbz r4, 0x2(r4)"
+      }
+    ]
+  },
+  "relocation_strict_objdiff": {
+    "configuration": "function_reloc_diffs=name_address",
+    "match_percent": 99.0,
+    "raw_json": "eternal-darkness-decomp/reports/GEDE01/strict-77990523-350d-4deb-a3fd-3fe884caa13e.json",
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80160480 fn_80160480 -c function_reloc_diffs=name_address -o reports/GEDE01/strict-77990523-350d-4deb-a3fd-3fe884caa13e.json --format json",
+    "match": false
+  },
+  "relocation_comparison": {
+    "all_offsets_types_targets_addends_equal": true,
+    "expected_count": 8,
+    "actual_count": 8,
+    "entries_expected": [
+      {
+        "offset": "0000000a",
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8023A878",
+        "addend": "+0"
+      },
+      {
+        "offset": "0000001a",
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8023A878",
+        "addend": "+0"
+      },
+      {
+        "offset": "00000046",
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8024F554",
+        "addend": "+0"
+      },
+      {
+        "offset": "0000004a",
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8024F554",
+        "addend": "+0"
+      },
+      {
+        "offset": "00000050",
+        "type": "R_PPC_REL24",
+        "target": "fn_80163BB4",
+        "addend": "+0"
+      },
+      {
+        "offset": "0000005a",
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8024F578",
+        "addend": "+0"
+      },
+      {
+        "offset": "0000005e",
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8024F578",
+        "addend": "+0"
+      },
+      {
+        "offset": "00000064",
+        "type": "R_PPC_REL24",
+        "target": "fn_80163BB4",
+        "addend": "+0"
+      }
+    ],
+    "entries_actual": [
+      {
+        "offset": "0000000a",
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8023A878",
+        "addend": "+0"
+      },
+      {
+        "offset": "0000001a",
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8023A878",
+        "addend": "+0"
+      },
+      {
+        "offset": "00000046",
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8024F554",
+        "addend": "+0"
+      },
+      {
+        "offset": "0000004a",
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8024F554",
+        "addend": "+0"
+      },
+      {
+        "offset": "00000050",
+        "type": "R_PPC_REL24",
+        "target": "fn_80163BB4",
+        "addend": "+0"
+      },
+      {
+        "offset": "0000005a",
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8024F578",
+        "addend": "+0"
+      },
+      {
+        "offset": "0000005e",
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8024F578",
+        "addend": "+0"
+      },
+      {
+        "offset": "00000064",
+        "type": "R_PPC_REL24",
+        "target": "fn_80163BB4",
+        "addend": "+0"
+      }
+    ],
+    "raw_readelf": [
+      {
+        "command": "readelf -rW build/GEDE01/obj/game/game_fn_80160480.o",
+        "exit_code": 0,
+        "stdout": "\nRelocation section '.rela.text' at offset 0xb8 contains 8 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000406 R_PPC_ADDR16_HA        00000000   lbl_8023A878 + 0\n0000001a  00000404 R_PPC_ADDR16_LO        00000000   lbl_8023A878 + 0\n00000046  00000506 R_PPC_ADDR16_HA        00000000   lbl_8024F554 + 0\n0000004a  00000504 R_PPC_ADDR16_LO        00000000   lbl_8024F554 + 0\n00000050  0000060a R_PPC_REL24            00000000   fn_80163BB4 + 0\n0000005a  00000706 R_PPC_ADDR16_HA        00000000   lbl_8024F578 + 0\n0000005e  00000704 R_PPC_ADDR16_LO        00000000   lbl_8024F578 + 0\n00000064  0000060a R_PPC_REL24            00000000   fn_80163BB4 + 0\n",
+        "stderr": ""
+      },
+      {
+        "command": "readelf -rW build/GEDE01/src/game/game_fn_80160480.o",
+        "exit_code": 0,
+        "stdout": "\nRelocation section '.rela.text' at offset 0xac contains 8 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000306 R_PPC_ADDR16_HA        00000000   lbl_8023A878 + 0\n0000001a  00000304 R_PPC_ADDR16_LO        00000000   lbl_8023A878 + 0\n00000046  00000406 R_PPC_ADDR16_HA        00000000   lbl_8024F554 + 0\n0000004a  00000404 R_PPC_ADDR16_LO        00000000   lbl_8024F554 + 0\n00000050  0000060a R_PPC_REL24            00000000   fn_80163BB4 + 0\n0000005a  00000506 R_PPC_ADDR16_HA        00000000   lbl_8024F578 + 0\n0000005e  00000504 R_PPC_ADDR16_LO        00000000   lbl_8024F578 + 0\n00000064  0000060a R_PPC_REL24            00000000   fn_80163BB4 + 0\n",
+        "stderr": ""
+      }
+    ]
+  },
+  "new_hypotheses": {
+    "description": "Change memory-reference typing and scalar lifetimes without changing compiler policy: typed descriptor fields, explicit byte locals, byte-access qualifiers, local table aliases, register hints, aggregate index/descriptor pairs, reused scalar temporaries, byte offsets, signed byte bitfields, and __restrict annotations. This extends the preserved attempts beyond entry-volatility and mirrored declarations.",
+    "experiment_count": 181,
+    "successful_compiles": 154,
+    "best_measured_percent": 99.0,
+    "raw_experiments": "eternal-darkness-decomp/reports/GEDE01/experiments-77990523-350d-4deb-a3fd-3fe884caa13e.json",
+    "result": "No experiment improved the retained 99.0% source. Unsupported C aggregate/declaration forms and plain restrict syntax failed compilation; their raw diagnostics are preserved. No compiler flag, pragma, assembly, tool, or neighboring function was changed."
+  },
+  "legal_audit": {
+    "command": "python3 eternal-darkness-decomp/tools/legal_audit.py",
+    "working_directory": ".",
+    "exit_code": 0,
+    "stdout": "legal audit passed (16527 tracked project files inspected)\n",
+    "stderr": "",
+    "scope": "Executed after staging all six assignment-specific report files."
+  },
+  "divergence": "Canonical and relocation-strict objdiff both remain 99.0% at the exact 120-byte size. All 8 relocations match in offset, type, target, and addend. At 0x24-0x28 the compiler loads previous/current descriptors in the opposite order from retail, using r5/r4 instead of r6/r5; the dependent byte loads differ at 0x2c-0x30.",
+  "scope": {
+    "source_changed": false,
+    "registration": "Object(NonMatching, \"game/game_fn_80160480.c\")",
+    "permitted_changes": "Assignment-specific reports only",
+    "preexisting_unrelated_change": "CLAUDE.md was already modified at entry and is excluded from the commit."
+  },
+  "exact_text_bytes": {
+    "expected_size": 120,
+    "actual_size": 120,
+    "equal": false,
+    "equal_byte_count": 114,
+    "differing_bytes": [
+      {
+        "offset": "0x25",
+        "expected": "c4",
+        "actual": "a4"
+      },
+      {
+        "offset": "0x26",
+        "expected": "00",
+        "actual": "28"
+      },
+      {
+        "offset": "0x29",
+        "expected": "a4",
+        "actual": "84"
+      },
+      {
+        "offset": "0x2a",
+        "expected": "28",
+        "actual": "00"
+      },
+      {
+        "offset": "0x2d",
+        "expected": "06",
+        "actual": "05"
+      },
+      {
+        "offset": "0x31",
+        "expected": "85",
+        "actual": "84"
+      }
+    ],
+    "note": "Direct ELF32 big-endian .text section comparison, before relocation application. Relocations are verified separately."
+  }
+}
