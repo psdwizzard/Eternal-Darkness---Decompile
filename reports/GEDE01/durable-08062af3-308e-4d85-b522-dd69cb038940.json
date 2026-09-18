@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "08062af3-308e-4d85-b522-dd69cb038940",
+  "attempt": 4,
+  "base_commit": "d8e92e36b5fb4cc92fbbaa4fb3e277a0deb9204c",
+  "target": "fn_80058394",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-08062af3-308e-4d85-b522-dd69cb038940.json"
+  ],
+  "divergence": "Best canonical and relocation-strict score remains unchanged from base at 98.699326% (1184 bytes, 296 instructions, 60 relocations per side). All relocations agree in offset, type, target, and addend. The remaining difference is the five-way callee-saved register cycle: retail state/strings/kind/context/event=r27/r28/r29/r30/r31; canonical strings/kind/context/event/state=r27/r28/r29/r30/r31. A distinct volatile-pointee allocation experiment regressed to 97.922295% and was reverted."
+}

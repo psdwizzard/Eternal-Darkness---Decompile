@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "assignment_id": "08062af3-308e-4d85-b522-dd69cb038940",
+  "target": "fn_80058394",
+  "source_reconciliation": {
+    "preserved_commit": "003aec9377aab574aded46f131e34b565af25e37",
+    "accepted_base": "d8e92e36b5fb4cc92fbbaa4fb3e277a0deb9204c",
+    "result": "The accepted base already contains the preserved independent honest-C reconstruction, so it was retained unchanged."
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/objdiff-08062af3-308e-4d85-b522-dd69cb038940-canonical.json --format json-pretty",
+    "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-08062af3-308e-4d85-b522-dd69cb038940-canonical.json",
+    "raw_measurement": "retail_size=1184 generated_size=1184 retail_instructions=296 generated_instructions=296 retail_relocations=60 generated_relocations=60 match_percent=98.699326"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/objdiff-08062af3-308e-4d85-b522-dd69cb038940-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-08062af3-308e-4d85-b522-dd69cb038940-reloc-strict.json",
+    "raw_measurement": "retail_size=1184 generated_size=1184 retail_instructions=296 generated_instructions=296 retail_relocations=60 generated_relocations=60 match_percent=98.699326",
+    "relocation_result": "All 60 relocation-bearing instructions agree in offset, type, target, and addend; cmp of the canonical and relocation-strict raw reports exited 0."
+  },
+  "experiment": {
+    "hypothesis": "Qualifying the HandlerState pointee volatile could change MWCC live-range priority while preserving the required member access sequence.",
+    "raw_measurement": "match_percent=97.922295",
+    "result": "regressed; the experiment was reverted"
+  },
+  "divergence": "Best score is unchanged from the accepted base. The remaining 77 argument mismatches are a five-way callee-saved register cycle: retail state/strings/kind/context/event=r27/r28/r29/r30/r31; canonical strings/kind/context/event/state=r27/r28/r29/r30/r31.",
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "result": "success",
+    "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_scope": "Because the target remains NonMatching, this verifies the canonical fallback build, not the candidate C."
+  },
+  "legal_audit": "No inline or whole-function assembly, shared reconstruction, runtime-code change, compiler-policy change, gate change, or neighboring-function edit is included."
+}
