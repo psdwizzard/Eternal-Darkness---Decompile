@@ -10,7 +10,11 @@ extern void* memcpy(void*, const void*, u32);
 void fn_801913F4(u8* object)
 {
     u32 value = lbl_80650B24;
-    volatile u32 saved_value;
+    // Keep the observable spill while allowing the plain view to reuse value.
+    union SavedValue {
+        volatile u32 observable;
+        u32 plain;
+    } saved_value;
     struct LocalValues {
         u32 word;
         u16 half;
@@ -22,7 +26,7 @@ void fn_801913F4(u8* object)
     object[1] = 1;
     {
         u8 first = object[0];
-        saved_value = value;
+        saved_value.observable = value;
         *(u16*)(object + 6) = first;
     }
     *(u16*)(object + 4) = 0x31;
@@ -43,6 +47,6 @@ void fn_801913F4(u8* object)
     *(u32*)(object + 0x2C) = 0;
     *(u32*)(object + 0x38) = 0;
     memcpy(object + 0x1E, &source, 6);
-    *(u32*)(object + 0x3C) = saved_value;
+    *(u32*)(object + 0x3C) = saved_value.plain;
     object[0x24] = 0;
 }

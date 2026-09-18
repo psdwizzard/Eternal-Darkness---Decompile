@@ -1,0 +1,146 @@
+{
+  "cwd": "eternal-darkness-decomp",
+  "commands": [
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801913F4",
+        "fn_801913F4",
+        "--format",
+        "json",
+        "-o",
+        "reports/GEDE01/canonical-9209b075-d7d8-477f-a75e-087faa230884.json"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/canonical-9209b075-d7d8-477f-a75e-087faa230884.json\n"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801913F4",
+        "fn_801913F4",
+        "--format",
+        "json",
+        "-o",
+        "reports/GEDE01/objdiff-9209b075-d7d8-477f-a75e-087faa230884.json",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-9209b075-d7d8-477f-a75e-087faa230884.json\n"
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/obj/game/game_fn_801913F4.o",
+        "build/GEDE01/src/game/game_fn_801913F4.o"
+      ],
+      "returncode": 0,
+      "stdout": "\nFile: build/GEDE01/obj/game/game_fn_801913F4.o\n\nRelocation section '.rela.text' at offset 0x124 contains 4 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000044  0000046d R_PPC_EMB_SDA21        00000000   lbl_80651D98 + 0\n00000048  0000056d R_PPC_EMB_SDA21        00000000   lbl_80651D9C + 0\n0000004c  0000066d R_PPC_EMB_SDA21        00000000   lbl_80650B24 + 0\n000000bc  0000070a R_PPC_REL24            00000000   memcpy + 0\n\nFile: build/GEDE01/src/game/game_fn_801913F4.o\n\nRelocation section '.rela.text' at offset 0x118 contains 4 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000044  0000046d R_PPC_EMB_SDA21        00000000   lbl_80651D98 + 0\n00000048  0000056d R_PPC_EMB_SDA21        00000000   lbl_80651D9C + 0\n0000004c  0000036d R_PPC_EMB_SDA21        00000000   lbl_80650B24 + 0\n000000bc  0000060a R_PPC_REL24            00000000   memcpy + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".tools/bin/ninja",
+        "-t",
+        "commands",
+        "build/GEDE01/src/game/game_fn_801913F4.o"
+      ],
+      "returncode": 0,
+      "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_801913F4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801913F4.d build/GEDE01/src/game/game_fn_801913F4.d\n",
+      "stderr": ""
+    }
+  ],
+  "raw_text": {
+    "equal": true,
+    "size": 228,
+    "target_sha256": "96a07bf4c1ab896d3b0118972abaf511d049084a328adfd402aecb1eaa5ffb83",
+    "generated_sha256": "96a07bf4c1ab896d3b0118972abaf511d049084a328adfd402aecb1eaa5ffb83"
+  },
+  "relocations": {
+    "equal": true,
+    "target": [
+      {
+        "offset": "0x44",
+        "type": 109,
+        "target": "lbl_80651D98",
+        "addend": 0
+      },
+      {
+        "offset": "0x48",
+        "type": 109,
+        "target": "lbl_80651D9C",
+        "addend": 0
+      },
+      {
+        "offset": "0x4c",
+        "type": 109,
+        "target": "lbl_80650B24",
+        "addend": 0
+      },
+      {
+        "offset": "0xbc",
+        "type": 10,
+        "target": "memcpy",
+        "addend": 0
+      }
+    ],
+    "generated": [
+      {
+        "offset": "0x44",
+        "type": 109,
+        "target": "lbl_80651D98",
+        "addend": 0
+      },
+      {
+        "offset": "0x48",
+        "type": 109,
+        "target": "lbl_80651D9C",
+        "addend": 0
+      },
+      {
+        "offset": "0x4c",
+        "type": 109,
+        "target": "lbl_80650B24",
+        "addend": 0
+      },
+      {
+        "offset": "0xbc",
+        "type": 10,
+        "target": "memcpy",
+        "addend": 0
+      }
+    ]
+  },
+  "source_sha256": "9a9782e29e4182a51a5d3c57b3efcdc93869d988a201c8a57f52f2788c294185",
+  "compiler": {
+    "path": "eternal-darkness-decomp/compilers/GC/1.3/mwcceppc.exe",
+    "sha256": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715",
+    "policy_changed": false
+  },
+  "analysis": {
+    "previous_attempts_reviewed": [
+      "3c07d331181b285931c423dc3827d865d852b9b6",
+      "faebcefe33a8af566e53afbac00fe76e48dffd4b",
+      "2e50e6255fec9ee2d6ef1b60878514a092f33662",
+      "dd826c87aa4ff25d230c8aa87efbd69e50e1d629"
+    ],
+    "accepted_base_already_contains_best_preserved_source": true,
+    "baseline_percent": 98.947365,
+    "baseline_divergence": "offset 0xC0: generated lwz r3, 0x8(r1), retail mr r3, r26",
+    "distinct_hypothesis": "Model the saved value as a union of volatile and nonvolatile u32 views. The volatile member forces the observed stack spill; reading the identically represented plain member permits register forwarding across memcpy while retaining the result move. Unlike earlier split values, const aliases, and inline forwarding, both accesses designate members of one aggregate.",
+    "result": "One union probe produced an exact 228-byte code match with all four relocation offsets, types, target names and signed addends equal.",
+    "scope": "Only the target independent C translation unit, its Matching registration, and assignment-specific reports. No assembly, compiler policy changes, neighboring-function edits, or private/generated binaries committed."
+  }
+}
