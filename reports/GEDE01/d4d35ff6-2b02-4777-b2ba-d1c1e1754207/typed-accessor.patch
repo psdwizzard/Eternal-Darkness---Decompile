@@ -1,0 +1,20 @@
+--- src/game/game_fn_80058394.c
++++ src/game/game_fn_80058394.c
+@@ -20,7 +20,7 @@
+ extern char lbl_80331748[];
+ extern int fn_80200C10(void *);
+ extern void *fn_80201BC8();
+-extern void *fn_80201B8C();
++extern HandlerState **fn_80201B8C(void *context);
+ extern void fn_800C39D0(void *context);
+ extern void fn_800BEBE4(void *context, s32 value);
+ extern s32 fn_80035FB8(void *context, char *first, char *second, char *third,
+@@ -59,7 +59,7 @@
+     strings = lbl_80243A40;
+     kind = fn_80200C10(event);
+     object = fn_80201BC8(context);
+-    state = (HandlerState *)*(void **)fn_80201B8C(context);
++    state = *fn_80201B8C(context);
+ 
+     if (kind == 1) return 1;
+     if (kind == 2) {

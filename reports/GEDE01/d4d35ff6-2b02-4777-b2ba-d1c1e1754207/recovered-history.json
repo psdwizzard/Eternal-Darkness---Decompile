@@ -1,0 +1,189 @@
+{
+  "cc92e64e0b20b25d1fc6341523f31e15f53d7c3c": {
+    "version": 1,
+    "assignment_id": "0a50bb8e-381e-4032-a7be-cd02e64644ff",
+    "target": "fn_80058394",
+    "source_reconciliation": {
+      "preserved_commit": "9ab943f04255065c6c3d6d415210cf0b09ec4186",
+      "accepted_base": "0b9a89857275de3270d090811579ca3bf1780393",
+      "result": "The preserved commit contains reports only. The accepted base already contains the same independent honest-C reconstruction, so the source was retained unchanged."
+    },
+    "canonical": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/objdiff-0a50bb8e-381e-4032-a7be-cd02e64644ff-canonical.json --format json-pretty",
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-0a50bb8e-381e-4032-a7be-cd02e64644ff-canonical.json",
+      "raw_measurement": "retail_size=1184 generated_size=1184 retail_instructions=296 generated_instructions=296 retail_relocations=60 generated_relocations=60 match_percent=98.699326 arg_mismatches=77"
+    },
+    "relocation_strict": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/objdiff-0a50bb8e-381e-4032-a7be-cd02e64644ff-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-0a50bb8e-381e-4032-a7be-cd02e64644ff-reloc-strict.json",
+      "raw_measurement": "retail_size=1184 generated_size=1184 retail_instructions=296 generated_instructions=296 retail_relocations=60 generated_relocations=60 match_percent=98.699326 arg_mismatches=77",
+      "relocation_result": "All relocation offsets, types, resolved targets, and addends agree. The canonical and relocation-strict raw reports are byte-identical (cmp exit 0)."
+    },
+    "experiment": {
+      "hypothesis": "Representing the accessor result as a state-slot pointer, rather than immediately as the loaded HandlerState pointer, could alter MWCC interference ordering and move state to the first callee-saved register without changing observable call order.",
+      "measurements": [
+        "A separate early state-slot temporary optimized away: match_percent=98.699326 size=1184 instructions=296.",
+        "A void-pointer state representation changed allocation but regressed: match_percent=98.293920 size=1184 instructions=296.",
+        "Retaining HandlerState ** and dereferencing at uses regressed: match_percent=96.672295 size=1208 instructions=303."
+      ],
+      "result": "All variants were reverted; the accepted-base reconstruction remains the best measured honest C."
+    },
+    "divergence": "Best score is unchanged from the accepted base. The 77 argument mismatches are the five-way callee-saved register cycle: retail state/strings/kind/context/event=r27/r28/r29/r30/r31; canonical strings/kind/context/event/state=r27/r28/r29/r30/r31.",
+    "build": {
+      "commands": [
+        "python3 configure.py",
+        ".tools/bin/ninja -j2"
+      ],
+      "result": "success",
+      "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+      "dol_scope": "The target remains NonMatching, so this verifies the canonical fallback build, not the candidate C."
+    },
+    "legal_audit": "No inline or whole-function assembly, shared reconstruction, runtime-code change, compiler-policy change, gate change, or neighboring-function edit is included."
+  },
+  "9ab943f04255065c6c3d6d415210cf0b09ec4186": {
+    "version": 1,
+    "assignment_id": "08062af3-308e-4d85-b522-dd69cb038940",
+    "target": "fn_80058394",
+    "source_reconciliation": {
+      "preserved_commit": "003aec9377aab574aded46f131e34b565af25e37",
+      "accepted_base": "d8e92e36b5fb4cc92fbbaa4fb3e277a0deb9204c",
+      "result": "The accepted base already contains the preserved independent honest-C reconstruction, so it was retained unchanged."
+    },
+    "canonical": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/objdiff-08062af3-308e-4d85-b522-dd69cb038940-canonical.json --format json-pretty",
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-08062af3-308e-4d85-b522-dd69cb038940-canonical.json",
+      "raw_measurement": "retail_size=1184 generated_size=1184 retail_instructions=296 generated_instructions=296 retail_relocations=60 generated_relocations=60 match_percent=98.699326"
+    },
+    "relocation_strict": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/objdiff-08062af3-308e-4d85-b522-dd69cb038940-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-08062af3-308e-4d85-b522-dd69cb038940-reloc-strict.json",
+      "raw_measurement": "retail_size=1184 generated_size=1184 retail_instructions=296 generated_instructions=296 retail_relocations=60 generated_relocations=60 match_percent=98.699326",
+      "relocation_result": "All 60 relocation-bearing instructions agree in offset, type, target, and addend; cmp of the canonical and relocation-strict raw reports exited 0."
+    },
+    "experiment": {
+      "hypothesis": "Qualifying the HandlerState pointee volatile could change MWCC live-range priority while preserving the required member access sequence.",
+      "raw_measurement": "match_percent=97.922295",
+      "result": "regressed; the experiment was reverted"
+    },
+    "divergence": "Best score is unchanged from the accepted base. The remaining 77 argument mismatches are a five-way callee-saved register cycle: retail state/strings/kind/context/event=r27/r28/r29/r30/r31; canonical strings/kind/context/event/state=r27/r28/r29/r30/r31.",
+    "build": {
+      "commands": [
+        "python3 configure.py",
+        ".tools/bin/ninja -j2"
+      ],
+      "result": "success",
+      "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+      "dol_scope": "Because the target remains NonMatching, this verifies the canonical fallback build, not the candidate C."
+    },
+    "legal_audit": "No inline or whole-function assembly, shared reconstruction, runtime-code change, compiler-policy change, gate change, or neighboring-function edit is included."
+  },
+  "003aec9377aab574aded46f131e34b565af25e37": {
+    "version": 1,
+    "assignment_id": "75285cc7-9665-4868-ae5c-eb495ff6feca",
+    "target": "fn_80058394",
+    "source_reconciliation": {
+      "preserved_commit": "5cf8073456d65c34b36e6c6667d71e6855fbef86",
+      "accepted_base": "b4d886a120f15c27d4414a6f70e5150a31363392",
+      "result": "The accepted base already contains the recovered independent honest-C reconstruction. Commit 5cf8073456d65c34b36e6c6667d71e6855fbef86 preserves the prior measured attempt and confirms that seven legitimate source-level allocation experiments failed to improve it, so the accepted-base source and its NonMatching registration were retained unchanged."
+    },
+    "canonical": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/objdiff-75285cc7-9665-4868-ae5c-eb495ff6feca-canonical.json --format json-pretty",
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-75285cc7-9665-4868-ae5c-eb495ff6feca-canonical.json",
+      "raw_measurement": "retail_size=1184 generated_size=1184 retail_instructions=296 generated_instructions=296 retail_relocations=60 generated_relocations=60 match_percent=98.699326"
+    },
+    "relocation_strict": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/objdiff-75285cc7-9665-4868-ae5c-eb495ff6feca-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-75285cc7-9665-4868-ae5c-eb495ff6feca-reloc-strict.json",
+      "raw_measurement": "retail_size=1184 generated_size=1184 retail_instructions=296 generated_instructions=296 retail_relocations=60 generated_relocations=60 match_percent=98.699326",
+      "relocation_result": "All 60 relocation-bearing instructions agree in offset, type, target, and addend. cmp reports byte-identical canonical and relocation-strict JSON outputs (exit 0)."
+    },
+    "divergence": "All instruction shapes, control flow, and relocations agree except for a five-way callee-saved register allocation cycle: retail assigns state/strings/kind/context/event to r27/r28/r29/r30/r31, while canonical GC/1.3 assigns strings/kind/context/event/state to r27/r28/r29/r30/r31. This produces 77 DIFF_ARG_MISMATCH instructions per side. Simultaneously mapping retail r27/r28/r29/r30/r31 to canonical r31/r27/r28/r29/r30 makes all 296 address-and-formatted-instruction records byte-identical (cmp exit 0).",
+    "build": {
+      "commands": [
+        "python3 configure.py",
+        ".tools/bin/ninja -j2"
+      ],
+      "result": "success",
+      "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+      "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+      "dol_scope": "The target remains NonMatching, so the DOL hash verifies the canonical fallback build and is not evidence that the candidate C matches."
+    },
+    "legal_audit": "No inline or whole-function assembly, shared reconstruction, runtime-code change, private input, generated binary, compiler-policy change, gate change, or neighboring-function edit is included."
+  },
+  "5cf8073456d65c34b36e6c6667d71e6855fbef86": {
+    "version": 1,
+    "assignment_id": "dda5363b-bf6f-4534-af98-6e8dd42a96fd",
+    "target": "fn_80058394",
+    "source_reconciliation": {
+      "preserved_commit": "2bf20c7b971c10d0feb5ecc4dc535b94bc6e54ca",
+      "accepted_base": "50218a44e115ffe3ffa4813490687e152edcf3cf",
+      "result": "The accepted base already contains the recovered independent honest-C reconstruction. The retained source is unchanged from the accepted base because every codegen-neutral experiment tied the base score and the two codegen-changing experiments regressed."
+    },
+    "canonical": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/objdiff-dda5363b-bf6f-4534-af98-6e8dd42a96fd-canonical.json --format json-pretty",
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-dda5363b-bf6f-4534-af98-6e8dd42a96fd-canonical.json",
+      "raw_measurement": "retail_size=1184 generated_size=1184 retail_instructions=296 generated_instructions=296 retail_relocations=60 generated_relocations=60 match_percent=98.699326"
+    },
+    "relocation_strict": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/objdiff-dda5363b-bf6f-4534-af98-6e8dd42a96fd-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-dda5363b-bf6f-4534-af98-6e8dd42a96fd-reloc-strict.json",
+      "raw_measurement": "retail_size=1184 generated_size=1184 retail_instructions=296 generated_instructions=296 retail_relocations=60 generated_relocations=60 match_percent=98.699326",
+      "relocation_result": "All 60 relocation-bearing instructions agree in offset, type, target, and addend; strict and canonical direct reports are byte-identical."
+    },
+    "experiments": [
+      {
+        "lever": "explicit intermediate state_ptr before dereference",
+        "match_percent": 98.699326,
+        "result": "codegen-neutral"
+      },
+      {
+        "lever": "state declared and initialized in an inner scope",
+        "match_percent": 98.699326,
+        "result": "codegen-neutral"
+      },
+      {
+        "lever": "register hints on strings, kind, context, and event",
+        "match_percent": 98.699326,
+        "result": "codegen-neutral"
+      },
+      {
+        "lever": "direct use of named context and event parameters without aliases",
+        "match_percent": 98.699326,
+        "result": "codegen-neutral"
+      },
+      {
+        "lever": "branch-local aliases for state member accesses",
+        "match_percent": 98.699326,
+        "result": "codegen-neutral"
+      },
+      {
+        "lever": "early state/context alias to perturb the live range",
+        "match_percent": 98.46284,
+        "result": "regressed by adding and rescheduling address materialization"
+      },
+      {
+        "lever": "state_ptr retained across the kind==1 test with dereference sunk afterward",
+        "match_percent": 98.04054,
+        "result": "regressed because the load was not hoisted across the branch"
+      }
+    ],
+    "divergence": "The best score is unchanged from the accepted base. Every instruction and relocation agrees modulo a five-way callee-saved register cycle: retail assigns state/strings/kind/context/event to r27/r28/r29/r30/r31, while canonical GC/1.3 assigns strings/kind/context/event/state to r27/r28/r29/r30/r31.",
+    "build": {
+      "commands": [
+        "python3 configure.py",
+        ".tools/bin/ninja -j2"
+      ],
+      "result": "success",
+      "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+      "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+      "dol_scope": "The target remains NonMatching, so the DOL hash verifies the canonical fallback build and is not evidence that the candidate C matches."
+    },
+    "legal_audit": "No inline or whole-function assembly, shared reconstruction, runtime-code change, private input, generated binary, compiler-policy change, or neighboring-function edit is included."
+  },
+  "source_reconciliation": {
+    "accepted_base": "ed9e85da8a1b192979db5f70b158d548a2bb926c",
+    "preserved_source_equals_base": true,
+    "base_source_sha256": "2cce9b00fa6d1f2e453d8265ec394041c239c317aaf26cc8a81b21c2a709527b",
+    "preserved_commit_changes": "reports only; no source recovery needed"
+  }
+}

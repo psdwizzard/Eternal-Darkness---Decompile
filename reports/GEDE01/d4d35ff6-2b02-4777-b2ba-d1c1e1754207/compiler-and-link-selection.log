@@ -1,0 +1,15 @@
+# game/game_fn_80058394.c: game (linked True)
+build build/GEDE01/src/game/game_fn_80058394.o: mwcc_sjis $
+    src/game/game_fn_80058394.c | compilers/$mw_version/mwcceppc.exe $
+    tools/mwcc_wrapper.py build/tools/sjiswrap.exe tools/transform_dep.py $
+    || pre-compile
+  mw_version = GC/1.3
+  cflags = -nodefaults -proc gekko -align powerpc -enum int -fp hardware $
+      -Cpp_exceptions off -O4,p -inline auto -pragma "cats off" -pragma $
+      "warn_notinlined off" -maxerrors 1 -nosyspath -RTTI off -fp_contract $
+      on -str reuse -multibyte -i include -i build/GEDE01/include $
+      -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on
+  basedir = build/GEDE01/src/game
+  basefile = build/GEDE01/src/game/game_fn_80058394
+
+Verified main.elf link rule selects build/GEDE01/src/game/game_fn_80058394.o and excludes the asm-derived target object.

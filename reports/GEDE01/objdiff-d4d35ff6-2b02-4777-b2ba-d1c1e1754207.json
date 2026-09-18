@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "assignment_id": "d4d35ff6-2b02-4777-b2ba-d1c1e1754207",
+  "target": "fn_80058394",
+  "status": "matched",
+  "source_reconciliation": {
+    "accepted_base": "ed9e85da8a1b192979db5f70b158d548a2bb926c",
+    "preserved_commit": "cc92e64e0b20b25d1fc6341523f31e15f53d7c3c",
+    "result": "Preserved source equals accepted-base source byte for byte; recovered historical reports were inspected and archived before experiments.",
+    "history": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/recovered-history.json"
+  },
+  "hypothesis": "MWCC scalar replacement of an aggregate member can introduce a different allocator identity/priority from an ordinary pointer local. A local struct containing the state pointer should preserve all behavior and the existing load while changing allocation. This aggregate-scalarization hypothesis is absent from the documented prior variants.",
+  "experiments": [
+    {
+      "name": "typed-accessor",
+      "hypothesis": "A correctly typed HandlerState ** accessor return may avoid the void ** cast path and change value allocation.",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/typed-accessor.patch",
+      "raw": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/typed-accessor-canonical.json",
+      "build": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/typed-accessor-build.log",
+      "result": "98.699326%; codegen-neutral; reverted."
+    },
+    {
+      "name": "aggregate-state",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/aggregate-state.patch",
+      "raw": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/aggregate-state-canonical.json",
+      "build": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/aggregate-state-build.log",
+      "result": "100%; retained. Local struct member is scalarized with no stack traffic; state/strings/kind/context/event become r27/r28/r29/r30/r31. The struct never escapes and adds no observable access."
+    },
+    {
+      "name": "array-state",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/array-state.patch",
+      "raw": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/array-state-canonical.json",
+      "build": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/array-state-build.log",
+      "result": "100%; corroborates aggregate scalarization, but reverted in favor of the struct form. No second C reconstruction retained."
+    }
+  ],
+  "measurements": {
+    "baseline-canonical": {
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/baseline-canonical.json",
+      "measurements": {
+        "left": {
+          "size": 1184,
+          "match_percent": 98.699326,
+          "instructions": 296,
+          "relocation_bearing_instructions": 60,
+          "argument_mismatches": 77
+        },
+        "right": {
+          "size": 1184,
+          "match_percent": 98.699326,
+          "instructions": 296,
+          "relocation_bearing_instructions": 60,
+          "argument_mismatches": 77
+        }
+      }
+    },
+    "typed-accessor-canonical": {
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/typed-accessor-canonical.json",
+      "measurements": {
+        "left": {
+          "size": 1184,
+          "match_percent": 98.699326,
+          "instructions": 296,
+          "relocation_bearing_instructions": 60,
+          "argument_mismatches": 77
+        },
+        "right": {
+          "size": 1184,
+          "match_percent": 98.699326,
+          "instructions": 296,
+          "relocation_bearing_instructions": 60,
+          "argument_mismatches": 77
+        }
+      }
+    },
+    "aggregate-state-canonical": {
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/aggregate-state-canonical.json",
+      "measurements": {
+        "left": {
+          "size": 1184,
+          "match_percent": 100.0,
+          "instructions": 296,
+          "relocation_bearing_instructions": 60,
+          "argument_mismatches": 0
+        },
+        "right": {
+          "size": 1184,
+          "match_percent": 100.0,
+          "instructions": 296,
+          "relocation_bearing_instructions": 60,
+          "argument_mismatches": 0
+        }
+      }
+    },
+    "array-state-canonical": {
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/array-state-canonical.json",
+      "measurements": {
+        "left": {
+          "size": 1184,
+          "match_percent": 100.0,
+          "instructions": 296,
+          "relocation_bearing_instructions": 60,
+          "argument_mismatches": 0
+        },
+        "right": {
+          "size": 1184,
+          "match_percent": 100.0,
+          "instructions": 296,
+          "relocation_bearing_instructions": 60,
+          "argument_mismatches": 0
+        }
+      }
+    },
+    "final-canonical": {
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/final-canonical.json",
+      "measurements": {
+        "left": {
+          "size": 1184,
+          "match_percent": 100.0,
+          "instructions": 296,
+          "relocation_bearing_instructions": 60,
+          "argument_mismatches": 0
+        },
+        "right": {
+          "size": 1184,
+          "match_percent": 100.0,
+          "instructions": 296,
+          "relocation_bearing_instructions": 60,
+          "argument_mismatches": 0
+        }
+      }
+    },
+    "final-reloc-strict": {
+      "artifact": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/final-reloc-strict.json",
+      "measurements": {
+        "left": {
+          "size": 1184,
+          "match_percent": 100.0,
+          "instructions": 296,
+          "relocation_bearing_instructions": 60,
+          "argument_mismatches": 0
+        },
+        "right": {
+          "size": 1184,
+          "match_percent": 100.0,
+          "instructions": 296,
+          "relocation_bearing_instructions": 60,
+          "argument_mismatches": 0
+        }
+      }
+    }
+  },
+  "commands": {
+    "cwd": "eternal-darkness-decomp",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/final-canonical.json --format json-pretty",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80058394 fn_80058394 -o reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/final-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "elf_verification": "python3 reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/verify_elf.py",
+    "build": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "legal_audit": "python3 tools/legal_audit.py"
+  },
+  "byte_and_relocation_verification": {
+    "artifact": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/elf-verification.json",
+    "script": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/verify_elf.py",
+    "text_bytes_equal": true,
+    "text_size": 1184,
+    "elf_relocation_records_per_side": 55,
+    "relocations_equal": true,
+    "fields_compared": [
+      "offset",
+      "type",
+      "target",
+      "addend"
+    ],
+    "note": "Objdiff reports 60 relocation-bearing instructions; ELF contains 55 explicit RELA records. Both are recorded separately."
+  },
+  "compiler": {
+    "revision": "GC/1.3",
+    "settings": "Existing canonical flags unchanged. Existing -use_lmw_stmw on retained.",
+    "evidence": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/compiler-and-link-selection.log"
+  },
+  "build": {
+    "exit_code": 0,
+    "configure_log": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/configure.log",
+    "raw_log": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/full-build.log",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "sha1_log": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/dol-sha1.log",
+    "scope": "Matching registration links build/GEDE01/src/game/game_fn_80058394.o into main.elf; DOL hash verifies the reconstruction as linked, not the NonMatching fallback."
+  },
+  "legal_audit": {
+    "artifact": "eternal-darkness-decomp/reports/GEDE01/d4d35ff6-2b02-4777-b2ba-d1c1e1754207/legal-audit.log",
+    "scope": "Only this function source, its Matching registration, and assignment-specific reports are committed. No inline/whole-function assembly, policy/gate edits, neighboring source edits, private inputs, or generated binaries. Existing unrelated CLAUDE.md change excluded."
+  },
+  "divergence": ""
+}
