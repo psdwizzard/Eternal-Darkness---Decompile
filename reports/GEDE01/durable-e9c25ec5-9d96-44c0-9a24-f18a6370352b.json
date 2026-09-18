@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e9c25ec5-9d96-44c0-9a24-f18a6370352b",
+  "attempt": 1,
+  "base_commit": "c7393c424a5b0dda3b4306eea6ad70b7be55b128",
+  "target": "fn_800A2B8C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e9c25ec5-9d96-44c0-9a24-f18a6370352b.json"
+  ],
+  "divergence": "Size-exact 400/400-byte honest C at 79.93% canonical and relocation-strict objdiff. The remaining differing rows are MWCC instruction scheduling and register allocation in the action initializer: retail hoists lbl_8064EE8C, lbl_8064EE98, lbl_8064EE94, and lbl_8064EE90 loads and owns the u16-to-float bias constant via lbl_8064EE98, while generated code delays the float loads and uses compiler pool @10; the later lbl_8064EE70 load is likewise scheduled after rather than before the position copy."
+}

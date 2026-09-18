@@ -8,14 +8,14 @@ typedef struct Vec3 {
 } Vec3;
 
 typedef struct Action800A2B8C {
-    u8 pad00[4];
+    u8 pad00;
+    u8 value10;
+    u8 pad02;
+    signed char value13;
     s16 value04;
     s16 value06;
     s16 value08;
-    u8 pad0A[6];
-    u8 value10;
-    u8 pad11[2];
-    signed char value13;
+    u8 pad0A[0xA];
     u8 value14;
     u8 pad15[3];
     u8 flags18;
@@ -31,8 +31,7 @@ typedef struct Action800A2B8C {
     u32 value94;
     Vec3 position;
     u8 params[6];
-    u8 padAA[0xA];
-    u8 typeB4;
+    u8 typeAA;
 } Action800A2B8C;
 
 typedef struct Runtime800A2B8C {
@@ -44,8 +43,12 @@ typedef struct Runtime800A2B8C {
     float value98;
     u8 pad09C[0x30];
     Action800A2B8C actionCC;
-    u32 handle160;
 } Runtime800A2B8C;
+
+typedef struct Params800A2B8C {
+    u32 word;
+    u16 half;
+} Params800A2B8C;
 
 typedef struct Context800A2B8C {
     u8 pad00[0x64];
@@ -70,49 +73,50 @@ extern void fn_80185A44(void);
 extern FN_80201E78_RETURN fn_80201E78(FN_80201E78_PARAMETERS);extern void* memcpy(void*, const void*, unsigned int);
 extern int fn_801E8328();
 
+/* NonMatching: behavior-complete and size-exact. The remaining divergence is
+ * MWCC scheduling/register allocation around the u16-to-float conversion and
+ * the four float constant loads in the action initializer. */
 void fn_800A2B8C(void* object, u16 value)
 {
     Context800A2B8C* context = ((Context800A2B8C*)fn_80201B8C());
     Runtime800A2B8C* runtime = context->runtime;
+    Action800A2B8C* action;
     u32 positionWord;
     s16 actionValue;
-    u8 params[6];
+    Params800A2B8C params;
     Vec3 position;
     void* source;
 
-    if ((runtime->flags84 & 0x20) == 0 && runtime->handle160 == 0) {
-        params[0] = ((u8*)&lbl_80651A18)[0];
-        params[1] = ((u8*)&lbl_80651A18)[1];
-        params[2] = ((u8*)&lbl_80651A18)[2];
-        params[3] = ((u8*)&lbl_80651A18)[3];
-        params[4] = ((u8*)&lbl_80651A1C)[0];
-        params[5] = ((u8*)&lbl_80651A1C)[1];
+    if ((runtime->flags84 & 0x20) == 0 && *(u32*)((u8*)runtime + 0x160) == 0) {
+        params.word = lbl_80651A18;
+        params.half = lbl_80651A1C;
         runtime->flags84 |= 0x20;
         source = fn_80035628(object);
-        runtime->handle160 = 0;
-        fn_801857B4(&runtime->actionCC);
+        action = &runtime->actionCC;
+        *(u32*)((u8*)runtime + 0x160) = 0;
+        fn_801857B4(action);
         fn_801D38BC(source, &positionWord, &actionValue);
-        runtime->actionCC.value04 = actionValue;
-        runtime->actionCC.value08 = 0;
-        runtime->actionCC.value06 = 0;
-        runtime->actionCC.value10 = 100;
-        runtime->actionCC.value13 = -10;
-        runtime->actionCC.value19 = 16;
-        runtime->actionCC.value78 = positionWord;
-        runtime->actionCC.value1C = value;
-        runtime->actionCC.value14 = 0;
-        runtime->actionCC.value50 = lbl_8064EE8C;
-        runtime->actionCC.flags18 |= 3;
-        runtime->actionCC.callback = fn_80185A44;
+        action->value04 = actionValue;
+        action->value08 = 0;
+        action->value06 = 0;
+        action->value10 = 100;
+        action->value13 = -10;
+        action->value19 = 16;
+        action->value78 = positionWord;
+        action->value1C = value;
+        action->value14 = 0;
+        action->value50 = lbl_8064EE8C;
+        action->flags18 |= 3;
+        action->callback = fn_80185A44;
         runtime->value98 = lbl_8064EE90;
         runtime->value94 = lbl_8064EE94 * (float)value;
         fn_80201E78(&position, object);
         runtime->position88 = position;
         runtime->position88.z = lbl_8064EE70;
-        runtime->actionCC.position = runtime->position88;
-        memcpy(runtime->actionCC.params, params, 6);
-        runtime->actionCC.value94 = 0;
-        runtime->actionCC.typeB4 = 2;
-        fn_801E8328(16, &runtime->actionCC);
+        action->position = runtime->position88;
+        memcpy(action->params, &params, 6);
+        action->value94 = 0;
+        action->typeAA = 2;
+        fn_801E8328(16, action);
     }
 }
