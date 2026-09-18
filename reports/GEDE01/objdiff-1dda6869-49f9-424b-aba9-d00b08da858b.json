@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "assignment_id": "1dda6869-49f9-424b-aba9-d00b08da858b",
+  "attempt": 4,
+  "target": "fn_800D9064",
+  "unit": "main/game/game_fn_800D9064",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_800D9064.externalized",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800D9064 fn_800D9064 -o build/GEDE01/fndiff_fn_800D9064.json --format json",
+    "build/binutils/powerpc-eabi-readelf -r build/GEDE01/obj/game/game_fn_800D9064.o",
+    "build/binutils/powerpc-eabi-readelf -r build/GEDE01/src/game/game_fn_800D9064.o",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "canonical_objdiff": {
+    "objdiff_version": "3.6.1",
+    "retail_size": 328,
+    "generated_size": 328,
+    "retail_instruction_count": 82,
+    "generated_instruction_count": 82,
+    "match_percent": 99.32927,
+    "raw_summary": "left fn_800D9064 size=328 match_percent=99.32927 instructions=82; right fn_800D9064 size=328 match_percent=99.32927 instructions=82",
+    "differing_instruction_offsets": ["0x0100", "0x0104", "0x0108", "0x010c", "0x0114", "0x011c", "0x0120", "0x0124"],
+    "raw_difference": [
+      "0x0100 retail: lis r6, fn_8014CA98@ha | generated: lis r5, fn_8014CA98@ha",
+      "0x0104 retail: addi r4, r4, lbl_803254C8@l | generated: addi r6, r4, lbl_803254C8@l",
+      "0x0108 retail: li r5, 0x0 | generated: li r4, 0x0",
+      "0x010c retail: addi r6, r6, fn_8014CA98@l | generated: addi r5, r5, fn_8014CA98@l",
+      "0x0114 retail: stw r3, 0x64(r4) | generated: stw r3, 0x64(r6)",
+      "0x011c retail: stw r6, 0x68(r4) | generated: stw r5, 0x68(r6)",
+      "0x0120 retail: stb r5, 0x37(r4) | generated: stb r4, 0x37(r6)",
+      "0x0124 retail: stb r0, 0x38(r4) | generated: stb r0, 0x38(r6)"
+    ]
+  },
+  "relocation_strict": {
+    "retail_relocations": 20,
+    "generated_relocations": 20,
+    "equal_offset_type_target_addend": 20,
+    "unequal_offset_type_target_addend": 0,
+    "raw_readelf_summary": "retail .rela.text offset 0x188 contains 20 entries; generated .rela.text offset 0x3c0 contains 20 entries",
+    "records": [
+      "0x000a R_PPC_ADDR16_HA lbl_803254C8 + 0", "0x001a R_PPC_ADDR16_LO lbl_803254C8 + 0",
+      "0x002c R_PPC_REL24 fn_8014CBC0 + 0", "0x0044 R_PPC_REL24 fn_80149CC4 + 0",
+      "0x004a R_PPC_ADDR16_HA lbl_803254C8 + 0", "0x0052 R_PPC_ADDR16_LO lbl_803254C8 + 0",
+      "0x0074 R_PPC_REL24 fn_801D39E0 + 0", "0x0086 R_PPC_ADDR16_HA lbl_803254C8 + 0",
+      "0x008e R_PPC_ADDR16_LO lbl_803254C8 + 0", "0x0092 R_PPC_ADDR16_HA fn_801FDA7C + 0",
+      "0x009e R_PPC_ADDR16_LO fn_801FDA7C + 0", "0x00a0 R_PPC_EMB_SDA21 lbl_8064F438 + 0",
+      "0x00b0 R_PPC_EMB_SDA21 lbl_8064F434 + 0", "0x00c0 R_PPC_EMB_SDA21 lbl_8064F430 + 0",
+      "0x00f8 R_PPC_REL24 fn_80201B54 + 0", "0x00fe R_PPC_ADDR16_HA lbl_803254C8 + 0",
+      "0x0102 R_PPC_ADDR16_HA fn_8014CA98 + 0", "0x0106 R_PPC_ADDR16_LO lbl_803254C8 + 0",
+      "0x010e R_PPC_ADDR16_LO fn_8014CA98 + 0", "0x0128 R_PPC_REL24 fn_801E8328 + 0"
+    ]
+  },
+  "attempt_notes": {
+    "distinct_hypothesis": "Tested whether retaining the descriptor address through an assignment expression, spelling the callback store through a pointer-to-field, and precomputing the zero and callback values would alter MWCC's coalescing graph while preserving the retail tail-store schedule. Also isolated the ABI-compatible integer-return declaration/cast for fn_80201B54 instead of coupling it to the scaled-limit correction.",
+    "measured_variants": [
+      "Assignment-expression descriptor plus pointer-to-field callback: size-exact 99.32927%, identical eight register-color differences; discarded.",
+      "ABI-compatible int return plus explicit owner cast, with the correct global limit conversion: size-exact 99.32927%, identical eight register-color differences; discarded.",
+      "Precomputed u8 zero before the callback assignment and precomputed callback local: size-exact 99.32927%, identical eight register-color differences; discarded."
+    ],
+    "preserved_candidate": "Retained the accepted base's cleaner honest independent C reconstruction unchanged because every distinct variant canonicalized to the same 99.32927% object.",
+    "legal_audit": "The translation unit contains C only and owns exactly fn_800D9064. No inline or whole-function assembly, shared reconstruction, gate change, compiler-policy change, neighboring-function edit, progress.json edit, or README.md edit was made."
+  },
+  "build_verification": {
+    "configure_exit": 0,
+    "full_ninja_exit": 0,
+    "target_externalized_build_exit": 0,
+    "objdiff_exit": 0,
+    "raw_ninja_tail": "[875/878] LINK build/GEDE01/main.elf; [876/878] DOL build/GEDE01/main.dol; [877/878] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [878/878] PROGRESS",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_matches": true,
+    "raw_sha1sum": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  }
+}
