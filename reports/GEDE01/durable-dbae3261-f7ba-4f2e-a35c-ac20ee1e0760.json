@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "dbae3261-f7ba-4f2e-a35c-ac20ee1e0760",
+  "attempt": 1,
+  "base_commit": "f3b6f8b90a4f23e609b0b7783934b4cd404a95e4",
+  "target": "fn_801858E0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-dbae3261-f7ba-4f2e-a35c-ac20ee1e0760.json"
+  ],
+  "divergence": "Best canonical objdiff is 52.56338%: retail is 284 bytes with a 0x40-byte frame and stmw/lmw r26-r31, while generated code is 236 bytes with a 0x30-byte frame and stmw/lmw r24-r31. Retail spills two aggregate words and the lbl_806509F4 value across fn_801859FC, whereas generated code retains all seven scalar values in nonvolatile registers. The six semantic relocations have equal types, targets, and addends, but the generated LO relocations occur at 0x14/0x18 instead of 0x34/0x38, SDA21 at 0x50 instead of 0x3c, and REL24 at 0x90 instead of 0xa4; generated local field loads also carry R_PPC_NONE annotations. Retail and existing build/GEDE01/main.dol both verify at SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f. The required full ninja build was attempted but stopped on the pre-existing unrelated game_fn_801B6F1C externalization error '@74 has no file-backed value'; the assigned translation unit builds successfully."
+}

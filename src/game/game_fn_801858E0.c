@@ -15,8 +15,12 @@ extern void fn_801859FC(u8*, u8);
 
 void fn_801858E0(u8* self)
 {
-    Words3 first = lbl_8023B050;
-    Words3 second = lbl_8023B05C;
+    u32 first_x = lbl_8023B050.x;
+    u32 first_y = lbl_8023B050.y;
+    u32 first_z = lbl_8023B050.z;
+    u32 second_x = lbl_8023B05C.x;
+    u32 second_y = lbl_8023B05C.y;
+    u32 second_z = lbl_8023B05C.z;
     u32 value = lbl_806509F4;
 
     self[0] = 31;
@@ -35,7 +39,13 @@ void fn_801858E0(u8* self)
     self[0x18] = 20;
     self[0x19] = 31;
     *(u32*)(self + 0x78) = value;
-    *(Words3*)(self + 0x3C) = first;
-    *(Words3*)(self + 0x48) = first;
-    *(Words3*)(self + 0x30) = second;
+    *(u32*)(self + 0x3C) = first_x;
+    *(u32*)(self + 0x40) = first_y;
+    *(u32*)(self + 0x44) = first_z;
+    *(u32*)(self + 0x48) = first_x;
+    *(u32*)(self + 0x4C) = first_y;
+    *(u32*)(self + 0x50) = first_z;
+    *(u32*)(self + 0x30) = second_x;
+    *(u32*)(self + 0x34) = second_y;
+    *(u32*)(self + 0x38) = second_z;
 }
