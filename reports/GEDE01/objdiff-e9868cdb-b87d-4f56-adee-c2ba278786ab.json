@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "assignment_id": "e9868cdb-b87d-4f56-adee-c2ba278786ab",
+  "target": "fn_801F5240",
+  "compiler_settings": {
+    "registration": "Object(Matching, \"game/game_fn_801F5240.c\", mw_version=\"GC/1.3\")",
+    "extra_cflags": [],
+    "canonical_settings_preserved": true
+  },
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F5240 fn_801F5240 -o build/GEDE01/assignment-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F5240 fn_801F5240 -o build/GEDE01/assignment-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "canonical": {
+    "target_bytes": 424,
+    "candidate_bytes": 424,
+    "target_instructions": 106,
+    "candidate_instructions": 106,
+    "match_percent": 100.0,
+    "difference_count": 0,
+    "matched": true,
+    "raw_summary": "target 424 bytes  base 424 bytes  match 100.0"
+  },
+  "relocation_strict": {
+    "configuration": "function_reloc_diffs=name_address",
+    "target_relocation_instructions": 30,
+    "candidate_relocation_instructions": 30,
+    "difference_count": 0,
+    "match_percent": 100.0,
+    "targets_and_addends_equal": true,
+    "matched": true,
+    "raw_summary": "target size=424 instructions=106 relocations=30; base size=424 instructions=106 relocations=30; match_percent=100.0; diff_kind entries=0"
+  },
+  "build": {
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "raw_check_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "built": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matched": true
+  },
+  "legal_audit": {
+    "exit_code": 0,
+    "raw_output": "legal audit passed (17115 tracked project files inspected)"
+  },
+  "divergence": ""
+}
