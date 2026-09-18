@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "assignment_id": "21ec8b9a-82b6-4572-abb1-05953ed0b4f8",
+  "target": "fn_800E50AC",
+  "compiler": "GC/1.3",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_800E50AC.c fn_800E50AC",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "build_exit_code": 0,
+  "raw_build_gate": "build/GEDE01/main.dol: OK",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_verified": true,
+  "objdiff": {
+    "tool": "objdiff-cli v3.6.1 via tools/fndiff.py",
+    "target_bytes": 200,
+    "candidate_bytes": 200,
+    "match_percent": 63.16,
+    "canonical_match": false,
+    "relocation_strict_match": false,
+    "relocation_count_target": 9,
+    "relocation_count_candidate": 9,
+    "relocation_types_targets_and_addends_match": true,
+    "relocation_offsets_match": false,
+    "target_relocations": [
+      "0x20 R_PPC_REL24 fn_8014CBC0+0",
+      "0x24 R_PPC_EMB_SDA21 lbl_8064F6C8+0",
+      "0x2c R_PPC_EMB_SDA21 lbl_8064D18C+0",
+      "0x30 R_PPC_ADDR16_HA fn_801FD8F0+0",
+      "0x34 R_PPC_ADDR16_LO fn_801FD8F0+0",
+      "0x64 R_PPC_EMB_SDA21 lbl_8064F6CC+0",
+      "0x94 R_PPC_REL24 fn_801FE8DC+0",
+      "0xa0 R_PPC_REL24 fn_8014C988+0",
+      "0xac R_PPC_REL24 fn_8014C37C+0"
+    ],
+    "candidate_relocations": [
+      "0x20 R_PPC_REL24 fn_8014CBC0+0",
+      "0x24 R_PPC_EMB_SDA21 lbl_8064F6C8+0",
+      "0x28 R_PPC_ADDR16_HA fn_801FD8F0+0",
+      "0x30 R_PPC_ADDR16_LO fn_801FD8F0+0",
+      "0x4c R_PPC_EMB_SDA21 lbl_8064D18C+0",
+      "0x68 R_PPC_EMB_SDA21 lbl_8064F6CC+0",
+      "0x94 R_PPC_REL24 fn_801FE8DC+0",
+      "0xa0 R_PPC_REL24 fn_8014C988+0",
+      "0xac R_PPC_REL24 fn_8014C37C+0"
+    ],
+    "raw_summary": "target 200 bytes  base 200 bytes  match 63.16",
+    "experiments": [
+      "Removing the effect_value scalar temporary compiled identically at 63.16%.",
+      "A direct nonvolatile field initializer remained 200 target/base bytes in the summary but regressed to 49.1% and emitted a longer instruction stream."
+    ],
+    "divergence": "The prologue, calls, epilogue, descriptor field values, final callback/flag stores, all relocation types/targets/addends, and total candidate size agree. Retail loads constants, owner, callback, input value, and position into r11/r8/r4/r31/r7/r6/r5 before descriptor stores; GC/1.3 assigns r8/r5/r4/r0/r9/r10/r11 and schedules callback, owner, and second-float loads differently. Relocation offsets differ at callback HA/LO (target 0x30/0x34 versus candidate 0x28/0x30), owner SDA21 (0x2c versus 0x4c), and lbl_8064F6CC SDA21 (0x64 versus 0x68)."
+  }
+}
