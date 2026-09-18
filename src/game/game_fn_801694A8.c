@@ -11,6 +11,7 @@ typedef struct Value {
     int type;
     int pad04;
     String* string;
+    int pad0C;
 } Value;
 
 extern int fn_80168A70(void*, Value*);
@@ -25,43 +26,54 @@ extern char lbl_8024FCD0[];
 
 void fn_801694A8(void* context, int count, Value* end)
 {
-    int grouped = 2;
+    do {
+        int grouped = 2;
 
-    while (count > 1) {
         if ((end[-2].type != 3 && fn_80168A70(context, end - 2) != 0) ||
             (end[-1].type != 3 && fn_80168A70(context, end - 1) != 0)) {
             if (fn_801691AC(context, end, 12) == 0) {
                 fn_8016044C(context, end - 2, 3, &lbl_8064BBF0);
             }
         } else if (end[-1].string->length != 0) {
+            int scanOffset = 32;
+            Value* scan;
             unsigned int total = end[-1].string->length + end[-2].string->length;
-            while (grouped < count) {
-                Value* value = end - grouped - 1;
-                if (value->type != 3 && fn_80168A70(context, value) != 0) {
-                    break;
+            goto scanTest;
+scanAdd:
+            total += scan[-1].string->length;
+            scanOffset += 16;
+            ++grouped;
+scanTest:
+            if (grouped < count) {
+                Value* value;
+                scan = (Value*)((char*)end - scanOffset);
+                value = scan - 1;
+                if (value->type == 3 ||
+                    fn_80168A70(context, value) == 0) {
+                    goto scanAdd;
                 }
-                total += value->string->length;
-                ++grouped;
             }
             if (total > 0xFFFFFFFDU) {
                 fn_80160FAC(context, lbl_8024FCD0);
             }
             {
                 char* joined = fn_80163A9C(context, total);
-                int remaining = grouped;
                 unsigned int copied = 0;
-                int offset = grouped * 16;
+                int offset = grouped << 4;
+                int remaining = grouped;
                 while (remaining > 0) {
-                    String* string = (end - offset / 16)->string;
-                    memcpy(joined + copied, string->data, string->length);
-                    copied += string->length;
+                    String* string = *(String**)((char*)end - offset + 8);
+                    unsigned int length = string->length;
+                    memcpy(joined + copied, string->data, length);
+                    copied += length;
                     offset -= 16;
                     --remaining;
                 }
-                (end - grouped)->string = fn_80166E3C(context, joined, copied);
+                (end - grouped)->string =
+                    fn_80166E3C(context, joined, copied);
             }
         }
         count -= grouped - 1;
-        end -= grouped - 1;
-    }
+        end = (Value*)((char*)end - ((grouped - 1) << 4));
+    } while (count > 1);
 }

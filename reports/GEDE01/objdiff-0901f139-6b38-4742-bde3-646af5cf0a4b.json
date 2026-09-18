@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "assignment_id": "0901f139-6b38-4742-bde3-646af5cf0a4b",
+  "target": "fn_801694A8",
+  "unit": "main/game/game_fn_801694A8",
+  "compiler": "canonical project configuration",
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801694A8 fn_801694A8 -o build/GEDE01/fn_801694A8-canonical.json --format json-pretty",
+    "exit_code": 0,
+    "stdout": "INFO Writing to build/GEDE01/fn_801694A8-canonical.json",
+    "raw_result": {
+      "left": {"name": "fn_801694A8", "size": "424", "match_percent": 100.0},
+      "right": {"name": "fn_801694A8", "size": "424", "match_percent": 100.0}
+    }
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801694A8 fn_801694A8 -o build/GEDE01/fn_801694A8-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "config": "function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "stdout": "INFO Writing to build/GEDE01/fn_801694A8-reloc-strict.json",
+    "raw_result": {
+      "left": {"name": "fn_801694A8", "size": "424", "match_percent": 100.0},
+      "right": {"name": "fn_801694A8", "size": "424", "match_percent": 100.0}
+    },
+    "relocation_count": {"left": 12, "right": 12},
+    "relocations": [
+      {"address": "52", "type_name": "R_PPC_REL24", "target": "fn_80168A70", "addend": 0},
+      {"address": "84", "type_name": "R_PPC_REL24", "target": "fn_80168A70", "addend": 0},
+      {"address": "108", "type_name": "R_PPC_REL24", "target": "fn_801691AC", "addend": 0},
+      {"address": "132", "type_name": "R_PPC_EMB_SDA21", "target": "lbl_8064BBF0", "addend": 0},
+      {"address": "136", "type_name": "R_PPC_REL24", "target": "fn_8016044C", "addend": 0},
+      {"address": "232", "type_name": "R_PPC_REL24", "target": "fn_80168A70", "addend": 0},
+      {"address": "256", "type_name": "R_PPC_ADDR16_HA", "target": "lbl_8024FCD0", "addend": 0},
+      {"address": "264", "type_name": "R_PPC_ADDR16_LO", "target": "lbl_8024FCD0", "addend": 0},
+      {"address": "268", "type_name": "R_PPC_REL24", "target": "fn_80160FAC", "addend": 0},
+      {"address": "280", "type_name": "R_PPC_REL24", "target": "fn_80163A9C", "addend": 0},
+      {"address": "328", "type_name": "R_PPC_REL24", "target": "memcpy", "addend": 0},
+      {"address": "364", "type_name": "R_PPC_REL24", "target": "fn_80166E3C", "addend": 0}
+    ],
+    "conclusion": "The objdiff CLI itself reports 100.0% with function_reloc_diffs=name_address; all 12 relocation offsets, types, resolved target names/addresses, and addends match. Zero addends are omitted by objdiff's raw JSON serialization and are recorded explicitly above."
+  },
+  "build_verification": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "exit_code": 0,
+    "raw_output": "build/GEDE01/main.dol: OK",
+    "sha1_command": "sha1sum build/GEDE01/main.dol",
+    "sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "sha1_equal": true
+  },
+  "legal_audit": {
+    "honest_c": true,
+    "independent_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false
+  }
+}
