@@ -1,0 +1,48 @@
+{
+  "assignment_id": "928ed5fe-cee6-4e16-9f07-df89abdd43ff",
+  "target": "fn_800BF0C0",
+  "previous_attempts_reviewed": [
+    "9a451dc4ed2d2956ff5ba0a123e3b07745d12171",
+    "a67443987df9cb94e07533829b62bb92cc0873b0",
+    "281ce4e25c9743787356c804817471360e85f927",
+    "af85dbbeb632c43f5d888f63f9f91339f8604be3",
+    "10b1eb632013ad01a052949b0b39aebd8d9444a6"
+  ],
+  "baseline_percent": 98.67021,
+  "hypothesis": "GC/1.3 pointer conversion nodes and separate resource-result live ranges affect register coalescing even when conversions emit no instructions. This differs from prior direct-formal and delayed-event-copy attempts.",
+  "findings": [
+    "Reusing the event parameter as the later resource improved canonical score to 98.776596%.",
+    "An inline owner getter changed allocation and improved canonical score to 98.82979%.",
+    "Pointer identity helpers without a cast coalesced unchanged. Adding the explicit (void *)(u32) conversion to the event value moved the early registers to their retail assignments: event/current/maximum/owner/world = r30/r25/r26/r27/r28; state/holder = r29/r31.",
+    "The conversion also works directly in the target function without any helper, reaching 99.893616%. The remaining two operand mismatches were at function offsets 0x110 and 0x124: the resolved resource used r30 instead of r25.",
+    "Giving the raw resource and resolved resource distinct C locals fixes both remaining operands. The final source contains only fn_800BF0C0, no helpers or assembly, and no changed compiler flags."
+  ],
+  "source_changes": [
+    "Explicit 32-bit event pointer roundtrip into event_object.",
+    "Separate resource and resolved pointer locals."
+  ],
+  "registration": "Promote only game/game_fn_800BF0C0.c from NonMatching to Matching after both canonical and relocation-strict objdiff reach 100%. Existing split remains unchanged.",
+  "scope": "Only target source, its configure.py registration, and assignment-specific reports. Pre-existing CLAUDE.md modification excluded. No shared input writes, no runtime code, no progress.json or README.md edits, no remote push.",
+  "commands": [
+    {
+      "argv": [
+        ".tools/bin/ninja",
+        "-t",
+        "commands",
+        "build/GEDE01/src/game/game_fn_800BF0C0.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800BF0C0.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800BF0C0.d build/GEDE01/src/game/game_fn_800BF0C0.d\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "sha256sum",
+        "compilers/GC/1.3/mwcceppc.exe"
+      ],
+      "exit_code": 0,
+      "stdout": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715  compilers/GC/1.3/mwcceppc.exe\n",
+      "stderr": ""
+    }
+  ]
+}

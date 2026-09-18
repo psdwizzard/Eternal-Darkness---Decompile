@@ -27,6 +27,8 @@ extern void fn_80157C98(void *, int, int);
 
 void *fn_800BF0C0(void *unused, void *event)
 {
+    /* Preserve the 32-bit conversion used by GC/1.3 pointer coalescing. */
+    void *event_object = (void *)(u32)event;
     void *state;
     void *world;
     int owner;
@@ -34,16 +36,16 @@ void *fn_800BF0C0(void *unused, void *event)
     int current;
     void **holder;
 
-    owner = fn_801A7498(event);
+    owner = fn_801A7498(event_object);
     world = fn_80201814(owner);
     holder = fn_80201B8C();
-    state = fn_801A7778(event);
+    state = fn_801A7778(event_object);
     maximum = fn_80157994(state);
-    current = fn_801A76B8(event) & 0xFF;
+    current = fn_801A76B8(event_object) & 0xFF;
 
     if (current > maximum) {
         current = maximum;
-        fn_801A75B0(event, (u8)maximum);
+        fn_801A75B0(event_object, (u8)maximum);
     }
 
     if ((fn_8020216C(world) & 0x10000) == 0 && maximum != 0) {
@@ -57,14 +59,15 @@ void *fn_800BF0C0(void *unused, void *event)
 
     if (fn_80157994(state) == 0) {
         void *resource;
+        void *resolved;
         void *child;
 
         fn_80201B3C();
         resource = fn_80205288();
         child = fn_802053B0(world, state);
-        resource = fn_80201BC8(resource);
-        if (fn_8011EB04(resource) == 0x70) {
-            fn_80124664(resource, 0x1A, 8, lbl_8064F110);
+        resolved = fn_80201BC8(resource);
+        if (fn_8011EB04(resolved) == 0x70) {
+            fn_80124664(resolved, 0x1A, 8, lbl_8064F110);
         }
 
         if (child != 0) {
