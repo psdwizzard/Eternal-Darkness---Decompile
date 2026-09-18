@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "assignment_id": "ab2ce93f-2866-4cc3-85b3-57858757b0f8",
+  "target": "fn_80180D0C",
+  "compiler": "GC/1.3",
+  "compiler_flags": "canonical plus -use_lmw_stmw on",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80180D0C -o reports/GEDE01/raw-canonical-ab2ce93f-2866-4cc3-85b3-57858757b0f8.json --format json-pretty fn_80180D0C",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80180D0C -o reports/GEDE01/raw-reloc-strict-ab2ce93f-2866-4cc3-85b3-57858757b0f8.json --format json-pretty -c function_reloc_diffs=name_address fn_80180D0C",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_outputs": {
+    "canonical": "reports/GEDE01/raw-canonical-ab2ce93f-2866-4cc3-85b3-57858757b0f8.json",
+    "canonical_sha256": "1c7ddc82b595f4b10c2a9f1ee6590315d4e4d347ee360744c91dd64a874f4d01",
+    "relocation_strict": "reports/GEDE01/raw-reloc-strict-ab2ce93f-2866-4cc3-85b3-57858757b0f8.json",
+    "relocation_strict_sha256": "1c7ddc82b595f4b10c2a9f1ee6590315d4e4d347ee360744c91dd64a874f4d01"
+  },
+  "build": {
+    "configure_exit": 0,
+    "ninja_exit": 0,
+    "sha1_check_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "canonical": {
+    "retail_text_bytes": 208,
+    "generated_text_bytes": 208,
+    "fuzzy_match_percent": 59.692307,
+    "matched": false
+  },
+  "relocation_strict": {
+    "configuration": "function_reloc_diffs=name_address",
+    "fuzzy_match_percent": 59.692307,
+    "retail_relocations": [
+      "R_PPC_ADDR16_HA lbl_8023B018 + 0",
+      "R_PPC_ADDR16_LO lbl_8023B018 + 0",
+      "R_PPC_ADDR16_HA lbl_802FC5BC + 0",
+      "R_PPC_ADDR16_LO lbl_802FC5BC + 0",
+      "R_PPC_EMB_SDA21 lbl_80650948 + 0",
+      "R_PPC_NONE lbl_8023B018 + 0",
+      "R_PPC_NONE lbl_8023B018 + 4",
+      "R_PPC_NONE lbl_8023B018 + 8",
+      "R_PPC_NONE lbl_802FC5BC + 12"
+    ],
+    "generated_relocations": [
+      "R_PPC_ADDR16_HA lbl_8023B018 + 0",
+      "R_PPC_ADDR16_LO lbl_8023B018 + 0",
+      "R_PPC_ADDR16_HA lbl_802FC5BC + 0",
+      "R_PPC_ADDR16_LO lbl_802FC5BC + 0",
+      "R_PPC_NONE lbl_8023B018 + 0",
+      "R_PPC_NONE lbl_8023B018 + 4",
+      "R_PPC_NONE lbl_8023B018 + 8",
+      "R_PPC_EMB_SDA21 lbl_80650948 + 0",
+      "R_PPC_NONE lbl_802FC5BC + 12"
+    ],
+    "targets_and_addends_equal": true,
+    "matched": false
+  },
+  "source": {
+    "path": "src/game/game_fn_80180D0C.c",
+    "kind": "independent honest C reconstruction",
+    "registration": "Object(NonMatching, game/game_fn_80180D0C.c, extra_cflags=[-use_lmw_stmw on])"
+  },
+  "divergence": "Retail uses a 0x30 stack frame, stmw/lmw r27-r31, keeps the three Triple words in r27-r29 and the -10/0x34 constants in r30/r31, and delays the scalar store sequence. Canonical GC/1.3 emits a 0x20 frame, saves only r31, holds the remaining Triple words in r12/r11, and interleaves their loads with scalar stores. Both objects are 208 bytes and carry the same nine relocation types, targets, and addends, but at different instruction addresses because of the schedule."
+}
