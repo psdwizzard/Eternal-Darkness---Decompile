@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "889450b5-8cae-4a39-b81c-96277584a3d5",
+  "attempt": 6,
+  "base_commit": "d1e5e679e5c6337c1e050bfb693814cf26a16813",
+  "target": "fn_801E3388",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-889450b5-8cae-4a39-b81c-96277584a3d5.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 98.85714%, 700 bytes per side. The only instruction-word differences are at 0x17C and 0x180: retail lfs f1, lbl_80651248@sda21 then lwz r7, 0x18(r1); generated reverses them. All 30 relocation type/target/addend entries agree in sequence, but the lbl_80651248 R_PPC_EMB_SDA21 relocation with addend 0 moves from 0x17C to 0x180. Retained the existing honest NonMatching source unchanged. Neither new probe improved the result."
+}

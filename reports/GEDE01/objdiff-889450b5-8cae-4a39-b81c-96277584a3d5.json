@@ -1,0 +1,206 @@
+{
+  "version": 1,
+  "assignment_id": "889450b5-8cae-4a39-b81c-96277584a3d5",
+  "attempt": 6,
+  "target": "fn_801E3388",
+  "base_commit": "d1e5e679e5c6337c1e050bfb693814cf26a16813",
+  "status": "attempted",
+  "source": "eternal-darkness-decomp/src/game/game_fn_801E3388.c",
+  "source_sha256": "178e6829b3714389e7c610e669163c0e50d56f5e3c24459fa132983fbf134539",
+  "preserved_attempts_reviewed": [
+    "6ececb2442ad496a159437d8347593cdead86192",
+    "f9937eb526fac7b7aba4a9163bc1bd48d6200fb6",
+    "214a7222ed9561d82de85f92e1b0b9d5b6964097",
+    "07c377359eefa7fa2416f5a7f8e0c6bf6794eb0f",
+    "c6daacb9861e16f4dd97401c1cdaed0717e4bab8"
+  ],
+  "retained_source": "Byte-identical to accepted HEAD and to source at preserved commit 6ececb2442ad496a159437d8347593cdead86192. Registration remains NonMatching; no configure.py or splits edits.",
+  "compiler": {
+    "version": "GC/1.3",
+    "policy": "Unchanged canonical settings",
+    "raw_command": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/compiler-command.log"
+  },
+  "baseline": {
+    "commands": [
+      {
+        "label": "configure",
+        "cwd": "eternal-darkness-decomp",
+        "argv": [
+          "python3",
+          "configure.py"
+        ],
+        "exit_code": 0,
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/configure.log"
+      },
+      {
+        "label": "build",
+        "cwd": "eternal-darkness-decomp",
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_801E3388.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/baseline-build.log"
+      },
+      {
+        "label": "diff",
+        "cwd": "eternal-darkness-decomp",
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801E3388",
+          "-o",
+          "reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/baseline.json",
+          "--format",
+          "json-pretty",
+          "fn_801E3388"
+        ],
+        "exit_code": 0,
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/baseline-diff.log"
+      }
+    ],
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/baseline.json",
+    "score": 98.85714
+  },
+  "probes": [
+    {
+      "name": "double-parameter",
+      "hypothesis": "The final fn_800CD568 parameter may be double. Promoting the external float changes the compiler expression type without requiring a different FPR value, potentially changing load scheduling.",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/double-parameter.patch",
+      "patch_base": "d1e5e679e5c6337c1e050bfb693814cf26a16813",
+      "patch_application": "From worktree root: git apply eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/double-parameter.patch",
+      "patch_validation": "git apply --check eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/double-parameter.patch",
+      "patch_validation_exit_code": 0,
+      "source_restoration": "Restored the byte-identical baseline after measurement; both patches are independent, not cumulative.",
+      "commands": [
+        {
+          "label": "build",
+          "cwd": "eternal-darkness-decomp",
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801E3388.o"
+          ],
+          "exit_code": 0,
+          "raw_output": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/double-parameter-build.log"
+        },
+        {
+          "label": "diff",
+          "cwd": "eternal-darkness-decomp",
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801E3388",
+            "-o",
+            "reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/double-parameter.json",
+            "--format",
+            "json-pretty",
+            "fn_801E3388"
+          ],
+          "exit_code": 0,
+          "raw_output": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/double-parameter-diff.log"
+        }
+      ],
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/double-parameter.json",
+      "score": 98.85714,
+      "generated_size": 700,
+      "result": "Entire raw objdiff JSON equals baseline: parameter promotion did not change codegen."
+    },
+    {
+      "name": "literal-zero",
+      "hypothesis": "The retail pool entry is IEEE-754 zero. A compiler-generated 0.0f constant may have different scheduling dependencies than an external symbol load.",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/literal-zero.patch",
+      "patch_base": "d1e5e679e5c6337c1e050bfb693814cf26a16813",
+      "patch_application": "From worktree root: git apply eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/literal-zero.patch",
+      "patch_validation": "git apply --check eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/literal-zero.patch",
+      "patch_validation_exit_code": 0,
+      "source_restoration": "Restored the byte-identical baseline after measurement; both patches are independent, not cumulative.",
+      "commands": [
+        {
+          "label": "build",
+          "cwd": "eternal-darkness-decomp",
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801E3388.o"
+          ],
+          "exit_code": 0,
+          "raw_output": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/literal-zero-build.log"
+        },
+        {
+          "label": "diff",
+          "cwd": "eternal-darkness-decomp",
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801E3388",
+            "-o",
+            "reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/literal-zero.json",
+            "--format",
+            "json-pretty",
+            "-c",
+            "function_reloc_diffs=name_address",
+            "fn_801E3388"
+          ],
+          "exit_code": 0,
+          "raw_output": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/literal-zero-diff.log"
+        }
+      ],
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/literal-zero.json",
+      "score": 98.828575,
+      "generated_size": 700,
+      "result": "Scheduling unchanged; the new @36 pool target introduces an additional strict relocation mismatch. Discarded."
+    }
+  ],
+  "canonical": {
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/canonical.json",
+    "score": 98.85714,
+    "settings": "Project defaults; objdiff.json has no options override. Explicit one-shot JSON output."
+  },
+  "relocation_strict": {
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/strict.json",
+    "score": 98.85714,
+    "settings": {
+      "function_reloc_diffs": "name_address"
+    },
+    "retail_raw_symbol_table_and_relocations": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/retail-relocations.log",
+    "generated_raw_symbol_table_and_relocations": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/generated-relocations.log",
+    "relocation_count_each": 30,
+    "relocation_comparison": "All type/target/addend sequences equal; only float relocation offset differs. Raw readelf logs include symbol tables and explicit addends.",
+    "commands": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/relocation-commands.json"
+  },
+  "verification_commands": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/verification-commands.json",
+  "instruction_word_comparison": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/text-comparison.json",
+  "full_build": {
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/full-build.log",
+    "exit_code": 0,
+    "target_reason": "Explicit main.dol target avoids default progress target, respecting the instruction not to update global progress."
+  },
+  "dol": {
+    "raw_sha1_output": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/dol-sha1.log",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "raw_cmp_output": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/dol-compare.log",
+    "cmp_exit_code": 0,
+    "limitation": "The function remains NonMatching; the canonical link uses its retail object. The DOL hash is not evidence of a C match."
+  },
+  "legal_audit": {
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/889450b5-8cae-4a39-b81c-96277584a3d5/legal-audit.log",
+    "exit_code": 0
+  },
+  "divergence": "Canonical and relocation-strict objdiff both measure 98.85714%, 700 bytes per side. The only instruction-word differences are at 0x17C and 0x180: retail lfs f1, lbl_80651248@sda21 then lwz r7, 0x18(r1); generated reverses them. All 30 relocation type/target/addend entries agree in sequence, but the lbl_80651248 R_PPC_EMB_SDA21 relocation with addend 0 moves from 0x17C to 0x180. Retained the existing honest NonMatching source unchanged. Neither new probe improved the result.",
+  "scope": "Assignment-specific reports only; preserved pre-existing CLAUDE.md modification untouched. No model change, delegation, remote push, neighboring source edit, shared-input mutation, compiler policy change, inline assembly, or global-progress edit.",
+  "evidence_validation": {
+    "patches": "Both independent standard unified patches passed git apply --check against the retained source.",
+    "raw_output_preservation": "git diff --cached --check reports only the trailing space in the null-symbol line of each raw readelf log; these two raw-output spaces are intentionally preserved."
+  }
+}
