@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "assignment_id": "b1008c6d-05b0-444e-9fd7-e0ab86a6b56a",
+  "target": "fn_800D6A28",
+  "compiler": "GC/1.3",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "objdiff_relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800D6A28 -o - --format json-pretty -c function_reloc_diffs=name_address fn_800D6A28",
+    "dol_hash": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measurements": {
+    "build_exit_code": 0,
+    "build_final_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "objdiff_match_percent": 59.0,
+    "retail_size": 20,
+    "generated_size": 12,
+    "retail_instructions": [
+      "cmpwi r3, 0x0",
+      "li r3, 0x1",
+      "beqlr",
+      "li r3, 0x1",
+      "blr"
+    ],
+    "generated_instructions": [
+      "cmpwi r3, 0x0",
+      "li r3, 0x1",
+      "blr"
+    ],
+    "retail_relocations": [],
+    "generated_relocations": []
+  },
+  "trials": [
+    {
+      "source_shape": "if (value == 0) return value + 1; return 1;",
+      "score": 55.0,
+      "generated_size": 24,
+      "generated_instructions": "cmpwi r3,0; li r0,1; bne; addi r0,r3,1; mr r3,r0; blr",
+      "retained": false
+    },
+    {
+      "source_shape": "if (value == 0) return !value; return 1;",
+      "score": 47.0,
+      "generated_size": 28,
+      "generated_instructions": "cmpwi r3,0; bne; cntlzw r0,r3; srwi r3,r0,5; blr; li r3,1; blr",
+      "retained": false
+    },
+    {
+      "source_shape": "int result = 1; if (value == 0) return result; result = 1; return result;",
+      "score": 59.0,
+      "generated_size": 12,
+      "generated_instructions": "cmpwi r3,0; li r3,1; blr",
+      "retained": false
+    }
+  ],
+  "conclusion": "The retained honest C reconstructs the always-one return behavior and reaches 59.0%. GC/1.3 merges the two equal-result exits into one blr, while retail retains beqlr followed by a redundant li r3,1 and blr. No relocations exist on either side."
+}
