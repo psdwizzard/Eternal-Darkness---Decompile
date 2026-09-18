@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "8ced5e5f-378b-430b-a361-e8ca78453a77",
+  "attempt": 5,
+  "base_commit": "3c140dc14d4bfa1f8008cabecf4b44cefc056fdb",
+  "target": "fn_80049E74",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8ced5e5f-378b-430b-a361-e8ca78453a77.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits the exact 1940-byte function at 98.762886%. The ten differing instructions are retail cmpwi r23,0 versus generated extsh. r0,r23 at offsets 0x1B8, 0x268, 0x344, 0x3F0, 0x4BC, 0x58C, 0x674, 0x69C, 0x70C, and 0x734. Complete canonical and relocation-strict raw objdiff payloads are preserved in the evidence file; they are byte-identical and contain all 27 relocation records. Attempt 5 tested a distinct int-condition declaration/lifetime-order hypothesis: placing the condition after persistent state regressed to 98.618550%, while placing it before type produced 98.804120% with broad register-allocation divergence, so the stronger short-typed reconstruction was restored."
+}
