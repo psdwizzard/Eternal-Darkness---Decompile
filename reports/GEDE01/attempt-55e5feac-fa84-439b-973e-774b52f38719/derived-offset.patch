@@ -1,0 +1,28 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8019C3B8.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8019C3B8.c
+@@ -18,7 +18,6 @@
+     register u8* color_data;
+     register u8* index_data;
+     register u8* vertex_data;
+-    int vertex_offset;
+     int i;
+     u8 count;
+     u16 vertex_size;
+@@ -46,16 +45,14 @@
+     object_data = *(u8**)(self + 0x4C);
+     color = color_data;
+     i = 0;
+-    vertex_offset = 0;
+     for (; i < count; i++) {
+         int j;
+-        fn_80188A7C(object_data, vertex_data + vertex_offset, fn_8018D020);
++        fn_80188A7C(object_data, vertex_data + i * 0x18, fn_8018D020);
+         for (j = 0; j < object_data[0x20]; j++) {
+             color[3] = object_data[0x2B];
+             color += 4;
+         }
+         object_data += 0x38;
+-        vertex_offset += 0x18;
+     }
+ 
+     DCFlushRange(vertex_data, vertex_size);
