@@ -13,14 +13,11 @@ Record* fn_801AAC10(void)
     int i;
 
     record = lbl_806080E0;
-    i = 0;
-    while (record->active != 0) {
-        record++;
-        i++;
-        if (i >= 80) {
-            fn_801AA9FC(1);
-            return 0;
+    for (i = 0; i < 80; i++, record++) {
+        if (record->active == 0) {
+            return record;
         }
     }
-    return record;
+    fn_801AA9FC(1);
+    return 0;
 }
