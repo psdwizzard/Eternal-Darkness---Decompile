@@ -1,0 +1,5466 @@
+{
+  "baseline": "HEAD source at 47dca350bfd06c14e5763b4d1e6011c306c593fb; batches e through h include long i in baseline",
+  "compiler": "GC/1.2.5n; unchanged canonical flags",
+  "hypotheses": [
+    {
+      "hypothesis": "index-register s32",
+      "source_delta": "--- \n+++ \n@@ -28,7 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n-    s32 i;\n+    register s32 i;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -47,7 +47,7 @@\n     if (type != 0) {\n         i = 0;\n         data = 0;\n-        while (i < len) {\n+        while ((s32)i < len) {\n             data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n             i++;\n         }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 59.754967
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "572"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-b.json"
+    },
+    {
+      "hypothesis": "index-u32",
+      "source_delta": "--- \n+++ \n@@ -28,7 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n-    s32 i;\n+    u32 i;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -47,7 +47,7 @@\n     if (type != 0) {\n         i = 0;\n         data = 0;\n-        while (i < len) {\n+        while ((s32)i < len) {\n             data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n             i++;\n         }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 59.754967
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "572"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-b.json"
+    },
+    {
+      "hypothesis": "index-register u32",
+      "source_delta": "--- \n+++ \n@@ -28,7 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n-    s32 i;\n+    register u32 i;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -47,7 +47,7 @@\n     if (type != 0) {\n         i = 0;\n         data = 0;\n-        while (i < len) {\n+        while ((s32)i < len) {\n             data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n             i++;\n         }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 59.754967
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "572"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-b.json"
+    },
+    {
+      "hypothesis": "index-outer",
+      "source_delta": "--- \n+++ \n@@ -44,8 +44,8 @@\n     }\n \n     exi->state |= 2;\n+    i = 0;\n     if (type != 0) {\n-        i = 0;\n         data = 0;\n         while (i < len) {\n             data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 59.390728
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "572"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-b.json"
+    },
+    {
+      "hypothesis": "data-init-first",
+      "source_delta": "--- \n+++ \n@@ -45,8 +45,8 @@\n \n     exi->state |= 2;\n     if (type != 0) {\n+        data = 0;\n         i = 0;\n-        data = 0;\n         while (i < len) {\n             data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n             i++;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.31126
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-b.json"
+    },
+    {
+      "hypothesis": "signed-data",
+      "source_delta": "--- \n+++ \n@@ -26,7 +26,7 @@\n {\n     BOOL enabled;\n     EXIControl *exi;\n-    u32 data;\n+    s32 data;\n     u32 regAddr;\n     s32 i;\n \n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-b.json"
+    },
+    {
+      "hypothesis": "pointer-regaddr",
+      "source_delta": "--- \n+++ \n@@ -27,7 +27,7 @@\n     BOOL enabled;\n     EXIControl *exi;\n     u32 data;\n-    u32 regAddr;\n+    volatile u32 *regAddr;\n     s32 i;\n \n     exi = &Ecb_80640AA8[chan];\n@@ -51,18 +51,18 @@\n             data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n             i++;\n         }\n-        regAddr = 0xCC006800;\n-        regAddr += chan * 20;\n-        *(volatile u32 *)(regAddr + 16) = data;\n+        regAddr = (volatile u32 *)0xCC006800;\n+        regAddr += chan * 5;\n+        regAddr[4] = data;\n     }\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n     data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n-    regAddr += chan * 20;\n-    *(volatile u32 *)(regAddr + 12) = data;\n+    regAddr = (volatile u32 *)0xCC006800;\n+    regAddr += chan * 5;\n+    regAddr[3] = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-b.json"
+    },
+    {
+      "hypothesis": "byte-pointer-regaddr",
+      "source_delta": "--- \n+++ \n@@ -27,7 +27,7 @@\n     BOOL enabled;\n     EXIControl *exi;\n     u32 data;\n-    u32 regAddr;\n+    volatile u8 *regAddr;\n     s32 i;\n \n     exi = &Ecb_80640AA8[chan];\n@@ -51,7 +51,7 @@\n             data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n             i++;\n         }\n-        regAddr = 0xCC006800;\n+        regAddr = (volatile u8 *)0xCC006800;\n         regAddr += chan * 20;\n         *(volatile u32 *)(regAddr + 16) = data;\n     }\n@@ -60,7 +60,7 @@\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n     data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n+    regAddr = (volatile u8 *)0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-b.json"
+    },
+    {
+      "hypothesis": "control-pointer-only",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     s32 i;\n+    volatile u32 *controlReg;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -60,9 +61,9 @@\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n     data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n-    regAddr += chan * 20;\n-    *(volatile u32 *)(regAddr + 12) = data;\n+    controlReg = (volatile u32 *)0xCC006800;\n+    controlReg += chan * 5;\n+    controlReg[3] = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-b.json"
+    },
+    {
+      "hypothesis": "control-unsigned-length",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,7 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data |= ((u32)len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-b.json"
+    },
+    {
+      "hypothesis": "control-address-before-data",
+      "source_delta": "--- \n+++ \n@@ -58,10 +58,10 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    regAddr = 0xCC006800;\n+    regAddr += chan * 20;\n     data = (type << 2) | 1;\n     data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n-    regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 96.721855
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-b.json"
+    },
+    {
+      "hypothesis": "loop-len > i",
+      "source_delta": "--- \n+++ \n@@ -47,7 +47,7 @@\n     if (type != 0) {\n         i = 0;\n         data = 0;\n-        while (i < len) {\n+        while (len > i) {\n             data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n             i++;\n         }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-c.json"
+    },
+    {
+      "hypothesis": "loop-!(i >= len)",
+      "source_delta": "--- \n+++ \n@@ -47,7 +47,7 @@\n     if (type != 0) {\n         i = 0;\n         data = 0;\n-        while (i < len) {\n+        while (!(i >= len)) {\n             data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n             i++;\n         }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 97.68212
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "608"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-c.json"
+    },
+    {
+      "hypothesis": "loop-i <= len - 1",
+      "source_delta": "--- \n+++ \n@@ -47,7 +47,7 @@\n     if (type != 0) {\n         i = 0;\n         data = 0;\n-        while (i < len) {\n+        while (i <= len - 1) {\n             data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n             i++;\n         }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 96.87417
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "612"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-c.json"
+    },
+    {
+      "hypothesis": "loop-len - i > 0",
+      "source_delta": "--- \n+++ \n@@ -47,7 +47,7 @@\n     if (type != 0) {\n         i = 0;\n         data = 0;\n-        while (i < len) {\n+        while (len - i > 0) {\n             data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n             i++;\n         }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 53.304634
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "344"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-c.json"
+    },
+    {
+      "hypothesis": "index-register-only",
+      "source_delta": "--- \n+++ \n@@ -28,7 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n-    s32 i;\n+    register s32 i;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-c.json"
+    },
+    {
+      "hypothesis": "index-long",
+      "source_delta": "--- \n+++ \n@@ -28,7 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n-    s32 i;\n+    long i;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-c.json"
+    },
+    {
+      "hypothesis": "index-init-assignment",
+      "source_delta": "--- \n+++ \n@@ -45,8 +45,7 @@\n \n     exi->state |= 2;\n     if (type != 0) {\n-        i = 0;\n-        data = 0;\n+        data = i = 0;\n         while (i < len) {\n             data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n             i++;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-c.json"
+    },
+    {
+      "hypothesis": "data-init-assignment",
+      "source_delta": "--- \n+++ \n@@ -45,8 +45,7 @@\n \n     exi->state |= 2;\n     if (type != 0) {\n-        i = 0;\n-        data = 0;\n+        i = data = 0;\n         while (i < len) {\n             data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n             i++;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 61.29801
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "572"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-c.json"
+    },
+    {
+      "hypothesis": "control-type-split",
+      "source_delta": "--- \n+++ \n@@ -58,7 +58,8 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n-    data = (type << 2) | 1;\n+    data = type << 2;\n+    data |= 1;\n     data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-c.json"
+    },
+    {
+      "hypothesis": "control-length-split",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,9 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    len--;\n+    len <<= 4;\n+    data |= len;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 96.49007
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-c.json"
+    },
+    {
+      "hypothesis": "control-length-temp",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     s32 i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -59,7 +60,9 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    lengthBits = len - 1;\n+    lengthBits <<= 4;\n+    data |= lengthBits;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.17881
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-c.json"
+    },
+    {
+      "hypothesis": "control-length-temp-store",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     s32 i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -59,10 +60,11 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    lengthBits = len - 1;\n+    lengthBits <<= 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n-    *(volatile u32 *)(regAddr + 12) = data;\n+    *(volatile u32 *)(regAddr + 12) = data | lengthBits;\n     OSRestoreInterrupts(enabled);\n     return 1;\n }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 94.17219
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-c.json"
+    },
+    {
+      "hypothesis": "typedefs-signedFalse-unsignedFalse-boolTrue",
+      "source_delta": "--- \n+++ \n@@ -1,4 +1,4 @@\n-typedef int BOOL;\n+typedef long BOOL;\n typedef int s32;\n typedef unsigned char u8;\n typedef unsigned int u32;\n@@ -28,7 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n-    s32 i;\n+    long i;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-d.json"
+    },
+    {
+      "hypothesis": "typedefs-signedFalse-unsignedTrue-boolFalse",
+      "source_delta": "--- \n+++ \n@@ -1,7 +1,7 @@\n typedef int BOOL;\n typedef int s32;\n typedef unsigned char u8;\n-typedef unsigned int u32;\n+typedef unsigned long u32;\n \n typedef struct EXIControl {\n     void *exiCallback;\n@@ -28,7 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n-    s32 i;\n+    long i;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-d.json"
+    },
+    {
+      "hypothesis": "typedefs-signedFalse-unsignedTrue-boolTrue",
+      "source_delta": "--- \n+++ \n@@ -1,7 +1,7 @@\n-typedef int BOOL;\n+typedef long BOOL;\n typedef int s32;\n typedef unsigned char u8;\n-typedef unsigned int u32;\n+typedef unsigned long u32;\n \n typedef struct EXIControl {\n     void *exiCallback;\n@@ -28,7 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n-    s32 i;\n+    long i;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-d.json"
+    },
+    {
+      "hypothesis": "typedefs-signedTrue-unsignedFalse-boolFalse",
+      "source_delta": "--- \n+++ \n@@ -1,5 +1,5 @@\n typedef int BOOL;\n-typedef int s32;\n+typedef long s32;\n typedef unsigned char u8;\n typedef unsigned int u32;\n \n@@ -28,7 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n-    s32 i;\n+    long i;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-d.json"
+    },
+    {
+      "hypothesis": "typedefs-signedTrue-unsignedFalse-boolTrue",
+      "source_delta": "--- \n+++ \n@@ -1,5 +1,5 @@\n-typedef int BOOL;\n-typedef int s32;\n+typedef long BOOL;\n+typedef long s32;\n typedef unsigned char u8;\n typedef unsigned int u32;\n \n@@ -28,7 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n-    s32 i;\n+    long i;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-d.json"
+    },
+    {
+      "hypothesis": "typedefs-signedTrue-unsignedTrue-boolFalse",
+      "source_delta": "--- \n+++ \n@@ -1,7 +1,7 @@\n typedef int BOOL;\n-typedef int s32;\n+typedef long s32;\n typedef unsigned char u8;\n-typedef unsigned int u32;\n+typedef unsigned long u32;\n \n typedef struct EXIControl {\n     void *exiCallback;\n@@ -28,7 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n-    s32 i;\n+    long i;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-d.json"
+    },
+    {
+      "hypothesis": "typedefs-signedTrue-unsignedTrue-boolTrue",
+      "source_delta": "--- \n+++ \n@@ -1,7 +1,7 @@\n-typedef int BOOL;\n-typedef int s32;\n+typedef long BOOL;\n+typedef long s32;\n typedef unsigned char u8;\n-typedef unsigned int u32;\n+typedef unsigned long u32;\n \n typedef struct EXIControl {\n     void *exiCallback;\n@@ -28,7 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n-    s32 i;\n+    long i;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-d.json"
+    },
+    {
+      "hypothesis": "long-type-long-data",
+      "source_delta": "--- \n+++ \n@@ -26,7 +26,7 @@\n {\n     BOOL enabled;\n     EXIControl *exi;\n-    u32 data;\n+    long data;\n     u32 regAddr;\n     long i;\n \n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "long-type-long-regAddr",
+      "source_delta": "--- \n+++ \n@@ -27,7 +27,7 @@\n     BOOL enabled;\n     EXIControl *exi;\n     u32 data;\n-    u32 regAddr;\n+    long regAddr;\n     long i;\n \n     exi = &Ecb_80640AA8[chan];\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "long-type-long-len",
+      "source_delta": "--- \n+++ \n@@ -22,7 +22,7 @@\n \n #define EXI_REGS ((volatile u32 *)0xCC006800)\n \n-BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void *callback)\n+BOOL EXIImm(s32 chan, void *buf, long len, u32 type, void *callback)\n {\n     BOOL enabled;\n     EXIControl *exi;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "long-type-long-type",
+      "source_delta": "--- \n+++ \n@@ -22,7 +22,7 @@\n \n #define EXI_REGS ((volatile u32 *)0xCC006800)\n \n-BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void *callback)\n+BOOL EXIImm(s32 chan, void *buf, s32 len, long type, void *callback)\n {\n     BOOL enabled;\n     EXIControl *exi;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.9404
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "cast-long-(len - 1)",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,7 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data |= (long)(len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "cast-long-len",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,7 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data |= ((long)len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "cast-long-((len - 1) << 4)",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,7 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data |= (long)((len - 1) << 4);\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "long-type-unsigned long-data",
+      "source_delta": "--- \n+++ \n@@ -26,7 +26,7 @@\n {\n     BOOL enabled;\n     EXIControl *exi;\n-    u32 data;\n+    unsigned long data;\n     u32 regAddr;\n     long i;\n \n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "long-type-unsigned long-regAddr",
+      "source_delta": "--- \n+++ \n@@ -27,7 +27,7 @@\n     BOOL enabled;\n     EXIControl *exi;\n     u32 data;\n-    u32 regAddr;\n+    unsigned long regAddr;\n     long i;\n \n     exi = &Ecb_80640AA8[chan];\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "long-type-unsigned long-len",
+      "source_delta": "--- \n+++ \n@@ -22,7 +22,7 @@\n \n #define EXI_REGS ((volatile u32 *)0xCC006800)\n \n-BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void *callback)\n+BOOL EXIImm(s32 chan, void *buf, unsigned long len, u32 type, void *callback)\n {\n     BOOL enabled;\n     EXIControl *exi;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 59.754967
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "572"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "long-type-unsigned long-type",
+      "source_delta": "--- \n+++ \n@@ -22,7 +22,7 @@\n \n #define EXI_REGS ((volatile u32 *)0xCC006800)\n \n-BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void *callback)\n+BOOL EXIImm(s32 chan, void *buf, s32 len, unsigned long type, void *callback)\n {\n     BOOL enabled;\n     EXIControl *exi;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "cast-unsigned long-(len - 1)",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,7 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data |= (unsigned long)(len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "cast-unsigned long-len",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,7 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data |= ((unsigned long)len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "cast-unsigned long-((len - 1) << 4)",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,7 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data |= (unsigned long)((len - 1) << 4);\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-e.json"
+    },
+    {
+      "hypothesis": "control-order-(0, 2, 1, 3)",
+      "source_delta": "--- \n+++ \n@@ -59,8 +59,8 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n+    regAddr = 0xCC006800;\n     data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.602646
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-f.json"
+    },
+    {
+      "hypothesis": "control-order-(0, 2, 3, 1)",
+      "source_delta": "--- \n+++ \n@@ -59,9 +59,9 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n+    data |= (len - 1) << 4;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.21192
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-f.json"
+    },
+    {
+      "hypothesis": "control-order-(2, 0, 1, 3)",
+      "source_delta": "--- \n+++ \n@@ -58,9 +58,9 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    regAddr = 0xCC006800;\n     data = (type << 2) | 1;\n     data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.53642
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-f.json"
+    },
+    {
+      "hypothesis": "control-order-(2, 0, 3, 1)",
+      "source_delta": "--- \n+++ \n@@ -58,10 +58,10 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    regAddr = 0xCC006800;\n     data = (type << 2) | 1;\n+    regAddr += chan * 20;\n     data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n-    regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.1457
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-f.json"
+    },
+    {
+      "hypothesis": "length-expr-(len - 1) * 16",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,7 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data |= (len - 1) * 16;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-f.json"
+    },
+    {
+      "hypothesis": "length-expr-(len - 1) * 16u",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,7 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data |= (len - 1) * 16u;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-f.json"
+    },
+    {
+      "hypothesis": "length-expr-((u32)len << 4) - 16",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,7 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data |= ((u32)len << 4) - 16;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.97351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-f.json"
+    },
+    {
+      "hypothesis": "length-expr-((len - 1) << 4) | data",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,7 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data = ((len - 1) << 4) | data;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.70199
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-f.json"
+    },
+    {
+      "hypothesis": "length-expr-data | ((len - 1) << 4)",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,7 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data = data | ((len - 1) << 4);\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-f.json"
+    },
+    {
+      "hypothesis": "register-regAddr",
+      "source_delta": "--- \n+++ \n@@ -27,7 +27,7 @@\n     BOOL enabled;\n     EXIControl *exi;\n     u32 data;\n-    u32 regAddr;\n+    register u32 regAddr;\n     long i;\n \n     exi = &Ecb_80640AA8[chan];\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-f.json"
+    },
+    {
+      "hypothesis": "register-data",
+      "source_delta": "--- \n+++ \n@@ -26,7 +26,7 @@\n {\n     BOOL enabled;\n     EXIControl *exi;\n-    u32 data;\n+    register u32 data;\n     u32 regAddr;\n     long i;\n \n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-f.json"
+    },
+    {
+      "hypothesis": "register-regAddr-data",
+      "source_delta": "--- \n+++ \n@@ -26,8 +26,8 @@\n {\n     BOOL enabled;\n     EXIControl *exi;\n-    u32 data;\n-    u32 regAddr;\n+    register u32 data;\n+    register u32 regAddr;\n     long i;\n \n     exi = &Ecb_80640AA8[chan];\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-f.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(0, 1, 2, 3, 4)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -59,7 +60,8 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    lengthBits = (len - 1) << 4;\n+    data |= lengthBits;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.70199
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(0, 1, 3, 2, 4)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -59,8 +60,9 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    lengthBits = (len - 1) << 4;\n     regAddr = 0xCC006800;\n+    data |= lengthBits;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.569534
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(0, 1, 3, 4, 2)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -59,9 +60,10 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    lengthBits = (len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n+    data |= lengthBits;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.17881
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(0, 3, 1, 2, 4)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -59,8 +60,9 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n+    lengthBits = (len - 1) << 4;\n+    data |= lengthBits;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.569534
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(0, 3, 1, 4, 2)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -59,9 +60,10 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n+    lengthBits = (len - 1) << 4;\n     regAddr += chan * 20;\n+    data |= lengthBits;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.17881
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(0, 3, 4, 1, 2)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -59,9 +60,10 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n+    lengthBits = (len - 1) << 4;\n+    data |= lengthBits;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.17881
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(1, 0, 2, 3, 4)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,8 +59,9 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    lengthBits = (len - 1) << 4;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data |= lengthBits;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.70199
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(1, 0, 3, 2, 4)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,9 +59,10 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    lengthBits = (len - 1) << 4;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n+    data |= lengthBits;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.569534
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(1, 0, 3, 4, 2)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,10 +59,11 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    lengthBits = (len - 1) << 4;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n+    data |= lengthBits;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.17881
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(1, 3, 0, 2, 4)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,9 +59,10 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    lengthBits = (len - 1) << 4;\n+    regAddr = 0xCC006800;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n+    data |= lengthBits;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.50331
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(1, 3, 0, 4, 2)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,10 +59,11 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    lengthBits = (len - 1) << 4;\n+    regAddr = 0xCC006800;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n     regAddr += chan * 20;\n+    data |= lengthBits;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.11258
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(1, 3, 4, 0, 2)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,10 +59,11 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n-    data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    lengthBits = (len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n+    data = (type << 2) | 1;\n+    data |= lengthBits;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.04636
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(3, 0, 1, 2, 4)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,9 +59,10 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    regAddr = 0xCC006800;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n+    lengthBits = (len - 1) << 4;\n+    data |= lengthBits;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.50331
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(3, 0, 1, 4, 2)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,10 +59,11 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    regAddr = 0xCC006800;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n+    lengthBits = (len - 1) << 4;\n     regAddr += chan * 20;\n+    data |= lengthBits;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.11258
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(3, 0, 4, 1, 2)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,10 +59,11 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    regAddr = 0xCC006800;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n     regAddr += chan * 20;\n+    lengthBits = (len - 1) << 4;\n+    data |= lengthBits;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.11258
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(3, 1, 0, 2, 4)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,9 +59,10 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    regAddr = 0xCC006800;\n+    lengthBits = (len - 1) << 4;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n+    data |= lengthBits;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.50331
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(3, 1, 0, 4, 2)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,10 +59,11 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    regAddr = 0xCC006800;\n+    lengthBits = (len - 1) << 4;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n     regAddr += chan * 20;\n+    data |= lengthBits;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.11258
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(3, 1, 4, 0, 2)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,10 +59,11 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n+    regAddr = 0xCC006800;\n+    lengthBits = (len - 1) << 4;\n+    regAddr += chan * 20;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n-    regAddr += chan * 20;\n+    data |= lengthBits;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.04636
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(3, 4, 0, 1, 2)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,10 +59,11 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n-    data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n+    data = (type << 2) | 1;\n+    lengthBits = (len - 1) << 4;\n+    data |= lengthBits;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.04636
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "length-temp-order-(3, 4, 1, 0, 2)",
+      "source_delta": "--- \n+++ \n@@ -29,6 +29,7 @@\n     u32 data;\n     u32 regAddr;\n     long i;\n+    u32 lengthBits;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n@@ -58,10 +59,11 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n-    data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n+    lengthBits = (len - 1) << 4;\n+    data = (type << 2) | 1;\n+    data |= lengthBits;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.04636
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-g.json"
+    },
+    {
+      "hypothesis": "tail-swap-data-address",
+      "source_delta": "--- \n+++ \n@@ -58,11 +58,11 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n-    data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n-    regAddr += chan * 20;\n-    *(volatile u32 *)(regAddr + 12) = data;\n+    regAddr = (type << 2) | 1;\n+    regAddr |= (len - 1) << 4;\n+    data = 0xCC006800;\n+    data += chan * 20;\n+    *(volatile u32 *)(data + 12) = regAddr;\n     OSRestoreInterrupts(enabled);\n     return 1;\n }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-h.json"
+    },
+    {
+      "hypothesis": "length-assign-data",
+      "source_delta": "--- \n+++ \n@@ -57,7 +57,8 @@\n     }\n \n     exi->immBuf = buf;\n-    exi->immLen = type != 1 ? len : 0;\n+    data = type != 1 ? len : 0;\n+    exi->immLen = data;\n     data = (type << 2) | 1;\n     data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-h.json"
+    },
+    {
+      "hypothesis": "length-assign-regAddr",
+      "source_delta": "--- \n+++ \n@@ -57,7 +57,8 @@\n     }\n \n     exi->immBuf = buf;\n-    exi->immLen = type != 1 ? len : 0;\n+    regAddr = type != 1 ? len : 0;\n+    exi->immLen = regAddr;\n     data = (type << 2) | 1;\n     data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-h.json"
+    },
+    {
+      "hypothesis": "length-assign-i",
+      "source_delta": "--- \n+++ \n@@ -57,7 +57,8 @@\n     }\n \n     exi->immBuf = buf;\n-    exi->immLen = type != 1 ? len : 0;\n+    i = type != 1 ? len : 0;\n+    exi->immLen = i;\n     data = (type << 2) | 1;\n     data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-h.json"
+    },
+    {
+      "hypothesis": "immlen-explicit-if",
+      "source_delta": "--- \n+++ \n@@ -57,7 +57,8 @@\n     }\n \n     exi->immBuf = buf;\n-    exi->immLen = type != 1 ? len : 0;\n+    if (type != 1) exi->immLen = len;\n+    else exi->immLen = 0;\n     data = (type << 2) | 1;\n     data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 97.98013
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-h.json"
+    },
+    {
+      "hypothesis": "length-reuse-index",
+      "source_delta": "--- \n+++ \n@@ -59,7 +59,9 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    i = len - 1;\n+    i <<= 4;\n+    data |= i;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.53642
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-h.json"
+    },
+    {
+      "hypothesis": "address-before-immlen",
+      "source_delta": "--- \n+++ \n@@ -57,10 +57,10 @@\n     }\n \n     exi->immBuf = buf;\n+    regAddr = 0xCC006800;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n     data |= (len - 1) << 4;\n-    regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n     OSRestoreInterrupts(enabled);\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 96.94702
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-h.json"
+    },
+    {
+      "hypothesis": "address-assignment-in-store",
+      "source_delta": "--- \n+++ \n@@ -61,8 +61,7 @@\n     data = (type << 2) | 1;\n     data |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n-    regAddr += chan * 20;\n-    *(volatile u32 *)(regAddr + 12) = data;\n+    *(volatile u32 *)((regAddr += chan * 20) + 12) = data;\n     OSRestoreInterrupts(enabled);\n     return 1;\n }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 99.7351
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66-h.json"
+    },
+    {
+      "hypothesis": "inline-0",
+      "source_delta": "--- \n+++ \n@@ -22,6 +22,8 @@\n \n #define EXI_REGS ((volatile u32 *)0xCC006800)\n \n+static inline u32 PackImm(void *buf, s32 len) { s32 i = 0;u32 data = 0; while (i < len) { data |= ((u8 *)buf)[i] << ((3-i)*8); i++; } return data; }\n+\n BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void *callback)\n {\n     BOOL enabled;\n@@ -45,12 +47,7 @@\n \n     exi->state |= 2;\n     if (type != 0) {\n-        i = 0;\n-        data = 0;\n-        while (i < len) {\n-            data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n-            i++;\n-        }\n+        data = PackImm(buf, len);\n         regAddr = 0xCC006800;\n         regAddr += chan * 20;\n         *(volatile u32 *)(regAddr + 16) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 95.29801
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66.json"
+    },
+    {
+      "hypothesis": "inline-1",
+      "source_delta": "--- \n+++ \n@@ -22,6 +22,8 @@\n \n #define EXI_REGS ((volatile u32 *)0xCC006800)\n \n+static inline u32 PackImm(void *buf, s32 len, s32 i) { u32 data = 0; while (i < len) { data |= ((u8 *)buf)[i] << ((3-i)*8); i++; } return data; }\n+\n BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void *callback)\n {\n     BOOL enabled;\n@@ -45,12 +47,7 @@\n \n     exi->state |= 2;\n     if (type != 0) {\n-        i = 0;\n-        data = 0;\n-        while (i < len) {\n-            data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n-            i++;\n-        }\n+        data = PackImm(buf, len, 0);\n         regAddr = 0xCC006800;\n         regAddr += chan * 20;\n         *(volatile u32 *)(regAddr + 16) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 95.29801
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66.json"
+    },
+    {
+      "hypothesis": "inline-2",
+      "source_delta": "--- \n+++ \n@@ -22,6 +22,8 @@\n \n #define EXI_REGS ((volatile u32 *)0xCC006800)\n \n+static inline u32 PackImm(void *buf, s32 len, s32 i, u32 data) {  while (i < len) { data |= ((u8 *)buf)[i] << ((3-i)*8); i++; } return data; }\n+\n BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void *callback)\n {\n     BOOL enabled;\n@@ -45,12 +47,7 @@\n \n     exi->state |= 2;\n     if (type != 0) {\n-        i = 0;\n-        data = 0;\n-        while (i < len) {\n-            data |= ((u8 *)buf)[i] << ((3 - i) * 8);\n-            i++;\n-        }\n+        data = PackImm(buf, len, 0, 0);\n         regAddr = 0xCC006800;\n         regAddr += chan * 20;\n         *(volatile u32 *)(regAddr + 16) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 95.927155
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66.json"
+    },
+    {
+      "hypothesis": "short-index",
+      "source_delta": "--- \n+++ \n@@ -28,7 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n-    s32 i;\n+    short i;\n \n     exi = &Ecb_80640AA8[chan];\n     enabled = OSDisableInterrupts();\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 54.066227
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "348"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66.json"
+    },
+    {
+      "hypothesis": "control-separate",
+      "source_delta": "--- \n+++ \n@@ -28,6 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n+    u32 control;\n     s32 i;\n \n     exi = &Ecb_80640AA8[chan];\n@@ -58,11 +59,11 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n-    data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    control = (type << 2) | 1;\n+    control |= (len - 1) << 4;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n-    *(volatile u32 *)(regAddr + 12) = data;\n+    *(volatile u32 *)(regAddr + 12) = control;\n     OSRestoreInterrupts(enabled);\n     return 1;\n }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 98.37749
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66.json"
+    },
+    {
+      "hypothesis": "control-length-first",
+      "source_delta": "--- \n+++ \n@@ -58,8 +58,8 @@\n \n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n-    data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    data = (len - 1) << 4;\n+    data |= (type << 2) | 1;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n     *(volatile u32 *)(regAddr + 12) = data;\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 95.662254
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66.json"
+    },
+    {
+      "hypothesis": "control-two-locals",
+      "source_delta": "--- \n+++ \n@@ -28,6 +28,7 @@\n     EXIControl *exi;\n     u32 data;\n     u32 regAddr;\n+    u32 controlLen;\n     s32 i;\n \n     exi = &Ecb_80640AA8[chan];\n@@ -59,10 +60,11 @@\n     exi->immBuf = buf;\n     exi->immLen = type != 1 ? len : 0;\n     data = (type << 2) | 1;\n-    data |= (len - 1) << 4;\n+    controlLen = (len - 1) << 4;\n+    controlLen |= data;\n     regAddr = 0xCC006800;\n     regAddr += chan * 20;\n-    *(volatile u32 *)(regAddr + 12) = data;\n+    *(volatile u32 *)(regAddr + 12) = controlLen;\n     OSRestoreInterrupts(enabled);\n     return 1;\n }\n",
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8020686C.o\n",
+      "sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604",
+            "match_percent": 95.662254
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "38"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "604"
+          },
+          {
+            "name": ".rela.text",
+            "size": "84"
+          },
+          {
+            "name": ".symtab",
+            "size": "144"
+          },
+          {
+            "name": ".strtab",
+            "size": "113"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "53"
+          },
+          {
+            "name": ".comment",
+            "size": "116"
+          }
+        ]
+      },
+      "batch": "experiments-71bd9e66.json"
+    }
+  ]
+}

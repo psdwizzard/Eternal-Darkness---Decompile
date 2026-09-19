@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "71bd9e66-bc1b-484d-82cb-20d6ff91f8c6",
+  "attempt": 6,
+  "base_commit": "47dca350bfd06c14e5763b4d1e6011c306c593fb",
+  "target": "fn_8020686C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-71bd9e66-bc1b-484d-82cb-20d6ff91f8c6.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-71bd9e66-bc1b-484d-82cb-20d6ff91f8c6-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-71bd9e66-bc1b-484d-82cb-20d6ff91f8c6.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-71bd9e66-bc1b-484d-82cb-20d6ff91f8c6.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.7351% with 604 retail bytes and 604 candidate bytes. The loop-entry comparison now matches exactly. Five instruction words remain different solely in register allocation: at 0x218 retail addi r3,r3,0x6800 versus candidate addi r6,r3,0x6800; at 0x220 slwi r4,r4,4 versus slwi r3,r4,4; at 0x224 or r4,r5,r4 versus or r5,r5,r3; at 0x228 add r3,r3,r0 versus add r6,r6,r0; at 0x22C stw r4,0xC(r3) versus stw r5,0xC(r6). All seven ELF relocation offsets, types, target names and zero addends agree. NonMatching retained; rebuilt DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f and retail cmp exit 0."
+}

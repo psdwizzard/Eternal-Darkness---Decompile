@@ -1,0 +1,261 @@
+{
+  "version": 1,
+  "assignment_id": "71bd9e66-bc1b-484d-82cb-20d6ff91f8c6",
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_output_tail": "### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n[878/880] DOL build/GEDE01/main.dol\n[879/880] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[880/880] PROGRESS\nProgress:\n  All: 58.10% fuzzy, 47.03% matched, 47.00% linked (6247 / 7068 files)\n    Code: 1082088 / 2300692 bytes (6013 / 8214 functions)\n    Data: 39594 / 4305642 bytes (0.92%)\n  Game Code: 93.58% fuzzy, 75.72% matched, 75.67% linked (6229 / 6633 files)\n    Code: 1079060 / 1425104 bytes (5951 / 6354 functions)\n    Data: 39370 / 40426 bytes (97.39%)\n  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\n    Code: 3028 / 3028 bytes (62 / 62 functions)\n    Data: 224 / 224 bytes (100.00%)"
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8020686C EXIImm -o reports/GEDE01/objdiff-71bd9e66-bc1b-484d-82cb-20d6ff91f8c6-canonical.json --format json-pretty",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/objdiff-71bd9e66-bc1b-484d-82cb-20d6ff91f8c6-canonical.json\n",
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "604",
+          "match_percent": 99.7351
+        },
+        {
+          "name": ".rela.text",
+          "size": "84"
+        },
+        {
+          "name": ".symtab",
+          "size": "144"
+        },
+        {
+          "name": ".strtab",
+          "size": "113"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "604"
+        },
+        {
+          "name": ".rela.text",
+          "size": "84"
+        },
+        {
+          "name": ".symtab",
+          "size": "144"
+        },
+        {
+          "name": ".strtab",
+          "size": "113"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "116"
+        }
+      ]
+    }
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8020686C EXIImm -o reports/GEDE01/objdiff-71bd9e66-bc1b-484d-82cb-20d6ff91f8c6.json --format json-pretty -c function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/objdiff-71bd9e66-bc1b-484d-82cb-20d6ff91f8c6.json\n",
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "604",
+          "match_percent": 99.7351
+        },
+        {
+          "name": ".rela.text",
+          "size": "84"
+        },
+        {
+          "name": ".symtab",
+          "size": "144"
+        },
+        {
+          "name": ".strtab",
+          "size": "113"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "604"
+        },
+        {
+          "name": ".rela.text",
+          "size": "84"
+        },
+        {
+          "name": ".symtab",
+          "size": "144"
+        },
+        {
+          "name": ".strtab",
+          "size": "113"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "116"
+        }
+      ]
+    }
+  },
+  "elf_relocations": {
+    "command": "build/binutils/powerpc-eabi-readelf -r build/GEDE01/obj/game/game_fn_8020686C.o build/GEDE01/src/game/game_fn_8020686C.o",
+    "exit_code": 0,
+    "stdout": "\nFile: build/GEDE01/obj/game/game_fn_8020686C.o\n\nRelocation section '.rela.text' at offset 0x29c contains 7 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000016  00000406 R_PPC_ADDR16_HA   00000000   Ecb_80640AA8 + 0\n0000001e  00000404 R_PPC_ADDR16_LO   00000000   Ecb_80640AA8 + 0\n00000034  0000050a R_PPC_REL24       00000000   OSDisableInterrupts + 0\n00000058  0000060a R_PPC_REL24       00000000   OSRestoreInterrupts + 0\n00000084  0000070a R_PPC_REL24       00000000   fn_80206E8C + 0\n00000094  0000080a R_PPC_REL24       00000000   __OSUnmaskInterrupts + 0\n00000234  0000060a R_PPC_REL24       00000000   OSRestoreInterrupts + 0\n\nFile: build/GEDE01/src/game/game_fn_8020686C.o\n\nRelocation section '.rela.text' at offset 0x290 contains 7 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000016  00000306 R_PPC_ADDR16_HA   00000000   Ecb_80640AA8 + 0\n0000001e  00000304 R_PPC_ADDR16_LO   00000000   Ecb_80640AA8 + 0\n00000034  0000050a R_PPC_REL24       00000000   OSDisableInterrupts + 0\n00000058  0000060a R_PPC_REL24       00000000   OSRestoreInterrupts + 0\n00000084  0000070a R_PPC_REL24       00000000   fn_80206E8C + 0\n00000094  0000080a R_PPC_REL24       00000000   __OSUnmaskInterrupts + 0\n00000234  0000060a R_PPC_REL24       00000000   OSRestoreInterrupts + 0\n",
+    "stderr": "",
+    "verified_entries": [
+      {
+        "offset": "00000016",
+        "type": "R_PPC_ADDR16_HA",
+        "symbol_value": "00000000",
+        "target": "Ecb_80640AA8",
+        "addend": "0"
+      },
+      {
+        "offset": "0000001e",
+        "type": "R_PPC_ADDR16_LO",
+        "symbol_value": "00000000",
+        "target": "Ecb_80640AA8",
+        "addend": "0"
+      },
+      {
+        "offset": "00000034",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "OSDisableInterrupts",
+        "addend": "0"
+      },
+      {
+        "offset": "00000058",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "OSRestoreInterrupts",
+        "addend": "0"
+      },
+      {
+        "offset": "00000084",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_80206E8C",
+        "addend": "0"
+      },
+      {
+        "offset": "00000094",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "__OSUnmaskInterrupts",
+        "addend": "0"
+      },
+      {
+        "offset": "00000234",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "OSRestoreInterrupts",
+        "addend": "0"
+      }
+    ],
+    "conclusion": "All seven ELF relocation offsets, types, resolved symbol names, symbol values, and addends agree. Raw ELF symbol indices differ, as expected for independent symbol tables."
+  },
+  "text_byte_comparison": {
+    "retail_size": 604,
+    "candidate_size": 604,
+    "identical_instruction_words": 146,
+    "total_instruction_words": 151,
+    "differing_words": [
+      {
+        "offset": "0x218",
+        "retail": "38636800",
+        "candidate": "38c36800"
+      },
+      {
+        "offset": "0x220",
+        "retail": "54842036",
+        "candidate": "54832036"
+      },
+      {
+        "offset": "0x224",
+        "retail": "7ca42378",
+        "candidate": "7ca51b78"
+      },
+      {
+        "offset": "0x228",
+        "retail": "7c630214",
+        "candidate": "7cc60214"
+      },
+      {
+        "offset": "0x22c",
+        "retail": "9083000c",
+        "candidate": "90a6000c"
+      }
+    ]
+  },
+  "compiler": {
+    "version": "GC/1.2.5n",
+    "sha1": {
+      "command": "sha1sum compilers/GC/1.2.5n/mwcceppc.exe",
+      "exit_code": 0,
+      "stdout": "ef0480e9b4a42398bda3e412794c6628e26e1bf7  compilers/GC/1.2.5n/mwcceppc.exe\n",
+      "stderr": ""
+    },
+    "flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "stdout": "legal audit passed (17437 tracked project files inspected)\n",
+    "stderr": ""
+  },
+  "assembly_scan": {
+    "command": "rg -n __asm|asm\\( src/game/game_fn_8020686C.c",
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\n",
+    "stderr": ""
+  },
+  "dol_byte_comparison": {
+    "command": "cmp build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "link_status": "NonMatching registration retained. Whole-DOL verification uses the retail split for this function; it does not establish that the C candidate matches.",
+  "hypothesis_result": "A long loop index compared with the int len parameter prevents folding of the initial register comparison in GC/1.2.5n. Both types are 32-bit in this compiler. Changing only s32 i to long i reproduces retail li r24,0; cmpw r24,r30; li r25,0; bge and raises canonical and strict scores from 98.37749 to 99.7351. Other tested local lifetime, inlining, pointer typing, integer rank and expression scheduling variants did not improve this frontier.",
+  "preserved_attempts_reviewed": [
+    "8e3149a45c407f838cdae240af646962a10af3f2",
+    "303cd458c480d87be27161665077a284c21ef346",
+    "d95b32d5129364022b65aff5e4810f84adb2ec4d",
+    "80386db558bf5e002f42c35c8ec5c88fef950fdf",
+    "02bd7fa75680731264ecfe2f52fd2afc5119b5a7"
+  ]
+}

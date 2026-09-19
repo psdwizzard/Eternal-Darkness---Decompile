@@ -28,7 +28,7 @@ BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void *callback)
     EXIControl *exi;
     u32 data;
     u32 regAddr;
-    s32 i;
+    long i;
 
     exi = &Ecb_80640AA8[chan];
     enabled = OSDisableInterrupts();
