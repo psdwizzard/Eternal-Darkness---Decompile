@@ -1,0 +1,14 @@
+{
+  "assignment_id": "1b71c07a-5fb9-4c64-a853-e7b8368cbd34",
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw_output": "build/GEDE01/main.dol: OK",
+  "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801CE744 -o build/GEDE01/objdiff-1b71c07a-canonical.json --format json-pretty fn_801CE744",
+  "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801CE744 -o reports/GEDE01/objdiff-1b71c07a-5fb9-4c64-a853-e7b8368cbd34.json --format json-pretty -c function_reloc_diffs=name_address fn_801CE744",
+  "objdiff_raw_output": "score=98.867134 retail_bytes=572 generated_bytes=572 retail_instructions=143 generated_instructions=143 differing_retail_rows=29 differing_generated_rows=29 retail_relocations=20 generated_relocations=20 retail_diff_kinds={'DIFF_ARG_MISMATCH': 29} generated_diff_kinds={'DIFF_ARG_MISMATCH': 29}",
+  "canonical_strict_comparison_raw_output": "canonical_strict_cmp_exit=0",
+  "legal_audit_command": "python3 tools/legal_audit.py",
+  "legal_audit_raw_output": "legal audit passed (17220 tracked project files inspected)",
+  "dol_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ndol_cmp_exit=0",
+  "hypothesis_raw_output": "Retain explicit source-level index_ptr/object_ptr induction variables, but advance object_ptr only on the non-null storage path. This removes the rejected candidate's null-pointer arithmetic UB and tests whether shortening the output-pointer update edge preserves its allocator improvement. The legal variant scores 98.867134%, above the accepted base's 98.56644%, while retaining 572 bytes, 143 instructions, and 20 relocations."
+}

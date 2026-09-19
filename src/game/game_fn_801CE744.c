@@ -56,9 +56,11 @@ void fn_801CE744(u32 type, u32 value, const Vec3f* position, u16 index,
     Vec3f submit_position;
     s16 indices[10];
     EffectParams params;
-    u32 object_type;
-    s16 count;
     int i;
+    s16 count;
+    u32 object_type;
+    s16* index_ptr;
+    void** object_ptr;
 
     fn_801CECB4(type, indices);
     fn_801905CC(&params);
@@ -72,7 +74,10 @@ void fn_801CE744(u32 type, u32 value, const Vec3f* position, u16 index,
 
     object_type = fn_801D38E8(type);
     count = fn_801CEB2C(type);
-    for (i = 0; i < count; i++) {
+    object_ptr = objects;
+    index_ptr = indices;
+    i = 0;
+    while (i < count) {
         f32 angle = base_angle + lbl_80651038 * i / count;
         void* object;
         void* effect;
@@ -81,8 +86,8 @@ void fn_801CE744(u32 type, u32 value, const Vec3f* position, u16 index,
         position_copy.x = position->x + radius * (lbl_8065103C * fn_80048C2C(angle));
         position_copy.y = position->y + radius * (lbl_8065103C * fn_80048C50(angle));
         position_copy.z = lbl_80651040 + position->z;
-        params.value04 = indices[i];
-        params.object10 = fn_801D3988(indices[i], object_type);
+        params.value04 = *index_ptr;
+        params.object10 = fn_801D3988(*index_ptr, object_type);
         object = 0;
         submit_position = position_copy;
         effect = fn_80148008(&submit_position, &descriptor, &params, fn_8019045C);
@@ -94,7 +99,10 @@ void fn_801CE744(u32 type, u32 value, const Vec3f* position, u16 index,
             }
         }
         if (objects != 0) {
-            objects[i] = object;
+            *object_ptr = object;
+            object_ptr++;
         }
+        index_ptr++;
+        i++;
     }
 }
