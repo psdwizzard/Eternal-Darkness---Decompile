@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "cd9e0484-8b71-47aa-bb85-1d7d3e5d0886",
+  "attempt": 5,
+  "base_commit": "04cc866b6a0b5cfc22a277fd776d567ea8017131",
+  "target": "fn_80175A08",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-cd9e0484-8b71-47aa-bb85-1d7d3e5d0886.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-cd9e0484-8b71-47aa-bb85-1d7d3e5d0886-reloc-strict.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are 97.82407%: retail is 432 bytes/108 instructions/26 relocations versus candidate 436 bytes/109 instructions/27 relocations. GC/1.3 materializes lbl_8024FF00@l into r0 before the r31 save and adds an extra mr r31,r0; retail saves r31 first and emits addi directly into r31, shifting the later jump-table sequence by four bytes. This attempt tested declaration/lifetime placement as a distinct register-allocation hypothesis: moving the string-base declaration among scalar locals regressed to 96.25% or 95.69444%, while initializing the argument count by call before the string base regressed to 94.67593%."
+}
