@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "341d7e64-2f88-4534-8559-2ff0071648bc",
+  "attempt": 1,
+  "base_commit": "cc138c4664d3f5d6322a111bf29c0c5f31c468c9",
+  "target": "fn_801A6350",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-341d7e64-2f88-4534-8559-2ff0071648bc.json"
+  ],
+  "divergence": "Fresh canonical GC/1.3 output is 100 bytes versus retail's 80 bytes and scores 1.5% under relocation-strict objdiff: the compiler lowers the behavior-complete switch as a compare tree, while retail uses a 24-entry jump table. The full build passed; build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f and byte comparison against orig/GEDE01/sys/main.dol passed."
+}
