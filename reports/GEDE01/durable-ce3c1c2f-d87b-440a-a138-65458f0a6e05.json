@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "assignment_id": "ce3c1c2f-d87b-440a-a138-65458f0a6e05",
+  "attempt": 5,
+  "base_commit": "a5db08f98b0c7cf8c325c7188a1db39da5b83184",
+  "target": "fn_801807B0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ce3c1c2f-d87b-440a-a138-65458f0a6e05.json",
+    "eternal-darkness-decomp/reports/GEDE01/strict-ce3c1c2f-d87b-440a-a138-65458f0a6e05.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-ce3c1c2f-d87b-440a-a138-65458f0a6e05.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-ce3c1c2f-d87b-440a-a138-65458f0a6e05.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-ce3c1c2f-d87b-440a-a138-65458f0a6e05.log",
+    "eternal-darkness-decomp/reports/GEDE01/notes-ce3c1c2f-d87b-440a-a138-65458f0a6e05.md",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-ce3c1c2f-d87b-440a-a138-65458f0a6e05.py",
+    "eternal-darkness-decomp/reports/GEDE01/verify-ce3c1c2f-d87b-440a-a138-65458f0a6e05.py"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff both measure 99.32039% for equal 412-byte, 103-instruction functions. Fourteen instructions differ only in register allocation: retail uses r24/r25/r26/r27 for truncated count and second/third/fourth strides; the candidate uses r27/r24/r25/r26. All 21 ELF relocations agree in offset, type, target name, target value, and zero addend. Attempt 5 tested stride declaration scope, scalar replacement, signedness, operand traversal, size-computation placement, declaration ordering, size/stride value splitting, and explicit metadata locals: none improved the baseline. Retained the existing independent NonMatching C source unchanged. Canonical build and legal audit pass; rebuilt and retail DOL SHA-1 are ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
