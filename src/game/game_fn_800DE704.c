@@ -50,10 +50,8 @@ extern void fn_8002AC60(void);
 extern void fn_8002AA18(void);
 extern void fn_8002A4C8(void);
 
-/* NonMatching: behavior-complete object/action/event setup. Splitting the two
- * owner identities restores retail's r3-to-r0-to-r27 transfer and exact code
- * size. The remaining differences are a late r29/r30 live-range swap after
- * fn_80201C24 and fn_80157BC4.
+/* Reuse the dead info/object slots for the event object and event type,
+ * respectively; this preserves MWCC's retail late-live-range allocation.
  */
 void fn_800DE704(void)
 {
@@ -95,8 +93,8 @@ void fn_800DE704(void)
     fn_8015690C(handle, fn_8002A4C8);
     fn_80156918(handle, object);
     fn_801261F4(info);
-    object = fn_80201C24(object);
-    info = (void *)fn_80157BC4();
-    object = fn_801E6CA0(lbl_8064C504, fn_80157BF4(object), (int)info, 0, 1);
+    info = fn_80201C24(object);
+    object = (void *)fn_80157BC4();
+    object = fn_801E6CA0(lbl_8064C504, fn_80157BF4(info), (int)object, 0, 1);
     fn_80027948(object, 0, source, (void *)eventOwner, 0, 0, 0);
 }

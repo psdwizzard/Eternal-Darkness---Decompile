@@ -1,0 +1,84 @@
+{
+  "assignment_id": "4f9dd945-7630-4e42-b380-3dffc0c9c0eb",
+  "preserved_attempts_reviewed": [
+    "2aa36533fd8a2cbcd92869c4ca23c06cd12f3678",
+    "7231c5652b77a5ba32fb58314c5f52313da182b5",
+    "7cc6fdd6ba053f9afeee8c87f0d1422abc78552e",
+    "cae5edbb69b5ae64a4efbb730184e21f42333bf5"
+  ],
+  "baseline": {
+    "size": 452,
+    "canonical_match_percent": 99.823006,
+    "remaining_instruction_offsets": [
+      "0x168",
+      "0x170",
+      "0x174",
+      "0x184"
+    ]
+  },
+  "hypothesis": "Change the late live-range interference/coalescing identities instead of repeating owner type or declaration-order variants. First introduce separate late locals, then cross the reused object/info identities.",
+  "compiler": "Canonical Ninja compiler command with only temporary output destination changed; GC/1.3, existing flags, no compiler policy changes. Final verification uses normal Ninja output.",
+  "measurements": [
+    {
+      "hypothesis": "distinct late locals ('eventObject', 'eventType')",
+      "score": 98.9823,
+      "size": "456",
+      "differences": [
+        [
+          360,
+          "mr r30, r3",
+          "mr r29, r3"
+        ],
+        [
+          368,
+          "mr r29, r3",
+          "mr r0, r3"
+        ],
+        [
+          372,
+          "mr r3, r30",
+          "mr r3, r29"
+        ],
+        [
+          376,
+          null,
+          "mr r29, r0"
+        ]
+      ]
+    },
+    {
+      "hypothesis": "distinct late locals ('eventType', 'eventObject')",
+      "score": 98.9823,
+      "size": "456",
+      "differences": [
+        [
+          360,
+          "mr r30, r3",
+          "mr r29, r3"
+        ],
+        [
+          368,
+          "mr r29, r3",
+          "mr r0, r3"
+        ],
+        [
+          372,
+          "mr r3, r30",
+          "mr r3, r29"
+        ],
+        [
+          376,
+          null,
+          "mr r29, r0"
+        ]
+      ]
+    },
+    {
+      "hypothesis": "late object in info, late type in object",
+      "score": 100.0,
+      "size": "452",
+      "differences": []
+    }
+  ],
+  "outcome": "Separate late locals add a move and produce 456 bytes. Crossed reuse produces all 452 retail bytes exactly and is retained. No alternate C translation units are retained."
+}
