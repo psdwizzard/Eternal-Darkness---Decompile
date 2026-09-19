@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "bdced6c3-84cf-4e56-9cd2-c8914366dc0c",
+  "attempt": 5,
+  "base_commit": "4984205854253b8e4b20b7cc7fe9ca6498d16139",
+  "target": "fn_801E915C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bdced6c3-84cf-4e56-9cd2-c8914366dc0c.json"
+  ],
+  "divergence": "A distinct declaration-order/register-lifetime hypothesis was tested after explicit entry-lvalue and field-pointer caching variants regressed to 95.83721% and 95.99225%, respectively. Reversing the top-level i/byte_offset declaration order compiles identically to the preserved best. Fresh canonical and relocation-strict objdiff agree at 98.16279%, size-exact at 1032/1032 bytes, with 226 equal rows, 29 operand mismatches, two replacements, one insertion, and one deletion. All 10 relocation-bearing instructions remain equal under function_reloc_diffs=name_address. The three entry-relocation loops still exchange r5/r6 for the field offset and loaded size; the data50 loops exchange r4/r5 and r30/r31 for byte offsets and counters; the data58 loop exchanges r30/r31 and emits mr where retail emits a second li. The verified whole-DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

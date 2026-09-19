@@ -64,8 +64,8 @@ extern char lbl_80265B2C[];
 u32 fn_801E915C(const u8* source, Header* header)
 {
     u32 offset = 0;
-    int i;
     u32 byte_offset;
+    int i;
 
     *header = *(const Header*)source;
     offset += sizeof(Header);
