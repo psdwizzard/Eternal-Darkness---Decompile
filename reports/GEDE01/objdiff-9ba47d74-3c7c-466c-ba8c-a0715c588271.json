@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "assignment_id": "9ba47d74-3c7c-466c-ba8c-a0715c588271",
+  "target": "fn_80193F3C",
+  "compiler": "GC/1.3",
+  "extra_cflags": [],
+  "hypothesis": {
+    "description": "Test source initialization order as the cause of MWCC virtual-FPR coloring: compute the first pair's y term before its x term while retaining identical arithmetic and uses.",
+    "distinct_from_preserved_attempts": true,
+    "baseline_match_percent": 98.13372,
+    "result_match_percent": 98.156975,
+    "tested_variants": [
+      {"variant":"reverse float declaration order","match_percent":97.98837},
+      {"variant":"interleave float declarations","match_percent":98.13372},
+      {"variant":"compute y0 before x0","match_percent":98.156975}
+    ]
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_output_tail": [
+      "[877/879] DOL build/GEDE01/main.dol",
+      "[878/879] CHECK config/GEDE01/build.sha1",
+      "build/GEDE01/main.dol: OK",
+      "[879/879] PROGRESS"
+    ]
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80193F3C fn_80193F3C -o build/GEDE01/9ba47d74-canonical.json --format json-pretty",
+    "exit_code": 0,
+    "raw_output": "INFO Writing to build/GEDE01/9ba47d74-canonical.json",
+    "target_size": 688,
+    "candidate_size": 688,
+    "match_percent": 98.156975,
+    "diff_instructions": 55,
+    "diff_kinds": {"DIFF_ARG_MISMATCH":55},
+    "first_diff": {"offset":"0x64","target":"stw r7, 0xc(r1)","candidate":"stw r7, 0x14(r1)"},
+    "last_diff": {"offset":"0x20C","target":"fsubs f0, f0, f6","candidate":"fsubs f0, f0, f5"}
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80193F3C fn_80193F3C -o build/GEDE01/9ba47d74-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "raw_output": "INFO Writing to build/GEDE01/9ba47d74-reloc-strict.json",
+    "target_size": 688,
+    "candidate_size": 688,
+    "match_percent": 98.156975,
+    "relocation_targets_and_addends_equal": true,
+    "relocations": [
+      {"offset":"0x34","type":"R_PPC_EMB_SDA21","target":"lbl_80650B58","addend":0},
+      {"offset":"0x3C","type":"R_PPC_EMB_SDA21","target":"lbl_80650B60","addend":0},
+      {"offset":"0x50","type":"R_PPC_EMB_SDA21","target":"lbl_80650B64","addend":0},
+      {"offset":"0x7C","type":"R_PPC_EMB_SDA21","target":"lbl_80650B68","addend":0},
+      {"offset":"0x98","type":"R_PPC_EMB_SDA21","target":"lbl_80650B58","addend":0}
+    ]
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "actual": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "divergence": "Size and opcode sequence remain exact, but 55 operands from 0x64 through 0x20C differ. Reversing the first pair's initialization improves weighted similarity while changing unsigned-conversion and fctiwz spill slots; the residual mismatch remains FPR coloring plus associated stack-slot allocation. All five relocation-bearing instructions retain identical address, type, target, and zero addend.",
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "independent_translation_unit": "src/game/game_fn_80193F3C.c",
+    "neighboring_function_edits": false,
+    "generated_or_private_inputs_staged": false
+  },
+  "result": "attempted"
+}

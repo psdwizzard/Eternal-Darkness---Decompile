@@ -33,8 +33,8 @@ void fn_80193F3C(u8 column, int row, Vec3s* center, Vec3s* output,
         y_offset *= factor;
     }
 
-    x0 = (float)x_scale * x_offset;
     y0 = (float)x_scale * y_offset;
+    x0 = (float)x_scale * x_offset;
 
     displacement = (((int)column - 4 - row) * 4 - 1);
     point = output;
