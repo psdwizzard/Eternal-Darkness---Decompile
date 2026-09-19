@@ -1,0 +1,3468 @@
+[
+  {
+    "name": "baseline",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "signed_descriptor_mode",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "signed_destination_flag",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 97.57692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "old_style_final_call",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "integer_final_call_return",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "reset_before_lookup",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "reset_between_type_and_address",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "reset_after_flag",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r5, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r0, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r6, r5, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r5, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r0, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r5, r6",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "signed_both_mode_and_flag",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "register_final_type",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "register_final_descriptor",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "register_both_final_locals",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "function_scope_final_locals",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.05385,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "last_call_parameter_u8",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "last_call_parameter_s8",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "last_call_parameter_u32",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "last_call_parameter_s16",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "last_call_parameter_u16",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "diagnostic_volatile_counter",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "diagnostic_volatile_descriptor_mode",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 97.57692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "diagnostic_volatile_destination_flag",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "single_byte_aggregate_copy",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "single_byte_builtin_copy",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 98.47692,
+    "size": "1048",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r3, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "lis r5, lbl_8030F540@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r4, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r3, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r3, r5, lbl_8030F540@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r5, 0x1",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r4, r0, r4",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "addi r3, r3, 0x1e0",
+        "diff_kind": "DIFF_REPLACE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "addi r4, r4, 0x19",
+        "diff_kind": "DIFF_REPLACE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl memcpy",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x410",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x414",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "byte_bitfield_destination",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "byte_bitfield_source",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "byte_bitfield_both",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "destination_pointer_before_type",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "destination_pointer_after_type",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "destination_pointer_after_descriptor",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "counter_pointer",
+    "build_exit": 0,
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n",
+    "diff_exit": 0,
+    "score": 99.07692,
+    "size": "1040",
+    "tail": [
+      {
+        "address": "0x3bc",
+        "formatted": "lbz r0, 0x1da(r31)",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c0",
+        "formatted": "lis r4, lbl_80241DE8@ha",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3c4",
+        "formatted": "lis r3, lbl_8030F540@ha",
+        "diff_kind": "DIFF_INSERT"
+      },
+      {
+        "address": "0x3c8",
+        "formatted": "li r6, 0x0",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3cc",
+        "formatted": "mulli r5, r0, 0x28",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d0",
+        "formatted": "addi r0, r4, lbl_80241DE8@l",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3d4",
+        "formatted": "addi r4, r3, lbl_8030F540@l",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3d8",
+        "formatted": "stw r6, lbl_8064C850@sda21",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3dc",
+        "formatted": "li r3, 0x0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e0",
+        "formatted": "add r5, r0, r5",
+        "diff_kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "address": "0x3e4",
+        "formatted": "lbz r0, 0x19(r5)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3e8",
+        "formatted": "stb r0, 0x1e0(r4)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3ec",
+        "formatted": "bl fn_80046C98",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f0",
+        "formatted": "lwz r0, 0x24(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f4",
+        "formatted": "lwz r31, 0x1c(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3f8",
+        "formatted": "lwz r30, 0x18(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x3fc",
+        "formatted": "lwz r29, 0x14(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x400",
+        "formatted": "lwz r28, 0x10(r1)",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x404",
+        "formatted": "mtlr r0",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x408",
+        "formatted": "addi r1, r1, 0x20",
+        "diff_kind": "DIFF_NONE"
+      },
+      {
+        "address": "0x40c",
+        "formatted": "blr ",
+        "diff_kind": "DIFF_NONE"
+      }
+    ]
+  },
+  {
+    "name": "destination_pointer_after_reset",
+    "build_exit": 2,
+    "compiler_diagnostic": "expression syntax error: TransitionState* final_state = &lbl_8030F540;",
+    "result": "Rejected by C90 declaration placement; no comparison run."
+  }
+]
