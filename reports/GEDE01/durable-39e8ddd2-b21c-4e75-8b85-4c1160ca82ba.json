@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "39e8ddd2-b21c-4e75-8b85-4c1160ca82ba",
+  "attempt": 5,
+  "base_commit": "a5d0fb3058034f04a41413fc7ad17cd2500a120b",
+  "target": "fn_8007C90C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-39e8ddd2-b21c-4e75-8b85-4c1160ca82ba.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-39e8ddd2-b21c-4e75-8b85-4c1160ca82ba-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-39e8ddd2-b21c-4e75-8b85-4c1160ca82ba.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 98.045456% with equal 440-byte functions, 111 instructions per side, and 38 relocation types, targets, and addends equal. Four aligned diff rows remain: retail preserves object_id in r26 while generated preserves it in r29; retail schedules fn_80204810@ha at 0x60 and slwi at 0x64 while generated reverses them; and the 0x98 equality compare is generated as equivalent cmpw r26,r0 instead of retail cmpw r0,r26. The distinct non-register target_index and retail-order equality hypothesis compiled to the same frontier. Full build, DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f, and legal audit passed."
+}

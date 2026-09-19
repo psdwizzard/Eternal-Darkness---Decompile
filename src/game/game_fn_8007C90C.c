@@ -31,7 +31,7 @@ s32 fn_8007C90C(void *object)
     register void *target;
     register void *current;
     register s32 object_id;
-    register s32 target_index;
+    s32 target_index;
     s32 result = -1;
 
     object_id = fn_80201B54(object);
@@ -44,7 +44,7 @@ s32 fn_8007C90C(void *object)
         target = fn_801A7778(current);
         fn_80128C44(created, fn_80204810, (object_id << 8) | 7);
         target_index = (u16)fn_80157994(target) + 1;
-        if (target_index == (u16)fn_80157948(target)) {
+        if ((u16)fn_80157948(target) == target_index) {
             fn_80128C28(created, fn_80204810, (object_id << 8) | 6);
         } else if (fn_802053B0(object, target) != 0) {
             if ((u16)fn_80157994(fn_80201C24()) != 1)
