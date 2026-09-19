@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "0e1f8c66-164a-4ff0-9b8b-f2728d03615b",
+  "attempt": 1,
+  "base_commit": "541f70738cc6bcaf3b85ecb445aea88ca29918d2",
+  "target": "fn_801A1E14",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0e1f8c66-164a-4ff0-9b8b-f2728d03615b.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is 10.846154%: retail is 260 bytes while generated code is 440 bytes. GC/1.3 emits a two-at-a-time unrolled loop instead of retail's single CTR loop, schedules the initial float constant after state initialization rather than at retail +0x08, and materializes the divisor-conversion double in local .sdata2 as @14 instead of retail's lbl_80650D20. Relocations therefore differ: retail has 5 .text relocations while generated has 6, including two generated lbl_80650D1C SDA21 references and the mismatched @14 SDA21 target."
+}
