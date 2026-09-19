@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "127d4c09-71f8-46e3-8187-1b60e7f72af9",
+  "attempt": 2,
+  "base_commit": "86081a61644d29a5904f0e67cc0e51ace86214c9",
+  "target": "fn_80195AEC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-127d4c09-71f8-46e3-8187-1b60e7f72af9.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 89.57746% for the size-exact 2556-byte .text. Retail and candidate each contain 46 relocation-bearing instructions and 552-byte .rela.text sections, but they are not relocation-strict or byte-identical: the candidate saves r16-r31 while retail saves r17-r31, shifting pervasive long-lived register allocation, and the candidate emits local 8-byte .sdata2 integer-to-float constants where retail uses lbl_80650B58 relocation targets. The canonical build completed successfully and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
