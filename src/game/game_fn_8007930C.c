@@ -32,18 +32,22 @@ extern void fn_80128C44(void *, void (*)(void), void *);
 extern void fn_80201D2C(void *, int);
 extern void fn_80201D14(void *, int);
 
-/* NonMatching: behavior-complete object activation and callback setup. */
+/* NonMatching: 552-byte activation/callback setup; remaining register coloring
+ * is documented in the assignment-specific canonical and strict reports. */
 int fn_8007930C(void *context, void *object)
 {
-    u8 *state = fn_80201B8C(context);
-    int owner_entry = (int)fn_80201B94(context);
+    int owner_entry;
+    int kind;
+    int value;
+    int work;
+    int result_action;
+    u8 *state;
+    int i;
     Vec3 copy;
     Vec3 position;
-    int result_action;
-    int value;
-    int kind;
-    int i;
 
+    state = fn_80201B8C(context);
+    owner_entry = (int)fn_80201B94(context);
     fn_8011F114(&position, object);
     copy = position;
     fn_80128EE4(object);
@@ -61,13 +65,13 @@ int fn_8007930C(void *context, void *object)
     if (owner_entry == 0)
         goto done;
     result_action = (int)fn_801A717C();
-    i = fn_80072354(*(int *)(state + 0x90));
+    work = fn_80072354(*(int *)(state + 0x90));
     fn_801A7460((void *)result_action, 4);
     fn_801A74A0((void *)result_action, value);
     fn_801A74A8((void *)result_action, kind);
     fn_801A74C8((void *)result_action, 1);
     fn_801A7560((void *)result_action, 0x704);
-    fn_800CF6AC(context, i, state, (void *)result_action, 0, 4);
+    fn_800CF6AC(context, work, state, (void *)result_action, 0, 4);
     fn_801A7598((void *)result_action, 0x1A4);
     fn_801A7550((void *)result_action, 0xC);
     fn_801A7558((void *)result_action, 7);

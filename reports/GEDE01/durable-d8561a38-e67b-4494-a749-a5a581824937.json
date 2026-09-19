@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "d8561a38-e67b-4494-a749-a5a581824937",
+  "attempt": 6,
+  "base_commit": "3e35875a33d118a2370a2f97859c588c2897177e",
+  "target": "fn_8007930C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d8561a38-e67b-4494-a749-a5a581824937.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d8561a38-e67b-4494-a749-a5a581824937-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/checks-d8561a38-e67b-4494-a749-a5a581824937.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-d8561a38-e67b-4494-a749-a5a581824937.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.31159%, improved from 98.58696%, with exact 552-byte size and 138 instructions. The remaining 19 rows are exclusively DIFF_ARG_MISMATCH: retail context/object/state-and-loop-callback registers r29/r30/r28 map to generated r28/r29/r30. All other instruction operands, opcodes, order, branches, stack offsets and references agree. Both raw reports are byte-identical. All 36 instruction relocation annotations agree; direct ELF parsing independently verifies all 35 actual .rela.text records, including symbol targets and signed addends. Full canonical build passes and DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f; this TU remains NonMatching."
+}
