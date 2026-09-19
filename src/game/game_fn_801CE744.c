@@ -60,7 +60,7 @@ void fn_801CE744(u32 type, u32 value, const Vec3f* position, u16 index,
     s16 count;
     u32 object_type;
     s16* index_ptr;
-    void** object_ptr;
+    u32 object_address;
 
     fn_801CECB4(type, indices);
     fn_801905CC(&params);
@@ -74,7 +74,7 @@ void fn_801CE744(u32 type, u32 value, const Vec3f* position, u16 index,
 
     object_type = fn_801D38E8(type);
     count = fn_801CEB2C(type);
-    object_ptr = objects;
+    object_address = (u32)objects;
     index_ptr = indices;
     i = 0;
     while (i < count) {
@@ -99,10 +99,11 @@ void fn_801CE744(u32 type, u32 value, const Vec3f* position, u16 index,
             }
         }
         if (objects != 0) {
-            *object_ptr = object;
-            object_ptr++;
+            *(void**)object_address = object;
         }
         index_ptr++;
+        /* Advance the 32-bit address without arithmetic on a null pointer. */
+        object_address += sizeof(void*);
         i++;
     }
 }
