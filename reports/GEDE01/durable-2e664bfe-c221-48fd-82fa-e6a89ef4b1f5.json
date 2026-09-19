@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "2e664bfe-c221-48fd-82fa-e6a89ef4b1f5",
+  "attempt": 2,
+  "base_commit": "019eab3fe981de052fa88e7c5323294678152860",
+  "target": "fn_801A1E14",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2e664bfe-c221-48fd-82fa-e6a89ef4b1f5.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is 10.846154%: retail is 260 bytes with 5 .text relocations while generated code is 440 bytes with 6. GC/1.3 emits a two-at-a-time unrolled loop instead of retail's single CTR loop, schedules the initial lbl_80650D1C load after state initialization rather than at retail +0x08, emits a second lbl_80650D1C SDA21 reference, and targets the generated local .sdata2 symbol @14 instead of retail's lbl_80650D20 for the divisor-conversion double."
+}
