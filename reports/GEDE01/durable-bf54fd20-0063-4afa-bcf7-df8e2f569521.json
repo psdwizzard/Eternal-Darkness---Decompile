@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "assignment_id": "bf54fd20-0063-4afa-bcf7-df8e2f569521",
+  "attempt": 6,
+  "base_commit": "f222d69ec2f061d3e9f12bde70d5ec9647675f2a",
+  "target": "fn_80175A08",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bf54fd20-0063-4afa-bcf7-df8e2f569521.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bf54fd20-0063-4afa-bcf7-df8e2f569521-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-bf54fd20-0063-4afa-bcf7-df8e2f569521.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-bf54fd20-0063-4afa-bcf7-df8e2f569521.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-bf54fd20-0063-4afa-bcf7-df8e2f569521.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-bf54fd20-0063-4afa-bcf7-df8e2f569521-final.json"
+  ],
+  "divergence": "Improved canonical and relocation-strict objdiff from 97.82407% to 99.44444%. Retail and candidate are both 432 bytes / 108 instructions / 26 objdiff relocations. A local diagnostic aggregate with an explicit field assignment removes the early r0 temporary and exactly matches the retail prologue. All 22 ELF relocation records match in offset, type, target and addend after retail-verified jump-table externalization. The only text-word difference is offset 0x44 (address 0x80175A4C): retail 0x389f0000, addi r4,r31,0; candidate 0x7fe4fb78, mr r4,r31. Retained as NonMatching."
+}

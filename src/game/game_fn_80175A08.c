@@ -14,17 +14,18 @@ extern void fn_80157BB8(void*, u8);
 extern void fn_80157BA0(void*, s16);
 extern void fn_80157B60(void*, u8);
 extern void fn_80157B3C(void*, u8);
-extern const char lbl_8024FF00;
+extern const char lbl_8024FF00[];
 
 int fn_80175A08(void* state)
 {
-    const char* strings = &lbl_8024FF00;
+    struct { const char* strings; } diagnostic;
     int kind;
     int object_id;
     void* object;
     int value;
+    diagnostic.strings = lbl_8024FF00;
     if (fn_8016A598(state) != 3) {
-        fn_80163BB4(state, strings, 3, fn_8016A598(state));
+        fn_80163BB4(state, diagnostic.strings, 3, fn_8016A598(state));
         return 0;
     }
 
@@ -59,11 +60,11 @@ int fn_80175A08(void* state)
             fn_80157B3C(object, value);
             break;
         default:
-            fn_80163BB4(state, strings + 0x5A8, kind);
+            fn_80163BB4(state, diagnostic.strings + 0x5A8, kind);
             break;
         }
     } else {
-        fn_80163BB4(state, strings + 0x5CC, object_id);
+        fn_80163BB4(state, diagnostic.strings + 0x5CC, object_id);
     }
     return 0;
 }

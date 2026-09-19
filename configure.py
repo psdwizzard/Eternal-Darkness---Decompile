@@ -158,6 +158,17 @@ config.custom_build_rules = [
         "description": "EXTERNALIZE $in",
     },
     {
+        "name": "externalize_game_80175A08_jumptable",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @23 jumptable_802504E4 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match --require-whole-section && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@23=jumptable_802504E4 --remove-section=.data "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    },
+    {
         "name": "externalize_game_801ECF50_jumptable",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @18 jumptable_80266224 "
@@ -3385,6 +3396,11 @@ for rule in config.custom_build_rules:
 guarded_externalize_rules.add("externalize_string_pool_80250588")
 config.custom_build_steps = {
     "post-compile": [
+        {
+            "outputs": [f"build/{VERSION}/src/game/game_fn_80175A08.externalized"],
+            "rule": "externalize_game_80175A08_jumptable",
+            "inputs": [f"build/{VERSION}/src/game/game_fn_80175A08.o"],
+        },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_80066E78.externalized"],
             "rule": "externalize_game_80066E78_jumptable",

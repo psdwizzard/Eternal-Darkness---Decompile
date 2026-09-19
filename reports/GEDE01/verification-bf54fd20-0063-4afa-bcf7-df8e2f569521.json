@@ -1,0 +1,420 @@
+{
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "configure.py"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80175A08",
+        "fn_80175A08",
+        "-o",
+        "reports/GEDE01/objdiff-bf54fd20-0063-4afa-bcf7-df8e2f569521.json",
+        "--format",
+        "json-pretty"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-bf54fd20-0063-4afa-bcf7-df8e2f569521.json\n",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-bf54fd20-0063-4afa-bcf7-df8e2f569521.json"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80175A08",
+        "fn_80175A08",
+        "-o",
+        "reports/GEDE01/objdiff-bf54fd20-0063-4afa-bcf7-df8e2f569521-reloc-strict.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-bf54fd20-0063-4afa-bcf7-df8e2f569521-reloc-strict.json\n",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-bf54fd20-0063-4afa-bcf7-df8e2f569521-reloc-strict.json"
+    },
+    {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2"
+      ],
+      "exit_code": 0,
+      "combined_stdout_stderr_file": "eternal-darkness-decomp/reports/GEDE01/build-bf54fd20-0063-4afa-bcf7-df8e2f569521.json"
+    },
+    {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2"
+      ],
+      "exit_code": 0,
+      "combined_stdout_stderr_file": "eternal-darkness-decomp/reports/GEDE01/build-bf54fd20-0063-4afa-bcf7-df8e2f569521-final.json"
+    },
+    {
+      "command": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "exit_code": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "sha1sum",
+        "-c",
+        "config/GEDE01/build.sha1"
+      ],
+      "exit_code": 0,
+      "stdout": "build/GEDE01/main.dol: OK\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "stdout": "legal audit passed (18120 tracked project files inspected)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "elf_comparison": {
+    "retail_text_size": 432,
+    "candidate_text_size": 432,
+    "retail_text_sha256": "fdbf71ed164999ab14f430a03f941ff8342d29d37393bcdb01a1545a934f500c",
+    "candidate_text_sha256": "5211abbb04e3b25c804f565d5eba58bcf032669943ab4811de5599e1949fb195",
+    "differing_words": [
+      {
+        "offset": "0x44",
+        "retail": "389f0000",
+        "candidate": "7fe4fb78"
+      }
+    ],
+    "retail_relocations": [
+      {
+        "offset": 10,
+        "type": 6,
+        "target": "lbl_8024FF00",
+        "addend": 0
+      },
+      {
+        "offset": 22,
+        "type": 4,
+        "target": "lbl_8024FF00",
+        "addend": 0
+      },
+      {
+        "offset": 40,
+        "type": 10,
+        "target": "fn_8016A598",
+        "addend": 0
+      },
+      {
+        "offset": 56,
+        "type": 10,
+        "target": "fn_8016A598",
+        "addend": 0
+      },
+      {
+        "offset": 80,
+        "type": 10,
+        "target": "fn_80163BB4",
+        "addend": 0
+      },
+      {
+        "offset": 100,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 124,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 144,
+        "type": 10,
+        "target": "fn_80201814",
+        "addend": 0
+      },
+      {
+        "offset": 156,
+        "type": 10,
+        "target": "fn_80201C24",
+        "addend": 0
+      },
+      {
+        "offset": 176,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 202,
+        "type": 6,
+        "target": "jumptable_802504E4",
+        "addend": 0
+      },
+      {
+        "offset": 210,
+        "type": 4,
+        "target": "jumptable_802504E4",
+        "addend": 0
+      },
+      {
+        "offset": 232,
+        "type": 10,
+        "target": "fn_80157B48",
+        "addend": 0
+      },
+      {
+        "offset": 248,
+        "type": 10,
+        "target": "fn_80157B54",
+        "addend": 0
+      },
+      {
+        "offset": 264,
+        "type": 10,
+        "target": "fn_80157B94",
+        "addend": 0
+      },
+      {
+        "offset": 280,
+        "type": 10,
+        "target": "fn_80157BAC",
+        "addend": 0
+      },
+      {
+        "offset": 296,
+        "type": 10,
+        "target": "fn_80157BB8",
+        "addend": 0
+      },
+      {
+        "offset": 312,
+        "type": 10,
+        "target": "fn_80157BA0",
+        "addend": 0
+      },
+      {
+        "offset": 328,
+        "type": 10,
+        "target": "fn_80157B60",
+        "addend": 0
+      },
+      {
+        "offset": 344,
+        "type": 10,
+        "target": "fn_80157B3C",
+        "addend": 0
+      },
+      {
+        "offset": 368,
+        "type": 10,
+        "target": "fn_80163BB4",
+        "addend": 0
+      },
+      {
+        "offset": 392,
+        "type": 10,
+        "target": "fn_80163BB4",
+        "addend": 0
+      }
+    ],
+    "candidate_relocations": [
+      {
+        "offset": 10,
+        "type": 6,
+        "target": "lbl_8024FF00",
+        "addend": 0
+      },
+      {
+        "offset": 22,
+        "type": 4,
+        "target": "lbl_8024FF00",
+        "addend": 0
+      },
+      {
+        "offset": 40,
+        "type": 10,
+        "target": "fn_8016A598",
+        "addend": 0
+      },
+      {
+        "offset": 56,
+        "type": 10,
+        "target": "fn_8016A598",
+        "addend": 0
+      },
+      {
+        "offset": 80,
+        "type": 10,
+        "target": "fn_80163BB4",
+        "addend": 0
+      },
+      {
+        "offset": 100,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 124,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 144,
+        "type": 10,
+        "target": "fn_80201814",
+        "addend": 0
+      },
+      {
+        "offset": 156,
+        "type": 10,
+        "target": "fn_80201C24",
+        "addend": 0
+      },
+      {
+        "offset": 176,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 202,
+        "type": 6,
+        "target": "jumptable_802504E4",
+        "addend": 0
+      },
+      {
+        "offset": 210,
+        "type": 4,
+        "target": "jumptable_802504E4",
+        "addend": 0
+      },
+      {
+        "offset": 232,
+        "type": 10,
+        "target": "fn_80157B48",
+        "addend": 0
+      },
+      {
+        "offset": 248,
+        "type": 10,
+        "target": "fn_80157B54",
+        "addend": 0
+      },
+      {
+        "offset": 264,
+        "type": 10,
+        "target": "fn_80157B94",
+        "addend": 0
+      },
+      {
+        "offset": 280,
+        "type": 10,
+        "target": "fn_80157BAC",
+        "addend": 0
+      },
+      {
+        "offset": 296,
+        "type": 10,
+        "target": "fn_80157BB8",
+        "addend": 0
+      },
+      {
+        "offset": 312,
+        "type": 10,
+        "target": "fn_80157BA0",
+        "addend": 0
+      },
+      {
+        "offset": 328,
+        "type": 10,
+        "target": "fn_80157B60",
+        "addend": 0
+      },
+      {
+        "offset": 344,
+        "type": 10,
+        "target": "fn_80157B3C",
+        "addend": 0
+      },
+      {
+        "offset": 368,
+        "type": 10,
+        "target": "fn_80163BB4",
+        "addend": 0
+      },
+      {
+        "offset": 392,
+        "type": 10,
+        "target": "fn_80163BB4",
+        "addend": 0
+      }
+    ],
+    "relocation_records_equal": true
+  },
+  "working_directory": "eternal-darkness-decomp",
+  "compiler": "GC/1.3, unchanged canonical flags including -sdata 0",
+  "source_sha256": "89d7115aa521e547bd3625e07724c909adbc386a4105e55e9decafd4537fe4a9",
+  "jump_table_verification": {
+    "method": "Existing externalize_elf_symbol.py with --require-relocation-match and --require-whole-section, registered only for this function in configure.py. Resolves all eight compiler-produced case-address entries against the retail DOL before externalization.",
+    "local_symbol": "@23",
+    "retail_symbol": "jumptable_802504E4",
+    "size": 32,
+    "result": "passed as part of final Ninja build"
+  },
+  "result": {
+    "status": "attempted",
+    "canonical_percent": 99.44444,
+    "relocation_strict_percent": 99.44444,
+    "objdiff_instruction_counts": [
+      108,
+      108
+    ],
+    "objdiff_relocation_counts_including_synthetic": [
+      26,
+      26
+    ],
+    "elf_rela_text_counts": [
+      22,
+      22
+    ],
+    "nonmatching_registration_retained": true,
+    "dol_note": "NonMatching registration uses the retail fallback in the verified DOL; the candidate is not claimed byte-matching."
+  },
+  "evidence_format_note": "Build output contains CRLF linker diagnostics. It is preserved losslessly as JSON strings to avoid trailing-whitespace errors in committed log files."
+}
