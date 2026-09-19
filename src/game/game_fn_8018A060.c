@@ -51,8 +51,9 @@ void fn_8018A060(u8* arg)
 
     entry = *(u8**)(object + 0x4C);
     color_out = buffer2;
+    i = 0;
     buffer_offset = 0;
-    for (i = 0; i < entry_count; i++) {
+    for (; i < entry_count; i++) {
         int j;
         fn_80188A7C(entry, buffer0 + buffer_offset, fn_8018D688);
         for (j = 0; j < entry[0x20]; j++) {
