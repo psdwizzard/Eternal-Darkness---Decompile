@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f75c4b12-a368-4774-b711-d42a6274fc0f",
+  "attempt": 5,
+  "base_commit": "c927c757e118339511e3152b85de424996396020",
+  "target": "fn_8017D700",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f75c4b12-a368-4774-b711-d42a6274fc0f.json"
+  ],
+  "divergence": "Canonical GC/1.3 generates 524 bytes versus 520 retail bytes at a fresh 98.19231% relocation-strict objdiff score. An asymmetric lifetime hypothesis using a distinct result local only for the x-acceleration clamp, unlike the previously tested distinct locals for all three clamps, compiled identically at 98.19231%; predeclaring all delta locals before their assignments also compiled identically. The preserved best reconstruction still assigns the initial y delta to r5 instead of retail r11, retains the clamped x delta in r30 instead of retail r5, and emits an extra mr r4,r12 before the z-acceleration clamp while delaying extsh r11,r28 by two instructions. Both sides have zero relocations. The full canonical build succeeds and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
