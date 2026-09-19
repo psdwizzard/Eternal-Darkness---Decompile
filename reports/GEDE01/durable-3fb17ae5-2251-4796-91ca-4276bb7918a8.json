@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3fb17ae5-2251-4796-91ca-4276bb7918a8",
+  "attempt": 4,
+  "base_commit": "61452677eb8bc7358b011a83af48d2ae21cf4acd",
+  "target": "fn_80087EC4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3fb17ae5-2251-4796-91ca-4276bb7918a8.json"
+  ],
+  "divergence": "Best canonical GC/1.3 output remains size-exact at 412/412 bytes and 98.194176%. Retail uses r26-r31 in a 0x20-byte frame and coalesces the early owner pointer with the mode-7 branch index in r31; canonical output keeps them in r28 and r31, saves r25-r31 in a 0x30-byte frame, and consequently rotates work/state/object/offset through r25/r29/r30/r27 with equivalent indexed-store lowering. Attempt 4 proved that reloading owner late removes the seventh nonvolatile register and exactly recovers the retail frame, but loses retail's early owner load and scores 96.79612%; an early-return lifetime split grows output to 416 bytes and scores 95.23301%. All 24 relocation tuples match exactly, and the linked DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
