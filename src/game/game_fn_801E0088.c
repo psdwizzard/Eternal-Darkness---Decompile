@@ -20,6 +20,10 @@ extern void fn_801FE934(int, int);
 extern int fn_801D3A34(int, int);
 extern u8 fn_801CEB2C(int);
 extern void fn_8014EAA4();
+extern void fn_801D0C94(void);
+extern void fn_801D0C9C(void);
+extern void fn_801D70B0();
+extern int fn_800A4F98(int);
 
 /* NonMatching: honest-C reconstruction of the complete common teardown path
  * and the first event arms. The remaining large event dispatcher is not yet
@@ -63,6 +67,16 @@ void fn_801E0088(void* object)
     }
 
     switch (*(u16*)(info + 0xff4)) {
+    case 0:
+        if (info[0xff0] & 0x10) {
+            fn_801D70B0(-1, (*(int*)(info + 4) & -0x821) | 0x410,
+                        *(int*)(info + 0xc), info + 0x38, 2, 0,
+                        fn_801D0C9C, 0, fn_801D0C94, 0);
+            a = fn_800A4F98(2);
+            if (fn_80201814(a))
+                fn_8020123C(8, a, a, 0);
+        }
+        break;
     case 20:
         fn_801FE934(*(int*)(info + 0x44), 5);
         break;
