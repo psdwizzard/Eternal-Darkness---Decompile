@@ -1,0 +1,9 @@
+{
+  "preserved_source_commit": "b5d605d6f5f0d73147b578bb46d0a5daa6584226",
+  "accepted_base": "ba913b0c1ac71f38a9c2d89d048ffaf09bb8226f",
+  "preserved_source_equals_accepted_source": true,
+  "baseline_source_sha256": "ec416e3e4cc9d6451bb3a9e3e624e17eb35bb935fe872a30b0bba875f6e6bd7a",
+  "historical_variant_raw_header": "target 588 bytes  base 588 bytes  match 92.02041",
+  "correction": "The prior index-derived-mask experiment reports 588/588 bytes, not 604. fndiff row indices include alignment gaps and are not instruction addresses. This historical variant was not rerun in attempt 6.",
+  "new_hypothesis": "Explicitly normalize the loop-carried mask at loop entry, so the value shifted after calls is the truncated value, rather than a separate persistent untruncated value. Then refine declaration/lifetime shapes on this newly normalized source."
+}

@@ -38,14 +38,12 @@ void fn_8014B0F0(void* left, void* right)
 {
     int count;
     Set* set;
+    u16 bit;
     int mode;
     int i;
     Set* entry;
-    u16 bit;
     Set* right_set;
     int update;
-    int j;
-    float *x, *y, *z;
     Value value;
 
     if (left == 0) {
@@ -72,7 +70,6 @@ void fn_8014B0F0(void* left, void* right)
     entry = set;
     bit = 1;
     for (i = 0; i < count; i++) {
-        bit = (u16)bit;
         if ((set->active & bit) != 0 && entry->object88 != 0) {
             if (mode != 0) {
                 fn_8017FF24(entry->object88, 0, 8);
@@ -80,20 +77,19 @@ void fn_8014B0F0(void* left, void* right)
                 fn_8017FF24(entry->object88, 8, 0);
             }
         }
-        bit = (u16)(bit << 1);
+        bit <<= 1;
         entry = (Set*)((char*)entry + 4);
     }
 
     if (update == 0) {
         entry = set;
         bit = 1;
-        for (j = 0; j < count; j++) {
-            bit = (u16)bit;
+        for (i = 0; i < count; i++) {
             if ((set->active & bit) != 0 && entry->object88 != 0) {
                 fn_8017FD6C(entry->object88);
                 set->active &= ~bit;
             }
-            bit = (u16)(bit << 1);
+            bit <<= 1;
             entry = (Set*)((char*)entry + 4);
         }
         return;
@@ -101,13 +97,12 @@ void fn_8014B0F0(void* left, void* right)
 
     {
         void* context = fn_80201BC8(right_set);
-        x = &value.x;
-        y = &value.y;
-        z = &value.z;
+        float* x = &value.x;
+        float* y = &value.y;
+        float* z = &value.z;
         entry = set;
         bit = 1;
-        for (j = 0; j < count; j++) {
-            bit = (u16)bit;
+        for (i = 0; i < count; i++) {
             if ((set->active & bit) != 0 && entry->object88 != 0) {
                 if (fn_8012FA54(context, entry->value48) != 0 ||
                     fn_8012DC94(context, entry->value48) == 0) {
@@ -123,7 +118,7 @@ void fn_8014B0F0(void* left, void* right)
                     set->active &= ~bit;
                 }
             }
-            bit = (u16)(bit << 1);
+            bit <<= 1;
             entry = (Set*)((char*)entry + 4);
         }
     }

@@ -1,0 +1,84 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8014B0F0.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8014B0F0.c
+@@ -38,10 +38,10 @@
+ {
+     int count;
+     Set* set;
+-    u16 bit;
+     int mode;
+     int i;
+     Set* entry;
++    u16 bit;
+     Set* right_set;
+     int update;
+     Value value;
+@@ -70,6 +70,7 @@
+     entry = set;
+     bit = 1;
+     for (i = 0; i < count; i++) {
++            bit = (u16)bit;
+         if ((set->active & bit) != 0 && entry->object88 != 0) {
+             if (mode != 0) {
+                 fn_8017FF24(entry->object88, 0, 8);
+@@ -77,19 +78,22 @@
+                 fn_8017FF24(entry->object88, 8, 0);
+             }
+         }
+-        bit <<= 1;
++        bit = (u16)(bit << 1);
+         entry = (Set*)((char*)entry + 4);
+     }
+ 
+     if (update == 0) {
++        u16 mask2;
++        u16 j;
+         entry = set;
+-        bit = 1;
+-        for (i = 0; i < count; i++) {
+-            if ((set->active & bit) != 0 && entry->object88 != 0) {
++        mask2 = 1;
++        for (j = 0; j < count; j++) {
++            mask2 = (u16)mask2;
++            if ((set->active & mask2) != 0 && entry->object88 != 0) {
+                 fn_8017FD6C(entry->object88);
+-                set->active &= ~bit;
++                set->active &= ~mask2;
+             }
+-            bit <<= 1;
++            mask2 = (u16)(mask2 << 1);
+             entry = (Set*)((char*)entry + 4);
+         }
+         return;
+@@ -97,13 +101,16 @@
+ 
+     {
+         void* context = fn_80201BC8(right_set);
++        u16 k;
++        u16 mask3;
+         float* x = &value.x;
+         float* y = &value.y;
+         float* z = &value.z;
+         entry = set;
+-        bit = 1;
+-        for (i = 0; i < count; i++) {
+-            if ((set->active & bit) != 0 && entry->object88 != 0) {
++        mask3 = 1;
++        for (k = 0; k < count; k++) {
++            mask3 = (u16)mask3;
++            if ((set->active & mask3) != 0 && entry->object88 != 0) {
+                 if (fn_8012FA54(context, entry->value48) != 0 ||
+                     fn_8012DC94(context, entry->value48) == 0) {
+                     short* position;
+@@ -115,10 +122,10 @@
+                     fn_8014B604(z, position + 2);
+                 } else {
+                     fn_8017FD6C(entry->object88);
+-                    set->active &= ~bit;
++                    set->active &= ~mask3;
+                 }
+             }
+-            bit <<= 1;
++            mask3 = (u16)(mask3 << 1);
+             entry = (Set*)((char*)entry + 4);
+         }
+     }

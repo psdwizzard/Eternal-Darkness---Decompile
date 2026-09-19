@@ -1,0 +1,63 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8014B0F0.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8014B0F0.c
+@@ -38,10 +38,10 @@
+ {
+     int count;
+     Set* set;
++    int i;
++    Set* entry;
+     u16 bit;
+     int mode;
+-    int i;
+-    Set* entry;
+     Set* right_set;
+     int update;
+     Value value;
+@@ -70,6 +70,7 @@
+     entry = set;
+     bit = 1;
+     for (i = 0; i < count; i++) {
++            bit = (u16)bit;
+         if ((set->active & bit) != 0 && entry->object88 != 0) {
+             if (mode != 0) {
+                 fn_8017FF24(entry->object88, 0, 8);
+@@ -77,7 +78,7 @@
+                 fn_8017FF24(entry->object88, 8, 0);
+             }
+         }
+-        bit <<= 1;
++        bit = (u16)(bit << 1);
+         entry = (Set*)((char*)entry + 4);
+     }
+ 
+@@ -85,11 +86,12 @@
+         entry = set;
+         bit = 1;
+         for (i = 0; i < count; i++) {
++            bit = (u16)bit;
+             if ((set->active & bit) != 0 && entry->object88 != 0) {
+                 fn_8017FD6C(entry->object88);
+                 set->active &= ~bit;
+             }
+-            bit <<= 1;
++            bit = (u16)(bit << 1);
+             entry = (Set*)((char*)entry + 4);
+         }
+         return;
+@@ -103,6 +105,7 @@
+         entry = set;
+         bit = 1;
+         for (i = 0; i < count; i++) {
++            bit = (u16)bit;
+             if ((set->active & bit) != 0 && entry->object88 != 0) {
+                 if (fn_8012FA54(context, entry->value48) != 0 ||
+                     fn_8012DC94(context, entry->value48) == 0) {
+@@ -118,7 +121,7 @@
+                     set->active &= ~bit;
+                 }
+             }
+-            bit <<= 1;
++            bit = (u16)(bit << 1);
+             entry = (Set*)((char*)entry + 4);
+         }
+     }

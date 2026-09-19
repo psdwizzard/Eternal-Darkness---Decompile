@@ -1,0 +1,75 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8014B0F0.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8014B0F0.c
+@@ -38,7 +38,7 @@
+ {
+     int count;
+     Set* set;
+-    u16 bit;
++    u32 bit1, bit2, bit3;
+     int mode;
+     int i;
+     Set* entry;
+@@ -68,28 +68,30 @@
+     }
+     count = set->count;
+     entry = set;
+-    bit = 1;
++    bit1 = 1;
+     for (i = 0; i < count; i++) {
+-        if ((set->active & bit) != 0 && entry->object88 != 0) {
++            bit1 = (u16)bit1;
++        if ((set->active & bit1) != 0 && entry->object88 != 0) {
+             if (mode != 0) {
+                 fn_8017FF24(entry->object88, 0, 8);
+             } else {
+                 fn_8017FF24(entry->object88, 8, 0);
+             }
+         }
+-        bit <<= 1;
++        bit1 = (u16)(bit1 << 1);
+         entry = (Set*)((char*)entry + 4);
+     }
+ 
+     if (update == 0) {
+         entry = set;
+-        bit = 1;
++        bit2 = 1;
+         for (i = 0; i < count; i++) {
+-            if ((set->active & bit) != 0 && entry->object88 != 0) {
++            bit2 = (u16)bit2;
++            if ((set->active & bit2) != 0 && entry->object88 != 0) {
+                 fn_8017FD6C(entry->object88);
+-                set->active &= ~bit;
++                set->active &= ~bit2;
+             }
+-            bit <<= 1;
++            bit2 = (u16)(bit2 << 1);
+             entry = (Set*)((char*)entry + 4);
+         }
+         return;
+@@ -101,9 +103,10 @@
+         float* y = &value.y;
+         float* z = &value.z;
+         entry = set;
+-        bit = 1;
++        bit3 = 1;
+         for (i = 0; i < count; i++) {
+-            if ((set->active & bit) != 0 && entry->object88 != 0) {
++            bit3 = (u16)bit3;
++            if ((set->active & bit3) != 0 && entry->object88 != 0) {
+                 if (fn_8012FA54(context, entry->value48) != 0 ||
+                     fn_8012DC94(context, entry->value48) == 0) {
+                     short* position;
+@@ -115,10 +118,10 @@
+                     fn_8014B604(z, position + 2);
+                 } else {
+                     fn_8017FD6C(entry->object88);
+-                    set->active &= ~bit;
++                    set->active &= ~bit3;
+                 }
+             }
+-            bit <<= 1;
++            bit3 = (u16)(bit3 << 1);
+             entry = (Set*)((char*)entry + 4);
+         }
+     }
