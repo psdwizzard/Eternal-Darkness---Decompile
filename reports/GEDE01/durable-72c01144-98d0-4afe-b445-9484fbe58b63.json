@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "assignment_id": "72c01144-98d0-4afe-b445-9484fbe58b63",
+  "attempt": 5,
+  "base_commit": "920ee92c98de929345e64d1683eeb63df33f6379",
+  "target": "fn_8008A96C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-72c01144-98d0-4afe-b445-9484fbe58b63.json",
+    "eternal-darkness-decomp/reports/GEDE01/72c01144-98d0-4afe-b445-9484fbe58b63/canonical-final.json",
+    "eternal-darkness-decomp/reports/GEDE01/72c01144-98d0-4afe-b445-9484fbe58b63/verification.json",
+    "eternal-darkness-decomp/reports/GEDE01/72c01144-98d0-4afe-b445-9484fbe58b63/experiments.json",
+    "eternal-darkness-decomp/reports/GEDE01/72c01144-98d0-4afe-b445-9484fbe58b63/notes.md",
+    "eternal-darkness-decomp/reports/GEDE01/72c01144-98d0-4afe-b445-9484fbe58b63/build-final.log",
+    "eternal-darkness-decomp/reports/GEDE01/72c01144-98d0-4afe-b445-9484fbe58b63/dol-sha1.txt",
+    "eternal-darkness-decomp/reports/GEDE01/72c01144-98d0-4afe-b445-9484fbe58b63/legal-audit.log"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff improved from 97.86184% (608/604 bytes) to 98.68421% (608/608 bytes). All 38 relocation records match in offset, type, target symbol/value, and addend. The only remaining byte differences are the swapped adjacent instructions at function offsets 0x78 and 0x7C: retail emits mr r25,r3 then li r27,0; canonical GC/1.3 emits li r27,0 then mr r25,r3. Reusing the effect local for the position-call result reproduces the retail r0 preservation pair; a bounded 0x34-byte array view reproduces both table-first add operand orders. Retained as NonMatching; the verified matching DOL therefore uses the retail split object."
+}

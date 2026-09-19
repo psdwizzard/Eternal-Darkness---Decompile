@@ -53,9 +53,8 @@ extern void fn_8003BD48(void);
 extern void fn_80204230(void);
 extern void fn_802042A4(void);
 
-/* NonMatching: behavior-complete effect setup and callback registration. The
- * remaining differences are one temporary-preservation instruction, two
- * commutative add operand orders, and nearby instruction scheduling. */
+/* NonMatching: the 608-byte reconstruction differs only in scheduling the
+ * zero-result initialization before, rather than after, the owner capture. */
 int fn_8008A96C(void* object, void* resource, void* unused)
 {
     ObjectInfo* info = ((ObjectInfo*)fn_80201B8C(object));
@@ -71,7 +70,7 @@ int fn_8008A96C(void* object, void* resource, void* unused)
     int selection;
     void* effect;
     void* config;
-    void* table;
+    u8 (*table)[0x34];
     Entry* entries;
     int count;
 
@@ -87,21 +86,22 @@ int fn_8008A96C(void* object, void* resource, void* unused)
         Vec3 temp;
         relatedPosition = fn_80201814(related);
         if (relatedPosition != 0) {
-            fn_8011F114(&temp, fn_80201BC8(relatedPosition));
+            effect = fn_80201BC8(relatedPosition);
+            fn_8011F114(&temp, effect);
             selection = fn_8008A808(object, 1);
             if (selection != -1) {
                 effect = fn_801294DC(resource, selection, 0, 6);
                 if (effect != 0) {
                     config = fn_801A717C();
-                    table = fn_80072354(info->field90);
+                    table = (u8 (*)[0x34])fn_80072354(info->field90);
                     fn_801A7460(config, selection);
                     fn_801A74A0(config, owner);
                     fn_801A74A8(config, related);
                     fn_801A74C8(config, 1);
                     fn_801A7560(config, 0x84);
                     offset = (selection != 4) << 3;
-                    fn_801A7538(config, *((u8*)table + offset + 0x2B));
-                    fn_801A7518(config, *((u8*)table + offset + 0x2A));
+                    fn_801A7538(config, (*table)[offset + 0x2B]);
+                    fn_801A7518(config, (*table)[offset + 0x2A]);
                     fn_801A7550(config, 0xC);
                     fn_801A7558(config, 7);
                     fn_801A764C(config, &positionCopy);
