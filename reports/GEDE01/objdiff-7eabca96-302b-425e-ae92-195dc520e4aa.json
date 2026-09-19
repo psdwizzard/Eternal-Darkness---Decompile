@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "assignment_id": "7eabca96-302b-425e-ae92-195dc520e4aa",
+  "target": "fn_80205914",
+  "compiler": "GC/1.3",
+  "cflags_addition": "-use_lmw_stmw on",
+  "source": "eternal-darkness-decomp/src/game/game_fn_80205914.c",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_80205914.o -2 build/GEDE01/src/game/game_fn_80205914.o -o reports/GEDE01/7eabca96-302b-425e-ae92-195dc520e4aa/canonical-final.json --format json -c function_reloc_diffs=none fn_80205914",
+    "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_80205914.o -2 build/GEDE01/src/game/game_fn_80205914.o -o reports/GEDE01/7eabca96-302b-425e-ae92-195dc520e4aa/strict-final.json --format json -c function_reloc_diffs=name_address fn_80205914",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/7eabca96-302b-425e-ae92-195dc520e4aa/configure-final.log",
+    "eternal-darkness-decomp/reports/GEDE01/7eabca96-302b-425e-ae92-195dc520e4aa/build-final.log",
+    "eternal-darkness-decomp/reports/GEDE01/7eabca96-302b-425e-ae92-195dc520e4aa/canonical-final.json",
+    "eternal-darkness-decomp/reports/GEDE01/7eabca96-302b-425e-ae92-195dc520e4aa/strict-final.json",
+    "eternal-darkness-decomp/reports/GEDE01/7eabca96-302b-425e-ae92-195dc520e4aa/relocations-final.json",
+    "eternal-darkness-decomp/reports/GEDE01/7eabca96-302b-425e-ae92-195dc520e4aa/dol-sha1.txt",
+    "eternal-darkness-decomp/reports/GEDE01/7eabca96-302b-425e-ae92-195dc520e4aa/trial-unprototyped-call.json",
+    "eternal-darkness-decomp/reports/GEDE01/7eabca96-302b-425e-ae92-195dc520e4aa/trial-comma-call.json"
+  ],
+  "measurements": {
+    "canonical_match_percent": 98.22222,
+    "relocation_strict_match_percent": 98.22222,
+    "target_size": 900,
+    "candidate_size": 900,
+    "different_instructions": 9,
+    "target_relocations": 49,
+    "candidate_relocations": 49,
+    "exact_relocation_records": 49,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "new_hypothesis": {
+    "description": "The final call's register allocation might be driven by prototype argument reservation or by moving the three output assignments into comma expressions in the call arguments.",
+    "result": "Both the unprototyped-call trial and the comma-expression call trial produced the same 900-byte, 98.22222% object and the same nine instruction differences as the retained explicit source."
+  },
+  "divergence": "Branches at 0x2C0 and 0x2C8 select exchanged semantically identical zero-return epilogues. At 0x308-0x328 retail schedules mr r3 before addi r5, carries the middle output in r8, and orders addi r6, li r7, and stw r8 differently; the candidate carries the value in r7 and overwrites r7 with the fifth argument later.",
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "translation_unit_function_count": 1,
+    "retail_binary_bytes_embedded": false,
+    "neighboring_functions_edited": false
+  }
+}
