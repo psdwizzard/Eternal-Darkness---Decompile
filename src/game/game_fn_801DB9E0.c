@@ -1,6 +1,13 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
+/*
+ * NonMatching: partial typed reconstruction of the event iterator and the
+ * representative dispatch arms recovered so far. Retail contains additional
+ * per-event and per-state cases; those are deliberately not replaced with an
+ * assembly fallback or speculative shared reconstruction.
+ */
+
 extern u32 lbl_8064D18C;
 extern void* lbl_8064C4E0;
 extern void* fn_80201B9C(void);
