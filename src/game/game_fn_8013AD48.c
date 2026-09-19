@@ -34,14 +34,13 @@ extern void fn_8013C518(Vec3*, Vec3*, float, float);
 extern void fn_8013C460(Vec3*, Vec3*, float, float);
 extern void fn_8013F3C0(Contact*, Vec3*, Vec3*, float);
 
-/* NonMatching: behavior-complete iterative contact correction reconstructed
- * from the retail control flow. */
+/* Iterative contact correction reconstructed from the retail control flow. */
 int fn_8013AD48(void* object, Contact* contact, Result* output)
 {
     int group;
     void* iterator;
     void* other;
-    unsigned char active;
+    int active;
     unsigned char pass;
     unsigned short contacts;
     unsigned char zero_kind;
@@ -154,9 +153,10 @@ int fn_8013AD48(void* object, Contact* contact, Result* output)
         if (contacts != 0 && pass < 8 && repeated == 0)
             continue;
         if (pass < 8 && contacts == 0) {
-            if (active == 0)
-                return 2;
-            return 0;
+            int result = 2;
+            if (active != 0)
+                result = 0;
+            return result;
         }
         return 3;
     } while (1);
