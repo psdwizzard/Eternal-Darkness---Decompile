@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b9d0a1ce-13da-4cc1-aa67-3e34518e332c",
+  "attempt": 1,
+  "base_commit": "be9b37620e51a87bd8df8d5102a17ef2121e8375",
+  "target": "fn_800F6218",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b9d0a1ce-13da-4cc1-aa67-3e34518e332c.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits 40 bytes at 27.777779% versus retail's 36 bytes. Retail uses subfic r8,r5,32; subic r9,r5,32; then fixed r10 temporaries and writes the high result directly to r3. Honest expanded C instead emits subfic r7,r5,32; subi r6,r5,32; computes the high word early in r0, uses r7/r5 temporaries, and needs mr r3,r0. There are no relocations in either function."
+}
