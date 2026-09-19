@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "assignment_id": "0753d4fa-0906-4c6e-bbec-4b7071966438",
+  "target": "fn_80153FD0",
+  "status": "matched",
+  "hypothesis": "The apparent third argument was a residual register value from the configuration store. Removing this artificial liveness constraint from the fn_801E8328 call restores the retail scheduler order. The two-argument call agrees with the independently reconstructed callee and nearby callers.",
+  "source_changes": [
+    "Remove third formal argument in the local declaration of fn_801E8328.",
+    "Remove config actual argument from that call.",
+    "Promote only game/game_fn_80153FD0.c from NonMatching to Matching in configure.py."
+  ],
+  "measurements": {
+    "canonical_objdiff_percent": 100.0,
+    "relocation_strict_objdiff_percent": 100.0,
+    "relocation_strict_setting": "function_reloc_diffs=name_address",
+    "retail_bytes": 284,
+    "generated_bytes": 284,
+    "exact_elf_text_bytes_equal": true,
+    "real_elf_relocations_each": 14,
+    "real_elf_relocations_equal": "offset, type, target name, signed addend",
+    "objdiff_relocation_bearing_instructions_each": 15,
+    "relocation_count_note": "Objdiff adds an inferred R_PPC_NONE association to the load at +0xE8; the ELF contains 14 real relocation entries.",
+    "linked_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "artifacts": {
+    "canonical": "eternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-canonical.json",
+    "reloc-strict": "eternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-reloc-strict.json",
+    "build": "eternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-build.json",
+    "probes": "eternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-probes.json",
+    "elf": "eternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-elf.json",
+    "compiler": "eternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-compiler.json",
+    "invocations": "eternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-invocations.json",
+    "audit": "eternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-audit.json"
+  },
+  "reproduction_script": "eternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-verify.py",
+  "legal_audit": "Recorded separately after staging. Only this function, its Matching registration, and assignment reports are included. No neighboring source, global progress, runtime code, gate, compiler settings, binaries, private inputs, or shared tools changed. Pre-existing CLAUDE.md modification excluded.",
+  "divergence": ""
+}

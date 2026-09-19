@@ -1,0 +1,54 @@
+[
+  {
+    "command": [
+      "python3",
+      "tools/legal_audit.py"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": "legal audit passed (17534 tracked project files inspected)\n"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--stat"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": " eternal-darkness-decomp/configure.py               |   2 +-\n ...rable-0753d4fa-0906-4c6e-bbec-4b7071966438.json |  21 +++\n ...0753d4fa-0906-4c6e-bbec-4b7071966438-build.json |  50 ++++++\n ...d4fa-0906-4c6e-bbec-4b7071966438-canonical.json |   1 +\n ...3d4fa-0906-4c6e-bbec-4b7071966438-compiler.json |  15 ++\n ...f-0753d4fa-0906-4c6e-bbec-4b7071966438-elf.json | 186 +++++++++++++++++++++\n ...fa-0906-4c6e-bbec-4b7071966438-invocations.json |  95 +++++++++++\n ...753d4fa-0906-4c6e-bbec-4b7071966438-probes.json |  38 +++++\n ...a-0906-4c6e-bbec-4b7071966438-reloc-strict.json |   1 +\n ...-0753d4fa-0906-4c6e-bbec-4b7071966438-verify.py |  46 +++++\n ...jdiff-0753d4fa-0906-4c6e-bbec-4b7071966438.json |  38 +++++\n .../src/game/game_fn_80153FD0.c                    |   4 +-\n 12 files changed, 494 insertions(+), 3 deletions(-)\n"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--name-only"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": "eternal-darkness-decomp/configure.py\neternal-darkness-decomp/reports/GEDE01/durable-0753d4fa-0906-4c6e-bbec-4b7071966438.json\neternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-build.json\neternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-canonical.json\neternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-compiler.json\neternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-elf.json\neternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-invocations.json\neternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-probes.json\neternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-reloc-strict.json\neternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438-verify.py\neternal-darkness-decomp/reports/GEDE01/objdiff-0753d4fa-0906-4c6e-bbec-4b7071966438.json\neternal-darkness-decomp/src/game/game_fn_80153FD0.c\n"
+  },
+  {
+    "command": [
+      "python3",
+      "tools/legal_audit.py"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "stage": "including_staged_audit_report",
+    "exit_code": 0,
+    "output": "legal audit passed (17535 tracked project files inspected)\n"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".tools/bin/ninja",
+    "-t",
+    "commands",
+    "build/GEDE01/src/game/game_fn_80153FD0.o"
+  ],
+  "exit_code": 0,
+  "target_compile_commands": [
+    "tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_80153FD0.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80153FD0.d build/GEDE01/src/game/game_fn_80153FD0.d"
+  ],
+  "compiler_sha256": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715",
+  "compiler": "GC/1.3",
+  "settings_changed": false
+}

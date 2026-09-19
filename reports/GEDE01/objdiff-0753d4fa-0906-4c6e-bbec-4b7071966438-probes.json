@@ -1,0 +1,38 @@
+{
+  "baseline_source": "typedef unsigned char u8;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct Object {\n    u8 data[0x188];\n} Object;\n\nextern void* fn_80149E04(void);\nextern void fn_80147E88(void*);\nextern void fn_801540EC(void*, void*);\nextern void fn_80149B0C(void*, int, int);\nextern void fn_8019CFC4(void*);\nextern void fn_80148A98(void*, void*);\nextern void fn_80149B38(void*);\nextern void fn_80184740(void*);\nextern int fn_801E8328(int, void*, u32);\nextern void fn_80149EB8(void*);\nextern u8 lbl_802FC5BC[];\n\nvoid fn_80153FD0(u32 value, Object* object)\n{\n    void* resource;\n    u8* child;\n    u32* global;\n    u32 config;\n\n    resource = fn_80149E04();\n    *(void**)(object->data + 0xC0) = resource;\n    if (*(void* volatile*)(object->data + 0xC0) != 0) {\n        fn_80147E88(object);\n        fn_801540EC(object, *(void**)(object->data + 0xC0));\n        fn_80149B0C(*(void**)(object->data + 0xC0), 0, 0);\n        fn_8019CFC4(object);\n        *(u32*)(object->data + 0x20) = value;\n        *(u32*)(object->data + 0xA8) = value;\n        resource = fn_80149E04();\n        *(void**)(object->data + 0x184) = resource;\n        if (*(void* volatile*)(object->data + 0x184) != 0) {\n            child = object->data + 0xC4;\n            fn_80147E88(child);\n            fn_80148A98(child, *(void**)(object->data + 0x184));\n            *(u32*)(child + 0x94) = 0;\n            *(u8*)(*(u8**)(object->data + 0x184)) = object->data[0];\n            fn_80149B38(*(void**)(object->data + 0x184));\n            fn_80184740(child);\n            child[0] = 0x14;\n            ((signed char*)child)[3] = -4;\n            child[0x14] = 10;\n            *(u16*)(child + 4) = 0x50;\n            global = (u32*)lbl_802FC5BC;\n            config = global[3];\n            *(u32*)(child + 0x2C) = config;\n            child[0x2F] = 0xE0;\n            fn_801E8328(0x1B, object, config);\n        } else {\n            fn_80149EB8(*(void**)(object->data + 0xC0));\n        }\n    }\n}\n",
+  "probes": [
+    {
+      "name": "two_argument_callee",
+      "hypothesis": "The third GPR is a residual store value rather than an argument; the independently reconstructed callee consumes only r3 and r4. Remove the artificial r5 argument dependency.",
+      "source": "typedef unsigned char u8;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct Object {\n    u8 data[0x188];\n} Object;\n\nextern void* fn_80149E04(void);\nextern void fn_80147E88(void*);\nextern void fn_801540EC(void*, void*);\nextern void fn_80149B0C(void*, int, int);\nextern void fn_8019CFC4(void*);\nextern void fn_80148A98(void*, void*);\nextern void fn_80149B38(void*);\nextern void fn_80184740(void*);\nextern int fn_801E8328(int, void*);\nextern void fn_80149EB8(void*);\nextern u8 lbl_802FC5BC[];\n\nvoid fn_80153FD0(u32 value, Object* object)\n{\n    void* resource;\n    u8* child;\n    u32* global;\n    u32 config;\n\n    resource = fn_80149E04();\n    *(void**)(object->data + 0xC0) = resource;\n    if (*(void* volatile*)(object->data + 0xC0) != 0) {\n        fn_80147E88(object);\n        fn_801540EC(object, *(void**)(object->data + 0xC0));\n        fn_80149B0C(*(void**)(object->data + 0xC0), 0, 0);\n        fn_8019CFC4(object);\n        *(u32*)(object->data + 0x20) = value;\n        *(u32*)(object->data + 0xA8) = value;\n        resource = fn_80149E04();\n        *(void**)(object->data + 0x184) = resource;\n        if (*(void* volatile*)(object->data + 0x184) != 0) {\n            child = object->data + 0xC4;\n            fn_80147E88(child);\n            fn_80148A98(child, *(void**)(object->data + 0x184));\n            *(u32*)(child + 0x94) = 0;\n            *(u8*)(*(u8**)(object->data + 0x184)) = object->data[0];\n            fn_80149B38(*(void**)(object->data + 0x184));\n            fn_80184740(child);\n            child[0] = 0x14;\n            ((signed char*)child)[3] = -4;\n            child[0x14] = 10;\n            *(u16*)(child + 4) = 0x50;\n            global = (u32*)lbl_802FC5BC;\n            config = global[3];\n            *(u32*)(child + 0x2C) = config;\n            child[0x2F] = 0xE0;\n            fn_801E8328(0x1B, object);\n        } else {\n            fn_80149EB8(*(void**)(object->data + 0xC0));\n        }\n    }\n}\n",
+      "result": {
+        "canonical_percent": 100.0,
+        "relocation_strict_percent": 100.0,
+        "retail_size": 284,
+        "generated_size": 284,
+        "retained": true
+      }
+    }
+  ],
+  "history_review": {
+    "commits": [
+      "72d17597cd6668ba4186754c0ae326eaf0a2e955",
+      "43a1e3c0a5e0681639433ab616023f917965a09d",
+      "d87ded050d7609e6308785d406822b1db7bc0f35",
+      "76e7262cbc539e9e7d0ebb55911a8aa722e04765",
+      "630c36761ba6187de97fb5915e347d49a1fff14b"
+    ],
+    "prior_best_percent": 98.22535,
+    "previously_failed_hypotheses": [
+      "typed layout",
+      "explicit locals",
+      "source order",
+      "canonical scheduling probes",
+      "direct symbol typing",
+      "volatile global read",
+      "field reuse and scalar preservation",
+      "explicit three-argument prototype"
+    ],
+    "new_evidence": "src/game/game_fn_801E8328.c implements a two-word enqueue operation and consumes only its first two arguments. Nearby fn_80153DF0 and fn_80153D04 also call it with two arguments. No neighboring source was changed."
+  }
+}
