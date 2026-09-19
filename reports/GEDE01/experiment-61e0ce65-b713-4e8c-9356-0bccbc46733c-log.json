@@ -1,0 +1,106 @@
+[
+  {
+    "variant": "delayed-alias",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8019C4E4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8019C4E4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_8019C4E4",
+          "fn_8019C4E4",
+          "-o",
+          "reports/GEDE01/experiment-61e0ce65-b713-4e8c-9356-0bccbc46733c-delayed-alias.json",
+          "--format",
+          "json",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-61e0ce65-b713-4e8c-9356-0bccbc46733c-delayed-alias.json\n"
+      }
+    ],
+    "measurement": [
+      {
+        "side": "left",
+        "size": "356",
+        "match_percent": 97.865166
+      },
+      {
+        "side": "right",
+        "size": "356",
+        "match_percent": 97.865166
+      }
+    ]
+  },
+  {
+    "variant": "explicit-loop",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8019C4E4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8019C4E4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_8019C4E4",
+          "fn_8019C4E4",
+          "-o",
+          "reports/GEDE01/experiment-61e0ce65-b713-4e8c-9356-0bccbc46733c-explicit-loop.json",
+          "--format",
+          "json",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-61e0ce65-b713-4e8c-9356-0bccbc46733c-explicit-loop.json\n"
+      }
+    ],
+    "measurement": [
+      {
+        "side": "left",
+        "size": "356",
+        "match_percent": 97.865166
+      },
+      {
+        "side": "right",
+        "size": "356",
+        "match_percent": 97.865166
+      }
+    ]
+  },
+  {
+    "variant": "aggregate-initializers",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8019C4E4.o"
+        ],
+        "exit_code": 2,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8019C4E4.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_8019C4E4.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8019C4E4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8019C4E4.d build/GEDE01/src/game/game_fn_8019C4E4.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_8019C4E4.c\n# ------------------------------------\n#      30: struct { u32 word; u16 half; } setup = { lbl_80651E00, lbl_80651E04 };\n#   Error:                                                       ^\n#   illegal constant expression\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n"
+      }
+    ]
+  }
+]

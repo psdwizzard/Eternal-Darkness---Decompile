@@ -1,0 +1,21 @@
+--- src/game/game_fn_8019C4E4.c
++++ src/game/game_fn_8019C4E4.c
+@@ -56,11 +56,17 @@
+     cfg[0x1B] = 0;
+ 
+     i = 0;
+-    for (; (u8)i < count; entry += 0x38, i++) {
++    goto test;
++loop:
++    {
+         fn_80180554(entry, base, &setup, &value, *(u16*)(cfg + 8), 0);
+         fn_801805E0(entry + 0x20, 4, cfg[1], (u32)((i & 0x3F) * 4),
+                     cfg + 0x18, lbl_80650C10);
+     }
++    entry += 0x38;
++    i++;
++test:
++    if ((u8)i < count) goto loop;
+ 
+     fn_8018CEC0(*(void**)(self + 0x54), count);
+     fn_8018C540(*(void**)(self + 0x58), cfg + 0x18, count, 4,

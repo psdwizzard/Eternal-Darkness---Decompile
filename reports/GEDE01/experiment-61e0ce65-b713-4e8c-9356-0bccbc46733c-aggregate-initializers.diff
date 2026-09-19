@@ -1,0 +1,31 @@
+--- src/game/game_fn_8019C4E4.c
++++ src/game/game_fn_8019C4E4.c
+@@ -23,24 +23,18 @@
+ 
+ void fn_8019C4E4(u8* object, void* first, void* second, u8* config)
+ {
+-    register u8 count;
+-    register u8* entry;
+     u8* cfg;
+     void* base;
+     u8* self;
+     int i;
+-    struct { u32 word; u16 half; } setup;
+-    struct { u32 word; u16 half; } value;
++    struct { u32 word; u16 half; } setup = { lbl_80651E00, lbl_80651E04 };
++    struct { u32 word; u16 half; } value = { lbl_80651E08, lbl_80651E0C };
++    register u8 count = config[0];
++    register u8* entry = *(u8**)(object + 0x4C);
+ 
+     cfg = config;
+     base = first;
+     self = object;
+-    setup.word = lbl_80651E00;
+-    setup.half = lbl_80651E04;
+-    value.word = lbl_80651E08;
+-    value.half = lbl_80651E0C;
+-    count = cfg[0];
+-    entry = *(u8**)(self + 0x4C);
+     fn_801804AC(self, base, &setup, &value);
+ 
+     self[0] = 0x80;
