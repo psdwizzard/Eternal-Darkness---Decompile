@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "assignment_id": "54e03c1e-5eba-4c3a-9eea-3ab83f348c83",
+  "target": "fn_80135510",
+  "canonical_objdiff": {
+    "command": "python3 tools/fndiff.py game/game_fn_80135510.c fn_80135510",
+    "exit_code": 0,
+    "raw_transcript": "eternal-darkness-decomp/reports/GEDE01/fndiff-54e03c1e-5eba-4c3a-9eea-3ab83f348c83.txt",
+    "raw_summary": "target 568 bytes  base 568 bytes  match 98.556335",
+    "target_instruction_count": 143,
+    "base_instruction_count": 143,
+    "raw_divergence": [
+      "0x01a4 target: mr r29, r30 | base: <none>",
+      "0x01a8 target: li r28, 0x0 | base: li r29, 0x0",
+      "0x01ac target: <none> | base: li r28, 0x0"
+    ]
+  },
+  "relocation_strict": {
+    "source": "build/GEDE01/fndiff_fn_80135510.json",
+    "tuple_fields": ["offset", "type", "type_name", "target_as_formatted_operand", "addend"],
+    "target_relocation_instruction_count": 70,
+    "base_relocation_instruction_count": 70,
+    "matching_offset_type_target_addend_count": 70,
+    "mismatching_offset_type_target_addend_count": 0,
+    "raw_summary": "70\n70\nnormalized_strict_relocation_diff_exit=0"
+  },
+  "hypothesis_trials": {
+    "hypothesis": "The retail mr r29,r30 is retained assignment dependency from source expression-tree shape rather than a different value.",
+    "variants": [
+      "right-associative chained offset assignment",
+      "global-store assignment reordered into the chain",
+      "signed record offset",
+      "union member reinterpretation",
+      "register-volatile source offset"
+    ],
+    "raw_result": "Every variant compiled to target 568 bytes  base 568 bytes  match 98.556335 and retained base li r29,0 at aligned offset 0x01a8; no variant improved the preserved clean source."
+  },
+  "build": {
+    "configure_command": "python3 configure.py",
+    "build_command": ".tools/bin/ninja -j2",
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "raw_sha1sum": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_verified": true
+  }
+}
