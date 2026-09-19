@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "assignment_id": "944b772b-a130-4e73-827c-5c826e8aef0e",
+  "target": "fn_800539D8",
+  "status": "matched",
+  "preserved_attempts_reviewed": [
+    "b650c809ff894a7680c462079060f7da6312ce47",
+    "2853c9ea10eb18d9f80c6205b35fb46017b8f767",
+    "c6af484afafd60250c6473fe0727eb153e1983fc",
+    "68d339f02fabfe5c1629cab646486c5f6310c90e"
+  ],
+  "reconciliation": "Accepted base already contains the 97.8951% reconstruction. Reviewed the preserved chained-assignment attempt; its documented unchanged codegen did not warrant carrying that spelling forward. Retained the base reconstruction and corrected only the formatter declaration/calls and remainder lifetimes.",
+  "hypothesis": "The previous ABI declaration put the float last in varargs. The existing fn_801E56AC implementation declares float scale first, followed by const char* format and varargs. Correcting the local declaration and three calls restores float-load scheduling. Computing seconds before reducing minutes preserves the quotient in r5 and the seconds remainder in r6, matching retail allocation.",
+  "experiments": [
+    {
+      "name": "baseline",
+      "change": "Accepted-base reconstruction, same measured codegen as preserved attempt 4.",
+      "score": 97.8951
+    },
+    {
+      "name": "prototype",
+      "change": "Correct fixed float-first formatter signature and calls.",
+      "score": 99.75524
+    },
+    {
+      "name": "remainder",
+      "change": "Test minutes % 60 and stamp % 60; rejected because MWCC duplicates division-correction instructions.",
+      "score": 96.818184
+    },
+    {
+      "name": "canonical",
+      "change": "Use seconds = stamp - minutes * 60; minutes -= hours * 60; then pass minutes and seconds >> 1.",
+      "score": 100.0
+    }
+  ],
+  "measurements": {
+    "baseline": {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-944b772b-a130-4e73-827c-5c826e8aef0e-baseline.json",
+      "score": 97.8951,
+      "retail_size": 1144,
+      "candidate_size": 1144,
+      "nonmatching_aligned_rows": 18
+    },
+    "prototype": {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-944b772b-a130-4e73-827c-5c826e8aef0e-prototype.json",
+      "score": 99.75524,
+      "retail_size": 1144,
+      "candidate_size": 1144,
+      "nonmatching_aligned_rows": 10
+    },
+    "remainder": {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-944b772b-a130-4e73-827c-5c826e8aef0e-remainder.json",
+      "score": 96.818184,
+      "retail_size": 1144,
+      "candidate_size": 1168,
+      "nonmatching_aligned_rows": 22
+    },
+    "canonical": {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-944b772b-a130-4e73-827c-5c826e8aef0e-canonical.json",
+      "score": 100.0,
+      "retail_size": 1144,
+      "candidate_size": 1144,
+      "nonmatching_aligned_rows": 0
+    },
+    "reloc-strict": {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-944b772b-a130-4e73-827c-5c826e8aef0e-reloc-strict.json",
+      "score": 100.0,
+      "retail_size": 1144,
+      "candidate_size": 1144,
+      "nonmatching_aligned_rows": 0
+    }
+  },
+  "verification": {
+    "working_directory": "eternal-darkness-decomp",
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800539D8 fn_800539D8 -o reports/GEDE01/objdiff-944b772b-a130-4e73-827c-5c826e8aef0e-canonical.json --format json-pretty",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800539D8 fn_800539D8 -o reports/GEDE01/objdiff-944b772b-a130-4e73-827c-5c826e8aef0e-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "elf_comparison": "python3 reports/GEDE01/verify-944b772b-a130-4e73-827c-5c826e8aef0e.py",
+    "raw_elf_output": "eternal-darkness-decomp/reports/GEDE01/elf-944b772b-a130-4e73-827c-5c826e8aef0e.json",
+    "raw_build_output": "eternal-darkness-decomp/reports/GEDE01/build-944b772b-a130-4e73-827c-5c826e8aef0e.log",
+    "audit_output": "eternal-darkness-decomp/reports/GEDE01/audit-944b772b-a130-4e73-827c-5c826e8aef0e.json",
+    "expected_and_actual_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "text_bytes_equal": true,
+    "explicit_ELF_relocations_equal": 126,
+    "objdiff_instruction_relocations_per_side": 149,
+    "relocation_note": "Objdiff annotates 149 instructions, including inferred internal-branch relocations. The ELF contains 126 explicit .rela.text entries; all offsets, types, symbol names, symbol values and addends compare equal.",
+    "compiler": "Unchanged canonical compilers/GC/1.3/mwcceppc.exe and flags; command and executable hash recorded in audit output."
+  },
+  "divergence": ""
+}

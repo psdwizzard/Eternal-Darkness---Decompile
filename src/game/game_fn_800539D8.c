@@ -90,7 +90,7 @@ extern void fn_801313EC(s32*, s32*, s32*);
 extern s32 fn_802365C0(void);
 extern void fn_801E3AA4(s32);
 extern void fn_801E5430(s32, s32);
-extern void fn_801E56AC(void*, s32, s32, s32, ...);
+extern void fn_801E56AC(float, const char*, ...);
 extern void fn_801E5FE4(void);
 extern void fn_800EB74C(void);
 extern void fn_80053600(s16, s32);
@@ -198,16 +198,19 @@ void fn_800539D8(void)
     if (lbl_8064CB64 != 0) {
         s32 minutes;
         s32 hours;
+        s32 seconds;
         fn_801E3AA4(0);
         fn_801E5430(10, 50);
-        fn_801E56AC((u8*)base + 0x2208, stamp, lbl_8030F540.elapsed,
-                    lbl_8030F540.offset, lbl_8064E4D8);
+        fn_801E56AC(lbl_8064E4D8, (const char*)base + 0x2208, stamp,
+                    lbl_8030F540.elapsed, lbl_8030F540.offset);
         minutes = stamp / 60;
         hours = minutes / 60;
-        fn_801E56AC((u8*)base + 0x221C, hours, minutes - hours * 60,
-                    (stamp - minutes * 60) >> 1, lbl_8064E4D8);
-        fn_801E56AC((u8*)base + 0x223C, first, second, third,
-                    lbl_8064E4D8);
+        seconds = stamp - minutes * 60;
+        minutes -= hours * 60;
+        fn_801E56AC(lbl_8064E4D8, (const char*)base + 0x221C, hours,
+                    minutes, seconds >> 1);
+        fn_801E56AC(lbl_8064E4D8, (const char*)base + 0x223C,
+                    first, second, third);
     }
     if (delta > 0 && fn_802365C0() != 0) {
         lbl_8064C850 = delta;
