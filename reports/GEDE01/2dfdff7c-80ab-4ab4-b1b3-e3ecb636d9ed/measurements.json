@@ -1,0 +1,43 @@
+{
+  "measurements": {
+    "canonical_match_percent": 99.41333,
+    "strict_match_percent": 99.41333,
+    "target_size": 900,
+    "candidate_size": 900,
+    "different_instructions": 6,
+    "exact_relocations": 49,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "instruction_differences": [
+    {
+      "offset": "0x308",
+      "retail": "mr r3, r29",
+      "candidate": "addi r5, r1, 0xc"
+    },
+    {
+      "offset": "0x30c",
+      "retail": "lwz r8, 0x1c(r1)",
+      "candidate": "lwz r8, 0x20(r1)"
+    },
+    {
+      "offset": "0x314",
+      "retail": "lwz r0, 0x20(r1)",
+      "candidate": "lwz r0, 0x1c(r1)"
+    },
+    {
+      "offset": "0x318",
+      "retail": "addi r5, r1, 0xc",
+      "candidate": "mr r3, r29"
+    },
+    {
+      "offset": "0x328",
+      "retail": "stw r8, 0xc(r1)",
+      "candidate": "stw r0, 0xc(r1)"
+    },
+    {
+      "offset": "0x32c",
+      "retail": "stw r0, 0x10(r1)",
+      "candidate": "stw r8, 0x10(r1)"
+    }
+  ]
+}

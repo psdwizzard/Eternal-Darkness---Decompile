@@ -1,0 +1,434 @@
+[
+  {
+    "trial": "partial-temps-1-cba",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ partial-temps-1-cba\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                c = local.c;\n+                local.output[0] = c;\n+                local.output[1] = local.b;\n+                local.output[2] = local.a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-1-cab",
+    "score": 98.22222,
+    "patch": "--- baseline\n+++ partial-temps-1-cab\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                c = local.c;\n+                local.output[0] = c;\n+                local.output[2] = local.a;\n+                local.output[1] = local.b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-1-cab.json",
+    "raw_objdiff_sha256": "04f7a48c74fd4617d8bbdaa18f42445afa79e62e5071ac5ee6c3de865de0d328",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-1-bca",
+    "score": 98.23556,
+    "patch": "--- baseline\n+++ partial-temps-1-bca\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                c = local.c;\n+                local.output[1] = local.b;\n+                local.output[0] = c;\n+                local.output[2] = local.a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-1-bca.json",
+    "raw_objdiff_sha256": "5cbf72c258946635536b68191132c9f4364cfcbbb4628aaf9710a5ffbea0ef8e",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-1-bac",
+    "score": 99.36444,
+    "patch": "--- baseline\n+++ partial-temps-1-bac\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                c = local.c;\n+                local.output[1] = local.b;\n+                local.output[2] = local.a;\n+                local.output[0] = c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-1-bac.json",
+    "raw_objdiff_sha256": "19f49b8a4e0dda4ed8df8251878c3ada516abfc1945891d26541cddca17cc1d8",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-1-acb",
+    "score": 98.19556,
+    "patch": "--- baseline\n+++ partial-temps-1-acb\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                c = local.c;\n+                local.output[2] = local.a;\n+                local.output[0] = c;\n+                local.output[1] = local.b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-1-acb.json",
+    "raw_objdiff_sha256": "20c3980dd36f173d40c11dfd7a7988cf295921aca90379926aa9ac25bba3f79c",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-1-abc",
+    "score": 99.333336,
+    "patch": "--- baseline\n+++ partial-temps-1-abc\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                c = local.c;\n+                local.output[2] = local.a;\n+                local.output[1] = local.b;\n+                local.output[0] = c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-1-abc.json",
+    "raw_objdiff_sha256": "7b0150e1d3c7f8de7f6e8959eb292594f9e95b0d2cab1a85203ba30344bf2bd6",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-2-cba",
+    "score": 98.23556,
+    "patch": "--- baseline\n+++ partial-temps-2-cba\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 b;\n+                b = local.b;\n+                local.output[0] = local.c;\n+                local.output[1] = b;\n+                local.output[2] = local.a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-2-cba.json",
+    "raw_objdiff_sha256": "501705f986144a4b6fb928c83282139b9cf3a0d86ffa4fde37eb1ca4a6a5722c",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-2-cab",
+    "score": 99.333336,
+    "patch": "--- baseline\n+++ partial-temps-2-cab\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 b;\n+                b = local.b;\n+                local.output[0] = local.c;\n+                local.output[2] = local.a;\n+                local.output[1] = b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-bca-acb.json",
+    "raw_objdiff_sha256": "e83fcdefb789dc5496b86e5e85c308ce0f37f8762aa5b52631887f0514965f99",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-2-bca",
+    "score": 98.248886,
+    "patch": "--- baseline\n+++ partial-temps-2-bca\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 b;\n+                b = local.b;\n+                local.output[1] = b;\n+                local.output[0] = local.c;\n+                local.output[2] = local.a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-2-bca.json",
+    "raw_objdiff_sha256": "9d8b6b25fdbc1e322e18b403edb010a061e5b0613328fc7c689d190f5addaf81",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-2-bac",
+    "score": 98.24,
+    "patch": "--- baseline\n+++ partial-temps-2-bac\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 b;\n+                b = local.b;\n+                local.output[1] = b;\n+                local.output[2] = local.a;\n+                local.output[0] = local.c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-2-bac.json",
+    "raw_objdiff_sha256": "1bf572a392091f755218ea2020fc2fafeeb3bc48ed43b0096b48a36efe852fc0",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-2-acb",
+    "score": 99.32445,
+    "patch": "--- baseline\n+++ partial-temps-2-acb\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 b;\n+                b = local.b;\n+                local.output[2] = local.a;\n+                local.output[0] = local.c;\n+                local.output[1] = b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-cab.json",
+    "raw_objdiff_sha256": "cb55dca7cc7254a4469572b04c083e1bca1f8b50782cba3b5678c5cf18015f7c",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-2-abc",
+    "score": 98.19556,
+    "patch": "--- baseline\n+++ partial-temps-2-abc\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 b;\n+                b = local.b;\n+                local.output[2] = local.a;\n+                local.output[1] = b;\n+                local.output[0] = local.c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-2-abc.json",
+    "raw_objdiff_sha256": "ecd0cd5dcec29d9a8a75f1299ea12b5027e9c22021c9c616673a008590f64579",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-3-cba",
+    "score": 98.23556,
+    "patch": "--- baseline\n+++ partial-temps-3-cba\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 b;\n+                c = local.c;\n+                b = local.b;\n+                local.output[0] = c;\n+                local.output[1] = b;\n+                local.output[2] = local.a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-2-cba.json",
+    "raw_objdiff_sha256": "501705f986144a4b6fb928c83282139b9cf3a0d86ffa4fde37eb1ca4a6a5722c",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-3-cab",
+    "score": 99.333336,
+    "patch": "--- baseline\n+++ partial-temps-3-cab\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 b;\n+                c = local.c;\n+                b = local.b;\n+                local.output[0] = c;\n+                local.output[2] = local.a;\n+                local.output[1] = b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-bca-acb.json",
+    "raw_objdiff_sha256": "e83fcdefb789dc5496b86e5e85c308ce0f37f8762aa5b52631887f0514965f99",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-3-bca",
+    "score": 98.23556,
+    "patch": "--- baseline\n+++ partial-temps-3-bca\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 b;\n+                c = local.c;\n+                b = local.b;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = local.a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-1-bca.json",
+    "raw_objdiff_sha256": "5cbf72c258946635536b68191132c9f4364cfcbbb4628aaf9710a5ffbea0ef8e",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-3-bac",
+    "score": 99.36444,
+    "patch": "--- baseline\n+++ partial-temps-3-bac\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 b;\n+                c = local.c;\n+                b = local.b;\n+                local.output[1] = b;\n+                local.output[2] = local.a;\n+                local.output[0] = c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-1-bac.json",
+    "raw_objdiff_sha256": "19f49b8a4e0dda4ed8df8251878c3ada516abfc1945891d26541cddca17cc1d8",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-3-acb",
+    "score": 99.386665,
+    "patch": "--- baseline\n+++ partial-temps-3-acb\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 b;\n+                c = local.c;\n+                b = local.b;\n+                local.output[2] = local.a;\n+                local.output[0] = c;\n+                local.output[1] = b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-acb.json",
+    "raw_objdiff_sha256": "c307fcb861e9e144b8083509372005dc0c84e5347a121084422fb81e6b0ed480",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-3-abc",
+    "score": 99.337776,
+    "patch": "--- baseline\n+++ partial-temps-3-abc\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 b;\n+                c = local.c;\n+                b = local.b;\n+                local.output[2] = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-abc.json",
+    "raw_objdiff_sha256": "fa2d6cc7a006e43387f231922dfb2f420e9799d24295d5dfa1c8e83a26480e87",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-4-cba",
+    "score": 99.36444,
+    "patch": "--- baseline\n+++ partial-temps-4-cba\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 a;\n+                a = local.a;\n+                local.output[0] = local.c;\n+                local.output[1] = local.b;\n+                local.output[2] = a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-bac-bca.json",
+    "raw_objdiff_sha256": "40c6b47547c2873196313f4564a1d773f1cb2085e63c55180932c1b5263f05d8",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-4-cab",
+    "score": 98.19556,
+    "patch": "--- baseline\n+++ partial-temps-4-cab\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 a;\n+                a = local.a;\n+                local.output[0] = local.c;\n+                local.output[2] = a;\n+                local.output[1] = local.b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-4-cab.json",
+    "raw_objdiff_sha256": "c8fbe9e6cc8aa2a3732cb6f7de5aac106afe69c79db2104a98bcbe468972129b",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-4-bca",
+    "score": 99.36,
+    "patch": "--- baseline\n+++ partial-temps-4-bca\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 a;\n+                a = local.a;\n+                local.output[1] = local.b;\n+                local.output[0] = local.c;\n+                local.output[2] = a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cab-cba.json",
+    "raw_objdiff_sha256": "a7593c00875d524dcee4aa216f1c4104589314adee934bf2064a73735d3a47e6",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-4-bac",
+    "score": 98.22222,
+    "patch": "--- baseline\n+++ partial-temps-4-bac\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 a;\n+                a = local.a;\n+                local.output[1] = local.b;\n+                local.output[2] = a;\n+                local.output[0] = local.c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-4-bac.json",
+    "raw_objdiff_sha256": "98b1a4727bc26b1a6c5a00e587a721bdbc2dd9c4e54a0fc5429c2de998a886e6",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-4-acb",
+    "score": 98.21333,
+    "patch": "--- baseline\n+++ partial-temps-4-acb\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 a;\n+                a = local.a;\n+                local.output[2] = a;\n+                local.output[0] = local.c;\n+                local.output[1] = local.b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-4-acb.json",
+    "raw_objdiff_sha256": "23fb9dafdf2c38bb94e847c898572ca437011eb7cf4d1507f9a6c14a9db15e24",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-4-abc",
+    "score": 98.22222,
+    "patch": "--- baseline\n+++ partial-temps-4-abc\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 a;\n+                a = local.a;\n+                local.output[2] = a;\n+                local.output[1] = local.b;\n+                local.output[0] = local.c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-4-abc.json",
+    "raw_objdiff_sha256": "7f4de74ceca3dcdf8ca52ddc197f4127c2ff35076766dc6d7482b00c03f31bf7",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-5-cba",
+    "score": 99.36444,
+    "patch": "--- baseline\n+++ partial-temps-5-cba\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 a;\n+                c = local.c;\n+                a = local.a;\n+                local.output[0] = c;\n+                local.output[1] = local.b;\n+                local.output[2] = a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-bac-bca.json",
+    "raw_objdiff_sha256": "40c6b47547c2873196313f4564a1d773f1cb2085e63c55180932c1b5263f05d8",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-5-cab",
+    "score": 98.19556,
+    "patch": "--- baseline\n+++ partial-temps-5-cab\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 a;\n+                c = local.c;\n+                a = local.a;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                local.output[1] = local.b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-4-cab.json",
+    "raw_objdiff_sha256": "c8fbe9e6cc8aa2a3732cb6f7de5aac106afe69c79db2104a98bcbe468972129b",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-5-bca",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ partial-temps-5-bca\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 a;\n+                c = local.c;\n+                a = local.a;\n+                local.output[1] = local.b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-5-bac",
+    "score": 99.36,
+    "patch": "--- baseline\n+++ partial-temps-5-bac\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 a;\n+                c = local.c;\n+                a = local.a;\n+                local.output[1] = local.b;\n+                local.output[2] = a;\n+                local.output[0] = c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bac.json",
+    "raw_objdiff_sha256": "328ecba77f29e9b452a6336fdab829489d0df4ee59e001e4259e3d91afd10cd2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-5-acb",
+    "score": 98.19556,
+    "patch": "--- baseline\n+++ partial-temps-5-acb\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 a;\n+                c = local.c;\n+                a = local.a;\n+                local.output[2] = a;\n+                local.output[0] = c;\n+                local.output[1] = local.b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-1-acb.json",
+    "raw_objdiff_sha256": "20c3980dd36f173d40c11dfd7a7988cf295921aca90379926aa9ac25bba3f79c",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-5-abc",
+    "score": 99.333336,
+    "patch": "--- baseline\n+++ partial-temps-5-abc\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 a;\n+                c = local.c;\n+                a = local.a;\n+                local.output[2] = a;\n+                local.output[1] = local.b;\n+                local.output[0] = c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-1-abc.json",
+    "raw_objdiff_sha256": "7b0150e1d3c7f8de7f6e8959eb292594f9e95b0d2cab1a85203ba30344bf2bd6",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-6-cba",
+    "score": 99.4,
+    "patch": "--- baseline\n+++ partial-temps-6-cba\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 b;\n+                u32 a;\n+                b = local.b;\n+                a = local.a;\n+                local.output[0] = local.c;\n+                local.output[1] = b;\n+                local.output[2] = a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-cba.json",
+    "raw_objdiff_sha256": "ea5ba459d3c8e0a1e235a9ecfe97c2c65a6c4ff7adb145c811969cdce4610094",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-6-cab",
+    "score": 99.32445,
+    "patch": "--- baseline\n+++ partial-temps-6-cab\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 b;\n+                u32 a;\n+                b = local.b;\n+                a = local.a;\n+                local.output[0] = local.c;\n+                local.output[2] = a;\n+                local.output[1] = b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-cab.json",
+    "raw_objdiff_sha256": "cb55dca7cc7254a4469572b04c083e1bca1f8b50782cba3b5678c5cf18015f7c",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-6-bca",
+    "score": 99.36,
+    "patch": "--- baseline\n+++ partial-temps-6-bca\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 b;\n+                u32 a;\n+                b = local.b;\n+                a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = local.c;\n+                local.output[2] = a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cab-cba.json",
+    "raw_objdiff_sha256": "a7593c00875d524dcee4aa216f1c4104589314adee934bf2064a73735d3a47e6",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-6-bac",
+    "score": 98.22222,
+    "patch": "--- baseline\n+++ partial-temps-6-bac\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 b;\n+                u32 a;\n+                b = local.b;\n+                a = local.a;\n+                local.output[1] = b;\n+                local.output[2] = a;\n+                local.output[0] = local.c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-4-bac.json",
+    "raw_objdiff_sha256": "98b1a4727bc26b1a6c5a00e587a721bdbc2dd9c4e54a0fc5429c2de998a886e6",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-6-acb",
+    "score": 99.32445,
+    "patch": "--- baseline\n+++ partial-temps-6-acb\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 b;\n+                u32 a;\n+                b = local.b;\n+                a = local.a;\n+                local.output[2] = a;\n+                local.output[0] = local.c;\n+                local.output[1] = b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-cab.json",
+    "raw_objdiff_sha256": "cb55dca7cc7254a4469572b04c083e1bca1f8b50782cba3b5678c5cf18015f7c",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-6-abc",
+    "score": 98.19556,
+    "patch": "--- baseline\n+++ partial-temps-6-abc\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 b;\n+                u32 a;\n+                b = local.b;\n+                a = local.a;\n+                local.output[2] = a;\n+                local.output[1] = b;\n+                local.output[0] = local.c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-2-abc.json",
+    "raw_objdiff_sha256": "ecd0cd5dcec29d9a8a75f1299ea12b5027e9c22021c9c616673a008590f64579",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-7-cba",
+    "score": 99.4,
+    "patch": "--- baseline\n+++ partial-temps-7-cba\n@@ -119,14 +119,23 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 b;\n+                u32 a;\n+                c = local.c;\n+                b = local.b;\n+                a = local.a;\n+                local.output[0] = c;\n+                local.output[1] = b;\n+                local.output[2] = a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-cba.json",
+    "raw_objdiff_sha256": "ea5ba459d3c8e0a1e235a9ecfe97c2c65a6c4ff7adb145c811969cdce4610094",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-7-cab",
+    "score": 99.32445,
+    "patch": "--- baseline\n+++ partial-temps-7-cab\n@@ -119,14 +119,23 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 b;\n+                u32 a;\n+                c = local.c;\n+                b = local.b;\n+                a = local.a;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                local.output[1] = b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-cab.json",
+    "raw_objdiff_sha256": "cb55dca7cc7254a4469572b04c083e1bca1f8b50782cba3b5678c5cf18015f7c",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-7-bca",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ partial-temps-7-bca\n@@ -119,14 +119,23 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 b;\n+                u32 a;\n+                c = local.c;\n+                b = local.b;\n+                a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-7-bac",
+    "score": 99.36,
+    "patch": "--- baseline\n+++ partial-temps-7-bac\n@@ -119,14 +119,23 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 b;\n+                u32 a;\n+                c = local.c;\n+                b = local.b;\n+                a = local.a;\n+                local.output[1] = b;\n+                local.output[2] = a;\n+                local.output[0] = c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bac.json",
+    "raw_objdiff_sha256": "328ecba77f29e9b452a6336fdab829489d0df4ee59e001e4259e3d91afd10cd2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-7-acb",
+    "score": 99.386665,
+    "patch": "--- baseline\n+++ partial-temps-7-acb\n@@ -119,14 +119,23 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 b;\n+                u32 a;\n+                c = local.c;\n+                b = local.b;\n+                a = local.a;\n+                local.output[2] = a;\n+                local.output[0] = c;\n+                local.output[1] = b;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-acb.json",
+    "raw_objdiff_sha256": "c307fcb861e9e144b8083509372005dc0c84e5347a121084422fb81e6b0ed480",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "partial-temps-7-abc",
+    "score": 99.337776,
+    "patch": "--- baseline\n+++ partial-temps-7-abc\n@@ -119,14 +119,23 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 c;\n+                u32 b;\n+                u32 a;\n+                c = local.c;\n+                b = local.b;\n+                a = local.a;\n+                local.output[2] = a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-abc.json",
+    "raw_objdiff_sha256": "fa2d6cc7a006e43387f231922dfb2f420e9799d24295d5dfa1c8e83a26480e87",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "word-copy-cba",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ word-copy-cba\n@@ -103,18 +103,19 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            typedef struct { u32 value; } Word;\n             struct {\n-                u32 output[3];\n-                u32 c;\n-                u32 alternate;\n-                u32 b;\n-                u32 a;\n+                Word output[3];\n+                Word c;\n+                Word alternate;\n+                Word b;\n+                Word a;\n             } local;\n \n-            local.a = lbl_806515D0;\n-            local.b = lbl_806515D4;\n-            local.alternate = lbl_806515D8;\n-            local.c = lbl_80651F70;\n+            local.a.value = lbl_806515D0;\n+            local.b.value = lbl_806515D4;\n+            local.alternate.value = lbl_806515D8;\n+            local.c.value = lbl_80651F70;\n \n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n@@ -122,11 +123,12 @@\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            fn_8012C774(target, &local.output[2].value, &local.output[1].value, &local.output[0].value, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "word-copy-cab",
+    "score": 98.22222,
+    "patch": "--- baseline\n+++ word-copy-cab\n@@ -103,30 +103,32 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            typedef struct { u32 value; } Word;\n             struct {\n-                u32 output[3];\n-                u32 c;\n-                u32 alternate;\n-                u32 b;\n-                u32 a;\n+                Word output[3];\n+                Word c;\n+                Word alternate;\n+                Word b;\n+                Word a;\n             } local;\n \n-            local.a = lbl_806515D0;\n-            local.b = lbl_806515D4;\n-            local.alternate = lbl_806515D8;\n-            local.c = lbl_80651F70;\n+            local.a.value = lbl_806515D0;\n+            local.b.value = lbl_806515D4;\n+            local.alternate.value = lbl_806515D8;\n+            local.c.value = lbl_80651F70;\n \n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n             local.output[0] = local.c;\n+            local.output[2] = local.a;\n             local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            fn_8012C774(target, &local.output[2].value, &local.output[1].value, &local.output[0].value, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-1-cab.json",
+    "raw_objdiff_sha256": "04f7a48c74fd4617d8bbdaa18f42445afa79e62e5071ac5ee6c3de865de0d328",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "word-copy-bca",
+    "score": 98.248886,
+    "patch": "--- baseline\n+++ word-copy-bca\n@@ -103,30 +103,32 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            typedef struct { u32 value; } Word;\n             struct {\n-                u32 output[3];\n-                u32 c;\n-                u32 alternate;\n-                u32 b;\n-                u32 a;\n+                Word output[3];\n+                Word c;\n+                Word alternate;\n+                Word b;\n+                Word a;\n             } local;\n \n-            local.a = lbl_806515D0;\n-            local.b = lbl_806515D4;\n-            local.alternate = lbl_806515D8;\n-            local.c = lbl_80651F70;\n+            local.a.value = lbl_806515D0;\n+            local.b.value = lbl_806515D4;\n+            local.alternate.value = lbl_806515D8;\n+            local.c.value = lbl_80651F70;\n \n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            local.output[1] = local.b;\n             local.output[0] = local.c;\n-            local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            fn_8012C774(target, &local.output[2].value, &local.output[1].value, &local.output[0].value, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-2-bca.json",
+    "raw_objdiff_sha256": "9d8b6b25fdbc1e322e18b403edb010a061e5b0613328fc7c689d190f5addaf81",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "word-copy-bac",
+    "score": 98.24,
+    "patch": "--- baseline\n+++ word-copy-bac\n@@ -103,30 +103,32 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            typedef struct { u32 value; } Word;\n             struct {\n-                u32 output[3];\n-                u32 c;\n-                u32 alternate;\n-                u32 b;\n-                u32 a;\n+                Word output[3];\n+                Word c;\n+                Word alternate;\n+                Word b;\n+                Word a;\n             } local;\n \n-            local.a = lbl_806515D0;\n-            local.b = lbl_806515D4;\n-            local.alternate = lbl_806515D8;\n-            local.c = lbl_80651F70;\n+            local.a.value = lbl_806515D0;\n+            local.b.value = lbl_806515D4;\n+            local.alternate.value = lbl_806515D8;\n+            local.c.value = lbl_80651F70;\n \n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            local.output[0] = local.c;\n+            fn_8012C774(target, &local.output[2].value, &local.output[1].value, &local.output[0].value, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-2-bac.json",
+    "raw_objdiff_sha256": "1bf572a392091f755218ea2020fc2fafeeb3bc48ed43b0096b48a36efe852fc0",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "word-copy-acb",
+    "score": 98.21333,
+    "patch": "--- baseline\n+++ word-copy-acb\n@@ -103,30 +103,32 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            typedef struct { u32 value; } Word;\n             struct {\n-                u32 output[3];\n-                u32 c;\n-                u32 alternate;\n-                u32 b;\n-                u32 a;\n+                Word output[3];\n+                Word c;\n+                Word alternate;\n+                Word b;\n+                Word a;\n             } local;\n \n-            local.a = lbl_806515D0;\n-            local.b = lbl_806515D4;\n-            local.alternate = lbl_806515D8;\n-            local.c = lbl_80651F70;\n+            local.a.value = lbl_806515D0;\n+            local.b.value = lbl_806515D4;\n+            local.alternate.value = lbl_806515D8;\n+            local.c.value = lbl_80651F70;\n \n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            local.output[2] = local.a;\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            fn_8012C774(target, &local.output[2].value, &local.output[1].value, &local.output[0].value, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-4-acb.json",
+    "raw_objdiff_sha256": "23fb9dafdf2c38bb94e847c898572ca437011eb7cf4d1507f9a6c14a9db15e24",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "word-copy-abc",
+    "score": 98.22222,
+    "patch": "--- baseline\n+++ word-copy-abc\n@@ -103,30 +103,32 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            typedef struct { u32 value; } Word;\n             struct {\n-                u32 output[3];\n-                u32 c;\n-                u32 alternate;\n-                u32 b;\n-                u32 a;\n+                Word output[3];\n+                Word c;\n+                Word alternate;\n+                Word b;\n+                Word a;\n             } local;\n \n-            local.a = lbl_806515D0;\n-            local.b = lbl_806515D4;\n-            local.alternate = lbl_806515D8;\n-            local.c = lbl_80651F70;\n+            local.a.value = lbl_806515D0;\n+            local.b.value = lbl_806515D4;\n+            local.alternate.value = lbl_806515D8;\n+            local.c.value = lbl_80651F70;\n \n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            local.output[2] = local.a;\n+            local.output[1] = local.b;\n             local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            fn_8012C774(target, &local.output[2].value, &local.output[1].value, &local.output[0].value, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/partial-temps-4-abc.json",
+    "raw_objdiff_sha256": "7f4de74ceca3dcdf8ca52ddc197f4127c2ff35076766dc6d7482b00c03f31bf7",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  }
+]

@@ -1,0 +1,110 @@
+[
+  {
+    "trial": "aggregate-copy-cba",
+    "score": 98.568886,
+    "patch": "--- baseline\n+++ aggregate-copy-cba\n@@ -104,7 +104,7 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n+                struct Triple { u32 c, b, a; } output;\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                struct Triple values;\n+                values.c = local.c;\n+                values.b = local.b;\n+                values.a = local.a;\n+                local.output = values;\n+            }\n+            fn_8012C774(target, &local.output.a, &local.output.b, &local.output.c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/aggregate-copy-cba.json",
+    "raw_objdiff_sha256": "15d373b0e58e3c4819c9338bea2571ed2457434fdb4fb51533ba322f4805b90a",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "array-loop-cba",
+    "score": 98.04,
+    "patch": "--- baseline\n+++ array-loop-cba\n@@ -119,14 +119,20 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 values[3];\n+                int i;\n+                values[0] = local.c;\n+                values[1] = local.b;\n+                values[2] = local.a;\n+                for (i = 0; i < 3; i++) local.output[i] = values[i];\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/array-loop-cba.json",
+    "raw_objdiff_sha256": "df01b913dddf0e88dc018e01f12a2cad174add0bb0cee56f4a57e175b9f3ec51",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "aggregate-copy-cab",
+    "score": 98.56,
+    "patch": "--- baseline\n+++ aggregate-copy-cab\n@@ -104,7 +104,7 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n+                struct Triple { u32 c, b, a; } output;\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                struct Triple values;\n+                values.c = local.c;\n+                values.a = local.a;\n+                values.b = local.b;\n+                local.output = values;\n+            }\n+            fn_8012C774(target, &local.output.a, &local.output.b, &local.output.c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/aggregate-copy-cab.json",
+    "raw_objdiff_sha256": "3938a0239e61f7514b48410d004aefc1ca85fe0c8cd39de2573040ed8c35c105",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "array-loop-cab",
+    "score": 98.03111,
+    "patch": "--- baseline\n+++ array-loop-cab\n@@ -119,14 +119,20 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 values[3];\n+                int i;\n+                values[0] = local.c;\n+                values[2] = local.a;\n+                values[1] = local.b;\n+                for (i = 0; i < 3; i++) local.output[i] = values[i];\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/array-loop-cab.json",
+    "raw_objdiff_sha256": "a66019331b217177cb74c5d7f9e59971638c2c8bf918b571080a194eed4bacda",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "aggregate-copy-bca",
+    "score": 98.56,
+    "patch": "--- baseline\n+++ aggregate-copy-bca\n@@ -104,7 +104,7 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n+                struct Triple { u32 c, b, a; } output;\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                struct Triple values;\n+                values.b = local.b;\n+                values.c = local.c;\n+                values.a = local.a;\n+                local.output = values;\n+            }\n+            fn_8012C774(target, &local.output.a, &local.output.b, &local.output.c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/aggregate-copy-bca.json",
+    "raw_objdiff_sha256": "dca4ceddaba9d6e112727fc9252a53d383709b57876bfa1e91a082b1f0108bfc",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "array-loop-bca",
+    "score": 98.03111,
+    "patch": "--- baseline\n+++ array-loop-bca\n@@ -119,14 +119,20 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 values[3];\n+                int i;\n+                values[1] = local.b;\n+                values[0] = local.c;\n+                values[2] = local.a;\n+                for (i = 0; i < 3; i++) local.output[i] = values[i];\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/array-loop-bca.json",
+    "raw_objdiff_sha256": "720f89e546ced1c096a60f11e27c0aa46caf68683ab9713c7c9f29986a772712",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "aggregate-copy-bac",
+    "score": 98.56,
+    "patch": "--- baseline\n+++ aggregate-copy-bac\n@@ -104,7 +104,7 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n+                struct Triple { u32 c, b, a; } output;\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                struct Triple values;\n+                values.b = local.b;\n+                values.a = local.a;\n+                values.c = local.c;\n+                local.output = values;\n+            }\n+            fn_8012C774(target, &local.output.a, &local.output.b, &local.output.c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/aggregate-copy-bac.json",
+    "raw_objdiff_sha256": "033bd4c0b379e309202bbfd56ea64d55ca1678f6444a6fdcdbf3b59e71319052",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "array-loop-bac",
+    "score": 98.03111,
+    "patch": "--- baseline\n+++ array-loop-bac\n@@ -119,14 +119,20 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 values[3];\n+                int i;\n+                values[1] = local.b;\n+                values[2] = local.a;\n+                values[0] = local.c;\n+                for (i = 0; i < 3; i++) local.output[i] = values[i];\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/array-loop-bac.json",
+    "raw_objdiff_sha256": "b37b3b6aa5aa9c4be6cc1ca9539cd5b0bde72e7a8c3eddf6619afd6f51958c68",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "aggregate-copy-acb",
+    "score": 98.55556,
+    "patch": "--- baseline\n+++ aggregate-copy-acb\n@@ -104,7 +104,7 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n+                struct Triple { u32 c, b, a; } output;\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                struct Triple values;\n+                values.a = local.a;\n+                values.c = local.c;\n+                values.b = local.b;\n+                local.output = values;\n+            }\n+            fn_8012C774(target, &local.output.a, &local.output.b, &local.output.c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/aggregate-copy-acb.json",
+    "raw_objdiff_sha256": "d9eb6288f0e28f08746f1bc6d5ec0fe09eace87ba87bece2bbf15e01cf4a68bc",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "array-loop-acb",
+    "score": 98.026665,
+    "patch": "--- baseline\n+++ array-loop-acb\n@@ -119,14 +119,20 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 values[3];\n+                int i;\n+                values[2] = local.a;\n+                values[0] = local.c;\n+                values[1] = local.b;\n+                for (i = 0; i < 3; i++) local.output[i] = values[i];\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/array-loop-acb.json",
+    "raw_objdiff_sha256": "aa688da00c9142c8e3655c945c9138dc2ef403a7313aca17ab96360b4fe30c4e",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "aggregate-copy-abc",
+    "score": 98.564445,
+    "patch": "--- baseline\n+++ aggregate-copy-abc\n@@ -104,7 +104,7 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n+                struct Triple { u32 c, b, a; } output;\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +119,19 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                struct Triple values;\n+                values.a = local.a;\n+                values.b = local.b;\n+                values.c = local.c;\n+                local.output = values;\n+            }\n+            fn_8012C774(target, &local.output.a, &local.output.b, &local.output.c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/aggregate-copy-abc.json",
+    "raw_objdiff_sha256": "6d8252fdb3a4d1fe220c665ee9db39937f3fea347b2bc496f6f6b696b6592bf7",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "array-loop-abc",
+    "score": 98.03555,
+    "patch": "--- baseline\n+++ array-loop-abc\n@@ -119,14 +119,20 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n+            {\n+                u32 values[3];\n+                int i;\n+                values[2] = local.a;\n+                values[1] = local.b;\n+                values[0] = local.c;\n+                for (i = 0; i < 3; i++) local.output[i] = values[i];\n+            }\n             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/array-loop-abc.json",
+    "raw_objdiff_sha256": "2d89bec10d018785434aaaa2641fc785e6509de2acba6368b0980c4732ee4b41",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  }
+]

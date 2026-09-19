@@ -1,0 +1,650 @@
+[
+  {
+    "trial": "split-cba-cba-before",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-cba-cba-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_c;\n+            u32 out_b;\n+            u32 out_a;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_b = local.b;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cba-cba-before.json",
+    "raw_objdiff_sha256": "00dcbe8e1325768635b9bad72a1f59a4314e899867adab37ad53b9c6ab970e54",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cba-cba-after",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-cba-cba-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_c;\n+            u32 out_b;\n+            u32 out_a;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_b = local.b;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cba-cba-before.json",
+    "raw_objdiff_sha256": "00dcbe8e1325768635b9bad72a1f59a4314e899867adab37ad53b9c6ab970e54",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cba-cab-before",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-cba-cab-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_c;\n+            u32 out_b;\n+            u32 out_a;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_a = local.a;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cba-cab-before.json",
+    "raw_objdiff_sha256": "9eedc62dd2541b351b186e6f3639ecbf50d74525ace2e7699b62b98eac8b7f18",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cba-cab-after",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-cba-cab-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_c;\n+            u32 out_b;\n+            u32 out_a;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_a = local.a;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cba-cab-before.json",
+    "raw_objdiff_sha256": "9eedc62dd2541b351b186e6f3639ecbf50d74525ace2e7699b62b98eac8b7f18",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cba-bca-before",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-cba-bca-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_c;\n+            u32 out_b;\n+            u32 out_a;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_c = local.c;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cba-bca-before.json",
+    "raw_objdiff_sha256": "bb63e0840da14441778d65c314d83b2bf0f8571052a32f34086b5ecb32450521",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cba-bca-after",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-cba-bca-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_c;\n+            u32 out_b;\n+            u32 out_a;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_c = local.c;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cba-bca-before.json",
+    "raw_objdiff_sha256": "bb63e0840da14441778d65c314d83b2bf0f8571052a32f34086b5ecb32450521",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cba-bac-before",
+    "score": 95.16,
+    "patch": "--- baseline\n+++ split-cba-bac-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_c;\n+            u32 out_b;\n+            u32 out_a;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_a = local.a;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cba-bac-before.json",
+    "raw_objdiff_sha256": "f46ff064f38cb4b7e63458946535e1c24c64c4d98ac8e3bc1085480c5ead9877",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cba-bac-after",
+    "score": 95.16,
+    "patch": "--- baseline\n+++ split-cba-bac-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_c;\n+            u32 out_b;\n+            u32 out_a;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_a = local.a;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cba-bac-before.json",
+    "raw_objdiff_sha256": "f46ff064f38cb4b7e63458946535e1c24c64c4d98ac8e3bc1085480c5ead9877",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cba-acb-before",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-cba-acb-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_c;\n+            u32 out_b;\n+            u32 out_a;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_c = local.c;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cba-acb-before.json",
+    "raw_objdiff_sha256": "a45749a5aa34a30f3b006065d4f55827d1ae2cc8b0b5315a7dae151566d0925a",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cba-acb-after",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-cba-acb-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_c;\n+            u32 out_b;\n+            u32 out_a;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_c = local.c;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cba-acb-before.json",
+    "raw_objdiff_sha256": "a45749a5aa34a30f3b006065d4f55827d1ae2cc8b0b5315a7dae151566d0925a",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cba-abc-before",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-cba-abc-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_c;\n+            u32 out_b;\n+            u32 out_a;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_b = local.b;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cba-abc-before.json",
+    "raw_objdiff_sha256": "95f710b5d0b68b95a0e6c956dc55b6656997bb01ea40f6ecb86a04e752bd136b",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cba-abc-after",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-cba-abc-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_c;\n+            u32 out_b;\n+            u32 out_a;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_b = local.b;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cba-abc-before.json",
+    "raw_objdiff_sha256": "95f710b5d0b68b95a0e6c956dc55b6656997bb01ea40f6ecb86a04e752bd136b",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cab-cba-before",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-cab-cba-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_c;\n+            u32 out_a;\n+            u32 out_b;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_b = local.b;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cab-cba-before.json",
+    "raw_objdiff_sha256": "56b1bcba922d1af034194a38ec5a00f65593c3fadacb844ec7d88bb46f662f64",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cab-cba-after",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-cab-cba-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_c;\n+            u32 out_a;\n+            u32 out_b;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_b = local.b;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cab-cba-before.json",
+    "raw_objdiff_sha256": "56b1bcba922d1af034194a38ec5a00f65593c3fadacb844ec7d88bb46f662f64",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cab-cab-before",
+    "score": 95.14667,
+    "patch": "--- baseline\n+++ split-cab-cab-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_c;\n+            u32 out_a;\n+            u32 out_b;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_a = local.a;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cab-cab-before.json",
+    "raw_objdiff_sha256": "7b0a6dbb01c0a2a74cd2cdf504f91693f9905bc9f9ebba77f931fea6bd8649e1",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cab-cab-after",
+    "score": 95.14667,
+    "patch": "--- baseline\n+++ split-cab-cab-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_c;\n+            u32 out_a;\n+            u32 out_b;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_a = local.a;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cab-cab-before.json",
+    "raw_objdiff_sha256": "7b0a6dbb01c0a2a74cd2cdf504f91693f9905bc9f9ebba77f931fea6bd8649e1",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cab-bca-before",
+    "score": 95.14667,
+    "patch": "--- baseline\n+++ split-cab-bca-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_c;\n+            u32 out_a;\n+            u32 out_b;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_c = local.c;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cab-bca-before.json",
+    "raw_objdiff_sha256": "f63217cdae584ae911a0a5ec22452289d41d752b8f44064a31b50423db1d0b8e",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cab-bca-after",
+    "score": 95.14667,
+    "patch": "--- baseline\n+++ split-cab-bca-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_c;\n+            u32 out_a;\n+            u32 out_b;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_c = local.c;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cab-bca-before.json",
+    "raw_objdiff_sha256": "f63217cdae584ae911a0a5ec22452289d41d752b8f44064a31b50423db1d0b8e",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cab-bac-before",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-cab-bac-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_c;\n+            u32 out_a;\n+            u32 out_b;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_a = local.a;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cab-bac-before.json",
+    "raw_objdiff_sha256": "1aee21224f2bf9f2c9d9ff83204732693e04e66f3665e8281e1459b064791538",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cab-bac-after",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-cab-bac-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_c;\n+            u32 out_a;\n+            u32 out_b;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_a = local.a;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cab-bac-before.json",
+    "raw_objdiff_sha256": "1aee21224f2bf9f2c9d9ff83204732693e04e66f3665e8281e1459b064791538",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cab-acb-before",
+    "score": 95.14667,
+    "patch": "--- baseline\n+++ split-cab-acb-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_c;\n+            u32 out_a;\n+            u32 out_b;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_c = local.c;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cab-acb-before.json",
+    "raw_objdiff_sha256": "6ef77ce0f8de9cd7d938963f77f9a4725ff40c4417828a61188733118a5d4be9",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cab-acb-after",
+    "score": 95.14667,
+    "patch": "--- baseline\n+++ split-cab-acb-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_c;\n+            u32 out_a;\n+            u32 out_b;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_c = local.c;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cab-acb-before.json",
+    "raw_objdiff_sha256": "6ef77ce0f8de9cd7d938963f77f9a4725ff40c4417828a61188733118a5d4be9",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cab-abc-before",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-cab-abc-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_c;\n+            u32 out_a;\n+            u32 out_b;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_b = local.b;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cab-abc-before.json",
+    "raw_objdiff_sha256": "c4326c3184b364a2cb4b7c065d28db1413807d204a6d677f176340b05c7533a7",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-cab-abc-after",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-cab-abc-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_c;\n+            u32 out_a;\n+            u32 out_b;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_b = local.b;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-cab-abc-before.json",
+    "raw_objdiff_sha256": "c4326c3184b364a2cb4b7c065d28db1413807d204a6d677f176340b05c7533a7",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bca-cba-before",
+    "score": 95.14667,
+    "patch": "--- baseline\n+++ split-bca-cba-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_b;\n+            u32 out_c;\n+            u32 out_a;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_b = local.b;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bca-cba-before.json",
+    "raw_objdiff_sha256": "077d2f8bc2c950d30238d9d4c5953215b614cf827d28f85f1a9229c065f867d8",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bca-cba-after",
+    "score": 95.14667,
+    "patch": "--- baseline\n+++ split-bca-cba-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_b;\n+            u32 out_c;\n+            u32 out_a;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_b = local.b;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bca-cba-before.json",
+    "raw_objdiff_sha256": "077d2f8bc2c950d30238d9d4c5953215b614cf827d28f85f1a9229c065f867d8",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bca-cab-before",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-bca-cab-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_b;\n+            u32 out_c;\n+            u32 out_a;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_a = local.a;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bca-cab-before.json",
+    "raw_objdiff_sha256": "0eec51f660a4c1415e81b9d4d229dac5d0352de63d7e2742618012108fbc9424",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bca-cab-after",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-bca-cab-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_b;\n+            u32 out_c;\n+            u32 out_a;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_a = local.a;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bca-cab-before.json",
+    "raw_objdiff_sha256": "0eec51f660a4c1415e81b9d4d229dac5d0352de63d7e2742618012108fbc9424",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bca-bca-before",
+    "score": 95.14667,
+    "patch": "--- baseline\n+++ split-bca-bca-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_b;\n+            u32 out_c;\n+            u32 out_a;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_c = local.c;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bca-bca-before.json",
+    "raw_objdiff_sha256": "c94a2c956da4702359978d1038ff79fde531abbd42ee40cc8dbe4dd70c2b0ebc",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bca-bca-after",
+    "score": 95.14667,
+    "patch": "--- baseline\n+++ split-bca-bca-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_b;\n+            u32 out_c;\n+            u32 out_a;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_c = local.c;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bca-bca-before.json",
+    "raw_objdiff_sha256": "c94a2c956da4702359978d1038ff79fde531abbd42ee40cc8dbe4dd70c2b0ebc",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bca-bac-before",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-bca-bac-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_b;\n+            u32 out_c;\n+            u32 out_a;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_a = local.a;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bca-bac-before.json",
+    "raw_objdiff_sha256": "8a9fb5171f2fb861c85d4f363afb12f4620a2c0f20809970ab5e1395d844eb7d",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bca-bac-after",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-bca-bac-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_b;\n+            u32 out_c;\n+            u32 out_a;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_a = local.a;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bca-bac-before.json",
+    "raw_objdiff_sha256": "8a9fb5171f2fb861c85d4f363afb12f4620a2c0f20809970ab5e1395d844eb7d",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bca-acb-before",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-bca-acb-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_b;\n+            u32 out_c;\n+            u32 out_a;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_c = local.c;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bca-acb-before.json",
+    "raw_objdiff_sha256": "b92396b3f1e00ef0939fcdff843faa9e3a1c33bdb1e86db2a24f2e8dcfca7567",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bca-acb-after",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-bca-acb-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_b;\n+            u32 out_c;\n+            u32 out_a;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_c = local.c;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bca-acb-before.json",
+    "raw_objdiff_sha256": "b92396b3f1e00ef0939fcdff843faa9e3a1c33bdb1e86db2a24f2e8dcfca7567",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bca-abc-before",
+    "score": 95.14667,
+    "patch": "--- baseline\n+++ split-bca-abc-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_b;\n+            u32 out_c;\n+            u32 out_a;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_b = local.b;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bca-abc-before.json",
+    "raw_objdiff_sha256": "653c4a6e1fb76d33baf2c9b89d0ebe87f46d200b657757d87b232006bfbcc5f7",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bca-abc-after",
+    "score": 95.14667,
+    "patch": "--- baseline\n+++ split-bca-abc-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_b;\n+            u32 out_c;\n+            u32 out_a;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_b = local.b;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bca-abc-before.json",
+    "raw_objdiff_sha256": "653c4a6e1fb76d33baf2c9b89d0ebe87f46d200b657757d87b232006bfbcc5f7",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bac-cba-before",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-bac-cba-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_b;\n+            u32 out_a;\n+            u32 out_c;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_b = local.b;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bac-cba-before.json",
+    "raw_objdiff_sha256": "fef758704ff9cc6544b9adce02ebc48cfa5e24ab81d43c48bc0a8b6dbc78205a",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bac-cba-after",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-bac-cba-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_b;\n+            u32 out_a;\n+            u32 out_c;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_b = local.b;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bac-cba-before.json",
+    "raw_objdiff_sha256": "fef758704ff9cc6544b9adce02ebc48cfa5e24ab81d43c48bc0a8b6dbc78205a",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bac-cab-before",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-bac-cab-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_b;\n+            u32 out_a;\n+            u32 out_c;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_a = local.a;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bac-cab-before.json",
+    "raw_objdiff_sha256": "27efc579af4bd3cb010dc821a691e5296016a5ebfe905c471b7661e25a4c4901",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bac-cab-after",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-bac-cab-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_b;\n+            u32 out_a;\n+            u32 out_c;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_a = local.a;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bac-cab-before.json",
+    "raw_objdiff_sha256": "27efc579af4bd3cb010dc821a691e5296016a5ebfe905c471b7661e25a4c4901",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bac-bca-before",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-bac-bca-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_b;\n+            u32 out_a;\n+            u32 out_c;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_c = local.c;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bac-bca-before.json",
+    "raw_objdiff_sha256": "f69ab083090d4ba401d8adc2175bb81a3c6852e4f1ca631a0ca7958b9caf4407",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bac-bca-after",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-bac-bca-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_b;\n+            u32 out_a;\n+            u32 out_c;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_c = local.c;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bac-bca-before.json",
+    "raw_objdiff_sha256": "f69ab083090d4ba401d8adc2175bb81a3c6852e4f1ca631a0ca7958b9caf4407",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bac-bac-before",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-bac-bac-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_b;\n+            u32 out_a;\n+            u32 out_c;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_a = local.a;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bac-bac-before.json",
+    "raw_objdiff_sha256": "409b1f3ffb5ccaf96fab7434efc9b165d73aa2a7a5066d7c706a6e800dcd1900",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bac-bac-after",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-bac-bac-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_b;\n+            u32 out_a;\n+            u32 out_c;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_a = local.a;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bac-bac-before.json",
+    "raw_objdiff_sha256": "409b1f3ffb5ccaf96fab7434efc9b165d73aa2a7a5066d7c706a6e800dcd1900",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bac-acb-before",
+    "score": 95.16,
+    "patch": "--- baseline\n+++ split-bac-acb-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_b;\n+            u32 out_a;\n+            u32 out_c;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_c = local.c;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bac-acb-before.json",
+    "raw_objdiff_sha256": "159801af00d1c008b22bb2f4784e3e4dfc7334808e46b45a31d85c0cb927e123",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bac-acb-after",
+    "score": 95.16,
+    "patch": "--- baseline\n+++ split-bac-acb-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_b;\n+            u32 out_a;\n+            u32 out_c;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_c = local.c;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bac-acb-before.json",
+    "raw_objdiff_sha256": "159801af00d1c008b22bb2f4784e3e4dfc7334808e46b45a31d85c0cb927e123",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bac-abc-before",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-bac-abc-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_b;\n+            u32 out_a;\n+            u32 out_c;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_b = local.b;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bac-abc-before.json",
+    "raw_objdiff_sha256": "3606084ba1d1dbe7e15c37cc2b367764245019781eb7cc550d66822024578be8",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-bac-abc-after",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-bac-abc-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_b;\n+            u32 out_a;\n+            u32 out_c;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_b = local.b;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-bac-abc-before.json",
+    "raw_objdiff_sha256": "3606084ba1d1dbe7e15c37cc2b367764245019781eb7cc550d66822024578be8",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-acb-cba-before",
+    "score": 95.16,
+    "patch": "--- baseline\n+++ split-acb-cba-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_a;\n+            u32 out_c;\n+            u32 out_b;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_b = local.b;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-acb-cba-before.json",
+    "raw_objdiff_sha256": "de4fcc216ff4729bdfe9a0dd0a488149828442fbb58452d0b98f89a89ed99370",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-acb-cba-after",
+    "score": 95.16,
+    "patch": "--- baseline\n+++ split-acb-cba-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_a;\n+            u32 out_c;\n+            u32 out_b;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_b = local.b;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-acb-cba-before.json",
+    "raw_objdiff_sha256": "de4fcc216ff4729bdfe9a0dd0a488149828442fbb58452d0b98f89a89ed99370",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-acb-cab-before",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-acb-cab-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_a;\n+            u32 out_c;\n+            u32 out_b;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_a = local.a;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-acb-cab-before.json",
+    "raw_objdiff_sha256": "1445117fb7375f01b3db738128ce579a53e29ad09bd79a9f143e26d30c22c547",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-acb-cab-after",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-acb-cab-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_a;\n+            u32 out_c;\n+            u32 out_b;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_a = local.a;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-acb-cab-before.json",
+    "raw_objdiff_sha256": "1445117fb7375f01b3db738128ce579a53e29ad09bd79a9f143e26d30c22c547",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-acb-bca-before",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-acb-bca-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_a;\n+            u32 out_c;\n+            u32 out_b;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_c = local.c;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-acb-bca-before.json",
+    "raw_objdiff_sha256": "8c986726a72e6874bb4b98573a9cbcac864479fa7f21946de12c5c91edee0411",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-acb-bca-after",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-acb-bca-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_a;\n+            u32 out_c;\n+            u32 out_b;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_c = local.c;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-acb-bca-before.json",
+    "raw_objdiff_sha256": "8c986726a72e6874bb4b98573a9cbcac864479fa7f21946de12c5c91edee0411",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-acb-bac-before",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-acb-bac-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_a;\n+            u32 out_c;\n+            u32 out_b;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_a = local.a;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-acb-bac-before.json",
+    "raw_objdiff_sha256": "11eaab00db5bef830a1279404ae2616208dd70cc02c7fa1a9f0978e6b4242f3d",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-acb-bac-after",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-acb-bac-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_a;\n+            u32 out_c;\n+            u32 out_b;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_a = local.a;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-acb-bac-before.json",
+    "raw_objdiff_sha256": "11eaab00db5bef830a1279404ae2616208dd70cc02c7fa1a9f0978e6b4242f3d",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-acb-acb-before",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-acb-acb-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_a;\n+            u32 out_c;\n+            u32 out_b;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_c = local.c;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-acb-acb-before.json",
+    "raw_objdiff_sha256": "6f85ab2d397216702bff72a16e19cfb33b3766e800e5b98e6e6ad9debee744f1",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-acb-acb-after",
+    "score": 95.15111,
+    "patch": "--- baseline\n+++ split-acb-acb-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_a;\n+            u32 out_c;\n+            u32 out_b;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_c = local.c;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-acb-acb-before.json",
+    "raw_objdiff_sha256": "6f85ab2d397216702bff72a16e19cfb33b3766e800e5b98e6e6ad9debee744f1",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-acb-abc-before",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-acb-abc-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_a;\n+            u32 out_c;\n+            u32 out_b;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_b = local.b;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-acb-abc-before.json",
+    "raw_objdiff_sha256": "372e786e7e099fc461cf36d70f38f781658a97e463d939394bffc1c5df027288",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-acb-abc-after",
+    "score": 95.155556,
+    "patch": "--- baseline\n+++ split-acb-abc-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_a;\n+            u32 out_c;\n+            u32 out_b;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_b = local.b;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-acb-abc-before.json",
+    "raw_objdiff_sha256": "372e786e7e099fc461cf36d70f38f781658a97e463d939394bffc1c5df027288",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-abc-cba-before",
+    "score": 95.164444,
+    "patch": "--- baseline\n+++ split-abc-cba-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_a;\n+            u32 out_b;\n+            u32 out_c;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_b = local.b;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-abc-cba-before.json",
+    "raw_objdiff_sha256": "fbb6decb115eb0b966da841a682d9d3cf8a54b64fb655f3b337fb0bc1c16b4b8",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-abc-cba-after",
+    "score": 95.164444,
+    "patch": "--- baseline\n+++ split-abc-cba-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_a;\n+            u32 out_b;\n+            u32 out_c;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_b = local.b;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-abc-cba-before.json",
+    "raw_objdiff_sha256": "fbb6decb115eb0b966da841a682d9d3cf8a54b64fb655f3b337fb0bc1c16b4b8",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-abc-cab-before",
+    "score": 95.16,
+    "patch": "--- baseline\n+++ split-abc-cab-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_a;\n+            u32 out_b;\n+            u32 out_c;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_a = local.a;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-abc-cab-before.json",
+    "raw_objdiff_sha256": "0c2afbaf47bf811705ae927cc2d0eee6f3cd5231824609c0ec6cfd8571943c77",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-abc-cab-after",
+    "score": 95.16,
+    "patch": "--- baseline\n+++ split-abc-cab-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_a;\n+            u32 out_b;\n+            u32 out_c;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_c = local.c;\n+            out_a = local.a;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-abc-cab-before.json",
+    "raw_objdiff_sha256": "0c2afbaf47bf811705ae927cc2d0eee6f3cd5231824609c0ec6cfd8571943c77",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-abc-bca-before",
+    "score": 95.16889,
+    "patch": "--- baseline\n+++ split-abc-bca-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_a;\n+            u32 out_b;\n+            u32 out_c;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_c = local.c;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-abc-bca-before.json",
+    "raw_objdiff_sha256": "55404225e271247205b3adf5186751a6433b191b304a97fc52e318d21224dbb5",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-abc-bca-after",
+    "score": 95.16889,
+    "patch": "--- baseline\n+++ split-abc-bca-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_a;\n+            u32 out_b;\n+            u32 out_c;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_c = local.c;\n+            out_a = local.a;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-abc-bca-before.json",
+    "raw_objdiff_sha256": "55404225e271247205b3adf5186751a6433b191b304a97fc52e318d21224dbb5",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-abc-bac-before",
+    "score": 95.16,
+    "patch": "--- baseline\n+++ split-abc-bac-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_a;\n+            u32 out_b;\n+            u32 out_c;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_a = local.a;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-abc-bac-before.json",
+    "raw_objdiff_sha256": "cc62c7789770fc9e765b49b5a43e9d2530364618e5ab25d2f2e2c418453a93c3",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-abc-bac-after",
+    "score": 95.16,
+    "patch": "--- baseline\n+++ split-abc-bac-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_a;\n+            u32 out_b;\n+            u32 out_c;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_b = local.b;\n+            out_a = local.a;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-abc-bac-before.json",
+    "raw_objdiff_sha256": "cc62c7789770fc9e765b49b5a43e9d2530364618e5ab25d2f2e2c418453a93c3",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-abc-acb-before",
+    "score": 95.164444,
+    "patch": "--- baseline\n+++ split-abc-acb-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_a;\n+            u32 out_b;\n+            u32 out_c;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_c = local.c;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-abc-acb-before.json",
+    "raw_objdiff_sha256": "6ff554fc0714fc0d3a5465c71f20301b7da16aefbcc560fb34a4b6b726b6f3f0",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-abc-acb-after",
+    "score": 95.164444,
+    "patch": "--- baseline\n+++ split-abc-acb-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_a;\n+            u32 out_b;\n+            u32 out_c;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_c = local.c;\n+            out_b = local.b;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-abc-acb-before.json",
+    "raw_objdiff_sha256": "6ff554fc0714fc0d3a5465c71f20301b7da16aefbcc560fb34a4b6b726b6f3f0",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-abc-abc-before",
+    "score": 95.16,
+    "patch": "--- baseline\n+++ split-abc-abc-before\n@@ -103,8 +103,10 @@\n         }\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n+            u32 out_a;\n+            u32 out_b;\n+            u32 out_c;\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n@@ -119,14 +121,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_b = local.b;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-abc-abc-before.json",
+    "raw_objdiff_sha256": "b121c901904a2d9e64f3119748cc265bd83288ceace6c9e24ae64ce0e216aacb",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "split-abc-abc-after",
+    "score": 95.16,
+    "patch": "--- baseline\n+++ split-abc-abc-after\n@@ -104,12 +104,15 @@\n     } else if (event == 0xB) {\n         if (data_type == 0x11) {\n             struct {\n-                u32 output[3];\n                 u32 c;\n                 u32 alternate;\n                 u32 b;\n                 u32 a;\n             } local;\n+            u32 out_a;\n+            u32 out_b;\n+            u32 out_c;\n+\n \n             local.a = lbl_806515D0;\n             local.b = lbl_806515D4;\n@@ -119,14 +122,15 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            out_a = local.a;\n+            out_b = local.b;\n+            out_c = local.c;\n+            fn_8012C774(target, &out_a, &out_b, &out_c, 4);\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/split-abc-abc-before.json",
+    "raw_objdiff_sha256": "b121c901904a2d9e64f3119748cc265bd83288ceace6c9e24ae64ce0e216aacb",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  }
+]

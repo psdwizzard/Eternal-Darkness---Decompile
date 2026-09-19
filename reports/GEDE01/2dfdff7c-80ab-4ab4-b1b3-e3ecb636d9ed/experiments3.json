@@ -1,0 +1,434 @@
+[
+  {
+    "trial": "pointers-oabc-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-oabc-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                void *call_object = target;\n+                u32 *pa = &local.output[2];\n+                u32 *pb = &local.output[1];\n+                u32 *pc = &local.output[0];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-oabc-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-oabc-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                void *call_object = target;\n+                u32 *pa = &local.output[2];\n+                u32 *pb = &local.output[1];\n+                u32 *pc = &local.output[0];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-oacb-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-oacb-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                void *call_object = target;\n+                u32 *pa = &local.output[2];\n+                u32 *pc = &local.output[0];\n+                u32 *pb = &local.output[1];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-oacb-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-oacb-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                void *call_object = target;\n+                u32 *pa = &local.output[2];\n+                u32 *pc = &local.output[0];\n+                u32 *pb = &local.output[1];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-obac-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-obac-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                void *call_object = target;\n+                u32 *pb = &local.output[1];\n+                u32 *pa = &local.output[2];\n+                u32 *pc = &local.output[0];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-obac-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-obac-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                void *call_object = target;\n+                u32 *pb = &local.output[1];\n+                u32 *pa = &local.output[2];\n+                u32 *pc = &local.output[0];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-obca-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-obca-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                void *call_object = target;\n+                u32 *pb = &local.output[1];\n+                u32 *pc = &local.output[0];\n+                u32 *pa = &local.output[2];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-obca-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-obca-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                void *call_object = target;\n+                u32 *pb = &local.output[1];\n+                u32 *pc = &local.output[0];\n+                u32 *pa = &local.output[2];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-ocab-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-ocab-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                void *call_object = target;\n+                u32 *pc = &local.output[0];\n+                u32 *pa = &local.output[2];\n+                u32 *pb = &local.output[1];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-ocab-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-ocab-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                void *call_object = target;\n+                u32 *pc = &local.output[0];\n+                u32 *pa = &local.output[2];\n+                u32 *pb = &local.output[1];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-ocba-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-ocba-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                void *call_object = target;\n+                u32 *pc = &local.output[0];\n+                u32 *pb = &local.output[1];\n+                u32 *pa = &local.output[2];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-ocba-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-ocba-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                void *call_object = target;\n+                u32 *pc = &local.output[0];\n+                u32 *pb = &local.output[1];\n+                u32 *pa = &local.output[2];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-aobc-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-aobc-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pa = &local.output[2];\n+                void *call_object = target;\n+                u32 *pb = &local.output[1];\n+                u32 *pc = &local.output[0];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-aobc-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-aobc-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pa = &local.output[2];\n+                void *call_object = target;\n+                u32 *pb = &local.output[1];\n+                u32 *pc = &local.output[0];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-aocb-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-aocb-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pa = &local.output[2];\n+                void *call_object = target;\n+                u32 *pc = &local.output[0];\n+                u32 *pb = &local.output[1];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-aocb-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-aocb-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pa = &local.output[2];\n+                void *call_object = target;\n+                u32 *pc = &local.output[0];\n+                u32 *pb = &local.output[1];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-aboc-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-aboc-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pa = &local.output[2];\n+                u32 *pb = &local.output[1];\n+                void *call_object = target;\n+                u32 *pc = &local.output[0];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-aboc-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-aboc-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pa = &local.output[2];\n+                u32 *pb = &local.output[1];\n+                void *call_object = target;\n+                u32 *pc = &local.output[0];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-abco-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-abco-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pa = &local.output[2];\n+                u32 *pb = &local.output[1];\n+                u32 *pc = &local.output[0];\n+                void *call_object = target;\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-abco-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-abco-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pa = &local.output[2];\n+                u32 *pb = &local.output[1];\n+                u32 *pc = &local.output[0];\n+                void *call_object = target;\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-acob-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-acob-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pa = &local.output[2];\n+                u32 *pc = &local.output[0];\n+                void *call_object = target;\n+                u32 *pb = &local.output[1];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-acob-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-acob-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pa = &local.output[2];\n+                u32 *pc = &local.output[0];\n+                void *call_object = target;\n+                u32 *pb = &local.output[1];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-acbo-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-acbo-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pa = &local.output[2];\n+                u32 *pc = &local.output[0];\n+                u32 *pb = &local.output[1];\n+                void *call_object = target;\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-acbo-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-acbo-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pa = &local.output[2];\n+                u32 *pc = &local.output[0];\n+                u32 *pb = &local.output[1];\n+                void *call_object = target;\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-boac-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-boac-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pb = &local.output[1];\n+                void *call_object = target;\n+                u32 *pa = &local.output[2];\n+                u32 *pc = &local.output[0];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-boac-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-boac-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pb = &local.output[1];\n+                void *call_object = target;\n+                u32 *pa = &local.output[2];\n+                u32 *pc = &local.output[0];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-boca-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-boca-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pb = &local.output[1];\n+                void *call_object = target;\n+                u32 *pc = &local.output[0];\n+                u32 *pa = &local.output[2];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-boca-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-boca-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pb = &local.output[1];\n+                void *call_object = target;\n+                u32 *pc = &local.output[0];\n+                u32 *pa = &local.output[2];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-baoc-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-baoc-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pb = &local.output[1];\n+                u32 *pa = &local.output[2];\n+                void *call_object = target;\n+                u32 *pc = &local.output[0];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-baoc-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-baoc-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pb = &local.output[1];\n+                u32 *pa = &local.output[2];\n+                void *call_object = target;\n+                u32 *pc = &local.output[0];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-baco-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-baco-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pb = &local.output[1];\n+                u32 *pa = &local.output[2];\n+                u32 *pc = &local.output[0];\n+                void *call_object = target;\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-baco-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-baco-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pb = &local.output[1];\n+                u32 *pa = &local.output[2];\n+                u32 *pc = &local.output[0];\n+                void *call_object = target;\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-bcoa-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-bcoa-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pb = &local.output[1];\n+                u32 *pc = &local.output[0];\n+                void *call_object = target;\n+                u32 *pa = &local.output[2];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-bcoa-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-bcoa-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pb = &local.output[1];\n+                u32 *pc = &local.output[0];\n+                void *call_object = target;\n+                u32 *pa = &local.output[2];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-bcao-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-bcao-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pb = &local.output[1];\n+                u32 *pc = &local.output[0];\n+                u32 *pa = &local.output[2];\n+                void *call_object = target;\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-bcao-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-bcao-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pb = &local.output[1];\n+                u32 *pc = &local.output[0];\n+                u32 *pa = &local.output[2];\n+                void *call_object = target;\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-coab-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-coab-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pc = &local.output[0];\n+                void *call_object = target;\n+                u32 *pa = &local.output[2];\n+                u32 *pb = &local.output[1];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-coab-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-coab-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pc = &local.output[0];\n+                void *call_object = target;\n+                u32 *pa = &local.output[2];\n+                u32 *pb = &local.output[1];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-coba-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-coba-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pc = &local.output[0];\n+                void *call_object = target;\n+                u32 *pb = &local.output[1];\n+                u32 *pa = &local.output[2];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-coba-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-coba-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pc = &local.output[0];\n+                void *call_object = target;\n+                u32 *pb = &local.output[1];\n+                u32 *pa = &local.output[2];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-caob-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-caob-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pc = &local.output[0];\n+                u32 *pa = &local.output[2];\n+                void *call_object = target;\n+                u32 *pb = &local.output[1];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-caob-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-caob-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pc = &local.output[0];\n+                u32 *pa = &local.output[2];\n+                void *call_object = target;\n+                u32 *pb = &local.output[1];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-cabo-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-cabo-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pc = &local.output[0];\n+                u32 *pa = &local.output[2];\n+                u32 *pb = &local.output[1];\n+                void *call_object = target;\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-cabo-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-cabo-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pc = &local.output[0];\n+                u32 *pa = &local.output[2];\n+                u32 *pb = &local.output[1];\n+                void *call_object = target;\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-cboa-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-cboa-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pc = &local.output[0];\n+                u32 *pb = &local.output[1];\n+                void *call_object = target;\n+                u32 *pa = &local.output[2];\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-cboa-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-cboa-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pc = &local.output[0];\n+                u32 *pb = &local.output[1];\n+                void *call_object = target;\n+                u32 *pa = &local.output[2];\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-cbao-direct",
+    "score": 98.26667,
+    "patch": "--- baseline\n+++ pointers-cbao-direct\n@@ -119,14 +119,21 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n+            {\n+                u32 *pc = &local.output[0];\n+                u32 *pb = &local.output[1];\n+                u32 *pa = &local.output[2];\n+                void *call_object = target;\n             local.output[0] = local.c;\n             local.output[1] = local.b;\n             local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/else-return.json",
+    "raw_objdiff_sha256": "287eab81f62bb2bf4b22dcd6055c70a644609e266597be83c779e20ed9f35de2",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  },
+  {
+    "trial": "pointers-cbao-temps",
+    "score": 99.41333,
+    "patch": "--- baseline\n+++ pointers-cbao-temps\n@@ -119,14 +119,24 @@\n             if (!(fn_8011FAEC(target) & 0x2000)) {\n                 local.b = local.alternate;\n             }\n-            local.output[0] = local.c;\n-            local.output[1] = local.b;\n-            local.output[2] = local.a;\n-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);\n+            {\n+                u32 *pc = &local.output[0];\n+                u32 *pb = &local.output[1];\n+                u32 *pa = &local.output[2];\n+                void *call_object = target;\n+                u32 c = local.c;\n+                u32 b = local.b;\n+                u32 a = local.a;\n+                local.output[1] = b;\n+                local.output[0] = c;\n+                local.output[2] = a;\n+                fn_8012C774(call_object, pa, pb, pc, 4);\n+            }\n             fn_8011FA8C(target, 0, 0x2000);\n             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);\n             return 1;\n         }\n+    } else {\n         return 0;\n     }\n     return 0;\n",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/2dfdff7c-80ab-4ab4-b1b3-e3ecb636d9ed/temps-cba-bca.json",
+    "raw_objdiff_sha256": "2bd7eff431e59c4de58e8bd02256e87bdd7e0487d915c24b83c60e11f3ab1831",
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80205914.o\n",
+    "build_exit_code": 0
+  }
+]

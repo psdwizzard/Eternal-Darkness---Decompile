@@ -119,14 +119,21 @@ int fn_80205914(void *object, int event, void *data)
             if (!(fn_8011FAEC(target) & 0x2000)) {
                 local.b = local.alternate;
             }
-            local.output[0] = local.c;
-            local.output[1] = local.b;
-            local.output[2] = local.a;
+            {
+                u32 c = local.c;
+                u32 b = local.b;
+                u32 a = local.a;
+
+                local.output[1] = b;
+                local.output[0] = c;
+                local.output[2] = a;
+            }
             fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);
             fn_8011FA8C(target, 0, 0x2000);
             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);
             return 1;
         }
+    } else {
         return 0;
     }
     return 0;
