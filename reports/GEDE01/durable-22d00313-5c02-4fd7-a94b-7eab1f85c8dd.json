@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "22d00313-5c02-4fd7-a94b-7eab1f85c8dd",
+  "attempt": 4,
+  "base_commit": "acb4ca4e680ca5ae80a6a73ed449ac0f9729a8c7",
+  "target": "fn_8014ECD8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-22d00313-5c02-4fd7-a94b-7eab1f85c8dd.json"
+  ],
+  "divergence": "Canonical relocation-aware objdiff reports 98.10185% for size-exact 432/432-byte functions. At function offset 0x2C, retail uses R_PPC_EMB_SDA21 targeting lbl_80650548 with addend 0 while generated code targets lbl_80650544 with addend 4. The other difference is equivalent scheduling of li r0,9 at retail offset 0x78 versus generated offset 0x7C across lfs f0,lbl_8065054C. A distinct split-scalar aggregate hypothesis corrected the relocation identity but reordered the global loads and registers, reducing the score to 95.59259%; an aggregate-then-z override added redundant loads and grew the function to 440 bytes, and a volatile float-load probe left the best score unchanged. The retained NonMatching reconstruction remains the 98.10185% candidate. The full build succeeded and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
