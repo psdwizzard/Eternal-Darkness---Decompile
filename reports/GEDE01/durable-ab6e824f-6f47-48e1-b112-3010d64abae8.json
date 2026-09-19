@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "ab6e824f-6f47-48e1-b112-3010d64abae8",
+  "attempt": 2,
+  "base_commit": "6f75b39b30d8bee678b23299a2324ee1803521a7",
+  "target": "fn_800F5C54",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ab6e824f-6f47-48e1-b112-3010d64abae8.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff is 33.086956%: retail is 92 bytes and generated C is 104 bytes. Retail preloads all three lbl_80239CD0 doubles through R_PPC_ADDR16_HI/R_PPC_ADDR16_LO plus constant-table addends 0, 8, and 16, uses fcmpu in CR0/CR6/CR7, and shares one conversion path. MWCC C instead addresses lbl_80239CD0 with R_PPC_ADDR16_HA/R_PPC_ADDR16_LO, emits sequential fcmpo branches, duplicates the conversion spill paths with a 0x20-byte frame, and therefore fails code and relocation-strict matching. The required build completed and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
