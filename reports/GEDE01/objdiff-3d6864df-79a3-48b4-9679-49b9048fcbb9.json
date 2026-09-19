@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "assignment_id": "3d6864df-79a3-48b4-9679-49b9048fcbb9",
+  "target": "fn_8012C804",
+  "tool": "objdiff-cli via tools/fndiff.py",
+  "raw_summary": "target 704 bytes  base 704 bytes  match 94.14773",
+  "canonical": {
+    "target_size": 704,
+    "candidate_size": 704,
+    "target_instructions": 176,
+    "candidate_instructions": 176,
+    "match_percent": 94.14773
+  },
+  "relocation_strict": {
+    "target_count": 4,
+    "candidate_count": 4,
+    "records_equal": true,
+    "raw_objdiff_records": "left/right: 28 R_PPC_REL24 fn_80125ECC; 196 R_PPC_REL24 fn_8012C478; 556 R_PPC_REL24 fn_8012BFE4; 672 R_PPC_REL24 fn_8012CAC4",
+    "records": [
+      {"offset": 28, "type": "R_PPC_REL24", "target": "fn_80125ECC", "addend": 0},
+      {"offset": 196, "type": "R_PPC_REL24", "target": "fn_8012C478", "addend": 0},
+      {"offset": 556, "type": "R_PPC_REL24", "target": "fn_8012BFE4", "addend": 0},
+      {"offset": 672, "type": "R_PPC_REL24", "target": "fn_8012CAC4", "addend": 0}
+    ]
+  },
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw_result": "build/GEDE01/main.dol: OK",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_raw_result": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "divergence": "Size-exact honest C. Source-order recovery improved canonical objdiff from 93.92614% to 94.14773%. Remaining differences are MWCC volatile-register selection in graph-entry, state-copy, and inherited-state paths; equivalent indexed-address formation; and zero-register lifetime allocation."
+}

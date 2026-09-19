@@ -32,7 +32,7 @@ void fn_8012C804(u8* dst, u8* src, int index)
     }
 
     graph = *(u8**)(*(u8**)(*(u8**)(dst + 0x240) + index_offset) + 4);
-    for (i = 0, offset = 0; offset < *(u16*)(graph + 6); offset++, i += 2) {
+    for (offset = 0, i = 0; offset < *(u16*)(graph + 6); i += 2, offset++) {
         entry = *(u16*)(*(u8**)(graph + 8) + i);
         if (entry & 0x8000) {
             int child = entry & 0x7FFF;
@@ -58,7 +58,7 @@ void fn_8012C804(u8* dst, u8* src, int index)
         }
     }
 
-    for (i = 0, offset = 0; offset < 18; offset++, i += 4) {
+    for (offset = 0, i = 0; offset < 18; i += 4, offset++) {
         src_object = *(u8**)(*(u8**)(src + 0x240) + i);
         if (src_object != 0) {
             flags = *(u16*)(src_object + 0xA);
@@ -78,7 +78,7 @@ void fn_8012C804(u8* dst, u8* src, int index)
 
     inherited = 0;
     graph = *(u8**)(*(u8**)(*(u8**)(src + 0x240) + index_offset) + 4);
-    for (i = 0, offset = 0; offset < *(u16*)(graph + 6); offset++, i += 2) {
+    for (offset = 0, i = 0; offset < *(u16*)(graph + 6); i += 2, offset++) {
         entry = *(u16*)(*(u8**)(graph + 8) + i);
         if (!(entry & 0x8000)) {
             inherited = *(void**)(src + 0x17C + entry * 8);
