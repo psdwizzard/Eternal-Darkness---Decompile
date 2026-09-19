@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "e703db48-f72b-4285-9234-344d699c7cdc",
+  "attempt": 2,
+  "base_commit": "488d05c0ba390cf29ac8a31902f8836f756bb40c",
+  "target": "fn_801D2440",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e703db48-f72b-4285-9234-344d699c7cdc.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e703db48-f72b-4285-9234-344d699c7cdc-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-e703db48-f72b-4285-9234-344d699c7cdc.log"
+  ],
+  "divergence": "Canonical and function_reloc_diffs=name_address relocation-strict objdiff both score 89.8546%. Retail is 2916 bytes (729 instructions) while GC/1.3 emits 2888 bytes (722 instructions). The reconstruction covers every retail state arm and preserves the reviewed semantics by keeping fn_80201BC8(info) separate from the original current pointer used by fn_80158264 and dispatch. Remaining codegen divergence is primarily r23-r31 allocation (retail saves r23-r31 while generated saves r24-r31), aggregate stack initialization scheduling, and seven instructions across saved-value moves and nested pointer/call expressions."
+}

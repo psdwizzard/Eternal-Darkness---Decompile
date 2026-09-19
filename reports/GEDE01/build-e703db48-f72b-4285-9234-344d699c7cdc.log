@@ -1,0 +1,40 @@
+$ python3 configure.py
+exit_code=0
+
+$ .tools/bin/ninja -j2
+[875/881] MWCC build/GEDE01/src/game/game_fn_801807B0.o
+[876/881] MWCC build/GEDE01/src/game/game_fn_801D2440.o
+[877/881] REPORT
+ INFO Loading project .
+ INFO Generating report for 7068 units (using 8 threads)
+ INFO Report generated in 0.223s
+ INFO Writing to build/GEDE01/report.json
+[878/881] LINK build/GEDE01/main.elf
+[879/881] DOL build/GEDE01/main.dol
+[880/881] CHECK config/GEDE01/build.sha1
+build/GEDE01/main.dol: OK
+[881/881] PROGRESS
+exit_code=0
+
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D2440.o
+ninja: no work to do.
+exit_code=0
+
+$ sha1sum build/GEDE01/main.dol
+ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol
+
+$ sha1sum -c config/GEDE01/build.sha1
+build/GEDE01/main.dol: OK
+exit_code=0
+
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json-pretty -o reports/GEDE01/objdiff-e703db48-f72b-4285-9234-344d699c7cdc-canonical.json fn_801D2440
+ INFO Writing to reports/GEDE01/objdiff-e703db48-f72b-4285-9234-344d699c7cdc-canonical.json
+exit_code=0
+
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json-pretty -c function_reloc_diffs=name_address -o reports/GEDE01/objdiff-e703db48-f72b-4285-9234-344d699c7cdc.json fn_801D2440
+ INFO Writing to reports/GEDE01/objdiff-e703db48-f72b-4285-9234-344d699c7cdc.json
+exit_code=0
+
+$ measured report summary
+canonical: left_size=2916 right_size=2888 match_percent=89.8546
+relocation_strict(function_reloc_diffs=name_address): left_size=2916 right_size=2888 match_percent=89.8546
