@@ -8,18 +8,25 @@ extern int lbl_8064CFAC;
 extern u32 lbl_8064CFB0;
 extern u8 lbl_8064CFA4;
 
-/* NonMatching: honest reconstruction of the pool reset. Retail uses MWCC's
- * eight-way unrolled loop to clear owner and state fields. */
+/* NonMatching: size-exact pool reset; remaining differences are register
+ * allocation and instruction scheduling in the setup and unrolled clear loop. */
 u32 fn_80135748(u32* end_out)
 {
     int i;
-    u32 aligned = (lbl_8064CF88->capacity + 31) & ~31;
-    u32 end = (u32)(lbl_8064CF80 + lbl_8064CFB0) - aligned;
+    Slot* slot;
+    u32 aligned;
+    u32 end;
+    int count;
+
     lbl_8064CFA4 = 1;
+    count = lbl_8064CFAC;
+    aligned = ((u32)lbl_8064CF88->data + 31) & ~31;
+    end = (u32)(lbl_8064CF80 + lbl_8064CFB0) - aligned;
     if (end_out != 0) *end_out = end;
-    for (i = 0; i < lbl_8064CFAC; i++) {
-        lbl_8064CF88[i].state = 0;
-        lbl_8064CF88[i].owner = 0;
+    for (i = 0; i < count; i++) {
+        slot = &lbl_8064CF88[i];
+        slot->state = 0;
+        slot->owner = 0;
     }
     return aligned;
 }
