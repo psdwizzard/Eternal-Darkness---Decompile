@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f1f6ccc6-8590-4f17-9856-e01c6c675faf",
+  "attempt": 4,
+  "base_commit": "1de73f203d852e1cb8be19172f8b733faada49b0",
+  "target": "fn_8020686C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f1f6ccc6-8590-4f17-9856-e01c6c675faf.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure a size-exact 98.37749% (604 retail bytes and 604 candidate bytes). The immediate-data loop entry emits cmpwi r30,0; li r24,0; li r25,0; ble instead of retail li r24,0; cmpw r24,r30; li r25,0; bge. At offsets 0x218-0x22C the control-register calculation is instruction-equivalent but rotates retail r5/r4/r3 temporaries to r5/r4/r6, including addi r6,r3,0x6800 rather than addi r3,r3,0x6800. All seven non-NONE relocation entries agree in type, target-symbol index, and zero addend. The distinct direct register-array and combined-address-expression hypotheses collapsed the address calculation to 596 bytes and scored 93.53642% and 96.516556%, respectively, so the size-exact reconstruction was retained. The rebuilt DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f and cmp against retail returns 0."
+}

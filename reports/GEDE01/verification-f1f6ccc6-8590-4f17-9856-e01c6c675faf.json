@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "assignment_id": "f1f6ccc6-8590-4f17-9856-e01c6c675faf",
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_output_tail": "[878/880] DOL build/GEDE01/main.dol\n[879/880] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[880/880] PROGRESS"
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8020686C fn_8020686C -o build/GEDE01/objdiff-f1f6ccc6-8590-4f17-9856-e01c6c675faf-canonical.json --format json-pretty",
+    "exit_code": 0,
+    "raw_measurement": "match_percent=98.37749 retail_size=604 candidate_size=604"
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8020686C fn_8020686C -o reports/GEDE01/objdiff-f1f6ccc6-8590-4f17-9856-e01c6c675faf.json --format json-pretty -c function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "raw_measurement": "match_percent=98.37749 retail_size=604 candidate_size=604",
+    "retail_relocations": "R_PPC_ADDR16_HA:2:0,R_PPC_ADDR16_LO:2:0,R_PPC_REL24:3:0,R_PPC_REL24:4:0,R_PPC_REL24:5:0,R_PPC_REL24:6:0,R_PPC_REL24:4:0",
+    "candidate_relocations": "R_PPC_ADDR16_HA:2:0,R_PPC_ADDR16_LO:2:0,R_PPC_REL24:3:0,R_PPC_REL24:4:0,R_PPC_REL24:5:0,R_PPC_REL24:6:0,R_PPC_REL24:4:0"
+  },
+  "hypotheses": [
+    "Direct EXI_REGS[chan * 5 + 3] assignment collapsed the address expression, yielding 596 candidate bytes and 93.53642%.",
+    "A single regAddr = 0xCC006800 + chan * 20 expression also collapsed the address expression, yielding 596 candidate bytes and 96.516556%.",
+    "The preserved two-statement base-address construction remains best at 604 bytes and 98.37749%."
+  ],
+  "legal_audit": {
+    "command": "rg -n '__asm|asm\\(' src/game/game_fn_8020686C.c",
+    "exit_code": 1,
+    "raw_output": "",
+    "conclusion": "The independent translation unit contains no inline or whole-function assembly."
+  },
+  "dol": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol && cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  }
+}
