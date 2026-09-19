@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "assignment_id": "0b7d9cac-05f7-4f35-bc65-8dcde6ee9dd8",
+  "target": "fn_801CEF74",
+  "compiler": "GC/1.3",
+  "compiler_flags": ["-use_lmw_stmw on"],
+  "commands": {
+    "configure": {
+      "command": "python3 configure.py",
+      "exit_code": 0
+    },
+    "build": {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output_tail": [
+        "[878/880] DOL build/GEDE01/main.dol",
+        "[879/880] CHECK config/GEDE01/build.sha1",
+        "build/GEDE01/main.dol: OK",
+        "[880/880] PROGRESS"
+      ]
+    },
+    "objdiff": {
+      "command": "python3 tools/fndiff.py game/game_fn_801CEF74.c fn_801CEF74",
+      "exit_code": 0,
+      "raw_output": "target 3784 bytes  base 640 bytes  match 15.852009",
+      "retail": {
+        "size_bytes": 3784,
+        "instruction_count": 946,
+        "relocation_count": 130
+      },
+      "candidate": {
+        "size_bytes": 640,
+        "instruction_count": 160,
+        "relocation_count": 25
+      },
+      "match_percent": 15.852009,
+      "relocation_strict_match": false
+    },
+    "dol_sha1": {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "exit_code": 0,
+      "raw_output": [
+        "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+        "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+      ]
+    },
+    "retail_comparison": {
+      "command": "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "exit_code": 0,
+      "raw_output": "retail_cmp_exit=0"
+    },
+    "legal_audit": {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (17376 tracked project files inspected)"
+    }
+  },
+  "semantic_checks": {
+    "zero_counter_reaches_cleanup": true,
+    "fn_801D313C_requires_counter_gt_30_and_flag_0x08": true,
+    "resource_cleanup_is_independent_of_counter_and_fn_801D313C": true,
+    "owner_type_mask": "0x1FF0",
+    "fn_801D1318_predicate": "flag 0x10 && !(counter > 30 && flag 0x08)",
+    "fn_800A0B68_after_teardown": true,
+    "dispatcher_reconstructed": false
+  },
+  "divergence": "The candidate is a 640-byte/160-instruction honest C prefix and teardown reconstruction versus retail's 3784-byte/946-instruction routine. The large event/state dispatcher beginning at retail offset 0x278 in the direct alignment (address 0x801CF1EC) remains unreconstructed. Consequently retail uses a 0x110 stack frame, saves f31, and allocates r23-r31, while the candidate uses a 0x30 frame and r25-r31; 105 retail relocation-bearing instructions remain absent. The corrected teardown predicates and calls are present, but register allocation and some instruction scheduling differ because the dispatcher and its floating-point temporaries are absent."
+}
