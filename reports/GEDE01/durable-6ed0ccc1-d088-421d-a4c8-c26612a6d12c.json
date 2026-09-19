@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "6ed0ccc1-d088-421d-a4c8-c26612a6d12c",
+  "attempt": 5,
+  "base_commit": "4aa8c30b176359dd4184a6dff16ec4ada5c06453",
+  "target": "fn_80171D6C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6ed0ccc1-d088-421d-a4c8-c26612a6d12c.json"
+  ],
+  "divergence": "Canonical objdiff-cli 3.6.1 with relocation-strict function_reloc_diffs=name_address reports 98.0531%: retail is 452 bytes/113 instructions with 17 relocation-bearing instructions, while generated code is 456 bytes/114 instructions with 18 relocation-bearing instructions. Attempt 5 tested a distinct scalar-replacement hypothesis by wrapping the long-lived lbl_8024FF00 pointer in an anonymous aggregate initialized at function entry; canonical MWCC scalarized it but degraded the score to 89.11504%, so the best honest C was restored. Retail keeps lbl_8024FF00@ha in r4 across stmw and emits addi r31,r4,lbl_8024FF00@l at +0x18, while canonical MWCC emits addi r0,r4,lbl_8024FF00@l at +0x10 before stmw and mr r31,r0 at +0x1C. Retail also emits addi r4,r31,0 at +0x38 versus generated mr r4,r31 at +0x3C. The required canonical build completed successfully and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
