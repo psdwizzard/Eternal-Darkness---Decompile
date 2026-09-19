@@ -1,0 +1,104 @@
+target 412 bytes  base 412 bytes  match 99.11651
+* 0x0000  stwu r1, -0x20(r1)                                   | stwu r1, -0x30(r1)
+  0x0004  mflr r0                                              | mflr r0
+* 0x0008  stw r0, 0x24(r1)                                     | stw r0, 0x34(r1)
+* 0x000c  stmw r26, 0x8(r1)                                    | stmw r25, 0x14(r1)
+* 0x0010  mr r28, r3                                           | mr r25, r3
+  0x0014  bl fn_8006ED98 [None+0 t10]                          | bl fn_8006ED98 [None+0 t10]
+  0x0018  mr r0, r3                                            | mr r0, r3
+* 0x001c  mr r3, r28                                           | mr r3, r25
+  0x0020  mr r27, r0                                           | mr r27, r0
+  0x0024  bl fn_8006D488 [None+0 t10]                          | bl fn_8006D488 [None+0 t10]
+  0x0028  lwz r0, 0x0(r27)                                     | lwz r0, 0x0(r27)
+  0x002c  mr r29, r3                                           | mr r29, r3
+* 0x0030  lwz r31, 0xc4(r28)                                   | lwz r28, 0xc4(r25)
+  0x0034  cmpwi r0, 0x7                                        | cmpwi r0, 0x7
+  0x0038  bne 0xc8                                             | bne 0xc8
+* 0x003c  mr r3, r28                                           | mr r3, r25
+  0x0040  li r4, 0x7                                           | li r4, 0x7
+  0x0044  bl fn_8006ECD4 [None+0 t10]                          | bl fn_8006ECD4 [None+0 t10]
+  0x0048  mr r31, r3                                           | mr r31, r3
+  0x004c  mr r3, r29                                           | mr r3, r29
+  0x0050  li r4, 0x0                                           | li r4, 0x0
+  0x0054  bl fn_802020B4 [None+0 t10]                          | bl fn_802020B4 [None+0 t10]
+  0x0058  li r3, 0x0                                           | li r3, 0x0
+  0x005c  bl fn_801A5C30 [None+0 t10]                          | bl fn_801A5C30 [None+0 t10]
+  0x0060  li r3, 0x2                                           | li r3, 0x2
+  0x0064  li r4, 0x0                                           | li r4, 0x0
+  0x0068  bl fn_8015C8A4 [None+0 t10]                          | bl fn_8015C8A4 [None+0 t10]
+  0x006c  lwz r3, lbl_8064C824@sda21 [None+0 t109]             | lwz r3, lbl_8064C824@sda21 [None+0 t109]
+  0x0070  bl fn_801A6E14 [None+0 t10]                          | bl fn_801A6E14 [None+0 t10]
+  0x0074  li r3, 0x1b                                          | li r3, 0x1b
+  0x0078  li r4, 0x64                                          | li r4, 0x64
+  0x007c  li r5, 0x6                                           | li r5, 0x6
+  0x0080  li r6, 0x0                                           | li r6, 0x0
+  0x0084  li r7, 0x0                                           | li r7, 0x0
+  0x0088  li r8, 0x5                                           | li r8, 0x5
+  0x008c  li r9, 0x0                                           | li r9, 0x0
+  0x0090  li r10, 0x1                                          | li r10, 0x1
+  0x0094  bl fn_801B05E8 [None+0 t10]                          | bl fn_801B05E8 [None+0 t10]
+  0x0098  bl fn_8004918C [None+0 t10]                          | bl fn_8004918C [None+0 t10]
+  0x009c  bl fn_801A7780 [None+0 t10]                          | bl fn_801A7780 [None+0 t10]
+  0x00a0  lis r4, 0x8                                          | lis r4, 0x8
+  0x00a4  addi r0, r4, 0x20                                    | addi r0, r4, 0x20
+  0x00a8  and. r0, r3, r0                                      | and. r0, r3, r0
+  0x00ac  beq 0x184                                            | beq 0x184
+  0x00b0  mulli r3, r31, 0x2c                                  | mulli r3, r31, 0x2c
+  0x00b4  li r0, 0x2                                           | li r0, 0x2
+* 0x00b8  add r3, r28, r3                                      | add r3, r25, r3
+  0x00bc  stb r0, 0x6a(r3)                                     | stb r0, 0x6a(r3)
+  0x00c0  stb r0, 0x6b(r3)                                     | stb r0, 0x6b(r3)
+  0x00c4  b 0x184                                              | b 0x184
+  0x00c8  lwz r3, lbl_8064C824@sda21 [None+0 t109]             | lwz r3, lbl_8064C824@sda21 [None+0 t109]
+  0x00cc  bl fn_801A6D94 [None+0 t10]                          | bl fn_801A6D94 [None+0 t10]
+  0x00d0  cmpwi r3, 0x0                                        | cmpwi r3, 0x0
+  0x00d4  beq 0x15c                                            | beq 0x15c
+* 0x00d8  mr r3, r28                                           | mr r3, r25
+  0x00dc  li r4, 0x6                                           | li r4, 0x6
+  0x00e0  bl fn_8006ECD4 [None+0 t10]                          | bl fn_8006ECD4 [None+0 t10]
+  0x00e4  mulli r30, r3, 0x2c                                  | mulli r30, r3, 0x2c
+  0x00e8  li r0, 0x4                                           | li r0, 0x4
+* 0x00ec  mr r3, r28                                           | mr r3, r25
+  0x00f0  li r4, 0x6                                           | li r4, 0x6
+* 0x00f4  add r29, r28, r30                                    | add r29, r25, r30
+  0x00f8  li r5, 0x0                                           | li r5, 0x0
+  0x00fc  stb r0, 0x68(r29)                                    | stb r0, 0x68(r29)
+  0x0100  li r6, 0x0                                           | li r6, 0x0
+  0x0104  li r7, 0x0                                           | li r7, 0x0
+  0x0108  bl fn_8006DEF8 [None+0 t10]                          | bl fn_8006DEF8 [None+0 t10]
+  0x010c  li r26, 0x0                                          | li r26, 0x0
+* 0x0110  addi r30, r30, 0x68                                  | addi r31, r25, 0x68
+* 0x0114  stbx r26, r28, r30                                   | stbx r26, r30, r31
+* 0x0118  mr r3, r28                                           | mr r3, r25
+  0x011c  li r4, 0x6                                           | li r4, 0x6
+  0x0120  li r5, 0x0                                           | li r5, 0x0
+  0x0124  li r6, 0x0                                           | li r6, 0x0
+  0x0128  li r7, 0x0                                           | li r7, 0x0
+  0x012c  bl fn_8006DEF8 [None+0 t10]                          | bl fn_8006DEF8 [None+0 t10]
+  0x0130  addi r26, r26, 0x1                                   | addi r26, r26, 0x1
+  0x0134  cmpwi r26, 0x4                                       | cmpwi r26, 0x4
+  0x0138  blt 0x114                                            | blt 0x114
+  0x013c  li r0, 0x0                                           | li r0, 0x0
+  0x0140  lis r3, fn_8006EA4C@ha [None+0 t6]                   | lis r3, fn_8006EA4C@ha [None+0 t6]
+  0x0144  stb r0, 0x68(r29)                                    | stb r0, 0x68(r29)
+  0x0148  addi r4, r3, fn_8006EA4C@l [None+0 t4]               | addi r4, r3, fn_8006EA4C@l [None+0 t4]
+  0x014c  mr r3, r27                                           | mr r3, r27
+* 0x0150  stb r0, 0x159(r31)                                   | stb r0, 0x159(r28)
+  0x0154  bl fn_8006BEE4 [None+0 t10]                          | bl fn_8006BEE4 [None+0 t10]
+  0x0158  b 0x184                                              | b 0x184
+  0x015c  mr r3, r29                                           | mr r3, r29
+  0x0160  li r4, 0x0                                           | li r4, 0x0
+  0x0164  bl fn_802020B4 [None+0 t10]                          | bl fn_802020B4 [None+0 t10]
+  0x0168  li r3, 0x0                                           | li r3, 0x0
+  0x016c  bl fn_801A5C30 [None+0 t10]                          | bl fn_801A5C30 [None+0 t10]
+  0x0170  li r3, 0x2                                           | li r3, 0x2
+  0x0174  li r4, 0x0                                           | li r4, 0x0
+  0x0178  bl fn_8015C8A4 [None+0 t10]                          | bl fn_8015C8A4 [None+0 t10]
+  0x017c  lwz r3, lbl_8064C824@sda21 [None+0 t109]             | lwz r3, lbl_8064C824@sda21 [None+0 t109]
+  0x0180  bl fn_801A6E14 [None+0 t10]                          | bl fn_801A6E14 [None+0 t10]
+* 0x0184  lmw r26, 0x8(r1)                                     | lmw r25, 0x14(r1)
+  0x0188  li r3, 0x1                                           | li r3, 0x1
+* 0x018c  lwz r0, 0x24(r1)                                     | lwz r0, 0x34(r1)
+  0x0190  mtlr r0                                              | mtlr r0
+* 0x0194  addi r1, r1, 0x20                                    | addi r1, r1, 0x30
+  0x0198  blr                                                  | blr

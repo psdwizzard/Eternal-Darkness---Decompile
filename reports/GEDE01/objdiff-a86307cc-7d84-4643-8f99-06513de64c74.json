@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "assignment_id": "a86307cc-7d84-4643-8f99-06513de64c74",
+  "attempt": 6,
+  "target": "fn_80087EC4",
+  "base_commit": "762b383994df120f2e80296d44abd26945c8a312",
+  "status": "attempted",
+  "compiler": "GC/1.3",
+  "compiler_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+  "compiler_policy_changed": false,
+  "source": "eternal-darkness-decomp/src/game/game_fn_80087EC4.c",
+  "source_sha256": "979875e3b44c3714e83f7be5809ee29ae522912a9e26ff3898fd1311091977fb",
+  "preserved_attempts_reviewed": [
+    "eccc87465440e03f34166227854e42048b695dc6",
+    "d47d87f9c613736e85839e55d9ca62514f7c086d",
+    "2daa20c13d40d73e2ce81436b4c2454f49b05b7c",
+    "181ba5fd22a5905e6459f1392bc1983e3f333389",
+    "b839c1f110947497319c7bce6e89ea0ead8e90d3"
+  ],
+  "reconciliation": "Accepted base already contains the preserved attempt-5 independent NonMatching C unit, registration, and split. Only this source and assignment-specific reports changed.",
+  "hypothesis": {
+    "new_hypothesis": "The extra saved register is caused by byte-address reassociation in the loop, not solely by failure to coalesce owner and mode-7 index. Model three 0x2C-byte records at Work+0x40, with count at record+0x28 and flag bytes at +0x2A/+0x2B, so the compiler can retain offset+0x68 rather than work+0x68.",
+    "layout_evidence": "Read-only inspection of fn_8006ECD4 shows three record references. fn_8006DEF8 uses stride 0x2C, arrays at work+0x40/+0x50/+0x60, and count at work+0x68. Owner remains at work+0xC4. Neither neighboring source was modified.",
+    "outcome": "Fully typed record accesses recover the six-register 0x20 frame and retail instruction forms, reaching 98.49515%, or 98.78641% with declaration ordering. Retaining byte-offset access only inside the loop and typed accesses before/after the loop improves the score to 99.11651%, at the cost of the seventh saved register. This highest-scoring honest reconstruction is retained. Owner and index are now separately typed locals; pointer/integer round trips are removed.",
+    "negative_results": "Exhaustive 720 permutations of six function-scoped declarations did not improve the fully typed form beyond 98.78641%. Register storage-class hints, const pointer copies, void input, scoped index/counter variants, named record pointers, typed view overlays, integer width/signedness changes, and offset-bias timing did not close the remaining gap.",
+    "experiments": "eternal-darkness-decomp/reports/GEDE01/experiments-a86307cc-7d84-4643-8f99-06513de64c74.json"
+  },
+  "build": {
+    "working_directory": "eternal-darkness-decomp",
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_log": "eternal-darkness-decomp/reports/GEDE01/build-a86307cc-7d84-4643-8f99-06513de64c74.log",
+    "raw_output_excerpt": "build/GEDE01/main.dol: OK",
+    "link_basis": "NonMatching: retail split remains linked; DOL equality is a regression gate, not proof that the C matches."
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80087EC4 fn_80087EC4 -o - --format json",
+    "match_percent": 99.11651,
+    "target_size": 412,
+    "source_size": 412,
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/canonical-a86307cc-7d84-4643-8f99-06513de64c74.json",
+    "raw_fndiff": "eternal-darkness-decomp/reports/GEDE01/fndiff-a86307cc-7d84-4643-8f99-06513de64c74.txt"
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80087EC4 fn_80087EC4 -o - --format json -c function_reloc_diffs=name_address",
+    "match_percent": 99.11651,
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/strict-a86307cc-7d84-4643-8f99-06513de64c74.json"
+  },
+  "byte_comparison": {
+    "method": "Extract .text from each ELF32 big-endian object using section headers and compare each four-byte instruction without masking.",
+    "target_sha256": "b41790fc669e2a6a053efa02452412e6a86549f5c13b46936666243a2137e29d",
+    "source_sha256": "c473d05b099cdc07e2cb5c7a495bcacc898578a7bfdf89b88ed109382ddbe148",
+    "differing_instruction_count": 18,
+    "differing_instruction_offsets": [
+      "0x0",
+      "0x8",
+      "0xc",
+      "0x10",
+      "0x1c",
+      "0x30",
+      "0x3c",
+      "0xb8",
+      "0xd8",
+      "0xec",
+      "0xf4",
+      "0x110",
+      "0x114",
+      "0x118",
+      "0x150",
+      "0x184",
+      "0x18c",
+      "0x194"
+    ]
+  },
+  "relocations": {
+    "equal": true,
+    "count": 24,
+    "comparison_fields": [
+      "offset",
+      "type",
+      "target",
+      "addend_sign",
+      "addend"
+    ],
+    "raw_readelf_and_tuples": "eternal-darkness-decomp/reports/GEDE01/relocations-a86307cc-7d84-4643-8f99-06513de64c74.json"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (17707 tracked project files inspected)\n",
+    "exit_code": 0
+  },
+  "scope": {
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "new_compiler_flags_or_pragmas": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "runtime_edits": false,
+    "global_progress_edits": false,
+    "private_inputs_or_binaries_committed": false,
+    "remote_push": false
+  },
+  "divergence": "Canonical GC/1.3 is size-exact at 412/412 bytes and 99.11651% on both canonical and relocation-strict objdiff, with 18 differing instructions. Retail uses work=r28 and owner=r31 in a 0x20-byte frame saving r26-r31. Generated code uses work=r25 and owner=r28 in a 0x30-byte frame saving r25-r31; at 0x110-0x114 it hoists work+0x68 into r31 and stores via offset=r30 plus r31, rather than adding 0x68 to offset=r30 and indexing work=r28. Other state/object/index/loop-counter roles and all 24 relocation tuples now agree."
+}

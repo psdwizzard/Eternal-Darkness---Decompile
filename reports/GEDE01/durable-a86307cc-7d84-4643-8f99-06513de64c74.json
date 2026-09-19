@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "assignment_id": "a86307cc-7d84-4643-8f99-06513de64c74",
+  "attempt": 6,
+  "base_commit": "762b383994df120f2e80296d44abd26945c8a312",
+  "target": "fn_80087EC4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a86307cc-7d84-4643-8f99-06513de64c74.json",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-a86307cc-7d84-4643-8f99-06513de64c74.json",
+    "eternal-darkness-decomp/reports/GEDE01/strict-a86307cc-7d84-4643-8f99-06513de64c74.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-a86307cc-7d84-4643-8f99-06513de64c74.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-a86307cc-7d84-4643-8f99-06513de64c74.json",
+    "eternal-darkness-decomp/reports/GEDE01/fndiff-a86307cc-7d84-4643-8f99-06513de64c74.txt",
+    "eternal-darkness-decomp/reports/GEDE01/build-a86307cc-7d84-4643-8f99-06513de64c74.log"
+  ],
+  "divergence": "Canonical GC/1.3 is size-exact at 412/412 bytes and 99.11651% on both canonical and relocation-strict objdiff, with 18 differing instructions. Retail uses work=r28 and owner=r31 in a 0x20-byte frame saving r26-r31. Generated code uses work=r25 and owner=r28 in a 0x30-byte frame saving r25-r31; at 0x110-0x114 it hoists work+0x68 into r31 and stores via offset=r30 plus r31, rather than adding 0x68 to offset=r30 and indexing work=r28. Other state/object/index/loop-counter roles and all 24 relocation tuples now agree."
+}
