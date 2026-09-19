@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "assignment_id": "9980acf9-d340-404e-85b7-c7b20a679483",
+  "target": "fn_800E33B8",
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "output": "build/GEDE01/main.dol: OK"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800E33B8 fn_800E33B8 -o reports/GEDE01/objdiff-9980acf9-d340-404e-85b7-c7b20a679483.json --format json-pretty",
+      "exit_code": 0,
+      "output": {"size": 252, "match_percent": 98.492065, "instruction_differences": 18, "relocations_per_side": 14}
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800E33B8 fn_800E33B8 -o reports/GEDE01/objdiff-9980acf9-d340-404e-85b7-c7b20a679483-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "output": {"size": 252, "match_percent": 98.492065, "instruction_differences": 18, "relocations_per_side": 14}
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+      "exit_code": 0,
+      "output": [
+        "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+        "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+      ]
+    }
+  ],
+  "tested_this_attempt": [
+    {
+      "hypothesis": "Hoist all three incoming formals into leading locals before constructing the other long-lived values, changing the interference graph while preserving the call and branch schedule.",
+      "result": "Optimizer-neutral: 252 bytes, 98.492065%, with the same generated event_data/object/mode/argument allocation r31/r29/r30/r28."
+    },
+    {
+      "hypothesis": "Construct mode and argument with conditional expressions rather than two initialized locals followed by conditional assignments, changing value-web creation order.",
+      "result": "Both conditional expressions colored event_data/object into the retail r30/r31 registers, but folded mode into branchless arithmetic, changed the incoming id/resource registers, and fell to 92.523810%. Mode-only and argument-only conditional variants measured 92.206350% and 98.492065% respectively; none preserved the retail instruction sequence with improved coloring."
+    }
+  ],
+  "best_divergence": "The retained C is size-exact. All 18 differences are register operands: retail event_data/object/mode/argument use r30/r31/r28/r29 while generated uses r31/r29/r30/r28. Both objdiff modes report 98.492065%; each side contains the same ordered 14 relocation records by type and target symbol."
+}
