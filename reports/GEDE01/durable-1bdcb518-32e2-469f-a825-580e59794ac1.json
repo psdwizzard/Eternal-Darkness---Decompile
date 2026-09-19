@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "1bdcb518-32e2-469f-a825-580e59794ac1",
+  "attempt": 1,
+  "base_commit": "2442692c480b97a1a5e8c42d38877b6d072a01f9",
+  "target": "fn_80196578",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1bdcb518-32e2-469f-a825-580e59794ac1.json"
+  ],
+  "divergence": "Best canonical relocation-strict objdiff is 80.44898%: retail is 196 bytes while GC/1.3 emits 188 bytes. Retail saves r28-r31 and keeps the two adjacent global words plus the 5/10 constants in four nonvolatile live ranges; generated code saves only r29-r31, colors the aggregate words into r29/r30, leaves 5 in r12, and consequently differs in aggregate stack materialization, store scheduling, restore sequence, and two instructions of total size."
+}
