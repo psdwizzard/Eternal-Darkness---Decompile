@@ -27,7 +27,7 @@ extern void* memset(void*, int, u32);
 extern void fn_801804AC(void*, void*, void*, void*);
 extern void fn_80180554(void*, void*, void*, void*, int, int);
 extern void fn_801805E0(void*, int, u8, int, void*, float);
-extern void fn_8018E230(void*, void*, int, u8, u8, u8);
+extern void fn_8018E230(void*, void*, int, u8, int, int);
 extern void fn_8018E260(void*, u8, u8);
 extern void fn_8018CB70(void*, u8, u16);
 extern void fn_8018C540(void*, void*, u8, int, u16);
@@ -66,7 +66,7 @@ void fn_8019B4D4(u8* object, void* first, void* second, u8* config)
 
     if (config[0x16] != 0) {
         fn_8018E230(entry, entry + 0x2B, 1, 0,
-                    (signed char)config[0x16], config[0x17]);
+                    ((s8*)config)[0x16], config[0x17]);
     } else if (*(u16*)(config + 6) == 0 && *(int*)(config + 0x1C) == 0) {
         if (config[0x14] != config[0x15]) {
             fn_8018E230(entry, entry + 0x2B, 3, config[0x14],
