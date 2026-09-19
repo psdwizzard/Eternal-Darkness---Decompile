@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "0141f2d1-e1b6-40c1-bbbb-fada18f504d5",
+  "attempt": 4,
+  "base_commit": "9b6d973a3b568fd365d56e925d4007f8db9e08df",
+  "target": "fn_801E915C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0141f2d1-e1b6-40c1-bbbb-fada18f504d5.json"
+  ],
+  "divergence": "A different loop-initialization-order hypothesis improves the preserved reconstruction from 98.10465% to 98.16279% while remaining size-exact at 1032/1032 bytes. Fresh canonical and relocation-strict objdiff agree at 98.16279%, with 29 operand mismatches, two replacements, one insertion, and one deletion; all 10 relocation-bearing instructions agree in site, type, target name/address, and addend. The three entry-relocation loops still exchange r5/r6 for field offset and loaded size. The data50 loops still exchange the byte-offset and element-counter roles (r4/r5 and r30/r31), although reversing comma-initializer order now matches two additional zero-initialization instructions. The data58 loop still exchanges r30/r31 and emits mr where retail emits a second li. The verified whole-DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

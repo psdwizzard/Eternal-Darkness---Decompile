@@ -139,11 +139,11 @@ u32 fn_801E915C(const u8* source, Header* header)
 
     if (header->data50 != 0) {
         header->data50 = (u32)(source + offset);
-        for (i = 0, byte_offset = 0; i < header->count4C; i++, byte_offset += 4) {
+        for (byte_offset = 0, i = 0; i < header->count4C; i++, byte_offset += 4) {
             *(u32*)(header->data50 + byte_offset) = (u32)(source + offset);
             offset += 4;
         }
-        for (i = 0, byte_offset = 0; i < header->count4C; i++, byte_offset += 4) {
+        for (byte_offset = 0, i = 0; i < header->count4C; i++, byte_offset += 4) {
             offset += fn_801EA600(source + offset, (void*)(header->data50 + byte_offset));
         }
     }
@@ -151,7 +151,7 @@ u32 fn_801E915C(const u8* source, Header* header)
     if (header->data58 != 0) {
         header->data58 = (u32)(source + offset);
         offset += header->count54 * 4;
-        for (i = 0, byte_offset = 0; i < header->count54; i++, byte_offset += 4) {
+        for (byte_offset = 0, i = 0; i < header->count54; i++, byte_offset += 4) {
             *(u32*)(header->data58 + byte_offset) = (u32)(source + offset);
             offset += fn_801EA6FC(source + offset, *(void**)(header->data58 + byte_offset));
         }
