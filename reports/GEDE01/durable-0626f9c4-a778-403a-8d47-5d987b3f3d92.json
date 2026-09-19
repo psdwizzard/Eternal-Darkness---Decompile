@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "0626f9c4-a778-403a-8d47-5d987b3f3d92",
+  "attempt": 2,
+  "base_commit": "7536d13c59446b6150f393e9255906a2fdade270",
+  "target": "fn_8015AEB8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0626f9c4-a778-403a-8d47-5d987b3f3d92.json"
+  ],
+  "divergence": "Fresh canonical GC/1.3 relocation-strict objdiff measures 83.70293% (85.205025% fuzzy project-report score) for an exact-size 956-byte C reconstruction (956 retail, 956 generated); the rebuilt DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f. After the common stwu/mflr, retail schedules li r6,0 and lis r7,lbl_805B6E00@ha at offsets 0x8/0xC, stores LR at 0x10, and directly emits stmw r16,0x10(r1) at 0x18, while canonical GC/1.3 stores LR at 0x8 and emits addi r11,r1,0x50 plus a relocation to _savegpr_16 at 0xC/0x10. Register allocation consequently rotates the long-lived lbl_805B6E00 bases (retail r27/r28/r29; generated r28/r27/r31), the allocation count (retail r30; generated r29), and flags (retail r31; generated r30), shifting branch targets and downstream encodings despite the recovered calls, copy schedule, two-entry setup loop, and teardown flow."
+}
