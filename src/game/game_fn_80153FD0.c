@@ -14,7 +14,7 @@ extern void fn_8019CFC4(void*);
 extern void fn_80148A98(void*, void*);
 extern void fn_80149B38(void*);
 extern void fn_80184740(void*);
-extern int fn_801E8328();
+extern int fn_801E8328(int, void*, u32);
 extern void fn_80149EB8(void*);
 extern u8 lbl_802FC5BC[];
 
@@ -52,7 +52,7 @@ void fn_80153FD0(u32 value, Object* object)
             config = global[3];
             *(u32*)(child + 0x2C) = config;
             child[0x2F] = 0xE0;
-            fn_801E8328(0x1B, object, (void*)config);
+            fn_801E8328(0x1B, object, config);
         } else {
             fn_80149EB8(*(void**)(object->data + 0xC0));
         }
