@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "86afb1e1-07a6-4cc7-9600-99996287f7c6",
+  "attempt": 2,
+  "base_commit": "488d05c0ba390cf29ac8a31902f8836f756bb40c",
+  "target": "fn_801E0088",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-86afb1e1-07a6-4cc7-9600-99996287f7c6.json"
+  ],
+  "divergence": "Relocation-strict direct objdiff is 8.621346%: generated 660 bytes/165 instructions/33 relocations versus retail 6296 bytes/1574 instructions/226 relocations. The preserved honest C reconstruction covers the common teardown and dispatcher cases 0, 20, and 40; the remaining dispatcher arms are absent. Canonical GC/1.3 emits a 0x30-byte frame with r27-r31 saved, while retail uses a 0x110-byte frame with r26-r31 and f31 saved. A clean canonical build completed and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
