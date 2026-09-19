@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "6383c9fc-d42f-4d97-ba7e-19c05f5c855b",
+  "attempt": 4,
+  "base_commit": "a4ee52f524c180db24ff67993732615bd565a6d1",
+  "target": "fn_801FE56C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6383c9fc-d42f-4d97-ba7e-19c05f5c855b.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict direct objdiff reports are byte-identical and measure the retained size-exact 716-byte reconstruction at 97.7933%. The 19 remaining diff rows are 15 operand mismatches plus two replacements, one deletion, and one insertion: retail uses r24/r23 for the constants/player pair while generated uses r23/r24; retail retains li r26,0 and updates it with ori r26,r26,0x80 at 0x110 and 0x190, while generated folds those to li r26,0x80 four bytes earlier; and generated materializes lbl_8063EA00 through r0 plus mr r29,r0. Both ELF objects contain the same ordered 39 relocation types, targets, and zero addends, but relocation records 3 through 31 are four bytes early until the compensating mr. A distinct register-volatile feature-mask hypothesis produced the desired ori operations but added stack traffic, expanded generated size to 740 bytes, and scored 94.167595%; delaying the constants initialization to alter player/constants live-range coloring remained size-exact but scored 94.94414%. Both were rejected. The required configure/build passed, build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f, and tools/legal_audit.py passed all 18351 tracked project files."
+}
