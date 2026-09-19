@@ -43,7 +43,7 @@ extern const float lbl_806512AC;
 extern const float lbl_806512B0;
 
 #define RELOCATE(field) do { \
-    u32 size = (u32)(field); \
+    size = (u32)(field); \
     if (size != 0) { \
         *(u32*)&(field) = (u32)(source + offset); \
         offset += size; \
@@ -53,7 +53,7 @@ extern const float lbl_806512B0;
 u32 fn_801E995C(const u8* source, ModelHeader* header)
 {
     u32 offset = 0;
-    u32 byte_offset;
+    u32 size;
     int i;
 
     *header = *(const ModelHeader*)source;
@@ -64,22 +64,22 @@ u32 fn_801E995C(const u8* source, ModelHeader* header)
     }
 
     RELOCATE(header->data04);
-    for (i = 0, byte_offset = 0; i < header->count02; i++, byte_offset += 0x78) {
-        RELOCATE(*(u32*)((u8*)header->data04 + byte_offset + 0x64));
-        RELOCATE(*(u32*)((u8*)header->data04 + byte_offset + 0x6C));
-        RELOCATE(*(u32*)((u8*)header->data04 + byte_offset + 0x74));
+    for (i = 0; i < header->count02; i++) {
+        RELOCATE(*(u32*)((u8*)header->data04 + (i * 0x78) + 0x64));
+        RELOCATE(*(u32*)((u8*)header->data04 + (i * 0x78) + 0x6C));
+        RELOCATE(*(u32*)((u8*)header->data04 + (i * 0x78) + 0x74));
     }
     RELOCATE(header->data0C);
-    for (i = 0, byte_offset = 0; i < header->count08; i++, byte_offset += 0x78) {
-        RELOCATE(*(u32*)((u8*)header->data0C + byte_offset + 0x64));
-        RELOCATE(*(u32*)((u8*)header->data0C + byte_offset + 0x6C));
-        RELOCATE(*(u32*)((u8*)header->data0C + byte_offset + 0x74));
+    for (i = 0; i < header->count08; i++) {
+        RELOCATE(*(u32*)((u8*)header->data0C + (i * 0x78) + 0x64));
+        RELOCATE(*(u32*)((u8*)header->data0C + (i * 0x78) + 0x6C));
+        RELOCATE(*(u32*)((u8*)header->data0C + (i * 0x78) + 0x74));
     }
     RELOCATE(header->data14);
-    for (i = 0, byte_offset = 0; i < header->count10; i++, byte_offset += 0x74) {
-        if (((Entry14*)((u8*)header->data14 + byte_offset))->type6C == 2) {
-            RELOCATE(((Entry14*)((u8*)header->data14 + byte_offset))->data34);
-            RELOCATE(((Entry14*)((u8*)header->data14 + byte_offset))->data3C);
+    for (i = 0; i < header->count10; i++) {
+        if (((Entry14*)((u8*)header->data14 + (i * 0x74)))->type6C == 2) {
+            RELOCATE(((Entry14*)((u8*)header->data14 + (i * 0x74)))->data34);
+            RELOCATE(((Entry14*)((u8*)header->data14 + (i * 0x74)))->data3C);
         }
     }
     RELOCATE(header->data24);
@@ -120,14 +120,17 @@ u32 fn_801E995C(const u8* source, ModelHeader* header)
     RELOCATE(header->data1C);
     RELOCATE(header->data54);
     RELOCATE(header->data5C);
-    for (i = 0, byte_offset = 0; i < header->count58; i++, byte_offset += 0x2C) {
-        RELOCATE(*(u32*)((u8*)header->data5C + byte_offset + 0x28));
+    for (i = 0; i < header->count58; i++) {
+        RELOCATE(*(u32*)((u8*)header->data5C + (i * 0x2C) + 0x28));
     }
     RELOCATE(header->data64);
-    for (i = 0; i < header->count60; i++) RELOCATE(header->data64[i].data08);
     for (i = 0; i < header->count60; i++) {
         Entry64* entry = &header->data64[i];
+        RELOCATE(entry->data08);
+    }
+    for (i = 0; i < header->count60; i++) {
         int j;
+        Entry64* entry = &header->data64[i];
         for (j = 0; j < entry->count06; j++) {
             entry->data08[j] = (u32)&header->data64[entry->data08[j]];
         }
