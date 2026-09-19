@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "42458158-8621-4a88-8632-1962eea71236",
+  "attempt": 6,
+  "base_commit": "6620130041814e4e371ead662a30a7e97fb3c219",
+  "target": "fn_8018A060",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-42458158-8621-4a88-8632-1962eea71236.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-42458158-8621-4a88-8632-1962eea71236.json",
+    "eternal-darkness-decomp/reports/GEDE01/probes-42458158-8621-4a88-8632-1962eea71236.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-42458158-8621-4a88-8632-1962eea71236.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 98.22222%: 360 bytes and 90 instructions on each side, with 24 DIFF_ARG_MISMATCH rows and no opcode or length differences. Retail uses object r28, buffers r31/r30/r29, callback r26, outer index r25, and buffer offset r27; canonical GC/1.3 uses object r31, buffers r29/r28/r27, callback r30, outer index r25, and buffer offset r26. All 22 raw ELF relocations match in offset, type, target and addend; all 27 objdiff relocation annotations also match. Real-parameter reuse, aggregate scalar replacement, and typed-local/coalescing plus callback-lifetime probes did not improve the accepted source (52 measurements including baseline); all probe edits were reverted. Parameter reuse adds a move and reaches at best 97.44444% for buffers; differently typed object locals remove parameter coalescing but shift the initial lis and score 95.94444%. The single-parameter NonMatching source is unchanged. Full configure/Ninja build and legal audit passed; DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
