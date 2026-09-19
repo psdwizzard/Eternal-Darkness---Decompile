@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b1e49184-a670-4694-b14a-8aac14e35085",
+  "attempt": 4,
+  "base_commit": "1a8f947198a2f561e001ab416538dc6a23716143",
+  "target": "fn_801E995C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b1e49184-a670-4694-b14a-8aac14e35085.json"
+  ],
+  "divergence": "Relocation-strict objdiff remains 99.322624% for equal 3236-byte functions (809 instructions each), with 79 argument/register mismatches. A distinct loop-local induction/byte-offset lifetime hypothesis regressed to 99.26082%; an explicit RELOCATE address temporary declared before size regressed to 99.16193%, while the reverse order reproduced the baseline. The best preserved source was therefore retained. Remaining differences are register coloring in the three early relocation loops, the data5C relocation loop, and the final Entry64 loops; conversion-pool relocations still target compiler-local @236/@260 identities instead of retail lbl_806512B8/lbl_806512C0. Canonical build succeeds and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
