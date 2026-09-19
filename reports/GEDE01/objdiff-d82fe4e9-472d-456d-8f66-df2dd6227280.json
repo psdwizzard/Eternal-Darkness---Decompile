@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "assignment_id": "d82fe4e9-472d-456d-8f66-df2dd6227280",
+  "target": "fn_8012C804",
+  "tool": "objdiff-cli via tools/fndiff.py",
+  "raw_summary": "target 704 bytes  base 704 bytes  match 93.92614",
+  "canonical": {
+    "target_size": 704,
+    "candidate_size": 704,
+    "target_instructions": 176,
+    "candidate_instructions": 176,
+    "match_percent": 93.92614
+  },
+  "relocation_strict": {
+    "target_count": 4,
+    "candidate_count": 4,
+    "records_equal": true,
+    "records": [
+      {"offset": 28, "type": "R_PPC_REL24", "target": "fn_80125ECC", "addend": 0},
+      {"offset": 196, "type": "R_PPC_REL24", "target": "fn_8012C478", "addend": 0},
+      {"offset": 556, "type": "R_PPC_REL24", "target": "fn_8012BFE4", "addend": 0},
+      {"offset": 672, "type": "R_PPC_REL24", "target": "fn_8012CAC4", "addend": 0}
+    ]
+  },
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw_result": "build/GEDE01/main.dol: OK",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_raw_result": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "divergence": "Size-exact honest C. Remaining instruction differences are canonical MWCC volatile-register selection (notably graph-entry r4 versus retail r3 and copy source/flags r6/r7 versus retail r7/r5), swapped increment scheduling in the graph walk, and equivalent indexed-address formation in the inherited-state lookup."
+}
