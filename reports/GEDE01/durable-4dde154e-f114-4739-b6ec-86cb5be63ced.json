@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "4dde154e-f114-4739-b6ec-86cb5be63ced",
+  "attempt": 2,
+  "base_commit": "9317cc0641d57474b7656e7f9df4bfe16b5bf55f",
+  "target": "fn_8006D548",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4dde154e-f114-4739-b6ec-86cb5be63ced.json"
+  ],
+  "divergence": "Canonical objdiff is 81.229866%: retail is 2384 bytes and candidate is 2400 bytes. The first concrete divergence is register allocation at function offset 0x10 (retail `mr r19,r3`; candidate `mr r20,r3`), followed by candidate-only `li r19,0` and `li r25,0` at function offsets 0x34 and 0x38. Thus the fn_8015C390 relocation is at retail function/section offset 0x34 but candidate function offset 0x3c (candidate section offset 0xc4 because the section begins with the 0x88-byte copy_point helper). After the null/count checks, retail emits `lwz r24,0x38(r26)` at 0x4c and `mr r21,r24` at 0x54 before its jump table; the candidate omits both there and instead emits `ble`, `li r3,-1`, and an early-return branch. All subsequent relocation offsets diverge; the raw objdiff evidence records both sides' relocation types, target-symbol IDs, resolved formatted target names, and addends."
+}
