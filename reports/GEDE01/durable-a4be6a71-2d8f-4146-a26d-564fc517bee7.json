@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a4be6a71-2d8f-4146-a26d-564fc517bee7",
+  "attempt": 2,
+  "base_commit": "8d348684b0d2134d5757a5fecd5e3a8673dc8590",
+  "target": "fn_801ED118",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a4be6a71-2d8f-4146-a26d-564fc517bee7.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 71.84699%: GC/1.3 emits 668 bytes versus retail's 732. The candidate folds the eight scalar-array bases into direct stores and keeps record-loop pointers in volatile r3-r11, while retail creates a 0x30-byte frame with stmw/lmw r25-r31 and retains scalar and record bases across the initialization schedule."
+}
