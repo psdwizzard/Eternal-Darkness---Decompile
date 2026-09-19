@@ -53,13 +53,14 @@ extern void fn_8002A4C8(void);
 /* NonMatching: behavior-complete object/action/event setup. The generated
  * function is four bytes short because MWCC coalesces the fn_80201B54 result
  * directly into its final register; retail retains an extra mr through r0.
- * The remaining instruction differences are callee-saved register allocation.
+ * Keeping the reused owner identity integer-typed does not prevent that
+ * coalescing. The remaining differences are callee-saved register allocation.
  */
 void fn_800DE704(void)
 {
     void *context = fn_80204A8C();
     void *source = fn_80201AE4();
-    void *owner = ((void *)fn_80201B44());
+    int owner = fn_80201B44();
     void *parent;
     Vec3 position;
     SpawnInfo spawn;
@@ -68,7 +69,7 @@ void fn_800DE704(void)
     void *handle;
 
     fn_80201814(source);
-    parent = fn_80201814(owner);
+    parent = fn_80201814((void *)owner);
     position = fn_80201E78(parent);
     fn_80043F44(&spawn);
     spawn.field_10 = 25;
@@ -78,7 +79,7 @@ void fn_800DE704(void)
     spawn.position = position;
     object = fn_80034708(&spawn);
     info = fn_80201BC8(object);
-    owner = ((void *)fn_80201B54(object));
+    owner = fn_80201B54(object);
     fn_80204CE4(object, context);
     fn_80201D54(object, lbl_8064D18C);
     fn_802015A4(object);
@@ -94,5 +95,5 @@ void fn_800DE704(void)
     object = fn_80201C24(object);
     info = (void *)fn_80157BC4();
     object = fn_801E6CA0(lbl_8064C504, fn_80157BF4(object), (int)info, 0, 1);
-    fn_80027948(object, 0, source, owner, 0, 0, 0);
+    fn_80027948(object, 0, source, (void *)owner, 0, 0, 0);
 }
