@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "assignment_id": "524e37e4-6df3-4536-9df7-a5a0b4528ebe",
+  "target": "fn_800DE704",
+  "tool": "tools/fndiff.py",
+  "hypothesis": {
+    "description": "Model the fn_80201B44 and fn_80201B54 results as distinct initialOwner and eventOwner locals instead of two definitions of one reused owner local, then order the independent context/object/info/source declarations to match the retail interference graph.",
+    "result": "The distinct owner lifetimes restored retail's previously missing mr r0,r3 followed by mr r27,r0 sequence and raised generated size from 448 to the exact 452 retail bytes. Declaration ordering aligned context, source, object, info, eventOwner, and handle through offset 0x164. MWCC still splits the reassigned object/info live ranges after fn_80201C24 and rotates r29/r30 for four instructions."
+  },
+  "canonical": {
+    "target_bytes": 452,
+    "generated_bytes": 452,
+    "match_percent": 99.823006,
+    "raw_output": "target 452 bytes  base 452 bytes  match 99.823006",
+    "raw_divergence": [
+      "0x0168 retail: mr r30, r3 | generated: mr r29, r3",
+      "0x0170 retail: mr r29, r3 | generated: mr r30, r3",
+      "0x0174 retail: mr r3, r30 | generated: mr r3, r29",
+      "0x0184 retail: mr r5, r29 | generated: mr r5, r30"
+    ]
+  },
+  "relocation_strict": {
+    "match": false,
+    "reason": "Canonical instruction comparison is not 100%, so relocation-strict 100% is not claimed. The ordered relocation-bearing instructions nevertheless agree in count, offsets, rendered targets, relocation types, and zero rendered addends on both sides.",
+    "raw_measurements": [
+      "left relocation-bearing instruction count: 40",
+      "right relocation-bearing instruction count: 40",
+      "ordered relocation instruction offsets and types identical on both sides",
+      "all fndiff-rendered relocation targets identical on both sides",
+      "all fndiff-rendered relocation addends: 0"
+    ]
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "python3 tools/fndiff.py game/game_fn_800DE704.c fn_800DE704",
+      "sha1sum build/GEDE01/main.dol"
+    ],
+    "ninja_result": "build/GEDE01/main.dol: OK",
+    "ninja_summary_raw": "Code: 1081712 / 1425104 bytes (5958 / 6354 functions); Data: 39370 / 40426 bytes (97.39%)",
+    "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "compiler_policy_changed": false,
+    "neighboring_functions_changed": false,
+    "translation_unit": "src/game/game_fn_800DE704.c"
+  }
+}
