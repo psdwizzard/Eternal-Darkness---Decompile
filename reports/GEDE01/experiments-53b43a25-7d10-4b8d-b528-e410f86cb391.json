@@ -1,0 +1,4688 @@
+{
+  "assignment_id": "53b43a25-7d10-4b8d-b528-e410f86cb391",
+  "baseline_commit": "e8f381b47937e9f4b42c129c45de981a71f62a4b",
+  "baseline_source": "src/game/game_fn_8017D700.c",
+  "measurement_note": "Raw objdiff section and symbol metrics retained for each experiment; final full instruction comparisons are in the canonical and relocation-strict evidence files.",
+  "experiments": [
+    {
+      "variant": "int_locals_mask_0",
+      "changed_axes": [],
+      "hypothesis": "Promoted delta locals with explicit short narrowing at initialization and velocity addition",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "3f73d89ce44ff2db1dc2ee651a9ed4f5bbbaf8d71ff59e8744485665fbec96fa",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 98.19231
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ]
+      },
+      "source_diff": ""
+    },
+    {
+      "variant": "int_locals_mask_1",
+      "changed_axes": [
+        "x"
+      ],
+      "hypothesis": "Promoted delta locals with explicit short narrowing at initialization and velocity addition",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "a9bceada4d12bb70b32d47e64fee4465ec9534bcec117e583a0c2c639052a4bb",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 91.84615
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 91.84615
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 91.84615
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -16,13 +16,13 @@\n {\n     s16 dy = target->y - position->y;\n     s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    int dx = (s16)(target->x - position->x);\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n+    velocity->x += (s16)dx;\n     velocity->y += dy;\n     velocity->z += dz;\n \n"
+    },
+    {
+      "variant": "int_locals_mask_2",
+      "changed_axes": [
+        "y"
+      ],
+      "hypothesis": "Promoted delta locals with explicit short narrowing at initialization and velocity addition",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "83fbd22f46c7ef14ed0ef62cfed09f4b139e808eb23d6edcfbe7b8a8e04738f2",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 90.15385
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 90.15385
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 90.15385
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -14,7 +14,7 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n+    int dy = (s16)(target->y - position->y);\n     s16 dz = target->z - position->z - z_offset;\n     s16 dx = target->x - position->x;\n \n@@ -23,7 +23,7 @@\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n-    velocity->y += dy;\n+    velocity->y += (s16)dy;\n     velocity->z += dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n"
+    },
+    {
+      "variant": "int_locals_mask_3",
+      "changed_axes": [
+        "x",
+        "y"
+      ],
+      "hypothesis": "Promoted delta locals with explicit short narrowing at initialization and velocity addition",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "20f2aa461702bbc2c8e1b4818ad217274d65a1d5de358eb9e3eff1966789368d",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 87.0
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 87.0
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 87.0
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -14,16 +14,16 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n+    int dy = (s16)(target->y - position->y);\n     s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    int dx = (s16)(target->x - position->x);\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n+    velocity->x += (s16)dx;\n+    velocity->y += (s16)dy;\n     velocity->z += dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n"
+    },
+    {
+      "variant": "int_locals_mask_4",
+      "changed_axes": [
+        "z"
+      ],
+      "hypothesis": "Promoted delta locals with explicit short narrowing at initialization and velocity addition",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "4c5e857dd60471de3ea3e616ac35b76248ebc8a0135bacf54198f722a8ce2976",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.03846
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.03846
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.03846
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -15,7 +15,7 @@\n                  s16 z_acceleration, s16 z_speed)\n {\n     s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n+    int dz = (s16)(target->z - position->z - z_offset);\n     s16 dx = target->x - position->x;\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n@@ -24,7 +24,7 @@\n \n     velocity->x += dx;\n     velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->z += (s16)dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n"
+    },
+    {
+      "variant": "int_locals_mask_5",
+      "changed_axes": [
+        "x",
+        "z"
+      ],
+      "hypothesis": "Promoted delta locals with explicit short narrowing at initialization and velocity addition",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "43d4d17bc235d6c1ee4868160a6f01c5bab516d2dd4cc923f7be2968d9700451",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 92.26923
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 92.26923
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 92.26923
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -15,16 +15,16 @@\n                  s16 z_acceleration, s16 z_speed)\n {\n     s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    int dz = (s16)(target->z - position->z - z_offset);\n+    int dx = (s16)(target->x - position->x);\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n+    velocity->x += (s16)dx;\n     velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->z += (s16)dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n"
+    },
+    {
+      "variant": "int_locals_mask_6",
+      "changed_axes": [
+        "y",
+        "z"
+      ],
+      "hypothesis": "Promoted delta locals with explicit short narrowing at initialization and velocity addition",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "ea2901b6de801e27e773d24c37caff6442647a1797c8efc2a40cf026b6a17ec7",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 89.3
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "528"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 89.3
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "528",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 89.3
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -14,8 +14,8 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n+    int dy = (s16)(target->y - position->y);\n+    int dz = (s16)(target->z - position->z - z_offset);\n     s16 dx = target->x - position->x;\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n@@ -23,8 +23,8 @@\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->y += (s16)dy;\n+    velocity->z += (s16)dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n"
+    },
+    {
+      "variant": "int_locals_mask_7",
+      "changed_axes": [
+        "x",
+        "y",
+        "z"
+      ],
+      "hypothesis": "Promoted delta locals with explicit short narrowing at initialization and velocity addition",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "46504192ba546cd0ed95b9261389957552614a128efec0c2f3fe4eb5b7387695",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 84.61539
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "528"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 84.61539
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "528",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 84.61539
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -14,17 +14,17 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    int dy = (s16)(target->y - position->y);\n+    int dz = (s16)(target->z - position->z - z_offset);\n+    int dx = (s16)(target->x - position->x);\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->x += (s16)dx;\n+    velocity->y += (s16)dy;\n+    velocity->z += (s16)dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n"
+    },
+    {
+      "variant": "int_explicit_clamp_narrow_1",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "2aeac71c31be235597babc5fbde2791a852e2afddf8895bb69297981834b9bc9",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 91.84615
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "528"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 91.84615
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "528",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 91.84615
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -16,9 +16,9 @@\n {\n     s16 dy = target->y - position->y;\n     s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    int dx = (s16)(target->x - position->x);\n \n-    dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n+    dx = (s16)CLAMP(dx, -xy_acceleration, xy_acceleration);\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n"
+    },
+    {
+      "variant": "int_explicit_clamp_narrow_2",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "07e718850b5575bb7ea789fc83dd7ef2de9e8f8f4b7af54d0f3bb0de7d6186f1",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 92.238464
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "528"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 92.238464
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "528",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 92.238464
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -14,12 +14,12 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n+    int dy = (s16)(target->y - position->y);\n     s16 dz = target->z - position->z - z_offset;\n     s16 dx = target->x - position->x;\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n-    dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n+    dy = (s16)CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n"
+    },
+    {
+      "variant": "int_explicit_clamp_narrow_3",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "26047b141860c6e3f9d979dcbf498dde098be94e799003a154f65a9e3882364f",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 90.1
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 90.1
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 90.1
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -14,12 +14,12 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n+    int dy = (s16)(target->y - position->y);\n     s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    int dx = (s16)(target->x - position->x);\n \n-    dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n-    dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n+    dx = (s16)CLAMP(dx, -xy_acceleration, xy_acceleration);\n+    dy = (s16)CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n"
+    },
+    {
+      "variant": "int_explicit_clamp_narrow_4",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "40478d9e6367e2a56be433e2545e1a7d00879aa79d68cf56ea2ff6f3d0d2e164",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 94.57692
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 94.57692
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 94.57692
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -15,12 +15,12 @@\n                  s16 z_acceleration, s16 z_speed)\n {\n     s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n+    int dz = (s16)(target->z - position->z - z_offset);\n     s16 dx = target->x - position->x;\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n-    dz = CLAMP(dz, -z_acceleration, z_acceleration);\n+    dz = (s16)CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n     velocity->y += dy;\n"
+    },
+    {
+      "variant": "int_explicit_clamp_narrow_5",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "35486d59a6a9ac2ea7fd6bf4cf2812da8ebb940544e2e8e22bc9d6a0539db0ba",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 94.30769
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "528"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 94.30769
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "528",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 94.30769
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -15,12 +15,12 @@\n                  s16 z_acceleration, s16 z_speed)\n {\n     s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    int dz = (s16)(target->z - position->z - z_offset);\n+    int dx = (s16)(target->x - position->x);\n \n-    dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n+    dx = (s16)CLAMP(dx, -xy_acceleration, xy_acceleration);\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n-    dz = CLAMP(dz, -z_acceleration, z_acceleration);\n+    dz = (s16)CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n     velocity->y += dy;\n"
+    },
+    {
+      "variant": "int_explicit_clamp_narrow_6",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "43d0beef5ae8fbb026da3521153f2bc0aebe9c7cc03a1eceb3642672c5562636",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 95.92308
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "528"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 95.92308
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "528",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 95.92308
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -14,13 +14,13 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n+    int dy = (s16)(target->y - position->y);\n+    int dz = (s16)(target->z - position->z - z_offset);\n     s16 dx = target->x - position->x;\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n-    dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n-    dz = CLAMP(dz, -z_acceleration, z_acceleration);\n+    dy = (s16)CLAMP(dy, -xy_acceleration, xy_acceleration);\n+    dz = (s16)CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n     velocity->y += dy;\n"
+    },
+    {
+      "variant": "int_explicit_clamp_narrow_7",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "00f2e9db6770bdb3d0d686517852150000c78b547e8fdac15e1086db7828bb09",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 92.42308
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "528"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 92.42308
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "528",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 92.42308
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -14,13 +14,13 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    int dy = (s16)(target->y - position->y);\n+    int dz = (s16)(target->z - position->z - z_offset);\n+    int dx = (s16)(target->x - position->x);\n \n-    dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n-    dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n-    dz = CLAMP(dz, -z_acceleration, z_acceleration);\n+    dx = (s16)CLAMP(dx, -xy_acceleration, xy_acceleration);\n+    dy = (s16)CLAMP(dy, -xy_acceleration, xy_acceleration);\n+    dz = (s16)CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n     velocity->y += dy;\n"
+    },
+    {
+      "variant": "register_short_1",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "41dcfe2dec0034a684e3f16fd6d7f73e7ef1ef126f509ba101ddfcad621c482e",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 98.19231
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -16,7 +16,7 @@\n {\n     s16 dy = target->y - position->y;\n     s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    register s16 dx = target->x - position->x;\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n"
+    },
+    {
+      "variant": "register_short_2",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "65ad0f6008497fa907ff882b0c8057bd42f30a11a03d467850ba5c9e8dc8764e",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 98.19231
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -14,7 +14,7 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n+    register s16 dy = target->y - position->y;\n     s16 dz = target->z - position->z - z_offset;\n     s16 dx = target->x - position->x;\n \n"
+    },
+    {
+      "variant": "register_short_3",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "6a966dbe93372cdb858635b1b651873cc281e2c1d294d3e788d77f3825e4c913",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 98.19231
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -14,9 +14,9 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n+    register s16 dy = target->y - position->y;\n     s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    register s16 dx = target->x - position->x;\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n"
+    },
+    {
+      "variant": "register_short_4",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "6f1d0384679a3d7830916550aa44072abe60ca45f8969a6369dd762b50e34da6",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 98.19231
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -15,7 +15,7 @@\n                  s16 z_acceleration, s16 z_speed)\n {\n     s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n+    register s16 dz = target->z - position->z - z_offset;\n     s16 dx = target->x - position->x;\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n"
+    },
+    {
+      "variant": "register_short_5",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "3e2429c4e772a0450b24ee022e8f0b75e04176168d18a5a0cd878548f310628e",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 98.19231
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -15,8 +15,8 @@\n                  s16 z_acceleration, s16 z_speed)\n {\n     s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    register s16 dz = target->z - position->z - z_offset;\n+    register s16 dx = target->x - position->x;\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n"
+    },
+    {
+      "variant": "register_short_6",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "43e1e163cbd829ce010789f225e0e9e9ea033bdb886a0f1b5e6e4be918f12069",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 98.19231
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -14,8 +14,8 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n+    register s16 dy = target->y - position->y;\n+    register s16 dz = target->z - position->z - z_offset;\n     s16 dx = target->x - position->x;\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n"
+    },
+    {
+      "variant": "register_short_7",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "444a4dbc73314181d8be2fbe6c65b916f20b36fc39db297196779900b7ed2354",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 98.19231
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ]
+      },
+      "source_diff": "--- \n+++ \n@@ -14,9 +14,9 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    register s16 dy = target->y - position->y;\n+    register s16 dz = target->z - position->z - z_offset;\n+    register s16 dx = target->x - position->x;\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n"
+    },
+    {
+      "variant": "delta_sum_1",
+      "source_diff": "--- \n+++ \n@@ -22,7 +22,8 @@\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n+    dx += velocity->x;\n+    velocity->x = dx;\n     velocity->y += dy;\n     velocity->z += dz;\n \n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "509d1943669367eaecbf7f2d96204730db421af8d957f07bbd65a8c1b269c497",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 98.07692
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.07692
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.07692
+          }
+        ]
+      }
+    },
+    {
+      "variant": "delta_sum_2",
+      "source_diff": "--- \n+++ \n@@ -23,7 +23,8 @@\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n-    velocity->y += dy;\n+    dy += velocity->y;\n+    velocity->y = dy;\n     velocity->z += dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "1c4df413ad85acf9293adfb4b7f670806b27e646edf2c3832f05cdd5dab685ef",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 98.03846
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.03846
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.03846
+          }
+        ]
+      }
+    },
+    {
+      "variant": "delta_sum_3",
+      "source_diff": "--- \n+++ \n@@ -22,8 +22,10 @@\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n+    dx += velocity->x;\n+    velocity->x = dx;\n+    dy += velocity->y;\n+    velocity->y = dy;\n     velocity->z += dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "c2b781e2e084755d4cdb29027df289893f29b2916cc51e7af6374ec068e178a6",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 97.92308
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 97.92308
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 97.92308
+          }
+        ]
+      }
+    },
+    {
+      "variant": "delta_sum_4",
+      "source_diff": "--- \n+++ \n@@ -24,7 +24,8 @@\n \n     velocity->x += dx;\n     velocity->y += dy;\n-    velocity->z += dz;\n+    dz += velocity->z;\n+    velocity->z = dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "84647bce49147f095865ec1a74b404e394287ad9a304534a75d28f6cce422f7f",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 97.03846
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 97.03846
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 97.03846
+          }
+        ]
+      }
+    },
+    {
+      "variant": "delta_sum_5",
+      "source_diff": "--- \n+++ \n@@ -22,9 +22,11 @@\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n+    dx += velocity->x;\n+    velocity->x = dx;\n     velocity->y += dy;\n-    velocity->z += dz;\n+    dz += velocity->z;\n+    velocity->z = dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "e3539f50620cf02e65dfbfb958606bddbb622c042713e4dabca4ca32b933c761",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.92308
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.92308
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.92308
+          }
+        ]
+      }
+    },
+    {
+      "variant": "delta_sum_6",
+      "source_diff": "--- \n+++ \n@@ -23,8 +23,10 @@\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    dy += velocity->y;\n+    velocity->y = dy;\n+    dz += velocity->z;\n+    velocity->z = dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "c373b401b7dc739198de564f013f6bb6ff075103b6f8696130d2fdd175bde659",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 97.03846
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 97.03846
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 97.03846
+          }
+        ]
+      }
+    },
+    {
+      "variant": "delta_sum_7",
+      "source_diff": "--- \n+++ \n@@ -22,9 +22,12 @@\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    dx += velocity->x;\n+    velocity->x = dx;\n+    dy += velocity->y;\n+    velocity->y = dy;\n+    dz += velocity->z;\n+    velocity->z = dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "cf8ec39424b6b90a90bc862cbe8c92729fad70f5e58a00fa5c6512df4e91feb8",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.92308
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.92308
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.92308
+          }
+        ]
+      }
+    },
+    {
+      "variant": "commute_sum_1",
+      "source_diff": "--- \n+++ \n@@ -22,7 +22,7 @@\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n+    velocity->x = dx + velocity->x;\n     velocity->y += dy;\n     velocity->z += dz;\n \n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "353f6521a1b39cfc3a6a68bad96a1b66114fd24c677a3556bdec7c42823012ae",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.61539
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.61539
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.61539
+          }
+        ]
+      }
+    },
+    {
+      "variant": "commute_sum_2",
+      "source_diff": "--- \n+++ \n@@ -23,7 +23,7 @@\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n-    velocity->y += dy;\n+    velocity->y = dy + velocity->y;\n     velocity->z += dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "98613079d4791f597355a0ef852b22e9fd0866087fc3ab5fcc8963a51e73fb0d",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.57692
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.57692
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.57692
+          }
+        ]
+      }
+    },
+    {
+      "variant": "commute_sum_3",
+      "source_diff": "--- \n+++ \n@@ -22,8 +22,8 @@\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n+    velocity->x = dx + velocity->x;\n+    velocity->y = dy + velocity->y;\n     velocity->z += dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "5427385efe7089e8dbaa8f15b1746d78c84f6f7de8628798938578c33e2cf3bd",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.53846
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.53846
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.53846
+          }
+        ]
+      }
+    },
+    {
+      "variant": "commute_sum_4",
+      "source_diff": "--- \n+++ \n@@ -24,7 +24,7 @@\n \n     velocity->x += dx;\n     velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->z = dz + velocity->z;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "136b94e6febd1dd6c0312df07343582374cd4bfd66834e2bfad497323181497c",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.42308
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.42308
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.42308
+          }
+        ]
+      }
+    },
+    {
+      "variant": "commute_sum_5",
+      "source_diff": "--- \n+++ \n@@ -22,9 +22,9 @@\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n+    velocity->x = dx + velocity->x;\n     velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->z = dz + velocity->z;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "1173774b982317da1787c81a4f44798780e68739a007ec9d4a5d4586f2b9f843",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.38461
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.38461
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.38461
+          }
+        ]
+      }
+    },
+    {
+      "variant": "commute_sum_6",
+      "source_diff": "--- \n+++ \n@@ -23,8 +23,8 @@\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->y = dy + velocity->y;\n+    velocity->z = dz + velocity->z;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "4393976795307671352fbd00e94574b60e5ec6e34ddf09cf03ec2dde9c456419",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.38461
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.38461
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.38461
+          }
+        ]
+      }
+    },
+    {
+      "variant": "commute_sum_7",
+      "source_diff": "--- \n+++ \n@@ -22,9 +22,9 @@\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->x = dx + velocity->x;\n+    velocity->y = dy + velocity->y;\n+    velocity->z = dz + velocity->z;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "0ce4da729fdd1dc00e6e7565fda3cdecbc65a790f671889639bb13d1cd480006",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.34615
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.34615
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.34615
+          }
+        ]
+      }
+    },
+    {
+      "variant": "assign_sum_1",
+      "source_diff": "--- \n+++ \n@@ -22,7 +22,7 @@\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n+    velocity->x = velocity->x + dx;\n     velocity->y += dy;\n     velocity->z += dz;\n \n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "a26f6b2c544fa115cf8e61beb9682a41d175a46cb74dff78dfece300b79e733c",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.65385
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ]
+      }
+    },
+    {
+      "variant": "assign_sum_2",
+      "source_diff": "--- \n+++ \n@@ -23,7 +23,7 @@\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n-    velocity->y += dy;\n+    velocity->y = velocity->y + dy;\n     velocity->z += dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "b279adecae0c812e315c3ac6d5b7f4c9b68f84e9a014822d996ebaf6df4bf883",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.65385
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ]
+      }
+    },
+    {
+      "variant": "assign_sum_3",
+      "source_diff": "--- \n+++ \n@@ -22,8 +22,8 @@\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n+    velocity->x = velocity->x + dx;\n+    velocity->y = velocity->y + dy;\n     velocity->z += dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "264aea93b3b99d5fddc3382a7905c405c7e629fdde4600f7de819325bb40c8b1",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.65385
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ]
+      }
+    },
+    {
+      "variant": "assign_sum_4",
+      "source_diff": "--- \n+++ \n@@ -24,7 +24,7 @@\n \n     velocity->x += dx;\n     velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->z = velocity->z + dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "76295976d0160ae2d8ecbd58608631d6ec7a18aeb0782ae4d83d9e5b3e884bd5",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.65385
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ]
+      }
+    },
+    {
+      "variant": "assign_sum_5",
+      "source_diff": "--- \n+++ \n@@ -22,9 +22,9 @@\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n+    velocity->x = velocity->x + dx;\n     velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->z = velocity->z + dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "5a6759ea3b158bd4dba04ef494054a056e7ddc8d355b850ea3f1a7c6db158e80",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.65385
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ]
+      }
+    },
+    {
+      "variant": "assign_sum_6",
+      "source_diff": "--- \n+++ \n@@ -23,8 +23,8 @@\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->y = velocity->y + dy;\n+    velocity->z = velocity->z + dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "69462f409619cdbff46befb1e4173c9237a9870467b0dc8bbbcfc111ace44f37",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.65385
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ]
+      }
+    },
+    {
+      "variant": "assign_sum_7",
+      "source_diff": "--- \n+++ \n@@ -22,9 +22,9 @@\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->x = velocity->x + dx;\n+    velocity->y = velocity->y + dy;\n+    velocity->z = velocity->z + dz;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "5f4f6028ae5a677a61591d2f73cc6e673c775d99a83a2d8673424aed9eed37ca",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.65385
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ]
+      }
+    },
+    {
+      "variant": "aggregate_xyz",
+      "source_diff": "--- \n+++ \n@@ -14,17 +14,18 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    struct { s16 x; s16 y; s16 z; } delta;\n+    delta.y = target->y - position->y;\n+    delta.z = target->z - position->z - z_offset;\n+    delta.x = target->x - position->x;\n \n-    dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n-    dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n-    dz = CLAMP(dz, -z_acceleration, z_acceleration);\n+    delta.x = CLAMP(delta.x, -xy_acceleration, xy_acceleration);\n+    delta.y = CLAMP(delta.y, -xy_acceleration, xy_acceleration);\n+    delta.z = CLAMP(delta.z, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->x += delta.x;\n+    velocity->y += delta.y;\n+    velocity->z += delta.z;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "7f064f94b394192e865144e8fd9624b8f7141a0dcc8e2ac61d591d2c962ef6b4",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 100.0
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 100.0
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 100.0
+          }
+        ]
+      }
+    },
+    {
+      "variant": "aggregate_xzy",
+      "source_diff": "--- \n+++ \n@@ -14,17 +14,18 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    struct { s16 x; s16 z; s16 y; } delta;\n+    delta.y = target->y - position->y;\n+    delta.z = target->z - position->z - z_offset;\n+    delta.x = target->x - position->x;\n \n-    dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n-    dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n-    dz = CLAMP(dz, -z_acceleration, z_acceleration);\n+    delta.x = CLAMP(delta.x, -xy_acceleration, xy_acceleration);\n+    delta.y = CLAMP(delta.y, -xy_acceleration, xy_acceleration);\n+    delta.z = CLAMP(delta.z, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->x += delta.x;\n+    velocity->y += delta.y;\n+    velocity->z += delta.z;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "2fb8073ce6cb06aada99982856ce90f65d08098daec80f64842069bcb60d03a8",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 100.0
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 100.0
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 100.0
+          }
+        ]
+      }
+    },
+    {
+      "variant": "aggregate_yxz",
+      "source_diff": "--- \n+++ \n@@ -14,17 +14,18 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    struct { s16 y; s16 x; s16 z; } delta;\n+    delta.y = target->y - position->y;\n+    delta.z = target->z - position->z - z_offset;\n+    delta.x = target->x - position->x;\n \n-    dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n-    dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n-    dz = CLAMP(dz, -z_acceleration, z_acceleration);\n+    delta.x = CLAMP(delta.x, -xy_acceleration, xy_acceleration);\n+    delta.y = CLAMP(delta.y, -xy_acceleration, xy_acceleration);\n+    delta.z = CLAMP(delta.z, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->x += delta.x;\n+    velocity->y += delta.y;\n+    velocity->z += delta.z;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "4ce0b68eb16a24a46cf22dc958274bed05057b244b56be7e1d6da3f82cba04f2",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 100.0
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 100.0
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 100.0
+          }
+        ]
+      }
+    },
+    {
+      "variant": "aggregate_yzx",
+      "source_diff": "--- \n+++ \n@@ -14,17 +14,18 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    struct { s16 y; s16 z; s16 x; } delta;\n+    delta.y = target->y - position->y;\n+    delta.z = target->z - position->z - z_offset;\n+    delta.x = target->x - position->x;\n \n-    dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n-    dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n-    dz = CLAMP(dz, -z_acceleration, z_acceleration);\n+    delta.x = CLAMP(delta.x, -xy_acceleration, xy_acceleration);\n+    delta.y = CLAMP(delta.y, -xy_acceleration, xy_acceleration);\n+    delta.z = CLAMP(delta.z, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->x += delta.x;\n+    velocity->y += delta.y;\n+    velocity->z += delta.z;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "f22eb2f79eb2e33ceb7aba6bab9c3089db330937c7cb1e0c50b85e6bf4d7e422",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 100.0
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 100.0
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 100.0
+          }
+        ]
+      }
+    },
+    {
+      "variant": "aggregate_zxy",
+      "source_diff": "--- \n+++ \n@@ -14,17 +14,18 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    struct { s16 z; s16 x; s16 y; } delta;\n+    delta.y = target->y - position->y;\n+    delta.z = target->z - position->z - z_offset;\n+    delta.x = target->x - position->x;\n \n-    dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n-    dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n-    dz = CLAMP(dz, -z_acceleration, z_acceleration);\n+    delta.x = CLAMP(delta.x, -xy_acceleration, xy_acceleration);\n+    delta.y = CLAMP(delta.y, -xy_acceleration, xy_acceleration);\n+    delta.z = CLAMP(delta.z, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->x += delta.x;\n+    velocity->y += delta.y;\n+    velocity->z += delta.z;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "7abe153345537e8037488b75f531b9611dd86525cba2f794713a4e592e29656c",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 100.0
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 100.0
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 100.0
+          }
+        ]
+      }
+    },
+    {
+      "variant": "aggregate_zyx",
+      "source_diff": "--- \n+++ \n@@ -14,17 +14,18 @@\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n-    s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n-    s16 dx = target->x - position->x;\n+    struct { s16 z; s16 y; s16 x; } delta;\n+    delta.y = target->y - position->y;\n+    delta.z = target->z - position->z - z_offset;\n+    delta.x = target->x - position->x;\n \n-    dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n-    dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n-    dz = CLAMP(dz, -z_acceleration, z_acceleration);\n+    delta.x = CLAMP(delta.x, -xy_acceleration, xy_acceleration);\n+    delta.y = CLAMP(delta.y, -xy_acceleration, xy_acceleration);\n+    delta.z = CLAMP(delta.z, -z_acceleration, z_acceleration);\n \n-    velocity->x += dx;\n-    velocity->y += dy;\n-    velocity->z += dz;\n+    velocity->x += delta.x;\n+    velocity->y += delta.y;\n+    velocity->z += delta.z;\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "e576474c0bc1ea033cc6c3be6d49cebf7565d997ef17a4d7c5e408224eb5919f",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 100.0
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 100.0
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 100.0
+          }
+        ]
+      }
+    },
+    {
+      "variant": "promoted_parameter_z_offset",
+      "source_diff": "--- \n+++ \n@@ -10,12 +10,12 @@\n #define MAX(a, b) ((a) > (b) ? (a) : (b))\n #define CLAMP(value, low, high) MIN(MAX((value), (low)), (high))\n \n-void fn_8017D700(Vec3s* position, Vec3s* target, s16 z_offset,\n+void fn_8017D700(Vec3s* position, Vec3s* target, int z_offset,\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n     s16 dy = target->y - position->y;\n-    s16 dz = target->z - position->z - z_offset;\n+    s16 dz = target->z - position->z - (s16)z_offset;\n     s16 dx = target->x - position->x;\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "d172349f622a69458f55c66d5504979d4c6e883803c196957612d25bb72291b7",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 95.38461
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "528"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 95.38461
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "528",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 95.38461
+          }
+        ]
+      }
+    },
+    {
+      "variant": "promoted_parameter_xy_acceleration",
+      "source_diff": "--- \n+++ \n@@ -11,15 +11,15 @@\n #define CLAMP(value, low, high) MIN(MAX((value), (low)), (high))\n \n void fn_8017D700(Vec3s* position, Vec3s* target, s16 z_offset,\n-                 Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n+                 Vec3s* velocity, int xy_acceleration, s16 xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n     s16 dy = target->y - position->y;\n     s16 dz = target->z - position->z - z_offset;\n     s16 dx = target->x - position->x;\n \n-    dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n-    dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n+    dx = CLAMP(dx, -(s16)xy_acceleration, (s16)xy_acceleration);\n+    dy = CLAMP(dy, -(s16)xy_acceleration, (s16)xy_acceleration);\n     dz = CLAMP(dz, -z_acceleration, z_acceleration);\n \n     velocity->x += dx;\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "337924935c6ed065b060d149f2007ab4bd7d5881a270b76e58d8a573f8f77062",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 95.11539
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 95.11539
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 95.11539
+          }
+        ]
+      }
+    },
+    {
+      "variant": "promoted_parameter_xy_speed",
+      "source_diff": "--- \n+++ \n@@ -11,7 +11,7 @@\n #define CLAMP(value, low, high) MIN(MAX((value), (low)), (high))\n \n void fn_8017D700(Vec3s* position, Vec3s* target, s16 z_offset,\n-                 Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n+                 Vec3s* velocity, s16 xy_acceleration, int xy_speed,\n                  s16 z_acceleration, s16 z_speed)\n {\n     s16 dy = target->y - position->y;\n@@ -26,8 +26,8 @@\n     velocity->y += dy;\n     velocity->z += dz;\n \n-    velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n-    velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n+    velocity->x = CLAMP(velocity->x, -(s16)xy_speed, (s16)xy_speed);\n+    velocity->y = CLAMP(velocity->y, -(s16)xy_speed, (s16)xy_speed);\n     velocity->z = CLAMP(velocity->z, -z_speed, z_speed);\n \n     position->x += velocity->x;\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "fdc8a39f0b84510ef470973f0fae2fa0d8f24567f4e63de0dc5cf1b443b32ab7",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 96.65385
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 96.65385
+          }
+        ]
+      }
+    },
+    {
+      "variant": "promoted_parameter_z_acceleration",
+      "source_diff": "--- \n+++ \n@@ -12,7 +12,7 @@\n \n void fn_8017D700(Vec3s* position, Vec3s* target, s16 z_offset,\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n-                 s16 z_acceleration, s16 z_speed)\n+                 int z_acceleration, s16 z_speed)\n {\n     s16 dy = target->y - position->y;\n     s16 dz = target->z - position->z - z_offset;\n@@ -20,7 +20,7 @@\n \n     dx = CLAMP(dx, -xy_acceleration, xy_acceleration);\n     dy = CLAMP(dy, -xy_acceleration, xy_acceleration);\n-    dz = CLAMP(dz, -z_acceleration, z_acceleration);\n+    dz = CLAMP(dz, -(s16)z_acceleration, (s16)z_acceleration);\n \n     velocity->x += dx;\n     velocity->y += dy;\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "b7a4f3603aa738ab6389d6c8bfdd5337a130bc00620924db099f6a3373565f01",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 98.19231
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ]
+      }
+    },
+    {
+      "variant": "promoted_parameter_z_speed",
+      "source_diff": "--- \n+++ \n@@ -12,7 +12,7 @@\n \n void fn_8017D700(Vec3s* position, Vec3s* target, s16 z_offset,\n                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,\n-                 s16 z_acceleration, s16 z_speed)\n+                 s16 z_acceleration, int z_speed)\n {\n     s16 dy = target->y - position->y;\n     s16 dz = target->z - position->z - z_offset;\n@@ -28,7 +28,7 @@\n \n     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);\n     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);\n-    velocity->z = CLAMP(velocity->z, -z_speed, z_speed);\n+    velocity->z = CLAMP(velocity->z, -(s16)z_speed, (s16)z_speed);\n \n     position->x += velocity->x;\n     position->y += velocity->y;\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017D700.o\n",
+      "build_stderr": "",
+      "build_returncode": 0,
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_8017D700.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_8017D700.o",
+        "-c",
+        "functionRelocDiffs=all",
+        "-o",
+        "-",
+        "fn_8017D700"
+      ],
+      "source_sha256": "0f9c7dc5f8d92ef2b51fe21c2f2d674484e173e0edde210770f2dcc746ad1739",
+      "raw_objdiff_sections": {
+        "left": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "520",
+            "match_percent": 98.19231
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "33"
+          }
+        ],
+        "right": [
+          {
+            "name": ".text",
+            "kind": "SECTION_CODE",
+            "size": "524"
+          },
+          {
+            "name": ".symtab",
+            "size": "64"
+          },
+          {
+            "name": ".strtab",
+            "size": "32"
+          },
+          {
+            "name": ".shstrtab",
+            "size": "42"
+          },
+          {
+            "name": ".comment",
+            "size": "76"
+          }
+        ]
+      },
+      "raw_objdiff_symbol_metrics": {
+        "left": [
+          {
+            "name": "fn_8017D700",
+            "size": "520",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ],
+        "right": [
+          {
+            "name": "fn_8017D700",
+            "size": "524",
+            "flags": 1,
+            "target_symbol": 1,
+            "match_percent": 98.19231
+          }
+        ]
+      }
+    }
+  ],
+  "command_working_directory": "eternal-darkness-decomp"
+}

@@ -14,17 +14,20 @@ void fn_8017D700(Vec3s* position, Vec3s* target, s16 z_offset,
                  Vec3s* velocity, s16 xy_acceleration, s16 xy_speed,
                  s16 z_acceleration, s16 z_speed)
 {
-    s16 dy = target->y - position->y;
-    s16 dz = target->z - position->z - z_offset;
-    s16 dx = target->x - position->x;
+    /* Keep the short deltas together for the original register allocation. */
+    Vec3s delta;
 
-    dx = CLAMP(dx, -xy_acceleration, xy_acceleration);
-    dy = CLAMP(dy, -xy_acceleration, xy_acceleration);
-    dz = CLAMP(dz, -z_acceleration, z_acceleration);
+    delta.y = target->y - position->y;
+    delta.z = target->z - position->z - z_offset;
+    delta.x = target->x - position->x;
 
-    velocity->x += dx;
-    velocity->y += dy;
-    velocity->z += dz;
+    delta.x = CLAMP(delta.x, -xy_acceleration, xy_acceleration);
+    delta.y = CLAMP(delta.y, -xy_acceleration, xy_acceleration);
+    delta.z = CLAMP(delta.z, -z_acceleration, z_acceleration);
+
+    velocity->x += delta.x;
+    velocity->y += delta.y;
+    velocity->z += delta.z;
 
     velocity->x = CLAMP(velocity->x, -xy_speed, xy_speed);
     velocity->y = CLAMP(velocity->y, -xy_speed, xy_speed);
