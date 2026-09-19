@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3c7c3146-a0b2-469a-93a8-08bbb13419ba",
+  "attempt": 2,
+  "base_commit": "8d348684b0d2134d5757a5fecd5e3a8673dc8590",
+  "target": "fn_801B8164",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3c7c3146-a0b2-469a-93a8-08bbb13419ba.json"
+  ],
+  "divergence": "GC/1.2.5n emits an exact-size 1040-byte function at 93.176926% relocation-strict objdiff. In both aggregate/group loops, retail assigns the ramp pointer to r28 and the index to r27, while the reconstruction reverses them (r27 pointer, r28 index), affecting pointer-based loads/stores, mask shifts, induction, comparison, and increments. The float-conversion constants also retain compiler-local generated relocation names (@79/@80/@82) rather than retail lbl_80650ED8/lbl_80650F04/lbl_80650EF0. In the default single-selector path, generated code additionally differs in instruction scheduling and volatile/nonvolatile register allocation around ramp address formation, voice/value stores, duration reload/test, integer-to-float conversion, and target/current stores. The switch dispatch, all three group paths, default behavior, frame, total size, and epilogue are present; the remaining differences prevent a 100% match."
+}
