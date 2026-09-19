@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "2fb1153b-3105-481e-8aa0-8a2748897d5a",
+  "attempt": 4,
+  "base_commit": "2d8a62e805ac8de752837c86617d84d85aa4dd55",
+  "target": "fn_801807B0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2fb1153b-3105-481e-8aa0-8a2748897d5a.json"
+  ],
+  "divergence": "Canonical GC/1.3 output is equal-sized at 412 bytes (103 instructions) and scores 99.32039%. All 21 relocation-bearing instructions agree in order, relocation type, formatted target, and zero addend. Fourteen instructions differ only in register allocation: retail assigns the truncated count and second/third/fourth strides to r24/r25/r26/r27, while the compiler assigns them to r27/r24/r25/r26. Attempt 4 tested early count-local and parameter-SSA lifetime hypotheses; the former optimized to the same allocation, while the latter emitted an extra early copy/truncation and expanded the function to 416 bytes."
+}
