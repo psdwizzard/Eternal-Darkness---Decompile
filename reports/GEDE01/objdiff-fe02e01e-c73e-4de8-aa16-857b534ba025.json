@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "assignment_id": "fe02e01e-c73e-4de8-aa16-857b534ba025",
+  "target": "fn_8007D744",
+  "source": "src/game/game_fn_8007D744.c",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8007D744 fn_8007D744 -o reports/GEDE01/objdiff-fe02e01e-c73e-4de8-aa16-857b534ba025-canonical.raw.json --format json",
+    "raw_result": "reports/GEDE01/objdiff-fe02e01e-c73e-4de8-aa16-857b534ba025-canonical.raw.json",
+    "match_percent": 98.333336,
+    "retail_size": 240,
+    "generated_size": 236,
+    "retail_relocations": 9,
+    "generated_relocations": 9
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8007D744 fn_8007D744 -o reports/GEDE01/objdiff-fe02e01e-c73e-4de8-aa16-857b534ba025-reloc-strict.raw.json --format json -c function_reloc_diffs=name_address",
+    "raw_result": "reports/GEDE01/objdiff-fe02e01e-c73e-4de8-aa16-857b534ba025-reloc-strict.raw.json",
+    "match_percent": 98.333336,
+    "retail_size": 240,
+    "generated_size": 236,
+    "retail_relocations": 9,
+    "generated_relocations": 9,
+    "relocation_result": "All nine relocation types, targets, and addends match; generated instruction addresses after the omitted branch are four bytes earlier."
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "result": "[879/880] CHECK config/GEDE01/build.sha1: build/GEDE01/main.dol: OK; [880/880] PROGRESS completed"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol && cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "build_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "cmp_exit": 0
+  },
+  "hypotheses_tested": [
+    "Omitting the explicit default label did not change code generation (98.333336%, 236 bytes).",
+    "Reducing the switch to case 5 only removed another dispatch instruction (96.666664%, 232 bytes).",
+    "Grouping cases 0 through 4 and moving default before case 5 did not retain the dead branch (98.333336%, 236 bytes).",
+    "Making default or the empty cases return introduced an unwanted lower-bound compare and grew output to 244 or 248 bytes.",
+    "Routing empty cases through a C label was branch-threaded to the epilogue and remained 98.333336%, 236 bytes."
+  ],
+  "legal_audit": "Independent C translation unit only; no inline or whole-function assembly, shared reconstruction, fallback jump, private input, gate change, compiler-policy change, or neighboring-function edit.",
+  "divergence": "Retail has one additional unreachable branch at 0x8007D76C (b 0x8007D824). Generated output omits that branch through branch threading, producing 236 bytes instead of 240; every other instruction and all nine relocation targets and addends match."
+}
