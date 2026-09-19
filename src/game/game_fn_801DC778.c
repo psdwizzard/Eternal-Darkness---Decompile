@@ -2,6 +2,12 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
+/* NonMatching: honest partial reconstruction. The cleanup path, early
+ * position update, and representative terminal states are recovered. Retail's
+ * particle-construction state arms remain unknown; their absence changes the
+ * 0x200-byte stack frame, switch graph, temporary lifetimes, and r25-r31
+ * allocation. */
+
 typedef struct Payload {
     short position[3];
     short pad06[5];
