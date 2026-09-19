@@ -17,23 +17,23 @@ extern void fn_80027730(void*, int, int);
 int fn_80112754(void* object)
 {
     int mode;
-    int horizontal;
     TextDescriptor* item;
 
     mode = fn_801E8D24(lbl_80331A08[5]);
-    horizontal = fn_800F5C54(fn_8016A694(object, 2));
     item = fn_801E6CA0(lbl_8064C504,
                       fn_800F5C54(fn_8016A694(object, 1)),
-                      horizontal, 0, 1);
+                      fn_800F5C54(fn_8016A694(object, 2)), 0, 1);
 
     switch (mode) {
     case 0:
-        horizontal = fn_801E63F0(item) >> 1;
-        fn_801E6328(item, (short)(horizontal + fn_801E6350(item)), 0x118);
+        fn_801E6328(item,
+                    (short)(fn_801E6350(item) + (fn_801E63F0(item) >> 1)),
+                    0x118);
         break;
     case 1:
-        horizontal = fn_801E63F0(item) >> 1;
-        fn_801E6328(item, (short)(horizontal + fn_801E6350(item)), 0x64);
+        fn_801E6328(item,
+                    (short)(fn_801E6350(item) + (fn_801E63F0(item) >> 1)),
+                    0x64);
         break;
     default:
         fn_801E6328(item,

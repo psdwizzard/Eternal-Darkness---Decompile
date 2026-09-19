@@ -8251,9 +8251,7 @@ config.libs = [
             Object(Matching, "game/game_fn_80112614.c"),
             Object(Matching, "game/game_fn_8011261C.c"),
             Object(Matching, "game/game_fn_801126E0.c"),
-            # Honest behavior-complete C at 98.19768%; MWCC colors the initial
-            # mode/horizontal values differently and emits one extra move.
-            Object(NonMatching, "game/game_fn_80112754.c"),
+            Object(Matching, "game/game_fn_80112754.c"),
             Object(Matching, "game/game_fn_801128AC.c"),
             Object(Matching, "game/game_fn_801128E4.c"),
             Object(Matching, "game/game_fn_80112928.c"),
