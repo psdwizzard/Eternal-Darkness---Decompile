@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "6be14a35-cec0-43ad-8fd0-9ee4d6e49f9d",
+  "attempt": 2,
+  "base_commit": "79736515c363748a31ace68abe297c0c3957a705",
+  "target": "fn_8015B274",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6be14a35-cec0-43ad-8fd0-9ee4d6e49f9d.json"
+  ],
+  "divergence": "96.173706% canonical objdiff; generated code is 868 bytes versus retail 852. Canonical prologue/epilogue emit _savegpr_22/_restgpr_22 calls instead of retail stmw/lmw, adding two relocations (26 generated versus 24 retail) and shifting shared calls, including DCFlushRange from retail offset 824 to generated offset 836. Additional divergence is register allocation, one signed/unsigned loop compare, extra zero-extension/move instructions, and branch scheduling."
+}
