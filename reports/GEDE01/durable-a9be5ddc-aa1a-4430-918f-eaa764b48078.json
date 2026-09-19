@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a9be5ddc-aa1a-4430-918f-eaa764b48078",
+  "attempt": 2,
+  "base_commit": "e5374deabb447adb8845d94f5ebbb4cac00e90c7",
+  "target": "fn_800AD540",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a9be5ddc-aa1a-4430-918f-eaa764b48078.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff score is 13.911688%; the raw reports are byte-identical. Retail fn_800AD540 is 1540 bytes with 15 relocation-bearing instructions, while generated fn_800AD540 is 860 bytes with 14. The generated translation unit contains 1012 total .text bytes because MWCC also emits the out-of-line static helpers mask_pixel (120 bytes) and clamp_index (32 bytes), although helper logic is inlined in the generated target. The first divergence is retail's 0x80-byte stack frame and stmw r15 versus the generated 0x40-byte frame and stmw r21. Retail border initialization uses counted loops; generated code also loops but partially unrolls the inner fill five pixels per CTR iteration, with different loop topology and register allocation. The principal size and control-flow divergence is retail's expanded clamped 3x3 neighbor bit tests versus generated nested dx/dy loops and differently scheduled inlined clamp/mask logic."
+}
