@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "dd34280e-3b22-4f8f-952d-3d369d29a8b4",
+  "attempt": 6,
+  "base_commit": "07eee9dd9fe1e57cfcce61c61b708b5f1c4dd703",
+  "target": "fn_80171D6C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-dd34280e-3b22-4f8f-952d-3d369d29a8b4.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff-cli 3.6.1 both report 98.0531%. Retail is 452 bytes/113 instructions with 17 relocation-bearing instructions; generated C is 456 bytes/114 instructions with 18. Retail retains lbl_8024FF00@ha in r4 across stmw and uses addi r31,r4,lbl_8024FF00@l at +0x18; C materializes the low address into r0 at +0x10, then uses mr r31,r0 at +0x1C. Retail addi r4,r31,0 at +0x38 becomes mr r4,r31 at +0x3C. The low relocation moves and a generated R_PPC_NONE association remains. Attempt 6 tested a distinct global typed-table/member-address hypothesis plus whole-array and array-row address forms; all normalize to the preserved code. Best honest NonMatching C restored unchanged. Canonical build and legal audit pass; DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
