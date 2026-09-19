@@ -36,21 +36,21 @@ typedef struct Data8008DD78 {
     void* value90;
 } Data8008DD78;
 
-/* NonMatching: behavior-complete honest C. Size, instruction scheduling, and
- * all 38 relocation sites align; the remaining differences are register
- * allocation for the object, data/value, and effect live ranges. */
+/* GC/1.3: preserve this local declaration order and the separate model
+ * pointer; both affect register allocation across the callback loop. */
 int fn_8008DD78(void* object, void* resource)
 {
     Vec8008DD78 position;
     Vec8008DD78 target_position;
-    void* actor;
-    void* created;
-    void* target;
-    Data8008DD78* value;
     void* data;
-    int callback;
+    Data8008DD78* value;
+    void* created;
     int owner;
     int target_id;
+    int callback;
+    void* target;
+    void* model;
+    void* actor;
 
     fn_8011F114(&position);
     owner = fn_80201B54(object);
@@ -64,14 +64,14 @@ int fn_8008DD78(void* object, void* resource)
     if (target != 0) {
         created = fn_801294DC(resource, 4, 0, 6);
         if (created != 0) {
-            resource = fn_80072354(value->value90);
-            actor = fn_801A717C(resource);
+            model = fn_80072354(value->value90);
+            actor = fn_801A717C(model);
             fn_801A7460(actor, 4);
             fn_801A74A0(actor, owner);
             fn_801A74A8(actor, target_id);
             fn_801A74C8(actor, 1);
             fn_801A7560(actor, 132);
-            fn_800CF6AC(object, resource, value, actor, 1, 5);
+            fn_800CF6AC(object, model, value, actor, 1, 5);
             fn_801A7550(actor, 12);
             fn_801A7558(actor, 7);
             fn_801A764C(actor, &position);
