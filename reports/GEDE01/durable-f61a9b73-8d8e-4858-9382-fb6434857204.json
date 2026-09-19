@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f61a9b73-8d8e-4858-9382-fb6434857204",
+  "attempt": 4,
+  "base_commit": "c54edeee3b6a6f9eac9211597fc5224377f69601",
+  "target": "fn_800B2EC0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f61a9b73-8d8e-4858-9382-fb6434857204.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 98.95238%: retail is 420 bytes and GC/1.3 output is 416 bytes. Moving the flag/update logic and final dispatch into switch cases removes the compiler's unreachable default-return block and aligns the active block at offset 0xa4, improving the preserved 98.0% attempt. The only remaining difference is at offsets 0xac-0xb0: retail emits bne to 0xb4 followed by an unconditional branch to 0x168, while GC/1.3 folds the equivalent zero-state transfer into one beq to 0x164. A while/goto form retained 98.85714% before relocation externalization; a one-case inner switch regressed to 97.809525% and changed register allocation, so it was rejected. Compiler-local signed-conversion bias @41 is externalized to retail lbl_8064F020, leaving no relocation target or addend mismatch. The canonical build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
