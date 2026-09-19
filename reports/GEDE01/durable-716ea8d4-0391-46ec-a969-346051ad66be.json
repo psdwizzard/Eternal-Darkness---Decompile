@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "716ea8d4-0391-46ec-a969-346051ad66be",
+  "attempt": 1,
+  "base_commit": "2540d704aaad487b4d9e23ad520042160f967e5f",
+  "target": "fn_80195AEC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-716ea8d4-0391-46ec-a969-346051ad66be.json"
+  ],
+  "divergence": "Canonical objdiff measured 89.57746% for the 2556-byte .text; target and candidate both have 552-byte .rela.text sections, but the candidate is not relocation-strict or byte-identical. Remaining differences are primarily pervasive register allocation (candidate saves r16-r31 while retail saves r17-r31, shifting long-lived object/field registers), plus candidate-local .sdata2 integer-to-float conversion constants instead of retail lbl_80650B58 relocation targets. The full build passed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
