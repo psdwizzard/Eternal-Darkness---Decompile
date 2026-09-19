@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d67df508-4dad-403b-a705-645c3c102f3b",
+  "attempt": 3,
+  "base_commit": "6f75b39b30d8bee678b23299a2324ee1803521a7",
+  "target": "fn_801E995C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d67df508-4dad-403b-a705-645c3c102f3b.json"
+  ],
+  "divergence": "Relocation-strict objdiff is 99.322624% for equal 3236-byte functions (809 instructions each), improving the preserved 98.57478% result by reversing declaration order to alter MWCC register lifetimes. The centroid phase now uses the retail r28/r29 roles exactly. Seventy-nine instructions remain different: the relocation loops still color induction, byte-offset, address, and size temporaries differently; the final Entry64 loops differ in temporary/induction register allocation; and conversion-pool relocations target compiler-local @236/@260 identities instead of retail lbl_806512B8/lbl_806512C0. Canonical build succeeds and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

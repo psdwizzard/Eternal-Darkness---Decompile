@@ -53,8 +53,8 @@ extern const float lbl_806512B0;
 u32 fn_801E995C(const u8* source, ModelHeader* header)
 {
     u32 offset = 0;
-    int i;
     u32 byte_offset;
+    int i;
 
     *header = *(const ModelHeader*)source;
     offset += sizeof(ModelHeader);
@@ -91,8 +91,8 @@ u32 fn_801E995C(const u8* source, ModelHeader* header)
     RELOCATE(header->vertices);
 
     for (i = 0; i < header->count3C; i++) {
-        Entry44* entry = &header->data44[i];
         s16* vertices = header->vertices;
+        Entry44* entry = &header->data44[i];
         int count = entry->count28;
         int j;
         float maximum = lbl_806512A8;
