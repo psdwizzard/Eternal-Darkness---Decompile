@@ -1,0 +1,65 @@
+[
+  {
+    "name": "preamble",
+    "hypothesis": "An unreachable break before the first case label might survive as the extra switch-exit branch.",
+    "score": 98.333336,
+    "size": "236",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-ed316d91-22df-430c-be8c-e3e099da8f53-preamble.raw.json",
+    "source_sha256": "059abebd256d2932f1c7726607852722619a83aa52675b190c0873861be5a007",
+    "edit_relative_to_preserved_source": "Insert break; immediately after switch (event) { and before case 0."
+  },
+  {
+    "name": "positive_guard",
+    "score": 98.333336,
+    "size": "236",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8007D744.o\n",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-ed316d91-22df-430c-be8c-e3e099da8f53-positive_guard.raw.json",
+    "source_sha256": "9a927fbf07885d5094504a4553f0fd9f3a13a72d27836a29396fbb72b7211c6a",
+    "edit_relative_to_preserved_source": "Replace the initial null-check return with a positive non-null guard enclosing the entire switch."
+  },
+  {
+    "name": "one_iteration_loop",
+    "score": 98.333336,
+    "size": "236",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8007D744.o\n",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-ed316d91-22df-430c-be8c-e3e099da8f53-one_iteration_loop.raw.json",
+    "source_sha256": "a9fe5317cecac0288856c41d05e42e9a006fad05fb8fc43307b19a3259641821",
+    "edit_relative_to_preserved_source": "Enclose the entire switch in do { ... } while (0)."
+  },
+  {
+    "name": "empty_nested_switch",
+    "score": 98.333336,
+    "size": "236",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8007D744.o\n",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-ed316d91-22df-430c-be8c-e3e099da8f53-empty_nested_switch.raw.json",
+    "source_sha256": "2a34833a59ae658a9ee2b0d128cf8988ee6968610920cc4cd59df07290d38bfd",
+    "edit_relative_to_preserved_source": "Replace case 0 break with switch (event) { default: break; } followed by break."
+  },
+  {
+    "name": "empty_nested_if",
+    "score": 96.666664,
+    "size": "248",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8007D744.o\n",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-ed316d91-22df-430c-be8c-e3e099da8f53-empty_nested_if.raw.json",
+    "source_sha256": "3b79135db7b59567ccfca9cec593abcbf1799aaf08d6558974edf0d9704b02f2",
+    "edit_relative_to_preserved_source": "Replace case 0 break with if (event) { break; } followed by break."
+  },
+  {
+    "name": "default_before_empty",
+    "score": 98.333336,
+    "size": "236",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8007D744.o\n",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-ed316d91-22df-430c-be8c-e3e099da8f53-default_before_empty.raw.json",
+    "source_sha256": "94ccc22d3f36290c05720f037693f4ae98d0b8bbca02ca324928e0f2a41412e9",
+    "edit_relative_to_preserved_source": "Move the default break before case 0; secondary layout control, overlapping prior default-order tests."
+  },
+  {
+    "name": "case5_return",
+    "score": 98.333336,
+    "size": "236",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8007D744.o\n",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-ed316d91-22df-430c-be8c-e3e099da8f53-case5_return.raw.json",
+    "source_sha256": "291457b2eca6569de28340511e937b451baaaed44c2df06b63fc2779ebd57395",
+    "edit_relative_to_preserved_source": "Replace the case 5 trailing break with return; all other cases unchanged."
+  }
+]

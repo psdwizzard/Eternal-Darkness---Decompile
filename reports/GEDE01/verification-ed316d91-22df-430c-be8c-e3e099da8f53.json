@@ -1,0 +1,32 @@
+[
+  {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\n",
+    "stderr": ""
+  },
+  {
+    "command": "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "stdout": "legal audit passed (17478 tracked project files inspected)\n",
+    "stderr": ""
+  },
+  {
+    "command": "build/binutils/powerpc-eabi-readelf -s -r build/GEDE01/obj/game/game_fn_8007D744.o",
+    "exit_code": 0,
+    "stdout": "\nRelocation section '.rela.text' at offset 0x130 contains 8 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n0000000c  0000046d R_PPC_EMB_SDA21   00000000   lbl_8064C8EC + 0\n00000030  0000050a R_PPC_REL24       00000000   fn_801E5D20 + 0\n00000036  00000606 R_PPC_ADDR16_HA   00000000   lbl_8031CBA0 + 0\n0000003e  00000604 R_PPC_ADDR16_LO   00000000   lbl_8031CBA0 + 0\n00000062  00000706 R_PPC_ADDR16_HA   00000000   lbl_802448F8 + 0\n0000007a  00000704 R_PPC_ADDR16_LO   00000000   lbl_802448F8 + 0\n00000080  0000046d R_PPC_EMB_SDA21   00000000   lbl_8064C8EC + 0\n000000dc  0000080a R_PPC_REL24       00000000   fn_801E6228 + 0\n\nSymbol table '.symtab' contains 9 entries:\n   Num:    Value  Size Type    Bind   Vis      Ndx Name\n     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND \n     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS game_fn_8007D744.c\n     2: 00000000     0 SECTION LOCAL  DEFAULT    1 .text\n     3: 00000000   240 FUNC    GLOBAL DEFAULT    1 fn_8007D744\n     4: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064C8EC\n     5: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801E5D20\n     6: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8031CBA0\n     7: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_802448F8\n     8: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801E6228\n",
+    "stderr": ""
+  },
+  {
+    "command": "build/binutils/powerpc-eabi-readelf -s -r build/GEDE01/src/game/game_fn_8007D744.o",
+    "exit_code": 0,
+    "stdout": "\nRelocation section '.rela.text' at offset 0x120 contains 8 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n0000000c  0000036d R_PPC_EMB_SDA21   00000000   lbl_8064C8EC + 0\n0000002c  0000060a R_PPC_REL24       00000000   fn_801E5D20 + 0\n00000032  00000406 R_PPC_ADDR16_HA   00000000   lbl_8031CBA0 + 0\n0000003a  00000404 R_PPC_ADDR16_LO   00000000   lbl_8031CBA0 + 0\n0000005e  00000506 R_PPC_ADDR16_HA   00000000   lbl_802448F8 + 0\n00000076  00000504 R_PPC_ADDR16_LO   00000000   lbl_802448F8 + 0\n0000007c  0000036d R_PPC_EMB_SDA21   00000000   lbl_8064C8EC + 0\n000000d8  0000070a R_PPC_REL24       00000000   fn_801E6228 + 0\n\nSymbol table '.symtab' contains 9 entries:\n   Num:    Value  Size Type    Bind   Vis      Ndx Name\n     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND \n     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS game_fn_8007D744.c\n     2: 00000000     0 SECTION LOCAL  DEFAULT    1 .text\n     3: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064C8EC\n     4: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8031CBA0\n     5: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_802448F8\n     6: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801E5D20\n     7: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801E6228\n     8: 00000000   236 FUNC    GLOBAL DEFAULT    1 fn_8007D744\n",
+    "stderr": ""
+  }
+]

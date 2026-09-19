@@ -1,0 +1,354 @@
+{
+  "version": 1,
+  "assignment_id": "ed316d91-22df-430c-be8c-e3e099da8f53",
+  "target": "fn_8007D744",
+  "source": "eternal-darkness-decomp/src/game/game_fn_8007D744.c",
+  "source_sha256": "0dd13cda70efbc3e5d92d089f31a9ff5f6a528ec0ce3b9a1b9154ddb6ba9ed72",
+  "source_reconciliation": "Accepted base already contains exactly the source preserved in b5c421814137db7adc01b9434a7569cbe102c5a2; retained its NonMatching registration.",
+  "compiler": {
+    "version": "GC/1.3",
+    "configuration": "Unmodified canonical default from configure.py; python3 configure.py",
+    "command": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_8007D744.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8007D744.d build/GEDE01/src/game/game_fn_8007D744.d\n"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8007D744 -o reports/GEDE01/objdiff-ed316d91-22df-430c-be8c-e3e099da8f53-canonical.raw.json --format json",
+    "raw_json": "eternal-darkness-decomp/reports/GEDE01/objdiff-ed316d91-22df-430c-be8c-e3e099da8f53-canonical.raw.json",
+    "raw_json_sha256": "9f3c34164809f2f4e41e3b9d80cbfbbb32a2e57229b1126da8ac410fa5ecb2b6",
+    "match_percent": 98.333336,
+    "retail_size": 240,
+    "generated_size": 236,
+    "retail_relocations": [
+      {
+        "offset": 12,
+        "type": 109,
+        "type_name": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064C8EC",
+        "addend": 0
+      },
+      {
+        "offset": 48,
+        "type": 10,
+        "type_name": "R_PPC_REL24",
+        "target": "fn_801E5D20",
+        "addend": 0
+      },
+      {
+        "offset": 52,
+        "type": 6,
+        "type_name": "R_PPC_ADDR16_HA",
+        "target": "lbl_8031CBA0",
+        "addend": 0
+      },
+      {
+        "offset": 60,
+        "type": 4,
+        "type_name": "R_PPC_ADDR16_LO",
+        "target": "lbl_8031CBA0",
+        "addend": 0
+      },
+      {
+        "offset": 68,
+        "type": 0,
+        "type_name": "R_PPC_NONE",
+        "target": "lbl_8031CBA0",
+        "addend": 20
+      },
+      {
+        "offset": 96,
+        "type": 6,
+        "type_name": "R_PPC_ADDR16_HA",
+        "target": "lbl_802448F8",
+        "addend": 0
+      },
+      {
+        "offset": 120,
+        "type": 4,
+        "type_name": "R_PPC_ADDR16_LO",
+        "target": "lbl_802448F8",
+        "addend": 0
+      },
+      {
+        "offset": 128,
+        "type": 109,
+        "type_name": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064C8EC",
+        "addend": 0
+      },
+      {
+        "offset": 220,
+        "type": 10,
+        "type_name": "R_PPC_REL24",
+        "target": "fn_801E6228",
+        "addend": 0
+      }
+    ],
+    "generated_relocations": [
+      {
+        "offset": 12,
+        "type": 109,
+        "type_name": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064C8EC",
+        "addend": 0
+      },
+      {
+        "offset": 44,
+        "type": 10,
+        "type_name": "R_PPC_REL24",
+        "target": "fn_801E5D20",
+        "addend": 0
+      },
+      {
+        "offset": 48,
+        "type": 6,
+        "type_name": "R_PPC_ADDR16_HA",
+        "target": "lbl_8031CBA0",
+        "addend": 0
+      },
+      {
+        "offset": 56,
+        "type": 4,
+        "type_name": "R_PPC_ADDR16_LO",
+        "target": "lbl_8031CBA0",
+        "addend": 0
+      },
+      {
+        "offset": 64,
+        "type": 0,
+        "type_name": "R_PPC_NONE",
+        "target": "lbl_8031CBA0",
+        "addend": 20
+      },
+      {
+        "offset": 92,
+        "type": 6,
+        "type_name": "R_PPC_ADDR16_HA",
+        "target": "lbl_802448F8",
+        "addend": 0
+      },
+      {
+        "offset": 116,
+        "type": 4,
+        "type_name": "R_PPC_ADDR16_LO",
+        "target": "lbl_802448F8",
+        "addend": 0
+      },
+      {
+        "offset": 124,
+        "type": 109,
+        "type_name": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064C8EC",
+        "addend": 0
+      },
+      {
+        "offset": 216,
+        "type": 10,
+        "type_name": "R_PPC_REL24",
+        "target": "fn_801E6228",
+        "addend": 0
+      }
+    ],
+    "relocation_targets_and_addends_equal": true,
+    "relocation_note": "Eight ELF relocations plus one objdiff-inferred R_PPC_NONE reference to lbl_8031CBA0+20.",
+    "differences": [
+      {
+        "diff_kind": "DIFF_DELETE",
+        "instruction": {
+          "address": "40",
+          "size": 4,
+          "formatted": "b 0xe0",
+          "parts": [
+            {
+              "opcode": {
+                "mnemonic": "b",
+                "opcode": 267
+              }
+            },
+            {
+              "arg": {
+                "branch_dest": "224"
+              }
+            }
+          ],
+          "branch_dest": "224"
+        }
+      }
+    ]
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8007D744 -o reports/GEDE01/objdiff-ed316d91-22df-430c-be8c-e3e099da8f53-reloc-strict.raw.json --format json -c function_reloc_diffs=name_address",
+    "raw_json": "eternal-darkness-decomp/reports/GEDE01/objdiff-ed316d91-22df-430c-be8c-e3e099da8f53-reloc-strict.raw.json",
+    "raw_json_sha256": "9f3c34164809f2f4e41e3b9d80cbfbbb32a2e57229b1126da8ac410fa5ecb2b6",
+    "match_percent": 98.333336,
+    "retail_size": 240,
+    "generated_size": 236,
+    "retail_relocations": [
+      {
+        "offset": 12,
+        "type": 109,
+        "type_name": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064C8EC",
+        "addend": 0
+      },
+      {
+        "offset": 48,
+        "type": 10,
+        "type_name": "R_PPC_REL24",
+        "target": "fn_801E5D20",
+        "addend": 0
+      },
+      {
+        "offset": 52,
+        "type": 6,
+        "type_name": "R_PPC_ADDR16_HA",
+        "target": "lbl_8031CBA0",
+        "addend": 0
+      },
+      {
+        "offset": 60,
+        "type": 4,
+        "type_name": "R_PPC_ADDR16_LO",
+        "target": "lbl_8031CBA0",
+        "addend": 0
+      },
+      {
+        "offset": 68,
+        "type": 0,
+        "type_name": "R_PPC_NONE",
+        "target": "lbl_8031CBA0",
+        "addend": 20
+      },
+      {
+        "offset": 96,
+        "type": 6,
+        "type_name": "R_PPC_ADDR16_HA",
+        "target": "lbl_802448F8",
+        "addend": 0
+      },
+      {
+        "offset": 120,
+        "type": 4,
+        "type_name": "R_PPC_ADDR16_LO",
+        "target": "lbl_802448F8",
+        "addend": 0
+      },
+      {
+        "offset": 128,
+        "type": 109,
+        "type_name": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064C8EC",
+        "addend": 0
+      },
+      {
+        "offset": 220,
+        "type": 10,
+        "type_name": "R_PPC_REL24",
+        "target": "fn_801E6228",
+        "addend": 0
+      }
+    ],
+    "generated_relocations": [
+      {
+        "offset": 12,
+        "type": 109,
+        "type_name": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064C8EC",
+        "addend": 0
+      },
+      {
+        "offset": 44,
+        "type": 10,
+        "type_name": "R_PPC_REL24",
+        "target": "fn_801E5D20",
+        "addend": 0
+      },
+      {
+        "offset": 48,
+        "type": 6,
+        "type_name": "R_PPC_ADDR16_HA",
+        "target": "lbl_8031CBA0",
+        "addend": 0
+      },
+      {
+        "offset": 56,
+        "type": 4,
+        "type_name": "R_PPC_ADDR16_LO",
+        "target": "lbl_8031CBA0",
+        "addend": 0
+      },
+      {
+        "offset": 64,
+        "type": 0,
+        "type_name": "R_PPC_NONE",
+        "target": "lbl_8031CBA0",
+        "addend": 20
+      },
+      {
+        "offset": 92,
+        "type": 6,
+        "type_name": "R_PPC_ADDR16_HA",
+        "target": "lbl_802448F8",
+        "addend": 0
+      },
+      {
+        "offset": 116,
+        "type": 4,
+        "type_name": "R_PPC_ADDR16_LO",
+        "target": "lbl_802448F8",
+        "addend": 0
+      },
+      {
+        "offset": 124,
+        "type": 109,
+        "type_name": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064C8EC",
+        "addend": 0
+      },
+      {
+        "offset": 216,
+        "type": 10,
+        "type_name": "R_PPC_REL24",
+        "target": "fn_801E6228",
+        "addend": 0
+      }
+    ],
+    "relocation_targets_and_addends_equal": true,
+    "relocation_note": "Eight ELF relocations plus one objdiff-inferred R_PPC_NONE reference to lbl_8031CBA0+20.",
+    "differences": [
+      {
+        "diff_kind": "DIFF_DELETE",
+        "instruction": {
+          "address": "40",
+          "size": 4,
+          "formatted": "b 0xe0",
+          "parts": [
+            {
+              "opcode": {
+                "mnemonic": "b",
+                "opcode": 267
+              }
+            },
+            {
+              "arg": {
+                "branch_dest": "224"
+              }
+            }
+          ],
+          "branch_dest": "224"
+        }
+      }
+    ]
+  },
+  "verification": "eternal-darkness-decomp/reports/GEDE01/verification-ed316d91-22df-430c-be8c-e3e099da8f53.json",
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_log": "eternal-darkness-decomp/reports/GEDE01/build-ed316d91-22df-430c-be8c-e3e099da8f53.log",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "limitation": "NonMatching target uses retail object for the linked DOL; DOL hash verifies integration, not a C byte match.",
+    "log_note": "Compiler CRLF output normalized to LF; all output lines preserved."
+  },
+  "hypothesis": "The front end might preserve the missing switch-exit branch when an unreachable break precedes the first case label, or when a positive pointer guard, one-iteration loop, or nested empty switch changes the enclosing CFG. All compiled to 236 bytes and 98.333336%. A nested conditional break instead retained lower-bound dispatch and produced 248 bytes at 96.666664%.",
+  "experiments": "eternal-darkness-decomp/reports/GEDE01/experiments-ed316d91-22df-430c-be8c-e3e099da8f53.json",
+  "legal_audit": "Independent C only; retained existing NonMatching reconstruction. No assembly, object patching, compiler-policy or gate changes, neighboring-function edits, private inputs, or generated binaries in commit.",
+  "divergence": "Canonical and relocation-strict objdiff are 98.333336%. Retail has one additional unreachable branch at 0x8007D76C (b 0x8007D824), producing 240 retail bytes versus 236 generated bytes; every other instruction aligns and all nine relocation types, targets and addends match."
+}
