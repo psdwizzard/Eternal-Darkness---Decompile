@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "assignment_id": "edd123c2-39f9-4be1-b623-3fac69ba7fa9",
+  "target": "fn_80159440",
+  "unit": "game/game_fn_80159440.c",
+  "compiler": "Metrowerks CodeWarrior for GameCube GC/1.3",
+  "compiler_sha256": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715",
+  "canonical": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "objdiff": {
+    "version_command": "build/tools/objdiff-cli --version",
+    "version_output": "objdiff-cli 3.6.1",
+    "strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80159440 fn_80159440 -o build/GEDE01/fn_80159440-edd123c2-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "strict_exit_output": "strict_exit=0",
+    "display_command": "python3 tools/fndiff.py game/game_fn_80159440.c fn_80159440",
+    "raw_summary": "target 496 bytes  base 492 bytes  match 98.08871",
+    "retail_size": 496,
+    "generated_size": 492,
+    "match_percent": 98.08871,
+    "retail_instruction_rows": 124,
+    "generated_instruction_rows": 124,
+    "retail_relocation_bearing_rows": 46,
+    "generated_relocation_bearing_rows": 45,
+    "relocation_comparison": "function_reloc_diffs=name_address",
+    "relocation_strict_match": false,
+    "raw_divergence": [
+      "retail 0x004c: addi r3, r29, 0x21c; generated has no instruction",
+      "retail 0x0054: stw r0, 0x18(r3); generated 0x0054: stw r0, 0x234(r29)",
+      "retail 0x0110: addi r6, r29, 0x1e0; generated: addi r5, r29, 0x1e0",
+      "retail 0x0114: lwz r0, 0x4(r6); generated: lwz r0, 0x1e4(r29)",
+      "Retail retains the channel-table base in r6 and the first indexed channel value in r0; generated retains the base in r5 and first uses r3. External relocation targets and addends otherwise agree under function_reloc_diffs=name_address."
+    ],
+    "generated_detail": "build/GEDE01/fn_80159440-edd123c2-strict.json"
+  },
+  "hypothesis_tests": [
+    {
+      "hypothesis": "Giving the transition subobject an explicit pointer lifetime before the conditional store may make GC/1.3 retain the subobject address in r3 instead of folding both field offsets into r29.",
+      "raw_result": "target 496 bytes  base 492 bytes  match 98.08871; GC/1.3 eliminated the explicit local and still emitted li r0,1 followed by stw r0,0x234(r29)."
+    },
+    {
+      "hypothesis": "Type-punning the globals pointer through a union before byte-offsetting to the transition state may inhibit constant subobject-offset propagation while preserving the same address and behavior.",
+      "raw_result": "target 496 bytes  base 492 bytes  match 98.08871; GC/1.3 propagated the union alias and again emitted the identical folded store."
+    }
+  ],
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "output": "legal audit passed (17778 tracked project files inspected)"
+  },
+  "source_scope": "Both new source-shape experiments were reverted because neither improved code generation. The accepted independent honest NonMatching C translation unit remains unchanged. No inline or whole-function assembly, shared reconstruction, gate changes, compiler-policy changes, or neighboring-function edits were made."
+}

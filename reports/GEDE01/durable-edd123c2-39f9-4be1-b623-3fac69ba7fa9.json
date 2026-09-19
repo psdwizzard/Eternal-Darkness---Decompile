@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "edd123c2-39f9-4be1-b623-3fac69ba7fa9",
+  "attempt": 5,
+  "base_commit": "d8469867c9818ef40cf3504a7f819b56d111eb68",
+  "target": "fn_80159440",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-edd123c2-39f9-4be1-b623-3fac69ba7fa9.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff score remains 98.08871% (496 retail bytes versus 492 generated; 46 retail versus 45 generated relocation-bearing rows). GC/1.3 folds retail's addi r3,r29,0x21c plus stw r0,0x18(r3) into stw r0,0x234(r29); the later channel-table base remains in generated r5 instead of retail r6, and the first indexed value uses generated r3 instead of retail r0. Explicit transition-pointer lifetime and union-alias type-punning hypotheses both generated the identical code."
+}
