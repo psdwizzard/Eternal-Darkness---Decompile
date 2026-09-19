@@ -55,7 +55,7 @@ void fn_8010FC3C(short amount)
             next = fn_801E8D34(lbl_80331738[2]) + 1;
             scan = fn_801E7B24(lbl_8024E388, 3, next);
             if (scan < 0) {
-                goto no_next;
+                goto selection_done;
             }
             found = 0;
             while (scan >= 0) {
@@ -72,14 +72,15 @@ no_next:
                 lbl_8064CD1C = lbl_8024C0CC[53].value + 1;
             }
         }
+selection_done:
         if (lbl_8064CD1C == lbl_8024C0CC[index].value) {
             lbl_8064CD1C = -1;
         } else {
             value = lbl_8064CD1C;
-            lbl_8064CD1C = lbl_8024C0CC[53].value + 1 >=
+            lbl_8064CD1C = lbl_8024C0CC[53].value + 1 <
                                   (value > 0 ? value : 0)
-                              ? (value > 0 ? value : 0)
-                              : lbl_8024C0CC[53].value + 1;
+                              ? lbl_8024C0CC[53].value + 1
+                              : (value > 0 ? value : 0);
         }
     } else {
         fn_80201B44();
@@ -93,10 +94,10 @@ no_next:
         if (next != -1) {
             lbl_8064CD1C = lbl_8024C0CC[next].value;
             value = lbl_8064CD1C;
-            lbl_8064CD1C = lbl_8024C0CC[53].value >=
+            lbl_8064CD1C = lbl_8024C0CC[53].value <
                                   (value > 0 ? value : 0)
-                              ? (value > 0 ? value : 0)
-                              : lbl_8024C0CC[53].value;
+                              ? lbl_8024C0CC[53].value
+                              : (value > 0 ? value : 0);
         } else {
             lbl_8064CD1C = lbl_8024C0CC[index].value;
         }
