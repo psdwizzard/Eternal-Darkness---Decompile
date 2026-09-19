@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "09dbf2ef-eaa8-4d09-9696-b698aa79321e",
+  "attempt": 6,
+  "base_commit": "c2ecd62c8f37a173a06277a15f72e4287b37e77a",
+  "target": "fn_8007C90C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-09dbf2ef-eaa8-4d09-9696-b698aa79321e.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-09dbf2ef-eaa8-4d09-9696-b698aa79321e-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-09dbf2ef-eaa8-4d09-9696-b698aa79321e.json",
+    "eternal-darkness-decomp/reports/GEDE01/provenance-09dbf2ef-eaa8-4d09-9696-b698aa79321e.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-09dbf2ef-eaa8-4d09-9696-b698aa79321e.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 98.13636%, with equal 440-byte functions and 110 real instructions per side (111 aligned rows). Three aligned diff rows remain: at 0x20 retail preserves object_id in r26 while generated uses r29; retail emits lis r4,fn_80204810@ha at 0x60 then slwi r31,r26,8 at 0x64, while generated emits slwi r31,r29,8 at 0x60 then lis at 0x64. The equality cmpw r0,r26 at 0x98 now matches. All 38 relocation types, targets and addends agree in sequence; the first callback HA relocation field is at retail 0x62 versus generated 0x66. The function remains NonMatching. Full build, expected DOL SHA-1 and legal audit passed."
+}
