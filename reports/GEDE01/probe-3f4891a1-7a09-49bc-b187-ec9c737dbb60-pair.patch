@@ -1,0 +1,24 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8014ECD8.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8014ECD8.c
+@@ -11,7 +11,10 @@
+     unsigned int x, y, z;
+ } Vec3Words;
+ 
+-extern Coord3 lbl_80650544;
++typedef struct CoordPair { s16 x, y; } CoordPair;
++typedef struct CoordTail { s16 z; } CoordTail;
++extern CoordPair lbl_80650544;
++extern CoordTail lbl_80650548;
+ extern float lbl_8065054C;
+ extern int lbl_802FC5BC[];
+ 
+@@ -42,7 +45,8 @@
+ 
+     index *= 0x174;
+     entry = object + 0xEBC + index;
+-    config = lbl_80650544;
++    *(CoordPair*)&config = lbl_80650544;
++    *(CoordTail*)&config.z = lbl_80650548;
+     object_id = *(volatile u8*)object;
+ 
+     fn_80180D0C(entry);

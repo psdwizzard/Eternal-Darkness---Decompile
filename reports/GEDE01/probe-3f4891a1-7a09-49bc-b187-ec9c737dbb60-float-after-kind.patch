@@ -1,0 +1,13 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8014ECD8.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8014ECD8.c
+@@ -58,9 +58,9 @@
+     fn_80180DDC(entry, object_id);
+ 
+     extent = *(volatile u16*)(object + 0x28);
+-    scale = lbl_8065054C;
+     *(u16*)(entry + 0x1C) = extent;
+     entry[0x14] = 6;
++    scale = lbl_8065054C;
+     *(u16*)(entry + 0x20) = 9;
+     entry[0x18] &= ~0x20;
+     *(float*)(entry + 0x50) = scale;

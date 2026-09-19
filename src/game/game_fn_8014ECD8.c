@@ -3,16 +3,17 @@ typedef unsigned short u16;
 typedef signed char s8;
 typedef signed short s16;
 
-typedef struct Coord3 {
-    s16 x, y, z;
-} Coord3;
+typedef struct CoordPair { s16 x, y; } CoordPair;
+typedef struct CoordTail { s16 z; } CoordTail;
+typedef struct Coord3 { CoordPair xy; CoordTail tail; } Coord3;
 
 typedef struct Vec3Words {
     unsigned int x, y, z;
 } Vec3Words;
 
-extern Coord3 lbl_80650544;
-extern float lbl_8065054C;
+extern CoordPair lbl_80650544;
+extern CoordTail lbl_80650548;
+extern const float lbl_8065054C;
 extern int lbl_802FC5BC[];
 
 extern void fn_80180D0C(void*);
@@ -26,10 +27,7 @@ extern void fn_80149B38(void*);
 extern int fn_801E8328();
 extern void* memcpy(void*, const void*, unsigned int);
 
-/* NonMatching: behavior- and size-exact entry/resource initializer at
- * 98.10185% (432/432 bytes). One equivalent relocation names
- * lbl_80650544+4 instead of lbl_80650548, and li 9 is scheduled after the
- * adjacent float load instead of before it. */
+/* Keep the two configuration objects separate to preserve their relocations. */
 void fn_8014ECD8(u8* object, int index, u8 variant)
 {
     u8 object_id;
@@ -42,7 +40,8 @@ void fn_8014ECD8(u8* object, int index, u8 variant)
 
     index *= 0x174;
     entry = object + 0xEBC + index;
-    config = lbl_80650544;
+    config.xy = lbl_80650544;
+    config.tail = lbl_80650548;
     object_id = *(volatile u8*)object;
 
     fn_80180D0C(entry);
