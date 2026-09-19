@@ -5,7 +5,7 @@ typedef unsigned int u32;
 typedef struct GameObject {
     u8 pad00[4];
     void* owner;
-    u32 type;
+    int type;
     u8 pad0C[0x24];
     void* link30;
     u8 pad34[0x10];
@@ -16,14 +16,15 @@ typedef struct GameObject {
     u16 stateFF4;
 } GameObject;
 
-extern u32 lbl_8064D18C;
+extern int lbl_8064D18C;
 extern void fn_801FE22C(void*);
 extern void fn_801D31E0(GameObject*);
 
 /*
  * Effect-object state callback.  The non-current-type teardown path and the
- * state discriminator are recovered.  The four particle-construction arms
- * still require their large stack-local descriptor layouts to be typed.
+ * state discriminator are identified (the compiler removes its empty arms).
+ * The four particle-construction arms still require their large stack-local
+ * descriptor layouts to be typed.
  */
 void fn_801D324C(GameObject* object)
 {
