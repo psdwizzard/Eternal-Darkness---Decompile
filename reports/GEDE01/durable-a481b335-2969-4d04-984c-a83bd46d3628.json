@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "a481b335-2969-4d04-984c-a83bd46d3628",
+  "attempt": 7,
+  "base_commit": "a606311d973926c35d9168300c6aac831dc44e78",
+  "target": "fn_800A1278",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a481b335-2969-4d04-984c-a83bd46d3628.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-a481b335-2969-4d04-984c-a83bd46d3628.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-a481b335-2969-4d04-984c-a83bd46d3628.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-a481b335-2969-4d04-984c-a83bd46d3628.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-a481b335-2969-4d04-984c-a83bd46d3628.py"
+  ],
+  "divergence": "New scalar word-copy hypothesis improved canonical and relocation-strict objdiff from 98.48214% to 98.59821%, still 448/448 bytes. Preserved one NonMatching C reconstruction with paired u32 temporaries for the initial position save. Remaining 31 DIFF_ARG_MISMATCH instructions: generated state/context/work/transform/position/info use r28/r26/r31/r30/r29/r27 versus retail r29/r30/r31/r28/r27/r26; generated initial copy loads y then x into r3/r0 at +0x64/+0x68 and stores x/y from r0/r3 at +0x6c/+0x70, whereas retail loads x then y and stores r3/r0. No instruction insertion/deletion remains. All 23 ELF relocations and 26 objdiff relocation annotations (including three inferred R_PPC_NONE references) agree in sites, resolved targets, types, and addends. DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f verified with NonMatching registration. Local register qualifiers, equivalent loop forms, local aggregate promotion, temporary scope/declaration/load order, partial aggregate copies, and three-component temporaries did not beat the preserved paired-copy candidate; exact variants and raw measurements are recorded."
+}

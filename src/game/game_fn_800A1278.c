@@ -1,10 +1,9 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
-typedef struct Vec800A1278 {
-    float x;
-    float y;
-    float z;
+typedef union Vec800A1278 {
+    struct { float x, y, z; } f;
+    u32 bits[3];
 } Vec800A1278;
 
 typedef struct Entry800A1278 {
@@ -84,16 +83,22 @@ int fn_800A1278(State800A1278* state)
     fn_80128EE4(transform);
 
     if (context->counter == 0) {
-        work->position = *position;
+        {
+            u32 x = position->bits[0];
+            u32 y = position->bits[1];
+            work->position.bits[0] = x;
+            work->position.bits[1] = y;
+            work->position.bits[2] = position->bits[2];
+        }
         context->counter++;
     }
 
-    if (position->z < lbl_8064EE68) {
+    if (position->f.z < lbl_8064EE68) {
         offset = lbl_802396E0;
         fn_80211A48(position, &offset, position);
         fn_80211A48(fn_8011F130(transform), &offset, &offset);
         fn_8012AC74(transform, fn_8011F130(transform), 3);
-    } else if (position->z >= lbl_8064EE68) {
+    } else if (position->f.z >= lbl_8064EE68) {
         info = ((Info800A1278*)fn_80201B8C(object));
         fn_802020B4(fn_80201814(fn_80036D38(object)->resource), 0);
         fn_801A5C30(0);
