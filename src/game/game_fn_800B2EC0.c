@@ -1,7 +1,5 @@
 typedef signed char s8;
 
-/* NonMatching: behavior-complete reconstruction. The remaining difference is
- * an equivalent zero-state branch layout emitted by the retail compiler. */
 extern int lbl_8064CA3C;
 extern int lbl_8064CA6C;
 extern int lbl_8064CE44;
@@ -50,9 +48,9 @@ void fn_800B2EC0(int object)
     case 7:
     case 8:
         if (lbl_8064CA31 == 0) {
-            goto apply_value;
-        }
-        if (lbl_8064CA31 == 1) {
+            /* Preserve the sample; this explicit arm retains the retail branch layout. */
+            value = value;
+        } else if (lbl_8064CA31 == 1) {
             value /= lbl_8064CA30;
             lbl_8064CA18 = value;
         } else if (lbl_8064CA31 == 2) {
@@ -67,7 +65,6 @@ void fn_800B2EC0(int object)
         } else {
             value = lbl_8064F01C;
         }
-apply_value:
         if (fn_8017BB98() != 3) {
             fn_800B81AC(lbl_80247428, object, value);
         }
