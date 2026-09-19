@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9cf90411-4df4-4c0c-b5f6-50f8b21d7f57",
+  "attempt": 2,
+  "base_commit": "24529498abd13470ca1f38f667c4572d1f1a554e",
+  "target": "fn_80131460",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9cf90411-4df4-4c0c-b5f6-50f8b21d7f57.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff is 97.37151% with exact 1292/1292-byte code size. The corrected fallback loop now matches retail at offsets 0x490-0x498 (cmpwi followed by bne 0x484). Remaining code differences are 79 argument mismatches, primarily register allocation, plus two inserted/deleted instruction pairs around offsets 0x374-0x37c: retail emits subf r4,r25,r3 then lha r3,0x1d6(r30), while generated emits lha r4,0x1d6(r30) then subf r5,r26,r3. The strict report contains 126 relocation-bearing instruction records on each side; the candidate is not claimed matched. Canonical build produced DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
