@@ -1,0 +1,415 @@
+{
+  "assignment_id": "4700c350-8c69-4f0c-a1d0-225ac9dbc090",
+  "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8019B4D4 fn_8019B4D4 -o reports/GEDE01/objdiff-4700c350-8c69-4f0c-a1d0-225ac9dbc090.json --format json-pretty",
+  "strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8019B4D4 fn_8019B4D4 -c function_reloc_diffs=name_address -o reports/GEDE01/objdiff-strict-4700c350-8c69-4f0c-a1d0-225ac9dbc090.json --format json-pretty",
+  "canonical_percent": 99.111115,
+  "strict_percent": 99.111115,
+  "canonical_strict_byte_identical": true,
+  "canonical_sha256": "fd92feef6bafd9a242ec80f6dd8257e4f862c5c5aa57d4e7d97387ee09838d9d",
+  "strict_sha256": "fd92feef6bafd9a242ec80f6dd8257e4f862c5c5aa57d4e7d97387ee09838d9d",
+  "source_sha256": "7d7919560ddda15c4ccccd8f8d24f65674f5f10eef4fba781de6f580d6b56a81",
+  "retail_text_size": 540,
+  "generated_text_size": 540,
+  "retail_object": "build/GEDE01/obj/game/game_fn_8019B4D4.o",
+  "generated_object": "build/GEDE01/src/game/game_fn_8019B4D4.o",
+  "raw_text_different_instruction_offsets": [
+    "0xd0",
+    "0xd8"
+  ],
+  "instruction_divergences": [
+    {
+      "retail_offset": "0xd0",
+      "generated_offset": "0xd0",
+      "retail": "li r4, 0x4",
+      "generated": "addi r3, r31, 0x20"
+    },
+    {
+      "retail_offset": "0xd8",
+      "generated_offset": "0xd8",
+      "retail": "addi r3, r31, 0x20",
+      "generated": "li r4, 0x4"
+    }
+  ],
+  "instruction_relocation_counts": {
+    "left": 30,
+    "right": 30
+  },
+  "elf_relocations_equal_including_targets_types_addends": true,
+  "retail_elf_relocations": [
+    {
+      "offset": "0x24",
+      "type": 109,
+      "target": "lbl_80651DF0",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x28",
+      "type": 109,
+      "target": "lbl_80651DF4",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x38",
+      "type": 10,
+      "target": "fn_801804AC",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x4c",
+      "type": 109,
+      "target": "lbl_80650BEC",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x94",
+      "type": 109,
+      "target": "lbl_8064D224",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x9c",
+      "type": 10,
+      "target": "memset",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0xb8",
+      "type": 10,
+      "target": "fn_80180554",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0xbe",
+      "type": 6,
+      "target": "lbl_802FC5BC",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0xc6",
+      "type": 4,
+      "target": "lbl_802FC5BC",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0xc8",
+      "type": 109,
+      "target": "lbl_80650BF8",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0xe0",
+      "type": 10,
+      "target": "fn_801805E0",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x108",
+      "type": 10,
+      "target": "fn_8018E230",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x148",
+      "type": 10,
+      "target": "fn_8018E230",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x158",
+      "type": 10,
+      "target": "fn_8018E260",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x178",
+      "type": 10,
+      "target": "fn_8018E230",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x18a",
+      "type": 6,
+      "target": "lbl_80607130",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x192",
+      "type": 4,
+      "target": "lbl_80607130",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x19c",
+      "type": 10,
+      "target": "fn_8018CB70",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x1b0",
+      "type": 10,
+      "target": "fn_8018EF9C",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x1e0",
+      "type": 10,
+      "target": "fn_8018C540",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x1f2",
+      "type": 6,
+      "target": "lbl_80606328",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x1f6",
+      "type": 6,
+      "target": "lbl_80606318",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x1fa",
+      "type": 4,
+      "target": "lbl_80606318",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x1fe",
+      "type": 4,
+      "target": "lbl_80606328",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x204",
+      "type": 10,
+      "target": "fn_801F5A04",
+      "target_value": 0,
+      "addend": 0
+    }
+  ],
+  "generated_elf_relocations": [
+    {
+      "offset": "0x24",
+      "type": 109,
+      "target": "lbl_80651DF0",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x28",
+      "type": 109,
+      "target": "lbl_80651DF4",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x38",
+      "type": 10,
+      "target": "fn_801804AC",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x4c",
+      "type": 109,
+      "target": "lbl_80650BEC",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x94",
+      "type": 109,
+      "target": "lbl_8064D224",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x9c",
+      "type": 10,
+      "target": "memset",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0xb8",
+      "type": 10,
+      "target": "fn_80180554",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0xbe",
+      "type": 6,
+      "target": "lbl_802FC5BC",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0xc6",
+      "type": 4,
+      "target": "lbl_802FC5BC",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0xc8",
+      "type": 109,
+      "target": "lbl_80650BF8",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0xe0",
+      "type": 10,
+      "target": "fn_801805E0",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x108",
+      "type": 10,
+      "target": "fn_8018E230",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x148",
+      "type": 10,
+      "target": "fn_8018E230",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x158",
+      "type": 10,
+      "target": "fn_8018E260",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x178",
+      "type": 10,
+      "target": "fn_8018E230",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x18a",
+      "type": 6,
+      "target": "lbl_80607130",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x192",
+      "type": 4,
+      "target": "lbl_80607130",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x19c",
+      "type": 10,
+      "target": "fn_8018CB70",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x1b0",
+      "type": 10,
+      "target": "fn_8018EF9C",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x1e0",
+      "type": 10,
+      "target": "fn_8018C540",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x1f2",
+      "type": 6,
+      "target": "lbl_80606328",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x1f6",
+      "type": 6,
+      "target": "lbl_80606318",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x1fa",
+      "type": 4,
+      "target": "lbl_80606318",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x1fe",
+      "type": 4,
+      "target": "lbl_80606328",
+      "target_value": 0,
+      "addend": 0
+    },
+    {
+      "offset": "0x204",
+      "type": 10,
+      "target": "fn_801F5A04",
+      "target_value": 0,
+      "addend": 0
+    }
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "required_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "build_commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2"
+  ],
+  "build_log": "eternal-darkness-decomp/reports/GEDE01/build-4700c350-8c69-4f0c-a1d0-225ac9dbc090.log",
+  "nonmatching_registration_retained": true,
+  "dol_note": "The target remains NonMatching, so the canonical DOL links the retail split for this function. The DOL hash verifies build integrity, not a C byte match.",
+  "experiment_conclusion": "Testing an unsigned comparison through the same signed-byte lvalue as the call argument prevents the prior r7 coalescing. This yields lbz r0,0x16(r30), cmplwi r0,0, and extsb r7,r0 with the retail argument ordering. Keeping the original unsigned lvalue in the condition produced 99.0%; the preserved one-line change produces 99.111115%. Float formal placement, typed struct/bitfield access, local temporary order, pointer forms, palette types, scale promotion, and local inline setup helpers did not remove the final two swapped instructions.",
+  "prior_attempt_evidence": "Studied the supplied preserved-attempt diagnoses, git show 34c73274 source/report/stat, git show 41de78b6 report, and git show 4569268a stat. The accepted base already contains the attempt-6 source. No prior variadic-call or signed fifth-parameter experiment was repeated.",
+  "canonical_compiler": "GC/1.3",
+  "canonical_c_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+  "changed_source_lines": [
+    "if (config[0x16] != 0) -> if ((u8)((s8*)config)[0x16] != 0)"
+  ],
+  "real_elf_relocation_count": 25,
+  "build_log_note": "Raw combined stdout/stderr with CRLF line endings normalized to LF.",
+  "legal_audit_command": "python3 tools/legal_audit.py",
+  "legal_audit_stdout": "legal audit passed (17172 tracked project files inspected)\n",
+  "build_returncode": 0,
+  "configure_returncode": 0,
+  "legal_audit_returncode": 0
+}

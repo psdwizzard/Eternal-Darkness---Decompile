@@ -64,7 +64,7 @@ void fn_8019B4D4(u8* object, void* first, void* second, u8* config)
     fn_801805E0(entry + 0x20, 4, config[1], 0, default_texture,
                 lbl_80650BF8);
 
-    if (config[0x16] != 0) {
+    if ((u8)((s8*)config)[0x16] != 0) {
         fn_8018E230(entry, entry + 0x2B, 1, 0,
                     ((s8*)config)[0x16], config[0x17]);
     } else if (*(u16*)(config + 6) == 0 && *(int*)(config + 0x1C) == 0) {
