@@ -35,9 +35,9 @@ void fn_80063124(s32 context, s32 object, s32 event, s32 current_object,
                   s32 unused, s32 *out_result)
 {
     s32 event_data;
+    u32 channels;
     s32 step;
     s32 signed_step;
-    u16 channels;
     s32 special;
     s32 index;
     s32 result;
@@ -46,7 +46,7 @@ void fn_80063124(s32 context, s32 object, s32 event, s32 current_object,
     event_data = fn_80200C38(event);
     step = fn_801A74F8();
     fn_801A7530(event_data);
-    channels = fn_801A7530(event_data);
+    channels = (u16)fn_801A7530(event_data);
     signed_step = (s16)step;
     special = channels & 2;
 
