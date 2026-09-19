@@ -1,0 +1,765 @@
+{
+  "method": "Each source variant was compiled with the existing Ninja object rule and compared with objdiff-cli diff -p . -u main/game/game_fn_80199868 fn_80199868 --format json-pretty. Scores, sizes and difference counts were parsed directly from the resulting JSON. No variant is registered or retained as an additional C translation unit.",
+  "experiments": [
+    {
+      "name": "baseline",
+      "match_percent": 98.27517,
+      "size": "596",
+      "differing_rows": 42,
+      "source_sha256": "a4ef5e38b76f8f60d00642959d3c30b0cb34975360f09145c4223a697ad2539b",
+      "differences": [
+        {
+          "offset": "16",
+          "retail": "mr r29, r3",
+          "generated": "mr r30, r3"
+        },
+        {
+          "offset": "20",
+          "retail": "addi r31, r29, 0x8c",
+          "generated": "addi r31, r30, 0x8c"
+        },
+        {
+          "offset": "28",
+          "retail": "lbz r0, 0x8c(r29)",
+          "generated": "lbz r0, 0x8c(r30)"
+        },
+        {
+          "offset": "52",
+          "retail": "lwz r3, 0x4c(r29)",
+          "generated": "lwz r3, 0x4c(r30)"
+        },
+        {
+          "offset": "56",
+          "retail": "mullw r28, r4, r0",
+          "generated": "mullw r28, r0, r4"
+        },
+        {
+          "offset": "64",
+          "retail": "mr r30, r28",
+          "generated": "mr r29, r28"
+        },
+        {
+          "offset": "84",
+          "retail": "lbz r7, 0x4(r29)",
+          "generated": "lbz r7, 0x4(r30)"
+        },
+        {
+          "offset": "124",
+          "retail": "addi r30, r30, 0x1",
+          "generated": "addi r29, r29, 0x1"
+        },
+        {
+          "offset": "136",
+          "retail": "cmpw r30, r0",
+          "generated": "cmpw r29, r0"
+        },
+        {
+          "offset": "144",
+          "retail": "lhz r5, 0xa(r29)",
+          "generated": "lhz r5, 0xa(r30)"
+        },
+        {
+          "offset": "184",
+          "retail": "lhz r0, 0xc(r29)",
+          "generated": "lhz r0, 0xc(r30)"
+        },
+        {
+          "offset": "220",
+          "retail": "mr r30, r3",
+          "generated": "mr r29, r3"
+        },
+        {
+          "offset": "224",
+          "retail": "lhz r0, 0xa(r29)",
+          "generated": "lhz r0, 0xa(r30)"
+        },
+        {
+          "offset": "244",
+          "retail": "divw r4, r4, r3",
+          "generated": "divw r26, r4, r3"
+        },
+        {
+          "offset": "248",
+          "retail": "lwz r3, 0x4c(r29)",
+          "generated": "lwz r3, 0x4c(r30)"
+        },
+        {
+          "offset": "252",
+          "retail": "mullw r26, r4, r0",
+          "generated": "mullw r26, r26, r0"
+        },
+        {
+          "offset": "276",
+          "retail": "mr r3, r30",
+          "generated": "mr r3, r29"
+        },
+        {
+          "offset": "304",
+          "retail": "addi r3, r29, 0x24",
+          "generated": "addi r3, r30, 0x24"
+        },
+        {
+          "offset": "380",
+          "retail": "addi r25, r25, 0x1",
+          "generated": "addi r28, r28, 0x4"
+        },
+        {
+          "offset": "384",
+          "retail": "addi r28, r28, 0x4",
+          "generated": "addi r25, r25, 0x1"
+        },
+        {
+          "offset": "404",
+          "retail": "lwz r30, 0x4c(r29)",
+          "generated": "lwz r25, 0x4c(r30)"
+        },
+        {
+          "offset": "408",
+          "retail": "li r27, 0x0",
+          "generated": "li r26, 0x0"
+        },
+        {
+          "offset": "412",
+          "retail": "lbz r28, 0x1(r29)",
+          "generated": "lbz r27, 0x1(r30)"
+        },
+        {
+          "offset": "420",
+          "retail": "lbz r0, 0x0(r30)",
+          "generated": "lbz r0, 0x0(r25)"
+        },
+        {
+          "offset": "432",
+          "retail": "mr r3, r30",
+          "generated": "mr r3, r25"
+        },
+        {
+          "offset": "436",
+          "retail": "addi r4, r30, 0x2b",
+          "generated": "addi r4, r25, 0x2b"
+        },
+        {
+          "offset": "452",
+          "retail": "addi r3, r29, 0x24",
+          "generated": "addi r3, r30, 0x24"
+        },
+        {
+          "offset": "456",
+          "retail": "clrlwi r4, r27, 24",
+          "generated": "clrlwi r4, r26, 24"
+        },
+        {
+          "offset": "468",
+          "retail": "addi r3, r29, 0x24",
+          "generated": "addi r3, r30, 0x24"
+        },
+        {
+          "offset": "472",
+          "retail": "clrlwi r4, r27, 24",
+          "generated": "clrlwi r4, r26, 24"
+        },
+        {
+          "offset": "488",
+          "retail": "lha r4, 0x1c(r30)",
+          "generated": "lha r4, 0x1c(r25)"
+        },
+        {
+          "offset": "492",
+          "retail": "addi r3, r30, 0xa",
+          "generated": "addi r3, r25, 0xa"
+        },
+        {
+          "offset": "496",
+          "retail": "addi r5, r30, 0x10",
+          "generated": "addi r5, r25, 0x10"
+        },
+        {
+          "offset": "504",
+          "retail": "addi r30, r30, 0x38",
+          "generated": "addi r25, r25, 0x38"
+        },
+        {
+          "offset": "508",
+          "retail": "addi r27, r27, 0x1",
+          "generated": "addi r26, r26, 0x1"
+        },
+        {
+          "offset": "512",
+          "retail": "cmpw r27, r28",
+          "generated": "cmpw r26, r27"
+        },
+        {
+          "offset": "520",
+          "retail": "lhz r3, 0xa(r29)",
+          "generated": "lhz r3, 0xa(r30)"
+        },
+        {
+          "offset": "528",
+          "retail": "sth r0, 0xa(r29)",
+          "generated": "sth r0, 0xa(r30)"
+        },
+        {
+          "offset": "532",
+          "retail": "lhz r3, 0xa(r29)",
+          "generated": "lhz r3, 0xa(r30)"
+        },
+        {
+          "offset": "536",
+          "retail": "lhz r0, 0xc(r29)",
+          "generated": "lhz r0, 0xc(r30)"
+        },
+        {
+          "offset": "548",
+          "retail": "addi r3, r29, 0x24",
+          "generated": "addi r3, r30, 0x24"
+        },
+        {
+          "offset": "568",
+          "retail": "sth r0, 0x22(r29)",
+          "generated": "sth r0, 0x22(r30)"
+        }
+      ]
+    },
+    {
+      "name": "single_expression_and_sequence_for_update",
+      "match_percent": 97.85235,
+      "size": "596",
+      "differing_rows": 49,
+      "source_sha256": "66cab90a6e227ed07a14c2fc759fc0eebd4127005087722abfa8573ea94cbe09"
+    },
+    {
+      "name": "commuted_first_product",
+      "match_percent": 97.85235,
+      "size": "596",
+      "differing_rows": 49,
+      "source_sha256": "4aad0666355b714f8069dc71d2ea56850f13f9d62f59dc3b270641550321be01"
+    },
+    {
+      "name": "parameter_alias",
+      "match_percent": 97.85235,
+      "size": "596",
+      "differing_rows": 49,
+      "source_sha256": "a8a1669d59ad3a161fa00d50058f6f6970067017a6ab387eaab3b237576e1cf3"
+    },
+    {
+      "name": "register_parameter",
+      "match_percent": 97.85235,
+      "size": "596",
+      "differing_rows": 49,
+      "source_sha256": "a03d59589cd6fb87e1411eecbbd621d8749ee069810036722f8b8ae119e0a083"
+    },
+    {
+      "name": "sequence_update_only",
+      "match_percent": 98.42282,
+      "size": "596",
+      "differing_rows": 40,
+      "source_sha256": "4588499bf8091d51ea4a094aa37ac704136ceb90a3bab463384a590cad8acae7"
+    },
+    {
+      "name": "single_expression_only",
+      "match_percent": 97.77181,
+      "size": "596",
+      "differing_rows": 50,
+      "source_sha256": "1f616ee239393872fb71fb01402c0e28989f2752933e45d0d4eb76253e1013a8"
+    },
+    {
+      "name": "typed_object_fields",
+      "match_percent": 98.27517,
+      "size": "596",
+      "differing_rows": 42,
+      "source_sha256": "3469e5c940d716406d982766a8841a681ee88e626033c9635da95620a9d53a1b"
+    },
+    {
+      "name": "typed_object_fields_sequence_update",
+      "match_percent": 98.42282,
+      "size": "596",
+      "differing_rows": 40,
+      "source_sha256": "db2863b87c18e5c2d24c73c649580014dbcb9e30d393da87f5a4c4bc5cc095a4"
+    },
+    {
+      "name": "first_quotient_local",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "ffe19519dd172f4f877235273fe9b88e5f2df4da351d72f91d5cfc6da07881ae"
+    },
+    {
+      "name": "second_quotient_local",
+      "match_percent": 98.18792,
+      "size": "596",
+      "differing_rows": 44,
+      "source_sha256": "a7e24600494bf242a7c60b7298a7a7bf8691cc72bbe4ec9f57ce12e28a64af54"
+    },
+    {
+      "name": "first_cached_quotient",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "ce071f6cd715258bf5b8e4e022445052c22ae9b45f619255ae9997934a22f774"
+    },
+    {
+      "name": "first_multiply_assign",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "7865207e0a7820c9217cceee82fb54422912531900b01c6eeec3a995d9fc7b4a",
+      "differences": [
+        {
+          "offset": "16",
+          "retail": "mr r29, r3",
+          "generated": "mr r30, r3"
+        },
+        {
+          "offset": "20",
+          "retail": "addi r31, r29, 0x8c",
+          "generated": "addi r31, r30, 0x8c"
+        },
+        {
+          "offset": "28",
+          "retail": "lbz r0, 0x8c(r29)",
+          "generated": "lbz r0, 0x8c(r30)"
+        },
+        {
+          "offset": "52",
+          "retail": "lwz r3, 0x4c(r29)",
+          "generated": "lwz r3, 0x4c(r30)"
+        },
+        {
+          "offset": "64",
+          "retail": "mr r30, r28",
+          "generated": "mr r29, r28"
+        },
+        {
+          "offset": "84",
+          "retail": "lbz r7, 0x4(r29)",
+          "generated": "lbz r7, 0x4(r30)"
+        },
+        {
+          "offset": "124",
+          "retail": "addi r30, r30, 0x1",
+          "generated": "addi r29, r29, 0x1"
+        },
+        {
+          "offset": "136",
+          "retail": "cmpw r30, r0",
+          "generated": "cmpw r29, r0"
+        },
+        {
+          "offset": "144",
+          "retail": "lhz r5, 0xa(r29)",
+          "generated": "lhz r5, 0xa(r30)"
+        },
+        {
+          "offset": "184",
+          "retail": "lhz r0, 0xc(r29)",
+          "generated": "lhz r0, 0xc(r30)"
+        },
+        {
+          "offset": "220",
+          "retail": "mr r30, r3",
+          "generated": "mr r29, r3"
+        },
+        {
+          "offset": "224",
+          "retail": "lhz r0, 0xa(r29)",
+          "generated": "lhz r0, 0xa(r30)"
+        },
+        {
+          "offset": "244",
+          "retail": "divw r4, r4, r3",
+          "generated": "divw r26, r4, r3"
+        },
+        {
+          "offset": "248",
+          "retail": "lwz r3, 0x4c(r29)",
+          "generated": "lwz r3, 0x4c(r30)"
+        },
+        {
+          "offset": "252",
+          "retail": "mullw r26, r4, r0",
+          "generated": "mullw r26, r26, r0"
+        },
+        {
+          "offset": "276",
+          "retail": "mr r3, r30",
+          "generated": "mr r3, r29"
+        },
+        {
+          "offset": "304",
+          "retail": "addi r3, r29, 0x24",
+          "generated": "addi r3, r30, 0x24"
+        },
+        {
+          "offset": "404",
+          "retail": "lwz r30, 0x4c(r29)",
+          "generated": "lwz r25, 0x4c(r30)"
+        },
+        {
+          "offset": "408",
+          "retail": "li r27, 0x0",
+          "generated": "li r26, 0x0"
+        },
+        {
+          "offset": "412",
+          "retail": "lbz r28, 0x1(r29)",
+          "generated": "lbz r27, 0x1(r30)"
+        },
+        {
+          "offset": "420",
+          "retail": "lbz r0, 0x0(r30)",
+          "generated": "lbz r0, 0x0(r25)"
+        },
+        {
+          "offset": "432",
+          "retail": "mr r3, r30",
+          "generated": "mr r3, r25"
+        },
+        {
+          "offset": "436",
+          "retail": "addi r4, r30, 0x2b",
+          "generated": "addi r4, r25, 0x2b"
+        },
+        {
+          "offset": "452",
+          "retail": "addi r3, r29, 0x24",
+          "generated": "addi r3, r30, 0x24"
+        },
+        {
+          "offset": "456",
+          "retail": "clrlwi r4, r27, 24",
+          "generated": "clrlwi r4, r26, 24"
+        },
+        {
+          "offset": "468",
+          "retail": "addi r3, r29, 0x24",
+          "generated": "addi r3, r30, 0x24"
+        },
+        {
+          "offset": "472",
+          "retail": "clrlwi r4, r27, 24",
+          "generated": "clrlwi r4, r26, 24"
+        },
+        {
+          "offset": "488",
+          "retail": "lha r4, 0x1c(r30)",
+          "generated": "lha r4, 0x1c(r25)"
+        },
+        {
+          "offset": "492",
+          "retail": "addi r3, r30, 0xa",
+          "generated": "addi r3, r25, 0xa"
+        },
+        {
+          "offset": "496",
+          "retail": "addi r5, r30, 0x10",
+          "generated": "addi r5, r25, 0x10"
+        },
+        {
+          "offset": "504",
+          "retail": "addi r30, r30, 0x38",
+          "generated": "addi r25, r25, 0x38"
+        },
+        {
+          "offset": "508",
+          "retail": "addi r27, r27, 0x1",
+          "generated": "addi r26, r26, 0x1"
+        },
+        {
+          "offset": "512",
+          "retail": "cmpw r27, r28",
+          "generated": "cmpw r26, r27"
+        },
+        {
+          "offset": "520",
+          "retail": "lhz r3, 0xa(r29)",
+          "generated": "lhz r3, 0xa(r30)"
+        },
+        {
+          "offset": "528",
+          "retail": "sth r0, 0xa(r29)",
+          "generated": "sth r0, 0xa(r30)"
+        },
+        {
+          "offset": "532",
+          "retail": "lhz r3, 0xa(r29)",
+          "generated": "lhz r3, 0xa(r30)"
+        },
+        {
+          "offset": "536",
+          "retail": "lhz r0, 0xc(r29)",
+          "generated": "lhz r0, 0xc(r30)"
+        },
+        {
+          "offset": "548",
+          "retail": "addi r3, r29, 0x24",
+          "generated": "addi r3, r30, 0x24"
+        },
+        {
+          "offset": "568",
+          "retail": "sth r0, 0x22(r29)",
+          "generated": "sth r0, 0x22(r30)"
+        }
+      ]
+    },
+    {
+      "name": "second_multiply_reversed",
+      "match_percent": 97.58389,
+      "size": "596",
+      "differing_rows": 58,
+      "source_sha256": "0d30fc8a6ba9f7f33cf5e22148bdc8069a2d6df20e627b459a742b865d9a6278"
+    },
+    {
+      "name": "register_indices",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "3352fec316691fef95438133273555568c5e1c0272dff41959957e83ed1ff847"
+    },
+    {
+      "name": "register_entries",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "965041f94e90ec48215ff9681825d9d76b630c313c6caebc5306fe2103aa40a2"
+    },
+    {
+      "name": "register_actor",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "65c9c91655765185bf937d18f9985ccf6dbd203124333a2b69d8423789f81678"
+    },
+    {
+      "name": "long_indices",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "ccd0017ecb48900c84d26cf20507c5da822a9c90d71ede823073895b59841b54"
+    },
+    {
+      "name": "long_first",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "2387764428734666c25d2214be9626528f77c9a939b481cddb87d0e933908dd1"
+    },
+    {
+      "name": "long_count",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "3ab616eb4b7ab4f6d08c5e0caf7ba69ab69df2bc3a0baa336e72a37df8da67c8"
+    },
+    {
+      "name": "hoist_before_config_10",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "76914485140e1b667ca313d4905b783e712da98b05578b247380f974ab50fc12"
+    },
+    {
+      "name": "alias_after_hoisted_10",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "5e49bb026da1fffaa9e146458abc1245ad584bfd384c844298f75d8901beb021"
+    },
+    {
+      "name": "hoist_before_config_25",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "2d1163786c3970debb23f779c2a2fd35fe02d489163ae9c5925255069eca4c33"
+    },
+    {
+      "name": "alias_after_hoisted_25",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "a3c2cc01870db543d148f507c6e482ec08cb988c9a6b8665bd2f8ac80e897880"
+    },
+    {
+      "name": "hoist_before_config_40",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "5cb3e3ca7ae14d048fdcfdcbc46662ebaf7ded0a3839b15ca457d16e507fcc46"
+    },
+    {
+      "name": "alias_after_hoisted_40",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "0c4669b412c8eef237e0a1fb546295e3335db254f758c0a15dad5cd02e9ee996"
+    },
+    {
+      "name": "first_while",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "d7c1bfb8d783a5b0032c278b2bf2f0efd416f6f934c434a3e427aae2eab2a635"
+    },
+    {
+      "name": "first_all_for_updates",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "d41713fa10bfae7b9c27faca4efa51522e212ef9161f984615cdc1da55838bfc"
+    },
+    {
+      "name": "second_all_for_updates",
+      "match_percent": 97.81208,
+      "size": "592",
+      "differing_rows": 55,
+      "source_sha256": "ddec137b2494b53f9698e35463d58890207e10e6b464c599ce164ef8c0d11ad8",
+      "invalid_experiment": "Discarded: mechanical replacement also removed the first-pass pointer increment. This score is not a valid reconstruction candidate."
+    },
+    {
+      "name": "third_while",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "38573ac0176b2a5bf2467cc0a6bb9a1d0fbc89e6c746601e3c9634447e0b7713"
+    },
+    {
+      "name": "third_all_for_updates",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "50e1aae6047ee7838f54c435695aa9d5fac6727df23314acfb52baec7b419f97"
+    },
+    {
+      "name": "third_for_initializer",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "89535211d472a46a1d933ed61b444ddf853107b6cd4560e3dc404c8824cad3b0"
+    },
+    {
+      "name": "second_quotient_assignment_expr",
+      "match_percent": 97.919464,
+      "size": "596",
+      "differing_rows": 49,
+      "source_sha256": "6e4241cbbb0fbf124582c058a6c5b602d3ab27fa21a9c184d144d77f8434f1e9"
+    },
+    {
+      "name": "second_index_quotient",
+      "match_percent": 98.255035,
+      "size": "596",
+      "differing_rows": 44,
+      "source_sha256": "cab003db05a52e1fadfbdd6bd3307724889b7b01f6190c61eda3dad8a181f391"
+    },
+    {
+      "name": "first_remainder_with_quotient",
+      "match_percent": 98.355705,
+      "size": "596",
+      "differing_rows": 42,
+      "source_sha256": "e0103a543c62b3d695ab10a2391a11eff4285135ceea3eb61680040f676f30ee"
+    },
+    {
+      "name": "first_index_quotient",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "ff915315eeef0132ed9316dce96843eef86873181b20cc485d0f3446cdfd33ad"
+    },
+    {
+      "name": "config_delayed_init",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "5f1d57058ddc269d2cc2cd00320890a9edb2c9c3c600a56157fcb9d646b82bc5"
+    },
+    {
+      "name": "shared_typed_u8* entry;",
+      "match_percent": 97.78523,
+      "size": "596",
+      "differing_rows": 56,
+      "source_sha256": "e7c637e7006c4c4ff5ee04b88b115867cbc1f4e4ea7b8a3b48f14c933133a591"
+    },
+    {
+      "name": "shared_typed_int index;",
+      "match_percent": 97.48322,
+      "size": "596",
+      "differing_rows": 62,
+      "source_sha256": "06a5a2b65a95e04741a5d12676c68a12a0e361eecb7951c6a6c13ae8bdb30f93"
+    },
+    {
+      "name": "shared_typed_int first;",
+      "match_percent": 97.65101,
+      "size": "596",
+      "differing_rows": 59,
+      "source_sha256": "68fb7d4e7e878b844a8dc460023f2331f99f7f9d40d9fe9a2941a0db4e1611b1"
+    },
+    {
+      "name": "shared_typed_u8* entry;,int index;",
+      "match_percent": 97.8859,
+      "size": "596",
+      "differing_rows": 53,
+      "source_sha256": "889a62ed21d8e1d1c7c3c3d6a092fe7cddb54446a7eabd8312665a17cb3b2222"
+    },
+    {
+      "name": "shared_typed_u8* entry;,int first;",
+      "match_percent": 97.65101,
+      "size": "596",
+      "differing_rows": 59,
+      "source_sha256": "4c7ddfca70bb76cbbf5e242045ba32e12114b98639bb6ee98b4dd8755e5e2fd8"
+    },
+    {
+      "name": "shared_typed_int index;,int first;",
+      "match_percent": 97.68456,
+      "size": "596",
+      "differing_rows": 58,
+      "source_sha256": "46602b53568cfe2c97519ba626257d531a6c12b9f3c437a75ce9bcb4c7f3da79"
+    },
+    {
+      "name": "shared_typed_u8* entry;,int index;,int first;",
+      "match_percent": 97.65101,
+      "size": "596",
+      "differing_rows": 59,
+      "source_sha256": "767b7928992a49b1a6739bd5278d762edabeb2bd50d176c46a342ad5a41f7b28"
+    },
+    {
+      "name": "typed_entries_all",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "f987538480ea7305723ad2cf9ee65861730d290f1ee0ef7febb501521ef03ada"
+    },
+    {
+      "name": "typed_config",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "79c2c526fd8be51c463487367726e770553708f1cec7b54273a36ddef978295f"
+    },
+    {
+      "name": "typed_config_and_entries",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "9f3590594b91b905e8b3c76b185721a309a891c8c55ad58453deef582d87b049"
+    },
+    {
+      "name": "unsigned_count_signed_comparison",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "8c6a65530414e7f149c45406310ef301f9f2cff452de79872720889af4c54640"
+    },
+    {
+      "name": "unsigned_indices_signed_comparisons",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "bc2d5adb2ac03c443e614034e9f497f4f4bbba55d07bb272d3a01de7fa37c466"
+    },
+    {
+      "name": "unsigned_first_signed_comparisons",
+      "match_percent": 98.48993,
+      "size": "596",
+      "differing_rows": 39,
+      "source_sha256": "2d096e48e736b3d9dfa28b1532c6cc3be79273731755761a44feb947cfdd63da"
+    }
+  ]
+}

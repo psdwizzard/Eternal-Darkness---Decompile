@@ -1,0 +1,247 @@
+{
+  "version": 1,
+  "assignment_id": "79ca884c-6390-49fa-bbdf-1f2cc3c14ff0",
+  "attempt": 6,
+  "base_commit": "862eec2ac2ff1035979efb7108b2e56d49ac142c",
+  "target": "fn_80199868",
+  "status": "attempted",
+  "source": "eternal-darkness-decomp/src/game/game_fn_80199868.c",
+  "source_sha256": "7865207e0a7820c9217cceee82fb54422912531900b01c6eeec3a995d9fc7b4a",
+  "registration": "Object(NonMatching, \"game/game_fn_80199868.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "command_working_directory": "eternal-darkness-decomp",
+  "raw_evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-79ca884c-6390-49fa-bbdf-1f2cc3c14ff0-canonical.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-79ca884c-6390-49fa-bbdf-1f2cc3c14ff0-reloc-strict.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-79ca884c-6390-49fa-bbdf-1f2cc3c14ff0-elf-audit.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-79ca884c-6390-49fa-bbdf-1f2cc3c14ff0-verification.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-79ca884c-6390-49fa-bbdf-1f2cc3c14ff0-experiments.json"
+  ],
+  "canonical_match_percent": 98.48993,
+  "relocation_strict_match_percent": 98.48993,
+  "retail_bytes": 596,
+  "generated_bytes": 596,
+  "differing_instruction_words": 39,
+  "canonical_strict_raw_byte_equal": true,
+  "relocation_count": 11,
+  "relocation_addresses_types_targets_values_addends_equal": true,
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_scope": "NonMatching registration links retail fallback; the matching DOL hash does not certify candidate instruction matching.",
+  "new_hypothesis": "Expression boundaries and loop-update placement change Metrowerks temporary live ranges and scheduling even when control flow and arithmetic semantics are identical. Typed field access was also tested independently and produced byte-identical code.",
+  "retained_changes": [
+    {
+      "change": "Move second-pass sequence += 4 into the for update clause after index++",
+      "score_after": 98.42282,
+      "effect": "Fixes instruction order at 0x17C and 0x180."
+    },
+    {
+      "change": "Separate first-pass division and multiplication into first = frame / interval; first *= batch",
+      "score_after": 98.48993,
+      "effect": "Fixes operand order of mullw at 0x38."
+    }
+  ],
+  "prior_attempts_reviewed": [
+    "13128b793efd3475edc3aa3420ff473ff9d49b38",
+    "50d3cedda8ab92b5435df680b90303c403d8e6e3",
+    "2dcbd0455e4c76f47a4831dc19b080f9796097d1"
+  ],
+  "divergence": "Canonical GC/1.3 emits 596 bytes at 98.48993% (39 differing instruction words). Retail object is r29 versus generated r30; first-pass index and second-pass actor use retail r30 versus generated r29; third-pass entry/index/count are retail r30/r27/r28 versus generated r25/r26/r27. At 0xF4 generated divw writes r26 instead of r4, and 0xFC consequently consumes r26 instead of r4. All control flow, call sites, stack layout, and all 11 R_PPC_REL24 targets and explicit zero addends agree. Canonical and relocation-strict raw reports are byte-identical.",
+  "instruction_differences": [
+    {
+      "offset": "0x10",
+      "retail": "mr r29, r3",
+      "generated": "mr r30, r3"
+    },
+    {
+      "offset": "0x14",
+      "retail": "addi r31, r29, 0x8c",
+      "generated": "addi r31, r30, 0x8c"
+    },
+    {
+      "offset": "0x1c",
+      "retail": "lbz r0, 0x8c(r29)",
+      "generated": "lbz r0, 0x8c(r30)"
+    },
+    {
+      "offset": "0x34",
+      "retail": "lwz r3, 0x4c(r29)",
+      "generated": "lwz r3, 0x4c(r30)"
+    },
+    {
+      "offset": "0x40",
+      "retail": "mr r30, r28",
+      "generated": "mr r29, r28"
+    },
+    {
+      "offset": "0x54",
+      "retail": "lbz r7, 0x4(r29)",
+      "generated": "lbz r7, 0x4(r30)"
+    },
+    {
+      "offset": "0x7c",
+      "retail": "addi r30, r30, 0x1",
+      "generated": "addi r29, r29, 0x1"
+    },
+    {
+      "offset": "0x88",
+      "retail": "cmpw r30, r0",
+      "generated": "cmpw r29, r0"
+    },
+    {
+      "offset": "0x90",
+      "retail": "lhz r5, 0xa(r29)",
+      "generated": "lhz r5, 0xa(r30)"
+    },
+    {
+      "offset": "0xb8",
+      "retail": "lhz r0, 0xc(r29)",
+      "generated": "lhz r0, 0xc(r30)"
+    },
+    {
+      "offset": "0xdc",
+      "retail": "mr r30, r3",
+      "generated": "mr r29, r3"
+    },
+    {
+      "offset": "0xe0",
+      "retail": "lhz r0, 0xa(r29)",
+      "generated": "lhz r0, 0xa(r30)"
+    },
+    {
+      "offset": "0xf4",
+      "retail": "divw r4, r4, r3",
+      "generated": "divw r26, r4, r3"
+    },
+    {
+      "offset": "0xf8",
+      "retail": "lwz r3, 0x4c(r29)",
+      "generated": "lwz r3, 0x4c(r30)"
+    },
+    {
+      "offset": "0xfc",
+      "retail": "mullw r26, r4, r0",
+      "generated": "mullw r26, r26, r0"
+    },
+    {
+      "offset": "0x114",
+      "retail": "mr r3, r30",
+      "generated": "mr r3, r29"
+    },
+    {
+      "offset": "0x130",
+      "retail": "addi r3, r29, 0x24",
+      "generated": "addi r3, r30, 0x24"
+    },
+    {
+      "offset": "0x194",
+      "retail": "lwz r30, 0x4c(r29)",
+      "generated": "lwz r25, 0x4c(r30)"
+    },
+    {
+      "offset": "0x198",
+      "retail": "li r27, 0x0",
+      "generated": "li r26, 0x0"
+    },
+    {
+      "offset": "0x19c",
+      "retail": "lbz r28, 0x1(r29)",
+      "generated": "lbz r27, 0x1(r30)"
+    },
+    {
+      "offset": "0x1a4",
+      "retail": "lbz r0, 0x0(r30)",
+      "generated": "lbz r0, 0x0(r25)"
+    },
+    {
+      "offset": "0x1b0",
+      "retail": "mr r3, r30",
+      "generated": "mr r3, r25"
+    },
+    {
+      "offset": "0x1b4",
+      "retail": "addi r4, r30, 0x2b",
+      "generated": "addi r4, r25, 0x2b"
+    },
+    {
+      "offset": "0x1c4",
+      "retail": "addi r3, r29, 0x24",
+      "generated": "addi r3, r30, 0x24"
+    },
+    {
+      "offset": "0x1c8",
+      "retail": "clrlwi r4, r27, 24",
+      "generated": "clrlwi r4, r26, 24"
+    },
+    {
+      "offset": "0x1d4",
+      "retail": "addi r3, r29, 0x24",
+      "generated": "addi r3, r30, 0x24"
+    },
+    {
+      "offset": "0x1d8",
+      "retail": "clrlwi r4, r27, 24",
+      "generated": "clrlwi r4, r26, 24"
+    },
+    {
+      "offset": "0x1e8",
+      "retail": "lha r4, 0x1c(r30)",
+      "generated": "lha r4, 0x1c(r25)"
+    },
+    {
+      "offset": "0x1ec",
+      "retail": "addi r3, r30, 0xa",
+      "generated": "addi r3, r25, 0xa"
+    },
+    {
+      "offset": "0x1f0",
+      "retail": "addi r5, r30, 0x10",
+      "generated": "addi r5, r25, 0x10"
+    },
+    {
+      "offset": "0x1f8",
+      "retail": "addi r30, r30, 0x38",
+      "generated": "addi r25, r25, 0x38"
+    },
+    {
+      "offset": "0x1fc",
+      "retail": "addi r27, r27, 0x1",
+      "generated": "addi r26, r26, 0x1"
+    },
+    {
+      "offset": "0x200",
+      "retail": "cmpw r27, r28",
+      "generated": "cmpw r26, r27"
+    },
+    {
+      "offset": "0x208",
+      "retail": "lhz r3, 0xa(r29)",
+      "generated": "lhz r3, 0xa(r30)"
+    },
+    {
+      "offset": "0x210",
+      "retail": "sth r0, 0xa(r29)",
+      "generated": "sth r0, 0xa(r30)"
+    },
+    {
+      "offset": "0x214",
+      "retail": "lhz r3, 0xa(r29)",
+      "generated": "lhz r3, 0xa(r30)"
+    },
+    {
+      "offset": "0x218",
+      "retail": "lhz r0, 0xc(r29)",
+      "generated": "lhz r0, 0xc(r30)"
+    },
+    {
+      "offset": "0x224",
+      "retail": "addi r3, r29, 0x24",
+      "generated": "addi r3, r30, 0x24"
+    },
+    {
+      "offset": "0x238",
+      "retail": "sth r0, 0x22(r29)",
+      "generated": "sth r0, 0x22(r30)"
+    }
+  ],
+  "legal_audit": "Passed; raw stdout and exit status preserved in verification report.",
+  "scope_audit": "Only target C source and assignment reports changed. Existing compiler/NonMatching registration and split boundaries retained. No inline assembly, extra translation units, global progress edits, runtime edits, private input modifications or remote push."
+}

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "assignment_id": "79ca884c-6390-49fa-bbdf-1f2cc3c14ff0",
+  "attempt": 6,
+  "base_commit": "862eec2ac2ff1035979efb7108b2e56d49ac142c",
+  "target": "fn_80199868",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-79ca884c-6390-49fa-bbdf-1f2cc3c14ff0.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-79ca884c-6390-49fa-bbdf-1f2cc3c14ff0-canonical.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-79ca884c-6390-49fa-bbdf-1f2cc3c14ff0-reloc-strict.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-79ca884c-6390-49fa-bbdf-1f2cc3c14ff0-elf-audit.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-79ca884c-6390-49fa-bbdf-1f2cc3c14ff0-verification.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-79ca884c-6390-49fa-bbdf-1f2cc3c14ff0-experiments.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits 596 bytes at 98.48993% (39 differing instruction words). Retail object is r29 versus generated r30; first-pass index and second-pass actor use retail r30 versus generated r29; third-pass entry/index/count are retail r30/r27/r28 versus generated r25/r26/r27. At 0xF4 generated divw writes r26 instead of r4, and 0xFC consequently consumes r26 instead of r4. All control flow, call sites, stack layout, and all 11 R_PPC_REL24 targets and explicit zero addends agree. Canonical and relocation-strict raw reports are byte-identical."
+}

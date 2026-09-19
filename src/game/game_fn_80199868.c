@@ -30,7 +30,8 @@ int fn_80199868(u8* object)
     int first;
     u8* entry;
     if (*(u16*)(object + 0xa) % config[0] == 0) {
-        first = (*(u16*)(object + 0xa) / config[0]) * config[1];
+        first = *(u16*)(object + 0xa) / config[0];
+        first *= config[1];
         entry = *(u8**)(object + 0x4c) + first * 0x38;
         for (index = first; index < first + config[1]; index++) {
             fn_8018E230(entry, entry + 0x2b, 2, config[3], object[4], config[4]);
@@ -55,7 +56,7 @@ int fn_80199868(u8* object)
         first = (*(u16*)(object + 0xa) - config[2]) / config[0];
         first *= config[1];
         entry = *(u8**)(object + 0x4c) + first * 0x38;
-        for (index = first; index < first + config[1]; index++) {
+        for (index = first; index < first + config[1]; index++, sequence += 4) {
             fn_8011F6A4(actor, *(void**)(sequence + 0x20),
                         *(void**)(sequence + 0x28), -1, &result, 1);
             *(s16*)(entry + 0xa) = (s16)result.x;
@@ -63,7 +64,6 @@ int fn_80199868(u8* object)
             *(s16*)(entry + 0xe) = (s16)result.z;
             fn_80180518(object + 0x24, (u8)index, 1);
             entry += 0x38;
-            sequence += 4;
         }
     }
     }
