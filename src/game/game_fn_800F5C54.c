@@ -1,18 +1,15 @@
+extern const double lbl_80239CD0[3];
+
 unsigned int fn_800F5C54(double value)
 {
-    unsigned int result = 0;
-    if (value >= 0.0) {
-        result--;
-        if (value < 4294967296.0) {
-            double converted = value;
-            if (value >= 2147483648.0) {
-                converted = value - 2147483648.0;
-            }
-            result = (int)converted;
-            if (value >= 2147483648.0) {
-                result += 0x80000000;
-            }
-        }
+    if (value < lbl_80239CD0[0]) {
+        return 0;
     }
-    return result;
+    if (value < lbl_80239CD0[1]) {
+        if (value < lbl_80239CD0[2]) {
+            return (int)value;
+        }
+        return (int)(value - lbl_80239CD0[2]) + 0x80000000;
+    }
+    return 0xFFFFFFFF;
 }

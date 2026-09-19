@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3b249594-8139-4f6e-a6f2-e39dd47bbf67",
+  "attempt": 1,
+  "base_commit": "559f09052c2ca88ae6ff6f1b225ab11ee15be93f",
+  "target": "fn_800F5C54",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3b249594-8139-4f6e-a6f2-e39dd47bbf67.json"
+  ],
+  "divergence": "Canonical objdiff is 33.086956%: retail is 92 bytes and generated C is 104 bytes. Retail preloads all three lbl_80239CD0 doubles through R_PPC_ADDR16_HI/R_PPC_ADDR16_LO plus constant-table addends 0, 8, and 16, uses fcmpu in CR0/CR6/CR7, and shares one conversion path. MWCC C instead addresses lbl_80239CD0 with R_PPC_ADDR16_HA/R_PPC_ADDR16_LO, emits sequential fcmpo branches, duplicates the conversion spill paths with a 0x20-byte frame, and therefore fails code and relocation-strict matching."
+}
