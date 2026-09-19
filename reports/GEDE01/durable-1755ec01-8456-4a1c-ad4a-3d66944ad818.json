@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "1755ec01-8456-4a1c-ad4a-3d66944ad818",
+  "attempt": 1,
+  "base_commit": "ba95ff18af758d1af09dd1e55d700531c718ea64",
+  "target": "fn_801415B4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1755ec01-8456-4a1c-ad4a-3d66944ad818.json"
+  ],
+  "divergence": "Relocation-strict objdiff measured 79.90925% (2292 retail bytes versus 2284 generated). The honest C reconstructs all nine unrolled projected edge-pair tests and both triangle-containment tests. Generated code saves f15-f31 using a 0x120-byte frame while retail saves f17-f31 using a 0x100-byte frame; different floating-register liveness then changes initial load scheduling and relocation instruction offsets (46 retail versus 54 generated relocation-bearing instructions)."
+}
