@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "assignment_id": "60e645b0-af71-4199-bd6c-f1bf391fc911",
+  "target": "fn_801A68C4",
+  "status": "matched",
+  "accepted_base": "0bb13627f3f012e5407d0074e260501bb196bf38",
+  "preserved_source_reconciled_from": "fcf72c6e43b94c7878e52ccc8154e8629915c139",
+  "prior_findings": "Early-return, positive-disjunction, explicit labels, empty arm, and switch forms did not retain retail branch pair. Reused the prior exact extern constants lbl_80650DCC/lbl_80650DD0 to correct local constant relocation names.",
+  "new_hypothesis": "Counted-loop unrolling occurs late enough to retain the otherwise folded branch pair. Volatile reads prevent loop-invariant load hoisting and preserve retail short-circuit read ordering.",
+  "experiments": [
+    {
+      "variant": "materialized",
+      "hypothesis_and_outcome": "Materialize the three-way short-circuit expression in a local int and test it; retains Boolean materialization instructions.",
+      "retail_size": 300,
+      "generated_size": 312,
+      "canonical_match_percent": 94.933334,
+      "raw_result": "eternal-darkness-decomp/reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-materialized.raw.json",
+      "build_command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801A68C4.o",
+      "diff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801A68C4 fn_801A68C4 -o reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-materialized.raw.json --format json-pretty"
+    },
+    {
+      "variant": "scan",
+      "hypothesis_and_outcome": "Scan all three entries in a counted loop, break on nonzero, and test the final index; retains index assignments.",
+      "retail_size": 300,
+      "generated_size": 320,
+      "canonical_match_percent": 91.58667,
+      "raw_result": "eternal-darkness-decomp/reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-scan.raw.json",
+      "build_command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801A68C4.o",
+      "diff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801A68C4 fn_801A68C4 -o reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-scan.raw.json --format json-pretty"
+    },
+    {
+      "variant": "once",
+      "hypothesis_and_outcome": "A do/while(0) dispatch with three break tests folds back to the prior single beq.",
+      "retail_size": 300,
+      "generated_size": 296,
+      "canonical_match_percent": 98.26667,
+      "raw_result": "eternal-darkness-decomp/reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-once.raw.json",
+      "build_command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801A68C4.o",
+      "diff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801A68C4 fn_801A68C4 -o reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-once.raw.json --format json-pretty"
+    },
+    {
+      "variant": "scan-goto",
+      "hypothesis_and_outcome": "Scan three array entries and jump directly to the active body; recovers branch pair but uses lwzu at 0x54 and offset 4 instead of 8 at 0x60.",
+      "retail_size": 300,
+      "generated_size": 300,
+      "canonical_match_percent": 99.18667,
+      "raw_result": "eternal-darkness-decomp/reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-scan-goto.raw.json",
+      "build_command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801A68C4.o",
+      "diff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801A68C4 fn_801A68C4 -o reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-scan-goto.raw.json --format json-pretty"
+    },
+    {
+      "variant": "select",
+      "hypothesis_and_outcome": "Replace indexed scan access with explicit ternary slot selection; retains selection scaffolding and hoists loads.",
+      "retail_size": 300,
+      "generated_size": 392,
+      "canonical_match_percent": 67.6,
+      "raw_result": "eternal-darkness-decomp/reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-select.raw.json",
+      "build_command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801A68C4.o",
+      "diff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801A68C4 fn_801A68C4 -o reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-select.raw.json --format json-pretty"
+    },
+    {
+      "variant": "counted-once",
+      "hypothesis_and_outcome": "One-iteration counted loop around the short-circuit dispatch recovers branch pair, but hoists second/third nonvolatile loads.",
+      "retail_size": 300,
+      "generated_size": 300,
+      "canonical_match_percent": 94.6,
+      "raw_result": "eternal-darkness-decomp/reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-counted-once.raw.json",
+      "build_command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801A68C4.o",
+      "diff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801A68C4 fn_801A68C4 -o reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-counted-once.raw.json --format json-pretty"
+    },
+    {
+      "variant": "counted-volatile",
+      "hypothesis_and_outcome": "The counted-once form with volatile array reads preserves conditional load order and exactly matches retail.",
+      "retail_size": 300,
+      "generated_size": 300,
+      "canonical_match_percent": 100.0,
+      "raw_result": "eternal-darkness-decomp/reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-counted-volatile.raw.json",
+      "build_command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801A68C4.o",
+      "diff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801A68C4 fn_801A68C4 -o reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-counted-volatile.raw.json --format json-pretty"
+    }
+  ],
+  "retained_implementation": "One independent C translation unit; one-iteration counted dispatch plus volatile slot reads, no assembly or compiler-setting changes. Volatile qualifier constrains accesses in this TU and does not change external object layout.",
+  "compiler": {
+    "platform": "gc_wii",
+    "compiler": "mwcc_242_53",
+    "c_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -DVERSION_GEDE01 -DNDEBUG=1 -lang=c",
+    "ctx_path": "build/GEDE01/src/game/game_fn_801A68C4.ctx",
+    "build_ctx": true
+  },
+  "canonical_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-canonical.raw.json",
+  "relocation_strict_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-60e645b0-af71-4199-bd6c-f1bf391fc911-strict.raw.json",
+  "elf_audit": "eternal-darkness-decomp/reports/GEDE01/elf-audit-60e645b0-af71-4199-bd6c-f1bf391fc911.json",
+  "verification": "eternal-darkness-decomp/reports/GEDE01/verification-60e645b0-af71-4199-bd6c-f1bf391fc911.json",
+  "canonical_match_percent": 100.0,
+  "relocation_strict_match_percent": 100.0,
+  "instruction_bytes": 300,
+  "relocation_count": 13,
+  "divergence": "",
+  "registration": "Only target Object(NonMatching) changed to Object(Matching); existing split already isolates exactly 0x801A68C4..0x801A69F0.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+}
