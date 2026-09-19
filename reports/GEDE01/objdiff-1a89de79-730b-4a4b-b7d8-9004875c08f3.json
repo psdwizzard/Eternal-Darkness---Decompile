@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "assignment_id": "1a89de79-730b-4a4b-b7d8-9004875c08f3",
+  "target": "fn_801F02C4",
+  "compiler": "GC/1.3",
+  "experiments": [
+    {
+      "label": "register-qualified nested scalar lifetimes",
+      "hypothesis": "Explicit register-qualified base, component, limit, and angle scalars in separate lexical scopes may change MWCC interference priority and reproduce retail f2/f1/f0 allocation without changing the expression schedule.",
+      "source_shape": "Each wrap block used register float base, component, limit, angle; assignments retained retail load order; the variant was rejected and is not the committed source.",
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F02C4 -o reports/GEDE01/objdiff-1a89de79-730b-4a4b-b7d8-9004875c08f3-register-scopes.json --format json-pretty -c function_reloc_diffs=name_address fn_801F02C4",
+      "configuration": "function_reloc_diffs=name_address",
+      "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-1a89de79-730b-4a4b-b7d8-9004875c08f3-register-scopes.json",
+      "raw_stdout": "INFO Writing to reports/GEDE01/objdiff-1a89de79-730b-4a4b-b7d8-9004875c08f3-register-scopes.json",
+      "measured": {"match_percent": 98.11475, "retail_text_bytes": 244, "generated_text_bytes": 244},
+      "outcome": "No instruction or relocation change from the accepted candidate."
+    },
+    {
+      "label": "scalar-replaced aggregate temporaries",
+      "hypothesis": "Placing base, component, limit, and angle in a local WrapTemps aggregate may alter SSA creation and MWCC FPR coloring after scalar replacement while retaining the retail schedule.",
+      "source_shape": "Each wrap block used a local four-float WrapTemps aggregate; the variant was rejected and is not the committed source.",
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F02C4 -o reports/GEDE01/objdiff-1a89de79-730b-4a4b-b7d8-9004875c08f3-aggregate-temps.json --format json-pretty -c function_reloc_diffs=name_address fn_801F02C4",
+      "configuration": "function_reloc_diffs=name_address",
+      "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-1a89de79-730b-4a4b-b7d8-9004875c08f3-aggregate-temps.json",
+      "raw_stdout": "INFO Writing to reports/GEDE01/objdiff-1a89de79-730b-4a4b-b7d8-9004875c08f3-aggregate-temps.json",
+      "measured": {"match_percent": 98.11475, "retail_text_bytes": 244, "generated_text_bytes": 244},
+      "outcome": "MWCC fully scalarized the aggregate but emitted the same instruction and relocation stream as the accepted candidate."
+    }
+  ],
+  "final_verification": {
+    "canonical": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F02C4 -o reports/GEDE01/objdiff-1a89de79-730b-4a4b-b7d8-9004875c08f3-final-canonical.raw.json --format json-pretty fn_801F02C4",
+      "configuration": "default canonical",
+      "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-1a89de79-730b-4a4b-b7d8-9004875c08f3-final-canonical.raw.json",
+      "raw_stdout": "INFO Writing to reports/GEDE01/objdiff-1a89de79-730b-4a4b-b7d8-9004875c08f3-final-canonical.raw.json",
+      "measured": {"match_percent": 98.11475, "retail_text_bytes": 244, "generated_text_bytes": 244}
+    },
+    "relocation_strict": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F02C4 -o reports/GEDE01/objdiff-1a89de79-730b-4a4b-b7d8-9004875c08f3-final-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_801F02C4",
+      "configuration": "function_reloc_diffs=name_address",
+      "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-1a89de79-730b-4a4b-b7d8-9004875c08f3-final-strict.raw.json",
+      "raw_stdout": "INFO Writing to reports/GEDE01/objdiff-1a89de79-730b-4a4b-b7d8-9004875c08f3-final-strict.raw.json",
+      "measured": {"match_percent": 98.11475, "retail_text_bytes": 244, "generated_text_bytes": 244}
+    },
+    "build": {
+      "commands": ["python3 configure.py", ".tools/bin/ninja -j2", "sha1sum build/GEDE01/main.dol"],
+      "raw_terminal_output": ["[877/879] DOL build/GEDE01/main.dol", "[878/879] CHECK config/GEDE01/build.sha1", "build/GEDE01/main.dol: OK", "[879/879] PROGRESS", "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"],
+      "exit_code": 0,
+      "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+    }
+  },
+  "divergence": "At 0x80 the generated R_PPC_EMB_SDA21 relocation targets TU-local @23 rather than retail lbl_80651360. At 0x9C..0xDC retail uses f2/f1/f0 for base/angle/limit while generated code uses f1/f0/f2; opcodes, control flow, instruction count, sizes, and other operands align."
+}
