@@ -1,0 +1,26 @@
+--- a/src/game/game_fn_801CE384.c
++++ b/src/game/game_fn_801CE384.c
+@@ -60,2 +59,0 @@
+-    s16* index;
+-    void** output;
+@@ -76,2 +73,0 @@
+-    output = objects;
+-    index = indices;
+@@ -85,2 +81,2 @@
+-        params.value04 = *index;
+-        params.object10 = fn_801D3988(*index, object_type);
++        params.value04 = indices[i];
++        params.object10 = fn_801D3988(indices[i], object_type);
+@@ -94,3 +90,3 @@
+-                    *output = fn_80156938(effect);
+-                    if (*output != 0) {
+-                        fn_8017FF1C(*output, 4);
++                    objects[i] = fn_80156938(effect);
++                    if (objects[i] != 0) {
++                        fn_8017FF1C(objects[i], 4);
+@@ -100 +96 @@
+-                *output = 0;
++                objects[i] = 0;
+@@ -103,2 +98,0 @@
+-        index++;
+-        output++;

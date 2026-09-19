@@ -1,0 +1,113 @@
+{
+  "base_commit": "c29f687b9368423a7c69442ce3ee510ce66c11e9",
+  "preserved_source_identical": true,
+  "hypothesis": "Explicit register storage-class hints may prioritize loop induction variables and arguments in the MWCC interference graph, unlike declaration reordering or early initialization.",
+  "studied_attempt_commits": [
+    "2e35354abf1679831e625a6d9e955b0252345304",
+    "e864124ace6a364b4ea89bf936988ffec3c7b754",
+    "75ec2a92f1c69fa9210ed0fa3893fca02ed495c7",
+    "591cf7615714aa425c62de6e96892bd9de9265be",
+    "145fbb43824df97a3012a4d9000804fe91048045"
+  ],
+  "excluded_previous_hypotheses": [
+    "Explicit IntToDouble union",
+    "Declaration reordering",
+    "Early iterator initialization"
+  ],
+  "secondary_hypothesis": "Array indexing may create compiler-generated strength-reduced induction pointers with different coloring priority from explicit source pointers.",
+  "trials": [
+    {
+      "label": "register-locals",
+      "target_bytes": 528,
+      "compiled_bytes": 528,
+      "strict_match_percent": 98.56061,
+      "identical_to_baseline_instructions": true,
+      "formatted_differing_rows": 34,
+      "source_diff": "eternal-darkness-decomp/reports/GEDE01/register-locals-cd070f98-2862-4050-8da1-6eddb612af63.diff",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/register-locals-cd070f98-2862-4050-8da1-6eddb612af63.json"
+    },
+    {
+      "label": "register-all",
+      "target_bytes": 528,
+      "compiled_bytes": 528,
+      "strict_match_percent": 98.56061,
+      "identical_to_baseline_instructions": true,
+      "formatted_differing_rows": 34,
+      "source_diff": "eternal-darkness-decomp/reports/GEDE01/register-all-cd070f98-2862-4050-8da1-6eddb612af63.diff",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/register-all-cd070f98-2862-4050-8da1-6eddb612af63.json"
+    },
+    {
+      "label": "register-index",
+      "target_bytes": 528,
+      "compiled_bytes": 528,
+      "strict_match_percent": 98.56061,
+      "identical_to_baseline_instructions": true,
+      "formatted_differing_rows": 34,
+      "source_diff": "eternal-darkness-decomp/reports/GEDE01/register-index-cd070f98-2862-4050-8da1-6eddb612af63.diff",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/register-index-cd070f98-2862-4050-8da1-6eddb612af63.json"
+    },
+    {
+      "label": "indexed-both",
+      "target_bytes": 528,
+      "compiled_bytes": 528,
+      "strict_match_percent": 98.44697,
+      "identical_to_baseline_instructions": false,
+      "formatted_differing_rows": 35,
+      "source_diff": "eternal-darkness-decomp/reports/GEDE01/indexed-both-cd070f98-2862-4050-8da1-6eddb612af63.diff",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/indexed-both-cd070f98-2862-4050-8da1-6eddb612af63.json"
+    },
+    {
+      "label": "indexed-input",
+      "target_bytes": 528,
+      "compiled_bytes": 528,
+      "strict_match_percent": 98.507576,
+      "identical_to_baseline_instructions": false,
+      "formatted_differing_rows": 33,
+      "source_diff": "eternal-darkness-decomp/reports/GEDE01/indexed-input-cd070f98-2862-4050-8da1-6eddb612af63.diff",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/indexed-input-cd070f98-2862-4050-8da1-6eddb612af63.json"
+    },
+    {
+      "label": "indexed-output",
+      "target_bytes": 528,
+      "compiled_bytes": 528,
+      "strict_match_percent": 98.52273,
+      "identical_to_baseline_instructions": false,
+      "formatted_differing_rows": 33,
+      "source_diff": "eternal-darkness-decomp/reports/GEDE01/indexed-output-cd070f98-2862-4050-8da1-6eddb612af63.diff",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/indexed-output-cd070f98-2862-4050-8da1-6eddb612af63.json"
+    }
+  ],
+  "decision": "Reject all experiments; retain accepted independent NonMatching C translation unit unchanged. No compiler, registration, split, neighboring source, runtime, or global progress changes.",
+  "review_correction": "Prior reports call all 34 differences register allocation differences. Measured baseline has 34 DIFF_ARG_MISMATCH rows total: 33 register operand rows and one conversion constant relocation target at 0xA8. Objdiff exposes 19 relocation-bearing instruction sites, including a synthetic R_PPC_NONE callback propagation at 0x150; real ELF relocation counts are verified separately with readelf.",
+  "final_relocations": {
+    "real_ELF_entries_per_side": 18,
+    "matching_offset_type_addend": true,
+    "matching_targets": 17,
+    "differences": [
+      {
+        "target": {
+          "offset": 168,
+          "type": "R_PPC_EMB_SDA21",
+          "target": "lbl_80651048",
+          "addend": 0
+        },
+        "compiled": {
+          "offset": 168,
+          "type": "R_PPC_EMB_SDA21",
+          "target": "@31",
+          "addend": 0
+        }
+      }
+    ]
+  },
+  "final_validation": {
+    "canonical_percent": 98.56061,
+    "relocation_strict_percent": 98.56061,
+    "target_size": 528,
+    "compiled_size": 528,
+    "DOL_SHA1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "source_retained": "eternal-darkness-decomp/src/game/game_fn_801CE384.c",
+    "NonMatching": true,
+    "DOL_caveat": "Full DOL uses retail object for this NonMatching function; DOL hash is a build-integrity check, not proof of a C function match."
+  }
+}

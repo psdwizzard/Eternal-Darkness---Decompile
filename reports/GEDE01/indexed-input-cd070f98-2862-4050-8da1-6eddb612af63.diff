@@ -1,0 +1,13 @@
+--- a/src/game/game_fn_801CE384.c
++++ b/src/game/game_fn_801CE384.c
+@@ -60 +59,0 @@
+-    s16* index;
+@@ -77 +75,0 @@
+-    index = indices;
+@@ -85,2 +83,2 @@
+-        params.value04 = *index;
+-        params.object10 = fn_801D3988(*index, object_type);
++        params.value04 = indices[i];
++        params.object10 = fn_801D3988(indices[i], object_type);
+@@ -103 +100,0 @@
+-        index++;
