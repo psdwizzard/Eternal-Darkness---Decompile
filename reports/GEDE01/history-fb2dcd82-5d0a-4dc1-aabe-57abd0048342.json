@@ -1,0 +1,42 @@
+[
+  {
+    "command": [
+      "git",
+      "show",
+      "3a9f1d06d:eternal-darkness-decomp/reports/GEDE01/durable-324d9314-350e-4aef-99cc-214afc56b106.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"version\": 1,\n  \"assignment_id\": \"324d9314-350e-4aef-99cc-214afc56b106\",\n  \"attempt\": 4,\n  \"base_commit\": \"25194381751f6b97fefcb329ad8486d482d93196\",\n  \"target\": \"fn_80063124\",\n  \"status\": \"attempted\",\n  \"evidence\": [\n    \"eternal-darkness-decomp/reports/GEDE01/objdiff-324d9314-350e-4aef-99cc-214afc56b106.json\"\n  ],\n  \"divergence\": \"Size-exact 488-byte canonical and relocation-strict objdiff score 99.63115%. All 19 relocation-bearing instructions have identical offsets, relocation types, semantic targets, and addends. Eight aligned instructions differ only in register allocation: retail step/signed_step/channels/special use r30/r29/r27/r28, while canonical GC/1.3 uses r28/r30/r29/r27. A new lexical-scope tie-break hypothesis regressed to 99.016396%, and changing signed_step to s16 plus special to u32 regressed to 98.89344%; the best widened-u32 candidate is retained.\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "show",
+      "ef33fe214:eternal-darkness-decomp/reports/GEDE01/durable-cea171ed-310d-4ba1-bec9-4f84e6b73133.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"version\": 1,\n  \"assignment_id\": \"cea171ed-310d-4ba1-bec9-4f84e6b73133\",\n  \"attempt\": 3,\n  \"base_commit\": \"d7bfdd73aced22f2335a62291b89f88dea5f2a5f\",\n  \"target\": \"fn_80063124\",\n  \"status\": \"attempted\",\n  \"evidence\": [\n    \"eternal-darkness-decomp/reports/GEDE01/objdiff-cea171ed-310d-4ba1-bec9-4f84e6b73133.json\"\n  ],\n  \"divergence\": \"Size-exact 488-byte canonical and relocation-strict objdiff score 99.63115%. Modeling channels as a widened u32 with an explicit u16 conversion removes the prior setup insert/delete scheduling pair. Eight aligned instructions still differ only in allocation of the four long-lived values: retail step/signed_step/channels/special use r30/r29/r27/r28, while canonical GC/1.3 uses r28/r30/r29/r27. All 19 relocation-bearing instructions have identical offsets, relocation types, semantic targets, and addends.\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "show",
+      "1fc76d145:eternal-darkness-decomp/reports/GEDE01/durable-2d437214-921c-4fe9-9a20-94c41fd9cfca.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"version\": 1,\n  \"assignment_id\": \"2d437214-921c-4fe9-9a20-94c41fd9cfca\",\n  \"attempt\": 2,\n  \"base_commit\": \"b5b0acb9cf56c1ed274893dc3c82ed870be938ad\",\n  \"target\": \"fn_80063124\",\n  \"status\": \"attempted\",\n  \"evidence\": [\n    \"eternal-darkness-decomp/reports/GEDE01/objdiff-2d437214-921c-4fe9-9a20-94c41fd9cfca.json\"\n  ],\n  \"divergence\": \"Size-exact 488-byte canonical and relocation-strict objdiff score 98.07377%. Retail colors raw step/signed step/channels/special as r30/r29/r27/r28 and schedules clrlwi, extsh, rlwinm; canonical GC/1.3 colors them as r29/r30/r28/r27 and schedules extsh, clrlwi, rlwinm. This leaves one setup insert/delete alignment pair and seven register-argument mismatches; all 19 relocation-bearing instructions have matching offsets, relocation types, semantic targets, and addends.\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "show",
+      "f2d6e8e4:eternal-darkness-decomp/reports/GEDE01/durable-46a07a11-bd0e-49d3-a922-185ad54b0840.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"version\": 1,\n  \"assignment_id\": \"46a07a11-bd0e-49d3-a922-185ad54b0840\",\n  \"attempt\": 1,\n  \"base_commit\": \"046ef37b93ccc47b00bbb9701e80da7091e5a27a\",\n  \"target\": \"fn_80063124\",\n  \"status\": \"attempted\",\n  \"evidence\": [\n    \"eternal-darkness-decomp/reports/GEDE01/objdiff-46a07a11-bd0e-49d3-a922-185ad54b0840.json\"\n  ],\n  \"divergence\": \"Size-exact 488-byte canonical and relocation-strict objdiff score 98.07377%. Retail colors raw step/signed step/channels/special as r30/r29/r27/r28 and schedules clrlwi, extsh, rlwinm; canonical GC/1.3 colors them as r29/r30/r28/r27 and schedules extsh, clrlwi, rlwinm. This leaves one setup insert/delete alignment pair and seven register-argument mismatches; all 19 relocation-bearing instructions have matching relocation types and semantic targets/addends.\"\n}\n",
+    "stderr": ""
+  }
+]
