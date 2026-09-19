@@ -22,20 +22,22 @@ void fn_800E33B8(int id, void *resource, EventData *data)
 {
     EventData *event_data;
     int mode;
-    void *object;
-    int argument;
+    struct {
+        void *object;
+        int argument;
+    } state;
     void *created;
     int value;
 
     event_data = data;
-    object = fn_80201814(id);
+    state.object = fn_80201814(id);
     value = event_data->value;
     mode = 49;
     if (value != 0)
         mode = 48;
-    argument = 12;
+    state.argument = 12;
     if (value != 0)
-        argument = 4;
+        state.argument = 4;
 
     fn_801291F0(resource, mode,
                 (unsigned char)(26 + ((-value | value) >> 31)));
@@ -45,9 +47,9 @@ void fn_800E33B8(int id, void *resource, EventData *data)
         fn_80128C44(created, fn_80204810, mode | 7);
         mode |= 6;
         fn_80128C28(created, fn_80204810, mode);
-        fn_801287C4(created, fn_80204810, mode, argument);
-        fn_80201D2C(object, 124);
-        fn_80201D14(object, 1);
+        fn_801287C4(created, fn_80204810, mode, state.argument);
+        fn_80201D2C(state.object, 124);
+        fn_80201D14(state.object, 1);
         ((RuntimeState *)event_data)->timer = 120;
     }
 }

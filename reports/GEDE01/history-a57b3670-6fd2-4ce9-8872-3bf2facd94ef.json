@@ -1,0 +1,275 @@
+{
+  "prior_reports": [
+    {
+      "commit": "dbc30a9b3500584cb72a2fbb6a11588ff4367e31",
+      "path": "eternal-darkness-decomp/reports/GEDE01/verification-3b1cfc7c-4a3b-4d03-b9be-79bb48070627.json",
+      "report": {
+        "version": 1,
+        "assignment_id": "3b1cfc7c-4a3b-4d03-b9be-79bb48070627",
+        "target": "fn_800E33B8",
+        "commands": [
+          {
+            "command": "python3 configure.py && .tools/bin/ninja -j2",
+            "exit_code": 0,
+            "output": "build/GEDE01/main.dol: OK"
+          },
+          {
+            "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800E33B8 fn_800E33B8 -o reports/GEDE01/objdiff-3b1cfc7c-4a3b-4d03-b9be-79bb48070627.json --format json-pretty",
+            "exit_code": 0,
+            "output": {
+              "size": 252,
+              "match_percent": 98.492065,
+              "instruction_differences": 18,
+              "relocations_per_side": 14
+            }
+          },
+          {
+            "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800E33B8 fn_800E33B8 -o reports/GEDE01/objdiff-3b1cfc7c-4a3b-4d03-b9be-79bb48070627-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+            "exit_code": 0,
+            "output": {
+              "size": 252,
+              "match_percent": 98.492065,
+              "instruction_differences": 18,
+              "relocations_per_side": 14
+            }
+          },
+          {
+            "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+            "exit_code": 0,
+            "output": [
+              "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+              "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+            ]
+          }
+        ],
+        "new_hypotheses_tested": [
+          {
+            "spelling": "copy all three incoming formals into leading locals and use only those aliases",
+            "result": "identical 252-byte codegen at 98.492065%"
+          },
+          {
+            "spelling": "permute the four long-lived local declarations into retail register order: object, event_data, argument, mode",
+            "result": "identical 252-byte codegen at 98.492065%"
+          }
+        ],
+        "remaining_difference": "Retail event_data/object/mode/argument use r30/r31/r28/r29; generated uses r31/r29/r30/r28. The 18 differences are register operands only."
+      }
+    },
+    {
+      "commit": "c502c45e106e8a5a3d2b07eb682e69f518f7857b",
+      "path": "eternal-darkness-decomp/reports/GEDE01/verification-9980acf9-d340-404e-85b7-c7b20a679483.json",
+      "report": {
+        "version": 1,
+        "assignment_id": "9980acf9-d340-404e-85b7-c7b20a679483",
+        "target": "fn_800E33B8",
+        "commands": [
+          {
+            "command": "python3 configure.py && .tools/bin/ninja -j2",
+            "exit_code": 0,
+            "output": "build/GEDE01/main.dol: OK"
+          },
+          {
+            "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800E33B8 fn_800E33B8 -o reports/GEDE01/objdiff-9980acf9-d340-404e-85b7-c7b20a679483.json --format json-pretty",
+            "exit_code": 0,
+            "output": {
+              "size": 252,
+              "match_percent": 98.492065,
+              "instruction_differences": 18,
+              "relocations_per_side": 14
+            }
+          },
+          {
+            "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800E33B8 fn_800E33B8 -o reports/GEDE01/objdiff-9980acf9-d340-404e-85b7-c7b20a679483-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+            "exit_code": 0,
+            "output": {
+              "size": 252,
+              "match_percent": 98.492065,
+              "instruction_differences": 18,
+              "relocations_per_side": 14
+            }
+          },
+          {
+            "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+            "exit_code": 0,
+            "output": [
+              "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+              "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+            ]
+          }
+        ],
+        "tested_this_attempt": [
+          {
+            "hypothesis": "Hoist all three incoming formals into leading locals before constructing the other long-lived values, changing the interference graph while preserving the call and branch schedule.",
+            "result": "Optimizer-neutral: 252 bytes, 98.492065%, with the same generated event_data/object/mode/argument allocation r31/r29/r30/r28."
+          },
+          {
+            "hypothesis": "Construct mode and argument with conditional expressions rather than two initialized locals followed by conditional assignments, changing value-web creation order.",
+            "result": "Both conditional expressions colored event_data/object into the retail r30/r31 registers, but folded mode into branchless arithmetic, changed the incoming id/resource registers, and fell to 92.523810%. Mode-only and argument-only conditional variants measured 92.206350% and 98.492065% respectively; none preserved the retail instruction sequence with improved coloring."
+          }
+        ],
+        "best_divergence": "The retained C is size-exact. All 18 differences are register operands: retail event_data/object/mode/argument use r30/r31/r28/r29 while generated uses r31/r29/r30/r28. Both objdiff modes report 98.492065%; each side contains the same ordered 14 relocation records by type and target symbol."
+      }
+    },
+    {
+      "commit": "ca7a03c26f34516fc83d2ce77588c78c0b56b28d",
+      "path": "eternal-darkness-decomp/reports/GEDE01/verification-852686c6-9da4-4771-b9d4-ef69b8b35b30.json",
+      "report": {
+        "version": 1,
+        "assignment_id": "852686c6-9da4-4771-b9d4-ef69b8b35b30",
+        "target": "fn_800E33B8",
+        "commands": [
+          {
+            "command": "python3 configure.py && .tools/bin/ninja -j2",
+            "exit_code": 0,
+            "output": "build/GEDE01/main.dol: OK"
+          },
+          {
+            "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800E33B8 fn_800E33B8 -o reports/GEDE01/objdiff-852686c6-9da4-4771-b9d4-ef69b8b35b30.json --format json-pretty",
+            "exit_code": 0,
+            "output": {
+              "size": 252,
+              "match_percent": 98.492065,
+              "instruction_differences": 18,
+              "relocations_per_side": 14
+            }
+          },
+          {
+            "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800E33B8 fn_800E33B8 -o reports/GEDE01/objdiff-852686c6-9da4-4771-b9d4-ef69b8b35b30-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+            "exit_code": 0,
+            "output": {
+              "size": 252,
+              "match_percent": 98.492065,
+              "instruction_differences": 18,
+              "relocations_per_side": 14,
+              "relocation_sequence_diff_exit": 0
+            }
+          },
+          {
+            "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+            "exit_code": 0,
+            "output": [
+              "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+              "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+            ]
+          }
+        ],
+        "recovered_from": "dbfe962db2ff69afc1c83da55474215a20bac1bc",
+        "tested_this_attempt": [
+          {
+            "spelling": "conditional operators for mode and argument",
+            "result": "252 bytes, 92.52381%; rejected"
+          },
+          {
+            "spelling": "separate flags live range after object creation",
+            "result": "252 bytes, 98.492065%; unchanged codegen"
+          },
+          {
+            "spelling": "generic void pointer type for third formal with typed local alias",
+            "result": "252 bytes, 98.492065%; unchanged codegen"
+          }
+        ]
+      }
+    },
+    {
+      "commit": "dbfe962db2ff69afc1c83da55474215a20bac1bc",
+      "path": "eternal-darkness-decomp/reports/GEDE01/verification-941dc1d7-c3e6-41b8-8138-a76ec2d0c52a.json",
+      "report": {
+        "version": 1,
+        "assignment_id": "941dc1d7-c3e6-41b8-8138-a76ec2d0c52a",
+        "target": "fn_800E33B8",
+        "commands": [
+          {
+            "command": "python3 configure.py && .tools/bin/ninja -j2",
+            "exit_code": 0,
+            "output": "build/GEDE01/main.dol: OK"
+          },
+          {
+            "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800E33B8 fn_800E33B8 -o reports/GEDE01/objdiff-941dc1d7-c3e6-41b8-8138-a76ec2d0c52a.json --format json-pretty",
+            "exit_code": 0,
+            "output": {
+              "size": 252,
+              "match_percent": 98.492065,
+              "instruction_differences": 18,
+              "relocations": 14
+            }
+          },
+          {
+            "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800E33B8 fn_800E33B8 -o reports/GEDE01/objdiff-941dc1d7-c3e6-41b8-8138-a76ec2d0c52a-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+            "exit_code": 0,
+            "output": {
+              "size": 252,
+              "match_percent": 98.492065,
+              "instruction_differences": 18,
+              "relocations": 14,
+              "relocation_sequence_diff_exit": 0
+            }
+          },
+          {
+            "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+            "exit_code": 0,
+            "output": [
+              "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+              "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+            ]
+          }
+        ],
+        "tested_levers": [
+          {
+            "spelling": "locals declared as event_data, mode, object, argument, created",
+            "result": "retained; 252 bytes, 98.492065%, 18 register-operand differences"
+          },
+          {
+            "spelling": "use the EventData formal parameter directly without a local alias",
+            "result": "unchanged codegen"
+          },
+          {
+            "spelling": "declarations initialized at first use",
+            "result": "unchanged codegen"
+          },
+          {
+            "spelling": "register storage class on the five long-lived locals",
+            "result": "unchanged codegen"
+          },
+          {
+            "spelling": "prototype fn_80201814(int) and fn_80128C28(void *, void *, int)",
+            "result": "unchanged codegen"
+          },
+          {
+            "spelling": "repeat event_data->value directly instead of retaining value",
+            "result": "unchanged codegen"
+          },
+          {
+            "spelling": "type object as RuntimeState *",
+            "result": "unchanged codegen"
+          },
+          {
+            "spelling": "assign argument before mode",
+            "result": "252 bytes, 98.5873%, 18 differences, but moves the argument constants into retail's mode instruction slots and the mode constants into retail's argument slots; rejected as a worse structural alignment"
+          },
+          {
+            "spelling": "call fn_80201814 before assigning the local event_data alias",
+            "result": "unchanged codegen"
+          }
+        ],
+        "side_interpretation": "objdiff left is target_path build/GEDE01/obj/game/game_fn_800E33B8.o (retail); right is base_path build/GEDE01/src/game/game_fn_800E33B8.o (generated). The preserved attempt's narrative reversed these sides."
+      }
+    },
+    {
+      "commit": "3168e18af4b2ac7a24ca61d9d490453e67e39e39",
+      "path": "eternal-darkness-decomp/reports/GEDE01/durable-d41937e6-2421-4c72-bd98-c7fd8fd97c6c.json",
+      "report": {
+        "version": 1,
+        "assignment_id": "d41937e6-2421-4c72-bd98-c7fd8fd97c6c",
+        "attempt": 1,
+        "base_commit": "65cad35c7abd996e71a4349e86dac1b21b0b9f65",
+        "target": "fn_800E33B8",
+        "status": "attempted",
+        "evidence": [
+          "eternal-darkness-decomp/reports/GEDE01/objdiff-d41937e6-2421-4c72-bd98-c7fd8fd97c6c.json"
+        ],
+        "divergence": "Canonical objdiff is size-exact at 252/252 bytes and 98.492065%. All 14 relocation-bearing instructions align, with matching relocation types, targets, and addends. The remaining 18 instruction differences are solely an equivalent callee-saved allocation permutation: candidate event data/object/mode/argument use r30/r31/r28/r29 while retail uses r31/r29/r30/r28."
+      }
+    }
+  ],
+  "baseline_source": "typedef struct RuntimeState {\n    unsigned char pad[0x14C];\n    short timer;\n} RuntimeState;\n\ntypedef struct EventData {\n    unsigned char pad[0x5C];\n    int value;\n} EventData;\n\nextern void *fn_80201814();\nextern void fn_801291F0(void *, int, unsigned char);\nextern void *fn_801294DC(void *, int, int, int);\nextern void fn_80128C44(void *, void *, int);\nextern void fn_80128C28();\nextern void fn_801287C4(void *, void *, int, int);\nextern void fn_80201D2C(void *, int);\nextern void fn_80201D14(void *, int);\nextern void fn_80204810(void);\n\nvoid fn_800E33B8(int id, void *resource, EventData *data)\n{\n    EventData *event_data;\n    int mode;\n    void *object;\n    int argument;\n    void *created;\n    int value;\n\n    event_data = data;\n    object = fn_80201814(id);\n    value = event_data->value;\n    mode = 49;\n    if (value != 0)\n        mode = 48;\n    argument = 12;\n    if (value != 0)\n        argument = 4;\n\n    fn_801291F0(resource, mode,\n                (unsigned char)(26 + ((-value | value) >> 31)));\n    created = fn_801294DC(resource, mode, 48, 6);\n    if (created != 0) {\n        mode = id << 8;\n        fn_80128C44(created, fn_80204810, mode | 7);\n        mode |= 6;\n        fn_80128C28(created, fn_80204810, mode);\n        fn_801287C4(created, fn_80204810, mode, argument);\n        fn_80201D2C(object, 124);\n        fn_80201D14(object, 1);\n        ((RuntimeState *)event_data)->timer = 120;\n    }\n}\n"
+}
