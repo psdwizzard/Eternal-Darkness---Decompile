@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "54ae78d9-04f6-440f-bea9-b26f99cb4423",
+  "attempt": 6,
+  "base_commit": "488a50af956c985cb66da55329bd0b7ec2df3065",
+  "target": "fn_80159440",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-54ae78d9-04f6-440f-bea9-b26f99cb4423.json",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-54ae78d9-04f6-440f-bea9-b26f99cb4423.json",
+    "eternal-darkness-decomp/reports/GEDE01/strict-54ae78d9-04f6-440f-bea9-b26f99cb4423.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-54ae78d9-04f6-440f-bea9-b26f99cb4423.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-54ae78d9-04f6-440f-bea9-b26f99cb4423.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff improved from 98.08871% to 98.6129% (496 retail bytes versus 492 generated). Typed channel fields now reproduce the retail channel-register allocation. Remaining: retail +0x4c addi r3,r29,0x21c is omitted, and retail +0x54 stw r0,0x18(r3) becomes generated +0x50 stw r0,0x234(r29); retail +0x114 lwz r0,0x4(r6) becomes generated +0x110 lwz r0,0x1e4(r29). Subsequent instruction and branch addresses shift by four bytes. Retail has 46 relocation-bearing rows versus 45 generated; all 30 actual ELF relocation types, targets and addends agree in corresponding order."
+}

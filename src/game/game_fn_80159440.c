@@ -3,11 +3,17 @@ typedef unsigned int u32;
 
 typedef void (*TransitionCallback)(int*, int*);
 
+typedef struct Channel {
+    char pad[0x8140];
+    short current;
+    char flags[2];
+} Channel;
+
 typedef struct ChannelTable {
     int unused;
     volatile int current;
     int pad08;
-    void* channels[12];
+    Channel* channels[12];
 } ChannelTable;
 
 typedef struct TransitionState {
@@ -92,12 +98,9 @@ void fn_80159440(int value, u32 flags)
     {
         ChannelTable* channels = (ChannelTable*)((u32)globals + 0x1E0);
         if (channels->current != -1) {
-            char* channel = (char*)channels->channels[channels->current];
-            *(short*)(channel + 0x8140) = -1;
-            channel = (char*)channels->channels[channels->current];
-            channel[0x8142] = 0;
-            channel = (char*)channels->channels[channels->current];
-            channel[0x8143] = 0;
+            channels->channels[channels->current]->current = -1;
+            channels->channels[channels->current]->flags[0] = 0;
+            channels->channels[channels->current]->flags[1] = 0;
         }
     }
 

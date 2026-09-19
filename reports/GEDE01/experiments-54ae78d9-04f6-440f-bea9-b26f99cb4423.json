@@ -1,0 +1,266 @@
+[
+  {
+    "hypothesis": "inline_setter",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "1700b98dc4a649d9ef54be71ccf807e8fd41653001a29a16ff0b68994ee497fd",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.08871\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0110  addi r6, r29, 0x1e0 [None+0 tNone]                   | addi r5, r29, 0x1e0 [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n* 0x0120  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r3, 0x4(r5) [None+0 tNone]\n* 0x0124  li r5, -0x1                                          | li r0, -0x1\n* 0x012c  slwi r0, r0, 2                                       | slwi r3, r3, 2\n* 0x0130  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r3 [None+0 tNone]\n* 0x013c  sth r5, -0x7ec0(r3)                                  | sth r0, -0x7ec0(r3)\n* 0x0140  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5) [None+0 tNone]\n* 0x0148  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r0 [None+0 tNone]\n* 0x0158  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5) [None+0 tNone]\n* 0x0160  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r0 [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "inline_setter_constant",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "1700b98dc4a649d9ef54be71ccf807e8fd41653001a29a16ff0b68994ee497fd",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.08871\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0110  addi r6, r29, 0x1e0 [None+0 tNone]                   | addi r5, r29, 0x1e0 [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n* 0x0120  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r3, 0x4(r5) [None+0 tNone]\n* 0x0124  li r5, -0x1                                          | li r0, -0x1\n* 0x012c  slwi r0, r0, 2                                       | slwi r3, r3, 2\n* 0x0130  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r3 [None+0 tNone]\n* 0x013c  sth r5, -0x7ec0(r3)                                  | sth r0, -0x7ec0(r3)\n* 0x0140  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5) [None+0 tNone]\n* 0x0148  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r0 [None+0 tNone]\n* 0x0158  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5) [None+0 tNone]\n* 0x0160  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r0 [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "register_subobject",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "1700b98dc4a649d9ef54be71ccf807e8fd41653001a29a16ff0b68994ee497fd",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.08871\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0110  addi r6, r29, 0x1e0 [None+0 tNone]                   | addi r5, r29, 0x1e0 [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n* 0x0120  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r3, 0x4(r5) [None+0 tNone]\n* 0x0124  li r5, -0x1                                          | li r0, -0x1\n* 0x012c  slwi r0, r0, 2                                       | slwi r3, r3, 2\n* 0x0130  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r3 [None+0 tNone]\n* 0x013c  sth r5, -0x7ec0(r3)                                  | sth r0, -0x7ec0(r3)\n* 0x0140  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5) [None+0 tNone]\n* 0x0148  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r0 [None+0 tNone]\n* 0x0158  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5) [None+0 tNone]\n* 0x0160  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r0 [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "inline_branch_setter",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "1700b98dc4a649d9ef54be71ccf807e8fd41653001a29a16ff0b68994ee497fd",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.08871\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0110  addi r6, r29, 0x1e0 [None+0 tNone]                   | addi r5, r29, 0x1e0 [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n* 0x0120  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r3, 0x4(r5) [None+0 tNone]\n* 0x0124  li r5, -0x1                                          | li r0, -0x1\n* 0x012c  slwi r0, r0, 2                                       | slwi r3, r3, 2\n* 0x0130  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r3 [None+0 tNone]\n* 0x013c  sth r5, -0x7ec0(r3)                                  | sth r0, -0x7ec0(r3)\n* 0x0140  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5) [None+0 tNone]\n* 0x0148  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r0 [None+0 tNone]\n* 0x0158  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5) [None+0 tNone]\n* 0x0160  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r0 [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "typed_channel_fields",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "48046db46db5b76b212d00bd98f91340caadaf99509c20ae0f3f0da2a0b9d16c",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.6129\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "inline_channel_reset",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "48046db46db5b76b212d00bd98f91340caadaf99509c20ae0f3f0da2a0b9d16c",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.6129\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "typed_channel_nonvolatile_index",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "0c886b78fca71699608aaa1700297e626fa2309dd0be564386425d34fc80df15",
+    "raw_diff_excerpt": "target 496 bytes  base 488 bytes  match 94.58064\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n* 0x0120  lwz r0, 0x4(r6) [None+0 tNone]                       | \n* 0x0124  li r5, -0x1                                          | \n* 0x0128  li r4, 0x0                                           | \n* 0x0130                                                       | li r5, -0x1\n* 0x0138                                                       | li r4, 0x0\n"
+  },
+  {
+    "hypothesis": "short_alias_channel_stores",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "1700b98dc4a649d9ef54be71ccf807e8fd41653001a29a16ff0b68994ee497fd",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.08871\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0110  addi r6, r29, 0x1e0 [None+0 tNone]                   | addi r5, r29, 0x1e0 [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n* 0x0120  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r3, 0x4(r5) [None+0 tNone]\n* 0x0124  li r5, -0x1                                          | li r0, -0x1\n* 0x012c  slwi r0, r0, 2                                       | slwi r3, r3, 2\n* 0x0130  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r3 [None+0 tNone]\n* 0x013c  sth r5, -0x7ec0(r3)                                  | sth r0, -0x7ec0(r3)\n* 0x0140  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5) [None+0 tNone]\n* 0x0148  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r0 [None+0 tNone]\n* 0x0158  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5) [None+0 tNone]\n* 0x0160  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r0 [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "fullwidth_transition_bitfield",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "48046db46db5b76b212d00bd98f91340caadaf99509c20ae0f3f0da2a0b9d16c",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.6129\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "fullwidth_index_bitfield",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "48046db46db5b76b212d00bd98f91340caadaf99509c20ae0f3f0da2a0b9d16c",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.6129\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "fullwidth_both_bitfields",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "48046db46db5b76b212d00bd98f91340caadaf99509c20ae0f3f0da2a0b9d16c",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.6129\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "transition_array_member",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "48046db46db5b76b212d00bd98f91340caadaf99509c20ae0f3f0da2a0b9d16c",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.6129\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "restrict_transition_pointer",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "48046db46db5b76b212d00bd98f91340caadaf99509c20ae0f3f0da2a0b9d16c",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.6129\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "address_taken_state_pointer",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "48046db46db5b76b212d00bd98f91340caadaf99509c20ae0f3f0da2a0b9d16c",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.6129\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "aggregate_pointer_parameter",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "8269512048f1ef6dbc56add1021d1a4ae1b61024c8d70c8eed698f2100122808",
+    "raw_diff_excerpt": "target 496 bytes  base 504 bytes  match 97.75\n* 0x0000  stwu r1, -0x20(r1)                                   | stwu r1, -0x30(r1)\n* 0x000c  stw r0, 0x24(r1)                                     | stw r0, 0x34(r1)\n* 0x0010  stw r31, 0x1c(r1)                                    | stw r31, 0x2c(r1)\n* 0x0014  stw r30, 0x18(r1)                                    | stw r30, 0x28(r1)\n* 0x0018  stw r29, 0x14(r1)                                    | stw r29, 0x24(r1)\n* 0x0020  stw r28, 0x10(r1)                                    | stw r28, 0x20(r1)\n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r3, 0x10(r1)\n* 0x0058                                                       | stw r3, 0xc(r1)\n* 0x005c                                                       | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0100  addi r4, r1, 0xc                                     | addi r4, r1, 0x14\n* 0x011c  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n* 0x01d8  lwz r0, 0x24(r1)                                     | lwz r0, 0x34(r1)\n* 0x01dc  lwz r31, 0x1c(r1)                                    | lwz r31, 0x2c(r1)\n* 0x01e0  lwz r30, 0x18(r1)                                    | lwz r30, 0x28(r1)\n* 0x01e4  lwz r29, 0x14(r1)                                    | lwz r29, 0x24(r1)\n* 0x01e8  lwz r28, 0x10(r1)                                    | lwz r28, 0x20(r1)\n* 0x01f0  addi r1, r1, 0x20                                    | addi r1, r1, 0x30\n"
+  },
+  {
+    "hypothesis": "fullwidth_pointer_roundtrip",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "07a0277bd7c5c58c8712497030eddfde0b064712ec4a707e4421d0e7674493a8",
+    "raw_diff_excerpt": "target 496 bytes  base 496 bytes  match 90.07258\n* 0x0014                                                       | addi r31, r5, lbl_805B6E00@l [None+0 t4]\n* 0x0020  addi r29, r5, lbl_805B6E00@l [None+0 t4]             | \n* 0x0050  addi r3, r29, 0x21c [None+0 tNone]                   | addic r3, r31, 0x21c\n* 0x0054  li r0, 0x1                                           | li r4, 0x1\n* 0x0058  stw r0, 0x18(r3) [None+0 tNone]                      | stw r4, 0x18(r3)\n* 0x005c  rlwinm. r31, r28, 0, 25, 25                          | rlwinm. r30, r28, 0, 25, 25\n* 0x00d8  mr r30, r3                                           | mr r29, r3\n* 0x00f0  addi r4, r29, 0x248 [None+0 tNone]                   | addi r4, r31, 0x248 [None+0 tNone]\n* 0x00f8  addi r3, r29, 0x248 [None+0 tNone]                   | addi r3, r31, 0x248 [None+0 tNone]\n* 0x0114                                                       | addic r5, r31, 0x1e0\n* 0x0118  addi r6, r29, 0x1e0 [None+0 tNone]                   | li r6, 0x0\n* 0x011c  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5)\n* 0x0128  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5)\n* 0x012c  li r5, -0x1                                          | \n* 0x0130  li r4, 0x0                                           | li r4, -0x1\n* 0x0138  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r0\n* 0x013c  lwz r3, 0xc(r3) [None+0 tNone]                       | lwz r3, 0xc(r3)\n* 0x0144  sth r5, -0x7ec0(r3)                                  | sth r4, -0x7ec0(r3)\n* 0x0148  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5)\n* 0x0150  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r0\n* 0x0154  lwz r3, 0xc(r3) [None+0 tNone]                       | lwz r3, 0xc(r3)\n* 0x015c  stb r4, -0x7ebe(r3)                                  | stb r6, -0x7ebe(r3)\n* 0x0160  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x4(r5)\n* 0x0168  add r3, r6, r0 [None+0 tNone]                        | add r3, r5, r0\n* 0x016c  lwz r3, 0xc(r3) [None+0 tNone]                       | lwz r3, 0xc(r3)\n* 0x0174  stb r4, -0x7ebd(r3)                                  | stb r6, -0x7ebd(r3)\n* 0x0178  cmpwi r31, 0x0                                       | cmpwi r30, 0x0\n* 0x01ac  mr r3, r30                                           | mr r3, r29\n"
+  },
+  {
+    "hypothesis": "channel_inline_index_getter",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "48046db46db5b76b212d00bd98f91340caadaf99509c20ae0f3f0da2a0b9d16c",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.6129\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "returning_setter",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "48046db46db5b76b212d00bd98f91340caadaf99509c20ae0f3f0da2a0b9d16c",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.6129\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "memcpy_pending_word",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "5271621af9d7ce8a50879e7b71b936b6dbba3d1bcc95afea6f1cbd99200d6c7a",
+    "raw_diff_excerpt": "target 496 bytes  base 508 bytes  match 95.97581\n* 0x0000  stwu r1, -0x20(r1)                                   | stwu r1, -0x30(r1)\n* 0x000c  stw r0, 0x24(r1)                                     | stw r0, 0x34(r1)\n* 0x0010  stw r31, 0x1c(r1)                                    | stw r31, 0x2c(r1)\n* 0x0014  stw r30, 0x18(r1)                                    | stw r30, 0x28(r1)\n* 0x0018  stw r29, 0x14(r1)                                    | stw r29, 0x24(r1)\n* 0x0020  stw r28, 0x10(r1)                                    | stw r28, 0x20(r1)\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | addi r3, r29, 0x234 [None+0 tNone]\n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0xc(r1)\n* 0x0058                                                       | addi r4, r1, 0xc\n* 0x005c                                                       | li r5, 0x4\n* 0x0060                                                       | bl memcpy [None+0 t10]\n* 0x0104  addi r4, r1, 0xc                                     | addi r4, r1, 0x10\n* 0x0120  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n* 0x01dc  lwz r0, 0x24(r1)                                     | lwz r0, 0x34(r1)\n* 0x01e0  lwz r31, 0x1c(r1)                                    | lwz r31, 0x2c(r1)\n* 0x01e4  lwz r30, 0x18(r1)                                    | lwz r30, 0x28(r1)\n* 0x01e8  lwz r29, 0x14(r1)                                    | lwz r29, 0x24(r1)\n* 0x01ec  lwz r28, 0x10(r1)                                    | lwz r28, 0x20(r1)\n* 0x01f4  addi r1, r1, 0x20                                    | addi r1, r1, 0x30\n"
+  },
+  {
+    "hypothesis": "channel_switch_guard",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "48046db46db5b76b212d00bd98f91340caadaf99509c20ae0f3f0da2a0b9d16c",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.6129\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "channel_embedded_base",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "48046db46db5b76b212d00bd98f91340caadaf99509c20ae0f3f0da2a0b9d16c",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.6129\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n"
+  },
+  {
+    "hypothesis": "channel_separate_current_pointer",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80159440.o"
+    ],
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80159440.o\n",
+    "exit": 0,
+    "object_sha256": "48046db46db5b76b212d00bd98f91340caadaf99509c20ae0f3f0da2a0b9d16c",
+    "raw_diff_excerpt": "target 496 bytes  base 492 bytes  match 98.6129\n* 0x004c  addi r3, r29, 0x21c [None+0 tNone]                   | li r0, 0x1\n* 0x0050  li r0, 0x1                                           | \n* 0x0054  stw r0, 0x18(r3) [None+0 tNone]                      | stw r0, 0x234(r29) [None+0 tNone]\n* 0x0114  lwz r0, 0x4(r6) [None+0 tNone]                       | lwz r0, 0x1e4(r29) [None+0 tNone]\n"
+  }
+]
