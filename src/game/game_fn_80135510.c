@@ -23,13 +23,11 @@ extern void* memset(void*, int, unsigned long);
 extern int fn_801358B4(int);
 extern void fn_80134FD8(Slot*, u32, void*);
 
-/* NonMatching: honest reconstruction of the one-time pool allocation and
- * group partitioning. Remaining differences are initialization scheduling. */
+/* Allocate the pool once, then reset and partition its slots by group. */
 void fn_80135510(void)
 {
-    u32 slot_offset;
-    u32 group_offset;
-    u32 record_offset;
+    u32 initial_index;
+    u32 record_index;
     int i;
     u32 offset;
     u32 j;
@@ -54,20 +52,17 @@ void fn_80135510(void)
     lbl_8064CF9C = 0;
     lbl_8064CFA4 = 0;
     fn_801358B4(1);
-    lbl_8064CF94 = group_offset = 0;
+    lbl_8064CF94 = initial_index = 0;
     offset = 0;
-    record_offset = group_offset;
+    record_index = initial_index;
     for (i = 0; i < lbl_8064CF8C; i++) {
-        group = (Group*)((char*)lbl_8064CF90 + group_offset);
+        group = &lbl_8064CF90[i];
         if (lbl_8064CF94 < group->width) lbl_8064CF94 = group->width;
-        slot_offset = record_offset;
         for (j = 0; j < group->count; j++) {
-            slot = (Slot*)((char*)lbl_8064CF88 + slot_offset);
-            record_offset += 0x18;
-            slot_offset += 0x18;
+            slot = &lbl_8064CF88[record_index];
+            record_index++;
             fn_80134FD8(slot, group->width, (char*)lbl_8064CF80 + offset);
             offset += group->width;
         }
-        group_offset += 8;
     }
 }
