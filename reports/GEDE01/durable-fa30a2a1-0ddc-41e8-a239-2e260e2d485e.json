@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "fa30a2a1-0ddc-41e8-a239-2e260e2d485e",
+  "attempt": 6,
+  "base_commit": "8aa5ee91e8c052cd2053d51d52e7e3359e3ad325",
+  "target": "fn_801711D0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-fa30a2a1-0ddc-41e8-a239-2e260e2d485e.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-fa30a2a1-0ddc-41e8-a239-2e260e2d485e.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-fa30a2a1-0ddc-41e8-a239-2e260e2d485e.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 97.927925%. Retail is 444 bytes; generated C is 448 bytes. Generated prologue materializes lbl_8024FF00 via addi r0,r4,@l followed by mr r30,r0 instead of retail addi r30,r4,@l, adding four bytes. The first diagnostic argument uses mr r4,r30 instead of retail addi r4,r30,0. Two signed conversion constant loads target local @15 instead of lbl_806506A8. Retail/generated have 23/24 relocation annotations and 20/20 substantive ELF relocations. New register-hint, declaration-order, and inline-accessor variants did not improve the preserved best NonMatching source. Full canonical build passes and DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
