@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "assignment_id": "619d3646-fd3a-4113-b195-ac156db863f4",
+  "target": "fn_80202678",
+  "compiler": "GC/1.3",
+  "compiler_flags": ["-use_lmw_stmw on"],
+  "experiment": {
+    "hypothesis": "Distinct opaque pointer types for owner, effect, resource, and linked may change Metrowerks alias classes and nonvolatile-register coloring without changing operations.",
+    "exact_patch": "After typedef unsigned short u16: typedef struct Owner80202678 Owner80202678; typedef struct Effect80202678 Effect80202678; typedef struct Resource80202678 Resource80202678;. Change fn_801A7498 to Resource80202678 *fn_801A7498(Effect80202678 *), fn_80201814 to Object80202678 *fn_80201814(Resource80202678 *), fn_80128F40 to int fn_80128F40(Owner80202678 *), fn_80202678 parameters to Owner80202678 *owner and Effect80202678 *effect, linked to Object80202678 *, and resource to Resource80202678 *.",
+    "commands": [
+      ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_80202678.o",
+      "python3 tools/fndiff.py game/game_fn_80202678.c fn_80202678"
+    ],
+    "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80202678.o\nINFO Writing to build/GEDE01/fndiff_fn_80202678.json\ntarget 368 bytes  base 368 bytes  match 98.478264",
+    "result": "No codegen change; variant was reverted and the accepted source retained."
+  },
+  "canonical_verification": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2", "sha1sum build/GEDE01/main.dol", "python3 tools/fndiff.py game/game_fn_80202678.c fn_80202678", "python3 tools/legal_audit.py"],
+    "raw_build_tail": "[7082/7086] DOL build/GEDE01/main.dol\n[7083/7086] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[7085/7086] REPORT\nINFO Report generated\n[7086/7086] PROGRESS",
+    "raw_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "raw_objdiff": "target 368 bytes  base 368 bytes  match 98.478264",
+    "raw_legal_audit": "legal audit passed (17364 tracked project files inspected)"
+  },
+  "relocation_strict": {
+    "count_left": 15,
+    "count_right": 15,
+    "all_equal": true,
+    "type": "R_PPC_REL24",
+    "addend": 0,
+    "records": [
+      [32, "fn_801A7498"], [40, "fn_80201814"], [56, "fn_80128F40"],
+      [72, "fn_80201E78"], [80, "fn_80201CDC"], [92, "fn_80201B94"],
+      [128, "fn_802006D4"], [168, "fn_802025D8"], [196, "fn_8020123C"],
+      [212, "fn_8003BD48"], [228, "fn_800459E0"], [244, "fn_80201E50"],
+      [292, "fn_801AC9F4"], [308, "fn_8003BD48"], [340, "fn_80201E50"]
+    ]
+  },
+  "remaining_divergence": {
+    "instruction_differences": 28,
+    "kind": "register allocation only",
+    "retail": {"owner":"r26","effect":"r30","result":"r31","resource":"r25","linked":"r27","height":"r24","flags":"r29","output":"r28"},
+    "generated": {"owner":"r24","effect":"r25","result":"r29","resource":"r31","linked":"r27","height":"r26","flags":"r30","output":"r28"},
+    "note": "linked and output agree; branch-local kind consequently uses generated r31 instead of retail r30."
+  }
+}
