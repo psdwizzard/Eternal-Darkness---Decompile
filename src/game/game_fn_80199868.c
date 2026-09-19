@@ -26,9 +26,9 @@ int fn_80199868(u8* object)
     } result;
 
     {
-    u8* entry;
-    int first;
     int index;
+    int first;
+    u8* entry;
     if (*(u16*)(object + 0xa) % config[0] == 0) {
         first = (*(u16*)(object + 0xa) / config[0]) * config[1];
         entry = *(u8**)(object + 0x4c) + first * 0x38;
@@ -41,9 +41,9 @@ int fn_80199868(u8* object)
     }
 
     {
-    void* actor;
-    u8* sequence;
     u8* entry;
+    u8* sequence;
+    void* actor;
     int first;
     int index;
     if (*(u16*)(object + 0xa) >= config[2] &&

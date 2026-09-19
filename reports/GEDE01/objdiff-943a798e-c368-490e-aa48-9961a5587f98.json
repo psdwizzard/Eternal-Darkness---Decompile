@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "assignment_id": "943a798e-c368-490e-aa48-9961a5587f98",
+  "target": "fn_80199868",
+  "source": "src/game/game_fn_80199868.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80199868.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80199868 fn_80199868 -o reports/GEDE01/objdiff-943a798e-c368-490e-aa48-9961a5587f98-canonical.raw.json --format json-pretty",
+  "canonical_raw_output": "reports/GEDE01/objdiff-943a798e-c368-490e-aa48-9961a5587f98-canonical.raw.json",
+  "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80199868 fn_80199868 -o reports/GEDE01/objdiff-943a798e-c368-490e-aa48-9961a5587f98-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+  "relocation_strict_raw_output": "reports/GEDE01/objdiff-943a798e-c368-490e-aa48-9961a5587f98-reloc-strict.raw.json",
+  "raw_report_cmp_exit": 0,
+  "canonical": {
+    "match_percent": 98.27517,
+    "retail_bytes": 596,
+    "generated_bytes": 596,
+    "retail_instructions": 149,
+    "generated_instructions": 149,
+    "differing_rows": 42
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "retail_count": 11,
+    "generated_count": 11,
+    "records_equal": true,
+    "addresses_types_targets_addends_equal": true,
+    "canonical_report_byte_identical": true,
+    "addends": "absent on both raw-report sides (implicit zero)"
+  },
+  "new_hypothesis": {
+    "description": "The untouched third-pass locals might recover retail coloring if the cached object byte retained its source-width type, or if index/count declarations preceded the entry pointer.",
+    "result": "Moving index/count declarations before entry emitted byte-identical code. Changing count from int to u8 kept 98.27517 but moved generated count from r27 to r31, farther from retail r28. Both variants were rejected and the best int-count form restored."
+  },
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_result": "exit 0; build/GEDE01/main.dol: OK",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "divergence": "The remaining 42 differing rows are register allocation plus operand selection. Retail keeps object in r29 while generated code keeps it in r30. Retail reuses r30 for the first-pass index and second-pass actor while generated code uses r29; the third pass remains rotated (retail entry/index/count r30/r27/r28 versus generated r25/r26/r27). Arithmetic differences remain at byte offsets 0x38 (commuted mullw), 0xF4 (divw destination), 0xFC (mullw source), and sequence/index increments at 0x17C/0x180. Control flow, calls, stack frame, code size, and all relocation targets/addends agree."
+}
