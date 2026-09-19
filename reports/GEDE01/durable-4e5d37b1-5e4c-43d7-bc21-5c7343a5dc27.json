@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "4e5d37b1-5e4c-43d7-bc21-5c7343a5dc27",
+  "attempt": 6,
+  "base_commit": "94d764a660bda2a93f9cae9079db1875c1a97919",
+  "target": "fn_801A5684",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4e5d37b1-5e4c-43d7-bc21-5c7343a5dc27.json"
+  ],
+  "divergence": "Fresh canonical GC/1.3 and explicit relocation-strict objdiff reports are byte-identical and measure 98.39449% for the size-exact 436-byte reconstruction (109 instructions). All 28 relocation-bearing instruction rows agree; the remaining 29 rows are DIFF_ARG_MISMATCH register-allocation differences: retail colors object/count/buffer0/buffer1/buffer2 as r27/r31/r30/r29/r28, while generated code colors them as r31/r29/r30/r28/r27, and the final induction/call value uses r28/r27 in retail versus r30/r31 generated. This attempt tested a distinct dead-variable coalescing hypothesis: spelling final induction through buffer2/object and through reused j/i each emitted the exact same 98.39449% object as the retained baseline, while explicit u32/u16 induction temporaries regressed to 98.11926% with 33 argument mismatches, so no variant was retained. The required build completed successfully and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
