@@ -1,0 +1,345 @@
+[
+  {
+    "hypothesis": "Reuse one cursor across both loops to couple allocation and prevent owner/cursor coalescing",
+    "source": "typedef unsigned char u8;\n\ntypedef struct Config {\n    void *header;\n    int value;\n    u8 pad_08[4];\n    u8 object_count;\n    u8 slot_count;\n    u8 pad_0E[0x66];\n    void *slots[16];\n    int expected;\n} Config;\n\ntypedef struct Owner {\n    u8 pad_00[0x38];\n    void *resource;\n    u8 pad_3C[0x88];\n    Config *config;\n} Owner;\n\ntypedef struct Runtime {\n    u8 pad_00[0x44];\n    void *object;\n} Runtime;\n\nextern void *fn_80201814();\nextern Runtime *fn_80036D38(void);\nextern int fn_80201B54();\nextern unsigned long long fn_8020123C();\nextern void *fn_80155DB4(void *object);\nextern void fn_80156FF4(void *object);\nextern void *fn_80201B8C();\nextern void *fn_80201BC8();\nextern int fn_80201EB8();\nextern void fn_8011FB54(void *object, int value);\nextern void *memset(void *dest, int value, unsigned int size);\nextern void *lbl_803127F8[32];\n\n/* NonMatching: size-exact behavior-complete reconstruction. Remaining output\n * differences are first-loop nonvolatile register allocation. */\nvoid fn_8006F544(Owner *owner, int enabled)\n{\n    Config *config;\n    void **object_iter;\n    void **objects;\n    int object;\n    u8 object_count;\n    void *source;\n    int value;\n\n    source = 0;\n    if (fn_80201814(owner->resource) != 0) {\n        source = fn_80036D38()->object;\n    }\n    objects = lbl_803127F8;\n    config = (Config *)((u8 *)owner->config + 0x48);\n    value = config->value;\n    object_count = config->object_count;\n    {\n        int slot;\n        u8 slot_count;\n        object_iter = (void **)config;\n        slot_count = config->slot_count;\n        for (slot = 0; slot < slot_count; slot++) {\n            if (((Config *)object_iter)->slots[0] != 0) {\n                int id = fn_80201B54(((Config *)object_iter)->slots[0]);\n                if (id == ((Config *)object_iter)->expected) {\n                    fn_8020123C(0x39, source, id, 0);\n                    if (enabled != 0) {\n                        void *runtime = fn_80155DB4(((Config *)object_iter)->slots[0]);\n                        if (runtime != 0) {\n                            fn_80156FF4(runtime);\n                        }\n                    }\n                    ((Config *)object_iter)->slots[0] = 0;\n                    ((Config *)object_iter)->expected = 0;\n                }\n            }\n            object_iter++;\n        }\n    }\n    object_iter = objects;\n    for (object = 0; object < object_count; object_iter++, object++) {\n        if (object_iter != 0 && *object_iter != 0) {\n            void *runtime;\n            fn_80201B8C(*object_iter);\n            runtime = fn_80201BC8(*object_iter);\n            if (fn_80201B54(*object_iter) != 0 &&\n                fn_80201EB8(*object_iter) == 10000) {\n                fn_8011FB54(runtime, value);\n            }\n        }\n    }\n    memset(lbl_803127F8, 0, 0x80);\n}\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8006F544.o"
+        ],
+        "exit": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8006F544.o\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_8006F544",
+          "fn_8006F544",
+          "-o",
+          "reports/GEDE01/reuse-cursor-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/reuse-cursor-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json\n"
+      }
+    ],
+    "measurement": "eternal-darkness-decomp/reports/GEDE01/reuse-cursor-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json"
+  },
+  {
+    "hypothesis": "register-source: storage-class hint changes allocation priority without additional operations",
+    "source": "typedef unsigned char u8;\n\ntypedef struct Config {\n    void *header;\n    int value;\n    u8 pad_08[4];\n    u8 object_count;\n    u8 slot_count;\n    u8 pad_0E[0x66];\n    void *slots[16];\n    int expected;\n} Config;\n\ntypedef struct Owner {\n    u8 pad_00[0x38];\n    void *resource;\n    u8 pad_3C[0x88];\n    Config *config;\n} Owner;\n\ntypedef struct Runtime {\n    u8 pad_00[0x44];\n    void *object;\n} Runtime;\n\nextern void *fn_80201814();\nextern Runtime *fn_80036D38(void);\nextern int fn_80201B54();\nextern unsigned long long fn_8020123C();\nextern void *fn_80155DB4(void *object);\nextern void fn_80156FF4(void *object);\nextern void *fn_80201B8C();\nextern void *fn_80201BC8();\nextern int fn_80201EB8();\nextern void fn_8011FB54(void *object, int value);\nextern void *memset(void *dest, int value, unsigned int size);\nextern void *lbl_803127F8[32];\n\n/* NonMatching: size-exact behavior-complete reconstruction. Remaining output\n * differences are first-loop nonvolatile register allocation. */\nvoid fn_8006F544(Owner *owner, int enabled)\n{\n    Config *config;\n    void **object_iter;\n    void **objects;\n    int object;\n    u8 object_count;\n    register void *source;\n    int value;\n\n    source = 0;\n    if (fn_80201814(owner->resource) != 0) {\n        source = fn_80036D38()->object;\n    }\n    objects = lbl_803127F8;\n    config = (Config *)((u8 *)owner->config + 0x48);\n    value = config->value;\n    object_count = config->object_count;\n    {\n        int slot;\n        Config *slot_config;\n        u8 slot_count;\n        slot_config = config;\n        slot_count = config->slot_count;\n        for (slot = 0; slot < slot_count; slot++) {\n            if (slot_config->slots[0] != 0) {\n                int id = fn_80201B54(slot_config->slots[0]);\n                if (id == slot_config->expected) {\n                    fn_8020123C(0x39, source, id, 0);\n                    if (enabled != 0) {\n                        void *runtime = fn_80155DB4(slot_config->slots[0]);\n                        if (runtime != 0) {\n                            fn_80156FF4(runtime);\n                        }\n                    }\n                    slot_config->slots[0] = 0;\n                    slot_config->expected = 0;\n                }\n            }\n            slot_config = (Config *)((u8 *)slot_config + 4);\n        }\n    }\n    object_iter = objects;\n    for (object = 0; object < object_count; object_iter++, object++) {\n        if (object_iter != 0 && *object_iter != 0) {\n            void *runtime;\n            fn_80201B8C(*object_iter);\n            runtime = fn_80201BC8(*object_iter);\n            if (fn_80201B54(*object_iter) != 0 &&\n                fn_80201EB8(*object_iter) == 10000) {\n                fn_8011FB54(runtime, value);\n            }\n        }\n    }\n    memset(lbl_803127F8, 0, 0x80);\n}\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8006F544.o"
+        ],
+        "exit": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8006F544.o\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_8006F544",
+          "fn_8006F544",
+          "-o",
+          "reports/GEDE01/register-source-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/register-source-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json\n"
+      }
+    ],
+    "measurement": "eternal-darkness-decomp/reports/GEDE01/register-source-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+    "score": 99.14773
+  },
+  {
+    "hypothesis": "register-owner: storage-class hint changes allocation priority without additional operations",
+    "source": "typedef unsigned char u8;\n\ntypedef struct Config {\n    void *header;\n    int value;\n    u8 pad_08[4];\n    u8 object_count;\n    u8 slot_count;\n    u8 pad_0E[0x66];\n    void *slots[16];\n    int expected;\n} Config;\n\ntypedef struct Owner {\n    u8 pad_00[0x38];\n    void *resource;\n    u8 pad_3C[0x88];\n    Config *config;\n} Owner;\n\ntypedef struct Runtime {\n    u8 pad_00[0x44];\n    void *object;\n} Runtime;\n\nextern void *fn_80201814();\nextern Runtime *fn_80036D38(void);\nextern int fn_80201B54();\nextern unsigned long long fn_8020123C();\nextern void *fn_80155DB4(void *object);\nextern void fn_80156FF4(void *object);\nextern void *fn_80201B8C();\nextern void *fn_80201BC8();\nextern int fn_80201EB8();\nextern void fn_8011FB54(void *object, int value);\nextern void *memset(void *dest, int value, unsigned int size);\nextern void *lbl_803127F8[32];\n\n/* NonMatching: size-exact behavior-complete reconstruction. Remaining output\n * differences are first-loop nonvolatile register allocation. */\nvoid fn_8006F544(register Owner *owner, int enabled)\n{\n    Config *config;\n    void **object_iter;\n    void **objects;\n    int object;\n    u8 object_count;\n    void *source;\n    int value;\n\n    source = 0;\n    if (fn_80201814(owner->resource) != 0) {\n        source = fn_80036D38()->object;\n    }\n    objects = lbl_803127F8;\n    config = (Config *)((u8 *)owner->config + 0x48);\n    value = config->value;\n    object_count = config->object_count;\n    {\n        int slot;\n        Config *slot_config;\n        u8 slot_count;\n        slot_config = config;\n        slot_count = config->slot_count;\n        for (slot = 0; slot < slot_count; slot++) {\n            if (slot_config->slots[0] != 0) {\n                int id = fn_80201B54(slot_config->slots[0]);\n                if (id == slot_config->expected) {\n                    fn_8020123C(0x39, source, id, 0);\n                    if (enabled != 0) {\n                        void *runtime = fn_80155DB4(slot_config->slots[0]);\n                        if (runtime != 0) {\n                            fn_80156FF4(runtime);\n                        }\n                    }\n                    slot_config->slots[0] = 0;\n                    slot_config->expected = 0;\n                }\n            }\n            slot_config = (Config *)((u8 *)slot_config + 4);\n        }\n    }\n    object_iter = objects;\n    for (object = 0; object < object_count; object_iter++, object++) {\n        if (object_iter != 0 && *object_iter != 0) {\n            void *runtime;\n            fn_80201B8C(*object_iter);\n            runtime = fn_80201BC8(*object_iter);\n            if (fn_80201B54(*object_iter) != 0 &&\n                fn_80201EB8(*object_iter) == 10000) {\n                fn_8011FB54(runtime, value);\n            }\n        }\n    }\n    memset(lbl_803127F8, 0, 0x80);\n}\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8006F544.o"
+        ],
+        "exit": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8006F544.o\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_8006F544",
+          "fn_8006F544",
+          "-o",
+          "reports/GEDE01/register-owner-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/register-owner-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json\n"
+      }
+    ],
+    "measurement": "eternal-darkness-decomp/reports/GEDE01/register-owner-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+    "score": 99.14773
+  },
+  {
+    "hypothesis": "register-cursor: storage-class hint changes allocation priority without additional operations",
+    "source": "typedef unsigned char u8;\n\ntypedef struct Config {\n    void *header;\n    int value;\n    u8 pad_08[4];\n    u8 object_count;\n    u8 slot_count;\n    u8 pad_0E[0x66];\n    void *slots[16];\n    int expected;\n} Config;\n\ntypedef struct Owner {\n    u8 pad_00[0x38];\n    void *resource;\n    u8 pad_3C[0x88];\n    Config *config;\n} Owner;\n\ntypedef struct Runtime {\n    u8 pad_00[0x44];\n    void *object;\n} Runtime;\n\nextern void *fn_80201814();\nextern Runtime *fn_80036D38(void);\nextern int fn_80201B54();\nextern unsigned long long fn_8020123C();\nextern void *fn_80155DB4(void *object);\nextern void fn_80156FF4(void *object);\nextern void *fn_80201B8C();\nextern void *fn_80201BC8();\nextern int fn_80201EB8();\nextern void fn_8011FB54(void *object, int value);\nextern void *memset(void *dest, int value, unsigned int size);\nextern void *lbl_803127F8[32];\n\n/* NonMatching: size-exact behavior-complete reconstruction. Remaining output\n * differences are first-loop nonvolatile register allocation. */\nvoid fn_8006F544(Owner *owner, int enabled)\n{\n    Config *config;\n    void **object_iter;\n    void **objects;\n    int object;\n    u8 object_count;\n    void *source;\n    int value;\n\n    source = 0;\n    if (fn_80201814(owner->resource) != 0) {\n        source = fn_80036D38()->object;\n    }\n    objects = lbl_803127F8;\n    config = (Config *)((u8 *)owner->config + 0x48);\n    value = config->value;\n    object_count = config->object_count;\n    {\n        int slot;\n        register Config *slot_config;\n        u8 slot_count;\n        slot_config = config;\n        slot_count = config->slot_count;\n        for (slot = 0; slot < slot_count; slot++) {\n            if (slot_config->slots[0] != 0) {\n                int id = fn_80201B54(slot_config->slots[0]);\n                if (id == slot_config->expected) {\n                    fn_8020123C(0x39, source, id, 0);\n                    if (enabled != 0) {\n                        void *runtime = fn_80155DB4(slot_config->slots[0]);\n                        if (runtime != 0) {\n                            fn_80156FF4(runtime);\n                        }\n                    }\n                    slot_config->slots[0] = 0;\n                    slot_config->expected = 0;\n                }\n            }\n            slot_config = (Config *)((u8 *)slot_config + 4);\n        }\n    }\n    object_iter = objects;\n    for (object = 0; object < object_count; object_iter++, object++) {\n        if (object_iter != 0 && *object_iter != 0) {\n            void *runtime;\n            fn_80201B8C(*object_iter);\n            runtime = fn_80201BC8(*object_iter);\n            if (fn_80201B54(*object_iter) != 0 &&\n                fn_80201EB8(*object_iter) == 10000) {\n                fn_8011FB54(runtime, value);\n            }\n        }\n    }\n    memset(lbl_803127F8, 0, 0x80);\n}\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8006F544.o"
+        ],
+        "exit": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8006F544.o\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_8006F544",
+          "fn_8006F544",
+          "-o",
+          "reports/GEDE01/register-cursor-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/register-cursor-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json\n"
+      }
+    ],
+    "measurement": "eternal-darkness-decomp/reports/GEDE01/register-cursor-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+    "score": 99.14773
+  },
+  {
+    "hypothesis": "register-slot-index: storage-class hint changes allocation priority without additional operations",
+    "source": "typedef unsigned char u8;\n\ntypedef struct Config {\n    void *header;\n    int value;\n    u8 pad_08[4];\n    u8 object_count;\n    u8 slot_count;\n    u8 pad_0E[0x66];\n    void *slots[16];\n    int expected;\n} Config;\n\ntypedef struct Owner {\n    u8 pad_00[0x38];\n    void *resource;\n    u8 pad_3C[0x88];\n    Config *config;\n} Owner;\n\ntypedef struct Runtime {\n    u8 pad_00[0x44];\n    void *object;\n} Runtime;\n\nextern void *fn_80201814();\nextern Runtime *fn_80036D38(void);\nextern int fn_80201B54();\nextern unsigned long long fn_8020123C();\nextern void *fn_80155DB4(void *object);\nextern void fn_80156FF4(void *object);\nextern void *fn_80201B8C();\nextern void *fn_80201BC8();\nextern int fn_80201EB8();\nextern void fn_8011FB54(void *object, int value);\nextern void *memset(void *dest, int value, unsigned int size);\nextern void *lbl_803127F8[32];\n\n/* NonMatching: size-exact behavior-complete reconstruction. Remaining output\n * differences are first-loop nonvolatile register allocation. */\nvoid fn_8006F544(Owner *owner, int enabled)\n{\n    Config *config;\n    void **object_iter;\n    void **objects;\n    int object;\n    u8 object_count;\n    void *source;\n    int value;\n\n    source = 0;\n    if (fn_80201814(owner->resource) != 0) {\n        source = fn_80036D38()->object;\n    }\n    objects = lbl_803127F8;\n    config = (Config *)((u8 *)owner->config + 0x48);\n    value = config->value;\n    object_count = config->object_count;\n    {\n        register int slot;\n        Config *slot_config;\n        u8 slot_count;\n        slot_config = config;\n        slot_count = config->slot_count;\n        for (slot = 0; slot < slot_count; slot++) {\n            if (slot_config->slots[0] != 0) {\n                int id = fn_80201B54(slot_config->slots[0]);\n                if (id == slot_config->expected) {\n                    fn_8020123C(0x39, source, id, 0);\n                    if (enabled != 0) {\n                        void *runtime = fn_80155DB4(slot_config->slots[0]);\n                        if (runtime != 0) {\n                            fn_80156FF4(runtime);\n                        }\n                    }\n                    slot_config->slots[0] = 0;\n                    slot_config->expected = 0;\n                }\n            }\n            slot_config = (Config *)((u8 *)slot_config + 4);\n        }\n    }\n    object_iter = objects;\n    for (object = 0; object < object_count; object_iter++, object++) {\n        if (object_iter != 0 && *object_iter != 0) {\n            void *runtime;\n            fn_80201B8C(*object_iter);\n            runtime = fn_80201BC8(*object_iter);\n            if (fn_80201B54(*object_iter) != 0 &&\n                fn_80201EB8(*object_iter) == 10000) {\n                fn_8011FB54(runtime, value);\n            }\n        }\n    }\n    memset(lbl_803127F8, 0, 0x80);\n}\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8006F544.o"
+        ],
+        "exit": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8006F544.o\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_8006F544",
+          "fn_8006F544",
+          "-o",
+          "reports/GEDE01/register-slot-index-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/register-slot-index-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json\n"
+      }
+    ],
+    "measurement": "eternal-darkness-decomp/reports/GEDE01/register-slot-index-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+    "score": 99.14773
+  },
+  {
+    "hypothesis": "Hoist first-loop cursor/count/index into outer declaration scope so cursor is allocated before the long-lived values, and source last. Expected greedy allocation: cursor r31, objects r30, object_count r29, slot_count r28, value r27, slot r26, source r25.",
+    "source": "typedef unsigned char u8;\n\ntypedef struct Config {\n    void *header;\n    int value;\n    u8 pad_08[4];\n    u8 object_count;\n    u8 slot_count;\n    u8 pad_0E[0x66];\n    void *slots[16];\n    int expected;\n} Config;\n\ntypedef struct Owner {\n    u8 pad_00[0x38];\n    void *resource;\n    u8 pad_3C[0x88];\n    Config *config;\n} Owner;\n\ntypedef struct Runtime {\n    u8 pad_00[0x44];\n    void *object;\n} Runtime;\n\nextern void *fn_80201814();\nextern Runtime *fn_80036D38(void);\nextern int fn_80201B54();\nextern unsigned long long fn_8020123C();\nextern void *fn_80155DB4(void *object);\nextern void fn_80156FF4(void *object);\nextern void *fn_80201B8C();\nextern void *fn_80201BC8();\nextern int fn_80201EB8();\nextern void fn_8011FB54(void *object, int value);\nextern void *memset(void *dest, int value, unsigned int size);\nextern void *lbl_803127F8[32];\n\n/* NonMatching: size-exact behavior-complete reconstruction. Remaining output\n * differences are first-loop nonvolatile register allocation. */\nvoid fn_8006F544(Owner *owner, int enabled)\n{\n    Config *config;\n    Config *slot_config;\n    void **object_iter;\n    void **objects;\n    int object;\n    u8 object_count;\n    u8 slot_count;\n    int value;\n    int slot;\n    void *source;\n\n    source = 0;\n    if (fn_80201814(owner->resource) != 0) {\n        source = fn_80036D38()->object;\n    }\n    objects = lbl_803127F8;\n    config = (Config *)((u8 *)owner->config + 0x48);\n    value = config->value;\n    object_count = config->object_count;\n    {\n        slot_config = config;\n        slot_count = config->slot_count;\n        for (slot = 0; slot < slot_count; slot++) {\n            if (slot_config->slots[0] != 0) {\n                int id = fn_80201B54(slot_config->slots[0]);\n                if (id == slot_config->expected) {\n                    fn_8020123C(0x39, source, id, 0);\n                    if (enabled != 0) {\n                        void *runtime = fn_80155DB4(slot_config->slots[0]);\n                        if (runtime != 0) {\n                            fn_80156FF4(runtime);\n                        }\n                    }\n                    slot_config->slots[0] = 0;\n                    slot_config->expected = 0;\n                }\n            }\n            slot_config = (Config *)((u8 *)slot_config + 4);\n        }\n    }\n    object_iter = objects;\n    for (object = 0; object < object_count; object_iter++, object++) {\n        if (object_iter != 0 && *object_iter != 0) {\n            void *runtime;\n            fn_80201B8C(*object_iter);\n            runtime = fn_80201BC8(*object_iter);\n            if (fn_80201B54(*object_iter) != 0 &&\n                fn_80201EB8(*object_iter) == 10000) {\n                fn_8011FB54(runtime, value);\n            }\n        }\n    }\n    memset(lbl_803127F8, 0, 0x80);\n}\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8006F544.o"
+        ],
+        "exit": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8006F544.o\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_8006F544",
+          "fn_8006F544",
+          "-o",
+          "reports/GEDE01/hoisted-cursor-lifetimes-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/hoisted-cursor-lifetimes-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json\n"
+      }
+    ],
+    "measurement": "eternal-darkness-decomp/reports/GEDE01/hoisted-cursor-lifetimes-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+    "score": 98.52273
+  },
+  {
+    "hypothesis": "hoisted-int-slot-count: integer promotion at initialization rather than loop comparison removes promoted byte temporary from allocation order",
+    "source": "typedef unsigned char u8;\n\ntypedef struct Config {\n    void *header;\n    int value;\n    u8 pad_08[4];\n    u8 object_count;\n    int slot_count;\n    u8 pad_0E[0x66];\n    void *slots[16];\n    int expected;\n} Config;\n\ntypedef struct Owner {\n    u8 pad_00[0x38];\n    void *resource;\n    u8 pad_3C[0x88];\n    Config *config;\n} Owner;\n\ntypedef struct Runtime {\n    u8 pad_00[0x44];\n    void *object;\n} Runtime;\n\nextern void *fn_80201814();\nextern Runtime *fn_80036D38(void);\nextern int fn_80201B54();\nextern unsigned long long fn_8020123C();\nextern void *fn_80155DB4(void *object);\nextern void fn_80156FF4(void *object);\nextern void *fn_80201B8C();\nextern void *fn_80201BC8();\nextern int fn_80201EB8();\nextern void fn_8011FB54(void *object, int value);\nextern void *memset(void *dest, int value, unsigned int size);\nextern void *lbl_803127F8[32];\n\n/* NonMatching: size-exact behavior-complete reconstruction. Remaining output\n * differences are first-loop nonvolatile register allocation. */\nvoid fn_8006F544(Owner *owner, int enabled)\n{\n    Config *config;\n    Config *slot_config;\n    void **object_iter;\n    void **objects;\n    int object;\n    u8 object_count;\n    int slot_count;\n    int value;\n    int slot;\n    void *source;\n\n    source = 0;\n    if (fn_80201814(owner->resource) != 0) {\n        source = fn_80036D38()->object;\n    }\n    objects = lbl_803127F8;\n    config = (Config *)((u8 *)owner->config + 0x48);\n    value = config->value;\n    object_count = config->object_count;\n    {\n        slot_config = config;\n        slot_count = config->slot_count;\n        for (slot = 0; slot < slot_count; slot++) {\n            if (slot_config->slots[0] != 0) {\n                int id = fn_80201B54(slot_config->slots[0]);\n                if (id == slot_config->expected) {\n                    fn_8020123C(0x39, source, id, 0);\n                    if (enabled != 0) {\n                        void *runtime = fn_80155DB4(slot_config->slots[0]);\n                        if (runtime != 0) {\n                            fn_80156FF4(runtime);\n                        }\n                    }\n                    slot_config->slots[0] = 0;\n                    slot_config->expected = 0;\n                }\n            }\n            slot_config = (Config *)((u8 *)slot_config + 4);\n        }\n    }\n    object_iter = objects;\n    for (object = 0; object < object_count; object_iter++, object++) {\n        if (object_iter != 0 && *object_iter != 0) {\n            void *runtime;\n            fn_80201B8C(*object_iter);\n            runtime = fn_80201BC8(*object_iter);\n            if (fn_80201B54(*object_iter) != 0 &&\n                fn_80201EB8(*object_iter) == 10000) {\n                fn_8011FB54(runtime, value);\n            }\n        }\n    }\n    memset(lbl_803127F8, 0, 0x80);\n}\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8006F544.o"
+        ],
+        "exit": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8006F544.o\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_8006F544",
+          "fn_8006F544",
+          "-o",
+          "reports/GEDE01/hoisted-int-slot-count-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/hoisted-int-slot-count-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json\n"
+      }
+    ],
+    "measurement": "eternal-darkness-decomp/reports/GEDE01/hoisted-int-slot-count-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+    "score": 99.26136,
+    "invalid": "Rejected edit error: replacement changed struct fields as well as locals, changing layout. Not a behavior-preserving candidate."
+  },
+  {
+    "hypothesis": "hoisted-int-counts: integer promotion at initialization rather than loop comparison removes promoted byte temporary from allocation order",
+    "source": "typedef unsigned char u8;\n\ntypedef struct Config {\n    void *header;\n    int value;\n    u8 pad_08[4];\n    int object_count;\n    int slot_count;\n    u8 pad_0E[0x66];\n    void *slots[16];\n    int expected;\n} Config;\n\ntypedef struct Owner {\n    u8 pad_00[0x38];\n    void *resource;\n    u8 pad_3C[0x88];\n    Config *config;\n} Owner;\n\ntypedef struct Runtime {\n    u8 pad_00[0x44];\n    void *object;\n} Runtime;\n\nextern void *fn_80201814();\nextern Runtime *fn_80036D38(void);\nextern int fn_80201B54();\nextern unsigned long long fn_8020123C();\nextern void *fn_80155DB4(void *object);\nextern void fn_80156FF4(void *object);\nextern void *fn_80201B8C();\nextern void *fn_80201BC8();\nextern int fn_80201EB8();\nextern void fn_8011FB54(void *object, int value);\nextern void *memset(void *dest, int value, unsigned int size);\nextern void *lbl_803127F8[32];\n\n/* NonMatching: size-exact behavior-complete reconstruction. Remaining output\n * differences are first-loop nonvolatile register allocation. */\nvoid fn_8006F544(Owner *owner, int enabled)\n{\n    Config *config;\n    Config *slot_config;\n    void **object_iter;\n    void **objects;\n    int object;\n    int object_count;\n    int slot_count;\n    int value;\n    int slot;\n    void *source;\n\n    source = 0;\n    if (fn_80201814(owner->resource) != 0) {\n        source = fn_80036D38()->object;\n    }\n    objects = lbl_803127F8;\n    config = (Config *)((u8 *)owner->config + 0x48);\n    value = config->value;\n    object_count = config->object_count;\n    {\n        slot_config = config;\n        slot_count = config->slot_count;\n        for (slot = 0; slot < slot_count; slot++) {\n            if (slot_config->slots[0] != 0) {\n                int id = fn_80201B54(slot_config->slots[0]);\n                if (id == slot_config->expected) {\n                    fn_8020123C(0x39, source, id, 0);\n                    if (enabled != 0) {\n                        void *runtime = fn_80155DB4(slot_config->slots[0]);\n                        if (runtime != 0) {\n                            fn_80156FF4(runtime);\n                        }\n                    }\n                    slot_config->slots[0] = 0;\n                    slot_config->expected = 0;\n                }\n            }\n            slot_config = (Config *)((u8 *)slot_config + 4);\n        }\n    }\n    object_iter = objects;\n    for (object = 0; object < object_count; object_iter++, object++) {\n        if (object_iter != 0 && *object_iter != 0) {\n            void *runtime;\n            fn_80201B8C(*object_iter);\n            runtime = fn_80201BC8(*object_iter);\n            if (fn_80201B54(*object_iter) != 0 &&\n                fn_80201EB8(*object_iter) == 10000) {\n                fn_8011FB54(runtime, value);\n            }\n        }\n    }\n    memset(lbl_803127F8, 0, 0x80);\n}\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8006F544.o"
+        ],
+        "exit": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8006F544.o\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_8006F544",
+          "fn_8006F544",
+          "-o",
+          "reports/GEDE01/hoisted-int-counts-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/hoisted-int-counts-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json\n"
+      }
+    ],
+    "measurement": "eternal-darkness-decomp/reports/GEDE01/hoisted-int-counts-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+    "score": 98.579544,
+    "invalid": "Rejected edit error: replacement changed struct fields as well as locals, changing layout. Not a behavior-preserving candidate."
+  },
+  {
+    "hypothesis": "Promote only the local slot_count to int, preserving byte struct field and original layout; avoids separate promoted byte temporary",
+    "source": "typedef unsigned char u8;\n\ntypedef struct Config {\n    void *header;\n    int value;\n    u8 pad_08[4];\n    u8 object_count;\n    u8 slot_count;\n    u8 pad_0E[0x66];\n    void *slots[16];\n    int expected;\n} Config;\n\ntypedef struct Owner {\n    u8 pad_00[0x38];\n    void *resource;\n    u8 pad_3C[0x88];\n    Config *config;\n} Owner;\n\ntypedef struct Runtime {\n    u8 pad_00[0x44];\n    void *object;\n} Runtime;\n\nextern void *fn_80201814();\nextern Runtime *fn_80036D38(void);\nextern int fn_80201B54();\nextern unsigned long long fn_8020123C();\nextern void *fn_80155DB4(void *object);\nextern void fn_80156FF4(void *object);\nextern void *fn_80201B8C();\nextern void *fn_80201BC8();\nextern int fn_80201EB8();\nextern void fn_8011FB54(void *object, int value);\nextern void *memset(void *dest, int value, unsigned int size);\nextern void *lbl_803127F8[32];\n\n/* NonMatching: size-exact behavior-complete reconstruction. Remaining output\n * differences are first-loop nonvolatile register allocation. */\nvoid fn_8006F544(Owner *owner, int enabled)\n{\n    Config *config;\n    Config *slot_config;\n    void **object_iter;\n    void **objects;\n    int object;\n    u8 object_count;\n    int slot_count;\n    int value;\n    int slot;\n    void *source;\n\n    source = 0;\n    if (fn_80201814(owner->resource) != 0) {\n        source = fn_80036D38()->object;\n    }\n    objects = lbl_803127F8;\n    config = (Config *)((u8 *)owner->config + 0x48);\n    value = config->value;\n    object_count = config->object_count;\n    {\n        slot_config = config;\n        slot_count = config->slot_count;\n        for (slot = 0; slot < slot_count; slot++) {\n            if (slot_config->slots[0] != 0) {\n                int id = fn_80201B54(slot_config->slots[0]);\n                if (id == slot_config->expected) {\n                    fn_8020123C(0x39, source, id, 0);\n                    if (enabled != 0) {\n                        void *runtime = fn_80155DB4(slot_config->slots[0]);\n                        if (runtime != 0) {\n                            fn_80156FF4(runtime);\n                        }\n                    }\n                    slot_config->slots[0] = 0;\n                    slot_config->expected = 0;\n                }\n            }\n            slot_config = (Config *)((u8 *)slot_config + 4);\n        }\n    }\n    object_iter = objects;\n    for (object = 0; object < object_count; object_iter++, object++) {\n        if (object_iter != 0 && *object_iter != 0) {\n            void *runtime;\n            fn_80201B8C(*object_iter);\n            runtime = fn_80201BC8(*object_iter);\n            if (fn_80201B54(*object_iter) != 0 &&\n                fn_80201EB8(*object_iter) == 10000) {\n                fn_8011FB54(runtime, value);\n            }\n        }\n    }\n    memset(lbl_803127F8, 0, 0x80);\n}\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8006F544.o"
+        ],
+        "exit": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8006F544.o\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_8006F544",
+          "fn_8006F544",
+          "-o",
+          "reports/GEDE01/promoted-local-slot-count-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/promoted-local-slot-count-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json\n"
+      }
+    ],
+    "measurement": "eternal-darkness-decomp/reports/GEDE01/promoted-local-slot-count-fa6dabd3-7d02-4cd8-b158-6ba81bc48d52.json",
+    "score": 100.0
+  }
+]
