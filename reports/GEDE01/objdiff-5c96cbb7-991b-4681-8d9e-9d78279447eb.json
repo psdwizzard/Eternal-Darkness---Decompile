@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "assignment_id": "5c96cbb7-991b-4681-8d9e-9d78279447eb",
+  "target": "fn_80087EC4",
+  "compiler": "GC/1.3",
+  "compiler_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "exit_code": 0,
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "canonical_objdiff": {
+    "command": "python3 tools/fndiff.py game/game_fn_80087EC4.c fn_80087EC4",
+    "raw_output": "target 412 bytes  base 412 bytes  match 98.194176",
+    "retail_size": 412,
+    "generated_size": 412,
+    "match_percent": 98.194176,
+    "differing_instruction_count": 31,
+    "differing_instruction_offsets_decimal": [0, 8, 12, 16, 28, 32, 40, 44, 48, 60, 76, 176, 180, 184, 188, 192, 216, 228, 236, 244, 252, 272, 276, 280, 324, 332, 336, 348, 388, 396, 404],
+    "raw_divergence_excerpt": [
+      "0x0000 retail: stwu r1, -0x20(r1) | generated: stwu r1, -0x30(r1)",
+      "0x000c retail: stmw r26, 0x8(r1) | generated: stmw r25, 0x14(r1)",
+      "0x0030 retail: lwz r31, 0xc4(r28) | generated: lwz r28, 0xc4(r25)",
+      "0x0048 retail: mr r31, r3 | generated: mr r31, r3",
+      "0x00b0 retail: mulli r3, r31, 0x2c | generated: mulli r0, r31, 0x2c",
+      "0x00e4 retail: mulli r30, r3, 0x2c | generated: mulli r27, r3, 0x2c",
+      "0x0150 retail: stb r0, 0x159(r31) | generated: stb r0, 0x159(r28)",
+      "0x0184 retail: lmw r26, 0x8(r1) | generated: lmw r25, 0x14(r1)"
+    ]
+  },
+  "attempt_5_hypothesis": {
+    "hypothesis": "Represent the shared owner/index value as one integer scalar, then add the register storage-class hint, so pointer typing cannot cause MWCC to split the mutually exclusive branch values and the scalar may remain in retail r31.",
+    "variants": [
+      {
+        "source_shape": "int owner_or_index = (int)work->owner; overwrite with fn_8006ECD4 result; cast back only for final owner store",
+        "raw_output": "target 412 bytes  base 412 bytes  match 98.194176"
+      },
+      {
+        "source_shape": "register int owner_or_index with the same overwrite and final cast",
+        "raw_output": "target 412 bytes  base 412 bytes  match 98.194176"
+      }
+    ],
+    "result": "Both variants were instruction-identical to the preserved pointer reconstruction. Canonical GC/1.3 performs SSA live-range splitting regardless of scalar type or register hint: owner remains r28 while the mode-7 index is r31, requiring r25-r31 and a 0x30-byte frame. The readable pointer reconstruction was restored."
+  },
+  "relocation_strict": {
+    "command": "diff -u <(readelf -Wr build/GEDE01/obj/game/game_fn_80087EC4.o | awk '/R_PPC_/ {print $1, $3, $5, $6, $7}') <(readelf -Wr build/GEDE01/src/game/game_fn_80087EC4.o | awk '/R_PPC_/ {print $1, $3, $5, $6, $7}')",
+    "exit_code": 0,
+    "raw_output": "relocation semantic tuples: exact (24/24 offsets, types, targets, addends)"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  },
+  "legal_scope": {
+    "independent_c_translation_unit": "src/game/game_fn_80087EC4.c",
+    "whole_function_assembly": false,
+    "inline_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "generated_or_private_inputs_in_evidence": false
+  }
+}
