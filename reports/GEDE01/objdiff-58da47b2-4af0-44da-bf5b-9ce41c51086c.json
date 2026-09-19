@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "assignment_id": "58da47b2-4af0-44da-bf5b-9ce41c51086c",
+  "target": "fn_800F61F4",
+  "compiler": "GC/1.3",
+  "canonical": {
+    "command": "python3 tools/fndiff.py game/game_fn_800F61F4.c fn_800F61F4",
+    "target_size": 36,
+    "generated_size": 40,
+    "match_percent": 27.777779,
+    "raw_output": [
+      "target 36 bytes  base 40 bytes  match 27.777779",
+      "* 0x0000  subfic r8, r5, 0x20                                  | subfic r7, r5, 0x20",
+      "* 0x0004  subic r9, r5, 0x20                                   | subi r6, r5, 0x20",
+      "* 0x0008                                                       | slw r3, r3, r5",
+      "* 0x000c  slw r3, r3, r5                                       | slw r0, r4, r5",
+      "* 0x0010  srw r10, r4, r8                                      | srw r7, r4, r7",
+      "* 0x0014                                                       | slw r5, r4, r6",
+      "* 0x0018                                                       | or r3, r3, r7",
+      "* 0x001c  or r3, r3, r10                                       | mr r4, r0",
+      "* 0x0020  slw r10, r4, r9                                      | ",
+      "* 0x0024  or r3, r3, r10                                       | or r3, r3, r5",
+      "* 0x0028  slw r4, r4, r5                                       | ",
+      "  0x002c  blr                                                  | blr"
+    ]
+  },
+  "relocation_strict": {
+    "target_command": "readelf -r build/GEDE01/obj/game/game_fn_800F61F4.o",
+    "generated_command": "readelf -r build/GEDE01/src/game/game_fn_800F61F4.o",
+    "target_raw_output": "There are no relocations in this file.",
+    "generated_raw_output": "There are no relocations in this file.",
+    "result": "Canonical comparison is relocation-strict because neither object contains relocation records."
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol"
+    ],
+    "ninja_result": "exit 0; build/GEDE01/main.dol: OK",
+    "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "reconstruction": {
+    "source": "src/game/game_fn_800F61F4.c",
+    "registration": "Object(NonMatching, \"game/game_fn_800F61F4.c\")",
+    "split": ".text start:0x800F61F4 end:0x800F6218",
+    "legal_audit": "Honest C only; no inline or whole-function assembly, shared reconstruction, compiler-policy change, gate change, or neighboring-function edit."
+  },
+  "prior_experiment": {
+    "description": "The preserved prior attempt tested a union-based direct hi/lo return and rejected it before restoring the better word-expanded C.",
+    "raw_output": "target 36 bytes  base 60 bytes  match 0.0"
+  }
+}
