@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "assignment_id": "0235c55e-a232-4c2a-948e-e00499765dd7",
+  "target": "fn_800531F0",
+  "compiler": "canonical project configuration (GC/1.3)",
+  "raw_reports": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0235c55e-a232-4c2a-948e-e00499765dd7-canonical.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0235c55e-a232-4c2a-948e-e00499765dd7-reloc-strict.raw.json"
+  ],
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[879/884] MWCC build/GEDE01/src/game/game_fn_800531F0.o\n[880/884] REPORT\n[881/884] LINK build/GEDE01/main.elf\n[882/884] DOL build/GEDE01/main.dol\n[883/884] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[884/884] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800531F0 fn_800531F0 -o build/GEDE01/objdiff-0235c55e-canonical.raw.json --format json",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-0235c55e-canonical.raw.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800531F0 fn_800531F0 -o build/GEDE01/objdiff-0235c55e-reloc-strict.raw.json --format json -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to build/GEDE01/objdiff-0235c55e-reloc-strict.raw.json"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "cmp -s build/GEDE01/objdiff-0235c55e-canonical.raw.json build/GEDE01/objdiff-0235c55e-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": "rg -n '__asm|asm\\s*\\(' src/game/game_fn_800531F0.c",
+      "exit_code": 1,
+      "raw_output": ""
+    }
+  ],
+  "hypothesis": {
+    "description": "Correct the return types of the two byte-state setter/getters instead of applying more pointer, alias, declaration-order, or indexing variants. The independent fn_801EF38C translation unit establishes an unsigned-char return, and the symmetric fn_8004736C result is also consumed as a byte.",
+    "baseline_match_percent": 97.82692,
+    "result": "Changing both declarations from s32 to u8 and removing redundant casts raised the score to 99.07692 and eliminated the entire effect-store versus fn_80144430 argument-scheduling cluster at 0x298..0x2A8. A final comma-expression sequencing probe compiled identically and was not retained."
+  },
+  "measurements": {
+    "canonical": {
+      "retail_size": 1040,
+      "generated_size": 1040,
+      "retail_instructions": 260,
+      "generated_instructions": 260,
+      "retail_relocations": 133,
+      "generated_relocations": 133,
+      "match_percent": 99.07692,
+      "differing_alignment_records": 9
+    },
+    "relocation_strict": {
+      "policy": "function_reloc_diffs=name_address",
+      "retail_size": 1040,
+      "generated_size": 1040,
+      "retail_instructions": 260,
+      "generated_instructions": 260,
+      "retail_relocations": 133,
+      "generated_relocations": 133,
+      "match_percent": 99.07692,
+      "differing_alignment_records": 9,
+      "raw_report_identical_to_canonical": true
+    },
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_matches_expected": true,
+    "inline_or_whole_function_assembly_hits": 0
+  },
+  "remaining_retail_sequence": [
+    "0x3BC lbz r4, 0x1da(r31)",
+    "0x3C0 lis r6, lbl_80241DE8@ha",
+    "0x3C4 li r0, 0",
+    "0x3C8 lis r3, lbl_8030F540@ha",
+    "0x3CC mulli r5, r4, 0x28",
+    "0x3D0 addi r6, r6, lbl_80241DE8@l",
+    "0x3D4 addi r4, r3, lbl_8030F540@l",
+    "0x3D8 stw r0, lbl_8064C850@sda21",
+    "0x3DC li r3, 0",
+    "0x3E0 add r5, r6, r5",
+    "0x3E4 lbz r0, 0x19(r5)",
+    "0x3E8 stb r0, 0x1e0(r4)"
+  ],
+  "divergence": "Size-exact honest C at 99.07692%. The sole remaining cluster is final descriptor-mode address formation at retail offsets 0x3BC..0x3E0: retail allocates type/descriptor-base/zero to r4/r6/r0 and schedules the state-base lis after li r0, while generated code allocates type/descriptor-base/zero to r0/r4/r6 and schedules the state-base lis before li r6. Relocation targets and addends agree; canonical and relocation-strict raw reports are byte-identical. This is not a match claim."
+}

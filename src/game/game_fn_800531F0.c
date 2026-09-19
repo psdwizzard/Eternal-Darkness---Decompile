@@ -91,8 +91,8 @@ extern void fn_801AC350(s32, s32, s32);
 extern void fn_801B0D30(void);
 extern void fn_80237D2C(s32);
 extern void fn_8015DD94(s32);
-extern s32 fn_8004736C(s32);
-extern s32 fn_801EF38C(s32);
+extern u8 fn_8004736C(s32);
+extern u8 fn_801EF38C(s32);
 extern void fn_80144430(s32, s32);
 extern void fn_801E79A0(void*, s32);
 extern void fn_801A9964(s32);
@@ -172,8 +172,8 @@ void fn_800531F0(void)
     fn_801B0D30();
     fn_80237D2C(1);
     fn_8015DD94(lbl_8030F540.type);
-    lbl_8030F540.mode = (u8)fn_8004736C(0);
-    lbl_8030F540.effect = (u8)fn_801EF38C(0);
+    lbl_8030F540.mode = fn_8004736C(0);
+    lbl_8030F540.effect = fn_801EF38C(0);
     fn_80144430(2, 1);
     if (lbl_8030F540.effect != 0) {
         fn_801E79A0(lbl_8064C4E0, 0x2ED);
