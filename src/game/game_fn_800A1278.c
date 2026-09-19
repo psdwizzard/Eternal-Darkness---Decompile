@@ -65,9 +65,8 @@ extern float lbl_8064EDB8;
 int fn_800A1278(State800A1278* state)
 {
     int index;
-    Work800A1278* work;
     Context800A1278* context;
-    register State800A1278* state_r = state;
+    Work800A1278* work;
     void* transform;
     Vec800A1278* position;
     Info800A1278* info;
@@ -76,10 +75,10 @@ int fn_800A1278(State800A1278* state)
     Vec800A1278 offset;
     int i;
 
-    context = fn_8006ED3C(state_r, 0x23, &index);
-    object = fn_80201814(state_r->resource);
+    context = fn_8006ED3C(state, 0x23, &index);
+    object = fn_80201814(state->resource);
     transform = fn_80201BC8(object);
-    work = state_r->work;
+    work = state->work;
     position = fn_8011F770(transform);
     fn_8011F114(&value, transform);
     fn_80128EE4(transform);
@@ -99,8 +98,8 @@ int fn_800A1278(State800A1278* state)
         fn_802020B4(fn_80201814(fn_80036D38(object)->resource), 0);
         fn_801A5C30(0);
         for (i = 0; i < 3; i++) {
-            state_r->entries[index].field_00 = i;
-            fn_8006DEF8(state_r, context->event, 0, 0, 0);
+            state->entries[index].field_00 = i;
+            fn_8006DEF8(state, context->event, 0, 0, 0);
         }
         *position = work->position;
         fn_8012AC74(transform, &value, 3);

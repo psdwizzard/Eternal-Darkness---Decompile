@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "51142a65-a986-4052-8798-2b6250e4076d",
+  "attempt": 5,
+  "base_commit": "a4ee3fc1e20e433c836497babcfd5a763c7d51e4",
+  "target": "fn_800A1278",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-51142a65-a986-4052-8798-2b6250e4076d.json"
+  ],
+  "divergence": "Canonical GC/1.3 is size-exact at 448/448 bytes and 98.48214% with 33 DIFF_ARG_MISMATCH instructions and no structural differences. All 26 relocation-bearing instructions align under function_reloc_diffs=name_address with no relocation diff classification. Retail assigns state/context/work/transform/position to r29/r30/r31/r28/r27; generated C assigns them to r27/r31/r30/r29/r28. Declaring context/work/transform/position before the state alias and toggling the alias register qualifier were byte-neutral. Moving the work definition before the context call worsened the score to 96.78571% by emitting lwz r30,0xc4(r3) before the call. Direct formal-parameter retention is byte-equivalent to the 98.48214% best and is preserved. The linked DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
