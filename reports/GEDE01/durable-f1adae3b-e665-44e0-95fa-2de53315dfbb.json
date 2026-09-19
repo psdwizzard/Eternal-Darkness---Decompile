@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f1adae3b-e665-44e0-95fa-2de53315dfbb",
+  "attempt": 1,
+  "base_commit": "78fb3181cd778475f81de699c7984593de65316f",
+  "target": "fn_801E995C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f1adae3b-e665-44e0-95fa-2de53315dfbb.json"
+  ],
+  "divergence": "Relocation-strict objdiff measures 98.57478% for equal 3236-byte functions. All 809 generated opcodes align with retail, but 200 instructions retain argument/register-allocation mismatches: the three early relocation loops color their induction/temporary registers differently, and the centroid phase swaps the retail roles of r28/r29. The generated conversion-pool references also retain local @236/@260 identities instead of retail lbl_806512B8/lbl_806512C0. Canonical build succeeds and build/GEDE01/main.dol has the required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
