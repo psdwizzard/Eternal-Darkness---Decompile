@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "assignment_id": "4db08a6c-4643-45b8-89e7-23b5f6faaf2f",
+  "target": "fn_80135510",
+  "canonical_objdiff": {
+    "command": "python3 tools/fndiff.py game/game_fn_80135510.c fn_80135510",
+    "exit_code": 0,
+    "raw_summary": "target 568 bytes  base 568 bytes  match 98.556335",
+    "target_instruction_count": 143,
+    "base_instruction_count": 143,
+    "raw_divergence": [
+      "0x01a4 target: mr r29, r30 | base: <none>",
+      "0x01a8 target: li r28, 0x0 | base: li r29, 0x0",
+      "0x01ac target: <none> | base: li r28, 0x0"
+    ]
+  },
+  "relocation_strict": {
+    "source": "build/GEDE01/fndiff_fn_80135510.json",
+    "tuple_fields": [
+      "instruction.address",
+      "instruction.relocation.type",
+      "instruction.relocation.type_name",
+      "instruction.formatted",
+      "instruction.relocation.addend"
+    ],
+    "target_relocation_instruction_count": 70,
+    "base_relocation_instruction_count": 70,
+    "matching_offset_type_target_addend_count": 70,
+    "mismatching_offset_type_target_addend_count": 0,
+    "raw_summary": "left_count=70\nright_count=70\nmatching_count=70\nmismatching_count=0\nstrict_equal=true"
+  },
+  "hypothesis_trials": {
+    "hypothesis": "The retail copy may arise because the record offset is initialized through the global maximum-width assignment result, creating an alias-visible value-provenance boundary, rather than directly from a known-zero local.",
+    "variants": [
+      {
+        "source_shape": "group_offset = 0; offset = 0; lbl_8064CF94 = group_offset; record_offset = lbl_8064CF94;",
+        "raw_result": "Compiler emitted an extra independent li r0,0 at base 0x0198, moved li r30,0 to 0x019c, stored r0 to lbl_8064CF94, then emitted independent li instructions for r27, r29 and r28. Base grew to 572 bytes and the loop shifted by four bytes."
+      },
+      {
+        "source_shape": "lbl_8064CF94 = group_offset = 0; offset = 0; record_offset = (group_offset += 0);",
+        "raw_result": "Compiler optimized the arithmetic dependency away and reproduced the preserved 568-byte, 98.556335% output with li r29,0 instead of mr r29,r30."
+      }
+    ],
+    "conclusion": "The new assignment-result/alias-boundary hypothesis did not reproduce retail codegen; the clean preserved reconstruction remains the best honest C candidate."
+  },
+  "build": {
+    "configure_command": "python3 configure.py",
+    "build_command": ".tools/bin/ninja -j2",
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "raw_sha1sum": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_verified": true
+  }
+}

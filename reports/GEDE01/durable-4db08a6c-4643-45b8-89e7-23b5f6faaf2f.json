@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "4db08a6c-4643-45b8-89e7-23b5f6faaf2f",
+  "attempt": 5,
+  "base_commit": "d5eaee919a9e5081b202fabca96249396c95744e",
+  "target": "fn_80135510",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4db08a6c-4643-45b8-89e7-23b5f6faaf2f.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff measure 98.556335% with size-exact 568-byte, 143-instruction output. All 70 relocation-bearing instructions match strictly by offset, type, resolved formatted target and addend. The only remaining codegen divergence is at retail offsets 0x1A4-0x1AC: retail emits mr r29,r30 then li r28,0, while GC/1.3 emits independent li r29,0 then li r28,0. A new global-assignment-result/alias-boundary hypothesis added an independent li r0,0 and grew the function to 572 bytes; a zero arithmetic self-dependency optimized back to the preserved output. Canonical build succeeds and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
