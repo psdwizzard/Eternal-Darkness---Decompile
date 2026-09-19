@@ -119,6 +119,7 @@ void fn_800539D8(void)
     s32 second;
     s32 first;
     s32 new_stamp;
+    s32 current;
     TransitionData* base = &lbl_802417D0;
 
     if (lbl_8030F540.cancel == 1) {
@@ -239,7 +240,8 @@ void fn_800539D8(void)
         fn_801EB194(1);
     }
     stamp = fn_800473A4();
-    if (fn_80047364() != stamp) {
+    current = fn_80047364();
+    if (current != stamp) {
         fn_80047364();
         fn_8004736C();
     }

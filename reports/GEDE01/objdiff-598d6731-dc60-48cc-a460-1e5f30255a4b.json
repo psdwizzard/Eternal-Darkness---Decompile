@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "assignment_id": "598d6731-dc60-48cc-a460-1e5f30255a4b",
+  "target": "fn_800539D8",
+  "compiler": "mwcc_242_53",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800539D8 fn_800539D8 -o build/GEDE01/objdiff-final-canonical.json --format json-pretty",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800539D8 fn_800539D8 -o build/GEDE01/objdiff-final-reloc.json --format json-pretty -c function_reloc_diffs=name_address",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "legal_audit": "rg -n '__asm|asm[[:space:]]*\\(' src/game/game_fn_800539D8.c; rg -n '^void fn_' src/game/game_fn_800539D8.c"
+  },
+  "raw_measurements": {
+    "canonical": {
+      "match_percent": 97.8951,
+      "retail_size": 1144,
+      "candidate_size": 1144,
+      "aligned_rows": 288,
+      "diff_none": 270,
+      "diff_argument_mismatch": 12,
+      "diff_delete": 2,
+      "diff_insert": 2,
+      "diff_replace": 2,
+      "retail_relocations": 149,
+      "candidate_relocations": 149
+    },
+    "relocation_strict": {
+      "configuration": "function_reloc_diffs=name_address",
+      "match_percent": 97.8951,
+      "retail_size": 1144,
+      "candidate_size": 1144,
+      "retail_relocations": 149,
+      "candidate_relocations": 149,
+      "byte_identical_to_canonical_report": true
+    },
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_verified": true,
+    "build_check": "build/GEDE01/main.dol: OK",
+    "legal_audit": {
+      "function_definitions": 1,
+      "inline_or_whole_function_assembly_hits": 0,
+      "independent_translation_unit": "src/game/game_fn_800539D8.c"
+    }
+  },
+  "hypothesis": "Materialize the fn_80047364 return value in a distinct local so its lifetime remains visible through the comparison; this changes MWCC's operand allocation from cmpw r27,r3 to retail's cmpw r3,r27.",
+  "improvement": "The distinct current local removes the preserved candidate's final symmetric cmpw operand mismatch and raises canonical and relocation-strict similarity from 97.86014% to 97.8951% without changing the 1144-byte size or 149-relocation count.",
+  "divergence": "The equal-size candidate has 270 of 288 aligned rows identical. The remaining 18 aligned-row differences are confined to the lbl_8064CB64 diagnostic formatting block: the first variadic call schedules the float and state address/value loads differently; signed division by 60 uses opposite r5/r6 temporary coloring and different remainder destinations; and the final variadic call loads the three stack outputs before the float instead of loading the float first. Canonical and relocation-strict scores are both 97.8951%, so this is not a match."
+}
