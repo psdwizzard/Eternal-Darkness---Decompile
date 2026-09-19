@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "assignment_id": "4e3fb481-da48-435f-aa31-cdd456f1ac88",
+  "target": "fn_80159440",
+  "unit": "game/game_fn_80159440.c",
+  "compiler": "Metrowerks CodeWarrior for GameCube GC/1.3",
+  "compiler_sha256": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715",
+  "objdiff_version_command": "build/tools/objdiff-cli --version",
+  "objdiff_version_output": "objdiff-cli 3.6.1",
+  "canonical": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "objdiff": {
+    "strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80159440 fn_80159440 -o build/GEDE01/fn_80159440-attempt4-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "strict_exit_output": "strict_exit=0",
+    "display_command": "python3 tools/fndiff.py game/game_fn_80159440.c fn_80159440",
+    "raw_summary": "target 496 bytes  base 492 bytes  match 98.08871",
+    "retail_size": 496,
+    "generated_size": 492,
+    "match_percent": 98.08871,
+    "retail_instruction_rows": 124,
+    "generated_instruction_rows": 124,
+    "retail_relocation_bearing_rows": 46,
+    "generated_relocation_bearing_rows": 45,
+    "relocation_comparison": "function_reloc_diffs=name_address",
+    "relocation_strict_match": false,
+    "raw_divergence": [
+      "retail 0x004c: addi r3, r29, 0x21c; generated has no instruction",
+      "retail 0x0054: stw r0, 0x18(r3); generated 0x0054: stw r0, 0x234(r29)",
+      "retail 0x0110: addi r6, r29, 0x1e0; generated: addi r5, r29, 0x1e0",
+      "retail 0x0114: lwz r0, 0x4(r6); generated: lwz r0, 0x1e4(r29)",
+      "retail channel-table operations retain r6 and the first indexed channel value in r0; generated operations retain r5 and first use r3. All external relocation targets and addends otherwise agree under function_reloc_diffs=name_address."
+    ],
+    "generated_detail": "build/GEDE01/fn_80159440-attempt4-strict.json"
+  },
+  "hypothesis_tests": [
+    {
+      "hypothesis": "An inline accessor returning &globals->transition may preserve the transition subobject pointer before the pending store.",
+      "raw_result": "target 496 bytes  base 492 bytes  match 98.08871; GC/1.3 inlined and folded the address into stw 0x234(r29)."
+    },
+    {
+      "hypothesis": "Declaring the transition subobject volatile may require a separately materialized object address.",
+      "raw_result": "target 496 bytes  base 492 bytes  match 98.08871; the volatile store still used stw 0x234(r29)."
+    },
+    {
+      "hypothesis": "The original global may have been byte-addressed with typed transition and channel-table subobject casts, inhibiting struct-field offset folding.",
+      "raw_result": "target 496 bytes  base 492 bytes  match 98.08871; GC/1.3 propagated both constant subobject offsets and produced the identical code."
+    },
+    {
+      "hypothesis": "A volatile ChannelTable pointee may preserve the table base for the first current-index load.",
+      "raw_result": "target 496 bytes  base 492 bytes  match 98.08871; the first load remained lwz r0,0x1e4(r29), and the retained base remained r5."
+    }
+  ],
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "output": "legal audit passed (17763 tracked project files inspected)"
+  },
+  "source_scope": "The accepted independent honest C translation unit was retained after all distinct source-shape hypotheses generated identical or inferior code. No inline or whole-function assembly, shared reconstruction, gate changes, compiler-policy changes, or neighboring-function edits were made."
+}
