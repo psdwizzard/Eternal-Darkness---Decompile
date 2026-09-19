@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "54817bd5-06b6-47b7-948b-12a4fd588c85",
+  "attempt": 5,
+  "base_commit": "6a922edcf7efed3d1fdad9fbacc6ac535b7ec637",
+  "target": "fn_80193F3C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-54817bd5-06b6-47b7-948b-12a4fd588c85.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are size-exact at 688/688 bytes and 99.88372%. Four FPR operand differences remain at offsets 0x16C, 0x174, 0x190, and 0x198: retail destructively coalesces the affected add/conversion values into f3 and f1, while the candidate uses f2. All five R_PPC_EMB_SDA21 relocations match by address, target, and zero addend."
+}

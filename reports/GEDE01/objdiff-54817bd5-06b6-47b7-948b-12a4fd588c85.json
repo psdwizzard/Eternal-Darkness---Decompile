@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "assignment_id": "54817bd5-06b6-47b7-948b-12a4fd588c85",
+  "target": "fn_80193F3C",
+  "compiler": "GC/1.3",
+  "extra_cflags": [],
+  "hypothesis": {
+    "description": "Compute both scale-coordinate product pairs before emitting any output stores, shortening the source-level split lifetime of x1/y1 and changing MWCC's FPR interference graph.",
+    "distinct_from_preserved_attempts": true,
+    "baseline_match_percent": 98.156975,
+    "result_match_percent": 99.88372,
+    "tested_variants": [
+      {"variant":"early x1/y1 after y0/x0","match_percent":99.73256,"diff_instructions":13},
+      {"variant":"early x1/y1 after x0/y0","match_percent":99.88372,"diff_instructions":4},
+      {"variant":"early y1/x1 after x0/y0","match_percent":99.84884,"diff_instructions":10},
+      {"variant":"block-scoped initialized coordinate locals","match_percent":99.88372,"diff_instructions":4}
+    ]
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_output_tail": [
+      "[877/879] DOL build/GEDE01/main.dol",
+      "[878/879] CHECK config/GEDE01/build.sha1",
+      "build/GEDE01/main.dol: OK",
+      "[879/879] PROGRESS"
+    ]
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80193F3C fn_80193F3C -o build/GEDE01/54817bd5-canonical.json --format json-pretty",
+    "exit_code": 0,
+    "raw_output": "INFO Writing to build/GEDE01/54817bd5-canonical.json",
+    "target_size": 688,
+    "candidate_size": 688,
+    "match_percent": 99.88372,
+    "diff_instructions": 4,
+    "diff_kinds": {"DIFF_ARG_MISMATCH":4},
+    "differences": [
+      {"offset":"0x16C","target":"fadds f3, f1, f6","candidate":"fadds f2, f1, f6"},
+      {"offset":"0x174","target":"fctiwz f3, f3","candidate":"fctiwz f3, f2"},
+      {"offset":"0x190","target":"fctiwz f1, f1","candidate":"fctiwz f2, f1"},
+      {"offset":"0x198","target":"stfd f1, 0x70(r1)","candidate":"stfd f2, 0x70(r1)"}
+    ]
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80193F3C fn_80193F3C -o build/GEDE01/54817bd5-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "raw_output": "INFO Writing to build/GEDE01/54817bd5-reloc-strict.json",
+    "target_size": 688,
+    "candidate_size": 688,
+    "match_percent": 99.88372,
+    "relocation_targets_and_addends_equal": true,
+    "relocations": [
+      {"offset":"0x34","type":"R_PPC_EMB_SDA21","target":"lbl_80650B58","addend":0},
+      {"offset":"0x3C","type":"R_PPC_EMB_SDA21","target":"lbl_80650B60","addend":0},
+      {"offset":"0x50","type":"R_PPC_EMB_SDA21","target":"lbl_80650B64","addend":0},
+      {"offset":"0x7C","type":"R_PPC_EMB_SDA21","target":"lbl_80650B68","addend":0},
+      {"offset":"0x98","type":"R_PPC_EMB_SDA21","target":"lbl_80650B58","addend":0}
+    ]
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "actual": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "divergence": "Size, opcode sequence, stack allocation, and all five relocations match. Four operand differences remain at offsets 0x16C, 0x174, 0x190, and 0x198: retail destructively coalesces two floating-point add/conversion values into f3 and f1, while the candidate uses f2 before conversion/storage.",
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "independent_translation_unit": "src/game/game_fn_80193F3C.c",
+    "neighboring_function_edits": false,
+    "generated_or_private_inputs_staged": false
+  },
+  "result": "attempted"
+}
