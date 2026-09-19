@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b4f77795-896c-499a-a131-1a8cf8948a81",
+  "attempt": 5,
+  "base_commit": "c5ccf4718a4106c53004b514b833b95359640507",
+  "target": "fn_8018A060",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b4f77795-896c-499a-a131-1a8cf8948a81.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is 98.22222% with size-exact 360-byte text and 90 instructions on each side. All 24 differences are DIFF_ARG_MISMATCH register operands: retail uses object r28, buffers r31/r30/r29, callback r26, outer index r25, and buffer offset r27, while canonical GC/1.3 uses object r31, buffers r29/r28/r27, callback r30, outer index r25, and buffer offset r26. All 27 relocation-bearing instructions occur on each side with matching relocation names, types, targets, and addends; strict comparison is not 100% because register operands differ in the callback materialization/use and surrounding stream. New honest one-parameter probes using register-qualified buffers, coalesced buffer-load temporaries, and delayed object aliasing compiled identically; an explicit callback local regressed to 364 bytes and 92.77778%, so none was retained. The prescribed full rebuild passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
