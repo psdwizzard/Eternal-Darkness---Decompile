@@ -9,7 +9,6 @@ extern int lbl_8064CE44;
 extern s8 lbl_8064CA31;
 extern s8 lbl_8064CA30;
 extern float lbl_8064CA18;
-extern double lbl_8064F020;
 extern float lbl_8064F01C;
 extern int lbl_80247428[];
 

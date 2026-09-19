@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "1d7eebef-aa22-4682-bba7-67128ff40542",
+  "attempt": 3,
+  "base_commit": "f7093396711f9ea4b62c2c5c5c286e95b787ffb2",
+  "target": "fn_800B2EC0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1d7eebef-aa22-4682-bba7-67128ff40542.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 98.0% for the size-exact 420-byte function. Externalizing compiler-local signed-conversion bias @40 to retail lbl_8064F020 removes both former SDA21 relocation mismatches at offsets 0xd0 and 0x120. The only remaining divergence is equivalent control flow at offsets 0xa4-0xb0: retail starts the flag test at 0xa4 and emits bne at 0xac plus an unconditional branch at 0xb0, while GC/1.3 emits an unreachable default-return branch at 0xa4, starts the flag test at 0xa8, and emits beq at 0xb0. Explicit case 2/default grouping and an explicit zero-flag jump retained 98.0%; moving case 2/default before case 0 regressed to 97.85714%, so the best source was restored. The canonical build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
