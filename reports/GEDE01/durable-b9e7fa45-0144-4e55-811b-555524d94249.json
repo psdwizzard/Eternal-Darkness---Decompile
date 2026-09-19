@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "b9e7fa45-0144-4e55-811b-555524d94249",
+  "attempt": 5,
+  "base_commit": "e43b9a05072ca961141277c5fef55c75f808081b",
+  "target": "fn_801EBC6C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b9e7fa45-0144-4e55-811b-555524d94249.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b9e7fa45-0144-4e55-811b-555524d94249-canonical.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b9e7fa45-0144-4e55-811b-555524d94249-reloc-strict.raw.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are 97.82609%; retail is 368 bytes and generated C is 364 bytes. At offsets 0xE0..0x120 retail uses r6/r4/r5 and an explicit slwi, while generated code uses r7/r6/r4 and folds away the slwi. Both relocation targets and addends match exactly."
+}

@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "assignment_id": "b9e7fa45-0144-4e55-811b-555524d94249",
+  "target": "fn_801EBC6C",
+  "source": "src/game/game_fn_801EBC6C.c",
+  "registration": "Object(NonMatching, \"game/game_fn_801EBC6C.c\", mw_version=\"GC/1.3\")",
+  "raw_evidence": {
+    "canonical": "reports/GEDE01/objdiff-b9e7fa45-0144-4e55-811b-555524d94249-canonical.raw.json",
+    "relocation_strict": "reports/GEDE01/objdiff-b9e7fa45-0144-4e55-811b-555524d94249-reloc-strict.raw.json",
+    "sha256": "020c99a1b9609faedee73d2c808854492861228304d2a00ed5b612c12d300238"
+  },
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "measured_output": "build/GEDE01/main.dol: OK"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EBC6C fn_801EBC6C -o reports/GEDE01/objdiff-b9e7fa45-0144-4e55-811b-555524d94249-canonical.raw.json --format json-pretty",
+      "exit_code": 0
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801EBC6C fn_801EBC6C -o reports/GEDE01/objdiff-b9e7fa45-0144-4e55-811b-555524d94249-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "measured_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "measured_output": "legal audit passed (18362 tracked project files inspected)"
+    }
+  ],
+  "canonical": {
+    "match_percent": 97.82609,
+    "retail_bytes": 368,
+    "generated_bytes": 364,
+    "left_diff_counts": {
+      "DIFF_ARG_MISMATCH": 11,
+      "DIFF_DELETE": 1
+    }
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "match_percent": 97.82609,
+    "retail_count": 2,
+    "generated_count": 2,
+    "addresses_types_targets_addends_equal": true,
+    "sites": [
+      "0x30 R_PPC_REL24 memset addend 0",
+      "0x70 R_PPC_EMB_SDA21 lbl_8064D6A0 addend 0"
+    ],
+    "canonical_report_byte_identical": true
+  },
+  "new_hypothesis": {
+    "description": "Change the local destination and lifetime shape without staging the packed expression: assign the packed expression directly to the persistent u16, introduce an explicit accumulator temporary before or after the effective-step load, narrow the packed temporary to u16, and reorder the packed/effective-step declarations.",
+    "measurements": [
+      "direct persistent-u16 assignment: 95.70652%",
+      "explicit accumulator temporary loaded before effective step: 93.95652%",
+      "explicit accumulator temporary loaded after effective step: 95.978264%",
+      "u16 packed temporary: 97.228264%",
+      "packed/effective-step declaration reorder: 97.82609% (neutral)"
+    ],
+    "conclusion": "The lifetime/type hypothesis did not improve the accepted candidate, so the behavior-complete 97.82609% source was restored unchanged."
+  },
+  "exact_codegen_divergence": "Instructions match through offset 0xDC. From 0xE0 through 0x120 retail uses r6 for the effective step, reuses r4 for the accumulator, constructs the packed pixel in r5 with an explicit slwi at 0x114, stores the accumulator, then inserts the low byte with rlwimi. Canonical GC/1.3 instead uses r7 for the effective step, r6 for the accumulator, constructs the packed value in r4, folds the shift into rlwimi, and omits retail's slwi, producing 364 bytes instead of 368. The loop tail matches again after this block. Both relocations match exactly.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: behavior-complete independent C remains NonMatching at 97.82609%; no matched credit is claimed."
+}
