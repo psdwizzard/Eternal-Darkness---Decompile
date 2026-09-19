@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9279bef3-a4a6-40bf-8992-75d27cd313ca",
+  "attempt": 4,
+  "base_commit": "e4b46effd01381dc2b953ebb51d741fd49fd3d52",
+  "target": "fn_801CE384",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9279bef3-a4a6-40bf-8992-75d27cd313ca.json"
+  ],
+  "divergence": "Canonical and relocation-strict GC/1.3 output remains size-exact at 528/528 bytes and scores 98.56061%, with 34 formatted instruction differences from callee-saved register allocation. A new explicit IntToDouble union hypothesis made the conversion bias relocation target lbl_80651048 but promoted arithmetic to double precision, emitted an extra frsp, grew output to 532 bytes, and regressed to 92.72727%; a declaration-order coloring hypothesis changed local allocations but remained at 98.56061% with no reduction in differences. In the preserved best output, all 19 relocation-bearing instruction sites, relocation types, and addends align; 18 targets agree, while offset 0xA8 uses retail lbl_80651048 versus compiler-local @31. The fresh full build completed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
