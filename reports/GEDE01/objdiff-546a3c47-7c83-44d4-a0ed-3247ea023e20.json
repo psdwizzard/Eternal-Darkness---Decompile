@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "assignment_id": "546a3c47-7c83-44d4-a0ed-3247ea023e20",
+  "target": "fn_801697AC",
+  "source": "eternal-darkness-decomp/src/game/game_fn_801697AC.c",
+  "registration": "Object(NonMatching, \"game/game_fn_801697AC.c\")",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/configure-546a3c47-7c83-44d4-a0ed-3247ea023e20.log"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/build-546a3c47-7c83-44d4-a0ed-3247ea023e20.log"
+    },
+    {
+      "command": "python3 tools/fndiff.py game/game_fn_801697AC.c fn_801697AC",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/fndiff-546a3c47-7c83-44d4-a0ed-3247ea023e20.log"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801697AC fn_801697AC -o reports/GEDE01/objdiff-canonical-546a3c47-7c83-44d4-a0ed-3247ea023e20.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-546a3c47-7c83-44d4-a0ed-3247ea023e20.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801697AC fn_801697AC -o reports/GEDE01/objdiff-reloc-strict-546a3c47-7c83-44d4-a0ed-3247ea023e20.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-reloc-strict-546a3c47-7c83-44d4-a0ed-3247ea023e20.json"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/dol-sha1-546a3c47-7c83-44d4-a0ed-3247ea023e20.log"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/legal-audit-546a3c47-7c83-44d4-a0ed-3247ea023e20.log"
+    }
+  ],
+  "canonical": {
+    "match_percent": 8.006204,
+    "retail_bytes": 3224,
+    "generated_bytes": 308,
+    "retail_relocations": 74,
+    "generated_relocations": 6
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "match_percent": 8.006204,
+    "canonical_report_byte_identical": true,
+    "records_equal": false,
+    "retail_count": 74,
+    "generated_count": 6
+  },
+  "recovered_opcode_cases": [0, 1, 4, 5, 7],
+  "recovered_opcode_case_count": 5,
+  "unrecovered_opcode_case_count": 44,
+  "codegen_divergence": "Retail is a 3224-byte Lua 4.0.1 interpreter with a 49-way switch (opcodes 0 through 48), compiler jump table jumptable_8024FD9C, r21-r31 live ranges, and 74 relocation-bearing instructions. The retained honest partial C reconstruction emits 308 bytes and implements only five explicit opcode cases (0, 1, 4, 5, and 7); its default return is not counted as a recovered opcode body. Generated code uses an eight-entry dispatch because case 7 is the highest implemented value, a 0x20-byte frame with individual r28-r31 saves, and 6 relocation-bearing instructions. The first structural divergence is retail stwu r1,-0x60(r1) versus generated stwu r1,-0x20(r1). The unrecovered 44 opcode bodies account for the remaining size, control-flow, live-range, jump-table, relocation-target, and relocation-addend differences.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "legal_audit": "passed",
+  "conclusion": "Attempted: this independent NonMatching translation unit is an honest partial reconstruction. The recovered use_lmw_stmw pragma matches the retail compiler policy for this translation unit, but the missing opcode bodies do not create enough register pressure for generated stmw/lmw instructions."
+}

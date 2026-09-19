@@ -1,3 +1,5 @@
+#pragma use_lmw_stmw on
+
 typedef unsigned int Instruction;
 
 typedef struct Value {

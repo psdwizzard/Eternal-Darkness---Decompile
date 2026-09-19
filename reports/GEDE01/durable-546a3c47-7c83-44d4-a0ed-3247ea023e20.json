@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "assignment_id": "546a3c47-7c83-44d4-a0ed-3247ea023e20",
+  "attempt": 2,
+  "base_commit": "7536d13c59446b6150f393e9255906a2fdade270",
+  "target": "fn_801697AC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-546a3c47-7c83-44d4-a0ed-3247ea023e20.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-546a3c47-7c83-44d4-a0ed-3247ea023e20.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-reloc-strict-546a3c47-7c83-44d4-a0ed-3247ea023e20.json",
+    "eternal-darkness-decomp/reports/GEDE01/configure-546a3c47-7c83-44d4-a0ed-3247ea023e20.log",
+    "eternal-darkness-decomp/reports/GEDE01/build-546a3c47-7c83-44d4-a0ed-3247ea023e20.log",
+    "eternal-darkness-decomp/reports/GEDE01/fndiff-546a3c47-7c83-44d4-a0ed-3247ea023e20.log",
+    "eternal-darkness-decomp/reports/GEDE01/dol-sha1-546a3c47-7c83-44d4-a0ed-3247ea023e20.log",
+    "eternal-darkness-decomp/reports/GEDE01/legal-audit-546a3c47-7c83-44d4-a0ed-3247ea023e20.log"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 8.006204%. Retail is 3224 bytes with 49 opcode cases and 74 relocation-bearing instructions; generated code is 308 bytes with five explicit recovered cases (0, 1, 4, 5, and 7) and 6 relocation-bearing instructions. The default return is not a recovered opcode. The exact first structural difference is retail's 0x60-byte frame and r21-r31 save set versus generated's 0x20-byte frame and r28-r31 saves. The remaining 44 opcode bodies, jumptable_8024FD9C layout, and corresponding control flow, live ranges, relocation targets, and relocation addends are unrecovered. The DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
