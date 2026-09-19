@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "2682b483-ac70-4ae7-8a1b-9bd72ad52ab1",
+  "attempt": 5,
+  "base_commit": "9aa5a014719b010b9b49f51877bc70438fc0e8e0",
+  "target": "fn_8019C4E4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2682b483-ac70-4ae7-8a1b-9bd72ad52ab1.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-2682b483-ac70-4ae7-8a1b-9bd72ad52ab1.diff",
+    "eternal-darkness-decomp/reports/GEDE01/verification-2682b483-ac70-4ae7-8a1b-9bd72ad52ab1.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits the same 356-byte, 89-instruction layout and all 20 relocation-bearing instructions agree by offset, formatted target, type, and addend, but 36 instruction arguments differ because retail count/entry/config/first/object use r31/r30/r29/r28/r27 while canonical uses r28/r27/r31/r30/r29. The attempt-5 qualifier-priority experiment moved register hints from count/entry to config/first/object without changing load or control-flow order; MWCC normalized it to the identical 97.865166% object, so it was reverted and the cleaner honest-C reconstruction retained."
+}

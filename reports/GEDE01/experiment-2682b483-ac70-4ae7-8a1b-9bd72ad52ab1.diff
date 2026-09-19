@@ -1,0 +1,45 @@
+Hypothesis: MWCC GC/1.3 may prioritize register-qualified parameter aliases over
+later-loaded long-lived scalar/pointer values without changing instruction order.
+
+The following exact source experiment was compiled, measured, and reverted:
+
+diff --git a/src/game/game_fn_8019C4E4.c b/src/game/game_fn_8019C4E4.c
+--- a/src/game/game_fn_8019C4E4.c
++++ b/src/game/game_fn_8019C4E4.c
+@@ -23,11 +23,11 @@
+ void fn_8019C4E4(u8* object, void* first, void* second, u8* config)
+ {
+-    register u8 count;
+-    register u8* entry;
+-    u8* cfg;
+-    void* base;
+-    u8* self;
++    u8 count;
++    u8* entry;
++    register u8* cfg;
++    register void* base;
++    register u8* self;
+     int i;
+     struct { u32 word; u16 half; } setup;
+     struct { u32 word; u16 half; } value;
+
+Raw command output:
+
+$ .tools/bin/ninja build/GEDE01/src/game/game_fn_8019C4E4.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_8019C4E4.o
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_8019C4E4 fn_8019C4E4 -o build/GEDE01/attempt5-qualifier.json --format json
+ INFO Writing to build/GEDE01/attempt5-qualifier.json
+$ jq '{sections:.left.sections,symbol:(.left.symbols[]|select(.name=="fn_8019C4E4")|{name,size,match_percent,differing_rows:([.instructions[]|select(.diff_kind != null and .diff_kind != "DIFF_NONE")]|length)})}' build/GEDE01/attempt5-qualifier.json
+{
+  "sections": [
+    {"name":".text","kind":"SECTION_CODE","size":"356","match_percent":97.865166},
+    {"name":".rela.text","size":"228"},
+    {"name":".symtab","size":"320"},
+    {"name":".strtab","size":"228"},
+    {"name":".shstrtab","size":"38"}
+  ],
+  "symbol": {"name":"fn_8019C4E4","size":"356","match_percent":97.865166,"differing_rows":36}
+}
+
+Result: qualifier placement is codegen-neutral for this function. The retained
+source remains the cleaner prior honest-C reconstruction at the same score.
