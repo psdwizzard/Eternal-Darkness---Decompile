@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "assignment_id": "209606f4-a0a0-4580-9b37-9c20c0f4274c",
+  "target": "fn_800D0B74",
+  "compiler": "GC/1.3",
+  "source": "src/game/game_fn_800D0B74.c",
+  "registration": "Object(NonMatching, \"game/game_fn_800D0B74.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800D0B74 fn_800D0B74 -o build/GEDE01/209606f4-final-canonical.json --format json-pretty",
+    "relocation_strict": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800D0B74 fn_800D0B74 -o build/GEDE01/209606f4-final-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+  },
+  "raw_outputs": {
+    "canonical": "left_size=9520 left_percent=6.3936973 left_instructions=2380 left_relocations=483 left_diff_rows=2356; right_size=688 right_percent=6.3936973 right_instructions=2380 right_relocations=34 right_diff_rows=2356",
+    "relocation_strict": "left_size=9520 left_percent=6.3936973 left_instructions=2380 left_relocations=483 left_diff_rows=2356; right_size=688 right_percent=6.3936973 right_instructions=2380 right_relocations=34 right_diff_rows=2356",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+    "build_check": "build/GEDE01/main.dol: OK"
+  },
+  "baseline": {
+    "match_percent": 2.8642857,
+    "retail_bytes": 9520,
+    "generated_bytes": 292
+  },
+  "best": {
+    "canonical_match_percent": 6.3936973,
+    "relocation_strict_match_percent": 6.3936973,
+    "retail_bytes": 9520,
+    "generated_bytes": 688,
+    "retail_relocation_instructions": 483,
+    "generated_relocation_instructions": 34
+  },
+  "reconstruction": "Honest C expresses common setup and the early event-3, event-1, and event-8 paths. The reviewed event-3 predicate is corrected so the fifth fn_800A3588 argument is actor_kind != 2. No inline or whole-function assembly is used.",
+  "divergence": "The remaining event dispatcher is not yet expressed: GC/1.3 emits a 0x50-byte frame with r21-r31 saves and 688 bytes, while retail uses a 0x1F0-byte frame, saves r14-r31 and f31, and contains 9520 bytes. The candidate consequently has only 34 of retail's 483 relocation-bearing instructions; later event branches, large local descriptors, f31 lifetime, and exact persistent register allocation remain absent."
+}
