@@ -6,8 +6,13 @@ extern s32 fn_801A5CE0(void);
 extern s32 fn_801A5D04(void);
 extern s32 fn_80070A6C(s32);
 extern s32 fn_801118E8(void);
-extern s32 lbl_8064A80C;
-extern s32 lbl_8064ABB8;
+extern void* fn_801E6CA0(void*, s32, s32, s32, s32);
+extern void fn_80006954(s32);
+extern void fn_80027730(void*, s32, s32);
+extern s32 lbl_8064D18C;
+extern void* lbl_8064C504;
+extern char lbl_80331748[];
+extern s32 lbl_8064D538;
 
 /*
  * Begins the event/state dispatch visible in retail.  The remaining switch
@@ -18,6 +23,7 @@ extern s32 lbl_8064ABB8;
 s32 fn_801D0050(s32 mode, u32* event)
 {
     u32 event_word = *event;
+    void* message;
 
     fn_80144C40();
     if (fn_801A5CE0() == 0 && fn_801A5D04() == 0) {
@@ -26,13 +32,21 @@ s32 fn_801D0050(s32 mode, u32* event)
     if (fn_80070A6C(2) != 0) {
         return 0;
     }
-    if (lbl_8064A80C == 83) {
+    if (lbl_8064D18C == 0x53) {
+        message = fn_801E6CA0(lbl_8064C504, 0, 0x1F, 0, 1);
+        fn_80006954(2);
+        fn_80027730(message, 0, 0);
         return 0;
     }
     if (mode != 0 && fn_801118E8() == 0) {
+        if (*(void**)(lbl_80331748 + 8) != 0) {
+            message = fn_801E6CA0(lbl_8064C504, 0, 0x16, 0, 1);
+            fn_80006954(2);
+            fn_80027730(message, 0, 0);
+        }
         return 0;
     }
-    if (lbl_8064ABB8 != 0) {
+    if (lbl_8064D538 != 0) {
         return 0;
     }
 
@@ -49,7 +63,7 @@ s32 fn_801D0050(s32 mode, u32* event)
     case 0x1040:
         break;
     default:
-        lbl_8064ABB8 = 0;
+        lbl_8064D538 = 0;
         break;
     }
     return 0;
