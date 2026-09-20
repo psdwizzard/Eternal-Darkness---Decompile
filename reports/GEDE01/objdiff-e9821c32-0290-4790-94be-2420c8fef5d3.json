@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "assignment_id": "e9821c32-0290-4790-94be-2420c8fef5d3",
+  "target": "fn_8016F78C",
+  "unit": "main/game/game_fn_8016F78C",
+  "compiler": "GC/1.3",
+  "source": "eternal-darkness-decomp/src/game/game_fn_8016F78C.c",
+  "source_sha256": "53491cb7585910742239574efbbade5633bfc13736ff35c5108cd631ffee801f",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8016F78C -o reports/GEDE01/objdiff-e9821c32-0290-4790-94be-2420c8fef5d3-canonical.raw.json --format json-pretty fn_8016F78C",
+    "exit_code": 0,
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-e9821c32-0290-4790-94be-2420c8fef5d3-canonical.raw.json",
+    "raw_output_sha256": "ea9da9f3c0ff9221bc6cbd64ae4bd4a38df7020cc44af1bc28c719d328f66b3f",
+    "retail_size": 364,
+    "generated_size": 368,
+    "match_percent": 97.58242,
+    "retail_relocation_bearing_instruction_rows": 21,
+    "generated_relocation_bearing_instruction_rows": 22
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8016F78C -o reports/GEDE01/objdiff-e9821c32-0290-4790-94be-2420c8fef5d3-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_8016F78C",
+    "config": "function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-e9821c32-0290-4790-94be-2420c8fef5d3-reloc-strict.raw.json",
+    "raw_output_sha256": "ea9da9f3c0ff9221bc6cbd64ae4bd4a38df7020cc44af1bc28c719d328f66b3f",
+    "byte_identical_to_canonical": true,
+    "cmp_exit_code": 0,
+    "match_percent": 97.58242,
+    "retail_size": 364,
+    "generated_size": 368,
+    "retail_relocation_bearing_instruction_rows": 21,
+    "generated_relocation_bearing_instruction_rows": 22
+  },
+  "instruction_differences": [
+    {
+      "retail": null,
+      "generated_offset": "0x10",
+      "generated": "addi r0, r4, lbl_8024FF00@l",
+      "kind": "DIFF_INSERT"
+    },
+    {
+      "retail_offset": "0x18",
+      "retail": "addi r31, r4, lbl_8024FF00@l",
+      "generated_offset": "0x1C",
+      "generated": "mr r31, r0",
+      "kind": "DIFF_REPLACE"
+    },
+    {
+      "retail_offset": "0x48",
+      "retail": "addi r4, r31, 0x0",
+      "generated_offset": "0x4C",
+      "generated": "mr r4, r31",
+      "kind": "DIFF_REPLACE"
+    }
+  ],
+  "new_codegen_hypothesis": {
+    "hypothesis": "Bias the retained byte pointer to the facing-format string at offset 0x190, then address each string relative to that interior anchor. This tests whether a nonzero address initialization and negative argument offset alter entry allocation and the zero-offset mr, unlike previously tested base-zero pointers.",
+    "source_transformation": {
+      "initialization": "const char* const strings = (const char*)&lbl_8024FF00 + 0x190;",
+      "argument_error": "strings - 0x190",
+      "facing_format": "strings",
+      "resource_error": "strings + 0xC",
+      "object_error": "strings + 0x28"
+    },
+    "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8016F78C.o && build/tools/objdiff-cli diff -p . -u main/game/game_fn_8016F78C -o reports/GEDE01/objdiff-e9821c32-0290-4790-94be-2420c8fef5d3-anchor.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_8016F78C",
+    "exit_code": 0,
+    "match_percent": 97.49451,
+    "generated_size": 368,
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-e9821c32-0290-4790-94be-2420c8fef5d3-anchor.raw.json",
+    "raw_output_sha256": "2c93a56a26dd75c3ddcf736ba20d5ef5a658043c6a6e5537564473bb96207e52",
+    "result": "Rejected. Entry still contains an extra instruction: addi r4,r4,lbl_8024FF00@l followed by addi r31,r4,0x190. Argument_error becomes subi r4,r31,0x190; facing_format becomes mr r3,r31; remaining string offsets become 0xC and 0x28. The established single NonMatching C reconstruction was restored byte-for-byte."
+  },
+  "build_verification": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol"
+    ],
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/verification-e9821c32-0290-4790-94be-2420c8fef5d3.txt",
+    "note": "NonMatching source is excluded from the linked DOL; the DOL hash verifies the canonical link, not a match of this function."
+  },
+  "legal_audit": {
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  },
+  "attempt": 6,
+  "base_commit": "083dff5083b1d0e2bed20945603718cee551cfe4",
+  "preserved_attempts_reviewed": [
+    "c31a9a60b9b248f0fafc090376a055c6c0b865de",
+    "17f4d3b197957f20a9d89d5708b1737f36d11451",
+    "9fceb0e082db108358e2b8a10f25afee58b49047"
+  ],
+  "reconciliation": "Accepted base already contains the same source SHA-256 and NonMatching registration as preserved c31a9a60; no source or registration change was needed."
+}
