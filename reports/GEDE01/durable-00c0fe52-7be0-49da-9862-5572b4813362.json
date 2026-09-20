@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "00c0fe52-7be0-49da-9862-5572b4813362",
+  "attempt": 5,
+  "base_commit": "847f6d09482434f33a9b2cb8e35ded369ed7870f",
+  "target": "fn_801F50EC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-00c0fe52-7be0-49da-9862-5572b4813362.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff are byte-identical and both measure 97.17647% for a size-exact 340/340-byte function. Both R_PPC_REL24 calls at offsets 0x74 and 0x100 retain fn_801F4FC8 with zero addends. The remaining seven aligned instruction differences are at offsets 0x38..0x60: retail forms row_offset plus low column bits in r25, adds shifted high column bits, then adds block base; GC/1.3 computes low plus high first, then block base and row_offset, with r3/r4 coloring reversed. A distinct reverse-birth staged-register hypothesis obtained r3=high and r4=low but MWCC reordered their calculation, kept the accumulator in r5, and scored 97.09412%. A typed u16 array-index hypothesis regressed to 89.90588% by rotating nonvolatile allocation and delaying the scale-by-two, so the existing honest C reconstruction remains best. A fresh python3 configure.py plus .tools/bin/ninja -j2 build passed, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
