@@ -29,7 +29,7 @@ extern void fn_80149D64(void*);
 
 /* NonMatching: behavior- and size-exact constructor at 97.14286% (168/168
  * bytes). The only remaining divergence is MWCC scheduling the independent
- * result-pointer add before, rather than after, the zero constant load. */
+ * result-pointer add after, rather than before, the zero constant load. */
 u8* fn_8014EC30(Vec3Words* position, u16 first, u8 second, u16 third,
                  u16 fourth, u16 fifth, u16 sixth, u8 seventh)
 {
