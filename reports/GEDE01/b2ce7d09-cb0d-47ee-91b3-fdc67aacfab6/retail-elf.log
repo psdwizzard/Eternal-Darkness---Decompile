@@ -1,0 +1,18 @@
+$ build/binutils/powerpc-eabi-readelf -Wrs build/GEDE01/obj/game/game_fn_80129D54.o
+
+Relocation section '.rela.text' at offset 0xcc contains 3 entries:
+ Offset     Info    Type                Sym. Value  Symbol's Name + Addend
+0000000a  00000406 R_PPC_ADDR16_HA        00000000   fn_801A9FA4 + 0
+00000022  00000404 R_PPC_ADDR16_LO        00000000   fn_801A9FA4 + 0
+00000064  0000050a R_PPC_REL24            00000000   fn_801287C4 + 0
+
+Symbol table '.symtab' contains 6 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS game_fn_80129D54.c
+     2: 00000000     0 SECTION LOCAL  DEFAULT    1 .text
+     3: 00000000   140 FUNC    GLOBAL DEFAULT    1 fn_80129D54
+     4: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801A9FA4
+     5: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801287C4
+
+exit_code=0

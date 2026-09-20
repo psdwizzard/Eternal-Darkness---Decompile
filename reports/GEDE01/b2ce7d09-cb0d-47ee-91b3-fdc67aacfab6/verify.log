@@ -1,0 +1,129 @@
+{
+  "canonical_percent": 97.14286,
+  "relocation_strict_percent": 97.14286,
+  "canonical_and_strict_raw_json_equal": true,
+  "retail_text_bytes": 140,
+  "generated_text_bytes": 136,
+  "raw_elf_relocations": [
+    {
+      "retail": {
+        "offset": 10,
+        "type": 6,
+        "target": "fn_801A9FA4",
+        "addend": 0
+      },
+      "generated": {
+        "offset": 10,
+        "type": 6,
+        "target": "fn_801A9FA4",
+        "addend": 0
+      },
+      "type_target_addend_equal": true,
+      "mapped_offset_equal": true
+    },
+    {
+      "retail": {
+        "offset": 34,
+        "type": 4,
+        "target": "fn_801A9FA4",
+        "addend": 0
+      },
+      "generated": {
+        "offset": 34,
+        "type": 4,
+        "target": "fn_801A9FA4",
+        "addend": 0
+      },
+      "type_target_addend_equal": true,
+      "mapped_offset_equal": true
+    },
+    {
+      "retail": {
+        "offset": 100,
+        "type": 10,
+        "target": "fn_801287C4",
+        "addend": 0
+      },
+      "generated": {
+        "offset": 96,
+        "type": 10,
+        "target": "fn_801287C4",
+        "addend": 0
+      },
+      "type_target_addend_equal": true,
+      "mapped_offset_equal": true
+    }
+  ],
+  "propagated_reference_note": "Objdiff also displays R_PPC_NONE at retail 0x58 / generated 0x54 for fn_801A9FA4; this is not an ELF relocation.",
+  "missing_instruction": {
+    "address": "72",
+    "size": 4,
+    "formatted": "b 0x68",
+    "parts": [
+      {
+        "opcode": {
+          "mnemonic": "b",
+          "opcode": 267
+        }
+      },
+      {
+        "arg": {
+          "branch_dest": "104"
+        }
+      }
+    ],
+    "branch_dest": "104"
+  },
+  "normalized_branch_pairs": [
+    {
+      "retail_offset": 40,
+      "generated_offset": 40,
+      "retail_target": 112,
+      "generated_target": 108,
+      "normalized_equal": true
+    },
+    {
+      "retail_offset": 52,
+      "generated_offset": 52,
+      "retail_target": 104,
+      "generated_target": 100,
+      "normalized_equal": true
+    },
+    {
+      "retail_offset": 56,
+      "generated_offset": 56,
+      "retail_target": 104,
+      "generated_target": 100,
+      "normalized_equal": true
+    },
+    {
+      "retail_offset": 64,
+      "generated_offset": 64,
+      "retail_target": 76,
+      "generated_target": 72,
+      "normalized_equal": true
+    },
+    {
+      "retail_offset": 68,
+      "generated_offset": 68,
+      "retail_target": 104,
+      "generated_target": 100,
+      "normalized_equal": true
+    },
+    {
+      "retail_offset": 116,
+      "generated_offset": 112,
+      "retail_target": 44,
+      "generated_target": 44,
+      "normalized_equal": true
+    }
+  ],
+  "all_other_instruction_words_equal_after_local_branch_normalization": true,
+  "exact_byte_match": false,
+  "sha256": {
+    "src/game/game_fn_80129D54.c": "0585272bb7005e95d90c7fb1567bd8af24b5a2f8afef676f61d55cbd6284bc11",
+    "compilers/GC/1.3/mwcceppc.exe": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715",
+    "build/GEDE01/obj/game/game_fn_80129D54.o": "ec8b0b6c1d2bd13a28c8c8b81f6f71074e119834a96747689ee8cbcaf9fef589",
+    "build/GEDE01/src/game/game_fn_80129D54.o": "5e322821193f41761db0497fc62eccf896205f2f87b83fd84e683d86c00ea84d"
+  }
+}

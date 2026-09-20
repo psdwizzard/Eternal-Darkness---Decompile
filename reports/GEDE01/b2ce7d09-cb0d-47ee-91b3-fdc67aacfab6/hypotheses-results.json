@@ -1,0 +1,83 @@
+[
+  {
+    "name": "baseline",
+    "replacement": null,
+    "source_sha256": "0585272bb7005e95d90c7fb1567bd8af24b5a2f8afef676f61d55cbd6284bc11",
+    "canonical_percent": 97.14286,
+    "retail_bytes": "140",
+    "generated_bytes": "136",
+    "raw_objdiff": "reports/GEDE01/b2ce7d09-cb0d-47ee-91b3-fdc67aacfab6/baseline.json"
+  },
+  {
+    "name": "case_do_zero",
+    "replacement": "case 1:\n            do { } while (0);\n            break;",
+    "source_sha256": "ea0629e8cd9320ffd4589ffc533940651605916fa4acf2710b6800b7452e8329",
+    "canonical_percent": 97.14286,
+    "retail_bytes": "140",
+    "generated_bytes": "136",
+    "raw_objdiff": "reports/GEDE01/b2ce7d09-cb0d-47ee-91b3-fdc67aacfab6/case_do_zero.json"
+  },
+  {
+    "name": "case_do_break",
+    "replacement": "case 1:\n            do { break; } while (1);\n            break;",
+    "source_sha256": "619c3e4af7094ba53f8a7ff962dfbb52ecc517bf7c305b329e40edd4bbc7fa41",
+    "canonical_percent": 97.14286,
+    "retail_bytes": "140",
+    "generated_bytes": "136",
+    "raw_objdiff": "reports/GEDE01/b2ce7d09-cb0d-47ee-91b3-fdc67aacfab6/case_do_break.json"
+  },
+  {
+    "name": "case_while_break",
+    "replacement": "case 1:\n            while (1) { break; }\n            break;",
+    "source_sha256": "54626f0e03e643bb192f9b9969fdca07400e2876943f2f56b4485ad428d0fdc4",
+    "canonical_percent": 97.14286,
+    "retail_bytes": "140",
+    "generated_bytes": "136",
+    "raw_objdiff": "reports/GEDE01/b2ce7d09-cb0d-47ee-91b3-fdc67aacfab6/case_while_break.json"
+  },
+  {
+    "name": "case_nested_constant_switch",
+    "replacement": "case 1:\n            switch (1) { case 1: break; default: break; }\n            break;",
+    "source_sha256": "d554d760519af9f1e50a853659f6e789d448798f89c94f1fdd28161eb698c093",
+    "canonical_percent": 97.14286,
+    "retail_bytes": "140",
+    "generated_bytes": "136",
+    "raw_objdiff": "reports/GEDE01/b2ce7d09-cb0d-47ee-91b3-fdc67aacfab6/case_nested_constant_switch.json"
+  },
+  {
+    "name": "case_nested_same_switch",
+    "replacement": "case 1:\n            switch (current->kind) { case 1: break; default: break; }\n            break;",
+    "source_sha256": "02303067217e27e381c259b5e073f479de47d9acc2d26f197aae0172c6ac65ee",
+    "canonical_percent": 97.14286,
+    "retail_bytes": "140",
+    "generated_bytes": "136",
+    "raw_objdiff": "reports/GEDE01/b2ce7d09-cb0d-47ee-91b3-fdc67aacfab6/case_nested_same_switch.json"
+  },
+  {
+    "name": "case_if_both_break",
+    "replacement": "case 1:\n            if (current->kind) break; else break;",
+    "source_sha256": "a21e1209b807ab11875dc92a3f3e933c56f4b302af866499a51c0346caa4b855",
+    "canonical_percent": 97.14286,
+    "retail_bytes": "140",
+    "generated_bytes": "136",
+    "raw_objdiff": "reports/GEDE01/b2ce7d09-cb0d-47ee-91b3-fdc67aacfab6/case_if_both_break.json"
+  },
+  {
+    "name": "case_zero_trip_call",
+    "replacement": "case 1:\n            while (0) { fn_801287C4(owner, fn_801A9FA4, (unsigned short)current->value, current->packed >> 17); }\n            break;",
+    "source_sha256": "f00a3029e79b27a996ac5ba1a12a95d1940a75c97688ccb6b8552fec846d5073",
+    "canonical_percent": 97.14286,
+    "retail_bytes": "140",
+    "generated_bytes": "136",
+    "raw_objdiff": "reports/GEDE01/b2ce7d09-cb0d-47ee-91b3-fdc67aacfab6/case_zero_trip_call.json"
+  },
+  {
+    "name": "case_local_constant_loop",
+    "replacement": "case 1: {\n            int once = 1;\n            while (once) { once = 0; }\n            break;\n        }",
+    "source_sha256": "23509106bc26bd3c4882728ff60f3fed1c8c95e4058504a78d855ec035a1748c",
+    "canonical_percent": 0.0,
+    "retail_bytes": "140",
+    "generated_bytes": "180",
+    "raw_objdiff": "reports/GEDE01/b2ce7d09-cb0d-47ee-91b3-fdc67aacfab6/case_local_constant_loop.json"
+  }
+]

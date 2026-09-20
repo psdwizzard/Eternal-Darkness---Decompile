@@ -1,0 +1,47 @@
+$ build/binutils/powerpc-eabi-objdump -dr build/GEDE01/src/game/game_fn_80129D54.o
+
+build/GEDE01/src/game/game_fn_80129D54.o:     file format elf32-powerpc
+
+
+Disassembly of section .text:
+
+00000000 <fn_80129D54>:
+   0:	94 21 ff e0 	stwu    r1,-32(r1)
+   4:	7c 08 02 a6 	mflr    r0
+   8:	3c c0 00 00 	lis     r6,0
+			a: R_PPC_ADDR16_HA	fn_801A9FA4
+   c:	90 01 00 24 	stw     r0,36(r1)
+  10:	bf 61 00 0c 	stmw    r27,12(r1)
+  14:	7c 7b 1b 78 	mr      r27,r3
+  18:	7c 9c 23 78 	mr      r28,r4
+  1c:	7c be 2b 78 	mr      r30,r5
+  20:	3b e6 00 00 	addi    r31,r6,0
+			22: R_PPC_ADDR16_LO	fn_801A9FA4
+  24:	3b a0 00 00 	li      r29,0
+  28:	48 00 00 44 	b       6c <fn_80129D54+0x6c>
+  2c:	80 1e 00 04 	lwz     r0,4(r30)
+  30:	2c 00 00 01 	cmpwi   r0,1
+  34:	41 82 00 30 	beq     64 <fn_80129D54+0x64>
+  38:	40 80 00 2c 	bge     64 <fn_80129D54+0x64>
+  3c:	2c 00 00 00 	cmpwi   r0,0
+  40:	40 80 00 08 	bge     48 <fn_80129D54+0x48>
+  44:	48 00 00 20 	b       64 <fn_80129D54+0x64>
+  48:	80 be 00 08 	lwz     r5,8(r30)
+  4c:	7f 63 db 78 	mr      r3,r27
+  50:	80 1e 00 00 	lwz     r0,0(r30)
+  54:	7f e4 fb 78 	mr      r4,r31
+  58:	54 a5 04 3e 	clrlwi  r5,r5,16
+  5c:	7c 06 8e 70 	srawi   r6,r0,17
+  60:	48 00 00 01 	bl      60 <fn_80129D54+0x60>
+			60: R_PPC_REL24	fn_801287C4
+  64:	3b de 00 0c 	addi    r30,r30,12
+  68:	3b bd 00 01 	addi    r29,r29,1
+  6c:	7c 1d e0 00 	cmpw    r29,r28
+  70:	41 80 ff bc 	blt     2c <fn_80129D54+0x2c>
+  74:	bb 61 00 0c 	lmw     r27,12(r1)
+  78:	80 01 00 24 	lwz     r0,36(r1)
+  7c:	7c 08 03 a6 	mtlr    r0
+  80:	38 21 00 20 	addi    r1,r1,32
+  84:	4e 80 00 20 	blr
+
+exit_code=0
