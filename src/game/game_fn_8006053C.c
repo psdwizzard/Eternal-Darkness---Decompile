@@ -67,9 +67,7 @@ s32 fn_8006053C(void *owner, s32 enabled)
         flags |= 2;
     }
 
-    if (flags & 1) {
-        value = (s8)middle;
-    }
+    value = (flags & 1) ? (s8)middle : value;
     if (flags & 2) {
         if (flags & 1) {
             if (select != 0) {

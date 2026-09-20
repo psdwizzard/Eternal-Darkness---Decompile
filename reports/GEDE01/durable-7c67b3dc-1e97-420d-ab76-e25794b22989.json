@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "7c67b3dc-1e97-420d-ab76-e25794b22989",
+  "attempt": 6,
+  "base_commit": "4a6d584e0d43d605ec7c05de943971f9c6b7f911",
+  "target": "fn_8006053C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7c67b3dc-1e97-420d-ab76-e25794b22989.json"
+  ],
+  "divergence": "Candidate is 388 bytes versus retail 384. The first flag assignment expressed as a conditional expression eliminates both extsb-to-r0/mr pairs, but introduces mr r4,r26 at candidate +0xf8. GC/1.3 allocates owner to r27 (retail r30), initial random value to r26 (retail r31), select to r31 (retail r27), low/middle/high thresholds to r30/r29/r28 (retail r28/r29/r26), and the post-flag selected value to r4 (retail r31). Byte loads still coalesce into threshold registers instead of staging through r6/r5/r0. Branch destinations after the added move shift by four bytes. All eight R_PPC_REL24 relocation offsets, targets, symbol values, and zero addends agree."
+}
