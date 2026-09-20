@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "assignment_id": "ef5b6a20-171a-4a63-8682-2ec4bb1c8f5b",
+  "target": "fn_8005B528",
+  "compiler": "GC/1.3",
+  "registration": "Object(NonMatching, \"game/game_fn_8005B528.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8005B528 fn_8005B528 -o reports/GEDE01/objdiff-ef5b6a20-171a-4a63-8682-2ec4bb1c8f5b-canonical.json --format json-pretty",
+    "raw_output": "retail_size=1676 generated_size=1660 match_percent=96.4105; retail-side diff kinds: DIFF_ARG_MISMATCH=7 DIFF_DELETE=9 DIFF_INSERT=5 DIFF_REPLACE=1",
+    "retail_bytes": 1676,
+    "generated_bytes": 1660,
+    "match_percent": 96.4105,
+    "raw_report": "reports/GEDE01/objdiff-ef5b6a20-171a-4a63-8682-2ec4bb1c8f5b-canonical.json"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8005B528 fn_8005B528 -o reports/GEDE01/objdiff-ef5b6a20-171a-4a63-8682-2ec4bb1c8f5b-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_output": "match_percent=96.4105; retail_relocation_instructions=70 generated_relocation_instructions=70 exact_aligned_relocation_instructions=65 nonexact_aligned_relocation_instructions=5",
+    "match_percent": 96.4105,
+    "retail_relocation_instructions": 70,
+    "generated_relocation_instructions": 70,
+    "exact_aligned_relocation_instructions": 65,
+    "nonexact_aligned_relocation_instructions": 5,
+    "raw_report": "reports/GEDE01/objdiff-ef5b6a20-171a-4a63-8682-2ec4bb1c8f5b-reloc-strict.json"
+  },
+  "new_hypothesis": {
+    "description": "Replace the compiler-generated three-element aggregate copy with explicit element assignments so the stores become source-level operations before the indexed lbl_8064C5A8 lookup, without volatile state or assembly.",
+    "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8005B528.o && build/tools/objdiff-cli diff -p . -u main/game/game_fn_8005B528 fn_8005B528 -o reports/GEDE01/test-explicit.json --format json-pretty",
+    "raw_output": "compiled successfully; match_percent=95.236275, regressing from 96.4105; the explicit-assignment variant was rejected and its generated test report was not preserved",
+    "const_control_raw_output": "Adding const to the aggregate initializer compiled to identical code at match_percent=96.4105; it was also rejected as codegen-neutral."
+  },
+  "codegen_divergence": {
+    "raw_output": "Retail-only instructions at function offsets 0x178 cmpwi r3,0x18, 0x17c beq 0x184, 0x180 nop, and 0x1e8 cmpwi r3,0 account for the 16-byte size delta. The remaining five nonexact relocation-bearing rows are in the local {0x5B,0x61,0x62} initializer/indexed lookup/timer scheduling region: generated code loads lbl_8064C5A8 before copying the local initializer and schedules lbl_80651948 differently. Clean empty conditions were already known to optimize away; explicit stores instead worsened the score to 95.236275."
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "exit=0; build/GEDE01/main.dol: OK; Progress All: 58.12% fuzzy, 47.60% matched, 47.57% linked (6266 / 7068 files); Code: 1095196 / 2300692 bytes (6032 / 8214 functions)"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol && cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0",
+    "sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "cmp_exit": 0
+  },
+  "legal_audit": {
+    "independent_translation_unit": true,
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_functions_edited": false,
+    "generated_binaries_staged": false,
+    "private_inputs_staged": false
+  }
+}
