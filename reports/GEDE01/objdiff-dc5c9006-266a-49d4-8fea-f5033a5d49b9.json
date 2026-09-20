@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "assignment_id": "dc5c9006-266a-49d4-8fea-f5033a5d49b9",
+  "target": "fn_8006053C",
+  "compiler": "GC/1.3",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_8006053C.c fn_8006053C",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8006053C fn_8006053C -o reports/GEDE01/objdiff-dc5c9006-266a-49d4-8fea-f5033a5d49b9-canonical.raw.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8006053C fn_8006053C -o reports/GEDE01/objdiff-dc5c9006-266a-49d4-8fea-f5033a5d49b9-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "raw_artifacts": {
+    "canonical_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-dc5c9006-266a-49d4-8fea-f5033a5d49b9-canonical.raw.json",
+    "relocation_strict_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-dc5c9006-266a-49d4-8fea-f5033a5d49b9-strict.raw.json"
+  },
+  "raw_measured_output": {
+    "build_result": "[888/888] PROGRESS (exit 0)",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "fndiff_summary": "target 384 bytes  base 392 bytes  match 96.614586",
+    "legal_audit": "legal audit passed (19010 tracked project files inspected)",
+    "canonical_objdiff": ".text size retail=384 candidate=392 match_percent=96.614586; differing instruction rows retail=19 candidate=19",
+    "relocation_strict_objdiff": ".text size retail=384 candidate=392 match_percent=96.614586; function_reloc_diffs=name_address; 8 relocations per object"
+  },
+  "canonical": {
+    "match_percent": 96.614586,
+    "retail_size": 384,
+    "candidate_size": 392,
+    "differing_instruction_rows_per_side": 19,
+    "matched": false
+  },
+  "relocation_strict": {
+    "match_percent": 96.614586,
+    "matched": false,
+    "relocations_equivalent": true,
+    "retail_count": 8,
+    "candidate_count": 8,
+    "type": "R_PPC_REL24",
+    "targets_in_address_order": [
+      "fn_800FBFB0",
+      "fn_80201B8C",
+      "fn_80201BC8",
+      "fn_800360B0",
+      "fn_80072354",
+      "fn_8011F114",
+      "fn_80066D04",
+      "fn_80066D04"
+    ],
+    "retail_addresses": [24, 64, 76, 96, 120, 136, 180, 216],
+    "candidate_addresses": [24, 64, 76, 96, 120, 136, 180, 216],
+    "retail_addends": [0, 0, 0, 0, 0, 0, 0, 0],
+    "candidate_addends": [0, 0, 0, 0, 0, 0, 0, 0]
+  },
+  "hypothesis_tests": [
+    {
+      "hypothesis": "Swap declaration/assignment order or use a chained cumulative expression to change middle/high live-range allocation.",
+      "result": "GC/1.3 canonicalized all variants to the same 392-byte object at 96.614586%."
+    },
+    {
+      "hypothesis": "Use mixed-width cumulative locals to obtain direct signed-byte narrowing and eliminate the two extra moves.",
+      "result": "s8 middle/s32 high produced the retail size of 384 bytes but regressed to 92.343750%; the inverse hybrid produced 380 bytes at 89.635414%."
+    },
+    {
+      "hypothesis": "Split assignment from signed narrowing to encourage destination coalescing into r31.",
+      "result": "GC/1.3 canonicalized the split assignments to the same 392-byte object at 96.614586%."
+    }
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "legal_audit_passed": true,
+  "divergence": "Candidate is 392 bytes versus retail 384. From retail +0x8c, GC/1.3 loads signed bytes directly into callee-saved r28/r26/r29 rather than temporary r6/r5/r0, then assigns cumulative middle/high thresholds to r26/r29 instead of retail r29/r26. At the two conditional value assignments, candidate emits extsb-to-r0 plus mr-to-r31 where retail emits direct extsb-to-r31. The later signed threshold comparisons consequently use the swapped registers. All eight R_PPC_REL24 relocation targets, addresses, and zero addends agree."
+}
