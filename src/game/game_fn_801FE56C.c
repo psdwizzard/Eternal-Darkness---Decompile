@@ -55,7 +55,6 @@ void fn_801FE56C(void)
 {
     int allow_hidden;
     void* player;
-    Entry** cursor;
     int i;
     int count;
     const u32* constants;
@@ -81,10 +80,7 @@ void fn_801FE56C(void)
         player = 0;
     }
 
-    allow_hidden = 0;
-    if (fn_80047178() != 0 && fn_8012FA54(player, 15) != 0) {
-        allow_hidden = 1;
-    }
+    allow_hidden = fn_80047178() != 0 && fn_8012FA54(player, 15) != 0;
 
     if (lbl_8064C4E4 != 0) {
         origin = *(Vec3*)&constants[0];
@@ -104,9 +100,8 @@ void fn_801FE56C(void)
         feature_mask = feature_mask | (u8)0x80;
     }
 
-    cursor = lbl_8063EA00;
     for (i = 0; i < count;) {
-        Entry* entry = *cursor;
+        Entry* entry = lbl_8063EA00[i];
         Record* record = &entry->record;
         int valid;
 
@@ -145,7 +140,6 @@ void fn_801FE56C(void)
         mask |= 1 << slot;
         slot++;
 next:
-        cursor++;
         i++;
     }
     fn_801F10BC(mask, feature_mask, 1);

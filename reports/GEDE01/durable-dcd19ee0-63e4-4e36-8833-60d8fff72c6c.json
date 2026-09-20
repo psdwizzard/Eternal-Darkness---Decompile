@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "dcd19ee0-63e4-4e36-8833-60d8fff72c6c",
+  "attempt": 6,
+  "base_commit": "49e342615e553e27b8bd457887dbb44820fccc4b",
+  "target": "fn_801FE56C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-dcd19ee0-63e4-4e36-8833-60d8fff72c6c.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-dcd19ee0-63e4-4e36-8833-60d8fff72c6c.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-dcd19ee0-63e4-4e36-8833-60d8fff72c6c.json",
+    "eternal-darkness-decomp/reports/GEDE01/trials-dcd19ee0-63e4-4e36-8833-60d8fff72c6c.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-dcd19ee0-63e4-4e36-8833-60d8fff72c6c.json"
+  ],
+  "divergence": "Canonical and relocation-strict direct objdiff are byte-identical and improve the retained reconstruction from 99.05028% (720 bytes) to 99.63687% (716 bytes, equal to retail). Indexed entry access lets canonical GC/1.3 synthesize the induction cursor without the extra mr, and expressing allow_hidden as a short-circuit boolean assignment recovers retail registers for both allow_hidden and the cursor. Exactly 13 instruction operand mismatches remain: retail uses r24 for constants and r23 for player, while the candidate uses r23 for constants and r24 for player. All 39 ordered ELF relocations now match exactly in offset, type, target, and addend (all addends zero); there are no remaining instruction insertions or deletions. The candidate remains NonMatching. Existing canonical settings, independent translation unit, and split registration are unchanged. Required python3 configure.py and .tools/bin/ninja -j2 passed; build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f. Rejected probes and raw measurements are preserved in assignment-specific evidence; only the best C reconstruction remains. legal audit passed (18419 tracked project files inspected)."
+}
