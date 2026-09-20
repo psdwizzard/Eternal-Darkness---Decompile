@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e0cb2e16-cf20-4681-a40f-18d9472fc5e4",
+  "attempt": 4,
+  "base_commit": "1a4ac354367bf6554b4d7b19c92253a8e9cc342a",
+  "target": "fn_801DF060",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e0cb2e16-cf20-4681-a40f-18d9472fc5e4.json"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict direct objdiff are 96.989365%: retail and generated code are both 4136 bytes and 1034 instructions, but 91 aligned instruction rows differ. Independent address-taken scalar triples and retail Vec3 declaration order reproduce the case-30 and vector stack-slot scheduling, improving the preserved 96.932304% attempt by 0.057061 points and reducing differing rows from 134 to 91. Retail still uses a 0x100-byte frame versus generated 0xE0, assigns the object to r31 earlier, and differs in r26-r30 allocation and repeated 26-argument call setup. Retail has 133 relocation-bearing instructions versus generated code's 134, so relocation-strict equality is not achieved. The canonical linked DOL verifies at SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

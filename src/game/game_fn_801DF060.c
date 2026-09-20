@@ -45,8 +45,8 @@ extern int fn_801F86F4(int);
         0, 2, 7, 2, 3, 1, 0, 1, 17, 4, 1, 16, 0, 1, 34, (mask), 0, (tail))
 
 /* NonMatching: complete honest-C reconstruction of the event-state dispatcher.
- * Retail's exact 0x100-byte frame, r26-r31 lifetimes, repeated 26-argument call
- * scheduling, and Vec3 aggregate copies remain compiler-codegen divergences. */
+ * Retail's exact 0x100-byte frame, r26-r31 lifetimes, and repeated 26-argument
+ * call scheduling remain compiler-codegen divergences. */
 void fn_801DF060(void* object)
 {
     u8* info = object;
@@ -55,8 +55,9 @@ void fn_801DF060(void* object)
     void* target;
     int owner;
     int a, b, c;
+    int d, e, f;
     int result;
-    Vec3 p, q, r, s, t, u;
+    Vec3 r, s, p, q, t, u;
 
     if (*(int*)(info + 8) != lbl_8064D18C || (info[0xff0] & 1)) {
         handle = fn_80201814(*(int*)(info + 0xe0));
@@ -111,13 +112,13 @@ void fn_801DF060(void* object)
     case 30:
         if (*(int*)(info + 0xf8) == 6) {
             target = fn_80201BC8(fn_80201814(*(int*)(info + 0xe0)));
-            a = lbl_806511EC; b = lbl_80651F20; c = lbl_806511F0;
-            fn_8012C62C(target, 15, &c, &b, &a, 4);
+            c = lbl_806511F0; b = lbl_80651F20; a = lbl_806511EC;
+            fn_8012C62C(target, 15, &a, &b, &c, 4);
             fn_8011FA8C(target, 0, 0x100);
         } else if (*(int*)(info + 0xf8) == 4) {
             target = fn_80201BC8(fn_80201814(*(int*)(info + 0xe0)));
-            a = lbl_806511F4; b = lbl_80651F24; c = lbl_806511F8;
-            fn_8012C62C(target, 15, &c, &b, &a, 4);
+            f = lbl_806511F8; e = lbl_80651F24; d = lbl_806511F4;
+            fn_8012C62C(target, 15, &d, &e, &f, 4);
             fn_8011FA8C(target, 0, 0x100);
         }
         break;
