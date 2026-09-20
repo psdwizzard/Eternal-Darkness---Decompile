@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "assignment_id": "06643e80-2957-4629-b19d-a861ee8f9a38",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80185CA4 -o reports/GEDE01/objdiff-06643e80-2957-4629-b19d-a861ee8f9a38-canonical.raw.json --format json-pretty fn_80185CA4",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80185CA4 -o reports/GEDE01/objdiff-06643e80-2957-4629-b19d-a861ee8f9a38.json --format json-pretty -c function_reloc_diffs=name_address fn_80185CA4",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measured_outputs": {
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_final_output": "[882/884] DOL build/GEDE01/main.dol; [883/884] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [884/884] PROGRESS",
+    "dol_provenance": "build/GEDE01/main.dol was linked and SHA-1 checked by the successful full build of this worktree at base commit 9be6d3e904fcbf889150704f3f72e1823a0809ed with the preserved fn_80185CA4 candidate.",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "candidate_object_sha1": "318c4c6388469271e5042cba5859f1d515e98cc4",
+    "canonical_raw_sha1": "c9815d4b565ae38101b183b426d9a24a1e707468",
+    "relocation_strict_raw_sha1": "c9815d4b565ae38101b183b426d9a24a1e707468",
+    "canonical": {
+      "target_size": 360,
+      "candidate_size": 360,
+      "target_instruction_count": 90,
+      "candidate_instruction_count": 90,
+      "match_percent": 97.333336
+    },
+    "relocation_strict": {
+      "config": "function_reloc_diffs=name_address",
+      "match_percent": 97.333336,
+      "target_relocation_count": 20,
+      "candidate_relocation_count": 20,
+      "same_offsets_targets_types_addends": true
+    }
+  },
+  "source_experiment": {
+    "hypothesis": "Replacing byte-pointer arithmetic with typed SelfData and DescData member accesses would change MWCC alias analysis and interference ordering enough to recover retail register coloring while preserving instruction shape.",
+    "result": "The struct-typed candidate compiled to 360 bytes but regressed to 89.755554%; the hypothesis was falsified and the stronger 97.333336% pointer-based candidate was restored. A preliminary explicit-register-qualified-local syntax probe was also rejected by canonical MWCC with '; expected', so no unsupported extension was preserved."
+  },
+  "exact_codegen_divergence": {
+    "instruction_shape": "The preserved candidate has 90 instructions and the same 360-byte size as retail. All opcodes and offsets align; 45 instructions differ only in register arguments.",
+    "register_allocation": "Retail maps desc/self/arg1/entry/count/index to r30/r28/r29/r26/r31/r27; canonical GC/1.3 maps them to r31/r30/r26/r27/r29/r28.",
+    "relocations": "All 20 relocations agree in offset, target, type, and addend. The committed canonical and relocation-strict raw JSON files are byte-identical."
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80185CA4.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "compiler_policy_changed": false,
+    "neighboring_functions_edited": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
