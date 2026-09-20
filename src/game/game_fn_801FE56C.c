@@ -94,14 +94,14 @@ void fn_801FE56C(void)
         fn_801ECE7C(255);
         fn_801FD6AC(&lbl_8063F00C, &position, lbl_802FC5BC, 20000);
         fn_801F0CB0(&lbl_8063F00C, &origin, 0, 7, 0, 0, 0);
-        feature_mask |= 0x80;
+        feature_mask = feature_mask | (u8)0x80;
     } else {
         target = *(Vec3*)&constants[3];
         fallback_position = *(Vec3*)&constants[6];
         fn_801ECE7C(255);
         fn_801FD6AC(&lbl_8063F00C, &fallback_position, lbl_802FC5BC, 20000);
         fn_801F0CB0(&lbl_8063F00C, &target, 0, 7, 0, 0, 0);
-        feature_mask |= 0x80;
+        feature_mask = feature_mask | (u8)0x80;
     }
 
     cursor = lbl_8063EA00;
