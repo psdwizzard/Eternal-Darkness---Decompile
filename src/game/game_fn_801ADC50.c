@@ -26,19 +26,18 @@ extern unsigned int fn_801BA2A4(unsigned int, unsigned int, unsigned int,
 
 void fn_801ADC50(void)
 {
-    Entry* entry;
     unsigned int index;
     unsigned int zero;
 
     if (lbl_8064D308 == 0) {
         index = 0;
-        entry = &lbl_8060B430.entries[index];
         zero = 0;
         do {
-            entry->handle = fn_801BA2A4(0xFF, entry->first, entry->second,
-                                        0x7D00, 0, 0x40, 0, 0, zero, zero,
-                                        0x30001, fn_801AE530, entry, zero);
-            entry++;
+            lbl_8060B430.entries[index].handle = fn_801BA2A4(
+                0xFF, lbl_8060B430.entries[index].first,
+                lbl_8060B430.entries[index].second, 0x7D00, 0, 0x40, 0, 0,
+                zero, zero, 0x30001, fn_801AE530,
+                &lbl_8060B430.entries[index], zero);
             index++;
         } while (index < 3);
         lbl_8064D308 = 1;
