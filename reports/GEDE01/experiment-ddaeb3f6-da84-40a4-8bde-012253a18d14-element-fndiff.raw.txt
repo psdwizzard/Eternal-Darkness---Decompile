@@ -1,0 +1,67 @@
+ INFO Writing to /home/rabbit/src/darkfoundry-new/.darkfoundry/worktrees/50c29326-0acb-40d9-995f-1837de479183/eternal-darkness-decomp/build/GEDE01/fndiff_fn_801EBDDC.json
+target 256 bytes  base 256 bytes  match 94.375
+  0x0000  lwz r7, lbl_8064D604@sda21 [None+0 t109]             | lwz r7, lbl_8064D604@sda21 [None+0 t109]
+  0x0004  cmplwi r7, 0x0                                       | cmplwi r7, 0x0
+  0x0008  beqlr                                                | beqlr
+  0x000c  cmplwi r3, 0x0                                       | cmplwi r3, 0x0
+  0x0010  beqlr                                                | beqlr
+* 0x0014  lwz r5, 0x14(r3)                                     | lwz r4, 0x14(r3)
+* 0x0018  li r4, 0x0                                           | li r5, 0x0
+  0x001c  li r0, 0xff                                          | li r0, 0xff
+* 0x0020                                                       | stw r4, lbl_8064D65C@sda21 [None+0 t109]
+* 0x0024  li r6, 0x1fc                                         | li r4, 0x1fc
+* 0x0028  stw r5, lbl_8064D65C@sda21 [None+0 t109]             | 
+* 0x002c  lwz r5, 0x2c(r3)                                     | lwz r6, 0x2c(r3)
+* 0x0030  stw r5, lbl_8064D664@sda21 [None+0 t109]             | stw r6, lbl_8064D664@sda21 [None+0 t109]
+* 0x0034  lwz r5, 0xc(r3)                                      | lwz r6, 0xc(r3)
+* 0x0038  sth r5, 0x0(r7)                                      | sth r6, 0x0(r7)
+* 0x003c  stw r4, lbl_8064D6A0@sda21 [None+0 t109]             | stw r5, lbl_8064D6A0@sda21 [None+0 t109]
+  0x0040  mtctr r0                                             | mtctr r0
+  0x0044  lwz r0, lbl_8064D660@sda21 [None+0 t109]             | lwz r0, lbl_8064D660@sda21 [None+0 t109]
+  0x0048  cmpwi r0, 0x0                                        | cmpwi r0, 0x0
+  0x004c  bne 0xdc                                             | bne 0xdc
+* 0x0050  lwz r4, lbl_8064D664@sda21 [None+0 t109]             | lwz r5, lbl_8064D664@sda21 [None+0 t109]
+* 0x0054  cmpwi r4, 0x0                                        | cmpwi r5, 0x0
+  0x0058  bne 0xcc                                             | bne 0xcc
+* 0x005c  lwz r5, lbl_8064D604@sda21 [None+0 t109]             | lwz r6, lbl_8064D604@sda21 [None+0 t109]
+  0x0060  lwz r0, 0xc(r3)                                      | lwz r0, 0xc(r3)
+* 0x0064  lhz r4, 0x0(r5)                                      | lhz r5, 0x0(r6)
+* 0x0068  clrlwi r4, r4, 24                                    | clrlwi r5, r5, 24
+* 0x006c  cmpw r4, r0                                          | cmpw r5, r0
+  0x0070  bgt 0x84                                             | bgt 0x84
+  0x0074  lwz r0, 0x14(r3)                                     | lwz r0, 0x14(r3)
+  0x0078  stw r0, lbl_8064D65C@sda21 [None+0 t109]             | stw r0, lbl_8064D65C@sda21 [None+0 t109]
+  0x007c  lwz r0, 0x2c(r3)                                     | lwz r0, 0x2c(r3)
+  0x0080  stw r0, lbl_8064D664@sda21 [None+0 t109]             | stw r0, lbl_8064D664@sda21 [None+0 t109]
+  0x0084  b 0xa4                                               | b 0xa4
+  0x0088  lwz r0, 0x10(r3)                                     | lwz r0, 0x10(r3)
+* 0x008c  cmpw r4, r0                                          | cmpw r5, r0
+  0x0090  blt 0xa4                                             | blt 0xa4
+  0x0094  lwz r0, 0x14(r3)                                     | lwz r0, 0x14(r3)
+  0x0098  neg r0, r0                                           | neg r0, r0
+  0x009c  stw r0, lbl_8064D65C@sda21 [None+0 t109]             | stw r0, lbl_8064D65C@sda21 [None+0 t109]
+  0x00a0  lwz r0, 0x28(r3)                                     | lwz r0, 0x28(r3)
+  0x00a4  stw r0, lbl_8064D664@sda21 [None+0 t109]             | stw r0, lbl_8064D664@sda21 [None+0 t109]
+* 0x00a8  lwz r4, lbl_8064D65C@sda21 [None+0 t109]             | lwz r5, lbl_8064D65C@sda21 [None+0 t109]
+* 0x00ac  lhz r0, 0x0(r5)                                      | lhz r0, 0x0(r6)
+* 0x00b0  add r0, r4, r0                                       | add r0, r5, r0
+  0x00b4  clrlwi r0, r0, 24                                    | clrlwi r0, r0, 24
+* 0x00b8  sth r0, 0x0(r5)                                      | sth r0, 0x0(r6)
+* 0x00bc  lwz r4, lbl_8064D6A0@sda21 [None+0 t109]             | lwz r5, lbl_8064D6A0@sda21 [None+0 t109]
+  0x00c0  lwz r0, 0x14(r3)                                     | lwz r0, 0x14(r3)
+* 0x00c4  add r0, r4, r0                                       | add r0, r5, r0
+  0x00c8  stw r0, lbl_8064D6A0@sda21 [None+0 t109]             | stw r0, lbl_8064D6A0@sda21 [None+0 t109]
+  0x00cc  b 0xd4                                               | b 0xd4
+* 0x00d0  subi r0, r4, 0x1                                     | subi r0, r5, 0x1
+  0x00d4  stw r0, lbl_8064D664@sda21 [None+0 t109]             | stw r0, lbl_8064D664@sda21 [None+0 t109]
+  0x00d8  lwz r0, 0x1c(r3)                                     | lwz r0, 0x1c(r3)
+  0x00dc  stw r0, lbl_8064D660@sda21 [None+0 t109]             | stw r0, lbl_8064D660@sda21 [None+0 t109]
+* 0x00e0  lwz r4, lbl_8064D660@sda21 [None+0 t109]             | lwz r5, lbl_8064D660@sda21 [None+0 t109]
+* 0x00e4  lwz r5, lbl_8064D604@sda21 [None+0 t109]             | lwz r6, lbl_8064D604@sda21 [None+0 t109]
+* 0x00e8  subi r0, r4, 0x1                                     | subi r0, r5, 0x1
+  0x00ec  stw r0, lbl_8064D660@sda21 [None+0 t109]             | stw r0, lbl_8064D660@sda21 [None+0 t109]
+* 0x00f0  lhz r0, 0x0(r5)                                      | lhz r0, 0x0(r6)
+* 0x00f4  sthx r0, r5, r6                                      | sthx r0, r6, r4
+* 0x00f8  subi r6, r6, 0x2                                     | subi r4, r4, 0x2
+  0x00fc  bdnz 0x40                                            | bdnz 0x40
+  0x0100  blr                                                  | blr

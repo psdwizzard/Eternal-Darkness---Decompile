@@ -1,0 +1,156 @@
+[
+  {
+    "variant": "element",
+    "hypothesis": "An element-index induction variable introduces the byte-offset temporary during strength reduction, potentially changing allocator priority versus an explicit byte-offset induction variable.",
+    "changes": [
+      "for (offset = 254; offset >= 0; offset--)",
+      "lbl_8064D604[offset] = *lbl_8064D604;"
+    ],
+    "match_percent": 94.375,
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-element.raw.json",
+    "build_command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801EBDDC.o",
+    "raw_build": "eternal-darkness-decomp/reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-element-build.raw.txt",
+    "raw_fndiff": "eternal-darkness-decomp/reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-element-fndiff.raw.txt",
+    "result_summary": "Size remains 256 bytes, but the initial step store moves ahead of the offset initialization; inner-loop register allocation remains incorrect."
+  },
+  {
+    "variant": "countdown-elements",
+    "patch": "--- \n+++ \n@@ -34,7 +34,7 @@\n     *lbl_8064D604 = source->lower;\n     lbl_8064D6A0 = 0;\n \n-    for (offset = 0x1FC; offset >= 0; offset -= 2) {\n+    for (offset = 255; offset > 0; offset--) {\n         if (lbl_8064D660 == 0) {\n             if (lbl_8064D664 == 0) {\n                 u16* image;\n@@ -59,6 +59,6 @@\n             lbl_8064D660 = source->delay;\n         }\n         lbl_8064D660--;\n-        *(u16*)((char*)lbl_8064D604 + offset) = *lbl_8064D604;\n+        lbl_8064D604[offset - 1] = *lbl_8064D604;\n     }\n }\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_801EBDDC.o"
+        ],
+        "exit_code": 0,
+        "raw_stdout_stderr": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBDDC.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801EBDDC",
+          "fn_801EBDDC",
+          "-o",
+          "reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-countdown-elements.raw.json",
+          "--format",
+          "json-pretty"
+        ],
+        "exit_code": 0,
+        "raw_stdout_stderr": " INFO Writing to reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-countdown-elements.raw.json\n"
+      }
+    ],
+    "match_percent": 89.578125,
+    "hypothesis": "Alternative strength-reduction expression may alter allocation of the byte-offset temporary.",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-countdown-elements.raw.json"
+  },
+  {
+    "variant": "countup-elements",
+    "patch": "--- \n+++ \n@@ -34,7 +34,7 @@\n     *lbl_8064D604 = source->lower;\n     lbl_8064D6A0 = 0;\n \n-    for (offset = 0x1FC; offset >= 0; offset -= 2) {\n+    for (offset = 0; offset < 255; offset++) {\n         if (lbl_8064D660 == 0) {\n             if (lbl_8064D664 == 0) {\n                 u16* image;\n@@ -59,6 +59,6 @@\n             lbl_8064D660 = source->delay;\n         }\n         lbl_8064D660--;\n-        *(u16*)((char*)lbl_8064D604 + offset) = *lbl_8064D604;\n+        lbl_8064D604[254 - offset] = *lbl_8064D604;\n     }\n }\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_801EBDDC.o"
+        ],
+        "exit_code": 0,
+        "raw_stdout_stderr": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBDDC.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801EBDDC",
+          "fn_801EBDDC",
+          "-o",
+          "reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-countup-elements.raw.json",
+          "--format",
+          "json-pretty"
+        ],
+        "exit_code": 0,
+        "raw_stdout_stderr": " INFO Writing to reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-countup-elements.raw.json\n"
+      }
+    ],
+    "match_percent": 91.0,
+    "hypothesis": "Alternative strength-reduction expression may alter allocation of the byte-offset temporary.",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-countup-elements.raw.json"
+  },
+  {
+    "variant": "byte-value",
+    "patch": "--- \n+++ \n@@ -38,7 +38,7 @@\n         if (lbl_8064D660 == 0) {\n             if (lbl_8064D664 == 0) {\n                 u16* image;\n-                int value;\n+                u8 value;\n \n                 image = lbl_8064D604;\n                 value = (u8)*image;\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_801EBDDC.o"
+        ],
+        "exit_code": 0,
+        "raw_stdout_stderr": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBDDC.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801EBDDC",
+          "fn_801EBDDC",
+          "-o",
+          "reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-byte-value.raw.json",
+          "--format",
+          "json-pretty"
+        ],
+        "exit_code": 0,
+        "raw_stdout_stderr": " INFO Writing to reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-byte-value.raw.json\n"
+      }
+    ],
+    "match_percent": 97.421875,
+    "hypothesis": "A narrower scalar type may change virtual-register creation/coalescing while retaining the low-byte load and signed promoted comparison.",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-byte-value.raw.json"
+  },
+  {
+    "variant": "short-value",
+    "patch": "--- \n+++ \n@@ -38,7 +38,7 @@\n         if (lbl_8064D660 == 0) {\n             if (lbl_8064D664 == 0) {\n                 u16* image;\n-                int value;\n+                short value;\n \n                 image = lbl_8064D604;\n                 value = (u8)*image;\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_801EBDDC.o"
+        ],
+        "exit_code": 0,
+        "raw_stdout_stderr": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBDDC.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801EBDDC",
+          "fn_801EBDDC",
+          "-o",
+          "reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-short-value.raw.json",
+          "--format",
+          "json-pretty"
+        ],
+        "exit_code": 0,
+        "raw_stdout_stderr": " INFO Writing to reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-short-value.raw.json\n"
+      }
+    ],
+    "match_percent": 97.421875,
+    "hypothesis": "A narrower scalar type may change virtual-register creation/coalescing while retaining the low-byte load and signed promoted comparison.",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/experiment-ddaeb3f6-da84-40a4-8bde-012253a18d14-short-value.raw.json"
+  }
+]

@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "assignment_id": "ddaeb3f6-da84-40a4-8bde-012253a18d14",
+  "attempt": 6,
+  "base_commit": "7dde091b78ac826d9380e8e548037f3902135383",
+  "target": "fn_801EBDDC",
+  "status": "attempted",
+  "working_directory": "eternal-darkness-decomp",
+  "compiler": "GC/1.3",
+  "source": "eternal-darkness-decomp/src/game/game_fn_801EBDDC.c",
+  "registration": "NonMatching; unchanged",
+  "preserved_attempts_reviewed": [
+    "d758aec298926b13645a94ba94b03df597552dd4",
+    "33ebd3411d15efd68f30166cdb48ff277168ff84",
+    "fe860eef23d37c549e53e26f57db3e96902507f9",
+    "4cd9d69f768c3069c149a979fb4caff218889cec",
+    "7e7ad7c9f5f0c8795a275b1803f1b4d09ea3084b"
+  ],
+  "measurements": {
+    "canonical": {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBDDC",
+        "fn_801EBDDC",
+        "-o",
+        "reports/GEDE01/objdiff-ddaeb3f6-da84-40a4-8bde-012253a18d14-canonical.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "exit_code": 0,
+      "raw_stdout_stderr": "eternal-darkness-decomp/reports/GEDE01/canonical-ddaeb3f6-da84-40a4-8bde-012253a18d14.raw.txt",
+      "raw_result": "eternal-darkness-decomp/reports/GEDE01/objdiff-ddaeb3f6-da84-40a4-8bde-012253a18d14-canonical.raw.json",
+      "match_percent": 97.421875,
+      "target_size": 256,
+      "base_size": 256
+    },
+    "reloc-strict": {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBDDC",
+        "fn_801EBDDC",
+        "-o",
+        "reports/GEDE01/objdiff-ddaeb3f6-da84-40a4-8bde-012253a18d14-reloc-strict.raw.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "exit_code": 0,
+      "raw_stdout_stderr": "eternal-darkness-decomp/reports/GEDE01/reloc-strict-ddaeb3f6-da84-40a4-8bde-012253a18d14.raw.txt",
+      "raw_result": "eternal-darkness-decomp/reports/GEDE01/objdiff-ddaeb3f6-da84-40a4-8bde-012253a18d14-reloc-strict.raw.json",
+      "match_percent": 97.421875,
+      "target_size": 256,
+      "base_size": 256
+    },
+    "fndiff": {
+      "argv": [
+        "python3",
+        "tools/fndiff.py",
+        "game/game_fn_801EBDDC.c",
+        "fn_801EBDDC"
+      ],
+      "exit_code": 0,
+      "raw_stdout_stderr": "eternal-darkness-decomp/reports/GEDE01/fndiff-ddaeb3f6-da84-40a4-8bde-012253a18d14.raw.txt"
+    },
+    "sha1": {
+      "argv": [
+        "sha1sum",
+        "build/GEDE01/main.dol",
+        "orig/GEDE01/sys/main.dol"
+      ],
+      "exit_code": 0,
+      "raw_stdout_stderr": "eternal-darkness-decomp/reports/GEDE01/sha1-ddaeb3f6-da84-40a4-8bde-012253a18d14.raw.txt"
+    },
+    "relocations-target": {
+      "argv": [
+        "readelf",
+        "-rW",
+        "build/GEDE01/obj/game/game_fn_801EBDDC.o"
+      ],
+      "exit_code": 0,
+      "raw_stdout_stderr": "eternal-darkness-decomp/reports/GEDE01/relocations-target-ddaeb3f6-da84-40a4-8bde-012253a18d14.raw.txt"
+    },
+    "relocations-base": {
+      "argv": [
+        "readelf",
+        "-rW",
+        "build/GEDE01/src/game/game_fn_801EBDDC.o"
+      ],
+      "exit_code": 0,
+      "raw_stdout_stderr": "eternal-darkness-decomp/reports/GEDE01/relocations-base-ddaeb3f6-da84-40a4-8bde-012253a18d14.raw.txt"
+    },
+    "relocation_comparison": {
+      "equal": true,
+      "count": 19,
+      "method": "Compare readelf relocation offset, type, symbol value, symbol name, and addend; ignore ELF symbol-table index."
+    },
+    "canonical_equals_strict": true,
+    "build": {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_stdout_stderr": "eternal-darkness-decomp/reports/GEDE01/build-ddaeb3f6-da84-40a4-8bde-012253a18d14.raw.txt"
+    },
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "legal_audit": {
+      "command": "python3 eternal-darkness-decomp/tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_stdout_stderr": "eternal-darkness-decomp/reports/GEDE01/legal-audit-ddaeb3f6-da84-40a4-8bde-012253a18d14.raw.txt"
+    }
+  },
+  "experiments": "eternal-darkness-decomp/reports/GEDE01/experiments-ddaeb3f6-da84-40a4-8bde-012253a18d14.json",
+  "divergence_summary": "Both objects are 256 bytes; canonical and relocation-strict objdiff are 97.421875%, with all 19 relocation targets and addends equal. Retail assigns loop offset/image pointer/transient to r6/r5/r4; GC/1.3 assigns r4/r6/r5. The final store is retail sthx r0,r5,r6 versus candidate sthx r0,r6,r4. No tested variant improved the accepted source.",
+  "source_disposition": "Restored the accepted best source byte-for-byte; retained its independent NonMatching translation unit. No compiler, gate, runtime, or progress changes. DOL verification uses the retail fallback for this NonMatching unit and is not proof of a C match."
+}
