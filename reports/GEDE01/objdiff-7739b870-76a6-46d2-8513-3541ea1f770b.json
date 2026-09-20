@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "assignment_id": "7739b870-76a6-46d2-8513-3541ea1f770b",
+  "attempt": 5,
+  "target": "fn_800CD6C0",
+  "compiler": "GC/1.3",
+  "source": "eternal-darkness-decomp/src/game/game_fn_800CD6C0.c",
+  "registration": "Object(NonMatching, \"game/game_fn_800CD6C0.c\")",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_800CD6C0.c fn_800CD6C0",
+    "build/binutils/powerpc-eabi-readelf -r build/GEDE01/obj/game/game_fn_800CD6C0.o",
+    "build/binutils/powerpc-eabi-readelf -r build/GEDE01/src/game/game_fn_800CD6C0.o",
+    "python3 tools/legal_audit.py",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "measurements": {
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "ninja_verification_stdout": "build/GEDE01/main.dol: OK",
+    "fndiff_stdout": "target 396 bytes  base 396 bytes  match 97.52525",
+    "target_bytes": 396,
+    "candidate_bytes": 396,
+    "target_instruction_count": 99,
+    "candidate_instruction_count": 99,
+    "different_instruction_rows": 42,
+    "match_percent": 97.52525,
+    "relocation_strict": {
+      "target_count": 10,
+      "candidate_count": 10,
+      "equal_offsets_types_targets_addends": true,
+      "target_readelf_rows": [
+        "00000044 R_PPC_REL24 fn_80201814 + 0",
+        "00000050 R_PPC_REL24 fn_80201B8C + 0",
+        "00000058 R_PPC_REL24 fn_80201B44 + 0",
+        "00000080 R_PPC_REL24 fn_8020123C + 0",
+        "000000d0 R_PPC_REL24 fn_80037AF4 + 0",
+        "000000d8 R_PPC_REL24 fn_80201B54 + 0",
+        "000000fc R_PPC_REL24 fn_80201B8C + 0",
+        "0000013c R_PPC_REL24 fn_802015A4 + 0",
+        "00000148 R_PPC_REL24 fn_801E8328 + 0",
+        "0000016c R_PPC_REL24 fn_8020104C + 0"
+      ],
+      "candidate_readelf_rows": [
+        "00000044 R_PPC_REL24 fn_80201814 + 0",
+        "00000050 R_PPC_REL24 fn_80201B8C + 0",
+        "00000058 R_PPC_REL24 fn_80201B44 + 0",
+        "00000080 R_PPC_REL24 fn_8020123C + 0",
+        "000000d0 R_PPC_REL24 fn_80037AF4 + 0",
+        "000000d8 R_PPC_REL24 fn_80201B54 + 0",
+        "000000fc R_PPC_REL24 fn_80201B8C + 0",
+        "0000013c R_PPC_REL24 fn_802015A4 + 0",
+        "00000148 R_PPC_REL24 fn_801E8328 + 0",
+        "0000016c R_PPC_REL24 fn_8020104C + 0"
+      ]
+    },
+    "representative_codegen_diff": [
+      "0x0018 target: mr r23, r3 | candidate: mr r20, r3",
+      "0x003c target: li r21, 0 | candidate: li r30, 0",
+      "0x0040 target: li r20, 0 | candidate: li r29, 0",
+      "0x0054 target: mr r21, r3 | candidate: mr r29, r3",
+      "0x00e0 target: mr r22, r3 | candidate: mr r28, r3",
+      "0x0100 target: lwz r20, 0x2c(r3) | candidate: lwz r29, 0x2c(r3)",
+      "0x015c target: mr r4, r22 | candidate: mr r4, r28"
+    ],
+    "legal_audit_stdout": "legal audit passed (18510 tracked project files inspected)",
+    "legal_audit_exit_code": 0,
+    "dol_sha1_stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_matches": true
+  },
+  "attempt_5_hypothesis": {
+    "hypothesis": "The redundant local copies and old-style callee declarations may create early scalar live ranges that force formal arguments into r20-r27; direct formal use plus exact prototypes may let the three result/state/index live ranges receive retail's r20-r22 colors first.",
+    "experiment": "Removed the eight identity local copies, used formal parameters directly, and supplied exact prototypes for every previously old-style callee declaration.",
+    "raw_result": "target 396 bytes  base 396 bytes  match 97.52525",
+    "outcome": "GC/1.3 emitted byte-identical code. Copy coalescing and old-style call lowering therefore do not explain the retail register coloring. The direct-formal form is retained as the simpler honest reconstruction."
+  },
+  "divergence": "All code size, control flow, and all 10 relocation offsets/types/targets/+0 addends agree. The remaining 42 instruction rows are one global callee-saved-register permutation: retail slot/payload r20, state r21, id r22, arguments r23-r30; candidate arguments r20-r27, id r28, state/payload r29, slot r30."
+}

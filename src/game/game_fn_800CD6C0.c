@@ -32,14 +32,14 @@ typedef struct Payload {
     Vec3 position;
 } Payload;
 
-extern void *fn_80201814();
-extern void *fn_80201B8C();
-extern int fn_80201B44();
-extern unsigned long long fn_8020123C();
+extern void *fn_80201814(int);
+extern void *fn_80201B8C(void *);
+extern int fn_80201B44(RuntimeState *);
+extern unsigned long long fn_8020123C(int, int, int, int);
 extern void *fn_80037AF4(int);
-extern int fn_80201B54();
+extern int fn_80201B54(void *);
 extern void fn_802015A4(void *);
-extern int fn_801E8328();
+extern int fn_801E8328(int, void *);
 extern void fn_8020104C(int, void*, void*, int, float);
 #define fn_8020104C(a,b,c,d,e) fn_8020104C((int)(a),(void*)(b),(void*)(c),(int)(d),(float)(e))
 
@@ -52,21 +52,13 @@ void *fn_800CD6C0(int argFirst, int argSecond, void *argThird, u8 argFlags,
     int slot = 0;
     RuntimeState *state = 0;
     int id;
-    int first = argFirst;
-    int second = argSecond;
-    void *third = argThird;
-    u8 flags = argFlags;
-    int fourth = argFourth;
-    s16 fifth = argFifth;
-    Vec3 *position = argPosition;
-    void *eighth = argEighth;
     void *resolved;
     Payload *payload;
 
-    resolved = fn_80201814(first);
+    resolved = fn_80201814(argFirst);
     if (resolved != 0) {
         state = ((RuntimeState *)fn_80201B8C(resolved));
-        if (first == fn_80201B44(state)) {
+        if (argFirst == fn_80201B44(state)) {
             int linked = state->resource->slots[0];
             if (linked != 0) {
                 fn_8020123C(0x39, linked, linked, 0);
@@ -92,14 +84,14 @@ void *fn_800CD6C0(int argFirst, int argSecond, void *argThird, u8 argFlags,
             state->resource->slots[slot] = id;
         }
         payload = (Payload *)((RuntimeState *)fn_80201B8C(object))->payload;
-        payload->flags = flags;
-        payload->first = first;
-        payload->second = second;
-        payload->fourth = fourth;
-        payload->fifth = fifth;
-        payload->third = third;
-        payload->position = *position;
-        payload->eighth = eighth;
+        payload->flags = argFlags;
+        payload->first = argFirst;
+        payload->second = argSecond;
+        payload->fourth = argFourth;
+        payload->fifth = argFifth;
+        payload->third = argThird;
+        payload->position = *argPosition;
+        payload->eighth = argEighth;
         fn_802015A4(object);
         fn_801E8328(0x15, object);
         if ((payload->flags & 6) == 0) {
