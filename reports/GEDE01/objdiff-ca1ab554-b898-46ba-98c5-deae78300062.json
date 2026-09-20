@@ -1,0 +1,266 @@
+{
+  "version": 1,
+  "assignment_id": "ca1ab554-b898-46ba-98c5-deae78300062",
+  "attempt": 5,
+  "base_commit": "31df0db22faa1c69405fb797117616f6a0827311",
+  "target": "fn_801383B4",
+  "status": "attempted",
+  "canonical": {
+    "match_percent": 99.6789,
+    "target_bytes": 436,
+    "candidate_bytes": 436,
+    "target_instructions": 109,
+    "candidate_instructions": 109,
+    "matched": false
+  },
+  "relocation_strict": {
+    "match_percent": 99.6789,
+    "matched": false,
+    "aligned_relocations": 17,
+    "target_candidate_relocations_equal": true,
+    "relocations": [
+      {
+        "offset": "00000020",
+        "type": "R_PPC_EMB_SDA21",
+        "symbol_value": "00000000",
+        "target": "lbl_8064CFF8",
+        "addend": "0"
+      },
+      {
+        "offset": "0000002c",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_800467E8",
+        "addend": "0"
+      },
+      {
+        "offset": "00000048",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_8015D424",
+        "addend": "0"
+      },
+      {
+        "offset": "00000052",
+        "type": "R_PPC_ADDR16_HA",
+        "symbol_value": "00000000",
+        "target": "lbl_8024EF08",
+        "addend": "0"
+      },
+      {
+        "offset": "0000005e",
+        "type": "R_PPC_ADDR16_LO",
+        "symbol_value": "00000000",
+        "target": "lbl_8024EF08",
+        "addend": "0"
+      },
+      {
+        "offset": "0000006c",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_800F9D4C",
+        "addend": "0"
+      },
+      {
+        "offset": "00000080",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_8015D6D0",
+        "addend": "0"
+      },
+      {
+        "offset": "00000090",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_80213394",
+        "addend": "0"
+      },
+      {
+        "offset": "000000d4",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_801382B4",
+        "addend": "0"
+      },
+      {
+        "offset": "000000dc",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_80138A6C",
+        "addend": "0"
+      },
+      {
+        "offset": "00000104",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "memset",
+        "addend": "0"
+      },
+      {
+        "offset": "00000138",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_80139B1C",
+        "addend": "0"
+      },
+      {
+        "offset": "0000015c",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_8012B408",
+        "addend": "0"
+      },
+      {
+        "offset": "00000178",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_8021345C",
+        "addend": "0"
+      },
+      {
+        "offset": "0000017c",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_8015D44C",
+        "addend": "0"
+      },
+      {
+        "offset": "00000190",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_801383B4",
+        "addend": "0"
+      },
+      {
+        "offset": "0000019c",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_80138624",
+        "addend": "0"
+      }
+    ]
+  },
+  "raw_outputs": {
+    "fndiff_summary": "target 436 bytes  base 436 bytes  match 99.6789",
+    "fndiff_mismatches": [
+      {
+        "offset": "0xfc",
+        "retail": "add r21, r6, r0",
+        "candidate": "add r22, r6, r0"
+      },
+      {
+        "offset": "0x110",
+        "retail": "lwz r22, 0x14(r29)",
+        "candidate": "lwz r21, 0x14(r29)"
+      },
+      {
+        "offset": "0x118",
+        "retail": "lhz r0, 0x8(r22)",
+        "candidate": "lhz r0, 0x8(r21)"
+      },
+      {
+        "offset": "0x120",
+        "retail": "mr r5, r22",
+        "candidate": "mr r5, r21"
+      },
+      {
+        "offset": "0x144",
+        "retail": "add r0, r21, r0",
+        "candidate": "add r0, r22, r0"
+      },
+      {
+        "offset": "0x164",
+        "retail": "addi r22, r22, 0x10",
+        "candidate": "addi r21, r21, 0x10"
+      }
+    ],
+    "direct_elf_text_comparison": {
+      "method": "Direct ELF32 big-endian .text section comparison, before relocation application; no object patching or normalization",
+      "target_bytes": 436,
+      "candidate_bytes": 436,
+      "mismatched_words": [
+        {
+          "offset": "0xfc",
+          "target_word": "7ea60214",
+          "candidate_word": "7ec60214"
+        },
+        {
+          "offset": "0x110",
+          "target_word": "82dd0014",
+          "candidate_word": "82bd0014"
+        },
+        {
+          "offset": "0x118",
+          "target_word": "a0160008",
+          "candidate_word": "a0150008"
+        },
+        {
+          "offset": "0x120",
+          "target_word": "7ec5b378",
+          "candidate_word": "7ea5ab78"
+        },
+        {
+          "offset": "0x144",
+          "target_word": "7c150214",
+          "candidate_word": "7c160214"
+        },
+        {
+          "offset": "0x164",
+          "target_word": "3ad60010",
+          "candidate_word": "3ab50010"
+        }
+      ]
+    },
+    "sha1sum": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\n",
+    "legal_audit": "legal audit passed (18763 tracked project files inspected)\n",
+    "legal_audit_after_staging": "legal audit passed (18772 tracked project files inspected)\n"
+  },
+  "dol_sha1": {
+    "built": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matched": true,
+    "note": "NonMatching remains unlinked; the DOL checksum verifies the canonical build, not a match for this C candidate."
+  },
+  "compiler": {
+    "revision": "GC/1.3",
+    "registration": "Object(NonMatching, \"game/game_fn_801383B4.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+    "policy_changed": false
+  },
+  "hypothesis": "Model the 16-byte allocation-data elements explicitly and vary loop induction and pointer coalescing, rather than repeat the previous standalone declaration permutations or move the source live range across memset. Typed array/struct/integer data bases, register hints, pointer qualifiers, while/goto loops, aliases, and most temporary reuse are codegen-neutral. Indexed traversal, grouped traversal state, update ordering, allocation temporaries, and split pointer addition change register allocation or scheduling but regress. Exact measured per-variant outputs are preserved in the experiments report.",
+  "experiment_summary": {
+    "unique_variants_including_baseline": 87,
+    "compiled_variants": 85,
+    "compile_rejections": 2,
+    "best_score": 99.6789,
+    "best_new_score": 99.6789,
+    "restrictions": "C restrict spelling is rejected by the unchanged canonical language mode; no compiler setting was changed."
+  },
+  "retained_source": "eternal-darkness-decomp/src/game/game_fn_801383B4.c",
+  "retained_source_unchanged_from_base": true,
+  "preserved_attempts_reviewed": [
+    "9e0adae495708aaae1b0a58c75dadf0c42b215c9",
+    "1929df5f4375e5ee11d7f16a30eb9ffddd943969",
+    "3423e20c5a9fe8e74f58e69fdb1c6a78fe0ad82d",
+    "c7b70413e6f5cb131cabb4f9dda4805efcdc9ba8"
+  ],
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_801383B4.c fn_801383B4",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801383B4 fn_801383B4 --format json-pretty -o reports/GEDE01/canonical-ca1ab554-b898-46ba-98c5-deae78300062.json",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801383B4 fn_801383B4 --format json-pretty -c function_reloc_diffs=name_address -o reports/GEDE01/strict-ca1ab554-b898-46ba-98c5-deae78300062.json",
+    "build/binutils/powerpc-eabi-readelf -rW build/GEDE01/obj/game/game_fn_801383B4.o build/GEDE01/src/game/game_fn_801383B4.o",
+    "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/canonical-ca1ab554-b898-46ba-98c5-deae78300062.json",
+    "eternal-darkness-decomp/reports/GEDE01/strict-ca1ab554-b898-46ba-98c5-deae78300062.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-ca1ab554-b898-46ba-98c5-deae78300062.txt",
+    "eternal-darkness-decomp/reports/GEDE01/bytes-ca1ab554-b898-46ba-98c5-deae78300062.json",
+    "eternal-darkness-decomp/reports/GEDE01/fndiff-ca1ab554-b898-46ba-98c5-deae78300062.txt",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-ca1ab554-b898-46ba-98c5-deae78300062.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-ca1ab554-b898-46ba-98c5-deae78300062.json"
+  ],
+  "divergence": "Canonical GC/1.3 still exchanges the allocation-data base and ResourceSource pointer between r21 and r22 in exactly six instructions (0xfc, 0x110, 0x118, 0x120, 0x144, 0x164). Both canonical and relocation-strict objdiff measure 99.6789%, with 436 bytes, 109 instructions, and all 17 relocation offsets/types/targets/addends aligned; neither comparison reaches 100%."
+}
