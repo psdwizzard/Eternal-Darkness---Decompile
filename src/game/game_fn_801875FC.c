@@ -28,12 +28,12 @@ void fn_801875FC(Entry* entry, u16* flags, s16* bounds, int axis, int start,
 
     a = second[axis];
     b = first[axis];
-    if (a <= b) goto use_b;
-    peak = add + a;
-    goto peak_done;
-use_b:
-    peak = add + b;
-peak_done:
+    if (a > b) {
+        peak = add;
+        peak += a;
+    } else {
+        peak = add + b;
+    }
     step = (float)(2 * peak - b - a) / (float)(end - start);
     step_integer = (int)step;
     current = (float)b;
