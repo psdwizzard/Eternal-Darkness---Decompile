@@ -37,7 +37,7 @@ extern void fn_80131E8C(Manager*, Batch*), fn_8013310C(Batch*);
 extern void fn_80133C20(Manager*, Batch*), fn_80133D00(Manager*, Batch*, int);
 extern void fn_80132A4C(Batch*), fn_80132FF8(int);
 
-/* NonMatching: honest-C reconstruction of the transition resource validation,
+/* Transition resource validation,
  * batch setup, timing adjustment, and fallback paths. */
 int fn_80131460(void)
 {
@@ -64,14 +64,18 @@ int fn_80131460(void)
                     (char*)manager + 0x14);
         fn_801F8994(lbl_8063D400, *(float*)((char*)manager + 0x20),
                     (char*)manager + 0x24);
+        descriptor = lbl_80241DE8;
         kind = *(u8*)(lbl_8030F540 + 0x1DA);
-        descriptor = &lbl_80241DE8[kind];
+        descriptor += kind;
         if (descriptor->resource != -1) fn_80236A1C(descriptor);
-        descriptor = &lbl_80241DE8[*(u8*)(lbl_8030F540 + 0x1DA)];
+        descriptor = lbl_80241DE8;
+        kind = *(u8*)(lbl_8030F540 + 0x1DA);
+        descriptor += kind;
         if (descriptor->handle != -1) fn_8016B400(descriptor->handle, 0, 0);
         fn_80131A28(lbl_8064D18C);
+        descriptor = lbl_80241DE8;
         kind = *(u8*)(lbl_8030F540 + 0x1DA);
-        descriptor = &lbl_80241DE8[kind];
+        descriptor += kind;
         if (descriptor->state != -1 && *(s8*)(lbl_8030F540 + 0x1DC) == 0 &&
             (*(u8*)(lbl_803003C8 + 0x1914) != 0 || kind == 0x60 ||
              (u8)(kind - 0x49) <= 2 || kind == 0x57 || kind == 0x83 ||
@@ -134,8 +138,11 @@ int fn_80131460(void)
                     adjustment = batch->adjustment - selected;
                     adjustment <<= 1;
                     counter = *(int*)(lbl_8030F540 + 0x1CC);
-                    *(s16*)(lbl_8030F540 + 0x1D6) = transition - adjustment;
-                    *(int*)(lbl_8030F540 + 0x1CC) = counter + adjustment;
+                    {
+                        int result = counter + adjustment;
+                        *(s16*)(lbl_8030F540 + 0x1D6) = transition - adjustment;
+                        *(int*)(lbl_8030F540 + 0x1CC) = result;
+                    }
                     batch->adjustment = 0;
                 } else batch->adjustment = 0;
             }
