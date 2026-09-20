@@ -57,10 +57,10 @@ void fn_8018DC24(u8* object)
     }
 
     object_data = *(u8**)(self + 0x4C);
-    scratch = lbl_80607900;
     color = color_data;
     coordinate = (u16*)transform;
     i = 0;
+    scratch = lbl_80607900;
     for (; i < count; i++) {
         struct { u32 word; u16 half; } point;
         int shade;
