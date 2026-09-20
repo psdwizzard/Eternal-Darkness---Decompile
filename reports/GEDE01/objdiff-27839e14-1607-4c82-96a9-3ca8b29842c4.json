@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "assignment_id": "27839e14-1607-4c82-96a9-3ca8b29842c4",
+  "attempt": 5,
+  "target": "fn_80067858",
+  "unit": "main/game/game_fn_80067858",
+  "compiler": "canonical GC/1.3 configuration from configure.py",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80067858.c fn_80067858",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80067858 fn_80067858 -o build/GEDE01/objdiff-27839e14-1607-4c82-96a9-3ca8b29842c4-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "raw_measurements": {
+    "preserved_source_commit": "9d84a5edeab0c892f4dadcaa483fad0fadc126d2",
+    "final_source_sha1": "415464031dd12f018d12769885a9709b344a95b6",
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_check_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "legal_audit_output": "legal audit passed (18787 tracked project files inspected)",
+    "canonical_objdiff_output": "target 448 bytes  base 456 bytes  match 97.14286; left instruction_rows=112 relocation_rows=18; right instruction_rows=114 relocation_rows=18",
+    "relocation_strict_objdiff_output": "target 448 bytes  base 456 bytes  match 97.14286; left instruction_rows=112 relocation_rows=18; right instruction_rows=114 relocation_rows=18",
+    "different_hypothesis_results": "Moving free_slot initialization before the first call regressed the fresh-object score to 95.26786%. Initialized declarators changed MWCC variable numbering but regressed to 96.51786%. Plain register qualifiers and declaration permutation left the fresh-object score at 97.14286% without correcting the allocation cycle. Constant -1 exits retained two extra li instructions."
+  },
+  "relocation_audit": {
+    "strict_mode": "function_reloc_diffs=name_address",
+    "targets_types_and_addends_equal": true,
+    "retail_relocation_rows": 18,
+    "generated_relocation_rows": 18
+  },
+  "canonical_match_percent": 97.14286,
+  "relocation_strict_match_percent": 97.14286,
+  "matched": false,
+  "divergence": "Canonical GC/1.3 emits 456 bytes versus retail's 448. Generated assigns free_slot/state/object_id to r28/r29/r30 while retail assigns them to r30/r28/r29. The explicit C early returns recover the retail conditional-branch shape but emit redundant `mr r3,r31` instructions on both generated early-return paths. All 18 relocation targets, types, and addends agree under relocation-strict comparison."
+}
