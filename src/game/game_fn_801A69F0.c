@@ -17,16 +17,14 @@ extern int lbl_80251200[3];
 void fn_801A69F0(int direction)
 {
     int group;
-    int nonzero = -direction | direction;
     int start = 3;
-    int increment = -1;
+    int nonzero = -direction | direction;
+    int increment;
 
     nonzero >>= 31;
     start &= ~nonzero;
 
-    if (direction != 0) {
-        increment = 1;
-    }
+    increment = direction != 0 ? 1 : -1;
 
     for (group = 0; group < 3; group++) {
         int count = lbl_80251200[group];
