@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "assignment_id": "f225bb51-3f1a-4914-9045-4725f244cb3e",
+  "target": "fn_8014D478",
+  "working_directory": "eternal-darkness-decomp",
+  "compiler_configuration": "canonical configure.py registration: Object(NonMatching, game/game_fn_8014D478.c, extra_cflags=[-use_lmw_stmw on])",
+  "commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output": "Project configured successfully"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[881/883] DOL build/GEDE01/main.dol\n[882/883] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[883/883] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8014D478 fn_8014D478 -o reports/GEDE01/objdiff-canonical-f225bb51-3f1a-4914-9045-4725f244cb3e.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to reports/GEDE01/objdiff-canonical-f225bb51-3f1a-4914-9045-4725f244cb3e.json",
+      "output": "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-f225bb51-3f1a-4914-9045-4725f244cb3e.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8014D478 fn_8014D478 -c function_reloc_diffs=name_address -o reports/GEDE01/objdiff-strict-f225bb51-3f1a-4914-9045-4725f244cb3e.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to reports/GEDE01/objdiff-strict-f225bb51-3f1a-4914-9045-4725f244cb3e.json",
+      "output": "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-f225bb51-3f1a-4914-9045-4725f244cb3e.json"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (18561 tracked project files inspected)"
+    }
+  ],
+  "canonical": {
+    "match_percent": 97.71186,
+    "text_bytes_each": 472,
+    "instructions_each": 118,
+    "objdiff_rows_each": 119,
+    "relocations_each": 19
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "match_percent": 97.71186,
+    "text_bytes_each": 472,
+    "instructions_each": 118,
+    "objdiff_rows_each": 119,
+    "relocations_each": 19,
+    "result": "not matched; complete raw JSON records relocation types, targets, addresses/addends"
+  },
+  "experiments": [
+    {
+      "hypothesis": "Hoist and reuse the upper threshold across both packed-kind blocks, anchoring the load before the state-kind store",
+      "result": "regressed to 96.94915% and 468 bytes when reused; the retained 472-byte candidate is better"
+    },
+    {
+      "hypothesis": "Reverse source assignment order for kind and packed in the first block to invert r0/r3 allocation",
+      "result": "regressed to 97.28814%; compiler retained the undesired first-block allocation"
+    }
+  ],
+  "remaining_divergence": "Ten argument mismatches remain: eight r0/r3 selections in the first packed-kind block and the two floating-load register/order differences at retail offsets 0xc8/0xcc. One scheduling pair remains: retail loads lbl_806504FC at 0x6c before the state-kind store at 0x70, while generated code stores at 0x6c and loads at 0x70. Strict relocation comparison therefore also differs at these scheduled SDA21 offsets."
+}

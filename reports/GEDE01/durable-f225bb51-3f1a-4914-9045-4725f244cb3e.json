@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f225bb51-3f1a-4914-9045-4725f244cb3e",
+  "attempt": 4,
+  "base_commit": "003d295e9678a6a7f6c657200185f1b1ddc2d259",
+  "target": "fn_8014D478",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f225bb51-3f1a-4914-9045-4725f244cb3e.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are 97.71186% with identical 472-byte/118-instruction code and 19 relocations per side. Ten argument mismatches remain: eight r0/r3 selections in the first packed-kind block and the two floating-load register/order differences at retail offsets 0xc8/0xcc. One scheduling pair remains: retail loads lbl_806504FC at 0x6c before the state-kind store at 0x70, while generated code stores at 0x6c and loads at 0x70; strict relocation comparison consequently differs at these SDA21 offsets."
+}

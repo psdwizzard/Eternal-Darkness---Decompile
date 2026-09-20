@@ -22,28 +22,31 @@ extern void fn_80179904(void*, int);
 /*
  * Honest NonMatching reconstruction. The behavior and all field writes are
  * recovered; remaining differences are temporary-register selection in the
- * two packed-kind blocks and floating-point load scheduling.
+ * first packed-kind block and one floating-point load/store scheduling pair.
  */
 void fn_8014D478(void* owner, Vec3* position, float* rotation,
                  int first_kind, int second_kind, int* source, int flags)
 {
     void* state;
     u8 kind;
+    int packed;
+    float first_upper;
 
     if (((flags & 4) != 0 || !(lbl_8064CF04 >= lbl_806504F8)) && flags != 0) {
         state = fn_80149D98(fn_8014D650);
         if (state != 0) {
             fn_80149D64(state);
             *(u8*)((char*)state + 0x1328) = 4;
+            first_upper = lbl_806504FC;
             *(int*)((char*)state + 0x38C) = flags;
 
-            if (lbl_8064CF04 >= lbl_806504FC) {
-                int packed = (first_kind >> 2) & 0x3F;
+            if (lbl_8064CF04 >= first_upper) {
+                packed = (first_kind >> 2) & 0x3F;
                 kind = first_kind & 0xFF;
                 if (packed > 0)
                     kind = packed;
             } else if (lbl_8064CF04 >= lbl_80650500) {
-                int packed = (first_kind >> 1) & 0x7F;
+                packed = (first_kind >> 1) & 0x7F;
                 kind = first_kind & 0xFF;
                 if (packed > 0)
                     kind = packed;
@@ -53,12 +56,12 @@ void fn_8014D478(void* owner, Vec3* position, float* rotation,
             *(u8*)((char*)state + 0x398) = kind;
 
             if (lbl_8064CF04 >= lbl_806504FC) {
-                int packed = (second_kind >> 2) & 0x3F;
+                packed = (second_kind >> 2) & 0x3F;
                 kind = second_kind & 0xFF;
                 if (packed > 0)
                     kind = packed;
             } else if (lbl_8064CF04 >= lbl_80650500) {
-                int packed = (second_kind >> 1) & 0x7F;
+                packed = (second_kind >> 1) & 0x7F;
                 kind = second_kind & 0xFF;
                 if (packed > 0)
                     kind = packed;
