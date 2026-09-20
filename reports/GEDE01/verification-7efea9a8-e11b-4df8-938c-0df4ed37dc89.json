@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "assignment_id": "7efea9a8-e11b-4df8-938c-0df4ed37dc89",
+  "configure": {
+    "command": "python3 configure.py",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "build": {
+    "command": ".tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_terminal_tail": "[879/883] REPORT\n INFO Loading project .\n INFO Generating report for 7068 units (using 8 threads)\n INFO Report generated in 0.171s\n INFO Writing to build/GEDE01/report.json\n[880/883] LINK build/GEDE01/main.elf\n[881/883] DOL build/GEDE01/main.dol\n[882/883] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[883/883] PROGRESS\nProgress:\n  All: 58.11% fuzzy, 47.39% matched, 47.36% linked (6263 / 7068 files)\n    Code: 1090224 / 2300692 bytes (6029 / 8214 functions)\n    Data: 39594 / 4305642 bytes (0.92%)"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "exit_code": 0,
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matched": true
+  },
+  "sha1_gate": {
+    "command": "sha1sum -c config/GEDE01/build.sha1",
+    "exit_code": 0,
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "retained_objdiff": {
+    "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8018A1C8 fn_8018A1C8 -o reports/GEDE01/objdiff-7efea9a8-e11b-4df8-938c-0df4ed37dc89-canonical.json --format json-pretty",
+    "strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8018A1C8 fn_8018A1C8 -o reports/GEDE01/objdiff-7efea9a8-e11b-4df8-938c-0df4ed37dc89.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_output": "retail_size=328 generated_size=328 match=97.31707\nretail_size=328 generated_size=328 match=97.31707",
+    "canonical_match_percent": 97.31707,
+    "strict_match_percent": 97.31707,
+    "diff_arg_mismatch_count": 36,
+    "relocation_records_retail": 18,
+    "relocation_records_generated": 18,
+    "relocation_site_type_target_addend_sequences_equal": true
+  }
+}

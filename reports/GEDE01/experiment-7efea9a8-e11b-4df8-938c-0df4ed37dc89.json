@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "assignment_id": "7efea9a8-e11b-4df8-938c-0df4ed37dc89",
+  "target": "fn_8018A1C8",
+  "hypothesis": "MWCC GC/1.3 may assign the desired descending retail register sequence if the long-lived locals are declared in the same lexical order as retail r31 through r21. This differs from the earlier register-class-only and early-induction-lifetime experiments because it changes declaration order without moving any initialization or executable statement.",
+  "source_delta": "@@ function local declarations @@\n-    register u8* self;\n-    register u8* buffer2;\n-    register u8* buffer1;\n-    register u8* buffer0;\n-    int offset;\n-    int i;\n-    u8 count;\n-    u16 size0;\n-    u16 size1;\n-    u16 size2;\n-    u8* entry;\n-    u8* out;\n+    register int i;\n+    register u8 count;\n+    register u16 size0;\n+    register u16 size1;\n+    register u16 size2;\n+    register u8* entry;\n+    register u8* buffer0;\n+    register u8* buffer1;\n+    register u8* buffer2;\n+    register u8* out;\n+    register u8* self;\n+    int offset;",
+  "compiler_invocation": "tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018A1C8.c -o build/GEDE01/src/game",
+  "build_command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8018A1C8.o",
+  "build_exit_code": 0,
+  "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018A1C8.o",
+  "measurement_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8018A1C8 fn_8018A1C8 -o reports/GEDE01/objdiff-7efea9a8-e11b-4df8-938c-0df4ed37dc89-experiment.json --format json-pretty -c function_reloc_diffs=name_address",
+  "measurement_exit_code": 0,
+  "measurement_output": "INFO Writing to reports/GEDE01/objdiff-7efea9a8-e11b-4df8-938c-0df4ed37dc89-experiment.json",
+  "retail_bytes": 328,
+  "generated_bytes": 328,
+  "match_percent": 96.34146,
+  "observed_codegen": "The variant kept instruction count and order but worsened register coloring: self moved from the retail r21 to r24; count/sizes became r31/r30/r29/r28; buffers became r27/r26/r25; entry/out/index/callback/offset became r21/r20/r22/r23/r19. It was reverted in favor of the retained 97.31707% source.",
+  "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-7efea9a8-e11b-4df8-938c-0df4ed37dc89-experiment.json"
+}
