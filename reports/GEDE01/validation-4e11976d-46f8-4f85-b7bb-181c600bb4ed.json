@@ -1,0 +1,38 @@
+{
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/build-4e11976d-46f8-4f85-b7bb-181c600bb4ed.log",
+    "output_normalization": "Windows linker CRLF line endings normalized to LF; output otherwise retained."
+  },
+  "sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n"
+  },
+  "scope": "Only assignment-specific reports changed. Existing source, NonMatching registration, split, and compiler settings retained. Pre-existing CLAUDE.md modification excluded.",
+  "clean_room": "No external source used. Reviewed repository preserved attempts and compared local canonical compiler output against approved retail input. No binaries or private inputs staged.",
+  "legal_audit": {
+    "command": [
+      "python3",
+      "eternal-darkness-decomp/tools/legal_audit.py"
+    ],
+    "exit_code": 0,
+    "stdout": "legal audit passed (18430 tracked project files inspected)\n",
+    "stderr": ""
+  },
+  "whitespace_check": {
+    "command": [
+      "git",
+      "diff",
+      "HEAD^",
+      "--check"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

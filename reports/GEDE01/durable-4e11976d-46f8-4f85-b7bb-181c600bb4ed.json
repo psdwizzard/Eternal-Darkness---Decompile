@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "4e11976d-46f8-4f85-b7bb-181c600bb4ed",
+  "attempt": 6,
+  "base_commit": "493a45bf014e1de43af68c695262c89d43cda1d2",
+  "target": "fn_8016FA08",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4e11976d-46f8-4f85-b7bb-181c600bb4ed.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-4e11976d-46f8-4f85-b7bb-181c600bb4ed.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-4e11976d-46f8-4f85-b7bb-181c600bb4ed.log",
+    "eternal-darkness-decomp/reports/GEDE01/validation-4e11976d-46f8-4f85-b7bb-181c600bb4ed.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff v3.6.1 both measure 97.77778%. Retail is 396 bytes with 24 relocation-bearing instruction records; generated is 400 bytes with 25. Retail offset 0x14 is addi r31,r4,lbl_8024FF00@l; generated offsets 0x10 and 0x18 are addi r0,r4,lbl_8024FF00@l then mr r31,r0. This extra instruction shifts later code by four bytes. Retail offset 0x44 is addi r4,r31,0 with R_PPC_NONE targeting lbl_8024FF00; generated offset 0x48 is mr r4,r31. Attempt 6 tested a new control-flow/coalescing hypothesis with five variants: if/else common return and goto shared exit each scored 94.69697% (396 bytes), moving the first count call before pool initialization scored 85.0% (400 bytes), placing the bad-count block at the end scored 78.08081% (400 bytes), and separating pool declaration from initialization remained 97.77778% (400 bytes). The 396-byte variants retain the address-copy defect and omit the retail early li r3,0; size equality is not a match. The original honest NonMatching C reconstruction and canonical compiler settings are unchanged. Canonical DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

@@ -1,0 +1,575 @@
+{
+  "hypothesis": "Control-flow joins and initialization placement may allow MWCC to coalesce the named string-pool base directly into r31, avoiding the r0-to-r31 copy. No compiler settings changed.",
+  "results": [
+    {
+      "name": "baseline",
+      "source_diff": "",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8016FA08.o\n",
+      "build_stderr": "",
+      "build_exit": 0,
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8016FA08",
+        "fn_8016FA08",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "-"
+      ],
+      "raw_objdiff_section_and_symbol_metadata": {
+        "left": {
+          "sections": [
+            {
+              "name": ".text",
+              "kind": "SECTION_CODE",
+              "size": "396",
+              "match_percent": 97.77778
+            },
+            {
+              "name": ".rela.text",
+              "size": "240"
+            },
+            {
+              "name": ".symtab",
+              "size": "288"
+            },
+            {
+              "name": ".strtab",
+              "size": "202"
+            },
+            {
+              "name": ".shstrtab",
+              "size": "38"
+            }
+          ],
+          "symbols": [
+            {
+              "name": "fn_8016FA08",
+              "size": "396",
+              "flags": 1,
+              "target_symbol": 1,
+              "match_percent": 97.77778
+            }
+          ]
+        },
+        "right": {
+          "sections": [
+            {
+              "name": ".text",
+              "kind": "SECTION_CODE",
+              "size": "400"
+            },
+            {
+              "name": ".rela.text",
+              "size": "240"
+            },
+            {
+              "name": ".symtab",
+              "size": "288"
+            },
+            {
+              "name": ".strtab",
+              "size": "202"
+            },
+            {
+              "name": ".shstrtab",
+              "size": "53"
+            },
+            {
+              "name": ".comment",
+              "size": "188"
+            }
+          ],
+          "symbols": [
+            {
+              "name": "fn_8016FA08",
+              "size": "400",
+              "flags": 1,
+              "target_symbol": 1,
+              "match_percent": 97.77778
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "if_else_common_return",
+      "source_diff": "--- \n+++ \n@@ -42,9 +42,7 @@\n \n     if (fn_8016A598(state) != 2) {\n         fn_80163BB4(state, string_pool, 2, fn_8016A598(state));\n-        return 0;\n-    }\n-\n+    } else {\n     object_id = (int)fn_8016A694(state, 1);\n     object = fn_80201814(object_id);\n     if (object != 0) {\n@@ -67,5 +65,6 @@\n     } else {\n         fn_80163BB4(state, string_pool + 0x218, object_id);\n     }\n+    }\n     return 0;\n }\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8016FA08.o\n",
+      "build_stderr": "",
+      "build_exit": 0,
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8016FA08",
+        "fn_8016FA08",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "-"
+      ],
+      "raw_objdiff_section_and_symbol_metadata": {
+        "left": {
+          "sections": [
+            {
+              "name": ".text",
+              "kind": "SECTION_CODE",
+              "size": "396",
+              "match_percent": 94.69697
+            },
+            {
+              "name": ".rela.text",
+              "size": "240"
+            },
+            {
+              "name": ".symtab",
+              "size": "288"
+            },
+            {
+              "name": ".strtab",
+              "size": "202"
+            },
+            {
+              "name": ".shstrtab",
+              "size": "38"
+            }
+          ],
+          "symbols": [
+            {
+              "name": "fn_8016FA08",
+              "size": "396",
+              "flags": 1,
+              "target_symbol": 1,
+              "match_percent": 94.69697
+            }
+          ]
+        },
+        "right": {
+          "sections": [
+            {
+              "name": ".text",
+              "kind": "SECTION_CODE",
+              "size": "396"
+            },
+            {
+              "name": ".rela.text",
+              "size": "240"
+            },
+            {
+              "name": ".symtab",
+              "size": "288"
+            },
+            {
+              "name": ".strtab",
+              "size": "202"
+            },
+            {
+              "name": ".shstrtab",
+              "size": "53"
+            },
+            {
+              "name": ".comment",
+              "size": "188"
+            }
+          ],
+          "symbols": [
+            {
+              "name": "fn_8016FA08",
+              "size": "396",
+              "flags": 1,
+              "target_symbol": 1,
+              "match_percent": 94.69697
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "count_before_pool",
+      "source_diff": "--- \n+++ \n@@ -28,6 +28,7 @@\n \n int fn_8016FA08(void* state)\n {\n+    int argument_count = fn_8016A598(state);\n     const char* string_pool = lbl_8024FF00;\n     int object_id;\n     unsigned int resource_id;\n@@ -40,7 +41,7 @@\n     Vec4 base_rotation;\n     Vec4 rotation;\n \n-    if (fn_8016A598(state) != 2) {\n+    if (argument_count != 2) {\n         fn_80163BB4(state, string_pool, 2, fn_8016A598(state));\n         return 0;\n     }\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8016FA08.o\n",
+      "build_stderr": "",
+      "build_exit": 0,
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8016FA08",
+        "fn_8016FA08",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "-"
+      ],
+      "raw_objdiff_section_and_symbol_metadata": {
+        "left": {
+          "sections": [
+            {
+              "name": ".text",
+              "kind": "SECTION_CODE",
+              "size": "396",
+              "match_percent": 85.0
+            },
+            {
+              "name": ".rela.text",
+              "size": "240"
+            },
+            {
+              "name": ".symtab",
+              "size": "288"
+            },
+            {
+              "name": ".strtab",
+              "size": "202"
+            },
+            {
+              "name": ".shstrtab",
+              "size": "38"
+            }
+          ],
+          "symbols": [
+            {
+              "name": "fn_8016FA08",
+              "size": "396",
+              "flags": 1,
+              "target_symbol": 1,
+              "match_percent": 85.0
+            }
+          ]
+        },
+        "right": {
+          "sections": [
+            {
+              "name": ".text",
+              "kind": "SECTION_CODE",
+              "size": "400"
+            },
+            {
+              "name": ".rela.text",
+              "size": "240"
+            },
+            {
+              "name": ".symtab",
+              "size": "288"
+            },
+            {
+              "name": ".strtab",
+              "size": "202"
+            },
+            {
+              "name": ".shstrtab",
+              "size": "53"
+            },
+            {
+              "name": ".comment",
+              "size": "188"
+            }
+          ],
+          "symbols": [
+            {
+              "name": "fn_8016FA08",
+              "size": "400",
+              "flags": 1,
+              "target_symbol": 1,
+              "match_percent": 85.0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "check_goto_shared_exit",
+      "source_diff": "--- \n+++ \n@@ -42,7 +42,7 @@\n \n     if (fn_8016A598(state) != 2) {\n         fn_80163BB4(state, string_pool, 2, fn_8016A598(state));\n-        return 0;\n+        goto done;\n     }\n \n     object_id = (int)fn_8016A694(state, 1);\n@@ -67,5 +67,6 @@\n     } else {\n         fn_80163BB4(state, string_pool + 0x218, object_id);\n     }\n+done:\n     return 0;\n }\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8016FA08.o\n",
+      "build_stderr": "",
+      "build_exit": 0,
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8016FA08",
+        "fn_8016FA08",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "-"
+      ],
+      "raw_objdiff_section_and_symbol_metadata": {
+        "left": {
+          "sections": [
+            {
+              "name": ".text",
+              "kind": "SECTION_CODE",
+              "size": "396",
+              "match_percent": 94.69697
+            },
+            {
+              "name": ".rela.text",
+              "size": "240"
+            },
+            {
+              "name": ".symtab",
+              "size": "288"
+            },
+            {
+              "name": ".strtab",
+              "size": "202"
+            },
+            {
+              "name": ".shstrtab",
+              "size": "38"
+            }
+          ],
+          "symbols": [
+            {
+              "name": "fn_8016FA08",
+              "size": "396",
+              "flags": 1,
+              "target_symbol": 1,
+              "match_percent": 94.69697
+            }
+          ]
+        },
+        "right": {
+          "sections": [
+            {
+              "name": ".text",
+              "kind": "SECTION_CODE",
+              "size": "396"
+            },
+            {
+              "name": ".rela.text",
+              "size": "240"
+            },
+            {
+              "name": ".symtab",
+              "size": "288"
+            },
+            {
+              "name": ".strtab",
+              "size": "202"
+            },
+            {
+              "name": ".shstrtab",
+              "size": "53"
+            },
+            {
+              "name": ".comment",
+              "size": "188"
+            }
+          ],
+          "symbols": [
+            {
+              "name": "fn_8016FA08",
+              "size": "396",
+              "flags": 1,
+              "target_symbol": 1,
+              "match_percent": 94.69697
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "error_block_at_end",
+      "source_diff": "--- \n+++ \n@@ -40,10 +40,7 @@\n     Vec4 base_rotation;\n     Vec4 rotation;\n \n-    if (fn_8016A598(state) != 2) {\n-        fn_80163BB4(state, string_pool, 2, fn_8016A598(state));\n-        return 0;\n-    }\n+    if (fn_8016A598(state) != 2) goto bad_count;\n \n     object_id = (int)fn_8016A694(state, 1);\n     object = fn_80201814(object_id);\n@@ -68,4 +65,7 @@\n         fn_80163BB4(state, string_pool + 0x218, object_id);\n     }\n     return 0;\n+bad_count:\n+    fn_80163BB4(state, string_pool, 2, fn_8016A598(state));\n+    return 0;\n }\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8016FA08.o\n",
+      "build_stderr": "",
+      "build_exit": 0,
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8016FA08",
+        "fn_8016FA08",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "-"
+      ],
+      "raw_objdiff_section_and_symbol_metadata": {
+        "left": {
+          "sections": [
+            {
+              "name": ".text",
+              "kind": "SECTION_CODE",
+              "size": "396",
+              "match_percent": 78.08081
+            },
+            {
+              "name": ".rela.text",
+              "size": "240"
+            },
+            {
+              "name": ".symtab",
+              "size": "288"
+            },
+            {
+              "name": ".strtab",
+              "size": "202"
+            },
+            {
+              "name": ".shstrtab",
+              "size": "38"
+            }
+          ],
+          "symbols": [
+            {
+              "name": "fn_8016FA08",
+              "size": "396",
+              "flags": 1,
+              "target_symbol": 1,
+              "match_percent": 78.08081
+            }
+          ]
+        },
+        "right": {
+          "sections": [
+            {
+              "name": ".text",
+              "kind": "SECTION_CODE",
+              "size": "400"
+            },
+            {
+              "name": ".rela.text",
+              "size": "240"
+            },
+            {
+              "name": ".symtab",
+              "size": "288"
+            },
+            {
+              "name": ".strtab",
+              "size": "202"
+            },
+            {
+              "name": ".shstrtab",
+              "size": "53"
+            },
+            {
+              "name": ".comment",
+              "size": "188"
+            }
+          ],
+          "symbols": [
+            {
+              "name": "fn_8016FA08",
+              "size": "400",
+              "flags": 1,
+              "target_symbol": 1,
+              "match_percent": 78.08081
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "pool_init_after_declarations",
+      "source_diff": "--- \n+++ \n@@ -28,7 +28,7 @@\n \n int fn_8016FA08(void* state)\n {\n-    const char* string_pool = lbl_8024FF00;\n+    const char* string_pool;\n     int object_id;\n     unsigned int resource_id;\n     void* object;\n@@ -40,6 +40,7 @@\n     Vec4 base_rotation;\n     Vec4 rotation;\n \n+    string_pool = lbl_8024FF00;\n     if (fn_8016A598(state) != 2) {\n         fn_80163BB4(state, string_pool, 2, fn_8016A598(state));\n         return 0;\n",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8016FA08.o\n",
+      "build_stderr": "",
+      "build_exit": 0,
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8016FA08",
+        "fn_8016FA08",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "-"
+      ],
+      "raw_objdiff_section_and_symbol_metadata": {
+        "left": {
+          "sections": [
+            {
+              "name": ".text",
+              "kind": "SECTION_CODE",
+              "size": "396",
+              "match_percent": 97.77778
+            },
+            {
+              "name": ".rela.text",
+              "size": "240"
+            },
+            {
+              "name": ".symtab",
+              "size": "288"
+            },
+            {
+              "name": ".strtab",
+              "size": "202"
+            },
+            {
+              "name": ".shstrtab",
+              "size": "38"
+            }
+          ],
+          "symbols": [
+            {
+              "name": "fn_8016FA08",
+              "size": "396",
+              "flags": 1,
+              "target_symbol": 1,
+              "match_percent": 97.77778
+            }
+          ]
+        },
+        "right": {
+          "sections": [
+            {
+              "name": ".text",
+              "kind": "SECTION_CODE",
+              "size": "400"
+            },
+            {
+              "name": ".rela.text",
+              "size": "240"
+            },
+            {
+              "name": ".symtab",
+              "size": "288"
+            },
+            {
+              "name": ".strtab",
+              "size": "202"
+            },
+            {
+              "name": ".shstrtab",
+              "size": "53"
+            },
+            {
+              "name": ".comment",
+              "size": "188"
+            }
+          ],
+          "symbols": [
+            {
+              "name": "fn_8016FA08",
+              "size": "400",
+              "flags": 1,
+              "target_symbol": 1,
+              "match_percent": 97.77778
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
