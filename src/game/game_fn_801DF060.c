@@ -43,6 +43,9 @@ extern int fn_801F86F4(int);
 #define BURST(handle, a, b, c, d, owner, mask, tail) \
     fn_801D62D0((handle), (a), (b), (handle), (c), (d), (owner), 0, \
         0, 2, 7, 2, 3, 1, 0, 1, 17, 4, 1, 16, 0, 1, 34, (mask), 0, (tail))
+#define BURST32(handle, a, b, c, d, owner, mask, tail) \
+    fn_801D62D0((handle), (a), (b), (handle), (c), (d), (owner), 0, \
+        0, 2, 7, 2, 3, 1, 0, 1, 17, 4, 1, 32, 0, 1, 34, (mask), 0, (tail))
 
 /* NonMatching: complete honest-C reconstruction of the event-state dispatcher.
  * Retail's exact 0x100-byte frame, r26-r31 lifetimes, and repeated 26-argument
@@ -53,6 +56,7 @@ void fn_801DF060(void* object)
     u8* constants = lbl_8023B5C0;
     void* handle;
     void* target;
+    void* node;
     int owner;
     int a, b, c;
     int d, e, f;
@@ -62,7 +66,8 @@ void fn_801DF060(void* object)
     if (*(int*)(info + 8) != lbl_8064D18C || (info[0xff0] & 1)) {
         handle = fn_80201814(*(int*)(info + 0xe0));
         if (handle) {
-            fn_80036DA4(handle, fn_80036D5C() | 0x08000000);
+            result = fn_80036D5C();
+            fn_80036DA4(handle, result | 0x08000000);
             result = fn_80201B5C(handle);
             if (result == 0 || result == 40) {
                 fn_80201D44(handle, *(int*)(info + 0x13c));
@@ -76,8 +81,10 @@ void fn_801DF060(void* object)
 
     switch (*(u16*)(info + 0xff4)) {
     case 0:
-        if (*(int*)(info + 0xf8) == 3 && *(int*)(info + 0xd4))
-            fn_801DE5DC(*(int*)(info + 0xe0), fn_801D38E8(*(int*)(info + 4)));
+        if (*(int*)(info + 0xf8) == 3 && *(int*)(info + 0xd4)) {
+            owner = fn_801D38E8(*(int*)(info + 4));
+            fn_801DE5DC(*(int*)(info + 0xe0), owner);
+        }
         break;
     case 20:
         if (*(int*)(info + 0xf8) == 6) {
@@ -85,7 +92,8 @@ void fn_801DF060(void* object)
             q = *(Vec3*)(constants + 0x90);
             handle = fn_80201814(*(int*)(info + 0xe0));
             target = fn_80201BC8(handle);
-            fn_802114E0(&r, fn_8011FE34(target));
+            node = fn_8011FE34(target);
+            fn_802114E0(&r, node);
             fn_8011F114(&s, target);
             fn_80211710(&r, &p, &p);
             fn_80211710(&r, &q, &q);
@@ -128,30 +136,36 @@ void fn_801DF060(void* object)
             else fn_801F74C8(35, 0, 6);
             fn_801441C0(1, 0, 20);
             if ((*(int*)(info + 4) & 15) == 1) {
-                handle = fn_80201814(*(int*)(info + 0xe0)); target = fn_80201BC8(handle);
+                int event_id;
+                event_id = *(int*)(info + 0xe0);
+                fn_80201BC8(fn_80201814(event_id));
                 owner = fn_801D38E8(*(int*)(info + 4));
-                BURST(handle, 33, 5, 32, 5, owner, 0x70800, 4);
-                BURST(handle, 33, 5, 32, 4, owner, 0x70800, 4);
+                BURST(event_id, 33, 5, 32, 5, owner, 0x70800, 4);
+                BURST(event_id, 33, 5, 32, 4, owner, 0x70800, 4);
             }
         }
         break;
     case 67:
         if (*(int*)(info + 0xf8) == 4 && ((*(int*)(info + 4) & 15) == 1)) {
-            handle = fn_80201814(*(int*)(info + 0xe0)); target = fn_80201BC8(handle);
+            int event_id;
+            event_id = *(int*)(info + 0xe0);
+            fn_80201BC8(fn_80201814(event_id));
             owner = fn_801D38E8(*(int*)(info + 4));
-            BURST(handle, 32, 4, 19, 1, owner, 0x70800, 4);
-            BURST(handle, 32, 5, 19, 1, owner, 0x70800, 4);
-            BURST(handle, 33, 5, 19, 1, owner, 0x70800, 4);
+            BURST(event_id, 32, 4, 19, 1, owner, 0x70800, 4);
+            BURST(event_id, 32, 5, 19, 1, owner, 0x70800, 4);
+            BURST(event_id, 33, 5, 19, 1, owner, 0x70800, 4);
         }
         break;
     case 84:
         if (*(int*)(info + 0xf8) == 4) {
-            handle = fn_80201814(*(int*)(info + 0xe0)); target = fn_80201BC8(handle);
+            int event_id;
+            event_id = *(int*)(info + 0xe0);
+            fn_80201BC8(fn_80201814(event_id));
             owner = fn_801D38E8(*(int*)(info + 4));
-            BURST(handle, 19, 1, 26, 1, owner, 0x50800, 4);
-            BURST(handle, 19, 1, 26, 1, owner, 0x60800, 4);
-            BURST(handle, 19, 1, 25, 1, owner, 0x50800, 4);
-            BURST(handle, 19, 1, 25, 1, owner, 0x60800, 4);
+            BURST32(event_id, 19, 1, 26, 1, owner, 0x50800, 4);
+            BURST32(event_id, 19, 1, 26, 1, owner, 0x60800, 4);
+            BURST32(event_id, 19, 1, 25, 1, owner, 0x50800, 4);
+            BURST32(event_id, 19, 1, 25, 1, owner, 0x60800, 4);
         }
         break;
     case 90:
@@ -160,27 +174,33 @@ void fn_801DF060(void* object)
         break;
     case 101:
         if (*(int*)(info + 0xf8) == 4) {
-            handle = fn_80201814(*(int*)(info + 0xe0)); target = fn_80201BC8(handle);
+            int event_id;
+            event_id = *(int*)(info + 0xe0);
+            fn_80201BC8(fn_80201814(event_id));
             owner = fn_801D38E8(*(int*)(info + 4));
-            BURST(handle, 26, 1, 0, 2, owner, 0x52800, 4);
-            BURST(handle, 26, 1, 0, 2, owner, 0x62800, 4);
-            BURST(handle, 25, 1, 0, 3, owner, 0x52800, 4);
-            BURST(handle, 25, 1, 0, 3, owner, 0x62800, 4);
+            BURST(event_id, 26, 1, 0, 2, owner, 0x52800, 4);
+            BURST(event_id, 26, 1, 0, 2, owner, 0x62800, 4);
+            BURST(event_id, 25, 1, 0, 3, owner, 0x52800, 4);
+            BURST(event_id, 25, 1, 0, 3, owner, 0x62800, 4);
         }
         break;
     case 118:
         if (*(int*)(info + 0xf8) == 4) {
-            handle = fn_80201814(*(int*)(info + 0xe0)); target = fn_80201BC8(handle);
+            int event_id;
+            event_id = *(int*)(info + 0xe0);
+            fn_80201BC8(fn_80201814(event_id));
             owner = fn_801D38E8(*(int*)(info + 4));
-            BURST(handle, 0, 2, 24, 2, owner, 0x70040, 4);
-            BURST(handle, 0, 3, 23, 3, owner, 0x70040, 4);
+            BURST(event_id, 0, 2, 24, 2, owner, 0x70040, 4);
+            BURST(event_id, 0, 3, 23, 3, owner, 0x70040, 4);
         }
         break;
     case 135:
         if (*(int*)(info + 0xf8) == 4) {
-            handle = fn_80201814(*(int*)(info + 0xe0)); target = fn_80201BC8(handle);
+            int event_id;
+            event_id = *(int*)(info + 0xe0);
+            fn_80201BC8(fn_80201814(event_id));
             owner = fn_801D38E8(*(int*)(info + 4));
-            fn_801D62D0(handle,24,2,handle,23,3,owner,0,0,4,7,2,3,1,0,1,17,10,4,60,0,1,68,0x42800,0,4);
+            fn_801D62D0(event_id,24,2,event_id,23,3,owner,0,0,4,7,2,3,1,0,1,17,10,4,60,0,1,68,0x42800,0,4);
         }
         break;
     case 200:
@@ -197,8 +217,6 @@ void fn_801DF060(void* object)
         if (*(int*)(info + 0xf8) == 3 && fn_801F86F4(0)) {
             *(int*)(lbl_8063D378 + 0x40) = 1; *(int*)(lbl_8063D400 + 0x40) = 1;
         }
-        fn_801D0E78(info);
-        break;
     case 500:
         fn_801D0E78(info);
         break;

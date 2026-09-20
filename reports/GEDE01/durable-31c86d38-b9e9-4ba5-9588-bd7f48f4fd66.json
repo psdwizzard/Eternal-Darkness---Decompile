@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "31c86d38-b9e9-4ba5-9588-bd7f48f4fd66",
+  "attempt": 5,
+  "base_commit": "2a73dacf5fc251c7404d8afe4f48b952cd1ed7ee",
+  "target": "fn_801DF060",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-31c86d38-b9e9-4ba5-9588-bd7f48f4fd66.json"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict direct objdiff are 99.183754%: retail is 4136 bytes and 1034 instructions while generated code is 4140 bytes and 1035 instructions, with 47 retail-side differing rows. Both sides have 133 relocation-bearing instructions, but strict equality is not achieved. Correcting the repeated effect paths to preserve and pass the stored event ID, using block-local event-ID lifetimes, sharing the state-310/state-500 cleanup fallthrough, and separating two retail move-producing temporaries improves the preserved 96.989365% attempt by 2.194389 points. Retail still uses a 0x100-byte frame versus generated code's 0xE0 frame; the remaining body divergence is two Vec3/argument scheduling moves and one repeated 26-argument call setup/register-allocation cluster. The canonical linked DOL verifies at SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
