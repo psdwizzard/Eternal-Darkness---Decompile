@@ -55,7 +55,7 @@ void fn_8006B21C(s32 mode)
     lbl_8064C8D0 = base + 0x630;
     switch (mode) {
     case 1:
-        state = (State *)(base + 0x654);
+        state = &root->state;
         state->value6 = 0;
         state->value8 = 5;
         state->valueA = 0;
@@ -69,7 +69,7 @@ void fn_8006B21C(s32 mode)
         break;
     default:
         memset(base + 0x654, 0, 0x164);
-        state = (State *)(base + 0x654);
+        state = &root->state;
         state->value15C = (u8 *)state + 0x164;
         fn_8006B364(state);
         break;

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "7c9a7c78-f444-490c-a897-a9d084b1655c",
+  "attempt": 5,
+  "base_commit": "ac76a07e629d81e6aa50e56242786b2f504dae0c",
+  "target": "fn_8006B21C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7c9a7c78-f444-490c-a897-a9d084b1655c.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff measure 96.87805% (328 retail bytes versus 320 generated). GC/1.3 folds the root and embedded-State address temporaries into r31-relative stores, omitting retail addi r3,r31,0 and addi r5,r31,0x654; in the default arm it derives the linked value from r3 and folds its destination into 0x7b0(r31), versus retail root-relative value formation and 0x15c(r3) destination."
+}

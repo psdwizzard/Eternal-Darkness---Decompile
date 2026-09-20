@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "assignment_id": "7c9a7c78-f444-490c-a897-a9d084b1655c",
+  "target": "fn_8006B21C",
+  "compiler": "GC/1.3 (canonical project settings)",
+  "preserved_source": "Recovered from 1bc082f876f3005ec3cca69e844d4e2a3f29262b: typed GlobalState member address &root->state in both switch arms.",
+  "experiment": {
+    "hypothesis": "Declare the embedded State as a one-element array and obtain both root prefix and State pointers through array-to-pointer decay; older MWCC may preserve decay address calculations that it folds for explicit casts and direct member addresses.",
+    "source_variant": "GlobalState.state changed from State to State[1]; lbl_8064C8D4 assigned from root->pad0 decay; state assigned from root->state decay; linked-buffer value spelled base+0x7B8.",
+    "compile_command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8006B21C.o build/tools/objdiff-cli",
+    "measure_command": "python3 tools/fndiff.py game/game_fn_8006B21C.c fn_8006B21C",
+    "measurement": "target 328 bytes  base 320 bytes  match 96.68293",
+    "result": "Rejected and not retained. Array decay was folded to the same flat root-relative stores; it did not emit retail addi r3,r31,0 or addi r5,r31,0x654. Default-arm instruction order was addi r0,r31,0x7b8 then addi r3,r31,0x654 and the store remained 0x7b0(r31)."
+  },
+  "canonical": {
+    "build_commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "build_output": "exit 0; build/GEDE01/main.dol: OK",
+    "objdiff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8006B21C fn_8006B21C -o reports/GEDE01/objdiff-7c9a7c78-f444-490c-a897-a9d084b1655c.json --format json",
+    "measurement": "target 328 bytes  base 320 bytes  match 96.87805"
+  },
+  "relocation_strict": {
+    "objdiff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8006B21C fn_8006B21C -o reports/GEDE01/objdiff-7c9a7c78-f444-490c-a897-a9d084b1655c-reloc-strict.json --format json -c function_reloc_diffs=name_address",
+    "measurement": "target 328 bytes  base 320 bytes  match 96.87805",
+    "comparison": "cmp canonical strict: exit 0 (byte-identical raw reports)"
+  },
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "remaining_divergence": "Generated output is 320 bytes versus 328 retail. GC/1.3 omits retail addi r3,r31,0 before the lbl_8064C8D4 store and addi r5,r31,0x654 before the four State field stores, folding both into r31-relative operations. In the default arm it forms the linked value as addi r0,r3,0x164 and stores to 0x7b0(r31), versus retail addi r0,r31,0x7b8 and stw r0,0x15c(r3)."
+}
