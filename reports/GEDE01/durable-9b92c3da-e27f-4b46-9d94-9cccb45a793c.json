@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "assignment_id": "9b92c3da-e27f-4b46-9d94-9cccb45a793c",
+  "attempt": 6,
+  "base_commit": "e4db62be82cbe4b0c54e1863d13ad3e3c7550558",
+  "target": "fn_801F50EC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9b92c3da-e27f-4b46-9d94-9cccb45a793c.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9b92c3da-e27f-4b46-9d94-9cccb45a793c-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-9b92c3da-e27f-4b46-9d94-9cccb45a793c/verification.json",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-9b92c3da-e27f-4b46-9d94-9cccb45a793c/experiments.json",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-9b92c3da-e27f-4b46-9d94-9cccb45a793c/notes.md",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-9b92c3da-e27f-4b46-9d94-9cccb45a793c/build.log",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-9b92c3da-e27f-4b46-9d94-9cccb45a793c/legal-audit.log"
+  ],
+  "divergence": "Improved from 97.17647% to 97.35294% canonical and relocation-strict objdiff, size-exact 340/340 bytes. A persistent unsigned integer address accumulator and integer destination/block bases recover the retail r25 addition chain. Five words remain different at 0x38, 0x3c, 0x48, 0x4c, and 0x5c: candidate calculates low bits in r4 before high bits in r3, shifts r3 into r4, and uses add r25,r25,r26 instead of add r25,r26,r25. All other words match (330/340 text bytes equal). Both R_PPC_REL24 calls at 0x74 and 0x100 target fn_801F4FC8 with zero addends. Canonical GC/1.3 configure/Ninja build and DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f pass; the function remains NonMatching."
+}

@@ -1,0 +1,164 @@
+{
+  "assignment_id": "9b92c3da-e27f-4b46-9d94-9cccb45a793c",
+  "target": "fn_801F50EC",
+  "status": "attempted",
+  "canonical_percent": 97.35294,
+  "relocation_strict_percent": 97.35294,
+  "retail_size": 340,
+  "candidate_size": 340,
+  "canonical_and_strict_identical": true,
+  "retained_candidate_equals_measured_all_integer_staged": true,
+  "instruction_differences": [
+    {
+      "offset": "0x38",
+      "retail": "srawi r4, r29, 2",
+      "candidate": "clrlslwi r4, r29, 30, 1"
+    },
+    {
+      "offset": "0x3c",
+      "retail": "clrlslwi r3, r29, 30, 1",
+      "candidate": "srawi r3, r29, 2"
+    },
+    {
+      "offset": "0x48",
+      "retail": "add r25, r30, r3",
+      "candidate": "add r25, r30, r4"
+    },
+    {
+      "offset": "0x4c",
+      "retail": "slwi r4, r4, 5",
+      "candidate": "slwi r4, r3, 5"
+    },
+    {
+      "offset": "0x5c",
+      "retail": "add r25, r26, r25",
+      "candidate": "add r25, r25, r26"
+    }
+  ],
+  "raw_text_word_differences": [
+    {
+      "offset": "0x38",
+      "retail_word": "7fa41670",
+      "candidate_word": "57a40f7c"
+    },
+    {
+      "offset": "0x3c",
+      "retail_word": "57a30f7c",
+      "candidate_word": "7fa31670"
+    },
+    {
+      "offset": "0x48",
+      "retail_word": "7f3e1a14",
+      "candidate_word": "7f3e2214"
+    },
+    {
+      "offset": "0x4c",
+      "retail_word": "54842834",
+      "candidate_word": "54642834"
+    },
+    {
+      "offset": "0x5c",
+      "retail_word": "7f3aca14",
+      "candidate_word": "7f39d214"
+    }
+  ],
+  "matching_text_bytes": 330,
+  "text_bytes": 340,
+  "raw_commands": [
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801F50EC",
+        "fn_801F50EC",
+        "-o",
+        "reports/GEDE01/objdiff-9b92c3da-e27f-4b46-9d94-9cccb45a793c-canonical.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-9b92c3da-e27f-4b46-9d94-9cccb45a793c-canonical.json\n"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801F50EC",
+        "fn_801F50EC",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "reports/GEDE01/objdiff-9b92c3da-e27f-4b46-9d94-9cccb45a793c.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-9b92c3da-e27f-4b46-9d94-9cccb45a793c.json\n"
+    },
+    {
+      "command": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "exit_code": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-r",
+        "build/GEDE01/obj/game/game_fn_801F50EC.o",
+        "build/GEDE01/src/game/game_fn_801F50EC.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nFile: build/GEDE01/obj/game/game_fn_801F50EC.o\n\nRelocation section '.rela.text' at offset 0x194 contains 2 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000074  0000040a R_PPC_REL24       00000000   fn_801F4FC8 + 0\n00000100  0000040a R_PPC_REL24       00000000   fn_801F4FC8 + 0\n\nFile: build/GEDE01/src/game/game_fn_801F50EC.o\n\nRelocation section '.rela.text' at offset 0x188 contains 2 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000074  0000030a R_PPC_REL24       00000000   fn_801F4FC8 + 0\n00000100  0000030a R_PPC_REL24       00000000   fn_801F4FC8 + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".tools/bin/ninja",
+        "-t",
+        "commands",
+        "build/GEDE01/src/game/game_fn_801F50EC.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_801F50EC.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801F50EC.d build/GEDE01/src/game/game_fn_801F50EC.d\n",
+      "stderr": ""
+    }
+  ],
+  "full_build_exit_code": 0,
+  "full_build_log": "eternal-darkness-decomp/reports/GEDE01/attempt-9b92c3da-e27f-4b46-9d94-9cccb45a793c/build.log",
+  "source_sha256": "177eeabd5d70e472616d5aee293f7ebd4e3761929857305b112e2a1dbfd3e344",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "note": "Function remains NonMatching; the successful DOL build uses the retail split object for this function, not this C reconstruction.",
+  "command_cwd": "eternal-darkness-decomp",
+  "legal_audit": {
+    "command": [
+      "python3",
+      "eternal-darkness-decomp/tools/legal_audit.py"
+    ],
+    "command_cwd": ".",
+    "exit_code": 0,
+    "stdout": "legal audit passed (18755 tracked project files inspected)\n",
+    "stderr": ""
+  },
+  "configure_command": [
+    "python3",
+    "configure.py"
+  ],
+  "full_build_command": [
+    ".tools/bin/ninja",
+    "-j2"
+  ],
+  "full_build_raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-9b92c3da-e27f-4b46-9d94-9cccb45a793c/build-raw.json",
+  "build_log_note": "build.log normalizes linker CRLF to LF; build-raw.json preserves exact stdout/stderr including CRLF."
+}
