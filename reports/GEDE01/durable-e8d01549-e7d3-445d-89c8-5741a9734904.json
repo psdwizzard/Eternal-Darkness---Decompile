@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "e8d01549-e7d3-445d-89c8-5741a9734904",
+  "attempt": 5,
+  "base_commit": "b998dc7ccab642946213c3acb506145ce8043c61",
+  "target": "fn_801028A8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e8d01549-e7d3-445d-89c8-5741a9734904.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-e8d01549-e7d3-445d-89c8-5741a9734904.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-e8d01549-e7d3-445d-89c8-5741a9734904.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-e8d01549-e7d3-445d-89c8-5741a9734904.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-e8d01549-e7d3-445d-89c8-5741a9734904.log"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both remain 97.510376%. Retail and candidate .text are exactly 964 bytes, with matching instruction locations, relocation types, target symbols and addends (raw SDA21 offsets use the established instruction-start versus halfword convention). Exactly 13 bytes in four instructions at offsets 0x3b0..0x3bc differ: retail emits mtlr r0; lwz r29,0x24(r1); lwz r28,0x20(r1); addi r1,r1,0x30, while canonical GC/1.2.5n emits those restores and stack teardown before mtlr. The body and prologue are byte-identical. 53 new variants plus baseline test shared-return control flow, type spelling/width, register declarations, lifetime scopes, return expressions and nested inline decomposition without changing compiler settings; none improves the accepted reconstruction. Retained one independent NonMatching C TU. Full canonical build passes with main.dol SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f; this integrity check links the retail object, not the NonMatching candidate."
+}

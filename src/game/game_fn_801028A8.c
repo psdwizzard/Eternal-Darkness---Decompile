@@ -35,7 +35,9 @@ static inline s16 read_bit(BitReader* reader)
 /* NonMatching: behavior-complete recursive decode-tree loader. Explicit inline
  * suppresses the unused out-of-line helper, making the unit's .text size exact.
  * A 16-bit helper result selects retail's 0x30-byte frame. The sole remaining
- * difference is MWCC's epilogue scheduling of mtlr after the final restores. */
+ * difference is MWCC's epilogue scheduling of mtlr after the final restores.
+ * Attempt 5: shared-return control flow, register/lifetime variants, and
+ * equivalent type spellings did not move mtlr under the canonical settings. */
 s16 fn_801028A8(DecodeTree* tree, BitReader* reader)
 {
     s16 value;

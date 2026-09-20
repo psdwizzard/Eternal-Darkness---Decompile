@@ -1,0 +1,161 @@
+{
+  "assignment_id": "e8d01549-e7d3-445d-89c8-5741a9734904",
+  "compiler": "GC/1.2.5n",
+  "canonical_settings_unchanged": true,
+  "compile_commands_raw": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -sdata 0 -MMD -c src/game/game_fn_801028A8.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801028A8.d build/GEDE01/src/game/game_fn_801028A8.d\n",
+  "objects": [
+    "build/GEDE01/obj/game/game_fn_801028A8.o",
+    "build/GEDE01/src/game/game_fn_801028A8.o"
+  ],
+  "text_sizes": [
+    964,
+    964
+  ],
+  "text_sha256": [
+    "2e350e55ef8dadb62019afa67a619f6c051e58638d06d15bbcb95695deb469de",
+    "02a386c0209b56fa6f155db515e4152f071d49a5df9c02f885109f97dfe59dd9"
+  ],
+  "differing_bytes": 13,
+  "differing_words": [
+    {
+      "offset": "0x3b0",
+      "retail": "7c0803a6",
+      "candidate": "83a10024"
+    },
+    {
+      "offset": "0x3b4",
+      "retail": "83a10024",
+      "candidate": "83810020"
+    },
+    {
+      "offset": "0x3b8",
+      "retail": "83810020",
+      "candidate": "38210030"
+    },
+    {
+      "offset": "0x3bc",
+      "retail": "38210030",
+      "candidate": "7c0803a6"
+    }
+  ],
+  "relocations": {
+    "retail": [
+      {
+        "section": ".rela.text",
+        "offset": 128,
+        "type": 10,
+        "target": "fn_801028A8",
+        "addend": 0
+      },
+      {
+        "section": ".rela.text",
+        "offset": 152,
+        "type": 10,
+        "target": "fn_801028A8",
+        "addend": 0
+      },
+      {
+        "section": ".rela.text",
+        "offset": 864,
+        "type": 109,
+        "target": "lbl_8064CC68",
+        "addend": 0
+      },
+      {
+        "section": ".rela.text",
+        "offset": 900,
+        "type": 109,
+        "target": "lbl_8064CC6C",
+        "addend": 0
+      }
+    ],
+    "candidate": [
+      {
+        "section": ".rela.text",
+        "offset": 128,
+        "type": 10,
+        "target": "fn_801028A8",
+        "addend": 0
+      },
+      {
+        "section": ".rela.text",
+        "offset": 152,
+        "type": 10,
+        "target": "fn_801028A8",
+        "addend": 0
+      },
+      {
+        "section": ".rela.text",
+        "offset": 866,
+        "type": 109,
+        "target": "lbl_8064CC68",
+        "addend": 0
+      },
+      {
+        "section": ".rela.text",
+        "offset": 902,
+        "type": 109,
+        "target": "lbl_8064CC6C",
+        "addend": 0
+      }
+    ],
+    "raw_entries_equal": false,
+    "instruction_locations_types_targets_addends_equal": true,
+    "offset_note": "MWCC encodes SDA21 relocation offsets at the immediate halfword (+2); DTK retail objects encode the containing instruction start. Raw entries are preserved above. Instruction locations, relocation types, target identities and signed addends agree; canonical and name_address objdiff normalize the halfword convention."
+  },
+  "readelf_raw": [
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-W",
+        "-S",
+        "-s",
+        "-r",
+        "build/GEDE01/obj/game/game_fn_801028A8.o"
+      ],
+      "exit": 0,
+      "stdout": "There are 6 section headers, starting at offset 0x4f4:\n\nSection Headers:\n  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al\n  [ 0]                   NULL            00000000 000000 000000 00      0   0  0\n  [ 1] .text             PROGBITS        00000000 000040 0003c4 00  AX  0   0  4\n  [ 2] .rela.text        RELA            00000000 000404 000030 0c   I  3   1  4\n  [ 3] .symtab           SYMTAB          00000000 000434 000060 10      4   3  4\n  [ 4] .strtab           STRTAB          00000000 000494 00003a 00      0   0  1\n  [ 5] .shstrtab         STRTAB          00000000 0004ce 000026 00      0   0  1\nKey to Flags:\n  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),\n  L (link order), O (extra OS processing required), G (group), T (TLS),\n  C (compressed), x (unknown), o (OS specific), E (exclude),\n  D (mbind), v (VLE), p (processor specific)\n\nRelocation section '.rela.text' at offset 0x404 contains 4 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000080  0000030a R_PPC_REL24            00000000   fn_801028A8 + 0\n00000098  0000030a R_PPC_REL24            00000000   fn_801028A8 + 0\n00000360  0000046d R_PPC_EMB_SDA21        00000000   lbl_8064CC68 + 0\n00000384  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064CC6C + 0\n\nSymbol table '.symtab' contains 6 entries:\n   Num:    Value  Size Type    Bind   Vis      Ndx Name\n     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND \n     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS game_fn_801028A8.c\n     2: 00000000     0 SECTION LOCAL  DEFAULT    1 .text\n     3: 00000000   964 FUNC    GLOBAL DEFAULT    1 fn_801028A8\n     4: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064CC68\n     5: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064CC6C\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-W",
+        "-S",
+        "-s",
+        "-r",
+        "build/GEDE01/src/game/game_fn_801028A8.o"
+      ],
+      "exit": 0,
+      "stdout": "There are 7 section headers, starting at offset 0x558:\n\nSection Headers:\n  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al\n  [ 0]                   NULL            00000000 000000 000000 00      0   0  0\n  [ 1] .text             PROGBITS        00000000 000034 0003c4 00  AX  0   0  4\n  [ 2] .rela.text        RELA            00000000 0003f8 000030 0c      3   1  4\n  [ 3] .symtab           SYMTAB          00000000 000428 000060 10      4   3  4\n  [ 4] .strtab           STRTAB          00000000 000488 00003a 01      0   0  1\n  [ 5] .shstrtab         STRTAB          00000000 0004c2 000035 01      0   0  1\n  [ 6] .comment          PROGBITS        00000000 0004f7 00005c 01      0   0  1\nKey to Flags:\n  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),\n  L (link order), O (extra OS processing required), G (group), T (TLS),\n  C (compressed), x (unknown), o (OS specific), E (exclude),\n  D (mbind), v (VLE), p (processor specific)\n\nRelocation section '.rela.text' at offset 0x3f8 contains 4 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000080  0000050a R_PPC_REL24            00000000   fn_801028A8 + 0\n00000098  0000050a R_PPC_REL24            00000000   fn_801028A8 + 0\n00000362  0000036d R_PPC_EMB_SDA21        00000000   lbl_8064CC68 + 0\n00000386  0000046d R_PPC_EMB_SDA21        00000000   lbl_8064CC6C + 0\n\nSymbol table '.symtab' contains 6 entries:\n   Num:    Value  Size Type    Bind   Vis      Ndx Name\n     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND \n     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS game_fn_801028A8.c\n     2: 00000000     0 SECTION LOCAL  DEFAULT    1 .text\n     3: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064CC68\n     4: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8064CC6C\n     5: 00000000   964 FUNC    GLOBAL DEFAULT    1 fn_801028A8\n",
+      "stderr": ""
+    }
+  ],
+  "link_status": "NonMatching: build.ninja linked False; retail target object is linked. DOL hash checks whole build integrity but does not validate candidate integration.",
+  "canonical_score": 97.510376,
+  "relocation_strict_score": 97.510376,
+  "source_sha256": "54729963ef056a7db5836f2069bf78d0dda8ec9d05c6dea5a1cdd635eeed4715",
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit": 0,
+    "log": "eternal-darkness-decomp/reports/GEDE01/build-e8d01549-e7d3-445d-89c8-5741a9734904.log",
+    "log_note": "Complete stdout/stderr with CRLF normalized to LF for repository whitespace checks."
+  },
+  "dol_sha1_raw": {
+    "command": [
+      "sha1sum",
+      "build/GEDE01/main.dol"
+    ],
+    "exit": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "stderr": ""
+  },
+  "verification_time_utc": "2026-09-20T08:34:36.786154+00:00",
+  "legal_audit_raw": {
+    "command": "python3 tools/legal_audit.py",
+    "cwd": "eternal-darkness-decomp",
+    "exit": 0,
+    "stdout": "legal audit passed (18526 tracked project files inspected)\n",
+    "stderr": ""
+  }
+}
