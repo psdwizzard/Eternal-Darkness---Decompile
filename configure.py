@@ -7742,9 +7742,7 @@ config.libs = [
             Object(Matching, "game/game_fn_800CCF60.c"),
             Object(Matching, "game/game_fn_800CD458.c"),
             Object(Matching, "game/game_fn_800CD568.c"),
-            # 97.52525% size-exact honest-C reconstruction; remaining
-            # differences are a global callee-saved-register permutation.
-            Object(NonMatching, "game/game_fn_800CD6C0.c"),
+            Object(Matching, "game/game_fn_800CD6C0.c"),
             Object(Matching, "game/game_fn_800CD84C.c"),
             Object(Matching, "game/game_fn_800CDD84.c"),
             Object(Matching, "game/game_fn_800CE3BC.c"),

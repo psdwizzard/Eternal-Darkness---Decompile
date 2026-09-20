@@ -49,8 +49,8 @@ void *fn_800CD6C0(int argFirst, int argSecond, void *argThird, u8 argFlags,
                   void *argEighth)
 {
     void *object = 0;
-    int slot = 0;
     RuntimeState *state = 0;
+    int slot = 0;
     int id;
     void *resolved;
     Payload *payload;
@@ -59,20 +59,16 @@ void *fn_800CD6C0(int argFirst, int argSecond, void *argThird, u8 argFlags,
     if (resolved != 0) {
         state = ((RuntimeState *)fn_80201B8C(resolved));
         if (argFirst == fn_80201B44(state)) {
-            int linked = state->resource->slots[0];
-            if (linked != 0) {
-                fn_8020123C(0x39, linked, linked, 0);
+            id = state->resource->slots[0];
+            if (id != 0) {
+                fn_8020123C(0x39, id, id, 0);
             }
             slot = 0;
         } else {
-            slot = 0;
-            if (state->resource->slots[0] != 0) {
-                slot = 1;
-                if (state->resource->slots[1] != 0) {
-                    slot = 2;
-                    if (state->resource->slots[2] != 0) {
-                        slot = 3;
-                    }
+            for (slot = 0; slot < 3; ++slot) {
+                id = state->resource->slots[slot];
+                if (id == 0) {
+                    break;
                 }
             }
         }

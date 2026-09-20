@@ -1,0 +1,254 @@
+{
+  "version": 1,
+  "assignment_id": "f556f067-0e5e-46fd-b95d-629dafae5852",
+  "attempt": 6,
+  "target": "fn_800CD6C0",
+  "compiler": "GC/1.3",
+  "compiler_policy": "unchanged canonical -O4,p, -lang=c; existing use_lmw_stmw pragma retained",
+  "registration": "Object(Matching, \"game/game_fn_800CD6C0.c\")",
+  "canonical_match_percent": 100.0,
+  "relocation_strict_match_percent": 100.0,
+  "relocation_strict_config": "function_reloc_diffs=all",
+  "target_bytes": 396,
+  "candidate_bytes": 396,
+  "text_bytes_equal": true,
+  "text_sha256": "fa944a17195b6f33790e9a345610b4f268b04abc0efa80c65a955a28a3f4f84a",
+  "relocations_equal_offsets_types_targets_addends": true,
+  "target_relocations": [
+    [
+      "00000044",
+      "R_PPC_REL24",
+      "fn_80201814",
+      "+",
+      "0"
+    ],
+    [
+      "00000050",
+      "R_PPC_REL24",
+      "fn_80201B8C",
+      "+",
+      "0"
+    ],
+    [
+      "00000058",
+      "R_PPC_REL24",
+      "fn_80201B44",
+      "+",
+      "0"
+    ],
+    [
+      "00000080",
+      "R_PPC_REL24",
+      "fn_8020123C",
+      "+",
+      "0"
+    ],
+    [
+      "000000d0",
+      "R_PPC_REL24",
+      "fn_80037AF4",
+      "+",
+      "0"
+    ],
+    [
+      "000000d8",
+      "R_PPC_REL24",
+      "fn_80201B54",
+      "+",
+      "0"
+    ],
+    [
+      "000000fc",
+      "R_PPC_REL24",
+      "fn_80201B8C",
+      "+",
+      "0"
+    ],
+    [
+      "0000013c",
+      "R_PPC_REL24",
+      "fn_802015A4",
+      "+",
+      "0"
+    ],
+    [
+      "00000148",
+      "R_PPC_REL24",
+      "fn_801E8328",
+      "+",
+      "0"
+    ],
+    [
+      "0000016c",
+      "R_PPC_REL24",
+      "fn_8020104C",
+      "+",
+      "0"
+    ]
+  ],
+  "candidate_relocations": [
+    [
+      "00000044",
+      "R_PPC_REL24",
+      "fn_80201814",
+      "+",
+      "0"
+    ],
+    [
+      "00000050",
+      "R_PPC_REL24",
+      "fn_80201B8C",
+      "+",
+      "0"
+    ],
+    [
+      "00000058",
+      "R_PPC_REL24",
+      "fn_80201B44",
+      "+",
+      "0"
+    ],
+    [
+      "00000080",
+      "R_PPC_REL24",
+      "fn_8020123C",
+      "+",
+      "0"
+    ],
+    [
+      "000000d0",
+      "R_PPC_REL24",
+      "fn_80037AF4",
+      "+",
+      "0"
+    ],
+    [
+      "000000d8",
+      "R_PPC_REL24",
+      "fn_80201B54",
+      "+",
+      "0"
+    ],
+    [
+      "000000fc",
+      "R_PPC_REL24",
+      "fn_80201B8C",
+      "+",
+      "0"
+    ],
+    [
+      "0000013c",
+      "R_PPC_REL24",
+      "fn_802015A4",
+      "+",
+      "0"
+    ],
+    [
+      "00000148",
+      "R_PPC_REL24",
+      "fn_801E8328",
+      "+",
+      "0"
+    ],
+    [
+      "0000016c",
+      "R_PPC_REL24",
+      "fn_8020104C",
+      "+",
+      "0"
+    ]
+  ],
+  "raw_commands": [
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_800CD6C0",
+        "fn_800CD6C0",
+        "-o",
+        "reports/GEDE01/canonical-raw-f556f067-0e5e-46fd-b95d-629dafae5852.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/canonical-raw-f556f067-0e5e-46fd-b95d-629dafae5852.json\n"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_800CD6C0",
+        "fn_800CD6C0",
+        "-c",
+        "function_reloc_diffs=all",
+        "-o",
+        "reports/GEDE01/strict-raw-f556f067-0e5e-46fd-b95d-629dafae5852.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/strict-raw-f556f067-0e5e-46fd-b95d-629dafae5852.json\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/fndiff.py",
+        "game/game_fn_800CD6C0.c",
+        "fn_800CD6C0"
+      ],
+      "exit_code": 0,
+      "stdout": "target 396 bytes  base 396 bytes  match 100.0\n  0x0000  stwu r1, -0x40(r1)                                   | stwu r1, -0x40(r1)\n  0x0004  mflr r0                                              | mflr r0\n  0x0008  stw r0, 0x44(r1)                                     | stw r0, 0x44(r1)\n  0x000c  stfd f31, 0x38(r1)                                   | stfd f31, 0x38(r1)\n  0x0010  fmr f31, f1                                          | fmr f31, f1\n  0x0014  stmw r20, 0x8(r1)                                    | stmw r20, 0x8(r1)\n  0x0018  mr r23, r3                                           | mr r23, r3\n  0x001c  mr r24, r4                                           | mr r24, r4\n  0x0020  mr r25, r5                                           | mr r25, r5\n  0x0024  mr r26, r6                                           | mr r26, r6\n  0x0028  mr r27, r7                                           | mr r27, r7\n  0x002c  mr r28, r8                                           | mr r28, r8\n  0x0030  mr r29, r9                                           | mr r29, r9\n  0x0034  mr r30, r10                                          | mr r30, r10\n  0x0038  li r31, 0x0                                          | li r31, 0x0\n  0x003c  li r21, 0x0                                          | li r21, 0x0\n  0x0040  li r20, 0x0                                          | li r20, 0x0\n  0x0044  bl fn_80201814 [None+0 t10]                          | bl fn_80201814 [None+0 t10]\n  0x0048  cmplwi r3, 0x0                                       | cmplwi r3, 0x0\n  0x004c  beq 0xc4                                             | beq 0xc4\n  0x0050  bl fn_80201B8C [None+0 t10]                          | bl fn_80201B8C [None+0 t10]\n  0x0054  mr r21, r3                                           | mr r21, r3\n  0x0058  bl fn_80201B44 [None+0 t10]                          | bl fn_80201B44 [None+0 t10]\n  0x005c  cmpw r23, r3                                         | cmpw r23, r3\n  0x0060  bne 0x8c                                             | bne 0x8c\n  0x0064  lwz r3, 0x8c(r21)                                    | lwz r3, 0x8c(r21)\n  0x0068  lwz r4, 0x2c(r3)                                     | lwz r4, 0x2c(r3)\n  0x006c  cmpwi r4, 0x0                                        | cmpwi r4, 0x0\n  0x0070  beq 0x84                                             | beq 0x84\n  0x0074  mr r5, r4                                            | mr r5, r4\n  0x0078  li r3, 0x39                                          | li r3, 0x39\n  0x007c  li r6, 0x0                                           | li r6, 0x0\n  0x0080  bl fn_8020123C [None+0 t10]                          | bl fn_8020123C [None+0 t10]\n  0x0084  li r20, 0x0                                          | li r20, 0x0\n  0x0088  b 0xc4                                               | b 0xc4\n  0x008c  lwz r3, 0x8c(r21)                                    | lwz r3, 0x8c(r21)\n  0x0090  li r20, 0x0                                          | li r20, 0x0\n  0x0094  lwz r0, 0x2c(r3)                                     | lwz r0, 0x2c(r3)\n  0x0098  cmpwi r0, 0x0                                        | cmpwi r0, 0x0\n  0x009c  beq 0xc4                                             | beq 0xc4\n  0x00a0  lwz r0, 0x30(r3)                                     | lwz r0, 0x30(r3)\n  0x00a4  li r20, 0x1                                          | li r20, 0x1\n  0x00a8  cmpwi r0, 0x0                                        | cmpwi r0, 0x0\n  0x00ac  beq 0xc4                                             | beq 0xc4\n  0x00b0  lwz r0, 0x34(r3)                                     | lwz r0, 0x34(r3)\n  0x00b4  li r20, 0x2                                          | li r20, 0x2\n  0x00b8  cmpwi r0, 0x0                                        | cmpwi r0, 0x0\n  0x00bc  beq 0xc4                                             | beq 0xc4\n  0x00c0  li r20, 0x3                                          | li r20, 0x3\n  0x00c4  cmpwi r20, 0x3                                       | cmpwi r20, 0x3\n  0x00c8  bge 0x170                                            | bge 0x170\n  0x00cc  li r3, 0x19                                          | li r3, 0x19\n  0x00d0  bl fn_80037AF4 [None+0 t10]                          | bl fn_80037AF4 [None+0 t10]\n  0x00d4  mr r31, r3                                           | mr r31, r3\n  0x00d8  bl fn_80201B54 [None+0 t10]                          | bl fn_80201B54 [None+0 t10]\n  0x00dc  cmplwi r21, 0x0                                      | cmplwi r21, 0x0\n  0x00e0  mr r22, r3                                           | mr r22, r3\n  0x00e4  beq 0xf8                                             | beq 0xf8\n  0x00e8  lwz r3, 0x8c(r21)                                    | lwz r3, 0x8c(r21)\n  0x00ec  slwi r0, r20, 2                                      | slwi r0, r20, 2\n  0x00f0  add r3, r3, r0                                       | add r3, r3, r0\n  0x00f4  stw r22, 0x2c(r3)                                    | stw r22, 0x2c(r3)\n  0x00f8  mr r3, r31                                           | mr r3, r31\n  0x00fc  bl fn_80201B8C [None+0 t10]                          | bl fn_80201B8C [None+0 t10]\n  0x0100  lwz r20, 0x2c(r3)                                    | lwz r20, 0x2c(r3)\n  0x0104  mr r3, r31                                           | mr r3, r31\n  0x0108  stb r26, 0x0(r20)                                    | stb r26, 0x0(r20)\n  0x010c  stw r23, 0x8(r20)                                    | stw r23, 0x8(r20)\n  0x0110  stw r24, 0xc(r20)                                    | stw r24, 0xc(r20)\n  0x0114  stw r27, 0x10(r20)                                   | stw r27, 0x10(r20)\n  0x0118  sth r28, 0x14(r20)                                   | sth r28, 0x14(r20)\n  0x011c  stw r25, 0x1c(r20)                                   | stw r25, 0x1c(r20)\n  0x0120  lwz r4, 0x0(r29)                                     | lwz r4, 0x0(r29)\n  0x0124  lwz r0, 0x4(r29)                                     | lwz r0, 0x4(r29)\n  0x0128  stw r4, 0x24(r20)                                    | stw r4, 0x24(r20)\n  0x012c  stw r0, 0x28(r20)                                    | stw r0, 0x28(r20)\n  0x0130  lwz r0, 0x8(r29)                                     | lwz r0, 0x8(r29)\n  0x0134  stw r0, 0x2c(r20)                                    | stw r0, 0x2c(r20)\n  0x0138  stw r30, 0x20(r20)                                   | stw r30, 0x20(r20)\n  0x013c  bl fn_802015A4 [None+0 t10]                          | bl fn_802015A4 [None+0 t10]\n  0x0140  mr r4, r31                                           | mr r4, r31\n  0x0144  li r3, 0x15                                          | li r3, 0x15\n  0x0148  bl fn_801E8328 [None+0 t10]                          | bl fn_801E8328 [None+0 t10]\n  0x014c  lbz r0, 0x0(r20)                                     | lbz r0, 0x0(r20)\n  0x0150  rlwinm. r0, r0, 0, 29, 30                            | rlwinm. r0, r0, 0, 29, 30\n  0x0154  bne 0x170                                            | bne 0x170\n  0x0158  fmr f1, f31                                          | fmr f1, f31\n  0x015c  mr r4, r22                                           | mr r4, r22\n  0x0160  mr r5, r22                                           | mr r5, r22\n  0x0164  li r3, 0x39                                          | li r3, 0x39\n  0x0168  li r6, 0x0                                           | li r6, 0x0\n  0x016c  bl fn_8020104C [None+0 t10]                          | bl fn_8020104C [None+0 t10]\n  0x0170  mr r3, r31                                           | mr r3, r31\n  0x0174  lfd f31, 0x38(r1)                                    | lfd f31, 0x38(r1)\n  0x0178  lmw r20, 0x8(r1)                                     | lmw r20, 0x8(r1)\n  0x017c  lwz r0, 0x44(r1)                                     | lwz r0, 0x44(r1)\n  0x0180  mtlr r0                                              | mtlr r0\n  0x0184  addi r1, r1, 0x40                                    | addi r1, r1, 0x40\n  0x0188  blr                                                  | blr\n",
+      "stderr": " INFO Writing to /home/rabbit/src/darkfoundry-new/.darkfoundry/worktrees/50c29326-0acb-40d9-995f-1837de479183/eternal-darkness-decomp/build/GEDE01/fndiff_fn_800CD6C0.json\n"
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-r",
+        "build/GEDE01/obj/game/game_fn_800CD6C0.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x1cc contains 10 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000044  0000040a R_PPC_REL24       00000000   fn_80201814 + 0\n00000050  0000050a R_PPC_REL24       00000000   fn_80201B8C + 0\n00000058  0000060a R_PPC_REL24       00000000   fn_80201B44 + 0\n00000080  0000070a R_PPC_REL24       00000000   fn_8020123C + 0\n000000d0  0000080a R_PPC_REL24       00000000   fn_80037AF4 + 0\n000000d8  0000090a R_PPC_REL24       00000000   fn_80201B54 + 0\n000000fc  0000050a R_PPC_REL24       00000000   fn_80201B8C + 0\n0000013c  00000a0a R_PPC_REL24       00000000   fn_802015A4 + 0\n00000148  00000b0a R_PPC_REL24       00000000   fn_801E8328 + 0\n0000016c  00000c0a R_PPC_REL24       00000000   fn_8020104C + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-r",
+        "build/GEDE01/src/game/game_fn_800CD6C0.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x1c0 contains 10 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000044  0000030a R_PPC_REL24       00000000   fn_80201814 + 0\n00000050  0000040a R_PPC_REL24       00000000   fn_80201B8C + 0\n00000058  0000050a R_PPC_REL24       00000000   fn_80201B44 + 0\n00000080  0000060a R_PPC_REL24       00000000   fn_8020123C + 0\n000000d0  0000070a R_PPC_REL24       00000000   fn_80037AF4 + 0\n000000d8  0000080a R_PPC_REL24       00000000   fn_80201B54 + 0\n000000fc  0000040a R_PPC_REL24       00000000   fn_80201B8C + 0\n0000013c  0000090a R_PPC_REL24       00000000   fn_802015A4 + 0\n00000148  00000a0a R_PPC_REL24       00000000   fn_801E8328 + 0\n0000016c  00000b0a R_PPC_REL24       00000000   fn_8020104C + 0\n",
+      "stderr": ""
+    }
+  ],
+  "diagnosis": "A real bounded search loop fully unrolls but changes register allocation versus manually nested conditionals. Reusing id for existing linked IDs and declaring state before slot completes the retail register assignment. No remaining instruction or relocation differences.",
+  "recovery": "Accepted base already contains attempt 5 source, registration and split from e827e9ccdaa14d2b93182f7c7e9f77b08561a0c0. All five preserved reports were reviewed before experiments.",
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "stdout": "legal audit passed (18518 tracked project files inspected)\n",
+    "stderr": ""
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matches": true,
+    "linked_candidate": true
+  },
+  "build_verification": {
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "dol_check_stdout": "build/GEDE01/main.dol: OK",
+    "raw_log": "eternal-darkness-decomp/reports/GEDE01/build-f556f067-0e5e-46fd-b95d-629dafae5852.json"
+  }
+}
