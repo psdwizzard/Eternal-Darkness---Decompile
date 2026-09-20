@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9d7c7f0c-c222-441a-9d90-38f031aba012",
+  "attempt": 8,
+  "base_commit": "8e7b2d83946dd87016283a1abbfaa2af39cf4848",
+  "target": "fn_800D322C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9d7c7f0c-c222-441a-9d90-38f031aba012.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 97.560974%, size-exact at 328 bytes. Address-based and binary-word comparisons isolate two slots: retail offset 0x78 is mr r3,r28 and 0x7c is addi r5,r1,0x1c; build has these reversed. All 13 relocation tuples match offsets, types, resolved targets and explicit addends, but full strict matching is false. New switch-guard basic-block hypothesis compiled to identical .text and was reverted. Canonical build passed; DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
