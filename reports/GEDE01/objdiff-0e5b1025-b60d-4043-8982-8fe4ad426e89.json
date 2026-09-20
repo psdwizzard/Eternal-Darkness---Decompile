@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "assignment_id": "0e5b1025-b60d-4043-8982-8fe4ad426e89",
+  "target": "fn_801383B4",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_801383B4.c fn_801383B4",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801383B4 fn_801383B4 --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+  ],
+  "canonical": {
+    "target_bytes": 436,
+    "candidate_bytes": 436,
+    "target_instructions": 109,
+    "candidate_instructions": 109,
+    "match_percent": 99.6789,
+    "matched": false
+  },
+  "relocation_strict": {
+    "target_relocation_instructions": 17,
+    "candidate_relocation_instructions": 17,
+    "relocation_offsets_types_targets_addends_aligned": 17,
+    "matched": false,
+    "reason": "All 17 relocation-bearing instructions have identical offsets, types, rendered targets, and zero addends. Six non-relocation instructions differ, so relocation-strict 100% is not claimable."
+  },
+  "dol_sha1": {
+    "built": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matched": true
+  },
+  "raw_outputs": {
+    "build_tail": "[882/884] DOL build/GEDE01/main.dol; [883/884] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [884/884] PROGRESS",
+    "fndiff_summary": "target 436 bytes  base 436 bytes  match 99.6789",
+    "fndiff_mismatches": [
+      "0x00fc add r21, r6, r0 | add r22, r6, r0",
+      "0x0110 lwz r22, 0x14(r29) | lwz r21, 0x14(r29)",
+      "0x0118 lhz r0, 0x8(r22) | lhz r0, 0x8(r21)",
+      "0x0120 mr r5, r22 | mr r5, r21",
+      "0x0144 add r0, r21, r0 | add r0, r22, r0",
+      "0x0164 addi r22, r22, 0x10 | addi r21, r21, 0x10"
+    ],
+    "relocations": "17 target and 17 candidate relocation-bearing instructions; offsets, R_PPC types, rendered target names, and addends align for all 17",
+    "sha1sum": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  },
+  "hypothesis": "Constrain ResourceSource to loop scope, then separately test creating its live range before the allocation-data base. Loop scoping is codegen-neutral at 99.6789%. Creating the source live range first does put the data base in retail r21, but keeps the source live across memset, adds a load, and recolors the remaining nonvolatile graph (95.899086%); declaration permutations score 98.66972% to 99.495415%. The original retained spelling remains the measured frontier.",
+  "divergence": "Retail keeps the allocation-data base in r21 and ResourceSource pointer in r22; canonical GC/1.3 assigns those two values to r22 and r21 respectively. The six instructions listed above are the complete divergence; the other 103 instructions and all 17 relocations agree."
+}
