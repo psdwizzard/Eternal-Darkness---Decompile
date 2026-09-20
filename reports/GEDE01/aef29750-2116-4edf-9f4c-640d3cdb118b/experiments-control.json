@@ -1,0 +1,174 @@
+[
+  {
+    "name": "explicit-goto-loop",
+    "patch": "--- baseline\n+++ explicit-goto-loop\n@@ -74,14 +74,20 @@\n     output = output_arg;\n     object = object_arg;\n \n-    for (i = 0; i < count; i++) {\n+    i = 0;\n+    goto projection_test;\n+projection_body:\n+    {\n         angle = circle * (f32)i / (f32)count;\n         point.x = ring->center.x + (f32)ring->radius * fn_80048C2C(angle);\n         point.y = ring->center.y + (f32)ring->radius * fn_80048C50(angle);\n         point.z = ring->center.z;\n         fn_801F6B6C(&point, &screen, 0, 0);\n         *projected_ptr++ = screen.x;\n+        i++;\n     }\n+projection_test:\n+    if (i < count) goto projection_body;\n \n     for (i = 0; i < count; i++) {\n         best = projected[0];\n",
+    "compile": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] RUN configure.py\n[1/2] MWCC build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "constant_symbols": {
+      "signed": "@66",
+      "unsigned": "@68"
+    },
+    "configure": {
+      "command": [
+        "python3",
+        "configure.py"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.externalized"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] RUN configure.py\n[1/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "objdiff": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801D1F78",
+        "-o",
+        "reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/explicit-goto-loop.json",
+        "--format",
+        "json",
+        "fn_801D1F78"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/explicit-goto-loop.json\n"
+    },
+    "match_percent": 97.810455,
+    "object_sha256": "0d5cc90e8b1db5fa9c98643d41dcf25500742c3cef7a69d77f7756851a72662f"
+  },
+  {
+    "name": "break-loop",
+    "patch": "--- baseline\n+++ break-loop\n@@ -74,13 +74,16 @@\n     output = output_arg;\n     object = object_arg;\n \n-    for (i = 0; i < count; i++) {\n+    i = 0;\n+    for (;;) {\n+        if (i >= count) break;\n         angle = circle * (f32)i / (f32)count;\n         point.x = ring->center.x + (f32)ring->radius * fn_80048C2C(angle);\n         point.y = ring->center.y + (f32)ring->radius * fn_80048C50(angle);\n         point.z = ring->center.z;\n         fn_801F6B6C(&point, &screen, 0, 0);\n         *projected_ptr++ = screen.x;\n+        i++;\n     }\n \n     for (i = 0; i < count; i++) {\n",
+    "compile": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "constant_symbols": {
+      "signed": "@71",
+      "unsigned": "@73"
+    },
+    "configure": {
+      "command": [
+        "python3",
+        "configure.py"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.externalized"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] RUN configure.py\n[1/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "objdiff": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801D1F78",
+        "-o",
+        "reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/break-loop.json",
+        "--format",
+        "json",
+        "fn_801D1F78"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/break-loop.json\n"
+    },
+    "match_percent": 97.45098,
+    "object_sha256": "48695a0377ea42c9f5818bb9d4ce2913970d24c97ea03e31614fc6ab62b63d40"
+  },
+  {
+    "name": "guarded-do-loop",
+    "patch": "--- baseline\n+++ guarded-do-loop\n@@ -74,14 +74,16 @@\n     output = output_arg;\n     object = object_arg;\n \n-    for (i = 0; i < count; i++) {\n+    i = 0;\n+    if (count != 0) do {\n         angle = circle * (f32)i / (f32)count;\n         point.x = ring->center.x + (f32)ring->radius * fn_80048C2C(angle);\n         point.y = ring->center.y + (f32)ring->radius * fn_80048C50(angle);\n         point.z = ring->center.z;\n         fn_801F6B6C(&point, &screen, 0, 0);\n         *projected_ptr++ = screen.x;\n-    }\n+        i++;\n+    } while (i < count);\n \n     for (i = 0; i < count; i++) {\n         best = projected[0];\n",
+    "compile": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "constant_symbols": {
+      "signed": "@70",
+      "unsigned": "@72"
+    },
+    "configure": {
+      "command": [
+        "python3",
+        "configure.py"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.externalized"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] RUN configure.py\n[1/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "objdiff": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801D1F78",
+        "-o",
+        "reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/guarded-do-loop.json",
+        "--format",
+        "json",
+        "fn_801D1F78"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/guarded-do-loop.json\n"
+    },
+    "match_percent": 97.04248,
+    "object_sha256": "a558ef1e7214d2fb79d4d59b159e3cd63772a724888aa2f6acb3ccf7e68b02f4"
+  },
+  {
+    "name": "restricted-output",
+    "patch": "--- baseline\n+++ restricted-output\n@@ -42,7 +42,7 @@\n extern void* fn_80201BC8(void);\n extern s32 fn_8011F6A4(void*, s32, s32, s32, QueryResult*, s32);\n \n-void fn_801D1F78(RingOutput* output_arg, volatile RingDefinition* ring_arg, s32 object_arg)\n+void fn_801D1F78(RingOutput* restrict output_arg, volatile RingDefinition* ring_arg, s32 object_arg)\n {\n     s32 projected[9];\n     s32 order[9];\n",
+    "compile": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.o"
+      ],
+      "exit_code": 2,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801D1F78.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_801D1F78.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_801D1F78.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801D1F78.d build/GEDE01/src/game/game_fn_801D1F78.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_801D1F78.c\n# ------------------------------------\n#      45: void fn_801D1F78(RingOutput* restrict output_arg, volatile RingDefinition* ring_arg, s32 object_arg)\n#   Error:                                       ^^^^^^^^^^\n#   ')' expected\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n"
+    }
+  }
+]

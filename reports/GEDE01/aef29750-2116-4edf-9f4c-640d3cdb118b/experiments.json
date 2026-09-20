@@ -1,0 +1,92 @@
+[
+  {
+    "name": "baseline",
+    "patch": "",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.externalized"
+      ],
+      "exit_code": 0,
+      "output": "[1/2] MWCC build/GEDE01/src/game/game_fn_801D1F78.o\n[2/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "objdiff": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801D1F78",
+        "-o",
+        "reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/baseline.json",
+        "--format",
+        "json",
+        "fn_801D1F78"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/baseline.json\n"
+    },
+    "match_percent": 97.810455,
+    "object_sha256": "0d5cc90e8b1db5fa9c98643d41dcf25500742c3cef7a69d77f7756851a72662f"
+  },
+  {
+    "name": "indexed-projected",
+    "patch": "--- baseline\n+++ indexed-projected\n@@ -57,7 +57,6 @@\n     u8 count;\n     volatile RingDefinition* ring;\n     f32 circle;\n-    s32* projected_ptr;\n     RingOutput* output;\n     s32 object;\n     s32 i;\n@@ -70,7 +69,6 @@\n     count = ring_arg->count;\n     ring = ring_arg;\n     circle = lbl_8065107C;\n-    projected_ptr = projected;\n     output = output_arg;\n     object = object_arg;\n \n@@ -80,7 +78,7 @@\n         point.y = ring->center.y + (f32)ring->radius * fn_80048C50(angle);\n         point.z = ring->center.z;\n         fn_801F6B6C(&point, &screen, 0, 0);\n-        *projected_ptr++ = screen.x;\n+        projected[i] = screen.x;\n     }\n \n     for (i = 0; i < count; i++) {\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.externalized"
+      ],
+      "exit_code": 1,
+      "output": "[1/2] MWCC build/GEDE01/src/game/game_fn_801D1F78.o\n[2/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801D1F78.o\nFAILED: [code=1] build/GEDE01/src/game/game_fn_801D1F78.externalized \npython3 tools/externalize_elf_symbol.py build/GEDE01/src/game/game_fn_801D1F78.o @67 lbl_80651070 orig/GEDE01/sys/main.dol --require-section-symbols=@67,@69 && python3 tools/externalize_elf_symbol.py build/GEDE01/src/game/game_fn_801D1F78.o @69 lbl_80651080 orig/GEDE01/sys/main.dol && build/binutils/powerpc-eabi-objcopy --redefine-sym=@67=lbl_80651070 --redefine-sym=@69=lbl_80651080 --remove-section=.sdata2 --rename-section=.comment=.ignored build/GEDE01/src/game/game_fn_801D1F78.o && touch build/GEDE01/src/game/game_fn_801D1F78.externalized\nbuild/GEDE01/src/game/game_fn_801D1F78.o: symbol '@67' not found\nninja: build stopped: subcommand failed.\n"
+    }
+  },
+  {
+    "name": "pointer-loop-increment",
+    "patch": "--- baseline\n+++ pointer-loop-increment\n@@ -74,13 +74,13 @@\n     output = output_arg;\n     object = object_arg;\n \n-    for (i = 0; i < count; i++) {\n+    for (i = 0; i < count; i++, projected_ptr++) {\n         angle = circle * (f32)i / (f32)count;\n         point.x = ring->center.x + (f32)ring->radius * fn_80048C2C(angle);\n         point.y = ring->center.y + (f32)ring->radius * fn_80048C50(angle);\n         point.z = ring->center.z;\n         fn_801F6B6C(&point, &screen, 0, 0);\n-        *projected_ptr++ = screen.x;\n+        *projected_ptr = screen.x;\n     }\n \n     for (i = 0; i < count; i++) {\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.externalized"
+      ],
+      "exit_code": 0,
+      "output": "[1/2] MWCC build/GEDE01/src/game/game_fn_801D1F78.o\n[2/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "objdiff": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801D1F78",
+        "-o",
+        "reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/pointer-loop-increment.json",
+        "--format",
+        "json",
+        "fn_801D1F78"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/pointer-loop-increment.json\n"
+    },
+    "match_percent": 97.810455,
+    "object_sha256": "0d5cc90e8b1db5fa9c98643d41dcf25500742c3cef7a69d77f7756851a72662f"
+  },
+  {
+    "name": "float-count-hoist",
+    "patch": "--- baseline\n+++ float-count-hoist\n@@ -65,6 +65,7 @@\n     s32 best;\n     s32 j;\n     f32 angle;\n+    f32 float_count;\n     void* context;\n \n     count = ring_arg->count;\n@@ -73,9 +74,10 @@\n     projected_ptr = projected;\n     output = output_arg;\n     object = object_arg;\n+    float_count = (f32)count;\n \n     for (i = 0; i < count; i++) {\n-        angle = circle * (f32)i / (f32)count;\n+        angle = circle * (f32)i / float_count;\n         point.x = ring->center.x + (f32)ring->radius * fn_80048C2C(angle);\n         point.y = ring->center.y + (f32)ring->radius * fn_80048C50(angle);\n         point.z = ring->center.z;\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.externalized"
+      ],
+      "exit_code": 1,
+      "output": "[1/2] MWCC build/GEDE01/src/game/game_fn_801D1F78.o\n[2/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801D1F78.o\nFAILED: [code=1] build/GEDE01/src/game/game_fn_801D1F78.externalized \npython3 tools/externalize_elf_symbol.py build/GEDE01/src/game/game_fn_801D1F78.o @67 lbl_80651070 orig/GEDE01/sys/main.dol --require-section-symbols=@67,@69 && python3 tools/externalize_elf_symbol.py build/GEDE01/src/game/game_fn_801D1F78.o @69 lbl_80651080 orig/GEDE01/sys/main.dol && build/binutils/powerpc-eabi-objcopy --redefine-sym=@67=lbl_80651070 --redefine-sym=@69=lbl_80651080 --remove-section=.sdata2 --rename-section=.comment=.ignored build/GEDE01/src/game/game_fn_801D1F78.o && touch build/GEDE01/src/game/game_fn_801D1F78.externalized\nbuild/GEDE01/src/game/game_fn_801D1F78.o: required section symbols not found: @69\nninja: build stopped: subcommand failed.\n"
+    }
+  }
+]

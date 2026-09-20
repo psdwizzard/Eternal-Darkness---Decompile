@@ -1,0 +1,161 @@
+[
+  {
+    "name": "grouped-arrays",
+    "patch": "--- baseline\n+++ grouped-arrays\n@@ -44,8 +44,7 @@\n \n void fn_801D1F78(RingOutput* output_arg, volatile RingDefinition* ring_arg, s32 object_arg)\n {\n-    s32 projected[9];\n-    s32 order[9];\n+    struct { s32 order[9]; s32 projected[9]; } workspace;\n     QueryResult query_a;\n     QueryResult query_b;\n     Vec3 point;\n@@ -70,7 +69,7 @@\n     count = ring_arg->count;\n     ring = ring_arg;\n     circle = lbl_8065107C;\n-    projected_ptr = projected;\n+    projected_ptr = workspace.projected;\n     output = output_arg;\n     object = object_arg;\n \n@@ -84,16 +83,16 @@\n     }\n \n     for (i = 0; i < count; i++) {\n-        best = projected[0];\n+        best = workspace.projected[0];\n         best_index = 0;\n         for (j = 1; j < count; j++) {\n-            if (projected[j] > best) {\n+            if (workspace.projected[j] > best) {\n                 best_index = j;\n-                best = projected[j];\n+                best = workspace.projected[j];\n             }\n         }\n-        order[i] = best_index;\n-        projected[best_index] = (s32)0x80000000;\n+        workspace.order[i] = best_index;\n+        workspace.projected[best_index] = (s32)0x80000000;\n     }\n \n     fn_80201814(object);\n@@ -112,11 +111,11 @@\n \n     if (reference_a_screen.x < reference_b_screen.x) {\n         for (i = 0; i < count; i++) {\n-            output->rank[order[count - 1 - i]] = i;\n+            output->rank[workspace.order[count - 1 - i]] = i;\n         }\n     } else {\n         for (i = 0; i < count; i++) {\n-            output->rank[order[i]] = i;\n+            output->rank[workspace.order[i]] = i;\n         }\n     }\n }\n",
+    "compile": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] RUN configure.py\n[1/2] MWCC build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "constant_symbols": {
+      "signed": "@69",
+      "unsigned": "@71"
+    },
+    "configure": {
+      "command": [
+        "python3",
+        "configure.py"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.externalized"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] RUN configure.py\n[1/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "objdiff": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801D1F78",
+        "-o",
+        "reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/grouped-arrays.json",
+        "--format",
+        "json",
+        "fn_801D1F78"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/grouped-arrays.json\n"
+    },
+    "match_percent": 74.97713,
+    "object_sha256": "04876b28c246fbf66139c8ca0560464fb7f25ab1ac671c6a06b3de4feebe7aee"
+  },
+  {
+    "name": "count-u16",
+    "patch": "--- baseline\n+++ count-u16\n@@ -54,7 +54,7 @@\n     Vec3 reference_b;\n     ScreenPosition reference_a_screen;\n     ScreenPosition reference_b_screen;\n-    u8 count;\n+    unsigned short count;\n     volatile RingDefinition* ring;\n     f32 circle;\n     s32* projected_ptr;\n",
+    "compile": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "constant_symbols": {
+      "signed": "@67",
+      "unsigned": "@69"
+    },
+    "configure": {
+      "command": [
+        "python3",
+        "configure.py"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.externalized"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] RUN configure.py\n[1/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "objdiff": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801D1F78",
+        "-o",
+        "reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/count-u16.json",
+        "--format",
+        "json",
+        "fn_801D1F78"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/count-u16.json\n"
+    },
+    "match_percent": 96.67647,
+    "object_sha256": "6131a57ca056ac7c134f2a0b3644673ee517557edcfd3661a38c425d7333c461"
+  },
+  {
+    "name": "field-volatiles",
+    "patch": "--- baseline\n+++ field-volatiles\n@@ -23,10 +23,10 @@\n } QueryResult;\n \n typedef struct RingDefinition {\n-    u8 count;\n+    volatile u8 count;\n     u8 pad;\n-    s16 radius;\n-    Vec3 center;\n+    volatile s16 radius;\n+    volatile Vec3 center;\n } RingDefinition;\n \n typedef struct RingOutput {\n@@ -42,7 +42,7 @@\n extern void* fn_80201BC8(void);\n extern s32 fn_8011F6A4(void*, s32, s32, s32, QueryResult*, s32);\n \n-void fn_801D1F78(RingOutput* output_arg, volatile RingDefinition* ring_arg, s32 object_arg)\n+void fn_801D1F78(RingOutput* output_arg, RingDefinition* ring_arg, s32 object_arg)\n {\n     s32 projected[9];\n     s32 order[9];\n@@ -55,7 +55,7 @@\n     ScreenPosition reference_a_screen;\n     ScreenPosition reference_b_screen;\n     u8 count;\n-    volatile RingDefinition* ring;\n+    RingDefinition* ring;\n     f32 circle;\n     s32* projected_ptr;\n     RingOutput* output;\n",
+    "compile": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "constant_symbols": {
+      "signed": "@67",
+      "unsigned": "@69"
+    },
+    "configure": {
+      "command": [
+        "python3",
+        "configure.py"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801D1F78.externalized"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] RUN configure.py\n[1/2] EXTERNALIZE build/GEDE01/src/game/game_fn_801D1F78.o\n"
+    },
+    "objdiff": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801D1F78",
+        "-o",
+        "reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/field-volatiles.json",
+        "--format",
+        "json",
+        "fn_801D1F78"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/aef29750-2116-4edf-9f4c-640d3cdb118b/field-volatiles.json\n"
+    },
+    "match_percent": 97.810455,
+    "object_sha256": "0d5cc90e8b1db5fa9c98643d41dcf25500742c3cef7a69d77f7756851a72662f"
+  }
+]
