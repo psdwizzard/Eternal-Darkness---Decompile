@@ -37,6 +37,7 @@ int fn_80087BA8(Work* work)
     int* data;
     int placed;
     int i;
+    int j;
 
     success = 0;
     state = fn_8006ED3C(work, 6, &index);
@@ -70,8 +71,8 @@ int fn_80087BA8(Work* work)
     if (fn_801A6D94(lbl_8064C824)) {
         ((u8*)work)[index * 0x2C + 0x68] = 4;
         fn_8006DEF8(work, 6, 0, 0, 0);
-        for (i = 0; i < 4; i++) {
-            ((u8*)work)[index * 0x2C + 0x68] = i;
+        for (j = 0; j < 4; j++) {
+            ((u8*)work)[index * 0x2C + 0x68] = j;
             fn_8006DEF8(work, 6, 0, 0, 0);
         }
         ((u8*)work)[index * 0x2C + 0x68] = 0;

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a5fd6a3f-617b-4981-87a6-4fc865c3a15a",
+  "attempt": 4,
+  "base_commit": "02ed25955386dbecb7a77959e0d70fb786ff53ca",
+  "target": "fn_80087BA8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a5fd6a3f-617b-4981-87a6-4fc865c3a15a.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict direct objdiff are byte-for-byte identical at 97.11712% and remain size-exact at 444/444 bytes with 111 instructions and 13 relocation sites per side; all relocation-bearing instructions have matching formatted targets and types with zero addends. Using a distinct callback-reset counter improves the prior 96.89189% result by making GC/1.3 allocate that loop counter to retail r25 instead of r27. Remaining codegen divergence is equivalent allocation of work/position to generated r28/r29 instead of retail r29/r28, plus equivalent indexed-store address formation at the first and final callback-byte stores (generated mulli/addi/stbx versus retail mulli/add/stb)."
+}
