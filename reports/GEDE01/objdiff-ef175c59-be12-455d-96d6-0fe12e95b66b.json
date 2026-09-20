@@ -1,0 +1,3398 @@
+{
+  "version": 1,
+  "assignment_id": "ef175c59-be12-455d-96d6-0fe12e95b66b",
+  "target": "fn_80142944",
+  "compiler": "GC/1.3",
+  "status": "attempted",
+  "source": "eternal-darkness-decomp/src/game/game_fn_80142944.c",
+  "base_reconciliation": "The accepted base already contains the identical source and NonMatching registration from preserved commit 3235aa1e7d1d70ab844bb62d9a101708171ac85f. Restored this best source after experiments; no source or registration change needed.",
+  "distinct_hypothesis": "Inline parameter substitution and loop induction could preserve address arithmetic until late instruction selection. Thirteen measured variants tested inline wrappers, inline cursor updates, single-iteration loops and local pointer aggregates without compiler setting changes. None improved on the restored baseline.",
+  "divergence": "Canonical GC/1.3 produces 100 bytes at 97.6% (24/25 instructions); at offset 0x20 retail uses addi r3,r31,0 while the candidate uses mr r3,r31. Relocation-strict objdiff also scores 97.6%; all six ELF relocation offsets, types, targets, and addends agree.",
+  "canonical": {
+    "command": [
+      "python3",
+      "tools/fndiff.py",
+      "game/game_fn_80142944.c",
+      "fn_80142944"
+    ],
+    "exit_code": 0,
+    "stdout": "target 100 bytes  base 100 bytes  match 97.6\n  0x0000  stwu r1, -0x10(r1)                                   | stwu r1, -0x10(r1)\n  0x0004  mflr r0                                              | mflr r0\n  0x0008  lis r3, lbl_805B1310@ha [None+0 t6]                  | lis r3, lbl_805B1310@ha [None+0 t6]\n  0x000c  li r4, 0x0                                           | li r4, 0x0\n  0x0010  stw r0, 0x14(r1)                                     | stw r0, 0x14(r1)\n  0x0014  li r5, 0xf0                                          | li r5, 0xf0\n  0x0018  stw r31, 0xc(r1)                                     | stw r31, 0xc(r1)\n  0x001c  addi r31, r3, lbl_805B1310@l [None+0 t4]             | addi r31, r3, lbl_805B1310@l [None+0 t4]\n* 0x0020  addi r3, r31, 0x0 [None+0 tNone]                     | mr r3, r31 [None+0 tNone]\n  0x0024  bl memset [None+0 t10]                               | bl memset [None+0 t10]\n  0x0028  addi r3, r31, 0xf0 [None+0 tNone]                    | addi r3, r31, 0xf0 [None+0 tNone]\n  0x002c  li r4, 0x0                                           | li r4, 0x0\n  0x0030  li r5, 0x24c0                                        | li r5, 0x24c0\n  0x0034  bl memset [None+0 t10]                               | bl memset [None+0 t10]\n  0x0038  addi r3, r31, 0x25b0 [None+0 tNone]                  | addi r3, r31, 0x25b0 [None+0 tNone]\n  0x003c  li r4, 0x0                                           | li r4, 0x0\n  0x0040  li r5, 0x7e0                                         | li r5, 0x7e0\n  0x0044  bl memset [None+0 t10]                               | bl memset [None+0 t10]\n  0x0048  li r0, 0x0                                           | li r0, 0x0\n  0x004c  stb r0, lbl_8064D038@sda21 [None+0 t109]             | stb r0, lbl_8064D038@sda21 [None+0 t109]\n  0x0050  lwz r0, 0x14(r1)                                     | lwz r0, 0x14(r1)\n  0x0054  lwz r31, 0xc(r1)                                     | lwz r31, 0xc(r1)\n  0x0058  mtlr r0                                              | mtlr r0\n  0x005c  addi r1, r1, 0x10                                    | addi r1, r1, 0x10\n  0x0060  blr                                                  | blr\n",
+    "stderr": " INFO Writing to eternal-darkness-decomp/build/GEDE01/fndiff_fn_80142944.json\n"
+  },
+  "canonical_raw_objdiff": {
+    "left": {
+      "sections": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "100",
+          "match_percent": 97.6
+        },
+        {
+          "name": ".rela.text",
+          "size": "72"
+        },
+        {
+          "name": ".symtab",
+          "size": "112"
+        },
+        {
+          "name": ".strtab",
+          "size": "65"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "symbols": [
+        {
+          "name": "fn_80142944",
+          "size": "100",
+          "flags": 1,
+          "target_symbol": 1,
+          "match_percent": 97.6,
+          "instructions": [
+            {
+              "instruction": {
+                "size": 4,
+                "formatted": "stwu r1, -0x10(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stwu",
+                      "opcode": 444
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "-16"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "4",
+                "size": 4,
+                "formatted": "mflr r0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mflr",
+                      "opcode": 342
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "8",
+                "size": 4,
+                "formatted": "lis r3, lbl_805B1310@ha",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "lis",
+                      "opcode": 264
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  },
+                  {
+                    "basic": "@ha"
+                  }
+                ],
+                "relocation": {
+                  "type": 6,
+                  "type_name": "R_PPC_ADDR16_HA",
+                  "target_symbol": 2
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "12",
+                "size": 4,
+                "formatted": "li r4, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r4"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "16",
+                "size": 4,
+                "formatted": "stw r0, 0x14(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stw",
+                      "opcode": 443
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "20"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "20",
+                "size": 4,
+                "formatted": "li r5, 0xf0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r5"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "240"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "24",
+                "size": 4,
+                "formatted": "stw r31, 0xc(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stw",
+                      "opcode": 443
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "12"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "28",
+                "size": 4,
+                "formatted": "addi r31, r3, lbl_805B1310@l",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  },
+                  {
+                    "basic": "@l"
+                  }
+                ],
+                "relocation": {
+                  "type": 4,
+                  "type_name": "R_PPC_ADDR16_LO",
+                  "target_symbol": 2
+                }
+              }
+            },
+            {
+              "diff_kind": "DIFF_REPLACE",
+              "instruction": {
+                "address": "32",
+                "size": 4,
+                "formatted": "addi r3, r31, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type_name": "R_PPC_NONE",
+                  "target_symbol": 2
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "36",
+                "size": 4,
+                "formatted": "bl memset",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "bl",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type": 10,
+                  "type_name": "R_PPC_REL24",
+                  "target_symbol": 3
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "40",
+                "size": 4,
+                "formatted": "addi r3, r31, 0xf0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "240"
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type_name": "R_PPC_NONE",
+                  "target_symbol": 2,
+                  "addend": "240"
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "44",
+                "size": 4,
+                "formatted": "li r4, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r4"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "48",
+                "size": 4,
+                "formatted": "li r5, 0x24c0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r5"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "9408"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "52",
+                "size": 4,
+                "formatted": "bl memset",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "bl",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type": 10,
+                  "type_name": "R_PPC_REL24",
+                  "target_symbol": 3
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "56",
+                "size": 4,
+                "formatted": "addi r3, r31, 0x25b0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "9648"
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type_name": "R_PPC_NONE",
+                  "target_symbol": 2,
+                  "addend": "9648"
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "60",
+                "size": 4,
+                "formatted": "li r4, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r4"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "64",
+                "size": 4,
+                "formatted": "li r5, 0x7e0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r5"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "2016"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "68",
+                "size": 4,
+                "formatted": "bl memset",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "bl",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type": 10,
+                  "type_name": "R_PPC_REL24",
+                  "target_symbol": 3
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "72",
+                "size": 4,
+                "formatted": "li r0, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "76",
+                "size": 4,
+                "formatted": "stb r0, lbl_8064D038@sda21",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stb",
+                      "opcode": 445
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  },
+                  {
+                    "basic": "@sda21"
+                  }
+                ],
+                "relocation": {
+                  "type": 109,
+                  "type_name": "R_PPC_EMB_SDA21",
+                  "target_symbol": 4
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "80",
+                "size": 4,
+                "formatted": "lwz r0, 0x14(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "lwz",
+                      "opcode": 439
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "20"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "84",
+                "size": 4,
+                "formatted": "lwz r31, 0xc(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "lwz",
+                      "opcode": 439
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "12"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "88",
+                "size": 4,
+                "formatted": "mtlr r0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mtlr",
+                      "opcode": 348
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "92",
+                "size": 4,
+                "formatted": "addi r1, r1, 0x10",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "16"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "96",
+                "size": 4,
+                "formatted": "blr ",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "blr",
+                      "opcode": 269
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "right": {
+      "sections": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "100"
+        },
+        {
+          "name": ".rela.text",
+          "size": "72"
+        },
+        {
+          "name": ".symtab",
+          "size": "112"
+        },
+        {
+          "name": ".strtab",
+          "size": "65"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "100"
+        }
+      ],
+      "symbols": [
+        {
+          "name": "fn_80142944",
+          "size": "100",
+          "flags": 1,
+          "target_symbol": 1,
+          "match_percent": 97.6,
+          "instructions": [
+            {
+              "instruction": {
+                "size": 4,
+                "formatted": "stwu r1, -0x10(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stwu",
+                      "opcode": 444
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "-16"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "4",
+                "size": 4,
+                "formatted": "mflr r0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mflr",
+                      "opcode": 342
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "8",
+                "size": 4,
+                "formatted": "lis r3, lbl_805B1310@ha",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "lis",
+                      "opcode": 264
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  },
+                  {
+                    "basic": "@ha"
+                  }
+                ],
+                "relocation": {
+                  "type": 6,
+                  "type_name": "R_PPC_ADDR16_HA",
+                  "target_symbol": 2
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "12",
+                "size": 4,
+                "formatted": "li r4, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r4"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "16",
+                "size": 4,
+                "formatted": "stw r0, 0x14(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stw",
+                      "opcode": 443
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "20"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "20",
+                "size": 4,
+                "formatted": "li r5, 0xf0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r5"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "240"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "24",
+                "size": 4,
+                "formatted": "stw r31, 0xc(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stw",
+                      "opcode": 443
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "12"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "28",
+                "size": 4,
+                "formatted": "addi r31, r3, lbl_805B1310@l",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  },
+                  {
+                    "basic": "@l"
+                  }
+                ],
+                "relocation": {
+                  "type": 4,
+                  "type_name": "R_PPC_ADDR16_LO",
+                  "target_symbol": 2
+                }
+              }
+            },
+            {
+              "diff_kind": "DIFF_REPLACE",
+              "instruction": {
+                "address": "32",
+                "size": 4,
+                "formatted": "mr r3, r31",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mr",
+                      "opcode": 357
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type_name": "R_PPC_NONE",
+                  "target_symbol": 2
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "36",
+                "size": 4,
+                "formatted": "bl memset",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "bl",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type": 10,
+                  "type_name": "R_PPC_REL24",
+                  "target_symbol": 4
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "40",
+                "size": 4,
+                "formatted": "addi r3, r31, 0xf0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "240"
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type_name": "R_PPC_NONE",
+                  "target_symbol": 2,
+                  "addend": "240"
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "44",
+                "size": 4,
+                "formatted": "li r4, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r4"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "48",
+                "size": 4,
+                "formatted": "li r5, 0x24c0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r5"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "9408"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "52",
+                "size": 4,
+                "formatted": "bl memset",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "bl",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type": 10,
+                  "type_name": "R_PPC_REL24",
+                  "target_symbol": 4
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "56",
+                "size": 4,
+                "formatted": "addi r3, r31, 0x25b0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "9648"
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type_name": "R_PPC_NONE",
+                  "target_symbol": 2,
+                  "addend": "9648"
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "60",
+                "size": 4,
+                "formatted": "li r4, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r4"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "64",
+                "size": 4,
+                "formatted": "li r5, 0x7e0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r5"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "2016"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "68",
+                "size": 4,
+                "formatted": "bl memset",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "bl",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type": 10,
+                  "type_name": "R_PPC_REL24",
+                  "target_symbol": 4
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "72",
+                "size": 4,
+                "formatted": "li r0, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "76",
+                "size": 4,
+                "formatted": "stb r0, lbl_8064D038@sda21",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stb",
+                      "opcode": 445
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  },
+                  {
+                    "basic": "@sda21"
+                  }
+                ],
+                "relocation": {
+                  "type": 109,
+                  "type_name": "R_PPC_EMB_SDA21",
+                  "target_symbol": 3
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "80",
+                "size": 4,
+                "formatted": "lwz r0, 0x14(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "lwz",
+                      "opcode": 439
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "20"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "84",
+                "size": 4,
+                "formatted": "lwz r31, 0xc(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "lwz",
+                      "opcode": 439
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "12"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "88",
+                "size": 4,
+                "formatted": "mtlr r0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mtlr",
+                      "opcode": 348
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "92",
+                "size": 4,
+                "formatted": "addi r1, r1, 0x10",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "16"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "96",
+                "size": 4,
+                "formatted": "blr ",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "blr",
+                      "opcode": 269
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "strict_command": [
+    "build/tools/objdiff-cli",
+    "diff",
+    "-p",
+    ".",
+    "-u",
+    "main/game/game_fn_80142944",
+    "fn_80142944",
+    "-c",
+    "functionRelocDiffs=all",
+    "-o",
+    "reports/GEDE01/strict-ef175c59-be12-455d-96d6-0fe12e95b66b.json",
+    "--format",
+    "json"
+  ],
+  "strict_raw_objdiff": {
+    "left": {
+      "sections": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "100",
+          "match_percent": 97.6
+        },
+        {
+          "name": ".rela.text",
+          "size": "72"
+        },
+        {
+          "name": ".symtab",
+          "size": "112"
+        },
+        {
+          "name": ".strtab",
+          "size": "65"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "symbols": [
+        {
+          "name": "fn_80142944",
+          "size": "100",
+          "flags": 1,
+          "target_symbol": 1,
+          "match_percent": 97.6,
+          "instructions": [
+            {
+              "instruction": {
+                "size": 4,
+                "formatted": "stwu r1, -0x10(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stwu",
+                      "opcode": 444
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "-16"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "4",
+                "size": 4,
+                "formatted": "mflr r0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mflr",
+                      "opcode": 342
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "8",
+                "size": 4,
+                "formatted": "lis r3, lbl_805B1310@ha",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "lis",
+                      "opcode": 264
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  },
+                  {
+                    "basic": "@ha"
+                  }
+                ],
+                "relocation": {
+                  "type": 6,
+                  "type_name": "R_PPC_ADDR16_HA",
+                  "target_symbol": 2
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "12",
+                "size": 4,
+                "formatted": "li r4, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r4"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "16",
+                "size": 4,
+                "formatted": "stw r0, 0x14(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stw",
+                      "opcode": 443
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "20"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "20",
+                "size": 4,
+                "formatted": "li r5, 0xf0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r5"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "240"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "24",
+                "size": 4,
+                "formatted": "stw r31, 0xc(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stw",
+                      "opcode": 443
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "12"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "28",
+                "size": 4,
+                "formatted": "addi r31, r3, lbl_805B1310@l",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  },
+                  {
+                    "basic": "@l"
+                  }
+                ],
+                "relocation": {
+                  "type": 4,
+                  "type_name": "R_PPC_ADDR16_LO",
+                  "target_symbol": 2
+                }
+              }
+            },
+            {
+              "diff_kind": "DIFF_REPLACE",
+              "instruction": {
+                "address": "32",
+                "size": 4,
+                "formatted": "addi r3, r31, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type_name": "R_PPC_NONE",
+                  "target_symbol": 2
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "36",
+                "size": 4,
+                "formatted": "bl memset",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "bl",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type": 10,
+                  "type_name": "R_PPC_REL24",
+                  "target_symbol": 3
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "40",
+                "size": 4,
+                "formatted": "addi r3, r31, 0xf0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "240"
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type_name": "R_PPC_NONE",
+                  "target_symbol": 2,
+                  "addend": "240"
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "44",
+                "size": 4,
+                "formatted": "li r4, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r4"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "48",
+                "size": 4,
+                "formatted": "li r5, 0x24c0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r5"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "9408"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "52",
+                "size": 4,
+                "formatted": "bl memset",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "bl",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type": 10,
+                  "type_name": "R_PPC_REL24",
+                  "target_symbol": 3
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "56",
+                "size": 4,
+                "formatted": "addi r3, r31, 0x25b0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "9648"
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type_name": "R_PPC_NONE",
+                  "target_symbol": 2,
+                  "addend": "9648"
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "60",
+                "size": 4,
+                "formatted": "li r4, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r4"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "64",
+                "size": 4,
+                "formatted": "li r5, 0x7e0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r5"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "2016"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "68",
+                "size": 4,
+                "formatted": "bl memset",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "bl",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type": 10,
+                  "type_name": "R_PPC_REL24",
+                  "target_symbol": 3
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "72",
+                "size": 4,
+                "formatted": "li r0, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "76",
+                "size": 4,
+                "formatted": "stb r0, lbl_8064D038@sda21",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stb",
+                      "opcode": 445
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  },
+                  {
+                    "basic": "@sda21"
+                  }
+                ],
+                "relocation": {
+                  "type": 109,
+                  "type_name": "R_PPC_EMB_SDA21",
+                  "target_symbol": 4
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "80",
+                "size": 4,
+                "formatted": "lwz r0, 0x14(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "lwz",
+                      "opcode": 439
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "20"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "84",
+                "size": 4,
+                "formatted": "lwz r31, 0xc(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "lwz",
+                      "opcode": 439
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "12"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "88",
+                "size": 4,
+                "formatted": "mtlr r0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mtlr",
+                      "opcode": 348
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "92",
+                "size": 4,
+                "formatted": "addi r1, r1, 0x10",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "16"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "96",
+                "size": 4,
+                "formatted": "blr ",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "blr",
+                      "opcode": 269
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "right": {
+      "sections": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "100"
+        },
+        {
+          "name": ".rela.text",
+          "size": "72"
+        },
+        {
+          "name": ".symtab",
+          "size": "112"
+        },
+        {
+          "name": ".strtab",
+          "size": "65"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "100"
+        }
+      ],
+      "symbols": [
+        {
+          "name": "fn_80142944",
+          "size": "100",
+          "flags": 1,
+          "target_symbol": 1,
+          "match_percent": 97.6,
+          "instructions": [
+            {
+              "instruction": {
+                "size": 4,
+                "formatted": "stwu r1, -0x10(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stwu",
+                      "opcode": 444
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "-16"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "4",
+                "size": 4,
+                "formatted": "mflr r0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mflr",
+                      "opcode": 342
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "8",
+                "size": 4,
+                "formatted": "lis r3, lbl_805B1310@ha",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "lis",
+                      "opcode": 264
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  },
+                  {
+                    "basic": "@ha"
+                  }
+                ],
+                "relocation": {
+                  "type": 6,
+                  "type_name": "R_PPC_ADDR16_HA",
+                  "target_symbol": 2
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "12",
+                "size": 4,
+                "formatted": "li r4, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r4"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "16",
+                "size": 4,
+                "formatted": "stw r0, 0x14(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stw",
+                      "opcode": 443
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "20"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "20",
+                "size": 4,
+                "formatted": "li r5, 0xf0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r5"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "240"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "24",
+                "size": 4,
+                "formatted": "stw r31, 0xc(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stw",
+                      "opcode": 443
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "12"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "28",
+                "size": 4,
+                "formatted": "addi r31, r3, lbl_805B1310@l",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  },
+                  {
+                    "basic": "@l"
+                  }
+                ],
+                "relocation": {
+                  "type": 4,
+                  "type_name": "R_PPC_ADDR16_LO",
+                  "target_symbol": 2
+                }
+              }
+            },
+            {
+              "diff_kind": "DIFF_REPLACE",
+              "instruction": {
+                "address": "32",
+                "size": 4,
+                "formatted": "mr r3, r31",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mr",
+                      "opcode": 357
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type_name": "R_PPC_NONE",
+                  "target_symbol": 2
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "36",
+                "size": 4,
+                "formatted": "bl memset",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "bl",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type": 10,
+                  "type_name": "R_PPC_REL24",
+                  "target_symbol": 4
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "40",
+                "size": 4,
+                "formatted": "addi r3, r31, 0xf0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "240"
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type_name": "R_PPC_NONE",
+                  "target_symbol": 2,
+                  "addend": "240"
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "44",
+                "size": 4,
+                "formatted": "li r4, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r4"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "48",
+                "size": 4,
+                "formatted": "li r5, 0x24c0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r5"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "9408"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "52",
+                "size": 4,
+                "formatted": "bl memset",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "bl",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type": 10,
+                  "type_name": "R_PPC_REL24",
+                  "target_symbol": 4
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "56",
+                "size": 4,
+                "formatted": "addi r3, r31, 0x25b0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r3"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "9648"
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type_name": "R_PPC_NONE",
+                  "target_symbol": 2,
+                  "addend": "9648"
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "60",
+                "size": 4,
+                "formatted": "li r4, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r4"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "64",
+                "size": 4,
+                "formatted": "li r5, 0x7e0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r5"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "2016"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "68",
+                "size": 4,
+                "formatted": "bl memset",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "bl",
+                      "opcode": 267
+                    }
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  }
+                ],
+                "relocation": {
+                  "type": 10,
+                  "type_name": "R_PPC_REL24",
+                  "target_symbol": 4
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "72",
+                "size": 4,
+                "formatted": "li r0, 0x0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "li",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "76",
+                "size": 4,
+                "formatted": "stb r0, lbl_8064D038@sda21",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "stb",
+                      "opcode": 445
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "reloc": true
+                    }
+                  },
+                  {
+                    "basic": "@sda21"
+                  }
+                ],
+                "relocation": {
+                  "type": 109,
+                  "type_name": "R_PPC_EMB_SDA21",
+                  "target_symbol": 3
+                }
+              }
+            },
+            {
+              "instruction": {
+                "address": "80",
+                "size": 4,
+                "formatted": "lwz r0, 0x14(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "lwz",
+                      "opcode": 439
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "20"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "84",
+                "size": 4,
+                "formatted": "lwz r31, 0xc(r1)",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "lwz",
+                      "opcode": 439
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r31"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "12"
+                    }
+                  },
+                  {
+                    "basic": "("
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "basic": ")"
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "88",
+                "size": 4,
+                "formatted": "mtlr r0",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "mtlr",
+                      "opcode": 348
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r0"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "92",
+                "size": 4,
+                "formatted": "addi r1, r1, 0x10",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "addi",
+                      "opcode": 263
+                    }
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "opaque": "r1"
+                    }
+                  },
+                  {
+                    "separator": true
+                  },
+                  {
+                    "arg": {
+                      "signed": "16"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "instruction": {
+                "address": "96",
+                "size": 4,
+                "formatted": "blr ",
+                "parts": [
+                  {
+                    "opcode": {
+                      "mnemonic": "blr",
+                      "opcode": 269
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "relocation_raw_readelf": {
+    "command": [
+      "build/binutils/powerpc-eabi-readelf",
+      "-r",
+      "build/GEDE01/obj/game/game_fn_80142944.o",
+      "build/GEDE01/src/game/game_fn_80142944.o"
+    ],
+    "exit_code": 0,
+    "stdout": "\nFile: build/GEDE01/obj/game/game_fn_80142944.o\n\nRelocation section '.rela.text' at offset 0xa4 contains 6 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n0000000a  00000406 R_PPC_ADDR16_HA   00000000   lbl_805B1310 + 0\n0000001e  00000404 R_PPC_ADDR16_LO   00000000   lbl_805B1310 + 0\n00000024  0000050a R_PPC_REL24       00000000   memset + 0\n00000034  0000050a R_PPC_REL24       00000000   memset + 0\n00000044  0000050a R_PPC_REL24       00000000   memset + 0\n0000004c  0000066d R_PPC_EMB_SDA21   00000000   lbl_8064D038 + 0\n\nFile: build/GEDE01/src/game/game_fn_80142944.o\n\nRelocation section '.rela.text' at offset 0x98 contains 6 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n0000000a  00000306 R_PPC_ADDR16_HA   00000000   lbl_805B1310 + 0\n0000001e  00000304 R_PPC_ADDR16_LO   00000000   lbl_805B1310 + 0\n00000024  0000050a R_PPC_REL24       00000000   memset + 0\n00000034  0000050a R_PPC_REL24       00000000   memset + 0\n00000044  0000050a R_PPC_REL24       00000000   memset + 0\n0000004c  0000046d R_PPC_EMB_SDA21   00000000   lbl_8064D038 + 0\n",
+    "stderr": ""
+  },
+  "relocation_strict_passed": false,
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_codes": [
+      0,
+      0
+    ],
+    "ninja_output_excerpt": "[882/884] DOL build/GEDE01/main.dol\n[883/884] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK",
+    "note": "NonMatching candidate is not linked into the canonical DOL; DOL verification confirms the retail-preserving build."
+  },
+  "dol_sha1": {
+    "command": [
+      "sha1sum",
+      "build/GEDE01/main.dol"
+    ],
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "stderr": ""
+  },
+  "experiments": "eternal-darkness-decomp/reports/GEDE01/experiments-ef175c59-be12-455d-96d6-0fe12e95b66b.json",
+  "legal_audit": {
+    "command": "python3 eternal-darkness-decomp/tools/legal_audit.py",
+    "exit_code": 0,
+    "stdout": "legal audit passed (18441 tracked project files inspected)\n"
+  }
+}
