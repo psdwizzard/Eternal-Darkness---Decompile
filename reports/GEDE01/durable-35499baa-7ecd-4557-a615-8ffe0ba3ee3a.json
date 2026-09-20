@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "35499baa-7ecd-4557-a615-8ffe0ba3ee3a",
+  "attempt": 5,
+  "base_commit": "c8cd822cb18df9baeff9b3ff491da632875c858a",
+  "target": "fn_80064E2C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-35499baa-7ecd-4557-a615-8ffe0ba3ee3a.json"
+  ],
+  "divergence": "Both objdiff modes measure 99.25305 percent, with 1312 bytes each. Nine instruction words differ because retail keeps original_first in r16 and is_current_owner in r15, while generated swaps them (offsets 0x0050, 0x00a0, 0x00cc, 0x0160, 0x01b8, 0x020c, 0x0240, 0x0354, 0x0364). The remaining two words are a scheduling swap: retail at 0x03ac/0x03b0 is mr r3,r14 then extsh r4,r0; generated emits extsh r4,r0 then mr r3,r14. Exactly 11 of 328 instruction words and 18 of 1312 bytes differ before relocation; there is no size excess. All 59 actual ELF relocation offsets/types/semantic targets/symbol values/addends are equal. The candidate is not claimed matched."
+}

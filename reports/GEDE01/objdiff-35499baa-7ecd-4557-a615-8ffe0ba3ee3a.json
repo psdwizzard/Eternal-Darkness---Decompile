@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "assignment_id": "35499baa-7ecd-4557-a615-8ffe0ba3ee3a",
+  "attempt": 5,
+  "base_commit": "c8cd822cb18df9baeff9b3ff491da632875c858a",
+  "target": "fn_80064E2C",
+  "status": "attempted",
+  "compiler": {
+    "version": "GC/1.3",
+    "flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+    "policy_changed": false
+  },
+  "recovery": {
+    "preserved_commit": "50b1be294b276001fc1770173b4908c4cd2df02c",
+    "preserved_source_already_equal_to_accepted_base": true,
+    "preserved_source_sha256": "f680e62ce3752d4a66b964546fa684c475f45e52b670a5dedce55f0457e69190",
+    "baseline_match_percent": 97.96646,
+    "baseline_artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-35499baa-7ecd-4557-a615-8ffe0ba3ee3a-baseline.json"
+  },
+  "source": {
+    "path": "eternal-darkness-decomp/src/game/game_fn_80064E2C.c",
+    "sha256": "4c59c84001d7b6bec9cc1dd260bc8285bf961097e895ec93174f5ec81208dede",
+    "registration": "Existing NonMatching registration and independent split retained; no configure.py or splits.txt changes needed."
+  },
+  "commands_working_directory": "eternal-darkness-decomp",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80064E2C fn_80064E2C -o reports/GEDE01/objdiff-35499baa-7ecd-4557-a615-8ffe0ba3ee3a-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80064E2C fn_80064E2C -o reports/GEDE01/objdiff-35499baa-7ecd-4557-a615-8ffe0ba3ee3a-relocation-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "build/binutils/powerpc-eabi-readelf -Wr build/GEDE01/obj/game/game_fn_80064E2C.o",
+    "build/binutils/powerpc-eabi-readelf -Wr build/GEDE01/src/game/game_fn_80064E2C.o",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "build": {
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "configure_log": "eternal-darkness-decomp/reports/GEDE01/configure-35499baa-7ecd-4557-a615-8ffe0ba3ee3a.log",
+    "build_log": "eternal-darkness-decomp/reports/GEDE01/build-35499baa-7ecd-4557-a615-8ffe0ba3ee3a.log",
+    "log_text_normalization": "Wine linker CRLF line endings normalized to LF; output text retained."
+  },
+  "hypothesis_and_result": "Combined feedback predicates reproduce the retail fallthrough branches, keep the fn_80201BC8 result in r3 until after the feedback comparison, and remove the extra pointer move, improving 97.96646 to 99.17683 percent and reducing 1316 to 1312 bytes. Expressing the half-amount max directly as the setter argument fixes its r3/r0 allocation and improves to 99.25305 percent. Coherent short getter/setter/input types fix the last argument scheduling but regress global register allocation; all 120 permutations of the five long-lived declarations under those types were measured, without exceeding the retained score. Declaration, capture placement, pointer typing, boolean typing, aggregate representation, and temporary reuse variants are documented; only one C source is retained.",
+  "experiments": {
+    "count": 183,
+    "artifact": "eternal-darkness-decomp/reports/GEDE01/experiments-35499baa-7ecd-4557-a615-8ffe0ba3ee3a.json"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "returncode": 0,
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "passed": true,
+    "scope": "NonMatching remains linked from the retail split; this verifies the canonical DOL build and is not a claim that the candidate is byte-identical."
+  },
+  "elf_verification": {
+    "artifact": "eternal-darkness-decomp/reports/GEDE01/elf-verification-35499baa-7ecd-4557-a615-8ffe0ba3ee3a.json",
+    "actual_relocation_count_each": 59,
+    "offset_type_symbol_value_target_addend_equal": true,
+    "text_size_each": 1312,
+    "different_instruction_words": 11,
+    "different_bytes": 18,
+    "note": "Objdiff attaches 61 relocation/reference annotations, including two inferred lbl_803003C8+8 references. The actual ELF RELA tables contain 59 entries; all 59 are compared directly."
+  },
+  "workspace": {
+    "preexisting_dirty_file": "CLAUDE.md",
+    "handling": "The assignment-provided CLAUDE.md modification existed at the first status check and is outside the authorized edit set. It was left untouched and excluded from the commit. No runtime, progress.json, README.md, neighboring sources, compiler settings, or shared inputs were edited."
+  },
+  "canonical_objdiff": {
+    "raw_artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-35499baa-7ecd-4557-a615-8ffe0ba3ee3a-canonical.json",
+    "match_percent": 99.25305,
+    "retail_size_bytes": 1312,
+    "generated_size_bytes": 1312,
+    "passed_100_percent_gate": false,
+    "basis": "default canonical configuration"
+  },
+  "relocation_strict_objdiff": {
+    "raw_artifact": "eternal-darkness-decomp/reports/GEDE01/objdiff-35499baa-7ecd-4557-a615-8ffe0ba3ee3a-relocation-strict.json",
+    "match_percent": 99.25305,
+    "retail_size_bytes": 1312,
+    "generated_size_bytes": 1312,
+    "passed_100_percent_gate": false,
+    "basis": "function_reloc_diffs=name_address"
+  },
+  "divergence": "Both objdiff modes measure 99.25305 percent, with 1312 bytes each. Nine instruction words differ because retail keeps original_first in r16 and is_current_owner in r15, while generated swaps them (offsets 0x0050, 0x00a0, 0x00cc, 0x0160, 0x01b8, 0x020c, 0x0240, 0x0354, 0x0364). The remaining two words are a scheduling swap: retail at 0x03ac/0x03b0 is mr r3,r14 then extsh r4,r0; generated emits extsh r4,r0 then mr r3,r14. Exactly 11 of 328 instruction words and 18 of 1312 bytes differ before relocation; there is no size excess. All 59 actual ELF relocation offsets/types/semantic targets/symbol values/addends are equal. The candidate is not claimed matched.",
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "returncode": 0,
+    "raw_stdout": "legal audit passed (18785 tracked project files inspected)\n",
+    "raw_stderr": "",
+    "passed": true,
+    "scope": "Run after staging all assignment artifacts; the tracked-file audit includes this assignment."
+  }
+}

@@ -145,16 +145,13 @@ s32 fn_80064E2C(u32 context, s32 event, s32 index, u16 mask, s32 amount,
     } else if (first <= 0 && original_first <= 0 && index == 1 &&
                is_current_owner) {
         s32 created = fn_801A717C();
-        s32 half;
         made_event = 1;
         fn_801A74A0(created, owner);
         fn_801A74A8(created, owner);
         fn_801A7538(created, 1);
-        half = 1;
-        if (((s16)amount >> 1) >= 1) {
-            half = ((s16)amount) >> 1;
-        }
-        fn_801A7518(created, (s16)half);
+        /* Keep the max expression at the call to retain the retail r3/r0 clamp. */
+        fn_801A7518(created, (s16)(((s16)amount >> 1) < 1 ?
+                                  1 : ((s16)amount >> 1)));
         fn_801A764C(created, &copied_position);
         if (((u32)(fn_8020123C(0x27, event_value, owner, created) &
                     0xFFFFFFFFULL) & 1) != 0) {
@@ -167,18 +164,17 @@ s32 fn_80064E2C(u32 context, s32 event, s32 index, u16 mask, s32 amount,
     }
 
     object = context != 0 ? fn_80201BC8(context) : 0;
-    if (feedback == 0) {
-        if (object != 0) {
-            fn_80120AD0(object, 0, 100, 0x22, lbl_8064E698,
-                         lbl_8064E69C);
-        }
-    } else if (feedback == 1) {
-        if (object != 0 && !made_event && lbl_8064CB24 == 0) {
+    /* Failed compound conditions continue through the retail else-if chain. */
+    if (feedback == 0 && object != 0) {
+        fn_80120AD0(object, 0, 100, 0x22, lbl_8064E698,
+                     lbl_8064E69C);
+    } else if (feedback == 1 && object != 0 && !made_event) {
+        if (lbl_8064CB24 == 0) {
             fn_80120AD0(object, 0, 100, 0x12, lbl_8064E698,
                          lbl_8064E69C);
         }
-    } else if (feedback == 2) {
-        if (object != 0 && lbl_8064C594 != 0 &&
+    } else if (feedback == 2 && object != 0) {
+        if (lbl_8064C594 != 0 &&
             fn_801E79FC((void *)lbl_8064C4E0, 0x257) != 0) {
             fn_80120AD0(object, 0, 100, 0xA, lbl_8064E698,
                          lbl_8064E69C);
