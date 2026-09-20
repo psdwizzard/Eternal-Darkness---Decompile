@@ -1,0 +1,225 @@
+{
+  "commands": [
+    {
+      "mode": "canonical",
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_801ECD74.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_801ECD74.o",
+        "-o",
+        "reports/GEDE01/objdiff-8f0fa4f4-ea27-4eba-b679-130bc254c711-canonical.json",
+        "--format",
+        "json-pretty",
+        "fn_801ECD74"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-8f0fa4f4-ea27-4eba-b679-130bc254c711-canonical.json\n",
+      "sha256": "864fab8c3114c676e2ab29e20e4216f06ed4509265f35b0296f092fd655c491e"
+    },
+    {
+      "mode": "strict",
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_801ECD74.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_801ECD74.o",
+        "-o",
+        "reports/GEDE01/objdiff-8f0fa4f4-ea27-4eba-b679-130bc254c711.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "functionRelocDiffs=all",
+        "fn_801ECD74"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-8f0fa4f4-ea27-4eba-b679-130bc254c711.json\n",
+      "sha256": "864fab8c3114c676e2ab29e20e4216f06ed4509265f35b0296f092fd655c491e"
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/obj/game/game_fn_801ECD74.o"
+      ],
+      "returncode": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x148 contains 10 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000008  0000046d R_PPC_EMB_SDA21        00000000   lbl_8065131C + 0\n00000010  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064D644 + 0\n0000001c  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064D640 + 0\n00000034  0000076d R_PPC_EMB_SDA21        00000000   lbl_80651320 + 0\n00000084  0000086d R_PPC_EMB_SDA21        00000000   lbl_8064D674 + 0\n00000090  0000086d R_PPC_EMB_SDA21        00000000   lbl_8064D674 + 0\n000000c4  0000086d R_PPC_EMB_SDA21        00000000   lbl_8064D674 + 0\n000000c8  0000086d R_PPC_EMB_SDA21        00000000   lbl_8064D674 + 0\n000000ec  0000086d R_PPC_EMB_SDA21        00000000   lbl_8064D674 + 0\n000000f4  0000090a R_PPC_REL24            00000000   fn_80229D8C + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/src/game/game_fn_801ECD74.o"
+      ],
+      "returncode": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x2d0 contains 10 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000008  0000046d R_PPC_EMB_SDA21        00000000   lbl_8065131C + 0\n00000010  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064D644 + 0\n0000001c  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064D640 + 0\n00000034  0000036d R_PPC_EMB_SDA21        00000000   lbl_80651320 + 0\n00000084  0000076d R_PPC_EMB_SDA21        00000000   lbl_8064D674 + 0\n00000090  0000076d R_PPC_EMB_SDA21        00000000   lbl_8064D674 + 0\n000000c4  0000076d R_PPC_EMB_SDA21        00000000   lbl_8064D674 + 0\n000000c8  0000076d R_PPC_EMB_SDA21        00000000   lbl_8064D674 + 0\n000000ec  0000076d R_PPC_EMB_SDA21        00000000   lbl_8064D674 + 0\n000000f4  0000080a R_PPC_REL24            00000000   fn_80229D8C + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "returncode": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    }
+  ],
+  "statistics": {
+    "left": {
+      "size": "264",
+      "match_percent": 96.969696,
+      "alignment_rows": 67,
+      "instructions": 66
+    },
+    "right": {
+      "size": "264",
+      "match_percent": 96.969696,
+      "alignment_rows": 67,
+      "instructions": 66
+    }
+  },
+  "relocations": {
+    "left": [
+      {
+        "offset": 8,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8065131C",
+        "addend": 0
+      },
+      {
+        "offset": 16,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D644",
+        "addend": 0
+      },
+      {
+        "offset": 28,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D640",
+        "addend": 0
+      },
+      {
+        "offset": 52,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_80651320",
+        "addend": 0
+      },
+      {
+        "offset": 132,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D674",
+        "addend": 0
+      },
+      {
+        "offset": 144,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D674",
+        "addend": 0
+      },
+      {
+        "offset": 196,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D674",
+        "addend": 0
+      },
+      {
+        "offset": 200,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D674",
+        "addend": 0
+      },
+      {
+        "offset": 236,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D674",
+        "addend": 0
+      },
+      {
+        "offset": 244,
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80229D8C",
+        "addend": 0
+      }
+    ],
+    "right": [
+      {
+        "offset": 8,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8065131C",
+        "addend": 0
+      },
+      {
+        "offset": 16,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D644",
+        "addend": 0
+      },
+      {
+        "offset": 28,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D640",
+        "addend": 0
+      },
+      {
+        "offset": 52,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_80651320",
+        "addend": 0
+      },
+      {
+        "offset": 132,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D674",
+        "addend": 0
+      },
+      {
+        "offset": 144,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D674",
+        "addend": 0
+      },
+      {
+        "offset": 196,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D674",
+        "addend": 0
+      },
+      {
+        "offset": 200,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D674",
+        "addend": 0
+      },
+      {
+        "offset": 236,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol": "lbl_8064D674",
+        "addend": 0
+      },
+      {
+        "offset": 244,
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80229D8C",
+        "addend": 0
+      }
+    ]
+  },
+  "relocations_equal": true,
+  "source_sha256": "29fdf8c06b1d7ec26b0bd44e12897d881c35fe4d1806eef176f3c8ace1430345",
+  "compiler": "GC/1.3",
+  "source_restored_to_base": true,
+  "configure_command": "python3 configure.py",
+  "configure_exit_code": 0,
+  "build_command": ".tools/bin/ninja -j2",
+  "build_exit_code": 0,
+  "hypothesis": "Change cache-copy dependence graph rather than local-copy lifetime or call ABI. Explicit green/RGB preloads change scheduling but reduce score to 95.15151/95.045456; aggregate/loop copies fail existing @25 constant postprocessing and are rejected without gate changes.",
+  "build_log_note": "Raw stdout/stderr captured; CRLF normalized to LF for git whitespace checks. Linker emitted unknown .ignored section warnings; final build and hash gate passed."
+}
