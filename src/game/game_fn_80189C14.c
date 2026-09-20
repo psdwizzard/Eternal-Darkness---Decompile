@@ -11,7 +11,8 @@ extern void fn_80188584(void*, void*), fn_8018D0D0(void*, void*, s16);
 extern int fn_801ED57C(int);
 extern void fn_801889D8(void*, void*, void*), fn_80226D78(int);
 
-void fn_80189C14(u8* arg)
+/* An integral incoming address lets MWCC allocate self independently. */
+void fn_80189C14(unsigned long arg)
 {
     u8* data = lbl_80607120;
     int entry_index;
@@ -31,7 +32,7 @@ void fn_80189C14(u8* arg)
     int position_offset;
     int saved;
 
-    self = arg;
+    self = (u8*)arg;
     count = self[1];
     flush0 = *(u16*)(data + 0xA);
     flush1 = *(u16*)(data + 0xE);
@@ -46,8 +47,9 @@ void fn_80189C14(u8* arg)
     }
     entries = *(u8**)(self + 0x4C);
     out = buffer2;
+    entry_index = 0;
     position_offset = 0;
-    for (entry_index = 0; entry_index < count; entry_index++) {
+    for (; entry_index < count; entry_index++) {
         position = (s16*)(buffer0 + position_offset);
         fn_80188A7C(entries, position, fn_8018D020);
         for (j = 0; j < entries[0x20]; j++) {
