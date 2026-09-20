@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "1b7827a1-cabb-4647-b624-a9b4279f44e1",
+  "attempt": 4,
+  "base_commit": "3653b0fc15edf43294dc3032038080c85f282c84",
+  "target": "fn_801028A8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1b7827a1-cabb-4647-b624-a9b4279f44e1.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 97.510376% with exact 964-byte .text and identical REL24/SDA21 relocation types, targets, and addends. Changing the inlined bit-reader result from int to s16 selects retail's 0x30-byte frame and removes every prologue/frame-offset mismatch. Only epilogue instruction order remains: canonical GC/1.2.5n restores r29/r28 and tears down the stack before mtlr, while retail schedules mtlr before those restores. A distinct #pragma scheduling off hypothesis produced retail's epilogue order but disrupted body scheduling and fell to 58.912865%, so it was rejected. Full build passes and main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
