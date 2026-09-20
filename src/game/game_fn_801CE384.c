@@ -20,7 +20,7 @@ typedef struct EffectParams {
     u16 value04;
     u16 value06;
     u8 pad08[8];
-    void* object10;
+    u32 object10;
     f32 angle14;
     u8 pad18[4];
     u8 value1C;
@@ -37,11 +37,11 @@ extern const f32 lbl_8065103C;
 extern const f32 lbl_80651040;
 extern void fn_801CECB4(u32, s16*);
 extern void fn_80190558(EffectParams*);
-extern u32 fn_801D38E8(u32);
-extern s16 fn_801CEB2C(u32);
+extern int fn_801D38E8(int);
+extern int fn_801CEB2C(u32);
 extern f32 fn_80048C2C(f32);
 extern f32 fn_80048C50(f32);
-extern void* fn_801D3988(s16, u32);
+extern u32 fn_801D3988(int, int);
 extern void* fn_80148008(Vec3f*, Descriptor*, EffectParams*, void (*)(void));
 extern void* fn_80156938(void*);
 extern void fn_8017FF1C(void*, int);
@@ -55,11 +55,14 @@ void fn_801CE384(u32 type, const Vec3f* position, u16 value, u32 value24,
     Vec3f submit_position;
     s16 indices[10];
     EffectParams params;
-    u32 object_type;
     s16 count;
-    s16* index;
-    void** output;
     int i;
+    int object_type;
+    int resolved_type;
+    struct LoopCursors {
+        u32 output_address;
+        s16* index;
+    } cursors;
 
     fn_801CECB4(type, indices);
     fn_80190558(&params);
@@ -71,19 +74,21 @@ void fn_801CE384(u32 type, const Vec3f* position, u16 value, u32 value24,
         params.value06 = value;
     }
 
-    object_type = fn_801D38E8(type);
+    resolved_type = fn_801D38E8(type);
+    object_type = resolved_type;
     count = fn_801CEB2C(type);
-    output = objects;
-    index = indices;
+    cursors.index = indices;
+    cursors.output_address = (u32)objects;
     for (i = 0; i < count;) {
-        f32 angle = lbl_80651038 * i / count;
+        f32 angle;
         descriptor.word = lbl_80651E98;
         descriptor.half = lbl_80651E9C;
+        angle = lbl_80651038 * i / count;
         position_copy.x = position->x + lbl_8065103C * fn_80048C2C(angle);
         position_copy.y = position->y + lbl_8065103C * fn_80048C50(angle);
         position_copy.z = lbl_80651040 + position->z;
-        params.value04 = *index;
-        params.object10 = fn_801D3988(*index, object_type);
+        params.value04 = *cursors.index;
+        params.object10 = fn_801D3988(*cursors.index, object_type);
         params.angle14 = angle;
         submit_position = position_copy;
         {
@@ -91,17 +96,17 @@ void fn_801CE384(u32 type, const Vec3f* position, u16 value, u32 value24,
                                        fn_80190320);
             if (effect != 0) {
                 if (objects != 0) {
-                    *output = fn_80156938(effect);
-                    if (*output != 0) {
-                        fn_8017FF1C(*output, 4);
+                    *(void**)cursors.output_address = fn_80156938(effect);
+                    if (*(void**)cursors.output_address != 0) {
+                        fn_8017FF1C(*(void**)cursors.output_address, 4);
                     }
                 }
             } else if (objects != 0) {
-                *output = 0;
+                *(void**)cursors.output_address = 0;
             }
         }
-        index++;
-        output++;
+        cursors.index++;
+        cursors.output_address += sizeof(void*);
         i++;
     }
 }

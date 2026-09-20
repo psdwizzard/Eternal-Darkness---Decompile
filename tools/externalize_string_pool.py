@@ -85,7 +85,57 @@ for off_base, addr_base, size_base, count in [(0x00, 0x48, 0x90, 7), (0x1C, 0x64
     break
 else:
     raise SystemExit(f"{retail_dol}: address 0x{address:08X} is not in a file-backed segment")
-local_value = bytes(data[pool_offset:pool_offset + pool_size])
+local_value = bytearray(data[pool_offset:pool_offset + pool_size])
+
+# Resolve address relocations inside the pool before comparing it with the
+# linked retail bytes. This covers pools that also contain compiler-generated
+# jump tables. Addressed function and data symbols carry their retail address
+# in their name, including build-only aliases such as ``seed_80175A08``.
+symbol_count = symbol_size // entry_size
+for index in range(section_count):
+    header = section_header(index)
+    section_type = struct.unpack_from(">I", data, header + 4)[0]
+    target_section = struct.unpack_from(">I", data, header + 0x1C)[0]
+    if section_type not in (4, 9) or target_section != pool_section:
+        continue
+    reloc_offset = struct.unpack_from(">I", data, header + 0x10)[0]
+    reloc_size = struct.unpack_from(">I", data, header + 0x14)[0]
+    reloc_entry_size = struct.unpack_from(">I", data, header + 0x24)[0]
+    if reloc_entry_size == 0:
+        reloc_entry_size = 12 if section_type == 4 else 8
+    for reloc in range(reloc_offset, reloc_offset + reloc_size, reloc_entry_size):
+        offset, info = struct.unpack_from(">II", data, reloc)
+        relocation_type = info & 0xFF
+        if relocation_type != 1:  # R_PPC_ADDR32
+            raise SystemExit(
+                f"{path}: unsupported pool relocation type {relocation_type} "
+                f"at 0x{offset:X}"
+            )
+        referenced_index = info >> 8
+        if referenced_index >= symbol_count:
+            raise SystemExit(f"{path}: invalid relocation symbol index {referenced_index}")
+        referenced_entry = symbol_offset + referenced_index * entry_size
+        referenced_name = symbol_name(referenced_entry)
+        address_match = re.fullmatch(r".*_([0-9A-Fa-f]{8})", referenced_name)
+        if not address_match:
+            raise SystemExit(
+                f"{path}: cannot resolve pool relocation against "
+                f"symbol {referenced_name!r}"
+            )
+        if section_type == 4:  # SHT_RELA
+            addend = struct.unpack_from(">i", data, reloc + 8)[0]
+        else:  # SHT_REL
+            addend = struct.unpack_from(">i", local_value, offset)[0]
+        if offset + 4 > pool_size:
+            raise SystemExit(f"{path}: pool relocation at 0x{offset:X} is out of range")
+        struct.pack_into(
+            ">I",
+            local_value,
+            offset,
+            (int(address_match.group(1), 16) + addend) & 0xFFFFFFFF,
+        )
+
+local_value = bytes(local_value)
 if local_value != retail_value:
     raise SystemExit(f"{path}: pool bytes do not match {pool_symbol} at 0x{address:08X}")
 
