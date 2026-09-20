@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "assignment_id": "91504971-c75a-4302-a082-7155e539c84a",
+  "base_commit": "9614228b6f235bc020b0f94e93141c6280c929e7",
+  "preserved_attempts_reviewed": [
+    "e803da9e18a645f85718d27d5fe4084043c2e598",
+    "1d376a8a39273bf72c4ded3c95b034a766870477",
+    "3d6120686589015bb219770358bd33e4d6e42d94",
+    "f6d60941a5a8e791323f8c1bddeba3c2fff135e7",
+    "5cad082579fab863d4f5989e8fe57ea85a04e34c"
+  ],
+  "hypothesis": "Count-local widening could alter integer-promotion live ranges and register interference without changing byte-load semantics. Follow-up probes tested control-flow spelling, declaration ordering and initialization, and pre-call load ordering. None improved the baseline.",
+  "experiments": "eternal-darkness-decomp/reports/GEDE01/experiments-91504971-c75a-4302-a082-7155e539c84a.json",
+  "canonical_score": 97.333336,
+  "relocation_strict_score": 97.333336,
+  "target_size": "360",
+  "candidate_size": "360",
+  "target_instructions": 90,
+  "candidate_instructions": 90,
+  "diff_kinds": {
+    "DIFF_NONE": 45,
+    "DIFF_ARG_MISMATCH": 45
+  },
+  "elf_relocations_equal": true,
+  "elf_relocation_count": 19,
+  "objdiff_relocations_equal": true,
+  "objdiff_relocation_count": 20,
+  "relocation_count_note": "19 actual ELF relocations; objdiff adds a synthetic R_PPC_NONE reference to lbl_80607120 with addend 2 at instruction offset 288. This explains the historical count of 20.",
+  "dol_verification": {
+    "command": [
+      "sha1sum",
+      "build/GEDE01/main.dol"
+    ],
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "stderr": "",
+    "provenance": "The successful full build in this assignment regenerated main.elf and main.dol, then passed the SHA-1 gate at step 883/884. This is the accepted base with the restored candidate, not a stale artifact after a failed build. The function remains NonMatching, so the DOL links its retail object rather than the candidate.",
+    "build_log": "eternal-darkness-decomp/reports/GEDE01/build-91504971-c75a-4302-a082-7155e539c84a.json"
+  },
+  "compiler": "Canonical GC/1.3; existing flags including -O4,p and per-object -use_lmw_stmw on unchanged.",
+  "candidate_source": "eternal-darkness-decomp/src/game/game_fn_80185CA4.c",
+  "source_preservation": "Restored unchanged accepted-base source after experiments. Its registration remains NonMatching; no split or registration changes needed.",
+  "scope_audit": {
+    "independent_C_translation_unit": true,
+    "assembly": false,
+    "compiler_policy_changed": false,
+    "neighboring_functions_changed": false,
+    "runtime_code_changed": false,
+    "global_progress_changed": false,
+    "unrelated_existing_change": "CLAUDE.md was modified on entry and is excluded from this commit."
+  },
+  "hashes": {
+    "eternal-darkness-decomp/src/game/game_fn_80185CA4.c": "34b3d63e183e3adf4f6771af40dba7509fb8fe6e",
+    "eternal-darkness-decomp/build/GEDE01/src/game/game_fn_80185CA4.o": "318c4c6388469271e5042cba5859f1d515e98cc4",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-91504971-c75a-4302-a082-7155e539c84a.json": "c9815d4b565ae38101b183b426d9a24a1e707468",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-91504971-c75a-4302-a082-7155e539c84a-canonical.raw.json": "c9815d4b565ae38101b183b426d9a24a1e707468"
+  },
+  "objdiff_commands": [
+    [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80185CA4",
+      "-o",
+      "reports/GEDE01/objdiff-91504971-c75a-4302-a082-7155e539c84a-canonical.raw.json",
+      "--format",
+      "json-pretty"
+    ],
+    [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80185CA4",
+      "-o",
+      "reports/GEDE01/objdiff-91504971-c75a-4302-a082-7155e539c84a.json",
+      "--format",
+      "json-pretty",
+      "-c",
+      "function_reloc_diffs=name_address"
+    ]
+  ],
+  "legal_audit": {
+    "command": [
+      "python3",
+      "eternal-darkness-decomp/tools/legal_audit.py"
+    ],
+    "exit_code": 0,
+    "stdout": "legal audit passed (18703 tracked project files inspected)\n",
+    "stderr": ""
+  },
+  "declaration_probe_note": "Reversing declarations changed entry/count allocation to r29/r27 but did not improve the score; the original candidate was restored."
+}

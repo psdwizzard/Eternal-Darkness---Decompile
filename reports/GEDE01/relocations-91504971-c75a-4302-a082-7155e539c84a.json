@@ -1,0 +1,170 @@
+{
+  "raw": [
+    {
+      "command": [
+        "readelf",
+        "-rW",
+        "build/GEDE01/obj/game/game_fn_80185CA4.o"
+      ],
+      "stdout": "\nRelocation section '.rela.text' at offset 0x1a8 contains 19 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000020  0000046d R_PPC_EMB_SDA21        00000000   lbl_80651D38 + 0\n00000024  0000056d R_PPC_EMB_SDA21        00000000   lbl_80651D3C + 0\n00000038  0000060a R_PPC_REL24            00000000   fn_801804AC + 0\n00000084  0000076d R_PPC_EMB_SDA21        00000000   lbl_8064D224 + 0\n0000008c  0000080a R_PPC_REL24            00000000   memset + 0\n00000098  0000090a R_PPC_REL24            00000000   fn_80179904 + 0\n000000bc  00000a0a R_PPC_REL24            00000000   fn_80180554 + 0\n000000c8  00000b6d R_PPC_EMB_SDA21        00000000   lbl_80650A18 + 0\n000000d8  00000c0a R_PPC_REL24            00000000   fn_801805E0 + 0\n000000e8  00000d0a R_PPC_REL24            00000000   fn_80180518 + 0\n0000010c  00000e0a R_PPC_REL24            00000000   fn_8018C2D0 + 0\n00000112  00000f06 R_PPC_ADDR16_HA        00000000   lbl_80607120 + 0\n0000011a  00000f04 R_PPC_ADDR16_LO        00000000   lbl_80607120 + 0\n0000012c  0000100a R_PPC_REL24            00000000   fn_8018C540 + 0\n0000013e  00001106 R_PPC_ADDR16_HA        00000000   lbl_80606328 + 0\n00000142  00001206 R_PPC_ADDR16_HA        00000000   lbl_80606318 + 0\n00000146  00001204 R_PPC_ADDR16_LO        00000000   lbl_80606318 + 0\n0000014a  00001104 R_PPC_ADDR16_LO        00000000   lbl_80606328 + 0\n00000150  0000130a R_PPC_REL24            00000000   fn_801F5A04 + 0\n",
+      "stderr": "",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "readelf",
+        "-rW",
+        "build/GEDE01/src/game/game_fn_80185CA4.o"
+      ],
+      "stdout": "\nRelocation section '.rela.text' at offset 0x19c contains 19 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000020  0000036d R_PPC_EMB_SDA21        00000000   lbl_80651D38 + 0\n00000024  0000046d R_PPC_EMB_SDA21        00000000   lbl_80651D3C + 0\n00000038  00000a0a R_PPC_REL24            00000000   fn_801804AC + 0\n00000084  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064D224 + 0\n0000008c  00000b0a R_PPC_REL24            00000000   memset + 0\n00000098  00000c0a R_PPC_REL24            00000000   fn_80179904 + 0\n000000bc  00000d0a R_PPC_REL24            00000000   fn_80180554 + 0\n000000c8  0000066d R_PPC_EMB_SDA21        00000000   lbl_80650A18 + 0\n000000d8  00000e0a R_PPC_REL24            00000000   fn_801805E0 + 0\n000000e8  00000f0a R_PPC_REL24            00000000   fn_80180518 + 0\n0000010c  0000100a R_PPC_REL24            00000000   fn_8018C2D0 + 0\n00000112  00000706 R_PPC_ADDR16_HA        00000000   lbl_80607120 + 0\n0000011a  00000704 R_PPC_ADDR16_LO        00000000   lbl_80607120 + 0\n0000012c  0000110a R_PPC_REL24            00000000   fn_8018C540 + 0\n0000013e  00000806 R_PPC_ADDR16_HA        00000000   lbl_80606328 + 0\n00000142  00000906 R_PPC_ADDR16_HA        00000000   lbl_80606318 + 0\n00000146  00000904 R_PPC_ADDR16_LO        00000000   lbl_80606318 + 0\n0000014a  00000804 R_PPC_ADDR16_LO        00000000   lbl_80606328 + 0\n00000150  0000120a R_PPC_REL24            00000000   fn_801F5A04 + 0\n",
+      "stderr": "",
+      "exit_code": 0
+    }
+  ],
+  "elf_relocations_equal": true,
+  "elf_relocation_count": 19,
+  "objdiff_relocations_equal": true,
+  "objdiff_relocation_count": 20,
+  "objdiff_normalized": [
+    {
+      "instruction_offset": 32,
+      "type": 109,
+      "type_name": "R_PPC_EMB_SDA21",
+      "target": "lbl_80651D38",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 36,
+      "type": 109,
+      "type_name": "R_PPC_EMB_SDA21",
+      "target": "lbl_80651D3C",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 56,
+      "type": 10,
+      "type_name": "R_PPC_REL24",
+      "target": "fn_801804AC",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 132,
+      "type": 109,
+      "type_name": "R_PPC_EMB_SDA21",
+      "target": "lbl_8064D224",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 140,
+      "type": 10,
+      "type_name": "R_PPC_REL24",
+      "target": "memset",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 152,
+      "type": 10,
+      "type_name": "R_PPC_REL24",
+      "target": "fn_80179904",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 188,
+      "type": 10,
+      "type_name": "R_PPC_REL24",
+      "target": "fn_80180554",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 200,
+      "type": 109,
+      "type_name": "R_PPC_EMB_SDA21",
+      "target": "lbl_80650A18",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 216,
+      "type": 10,
+      "type_name": "R_PPC_REL24",
+      "target": "fn_801805E0",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 232,
+      "type": 10,
+      "type_name": "R_PPC_REL24",
+      "target": "fn_80180518",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 268,
+      "type": 10,
+      "type_name": "R_PPC_REL24",
+      "target": "fn_8018C2D0",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 272,
+      "type": 6,
+      "type_name": "R_PPC_ADDR16_HA",
+      "target": "lbl_80607120",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 280,
+      "type": 4,
+      "type_name": "R_PPC_ADDR16_LO",
+      "target": "lbl_80607120",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 288,
+      "type": 0,
+      "type_name": "R_PPC_NONE",
+      "target": "lbl_80607120",
+      "addend": 2
+    },
+    {
+      "instruction_offset": 300,
+      "type": 10,
+      "type_name": "R_PPC_REL24",
+      "target": "fn_8018C540",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 316,
+      "type": 6,
+      "type_name": "R_PPC_ADDR16_HA",
+      "target": "lbl_80606328",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 320,
+      "type": 6,
+      "type_name": "R_PPC_ADDR16_HA",
+      "target": "lbl_80606318",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 324,
+      "type": 4,
+      "type_name": "R_PPC_ADDR16_LO",
+      "target": "lbl_80606318",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 328,
+      "type": 4,
+      "type_name": "R_PPC_ADDR16_LO",
+      "target": "lbl_80606328",
+      "addend": 0
+    },
+    {
+      "instruction_offset": 336,
+      "type": 10,
+      "type_name": "R_PPC_REL24",
+      "target": "fn_801F5A04",
+      "addend": 0
+    }
+  ]
+}

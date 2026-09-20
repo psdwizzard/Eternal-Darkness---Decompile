@@ -1,0 +1,145 @@
+[
+  {
+    "name": "baseline",
+    "source_change": "Unchanged accepted-base reconstruction.",
+    "build_exit": 0,
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80185CA4.o\n",
+    "build_stderr": "",
+    "score": 97.333336,
+    "size": "360",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/experiment-91504971-c75a-4302-a082-7155e539c84a-baseline.raw.json",
+    "object_sha1": "318c4c6388469271e5042cba5859f1d515e98cc4"
+  },
+  {
+    "name": "count_u32",
+    "source_change": "register u8 count -> register u32 count",
+    "build_exit": 0,
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80185CA4.o\n",
+    "build_stderr": "",
+    "score": 97.333336,
+    "size": "360",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/experiment-91504971-c75a-4302-a082-7155e539c84a-baseline.raw.json",
+    "object_sha1": "318c4c6388469271e5042cba5859f1d515e98cc4"
+  },
+  {
+    "name": "count_int",
+    "source_change": "register u8 count -> register int count",
+    "build_exit": 0,
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80185CA4.o\n",
+    "build_stderr": "",
+    "score": 96.72222,
+    "size": "360",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/experiment-91504971-c75a-4302-a082-7155e539c84a-count_int.raw.json",
+    "object_sha1": "803cedf867468a01ec24e7556ac10b3cd23efd66"
+  },
+  {
+    "name": "count_u32_index_u32",
+    "source_change": "register u8 count -> register u32 count; register int i -> register u32 i",
+    "build_exit": 0,
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80185CA4.o\n",
+    "build_stderr": "",
+    "score": 97.333336,
+    "size": "360",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/experiment-91504971-c75a-4302-a082-7155e539c84a-baseline.raw.json",
+    "object_sha1": "318c4c6388469271e5042cba5859f1d515e98cc4"
+  },
+  {
+    "name": "index_u16",
+    "build_exit": 0,
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80185CA4.o\n",
+    "build_stderr": "",
+    "score": 95.166664,
+    "size": "360",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/experiment-91504971-c75a-4302-a082-7155e539c84a-index_u16.raw.json",
+    "object_sha1": "1a84ab5028b842c865355c79025f8a6ae7500fb3",
+    "source_change": "register int i -> register u16 i"
+  },
+  {
+    "name": "no_register",
+    "build_exit": 0,
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80185CA4.o\n",
+    "build_stderr": "",
+    "score": 97.333336,
+    "size": "360",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/experiment-91504971-c75a-4302-a082-7155e539c84a-baseline.raw.json",
+    "object_sha1": "318c4c6388469271e5042cba5859f1d515e98cc4",
+    "source_change": "Remove all register storage-class specifiers."
+  },
+  {
+    "name": "goto_loop",
+    "build_exit": 0,
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80185CA4.o\n",
+    "build_stderr": "",
+    "score": 97.333336,
+    "size": "360",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/experiment-91504971-c75a-4302-a082-7155e539c84a-baseline.raw.json",
+    "object_sha1": "318c4c6388469271e5042cba5859f1d515e98cc4",
+    "source_change": "Replace for with i=0; goto test; loop: { body; i++; } test: if ((u8)i < count) goto loop;"
+  },
+  {
+    "name": "guard_do",
+    "build_exit": 0,
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80185CA4.o\n",
+    "build_stderr": "",
+    "score": 95.64445,
+    "size": "364",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/experiment-91504971-c75a-4302-a082-7155e539c84a-guard_do.raw.json",
+    "object_sha1": "315ee29adfe16e0659ed8ca7cb9d738b85f086fc",
+    "source_change": "Replace for with i=0; if (count != 0) do { body; i++; } while ((u8)i < count);"
+  },
+  {
+    "name": "index_s16",
+    "build_exit": 0,
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80185CA4.o\n",
+    "build_stderr": "",
+    "score": 95.166664,
+    "size": "360",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/experiment-91504971-c75a-4302-a082-7155e539c84a-index_s16.raw.json",
+    "object_sha1": "254ee6830a4d30b02cf691feec52d2b4cff67d8d",
+    "source_change": "register int i -> register s16 i"
+  },
+  {
+    "name": "declarations_reversed",
+    "build_exit": 0,
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80185CA4.o\n",
+    "build_stderr": "",
+    "score": 97.333336,
+    "size": "360",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/experiment-91504971-c75a-4302-a082-7155e539c84a-declarations_reversed.raw.json",
+    "object_sha1": "e9a0c93cd4bf790f22ca821a132c6b681eaae6e3",
+    "source_change": "Reverse the six register-local declarations."
+  },
+  {
+    "name": "declarations_retail_order",
+    "build_exit": 0,
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80185CA4.o\n",
+    "build_stderr": "",
+    "score": 97.333336,
+    "size": "360",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/experiment-91504971-c75a-4302-a082-7155e539c84a-declarations_reversed.raw.json",
+    "object_sha1": "e9a0c93cd4bf790f22ca821a132c6b681eaae6e3",
+    "source_change": "Same reversal, independently repeated; not an additional unique variant."
+  },
+  {
+    "name": "declarations_initializers",
+    "build_exit": 0,
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80185CA4.o\n",
+    "build_stderr": "",
+    "score": 97.333336,
+    "size": "360",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/experiment-91504971-c75a-4302-a082-7155e539c84a-baseline.raw.json",
+    "object_sha1": "318c4c6388469271e5042cba5859f1d515e98cc4",
+    "source_change": "Initialize desc_local, arg1_local, self_local in their declarations; remove their later assignments."
+  },
+  {
+    "name": "load_count_before_entry",
+    "build_exit": 0,
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80185CA4.o\n",
+    "build_stderr": "",
+    "score": 95.22222,
+    "size": "360",
+    "raw": "eternal-darkness-decomp/reports/GEDE01/experiment-91504971-c75a-4302-a082-7155e539c84a-load_count_before_entry.raw.json",
+    "object_sha1": "c164c5a725508238348879b5ab01b592d5d7ea59",
+    "source_change": "Swap count=desc_local[0] and entry=*(u8**)(self_local+0x4C)."
+  }
+]
