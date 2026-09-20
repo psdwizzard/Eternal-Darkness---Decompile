@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "assignment_id": "2829404f-bac2-400d-ab23-5630b859ecf2",
+  "target": "fn_8014EC30",
+  "source": "src/game/game_fn_8014EC30.c",
+  "compiler": "canonical project compiler and flags; -use_lmw_stmw on",
+  "preserved_attempt_review": [
+    "17e458845679ecbe2ebf3666178336598be398cc: statement reordering, explicit zero temporary, integer pointer arithmetic, and -schedule off",
+    "47b024bf6e690676414cdbdb272b66fa6919bca5: result-relative stores, result-result zero, and alternate pointer expression",
+    "dfc85811d3cbc9c01b1c5174a438818fcbcfc097: chained zero assignment, result-pointer store, and split pointer arithmetic",
+    "848afd093ec4c696e0275a088a2d949b143c85c8: typed pointer lifetime, explicit zero ordering, self-subtraction/XOR dependency, and nonconstant comparison"
+  ],
+  "new_hypothesis": "The two adjacent zero words may have originated as one 64-bit aggregate initialization, producing a different MWCC scheduling graph without changing runtime stores. This was not among the preserved variants.",
+  "experiments": [
+    {
+      "variant": "single unsigned-long-long zero store over offsets 0xC..0x13",
+      "raw_output": "target 168 bytes  base 168 bytes  match 97.09524; offsets 0x50/0x54 remained li/addi reversed and generated stores at 0x88/0x8C became 0x10 then 0x0C",
+      "result": "rejected and reverted"
+    },
+    {
+      "variant": "successful result represented as Instance*, converted to the member pointer by a conditional return",
+      "raw_output": "target 168 bytes  base 184 bytes  match 84.52381; extra cmplwi/beq/addi/b/li return sequence at generated offsets 0x90..0xA0",
+      "result": "rejected and reverted"
+    },
+    {
+      "variant": "result register initialized in its declaration",
+      "raw_output": "target 168 bytes  base 168 bytes  match 97.14286; only offsets 0x50/0x54 differed",
+      "result": "canonicalized to baseline and reverted"
+    }
+  ],
+  "canonical_objdiff": {
+    "command": "python3 tools/fndiff.py game/game_fn_8014EC30.c fn_8014EC30",
+    "raw_output": "target 168 bytes  base 168 bytes  match 97.14286\n* 0x0050  addi r30, r31, 0x8 | li r0, 0x0\n* 0x0054  li r0, 0x0 | addi r30, r31, 0x8",
+    "retail_bytes": 168,
+    "generated_bytes": 168,
+    "match_percent": 97.14286,
+    "differing_instruction_rows": 2
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8014EC30 fn_8014EC30 -o build/GEDE01/fndiff_fn_8014EC30-reloc-2829404f.json --format json-pretty -c function_reloc_diffs=name_address",
+    "generated_comparison_json_bytes": 69081,
+    "raw_generated_comparison": {
+      "left_section": {"name": ".text", "size": "168", "match_percent": 97.14286},
+      "right_section": {"name": ".text", "size": "168", "match_percent": 97.14286},
+      "left_relocations": [
+        {"instruction_address": "8", "formatted": "lis r11, fn_8014EE88@ha", "type": 6, "type_name": "R_PPC_ADDR16_HA", "target_symbol": 2},
+        {"instruction_address": "24", "formatted": "addi r3, r11, fn_8014EE88@l", "type": 4, "type_name": "R_PPC_ADDR16_LO", "target_symbol": 2},
+        {"instruction_address": "60", "formatted": "bl fn_80149D98", "type": 10, "type_name": "R_PPC_REL24", "target_symbol": 3},
+        {"instruction_address": "72", "formatted": "bl fn_80149D64", "type": 10, "type_name": "R_PPC_REL24", "target_symbol": 4}
+      ],
+      "right_relocations": [
+        {"instruction_address": "8", "formatted": "lis r11, fn_8014EE88@ha", "type": 6, "type_name": "R_PPC_ADDR16_HA", "target_symbol": 2},
+        {"instruction_address": "24", "formatted": "addi r3, r11, fn_8014EE88@l", "type": 4, "type_name": "R_PPC_ADDR16_LO", "target_symbol": 2},
+        {"instruction_address": "60", "formatted": "bl fn_80149D98", "type": 10, "type_name": "R_PPC_REL24", "target_symbol": 3},
+        {"instruction_address": "72", "formatted": "bl fn_80149D64", "type": 10, "type_name": "R_PPC_REL24", "target_symbol": 4}
+      ]
+    },
+    "raw_retail_readelf": "Relocation section '.rela.text' at offset 0xe8 contains 4 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n0000000a  00000406 R_PPC_ADDR16_HA   00000000   fn_8014EE88 + 0\n0000001a  00000404 R_PPC_ADDR16_LO   00000000   fn_8014EE88 + 0\n0000003c  0000050a R_PPC_REL24       00000000   fn_80149D98 + 0\n00000048  0000060a R_PPC_REL24       00000000   fn_80149D64 + 0",
+    "raw_generated_readelf": "Relocation section '.rela.text' at offset 0xdc contains 4 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n0000000a  00000306 R_PPC_ADDR16_HA   00000000   fn_8014EE88 + 0\n0000001a  00000304 R_PPC_ADDR16_LO   00000000   fn_8014EE88 + 0\n0000003c  0000040a R_PPC_REL24       00000000   fn_80149D98 + 0\n00000048  0000050a R_PPC_REL24       00000000   fn_80149D64 + 0",
+    "comparison": "4/4 relocation byte offsets, types, target names, and addends are equal"
+  },
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "raw_output": "build/GEDE01/main.dol: OK",
+    "status": "passed"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "verified": true
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (18830 tracked project files inspected)",
+    "status": "passed"
+  },
+  "conclusion": "The clean behavior- and size-exact C reconstruction remains NonMatching. Retail emits addi r30,r31,8 at 0x50 then li r0,0 at 0x54; canonical GC/1.3 emits the same independent instructions in the opposite order. Every other instruction and all four relocations agree."
+}
