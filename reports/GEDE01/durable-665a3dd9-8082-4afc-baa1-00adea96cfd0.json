@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "665a3dd9-8082-4afc-baa1-00adea96cfd0",
+  "attempt": 5,
+  "base_commit": "d2992127cf794f21fe8a5bcc8e37fae9c504eb79",
+  "target": "fn_8005B528",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-665a3dd9-8082-4afc-baa1-00adea96cfd0.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are 96.4105% (1676 retail bytes versus 1660 generated). Retail retains cmpwi/beq/nop after fn_80128EAC and cmpwi after fn_800A1060; five of 70 relocation-bearing rows remain nonexact in the differently scheduled local {0x5B,0x61,0x62} initializer/indexed lookup/timer region. Moving the timer stores before the indexed lookup regressed to 95.60143%, so the accepted honest C was retained."
+}

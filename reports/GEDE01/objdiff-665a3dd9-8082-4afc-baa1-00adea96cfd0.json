@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "assignment_id": "665a3dd9-8082-4afc-baa1-00adea96cfd0",
+  "target": "fn_8005B528",
+  "compiler": "GC/1.3",
+  "registration": "Object(NonMatching, \"game/game_fn_8005B528.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8005B528 fn_8005B528 -o reports/GEDE01/objdiff-665a3dd9-8082-4afc-baa1-00adea96cfd0-canonical.json --format json",
+    "raw_output": "retail_size=1676 generated_size=1660 match_percent=96.4105",
+    "retail_bytes": 1676,
+    "generated_bytes": 1660,
+    "match_percent": 96.4105,
+    "raw_json": "eternal-darkness-decomp/reports/GEDE01/objdiff-665a3dd9-8082-4afc-baa1-00adea96cfd0-canonical.json"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8005B528 fn_8005B528 -o reports/GEDE01/objdiff-665a3dd9-8082-4afc-baa1-00adea96cfd0-reloc-strict.json --format json -c function_reloc_diffs=name_address",
+    "raw_output": "retail_size=1676 generated_size=1660 match_percent=96.4105 retail_relocation_instructions=70 generated_relocation_instructions=70 exact_aligned_relocation_instructions=65 nonexact_aligned_relocation_instructions=5",
+    "match_percent": 96.4105,
+    "retail_relocation_instructions": 70,
+    "generated_relocation_instructions": 70,
+    "exact_aligned_relocation_instructions": 65,
+    "nonexact_aligned_relocation_instructions": 5,
+    "raw_json": "eternal-darkness-decomp/reports/GEDE01/objdiff-665a3dd9-8082-4afc-baa1-00adea96cfd0-reloc-strict.json"
+  },
+  "codegen_diff": {
+    "raw_output": "DIFF_ARG_MISMATCH=7 DIFF_DELETE=9 DIFF_INSERT=5 DIFF_REPLACE=1; retail 0x0178 cmpwi r3,0x18, 0x017c beq and 0x0180 nop are absent after fn_80128EAC; retail 0x01e8 cmpwi r3,0 is absent after fn_800A1060; at retail 0x0368..0x03c0 GC/1.3 schedules lbl_80238FE8, lbl_8064C5A8 and lbl_80651948 loads plus the local three-value initializer differently",
+    "diff_counts": {
+      "DIFF_ARG_MISMATCH": 7,
+      "DIFF_DELETE": 9,
+      "DIFF_INSERT": 5,
+      "DIFF_REPLACE": 1
+    }
+  },
+  "new_hypothesis": {
+    "description": "Move both lbl_80651948 timer stores before the indexed values[*lbl_8064C5A8 - 1] lookup so GC/1.3 must materialize the timer before the local-array selection.",
+    "raw_output": "compiled generated_size=1660 relocation_strict_match_percent=95.60143; regression from accepted 96.4105",
+    "accepted": false,
+    "reason": "The changed dependency order moved timer stores ahead of the initializer loads and increased argument/register mismatches, so the accepted honest C was restored. A volatile declaration for lbl_8064C5A8 was also measured and left codegen unchanged at 96.4105."
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "build/GEDE01/main.dol: OK; Progress All: 58.12% fuzzy, 47.60% matched, 47.57% linked (6266 / 7068 files); Code: 1095196 / 2300692 bytes (6032 / 8214 functions)"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0",
+    "sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "cmp_exit": 0
+  },
+  "legal_audit": {
+    "independent_translation_unit": true,
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_functions_edited": false,
+    "generated_binaries_staged": false,
+    "private_inputs_staged": false
+  }
+}
