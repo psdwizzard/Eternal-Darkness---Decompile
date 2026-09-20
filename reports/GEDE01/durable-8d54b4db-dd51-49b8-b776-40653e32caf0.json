@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "8d54b4db-dd51-49b8-b776-40653e32caf0",
+  "attempt": 5,
+  "base_commit": "cc30e5c4856a1928b4fbfb3eecc38ed801c5fe94",
+  "target": "fn_8016FA08",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8d54b4db-dd51-49b8-b776-40653e32caf0.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff v3.6.1 remains 97.77778%: retail is 396 bytes with 24 relocation-bearing instruction records, while generated code is 400 bytes with 25. Retail offset 0x14 emits addi r31,r4,lbl_8024FF00@l; generated offsets 0x10 and 0x18 emit addi r0,r4,lbl_8024FF00@l then mr r31,r0, shifting subsequent code by four bytes. Retail offset 0x44 emits addi r4,r31,0 with an R_PPC_NONE record targeting lbl_8024FF00, while generated offset 0x48 emits mr r4,r31. Attempt 5 tested a distinct split-use/deferred-base hypothesis: the zero-offset diagnostic referenced lbl_8024FF00 directly while later nonzero offsets shared a local base. MWCC deferred address materialization into the error branch and regressed to 92.9798%. Representing the shared base as a 32-bit integer instead of a pointer remained identical at 97.77778%. The original honest pointer reconstruction was retained. The canonical DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
