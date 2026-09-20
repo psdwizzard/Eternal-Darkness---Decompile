@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "assignment_id": "9fe9e193-c2c0-4a1f-8d4b-6847c5f6d485",
+  "target": "fn_801383B4",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_801383B4.c fn_801383B4",
+    "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+  ],
+  "canonical": {
+    "target_bytes": 436,
+    "candidate_bytes": 436,
+    "match_percent": 99.6789,
+    "matched": false
+  },
+  "relocation_strict": {
+    "target_relocation_section_bytes": 204,
+    "candidate_relocation_section_bytes": 204,
+    "target_relocation_instructions": 17,
+    "candidate_relocation_instructions": 17,
+    "relocation_offsets_types_targets_addends_aligned": 17,
+    "matched": false,
+    "reason": "All 17 relocation-bearing instructions agree in offset, type, target, and addend, but six non-relocation code instructions differ, so relocation-strict 100% is not claimable."
+  },
+  "dol_sha1": {
+    "built": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matched": true
+  },
+  "raw_outputs": {
+    "configure": "exit 0; no stdout",
+    "build": "[883/884] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[884/884] PROGRESS",
+    "fndiff_summary": "target 436 bytes  base 436 bytes  match 99.6789",
+    "fndiff_mismatches": [
+      "0x00fc add r21, r6, r0 | add r22, r6, r0",
+      "0x0110 lwz r22, 0x14(r29) | lwz r21, 0x14(r29)",
+      "0x0118 lhz r0, 0x8(r22) | lhz r0, 0x8(r21)",
+      "0x0120 mr r5, r22 | mr r5, r21",
+      "0x0144 add r0, r21, r0 | add r0, r22, r0",
+      "0x0164 addi r22, r22, 0x10 | addi r21, r21, 0x10"
+    ],
+    "sha1sum": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  },
+  "hypothesis": "Reorder the recovered locals by retail live-range priority and reverse the header-base addition operands. This changes GC/1.3 graph coloring from the prior 97.15596% allocation to the retail registers for parameters, parent, header, source-data buffer, count, data index, destination, and loop counter.",
+  "divergence": "Only the loop data-base and ResourceSource pointer remain exchanged: retail uses r21 for the allocation data base and r22 for the source pointer, while canonical GC/1.3 uses r22 and r21 respectively. The six differing instructions are listed verbatim above; all other 103 instructions agree."
+}

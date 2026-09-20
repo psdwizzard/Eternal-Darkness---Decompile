@@ -32,20 +32,20 @@ extern void fn_80138624(int, int);
 void fn_801383B4(int slot_index, int mode)
 {
     ResourceSlot* slot = &lbl_8064CFF8[slot_index];
-    ResourceHeader* header;
-    ResourceSource* source;
+    int i;
+    int parent;
+    void* scratch;
+    void* source_data;
+    int count;
+    int data_index;
+    int read_size;
     ResourceItem* dest;
+    u8* data;
+    ResourceSource* source;
+    ResourceHeader* header;
     FileInfo file;
     int scratch_size;
     int data_offset;
-    u32 read_size;
-    int data_index;
-    int count;
-    int parent;
-    int i;
-    void* scratch;
-    void* source_data;
-    u8* data;
 
     if (slot_index <= -1) fn_800467E8();
     if (slot->allocation != 0) return;
@@ -57,13 +57,13 @@ void fn_801383B4(int slot_index, int mode)
     read_size = fn_8015D6D0(slot->name, scratch, 0x8000);
     fn_80213394(slot->name, &file);
     header = (ResourceHeader*)scratch;
-    if (read_size == 0x20) {
+    if ((u32)read_size == 0x20) {
         parent = header->parent;
-    } else if ((int)read_size != 0) {
+    } else if (read_size != 0) {
         count = header->count;
         data_offset = 0;
         data_index = 0;
-        header->items = (ResourceSource*)((u8*)header + (u32)header->items);
+        header->items = (ResourceSource*)((u32)header->items + (u32)header);
         slot->allocation = fn_80138A6C(fn_801382B4(count, header, &data_offset), mode);
         data = (u8*)slot->allocation + data_offset;
         slot->count = count;
