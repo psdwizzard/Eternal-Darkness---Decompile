@@ -39,10 +39,6 @@ extern void fn_800F8BAC(const char*, const char*, int);
 
 void fn_801FF008(Header* header, int arg)
 {
-    int id_offset;
-    int value_offset;
-    Record* destination;
-    int record_offset;
     s16 id;
     int result;
     int i;
@@ -55,23 +51,16 @@ void fn_801FF008(Header* header, int arg)
 
     result = 2;
     i = 0;
-    record_offset = 0;
     count = header->count;
     output = lbl_8064D820[lbl_8064D7D8];
 
     for (; i < count; i++) {
-        *output = *(Record*)((u8*)header->records + record_offset);
+        *output = header->records[i];
 
-        id_offset = 0;
-        value_offset = id_offset;
-        destination = output;
-        for (j = 0; j < 11; j++, id_offset += 2, value_offset += 4,
-             destination = (Record*)((u8*)destination + 4)) {
-            id = *(s16*)(record_offset + (u8*)header->records +
-                         id_offset + 0x5C);
+        for (j = 0; j < 11; j++) {
+            id = header->records[i].ids[j];
             if (id != -1) {
-                value = *(u32*)((u8*)header->records + record_offset +
-                                value_offset + 0x2C);
+                value = header->records[i].values[j];
                 if (fn_801FF2F8(&lbl_8063F020[lbl_8064D7D8], id) == 0) {
                     u8 type = output->type;
                     if (type != 0 && type == (s8)lbl_8030F540[0x1E0]) {
@@ -81,15 +70,14 @@ void fn_801FF008(Header* header, int arg)
                         if (result == 2) {
                             result = 1;
                         }
-                    } else if ((object_value = *(u32*)(record_offset +
-                                                       (u8*)header->records +
-                                                       value_offset)) != 0) {
+                    } else if ((object_value =
+                                    (u32)header->records[i].objects[j]) != 0) {
                         object = (void*)object_value;
                         if (object == 0) {
                             fn_800F8BAC(lbl_8064C3B8, lbl_802FC8AC, 371);
                         }
                         fn_8015DAB0(object);
-                        destination->objects[0] = object;
+                        output->objects[j] = object;
                         fn_801FF4D4(&lbl_8063F020[lbl_8064D7D8], object,
                                     value, id);
                     }
@@ -97,7 +85,6 @@ void fn_801FF008(Header* header, int arg)
             }
         }
         output++;
-        record_offset += sizeof(Record);
     }
 
     {
