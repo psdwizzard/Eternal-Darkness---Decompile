@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "0e353de2-c944-477f-9800-bf993ea32d3f",
+  "attempt": 5,
+  "base_commit": "07185603b6703c475bde239a944178bc4754fb79",
+  "target": "fn_80176A94",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0e353de2-c944-477f-9800-bf993ea32d3f.json"
+  ],
+  "divergence": "Relocation-strict objdiff-cli v3.6.1 measures 96.76471%: retail is 272 bytes and canonical GC/1.3 is 276 bytes, while both .rela.text sections are 168 bytes (14 concrete ELF relocations). Attempt 5 tested a distinct address-expression hypothesis: scalar address-of first produced the desired direct r31 scheduling but incorrectly selected an SDA21 relocation and regressed to 94.117645%; a non-small pointer-to-array/address-of form restored the correct HA/LO relocation pair but reproduced the 96.76471% baseline, and direct repeated global references regressed to 77.85294%. The retained honest C therefore remains the best reconstruction. Canonical still materializes lbl_8024FF00@l in r0 before saving r31 and then emits mr r31,r0, whereas retail saves r31 first and materializes the low half directly with addi r31,r4,lbl_8024FF00@l; the validation diagnostic also emits mr r4,r31 instead of retail's equivalent addi r4,r31,0. The recovered validation, numeric conversion, handle association, three result paths, relocation targets/addends, and cleanup otherwise agree. The canonical build passed and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
