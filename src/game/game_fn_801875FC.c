@@ -16,7 +16,6 @@ extern int fn_800FBFB0(void);
 void fn_801875FC(Entry* entry, u16* flags, s16* bounds, int axis, int start,
                  int end, s16* first, s16* second, int add, int delta)
 {
-    s16* bound;
     int a;
     int b;
     int peak;
@@ -39,30 +38,28 @@ void fn_801875FC(Entry* entry, u16* flags, s16* bounds, int axis, int start,
     current = (float)b;
     index = start;
     mask = 1 << (start + 3);
-    bound = &bounds[start];
     while (index < end) {
         int hit = 0;
         if ((*flags & mask) != 0) {
             entry->coordinate[axis] += delta;
-            if (entry->coordinate[axis] >= *bound) hit = 1;
+            if (entry->coordinate[axis] >= bounds[index]) hit = 1;
         } else {
             entry->coordinate[axis] -= delta;
-            if (entry->coordinate[axis] <= *bound) hit = 1;
+            if (entry->coordinate[axis] <= bounds[index]) hit = 1;
         }
         if (hit) {
             int value;
-            entry->coordinate[axis] = *bound;
+            entry->coordinate[axis] = bounds[index];
             value = fn_800FBFB0() % step_integer;
             if (step < 0.0f) value = -value;
-            *bound = (s16)(current + (float)value);
-            if (entry->coordinate[axis] < *bound) *flags |= mask;
+            bounds[index] = (s16)(current + (float)value);
+            if (entry->coordinate[axis] < bounds[index]) *flags |= mask;
             else *flags &= ~mask;
         }
         current += step;
         if (current > (float)peak) step = -step;
         mask <<= 1;
         entry++;
-        bound++;
         index++;
     }
 }
