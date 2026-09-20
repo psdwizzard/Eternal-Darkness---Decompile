@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "17471dca-65da-4b42-9a98-8623d0efc756",
+  "attempt": 4,
+  "base_commit": "2d6c8f494994ebcbbf6a4a5ca742d0397b6d7715",
+  "target": "fn_801D84F4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-17471dca-65da-4b42-9a98-8623d0efc756.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff measures 99.26923% with exact 520-byte and 130-instruction parity. A new volatile-flags-load and declaration-order hypothesis fixes the initial scheduling difference and makes the point iterator r31 and count r30 agree with retail. All 14 relocation sites retain matching offsets, types, targets, and zero addends. The only remaining differences are 18 DIFF_ARG_MISMATCH entries from a single object/state register swap: retail preserves the object in r29 and state in r28, while GC/1.3 preserves the object in r28 and state in r29. The full canonical build passed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
