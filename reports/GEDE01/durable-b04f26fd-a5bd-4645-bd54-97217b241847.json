@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b04f26fd-a5bd-4645-bd54-97217b241847",
+  "attempt": 6,
+  "base_commit": "a5f56e42db7db33feb8d9e5802f6218fb0a2e777",
+  "target": "fn_8005B528",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b04f26fd-a5bd-4645-bd54-97217b241847.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff improved from 96.4105% to 98.13126%, with both objects now 1676 bytes. Return-based conditions recover both cmpwi instructions. Retail beq/nop at 0x17c/0x180 remain absent; generated subfic/neg at 0x384/0x38c compute the equivalent one-based selector offset. The initializer/indexed lookup/timer region still differs in scheduling and registers, with 65 of 70 objdiff relocation-bearing rows exact and five nonexact. Equal size is not a byte match."
+}

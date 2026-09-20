@@ -91,7 +91,10 @@ s32 fn_8005B528(void *context, void *event, u32 *result)
         return 1;
     }
     if (kind == 3) {
-        fn_80128EAC(object);
+        /* Both outcomes acknowledge the event; retain the result test. */
+        if (fn_80128EAC(object) == 24) {
+            return 1;
+        }
         return 1;
     }
     if (kind == 0xE5) {
@@ -107,7 +110,9 @@ s32 fn_8005B528(void *context, void *event, u32 *result)
         return 1;
     }
     if (kind == 7) {
-        fn_800A1060();
+        if (fn_800A1060() != 0) {
+            return 1;
+        }
         return 1;
     }
     if (kind == 6) {
@@ -152,7 +157,8 @@ kind_6_done:
         if (lbl_803003C8.mode == 13 && fn_800AD3E4() != 8) {
             u32 timer[2];
             s32 values[3] = {0x5B, 0x61, 0x62};
-            s32 value = values[*lbl_8064C5A8 - 1];
+            /* Convert the one-based selector to a zero-based array index. */
+            s32 value = values[-(1 - *lbl_8064C5A8)];
             timer[0] = lbl_80651948;
             timer[1] = lbl_80651948;
             fn_801F348C(&timer[1], 1);
