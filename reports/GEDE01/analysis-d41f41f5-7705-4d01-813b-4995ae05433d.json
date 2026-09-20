@@ -1,0 +1,124 @@
+{
+  "assignment_id": "d41f41f5-7705-4d01-813b-4995ae05433d",
+  "hypothesis": "Compiler-owned string-pool base is allocated directly to the saved register; an explicit pointer local introduces the extra copy. Test only the four literals referenced by this function under unchanged canonical GC/1.3 and -str reuse.",
+  "prior_attempts_reviewed": [
+    "492ac1e76d8f001fcf34503e4065c02a009348a7",
+    "98fba42c8c161908e7c874992ef36b311f99ad95",
+    "d7c7a4e167c62eaffb0732d09a0941a012220cf0",
+    "3451b646f19cf155f460fd21efe8df621ea89d22",
+    "7f6c2cc4351643d39594e5ea9cf86cad66989cb7"
+  ],
+  "supporting_project_note": "eternal-darkness-decomp/docs/matching.md:283",
+  "baseline_score": 96.76471,
+  "canonical_score": 98.70588,
+  "relocation_strict_score": 98.70588,
+  "strict_setting": "function_reloc_diffs=name_address",
+  "target": {
+    "sha256": "43454bb9f182dd7eda0c74b39546ecef7abc604195a782b4605a819a5b908e17",
+    "text_sha256": "18759a983c86a0a347037e59ec059e2eb42179aa8a4f9f8dca7f63d3370a3b07",
+    "text_size": 272
+  },
+  "candidate": {
+    "sha256": "608e177cde6010617157c3b2ba28a7775ff4aba34bb378aa2f6375bbf43d95b7",
+    "text_sha256": "ea5b2d31c5fb8bcd4f1dc10740662d1532c93872cf6de41a3a1788ab2c973eb8",
+    "text_size": 272
+  },
+  "raw_text_word_differences": [
+    {
+      "offset": "0x50",
+      "retail": "389f0000",
+      "candidate": "7fe4fb78"
+    },
+    {
+      "offset": "0xc4",
+      "retail": "387f0624",
+      "candidate": "387f0030"
+    },
+    {
+      "offset": "0xd4",
+      "retail": "387f0638",
+      "candidate": "387f0044"
+    },
+    {
+      "offset": "0xe4",
+      "retail": "387f064c",
+      "candidate": "387f0058"
+    }
+  ],
+  "relocations": [
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-objdump",
+        "-r",
+        "build/GEDE01/obj/game/game_fn_80176A94.o"
+      ],
+      "exit_code": 0,
+      "output": "\nbuild/GEDE01/obj/game/game_fn_80176A94.o:     file format elf32-powerpc\n\nRELOCATION RECORDS FOR [.text]:\nOFFSET   TYPE              VALUE\n0000000a R_PPC_ADDR16_HA   lbl_8024FF00\n00000016 R_PPC_ADDR16_LO   lbl_8024FF00\n00000024 R_PPC_REL24       fn_8017AF64\n00000034 R_PPC_REL24       fn_8016A598\n00000044 R_PPC_REL24       fn_8016A598\n0000005c R_PPC_REL24       fn_80163BB4\n00000070 R_PPC_REL24       fn_8016A694\n0000008c R_PPC_REL24       fn_80220A68\n000000a4 R_PPC_REL24       fn_802213DC\n000000b4 R_PPC_REL24       fn_80220B4C\n000000c8 R_PPC_REL24       fn_8017BA60\n000000d8 R_PPC_REL24       fn_8017BA60\n000000e8 R_PPC_REL24       fn_8017BA60\n000000ec R_PPC_REL24       fn_8017AF78\n\n\n"
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-objdump",
+        "-r",
+        "build/GEDE01/src/game/game_fn_80176A94.o"
+      ],
+      "exit_code": 0,
+      "output": "\nbuild/GEDE01/src/game/game_fn_80176A94.o:     file format elf32-powerpc\n\nRELOCATION RECORDS FOR [.text]:\nOFFSET   TYPE              VALUE\n0000000a R_PPC_ADDR16_HA   ...data.0\n00000016 R_PPC_ADDR16_LO   ...data.0\n00000024 R_PPC_REL24       fn_8017AF64\n00000034 R_PPC_REL24       fn_8016A598\n00000044 R_PPC_REL24       fn_8016A598\n0000005c R_PPC_REL24       fn_80163BB4\n00000070 R_PPC_REL24       fn_8016A694\n0000008c R_PPC_REL24       fn_80220A68\n000000a4 R_PPC_REL24       fn_802213DC\n000000b4 R_PPC_REL24       fn_80220B4C\n000000c8 R_PPC_REL24       fn_8017BA60\n000000d8 R_PPC_REL24       fn_8017BA60\n000000e8 R_PPC_REL24       fn_8017BA60\n000000ec R_PPC_REL24       fn_8017AF78\n\n\n"
+    }
+  ],
+  "compiler_command": {
+    "command": [
+      ".tools/bin/ninja",
+      "-t",
+      "commands",
+      "build/GEDE01/src/game/game_fn_80176A94.o"
+    ],
+    "exit_code": 0,
+    "output": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_80176A94.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80176A94.d build/GEDE01/src/game/game_fn_80176A94.d\n"
+  },
+  "objdiff_version": {
+    "command": [
+      "build/tools/objdiff-cli",
+      "--version"
+    ],
+    "exit_code": 0,
+    "output": "objdiff-cli 3.6.1\n"
+  },
+  "scope": "One independent C TU remains NonMatching. No registration, splits, compiler flags, externalization, gates, neighboring source, runtime, or global progress edits. No local pool remapping or reconstruction of unrelated strings.",
+  "interpretation": "The higher score is not a relocation match: both HA/LO relocations now target local ...data.0 instead of lbl_8024FF00; result strings use offsets 0x30/0x44/0x58 instead of 0x624/0x638/0x64c. GC/1.3 still emits mr r4,r31 at 0x50 instead of addi r4,r31,0. All other text words match in the unrelocated objects. The twelve call relocations retain their retail targets and addends. The DOL uses the retail object because the source remains NonMatching.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "final_build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "log": "eternal-darkness-decomp/reports/GEDE01/build-d41f41f5-7705-4d01-813b-4995ae05433d.log",
+    "dol_uses_retail_fallback": true,
+    "log_normalization": "CRLF line endings normalized to LF; output text otherwise unchanged."
+  },
+  "dol_check": {
+    "command": [
+      "sha1sum",
+      "eternal-darkness-decomp/build/GEDE01/main.dol"
+    ],
+    "exit_code": 0,
+    "output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  eternal-darkness-decomp/build/GEDE01/main.dol\n"
+  },
+  "legal_audit": {
+    "command": [
+      "python3",
+      "eternal-darkness-decomp/tools/legal_audit.py"
+    ],
+    "exit_code": 0,
+    "output": "legal audit passed (18978 tracked project files inspected)\n"
+  },
+  "diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "output": ""
+  }
+}

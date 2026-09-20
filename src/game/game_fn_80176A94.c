@@ -7,19 +7,16 @@ extern int fn_80220A68(int, void*, int);
 extern int fn_802213DC(int);
 extern int fn_80220B4C(int);
 extern void fn_8017BA60(const char*, int);
-extern const char lbl_8024FF00[];
 
 int fn_80176A94(void* state)
 {
-    const char* strings;
     void* handle;
     int id;
     int result;
 
-    strings = lbl_8024FF00;
     handle = fn_8017AF64();
     if (fn_8016A598(state) != 1) {
-        fn_80163BB4(state, strings + 0, 1, fn_8016A598(state));
+        fn_80163BB4(state, "\nInvalid Num of Args Expecting %i, and got %i\n", 1, fn_8016A598(state));
         return 0;
     }
 
@@ -31,13 +28,13 @@ int fn_80176A94(void* state)
         if (result == 0) {
             int name = fn_80220B4C(id);
             if (name != 0) {
-                fn_8017BA60(strings + 0x624, name);
+                fn_8017BA60("Couldn't unmount: ", name);
             }
         } else {
-            fn_8017BA60(strings + 0x638, result);
+            fn_8017BA60("Couldn't format: ", result);
         }
     } else {
-        fn_8017BA60(strings + 0x64C, result);
+        fn_8017BA60("Couldn't mount card: ", result);
     }
 
     fn_8017AF78();
