@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "assignment_id": "3b9e7f5d-7fd3-44bb-b7f4-a376cb7f020c",
+  "attempt": 4,
+  "target": "fn_8008A6F8",
+  "unit": "main/game/game_fn_8008A6F8",
+  "source_provenance": {
+    "classification": "honest improved NonMatching C reconstruction inherited from the accepted base and refined in this attempt",
+    "source": "src/game/game_fn_8008A6F8.c",
+    "source_sha256": "a7df9a1571de29af862fe1ba24b999beb30c43a747c415a782e34c71117f316f",
+    "accepted_base": "3459c9faa78419dcb694e14c25267f89e96d1617",
+    "assessment": "A new ABI/source-order hypothesis modeled fn_80201138's final parameters as (float, s32), rather than (s32, float). Because floating and integer arguments use independent ABI register sequences, the call remains f1/r7-equivalent while GC/1.3 now schedules li r7,0 after the conditional float load exactly as retail does. Pointer, signed scalar, cast, volatile, and branch-local-zero diagnostics were tested; they either preserved the remaining signed comparison commutation, changed cmpw to cmplw, or reduced the score, and were discarded."
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "settings": "existing canonical project settings; no compiler-policy or per-object flag changes"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8008A6F8 fn_8008A6F8 -o build/GEDE01/objdiff-3b9e7f5d-7fd3-44bb-b7f4-a376cb7f020c-canonical.raw.json --format json-pretty",
+    "raw_report_sha256": "17c94188ed7809f54e33d62f3229ba50bbcb62c1a8c4f0a844a7a1f2140c72b8",
+    "raw_measurement": {
+      "target_size": 272,
+      "generated_size": 272,
+      "target_match_percent": 99.85294,
+      "generated_match_percent": 99.85294,
+      "target_differing_instruction_rows": 1,
+      "generated_differing_instruction_rows": 1,
+      "target_relocation_entries": 19,
+      "generated_relocation_entries": 19
+    },
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-3b9e7f5d-7fd3-44bb-b7f4-a376cb7f020c-canonical.raw.json"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8008A6F8 fn_8008A6F8 -o build/GEDE01/objdiff-3b9e7f5d-7fd3-44bb-b7f4-a376cb7f020c-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "config": "function_reloc_diffs=name_address",
+    "raw_report_sha256": "17c94188ed7809f54e33d62f3229ba50bbcb62c1a8c4f0a844a7a1f2140c72b8",
+    "raw_report_byte_identical_to_canonical": true,
+    "raw_cmp_output": "cmp_exit=0",
+    "raw_measurement": {
+      "target_size": 272,
+      "generated_size": 272,
+      "target_match_percent": 99.85294,
+      "generated_match_percent": 99.85294,
+      "target_differing_instruction_rows": 1,
+      "generated_differing_instruction_rows": 1,
+      "target_relocation_entries": 19,
+      "generated_relocation_entries": 19
+    },
+    "relocation_assessment": "All 19 relocation types, targets, addends, and sites agree. Canonical and relocation-strict raw reports are byte-identical."
+  },
+  "instruction_differences": [
+    {
+      "offset": "0x4C",
+      "target": "cmpw r3, r0",
+      "generated": "cmpw r0, r3",
+      "classification": "commuted signed comparison operands"
+    }
+  ],
+  "fndiff": {
+    "command": "python3 tools/fndiff.py game/game_fn_8008A6F8.c fn_8008A6F8",
+    "raw_output": "target 272 bytes  base 272 bytes  match 99.85294\n0x004c target cmpw r3, r0 | base cmpw r0, r3"
+  },
+  "build_verification": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol"
+    ],
+    "ninja_raw_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "note": "The target remains NonMatching and excluded from the linked DOL; the hash verifies the project link gate, not a function match."
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (18926 tracked project files inspected)",
+    "independent_translation_unit": "src/game/game_fn_8008A6F8.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
