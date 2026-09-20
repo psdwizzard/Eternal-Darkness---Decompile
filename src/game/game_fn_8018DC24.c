@@ -22,13 +22,6 @@ extern void fn_8018865C(void*, void*, void*);
 
 void fn_8018DC24(u8* object)
 {
-    register u8* vertex_data;
-    register u8* index_data;
-    register u8* color_data;
-    register u8* transform;
-    register u8* self;
-    u16* coordinate;
-    s16* scratch;
     int i;
     int phase;
     u8 count;
@@ -38,6 +31,11 @@ void fn_8018DC24(u8* object)
     u8* object_data;
     u8* color;
     u16 offset;
+    register u8* vertex_data;
+    register u8* index_data;
+    register u8* color_data;
+    register u8* transform;
+    register u8* self;
 
     self = object;
     count = object[1];
@@ -58,9 +56,7 @@ void fn_8018DC24(u8* object)
 
     object_data = *(u8**)(self + 0x4C);
     color = color_data;
-    coordinate = (u16*)transform;
     i = 0;
-    scratch = lbl_80607900;
     for (; i < count; i++) {
         struct { u32 word; u16 half; } point;
         int shade;
@@ -73,9 +69,9 @@ void fn_8018DC24(u8* object)
                 *(s16*)(object_data + 0xE) += *(s16*)(object_data + 0x14);
             }
         }
-        fn_8018168C(object_data, &point, (s16)shade, coordinate[7]);
-        *(u32*)scratch = *(u32*)(object_data + 0xA);
-        scratch[2] = *(u16*)(object_data + 0xE);
+        fn_8018168C(object_data, &point, (s16)shade, ((u16*)transform)[i + 7]);
+        *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);
+        lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);
         {
             int j;
             for (j = 0; j < object_data[0x20]; j++) {
@@ -88,8 +84,6 @@ void fn_8018DC24(u8* object)
         if (phase >= transform[3]) {
             phase = 0;
         }
-        coordinate++;
-        scratch += 3;
     }
 
     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);
@@ -97,12 +91,12 @@ void fn_8018DC24(u8* object)
     {
         float value = *(float*)(transform + 0x68);
         if (value < 0.0f) value = -value;
-        if (value > 1.0f) *(float*)(transform + 0x68) = *(float*)(transform + 0x74);
+        if (value > 360.0f) *(float*)(transform + 0x68) = *(float*)(transform + 0x74);
     }
     {
         float value = *(float*)(transform + 0x68);
         if (value < 0.0f) value = -value;
-        fn_80211380(transform + 0x78, transform + 0x60, 0.5f * value);
+        fn_80211380(transform + 0x78, transform + 0x60, 0.017453292f * value);
     }
     DCFlushRange(vertex_data, vertex_size);
     DCFlushRange(index_data, index_size);
