@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "assignment_id": "8bb4cee9-0ca6-400d-a53a-a6ebe8f3d37a",
+  "target": "fn_80189C14",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80189C14 fn_80189C14 -o reports/GEDE01/objdiff-8bb4cee9-0ca6-400d-a53a-a6ebe8f3d37a.json --format json-pretty",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80189C14 fn_80189C14 -o reports/GEDE01/objdiff-8bb4cee9-0ca6-400d-a53a-a6ebe8f3d37a-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "report_comparison": "cmp -s reports/GEDE01/objdiff-8bb4cee9-0ca6-400d-a53a-a6ebe8f3d37a.json reports/GEDE01/objdiff-8bb4cee9-0ca6-400d-a53a-a6ebe8f3d37a-reloc-strict.json"
+  },
+  "raw_measured_outputs": {
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_sha_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical": "retail_size=616 generated_size=616 retail_instructions=154 generated_instructions=154 match=97.07792 relocations=25 differing_instructions=74",
+    "relocation_strict": "retail_size=616 generated_size=616 retail_instructions=154 generated_instructions=154 match=97.07792 relocations=25 differing_instructions=74",
+    "canonical_vs_relocation_strict_cmp_exit_code": 0
+  },
+  "hypothesis_tested": {
+    "description": "Split the long-lived parameter/buffer lifetimes and separately prioritize the self pointer with register storage so MWCC would color self immediately after position_offset and shift the remaining persistent values into the retail r17-r31 assignment.",
+    "result": "Direct-parameter and register-qualified-self variants both compiled byte-identically to the retained reconstruction at 97.07792%; both were reverted. MWCC coalesced the aliases and retained generated self/count/buffers in r31/r25/r20-r17 instead of retail r16/r26/r21,r19,r18."
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80189C14.c",
+    "range": "0x80189C14-0x80189E7C",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
