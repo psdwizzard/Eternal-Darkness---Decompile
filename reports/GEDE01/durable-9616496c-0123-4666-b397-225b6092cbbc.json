@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "assignment_id": "9616496c-0123-4666-b397-225b6092cbbc",
+  "attempt": 6,
+  "base_commit": "49aec4401c1b382033119818706adbf08fc7a22b",
+  "target": "fn_801D84F4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9616496c-0123-4666-b397-225b6092cbbc.json",
+    "eternal-darkness-decomp/reports/GEDE01/strict-9616496c-0123-4666-b397-225b6092cbbc.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-9616496c-0123-4666-b397-225b6092cbbc.json",
+    "eternal-darkness-decomp/reports/GEDE01/trials-9616496c-0123-4666-b397-225b6092cbbc.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-9616496c-0123-4666-b397-225b6092cbbc.json",
+    "eternal-darkness-decomp/reports/GEDE01/final-build-9616496c-0123-4666-b397-225b6092cbbc.json"
+  ],
+  "divergence": "Canonical and relocation-strict (function_reloc_diffs=all) objdiff both measure 99.33077%, up from 99.26923%, with 520 bytes and 130 instructions on each side. There are 17 raw differing instructions (23 differing bytes): 15 object/state register-swap sites (retail object r29/state r28; compiled object r28/state r29), plus two flag loads at function offsets 0x14c and 0x17c using compiled 0x13a(r28) instead of retail 0x7e(r28). Objdiff additionally reports the relocation symbol lbl_806510D8 versus local @39 at offset 0x9c, totaling 18 DIFF_ARG_MISMATCH entries. All 14 relocation offsets/types/addends match; 13 target names match exactly, and the remaining eight-byte conversion constant matches the retail DOL value but retains distinct symbol identity. The typed embedded-state hypothesis and object-relative flag accesses improve the metric without resolving register coloring. Preserved one NonMatching C translation unit. Canonical full build and DOL SHA-1 passed."
+}

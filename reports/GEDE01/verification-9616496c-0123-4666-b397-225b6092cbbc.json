@@ -1,0 +1,131 @@
+{
+  "assignment_id": "9616496c-0123-4666-b397-225b6092cbbc",
+  "canonical_compiler": "GC/1.3",
+  "registration": "Object(NonMatching, \"game/game_fn_801D84F4.c\", mw_version=\"GC/1.3\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "selected_hypothesis": "Typed Object with embedded State; both flags reads use object->state.flags to shorten State pointer dependence. All other fields use natural typed offsets.",
+  "source_sha256": "1ce459682611a07aa2e2c1516ffbcae22f9d30e1c98ea8be92a46c137381cf43",
+  "objdiff_commands": [
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D84F4 fn_801D84F4 --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D84F4 fn_801D84F4 -c function_reloc_diffs=all --format json-pretty"
+  ],
+  "text_sizes": [
+    520,
+    520
+  ],
+  "instruction_counts": [
+    130,
+    130
+  ],
+  "text_sha256": [
+    "716ae6a4044f1958d906d1ab2d6802eb07fcba54bc3fba66071bb191ea0086c4",
+    "1841e44e0fb4578e87be8aea1ebf302c5219d31505167f88a4edfe0146d92db3"
+  ],
+  "raw_byte_mismatch_count": 23,
+  "raw_instruction_mismatch_offsets": [
+    "0x34",
+    "0x38",
+    "0x44",
+    "0x54",
+    "0x68",
+    "0x74",
+    "0x84",
+    "0xa0",
+    "0xc0",
+    "0xf4",
+    "0x114",
+    "0x12c",
+    "0x14c",
+    "0x17c",
+    "0x198",
+    "0x1bc",
+    "0x1cc"
+  ],
+  "relocations": {
+    "retail": {
+      "path": "build/GEDE01/obj/game/game_fn_801D84F4.o",
+      "command": "readelf -Wr build/GEDE01/obj/game/game_fn_801D84F4.o",
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x248 contains 14 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000048  0000040a R_PPC_REL24            00000000   fn_80201814 + 0\n00000064  0000050a R_PPC_REL24            00000000   fn_8020123C + 0\n00000080  0000060a R_PPC_REL24            00000000   fn_80142FCC + 0\n00000088  0000070a R_PPC_REL24            00000000   fn_801CEB2C + 0\n00000094  0000086d R_PPC_EMB_SDA21        00000000   lbl_806510E4 + 0\n0000009c  0000096d R_PPC_EMB_SDA21        00000000   lbl_806510D8 + 0\n000000a4  00000a6d R_PPC_EMB_SDA21        00000000   lbl_806510E8 + 0\n000000f0  00000b0a R_PPC_REL24            00000000   fn_80048C2C + 0\n00000110  00000c0a R_PPC_REL24            00000000   fn_80048C50 + 0\n00000158  00000d0a R_PPC_REL24            00000000   fn_8017FD6C + 0\n00000164  00000e0a R_PPC_REL24            00000000   fn_8019B134 + 0\n000001a0  00000f0a R_PPC_REL24            00000000   fn_801D7998 + 0\n000001c8  00000f0a R_PPC_REL24            00000000   fn_801D7998 + 0\n000001d0  0000100a R_PPC_REL24            00000000   fn_801D0E78 + 0\n"
+    },
+    "compiled": {
+      "path": "build/GEDE01/src/game/game_fn_801D84F4.o",
+      "command": "readelf -Wr build/GEDE01/src/game/game_fn_801D84F4.o",
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x248 contains 14 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000048  0000070a R_PPC_REL24            00000000   fn_80201814 + 0\n00000064  0000080a R_PPC_REL24            00000000   fn_8020123C + 0\n00000080  0000090a R_PPC_REL24            00000000   fn_80142FCC + 0\n00000088  00000a0a R_PPC_REL24            00000000   fn_801CEB2C + 0\n00000094  0000056d R_PPC_EMB_SDA21        00000000   lbl_806510E4 + 0\n0000009c  0000046d R_PPC_EMB_SDA21        00000000   @39 + 0\n000000a4  0000066d R_PPC_EMB_SDA21        00000000   lbl_806510E8 + 0\n000000f0  00000b0a R_PPC_REL24            00000000   fn_80048C2C + 0\n00000110  00000c0a R_PPC_REL24            00000000   fn_80048C50 + 0\n00000158  00000d0a R_PPC_REL24            00000000   fn_8017FD6C + 0\n00000164  00000e0a R_PPC_REL24            00000000   fn_8019B134 + 0\n000001a0  00000f0a R_PPC_REL24            00000000   fn_801D7998 + 0\n000001c8  00000f0a R_PPC_REL24            00000000   fn_801D7998 + 0\n000001d0  0000100a R_PPC_REL24            00000000   fn_801D0E78 + 0\n"
+    }
+  },
+  "conversion_constant": {
+    "target_symbol": "lbl_806510D8",
+    "target_address": "0x806510d8",
+    "compiled_symbol": "@39",
+    "compiled_section": ".sdata2",
+    "compiled_size": 8,
+    "retail_sha256": "07af8387624cf8f36152797d2f561246f21237d1d22b5c13006eacfa6f475e43",
+    "compiled_sha256": "07af8387624cf8f36152797d2f561246f21237d1d22b5c13006eacfa6f475e43",
+    "bytes_equal": true,
+    "note": "Equivalent eight-byte value, but distinct relocation symbol identity; no exact target-identity match is claimed."
+  },
+  "scope": "Only target C translation unit and assignment reports changed; existing NonMatching registration and split retained. No compiler policy or binary rewrites. The DOL retains the retail object for this NonMatching unit.",
+  "objdiff": {
+    "match_percent": 99.33077,
+    "diff_counts": {
+      "DIFF_NONE": 112,
+      "DIFF_ARG_MISMATCH": 18
+    }
+  },
+  "strict": {
+    "match_percent": 99.33077,
+    "diff_counts": {
+      "DIFF_NONE": 112,
+      "DIFF_ARG_MISMATCH": 18
+    }
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matches": true
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "log": "eternal-darkness-decomp/reports/GEDE01/final-build-9616496c-0123-4666-b397-225b6092cbbc.json"
+  },
+  "historical_review": {
+    "accepted_base": "49aec4401c1b382033119818706adbf08fc7a22b",
+    "reviewed_commits": [
+      "908d120b50885865f7cc95a60a64045313fc26c2",
+      "71c612169f98d1bc028637f2d3af13bfdbf1f9cd",
+      "26507986badcc9205954c9f66cf7281bacc20e79",
+      "7e20f98f511894e57926c44a3c45e67f34c8b716",
+      "74132d035c87c9978088e5e8d535d9bc3b514cc6"
+    ],
+    "prior_best": 99.26923,
+    "different_hypothesis": "Typed embedded State and object-relative flag accesses alter alias/base dependence and State live range, rather than repeating saved-object/base-pointer coalescing or declaration-order-only experiments."
+  },
+  "relocation_summary": {
+    "count_each": 14,
+    "matching_offsets_types_addends": 14,
+    "all_addends_zero": true,
+    "identical_target_names": 13,
+    "remaining_target_identity_difference": "offset 0x9c: retail lbl_806510D8 versus compiler-local @39; data equality independently checked against the retail DOL. No retargeting applied."
+  },
+  "legal_audit": {
+    "command": "python3 eternal-darkness-decomp/tools/legal_audit.py",
+    "exit_code": 0,
+    "stdout": "legal audit passed (18456 tracked project files inspected)\n",
+    "stderr": ""
+  },
+  "staged_whitespace_check": {
+    "command": "git diff --cached --check",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "preexisting_unrelated_change": "CLAUDE.md was modified before work began and is excluded from this commit."
+}

@@ -9,10 +9,6 @@ typedef struct Point3s {
     s16 z;
 } Point3s;
 
-typedef struct Object {
-    u8 bytes[0x13B];
-} Object;
-
 typedef struct State {
     void* first;
     void* second;
@@ -24,6 +20,15 @@ typedef struct State {
     u8 pad_50[0x2E];
     u8 flags;
 } State;
+
+typedef struct Object {
+    u32 unknown_00;
+    u32 kind;
+    u8 pad_08[0x30];
+    float x, y, z;
+    u8 pad_44[0x78];
+    State state;
+} Object;
 
 extern const float lbl_806510E4;
 extern const double lbl_806510D8;
@@ -42,11 +47,10 @@ extern void fn_801D0E78(Object*);
 void fn_801D84F4(Object* object)
 {
     Point3s points[8];
-    register u8* base = object->bytes;
-    u8 flags = *(volatile u8*)(base + 0x13A);
+    u8 flags = *(volatile u8*)&object->state.flags;
     register Point3s* line;
     s16 count;
-    State* state = (State*)(base + 0xBC);
+    State* state = &object->state;
     int i;
 
     if ((flags & 5) == 0 &&
@@ -61,32 +65,32 @@ void fn_801D84F4(Object* object)
     if (state->resource != 0)
         fn_80142FCC(state->resource);
 
-    i = fn_801CEB2C(*(u32*)(base + 4));
+    i = fn_801CEB2C(object->kind);
     line = points;
     count = (s16)i;
     for (i = 0; i < count; i++) {
         float angle = state->angle +
             lbl_806510E4 * (float)i / (float)count;
-        points[i].x = (s16)(*(float*)(base + 0x38) +
+        points[i].x = (s16)(object->x +
                             lbl_806510E8 * fn_80048C2C(angle));
-        points[i].y = (s16)(*(float*)(base + 0x3C) +
+        points[i].y = (s16)(object->y +
                             lbl_806510E8 * fn_80048C50(angle));
-        points[i].z = (s16)*(float*)(base + 0x40);
+        points[i].z = (s16)object->z;
 
         if (state->entries[i] != 0) {
-            if ((state->flags & 8) != 0)
+            if ((object->state.flags & 8) != 0)
                 fn_8017FD6C(state->entries[i]);
             else
                 fn_8019B134(state->entries[i], 0);
         }
     }
 
-    if ((state->flags & 8) == 0) {
+    if ((object->state.flags & 8) == 0) {
         for (i = 0; i < count - 1; i++) {
-            fn_801D7998(line, line + 1, (Object*)base);
+            fn_801D7998(line, line + 1, object);
             line++;
         }
-        fn_801D7998(&points[i], &points[0], (Object*)base);
+        fn_801D7998(&points[i], &points[0], object);
     }
-    fn_801D0E78((Object*)base);
+    fn_801D0E78(object);
 }
