@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d654819a-d091-45c2-9e7a-82bbc2559747",
+  "attempt": 4,
+  "base_commit": "a7b332394fcdbff50557fa9520720dfaee217547",
+  "target": "fn_801ECD74",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d654819a-d091-45c2-9e7a-82bbc2559747.json"
+  ],
+  "divergence": "Size-exact GC/1.3 C remains 96.969696% in both canonical and relocation-strict direct objdiff (264 bytes, 67 instructions per side, and 10 relocation-bearing instructions per side); the canonical and strict raw reports are byte-identical. The only code divergence is one independent scheduling swap represented by two objdiff rows: retail emits lbz r0, 1(r3) before addi r4, r1, 8, while the candidate emits addi first. A different ABI hypothesis declaring fn_80229D8C as taking Color by value, allowing MWCC to synthesize its hidden stack copy, generated the same 264-byte code and the same swap, so it was rejected and the accepted honest-C reconstruction was restored. The canonical build completed and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
