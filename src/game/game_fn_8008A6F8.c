@@ -19,20 +19,22 @@ extern void fn_80201138(s32, void*, s32, s32, float, s32);
 extern void fn_80201D2C(void *, int);
 extern void fn_80201D14(void *, int);
 
-/* NonMatching: honest reconstruction of the object-spawn callback. The
- * remaining difference is one comparison operand order. */
+/* Object-spawn callback. Keep the identity lookup as a separate full
+ * expression to preserve the canonical compiler's comparison operand order. */
 void fn_8008A6F8(void* object)
 {
     void* resource;
     s32 object_id;
     void* created;
     s32 zero;
+    s32 actual;
     float scale;
 
     fn_80201B8C(object);
     resource = fn_80201BC8(object);
     object_id = ((s32)fn_80201B54(object));
-    if ((s32)lbl_8064D18C != fn_80201EB8(object)) {
+    actual = fn_80201EB8(object);
+    if (actual != (s32)lbl_8064D18C) {
         fn_801E8328(2, object);
         return;
     }

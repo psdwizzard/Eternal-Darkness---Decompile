@@ -1,0 +1,265 @@
+[
+  {
+    "name": "unsigned_difference_cast_signed",
+    "expression": "(s32)((unsigned int)fn_80201EB8(object) - (unsigned int)lbl_8064D18C) != 0",
+    "compile_exit": 0,
+    "compile_raw_output": "",
+    "score": 99.117645,
+    "size": "272",
+    "differences": [
+      {
+        "side": "target",
+        "row": {
+          "diff_kind": "DIFF_REPLACE",
+          "instruction": {
+            "address": "76",
+            "size": 4,
+            "formatted": "cmpw r3, r0",
+            "parts": [
+              {
+                "opcode": {
+                  "mnemonic": "cmpw",
+                  "opcode": 304
+                }
+              },
+              {
+                "arg": {
+                  "opaque": "r3"
+                }
+              },
+              {
+                "separator": true
+              },
+              {
+                "arg": {
+                  "opaque": "r0"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "side": "generated",
+        "row": {
+          "diff_kind": "DIFF_REPLACE",
+          "instruction": {
+            "address": "76",
+            "size": 4,
+            "formatted": "subf. r0, r0, r3",
+            "parts": [
+              {
+                "opcode": {
+                  "mnemonic": "subf.",
+                  "opcode": 379
+                }
+              },
+              {
+                "arg": {
+                  "opaque": "r0"
+                }
+              },
+              {
+                "separator": true
+              },
+              {
+                "arg": {
+                  "opaque": "r0"
+                }
+              },
+              {
+                "separator": true
+              },
+              {
+                "arg": {
+                  "opaque": "r3"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "xor_identity",
+    "expression": "(fn_80201EB8(object) ^ (s32)lbl_8064D18C) != 0",
+    "compile_exit": 0,
+    "compile_raw_output": "",
+    "score": 99.117645,
+    "size": "272",
+    "differences": [
+      {
+        "side": "target",
+        "row": {
+          "diff_kind": "DIFF_REPLACE",
+          "instruction": {
+            "address": "76",
+            "size": 4,
+            "formatted": "cmpw r3, r0",
+            "parts": [
+              {
+                "opcode": {
+                  "mnemonic": "cmpw",
+                  "opcode": 304
+                }
+              },
+              {
+                "arg": {
+                  "opaque": "r3"
+                }
+              },
+              {
+                "separator": true
+              },
+              {
+                "arg": {
+                  "opaque": "r0"
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "side": "generated",
+        "row": {
+          "diff_kind": "DIFF_REPLACE",
+          "instruction": {
+            "address": "76",
+            "size": 4,
+            "formatted": "xor. r0, r0, r3",
+            "parts": [
+              {
+                "opcode": {
+                  "mnemonic": "xor.",
+                  "opcode": 388
+                }
+              },
+              {
+                "arg": {
+                  "opaque": "r0"
+                }
+              },
+              {
+                "separator": true
+              },
+              {
+                "arg": {
+                  "opaque": "r0"
+                }
+              },
+              {
+                "separator": true
+              },
+              {
+                "arg": {
+                  "opaque": "r3"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "complement_identity",
+    "expression": "~fn_80201EB8(object) != ~(s32)lbl_8064D18C",
+    "compile_exit": 0,
+    "compile_raw_output": "",
+    "score": 99.85294,
+    "size": "272",
+    "differences": [
+      {
+        "side": "target",
+        "row": {
+          "diff_kind": "DIFF_ARG_MISMATCH",
+          "instruction": {
+            "address": "76",
+            "size": 4,
+            "formatted": "cmpw r3, r0",
+            "parts": [
+              {
+                "opcode": {
+                  "mnemonic": "cmpw",
+                  "opcode": 304
+                }
+              },
+              {
+                "arg": {
+                  "opaque": "r3"
+                }
+              },
+              {
+                "separator": true
+              },
+              {
+                "arg": {
+                  "opaque": "r0"
+                }
+              }
+            ]
+          },
+          "arg_diff": [
+            {
+              "diff_index": 0
+            },
+            {
+              "diff_index": 1
+            }
+          ]
+        }
+      },
+      {
+        "side": "generated",
+        "row": {
+          "diff_kind": "DIFF_ARG_MISMATCH",
+          "instruction": {
+            "address": "76",
+            "size": 4,
+            "formatted": "cmpw r0, r3",
+            "parts": [
+              {
+                "opcode": {
+                  "mnemonic": "cmpw",
+                  "opcode": 304
+                }
+              },
+              {
+                "arg": {
+                  "opaque": "r0"
+                }
+              },
+              {
+                "separator": true
+              },
+              {
+                "arg": {
+                  "opaque": "r3"
+                }
+              }
+            ]
+          },
+          "arg_diff": [
+            {
+              "diff_index": 0
+            },
+            {
+              "diff_index": 1
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "sequenced_result_local",
+    "hypothesis": "Separate evaluation into scalar temporaries or inline helper parameters before equality instruction selection.",
+    "compile_exit": 0,
+    "compile_raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8008A6F8.o\n",
+    "score": 100.0,
+    "size": "272",
+    "differences": []
+  }
+]

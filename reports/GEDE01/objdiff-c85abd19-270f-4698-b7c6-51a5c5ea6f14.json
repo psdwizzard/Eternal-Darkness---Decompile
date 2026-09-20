@@ -1,0 +1,365 @@
+{
+  "version": 1,
+  "assignment_id": "c85abd19-270f-4698-b7c6-51a5c5ea6f14",
+  "attempt": 6,
+  "base_commit": "a9add4d1158281058a401025811da134e2272e24",
+  "target": "fn_8008A6F8",
+  "unit": "main/game/game_fn_8008A6F8",
+  "source_provenance": {
+    "source": "eternal-darkness-decomp/src/game/game_fn_8008A6F8.c",
+    "source_sha256": "36ad062c9140270d5401f92232bda6605a8a39f36486c8f0d97781601fd7a9d4",
+    "preserved_attempts_reviewed": [
+      "88e48d5a7d6761f3adf9dc58926861d8aa1bdb3a",
+      "7cc70e1f86d6956f69f83c6fd79799c8a4718efc",
+      "eccc084a21fb7e636391a092d88b68c00b824616",
+      "a741c95d07c31f2845fbaf6ef4d3cf8d8fb8db98",
+      "34dcb4b97e4cf2370dd581a02ebd554063ece496"
+    ],
+    "new_hypotheses": "Arithmetic identity tests produced subf. or xor. instead of cmpw; bitwise complement normalized to the inherited commutation. Separating fn_80201EB8(object) into a completed scalar assignment before comparison changed MWCC operand selection to retail cmpw r3,r0. This is the only semantic source change retained. No inline helper variants ran after the scalar assignment matched.",
+    "hypothesis_measurements": "eternal-darkness-decomp/reports/GEDE01/hypotheses-c85abd19-270f-4698-b7c6-51a5c5ea6f14.json"
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "settings": "Unchanged canonical flags from configure.py; independent C translation unit; no per-object flags or binary transformations added.",
+    "raw_canonical_compile_command": "tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_8008A6F8.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8008A6F8.d build/GEDE01/src/game/game_fn_8008A6F8.d"
+  },
+  "instruction_differences": [],
+  "elf_relocation_verification": {
+    "all_sites_types_targets_symbol_values_and_addends_equal": true,
+    "actual_elf_relocation_count": 18,
+    "historical_count_correction": "Earlier reports counted 19 objdiff relocation annotations. The instruction at 0xB4 has an empty relocation annotation; readelf reports 18 real ELF relocation entries.",
+    "target": {
+      "command": "readelf -r eternal-darkness-decomp/build/GEDE01/obj/game/game_fn_8008A6F8.o",
+      "raw_output": "\nRelocation section '.rela.text' at offset 0x150 contains 18 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n0000001c  0000040a R_PPC_REL24       00000000   fn_80201B8C + 0\n00000024  0000050a R_PPC_REL24       00000000   fn_80201BC8 + 0\n00000034  0000060a R_PPC_REL24       00000000   fn_80201B54 + 0\n00000044  0000070a R_PPC_REL24       00000000   fn_80201EB8 + 0\n00000048  0000086d R_PPC_EMB_SDA21   00000000   lbl_8064D18C + 0\n0000005c  0000090a R_PPC_REL24       00000000   fn_801E8328 + 0\n00000074  00000a0a R_PPC_REL24       00000000   fn_801294DC + 0\n00000082  00000b06 R_PPC_ADDR16_HA   00000000   fn_8008A8D8 + 0\n0000008a  00000b04 R_PPC_ADDR16_LO   00000000   fn_8008A8D8 + 0\n0000008c  00000c0a R_PPC_REL24       00000000   fn_80128C28 + 0\n000000a0  00000d0a R_PPC_REL24       00000000   fn_800389E0 + 0\n000000a6  00000e06 R_PPC_ADDR16_HA   00000000   lbl_803003C8 + 0\n000000ae  00000e04 R_PPC_ADDR16_LO   00000000   lbl_803003C8 + 0\n000000c8  00000f6d R_PPC_EMB_SDA21   00000000   lbl_8064EBC0 + 0\n000000d0  0000106d R_PPC_EMB_SDA21   00000000   lbl_8064EBC4 + 0\n000000d8  0000110a R_PPC_REL24       00000000   fn_80201138 + 0\n000000e4  0000120a R_PPC_REL24       00000000   fn_80201D2C + 0\n000000f0  0000130a R_PPC_REL24       00000000   fn_80201D14 + 0\n",
+      "entries": [
+        {
+          "offset": 28,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201B8C",
+          "addend": 0
+        },
+        {
+          "offset": 36,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201BC8",
+          "addend": 0
+        },
+        {
+          "offset": 52,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201B54",
+          "addend": 0
+        },
+        {
+          "offset": 68,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201EB8",
+          "addend": 0
+        },
+        {
+          "offset": 72,
+          "type": "R_PPC_EMB_SDA21",
+          "symbol_value": 0,
+          "target": "lbl_8064D18C",
+          "addend": 0
+        },
+        {
+          "offset": 92,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_801E8328",
+          "addend": 0
+        },
+        {
+          "offset": 116,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_801294DC",
+          "addend": 0
+        },
+        {
+          "offset": 130,
+          "type": "R_PPC_ADDR16_HA",
+          "symbol_value": 0,
+          "target": "fn_8008A8D8",
+          "addend": 0
+        },
+        {
+          "offset": 138,
+          "type": "R_PPC_ADDR16_LO",
+          "symbol_value": 0,
+          "target": "fn_8008A8D8",
+          "addend": 0
+        },
+        {
+          "offset": 140,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80128C28",
+          "addend": 0
+        },
+        {
+          "offset": 160,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_800389E0",
+          "addend": 0
+        },
+        {
+          "offset": 166,
+          "type": "R_PPC_ADDR16_HA",
+          "symbol_value": 0,
+          "target": "lbl_803003C8",
+          "addend": 0
+        },
+        {
+          "offset": 174,
+          "type": "R_PPC_ADDR16_LO",
+          "symbol_value": 0,
+          "target": "lbl_803003C8",
+          "addend": 0
+        },
+        {
+          "offset": 200,
+          "type": "R_PPC_EMB_SDA21",
+          "symbol_value": 0,
+          "target": "lbl_8064EBC0",
+          "addend": 0
+        },
+        {
+          "offset": 208,
+          "type": "R_PPC_EMB_SDA21",
+          "symbol_value": 0,
+          "target": "lbl_8064EBC4",
+          "addend": 0
+        },
+        {
+          "offset": 216,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201138",
+          "addend": 0
+        },
+        {
+          "offset": 228,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201D2C",
+          "addend": 0
+        },
+        {
+          "offset": 240,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201D14",
+          "addend": 0
+        }
+      ]
+    },
+    "generated": {
+      "command": "readelf -r eternal-darkness-decomp/build/GEDE01/src/game/game_fn_8008A6F8.o",
+      "raw_output": "\nRelocation section '.rela.text' at offset 0x144 contains 18 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n0000001c  0000070a R_PPC_REL24       00000000   fn_80201B8C + 0\n00000024  0000080a R_PPC_REL24       00000000   fn_80201BC8 + 0\n00000034  0000090a R_PPC_REL24       00000000   fn_80201B54 + 0\n00000044  00000a0a R_PPC_REL24       00000000   fn_80201EB8 + 0\n00000048  0000036d R_PPC_EMB_SDA21   00000000   lbl_8064D18C + 0\n0000005c  00000b0a R_PPC_REL24       00000000   fn_801E8328 + 0\n00000074  00000c0a R_PPC_REL24       00000000   fn_801294DC + 0\n00000082  00000d06 R_PPC_ADDR16_HA   00000000   fn_8008A8D8 + 0\n0000008a  00000d04 R_PPC_ADDR16_LO   00000000   fn_8008A8D8 + 0\n0000008c  00000e0a R_PPC_REL24       00000000   fn_80128C28 + 0\n000000a0  00000f0a R_PPC_REL24       00000000   fn_800389E0 + 0\n000000a6  00000606 R_PPC_ADDR16_HA   00000000   lbl_803003C8 + 0\n000000ae  00000604 R_PPC_ADDR16_LO   00000000   lbl_803003C8 + 0\n000000c8  0000046d R_PPC_EMB_SDA21   00000000   lbl_8064EBC0 + 0\n000000d0  0000056d R_PPC_EMB_SDA21   00000000   lbl_8064EBC4 + 0\n000000d8  0000100a R_PPC_REL24       00000000   fn_80201138 + 0\n000000e4  0000110a R_PPC_REL24       00000000   fn_80201D2C + 0\n000000f0  0000120a R_PPC_REL24       00000000   fn_80201D14 + 0\n",
+      "entries": [
+        {
+          "offset": 28,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201B8C",
+          "addend": 0
+        },
+        {
+          "offset": 36,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201BC8",
+          "addend": 0
+        },
+        {
+          "offset": 52,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201B54",
+          "addend": 0
+        },
+        {
+          "offset": 68,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201EB8",
+          "addend": 0
+        },
+        {
+          "offset": 72,
+          "type": "R_PPC_EMB_SDA21",
+          "symbol_value": 0,
+          "target": "lbl_8064D18C",
+          "addend": 0
+        },
+        {
+          "offset": 92,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_801E8328",
+          "addend": 0
+        },
+        {
+          "offset": 116,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_801294DC",
+          "addend": 0
+        },
+        {
+          "offset": 130,
+          "type": "R_PPC_ADDR16_HA",
+          "symbol_value": 0,
+          "target": "fn_8008A8D8",
+          "addend": 0
+        },
+        {
+          "offset": 138,
+          "type": "R_PPC_ADDR16_LO",
+          "symbol_value": 0,
+          "target": "fn_8008A8D8",
+          "addend": 0
+        },
+        {
+          "offset": 140,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80128C28",
+          "addend": 0
+        },
+        {
+          "offset": 160,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_800389E0",
+          "addend": 0
+        },
+        {
+          "offset": 166,
+          "type": "R_PPC_ADDR16_HA",
+          "symbol_value": 0,
+          "target": "lbl_803003C8",
+          "addend": 0
+        },
+        {
+          "offset": 174,
+          "type": "R_PPC_ADDR16_LO",
+          "symbol_value": 0,
+          "target": "lbl_803003C8",
+          "addend": 0
+        },
+        {
+          "offset": 200,
+          "type": "R_PPC_EMB_SDA21",
+          "symbol_value": 0,
+          "target": "lbl_8064EBC0",
+          "addend": 0
+        },
+        {
+          "offset": 208,
+          "type": "R_PPC_EMB_SDA21",
+          "symbol_value": 0,
+          "target": "lbl_8064EBC4",
+          "addend": 0
+        },
+        {
+          "offset": 216,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201138",
+          "addend": 0
+        },
+        {
+          "offset": 228,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201D2C",
+          "addend": 0
+        },
+        {
+          "offset": 240,
+          "type": "R_PPC_REL24",
+          "symbol_value": 0,
+          "target": "fn_80201D14",
+          "addend": 0
+        }
+      ]
+    }
+  },
+  "constraints": {
+    "independent_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "compiler_policy_or_gate_changes": false,
+    "neighboring_function_edits": false,
+    "runtime_or_global_progress_edits": false,
+    "generated_binaries_or_private_inputs_committed": false,
+    "remote_push": false
+  },
+  "canonical": {
+    "command_working_directory": "eternal-darkness-decomp",
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8008A6F8 fn_8008A6F8 -o reports/GEDE01/canonical-c85abd19-270f-4698-b7c6-51a5c5ea6f14.raw.json --format json-pretty",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/canonical-c85abd19-270f-4698-b7c6-51a5c5ea6f14.raw.json",
+    "raw_report_sha256": "8c8d84b0710460e5fecbb306a9a184878405efe9937514c491778d6ab0d275b1",
+    "raw_output": " INFO Writing to reports/GEDE01/canonical-c85abd19-270f-4698-b7c6-51a5c5ea6f14.raw.json\n",
+    "raw_measurement": {
+      "target_size": 272,
+      "generated_size": 272,
+      "target_match_percent": 100.0,
+      "generated_match_percent": 100.0,
+      "differing_instruction_rows": [
+        0,
+        0
+      ]
+    }
+  },
+  "strict": {
+    "command_working_directory": "eternal-darkness-decomp",
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8008A6F8 fn_8008A6F8 -o reports/GEDE01/strict-c85abd19-270f-4698-b7c6-51a5c5ea6f14.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/strict-c85abd19-270f-4698-b7c6-51a5c5ea6f14.raw.json",
+    "raw_report_sha256": "8c8d84b0710460e5fecbb306a9a184878405efe9937514c491778d6ab0d275b1",
+    "raw_output": " INFO Writing to reports/GEDE01/strict-c85abd19-270f-4698-b7c6-51a5c5ea6f14.raw.json\n",
+    "raw_measurement": {
+      "target_size": 272,
+      "generated_size": 272,
+      "target_match_percent": 100.0,
+      "generated_match_percent": 100.0,
+      "differing_instruction_rows": [
+        0,
+        0
+      ]
+    }
+  },
+  "canonical_and_strict_reports_byte_identical": true,
+  "build_verification": {
+    "command_working_directory": "eternal-darkness-decomp",
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol"
+    ],
+    "configure_exit": 0,
+    "configure_raw_output": "",
+    "ninja_exit": 0,
+    "ninja_raw_output_file": "eternal-darkness-decomp/reports/GEDE01/build-c85abd19-270f-4698-b7c6-51a5c5ea6f14.log",
+    "ninja_raw_output_sha256": "49a79432d591d1fb026482259ded26232f6c146d91e53a7498b052123b2d4d16",
+    "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "target_linked": true,
+    "registration": "Object(Matching, \"game/game_fn_8008A6F8.c\")",
+    "note": "The generated C object is linked into this verified DOL. Existing split already covers the independent translation unit; no split edit needed."
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "command_working_directory": "eternal-darkness-decomp",
+    "raw_output": "legal audit passed (18941 tracked project files inspected)\n",
+    "exit_code": 0
+  }
+}
