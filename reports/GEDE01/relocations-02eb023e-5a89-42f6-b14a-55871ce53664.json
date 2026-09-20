@@ -1,0 +1,184 @@
+[
+  {
+    "argv": [
+      "readelf",
+      "--wide",
+      "--relocs",
+      "build/GEDE01/obj/game/game_fn_80171560.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": "\nRelocation section '.rela.text' at offset 0x144 contains 13 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000406 R_PPC_ADDR16_HA        00000000   lbl_8024FF00 + 0\n0000001a  00000404 R_PPC_ADDR16_LO        00000000   lbl_8024FF00 + 0\n0000001c  0000050a R_PPC_REL24            00000000   fn_8016A598 + 0\n0000002c  0000050a R_PPC_REL24            00000000   fn_8016A598 + 0\n00000044  0000060a R_PPC_REL24            00000000   fn_80163BB4 + 0\n00000058  0000070a R_PPC_REL24            00000000   fn_8016A694 + 0\n00000070  0000070a R_PPC_REL24            00000000   fn_8016A694 + 0\n00000084  0000080a R_PPC_REL24            00000000   fn_80201814 + 0\n000000a0  0000060a R_PPC_REL24            00000000   fn_80163BB4 + 0\n000000ac  0000090a R_PPC_REL24            00000000   fn_80201BC8 + 0\n000000cc  0000060a R_PPC_REL24            00000000   fn_80163BB4 + 0\n000000dc  00000a0a R_PPC_REL24            00000000   fn_801296F8 + 0\n000000e8  00000b0a R_PPC_REL24            00000000   fn_8011FB5C + 0\n",
+    "parsed_entries": [
+      {
+        "offset": 10,
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8024FF00",
+        "addend": 0
+      },
+      {
+        "offset": 26,
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8024FF00",
+        "addend": 0
+      },
+      {
+        "offset": 28,
+        "type": "R_PPC_REL24",
+        "target": "fn_8016A598",
+        "addend": 0
+      },
+      {
+        "offset": 44,
+        "type": "R_PPC_REL24",
+        "target": "fn_8016A598",
+        "addend": 0
+      },
+      {
+        "offset": 68,
+        "type": "R_PPC_REL24",
+        "target": "fn_80163BB4",
+        "addend": 0
+      },
+      {
+        "offset": 88,
+        "type": "R_PPC_REL24",
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 112,
+        "type": "R_PPC_REL24",
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 132,
+        "type": "R_PPC_REL24",
+        "target": "fn_80201814",
+        "addend": 0
+      },
+      {
+        "offset": 160,
+        "type": "R_PPC_REL24",
+        "target": "fn_80163BB4",
+        "addend": 0
+      },
+      {
+        "offset": 172,
+        "type": "R_PPC_REL24",
+        "target": "fn_80201BC8",
+        "addend": 0
+      },
+      {
+        "offset": 204,
+        "type": "R_PPC_REL24",
+        "target": "fn_80163BB4",
+        "addend": 0
+      },
+      {
+        "offset": 220,
+        "type": "R_PPC_REL24",
+        "target": "fn_801296F8",
+        "addend": 0
+      },
+      {
+        "offset": 232,
+        "type": "R_PPC_REL24",
+        "target": "fn_8011FB5C",
+        "addend": 0
+      }
+    ]
+  },
+  {
+    "argv": [
+      "readelf",
+      "--wide",
+      "--relocs",
+      "build/GEDE01/src/game/game_fn_80171560.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": "\nRelocation section '.rela.text' at offset 0x13c contains 13 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000306 R_PPC_ADDR16_HA        00000000   lbl_8024FF00 + 0\n00000012  00000304 R_PPC_ADDR16_LO        00000000   lbl_8024FF00 + 0\n00000020  0000040a R_PPC_REL24            00000000   fn_8016A598 + 0\n00000030  0000040a R_PPC_REL24            00000000   fn_8016A598 + 0\n00000048  0000050a R_PPC_REL24            00000000   fn_80163BB4 + 0\n0000005c  0000060a R_PPC_REL24            00000000   fn_8016A694 + 0\n00000074  0000060a R_PPC_REL24            00000000   fn_8016A694 + 0\n00000088  0000070a R_PPC_REL24            00000000   fn_80201814 + 0\n000000a4  0000050a R_PPC_REL24            00000000   fn_80163BB4 + 0\n000000b0  0000080a R_PPC_REL24            00000000   fn_80201BC8 + 0\n000000d0  0000050a R_PPC_REL24            00000000   fn_80163BB4 + 0\n000000e0  0000090a R_PPC_REL24            00000000   fn_801296F8 + 0\n000000ec  00000a0a R_PPC_REL24            00000000   fn_8011FB5C + 0\n",
+    "parsed_entries": [
+      {
+        "offset": 10,
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8024FF00",
+        "addend": 0
+      },
+      {
+        "offset": 18,
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8024FF00",
+        "addend": 0
+      },
+      {
+        "offset": 32,
+        "type": "R_PPC_REL24",
+        "target": "fn_8016A598",
+        "addend": 0
+      },
+      {
+        "offset": 48,
+        "type": "R_PPC_REL24",
+        "target": "fn_8016A598",
+        "addend": 0
+      },
+      {
+        "offset": 72,
+        "type": "R_PPC_REL24",
+        "target": "fn_80163BB4",
+        "addend": 0
+      },
+      {
+        "offset": 92,
+        "type": "R_PPC_REL24",
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 116,
+        "type": "R_PPC_REL24",
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 136,
+        "type": "R_PPC_REL24",
+        "target": "fn_80201814",
+        "addend": 0
+      },
+      {
+        "offset": 164,
+        "type": "R_PPC_REL24",
+        "target": "fn_80163BB4",
+        "addend": 0
+      },
+      {
+        "offset": 176,
+        "type": "R_PPC_REL24",
+        "target": "fn_80201BC8",
+        "addend": 0
+      },
+      {
+        "offset": 208,
+        "type": "R_PPC_REL24",
+        "target": "fn_80163BB4",
+        "addend": 0
+      },
+      {
+        "offset": 224,
+        "type": "R_PPC_REL24",
+        "target": "fn_801296F8",
+        "addend": 0
+      },
+      {
+        "offset": 236,
+        "type": "R_PPC_REL24",
+        "target": "fn_8011FB5C",
+        "addend": 0
+      }
+    ]
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "hypothesis": "Nested success branches and a single return may change MWCC control-flow merging, local live ranges, and prologue address scheduling. Previous attempts changed data declarations and pointer expressions instead.",
+  "source": "extern int fn_8016A598(void*);\nextern double fn_8016A694(void*, int);\nextern void fn_80163BB4(void*, const char*, ...);\nextern void *fn_80201814();\nextern void *fn_80201BC8();\nextern void fn_801296F8(void*, int);\nextern void fn_8011FB5C(void*, int);\nstruct ErrorStrings {\n    char argument_count;\n    char pad_001[0x343];\n    char object_not_found[0x1C];\n    char component_not_found[1];\n};\nextern const struct ErrorStrings lbl_8024FF00;\n\nint fn_80171560(void* state)\n{\n    const struct ErrorStrings* errors = &lbl_8024FF00;\n    int object_id;\n    int value;\n    void* object;\n    void* component;\n\n    if (fn_8016A598(state) != 2) {\n        fn_80163BB4(state, &errors->pad_001[-1], 2, fn_8016A598(state));\n    } else {\n        object_id = (int)fn_8016A694(state, 1);\n        value = (int)fn_8016A694(state, 2);\n        object = fn_80201814(object_id);\n        if (object == 0) {\n            fn_80163BB4(state, errors->object_not_found, object_id);\n        } else {\n            component = fn_80201BC8(object);\n            if (component == 0) {\n                fn_80163BB4(state, errors->component_not_found, object_id, object);\n            } else {\n                fn_801296F8(component, value);\n                fn_8011FB5C(component, value);\n            }\n        }\n    }\n    return 0;\n}\n",
+  "commands": [
+    {
+      "argv": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_80171560.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80171560.o\n"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80171560",
+        "fn_80171560",
+        "-o",
+        "reports/GEDE01/objdiff-02eb023e-5a89-42f6-b14a-55871ce53664-nested.raw.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/objdiff-02eb023e-5a89-42f6-b14a-55871ce53664-nested.raw.json\n"
+    }
+  ]
+}
