@@ -42,6 +42,7 @@ extern void fn_80132A4C(Batch*), fn_80132FF8(int);
 int fn_80131460(void)
 {
     Manager* manager = fn_8015E4A4();
+    Batch* batch;
     int state = *(int*)(lbl_8030F540 + 0x1C8);
     int selected = state >> 1;
     lbl_8064CF6C = 0;
@@ -83,13 +84,13 @@ int fn_80131460(void)
     fn_80131AA8(*(u8*)(lbl_8030F540 + 0x1DA), selected);
     if (*(int*)(lbl_8030F540 + 0x1C8) < 0) return 0;
     {
-        int i, offset;
-        for (i = 0, offset = 0; i < manager->count; i++, offset += 0x28) {
+        int offset, i;
+        for (i = 0, offset = 0; i < manager->count; offset += 0x28, i++) {
             void* object = *(void**)(manager->records + offset);
             if (object != 0 && fn_8012AFC4(object) != 0) {
-                int j, inner_offset;
+                int inner_offset, j;
                 for (j = 0, inner_offset = 0; j < manager->count;
-                     j++, inner_offset += 0x28)
+                     inner_offset += 0x28, j++)
                     fn_8012A254(*(void**)(manager->records + inner_offset));
                 return 0;
             }
@@ -103,7 +104,6 @@ int fn_80131460(void)
             *(int*)(lbl_8030F540 + 0x1CC) += 1;
     }
     {
-        Batch* batch;
         int i = 0;
         while (i < *(s16*)(lbl_8030F540 + 0x1D6) + 1) {
             batch = fn_8015E1A8(selected);
@@ -122,15 +122,20 @@ int fn_80131460(void)
                 if (fn_80236D30() != 0) {
                     u8 kind = *(u8*)(lbl_8030F540 + 0x1DA);
                     int adjustment;
+                    s16 transition;
+                    int counter;
                     if (kind == 0x8F)
                         batch->adjustment = 0x598;
                     else if (kind == 0xAB)
                         batch->adjustment = 0x598;
                     else if (kind == 0xAC)
                         batch->adjustment = 0x598;
-                    adjustment = (batch->adjustment - selected) * 2;
-                    *(s16*)(lbl_8030F540 + 0x1D6) -= adjustment;
-                    *(int*)(lbl_8030F540 + 0x1CC) += adjustment;
+                    transition = *(s16*)(lbl_8030F540 + 0x1D6);
+                    adjustment = batch->adjustment - selected;
+                    adjustment <<= 1;
+                    counter = *(int*)(lbl_8030F540 + 0x1CC);
+                    *(s16*)(lbl_8030F540 + 0x1D6) = transition - adjustment;
+                    *(int*)(lbl_8030F540 + 0x1CC) = counter + adjustment;
                     batch->adjustment = 0;
                 } else batch->adjustment = 0;
             }
@@ -147,7 +152,7 @@ int fn_80131460(void)
     if (*(s16*)(lbl_8030F540 + 0x1D6) == -1 &&
         *(int*)(lbl_8030F540 + 0x1C8) != -2) {
         int index = *(int*)(lbl_8030F540 + 0x1C8) >> 1;
-        Batch* batch = fn_8015E1A8(index);
+        batch = fn_8015E1A8(index);
         if ((*(int*)(lbl_8030F540 + 0x1C8) & 1) == 0) {
             int zero = 0;
             fn_80132794(manager, batch);
