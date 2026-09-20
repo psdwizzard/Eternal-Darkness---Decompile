@@ -17,12 +17,8 @@ extern int lbl_80251200[3];
 void fn_801A69F0(int direction)
 {
     int group;
-    int start = 3;
-    int nonzero = -direction | direction;
+    int start = direction ? 0 : 3;
     int increment;
-
-    nonzero >>= 31;
-    start &= ~nonzero;
 
     increment = direction != 0 ? 1 : -1;
 

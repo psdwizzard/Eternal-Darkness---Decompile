@@ -1,0 +1,2927 @@
+{
+  "assignment_id": "4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc",
+  "preserved_attempts_reviewed": [
+    "b746c826ac61c06ebffcebb3d72e5672cdfd1d04",
+    "e3dd16ded3666a347723edf61b164280368ad825",
+    "1a0262846001ca6367834b91d1cd6f944521acb5",
+    "616417ba8c5aa8eed3a7d7e848c32ca07338f512",
+    "320588f1ab3cc36a2ed01b5a5f17e8c3f2d1e9f2"
+  ],
+  "prior_frontier": 97.881355,
+  "initial_distinct_hypothesis": "Using the input parameter as the mask or start-index destination, while retaining its original direction value in a local, may change allocator coalescing. Both variants regressed. Unsigned mask and register storage specifiers did not improve allocation.",
+  "second_hypothesis": "Array address-expression shape may change compiler-generated induction temporaries. Flat indexing, direct field accesses, row locals, explicit outer cursors, commuted pointer addition and byte-address expressions did not improve the frontier. These are not the previously rejected explicit inner pointer-induction variant.",
+  "successful_hypothesis": "The observed neg/or/srawi/andc sequence is compiler lowering of a conditional constant selection, rather than explicit source-level bit operations. Writing int start = direction ? 0 : 3 gives the compiler an unnamed conditional temporary; it produces the exact retail allocation. Both declaration-initializer and separate-assignment spellings measured 100%. The initializer is retained.",
+  "retained_source": "src/game/game_fn_801A69F0.c",
+  "compiler": "GC/1.3, unchanged canonical configure.py flags",
+  "experiments": [
+    {
+      "variant": "parameter_mask",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 93.05085,
+      "size": "236",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "mr. r12, r3"
+        ],
+        [
+          "cmpwi r3, 0x0",
+          "li r11, 0x3"
+        ],
+        [
+          "li r0, 0x3",
+          "or r0, r0, r3"
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r3, r0, 31"
+        ],
+        [
+          "li r7, -0x1",
+          "li r6, -0x1"
+        ],
+        [
+          "andc r8, r0, r4",
+          "andc r11, r11, r3"
+        ],
+        [
+          "li r7, 0x1",
+          "li r6, 0x1"
+        ],
+        [
+          "lis r5, lbl_80251200@ha",
+          "lis r4, lbl_80251200@ha"
+        ],
+        [
+          "lis r4, lbl_80251140@ha",
+          "lis r3, lbl_80251140@ha"
+        ],
+        [
+          "slwi r12, r7, 4",
+          "slwi r10, r6, 4"
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r8, r4, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "addi r9, r3, lbl_80251140@l"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r4, 0x0(r8)"
+        ],
+        [
+          "cmpwi r5, 0x0",
+          "cmpwi r4, 0x0"
+        ],
+        [
+          "li r4, 0x3c",
+          "li r3, 0x3c"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r11, 4"
+        ],
+        [
+          "divw r5, r4, r5",
+          "divw r4, r3, r4"
+        ],
+        [
+          "li r6, 0x4",
+          "li r5, 0x4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r11"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r7, r9, r0"
+        ],
+        [
+          "srwi r4, r6, 31",
+          "srwi r3, r5, 31"
+        ],
+        [
+          "extsh r29, r5",
+          "extsh r29, r4"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r7)"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r7)"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r7)"
+        ],
+        [
+          "cmpwi r3, 0x0",
+          "cmpwi r12, 0x0"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r7, r7, r10"
+        ],
+        [
+          "add r31, r31, r7",
+          "add r31, r31, r6"
+        ],
+        [
+          "srawi r5, r31, 31",
+          "srawi r4, r31, 31"
+        ],
+        [
+          "subfc r0, r6, r31",
+          "subfc r0, r5, r31"
+        ],
+        [
+          "adde r0, r5, r4",
+          "adde r0, r4, r3"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r8, r8, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r9, r9, 0x40"
+        ]
+      ]
+    },
+    {
+      "variant": "parameter_start",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 92.71186,
+      "size": "236",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "or r0, r0, r3"
+        ],
+        [
+          "cmpwi r3, 0x0",
+          "mr. r12, r3"
+        ],
+        [
+          "li r0, 0x3",
+          null
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r0, r0, 31"
+        ],
+        [
+          null,
+          "nor r0, r0, r0"
+        ],
+        [
+          "andc r8, r0, r4",
+          "clrlwi r3, r0, 30"
+        ],
+        [
+          "slwi r12, r7, 4",
+          "slwi r11, r7, 4"
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r5, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "addi r10, r4, lbl_80251140@l"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r9)"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r3, 4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r3"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r10, r0"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "cmpwi r3, 0x0",
+          "cmpwi r12, 0x0"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r11"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r10, r10, 0x40"
+        ]
+      ]
+    },
+    {
+      "variant": "unsigned_mask",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 97.881355,
+      "size": "236",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "or r0, r0, r3"
+        ],
+        [
+          "li r0, 0x3",
+          "li r12, 0x3"
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r0, r0, 31"
+        ],
+        [
+          "andc r8, r0, r4",
+          "andc r12, r12, r0"
+        ],
+        [
+          "slwi r12, r7, 4",
+          "slwi r11, r7, 4"
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r5, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "addi r10, r4, lbl_80251140@l"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r9)"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r12, 4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r12"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r10, r0"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r11"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r10, r10, 0x40"
+        ]
+      ]
+    },
+    {
+      "variant": "signed_short_start",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 93.644066,
+      "size": "244",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "or r0, r0, r3"
+        ],
+        [
+          "li r0, 0x3",
+          "li r6, 0x3"
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r0, r0, 31"
+        ],
+        [
+          "andc r8, r0, r4",
+          "andc r0, r6, r0"
+        ],
+        [
+          null,
+          "extsh r6, r0"
+        ],
+        [
+          "stw r29, 0x14(r1)",
+          "stw r29, 0x14(r1)"
+        ],
+        [
+          "beq 0x34",
+          "beq 0x38"
+        ],
+        [
+          "li r7, 0x1",
+          "li r7, 0x1"
+        ],
+        [
+          "lis r5, lbl_80251200@ha",
+          "lis r5, lbl_80251200@ha"
+        ],
+        [
+          "lis r4, lbl_80251140@ha",
+          "lis r4, lbl_80251140@ha"
+        ],
+        [
+          "li r0, 0x3",
+          "li r0, 0x3"
+        ],
+        [
+          "slwi r12, r7, 4",
+          "mr r11, r6"
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r5, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "addi r10, r4, lbl_80251140@l"
+        ],
+        [
+          null,
+          "slwi r12, r7, 4"
+        ],
+        [
+          "mtctr r0",
+          "mtctr r0"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r9)"
+        ],
+        [
+          "cmpwi r5, 0x0",
+          "cmpwi r5, 0x0"
+        ],
+        [
+          "ble 0xcc",
+          "ble 0xd4"
+        ],
+        [
+          "li r4, 0x3c",
+          "li r4, 0x3c"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r11, 4"
+        ],
+        [
+          "divw r5, r4, r5",
+          "divw r5, r4, r5"
+        ],
+        [
+          "li r6, 0x4",
+          "li r6, 0x4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r11"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r10, r0"
+        ],
+        [
+          "srwi r4, r6, 31",
+          "srwi r4, r6, 31"
+        ],
+        [
+          "li r30, -0x1e",
+          "li r30, -0x1e"
+        ],
+        [
+          "extsh r29, r5",
+          "extsh r29, r5"
+        ],
+        [
+          "li r0, 0x0",
+          "li r0, 0x0"
+        ],
+        [
+          "b 0xc4",
+          "b 0xcc"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "cmplwi r0, 0x0",
+          "cmplwi r0, 0x0"
+        ],
+        [
+          "beq 0xa0",
+          "beq 0xa8"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "add r30, r30, r29",
+          "add r30, r30, r29"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "cmpwi r3, 0x0",
+          "cmpwi r3, 0x0"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r12"
+        ],
+        [
+          "add r31, r31, r7",
+          "add r31, r31, r7"
+        ],
+        [
+          "beq 0xc0",
+          "beq 0xc8"
+        ],
+        [
+          "srawi r5, r31, 31",
+          "srawi r5, r31, 31"
+        ],
+        [
+          "subfc r0, r6, r31",
+          "subfc r0, r6, r31"
+        ],
+        [
+          "adde r0, r5, r4",
+          "adde r0, r5, r4"
+        ],
+        [
+          "b 0xc4",
+          "b 0xcc"
+        ],
+        [
+          "srwi r0, r31, 31",
+          "srwi r0, r31, 31"
+        ],
+        [
+          "cmpwi r0, 0x0",
+          "cmpwi r0, 0x0"
+        ],
+        [
+          "beq 0x88",
+          "beq 0x90"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r10, r10, 0x40"
+        ],
+        [
+          "bdnz 0x50",
+          "bdnz 0x58"
+        ],
+        [
+          "lwz r31, 0x1c(r1)",
+          "lwz r31, 0x1c(r1)"
+        ],
+        [
+          "lwz r30, 0x18(r1)",
+          "lwz r30, 0x18(r1)"
+        ],
+        [
+          "lwz r29, 0x14(r1)",
+          "lwz r29, 0x14(r1)"
+        ],
+        [
+          "addi r1, r1, 0x20",
+          "addi r1, r1, 0x20"
+        ],
+        [
+          "blr ",
+          "blr "
+        ]
+      ]
+    },
+    {
+      "variant": "unsigned_start",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 95.33898,
+      "size": "240",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "or r0, r0, r3"
+        ],
+        [
+          "li r0, 0x3",
+          "li r6, 0x3"
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r0, r0, 31"
+        ],
+        [
+          "andc r8, r0, r4",
+          "andc r6, r6, r0"
+        ],
+        [
+          "slwi r12, r7, 4",
+          "mr r11, r6"
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r5, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "addi r10, r4, lbl_80251140@l"
+        ],
+        [
+          null,
+          "slwi r12, r7, 4"
+        ],
+        [
+          "mtctr r0",
+          "mtctr r0"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r9)"
+        ],
+        [
+          "cmpwi r5, 0x0",
+          "cmpwi r5, 0x0"
+        ],
+        [
+          "ble 0xcc",
+          "ble 0xd0"
+        ],
+        [
+          "li r4, 0x3c",
+          "li r4, 0x3c"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r11, 4"
+        ],
+        [
+          "divw r5, r4, r5",
+          "divw r5, r4, r5"
+        ],
+        [
+          "li r6, 0x4",
+          "li r6, 0x4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r11"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r10, r0"
+        ],
+        [
+          "srwi r4, r6, 31",
+          "srwi r4, r6, 31"
+        ],
+        [
+          "li r30, -0x1e",
+          "li r30, -0x1e"
+        ],
+        [
+          "extsh r29, r5",
+          "extsh r29, r5"
+        ],
+        [
+          "li r0, 0x0",
+          "li r0, 0x0"
+        ],
+        [
+          "b 0xc4",
+          "b 0xc8"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "cmplwi r0, 0x0",
+          "cmplwi r0, 0x0"
+        ],
+        [
+          "beq 0xa0",
+          "beq 0xa4"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "add r30, r30, r29",
+          "add r30, r30, r29"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "cmpwi r3, 0x0",
+          "cmpwi r3, 0x0"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r12"
+        ],
+        [
+          "add r31, r31, r7",
+          "add r31, r31, r7"
+        ],
+        [
+          "beq 0xc0",
+          "beq 0xc4"
+        ],
+        [
+          "srawi r5, r31, 31",
+          "srawi r5, r31, 31"
+        ],
+        [
+          "subfc r0, r6, r31",
+          "subfc r0, r6, r31"
+        ],
+        [
+          "adde r0, r5, r4",
+          "adde r0, r5, r4"
+        ],
+        [
+          "b 0xc4",
+          "b 0xc8"
+        ],
+        [
+          "srwi r0, r31, 31",
+          "srwi r0, r31, 31"
+        ],
+        [
+          "cmpwi r0, 0x0",
+          "cmpwi r0, 0x0"
+        ],
+        [
+          "beq 0x88",
+          "beq 0x8c"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r10, r10, 0x40"
+        ],
+        [
+          "bdnz 0x50",
+          "bdnz 0x54"
+        ],
+        [
+          "lwz r31, 0x1c(r1)",
+          "lwz r31, 0x1c(r1)"
+        ],
+        [
+          "lwz r30, 0x18(r1)",
+          "lwz r30, 0x18(r1)"
+        ],
+        [
+          "lwz r29, 0x14(r1)",
+          "lwz r29, 0x14(r1)"
+        ],
+        [
+          "addi r1, r1, 0x20",
+          "addi r1, r1, 0x20"
+        ],
+        [
+          "blr ",
+          "blr "
+        ]
+      ]
+    },
+    {
+      "variant": "register_start",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 97.881355,
+      "size": "236",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "or r0, r0, r3"
+        ],
+        [
+          "li r0, 0x3",
+          "li r12, 0x3"
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r0, r0, 31"
+        ],
+        [
+          "andc r8, r0, r4",
+          "andc r12, r12, r0"
+        ],
+        [
+          "slwi r12, r7, 4",
+          "slwi r11, r7, 4"
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r5, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "addi r10, r4, lbl_80251140@l"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r9)"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r12, 4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r12"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r10, r0"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r11"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r10, r10, 0x40"
+        ]
+      ]
+    },
+    {
+      "variant": "register_direction",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 97.881355,
+      "size": "236",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "or r0, r0, r3"
+        ],
+        [
+          "li r0, 0x3",
+          "li r12, 0x3"
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r0, r0, 31"
+        ],
+        [
+          "andc r8, r0, r4",
+          "andc r12, r12, r0"
+        ],
+        [
+          "slwi r12, r7, 4",
+          "slwi r11, r7, 4"
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r5, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "addi r10, r4, lbl_80251140@l"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r9)"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r12, 4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r12"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r10, r0"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r11"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r10, r10, 0x40"
+        ]
+      ]
+    },
+    {
+      "variant": "flat_array",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 81.169495,
+      "size": "240",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "or r0, r0, r3"
+        ],
+        [
+          "li r0, 0x3",
+          "li r12, 0x3"
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r0, r0, 31"
+        ],
+        [
+          "li r7, -0x1",
+          "li r8, -0x1"
+        ],
+        [
+          "andc r8, r0, r4",
+          "andc r12, r12, r0"
+        ],
+        [
+          "li r7, 0x1",
+          "li r8, 0x1"
+        ],
+        [
+          "lis r5, lbl_80251200@ha",
+          "lis r4, lbl_80251200@ha"
+        ],
+        [
+          "lis r4, lbl_80251140@ha",
+          null
+        ],
+        [
+          "li r0, 0x3",
+          "li r0, 0x3"
+        ],
+        [
+          "slwi r12, r7, 4",
+          null
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r10, r4, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "li r11, 0x0"
+        ],
+        [
+          "mtctr r0",
+          "mtctr r0"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r10)"
+        ],
+        [
+          "cmpwi r5, 0x0",
+          "cmpwi r5, 0x0"
+        ],
+        [
+          "ble 0xcc",
+          "ble 0xd0"
+        ],
+        [
+          "li r4, 0x3c",
+          "li r0, 0x3c"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "lis r4, lbl_80251140@ha"
+        ],
+        [
+          "divw r5, r4, r5",
+          "divw r0, r0, r5"
+        ],
+        [
+          "li r6, 0x4",
+          "li r6, 0x4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r12"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r9, r12, r11"
+        ],
+        [
+          null,
+          "addi r7, r4, lbl_80251140@l"
+        ],
+        [
+          "srwi r4, r6, 31",
+          "srwi r4, r6, 31"
+        ],
+        [
+          "li r30, -0x1e",
+          null
+        ],
+        [
+          "extsh r29, r5",
+          "extsh r29, r0"
+        ],
+        [
+          "li r0, 0x0",
+          "li r30, -0x1e"
+        ],
+        [
+          null,
+          "li r0, 0x0"
+        ],
+        [
+          "b 0xc4",
+          "b 0xc8"
+        ],
+        [
+          null,
+          "slwi r0, r9, 4"
+        ],
+        [
+          null,
+          "add r5, r7, r0"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r5)"
+        ],
+        [
+          "cmplwi r0, 0x0",
+          "cmplwi r0, 0x0"
+        ],
+        [
+          "beq 0xa0",
+          "beq 0xa4"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r5)"
+        ],
+        [
+          "add r30, r30, r29",
+          "add r30, r30, r29"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r5)"
+        ],
+        [
+          "cmpwi r3, 0x0",
+          "cmpwi r3, 0x0"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r9, r9, r8"
+        ],
+        [
+          "add r31, r31, r7",
+          "add r31, r31, r8"
+        ],
+        [
+          "beq 0xc0",
+          "beq 0xc4"
+        ],
+        [
+          "srawi r5, r31, 31",
+          "srawi r5, r31, 31"
+        ],
+        [
+          "subfc r0, r6, r31",
+          "subfc r0, r6, r31"
+        ],
+        [
+          "adde r0, r5, r4",
+          "adde r0, r5, r4"
+        ],
+        [
+          "b 0xc4",
+          "b 0xc8"
+        ],
+        [
+          "srwi r0, r31, 31",
+          "srwi r0, r31, 31"
+        ],
+        [
+          "cmpwi r0, 0x0",
+          "cmpwi r0, 0x0"
+        ],
+        [
+          "beq 0x88",
+          "beq 0x84"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r10, r10, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r11, r11, 0x4"
+        ],
+        [
+          "bdnz 0x50",
+          "bdnz 0x48"
+        ],
+        [
+          "lwz r31, 0x1c(r1)",
+          "lwz r31, 0x1c(r1)"
+        ],
+        [
+          "lwz r30, 0x18(r1)",
+          "lwz r30, 0x18(r1)"
+        ],
+        [
+          "lwz r29, 0x14(r1)",
+          "lwz r29, 0x14(r1)"
+        ],
+        [
+          "addi r1, r1, 0x20",
+          "addi r1, r1, 0x20"
+        ],
+        [
+          "blr ",
+          "blr "
+        ]
+      ]
+    },
+    {
+      "variant": "direct_field_access",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 97.881355,
+      "size": "236",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "or r0, r0, r3"
+        ],
+        [
+          "li r0, 0x3",
+          "li r12, 0x3"
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r0, r0, 31"
+        ],
+        [
+          "andc r8, r0, r4",
+          "andc r12, r12, r0"
+        ],
+        [
+          "slwi r12, r7, 4",
+          "slwi r11, r7, 4"
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r5, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "addi r10, r4, lbl_80251140@l"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r9)"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r12, 4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r12"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r10, r0"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r11"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r10, r10, 0x40"
+        ]
+      ]
+    },
+    {
+      "variant": "explicit_row",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 97.42373,
+      "size": "236",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "or r0, r0, r3"
+        ],
+        [
+          "li r0, 0x3",
+          "li r12, 0x3"
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r0, r0, 31"
+        ],
+        [
+          "andc r8, r0, r4",
+          "andc r12, r12, r0"
+        ],
+        [
+          "lis r5, lbl_80251200@ha",
+          "lis r5, lbl_80251140@ha"
+        ],
+        [
+          "lis r4, lbl_80251140@ha",
+          "lis r4, lbl_80251200@ha"
+        ],
+        [
+          "slwi r12, r7, 4",
+          "slwi r11, r7, 4"
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r5, lbl_80251140@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "addi r10, r4, lbl_80251200@l"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r10)"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r12, 4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r12"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r9, r0"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r11"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x40"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r10, r10, 0x4"
+        ]
+      ]
+    },
+    {
+      "variant": "count_cursor",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 83.0,
+      "size": "240",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "lis r4, lbl_80251200@ha"
+        ],
+        [
+          null,
+          "or r0, r0, r3"
+        ],
+        [
+          "li r0, 0x3",
+          "addi r4, r4, lbl_80251200@l"
+        ],
+        [
+          null,
+          "li r12, 0x3"
+        ],
+        [
+          null,
+          "stw r30, 0x18(r1)"
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r0, r0, 31"
+        ],
+        [
+          "li r7, -0x1",
+          "li r7, -0x1"
+        ],
+        [
+          null,
+          "mr r11, r4"
+        ],
+        [
+          "stw r30, 0x18(r1)",
+          "stw r29, 0x14(r1)"
+        ],
+        [
+          "andc r8, r0, r4",
+          "andc r12, r12, r0"
+        ],
+        [
+          "stw r29, 0x14(r1)",
+          null
+        ],
+        [
+          "beq 0x34",
+          "beq 0x40"
+        ],
+        [
+          "li r7, 0x1",
+          "li r7, 0x1"
+        ],
+        [
+          "lis r5, lbl_80251200@ha",
+          null
+        ],
+        [
+          "lis r4, lbl_80251140@ha",
+          "lis r4, lbl_80251140@ha"
+        ],
+        [
+          "li r0, 0x3",
+          "li r0, 0x3"
+        ],
+        [
+          "slwi r12, r7, 4",
+          null
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r4, lbl_80251140@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "slwi r10, r7, 4"
+        ],
+        [
+          "mtctr r0",
+          "mtctr r0"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r11)"
+        ],
+        [
+          "cmpwi r5, 0x0",
+          "cmpwi r5, 0x0"
+        ],
+        [
+          "ble 0xcc",
+          "ble 0xd0"
+        ],
+        [
+          "li r4, 0x3c",
+          "li r4, 0x3c"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r12, 4"
+        ],
+        [
+          "divw r5, r4, r5",
+          "divw r5, r4, r5"
+        ],
+        [
+          "li r6, 0x4",
+          "li r6, 0x4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r12"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r9, r0"
+        ],
+        [
+          "srwi r4, r6, 31",
+          "srwi r4, r6, 31"
+        ],
+        [
+          "li r30, -0x1e",
+          "li r30, -0x1e"
+        ],
+        [
+          "extsh r29, r5",
+          "extsh r29, r5"
+        ],
+        [
+          "li r0, 0x0",
+          "li r0, 0x0"
+        ],
+        [
+          "b 0xc4",
+          "b 0xc8"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "cmplwi r0, 0x0",
+          "cmplwi r0, 0x0"
+        ],
+        [
+          "beq 0xa0",
+          "beq 0xa4"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "add r30, r30, r29",
+          "add r30, r30, r29"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "cmpwi r3, 0x0",
+          "cmpwi r3, 0x0"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r10"
+        ],
+        [
+          "add r31, r31, r7",
+          "add r31, r31, r7"
+        ],
+        [
+          "beq 0xc0",
+          "beq 0xc4"
+        ],
+        [
+          "srawi r5, r31, 31",
+          "srawi r5, r31, 31"
+        ],
+        [
+          "subfc r0, r6, r31",
+          "subfc r0, r6, r31"
+        ],
+        [
+          "adde r0, r5, r4",
+          "adde r0, r5, r4"
+        ],
+        [
+          "b 0xc4",
+          "b 0xc8"
+        ],
+        [
+          "srwi r0, r31, 31",
+          "srwi r0, r31, 31"
+        ],
+        [
+          "cmpwi r0, 0x0",
+          "cmpwi r0, 0x0"
+        ],
+        [
+          "beq 0x88",
+          "beq 0x8c"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x40"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r11, r11, 0x4"
+        ],
+        [
+          "bdnz 0x50",
+          "bdnz 0x54"
+        ],
+        [
+          "lwz r31, 0x1c(r1)",
+          "lwz r31, 0x1c(r1)"
+        ],
+        [
+          "lwz r30, 0x18(r1)",
+          "lwz r30, 0x18(r1)"
+        ],
+        [
+          "lwz r29, 0x14(r1)",
+          "lwz r29, 0x14(r1)"
+        ],
+        [
+          "addi r1, r1, 0x20",
+          "addi r1, r1, 0x20"
+        ],
+        [
+          "blr ",
+          "blr "
+        ]
+      ]
+    },
+    {
+      "variant": "array_row_cursor",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 83.28814,
+      "size": "240",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "lis r4, lbl_80251140@ha"
+        ],
+        [
+          null,
+          "or r0, r0, r3"
+        ],
+        [
+          "li r0, 0x3",
+          "addi r4, r4, lbl_80251140@l"
+        ],
+        [
+          null,
+          "li r12, 0x3"
+        ],
+        [
+          null,
+          "stw r30, 0x18(r1)"
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r0, r0, 31"
+        ],
+        [
+          "li r7, -0x1",
+          "li r7, -0x1"
+        ],
+        [
+          null,
+          "mr r11, r4"
+        ],
+        [
+          "stw r30, 0x18(r1)",
+          "stw r29, 0x14(r1)"
+        ],
+        [
+          "andc r8, r0, r4",
+          "andc r12, r12, r0"
+        ],
+        [
+          "stw r29, 0x14(r1)",
+          null
+        ],
+        [
+          "beq 0x34",
+          "beq 0x40"
+        ],
+        [
+          "li r7, 0x1",
+          "li r7, 0x1"
+        ],
+        [
+          "lis r5, lbl_80251200@ha",
+          null
+        ],
+        [
+          "lis r4, lbl_80251140@ha",
+          "lis r4, lbl_80251200@ha"
+        ],
+        [
+          "li r0, 0x3",
+          "li r0, 0x3"
+        ],
+        [
+          "slwi r12, r7, 4",
+          null
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r4, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "slwi r10, r7, 4"
+        ],
+        [
+          "mtctr r0",
+          "mtctr r0"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r9)"
+        ],
+        [
+          "cmpwi r5, 0x0",
+          "cmpwi r5, 0x0"
+        ],
+        [
+          "ble 0xcc",
+          "ble 0xd0"
+        ],
+        [
+          "li r4, 0x3c",
+          "li r4, 0x3c"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r12, 4"
+        ],
+        [
+          "divw r5, r4, r5",
+          "divw r5, r4, r5"
+        ],
+        [
+          "li r6, 0x4",
+          "li r6, 0x4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r12"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r11, r0"
+        ],
+        [
+          "srwi r4, r6, 31",
+          "srwi r4, r6, 31"
+        ],
+        [
+          "li r30, -0x1e",
+          "li r30, -0x1e"
+        ],
+        [
+          "extsh r29, r5",
+          "extsh r29, r5"
+        ],
+        [
+          "li r0, 0x0",
+          "li r0, 0x0"
+        ],
+        [
+          "b 0xc4",
+          "b 0xc8"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "cmplwi r0, 0x0",
+          "cmplwi r0, 0x0"
+        ],
+        [
+          "beq 0xa0",
+          "beq 0xa4"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "add r30, r30, r29",
+          "add r30, r30, r29"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "cmpwi r3, 0x0",
+          "cmpwi r3, 0x0"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r10"
+        ],
+        [
+          "add r31, r31, r7",
+          "add r31, r31, r7"
+        ],
+        [
+          "beq 0xc0",
+          "beq 0xc4"
+        ],
+        [
+          "srawi r5, r31, 31",
+          "srawi r5, r31, 31"
+        ],
+        [
+          "subfc r0, r6, r31",
+          "subfc r0, r6, r31"
+        ],
+        [
+          "adde r0, r5, r4",
+          "adde r0, r5, r4"
+        ],
+        [
+          "b 0xc4",
+          "b 0xc8"
+        ],
+        [
+          "srwi r0, r31, 31",
+          "srwi r0, r31, 31"
+        ],
+        [
+          "cmpwi r0, 0x0",
+          "cmpwi r0, 0x0"
+        ],
+        [
+          "beq 0x88",
+          "beq 0x8c"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r11, r11, 0x40"
+        ],
+        [
+          "bdnz 0x50",
+          "bdnz 0x54"
+        ],
+        [
+          "lwz r31, 0x1c(r1)",
+          "lwz r31, 0x1c(r1)"
+        ],
+        [
+          "lwz r30, 0x18(r1)",
+          "lwz r30, 0x18(r1)"
+        ],
+        [
+          "lwz r29, 0x14(r1)",
+          "lwz r29, 0x14(r1)"
+        ],
+        [
+          "addi r1, r1, 0x20",
+          "addi r1, r1, 0x20"
+        ],
+        [
+          "blr ",
+          "blr "
+        ]
+      ]
+    },
+    {
+      "variant": "entry_address_commuted",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 97.881355,
+      "size": "236",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "or r0, r0, r3"
+        ],
+        [
+          "li r0, 0x3",
+          "li r12, 0x3"
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r0, r0, 31"
+        ],
+        [
+          "andc r8, r0, r4",
+          "andc r12, r12, r0"
+        ],
+        [
+          "slwi r12, r7, 4",
+          "slwi r11, r7, 4"
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r5, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "addi r10, r4, lbl_80251140@l"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r9)"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r12, 4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r12"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r10, r0"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r11"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r10, r10, 0x40"
+        ]
+      ]
+    },
+    {
+      "variant": "entry_bytes",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 97.881355,
+      "size": "236",
+      "differences": [
+        [
+          "or r4, r0, r3",
+          "or r0, r0, r3"
+        ],
+        [
+          "li r0, 0x3",
+          "li r12, 0x3"
+        ],
+        [
+          "srawi r4, r4, 31",
+          "srawi r0, r0, 31"
+        ],
+        [
+          "andc r8, r0, r4",
+          "andc r12, r12, r0"
+        ],
+        [
+          "slwi r12, r7, 4",
+          "slwi r11, r7, 4"
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r5, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "addi r10, r4, lbl_80251140@l"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r9)"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r12, 4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r12"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r10, r0"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r11"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r10, r10, 0x40"
+        ]
+      ]
+    },
+    {
+      "variant": "start_ternary",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 100.0,
+      "size": "236",
+      "differences": []
+    },
+    {
+      "variant": "start_if",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 79.54237,
+      "size": "232",
+      "differences": [
+        [
+          "neg r0, r3",
+          null
+        ],
+        [
+          "or r4, r0, r3",
+          null
+        ],
+        [
+          "cmpwi r3, 0x0",
+          "cmpwi r3, 0x0"
+        ],
+        [
+          "stw r31, 0x1c(r1)",
+          null
+        ],
+        [
+          "li r0, 0x3",
+          "li r12, 0x3"
+        ],
+        [
+          "srawi r4, r4, 31",
+          null
+        ],
+        [
+          "li r7, -0x1",
+          null
+        ],
+        [
+          "stw r30, 0x18(r1)",
+          "stw r31, 0x1c(r1)"
+        ],
+        [
+          "andc r8, r0, r4",
+          null
+        ],
+        [
+          "stw r29, 0x14(r1)",
+          "stw r30, 0x18(r1)"
+        ],
+        [
+          null,
+          "stw r29, 0x14(r1)"
+        ],
+        [
+          null,
+          "beq 0x20"
+        ],
+        [
+          null,
+          "li r12, 0x0"
+        ],
+        [
+          null,
+          "cmpwi r3, 0x0"
+        ],
+        [
+          null,
+          "li r7, -0x1"
+        ],
+        [
+          "beq 0x34",
+          "beq 0x30"
+        ],
+        [
+          "li r7, 0x1",
+          "li r7, 0x1"
+        ],
+        [
+          "lis r5, lbl_80251200@ha",
+          "lis r5, lbl_80251200@ha"
+        ],
+        [
+          "lis r4, lbl_80251140@ha",
+          "lis r4, lbl_80251140@ha"
+        ],
+        [
+          "li r0, 0x3",
+          "li r0, 0x3"
+        ],
+        [
+          "slwi r12, r7, 4",
+          "slwi r11, r7, 4"
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r5, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "addi r10, r4, lbl_80251140@l"
+        ],
+        [
+          "mtctr r0",
+          "mtctr r0"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r9)"
+        ],
+        [
+          "cmpwi r5, 0x0",
+          "cmpwi r5, 0x0"
+        ],
+        [
+          "ble 0xcc",
+          "ble 0xc8"
+        ],
+        [
+          "li r4, 0x3c",
+          "li r4, 0x3c"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r12, 4"
+        ],
+        [
+          "divw r5, r4, r5",
+          "divw r5, r4, r5"
+        ],
+        [
+          "li r6, 0x4",
+          "li r6, 0x4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r12"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r10, r0"
+        ],
+        [
+          "srwi r4, r6, 31",
+          "srwi r4, r6, 31"
+        ],
+        [
+          "li r30, -0x1e",
+          "li r30, -0x1e"
+        ],
+        [
+          "extsh r29, r5",
+          "extsh r29, r5"
+        ],
+        [
+          "li r0, 0x0",
+          "li r0, 0x0"
+        ],
+        [
+          "b 0xc4",
+          "b 0xc0"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "cmplwi r0, 0x0",
+          "cmplwi r0, 0x0"
+        ],
+        [
+          "beq 0xa0",
+          "beq 0x9c"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "add r30, r30, r29",
+          "add r30, r30, r29"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "cmpwi r3, 0x0",
+          "cmpwi r3, 0x0"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r11"
+        ],
+        [
+          "add r31, r31, r7",
+          "add r31, r31, r7"
+        ],
+        [
+          "beq 0xc0",
+          "beq 0xbc"
+        ],
+        [
+          "srawi r5, r31, 31",
+          "srawi r5, r31, 31"
+        ],
+        [
+          "subfc r0, r6, r31",
+          "subfc r0, r6, r31"
+        ],
+        [
+          "adde r0, r5, r4",
+          "adde r0, r5, r4"
+        ],
+        [
+          "b 0xc4",
+          "b 0xc0"
+        ],
+        [
+          "srwi r0, r31, 31",
+          "srwi r0, r31, 31"
+        ],
+        [
+          "cmpwi r0, 0x0",
+          "cmpwi r0, 0x0"
+        ],
+        [
+          "beq 0x88",
+          "beq 0x84"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r10, r10, 0x40"
+        ],
+        [
+          "bdnz 0x50",
+          "bdnz 0x4c"
+        ],
+        [
+          "lwz r31, 0x1c(r1)",
+          "lwz r31, 0x1c(r1)"
+        ],
+        [
+          "lwz r30, 0x18(r1)",
+          "lwz r30, 0x18(r1)"
+        ],
+        [
+          "lwz r29, 0x14(r1)",
+          "lwz r29, 0x14(r1)"
+        ],
+        [
+          "addi r1, r1, 0x20",
+          "addi r1, r1, 0x20"
+        ],
+        [
+          "blr ",
+          "blr "
+        ]
+      ]
+    },
+    {
+      "variant": "start_ternary_assign",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 100.0,
+      "size": "236",
+      "differences": []
+    },
+    {
+      "variant": "start_bool_product",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A69F0.o"
+          ],
+          "exit": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A69F0.o\n"
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A69F0",
+            "-o",
+            "reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json",
+            "--format",
+            "json-pretty",
+            "fn_801A69F0"
+          ],
+          "exit": 0,
+          "output": " INFO Writing to reports/GEDE01/objdiff-4daa370b-7ec1-4b91-9a7f-0c7b0fe32edc.json\n"
+        }
+      ],
+      "score": 92.0339,
+      "size": "228",
+      "differences": [
+        [
+          "neg r0, r3",
+          "cntlzw r0, r3"
+        ],
+        [
+          "or r4, r0, r3",
+          "srwi r0, r0, 5"
+        ],
+        [
+          "li r0, 0x3",
+          "mulli r12, r0, 0x3"
+        ],
+        [
+          "srawi r4, r4, 31",
+          null
+        ],
+        [
+          "li r7, -0x1",
+          "li r7, -0x1"
+        ],
+        [
+          "stw r30, 0x18(r1)",
+          "stw r30, 0x18(r1)"
+        ],
+        [
+          "andc r8, r0, r4",
+          null
+        ],
+        [
+          "stw r29, 0x14(r1)",
+          "stw r29, 0x14(r1)"
+        ],
+        [
+          "beq 0x34",
+          "beq 0x2c"
+        ],
+        [
+          "li r7, 0x1",
+          "li r7, 0x1"
+        ],
+        [
+          "lis r5, lbl_80251200@ha",
+          "lis r5, lbl_80251200@ha"
+        ],
+        [
+          "lis r4, lbl_80251140@ha",
+          "lis r4, lbl_80251140@ha"
+        ],
+        [
+          "li r0, 0x3",
+          "li r0, 0x3"
+        ],
+        [
+          "slwi r12, r7, 4",
+          "slwi r11, r7, 4"
+        ],
+        [
+          "addi r10, r5, lbl_80251200@l",
+          "addi r9, r5, lbl_80251200@l"
+        ],
+        [
+          "addi r11, r4, lbl_80251140@l",
+          "addi r10, r4, lbl_80251140@l"
+        ],
+        [
+          "mtctr r0",
+          "mtctr r0"
+        ],
+        [
+          "lwz r5, 0x0(r10)",
+          "lwz r5, 0x0(r9)"
+        ],
+        [
+          "cmpwi r5, 0x0",
+          "cmpwi r5, 0x0"
+        ],
+        [
+          "ble 0xcc",
+          "ble 0xc4"
+        ],
+        [
+          "li r4, 0x3c",
+          "li r4, 0x3c"
+        ],
+        [
+          "slwi r0, r8, 4",
+          "slwi r0, r12, 4"
+        ],
+        [
+          "divw r5, r4, r5",
+          "divw r5, r4, r5"
+        ],
+        [
+          "li r6, 0x4",
+          "li r6, 0x4"
+        ],
+        [
+          "mr r31, r8",
+          "mr r31, r12"
+        ],
+        [
+          "add r9, r11, r0",
+          "add r8, r10, r0"
+        ],
+        [
+          "srwi r4, r6, 31",
+          "srwi r4, r6, 31"
+        ],
+        [
+          "li r30, -0x1e",
+          "li r30, -0x1e"
+        ],
+        [
+          "extsh r29, r5",
+          "extsh r29, r5"
+        ],
+        [
+          "li r0, 0x0",
+          "li r0, 0x0"
+        ],
+        [
+          "b 0xc4",
+          "b 0xbc"
+        ],
+        [
+          "lbz r0, 0xc(r9)",
+          "lbz r0, 0xc(r8)"
+        ],
+        [
+          "cmplwi r0, 0x0",
+          "cmplwi r0, 0x0"
+        ],
+        [
+          "beq 0xa0",
+          "beq 0x98"
+        ],
+        [
+          "sth r30, 0x4(r9)",
+          "sth r30, 0x4(r8)"
+        ],
+        [
+          "add r30, r30, r29",
+          "add r30, r30, r29"
+        ],
+        [
+          "sth r30, 0x8(r9)",
+          "sth r30, 0x8(r8)"
+        ],
+        [
+          "cmpwi r3, 0x0",
+          "cmpwi r3, 0x0"
+        ],
+        [
+          "add r9, r9, r12",
+          "add r8, r8, r11"
+        ],
+        [
+          "add r31, r31, r7",
+          "add r31, r31, r7"
+        ],
+        [
+          "beq 0xc0",
+          "beq 0xb8"
+        ],
+        [
+          "srawi r5, r31, 31",
+          "srawi r5, r31, 31"
+        ],
+        [
+          "subfc r0, r6, r31",
+          "subfc r0, r6, r31"
+        ],
+        [
+          "adde r0, r5, r4",
+          "adde r0, r5, r4"
+        ],
+        [
+          "b 0xc4",
+          "b 0xbc"
+        ],
+        [
+          "srwi r0, r31, 31",
+          "srwi r0, r31, 31"
+        ],
+        [
+          "cmpwi r0, 0x0",
+          "cmpwi r0, 0x0"
+        ],
+        [
+          "beq 0x88",
+          "beq 0x80"
+        ],
+        [
+          "addi r10, r10, 0x4",
+          "addi r9, r9, 0x4"
+        ],
+        [
+          "addi r11, r11, 0x40",
+          "addi r10, r10, 0x40"
+        ],
+        [
+          "bdnz 0x50",
+          "bdnz 0x48"
+        ],
+        [
+          "lwz r31, 0x1c(r1)",
+          "lwz r31, 0x1c(r1)"
+        ],
+        [
+          "lwz r30, 0x18(r1)",
+          "lwz r30, 0x18(r1)"
+        ],
+        [
+          "lwz r29, 0x14(r1)",
+          "lwz r29, 0x14(r1)"
+        ],
+        [
+          "addi r1, r1, 0x20",
+          "addi r1, r1, 0x20"
+        ],
+        [
+          "blr ",
+          "blr "
+        ]
+      ]
+    }
+  ],
+  "method": "Each variant replaces only the target source, builds its object through canonical Ninja, and measures it against the existing retail split using objdiff. Variants are discarded; final verification rebuilds the retained source and compares canonical and relocation-strict results, ELF text bytes and relocation tuples, then the entire linked DOL."
+}
