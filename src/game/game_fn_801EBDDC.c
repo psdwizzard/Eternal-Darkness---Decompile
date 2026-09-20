@@ -22,8 +22,6 @@ extern int lbl_8064D6A0;
 
 void fn_801EBDDC(Source* source)
 {
-    u16* image;
-    int value;
     int offset;
 
     if (lbl_8064D604 == 0)
@@ -39,6 +37,9 @@ void fn_801EBDDC(Source* source)
     for (offset = 0x1FC; offset >= 0; offset -= 2) {
         if (lbl_8064D660 == 0) {
             if (lbl_8064D664 == 0) {
+                u16* image;
+                int value;
+
                 image = lbl_8064D604;
                 value = (u8)*image;
 
