@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "assignment_id": "c48e3a5c-0a7d-4e74-a683-7ae2948f23d6",
+  "target": "fn_8016F78C",
+  "unit": "main/game/game_fn_8016F78C",
+  "compiler": "GC/1.3",
+  "source": "eternal-darkness-decomp/src/game/game_fn_8016F78C.c",
+  "source_sha256": "53491cb7585910742239574efbbade5633bfc13736ff35c5108cd631ffee801f",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8016F78C -o build/GEDE01/objdiff-c48e3a5c-canonical.raw.json --format json-pretty fn_8016F78C",
+    "exit_code": 0,
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-c48e3a5c-0a7d-4e74-a683-7ae2948f23d6-canonical.raw.json",
+    "raw_output_sha256": "ea9da9f3c0ff9221bc6cbd64ae4bd4a38df7020cc44af1bc28c719d328f66b3f",
+    "retail_size": 364,
+    "generated_size": 368,
+    "match_percent": 97.58242,
+    "retail_relocation_bearing_instruction_rows": 21,
+    "generated_relocation_bearing_instruction_rows": 22
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8016F78C -o build/GEDE01/objdiff-c48e3a5c-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_8016F78C",
+    "config": "function_reloc_diffs=name_address",
+    "exit_code": 0,
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-c48e3a5c-0a7d-4e74-a683-7ae2948f23d6-reloc-strict.raw.json",
+    "raw_output_sha256": "ea9da9f3c0ff9221bc6cbd64ae4bd4a38df7020cc44af1bc28c719d328f66b3f",
+    "byte_identical_to_canonical": true,
+    "cmp_exit_code": 0,
+    "match_percent": 97.58242
+  },
+  "instruction_differences": [
+    {
+      "retail": null,
+      "generated_offset": "0x10",
+      "generated": "addi r0, r4, lbl_8024FF00@l",
+      "kind": "DIFF_INSERT"
+    },
+    {
+      "retail_offset": "0x18",
+      "retail": "addi r31, r4, lbl_8024FF00@l",
+      "generated_offset": "0x1C",
+      "generated": "mr r31, r0",
+      "kind": "DIFF_REPLACE"
+    },
+    {
+      "retail_offset": "0x48",
+      "retail": "addi r4, r31, 0x0",
+      "generated_offset": "0x4C",
+      "generated": "mr r4, r31",
+      "kind": "DIFF_REPLACE"
+    }
+  ],
+  "new_codegen_hypothesis": {
+    "hypothesis": "Evaluate and retain the argument count before forming the string-block pointer, placing pointer materialization at the first control-flow join rather than at declaration initialization.",
+    "result": "MWCC moved both lbl_8024FF00 address halves after fn_8016A598 instead of retaining retail's early @ha and delayed direct-to-r31 @l sequence. The generated size remained 368 bytes but the score fell to 81.48351%, so the variant was rejected and the established reconstruction restored."
+  },
+  "build_verification": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2", "sha1sum build/GEDE01/main.dol"],
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "legal_audit": {
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
