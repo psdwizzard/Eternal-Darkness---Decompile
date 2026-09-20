@@ -47,18 +47,34 @@ extern void DCFlushRange(void*, u32);
 
 void fn_801FF9E4(void)
 {
-    int bank = lbl_8064D7D8 ^ 1;
-    Command* command = lbl_8064D848[bank];
-    u16* display = (u16*)lbl_8064D828[bank];
-    u8* buffer9 = lbl_8064D850[bank];
-    u8* buffer11 = lbl_8064D830[bank];
-    u8* records = lbl_8064D820[bank];
-    u8* colors = lbl_8064D840[bank];
-    u8* indices = lbl_8064D838[bank];
-    int enabled = 1;
-    int i;
     Command* current;
+    int i;
+    Command* command;
+    u16* display;
+    u8* records;
+    u8* colors;
+    int enabled;
+    int first;
+    int end;
+    int offset;
+    u8* record;
+    int delay;
+    Color packed;
     u8* index;
+    u8* buffer9;
+    u8* buffer11;
+    u8* indices;
+    int bank;
+
+    bank = lbl_8064D7D8 ^ 1;
+    command = lbl_8064D848[bank];
+    display = (u16*)lbl_8064D828[bank];
+    buffer9 = lbl_8064D850[bank];
+    buffer11 = lbl_8064D830[bank];
+    records = lbl_8064D820[bank];
+    colors = lbl_8064D840[bank];
+    indices = lbl_8064D838[bank];
+    enabled = 1;
 
     if (*(int*)(lbl_8030F540 + 0x1C8) == -2) {
         return;
@@ -75,12 +91,11 @@ void fn_801FF9E4(void)
 
     current = command;
     index = indices;
-    for (i = 0; i < lbl_8064D7F0[lbl_8064D7D8 ^ 1]; i++, current++, index++) {
-        u8* record = records + current->kind * 0x74;
-        int end = current->first + current->count;
-        int j;
-        int delay;
-        Color packed;
+    for (i = 0; i < lbl_8064D7F0[lbl_8064D7D8 ^ 1]; current++, i++, index++) {
+        offset = current->kind * 0x74;
+        first = current->first;
+        end = first + current->count;
+        record = records + offset;
 
         if (record[0x59] != 0 && record[0x59] != (signed char)lbl_8030F540[0x1E0]) {
             continue;
@@ -106,20 +121,24 @@ void fn_801FF9E4(void)
             packed.alpha = 0xFF;
         }
         if (((signed char)colors[i >> 3] & (1 << (i & 7))) != 0) {
-            if (enabled != 1) fn_801ECEC8(1, 3, 0);
-            enabled = 1;
+            if (enabled != 1) {
+                fn_801ECEC8(1, 3, 0);
+                enabled = 1;
+            }
         } else {
-            if (enabled) fn_801ECEC8(0, 3, 0);
-            enabled = 0;
+            if (enabled) {
+                fn_801ECEC8(0, 3, 0);
+                enabled = 0;
+            }
         }
         fn_801ECEC8(1, 3, 0);
         fn_801EDA7C(0, 0, 0xABF, record);
         fn_801ECD74(packed);
         fn_80226AB4(0x98, 6, current->count);
-        for (j = current->first; j < end; j++) {
-            fn_801FFCFC(display[j * 2]);
-            fn_801FFCF0(display[j * 2 + 1]);
-            fn_801FFCE4(display[j * 2 + 1]);
+        for (; first < end; first++) {
+            fn_801FFCFC(display[first * 2]);
+            fn_801FFCF0(display[first * 2 + 1]);
+            fn_801FFCE4(display[first * 2 + 1]);
         }
         fn_801FFCE0();
     }

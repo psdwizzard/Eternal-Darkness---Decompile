@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "assignment_id": "60d761a2-5f27-4c86-b5d8-f6b5cd34d417",
+  "target": "fn_801FF9E4",
+  "compiler": "GC/1.3",
+  "compiler_flags": "-use_lmw_stmw on",
+  "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FF9E4 -o build/GEDE01/objdiff-60d761a2-canonical.json --format json-pretty fn_801FF9E4",
+  "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FF9E4 -o build/GEDE01/objdiff-60d761a2-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_801FF9E4",
+  "measurement_raw_output": "basis=canonical symbol=fn_801FF9E4 retail_bytes=764 generated_bytes=764 match_percent=100.0 retail_instructions=191 generated_instructions=191 retail_relocations=43 generated_relocations=43 differing_rows=0\nbasis=reloc-strict symbol=fn_801FF9E4 retail_bytes=764 generated_bytes=764 match_percent=100.0 retail_instructions=191 generated_instructions=191 retail_relocations=43 generated_relocations=43 differing_rows=0\ncanonical_vs_relocation_strict=byte-identical JSON (cmp exit 0)",
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw_output": "[879/884] REPORT\n[880/884] LINK build/GEDE01/main.elf\n[881/884] DOL build/GEDE01/main.dol\n[882/884] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[883/884] PROGRESS",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "source_audit": "Independent C translation unit; no asm statement, whole-function assembly, shared reconstruction, gate change, compiler-policy change, or neighboring-function edit. configure.py is Matching with canonical GC/1.3 and -use_lmw_stmw on; the existing split remains game/game_fn_801FF9E4.c at 0x801FF9E4..0x801FFCE0.",
+  "hypothesis_and_result": "Unlike the preserved alias-only attempts, this attempt separated declaration order from initialization and modeled the retail inner-loop induction value as an explicit first local reused through the loop. C89-style function-scope temporaries produced retail's r21-r30 interference graph; an explicit offset preserved the kind product in r0 while loading count into r3; placing enabled assignments inside their guarded calls and ordering the outer increments current, i, index resolved the final branch displacements and schedule.",
+  "divergence": ""
+}
