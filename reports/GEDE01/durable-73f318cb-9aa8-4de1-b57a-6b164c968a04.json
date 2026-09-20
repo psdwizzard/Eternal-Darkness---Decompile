@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "assignment_id": "73f318cb-9aa8-4de1-b57a-6b164c968a04",
+  "attempt": 5,
+  "base_commit": "47335122300de3ce6ae80b8ffa7d0690dd03617a",
+  "target": "fn_80194AC4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/baseline-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-byte-half-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-early-half-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-early-half-inline-endpoints-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-early-half-inline-promoted-type-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-inline-endpoints-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-int-width-cast-shifts-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-promoted-width-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-reuse-width-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-shared-half-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-shared-index-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-shared-rest-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-shared-temporaries-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-type-before-flags-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-type-before-outputs-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-type-before-width-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-73f318cb-9aa8-4de1-b57a-6b164c968a04.json"
+  ],
+  "divergence": "Improved canonical and relocation-strict objdiff from 97.40167% to 98.49372%. Retail is 956 bytes/239 instructions; retained NonMatching C is 952 bytes/238 instructions. Conversion stack slots now align, but register allocation and initial conversion scheduling differ, and retail mr r31,r25 at 0x34c is absent. Both objects contain 22 relocations; seven candidate @29 + 0 targets differ from retail lbl_80650B58 + 0, and the final call site shifts by -4 bytes. Canonical build and required DOL SHA-1 pass; this does not establish a candidate match because the NonMatching object is not linked."
+}

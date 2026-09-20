@@ -13,7 +13,8 @@ void fn_80194AC4(const s16* base, const float* scale, u8* state)
     s16* outputs[3];
     u32 flags;
     u8 width;
-    u8 type;
+    int type;
+    int half;
 
     outputs[0] = (s16*)(state + 0x28);
     outputs[1] = (s16*)(state + 0x42);
@@ -23,45 +24,38 @@ void fn_80194AC4(const s16* base, const float* scale, u8* state)
     type = state[3];
 
     if (flags & 0x100) {
-        int half;
         int rest;
         float step;
-        int endpoint;
 
+        half = (u8)width >> 1;
         fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);
         fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);
 
-        half = (u8)width >> 1;
         step = lbl_80650B70 * scale[2];
         fn_80193E1C(outputs[2], half, step, base[2], type);
         rest = width - half;
-        endpoint = (int)((float)half * step + (float)base[2]);
         fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,
-                    endpoint, type);
+                    (int)((float)half * step + (float)base[2]), type);
     } else if (flags & 0x400) {
-        int half = width >> 1;
         int rest;
         float step;
-        int endpoint;
+        half = width >> 1;
 
         step = lbl_80650B70 * scale[0];
         fn_80193E1C(outputs[0], half, step, base[0], type);
         rest = width - half;
-        endpoint = (int)((float)half * step + (float)base[0]);
         fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,
-                    endpoint, type);
+                    (int)((float)half * step + (float)base[0]), type);
 
         step = lbl_80650B70 * scale[1];
         fn_80193E1C(outputs[1], half, step, base[1], type);
-        endpoint = (int)((float)half * step + (float)base[1]);
         fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,
-                    endpoint, type);
+                    (int)((float)half * step + (float)base[1]), type);
 
         step = lbl_80650B70 * scale[2];
         fn_80193E1C(outputs[2], half, step, base[2], type);
-        endpoint = (int)((float)half * step + (float)base[2]);
         fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,
-                    endpoint, type);
+                    (int)((float)half * step + (float)base[2]), type);
     } else {
         int i;
         for (i = 0; i < 3; i++) {

@@ -1,0 +1,587 @@
+[
+  {
+    "name": "early-half",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    u8 width;\n    u8 type;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    width = state[0xB] - 4;\n    type = state[3];\n\n    if (flags & 0x100) {\n        int half;\n        int rest;\n        float step;\n        int endpoint;\n\n        half = (u8)width >> 1;\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        endpoint = (int)((float)half * step + (float)base[2]);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    endpoint, type);\n    } else if (flags & 0x400) {\n        int half = width >> 1;\n        int rest;\n        float step;\n        int endpoint;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        endpoint = (int)((float)half * step + (float)base[0]);\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    endpoint, type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        endpoint = (int)((float)half * step + (float)base[1]);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    endpoint, type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        endpoint = (int)((float)half * step + (float)base[2]);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    endpoint, type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-early-half-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-early-half-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 97.69456,
+      "retail_size": "956",
+      "candidate_size": "964"
+    }
+  },
+  {
+    "name": "shared-temporaries",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    u8 width;\n    u8 type;\n    int half;\n    int rest;\n    float step;\n    int endpoint;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    width = state[0xB] - 4;\n    type = state[3];\n\n    if (flags & 0x100) {\n\n        half = (u8)width >> 1;\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        endpoint = (int)((float)half * step + (float)base[2]);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    endpoint, type);\n    } else if (flags & 0x400) {\n        half = width >> 1;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        endpoint = (int)((float)half * step + (float)base[0]);\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    endpoint, type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        endpoint = (int)((float)half * step + (float)base[1]);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    endpoint, type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        endpoint = (int)((float)half * step + (float)base[2]);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    endpoint, type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-shared-temporaries-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-shared-temporaries-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 95.811714,
+      "retail_size": "956",
+      "candidate_size": "964"
+    }
+  },
+  {
+    "name": "inline-endpoints",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    u8 width;\n    u8 type;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    width = state[0xB] - 4;\n    type = state[3];\n\n    if (flags & 0x100) {\n        int half;\n        int rest;\n        float step;\n\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        half = (u8)width >> 1;\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else if (flags & 0x400) {\n        int half = width >> 1;\n        int rest;\n        float step;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    (int)((float)half * step + (float)base[0]), type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    (int)((float)half * step + (float)base[1]), type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-inline-endpoints-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-inline-endpoints-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 97.656906,
+      "retail_size": "956",
+      "candidate_size": "960"
+    }
+  },
+  {
+    "name": "early-half-inline-endpoints",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    u8 width;\n    u8 type;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    width = state[0xB] - 4;\n    type = state[3];\n\n    if (flags & 0x100) {\n        int half;\n        int rest;\n        float step;\n\n        half = (u8)width >> 1;\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else if (flags & 0x400) {\n        int half = width >> 1;\n        int rest;\n        float step;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    (int)((float)half * step + (float)base[0]), type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    (int)((float)half * step + (float)base[1]), type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-early-half-inline-endpoints-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-early-half-inline-endpoints-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 97.94979,
+      "retail_size": "956",
+      "candidate_size": "964"
+    }
+  },
+  {
+    "name": "type-before-width",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    u8 width;\n    u8 type;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    type = state[3];\n    width = state[0xB] - 4;\n\n    if (flags & 0x100) {\n        int half;\n        int rest;\n        float step;\n\n        half = (u8)width >> 1;\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else if (flags & 0x400) {\n        int half = width >> 1;\n        int rest;\n        float step;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    (int)((float)half * step + (float)base[0]), type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    (int)((float)half * step + (float)base[1]), type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-type-before-width-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-type-before-width-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 97.94979,
+      "retail_size": "956",
+      "candidate_size": "964"
+    }
+  },
+  {
+    "name": "type-before-flags",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    u8 width;\n    u8 type;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    type = state[3];\n    flags = *(u32*)(state + 0x7C);\n    width = state[0xB] - 4;\n\n    if (flags & 0x100) {\n        int half;\n        int rest;\n        float step;\n\n        half = (u8)width >> 1;\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else if (flags & 0x400) {\n        int half = width >> 1;\n        int rest;\n        float step;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    (int)((float)half * step + (float)base[0]), type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    (int)((float)half * step + (float)base[1]), type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-type-before-flags-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-type-before-flags-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 97.94979,
+      "retail_size": "956",
+      "candidate_size": "964"
+    }
+  },
+  {
+    "name": "type-before-outputs",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    u8 width;\n    u8 type;\n\n    type = state[3];\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    width = state[0xB] - 4;\n\n    if (flags & 0x100) {\n        int half;\n        int rest;\n        float step;\n\n        half = (u8)width >> 1;\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else if (flags & 0x400) {\n        int half = width >> 1;\n        int rest;\n        float step;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    (int)((float)half * step + (float)base[0]), type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    (int)((float)half * step + (float)base[1]), type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-type-before-outputs-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-type-before-outputs-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 97.94979,
+      "retail_size": "956",
+      "candidate_size": "964"
+    }
+  },
+  {
+    "name": "early-half-inline-promoted-type",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    u8 width;\n    int type;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    width = state[0xB] - 4;\n    type = state[3];\n\n    if (flags & 0x100) {\n        int half;\n        int rest;\n        float step;\n\n        half = (u8)width >> 1;\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else if (flags & 0x400) {\n        int half = width >> 1;\n        int rest;\n        float step;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    (int)((float)half * step + (float)base[0]), type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    (int)((float)half * step + (float)base[1]), type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-early-half-inline-promoted-type-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-early-half-inline-promoted-type-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 98.159,
+      "retail_size": "956",
+      "candidate_size": "952"
+    }
+  },
+  {
+    "name": "promoted-width",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    int width;\n    int type;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    width = (u8)(state[0xB] - 4);\n    type = state[3];\n\n    if (flags & 0x100) {\n        int half;\n        int rest;\n        float step;\n\n        half = (u8)width >> 1;\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else if (flags & 0x400) {\n        int half = width >> 1;\n        int rest;\n        float step;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    (int)((float)half * step + (float)base[0]), type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    (int)((float)half * step + (float)base[1]), type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-promoted-width-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-promoted-width-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 94.267784,
+      "retail_size": "956",
+      "candidate_size": "952"
+    }
+  },
+  {
+    "name": "byte-half",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    u8 width;\n    int type;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    width = state[0xB] - 4;\n    type = state[3];\n\n    if (flags & 0x100) {\n        u8 half;\n        int rest;\n        float step;\n\n        half = (u8)width >> 1;\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else if (flags & 0x400) {\n        u8 half = width >> 1;\n        int rest;\n        float step;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    (int)((float)half * step + (float)base[0]), type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    (int)((float)half * step + (float)base[1]), type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-byte-half-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-byte-half-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 87.88284,
+      "retail_size": "956",
+      "candidate_size": "952"
+    }
+  },
+  {
+    "name": "shared-half",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    u8 width;\n    int type;\n    int half;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    width = state[0xB] - 4;\n    type = state[3];\n\n    if (flags & 0x100) {\n        int rest;\n        float step;\n\n        half = (u8)width >> 1;\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else if (flags & 0x400) {\n        int rest;\n        float step;\n        half = width >> 1;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    (int)((float)half * step + (float)base[0]), type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    (int)((float)half * step + (float)base[1]), type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-shared-half-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-shared-half-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 98.49372,
+      "retail_size": "956",
+      "candidate_size": "952"
+    }
+  },
+  {
+    "name": "shared-rest",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    u8 width;\n    int type;\n    int half;\n    int rest;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    width = state[0xB] - 4;\n    type = state[3];\n\n    if (flags & 0x100) {\n        float step;\n\n        half = (u8)width >> 1;\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else if (flags & 0x400) {\n        float step;\n        half = width >> 1;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    (int)((float)half * step + (float)base[0]), type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    (int)((float)half * step + (float)base[1]), type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-shared-rest-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-shared-rest-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 98.11716,
+      "retail_size": "956",
+      "candidate_size": "952"
+    }
+  },
+  {
+    "name": "shared-index",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    u8 width;\n    int type;\n    int half;\n    int i;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    width = state[0xB] - 4;\n    type = state[3];\n\n    if (flags & 0x100) {\n        int rest;\n        float step;\n\n        half = (u8)width >> 1;\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else if (flags & 0x400) {\n        int rest;\n        float step;\n        half = width >> 1;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    (int)((float)half * step + (float)base[0]), type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    (int)((float)half * step + (float)base[1]), type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else {\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-shared-index-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-shared-index-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 98.49372,
+      "retail_size": "956",
+      "candidate_size": "952"
+    }
+  },
+  {
+    "name": "int-width-cast-shifts",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    int width;\n    int type;\n    int half;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    width = (u8)(state[0xB] - 4);\n    type = state[3];\n\n    if (flags & 0x100) {\n        int rest;\n        float step;\n\n        half = (u8)width >> 1;\n        fn_80186F70(outputs[0], width, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], width, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        rest = width - half;\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else if (flags & 0x400) {\n        int rest;\n        float step;\n        half = (u8)width >> 1;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    (int)((float)half * step + (float)base[0]), type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    (int)((float)half * step + (float)base[1]), type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-int-width-cast-shifts-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-int-width-cast-shifts-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 95.39749,
+      "retail_size": "956",
+      "candidate_size": "952"
+    }
+  },
+  {
+    "name": "reuse-width",
+    "source": "typedef signed short s16;\ntypedef unsigned char u8;\ntypedef unsigned int u32;\n\nextern const double lbl_80650B58;\nextern const float lbl_80650B70;\n\nvoid fn_80186F70(s16* output, int count, float step, float base, int range);\nvoid fn_80193E1C(s16* output, int count, float step, int base, int range);\n\nvoid fn_80194AC4(const s16* base, const float* scale, u8* state)\n{\n    s16* outputs[3];\n    u32 flags;\n    u8 width;\n    int type;\n\n    outputs[0] = (s16*)(state + 0x28);\n    outputs[1] = (s16*)(state + 0x42);\n    outputs[2] = (s16*)(state + 0x5C);\n    flags = *(u32*)(state + 0x7C);\n    width = state[0xB] - 4;\n    type = state[3];\n\n    if (flags & 0x100) {\n        int full;\n        int rest;\n        float step;\n\n        full = width;\n        width >>= 1;\n        fn_80186F70(outputs[0], full, scale[0], (float)base[0], type);\n        fn_80186F70(outputs[1], full, scale[1], (float)base[1], type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], width, step, base[2], type);\n        rest = full - width;\n        fn_80193E1C(outputs[2] + width, rest, scale[2] / (float)rest,\n                    (int)((float)width * step + (float)base[2]), type);\n    } else if (flags & 0x400) {\n        int half = width >> 1;\n        int rest;\n        float step;\n\n        step = lbl_80650B70 * scale[0];\n        fn_80193E1C(outputs[0], half, step, base[0], type);\n        rest = width - half;\n        fn_80193E1C(outputs[0] + half, rest, scale[0] / (float)rest,\n                    (int)((float)half * step + (float)base[0]), type);\n\n        step = lbl_80650B70 * scale[1];\n        fn_80193E1C(outputs[1], half, step, base[1], type);\n        fn_80193E1C(outputs[1] + half, rest, scale[1] / (float)rest,\n                    (int)((float)half * step + (float)base[1]), type);\n\n        step = lbl_80650B70 * scale[2];\n        fn_80193E1C(outputs[2], half, step, base[2], type);\n        fn_80193E1C(outputs[2] + half, rest, scale[2] / (float)rest,\n                    (int)((float)half * step + (float)base[2]), type);\n    } else {\n        int i;\n        for (i = 0; i < 3; i++) {\n            fn_80186F70(outputs[i], width, scale[i], (float)base[i], type);\n        }\n    }\n}\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80194AC4.o"
+        ],
+        "exit_code": 0,
+        "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80194AC4.o\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80194AC4",
+          "fn_80194AC4",
+          "-o",
+          "reports/GEDE01/experiment-reuse-width-73f318cb-9aa8-4de1-b57a-6b164c968a04.json",
+          "--format",
+          "json-pretty",
+          "-c",
+          "function_reloc_diffs=name_address"
+        ],
+        "exit_code": 0,
+        "raw_output": " INFO Writing to reports/GEDE01/experiment-reuse-width-73f318cb-9aa8-4de1-b57a-6b164c968a04.json\n"
+      }
+    ],
+    "measurement": {
+      "score": 92.27615,
+      "retail_size": "956",
+      "candidate_size": "952"
+    }
+  }
+]
