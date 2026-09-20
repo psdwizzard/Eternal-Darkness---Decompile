@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "758cb79e-7603-40bd-aae8-b49162ce6cb8",
+  "attempt": 4,
+  "base_commit": "4c892bec53cbdc5a1ab7d7db59b7a6aa01d3e911",
+  "target": "fn_801F50EC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-758cb79e-7603-40bd-aae8-b49162ce6cb8-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-758cb79e-7603-40bd-aae8-b49162ce6cb8.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both measure 97.17647% for a size-exact 340/340-byte function; their raw JSON reports are byte-identical. Both R_PPC_REL24 calls at offsets 0x74 and 0x100 retain fn_801F4FC8 with zero addends. The remaining seven aligned instruction differences are at offsets 0x38..0x60: retail forms row_offset plus low column bits in r25, adds shifted high column bits, then adds block base; GC/1.3 computes low plus high first, then block base and row_offset, with r3/r4 coloring reversed. A distinct staged integer-offset hypothesis produced the retail dependency order but kept the intermediate in r5 and reversed the high/low calculation order, regressing to 97.09412%; a staged pointer-offset hypothesis regressed to 94.90588%, so the existing honest C reconstruction remains best. A fresh python3 configure.py plus .tools/bin/ninja -j2 build passed, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
