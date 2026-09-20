@@ -26,7 +26,7 @@ void fn_8018DC24(u8* object)
     register u8* index_data;
     register u8* color_data;
     register u8* transform;
-    u8* self;
+    register u8* self;
     u16* coordinate;
     s16* scratch;
     int i;
@@ -39,6 +39,7 @@ void fn_8018DC24(u8* object)
     u8* color;
     u16 offset;
 
+    self = object;
     count = object[1];
     offset = *(u16*)(lbl_80607120 + 2);
     transform = object + 0x8C;
@@ -49,7 +50,6 @@ void fn_8018DC24(u8* object)
     vertex_data = *(u8**)(object + 0x50);
     index_data = *(u8**)(object + 0x54);
     color_data = *(u8**)(object + 0x58);
-    self = object;
     if (lbl_8064D738 != 0) {
         index_data += offset * 4;
         vertex_data += offset * 6;
