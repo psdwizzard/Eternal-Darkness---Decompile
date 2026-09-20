@@ -98,14 +98,15 @@ int fn_80131460(void)
     {
         s16 transition = *(s16*)(lbl_8030F540 + 0x1D6);
         if (transition != -1)
-        *(s16*)(lbl_8030F540 + 0x1D6) = lbl_8064C850;
+            *(s16*)(lbl_8030F540 + 0x1D6) = lbl_8064C850;
         else if (transition == -1)
             *(int*)(lbl_8030F540 + 0x1CC) += 1;
     }
     {
+        Batch* batch;
         int i = 0;
         while (i < *(s16*)(lbl_8030F540 + 0x1D6) + 1) {
-            Batch* batch = fn_8015E1A8(selected);
+            batch = fn_8015E1A8(selected);
             if ((*(int*)(lbl_8030F540 + 0x1C8) & 1) == 0) {
                 fn_80132794(manager, batch);
                 fn_80132B24(batch, manager->limit - selected);

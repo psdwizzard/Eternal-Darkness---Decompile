@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "269c50aa-d6cf-47f8-b539-0bae17165d05",
+  "attempt": 3,
+  "base_commit": "77936e4e89481c9d2b23cdacd48978fb21378fe8",
+  "target": "fn_80131460",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-269c50aa-d6cf-47f8-b539-0bae17165d05.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff is 97.44891% with exact 1292/1292-byte code size, improving the preserved 97.37151% attempt by extending the primary-loop Batch pointer lifetime before the induction variable; this makes the induction variable use retail r24. Remaining differences are 75 argument mismatches, primarily register allocation (the generated primary-loop Batch pointer is r25 versus retail r26, while selected is generated r26 versus retail r25), plus two inserted/deleted instruction pairs at offsets 0x374-0x384: retail schedules lwz r5,0x1cc(r31), subf r4,r25,r3, then lha r3,0x1d6(r30), while generated schedules lha r4,0x1d6(r30), subf r5,r26,r3, then lwz r3,0x1cc(r31). Both sides contain 126 relocation-bearing instruction records. The candidate is not claimed matched. Canonical build produced DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
