@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d6a577a7-797d-4161-9ee2-b27e324e1238",
+  "attempt": 5,
+  "base_commit": "fb8eb88fee727e8d8162097e317c740323885aae",
+  "target": "fn_801D84F4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d6a577a7-797d-4161-9ee2-b27e324e1238.json"
+  ],
+  "divergence": "Canonical relocation-aware objdiff is 99.26923% with exact 520-byte and 130-instruction parity. Of 18 DIFF_ARG_MISMATCH entries, 17 are the persistent object/state register swap: retail preserves the object in r29 and state in r28, while GC/1.3 preserves the object/base in r28 and state in r29. The remaining displayed mismatch is the equivalent SDA21 conversion-constant symbol spelling lbl_806510D8 versus local @39. All 14 relocation offsets and types agree and all addends are zero; the name/address comparison resolves @39 at the retail constant address. The distinct base-pointer/coalescing hypothesis compiled identically and did not change register coloring."
+}

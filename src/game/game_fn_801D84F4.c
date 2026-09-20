@@ -42,15 +42,12 @@ extern void fn_801D0E78(Object*);
 void fn_801D84F4(Object* object)
 {
     Point3s points[8];
-    u8 flags = *(volatile u8*)(object->bytes + 0x13A);
+    register u8* base = object->bytes;
+    u8 flags = *(volatile u8*)(base + 0x13A);
     register Point3s* line;
     s16 count;
-    register Object* saved_object;
-    register State* state;
+    State* state = (State*)(base + 0xBC);
     int i;
-
-    saved_object = object;
-    state = (State*)(saved_object->bytes + 0xBC);
 
     if ((flags & 5) == 0 &&
         fn_80201814(state->first) == 0) {
@@ -64,17 +61,17 @@ void fn_801D84F4(Object* object)
     if (state->resource != 0)
         fn_80142FCC(state->resource);
 
-    i = fn_801CEB2C(*(u32*)(saved_object->bytes + 4));
+    i = fn_801CEB2C(*(u32*)(base + 4));
     line = points;
     count = (s16)i;
     for (i = 0; i < count; i++) {
         float angle = state->angle +
             lbl_806510E4 * (float)i / (float)count;
-        points[i].x = (s16)(*(float*)(saved_object->bytes + 0x38) +
+        points[i].x = (s16)(*(float*)(base + 0x38) +
                             lbl_806510E8 * fn_80048C2C(angle));
-        points[i].y = (s16)(*(float*)(saved_object->bytes + 0x3C) +
+        points[i].y = (s16)(*(float*)(base + 0x3C) +
                             lbl_806510E8 * fn_80048C50(angle));
-        points[i].z = (s16)*(float*)(saved_object->bytes + 0x40);
+        points[i].z = (s16)*(float*)(base + 0x40);
 
         if (state->entries[i] != 0) {
             if ((state->flags & 8) != 0)
@@ -86,10 +83,10 @@ void fn_801D84F4(Object* object)
 
     if ((state->flags & 8) == 0) {
         for (i = 0; i < count - 1; i++) {
-            fn_801D7998(line, line + 1, saved_object);
+            fn_801D7998(line, line + 1, (Object*)base);
             line++;
         }
-        fn_801D7998(&points[i], &points[0], saved_object);
+        fn_801D7998(&points[i], &points[0], (Object*)base);
     }
-    fn_801D0E78(saved_object);
+    fn_801D0E78((Object*)base);
 }
