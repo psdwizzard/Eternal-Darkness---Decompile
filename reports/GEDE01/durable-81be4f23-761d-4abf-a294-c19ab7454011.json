@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "81be4f23-761d-4abf-a294-c19ab7454011",
+  "attempt": 5,
+  "base_commit": "ee2c5659278f42d906811ba0e816479b30dcf107",
+  "target": "fn_80052670",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-81be4f23-761d-4abf-a294-c19ab7454011.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits 640 bytes versus 656 retail bytes at 95.71342%. Retail retains four base-pointer materializations at 0x38, 0xF8, 0x170, and 0x194 that canonical MWCC folds into indexed loads/stores. All 48 relocation types, targets, and addends agree in sequence, but the 16-byte instruction-size difference shifts relocation sites, so neither canonical nor relocation-strict comparison is 100%."
+}

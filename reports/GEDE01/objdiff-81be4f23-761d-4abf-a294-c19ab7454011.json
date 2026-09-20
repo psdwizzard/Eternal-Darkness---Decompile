@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "assignment_id": "81be4f23-761d-4abf-a294-c19ab7454011",
+  "target": "fn_80052670",
+  "source": "eternal-darkness-decomp/src/game/game_fn_80052670.c",
+  "registration": "Object(NonMatching, \"game/game_fn_80052670.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "raw_artifacts": {
+    "canonical_objdiff_json": "eternal-darkness-decomp/reports/GEDE01/objdiff-81be4f23-761d-4abf-a294-c19ab7454011-canonical.raw.json",
+    "relocation_strict_objdiff_json": "eternal-darkness-decomp/reports/GEDE01/objdiff-81be4f23-761d-4abf-a294-c19ab7454011-reloc-strict.raw.json",
+    "retail_readelf_relocations": "eternal-darkness-decomp/reports/GEDE01/objdiff-81be4f23-761d-4abf-a294-c19ab7454011-retail.relocations.txt",
+    "generated_readelf_relocations": "eternal-darkness-decomp/reports/GEDE01/objdiff-81be4f23-761d-4abf-a294-c19ab7454011-generated.relocations.txt"
+  },
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output": "[885/887] DOL build/GEDE01/main.dol\n[886/887] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[887/887] PROGRESS"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80052670 fn_80052670 -o reports/GEDE01/objdiff-81be4f23-761d-4abf-a294-c19ab7454011-canonical.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to reports/GEDE01/objdiff-81be4f23-761d-4abf-a294-c19ab7454011-canonical.raw.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80052670 fn_80052670 -o reports/GEDE01/objdiff-81be4f23-761d-4abf-a294-c19ab7454011-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to reports/GEDE01/objdiff-81be4f23-761d-4abf-a294-c19ab7454011-reloc-strict.raw.json"
+    },
+    {
+      "command": "cmp -s reports/GEDE01/objdiff-81be4f23-761d-4abf-a294-c19ab7454011-canonical.raw.json reports/GEDE01/objdiff-81be4f23-761d-4abf-a294-c19ab7454011-reloc-strict.raw.json",
+      "exit_code": 0,
+      "raw_output": ""
+    },
+    {
+      "command": "readelf -r build/GEDE01/obj/game/game_fn_80052670.o and readelf -r build/GEDE01/src/game/game_fn_80052670.o",
+      "exit_code": 0,
+      "raw_output": "Complete unmodified stdout is committed in the two raw_artifacts *.relocations.txt files. Each reports 48 .rela.text entries."
+    },
+    {
+      "command": "normalize readelf rows to relocation type, target name, and addend in sequence; cmp normalized outputs",
+      "exit_code": 0,
+      "raw_output": "relocation_type_target_addend_cmp_exit=0"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output": "legal audit passed (19014 tracked project files inspected)"
+    }
+  ],
+  "canonical": {
+    "match_percent": 95.71342,
+    "retail_bytes": 656,
+    "generated_bytes": 640,
+    "retail_instructions": 164,
+    "generated_instructions": 160,
+    "diff_arg_mismatch": 21,
+    "diff_delete": 4,
+    "diff_replace": 3
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "match_percent": 95.71342,
+    "retail_count": 48,
+    "generated_count": 48,
+    "types_targets_addends_equal_in_sequence": true,
+    "relocation_site_offsets_equal": false,
+    "canonical_report_byte_identical": true
+  },
+  "different_hypothesis": {
+    "description": "Explicit register-storage local lvalue temporaries for the template destination, descriptor lookup, and each formatted-log lookup might inhibit MWCC's address-combining pass while preserving ordinary non-volatile C semantics.",
+    "experiment": "Added register-qualified block-local pointer temporaries at all four fold sites and rebuilt only the independent translation unit.",
+    "raw_output": "match_percent=95.71342 retail_bytes=656 generated_bytes=640; the generated instruction stream remained byte-identical",
+    "conclusion": "Canonical GC/1.3 ignores these register storage hints for optimized address formation. The clean preserved reconstruction was restored before final verification."
+  },
+  "exact_codegen_divergence": "Retail retains four base-pointer materializations that canonical GC/1.3 folds away: addi r24,r30,0x2120 at retail 0x38 before the 64-byte template copy; addi r4,r30,0 at retail 0xF8 before the descriptor lookup; and addi r5,r30,0 at retail 0x170 and 0x194 before the two formatted-log descriptor lookups. Their absence makes generated code 16 bytes shorter, changes stmw/lmw from r24 at stack offset 0x10 to r25 at 0x14, folds template stores from 0x20..0x5C(r24) to 0x2140..0x217C(r30), and shifts later branch and relocation sites. All 48 relocation types, targets, and addends agree in sequence, but relocation sites differ.",
+  "recovery": {
+    "preserved_commit": "133cbd205387bb5e9de59cc14b300ec40189574a",
+    "raw_output": "The accepted base ee2c5659278f42d906811ba0e816479b30dcf107 already contains the behavior-complete independent C translation unit and its NonMatching configure.py and splits.txt registration. Preserved reports were inspected with git show and the accepted source was rebuilt unchanged."
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "conclusion": "Attempted: the behavior-complete independent C reconstruction remains the best honest result at 95.71342%; canonical and relocation-strict comparisons are not 100%, so it remains NonMatching."
+}
