@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "assignment_id": "2cb7c086-61ae-4e51-a360-227e470e5f04",
+  "target": "fn_801EBC6C",
+  "source": "eternal-darkness-decomp/src/game/game_fn_801EBC6C.c",
+  "registration": "Object(NonMatching, \"game/game_fn_801EBC6C.c\", mw_version=\"GC/1.3\")",
+  "prior_candidate": "Base already contains strongest preserved source from 258d4531c93e0cf31cb088f488c49c1ff48928cc at 97.82609%; this attempt changes only low-byte insertion.",
+  "hypothesis": "Explicit low-byte replacement mask preserves slwi and selects the retail low-byte rlwimi pattern. The new source improves to 99.29348%. Further masked-expression/lifetime experiments did not improve it.",
+  "canonical": {
+    "match_percent": 99.29348,
+    "retail_size": 368,
+    "generated_size": 368,
+    "raw_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-2cb7c086-61ae-4e51-a360-227e470e5f04-canonical.raw.json"
+  },
+  "relocation_strict": {
+    "match_percent": 99.29348,
+    "config": "function_reloc_diffs=name_address",
+    "raw_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-2cb7c086-61ae-4e51-a360-227e470e5f04-reloc-strict.raw.json",
+    "relocations_equal": true,
+    "retail_relocations": [
+      {
+        "offset": 48,
+        "type": "R_PPC_REL24",
+        "symbol_value": 0,
+        "target": "memset",
+        "addend": 0
+      },
+      {
+        "offset": 112,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol_value": 0,
+        "target": "lbl_8064D6A0",
+        "addend": 0
+      }
+    ],
+    "generated_relocations": [
+      {
+        "offset": 48,
+        "type": "R_PPC_REL24",
+        "symbol_value": 0,
+        "target": "memset",
+        "addend": 0
+      },
+      {
+        "offset": 112,
+        "type": "R_PPC_EMB_SDA21",
+        "symbol_value": 0,
+        "target": "lbl_8064D6A0",
+        "addend": 0
+      }
+    ],
+    "canonical_raw_byte_identical": true
+  },
+  "byte_comparison": {
+    "retail_size": 368,
+    "generated_size": 368,
+    "differing_bytes": 10,
+    "differing_word_offsets": [
+      "0x100",
+      "0x104",
+      "0x108",
+      "0x10c",
+      "0x110",
+      "0x114",
+      "0x118",
+      "0x11c",
+      "0x120"
+    ],
+    "note": "Raw ELF .text comparison before applying relocations; objdiff and readelf provide relocation-aware checks."
+  },
+  "instruction_differences": [
+    {
+      "offset": "0x100",
+      "retail": "lwz r4, 0x10(r31)",
+      "generated": "lwz r5, 0x10(r31)",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x104",
+      "retail": "lwz r0, 0x14(r30)",
+      "generated": "lwz r4, 0x14(r30)",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x108",
+      "retail": "clrlwi r5, r6, 24",
+      "generated": "clrlwi r0, r6, 24",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x10c",
+      "retail": "subfic r5, r5, 0xff",
+      "generated": "subfic r0, r0, 0xff",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x110",
+      "retail": "add r0, r4, r0",
+      "generated": "add r4, r5, r4",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x114",
+      "retail": "slwi r5, r5, 8",
+      "generated": "slwi r0, r0, 8",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x118",
+      "retail": "stw r0, 0x10(r31)",
+      "generated": "stw r4, 0x10(r31)",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x11c",
+      "retail": "rlwimi r5, r6, 0, 24, 31",
+      "generated": "rlwimi r0, r6, 0, 24, 31",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    },
+    {
+      "offset": "0x120",
+      "retail": "clrlwi r5, r5, 16",
+      "generated": "clrlwi r5, r0, 16",
+      "diff_kind": "DIFF_ARG_MISMATCH"
+    }
+  ],
+  "verification_log": "eternal-darkness-decomp/reports/GEDE01/verification-2cb7c086-61ae-4e51-a360-227e470e5f04.json",
+  "experiments": "eternal-darkness-decomp/reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04.json",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_scope": "Full canonical build passes. This reconstruction remains NonMatching, so retail assembly remains linked for this function.",
+  "divergence": "Canonical and relocation-strict objdiff are 99.29348%, with retail and generated C both 368 bytes. Every opcode and instruction position matches. Nine instructions at offsets 0x100, 0x104, 0x108, 0x10C, 0x110, 0x114, 0x118, 0x11C and 0x120 differ only in register operands: retail uses r4/r0 for the accumulator addition and r5 for packed color; generated C uses r5/r4 and r0 respectively. The effective step now matches in r6, and the explicit slwi and low-byte rlwimi match. Both relocation offsets, types, target names, symbol values and addends match exactly."
+}

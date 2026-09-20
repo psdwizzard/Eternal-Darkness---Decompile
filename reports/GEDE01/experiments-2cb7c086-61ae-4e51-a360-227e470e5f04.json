@@ -1,0 +1,4074 @@
+{
+  "version": 1,
+  "assignment_id": "2cb7c086-61ae-4e51-a360-227e470e5f04",
+  "hypothesis": "Explicit low-byte replacement (packed & ~0xFF) | (step & 0xFF) prevents GC/1.3 from reversing the packed-color insertion and folding away the shift. Follow-up variants investigate operand typing, expression grouping and accumulator lifetimes under that mask.",
+  "measurement_basis": "Scores, sizes and instruction differences below are derived from actual per-variant objdiff JSON. Per-variant temporary raw files were removed after extraction; final retained-source canonical and relocation-strict raw files are committed separately. Build and diff process output strings are verbatim. Six initial loads_* harness runs failed because the experiment delimiter also replaced a C OR operator; corrected reruns follow.",
+  "retained_variant": "mask_low",
+  "retained_change": "packed |= (unsigned char)step; -> packed = (packed & ~0xFF) | (step & 0xFF);",
+  "records": [
+    {
+      "variant": "mask_low",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_low.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_low.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_high",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_high.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_high.raw.json\n",
+      "score": 95.978264,
+      "retail_size": "368",
+      "generated_size": "364",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r6, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r6, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r6, r0, 8, 16, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r6, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "xor_insert",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-xor_insert.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-xor_insert.raw.json\n",
+      "score": 92.17391,
+      "retail_size": "368",
+      "generated_size": "376",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "slwi r7, r0, 8",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "xor r0, r7, r6",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": null,
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "clrlwi r0, r0, 24",
+          "diff_kind": "DIFF_OP_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "xor r7, r7, r0",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r7, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "narrow_mask",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-narrow_mask.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-narrow_mask.raw.json\n",
+      "score": 98.75,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "clrlslwi r0, r0, 24, 8",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_register_packed",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_register_packed.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_register_packed.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_unsigned_packed",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_unsigned_packed.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_unsigned_packed.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_decl_first",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_decl_first.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_decl_first.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_value",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_value.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_value.raw.json\n",
+      "score": 95.70652,
+      "retail_size": "368",
+      "generated_size": "364",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r6, 0x8(r31)",
+          "generated": "lwz r7, 0x8(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "li r6, 0x0",
+          "generated": "li r7, 0x0",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r6, r6, r4",
+          "generated": "add r7, r7, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r6, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r5, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r4, r7, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r4, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r5, r6, r5",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r0, 8, 16, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r5, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_acc_temp",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_temp.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_temp.raw.json\n",
+      "score": 95.978264,
+      "retail_size": "368",
+      "generated_size": "372",
+      "derived_instruction_differences": [
+        {
+          "retail": null,
+          "generated": "clrlwi r5, r6, 24",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": null,
+          "generated": "slwi r5, r5, 8",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r4, r5",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_store_middle",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_store_middle.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_store_middle.raw.json\n",
+      "score": 95.978264,
+      "retail_size": "368",
+      "generated_size": "372",
+      "derived_instruction_differences": [
+        {
+          "retail": null,
+          "generated": "clrlwi r5, r6, 24",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": null,
+          "generated": "slwi r5, r5, 8",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r4, r5",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_register_value",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_register_value.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_register_value.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_compare_reuse",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_compare_reuse.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_compare_reuse.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r5, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_word_value",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_word_value.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_word_value.raw.json\n",
+      "score": 93.36957,
+      "retail_size": "368",
+      "generated_size": "380",
+      "derived_instruction_differences": [
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r4, r5, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "mr r5, r4",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "slwi r7, r0, 8",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r0, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r4, r7",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r0, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "mr r5, r0",
+          "diff_kind": "DIFF_INSERT"
+        }
+      ]
+    },
+    {
+      "variant": "mask_int_value",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_int_value.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_int_value.raw.json\n",
+      "score": 93.36957,
+      "retail_size": "368",
+      "generated_size": "380",
+      "derived_instruction_differences": [
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r4, r5, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "mr r5, r4",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "slwi r7, r0, 8",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r0, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r4, r7",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r0, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "mr r5, r0",
+          "diff_kind": "DIFF_INSERT"
+        }
+      ]
+    },
+    {
+      "variant": "mask_persistent_word",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_persistent_word.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_persistent_word.raw.json\n",
+      "score": 95.38043,
+      "retail_size": "368",
+      "generated_size": "372",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r6, 0x8(r31)",
+          "generated": "lwz r7, 0x8(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "li r6, 0x0",
+          "generated": "li r7, 0x0",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r6, r6, r4",
+          "generated": "add r7, r7, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "clrlwi r0, r7, 24",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "slwi r6, r0, 8",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r0, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r4, r6",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r7, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_acc_reversed",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_reversed.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_reversed.raw.json\n",
+      "score": 99.16304,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_acc_split",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_split.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_split.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r5, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_acc_compare_assign",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_compare_assign.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_compare_assign.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_packed_assign_value",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_packed_assign_value.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_packed_assign_value.raw.json\n",
+      "score": 95.978264,
+      "retail_size": "368",
+      "generated_size": "364",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r6, r0, 8, 16, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r6, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_acc_between_inverse_shift",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_between_inverse_shift.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_between_inverse_shift.raw.json\n",
+      "score": 96.902176,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r7, r5, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r5, r6",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r5, r7, 8, 0, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r0, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        }
+      ]
+    },
+    {
+      "variant": "mask_acc_load_before_step",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_load_before_step.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_load_before_step.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_acc_load_after_step",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_load_after_step.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_load_after_step.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_split_and",
+      "source_patch": "--- \n+++ \n@@ -64,7 +64,8 @@\n                     step += compare;\n                     work->accumulator += input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n+                    packed &= ~0xFF;\n+                    packed |= step & 0xFF;\n                     value = packed;\n                 } else {\n                     work->count--;\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_split_and.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_split_and.raw.json\n",
+      "score": 97.01087,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "mr r4, r6",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r0, 8, 0, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_cast_low",
+      "source_patch": "--- \n+++ \n@@ -64,7 +64,7 @@\n                     step += compare;\n                     work->accumulator += input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n+                    packed = (packed & ~0xFF) | (unsigned char)step;\n                     value = packed;\n                 } else {\n                     work->count--;\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_cast_low.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_cast_low.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_unsigned_mask",
+      "source_patch": "--- \n+++ \n@@ -64,7 +64,7 @@\n                     step += compare;\n                     work->accumulator += input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n+                    packed = (packed & ~0xFFU) | (step & 0xFF);\n                     value = packed;\n                 } else {\n                     work->count--;\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_unsigned_mask.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_unsigned_mask.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_packed_u16",
+      "source_patch": "--- \n+++ \n@@ -33,7 +33,7 @@\n     u16 value;\n     int compare;\n     int step;\n-    int packed;\n+    u16 packed;\n     int i;\n \n     memset(work, 0, 0x18);\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_packed_u16.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_packed_u16.raw.json\n",
+      "score": 92.5,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r6, 0x8(r31)",
+          "generated": "lwz r7, 0x8(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "li r6, 0x0",
+          "generated": "li r7, 0x0",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r6, r6, r4",
+          "generated": "add r7, r7, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r6, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "clrlwi r4, r7, 24",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r5, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r4, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r5, r6, r5",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r0, 8, 16, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r5, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r0, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "mr r5, r0",
+          "diff_kind": "DIFF_INSERT"
+        }
+      ]
+    },
+    {
+      "variant": "mask_acc_before_step_add",
+      "source_patch": "--- \n+++ \n@@ -61,8 +61,8 @@\n                     if (input->upper == input->lower && (unsigned char)compare == input->lower)\n                         step = 0;\n \n+                    work->accumulator += input->step;\n                     step += compare;\n-                    work->accumulator += input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n                     value = packed;\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_before_step_add.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_before_step_add.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_compare_step",
+      "source_patch": "--- \n+++ \n@@ -61,10 +61,10 @@\n                     if (input->upper == input->lower && (unsigned char)compare == input->lower)\n                         step = 0;\n \n-                    step += compare;\n+                    compare += step;\n                     work->accumulator += input->step;\n-                    packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n+                    packed = (0xFF - (unsigned char)compare) << 8;\n+                    packed = (packed & ~0xFF) | (compare & 0xFF);\n                     value = packed;\n                 } else {\n                     work->count--;\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_compare_step.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_compare_step.raw.json\n",
+      "score": 99.184784,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "add r6, r6, r4",
+          "generated": "add r6, r4, r6",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_packed_step",
+      "source_patch": "--- \n+++ \n@@ -61,9 +61,10 @@\n                     if (input->upper == input->lower && (unsigned char)compare == input->lower)\n                         step = 0;\n \n-                    step += compare;\n+                    packed = step + compare;\n                     work->accumulator += input->step;\n-                    packed = (0xFF - (unsigned char)step) << 8;\n+                    step = packed;\n+                    packed = (0xFF - (unsigned char)packed) << 8;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n                     value = packed;\n                 } else {\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_packed_step.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_packed_step.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_inverse_u8",
+      "source_patch": "--- \n+++ \n@@ -63,7 +63,7 @@\n \n                     step += compare;\n                     work->accumulator += input->step;\n-                    packed = (0xFF - (unsigned char)step) << 8;\n+                    packed = (unsigned char)(0xFF - (unsigned char)step) << 8;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n                     value = packed;\n                 } else {\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_inverse_u8.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_inverse_u8.raw.json\n",
+      "score": 95.978264,
+      "retail_size": "368",
+      "generated_size": "364",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r6, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r6, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r6, r0, 8, 16, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r6, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_acc_delayed_narrow",
+      "source_patch": "--- \n+++ \n@@ -62,9 +62,9 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n+                    work->accumulator += input->step;\n                     value = packed;\n                 } else {\n                     work->count--;\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_delayed_narrow.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_delayed_narrow.raw.json\n",
+      "score": 95.978264,
+      "retail_size": "368",
+      "generated_size": "372",
+      "derived_instruction_differences": [
+        {
+          "retail": null,
+          "generated": "clrlwi r5, r6, 24",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": null,
+          "generated": "slwi r5, r5, 8",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r4, r5",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_shift_unsigned",
+      "source_patch": "--- \n+++ \n@@ -63,7 +63,7 @@\n \n                     step += compare;\n                     work->accumulator += input->step;\n-                    packed = (0xFF - (unsigned char)step) << 8;\n+                    packed = (0xFFU - (unsigned char)step) << 8;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n                     value = packed;\n                 } else {\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_shift_unsigned.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_shift_unsigned.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_direct_expr",
+      "source_patch": "--- \n+++ \n@@ -63,9 +63,7 @@\n \n                     step += compare;\n                     work->accumulator += input->step;\n-                    packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n-                    value = packed;\n+                    value = (((0xFF - (unsigned char)step) << 8) & ~0xFF) | (step & 0xFF);\n                 } else {\n                     work->count--;\n                 }\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_direct_expr.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_direct_expr.raw.json\n",
+      "score": 96.141304,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r6, 0x8(r31)",
+          "generated": "lwz r7, 0x8(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "li r6, 0x0",
+          "generated": "li r7, 0x0",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r6, r6, r4",
+          "generated": "add r7, r7, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r6, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r5, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r7, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r4, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r5, r6, r5",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r0, r7",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r4, 8, 0, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r5, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_direct_expr_u8",
+      "source_patch": "--- \n+++ \n@@ -63,9 +63,7 @@\n \n                     step += compare;\n                     work->accumulator += input->step;\n-                    packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n-                    value = packed;\n+                    value = (((0xFF - (unsigned char)step) << 8) & ~0xFF) | (unsigned char)step;\n                 } else {\n                     work->count--;\n                 }\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_direct_expr_u8.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_direct_expr_u8.raw.json\n",
+      "score": 95.70652,
+      "retail_size": "368",
+      "generated_size": "364",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r6, 0x8(r31)",
+          "generated": "lwz r7, 0x8(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "li r6, 0x0",
+          "generated": "li r7, 0x0",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r6, r6, r4",
+          "generated": "add r7, r7, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r6, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r5, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r4, r7, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r4, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r5, r6, r5",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r0, 8, 0, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r5, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_separate_final",
+      "source_patch": "--- \n+++ \n@@ -64,8 +64,7 @@\n                     step += compare;\n                     work->accumulator += input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n-                    value = packed;\n+                    value = (packed & ~0xFF) | (step & 0xFF);\n                 } else {\n                     work->count--;\n                 }\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_separate_final.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_separate_final.raw.json\n",
+      "score": 96.141304,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r6, 0x8(r31)",
+          "generated": "lwz r7, 0x8(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "li r6, 0x0",
+          "generated": "li r7, 0x0",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r6, r6, r4",
+          "generated": "add r7, r7, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r6, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r5, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r7, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r4, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r5, r6, r5",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r0, r7",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r4, 8, 0, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r5, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_step_assignment",
+      "source_patch": "--- \n+++ \n@@ -61,7 +61,7 @@\n                     if (input->upper == input->lower && (unsigned char)compare == input->lower)\n                         step = 0;\n \n-                    step += compare;\n+                    step = step + compare;\n                     work->accumulator += input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_step_assignment.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_step_assignment.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_step_commuted",
+      "source_patch": "--- \n+++ \n@@ -61,7 +61,7 @@\n                     if (input->upper == input->lower && (unsigned char)compare == input->lower)\n                         step = 0;\n \n-                    step += compare;\n+                    step = compare + step;\n                     work->accumulator += input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_step_commuted.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_step_commuted.raw.json\n",
+      "score": 99.184784,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "add r6, r6, r4",
+          "generated": "add r6, r4, r6",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_acc_commuted_local",
+      "source_patch": "--- \n+++ \n@@ -34,6 +34,8 @@\n     int compare;\n     int step;\n     int packed;\n+    int acc;\n+    int delta;\n     int i;\n \n     memset(work, 0, 0x18);\n@@ -62,7 +64,9 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n+                    acc = work->accumulator;\n+                    delta = input->step;\n+                    work->accumulator = delta + acc;\n                     packed = (0xFF - (unsigned char)step) << 8;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n                     value = packed;\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_commuted_local.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_commuted_local.raw.json\n",
+      "score": 99.16304,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_acc_volatile",
+      "source_patch": "--- \n+++ \n@@ -18,7 +18,7 @@\n     int delay;\n     int step;\n     u32 padC;\n-    int accumulator;\n+    volatile int accumulator;\n     u16* image;\n } State;\n \n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_volatile.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_acc_volatile.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_loads_packed_store",
+      "source_patch": "--- \n+++ \n@@ -64,9 +64,12 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n+                    acc = work->accumulator;\n+                    delta = input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n+                    work->accumulator = acc + delta;\n+                    packed = (packed & ~0xFF) \n+                     (step & 0xFF);\n                     value = packed;\n                 } else {\n                     work->count--;\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 2,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_801EBC6C.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_801EBC6C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801EBC6C.d build/GEDE01/src/game/game_fn_801EBC6C.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_801EBC6C.c\n# ------------------------------------\n#      72: (step & 0xFF);\n#   Error:             ^\n#   call of non-function\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n"
+    },
+    {
+      "variant": "mask_loads_inverse_store_shift",
+      "source_patch": "--- \n+++ \n@@ -64,9 +64,13 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n-                    packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n+                    acc = work->accumulator;\n+                    delta = input->step;\n+                    packed = 0xFF - (unsigned char)step;\n+                    work->accumulator = acc + delta;\n+                    packed <<= 8;\n+                    packed = (packed & ~0xFF) \n+                     (step & 0xFF);\n                     value = packed;\n                 } else {\n                     work->count--;\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 2,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_801EBC6C.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_801EBC6C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801EBC6C.d build/GEDE01/src/game/game_fn_801EBC6C.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_801EBC6C.c\n# ------------------------------------\n#      73: (step & 0xFF);\n#   Error:             ^\n#   call of non-function\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n"
+    },
+    {
+      "variant": "mask_loads_inverse_add_shift_store",
+      "source_patch": "--- \n+++ \n@@ -64,9 +64,14 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n-                    packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n+                    acc = work->accumulator;\n+                    delta = input->step;\n+                    packed = 0xFF - (unsigned char)step;\n+                    acc += delta;\n+                    packed <<= 8;\n+                    work->accumulator = acc;\n+                    packed = (packed & ~0xFF) \n+                     (step & 0xFF);\n                     value = packed;\n                 } else {\n                     work->count--;\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 2,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_801EBC6C.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_801EBC6C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801EBC6C.d build/GEDE01/src/game/game_fn_801EBC6C.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_801EBC6C.c\n# ------------------------------------\n#      74: (step & 0xFF);\n#   Error:             ^\n#   call of non-function\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n"
+    },
+    {
+      "variant": "mask_loads_packed_add_store",
+      "source_patch": "--- \n+++ \n@@ -64,9 +64,13 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n+                    acc = work->accumulator;\n+                    delta = input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n+                    acc += delta;\n+                    work->accumulator = acc;\n+                    packed = (packed & ~0xFF) \n+                     (step & 0xFF);\n                     value = packed;\n                 } else {\n                     work->count--;\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 2,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_801EBC6C.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_801EBC6C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801EBC6C.d build/GEDE01/src/game/game_fn_801EBC6C.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_801EBC6C.c\n# ------------------------------------\n#      73: (step & 0xFF);\n#   Error:             ^\n#   call of non-function\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n"
+    },
+    {
+      "variant": "mask_loads_packed_store_final",
+      "source_patch": "--- \n+++ \n@@ -64,10 +64,12 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n+                    acc = work->accumulator;\n+                    delta = input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n-                    value = packed;\n+                    work->accumulator = acc + delta;\n+                    value = (packed & ~0xFF) \n+                     (step & 0xFF);\n                 } else {\n                     work->count--;\n                 }\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 2,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_801EBC6C.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_801EBC6C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801EBC6C.d build/GEDE01/src/game/game_fn_801EBC6C.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_801EBC6C.c\n# ------------------------------------\n#      72: (step & 0xFF);\n#   Error:             ^\n#   call of non-function\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n"
+    },
+    {
+      "variant": "mask_loads_inverse_store_shift_final",
+      "source_patch": "--- \n+++ \n@@ -64,10 +64,13 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n-                    packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n-                    value = packed;\n+                    acc = work->accumulator;\n+                    delta = input->step;\n+                    packed = 0xFF - (unsigned char)step;\n+                    work->accumulator = acc + delta;\n+                    packed <<= 8;\n+                    value = (packed & ~0xFF) \n+                     (step & 0xFF);\n                 } else {\n                     work->count--;\n                 }\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 2,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_801EBC6C.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_801EBC6C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801EBC6C.d build/GEDE01/src/game/game_fn_801EBC6C.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_801EBC6C.c\n# ------------------------------------\n#      73: (step & 0xFF);\n#   Error:             ^\n#   call of non-function\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n"
+    },
+    {
+      "variant": "mask_loads_packed_store",
+      "source_patch": "--- \n+++ \n@@ -64,8 +64,10 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n+                    acc = work->accumulator;\n+                    delta = input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n+                    work->accumulator = acc + delta;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n                     value = packed;\n                 } else {\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_loads_packed_store.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_loads_packed_store.raw.json\n",
+      "score": 95.978264,
+      "retail_size": "368",
+      "generated_size": "372",
+      "derived_instruction_differences": [
+        {
+          "retail": null,
+          "generated": "clrlwi r5, r6, 24",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": null,
+          "generated": "slwi r5, r5, 8",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r4, r5",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_loads_inverse_store_shift",
+      "source_patch": "--- \n+++ \n@@ -64,8 +64,11 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n-                    packed = (0xFF - (unsigned char)step) << 8;\n+                    acc = work->accumulator;\n+                    delta = input->step;\n+                    packed = 0xFF - (unsigned char)step;\n+                    work->accumulator = acc + delta;\n+                    packed <<= 8;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n                     value = packed;\n                 } else {\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_loads_inverse_store_shift.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_loads_inverse_store_shift.raw.json\n",
+      "score": 96.902176,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r7, r5, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r5, r6",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r5, r7, 8, 0, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r0, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        }
+      ]
+    },
+    {
+      "variant": "mask_loads_inverse_add_shift_store",
+      "source_patch": "--- \n+++ \n@@ -64,8 +64,12 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n-                    packed = (0xFF - (unsigned char)step) << 8;\n+                    acc = work->accumulator;\n+                    delta = input->step;\n+                    packed = 0xFF - (unsigned char)step;\n+                    acc += delta;\n+                    packed <<= 8;\n+                    work->accumulator = acc;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n                     value = packed;\n                 } else {\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_loads_inverse_add_shift_store.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_loads_inverse_add_shift_store.raw.json\n",
+      "score": 96.57609,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r7, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r4, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r5, r4, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r7, r7, r0",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r4, r6",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r5, 8, 0, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r7, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_loads_packed_add_store",
+      "source_patch": "--- \n+++ \n@@ -64,8 +64,11 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n+                    acc = work->accumulator;\n+                    delta = input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n+                    acc += delta;\n+                    work->accumulator = acc;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n                     value = packed;\n                 } else {\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_loads_packed_add_store.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_loads_packed_add_store.raw.json\n",
+      "score": 95.652176,
+      "retail_size": "368",
+      "generated_size": "372",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "clrlwi r4, r6, 24",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r4, r4, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "slwi r4, r4, 8",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r5, r5, r0",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r0, r4",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_loads_packed_store_final",
+      "source_patch": "--- \n+++ \n@@ -64,10 +64,11 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n+                    acc = work->accumulator;\n+                    delta = input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n-                    value = packed;\n+                    work->accumulator = acc + delta;\n+                    value = (packed & ~0xFF) | (step & 0xFF);\n                 } else {\n                     work->count--;\n                 }\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_loads_packed_store_final.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_loads_packed_store_final.raw.json\n",
+      "score": 96.141304,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r6, 0x8(r31)",
+          "generated": "lwz r7, 0x8(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "li r6, 0x0",
+          "generated": "li r7, 0x0",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r6, r6, r4",
+          "generated": "add r7, r7, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r6, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r5, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r7, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r4, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r5, r6, r5",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r0, r7",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r4, 8, 0, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r5, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_loads_inverse_store_shift_final",
+      "source_patch": "--- \n+++ \n@@ -64,10 +64,12 @@\n                         step = 0;\n \n                     step += compare;\n-                    work->accumulator += input->step;\n-                    packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n-                    value = packed;\n+                    acc = work->accumulator;\n+                    delta = input->step;\n+                    packed = 0xFF - (unsigned char)step;\n+                    work->accumulator = acc + delta;\n+                    packed <<= 8;\n+                    value = (packed & ~0xFF) | (step & 0xFF);\n                 } else {\n                     work->count--;\n                 }\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_loads_inverse_store_shift_final.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_loads_inverse_store_shift_final.raw.json\n",
+      "score": 96.141304,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r6, 0x8(r31)",
+          "generated": "lwz r7, 0x8(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "li r6, 0x0",
+          "generated": "li r7, 0x0",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r6, r6, r4",
+          "generated": "add r7, r7, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r6, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r5, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r7, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r4, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r5, r6, r5",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r0, r7",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r4, 8, 0, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r5, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_final_cast",
+      "source_patch": "--- \n+++ \n@@ -65,7 +65,7 @@\n                     work->accumulator += input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n-                    value = packed;\n+                    value = (u16)packed;\n                 } else {\n                     work->count--;\n                 }\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_final_cast.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_final_cast.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    },
+    {
+      "variant": "mask_final_mask",
+      "source_patch": "--- \n+++ \n@@ -65,7 +65,7 @@\n                     work->accumulator += input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n-                    value = packed;\n+                    value = packed & 0xFFFF;\n                 } else {\n                     work->count--;\n                 }\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_final_mask.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_final_mask.raw.json\n",
+      "score": 94.51087,
+      "retail_size": "368",
+      "generated_size": "376",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "slwi r7, r0, 8",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r0, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r4, r7",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r0, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "mr r5, r0",
+          "diff_kind": "DIFF_INSERT"
+        }
+      ]
+    },
+    {
+      "variant": "mask_final_compound",
+      "source_patch": "--- \n+++ \n@@ -65,7 +65,7 @@\n                     work->accumulator += input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n-                    value = packed;\n+                    value = packed &= 0xFFFF;\n                 } else {\n                     work->count--;\n                 }\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_final_compound.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_final_compound.raw.json\n",
+      "score": 91.41304,
+      "retail_size": "368",
+      "generated_size": "372",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r6, 0x8(r31)",
+          "generated": "lwz r7, 0x8(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "li r6, 0x0",
+          "generated": "li r7, 0x0",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r6, r6, r4",
+          "generated": "add r7, r7, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r6, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "clrlwi r0, r7, 24",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r5, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r4, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "mr r0, r7",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r5, r6, r5",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r4, 8, 0, 23",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "stw r5, 0x10(r31)",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r0, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "mr r5, r0",
+          "diff_kind": "DIFF_INSERT"
+        }
+      ]
+    },
+    {
+      "variant": "mask_final_staged_cast",
+      "source_patch": "--- \n+++ \n@@ -65,6 +65,7 @@\n                     work->accumulator += input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n                     packed = (packed & ~0xFF) | (step & 0xFF);\n+                    packed = (u16)packed;\n                     value = packed;\n                 } else {\n                     work->count--;\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_final_staged_cast.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_final_staged_cast.raw.json\n",
+      "score": 94.51087,
+      "retail_size": "368",
+      "generated_size": "376",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": null,
+          "diff_kind": "DIFF_DELETE"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "slwi r7, r0, 8",
+          "diff_kind": "DIFF_INSERT"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r0, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "mr r4, r7",
+          "diff_kind": "DIFF_REPLACE"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r4, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r0, r4, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": null,
+          "generated": "mr r5, r0",
+          "diff_kind": "DIFF_INSERT"
+        }
+      ]
+    },
+    {
+      "variant": "mask_low_u32_cast",
+      "source_patch": "--- \n+++ \n@@ -64,7 +64,7 @@\n                     step += compare;\n                     work->accumulator += input->step;\n                     packed = (0xFF - (unsigned char)step) << 8;\n-                    packed = (packed & ~0xFF) | (step & 0xFF);\n+                    packed = (packed & ~0xFF) | (u32)(unsigned char)step;\n                     value = packed;\n                 } else {\n                     work->count--;\n",
+      "build_command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801EBC6C.o"
+      ],
+      "build_exit": 0,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EBC6C.o\n",
+      "diff_command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801EBC6C",
+        "fn_801EBC6C",
+        "-o",
+        "reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_low_u32_cast.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "diff_exit": 0,
+      "diff_output": " INFO Writing to reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04-mask_low_u32_cast.raw.json\n",
+      "score": 99.29348,
+      "retail_size": "368",
+      "generated_size": "368",
+      "derived_instruction_differences": [
+        {
+          "retail": "lwz r4, 0x10(r31)",
+          "generated": "lwz r5, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "lwz r0, 0x14(r30)",
+          "generated": "lwz r4, 0x14(r30)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r6, 24",
+          "generated": "clrlwi r0, r6, 24",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "subfic r5, r5, 0xff",
+          "generated": "subfic r0, r0, 0xff",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "add r0, r4, r0",
+          "generated": "add r4, r5, r4",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "slwi r5, r5, 8",
+          "generated": "slwi r0, r0, 8",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "stw r0, 0x10(r31)",
+          "generated": "stw r4, 0x10(r31)",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "rlwimi r5, r6, 0, 24, 31",
+          "generated": "rlwimi r0, r6, 0, 24, 31",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        },
+        {
+          "retail": "clrlwi r5, r5, 16",
+          "generated": "clrlwi r5, r0, 16",
+          "diff_kind": "DIFF_ARG_MISMATCH"
+        }
+      ]
+    }
+  ]
+}

@@ -64,7 +64,7 @@ void fn_801EBC6C(Source* source, State* state, u16* image)
                     step += compare;
                     work->accumulator += input->step;
                     packed = (0xFF - (unsigned char)step) << 8;
-                    packed |= (unsigned char)step;
+                    packed = (packed & ~0xFF) | (step & 0xFF);
                     value = packed;
                 } else {
                     work->count--;

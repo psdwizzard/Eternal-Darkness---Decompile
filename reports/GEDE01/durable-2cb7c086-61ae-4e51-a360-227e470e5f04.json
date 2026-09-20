@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "2cb7c086-61ae-4e51-a360-227e470e5f04",
+  "attempt": 6,
+  "base_commit": "b43cbb326803ff84c56a7b1d7846d9a861d81dfc",
+  "target": "fn_801EBC6C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2cb7c086-61ae-4e51-a360-227e470e5f04.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2cb7c086-61ae-4e51-a360-227e470e5f04-canonical.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2cb7c086-61ae-4e51-a360-227e470e5f04-reloc-strict.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-2cb7c086-61ae-4e51-a360-227e470e5f04.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-2cb7c086-61ae-4e51-a360-227e470e5f04.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are 99.29348%, with retail and generated C both 368 bytes. Every opcode and instruction position matches. Nine instructions at offsets 0x100, 0x104, 0x108, 0x10C, 0x110, 0x114, 0x118, 0x11C and 0x120 differ only in register operands: retail uses r4/r0 for the accumulator addition and r5 for packed color; generated C uses r5/r4 and r0 respectively. The effective step now matches in r6, and the explicit slwi and low-byte rlwimi match. Both relocation offsets, types, target names, symbol values and addends match exactly."
+}
