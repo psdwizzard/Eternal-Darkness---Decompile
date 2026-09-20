@@ -6,9 +6,9 @@ typedef struct Vec3 {
 } Vec3;
 
 extern float lbl_8064CF04;
-extern float lbl_806504F8;
-extern float lbl_806504FC;
-extern float lbl_80650500;
+extern const float lbl_806504F8;
+extern const float lbl_806504FC;
+extern const float lbl_80650500;
 extern void* lbl_8064C4E0;
 extern int lbl_802FC5BC[];
 
@@ -19,56 +19,41 @@ extern int fn_80201A84(void*);
 extern int fn_801E79FC(void*, int);
 extern void fn_80179904(void*, int);
 
-/*
- * Honest NonMatching reconstruction. The behavior and all field writes are
- * recovered; remaining differences are temporary-register selection in the
- * first packed-kind block and one floating-point load/store scheduling pair.
- */
+/* Select the packed variant for the current global level. */
+static inline u8 packed_kind(int value)
+{
+    u8 kind;
+    int packed;
+    if (lbl_8064CF04 >= lbl_806504FC) {
+        packed = (value >> 2) & 0x3F;
+        kind = value & 0xFF;
+        if (packed > 0)
+            kind = packed;
+    } else if (lbl_8064CF04 >= lbl_80650500) {
+        packed = (value >> 1) & 0x7F;
+        kind = value & 0xFF;
+        if (packed > 0)
+            kind = packed;
+    } else {
+        kind = value & 0xFF;
+    }
+    return kind;
+}
+
 void fn_8014D478(void* owner, Vec3* position, float* rotation,
                  int first_kind, int second_kind, int* source, int flags)
 {
     void* state;
-    u8 kind;
-    int packed;
-    float first_upper;
 
     if (((flags & 4) != 0 || !(lbl_8064CF04 >= lbl_806504F8)) && flags != 0) {
         state = fn_80149D98(fn_8014D650);
         if (state != 0) {
             fn_80149D64(state);
             *(u8*)((char*)state + 0x1328) = 4;
-            first_upper = lbl_806504FC;
             *(int*)((char*)state + 0x38C) = flags;
 
-            if (lbl_8064CF04 >= first_upper) {
-                packed = (first_kind >> 2) & 0x3F;
-                kind = first_kind & 0xFF;
-                if (packed > 0)
-                    kind = packed;
-            } else if (lbl_8064CF04 >= lbl_80650500) {
-                packed = (first_kind >> 1) & 0x7F;
-                kind = first_kind & 0xFF;
-                if (packed > 0)
-                    kind = packed;
-            } else {
-                kind = first_kind & 0xFF;
-            }
-            *(u8*)((char*)state + 0x398) = kind;
-
-            if (lbl_8064CF04 >= lbl_806504FC) {
-                packed = (second_kind >> 2) & 0x3F;
-                kind = second_kind & 0xFF;
-                if (packed > 0)
-                    kind = packed;
-            } else if (lbl_8064CF04 >= lbl_80650500) {
-                packed = (second_kind >> 1) & 0x7F;
-                kind = second_kind & 0xFF;
-                if (packed > 0)
-                    kind = packed;
-            } else {
-                kind = second_kind & 0xFF;
-            }
-            *(u8*)((char*)state + 0x399) = kind;
+            *(u8*)((char*)state + 0x398) = packed_kind(first_kind);
+            *(u8*)((char*)state + 0x399) = packed_kind(second_kind);
             *(int*)((char*)state + 0x3A4) = *source;
             *(int*)((char*)state + 0x394) = -1;
             if (owner != 0)
