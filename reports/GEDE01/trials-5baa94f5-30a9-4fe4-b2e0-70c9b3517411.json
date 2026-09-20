@@ -1,0 +1,631 @@
+[
+  {
+    "name": "byte-offset-fields",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = lbl_806286B0[--lbl_8064D470].node;\n    base = *(ResourceNode**)((u8*)lbl_806286B0 + lbl_8064D470 * 12 + 8);\n    archive = *(void**)((u8*)lbl_806286B0 + lbl_8064D470 * 12 + 4);\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "4dece6cbf6b45df975eaed002a490125502a5e32a235907dc4e33da72dab3f1e",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-byte-offset-fields.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-byte-offset-fields.json\n"
+      }
+    ],
+    "score": 95.55,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-byte-offset-fields.json"
+  },
+  {
+    "name": "byte-offset-local",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    int offset;\n    node = lbl_806286B0[--lbl_8064D470].node;\n    offset = lbl_8064D470 * 12;\n    base = *(ResourceNode**)((u8*)lbl_806286B0 + offset + 8);\n    archive = *(void**)((u8*)lbl_806286B0 + offset + 4);\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "d0de43d6fa1fef3ce2d446a3c9ac428ec0f2553b8dfd618cab793bad511611e5",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-byte-offset-local.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-byte-offset-local.json\n"
+      }
+    ],
+    "score": 95.4375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-byte-offset-local.json"
+  },
+  {
+    "name": "field-first-address",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = lbl_806286B0[--lbl_8064D470].node;\n    base = *(ResourceNode**)((u8*)&lbl_806286B0[0].base + lbl_8064D470 * 12);\n    archive = *(void**)((u8*)&lbl_806286B0[0].archive + lbl_8064D470 * 12);\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "9f5cc3904e0c731655be6e70d682251974d48fbe6c4da9d7d14c9be34c420764",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-field-first-address.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-field-first-address.json\n"
+      }
+    ],
+    "score": 95.7375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-field-first-address.json"
+  },
+  {
+    "name": "scalar-pointer-array",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = ((ResourceNode**)lbl_806286B0)[(s16)(lbl_8064D470-- - 1) * 3];\n    base = lbl_806286B0[lbl_8064D470].base;\n    archive = lbl_806286B0[lbl_8064D470].archive;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "537e93bfc252434a8d4e759928bd24d1f47b9462ad810e314846a9ad877a2b81",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-scalar-pointer-array.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-scalar-pointer-array.json\n"
+      }
+    ],
+    "score": 95.7375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-scalar-pointer-array.json"
+  },
+  {
+    "name": "scalar-prefix-array",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = ((ResourceNode**)lbl_806286B0)[--lbl_8064D470 * 3];\n    base = lbl_806286B0[lbl_8064D470].base;\n    archive = lbl_806286B0[lbl_8064D470].archive;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "5afea59635443c2f984a5d4723c44f356b8b527ce2791b031b9d605149a7fce1",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-scalar-prefix-array.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-scalar-prefix-array.json\n"
+      }
+    ],
+    "score": 95.7375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-scalar-prefix-array.json"
+  },
+  {
+    "name": "scalar-byte-address",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = *(ResourceNode**)((u8*)lbl_806286B0 + (s16)(lbl_8064D470-- - 1) * 12);\n    base = lbl_806286B0[lbl_8064D470].base;\n    archive = lbl_806286B0[lbl_8064D470].archive;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "1e1d4fc78d74b23229e6b35cbb55e1194e2d99acefec56724a50fa7898cd0259",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-scalar-byte-address.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-scalar-byte-address.json\n"
+      }
+    ],
+    "score": 95.7375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-scalar-byte-address.json"
+  },
+  {
+    "name": "scalar-member-address",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = (&lbl_806286B0[0].node)[(s16)(lbl_8064D470-- - 1) * 3];\n    base = lbl_806286B0[lbl_8064D470].base;\n    archive = lbl_806286B0[lbl_8064D470].archive;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "1726314d820aa625b20bd7483213fd1c59363f81aeda2091079ac5f72e5bb698",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-scalar-member-address.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-scalar-member-address.json\n"
+      }
+    ],
+    "score": 95.7375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-scalar-member-address.json"
+  },
+  {
+    "name": "archive-before-base",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = lbl_806286B0[--lbl_8064D470].node;\n    archive = lbl_806286B0[lbl_8064D470].archive;\n    base = lbl_806286B0[lbl_8064D470].base;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "6c42c484cef9dd40a917976a90e71972c1d21e496146144d4e0432b186e62843",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-archive-before-base.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-archive-before-base.json\n"
+      }
+    ],
+    "score": 95.6,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-archive-before-base.json"
+  },
+  {
+    "name": "comma-loads",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = lbl_806286B0[--lbl_8064D470].node,\n    base = lbl_806286B0[lbl_8064D470].base,\n    archive = lbl_806286B0[lbl_8064D470].archive;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "199cad8c34281117200d3ae467dfbf29f1ece2e5986a092d6fef49a133eeb2e0",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-comma-loads.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-comma-loads.json\n"
+      }
+    ],
+    "score": 95.7375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-comma-loads.json"
+  },
+  {
+    "name": "volatile-node-scalar",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = ((ResourceNode* volatile*)lbl_806286B0)[--lbl_8064D470 * 3];\n    base = lbl_806286B0[lbl_8064D470].base;\n    archive = lbl_806286B0[lbl_8064D470].archive;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "00897131b45b0eccbff7b4303c0e59793844e3425c444309fc658a7c6ff8d25d",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-volatile-node-scalar.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-volatile-node-scalar.json\n"
+      }
+    ],
+    "score": 95.7375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-volatile-node-scalar.json"
+  },
+  {
+    "name": "volatile-base-member",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = lbl_806286B0[--lbl_8064D470].node;\n    base = *(ResourceNode* volatile*)&lbl_806286B0[lbl_8064D470].base;\n    archive = lbl_806286B0[lbl_8064D470].archive;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "d0b2eaeadb2b918591595e30ff4ed1a57f318912d7ae1b2848b80b94af608333",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-volatile-base-member.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-volatile-base-member.json\n"
+      }
+    ],
+    "score": 95.7375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-volatile-base-member.json"
+  },
+  {
+    "name": "volatile-both-later",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = lbl_806286B0[--lbl_8064D470].node;\n    base = ((volatile ResourceLoad*)lbl_806286B0)[lbl_8064D470].base;\n    archive = ((volatile ResourceLoad*)lbl_806286B0)[lbl_8064D470].archive;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "7a597f80bda1cc4ded60ae5d1158fbc3796d82d1de84c156799b5614b81182b1",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-volatile-both-later.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-volatile-both-later.json\n"
+      }
+    ],
+    "score": 95.55,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-volatile-both-later.json"
+  },
+  {
+    "name": "integer-node-field",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    u32 node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = (ResourceNode*)lbl_806286B0[--lbl_8064D470].node;\n    base = lbl_806286B0[lbl_8064D470].base;\n    archive = lbl_806286B0[lbl_8064D470].archive;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "406a425a18765c3f196e9ff43d07835d02b1dcf0cbbdbc8cdc5b74989e038a5b",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-integer-node-field.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-integer-node-field.json\n"
+      }
+    ],
+    "score": 95.7375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-integer-node-field.json"
+  },
+  {
+    "name": "integer-all-fields",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    u32 node;\n    u32 archive;\n    u32 base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = (ResourceNode*)lbl_806286B0[--lbl_8064D470].node;\n    base = (ResourceNode*)lbl_806286B0[lbl_8064D470].base;\n    archive = (void*)lbl_806286B0[lbl_8064D470].archive;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "f789b946301c9705f71edec97f69f090c1a1fb1ce7e608a9c96d5d6e4a40e104",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-integer-all-fields.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-integer-all-fields.json\n"
+      }
+    ],
+    "score": 95.7375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-integer-all-fields.json"
+  },
+  {
+    "name": "opaque-node-field",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    void* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = (ResourceNode*)lbl_806286B0[--lbl_8064D470].node;\n    base = lbl_806286B0[lbl_8064D470].base;\n    archive = lbl_806286B0[lbl_8064D470].archive;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "f8814ffbed9c0de06090de323fae4b8fe8254f263d415a39cdecddb691776fd8",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-opaque-node-field.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-opaque-node-field.json\n"
+      }
+    ],
+    "score": 95.7375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-opaque-node-field.json"
+  },
+  {
+    "name": "integer-address",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = *(ResourceNode**)((u32)lbl_806286B0 + (s16)(lbl_8064D470-- - 1) * 12);\n    base = lbl_806286B0[lbl_8064D470].base;\n    archive = lbl_806286B0[lbl_8064D470].archive;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "2788b7ef36272b677bb0bfd2effb7bf23451d1481ff3bd8fdd41c79451969943",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-integer-address.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-integer-address.json\n"
+      }
+    ],
+    "score": 95.7375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-integer-address.json"
+  },
+  {
+    "name": "integer-address-prefix",
+    "source": "typedef unsigned char u8;\ntypedef signed short s16;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct ResourceNode {\n    u32 next;\n    u16 id;\n    u16 flags;\n    u32 list0;\n    u32 list1;\n    u32 list4;\n    u32 list2;\n    u32 list3;\n    u32 extra;\n} ResourceNode;\n\ntypedef struct ResourceLoad {\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n} ResourceLoad;\n\nextern s16 lbl_8064D470;\nextern ResourceLoad lbl_806286B0[];\nextern void fn_801CE2B8(void);\nextern void fn_801C9460(void*, u16);\nextern void fn_801B399C(u16);\nextern void fn_801C242C(void*);\nextern void fn_801CE280(void);\nextern void fn_801C3BCC(u16*, void*, u8, void*);\nextern void fn_801BC240(void*);\nextern void fn_801C3B30(u16*, void*, u8, void*);\nextern void fn_801BC798(u16);\n\nint fn_801C3E2C(void)\n{\n    ResourceNode* node;\n    void* archive;\n    ResourceNode* base;\n    u8* extra;\n\n    node = *(ResourceNode**)((u32)lbl_806286B0 + --lbl_8064D470 * 12);\n    base = lbl_806286B0[lbl_8064D470].base;\n    archive = lbl_806286B0[lbl_8064D470].archive;\n\n    fn_801CE2B8();\n    if (node->flags == 1) {\n        extra = (u8*)base + node->extra;\n        fn_801C9460(extra + 4, *(u16*)extra);\n    } else {\n        fn_801B399C(node->id);\n    }\n    fn_801C242C((u8*)base + node->list0);\n    fn_801CE280();\n    fn_801C3BCC((u16*)((u8*)base + node->list1), 0, 1, (void*)1);\n    fn_801BC240(archive);\n    fn_801C3B30((u16*)((u8*)base + node->list0), 0, 0, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list4), 0, 4, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list2), 0, 2, (void*)1);\n    fn_801C3B30((u16*)((u8*)base + node->list3), 0, 3, (void*)1);\n    if (node->flags == 1) {\n        fn_801BC798(node->id);\n    }\n    return 1;\n}\n",
+    "source_sha256": "9fdcc269ce36ea26dbfc080d909dc9533de4edf60c9fdbccf5e816447a4064ac",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_801C3E2C.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.2.5n/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -Cpp_exceptions on -use_lmw_stmw on -MMD -c src/game/game_fn_801C3E2C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801C3E2C.d build/GEDE01/src/game/game_fn_801C3E2C.d\n"
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_801C3E2C",
+          "-o",
+          "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-integer-address-prefix.json",
+          "--format",
+          "json-pretty",
+          "fn_801C3E2C"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-integer-address-prefix.json\n"
+      }
+    ],
+    "score": 95.7375,
+    "size": "324",
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-trial-integer-address-prefix.json"
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_801C3E2C",
+      "-o",
+      "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-canonical.json",
+      "--format",
+      "json-pretty",
+      "fn_801C3E2C"
+    ],
+    "exit_code": 0,
+    "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411-canonical.json\n"
+  },
+  {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_801C3E2C",
+      "-o",
+      "reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411.json",
+      "--format",
+      "json-pretty",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "fn_801C3E2C"
+    ],
+    "exit_code": 0,
+    "output": " INFO Writing to reports/GEDE01/objdiff-5baa94f5-30a9-4fe4-b2e0-70c9b3517411.json\n"
+  }
+]

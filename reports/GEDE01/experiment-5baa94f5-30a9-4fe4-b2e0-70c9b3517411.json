@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "assignment_id": "5baa94f5-30a9-4fe4-b2e0-70c9b3517411",
+  "target": "fn_801C3E2C",
+  "historical_commits_reviewed": [
+    "4ce654975e6d24d1b6f8b923dbb543e0a74a166a",
+    "2995eef30840ffb64ab85b04db3e5bdd14faadda",
+    "d4d75c816990cb563d964f45e0dca34b59bc9417",
+    "12550f747fbc50072300d504fa73c2f76a1b9771",
+    "5bb9a2bf552587d3ebe648475aeefb1c2895321d"
+  ],
+  "new_hypothesis": "Later base/archive address-expression trees may drive address commoning and scheduling of the initial signed-short decrement lookup; express these fields through byte offsets and vary their load order. Follow-up scalar pointer, integer-address, and field-type variants test whether typed record addressing causes the extra add plus lwz instead of lwzx.",
+  "trial_count": 17,
+  "trial_result": "No improvement: all new trials generate 324 bytes, best 95.7375%. Preserve the existing 320-byte 96.6875% candidate unchanged.",
+  "results": {
+    "canonical": {
+      "percent": 96.6875,
+      "retail_size": "320",
+      "generated_size": "320",
+      "differing_rows": {
+        "left": [
+          {
+            "kind": "DIFF_DELETE",
+            "instruction": "extsh r0, r0",
+            "offset": "44"
+          },
+          {
+            "kind": "DIFF_ARG_MISMATCH",
+            "instruction": "mulli r3, r0, 0xc",
+            "offset": "48"
+          },
+          {
+            "kind": "DIFF_INSERT",
+            "instruction": null,
+            "offset": null
+          },
+          {
+            "kind": "DIFF_REPLACE",
+            "instruction": "lwzx r31, r4, r3",
+            "offset": "60"
+          }
+        ],
+        "right": [
+          {
+            "kind": "DIFF_DELETE",
+            "instruction": null,
+            "offset": null
+          },
+          {
+            "kind": "DIFF_ARG_MISMATCH",
+            "instruction": "mulli r3, r3, 0xc",
+            "offset": "44"
+          },
+          {
+            "kind": "DIFF_INSERT",
+            "instruction": "add r3, r4, r3",
+            "offset": "52"
+          },
+          {
+            "kind": "DIFF_REPLACE",
+            "instruction": "lwz r31, -0xc(r3)",
+            "offset": "60"
+          }
+        ]
+      }
+    },
+    "relocation_strict": {
+      "percent": 96.6875,
+      "retail_size": "320",
+      "generated_size": "320",
+      "differing_rows": {
+        "left": [
+          {
+            "kind": "DIFF_DELETE",
+            "instruction": "extsh r0, r0",
+            "offset": "44"
+          },
+          {
+            "kind": "DIFF_ARG_MISMATCH",
+            "instruction": "mulli r3, r0, 0xc",
+            "offset": "48"
+          },
+          {
+            "kind": "DIFF_INSERT",
+            "instruction": null,
+            "offset": null
+          },
+          {
+            "kind": "DIFF_REPLACE",
+            "instruction": "lwzx r31, r4, r3",
+            "offset": "60"
+          }
+        ],
+        "right": [
+          {
+            "kind": "DIFF_DELETE",
+            "instruction": null,
+            "offset": null
+          },
+          {
+            "kind": "DIFF_ARG_MISMATCH",
+            "instruction": "mulli r3, r3, 0xc",
+            "offset": "44"
+          },
+          {
+            "kind": "DIFF_INSERT",
+            "instruction": "add r3, r4, r3",
+            "offset": "52"
+          },
+          {
+            "kind": "DIFF_REPLACE",
+            "instruction": "lwz r31, -0xc(r3)",
+            "offset": "60"
+          }
+        ]
+      }
+    }
+  },
+  "source_sha256": "febda75ba40ec098bb56a8fb96d7355d8e3e9225fe6bb4e48c0f1a905f49d7d1",
+  "registration": "Existing independent C TU remains NonMatching, GC/1.2.5n, -Cpp_exceptions on, -use_lmw_stmw on; no configuration change.",
+  "dol_scope": "Successful canonical DOL verification links the retail split for this NonMatching function; it is not evidence that the reconstructed function matches.",
+  "raw_trial_evidence": "eternal-darkness-decomp/reports/GEDE01/trials-5baa94f5-30a9-4fe4-b2e0-70c9b3517411.json",
+  "preexisting_modification": "CLAUDE.md was already modified and is left untouched and uncommitted."
+}

@@ -1,0 +1,273 @@
+{
+  "raw_commands": [
+    {
+      "command": [
+        "sha1sum",
+        "build/GEDE01/main.dol",
+        "orig/GEDE01/sys/main.dol"
+      ],
+      "exit_code": 0,
+      "output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\n"
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/obj/game/game_fn_801C3E2C.o"
+      ],
+      "exit_code": 0,
+      "output": "\nRelocation section '.relaextabindex' at offset 0x1c0 contains 2 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000000  00000701 R_PPC_ADDR32           00000000   fn_801C3E2C + 0\n00000008  00000501 R_PPC_ADDR32           00000000   @etb_80005A58 + 0\n\nRelocation section '.rela.text' at offset 0x1d8 contains 17 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000006  00000806 R_PPC_ADDR16_HA        00000000   lbl_806286B0 + 0\n0000000e  00000804 R_PPC_ADDR16_LO        00000000   lbl_806286B0 + 0\n00000020  0000096d R_PPC_EMB_SDA21        00000000   lbl_8064D470 + 0\n00000028  0000096d R_PPC_EMB_SDA21        00000000   lbl_8064D470 + 0\n00000034  0000096d R_PPC_EMB_SDA21        00000000   lbl_8064D470 + 0\n0000004c  00000a0a R_PPC_REL24            00000000   fn_801CE2B8 + 0\n0000006c  00000b0a R_PPC_REL24            00000000   fn_801C9460 + 0\n00000078  00000c0a R_PPC_REL24            00000000   fn_801B399C + 0\n00000084  00000d0a R_PPC_REL24            00000000   fn_801C242C + 0\n00000088  00000e0a R_PPC_REL24            00000000   fn_801CE280 + 0\n000000a0  00000f0a R_PPC_REL24            00000000   fn_801C3BCC + 0\n000000a8  0000100a R_PPC_REL24            00000000   fn_801BC240 + 0\n000000c0  0000110a R_PPC_REL24            00000000   fn_801C3B30 + 0\n000000d8  0000110a R_PPC_REL24            00000000   fn_801C3B30 + 0\n000000f0  0000110a R_PPC_REL24            00000000   fn_801C3B30 + 0\n00000108  0000110a R_PPC_REL24            00000000   fn_801C3B30 + 0\n0000011c  0000120a R_PPC_REL24            00000000   fn_801BC798 + 0\n"
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/src/game/game_fn_801C3E2C.o"
+      ],
+      "exit_code": 0,
+      "output": "\nRelocation section '.rela.text' at offset 0x188 contains 17 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000006  00000706 R_PPC_ADDR16_HA        00000000   lbl_806286B0 + 0\n0000000e  00000704 R_PPC_ADDR16_LO        00000000   lbl_806286B0 + 0\n00000022  0000096d R_PPC_EMB_SDA21        00000000   lbl_8064D470 + 0\n0000002a  0000096d R_PPC_EMB_SDA21        00000000   lbl_8064D470 + 0\n00000032  0000096d R_PPC_EMB_SDA21        00000000   lbl_8064D470 + 0\n0000004c  00000a0a R_PPC_REL24            00000000   fn_801CE2B8 + 0\n0000006c  00000b0a R_PPC_REL24            00000000   fn_801C9460 + 0\n00000078  00000c0a R_PPC_REL24            00000000   fn_801B399C + 0\n00000084  00000d0a R_PPC_REL24            00000000   fn_801C242C + 0\n00000088  00000e0a R_PPC_REL24            00000000   fn_801CE280 + 0\n000000a0  00000f0a R_PPC_REL24            00000000   fn_801C3BCC + 0\n000000a8  0000100a R_PPC_REL24            00000000   fn_801BC240 + 0\n000000c0  0000110a R_PPC_REL24            00000000   fn_801C3B30 + 0\n000000d8  0000110a R_PPC_REL24            00000000   fn_801C3B30 + 0\n000000f0  0000110a R_PPC_REL24            00000000   fn_801C3B30 + 0\n00000108  0000110a R_PPC_REL24            00000000   fn_801C3B30 + 0\n0000011c  0000120a R_PPC_REL24            00000000   fn_801BC798 + 0\n\nRelocation section '.relaextabindex' at offset 0x254 contains 2 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000000  00000801 R_PPC_ADDR32           00000000   fn_801C3E2C + 0\n00000008  00000501 R_PPC_ADDR32           00000000   @8 + 0\n"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "output": "legal audit passed (19010 tracked project files inspected)\n"
+    }
+  ],
+  "text_sizes": [
+    320,
+    320
+  ],
+  "raw_text_bytes_equal": false,
+  "raw_text_differing_byte_offsets": [
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    51,
+    52,
+    53,
+    54,
+    55,
+    60,
+    61,
+    62,
+    63
+  ],
+  "text_relocations": {
+    "left": [
+      {
+        "offset": 6,
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_806286B0",
+        "addend": 0
+      },
+      {
+        "offset": 14,
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_806286B0",
+        "addend": 0
+      },
+      {
+        "offset": 32,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064D470",
+        "addend": 0
+      },
+      {
+        "offset": 40,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064D470",
+        "addend": 0
+      },
+      {
+        "offset": 52,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064D470",
+        "addend": 0
+      },
+      {
+        "offset": 76,
+        "type": "R_PPC_REL24",
+        "target": "fn_801CE2B8",
+        "addend": 0
+      },
+      {
+        "offset": 108,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C9460",
+        "addend": 0
+      },
+      {
+        "offset": 120,
+        "type": "R_PPC_REL24",
+        "target": "fn_801B399C",
+        "addend": 0
+      },
+      {
+        "offset": 132,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C242C",
+        "addend": 0
+      },
+      {
+        "offset": 136,
+        "type": "R_PPC_REL24",
+        "target": "fn_801CE280",
+        "addend": 0
+      },
+      {
+        "offset": 160,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C3BCC",
+        "addend": 0
+      },
+      {
+        "offset": 168,
+        "type": "R_PPC_REL24",
+        "target": "fn_801BC240",
+        "addend": 0
+      },
+      {
+        "offset": 192,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C3B30",
+        "addend": 0
+      },
+      {
+        "offset": 216,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C3B30",
+        "addend": 0
+      },
+      {
+        "offset": 240,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C3B30",
+        "addend": 0
+      },
+      {
+        "offset": 264,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C3B30",
+        "addend": 0
+      },
+      {
+        "offset": 284,
+        "type": "R_PPC_REL24",
+        "target": "fn_801BC798",
+        "addend": 0
+      }
+    ],
+    "right": [
+      {
+        "offset": 6,
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_806286B0",
+        "addend": 0
+      },
+      {
+        "offset": 14,
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_806286B0",
+        "addend": 0
+      },
+      {
+        "offset": 34,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064D470",
+        "addend": 0
+      },
+      {
+        "offset": 42,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064D470",
+        "addend": 0
+      },
+      {
+        "offset": 50,
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064D470",
+        "addend": 0
+      },
+      {
+        "offset": 76,
+        "type": "R_PPC_REL24",
+        "target": "fn_801CE2B8",
+        "addend": 0
+      },
+      {
+        "offset": 108,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C9460",
+        "addend": 0
+      },
+      {
+        "offset": 120,
+        "type": "R_PPC_REL24",
+        "target": "fn_801B399C",
+        "addend": 0
+      },
+      {
+        "offset": 132,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C242C",
+        "addend": 0
+      },
+      {
+        "offset": 136,
+        "type": "R_PPC_REL24",
+        "target": "fn_801CE280",
+        "addend": 0
+      },
+      {
+        "offset": 160,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C3BCC",
+        "addend": 0
+      },
+      {
+        "offset": 168,
+        "type": "R_PPC_REL24",
+        "target": "fn_801BC240",
+        "addend": 0
+      },
+      {
+        "offset": 192,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C3B30",
+        "addend": 0
+      },
+      {
+        "offset": 216,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C3B30",
+        "addend": 0
+      },
+      {
+        "offset": 240,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C3B30",
+        "addend": 0
+      },
+      {
+        "offset": 264,
+        "type": "R_PPC_REL24",
+        "target": "fn_801C3B30",
+        "addend": 0
+      },
+      {
+        "offset": 284,
+        "type": "R_PPC_REL24",
+        "target": "fn_801BC798",
+        "addend": 0
+      }
+    ]
+  },
+  "relocation_types_targets_addends_equal": true,
+  "relocation_offsets_equal": false
+}
