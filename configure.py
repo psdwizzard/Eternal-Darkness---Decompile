@@ -11923,7 +11923,7 @@ config.libs = [
             # and aggregate Vec3 scheduling remain codegen-divergent.
             Object(NonMatching, "game/game_fn_801DE8B4.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801DEEBC.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
-            Object(NonMatching, "game/game_fn_801DF060.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801DF060.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/game_fn_801E0088.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E1920.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E1A18.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),

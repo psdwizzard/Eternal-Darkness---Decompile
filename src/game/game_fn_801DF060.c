@@ -2,6 +2,7 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 typedef struct Vec3 { float x, y, z; } Vec3;
+typedef float Matrix34[3][4];
 
 extern int lbl_8064D18C;
 extern u8 lbl_8023B5C0[];
@@ -21,9 +22,9 @@ extern void fn_801D0E78(void*);
 extern int fn_801D38E8(int);
 extern void fn_801DE5DC(int, int);
 extern void* fn_8011FE34(void*);
-extern void fn_802114E0(Vec3*, void*);
+extern void fn_802114E0(Matrix34, void*);
 extern void fn_8011F114(Vec3*, void*);
-extern void fn_80211710(Vec3*, Vec3*, Vec3*);
+extern void fn_80211710(Matrix34, Vec3*, Vec3*);
 extern void fn_80211A6C(Vec3*, Vec3*, Vec3*);
 extern void fn_80211A48(Vec3*, Vec3*, Vec3*);
 extern float fn_80211B44(Vec3*, Vec3*);
@@ -47,9 +48,8 @@ extern int fn_801F86F4(int);
     fn_801D62D0((handle), (a), (b), (handle), (c), (d), (owner), 0, \
         0, 2, 7, 2, 3, 1, 0, 1, 17, 4, 1, 32, 0, 1, 34, (mask), 0, (tail))
 
-/* NonMatching: complete honest-C reconstruction of the event-state dispatcher.
- * Retail's exact 0x100-byte frame, r26-r31 lifetimes, and repeated 26-argument
- * call scheduling remain compiler-codegen divergences. */
+/* Event-state dispatcher. The transform is a 3x4 matrix; flags remain
+ * full-width until the call converts them to the 16-bit effect identifier. */
 void fn_801DF060(void* object)
 {
     u8* info = object;
@@ -61,7 +61,10 @@ void fn_801DF060(void* object)
     int a, b, c;
     int d, e, f;
     int result;
-    Vec3 r, s, p, q, t, u;
+    float distance;
+    u32 flags;
+    Matrix34 r;
+    Vec3 s, p, q, t, u;
 
     if (*(int*)(info + 8) != lbl_8064D18C || (info[0xff0] & 1)) {
         handle = fn_80201814(*(int*)(info + 0xe0));
@@ -93,15 +96,15 @@ void fn_801DF060(void* object)
             handle = fn_80201814(*(int*)(info + 0xe0));
             target = fn_80201BC8(handle);
             node = fn_8011FE34(target);
-            fn_802114E0(&r, node);
+            fn_802114E0(r, node);
             fn_8011F114(&s, target);
-            fn_80211710(&r, &p, &p);
-            fn_80211710(&r, &q, &q);
+            fn_80211710(r, &p, &p);
+            fn_80211710(r, &q, &q);
             fn_80211A6C(&q, &p, &q);
             fn_80211A48(&s, &p, &p);
-            fn_80120AD0(target, &q, 100,
-                (u16)(fn_8006749C(fn_801D38E8(*(int*)(info + 4))) | 0x4000),
-                fn_80211B44(&q, &p), lbl_806511CC);
+            distance = fn_80211B44(&q, &p);
+            flags = fn_8006749C(fn_801D38E8(*(int*)(info + 4))) | 0x4000;
+            fn_80120AD0(target, &q, 100, flags, distance, lbl_806511CC);
             fn_80201D44(handle, 6); fn_80201D24(handle, 1); fn_802015A4(handle);
             if (fn_8012A100(target, 0x8a)) fn_801DE7A0(*(int*)(info + 0xe0));
         } else if (*(int*)(info + 0xf8) == 4) {
@@ -110,9 +113,9 @@ void fn_801DF060(void* object)
             handle = fn_80201814(*(int*)(info + 0xe0));
             target = fn_80201BC8(handle);
             t.z = lbl_806511B8 + *(float*)(info + 0x110);
-            fn_80120AD0(target, &u, 100,
-                (u16)(fn_8006749C(fn_801D38E8(*(int*)(info + 4))) | 0x4000),
-                fn_80211B44(&u, &t), lbl_806511CC);
+            distance = fn_80211B44(&u, &t);
+            flags = fn_8006749C(fn_801D38E8(*(int*)(info + 4))) | 0x4000;
+            fn_80120AD0(target, &u, 100, flags, distance, lbl_806511CC);
             fn_80201D44(handle, 5); fn_80201D24(handle, 1); fn_802015A4(handle);
             if (fn_8012A100(target, 0x8a)) fn_801DE7A0(*(int*)(info + 0xe0));
         }
@@ -153,7 +156,9 @@ void fn_801DF060(void* object)
             owner = fn_801D38E8(*(int*)(info + 4));
             BURST(event_id, 32, 4, 19, 1, owner, 0x70800, 4);
             BURST(event_id, 32, 5, 19, 1, owner, 0x70800, 4);
-            BURST(event_id, 33, 5, 19, 1, owner, 0x70800, 4);
+            /* This effect uses 17, rather than BURST's usual 34. */
+            fn_801D62D0(event_id, 33, 5, event_id, 19, 1, owner, 0,
+                0, 2, 7, 2, 3, 1, 0, 1, 17, 4, 1, 16, 0, 1, 17, 0x70800, 0, 4);
         }
         break;
     case 84:

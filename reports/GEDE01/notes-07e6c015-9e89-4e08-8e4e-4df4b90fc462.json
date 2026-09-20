@@ -1,0 +1,56 @@
+{
+  "assignment_id": "07e6c015-9e89-4e08-8e4e-4df4b90fc462",
+  "preserved_source_commit": "226393ef893d96d5d4028df7b89fb6a4f140986f",
+  "canonical_compiler": "GC/1.3",
+  "extra_cflags": [
+    "-use_lmw_stmw on"
+  ],
+  "new_hypothesis": "Remaining mismatches reflect incorrect matrix storage and one effect argument, followed by an overly narrow flags lifetime, rather than artificial frame padding or register forcing.",
+  "changes": [
+    "Replace 12-byte Vec3 transform with 48-byte Matrix34, correcting fn_802114E0/fn_80211710 local declarations. Frame becomes retail 0x100.",
+    "State 67 third effect call argument 23 is 17, not 34. Retail reuses r26 loaded with 17 for both stack +0x28 and +0x40.",
+    "Keep flags as u32 until the u16 call-parameter conversion. Separate distance evaluation preserves the retail floating-point and integer scheduling."
+  ],
+  "measurements": [
+    {
+      "variant": "preserved attempt 5",
+      "strict_percent": 99.183754,
+      "provenance": "preserved commit raw objdiff"
+    },
+    {
+      "variant": "Matrix34 and argument-23 correction",
+      "strict_percent": 99.61315,
+      "text_bytes": 4136
+    },
+    {
+      "variant": "int callee parameter retaining explicit u16 cast",
+      "strict_percent": 99.61315
+    },
+    {
+      "variant": "u16 callee parameter with implicit conversion",
+      "strict_percent": 99.61315
+    },
+    {
+      "variant": "explicit distance and u16 flags locals",
+      "strict_percent": 99.61315
+    },
+    {
+      "variant": "explicit distance and u32 flags locals",
+      "strict_percent": 100.0,
+      "canonical_percent": 100.0,
+      "text_bytes": 4136,
+      "instruction_count": 1034,
+      "elf_relocation_count": 115
+    }
+  ],
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801DF060.o -2 build/GEDE01/src/game/game_fn_801DF060.o -o reports/GEDE01/objdiff-07e6c015-9e89-4e08-8e4e-4df4b90fc462-canonical.json fn_801DF060",
+    "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801DF060.o -2 build/GEDE01/src/game/game_fn_801DF060.o -o reports/GEDE01/objdiff-07e6c015-9e89-4e08-8e4e-4df4b90fc462.json -c function_reloc_diffs=name_address fn_801DF060",
+    "python3 reports/GEDE01/verify-07e6c015-9e89-4e08-8e4e-4df4b90fc462.py",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "scope": "Only target source, target configure registration and assignment reports changed. Existing split retained. No assembly or compiler-policy changes."
+}
