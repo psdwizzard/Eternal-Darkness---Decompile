@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "assignment_id": "fb6b3156-36fd-46a1-b211-24c7ed3e07fe",
+  "target": "fn_80142944",
+  "compiler": "GC/1.3",
+  "canonical_command": "python3 tools/fndiff.py game/game_fn_80142944.c fn_80142944",
+  "raw_summary": "target 100 bytes  base 100 bytes  match 97.6",
+  "text": {
+    "target_bytes": 100,
+    "candidate_bytes": 100,
+    "match_percent": 97.6,
+    "matching_instructions": 24,
+    "total_instructions": 25
+  },
+  "relocation_strict": {
+    "passed": false,
+    "symbol_bearing_relocations": "All six agree by offset, type, target name, and addend: 0x08 R_PPC_ADDR16_HA lbl_805B1310+0; 0x1c R_PPC_ADDR16_LO lbl_805B1310+0; 0x24/0x34/0x44 R_PPC_REL24 memset+0; 0x4c R_PPC_EMB_SDA21 lbl_8064D038+0.",
+    "synthetic_base_annotations": "R_PPC_NONE annotations also agree at 0x20 lbl_805B1310+0, 0x28 lbl_805B1310+240, and 0x38 lbl_805B1310+9648.",
+    "reason": "The instruction encoding at 0x20 differs, so the candidate is not a strict match despite agreeing relocation metadata."
+  },
+  "raw_difference": "0x0020 target: addi r3, r31, 0x0 [R_PPC_NONE lbl_805B1310+0] | candidate: mr r3, r31 [R_PPC_NONE lbl_805B1310+0]",
+  "distinct_hypothesis": {
+    "description": "Retail may have carried the pool base through an integer-sized address expression, because canonical GC/1.3 emits addi dst,src,0 for some integer argument copies while using mr for pointer copies.",
+    "measured_result": "Using a u32 pool-base carrier, including a u32 first-parameter declaration for memset, remained size-exact at 97.6% and retained the same sole mr-versus-addi difference. Explicit aggregate/array address forms either retained the same difference or worsened register allocation. The best honest running-pointer reconstruction was restored."
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol",
+      "python3 tools/fndiff.py game/game_fn_80142944.c fn_80142944",
+      "python3 tools/legal_audit.py"
+    ],
+    "ninja_result": "build/GEDE01/main.dol: OK",
+    "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "legal_audit_raw": "legal audit passed (18421 tracked project files inspected)"
+  },
+  "raw_report_source": "build/GEDE01/fndiff_fn_80142944.json"
+}
