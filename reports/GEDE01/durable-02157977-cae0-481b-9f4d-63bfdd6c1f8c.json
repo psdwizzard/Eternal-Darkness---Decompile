@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "02157977-cae0-481b-9f4d-63bfdd6c1f8c",
+  "attempt": 6,
+  "base_commit": "6feef1874aae030254539d60a01c6f0756639d5a",
+  "target": "fn_8018FFBC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-02157977-cae0-481b-9f4d-63bfdd6c1f8c.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are 97.62712% for 708-byte retail and generated functions, with seven alignment differences. Retail uses lis r7 at 0x0, addi r8,r7 at 0x4, lhz through r8 at 0x8, and clrlwi r7,r6,24 at 0xc. Generated uses lis r8 at 0x0, clrlwi r7,r6,24 at 0x4, addi r6,r8 at 0x8, and lhz through r6 at 0xc. Retail schedules addi r9,r9,8 at actual instruction offset 0x1e4; generated schedules it at 0x15c. HA and LO relocations both target lbl_80607120 with zero addends; LO operand offsets are retail 0x6 and generated 0xa. Induction-update placement experiments did not improve the retained NonMatching C."
+}
