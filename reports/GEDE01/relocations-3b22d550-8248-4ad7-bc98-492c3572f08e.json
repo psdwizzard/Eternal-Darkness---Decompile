@@ -1,0 +1,211 @@
+{
+  "version": 1,
+  "assignment_id": "3b22d550-8248-4ad7-bc98-492c3572f08e",
+  "retail": {
+    "argv": [
+      "readelf",
+      "-rW",
+      "build/GEDE01/obj/game/game_fn_8018A1C8.o"
+    ],
+    "exit_code": 0,
+    "stdout": "\nRelocation section '.rela.text' at offset 0x188 contains 13 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000016  00000406 R_PPC_ADDR16_HA        00000000   lbl_80607120 + 0\n0000001a  00000404 R_PPC_ADDR16_LO        00000000   lbl_80607120 + 0\n0000001c  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n0000005e  00000606 R_PPC_ADDR16_HA        00000000   fn_8018D724 + 0\n0000006e  00000604 R_PPC_ADDR16_LO        00000000   fn_8018D724 + 0\n00000084  0000070a R_PPC_REL24            00000000   fn_80188A7C + 0\n000000dc  0000080a R_PPC_REL24            00000000   fn_801ED57C + 0\n000000f0  0000090a R_PPC_REL24            00000000   DCFlushRange + 0\n000000fc  0000090a R_PPC_REL24            00000000   DCFlushRange + 0\n00000108  0000090a R_PPC_REL24            00000000   DCFlushRange + 0\n00000118  00000a0a R_PPC_REL24            00000000   fn_8018D0D0 + 0\n00000128  00000b0a R_PPC_REL24            00000000   fn_801887C4 + 0\n00000130  0000080a R_PPC_REL24            00000000   fn_801ED57C + 0\n",
+    "stderr": "",
+    "entries": [
+      {
+        "offset": "00000016",
+        "type": "R_PPC_ADDR16_HA",
+        "symbol_value": "00000000",
+        "target": "lbl_80607120",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000001a",
+        "type": "R_PPC_ADDR16_LO",
+        "symbol_value": "00000000",
+        "target": "lbl_80607120",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000001c",
+        "type": "R_PPC_EMB_SDA21",
+        "symbol_value": "00000000",
+        "target": "lbl_8064D738",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000005e",
+        "type": "R_PPC_ADDR16_HA",
+        "symbol_value": "00000000",
+        "target": "fn_8018D724",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000006e",
+        "type": "R_PPC_ADDR16_LO",
+        "symbol_value": "00000000",
+        "target": "fn_8018D724",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000084",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_80188A7C",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000000dc",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_801ED57C",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000000f0",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "DCFlushRange",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000000fc",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "DCFlushRange",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000108",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "DCFlushRange",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000118",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_8018D0D0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000128",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_801887C4",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000130",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_801ED57C",
+        "addend": "+ 0"
+      }
+    ]
+  },
+  "generated": {
+    "argv": [
+      "readelf",
+      "-rW",
+      "build/GEDE01/src/game/game_fn_8018A1C8.o"
+    ],
+    "exit_code": 0,
+    "stdout": "\nRelocation section '.rela.text' at offset 0x17c contains 13 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000016  00000306 R_PPC_ADDR16_HA        00000000   lbl_80607120 + 0\n0000001a  00000304 R_PPC_ADDR16_LO        00000000   lbl_80607120 + 0\n0000001c  0000046d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n0000005e  00000506 R_PPC_ADDR16_HA        00000000   fn_8018D724 + 0\n0000006e  00000504 R_PPC_ADDR16_LO        00000000   fn_8018D724 + 0\n00000084  0000060a R_PPC_REL24            00000000   fn_80188A7C + 0\n000000dc  0000070a R_PPC_REL24            00000000   fn_801ED57C + 0\n000000f0  0000080a R_PPC_REL24            00000000   DCFlushRange + 0\n000000fc  0000080a R_PPC_REL24            00000000   DCFlushRange + 0\n00000108  0000080a R_PPC_REL24            00000000   DCFlushRange + 0\n00000118  0000090a R_PPC_REL24            00000000   fn_8018D0D0 + 0\n00000128  00000a0a R_PPC_REL24            00000000   fn_801887C4 + 0\n00000130  0000070a R_PPC_REL24            00000000   fn_801ED57C + 0\n",
+    "stderr": "",
+    "entries": [
+      {
+        "offset": "00000016",
+        "type": "R_PPC_ADDR16_HA",
+        "symbol_value": "00000000",
+        "target": "lbl_80607120",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000001a",
+        "type": "R_PPC_ADDR16_LO",
+        "symbol_value": "00000000",
+        "target": "lbl_80607120",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000001c",
+        "type": "R_PPC_EMB_SDA21",
+        "symbol_value": "00000000",
+        "target": "lbl_8064D738",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000005e",
+        "type": "R_PPC_ADDR16_HA",
+        "symbol_value": "00000000",
+        "target": "fn_8018D724",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000006e",
+        "type": "R_PPC_ADDR16_LO",
+        "symbol_value": "00000000",
+        "target": "fn_8018D724",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000084",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_80188A7C",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000000dc",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_801ED57C",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000000f0",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "DCFlushRange",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000000fc",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "DCFlushRange",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000108",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "DCFlushRange",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000118",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_8018D0D0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000128",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_801887C4",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000130",
+        "type": "R_PPC_REL24",
+        "symbol_value": "00000000",
+        "target": "fn_801ED57C",
+        "addend": "+ 0"
+      }
+    ]
+  },
+  "site_type_target_addend_equal": true
+}

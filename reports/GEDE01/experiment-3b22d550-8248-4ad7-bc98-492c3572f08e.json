@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "assignment_id": "3b22d550-8248-4ad7-bc98-492c3572f08e",
+  "baseline_source": "typedef unsigned char u8;\ntypedef unsigned short u16;\ntypedef signed short s16;\n\nextern int lbl_8064D738;\nextern u8 lbl_80607120[];\nextern void fn_8018D724(void*, void*, void*);\nextern void fn_80188A7C(void*, void*, void (*)(void*, void*, void*));\nextern void DCFlushRange(void*, unsigned long);\nextern int fn_801ED57C(int);\nextern void fn_8018D0D0(void*, void*, s16);\nextern void fn_801887C4(void*, void*, void*);\n\nvoid fn_8018A1C8(u8* object)\n{\n    register u8* self;\n    register u8* buffer2;\n    register u8* buffer1;\n    register u8* buffer0;\n    int offset;\n    int i;\n    u8 count;\n    u16 size0;\n    u16 size1;\n    u16 size2;\n    u8* entry;\n    u8* out;\n    u16 vertex_count;\n\n    self = object;\n    count = self[1];\n    vertex_count = *(u16*)(lbl_80607120 + 2);\n    size0 = *(u16*)(lbl_80607120 + 0xA);\n    size1 = *(u16*)(lbl_80607120 + 0xE);\n    size2 = *(u16*)(lbl_80607120 + 0xC);\n    buffer0 = *(u8**)(self + 0x50);\n    buffer1 = *(u8**)(self + 0x54);\n    buffer2 = *(u8**)(self + 0x58);\n\n    if (lbl_8064D738 != 0) {\n        buffer1 += vertex_count * 4;\n        buffer0 += vertex_count * 6;\n        buffer2 += vertex_count * 4;\n    }\n    entry = *(u8**)(self + 0x4C);\n    out = buffer2;\n    i = 0;\n    offset = 0;\n    for (; i < count; i++) {\n        int j;\n        fn_80188A7C(entry, buffer0 + offset, fn_8018D724);\n        for (j = 0; j < entry[0x20]; j++) {\n            out[0] = entry[0x28];\n            out[1] = entry[0x29];\n            out[2] = entry[0x2A];\n            out[3] = entry[0x2B];\n            out += 4;\n        }\n        entry += 0x38;\n        offset += 0xC;\n    }\n    {\n        int saved = fn_801ED57C(0);\n        DCFlushRange(buffer0, size0);\n        DCFlushRange(buffer2, size2);\n        DCFlushRange(buffer1, size1);\n        fn_8018D0D0(self, self + 0x5C, *(s16*)(self + 0xE));\n        fn_801887C4(buffer0, buffer1, buffer2);\n        fn_801ED57C(saved);\n    }\n}\n",
+  "hypothesis": "Widen narrow count, size, and vertex-count locals to signed int without changing source loads, initialization placement, or declaration order; test whether MWCC virtual-register typing changes graph coloring.",
+  "source_delta": "--- baseline\n+++ widened\n@@ -19,13 +19,13 @@\n     register u8* buffer0;\n     int offset;\n     int i;\n-    u8 count;\n-    u16 size0;\n-    u16 size1;\n-    u16 size2;\n+    int count;\n+    int size0;\n+    int size1;\n+    int size2;\n     u8* entry;\n     u8* out;\n-    u16 vertex_count;\n+    int vertex_count;\n \n     self = object;\n     count = self[1];\n",
+  "commands": [
+    {
+      "argv": [
+        ".tools/bin/ninja",
+        "-j2",
+        "-v",
+        "build/GEDE01/src/game/game_fn_8018A1C8.o"
+      ],
+      "exit_code": 0,
+      "stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018A1C8.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018A1C8.d build/GEDE01/src/game/game_fn_8018A1C8.d\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8018A1C8",
+        "fn_8018A1C8",
+        "-o",
+        "reports/GEDE01/objdiff-3b22d550-8248-4ad7-bc98-492c3572f08e-widened.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-3b22d550-8248-4ad7-bc98-492c3572f08e-widened.json\n"
+    }
+  ],
+  "followups": [
+    {
+      "name": "derived-offset",
+      "hypothesis": "Express address as base plus index times stride so MWCC derives its own induction variable; natural variant also removes register pointer hints.",
+      "source_delta": "--- baseline\n+++ derived-offset\n@@ -17,7 +17,6 @@\n     register u8* buffer2;\n     register u8* buffer1;\n     register u8* buffer0;\n-    int offset;\n     int i;\n     u8 count;\n     u16 size0;\n@@ -45,10 +44,9 @@\n     entry = *(u8**)(self + 0x4C);\n     out = buffer2;\n     i = 0;\n-    offset = 0;\n     for (; i < count; i++) {\n         int j;\n-        fn_80188A7C(entry, buffer0 + offset, fn_8018D724);\n+        fn_80188A7C(entry, buffer0 + i * 12, fn_8018D724);\n         for (j = 0; j < entry[0x20]; j++) {\n             out[0] = entry[0x28];\n             out[1] = entry[0x29];\n@@ -57,7 +55,6 @@\n             out += 4;\n         }\n         entry += 0x38;\n-        offset += 0xC;\n     }\n     {\n         int saved = fn_801ED57C(0);\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "-v",
+            "build/GEDE01/src/game/game_fn_8018A1C8.o"
+          ],
+          "exit_code": 0,
+          "stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018A1C8.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018A1C8.d build/GEDE01/src/game/game_fn_8018A1C8.d\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018A1C8",
+            "fn_8018A1C8",
+            "-o",
+            "reports/GEDE01/objdiff-3b22d550-8248-4ad7-bc98-492c3572f08e-derived-offset.json",
+            "--format",
+            "json-pretty",
+            "-c",
+            "function_reloc_diffs=name_address"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/objdiff-3b22d550-8248-4ad7-bc98-492c3572f08e-derived-offset.json\n"
+        }
+      ],
+      "match_percent": 94.51219,
+      "generated_bytes": "328",
+      "observed_codegen": "Compiler uses a running pointer initialized from buffer0 instead of a zero byte offset, with mr instead of add in the call argument and changed register coloring. Reverted."
+    },
+    {
+      "name": "derived-offset-natural",
+      "hypothesis": "Express address as base plus index times stride so MWCC derives its own induction variable; natural variant also removes register pointer hints.",
+      "source_delta": "--- baseline\n+++ derived-offset-natural\n@@ -13,11 +13,10 @@\n \n void fn_8018A1C8(u8* object)\n {\n-    register u8* self;\n-    register u8* buffer2;\n-    register u8* buffer1;\n-    register u8* buffer0;\n-    int offset;\n+    u8* self;\n+    u8* buffer2;\n+    u8* buffer1;\n+    u8* buffer0;\n     int i;\n     u8 count;\n     u16 size0;\n@@ -45,10 +44,9 @@\n     entry = *(u8**)(self + 0x4C);\n     out = buffer2;\n     i = 0;\n-    offset = 0;\n     for (; i < count; i++) {\n         int j;\n-        fn_80188A7C(entry, buffer0 + offset, fn_8018D724);\n+        fn_80188A7C(entry, buffer0 + i * 12, fn_8018D724);\n         for (j = 0; j < entry[0x20]; j++) {\n             out[0] = entry[0x28];\n             out[1] = entry[0x29];\n@@ -57,7 +55,6 @@\n             out += 4;\n         }\n         entry += 0x38;\n-        offset += 0xC;\n     }\n     {\n         int saved = fn_801ED57C(0);\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "-v",
+            "build/GEDE01/src/game/game_fn_8018A1C8.o"
+          ],
+          "exit_code": 0,
+          "stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018A1C8.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018A1C8.d build/GEDE01/src/game/game_fn_8018A1C8.d\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018A1C8",
+            "fn_8018A1C8",
+            "-o",
+            "reports/GEDE01/objdiff-3b22d550-8248-4ad7-bc98-492c3572f08e-derived-offset-natural.json",
+            "--format",
+            "json-pretty",
+            "-c",
+            "function_reloc_diffs=name_address"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/objdiff-3b22d550-8248-4ad7-bc98-492c3572f08e-derived-offset-natural.json\n"
+        }
+      ],
+      "match_percent": 94.51219,
+      "generated_bytes": "328",
+      "observed_codegen": "Compiler uses a running pointer initialized from buffer0 instead of a zero byte offset, with mr instead of add in the call argument and changed register coloring. Reverted."
+    }
+  ],
+  "match_percent": 96.585365,
+  "generated_bytes": 328,
+  "observed_codegen": "Register coloring unchanged; vertex_count widening changes clrlslwi r3,r4,16,2 to slwi r3,r4,2 at offset 0x4c. Reverted.",
+  "reviewed_preserved_commits": [
+    "74630f41f3e62b824f4b17e2275d283bb65c9661",
+    "ffa822390c5f8e2055f0a55e040001a5a061de80"
+  ],
+  "prior_hypotheses_excluded": [
+    "declaration-order retail register sequence",
+    "register-class hints",
+    "early outer-index lifetime"
+  ],
+  "retained_source": "Unchanged accepted-base reconstruction; identical to preserved commit 74630f41f3e62b824f4b17e2275d283bb65c9661."
+}
