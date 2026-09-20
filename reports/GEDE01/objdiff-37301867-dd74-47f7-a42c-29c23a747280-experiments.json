@@ -1,0 +1,253 @@
+[
+  {
+    "name": "baseline",
+    "source_patch": "",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80052670.o"
+        ],
+        "exit_code": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80052670.o\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80052670",
+          "fn_80052670",
+          "-o",
+          "reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-baseline.raw.json",
+          "--format",
+          "json-pretty"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-baseline.raw.json\n"
+      }
+    ],
+    "summary": {
+      "left": {
+        "name": "fn_80052670",
+        "size": "656",
+        "match_percent": 95.71342
+      },
+      "right": {
+        "name": "fn_80052670",
+        "size": "640",
+        "match_percent": 95.71342
+      }
+    },
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-baseline.raw.json"
+  },
+  {
+    "name": "inline-boundary",
+    "source_patch": "--- src/game/game_fn_80052670.c\n+++ src/game/game_fn_80052670.c\n@@ -81,6 +81,17 @@\n extern u32 lbl_80651940;\n extern s32 lbl_8064C600;\n \n+static inline void copy_transition_template(TemplateDestination* data)\n+{\n+    data->first = lbl_80238F40;\n+    data->second = lbl_80238F60;\n+}\n+\n+static inline TypeDescriptor* get_descriptor(TypeDescriptor* data, u8 index)\n+{\n+    return data + index;\n+}\n+\n void fn_80052670(void)\n {\n     TypeDescriptor* types = (TypeDescriptor*)&lbl_802417D0;\n@@ -88,8 +99,7 @@\n     if (lbl_8030F540.copy_template != 0) {\n         TemplateDestination* data = (TemplateDestination*)types;\n         data = (TemplateDestination*)((u8*)data + 0x2120);\n-        data->first = lbl_80238F40;\n-        data->second = lbl_80238F60;\n+        copy_transition_template(data);\n     }\n \n     if (fn_80052900() == 0) {\n@@ -99,8 +109,7 @@\n         }\n \n         {\n-            TypeDescriptor* descriptor = types;\n-            descriptor += lbl_8030F540.type;\n+            TypeDescriptor* descriptor = get_descriptor(types, lbl_8030F540.type);\n             if (descriptor->value14 != -1) {\n                 fn_8015C7D8(descriptor->value14);\n             }\n@@ -116,9 +125,9 @@\n         fn_801AD404(100, 100, 1);\n \n         fn_800F9D4C(lbl_803282E0, (char*)types + 0x2180,\n-                    types[lbl_8030F540.type].name);\n+                    get_descriptor(types, lbl_8030F540.type)->name);\n         fn_800F9D4C(lbl_80328360, (char*)types + 0x2190,\n-                    types[lbl_8030F540.type].value0C);\n+                    get_descriptor(types, lbl_8030F540.type)->value0C);\n \n         lbl_8064C85C = fn_80144628(3, (u8*)types + 0x2120, 0);\n         lbl_8030F540.flag1DF = 0;\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80052670.o"
+        ],
+        "exit_code": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80052670.o\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80052670",
+          "fn_80052670",
+          "-o",
+          "reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-inline-boundary.raw.json",
+          "--format",
+          "json-pretty"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-inline-boundary.raw.json\n"
+      }
+    ],
+    "summary": {
+      "left": {
+        "name": "fn_80052670",
+        "size": "656",
+        "match_percent": 95.256096
+      },
+      "right": {
+        "name": "fn_80052670",
+        "size": "640",
+        "match_percent": 95.256096
+      }
+    },
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-inline-boundary.raw.json"
+  },
+  {
+    "name": "builtin-copy",
+    "source_patch": "--- src/game/game_fn_80052670.c\n+++ src/game/game_fn_80052670.c\n@@ -81,6 +81,8 @@\n extern u32 lbl_80651940;\n extern s32 lbl_8064C600;\n \n+extern void* memcpy(void*, const void*, u32);\n+\n void fn_80052670(void)\n {\n     TypeDescriptor* types = (TypeDescriptor*)&lbl_802417D0;\n@@ -88,8 +90,8 @@\n     if (lbl_8030F540.copy_template != 0) {\n         TemplateDestination* data = (TemplateDestination*)types;\n         data = (TemplateDestination*)((u8*)data + 0x2120);\n-        data->first = lbl_80238F40;\n-        data->second = lbl_80238F60;\n+        memcpy(&data->first, &lbl_80238F40, sizeof(Template32));\n+        memcpy(&data->second, &lbl_80238F60, sizeof(Template32));\n     }\n \n     if (fn_80052900() == 0) {\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80052670.o"
+        ],
+        "exit_code": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80052670.o\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80052670",
+          "fn_80052670",
+          "-o",
+          "reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-builtin-copy.raw.json",
+          "--format",
+          "json-pretty"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-builtin-copy.raw.json\n"
+      }
+    ],
+    "summary": {
+      "left": {
+        "name": "fn_80052670",
+        "size": "656",
+        "match_percent": 73.35366
+      },
+      "right": {
+        "name": "fn_80052670",
+        "size": "548",
+        "match_percent": 73.35366
+      }
+    },
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-builtin-copy.raw.json"
+  },
+  {
+    "name": "copy-loop",
+    "source_patch": "--- src/game/game_fn_80052670.c\n+++ src/game/game_fn_80052670.c\n@@ -88,8 +88,9 @@\n     if (lbl_8030F540.copy_template != 0) {\n         TemplateDestination* data = (TemplateDestination*)types;\n         data = (TemplateDestination*)((u8*)data + 0x2120);\n-        data->first = lbl_80238F40;\n-        data->second = lbl_80238F60;\n+        s32 i;\n+        for (i = 0; i < 8; ++i) data->first.words[i] = lbl_80238F40.words[i];\n+        for (i = 0; i < 8; ++i) data->second.words[i] = lbl_80238F60.words[i];\n     }\n \n     if (fn_80052900() == 0) {\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80052670.o"
+        ],
+        "exit_code": 2,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80052670.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_80052670.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80052670.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80052670.d build/GEDE01/src/game/game_fn_80052670.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_80052670.c\n# ------------------------------------\n#      91: s32 i;\n#   Error: ^^^\n#   expression syntax error\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "name": "copy-loop-c89",
+    "source_patch": "--- src/game/game_fn_80052670.c\n+++ src/game/game_fn_80052670.c\n@@ -86,10 +86,11 @@\n     TypeDescriptor* types = (TypeDescriptor*)&lbl_802417D0;\n \n     if (lbl_8030F540.copy_template != 0) {\n+        s32 i;\n         TemplateDestination* data = (TemplateDestination*)types;\n         data = (TemplateDestination*)((u8*)data + 0x2120);\n-        data->first = lbl_80238F40;\n-        data->second = lbl_80238F60;\n+        for (i = 0; i < 8; ++i) data->first.words[i] = lbl_80238F40.words[i];\n+        for (i = 0; i < 8; ++i) data->second.words[i] = lbl_80238F60.words[i];\n     }\n \n     if (fn_80052900() == 0) {\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80052670.o"
+        ],
+        "exit_code": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80052670.o\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80052670",
+          "fn_80052670",
+          "-o",
+          "reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-copy-loop-c89.raw.json",
+          "--format",
+          "json-pretty"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-copy-loop-c89.raw.json\n"
+      }
+    ],
+    "summary": {
+      "left": {
+        "name": "fn_80052670",
+        "size": "656",
+        "match_percent": 95.71342
+      },
+      "right": {
+        "name": "fn_80052670",
+        "size": "640",
+        "match_percent": 95.71342
+      }
+    },
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-copy-loop-c89.raw.json"
+  },
+  {
+    "name": "inline-copy-only",
+    "source_patch": "--- src/game/game_fn_80052670.c\n+++ src/game/game_fn_80052670.c\n@@ -81,6 +81,12 @@\n extern u32 lbl_80651940;\n extern s32 lbl_8064C600;\n \n+static inline void copy_transition_template(TemplateDestination* data)\n+{\n+    data->first = lbl_80238F40;\n+    data->second = lbl_80238F60;\n+}\n+\n void fn_80052670(void)\n {\n     TypeDescriptor* types = (TypeDescriptor*)&lbl_802417D0;\n@@ -88,8 +94,7 @@\n     if (lbl_8030F540.copy_template != 0) {\n         TemplateDestination* data = (TemplateDestination*)types;\n         data = (TemplateDestination*)((u8*)data + 0x2120);\n-        data->first = lbl_80238F40;\n-        data->second = lbl_80238F60;\n+        copy_transition_template(data);\n     }\n \n     if (fn_80052900() == 0) {\n",
+    "commands": [
+      {
+        "argv": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_80052670.o"
+        ],
+        "exit_code": 0,
+        "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80052670.o\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80052670",
+          "fn_80052670",
+          "-o",
+          "reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-inline-copy-only.raw.json",
+          "--format",
+          "json-pretty"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": " INFO Writing to reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-inline-copy-only.raw.json\n"
+      }
+    ],
+    "summary": {
+      "left": {
+        "name": "fn_80052670",
+        "size": "656",
+        "match_percent": 95.71342
+      },
+      "right": {
+        "name": "fn_80052670",
+        "size": "640",
+        "match_percent": 95.71342
+      }
+    },
+    "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-inline-copy-only.raw.json"
+  }
+]

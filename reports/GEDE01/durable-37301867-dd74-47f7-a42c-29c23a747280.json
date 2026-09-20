@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "37301867-dd74-47f7-a42c-29c23a747280",
+  "attempt": 6,
+  "base_commit": "2235dbe056a0fb3591a126a1e2630e3b71f6c5b9",
+  "target": "fn_80052670",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits 640 bytes versus 656 retail bytes at 95.71342%. Retail retains addi r24,r30,0x2120 at 0x38, addi r4,r30,0 at 0xF8, and addi r5,r30,0 at 0x170 and 0x194. Generated code folds these bases into accesses, changes stmw/lmw from r24 at stack offset 0x10 to r25 at 0x14, and uses template stores at 0x2140..0x217C(r30) instead of 0x20..0x5C(r24). All 48 relocation types, targets, and addends agree in sequence, but the missing 16 bytes shift relocation sites (first: retail 0x3E versus generated 0x3A). Both canonical and relocation-strict comparisons remain 95.71342%, not 100%."
+}

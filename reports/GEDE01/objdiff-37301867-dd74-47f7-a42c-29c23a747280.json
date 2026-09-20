@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "assignment_id": "37301867-dd74-47f7-a42c-29c23a747280",
+  "attempt": 6,
+  "base_commit": "2235dbe056a0fb3591a126a1e2630e3b71f6c5b9",
+  "target": "fn_80052670",
+  "source": "eternal-darkness-decomp/src/game/game_fn_80052670.c",
+  "source_sha256": "e879dc9b0bbed5ce87e3202e693c18f9128683daee0792456216279b0282d360",
+  "registration": "Object(NonMatching, \"game/game_fn_80052670.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+  "recovery": {
+    "preserved_source_commit": "c73005a169b70a36b0c01809756144a5e795d96b",
+    "source_byte_identical_to_preserved_commit": true,
+    "registration_and_split_already_present": true,
+    "historical_reports_read_from_commits": [
+      "c73005a169b70a36b0c01809756144a5e795d96b",
+      "133cbd205387bb5e9de59cc14b300ec40189574a",
+      "69467754b99351b0c5661e7e3ac1a39c12fc9a9d",
+      "5c09ae8274b177b6abcf2645031ef9a9ddd57347",
+      "2698bb7c1b11c0dfc302fe09eb9b73d07cf87580"
+    ]
+  },
+  "different_hypothesis": {
+    "description": "An inline helper boundary or late lowering of a fixed-size copy may preserve address materializations that direct aggregate assignment and ordinary pointer aliases lose. Tested under unchanged canonical GC/1.3 flags in the assigned independent C translation unit.",
+    "experiments": "eternal-darkness-decomp/reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-experiments.json",
+    "results": [
+      "Inline copy plus descriptor helper: 95.256096%, 640 bytes; alters final log lookup from mulli r0/add r5/lha to mulli r5/addi r0/lhax at generated offsets 0x190..0x198; still missing all four retail base materializations.",
+      "Two fixed-size memcpy calls: 73.35366%, 548 bytes; worse than baseline.",
+      "Two explicit eight-word loops: initial C89 declaration-placement error fixed; successful variant 95.71342%, 640 bytes, raw objdiff identical to baseline.",
+      "Copy-only inline helper: 95.71342%, 640 bytes, raw objdiff identical to baseline."
+    ],
+    "conclusion": "Neither inline helper boundaries nor alternative copy lowering retain the missing bases. Restored the cleaner original source; no experimental helper, copy form, or compiler setting retained.",
+    "additional_unproven_hypothesis": "The redundant zero-offset addi instructions are consistent with compiler-generated static data pooling. Existing tools/undefine_elf_static_pool.py only accepts .bss NOBITS objects, whereas lbl_802417D0 is .data. No shared data reconstruction or new externalization/compiler rule was attempted; this remains an untested explanation, not a proven blocker."
+  },
+  "canonical": {
+    "match_percent": 95.71342,
+    "retail_bytes": 656,
+    "generated_bytes": 640,
+    "retail_instruction_count": 164,
+    "generated_instruction_count": 160,
+    "diff_kinds": {
+      "DIFF_NONE": 136,
+      "DIFF_ARG_MISMATCH": 21,
+      "DIFF_REPLACE": 3,
+      "DIFF_DELETE": 4
+    }
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "match_percent": 95.71342,
+    "canonical_report_byte_identical": true,
+    "retail_count": 48,
+    "generated_count": 48,
+    "types_targets_addends_equal_in_sequence": true,
+    "relocation_site_offsets_equal": false,
+    "first_site_difference": {
+      "retail_offset": "0000003e",
+      "generated_offset": "0000003a",
+      "type": "R_PPC_ADDR16_LO",
+      "target": "lbl_80238F60",
+      "addend": "+ 0"
+    }
+  },
+  "raw_artifacts": {
+    "canonical_objdiff_json": "eternal-darkness-decomp/reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-canonical.raw.json",
+    "relocation_strict_objdiff_json": "eternal-darkness-decomp/reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-reloc-strict.raw.json",
+    "retail_relocations": "eternal-darkness-decomp/reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-retail.relocations.txt",
+    "generated_relocations": "eternal-darkness-decomp/reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-generated.relocations.txt",
+    "verification_command_stdout_stderr": "eternal-darkness-decomp/reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-verification.json",
+    "experiment_patches_command_stdout_stderr_and_raw_objdiff_references": "eternal-darkness-decomp/reports/GEDE01/objdiff-37301867-dd74-47f7-a42c-29c23a747280-experiments.json"
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_note": "The function remains NonMatching, so the verified full DOL links its retail object; this hash does not establish a C match.",
+  "exact_codegen_divergence": "Canonical GC/1.3 emits 640 bytes versus 656 retail bytes at 95.71342%. Retail retains addi r24,r30,0x2120 at 0x38, addi r4,r30,0 at 0xF8, and addi r5,r30,0 at 0x170 and 0x194. Generated code folds these bases into accesses, changes stmw/lmw from r24 at stack offset 0x10 to r25 at 0x14, and uses template stores at 0x2140..0x217C(r30) instead of 0x20..0x5C(r24). All 48 relocation types, targets, and addends agree in sequence, but the missing 16 bytes shift relocation sites (first: retail 0x3E versus generated 0x3A). Both canonical and relocation-strict comparisons remain 95.71342%, not 100%.",
+  "conclusion": "attempted; best honest reconstruction unchanged at 95.71342%; full build, required DOL SHA-1, and legal audit pass."
+}
