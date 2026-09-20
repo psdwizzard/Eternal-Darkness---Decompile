@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "6824a87e-5c60-4573-87fa-5bf880f69710",
+  "attempt": 3,
+  "base_commit": "69d2496a5440ca8149433672fd230aef252ac849",
+  "target": "fn_801028A8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6824a87e-5c60-4573-87fa-5bf880f69710.json"
+  ],
+  "divergence": "Relocation-strict objdiff measures 97.47718% with exact 964-byte .text on both sides and identical REL24/SDA21 relocation types, targets, and addends. Explicit static inline removes the prior unit's unused 84-byte helper, so the entire translation unit .text is now exactly 964 bytes. The remaining codegen delta is confined to prologue/epilogue frame handling: retail allocates 0x30 bytes and restores r29/r28 after mtlr, while canonical GC/1.2.5n allocates 0x40 bytes, shifts save/restore offsets by 0x10, and restores all GPRs before stack teardown and mtlr. A tested macro-expanded bit-reader reduced the frame to 0x20 and changed late register allocation (97.3527%); adding an artificial stack local reached 0x30 but remained lower-scoring and was rejected as non-honest. Full build passes and main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

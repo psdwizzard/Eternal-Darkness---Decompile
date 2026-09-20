@@ -19,7 +19,7 @@ typedef struct BitReader {
 __declspec(section ".sdata") extern s32 lbl_8064CC68;
 __declspec(section ".sdata") extern s32 lbl_8064CC6C;
 
-static int read_bit(BitReader* reader)
+static inline int read_bit(BitReader* reader)
 {
     u8 bit;
 
@@ -32,10 +32,10 @@ static int read_bit(BitReader* reader)
     return bit != 0;
 }
 
-/* NonMatching: behavior-complete recursive decode-tree loader. Code and
- * relocations agree apart from MWCC reserving a 0x40-byte frame for this split
- * TU where retail reserves 0x30 bytes; only frame allocation and the associated
- * prologue/epilogue stack offsets differ. */
+/* NonMatching: behavior-complete recursive decode-tree loader. Explicit inline
+ * suppresses the unused out-of-line helper, making the unit's .text size exact.
+ * The function differs only in MWCC's 0x40-byte frame and epilogue scheduling;
+ * retail uses a 0x30-byte frame. */
 s16 fn_801028A8(DecodeTree* tree, BitReader* reader)
 {
     s16 value;
