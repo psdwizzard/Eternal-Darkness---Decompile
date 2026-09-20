@@ -53,14 +53,15 @@ s32 fn_80064E2C(u32 context, s32 event, s32 index, u16 mask, s32 amount,
     s32 original_event;
     EventPosition copied_position;
     EventPosition position;
-    s32 event_value;
-    s32 owner;
-    s16 original_first;
-    s32 is_current_owner;
-    s32 feedback;
     s32 made_event;
     s32 result;
+    s32 feedback;
+    s32 event_value;
+    s32 owner;
+    s32 is_current_owner;
+    s16 original_first;
     s32 update_result;
+    s32 has_four;
     void *object;
 
     state = fn_80036D38(context);
@@ -90,8 +91,9 @@ s32 fn_80064E2C(u32 context, s32 event, s32 index, u16 mask, s32 amount,
         }
     }
 
+    has_four = mask & 4;
     mask = (u16)mask;
-    if ((mask & 4) && lbl_8064C594 == 0) {
+    if (has_four && lbl_8064C594 == 0) {
         return 0;
     }
 
@@ -114,7 +116,7 @@ s32 fn_80064E2C(u32 context, s32 event, s32 index, u16 mask, s32 amount,
     if ((mask & 2) && is_current_owner && (s16)amount > 0) {
         feedback = 1;
         fn_8020123C(0xC9, owner, event_value, 1);
-    } else if ((mask & 4) && is_current_owner && (s16)amount > 0) {
+    } else if (has_four && is_current_owner && (s16)amount > 0) {
         feedback = 2;
     }
 

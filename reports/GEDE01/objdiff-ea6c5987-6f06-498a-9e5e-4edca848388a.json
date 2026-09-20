@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "assignment_id": "ea6c5987-6f06-498a-9e5e-4edca848388a",
+  "target": "fn_80064E2C",
+  "compiler": "canonical GC/1.3 configuration from configure.py",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80064E2C fn_80064E2C -o reports/GEDE01/objdiff-ea6c5987-6f06-498a-9e5e-4edca848388a-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80064E2C fn_80064E2C -o reports/GEDE01/objdiff-ea6c5987-6f06-498a-9e5e-4edca848388a-relocation-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "canonical_objdiff": {
+    "raw_output": "target 1312 bytes  base 1316 bytes  match 97.96646",
+    "raw_artifact": "reports/GEDE01/objdiff-ea6c5987-6f06-498a-9e5e-4edca848388a-canonical.json",
+    "retail_size_bytes": 1312,
+    "generated_size_bytes": 1316,
+    "match_percent": 97.96646
+  },
+  "relocation_strict_objdiff": {
+    "basis": "function_reloc_diffs=name_address",
+    "raw_output": "target 1312 bytes  base 1316 bytes  match 97.96646",
+    "raw_artifact": "reports/GEDE01/objdiff-ea6c5987-6f06-498a-9e5e-4edca848388a-relocation-strict.json",
+    "match_percent": 97.96646,
+    "retail_relocation_count": 61,
+    "generated_relocation_count": 61,
+    "types_targets_addends_in_order_equal": true,
+    "passed_100_percent_gate": false
+  },
+  "dol_verification": {
+    "raw_sha1sum": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "passed": true
+  },
+  "hypothesis_and_result": "Reordered the five long-lived declarations to the retail register-color sequence made_event/result/feedback/event_value/owner, moving generated r31-r27 onto the retail allocation. Preserved mask bit 4 in has_four across both uses, which reproduces retail's rlwinm r18 before clrlwi mask normalization. These distinct declaration-order and lifetime hypotheses improve the preserved 97.143295 percent attempt to 97.96646 percent.",
+  "divergence": "Generated remains four bytes larger. The remaining mismatches are the original_first/is_current_owner r15-r16 swap; r0/r3/r4 scheduling in the half-amount clamp and fn_801A7518 argument setup; and final conditional fn_80201BC8 result plus first feedback-call argument scheduling. A tested computed-half-first form removed four bytes but regressed to 97.493904 percent; a tested initialize-then-conditional object form became size-exact but regressed to 96.73781 percent, so neither is preserved. All 61 relocation type/semantic-target/addend tuples remain equal in order under the distinct name_address strict run."
+}
