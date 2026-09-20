@@ -1,0 +1,24 @@
+{
+  "assignment_id": "e2e9c9e8-aae8-441e-8fc6-b5b58e722e21",
+  "command_working_directory": "eternal-darkness-decomp",
+  "hypothesis": "Local aggregate scalar replacement gives the string pointer a different MWCC virtual-register origin from a standalone pointer initializer. Grouping arg1 and arg3 with that pointer also restores the retail allocation order; register hints and pointer type changes alone did not.",
+  "prior_reconciliation": "All five preserved commits contain the same source SHA-256 4e5c36469e835e379919e9208858ec5e6dbe5d48595458e192fde00ec6cec4d1 as the accepted base. The failed attempt-5 commit added reports only. Prior narratives were recovered with git show and retained in preserved-attempts.json. No historical verification claims were reused as current measurements.",
+  "selected_variant": "narrow-base-arg1-arg3",
+  "selected_source": "eternal-darkness-decomp/src/game/game_fn_80171BB4.c",
+  "source_formatting": "Final source only expands the selected anonymous struct declaration onto separate lines; the final object SHA-256 exactly equals that variant object.",
+  "canonical_match_percent": 99.454544,
+  "relocation_strict_match_percent": 99.454544,
+  "divergence": "Canonical and relocation-strict objdiff v3.6.1 both measure 99.454544%, improved from 97.045456%. Retail and generated .text are both 440 bytes. Exactly one instruction word differs at function offset 0x38 (address 0x80171BEC): retail 389c0000 is addi r4,r28,0; generated 7f84e378 is mr r4,r28. All other 109 instruction words and all 14 relocation offsets, types, target names, and zero addends agree. Aggregate storage for arg1, arg3, and the string pointer eliminates the former prologue temporary and reproduces retained-register allocation. Retained as NonMatching because the one opcode difference prevents 100%.",
+  "compiler": "GC/1.3; unchanged canonical flags including -use_lmw_stmw on; full verbose compiler commands recorded per experiment",
+  "reconstruction_count": 1,
+  "registration": "Existing NonMatching registration and independent split remain unchanged.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_interpretation": "Full canonical build passes with the NonMatching unit linked from its retail object; this hash does not imply that the candidate is matched or linked.",
+  "reproduction": [
+    "From eternal-darkness-decomp: python3 reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/run-experiments.py (regenerates all variants from the accepted base and restores the current source in finally).",
+    "From eternal-darkness-decomp: python3 reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/verify-final.py (configure, mandated full ninja -j2 build, canonical/strict objdiff, raw readelf, DOL hashes, legal audit and byte/relocation decoding)."
+  ],
+  "evidence_conventions": "Commands and experiment raw_objdiff paths are relative to command_working_directory. Envelope evidence paths are worktree-relative. Every experiment includes a unified source patch, source/object SHA-256, exact invocation with exit code and raw console output, and a raw objdiff file. Patches are against the accepted base; git apply -p0 from the project directory reproduces a patch.",
+  "scope": "Only this function source and assignment-specific reports are changed. No compiler/gate policy changes, inline assembly, neighboring edits, runtime changes, or progress/README edits. Pre-existing CLAUDE.md change is excluded.",
+  "raw_verification_passed": true
+}

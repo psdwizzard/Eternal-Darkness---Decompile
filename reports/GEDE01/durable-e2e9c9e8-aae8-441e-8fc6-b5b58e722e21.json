@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "assignment_id": "e2e9c9e8-aae8-441e-8fc6-b5b58e722e21",
+  "attempt": 6,
+  "base_commit": "3c72fc0334ee3b3fe980baa76c30b49ef43d3566",
+  "target": "fn_80171BB4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e2e9c9e8-aae8-441e-8fc6-b5b58e722e21.json",
+    "eternal-darkness-decomp/reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/final-canonical.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/final-commands.json",
+    "eternal-darkness-decomp/reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/elf-comparison.json",
+    "eternal-darkness-decomp/reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/experiments.json",
+    "eternal-darkness-decomp/reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/run-experiments.py",
+    "eternal-darkness-decomp/reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/verify-final.py",
+    "eternal-darkness-decomp/reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/preserved-attempts.json",
+    "eternal-darkness-decomp/reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/summary.json",
+    "eternal-darkness-decomp/reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/staged-audit.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff v3.6.1 both measure 99.454544%, improved from 97.045456%. Retail and generated .text are both 440 bytes. Exactly one instruction word differs at function offset 0x38 (address 0x80171BEC): retail 389c0000 is addi r4,r28,0; generated 7f84e378 is mr r4,r28. All other 109 instruction words and all 14 relocation offsets, types, target names, and zero addends agree. Aggregate storage for arg1, arg3, and the string pointer eliminates the former prologue temporary and reproduces retained-register allocation. Retained as NonMatching because the one opcode difference prevents 100%."
+}

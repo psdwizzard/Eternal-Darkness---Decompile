@@ -1,0 +1,1478 @@
+[
+  {
+    "name": "baseline",
+    "source_sha256": "4e5c36469e835e379919e9208858ec5e6dbe5d48595458e192fde00ec6cec4d1",
+    "patch": "",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/baseline.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/baseline.raw.json\n"
+      }
+    ],
+    "object_sha256": "4e81828ddf0100c4d576f5ae24b0507fc2f3352316cfa61f19a91876681266d2",
+    "match_percent": 97.045456,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/baseline.raw.json"
+  },
+  {
+    "name": "register-arg1",
+    "source_sha256": "3566423fc727d11c4443a5f5aeb570a203d0ae1d4592870a50c3a205f58586b8",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,7 +8,7 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n+    register int arg1;\n     int arg3;\n     unsigned char clamped3;\n     int arg5;\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg1.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg1.raw.json\n"
+      }
+    ],
+    "object_sha256": "4e81828ddf0100c4d576f5ae24b0507fc2f3352316cfa61f19a91876681266d2",
+    "match_percent": 97.045456,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg1.raw.json"
+  },
+  {
+    "name": "register-arg2",
+    "source_sha256": "3abe74ed3a2e43d9249c1208dae27d87c735bb42d9c4a64e033f540c4e28c6bb",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -7,7 +7,7 @@\n int fn_80171BB4(void* state)\n {\n     int arg4;\n-    int arg2;\n+    register int arg2;\n     int arg1;\n     int arg3;\n     unsigned char clamped3;\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg2.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg2.raw.json\n"
+      }
+    ],
+    "object_sha256": "4e81828ddf0100c4d576f5ae24b0507fc2f3352316cfa61f19a91876681266d2",
+    "match_percent": 97.045456,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg2.raw.json"
+  },
+  {
+    "name": "register-arg3",
+    "source_sha256": "ec061bc98a00780c18eba27f12f56d8b0685a87f1608ce783b2d26153fb620c5",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -9,7 +9,7 @@\n     int arg4;\n     int arg2;\n     int arg1;\n-    int arg3;\n+    register int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg3.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg3.raw.json\n"
+      }
+    ],
+    "object_sha256": "4e81828ddf0100c4d576f5ae24b0507fc2f3352316cfa61f19a91876681266d2",
+    "match_percent": 97.045456,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg3.raw.json"
+  },
+  {
+    "name": "register-arg4",
+    "source_sha256": "2e3b41978a90c1536948de1a5dc535dc0b2ba9ce69f73ac776bd8fc9c1529d97",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -6,7 +6,7 @@\n \n int fn_80171BB4(void* state)\n {\n-    int arg4;\n+    register int arg4;\n     int arg2;\n     int arg1;\n     int arg3;\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg4.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg4.raw.json\n"
+      }
+    ],
+    "object_sha256": "4e81828ddf0100c4d576f5ae24b0507fc2f3352316cfa61f19a91876681266d2",
+    "match_percent": 97.045456,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg4.raw.json"
+  },
+  {
+    "name": "register-arg5",
+    "source_sha256": "be7a2e59a0b3970335fb08e4b327bd90094bc6cd17b77a0035675303e7fdd608",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -11,7 +11,7 @@\n     int arg1;\n     int arg3;\n     unsigned char clamped3;\n-    int arg5;\n+    register int arg5;\n     signed char clamped5;\n     const char* strings = lbl_8024FF00;\n \n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg5.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg5.raw.json\n"
+      }
+    ],
+    "object_sha256": "4e81828ddf0100c4d576f5ae24b0507fc2f3352316cfa61f19a91876681266d2",
+    "match_percent": 97.045456,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg5.raw.json"
+  },
+  {
+    "name": "register-arg1-arg2-arg3-arg4-arg5",
+    "source_sha256": "946ea05942ea53c272a5ff8f32a451c6f1908f4eadf013112d449e1f808528bf",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -6,12 +6,12 @@\n \n int fn_80171BB4(void* state)\n {\n-    int arg4;\n-    int arg2;\n-    int arg1;\n-    int arg3;\n+    register int arg4;\n+    register int arg2;\n+    register int arg1;\n+    register int arg3;\n     unsigned char clamped3;\n-    int arg5;\n+    register int arg5;\n     signed char clamped5;\n     const char* strings = lbl_8024FF00;\n \n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg1-arg2-arg3-arg4-arg5.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg1-arg2-arg3-arg4-arg5.raw.json\n"
+      }
+    ],
+    "object_sha256": "4e81828ddf0100c4d576f5ae24b0507fc2f3352316cfa61f19a91876681266d2",
+    "match_percent": 97.045456,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/register-arg1-arg2-arg3-arg4-arg5.raw.json"
+  },
+  {
+    "name": "aggregate-arguments",
+    "source_sha256": "cc38875e8ff1d7748ac23edf449c663339df06af4bc01a3937a8e92aedbab4ca",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -6,12 +6,8 @@\n \n int fn_80171BB4(void* state)\n {\n-    int arg4;\n-    int arg2;\n-    int arg1;\n-    int arg3;\n+    struct { int arg4, arg2, arg1, arg3, arg5; } args;\n     unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n     const char* strings = lbl_8024FF00;\n \n@@ -20,30 +16,30 @@\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n-    arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n-    arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n+    args.arg2 = (int)fn_8016A694(state, 2);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n+    args.arg4 = (int)fn_8016A694(state, 4);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, strings + 0x3CC, args.arg5);\n     }\n \n-    if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+    if (args.arg2 != 1 && args.arg2 != 2) {\n+        fn_80163BB4(state, strings + 0x3F4, args.arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, args.arg4, clamped5, args.arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/aggregate-arguments.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/aggregate-arguments.raw.json\n"
+      }
+    ],
+    "object_sha256": "c6eecf68350dbb99df180ba6289a96e716d1e6cd2e2065a588928430e901f4e6",
+    "match_percent": 97.09091,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/aggregate-arguments.raw.json"
+  },
+  {
+    "name": "aggregate-base",
+    "source_sha256": "fa35babdf70896bbf1cbae035940eb5da3fbc88283753b630714c43e9b8b04cd",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -6,44 +6,40 @@\n \n int fn_80171BB4(void* state)\n {\n-    int arg4;\n-    int arg2;\n-    int arg1;\n-    int arg3;\n     unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg4; int arg2; int arg1; int arg3; int arg5; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n-    arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n-    arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n+    args.arg2 = (int)fn_8016A694(state, 2);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n+    args.arg4 = (int)fn_8016A694(state, 4);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, args.strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, args.strings + 0x3CC, args.arg5);\n     }\n \n-    if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+    if (args.arg2 != 1 && args.arg2 != 2) {\n+        fn_80163BB4(state, args.strings + 0x3F4, args.arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, args.arg4, clamped5, args.arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/aggregate-base.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/aggregate-base.raw.json\n"
+      }
+    ],
+    "object_sha256": "b42f28b200f5e5b9d9848e203f1bc83dca2367dc9e80a341d37bfa11b9655dbf",
+    "match_percent": 98.0,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/aggregate-base.raw.json"
+  },
+  {
+    "name": "aggregate-base-and-clamps",
+    "source_sha256": "5fff498038234ee4a4f41bdb921b89952a27d0ba2e0bfeb27f95ac90e9366bd8",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -6,44 +6,38 @@\n \n int fn_80171BB4(void* state)\n {\n-    int arg4;\n-    int arg2;\n-    int arg1;\n-    int arg3;\n-    unsigned char clamped3;\n-    int arg5;\n-    signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg4; int arg2; int arg1; int arg3; int arg5; const char* strings; unsigned char clamped3; signed char clamped5; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n-    arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n-    arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n+    args.arg2 = (int)fn_8016A694(state, 2);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n+    args.arg4 = (int)fn_8016A694(state, 4);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    args.clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != args.clamped3) {\n+        fn_80163BB4(state, args.strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    args.clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != args.clamped5) {\n+        fn_80163BB4(state, args.strings + 0x3CC, args.arg5);\n     }\n \n-    if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+    if (args.arg2 != 1 && args.arg2 != 2) {\n+        fn_80163BB4(state, args.strings + 0x3F4, args.arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, args.clamped3, args.arg4, args.clamped5, args.arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/aggregate-base-and-clamps.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/aggregate-base-and-clamps.raw.json\n"
+      }
+    ],
+    "object_sha256": "b42f28b200f5e5b9d9848e203f1bc83dca2367dc9e80a341d37bfa11b9655dbf",
+    "match_percent": 98.0,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/aggregate-base-and-clamps.raw.json"
+  },
+  {
+    "name": "narrow-base",
+    "source_sha256": "8a847ebe8114102902e18a00f7e695ca48b09834b857263a56e60e2d1989a6a1",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -13,10 +13,11 @@\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n@@ -30,18 +31,18 @@\n                    ? 0x7F\n                    : (arg3 > 0 ? arg3 : 0);\n     if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+        fn_80163BB4(state, args.strings + 0x3A8, arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, args.strings + 0x3CC, arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n     fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base.raw.json\n"
+      }
+    ],
+    "object_sha256": "d0c68c00dae18bab54681467082acc7f9797bbd0516e8235c3b9af70746266c5",
+    "match_percent": 98.454544,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base.raw.json"
+  },
+  {
+    "name": "narrow-base-array",
+    "source_sha256": "4623eaaabc1319a423d6dc105f57038e577559fceaee40ff84ab8c04502c8d2f",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -13,10 +13,11 @@\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { const char (*strings)[1]; } args;\n+    args.strings = (const char (*)[1])lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, (*args.strings), 5, fn_8016A598(state));\n         return 0;\n     }\n \n@@ -30,18 +31,18 @@\n                    ? 0x7F\n                    : (arg3 > 0 ? arg3 : 0);\n     if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+        fn_80163BB4(state, (*args.strings) + 0x3A8, arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, (*args.strings) + 0x3CC, arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, (*args.strings) + 0x3F4, arg2);\n     }\n \n     fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-array.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-array.raw.json\n"
+      }
+    ],
+    "object_sha256": "d0c68c00dae18bab54681467082acc7f9797bbd0516e8235c3b9af70746266c5",
+    "match_percent": 98.454544,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-array.raw.json"
+  },
+  {
+    "name": "narrow-base-arg1",
+    "source_sha256": "67ff37ebd768672eed7d4628afde48257513ee59f6a5281cbcbf5bbb3dc639e8",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,19 +8,19 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n     int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n     arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n@@ -30,20 +30,20 @@\n                    ? 0x7F\n                    : (arg3 > 0 ? arg3 : 0);\n     if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+        fn_80163BB4(state, args.strings + 0x3A8, arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, args.strings + 0x3CC, arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1.raw.json\n"
+      }
+    ],
+    "object_sha256": "8ceb641f7b5563d87d36a00fdcd9bd5d93c3c9a6eb60796c97200bb316b0e29a",
+    "match_percent": 98.36364,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1.raw.json"
+  },
+  {
+    "name": "narrow-base-arg1-array",
+    "source_sha256": "6f6eea94ced3fa0904517d8a442b852e1ec7833d970692dfcdb00edc07fa0643",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,19 +8,19 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n     int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; const char (*strings)[1]; } args;\n+    args.strings = (const char (*)[1])lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, (*args.strings), 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n     arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n@@ -30,20 +30,20 @@\n                    ? 0x7F\n                    : (arg3 > 0 ? arg3 : 0);\n     if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+        fn_80163BB4(state, (*args.strings) + 0x3A8, arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, (*args.strings) + 0x3CC, arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, (*args.strings) + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-array.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-array.raw.json\n"
+      }
+    ],
+    "object_sha256": "8ceb641f7b5563d87d36a00fdcd9bd5d93c3c9a6eb60796c97200bb316b0e29a",
+    "match_percent": 98.36364,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-array.raw.json"
+  },
+  {
+    "name": "narrow-base-arg2",
+    "source_sha256": "fc0b9752d5ef75f1673f62b1d384b5b21f07d711e6a51ca42ec4b64e82e20ea6",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -7,21 +7,21 @@\n int fn_80171BB4(void* state)\n {\n     int arg4;\n-    int arg2;\n     int arg1;\n     int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg2; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n     arg1 = (int)fn_8016A694(state, 1);\n-    arg2 = (int)fn_8016A694(state, 2);\n+    args.arg2 = (int)fn_8016A694(state, 2);\n     arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n     arg5 = (int)fn_8016A694(state, 5);\n@@ -30,20 +30,20 @@\n                    ? 0x7F\n                    : (arg3 > 0 ? arg3 : 0);\n     if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+        fn_80163BB4(state, args.strings + 0x3A8, arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, args.strings + 0x3CC, arg5);\n     }\n \n-    if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+    if (args.arg2 != 1 && args.arg2 != 2) {\n+        fn_80163BB4(state, args.strings + 0x3F4, args.arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, args.arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg2.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg2.raw.json\n"
+      }
+    ],
+    "object_sha256": "887960101c94fc9de061494d447ee9e44dc5bd5c89f396795fb23cebf46767cc",
+    "match_percent": 98.454544,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg2.raw.json"
+  },
+  {
+    "name": "narrow-base-arg2-array",
+    "source_sha256": "56f09ac83e00f04850c512217e81bb6b4ff2310282e79902c4478a020a15590a",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -7,21 +7,21 @@\n int fn_80171BB4(void* state)\n {\n     int arg4;\n-    int arg2;\n     int arg1;\n     int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg2; const char (*strings)[1]; } args;\n+    args.strings = (const char (*)[1])lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, (*args.strings), 5, fn_8016A598(state));\n         return 0;\n     }\n \n     arg1 = (int)fn_8016A694(state, 1);\n-    arg2 = (int)fn_8016A694(state, 2);\n+    args.arg2 = (int)fn_8016A694(state, 2);\n     arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n     arg5 = (int)fn_8016A694(state, 5);\n@@ -30,20 +30,20 @@\n                    ? 0x7F\n                    : (arg3 > 0 ? arg3 : 0);\n     if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+        fn_80163BB4(state, (*args.strings) + 0x3A8, arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, (*args.strings) + 0x3CC, arg5);\n     }\n \n-    if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+    if (args.arg2 != 1 && args.arg2 != 2) {\n+        fn_80163BB4(state, (*args.strings) + 0x3F4, args.arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, args.arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg2-array.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg2-array.raw.json\n"
+      }
+    ],
+    "object_sha256": "887960101c94fc9de061494d447ee9e44dc5bd5c89f396795fb23cebf46767cc",
+    "match_percent": 98.454544,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg2-array.raw.json"
+  },
+  {
+    "name": "narrow-base-arg4",
+    "source_sha256": "a367af726ec092dcfcd372963e8571f31ea6812cce0d0656acced9b5ebe78ae6",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -6,44 +6,44 @@\n \n int fn_80171BB4(void* state)\n {\n-    int arg4;\n     int arg2;\n     int arg1;\n     int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg4; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n     arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n     arg3 = (int)fn_8016A694(state, 3);\n-    arg4 = (int)fn_8016A694(state, 4);\n+    args.arg4 = (int)fn_8016A694(state, 4);\n     arg5 = (int)fn_8016A694(state, 5);\n \n     clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n                    ? 0x7F\n                    : (arg3 > 0 ? arg3 : 0);\n     if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+        fn_80163BB4(state, args.strings + 0x3A8, arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, args.strings + 0x3CC, arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)arg1, 0, clamped3, args.arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg4.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg4.raw.json\n"
+      }
+    ],
+    "object_sha256": "d0c68c00dae18bab54681467082acc7f9797bbd0516e8235c3b9af70746266c5",
+    "match_percent": 98.454544,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg4.raw.json"
+  },
+  {
+    "name": "narrow-base-arg4-array",
+    "source_sha256": "af0b385cd8bf78eeb1e65938cc38d99e05a2ff395514907630bdd402e70e0ef1",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -6,44 +6,44 @@\n \n int fn_80171BB4(void* state)\n {\n-    int arg4;\n     int arg2;\n     int arg1;\n     int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg4; const char (*strings)[1]; } args;\n+    args.strings = (const char (*)[1])lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, (*args.strings), 5, fn_8016A598(state));\n         return 0;\n     }\n \n     arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n     arg3 = (int)fn_8016A694(state, 3);\n-    arg4 = (int)fn_8016A694(state, 4);\n+    args.arg4 = (int)fn_8016A694(state, 4);\n     arg5 = (int)fn_8016A694(state, 5);\n \n     clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n                    ? 0x7F\n                    : (arg3 > 0 ? arg3 : 0);\n     if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+        fn_80163BB4(state, (*args.strings) + 0x3A8, arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, (*args.strings) + 0x3CC, arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, (*args.strings) + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)arg1, 0, clamped3, args.arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg4-array.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg4-array.raw.json\n"
+      }
+    ],
+    "object_sha256": "d0c68c00dae18bab54681467082acc7f9797bbd0516e8235c3b9af70746266c5",
+    "match_percent": 98.454544,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg4-array.raw.json"
+  },
+  {
+    "name": "narrow-base-arg3",
+    "source_sha256": "f78f5e7e297ff313ae4b8b5ef7ecaab8b01fa3144317146e6501c6df68a7ead6",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -9,39 +9,39 @@\n     int arg4;\n     int arg2;\n     int arg1;\n-    int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg3; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n     arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n     arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, args.strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, args.strings + 0x3CC, arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n     fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg3.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg3.raw.json\n"
+      }
+    ],
+    "object_sha256": "fd345b21de3cc5fef18161050f962152dfc1768c727887e2d698986ecf662f84",
+    "match_percent": 98.36364,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg3.raw.json"
+  },
+  {
+    "name": "narrow-base-arg3-array",
+    "source_sha256": "161fdd3341b7f9fd789b006c51d8ee531e2ce3b150c8c2d9ffe3d78e66184654",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -9,39 +9,39 @@\n     int arg4;\n     int arg2;\n     int arg1;\n-    int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg3; const char (*strings)[1]; } args;\n+    args.strings = (const char (*)[1])lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, (*args.strings), 5, fn_8016A598(state));\n         return 0;\n     }\n \n     arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n     arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, (*args.strings) + 0x3A8, args.arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, (*args.strings) + 0x3CC, arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, (*args.strings) + 0x3F4, arg2);\n     }\n \n     fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg3-array.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg3-array.raw.json\n"
+      }
+    ],
+    "object_sha256": "fd345b21de3cc5fef18161050f962152dfc1768c727887e2d698986ecf662f84",
+    "match_percent": 98.36364,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg3-array.raw.json"
+  },
+  {
+    "name": "narrow-base-arg5",
+    "source_sha256": "5eb4c942d440f668121837297e346836e68bf0477eaad39ece7feac599ad18d7",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -11,12 +11,12 @@\n     int arg1;\n     int arg3;\n     unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg5; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n@@ -24,24 +24,24 @@\n     arg2 = (int)fn_8016A694(state, 2);\n     arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n     clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n                    ? 0x7F\n                    : (arg3 > 0 ? arg3 : 0);\n     if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+        fn_80163BB4(state, args.strings + 0x3A8, arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, args.strings + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n     fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg5.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg5.raw.json\n"
+      }
+    ],
+    "object_sha256": "203123f55ab93f4253c065f42575d1ae9fa49fe2518f2e18eb57d4df864d8ccb",
+    "match_percent": 97.454544,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg5.raw.json"
+  },
+  {
+    "name": "narrow-base-arg5-array",
+    "source_sha256": "b135739615b924d01eb5145daa9d2c8697cdf3b145921305af81a4ca595e3b9c",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -11,12 +11,12 @@\n     int arg1;\n     int arg3;\n     unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg5; const char (*strings)[1]; } args;\n+    args.strings = (const char (*)[1])lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, (*args.strings), 5, fn_8016A598(state));\n         return 0;\n     }\n \n@@ -24,24 +24,24 @@\n     arg2 = (int)fn_8016A694(state, 2);\n     arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n     clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n                    ? 0x7F\n                    : (arg3 > 0 ? arg3 : 0);\n     if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+        fn_80163BB4(state, (*args.strings) + 0x3A8, arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, (*args.strings) + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, (*args.strings) + 0x3F4, arg2);\n     }\n \n     fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg5-array.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg5-array.raw.json\n"
+      }
+    ],
+    "object_sha256": "203123f55ab93f4253c065f42575d1ae9fa49fe2518f2e18eb57d4df864d8ccb",
+    "match_percent": 97.454544,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg5-array.raw.json"
+  },
+  {
+    "name": "narrow-base-arg1-arg3",
+    "source_sha256": "c3d8a3342f135b8ca74a63cb6c9e8d4f1ce18756bb819d57c69e744bde520657",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,42 +8,41 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n     arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, args.strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, args.strings + 0x3CC, arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg3.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg3.raw.json\n"
+      }
+    ],
+    "object_sha256": "0bca7f7dd091ed1de9436efa4d8ffef9fe9a5662a6f6f8895f83498ce996a6dd",
+    "match_percent": 99.454544,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg3.raw.json"
+  },
+  {
+    "name": "narrow-base-arg1-arg3-array",
+    "source_sha256": "23125208bb500f492e36214dca53506e6f6aa2ed5501d127310571d4892cf422",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,42 +8,41 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; const char (*strings)[1]; } args;\n+    args.strings = (const char (*)[1])lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, (*args.strings), 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n     arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, (*args.strings) + 0x3A8, args.arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, (*args.strings) + 0x3CC, arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, (*args.strings) + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg3-array.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg3-array.raw.json\n"
+      }
+    ],
+    "object_sha256": "0bca7f7dd091ed1de9436efa4d8ffef9fe9a5662a6f6f8895f83498ce996a6dd",
+    "match_percent": 99.454544,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg3-array.raw.json"
+  },
+  {
+    "name": "narrow-base-arg1-arg5",
+    "source_sha256": "d3aac1acb594a59dcde4ae5b9310d35e17017e9d40ad79488073b25f1f33ac04",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,42 +8,41 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n     int arg3;\n     unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg5; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n     arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n     clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n                    ? 0x7F\n                    : (arg3 > 0 ? arg3 : 0);\n     if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+        fn_80163BB4(state, args.strings + 0x3A8, arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, args.strings + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg5.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg5.raw.json\n"
+      }
+    ],
+    "object_sha256": "7f0be2c1c7b61e869ebba97c68185d864e8e830402a29021f30034096f99bbca",
+    "match_percent": 98.545456,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg5.raw.json"
+  },
+  {
+    "name": "narrow-base-arg1-arg5-array",
+    "source_sha256": "e993e8368dd195d1548c8dcc7b3aa162510361c74faa722b452b8fb82478c04c",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,42 +8,41 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n     int arg3;\n     unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg5; const char (*strings)[1]; } args;\n+    args.strings = (const char (*)[1])lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, (*args.strings), 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n     arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n     clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n                    ? 0x7F\n                    : (arg3 > 0 ? arg3 : 0);\n     if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+        fn_80163BB4(state, (*args.strings) + 0x3A8, arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, (*args.strings) + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, (*args.strings) + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg5-array.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg5-array.raw.json\n"
+      }
+    ],
+    "object_sha256": "7f0be2c1c7b61e869ebba97c68185d864e8e830402a29021f30034096f99bbca",
+    "match_percent": 98.545456,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg5-array.raw.json"
+  },
+  {
+    "name": "narrow-base-arg3-arg5",
+    "source_sha256": "36078a7ad66ed5579e0a5bf9367397511dfab9d2083f584419f43c2b1c7e07c1",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -9,39 +9,38 @@\n     int arg4;\n     int arg2;\n     int arg1;\n-    int arg3;\n     unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg3; int arg5; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n     arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, args.strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, args.strings + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n     fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg3-arg5.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg3-arg5.raw.json\n"
+      }
+    ],
+    "object_sha256": "fb85e48372d6502b5ecbc84337efa949496ac7e1e29ed5bf63e21e6f6c6e6712",
+    "match_percent": 97.90909,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg3-arg5.raw.json"
+  },
+  {
+    "name": "narrow-base-arg3-arg5-array",
+    "source_sha256": "3631880bf1555bfb886dbc7ca777ae2c5aa7e2b532c5436bd78c3c9bddc963dc",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -9,39 +9,38 @@\n     int arg4;\n     int arg2;\n     int arg1;\n-    int arg3;\n     unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg3; int arg5; const char (*strings)[1]; } args;\n+    args.strings = (const char (*)[1])lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, (*args.strings), 5, fn_8016A598(state));\n         return 0;\n     }\n \n     arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, (*args.strings) + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, (*args.strings) + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, (*args.strings) + 0x3F4, arg2);\n     }\n \n     fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg3-arg5-array.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg3-arg5-array.raw.json\n"
+      }
+    ],
+    "object_sha256": "fb85e48372d6502b5ecbc84337efa949496ac7e1e29ed5bf63e21e6f6c6e6712",
+    "match_percent": 97.90909,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg3-arg5-array.raw.json"
+  },
+  {
+    "name": "narrow-base-arg1-arg3-arg5",
+    "source_sha256": "a51c0fb893bb0e1cb9876040ce715ed2c3cae11034084c726d218272c0569f67",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,42 +8,40 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n     unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; int arg5; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, args.strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, args.strings + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg3-arg5.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg3-arg5.raw.json\n"
+      }
+    ],
+    "object_sha256": "7b40d5cbf0c169432e10662eb8da20129c5646040c271fed60ae8d7c1325dbaf",
+    "match_percent": 99.0,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg3-arg5.raw.json"
+  },
+  {
+    "name": "narrow-base-arg1-arg3-arg5-array",
+    "source_sha256": "6700f2114a20a2e09f043a4210b2f69e33372c745e81509ec7226b290655093c",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,42 +8,40 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n     unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; int arg5; const char (*strings)[1]; } args;\n+    args.strings = (const char (*)[1])lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, (*args.strings), 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, (*args.strings) + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, (*args.strings) + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, (*args.strings) + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg3-arg5-array.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg3-arg5-array.raw.json\n"
+      }
+    ],
+    "object_sha256": "7b40d5cbf0c169432e10662eb8da20129c5646040c271fed60ae8d7c1325dbaf",
+    "match_percent": 99.0,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/narrow-base-arg1-arg3-arg5-array.raw.json"
+  },
+  {
+    "name": "refine",
+    "source_sha256": "a51c0fb893bb0e1cb9876040ce715ed2c3cae11034084c726d218272c0569f67",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,42 +8,40 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n     unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; int arg5; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, args.strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, args.strings + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine.raw.json\n"
+      }
+    ],
+    "object_sha256": "7b40d5cbf0c169432e10662eb8da20129c5646040c271fed60ae8d7c1325dbaf",
+    "match_percent": 99.0,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine.raw.json"
+  },
+  {
+    "name": "refine-struct-address",
+    "source_sha256": "c9443fdacbce48f2ced1fd1bfe9c7af3a7b3c078e1f4680f8ac10616639f2709",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -1,3 +1,4 @@\n+struct StringBase { char text[1]; };\n extern int fn_8016A598(void*);\n extern double fn_8016A694(void*, int);\n extern void fn_80163BB4(void*, const char*, ...);\n@@ -8,42 +9,40 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n     unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; int arg5; const struct StringBase* strings; } args;\n+    args.strings = (const struct StringBase*)lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings->text, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, args.strings->text + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, args.strings->text + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings->text + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-struct-address.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-struct-address.raw.json\n"
+      }
+    ],
+    "object_sha256": "7b40d5cbf0c169432e10662eb8da20129c5646040c271fed60ae8d7c1325dbaf",
+    "match_percent": 99.0,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-struct-address.raw.json"
+  },
+  {
+    "name": "refine-clamped3",
+    "source_sha256": "ac02a0cc3a88046005c8cc3678903e9eba82dd4f0aa1c0ddd74a6d63c81df8a4",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,42 +8,39 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n-    unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; int arg5; unsigned char clamped3; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    args.clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != args.clamped3) {\n+        fn_80163BB4(state, args.strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, args.strings + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, args.clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped3.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped3.raw.json\n"
+      }
+    ],
+    "object_sha256": "7b40d5cbf0c169432e10662eb8da20129c5646040c271fed60ae8d7c1325dbaf",
+    "match_percent": 99.0,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped3.raw.json"
+  },
+  {
+    "name": "refine-clamped3-struct-address",
+    "source_sha256": "65113678a518de7717ce018ad38cce8e93e5921f65bba3f19b2436bd3034a4d3",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -1,3 +1,4 @@\n+struct StringBase { char text[1]; };\n extern int fn_8016A598(void*);\n extern double fn_8016A694(void*, int);\n extern void fn_80163BB4(void*, const char*, ...);\n@@ -8,42 +9,39 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n-    unsigned char clamped3;\n-    int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; int arg5; unsigned char clamped3; const struct StringBase* strings; } args;\n+    args.strings = (const struct StringBase*)lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings->text, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    args.clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != args.clamped3) {\n+        fn_80163BB4(state, args.strings->text + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != clamped5) {\n+        fn_80163BB4(state, args.strings->text + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings->text + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, args.clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped3-struct-address.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped3-struct-address.raw.json\n"
+      }
+    ],
+    "object_sha256": "7b40d5cbf0c169432e10662eb8da20129c5646040c271fed60ae8d7c1325dbaf",
+    "match_percent": 99.0,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped3-struct-address.raw.json"
+  },
+  {
+    "name": "refine-clamped5",
+    "source_sha256": "baee908bf29f2ffb4676be5c295ac21f5b4f74beb474a5142a8d0f89d0b4be01",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,42 +8,39 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n     unsigned char clamped3;\n-    int arg5;\n-    signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; int arg5; signed char clamped5; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, args.strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    args.clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != args.clamped5) {\n+        fn_80163BB4(state, args.strings + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, args.clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped5.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped5.raw.json\n"
+      }
+    ],
+    "object_sha256": "7b40d5cbf0c169432e10662eb8da20129c5646040c271fed60ae8d7c1325dbaf",
+    "match_percent": 99.0,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped5.raw.json"
+  },
+  {
+    "name": "refine-clamped5-struct-address",
+    "source_sha256": "525c2f2962ee1b51d48bdcb7a923dc78ae4a342f6e2a31a3b292c2581294d8ee",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -1,3 +1,4 @@\n+struct StringBase { char text[1]; };\n extern int fn_8016A598(void*);\n extern double fn_8016A694(void*, int);\n extern void fn_80163BB4(void*, const char*, ...);\n@@ -8,42 +9,39 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n     unsigned char clamped3;\n-    int arg5;\n-    signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; int arg5; signed char clamped5; const struct StringBase* strings; } args;\n+    args.strings = (const struct StringBase*)lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings->text, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, args.strings->text + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    args.clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != args.clamped5) {\n+        fn_80163BB4(state, args.strings->text + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings->text + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, args.clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped5-struct-address.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped5-struct-address.raw.json\n"
+      }
+    ],
+    "object_sha256": "7b40d5cbf0c169432e10662eb8da20129c5646040c271fed60ae8d7c1325dbaf",
+    "match_percent": 99.0,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped5-struct-address.raw.json"
+  },
+  {
+    "name": "refine-clamped3-clamped5",
+    "source_sha256": "a500ad81c33fec54b840ed5aa76b5b885b0f221e7d1224f75a928f59925cb162",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,42 +8,38 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n-    unsigned char clamped3;\n-    int arg5;\n-    signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; int arg5; unsigned char clamped3; signed char clamped5; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    args.clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != args.clamped3) {\n+        fn_80163BB4(state, args.strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    args.clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != args.clamped5) {\n+        fn_80163BB4(state, args.strings + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, args.clamped3, arg4, args.clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped3-clamped5.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped3-clamped5.raw.json\n"
+      }
+    ],
+    "object_sha256": "7b40d5cbf0c169432e10662eb8da20129c5646040c271fed60ae8d7c1325dbaf",
+    "match_percent": 99.0,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped3-clamped5.raw.json"
+  },
+  {
+    "name": "refine-clamped3-clamped5-struct-address",
+    "source_sha256": "cb0e7400fdfd5218ab5e645ec5d7f767b67f612f3f41509b9281242431f0e7d3",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -1,3 +1,4 @@\n+struct StringBase { char text[1]; };\n extern int fn_8016A598(void*);\n extern double fn_8016A694(void*, int);\n extern void fn_80163BB4(void*, const char*, ...);\n@@ -8,42 +9,38 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n-    unsigned char clamped3;\n-    int arg5;\n-    signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; int arg5; unsigned char clamped3; signed char clamped5; const struct StringBase* strings; } args;\n+    args.strings = (const struct StringBase*)lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, args.strings->text, 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n-    arg5 = (int)fn_8016A694(state, 5);\n+    args.arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    args.clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != args.clamped3) {\n+        fn_80163BB4(state, args.strings->text + 0x3A8, args.arg3, 0x7F);\n     }\n \n-    clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n+    args.clamped5 = (args.arg5 > 0 ? args.arg5 : 0) > 0xFF\n                    ? 0xFF\n-                   : (arg5 > 0 ? arg5 : 0);\n-    if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+                   : (args.arg5 > 0 ? args.arg5 : 0);\n+    if (args.arg5 != args.clamped5) {\n+        fn_80163BB4(state, args.strings->text + 0x3CC, args.arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings->text + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, args.clamped3, arg4, args.clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped3-clamped5-struct-address.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped3-clamped5-struct-address.raw.json\n"
+      }
+    ],
+    "object_sha256": "7b40d5cbf0c169432e10662eb8da20129c5646040c271fed60ae8d7c1325dbaf",
+    "match_percent": 99.0,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/refine-clamped3-clamped5-struct-address.raw.json"
+  },
+  {
+    "name": "last-address-of-element",
+    "source_sha256": "417642b331826954cce41cb35aa7d95f008cd4927321dd425e9ae21805ae8e3b",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,42 +8,41 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, &args.strings[0], 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n     arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, args.strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, args.strings + 0x3CC, arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/last-address-of-element.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/last-address-of-element.raw.json\n"
+      }
+    ],
+    "object_sha256": "0bca7f7dd091ed1de9436efa4d8ffef9fe9a5662a6f6f8895f83498ce996a6dd",
+    "match_percent": 99.454544,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/last-address-of-element.raw.json"
+  },
+  {
+    "name": "last-integer-member-address",
+    "source_sha256": "2c3ff3cf14d626a55bfb7a831a8eb19e50b6fa55519d1f47e1ef806dc05f29ce",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,42 +8,41 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, (const char*)((unsigned int)args.strings + 0), 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n     arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, args.strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, args.strings + 0x3CC, arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/last-integer-member-address.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/last-integer-member-address.raw.json\n"
+      }
+    ],
+    "object_sha256": "0bca7f7dd091ed1de9436efa4d8ffef9fe9a5662a6f6f8895f83498ce996a6dd",
+    "match_percent": 99.454544,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/last-integer-member-address.raw.json"
+  },
+  {
+    "name": "last-array-lvalue-address",
+    "source_sha256": "4363bb904b33c39f0b5dbaebf30130f290a3929a6b749a30e515d0c498514bfc",
+    "patch": "--- src/game/game_fn_80171BB4.c\n+++ src/game/game_fn_80171BB4.c\n@@ -8,42 +8,41 @@\n {\n     int arg4;\n     int arg2;\n-    int arg1;\n-    int arg3;\n     unsigned char clamped3;\n     int arg5;\n     signed char clamped5;\n-    const char* strings = lbl_8024FF00;\n+    struct { int arg1; int arg3; const char* strings; } args;\n+    args.strings = lbl_8024FF00;\n \n     if (fn_8016A598(state) != 5) {\n-        fn_80163BB4(state, strings, 5, fn_8016A598(state));\n+        fn_80163BB4(state, *((const char (*)[1024])args.strings), 5, fn_8016A598(state));\n         return 0;\n     }\n \n-    arg1 = (int)fn_8016A694(state, 1);\n+    args.arg1 = (int)fn_8016A694(state, 1);\n     arg2 = (int)fn_8016A694(state, 2);\n-    arg3 = (int)fn_8016A694(state, 3);\n+    args.arg3 = (int)fn_8016A694(state, 3);\n     arg4 = (int)fn_8016A694(state, 4);\n     arg5 = (int)fn_8016A694(state, 5);\n \n-    clamped3 = (arg3 > 0 ? arg3 : 0) > 0x7F\n+    clamped3 = (args.arg3 > 0 ? args.arg3 : 0) > 0x7F\n                    ? 0x7F\n-                   : (arg3 > 0 ? arg3 : 0);\n-    if (arg3 != clamped3) {\n-        fn_80163BB4(state, strings + 0x3A8, arg3, 0x7F);\n+                   : (args.arg3 > 0 ? args.arg3 : 0);\n+    if (args.arg3 != clamped3) {\n+        fn_80163BB4(state, args.strings + 0x3A8, args.arg3, 0x7F);\n     }\n \n     clamped5 = (arg5 > 0 ? arg5 : 0) > 0xFF\n                    ? 0xFF\n                    : (arg5 > 0 ? arg5 : 0);\n     if (arg5 != clamped5) {\n-        fn_80163BB4(state, strings + 0x3CC, arg5);\n+        fn_80163BB4(state, args.strings + 0x3CC, arg5);\n     }\n \n     if (arg2 != 1 && arg2 != 2) {\n-        fn_80163BB4(state, strings + 0x3F4, arg2);\n+        fn_80163BB4(state, args.strings + 0x3F4, arg2);\n     }\n \n-    fn_801AC5E4((unsigned short)arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n+    fn_801AC5E4((unsigned short)args.arg1, 0, clamped3, arg4, clamped5, arg2, 0);\n     return 0;\n }\n",
+    "commands": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "-v",
+          "build/GEDE01/src/game/game_fn_80171BB4.o"
+        ],
+        "exit_code": 0,
+        "output": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80171BB4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80171BB4.d build/GEDE01/src/game/game_fn_80171BB4.d\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-p",
+          ".",
+          "-u",
+          "main/game/game_fn_80171BB4",
+          "-c",
+          "function_reloc_diffs=name_address",
+          "-o",
+          "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/last-array-lvalue-address.raw.json"
+        ],
+        "exit_code": 0,
+        "output": " INFO Writing to reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/last-array-lvalue-address.raw.json\n"
+      }
+    ],
+    "object_sha256": "0bca7f7dd091ed1de9436efa4d8ffef9fe9a5662a6f6f8895f83498ce996a6dd",
+    "match_percent": 99.454544,
+    "raw_objdiff": "reports/GEDE01/e2e9c9e8-aae8-441e-8fc6-b5b58e722e21/last-array-lvalue-address.raw.json"
+  }
+]
