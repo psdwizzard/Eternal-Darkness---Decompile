@@ -42,6 +42,7 @@ extern void fn_801285F8(int);
 
 void fn_800C030C(void *context, void *encoded, float scale)
 {
+    float fraction;
     void *parsed = (void *)fn_80200C38(encoded);
     u16 mode = fn_801A6DE4(parsed);
     float range = fn_801A6DDC(parsed);
@@ -58,7 +59,6 @@ void fn_800C030C(void *context, void *encoded, float scale)
     int position;
     int low;
     int high;
-    float fraction;
 
     if (selection == 0x16) {
         fn_801294DC(object, 2, 0x25, 1);
@@ -118,8 +118,8 @@ void fn_800C030C(void *context, void *encoded, float scale)
         low = fn_8012A1FC(object, selection);
         high = fn_8012A1BC(object, selection);
         source = fn_800C07E0(object, selection, fn_8011FCE4(object));
-        source = fn_800C4880(low + source +
-                            (int)(fraction * (float)(high - low)), 4, low, high);
+        source = fn_800C4880((int)(fraction * (float)(high - low)) +
+                            (low + source), 4, low, high);
         fn_80129FD0(object, source << 17, 1);
     }
 
