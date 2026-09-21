@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "assignment_id": "75e502ec-b9b8-4d22-bd9c-9b739ca84b1c",
+  "target": "fn_8008CEF0",
+  "compiler": "MWCC GC/1.3 (canonical game configuration, -use_lmw_stmw on)",
+  "hypothesis": "Giving fn_80201B8C its precise RuntimeData* return type might change frontend web creation so the long-lived transform/runtime/target/value locals receive retail's high nonvolatile registers before the parameter webs.",
+  "hypothesis_result": "Rejected. The typed-return experiment produced exactly the same 1068-byte function, 267 instructions, r30/r31 parameter allocation, and 98.91386% score; it was reverted and the stronger preserved source was retained unchanged.",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8008CEF0 fn_8008CEF0 -o build/GEDE01/fndiff_fn_8008CEF0.json --format json",
+    "raw_summary": "target_size=1068 generated_size=1068 target_score=98.91386 generated_score=98.91386 target_instructions=267 generated_instructions=267",
+    "retail_relocations": 53,
+    "generated_relocations": 53
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8008CEF0 fn_8008CEF0 -o build/GEDE01/fndiff_fn_8008CEF0_reloc_strict.json --format json -c function_reloc_diffs=name_address",
+    "raw_cmp": "canonical and relocation-strict JSON outputs are byte-identical (cmp_exit=0)",
+    "result": "nonmatching at 98.91386%; 53/53 relocation-bearing instructions and 267/267 instructions"
+  },
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2", "sha1sum build/GEDE01/main.dol", "python3 tools/legal_audit.py"],
+    "ninja_raw_final": "build/GEDE01/main.dol: OK",
+    "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "legal_audit_raw": "legal audit passed (19759 tracked project files inspected)"
+  },
+  "divergence": "Opcode and control-flow shape, 0xA0 frame, size, instruction count, and relocation count align. Retail maps context/fallback/low/high/object/position/value/target/runtime/transform to r19/r23/r24/r25/r26/r27/r28/r29/r30/r31; canonical output maps context/value/target/runtime/transform/fallback/low/high/object/position to r19/r23/r24/r25/r26/r27/r28/r29/r30/r31. The strict diff also displays retail lbl_8064EC18 versus generated TU-local @51 for one conversion constant-pool relocation."
+}
