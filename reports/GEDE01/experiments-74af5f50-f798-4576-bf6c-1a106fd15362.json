@@ -1,0 +1,102 @@
+{
+  "selected": "compressed count uses remaining",
+  "experiments": [
+    {
+      "hypothesis": "compressed count uses index",
+      "match_percent": 98.356804,
+      "size": "860",
+      "differences": [
+        "addi r11, r1, 0x2a0",
+        "bl _savegpr_22",
+        "clrlslwi r23, r3, 24, 8",
+        "add r23, r23, r0",
+        "cmpwi r23, 0x0",
+        "subi r23, r23, 0x1",
+        "addi r11, r1, 0x2a0",
+        "bl _restgpr_22"
+      ]
+    },
+    {
+      "hypothesis": "compressed count uses unused",
+      "match_percent": 98.49765,
+      "size": "860",
+      "differences": [
+        "addi r11, r1, 0x2a0",
+        "bl _savegpr_22",
+        "addi r11, r1, 0x2a0",
+        "bl _restgpr_22"
+      ]
+    },
+    {
+      "hypothesis": "compressed count uses remaining",
+      "match_percent": 98.49765,
+      "size": "860",
+      "differences": [
+        "addi r11, r1, 0x2a0",
+        "bl _savegpr_22",
+        "addi r11, r1, 0x2a0",
+        "bl _restgpr_22"
+      ]
+    },
+    {
+      "hypothesis": "separate remaining declared before u32 scratch;",
+      "match_percent": 98.49765,
+      "size": "860",
+      "differences": [
+        "addi r11, r1, 0x2a0",
+        "bl _savegpr_22",
+        "addi r11, r1, 0x2a0",
+        "bl _restgpr_22"
+      ]
+    },
+    {
+      "hypothesis": "separate remaining declared before int code;",
+      "match_percent": 98.49765,
+      "size": "860",
+      "differences": [
+        "addi r11, r1, 0x2a0",
+        "bl _savegpr_22",
+        "addi r11, r1, 0x2a0",
+        "bl _restgpr_22"
+      ]
+    },
+    {
+      "hypothesis": "separate remaining declared before int index;",
+      "match_percent": 98.49765,
+      "size": "860",
+      "differences": [
+        "addi r11, r1, 0x2a0",
+        "bl _savegpr_22",
+        "addi r11, r1, 0x2a0",
+        "bl _restgpr_22"
+      ]
+    },
+    {
+      "hypothesis": "separate remaining declared before int value;",
+      "match_percent": 98.49765,
+      "size": "860",
+      "differences": [
+        "addi r11, r1, 0x2a0",
+        "bl _savegpr_22",
+        "addi r11, r1, 0x2a0",
+        "bl _restgpr_22"
+      ]
+    },
+    {
+      "hypothesis": "register code keyword",
+      "match_percent": 98.356804,
+      "size": "860",
+      "differences": [
+        "addi r11, r1, 0x2a0",
+        "bl _savegpr_22",
+        "clrlslwi r23, r3, 24, 8",
+        "add r23, r23, r0",
+        "cmpwi r23, 0x0",
+        "subi r23, r23, 0x1",
+        "addi r11, r1, 0x2a0",
+        "bl _restgpr_22"
+      ]
+    }
+  ],
+  "rationale": "A separate compressed-byte counter breaks the allocator coalescing with the table code/index live ranges. It receives retail r22 while count remains retail r24. Equivalent parameter reuse tied but a named local is clearer."
+}

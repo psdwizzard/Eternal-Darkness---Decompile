@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "assignment_id": "74af5f50-f798-4576-bf6c-1a106fd15362",
+  "status": "attempted",
+  "match_percent": 98.49765,
+  "target_bytes": 852,
+  "generated_bytes": 860,
+  "canonical_compiler_settings": true,
+  "compiler": "GC/1.3",
+  "source_sha256": "c041e4ef802a9b5ff9922fbd9adbbb4b6e359a5a43154e793cca0d4aa6864429",
+  "relocation_strict_match": false,
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_note": "Target remains NonMatching, so the verified DOL links the retail target object; this hash does not demonstrate a matching reconstruction.",
+  "prior_attempts_reviewed": [
+    "9ed4d80bb030f920a95887fd29f98f98399918d8",
+    "ba74dda82a8bedce350f67fdbf12e991cdac0a51",
+    "9048aa1a8637df704829e11954e88adc16291ee9",
+    "0d23b23eacf83e17e4054ba06e6c5d6db496082b (rejection diagnosis in assignment)"
+  ],
+  "hypothesis": "Separate compressed-byte count from dictionary code/index live ranges while preserving count as the expansion-stack depth. This yields retail r22 and r24 respectively.",
+  "base_reconciliation": "Accepted base source was verified identical to preserved commit 9ed4d80; registration and splits already present and left unchanged.",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_8015B274.c fn_8015B274",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8015B274 -o reports/GEDE01/raw-objdiff-74af5f50-f798-4576-bf6c-1a106fd15362.json --format json",
+    "readelf -sWr build/GEDE01/obj/game/game_fn_8015B274.o",
+    "readelf -sWr build/GEDE01/src/game/game_fn_8015B274.o"
+  ],
+  "evidence_files": [
+    "eternal-darkness-decomp/reports/GEDE01/raw-objdiff-74af5f50-f798-4576-bf6c-1a106fd15362.json",
+    "eternal-darkness-decomp/reports/GEDE01/raw-fndiff-74af5f50-f798-4576-bf6c-1a106fd15362.txt",
+    "eternal-darkness-decomp/reports/GEDE01/raw-readelf-74af5f50-f798-4576-bf6c-1a106fd15362.txt",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-74af5f50-f798-4576-bf6c-1a106fd15362.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-74af5f50-f798-4576-bf6c-1a106fd15362.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-audit-74af5f50-f798-4576-bf6c-1a106fd15362.txt",
+    "eternal-darkness-decomp/reports/GEDE01/compile-74af5f50-f798-4576-bf6c-1a106fd15362.txt"
+  ],
+  "divergence": "Canonical objdiff is 98.49765% (852 retail bytes versus 860 generated). All body register differences are resolved. Remaining marked differences are retail stmw r22,0x278(r1) / lmw r22,0x278(r1) versus canonical addi r11,r1,0x2a0 plus _savegpr_22 / _restgpr_22 calls. The two added instructions add eight bytes and two ELF relocations (20 retail versus 22 generated; 24 versus 26 objdiff records including inferred R_PPC_NONE). All 24 shared objdiff relocation records agree in type, target and addend but generated offsets are four bytes later; DCFlushRange is retail 824 versus generated 828. Relocation-strict equality fails."
+}

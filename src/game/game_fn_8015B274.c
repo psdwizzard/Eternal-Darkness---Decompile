@@ -41,6 +41,7 @@ int fn_8015B274(void* source, void* destination, u8* output, int unused,
     int index;
     int count;
     int value;
+    int remaining;
 
     fn_80158E7C(3);
     if (fn_8020D318(reader, &scratch, 0) != 0) {
@@ -106,14 +107,14 @@ int fn_8015B274(void* source, void* destination, u8* output, int unused,
             code = fn_8015B5C8(&stream) & 0xff;
         }
 
-        code = (u8)fn_8015B5C8(&stream) << 8;
-        code += (u8)fn_8015B5C8(&stream);
+        remaining = (u8)fn_8015B5C8(&stream) << 8;
+        remaining += (u8)fn_8015B5C8(&stream);
         count = 0;
         for (;;) {
             if (count != 0) {
                 value = expansion[--count];
             } else {
-                if (code-- == 0) {
+                if (remaining-- == 0) {
                     break;
                 }
                 value = (u8)fn_8015B5C8(&stream);

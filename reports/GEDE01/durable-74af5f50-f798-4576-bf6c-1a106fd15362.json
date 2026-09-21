@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "74af5f50-f798-4576-bf6c-1a106fd15362",
+  "attempt": 5,
+  "base_commit": "eef81381cc86666c4b37b475fb0b0c75e9e4eb5a",
+  "target": "fn_8015B274",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-74af5f50-f798-4576-bf6c-1a106fd15362.json"
+  ],
+  "divergence": "Canonical objdiff is 98.49765% (852 retail bytes versus 860 generated). All body register differences are resolved. Remaining marked differences are retail stmw r22,0x278(r1) / lmw r22,0x278(r1) versus canonical addi r11,r1,0x2a0 plus _savegpr_22 / _restgpr_22 calls. The two added instructions add eight bytes and two ELF relocations (20 retail versus 22 generated; 24 versus 26 objdiff records including inferred R_PPC_NONE). All 24 shared objdiff relocation records agree in type, target and addend but generated offsets are four bytes later; DCFlushRange is retail 824 versus generated 828. Relocation-strict equality fails."
+}
