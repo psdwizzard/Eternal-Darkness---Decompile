@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "c42fcc5c-27fc-452a-84ac-b956e3214ec3",
+  "attempt": 5,
+  "base_commit": "e2269383053224a94c3c6b5d6c66c6aef3800d73",
+  "target": "fn_800DC9A8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c42fcc5c-27fc-452a-84ac-b956e3214ec3.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c42fcc5c-27fc-452a-84ac-b956e3214ec3-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c42fcc5c-27fc-452a-84ac-b956e3214ec3-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c42fcc5c-27fc-452a-84ac-b956e3214ec3-experiments.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-c42fcc5c-27fc-452a-84ac-b956e3214ec3.json"
+  ],
+  "divergence": "Retail mr r23,r24 at 0xA0 is absent; compiler coalesces head and iterator into r23. Nonvolatile register allocation and conversion-setup scheduling differ, with consequent branch displacement changes. Retail lfd conversion bias targets lbl_8064F4F0; generated targets @30 (both addend zero). Canonical and relocation-strict objdiff both 96.41791%; retail 536 bytes/134 instructions, generated 532 bytes/133 instructions. Full build, DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f, and legal audit pass."
+}
