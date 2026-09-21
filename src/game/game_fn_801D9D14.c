@@ -35,7 +35,6 @@ extern void fn_801E8328(u32, void*);
 void fn_801D9D14(Object* self)
 {
     u32 owner;
-    u8* effect;
     u32 parameter;
 
     if (*(int*)(self->bytes + 8) != lbl_8064D18C ||
@@ -68,6 +67,7 @@ void fn_801D9D14(Object* self)
         void* node = fn_80201814(*(u32*)(self->bytes + 0xC));
         if (node != 0 && fn_80201B64(node) != 8) {
             u32 effectOwner;
+            u8* effect;
             u32 init[2];
             u32 xyz[3];
             float zOffset;
@@ -94,13 +94,13 @@ void fn_801D9D14(Object* self)
             xyz[2] = *(u32*)(self->bytes + 0x40);
             zOffset += *(float*)&xyz[2];
             *(float*)&xyz[2] = zOffset;
-            *(u32*)(effect + 0x98) = xyz[0];
-            *(u32*)(effect + 0x9C) = xyz[1];
-            *(u32*)(effect + 0xA0) = xyz[2];
-            memcpy(effect + 0xA4, init, 6);
-            *(u32*)(effect + 0x94) = 0;
-            effect[0xAA] = 4;
-            fn_801E8328(0x10, effect);
+            *(u32*)(self->bytes + 0x154) = xyz[0];
+            *(u32*)(self->bytes + 0x158) = xyz[1];
+            *(u32*)(self->bytes + 0x15C) = xyz[2];
+            memcpy(self->bytes + 0x160, init, 6);
+            *(u32*)(self->bytes + 0x150) = 0;
+            self->bytes[0x166] = 4;
+            fn_801E8328(0x10, self->bytes + 0xBC);
         }
         break;
     }
