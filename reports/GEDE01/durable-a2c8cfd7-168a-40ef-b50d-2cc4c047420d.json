@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a2c8cfd7-168a-40ef-b50d-2cc4c047420d",
+  "attempt": 4,
+  "base_commit": "5f840d9893d29bf2e40d0949dec169635a115808",
+  "target": "fn_80173D44",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a2c8cfd7-168a-40ef-b50d-2cc4c047420d.json"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff remain size-exact at 448 bytes and score 96.42857%. Retail emits the prologue and mr r31,r3 at offsets 0x00-0x10, then loads lbl_80651CA0, lbl_80651CA4, and lbl_806506F4 at 0x14, 0x18, and 0x1C. The candidate hoists the lbl_80651CA0 and lbl_806506F4 loads to 0x08 and 0x10, delays mr r31,r3 to 0x18, and loads lbl_80651CA4 at 0x1C; all instructions from 0x20 onward align. Both sides have 112 instructions and 21 relocations. All relocation types, targets, and zero addends are present, but the first three relocation order/offset pairs differ: retail has lbl_80651CA0@0x14, lbl_80651CA4@0x18, lbl_806506F4@0x1C, while the candidate has lbl_80651CA0@0x08, lbl_806506F4@0x10, lbl_80651CA4@0x1C; the remaining 18 relocation entries align. This attempt tested a distinct call-boundary hypothesis by expressing fn_8016A598 before local initialization: MWCC kept the call at 0x14 and placed the globals after it, so it was rejected. Aggregate initializer syntax was also rejected by canonical C mode as a non-constant automatic initializer. The preserved best honest reconstruction is unchanged. The linked DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
