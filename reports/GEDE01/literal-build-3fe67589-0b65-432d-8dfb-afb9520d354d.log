@@ -1,0 +1,5 @@
+[1/1] EXTERNALIZE build/GEDE01/src/game/game_fn_80173F04.o
+FAILED: [code=1] build/GEDE01/src/game/game_fn_80173F04.externalized
+python3 tools/externalize_elf_symbol.py build/GEDE01/src/game/game_fn_80173F04.o @22 lbl_806506A8 orig/GEDE01/sys/main.dol && build/binutils/powerpc-eabi-objcopy --redefine-sym=@22=lbl_806506A8 --remove-section=.sdata2 build/GEDE01/src/game/game_fn_80173F04.o && touch build/GEDE01/src/game/game_fn_80173F04.externalized
+build/GEDE01/src/game/game_fn_80173F04.o: symbol '@22' not found
+ninja: build stopped: subcommand failed.

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "assignment_id": "3fe67589-0b65-432d-8dfb-afb9520d354d",
+  "attempt": 6,
+  "base_commit": "1ee6391f88f5e0f0f9d799fc725cecd84d088d77",
+  "target": "fn_80173F04",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3fe67589-0b65-432d-8dfb-afb9520d354d.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3fe67589-0b65-432d-8dfb-afb9520d354d-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-3fe67589-0b65-432d-8dfb-afb9520d354d.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-3fe67589-0b65-432d-8dfb-afb9520d354d.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3fe67589-0b65-432d-8dfb-afb9520d354d-literal-unnormalized.json",
+    "eternal-darkness-decomp/reports/GEDE01/literal-build-3fe67589-0b65-432d-8dfb-afb9520d354d.log",
+    "eternal-darkness-decomp/reports/GEDE01/build-3fe67589-0b65-432d-8dfb-afb9520d354d.log",
+    "eternal-darkness-decomp/reports/GEDE01/configure-3fe67589-0b65-432d-8dfb-afb9520d354d.log"
+  ],
+  "divergence": "Retained canonical and explicit function_reloc_diffs=name_address scores improve from 95.675% to 96.175%. Both functions are now 640 bytes/160 instructions, use a 0x150-byte frame, and save r22-r31 at 0x128. The independent four-byte aggregate removes the extra r21 and restores every stack offset. All encoded instructions from offset 0x2c onward match. Only entry scheduling remains: generated loads lbl_80651CA8 and lbl_806506FC before stmw and stores value before the descriptor, whereas retail loads all three defaults after stmw and stores descriptor first. Both sides have 29 relocations with equal target/type/addend multisets but differing entry relocation offsets; strict equality is not claimed. A separate literal-initializer experiment reproduces all 640 encoded text bytes before relocation (strict unnormalized score 99.875%), but requires unsupported NOBITS constant normalization and fails the unchanged @22 rule because its bias is @24. That experiment was discarded; no helper/gate/compiler-policy changes were made. The full canonical build passes and DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

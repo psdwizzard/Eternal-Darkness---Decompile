@@ -1,0 +1,410 @@
+{
+  "version": 1,
+  "assignment_id": "3fe67589-0b65-432d-8dfb-afb9520d354d",
+  "working_directory": "eternal-darkness-decomp",
+  "preserved_commit": "9d710d5b157816c4bc0e563aa2f1db727f2544df",
+  "preserved_source_identical_to_accepted_base": true,
+  "compiler": "GC/1.3",
+  "compiler_sha256": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715",
+  "compiler_settings": "Unchanged canonical -O4,p, -lang=c, -use_lmw_stmw on; existing @22 externalization retained",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80173F04 -o reports/GEDE01/objdiff-3fe67589-0b65-432d-8dfb-afb9520d354d.json --format json-pretty fn_80173F04",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80173F04 -o reports/GEDE01/objdiff-3fe67589-0b65-432d-8dfb-afb9520d354d-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_80173F04",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "source_audit": "rg -n '__asm|\\basm\\s*\\(|#\\s*pragma' src/game/game_fn_80173F04.c",
+    "legal_audit": "python3 tools/legal_audit.py"
+  },
+  "raw_outputs": {
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical_match_percent": 96.175,
+    "relocation_strict_match_percent": 96.175,
+    "source_audit_stdout": "",
+    "source_audit_exit_code": 1,
+    "legal_audit": "legal audit passed (19378 tracked project files inspected)"
+  },
+  "text_comparison": {
+    "retail_size": 640,
+    "generated_size": 640,
+    "retail_instructions": 160,
+    "generated_instructions": 160,
+    "frame_size": 336,
+    "saved_registers": "r22-r31 at 0x128 on both sides",
+    "different_instruction_offsets": [
+      "0x8",
+      "0xc",
+      "0x10",
+      "0x14",
+      "0x18",
+      "0x1c",
+      "0x20",
+      "0x24",
+      "0x28"
+    ],
+    "identical_from_offset": "0x2c",
+    "retail_sha256": "943b93e9d632bbcacadf2782c12db6770899f841cde0b9151e6dc5c35dc00091",
+    "generated_sha256": "429c01e93baa18a0b5c9744df0ba774926fedcb50ec7c2d348362d10584e7be3"
+  },
+  "relocations": {
+    "retail_count": 29,
+    "generated_count": 29,
+    "retail": [
+      {
+        "offset": 20,
+        "type": 109,
+        "target": "lbl_80651CA8",
+        "addend": 0
+      },
+      {
+        "offset": 24,
+        "type": 109,
+        "target": "lbl_80651CAC",
+        "addend": 0
+      },
+      {
+        "offset": 28,
+        "type": 109,
+        "target": "lbl_806506FC",
+        "addend": 0
+      },
+      {
+        "offset": 44,
+        "type": 10,
+        "target": "fn_8016A598",
+        "addend": 0
+      },
+      {
+        "offset": 60,
+        "type": 10,
+        "target": "fn_8016A598",
+        "addend": 0
+      },
+      {
+        "offset": 66,
+        "type": 6,
+        "target": "lbl_8024FF00",
+        "addend": 0
+      },
+      {
+        "offset": 74,
+        "type": 4,
+        "target": "lbl_8024FF00",
+        "addend": 0
+      },
+      {
+        "offset": 88,
+        "type": 10,
+        "target": "fn_80163BB4",
+        "addend": 0
+      },
+      {
+        "offset": 108,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 112,
+        "type": 10,
+        "target": "fn_800F5C54",
+        "addend": 0
+      },
+      {
+        "offset": 132,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 156,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 180,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 204,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 228,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 252,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 276,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 300,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 324,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 348,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 372,
+        "type": 10,
+        "target": "fn_8015C4A4",
+        "addend": 0
+      },
+      {
+        "offset": 384,
+        "type": 10,
+        "target": "fn_80158ABC",
+        "addend": 0
+      },
+      {
+        "offset": 420,
+        "type": 109,
+        "target": "lbl_806506A8",
+        "addend": 0
+      },
+      {
+        "offset": 484,
+        "type": 10,
+        "target": "fn_8018358C",
+        "addend": 0
+      },
+      {
+        "offset": 554,
+        "type": 6,
+        "target": "fn_80183454",
+        "addend": 0
+      },
+      {
+        "offset": 562,
+        "type": 4,
+        "target": "fn_80183454",
+        "addend": 0
+      },
+      {
+        "offset": 592,
+        "type": 10,
+        "target": "fn_80148008",
+        "addend": 0
+      },
+      {
+        "offset": 604,
+        "type": 10,
+        "target": "fn_80156938",
+        "addend": 0
+      },
+      {
+        "offset": 612,
+        "type": 10,
+        "target": "fn_8017FF1C",
+        "addend": 0
+      }
+    ],
+    "generated": [
+      {
+        "offset": 8,
+        "type": 109,
+        "target": "lbl_80651CA8",
+        "addend": 0
+      },
+      {
+        "offset": 16,
+        "type": 109,
+        "target": "lbl_806506FC",
+        "addend": 0
+      },
+      {
+        "offset": 28,
+        "type": 109,
+        "target": "lbl_80651CAC",
+        "addend": 0
+      },
+      {
+        "offset": 44,
+        "type": 10,
+        "target": "fn_8016A598",
+        "addend": 0
+      },
+      {
+        "offset": 60,
+        "type": 10,
+        "target": "fn_8016A598",
+        "addend": 0
+      },
+      {
+        "offset": 66,
+        "type": 6,
+        "target": "lbl_8024FF00",
+        "addend": 0
+      },
+      {
+        "offset": 74,
+        "type": 4,
+        "target": "lbl_8024FF00",
+        "addend": 0
+      },
+      {
+        "offset": 88,
+        "type": 10,
+        "target": "fn_80163BB4",
+        "addend": 0
+      },
+      {
+        "offset": 108,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 112,
+        "type": 10,
+        "target": "fn_800F5C54",
+        "addend": 0
+      },
+      {
+        "offset": 132,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 156,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 180,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 204,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 228,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 252,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 276,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 300,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 324,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 348,
+        "type": 10,
+        "target": "fn_8016A694",
+        "addend": 0
+      },
+      {
+        "offset": 372,
+        "type": 10,
+        "target": "fn_8015C4A4",
+        "addend": 0
+      },
+      {
+        "offset": 384,
+        "type": 10,
+        "target": "fn_80158ABC",
+        "addend": 0
+      },
+      {
+        "offset": 420,
+        "type": 109,
+        "target": "lbl_806506A8",
+        "addend": 0
+      },
+      {
+        "offset": 484,
+        "type": 10,
+        "target": "fn_8018358C",
+        "addend": 0
+      },
+      {
+        "offset": 554,
+        "type": 6,
+        "target": "fn_80183454",
+        "addend": 0
+      },
+      {
+        "offset": 562,
+        "type": 4,
+        "target": "fn_80183454",
+        "addend": 0
+      },
+      {
+        "offset": 592,
+        "type": 10,
+        "target": "fn_80148008",
+        "addend": 0
+      },
+      {
+        "offset": 604,
+        "type": 10,
+        "target": "fn_80156938",
+        "addend": 0
+      },
+      {
+        "offset": 612,
+        "type": 10,
+        "target": "fn_8017FF1C",
+        "addend": 0
+      }
+    ],
+    "target_type_addend_multisets_equal": true
+  },
+  "scope": "One independent NonMatching C translation unit; no registration, split, runtime, progress, README, helper, or compiler-policy edits. Pre-existing CLAUDE.md edit left unstaged. DOL is the canonical build with retail fallback for this NonMatching function.",
+  "build_log_format": "Complete stdout/stderr with CRLF normalized to LF and trailing whitespace removed."
+}

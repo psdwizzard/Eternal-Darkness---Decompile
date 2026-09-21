@@ -1,0 +1,36 @@
+[
+  {
+    "hypothesis": "Separate four-byte aggregate copy lifetime, not combined with descriptor",
+    "score": 96.175,
+    "source_change": "Replace scalar u32 local value, its extern default, and EffectParams.value1C with the same independent one-word Value32 aggregate; retain assignments and all other source."
+  },
+  {
+    "hypothesis": "Member-wise initialization of the independent Value32 aggregate",
+    "score": 96.175,
+    "result": "Identical generated text to aggregate assignment; extra r21 and stack drift fixed, but entry schedule differs."
+  },
+  {
+    "hypothesis": "Four-channel byte aggregate for the four-byte value (retail initial value 0xe4c308ff)",
+    "score": 96.175,
+    "result": "Identical code generation to one-word aggregate."
+  },
+  {
+    "hypothesis": "Aggregate copies for both descriptor fragments as well as the four-byte value",
+    "score": 96.175,
+    "result": "Identical code generation; unnecessary wrappers discarded."
+  },
+  {
+    "hypothesis": "Retail entry is compiler-generated literal initialization of a six-byte three-short descriptor {0,0,0} and a four-byte color {0xe4,0xc3,0x08,0xff}, rather than optimized runtime external loads",
+    "strict_unnormalized_score": 99.875,
+    "raw_text_equal": true,
+    "raw_text_size": 640,
+    "raw_text_sha256": "943b93e9d632bbcacadf2782c12db6770899f841cde0b9151e6dc5c35dc00091",
+    "result": "All 160 encoded instructions match before relocation, but compiler-local constant relocations are not normalized. Existing externalization fails because @22 does not exist. Not a canonical match; literal variant discarded without changing the externalization policy.",
+    "unnormalized_symbols": {
+      "@4": "six-byte zero descriptor in .sbss2, references at addends 0 and 4",
+      "@5": "four-byte color in .sdata2",
+      "@24": "signed-conversion bias in .sdata2"
+    },
+    "followup_constraint": "Matching this discarded literal variant would require canonical support for verifying/externalizing the NOBITS zero initializer and mapping @4+4 to lbl_80651CAC, plus @5 to lbl_806506FC and @24 to lbl_806506A8. Existing externalize_elf_symbol.py and retarget_elf_relocation.py reject NOBITS/file-unbacked values. Helper/gate changes are outside this assignment; none were made."
+  }
+]

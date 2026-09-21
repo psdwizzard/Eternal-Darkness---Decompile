@@ -4,12 +4,14 @@ typedef unsigned int u32;
 
 typedef struct Vec3s { short x, y, z; } Vec3s;
 typedef struct Vec3f { float x, y, z; } Vec3f;
+/* Four-byte aggregate copied through a local before entering EffectParams. */
+typedef struct Value32 { u32 word; } Value32;
 typedef struct Descriptor { u32 word; u16 half; } Descriptor;
 typedef struct EffectParams {
     u8 pad0[2]; u8 value2; signed char value3; u8 pad4[2]; u16 value6;
     u8 pad8[0xC];
     u8 value14, value15, value16, value17, value18, value19, value1A, pad1B;
-    u32 value1C;
+    Value32 value1C;
     u8 pad20[0x70];
 } EffectParams;
 
@@ -26,7 +28,7 @@ extern void* fn_80156938(void*);
 extern void fn_8017FF1C(void*, int);
 extern const u32 lbl_80651CA8;
 extern const u16 lbl_80651CAC;
-extern const u32 lbl_806506FC;
+extern const Value32 lbl_806506FC;
 extern const char lbl_8024FF00[];
 
 int fn_80173F04(void* arg)
@@ -45,7 +47,7 @@ int fn_80173F04(void* arg)
     int arg11;
     Vec3s* source;
     Descriptor descriptor;
-    u32 value;
+    Value32 value;
     Vec3f position;
     Vec3f submit_position;
     EffectParams params;
