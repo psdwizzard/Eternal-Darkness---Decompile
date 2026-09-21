@@ -9,7 +9,7 @@ typedef struct Object {
 extern int lbl_8064D18C;
 extern u32 lbl_80651EE0;
 extern u16 lbl_80651EE4;
-extern float lbl_80651160;
+extern const float lbl_80651160;
 extern void fn_801FE22C(u32);
 extern u32 fn_80201B54(void*);
 extern unsigned long long fn_8020123C(u32, u32, u32, u32);
@@ -70,7 +70,6 @@ void fn_801D9D14(Object* self)
             u8* effect;
             u32 init[2];
             u32 xyz[3];
-            float zOffset;
             init[0] = lbl_80651EE0;
             *(u16*)((u8*)init + 4) = lbl_80651EE4;
             fn_801FE934(*(u32*)(self->bytes + 0x44), 0x3C);
@@ -85,17 +84,15 @@ void fn_801D9D14(Object* self)
             fn_801D38BC(effectOwner, effect + 0x78, effect + 4);
             effect[0x14] = 30;
             *(u16*)(effect + 0x1C) = 0x80;
-            zOffset = lbl_80651160;
             effect[0x18] |= 2;
             effect[0x19] = 8;
             *(void (**)(void))(effect + 0x90) = fn_80185AE8;
             xyz[0] = *(u32*)(self->bytes + 0x38);
             xyz[1] = *(u32*)(self->bytes + 0x3C);
             xyz[2] = *(u32*)(self->bytes + 0x40);
-            zOffset += *(float*)&xyz[2];
-            *(float*)&xyz[2] = zOffset;
-            *(u32*)(self->bytes + 0x154) = xyz[0];
-            *(u32*)(self->bytes + 0x158) = xyz[1];
+            *(float*)&xyz[2] += lbl_80651160;
+            *(u32*)(effect + 0x98) = xyz[0];
+            *(u32*)(effect + 0x9C) = xyz[1];
             *(u32*)(self->bytes + 0x15C) = xyz[2];
             memcpy(effect + 0xA4, init, 6);
             *(u32*)(self->bytes + 0x150) = 0;

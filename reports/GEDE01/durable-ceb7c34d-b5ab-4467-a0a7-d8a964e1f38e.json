@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "ceb7c34d-b5ab-4467-a0a7-d8a964e1f38e",
+  "attempt": 5,
+  "base_commit": "9bbd1eec93e743c4531df734a8211fa8e76e015a",
+  "target": "fn_801D9D14",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ceb7c34d-b5ab-4467-a0a7-d8a964e1f38e.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-ceb7c34d-b5ab-4467-a0a7-d8a964e1f38e.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-ceb7c34d-b5ab-4467-a0a7-d8a964e1f38e.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-ceb7c34d-b5ab-4467-a0a7-d8a964e1f38e.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-ceb7c34d-b5ab-4467-a0a7-d8a964e1f38e.log"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.9% for exact 720-byte functions (180 instructions), improved from 98.30556%. Correct const qualification of the .sdata2 float plus direct Z accumulation fixes all floating register and scheduling differences. Effect-relative X/Y stores also now match. Three instruction words remain different: at 0x220 retail stw r0,0xA0(r30) versus generated stw r0,0x15C(r31); at 0x230 retail stw r3,0x94(r30) versus generated stw r3,0x150(r31); at 0x23C retail stb r0,0xAA(r30) versus generated stb r0,0x166(r31). All 31 ELF relocation offsets, types, target names, target addresses, and addends agree. Extending effect to these remaining stores causes the global r30/r31 swap. Preserved as one NonMatching C translation unit. Canonical build and legal audit pass; main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
