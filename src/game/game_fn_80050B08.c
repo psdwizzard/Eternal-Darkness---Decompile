@@ -26,7 +26,6 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
     s32 spC[3];
     u8 sp8;
     s32 var_r28;
-    s32 var_r29;
     s8 var_r31;
     u16 var_r21;
     u16 var_r22;
@@ -34,16 +33,15 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
     u16 var_r3_2;
     u8 *var_r23 = lbl_80238E60;
 
-    var_r29 = arg0;
     var_r22 = 0xFFFF;
     var_r21 = 0;
     var_r31 = 0;
     var_r28 = 0;
     sp8 = 0;
     if (arg1 != 0) {
-        var_r29 = fn_8011EB04(arg1);
+        arg0 = fn_8011EB04(arg1);
     }
-    switch (var_r29) {                              /* switch 1; irregular */
+    switch (arg0) {                                 /* switch 1; irregular */
     case 1:
     case 91:
     case 98:
@@ -1078,6 +1076,6 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
     if (arg6 != NULL) {
         *arg6 |= var_r28;
     }
-    fn_800EB458(lbl_8024104C, var_r29, var_r22, arg2, sp8, var_r31, var_r21);
+    fn_800EB458(lbl_8024104C, arg0, var_r22, arg2, sp8, var_r31, var_r21);
     return var_r22;
 }
