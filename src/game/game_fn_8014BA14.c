@@ -28,7 +28,7 @@ extern void fn_801A7670(void*, int);
 extern void fn_8020104C(int, void*, void*, int, float);
 extern int fn_801A98F4(int, int);
 
-void fn_8014BA14(s16* first, s16* second, int id, void* owner)
+void fn_8014BA14(s16* first, s16* second, u32 id, void* owner)
 {
     int special = 0;
     int effect = 0;

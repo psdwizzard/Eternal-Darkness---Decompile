@@ -3093,6 +3093,7 @@ config.custom_build_rules = [
 ]
 
 game_section_externalizations = {
+    "8014BA14": (".sdata2", [("@65", "lbl_806504B0")]),
     "800B2EC0": (".sdata2", [("@41", "lbl_8064F020")]),
     "8001CA04": (".sdata2", [("@18", "lbl_8064DE60")]),
     "80031544": (".sdata2", [("@7", "lbl_8064E038")]),

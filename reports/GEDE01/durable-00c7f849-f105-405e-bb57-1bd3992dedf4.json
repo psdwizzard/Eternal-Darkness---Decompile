@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "00c7f849-f105-405e-bb57-1bd3992dedf4",
+  "attempt": 4,
+  "base_commit": "28f2371cdbd5d7289b44cbf69b48d8a42fd5bfd6",
+  "target": "fn_8014BA14",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-00c7f849-f105-405e-bb57-1bd3992dedf4.json"
+  ],
+  "divergence": "Fresh canonical relocation-aware objdiff measures 98.37334% with equal 1200-byte text and 38 relocation-bearing instructions per side. The unsigned identifier type fixes the retail cmplwi at 0x1bc, and canonical externalization now gives both signed-conversion loads the correct lbl_806504B0 target and addend; relocation-strict credit is still not claimed because the second relocation-bearing load is at retail offset 0x3f0 versus generated offset 0x3f4. Remaining code differences are persistent owner/special/color register allocation, first endpoint scalar-load and FPR scheduling, and midpoint component scheduling. The full canonical build passes with DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
