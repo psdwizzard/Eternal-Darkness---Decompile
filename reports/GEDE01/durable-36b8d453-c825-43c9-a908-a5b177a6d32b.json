@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "36b8d453-c825-43c9-a908-a5b177a6d32b",
+  "attempt": 4,
+  "base_commit": "a65eb3d2ab9e0a69fb0d4c780bd8d1fe8ce10937",
+  "target": "fn_80173F04",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-36b8d453-c825-43c9-a908-a5b177a6d32b.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-36b8d453-c825-43c9-a908-a5b177a6d32b-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-36b8d453-c825-43c9-a908-a5b177a6d32b.json"
+  ],
+  "divergence": "Fresh direct canonical and explicit function_reloc_diffs=name_address objdiff both measure 95.675000%: retail is 640 bytes/160 instructions and generated is 632 bytes/158 instructions, with 29 relocation-bearing instructions on each side. Both use a 0x150-byte frame; retail saves r22-r31 at 0x128 while generated saves r21-r31 at 0x124. Retail loads lbl_80651CA8, lbl_80651CAC, and lbl_806506FC after stmw and spills all three, whereas generated schedules the first two loads before stmw and retains lbl_806506FC in the extra callee-saved r21, shifting downstream register and local-stack assignments. This attempt tested a distinct callback-typing hypothesis by correcting fn_80183454 from void(void) to its grounded u8*(void*,void*,void*) signature and giving fn_80148008 the corresponding callback type; codegen and score were identical, ruling out callback ABI typing as the cause while removing the source-level signature contradiction. Previously documented delayed-global-read, declaration-order, and packed-aggregate variants were not repeated. The generated relocation set additionally exposes lbl_806506A8 through the existing @22 signed-conversion-bias externalization, so strict equality is not claimed. The full canonical build passed, the legal audit found no assembly constructs, and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

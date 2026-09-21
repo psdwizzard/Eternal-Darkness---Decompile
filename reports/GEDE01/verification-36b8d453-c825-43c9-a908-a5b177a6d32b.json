@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "assignment_id": "36b8d453-c825-43c9-a908-a5b177a6d32b",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80173F04 -o reports/GEDE01/objdiff-36b8d453-c825-43c9-a908-a5b177a6d32b.json --format json-pretty fn_80173F04",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80173F04 -o reports/GEDE01/objdiff-36b8d453-c825-43c9-a908-a5b177a6d32b-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_80173F04",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "legal_audit": "rg -n '__asm|asm\\s*\\(' src/game/game_fn_80173F04.c"
+  },
+  "raw_outputs": {
+    "build_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical": "retail size=640 instructions=160 relocations=29 match_percent=95.675; generated size=632 instructions=158 relocations=29 match_percent=95.675",
+    "relocation_strict": "function_reloc_diffs=name_address; retail size=640 instructions=160 relocations=29 match_percent=95.675; generated size=632 instructions=158 relocations=29 match_percent=95.675",
+    "generated_sections": ".text size=0x278; .rela.text size=0x15c entry_size=0x0c",
+    "legal_audit": "no matches"
+  }
+}
