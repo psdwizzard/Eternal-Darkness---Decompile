@@ -3120,6 +3120,7 @@ game_section_externalizations = {
     "80153A24": (".sdata2", [("@15", "lbl_806505C8"), ("@18", "lbl_806505D0")]),
     "801535D8": (".sdata2", [("@38", "lbl_806505A8"), ("@40", "lbl_806505B0")]),
     "80174F2C": (".sdata2", [("@17", "lbl_806506A8")]),
+    "801752B0": (".sdata2", [("@13", "lbl_806506A8")]),
     "8017AC20": (".sdata2", [("@18", "lbl_806508A8")]),
     "8018680C": (".sdata2", [("@20", "lbl_80650A10")]),
     "80186F70": (".sdata2", [("@22", "lbl_80650A38")]),
@@ -10051,9 +10052,7 @@ config.libs = [
             Object(Matching, "game/game_fn_80175164.c"),
             Object(Matching, "game/game_fn_801751DC.c"),
             Object(Matching, "game/game_fn_80175244.c"),
-            # 95.642204% exact-size honest C; callback address materialization
-            # and descriptor-pointer scheduling differ across 19 instructions.
-            Object(NonMatching, "game/game_fn_801752B0.c"),
+            Object(Matching, "game/game_fn_801752B0.c"),
             Object(Matching, "game/game_fn_80175464.c"),
             Object(Matching, "game/game_fn_801754D0.c"),
             Object(Matching, "game/game_fn_80175534.c"),
