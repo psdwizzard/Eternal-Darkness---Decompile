@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "ba098e80-66ba-44a5-833f-6a515da1c4a4",
+  "attempt": 6,
+  "base_commit": "aae153f5ec7b3d41251c1df870905253f933a35c",
+  "target": "fn_80053048",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ba098e80-66ba-44a5-833f-6a515da1c4a4.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ba098e80-66ba-44a5-833f-6a515da1c4a4-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-ba098e80-66ba-44a5-833f-6a515da1c4a4.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-ba098e80-66ba-44a5-833f-6a515da1c4a4.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-ba098e80-66ba-44a5-833f-6a515da1c4a4.json"
+  ],
+  "divergence": "Improved canonical and function_reloc_diffs=name_address objdiff from 96.30189% to 97.54717%, at 424/424 bytes. Indexed record access puts the record pointer in retail r28; reusing the slot counter and expressing cleanup masks directly makes the cleanup loop exact. Remaining first-loop differences: retail copied transition type/slot index/mask use r27/r24/r26, generated uses r26/r27/r24; the two moves at 0x70/0x74 are reversed, and the second argument move is generated at 0xDC versus retail 0xE0 (the clrlwi moves from retail 0xDC to generated 0xE0). There are 10 aligned rows with differing instruction text, plus the relocated clrlwi row. All 18 actual ELF relocation records have identical offsets, types, resolved target names/values/sections and addends; objdiff displays 33 relocation-bearing rows per side. Canonical and strict raw reports are byte-identical. Full canonical build and legal audit pass; DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f. Remains one independent NonMatching C translation unit with unchanged canonical compiler settings."
+}

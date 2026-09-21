@@ -60,8 +60,8 @@ void fn_80053048(s32 value)
     record = fn_801E880C(lbl_8064C514, type, 0);
     record_type = type;
 
-    for (i = 0; i < count; i++, record++) {
-        if (value == record->value) {
+    for (i = 0; i < count; i++) {
+        if (value == record[i].value) {
             for (type = 0; type < 5; type++) {
                 s32 mask = 1 << type;
                 if (((s8)lbl_8030F540.used_slots & mask) == 0) {
@@ -69,14 +69,14 @@ void fn_80053048(s32 value)
                     if (lbl_8064C510 == 0) {
                         return;
                     }
-                    if (record->enabled == 0 && (lbl_803003C8.flags & 1) == 0) {
+                    if (record[i].enabled == 0 && (lbl_803003C8.flags & 1) == 0) {
                         break;
                     }
                     handle = fn_801E6CA0(lbl_8064C510, record_type, (u16)i,
                                         0x10000, 1);
                     lbl_8030F540.used_slots |= mask;
                     lbl_8030F540.slots[type].handle = handle;
-                    lbl_8030F540.slots[type].value = value + record->addend;
+                    lbl_8030F540.slots[type].value = value + record[i].addend;
                     break;
                 }
             }
@@ -84,14 +84,12 @@ void fn_80053048(s32 value)
     }
 
     {
-        s32 cleanup_slot;
-        for (cleanup_slot = 0; cleanup_slot < 5; cleanup_slot++) {
-            s32 mask = 1 << cleanup_slot;
-            if (((s8)lbl_8030F540.used_slots & mask) != 0 &&
-                value == lbl_8030F540.slots[cleanup_slot].value) {
-                fn_801E5FB0(lbl_8030F540.slots[cleanup_slot].handle);
-                lbl_8030F540.slots[cleanup_slot].handle = 0;
-                lbl_8030F540.used_slots &= ~mask;
+        for (type = 0; type < 5; type++) {
+            if (((s8)lbl_8030F540.used_slots & (1 << type)) != 0 &&
+                value == lbl_8030F540.slots[type].value) {
+                fn_801E5FB0(lbl_8030F540.slots[type].handle);
+                lbl_8030F540.slots[type].handle = 0;
+                lbl_8030F540.used_slots &= ~(1 << type);
             }
         }
     }

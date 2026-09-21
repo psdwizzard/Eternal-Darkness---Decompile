@@ -1,0 +1,596 @@
+{
+  "assignment_id": "ba098e80-66ba-44a5-833f-6a515da1c4a4",
+  "commands": [
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80053048",
+        "fn_80053048",
+        "-o",
+        "reports/GEDE01/objdiff-ba098e80-66ba-44a5-833f-6a515da1c4a4-canonical.json",
+        "--format",
+        "json-pretty"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-ba098e80-66ba-44a5-833f-6a515da1c4a4-canonical.json\n"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80053048",
+        "fn_80053048",
+        "-o",
+        "reports/GEDE01/objdiff-ba098e80-66ba-44a5-833f-6a515da1c4a4.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-ba098e80-66ba-44a5-833f-6a515da1c4a4.json\n"
+    },
+    {
+      "command": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "exit_code": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "stdout": "legal audit passed (19159 tracked project files inspected)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "stdout": "legal audit passed (19165 tracked project files inspected)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "final_build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/build-ba098e80-66ba-44a5-833f-6a515da1c4a4.json",
+    "nonmatching_uses_retail_object": true
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "canonical_strict_byte_identical": true,
+  "match_percent": [
+    97.54717,
+    97.54717
+  ],
+  "sizes": [
+    "424",
+    "424"
+  ],
+  "displayed_instruction_rows": [
+    107,
+    107
+  ],
+  "actual_instruction_counts": [
+    106,
+    106
+  ],
+  "differing_aligned_rows": [
+    {
+      "retail": {
+        "address": "112",
+        "formatted": "mr r28, r3"
+      },
+      "generated": {
+        "address": "112",
+        "formatted": "mr r26, r24"
+      }
+    },
+    {
+      "retail": {
+        "address": "116",
+        "formatted": "mr r27, r24"
+      },
+      "generated": {
+        "address": "116",
+        "formatted": "mr r28, r3"
+      }
+    },
+    {
+      "retail": {
+        "address": "156",
+        "formatted": "li r24, 0x0"
+      },
+      "generated": {
+        "address": "156",
+        "formatted": "li r27, 0x0"
+      }
+    },
+    {
+      "retail": {
+        "address": "172",
+        "formatted": "slw r26, r3, r24"
+      },
+      "generated": {
+        "address": "172",
+        "formatted": "slw r24, r3, r27"
+      }
+    },
+    {
+      "retail": {
+        "address": "176",
+        "formatted": "and. r0, r4, r26"
+      },
+      "generated": {
+        "address": "176",
+        "formatted": "and. r0, r4, r24"
+      }
+    },
+    {
+      "retail": {},
+      "generated": {
+        "address": "220",
+        "formatted": "mr r4, r26"
+      }
+    },
+    {
+      "retail": {
+        "address": "224",
+        "formatted": "mr r4, r27"
+      },
+      "generated": {}
+    },
+    {
+      "retail": {
+        "address": "248",
+        "formatted": "slwi r5, r24, 4"
+      },
+      "generated": {
+        "address": "248",
+        "formatted": "slwi r5, r27, 4"
+      }
+    },
+    {
+      "retail": {
+        "address": "252",
+        "formatted": "or r6, r0, r26"
+      },
+      "generated": {
+        "address": "252",
+        "formatted": "or r6, r0, r24"
+      }
+    },
+    {
+      "retail": {
+        "address": "288",
+        "formatted": "addi r24, r24, 0x1"
+      },
+      "generated": {
+        "address": "288",
+        "formatted": "addi r27, r27, 0x1"
+      }
+    }
+  ],
+  "elf_relocations": {
+    "retail": [
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 10,
+        "type": 6,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 26,
+        "type": 4,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 56,
+        "type": 109,
+        "target": "lbl_8064C514",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 68,
+        "type": 109,
+        "target": "lbl_8064C510",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 76,
+        "type": 10,
+        "target": "fn_801E88FC",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 88,
+        "type": 109,
+        "target": "lbl_8064C514",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 100,
+        "type": 10,
+        "target": "fn_801E880C",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 106,
+        "type": 6,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 110,
+        "type": 6,
+        "target": "lbl_803003C8",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 122,
+        "type": 4,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 126,
+        "type": 4,
+        "target": "lbl_803003C8",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 184,
+        "type": 109,
+        "target": "lbl_8064C510",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 236,
+        "type": 10,
+        "target": "fn_801E6CA0",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 246,
+        "type": 6,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 258,
+        "type": 4,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 314,
+        "type": 6,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 322,
+        "type": 4,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 368,
+        "type": 10,
+        "target": "fn_801E5FB0",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      }
+    ],
+    "generated": [
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 10,
+        "type": 6,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 26,
+        "type": 4,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 56,
+        "type": 109,
+        "target": "lbl_8064C514",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 68,
+        "type": 109,
+        "target": "lbl_8064C510",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 76,
+        "type": 10,
+        "target": "fn_801E88FC",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 88,
+        "type": 109,
+        "target": "lbl_8064C514",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 100,
+        "type": 10,
+        "target": "fn_801E880C",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 106,
+        "type": 6,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 110,
+        "type": 6,
+        "target": "lbl_803003C8",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 122,
+        "type": 4,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 126,
+        "type": 4,
+        "target": "lbl_803003C8",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 184,
+        "type": 109,
+        "target": "lbl_8064C510",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 236,
+        "type": 10,
+        "target": "fn_801E6CA0",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 246,
+        "type": 6,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 258,
+        "type": 4,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 314,
+        "type": 6,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 322,
+        "type": 4,
+        "target": "lbl_8030F540",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      },
+      {
+        "relocation_section": ".rela.text",
+        "section": ".text",
+        "offset": 368,
+        "type": 10,
+        "target": "fn_801E5FB0",
+        "target_value": 0,
+        "target_section": "UND",
+        "addend": 0
+      }
+    ]
+  },
+  "elf_relocations_exact": true,
+  "objdiff_relocation_bearing_rows": [
+    33,
+    33
+  ],
+  "source_sha1": "bc917c2aa76e26ab4deb04f3d188fd51ca0aa373",
+  "scope_audit": {
+    "registration_unchanged": "Object(NonMatching, \"game/game_fn_80053048.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+    "compiler": "GC/1.3, existing canonical flags",
+    "independent_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "compiler_policy_changes": false,
+    "neighboring_function_changes": false,
+    "unrelated_preexisting_change_excluded": "CLAUDE.md"
+  },
+  "build_log_encoding_note": "Compiler CRLF output is preserved exactly in the JSON raw_combined_output string, avoiding trailing-CR whitespace warnings from a plain .log file."
+}
