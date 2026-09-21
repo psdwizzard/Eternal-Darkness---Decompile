@@ -1,0 +1,660 @@
+{
+  "assignment_id": "46d0628c-89d2-4033-a04c-9089208f0437",
+  "commands": [
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8014BA14",
+        "fn_8014BA14",
+        "-o",
+        "reports/GEDE01/objdiff-46d0628c-89d2-4033-a04c-9089208f0437.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-46d0628c-89d2-4033-a04c-9089208f0437.json\n"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8014BA14",
+        "fn_8014BA14",
+        "-o",
+        "reports/GEDE01/objdiff-strict-46d0628c-89d2-4033-a04c-9089208f0437.json",
+        "--format",
+        "json",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-strict-46d0628c-89d2-4033-a04c-9089208f0437.json\n"
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/obj/game/game_fn_8014BA14.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x4f0 contains 38 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n000000a0  0000040a R_PPC_REL24            00000000   fn_8018F764 + 0\n000000c8  0000050a R_PPC_REL24            00000000   fn_80198C8C + 0\n000000e8  0000050a R_PPC_REL24            00000000   fn_80198C8C + 0\n00000104  0000040a R_PPC_REL24            00000000   fn_8018F764 + 0\n0000012c  0000050a R_PPC_REL24            00000000   fn_80198C8C + 0\n0000014c  0000050a R_PPC_REL24            00000000   fn_80198C8C + 0\n00000158  0000040a R_PPC_REL24            00000000   fn_8018F764 + 0\n00000180  0000050a R_PPC_REL24            00000000   fn_80198C8C + 0\n000001a0  0000050a R_PPC_REL24            00000000   fn_80198C8C + 0\n000001b0  0000060a R_PPC_REL24            00000000   fn_80201A84 + 0\n000001b8  0000070a R_PPC_REL24            00000000   fn_80201814 + 0\n000001cc  0000080a R_PPC_REL24            00000000   fn_8011FE4C + 0\n000001dc  0000080a R_PPC_REL24            00000000   fn_8011FE4C + 0\n000001e0  0000060a R_PPC_REL24            00000000   fn_80201A84 + 0\n000001e8  0000070a R_PPC_REL24            00000000   fn_80201814 + 0\n00000200  0000090a R_PPC_REL24            00000000   fn_8020123C + 0\n00000220  00000a0a R_PPC_REL24            00000000   fn_80201B64 + 0\n0000022c  00000b0a R_PPC_REL24            00000000   fn_80201B44 + 0\n00000238  00000c6d R_PPC_EMB_SDA21        00000000   lbl_8064D5A8 + 0\n0000023c  00000d6d R_PPC_EMB_SDA21        00000000   lbl_8064D0AC + 0\n00000264  00000d6d R_PPC_EMB_SDA21        00000000   lbl_8064D0AC + 0\n00000278  00000e0a R_PPC_REL24            00000000   fn_801A717C + 0\n00000288  00000f0a R_PPC_REL24            00000000   fn_801A74A0 + 0\n00000294  0000100a R_PPC_REL24            00000000   fn_801A74A8 + 0\n000002a0  0000110a R_PPC_REL24            00000000   fn_801A7538 + 0\n000002ac  0000120a R_PPC_REL24            00000000   fn_801A7518 + 0\n000002b8  0000130a R_PPC_REL24            00000000   fn_801A7588 + 0\n000002c4  0000140a R_PPC_REL24            00000000   fn_80201E78 + 0\n00000304  0000156d R_PPC_EMB_SDA21        00000000   lbl_806504B0 + 0\n00000380  0000160a R_PPC_REL24            00000000   fn_80179004 + 0\n00000390  0000160a R_PPC_REL24            00000000   fn_80179004 + 0\n000003f0  0000156d R_PPC_EMB_SDA21        00000000   lbl_806504B0 + 0\n0000042c  0000160a R_PPC_REL24            00000000   fn_80179004 + 0\n00000468  0000170a R_PPC_REL24            00000000   fn_801A764C + 0\n00000474  0000180a R_PPC_REL24            00000000   fn_801A7670 + 0\n00000478  0000196d R_PPC_EMB_SDA21        00000000   lbl_806504AC + 0\n0000048c  00001a0a R_PPC_REL24            00000000   fn_8020104C + 0\n00000498  00001b0a R_PPC_REL24            00000000   fn_801A98F4 + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/src/game/game_fn_8014BA14.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x8fc contains 38 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n000000a0  0000070a R_PPC_REL24            00000000   fn_8018F764 + 0\n000000c8  0000080a R_PPC_REL24            00000000   fn_80198C8C + 0\n000000e8  0000080a R_PPC_REL24            00000000   fn_80198C8C + 0\n00000104  0000070a R_PPC_REL24            00000000   fn_8018F764 + 0\n0000012c  0000080a R_PPC_REL24            00000000   fn_80198C8C + 0\n0000014c  0000080a R_PPC_REL24            00000000   fn_80198C8C + 0\n00000158  0000070a R_PPC_REL24            00000000   fn_8018F764 + 0\n00000180  0000080a R_PPC_REL24            00000000   fn_80198C8C + 0\n000001a0  0000080a R_PPC_REL24            00000000   fn_80198C8C + 0\n000001b0  0000090a R_PPC_REL24            00000000   fn_80201A84 + 0\n000001b8  00000a0a R_PPC_REL24            00000000   fn_80201814 + 0\n000001cc  00000b0a R_PPC_REL24            00000000   fn_8011FE4C + 0\n000001dc  00000b0a R_PPC_REL24            00000000   fn_8011FE4C + 0\n000001e0  0000090a R_PPC_REL24            00000000   fn_80201A84 + 0\n000001e8  00000a0a R_PPC_REL24            00000000   fn_80201814 + 0\n00000200  00000c0a R_PPC_REL24            00000000   fn_8020123C + 0\n00000220  00000d0a R_PPC_REL24            00000000   fn_80201B64 + 0\n0000022c  00000e0a R_PPC_REL24            00000000   fn_80201B44 + 0\n00000238  0000046d R_PPC_EMB_SDA21        00000000   lbl_8064D5A8 + 0\n0000023c  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064D0AC + 0\n00000264  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064D0AC + 0\n00000278  00000f0a R_PPC_REL24            00000000   fn_801A717C + 0\n00000288  0000100a R_PPC_REL24            00000000   fn_801A74A0 + 0\n00000294  0000110a R_PPC_REL24            00000000   fn_801A74A8 + 0\n000002a0  0000120a R_PPC_REL24            00000000   fn_801A7538 + 0\n000002ac  0000130a R_PPC_REL24            00000000   fn_801A7518 + 0\n000002b8  0000140a R_PPC_REL24            00000000   fn_801A7588 + 0\n000002c4  0000150a R_PPC_REL24            00000000   fn_80201E78 + 0\n00000304  0000036d R_PPC_EMB_SDA21        00000000   lbl_806504B0 + 0\n00000380  0000160a R_PPC_REL24            00000000   fn_80179004 + 0\n00000390  0000160a R_PPC_REL24            00000000   fn_80179004 + 0\n000003f0  0000036d R_PPC_EMB_SDA21        00000000   lbl_806504B0 + 0\n0000042c  0000160a R_PPC_REL24            00000000   fn_80179004 + 0\n00000468  0000170a R_PPC_REL24            00000000   fn_801A764C + 0\n00000474  0000180a R_PPC_REL24            00000000   fn_801A7670 + 0\n00000478  0000066d R_PPC_EMB_SDA21        00000000   lbl_806504AC + 0\n0000048c  0000190a R_PPC_REL24            00000000   fn_8020104C + 0\n00000498  00001a0a R_PPC_REL24            00000000   fn_801A98F4 + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "exit_code": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "stdout": "legal audit passed (19429 tracked project files inspected)\n",
+      "stderr": ""
+    }
+  ],
+  "canonical_score": 99.51667,
+  "strict_score": 99.51667,
+  "text": {
+    "retail_bytes": 1200,
+    "generated_bytes": 1200,
+    "exact_equal_bytes_at_same_offset": 1160,
+    "different_instruction_offsets": [
+      "0x1c",
+      "0x7c",
+      "0x9c",
+      "0xb0",
+      "0xd0",
+      "0xf4",
+      "0x100",
+      "0x114",
+      "0x118",
+      "0x134",
+      "0x138",
+      "0x154",
+      "0x168",
+      "0x188",
+      "0x304",
+      "0x318",
+      "0x328",
+      "0x338",
+      "0x348",
+      "0x358",
+      "0x368",
+      "0x378",
+      "0x3f0",
+      "0x400",
+      "0x410",
+      "0x420",
+      "0x424"
+    ],
+    "retail_sha256": "fb94e8e6885159837026ef17b03c45474595f050982954d5cfe7c515fef27a5a",
+    "generated_sha256": "02ca389498c6a824537d242061c7223f8259a7a6d06f911607013d17e67e0707"
+  },
+  "relocations": {
+    "retail": [
+      {
+        "offset": 160,
+        "type": 10,
+        "target": "fn_8018F764",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 200,
+        "type": 10,
+        "target": "fn_80198C8C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 232,
+        "type": 10,
+        "target": "fn_80198C8C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 260,
+        "type": 10,
+        "target": "fn_8018F764",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 300,
+        "type": 10,
+        "target": "fn_80198C8C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 332,
+        "type": 10,
+        "target": "fn_80198C8C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 344,
+        "type": 10,
+        "target": "fn_8018F764",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 384,
+        "type": 10,
+        "target": "fn_80198C8C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 416,
+        "type": 10,
+        "target": "fn_80198C8C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 432,
+        "type": 10,
+        "target": "fn_80201A84",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 440,
+        "type": 10,
+        "target": "fn_80201814",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 460,
+        "type": 10,
+        "target": "fn_8011FE4C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 476,
+        "type": 10,
+        "target": "fn_8011FE4C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 480,
+        "type": 10,
+        "target": "fn_80201A84",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 488,
+        "type": 10,
+        "target": "fn_80201814",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 512,
+        "type": 10,
+        "target": "fn_8020123C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 544,
+        "type": 10,
+        "target": "fn_80201B64",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 556,
+        "type": 10,
+        "target": "fn_80201B44",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 568,
+        "type": 109,
+        "target": "lbl_8064D5A8",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 572,
+        "type": 109,
+        "target": "lbl_8064D0AC",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 612,
+        "type": 109,
+        "target": "lbl_8064D0AC",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 632,
+        "type": 10,
+        "target": "fn_801A717C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 648,
+        "type": 10,
+        "target": "fn_801A74A0",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 660,
+        "type": 10,
+        "target": "fn_801A74A8",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 672,
+        "type": 10,
+        "target": "fn_801A7538",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 684,
+        "type": 10,
+        "target": "fn_801A7518",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 696,
+        "type": 10,
+        "target": "fn_801A7588",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 708,
+        "type": 10,
+        "target": "fn_80201E78",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 772,
+        "type": 109,
+        "target": "lbl_806504B0",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 896,
+        "type": 10,
+        "target": "fn_80179004",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 912,
+        "type": 10,
+        "target": "fn_80179004",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1008,
+        "type": 109,
+        "target": "lbl_806504B0",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1068,
+        "type": 10,
+        "target": "fn_80179004",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1128,
+        "type": 10,
+        "target": "fn_801A764C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1140,
+        "type": 10,
+        "target": "fn_801A7670",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1144,
+        "type": 109,
+        "target": "lbl_806504AC",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1164,
+        "type": 10,
+        "target": "fn_8020104C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1176,
+        "type": 10,
+        "target": "fn_801A98F4",
+        "symbol_value": 0,
+        "addend": 0
+      }
+    ],
+    "generated": [
+      {
+        "offset": 160,
+        "type": 10,
+        "target": "fn_8018F764",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 200,
+        "type": 10,
+        "target": "fn_80198C8C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 232,
+        "type": 10,
+        "target": "fn_80198C8C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 260,
+        "type": 10,
+        "target": "fn_8018F764",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 300,
+        "type": 10,
+        "target": "fn_80198C8C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 332,
+        "type": 10,
+        "target": "fn_80198C8C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 344,
+        "type": 10,
+        "target": "fn_8018F764",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 384,
+        "type": 10,
+        "target": "fn_80198C8C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 416,
+        "type": 10,
+        "target": "fn_80198C8C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 432,
+        "type": 10,
+        "target": "fn_80201A84",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 440,
+        "type": 10,
+        "target": "fn_80201814",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 460,
+        "type": 10,
+        "target": "fn_8011FE4C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 476,
+        "type": 10,
+        "target": "fn_8011FE4C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 480,
+        "type": 10,
+        "target": "fn_80201A84",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 488,
+        "type": 10,
+        "target": "fn_80201814",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 512,
+        "type": 10,
+        "target": "fn_8020123C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 544,
+        "type": 10,
+        "target": "fn_80201B64",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 556,
+        "type": 10,
+        "target": "fn_80201B44",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 568,
+        "type": 109,
+        "target": "lbl_8064D5A8",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 572,
+        "type": 109,
+        "target": "lbl_8064D0AC",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 612,
+        "type": 109,
+        "target": "lbl_8064D0AC",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 632,
+        "type": 10,
+        "target": "fn_801A717C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 648,
+        "type": 10,
+        "target": "fn_801A74A0",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 660,
+        "type": 10,
+        "target": "fn_801A74A8",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 672,
+        "type": 10,
+        "target": "fn_801A7538",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 684,
+        "type": 10,
+        "target": "fn_801A7518",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 696,
+        "type": 10,
+        "target": "fn_801A7588",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 708,
+        "type": 10,
+        "target": "fn_80201E78",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 772,
+        "type": 109,
+        "target": "lbl_806504B0",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 896,
+        "type": 10,
+        "target": "fn_80179004",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 912,
+        "type": 10,
+        "target": "fn_80179004",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1008,
+        "type": 109,
+        "target": "lbl_806504B0",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1068,
+        "type": 10,
+        "target": "fn_80179004",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1128,
+        "type": 10,
+        "target": "fn_801A764C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1140,
+        "type": 10,
+        "target": "fn_801A7670",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1144,
+        "type": 109,
+        "target": "lbl_806504AC",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1164,
+        "type": 10,
+        "target": "fn_8020104C",
+        "symbol_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 1176,
+        "type": 10,
+        "target": "fn_801A98F4",
+        "symbol_value": 0,
+        "addend": 0
+      }
+    ],
+    "equal_offsets_types_targets_symbol_values_and_addends": true
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "nonmatching_note": "DOL verification passes using the retail split for this NonMatching function; it does not certify the C reconstruction as byte-matched."
+}

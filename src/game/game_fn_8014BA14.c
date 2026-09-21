@@ -22,7 +22,8 @@ extern void fn_801A7518(void*, int);
 extern void fn_801A7588(void*, int);
 #define FN_80201E78_RETURN void
 #define FN_80201E78_PARAMETERS Vec3*, void*
-extern FN_80201E78_RETURN fn_80201E78(FN_80201E78_PARAMETERS);extern u32 fn_80179004(Vec3*, Vec3*);
+extern FN_80201E78_RETURN fn_80201E78(FN_80201E78_PARAMETERS);
+extern u32 fn_80179004(Vec3*, Vec3*);
 extern void fn_801A764C(void*, Vec3*);
 extern void fn_801A7670(void*, int);
 extern void fn_8020104C(int, void*, void*, int, float);
@@ -40,8 +41,7 @@ void fn_8014BA14(s16* first, s16* second, u32 id, void* owner)
     Vec3 a;
     Vec3 b;
     Vec3 middle;
-    float ax, ay, az, bx, by, bz;
-    int mx, my, mz;
+    float x2, z1, y1, x1, y2, z2;
     u32 da, db, dm;
     Vec3* nearest;
 
@@ -76,11 +76,11 @@ void fn_8014BA14(s16* first, s16* second, u32 id, void* owner)
         case -4:
         case -3:
         case -2: {
-            unsigned char color = (effect + 1) * 17 - 5;
+            effect = (unsigned char)((effect + 1) * 17 - 5);
             if (fn_8018F764(owner) == 9)
-                fn_80198C8C(owner, 6, 255, -3, 150, color);
+                fn_80198C8C(owner, 6, 255, -3, 150, effect);
             else
-                fn_80198C8C(owner, 1, 255, -3, 90, color);
+                fn_80198C8C(owner, 1, 255, -3, 90, effect);
             break;
         }
         default:
@@ -127,16 +127,16 @@ void fn_8014BA14(s16* first, s16* second, u32 id, void* owner)
     fn_801A7518(spawn, 10);
     fn_801A7588(spawn, 2);
     fn_80201E78(&point, room);
-    ax = first[0]; az = first[1]; bx = first[2];
-    by = second[0]; bz = second[1]; ay = second[2];
-    a.x = ax; a.y = az; a.z = bx;
-    b.x = by; b.y = bz; b.z = ay;
+    x1 = first[0]; y1 = first[1]; z1 = first[2];
+    x2 = second[0]; y2 = second[1]; z2 = second[2];
+    a.x = x1; a.y = y1; a.z = z1;
+    b.x = x2; b.y = y2; b.z = z2;
     da = fn_80179004(&point, &a);
     db = fn_80179004(&point, &b);
-    mx = first[2] + ((second[2] - first[2]) >> 1);
-    my = first[0] + ((second[0] - first[0]) >> 1);
-    mz = first[1] + ((second[1] - first[1]) >> 1);
-    middle.x = my; middle.y = mz; middle.z = mx;
+    z1 = first[2] + ((second[2] - first[2]) >> 1);
+    x1 = first[0] + ((second[0] - first[0]) >> 1);
+    y1 = first[1] + ((second[1] - first[1]) >> 1);
+    middle.z = z1; middle.x = x1; middle.y = y1;
     dm = fn_80179004(&point, &middle);
     if (da < db) {
         if (da < dm)

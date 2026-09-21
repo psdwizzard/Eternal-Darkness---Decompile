@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "46d0628c-89d2-4033-a04c-9089208f0437",
+  "attempt": 5,
+  "base_commit": "dec61980499faaa1b8d6413a20e184c0d9ede647",
+  "target": "fn_8014BA14",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-46d0628c-89d2-4033-a04c-9089208f0437.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-46d0628c-89d2-4033-a04c-9089208f0437.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-46d0628c-89d2-4033-a04c-9089208f0437.json",
+    "eternal-darkness-decomp/reports/GEDE01/research-46d0628c-89d2-4033-a04c-9089208f0437.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-46d0628c-89d2-4033-a04c-9089208f0437.log"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both measure 99.51667%, with equal 1200-byte text and 300 instructions. All 38 relocation records match exactly, including instruction offsets, relocation types, targets, symbol values and addends. Reusing float temporaries for the midpoint and reusing effect for the narrowed color fixes the prior scheduling shift and special-flag allocation. Remaining divergence is 27 instruction words (40 byte positions): owner/color use r25/r29 instead of retail r29/r25; endpoint conversion bias uses f1 instead of f6 with corresponding subtract/source register differences; midpoint conversion bias uses f1 instead of f3 with corresponding result-register differences. No opcode, branch, load/store offset or relocation discrepancy remains. Preserved as NonMatching. Canonical full build and legal audit pass; DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f (retail split retained for this NonMatching function)."
+}
