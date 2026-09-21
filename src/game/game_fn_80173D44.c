@@ -37,15 +37,14 @@ int fn_80173D44(void* arg)
     int resource;
     int kind;
     Vec3s* source;
-    volatile u32 value;
     Descriptor descriptor;
+    volatile u32 value;
     Vec3f position;
     Vec3f submit_position;
     EffectParams params;
     descriptor.word = lbl_80651CA0;
     descriptor.half = lbl_80651CA4;
     value = lbl_806506F4;
-
     if (fn_8016A598(state) != 2) {
         fn_80163BB4(state, lbl_8024FF00, 2, fn_8016A598(state));
         return 0;

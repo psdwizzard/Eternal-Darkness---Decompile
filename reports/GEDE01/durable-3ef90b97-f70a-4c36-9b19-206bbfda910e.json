@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3ef90b97-f70a-4c36-9b19-206bbfda910e",
+  "attempt": 3,
+  "base_commit": "64a47f729ee4f805686f3693b3de4bdbf44186d2",
+  "target": "fn_80173D44",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3ef90b97-f70a-4c36-9b19-206bbfda910e.json"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff score 96.42857% at the exact retail size of 448 bytes. Reordering the Descriptor declaration before the volatile value was tested as a distinct allocation/scheduling hypothesis and preserved the best code shape but did not alter the generated startup schedule. Volatile-qualified source globals were also tested and rejected because they moved only the halfword load, worsening the schedule. The retained reconstruction still differs only in four alignment edits at startup: candidate loads lbl_80651CA0 and lbl_806506F4 at offsets 0x08 and 0x10, while retail places those loads at 0x14 and 0x1C after the prologue and mr r31,r3; the lbl_80651CA4 load is at 0x1C in the candidate versus 0x18 retail. All instructions from offset 0x20 onward align after those edits. Both sides contain 112 instructions and 21 relocation-bearing instructions. The full linked DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
