@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "4bf8b408-9f4c-49d7-8c87-efed887870f5",
+  "attempt": 5,
+  "base_commit": "f613df37d5f929e4f4d7e06fb5b5407f3fbcb22d",
+  "target": "fn_801861C4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4bf8b408-9f4c-49d7-8c87-efed887870f5.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4bf8b408-9f4c-49d7-8c87-efed887870f5-reloc-strict.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 96.090225% with exact 1064-byte size and 43 relocation-bearing instructions per side. The first difference is +0x1C: retail `mr r26, r3`, generated `mr r25, r3`; this begins a long-lived r25-r31 allocation rotation. Retail places setup at r1+0x8/r1+0xC and the vector pointer at r1+0x44, while generated places the vector pointer at r1+0x8 and setup at r1+0xC/r1+0x10, leaving small aggregates four bytes high and matrix operands eight bytes low. A new early-live-range ordering hypothesis regressed to 95.52631%; a padded address-taken setup/vector aggregate regressed to 95.30075% and enlarged the frame to 0x230, so neither was retained."
+}
