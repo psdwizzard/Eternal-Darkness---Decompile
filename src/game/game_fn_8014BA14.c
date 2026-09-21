@@ -43,6 +43,7 @@ void fn_8014BA14(s16* first, s16* second, int id, void* owner)
     float ax, ay, az, bx, by, bz;
     int mx, my, mz;
     u32 da, db, dm;
+    Vec3* nearest;
 
     if (id == 0)
         return;
@@ -126,20 +127,28 @@ void fn_8014BA14(s16* first, s16* second, int id, void* owner)
     fn_801A7518(spawn, 10);
     fn_801A7588(spawn, 2);
     fn_80201E78(&point, room);
-    ay = first[0]; az = first[1]; bx = first[2];
-    by = second[0]; bz = second[1]; ax = second[2];
-    a.x = ay; a.y = az; a.z = bx;
-    b.x = by; b.y = bz; b.z = ax;
+    ax = first[0]; az = first[1]; bx = first[2];
+    by = second[0]; bz = second[1]; ay = second[2];
+    a.x = ax; a.y = az; a.z = bx;
+    b.x = by; b.y = bz; b.z = ay;
     da = fn_80179004(&point, &a);
     db = fn_80179004(&point, &b);
+    mx = first[2] + ((second[2] - first[2]) >> 1);
     my = first[0] + ((second[0] - first[0]) >> 1);
     mz = first[1] + ((second[1] - first[1]) >> 1);
-    mx = first[2] + ((second[2] - first[2]) >> 1);
     middle.x = my; middle.y = mz; middle.z = mx;
     dm = fn_80179004(&point, &middle);
-    fn_801A764C(spawn,
-                da < db ? (da < dm ? &a : &middle)
-                        : (db < dm ? &b : &middle));
+    if (da < db) {
+        if (da < dm)
+            nearest = &a;
+        else
+            nearest = &middle;
+    } else if (db < dm) {
+        nearest = &b;
+    } else {
+        nearest = &middle;
+    }
+    fn_801A764C(spawn, nearest);
     fn_801A7670(spawn, 0);
     fn_8020104C(237, (void *)-1, (void *)zone, (int)spawn, lbl_806504AC);
     fn_801A98F4(552, 100);
