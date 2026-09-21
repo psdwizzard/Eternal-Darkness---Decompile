@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3c23cd85-bf28-4648-84c8-b632ec30efbc",
+  "attempt": 4,
+  "base_commit": "82dcc6b318a118e731dcfb2ccdff545b26eaabcf",
+  "target": "fn_8018D998",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3c23cd85-bf28-4648-84c8-b632ec30efbc.json"
+  ],
+  "divergence": "Fresh canonical GC/1.3 relocation-strict objdiff is 96.073616%: retail is 652 bytes with 34 instruction relocations, generated is 656 bytes with 35. Generated assigns object/transform/vertex/index/color to r31/r26/r29/r28/r27 instead of retail r27/r28/r31/r30/r29. At retail offsets 0x74..0x7c, retail loads the signed-conversion bias then materializes lbl_80607900@l directly into r24; generated materializes the low half early into r0, loads the bias, then copies r0 to r24, adding one instruction and relocation-shifting subsequent code. A new scratch-pointer register hint and removal of the self alias were byte-identical; declaration-time scratch initialization regressed to 92.07976%, so all were rejected. The full canonical build succeeded and main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
