@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "2dd7e04e-4692-4b6b-a0ff-da4b7078e4cc",
+  "attempt": 3,
+  "base_commit": "a8e685cdbed1c0cf32d7e01dee65a720f5c2136b",
+  "target": "fn_8012AC74",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2dd7e04e-4692-4b6b-a0ff-da4b7078e4cc.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2dd7e04e-4692-4b6b-a0ff-da4b7078e4cc-reloc-strict.json"
+  ],
+  "divergence": "Best canonical and relocation-strict score is 95.5921%; generated code is 308 bytes versus retail's 304. Remaining differences are an owner/flags callee-saved register swap (generated owner/flags in r29/r31 versus retail r31/r29), predicate temporary register coloring, and one extra li r7,1; relocation targets and addends agree. A distinct direct-typed-parameter plus staged-flags-local hypothesis regressed to 92.302635%; leading flags-local declaration order, reversed predicate-local declaration order, and a register-qualified owner local reproduced 95.5921% without changing codegen. The final retained source was rebuilt before measurement and the rebuilt DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
