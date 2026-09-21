@@ -9,9 +9,9 @@ typedef struct ShortCoord3 {
     s16 z;
 } ShortCoord3;
 
-extern u32 lbl_80651CF0;
-extern u16 lbl_80651CF4;
-extern u32 lbl_806509BC;
+extern volatile u32 lbl_80651CF0;
+extern volatile u16 lbl_80651CF4;
+extern volatile u32 lbl_806509BC;
 extern float lbl_806509B8;
 extern float lbl_806509C0;
 extern void* lbl_8064D224;
@@ -36,6 +36,8 @@ extern void fn_801F5A04(void*, s16, void*, void*);
 void fn_80182514(u8* self, void* arg1, ShortCoord3* arg2, u8* desc)
 {
     u32 effect;
+    u32 seed0;
+    u16 seed1;
     ShortCoord3 base;
     ShortCoord3 setup;
     ShortCoord3 work;
@@ -45,9 +47,11 @@ void fn_80182514(u8* self, void* arg1, ShortCoord3* arg2, u8* desc)
     u8* item;
     u8* detail;
     detail = desc + 0x14;
-    *(u32*)&setup = lbl_80651CF0;
-    setup.z = lbl_80651CF4;
+    seed0 = lbl_80651CF0;
+    seed1 = lbl_80651CF4;
+    *(volatile u32*)&setup = seed0;
     effect = lbl_806509BC;
+    setup.z = seed1;
     item = *(u8**)(self + 0x4C);
     count = desc[0];
     memcpy(&setup, detail, 6);
@@ -69,10 +73,12 @@ void fn_80182514(u8* self, void* arg1, ShortCoord3* arg2, u8* desc)
     }
     fn_80180518(self + 0x24, 0, 1);
     item = *(u8**)(self + 0x4C);
-    if (detail[0xD] == detail[0xE]) item[0x2B] = detail[0xE];
-    else {
+    {
         u8* field = item + 0x2B;
-        fn_8018E230(item, field, 1, 0, (signed char)detail[0xD], detail[0xE]);
+        if (detail[0xD] == detail[0xE]) item[0x2B] = detail[0xE];
+        else {
+            fn_8018E230(item, field, 1, 0, (signed char)detail[0xD], detail[0xE]);
+        }
     }
     if (lbl_806509B8 == *(float*)(detail + 0x14)) fn_8018CB70(*(void**)(self + 0x54), count, *(u16*)(lbl_80607120 + 2));
     else fn_8018CEC0(*(void**)(self + 0x54), count);

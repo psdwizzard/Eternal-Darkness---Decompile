@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "assignment_id": "530313d1-505f-4e59-b53c-8ac36163da12",
+  "attempt": 7,
+  "base_commit": "15816a5cb57ae98dba1964c3cc316a49463cee9e",
+  "target": "fn_80182514",
+  "status": "attempted",
+  "evidence": ["eternal-darkness-decomp/reports/GEDE01/objdiff-530313d1-505f-4e59-b53c-8ac36163da12.json"],
+  "divergence": "Canonical objdiff is 97.32919%, not 100%. Three prologue argument-register moves remain reordered; the effect stack store precedes rather than follows the item load; and item+0x2B is hoisted before the terminal branch rather than formed in its else arm. All 33 relocation tuples match exactly."
+}
