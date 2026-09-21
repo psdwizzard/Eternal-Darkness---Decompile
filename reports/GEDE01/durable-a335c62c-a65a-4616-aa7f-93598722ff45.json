@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "assignment_id": "a335c62c-a65a-4616-aa7f-93598722ff45",
+  "attempt": 5,
+  "base_commit": "bc911ed02637103f79570f9ed0994f117c8bfb3e",
+  "target": "fn_80088E44",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a335c62c-a65a-4616-aa7f-93598722ff45.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a335c62c-a65a-4616-aa7f-93598722ff45-canonical.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a335c62c-a65a-4616-aa7f-93598722ff45-relocation-strict.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a335c62c-a65a-4616-aa7f-93598722ff45-baseline.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/variants-a335c62c-a65a-4616-aa7f-93598722ff45.json",
+    "eternal-darkness-decomp/reports/GEDE01/variant-outputs-a335c62c-a65a-4616-aa7f-93598722ff45.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-a335c62c-a65a-4616-aa7f-93598722ff45-retail.txt",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-a335c62c-a65a-4616-aa7f-93598722ff45-candidate.txt",
+    "eternal-darkness-decomp/reports/GEDE01/build-a335c62c-a65a-4616-aa7f-93598722ff45.log",
+    "eternal-darkness-decomp/reports/GEDE01/legal-a335c62c-a65a-4616-aa7f-93598722ff45.log"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff independently measure 99.87755%, size-exact at 196/196 bytes. Both retail base registers, all register assignments, control flow, and relocation targets/addends now align. Only two instruction words differ: at +0x44 retail addi r0,r3,0x20 versus candidate addi r0,r3,0x60; at +0x4c retail lhzx r0,r25,r0 versus candidate lhzx r0,r31,r0. The same halfword is read using table+0x20 versus state+0x60 (table=state+0x40). This is remaining address-base/offset selection, not an allocator-only issue. The function remains NonMatching."
+}

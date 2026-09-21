@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "assignment_id": "a335c62c-a65a-4616-aa7f-93598722ff45",
+  "target": "fn_80088E44",
+  "compiler": "GC/1.3",
+  "canonical_cflags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+  "commands": {
+    "cwd": "eternal-darkness-decomp",
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_80088E44.o -2 build/GEDE01/src/game/game_fn_80088E44.o -o reports/GEDE01/objdiff-a335c62c-a65a-4616-aa7f-93598722ff45-canonical.raw.json --format json-pretty fn_80088E44",
+    "relocation_strict": "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_80088E44.o -2 build/GEDE01/src/game/game_fn_80088E44.o -o reports/GEDE01/objdiff-a335c62c-a65a-4616-aa7f-93598722ff45-relocation-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_80088E44",
+    "retail_relocations": "build/binutils/powerpc-eabi-readelf -r build/GEDE01/obj/game/game_fn_80088E44.o",
+    "candidate_relocations": "build/binutils/powerpc-eabi-readelf -r build/GEDE01/src/game/game_fn_80088E44.o",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol",
+    "legal_audit": "python3 tools/legal_audit.py"
+  },
+  "measurements": {
+    "canonical": {
+      "match_percent": 99.87755,
+      "retail_size": 196,
+      "candidate_size": 196,
+      "raw_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-a335c62c-a65a-4616-aa7f-93598722ff45-canonical.raw.json",
+      "raw_sha256": "8ca8748c91c76c28627fffe48abde02d88d357f4ea68c3caa5c205f84ec4cce3"
+    },
+    "relocation-strict": {
+      "match_percent": 99.87755,
+      "retail_size": 196,
+      "candidate_size": 196,
+      "raw_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-a335c62c-a65a-4616-aa7f-93598722ff45-relocation-strict.raw.json",
+      "raw_sha256": "8ca8748c91c76c28627fffe48abde02d88d357f4ea68c3caa5c205f84ec4cce3"
+    }
+  },
+  "differing_instruction_rows": [
+    {
+      "offset": "0x44",
+      "retail": "addi r0, r3, 0x20",
+      "candidate": "addi r0, r3, 0x60",
+      "retail_encoding": "38030020",
+      "candidate_encoding": "38030060"
+    },
+    {
+      "offset": "0x4c",
+      "retail": "lhzx r0, r25, r0",
+      "candidate": "lhzx r0, r31, r0",
+      "retail_encoding": "7c19022e",
+      "candidate_encoding": "7c1f022e"
+    }
+  ],
+  "text_byte_comparison": {
+    "retail_sha256": "6366132d8da30f0e4e004df55838dead0234f4c60fa84e821e8c1653d31a0d11",
+    "candidate_sha256": "b0a315cfb894dba5f2d1702859d2af66f50b8b0ff363bbede75aaaeb4d73c92f",
+    "matching_bytes": 194,
+    "total_bytes": 196
+  },
+  "relocations": [
+    {
+      "offset": "0x30",
+      "type": "R_PPC_REL24",
+      "retail_target": "fn_8006C9C0",
+      "candidate_target": "fn_8006C9C0",
+      "retail_addend": 0,
+      "candidate_addend": 0
+    },
+    {
+      "offset": "0x8c",
+      "type": "R_PPC_REL24",
+      "retail_target": "fn_8006C9E4",
+      "candidate_target": "fn_8006C9E4",
+      "retail_addend": 0,
+      "candidate_addend": 0
+    }
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_scope": "Full canonical link passed; NonMatching registration retains the retail object for this function. The DOL gate is not evidence that this candidate matches.",
+  "source_sha256": "4d867b3dd4a927fdebcf51d8bcc41fb449a7f8cf041cee24c760b99f453504ae",
+  "prior_best": 95.89796,
+  "retained_variant": "plain-table-base",
+  "variant_report": "eternal-darkness-decomp/reports/GEDE01/variants-a335c62c-a65a-4616-aa7f-93598722ff45.json",
+  "divergence": "Canonical and relocation-strict objdiff independently measure 99.87755%, size-exact at 196/196 bytes. Both retail base registers, all register assignments, control flow, and relocation targets/addends now align. Only two instruction words differ: at +0x44 retail addi r0,r3,0x20 versus candidate addi r0,r3,0x60; at +0x4c retail lhzx r0,r25,r0 versus candidate lhzx r0,r31,r0. The same halfword is read using table+0x20 versus state+0x60 (table=state+0x40). This is remaining address-base/offset selection, not an allocator-only issue. The function remains NonMatching.",
+  "scope": "Only assigned source and assignment-specific reports changed; existing NonMatching registration and split are unchanged. Pre-existing CLAUDE.md modification is not part of this commit.",
+  "build_log_line_endings": "Compiler CRLF lines normalized to LF; all log text retained.",
+  "legal_audit_log": "eternal-darkness-decomp/reports/GEDE01/legal-a335c62c-a65a-4616-aa7f-93598722ff45.log",
+  "legal_audit_passed": true
+}

@@ -9,8 +9,7 @@ typedef struct Child {
     u32 value;
 } Child;
 
-typedef struct State {
-    u8 pad[0x40];
+typedef struct Table {
     Callback callbacks[4];
     void* arguments[4];
     u16 values[4];
@@ -18,6 +17,11 @@ typedef struct State {
     u8 previous;
     u8 first;
     u8 last;
+} Table;
+
+typedef struct State {
+    u8 pad[0x40];
+    Table table;
 } State;
 
 typedef struct FullWork {
@@ -38,7 +42,7 @@ int fn_80088E44(FullWork* work)
     u8 last;
     int value;
     Child* child;
-    u8* entry;
+    Table* entry;
     Callback callback;
     void* argument;
 
@@ -46,24 +50,24 @@ int fn_80088E44(FullWork* work)
     child = work->child;
     if (child != 0) {
         value = child->value >> 16;
-        entry = (u8*)base->callbacks;
+        entry = &base->table;
         fn_8006C9C0(child);
-        current = base->current;
-        first = base->first;
-        last = base->last;
-        callback = *(Callback*)(entry + current * 4);
-        argument = *(void**)(entry + 0x10 + current * 4);
-        if (value == *(u16*)(entry + 0x20 + current * 2) && current < 4 &&
+        current = entry->current;
+        first = entry->first;
+        last = entry->last;
+        callback = *(Callback*)((u8*)entry + current * 4);
+        argument = *(void**)((u8*)entry + 0x10 + current * 4);
+        if (value == ((u16*)base)[current + 0x30] && current < 4 &&
             callback != 0 && argument != 0) {
             callback(argument);
             fn_8006C9E4(child, 0);
-            base->previous = current;
+            base->table.previous = current;
             current++;
             if (current >= last) {
                 current = first;
             }
         }
-        base->current = current;
+        base->table.current = current;
     }
     return 0;
 }
