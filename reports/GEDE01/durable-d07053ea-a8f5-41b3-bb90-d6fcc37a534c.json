@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "d07053ea-a8f5-41b3-bb90-d6fcc37a534c",
+  "attempt": 5,
+  "base_commit": "f95d1a5f75d89a54a815cf7c24fb895564467abb",
+  "target": "fn_8014BEC4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d07053ea-a8f5-41b3-bb90-d6fcc37a534c.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d07053ea-a8f5-41b3-bb90-d6fcc37a534c-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d07053ea-a8f5-41b3-bb90-d6fcc37a534c-hypothesis.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-d07053ea-a8f5-41b3-bb90-d6fcc37a534c.txt"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are 96.26214% with equal 412-byte sizes. Retail uses integer lwzu/lwz/stw for the initial Vec3 copy and emits the r28/r27 parameter moves in reverse order; GC/1.3 uses lfsu/lfs/stfs. Declaration-time initialization and an explicit unsigned-array view regress to 95.58253% and 416 bytes by adding address materialization."
+}

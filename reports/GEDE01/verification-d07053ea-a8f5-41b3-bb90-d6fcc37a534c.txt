@@ -1,0 +1,55 @@
+assignment_id=d07053ea-a8f5-41b3-bb90-d6fcc37a534c
+target=fn_8014BEC4
+base_commit=f95d1a5f75d89a54a815cf7c24fb895564467abb
+
+Distinct hypothesis tested
+--------------------------
+The preserved attempts used a later field-wise float copy, direct struct assignment,
+and three-word aggregate forms.  This attempt tested declaration-time aggregate
+initialization (`Vec3 offset = lbl_8023A718`) and an explicit unsigned-int array
+view with three indexed bitwise stores.  Both variants compiled identically.
+
+Raw hypothesis measurement
+--------------------------
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_8014BEC4 fn_8014BEC4 -o reports/GEDE01/objdiff-d07053ea-a8f5-41b3-bb90-d6fcc37a534c-hypothesis.json --format json-pretty -c function_reloc_diffs=name_address
+ INFO Writing to reports/GEDE01/objdiff-d07053ea-a8f5-41b3-bb90-d6fcc37a534c-hypothesis.json
+$ jq -r '"hypothesis retail_bytes=\(.left.symbols[0].size) generated_bytes=\(.right.symbols[0].size) match_percent=\(.left.symbols[0].match_percent)"' reports/GEDE01/objdiff-d07053ea-a8f5-41b3-bb90-d6fcc37a534c-hypothesis.json
+hypothesis retail_bytes=412 generated_bytes=416 match_percent=95.58253
+
+The hypothesis emits lis/addi address materialization plus three lwz loads.  The
+retail function uses lis plus relocation-bearing lwzu and two lwz loads, so the
+hypothesis adds four bytes and shifts the remaining body and relocations.
+
+Final prescribed build and DOL verification
+-------------------------------------------
+$ python3 configure.py
+exit=0
+$ .tools/bin/ninja -j2
+[888/890] DOL build/GEDE01/main.dol
+[889/890] CHECK config/GEDE01/build.sha1
+build/GEDE01/main.dol: OK
+[890/890] PROGRESS
+exit=0
+$ sha1sum build/GEDE01/main.dol
+ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol
+
+Final canonical measurement
+---------------------------
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_8014BEC4 fn_8014BEC4 -o reports/GEDE01/objdiff-d07053ea-a8f5-41b3-bb90-d6fcc37a534c-canonical.json --format json-pretty
+ INFO Writing to reports/GEDE01/objdiff-d07053ea-a8f5-41b3-bb90-d6fcc37a534c-canonical.json
+canonical retail_bytes=412 generated_bytes=412 match_percent=96.26214
+
+Final relocation-strict measurement
+-----------------------------------
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_8014BEC4 fn_8014BEC4 -o reports/GEDE01/objdiff-d07053ea-a8f5-41b3-bb90-d6fcc37a534c.json --format json-pretty -c function_reloc_diffs=name_address
+ INFO Writing to reports/GEDE01/objdiff-d07053ea-a8f5-41b3-bb90-d6fcc37a534c.json
+strict retail_bytes=412 generated_bytes=412 match_percent=96.26214
+
+Exact final divergence
+----------------------
+Retail uses `lis r8` and relocation-bearing `lwzu r5,lbl_8023A718@l(r8)`,
+followed by `lwz/lwz` and `stw/stw/stw`.  GC/1.3 uses `lis r3` and
+relocation-bearing `lfsu f2,lbl_8023A718@l(r3)`, followed by `lfs/lfs` and
+`stfs/stfs/stfs`.  GC/1.3 emits `mr r27,r4` before `mr r28,r5`; retail emits
+those moves in the reverse order.  All subsequent instructions and all other
+relocation-bearing instructions agree in offset, type, target, and addend.
