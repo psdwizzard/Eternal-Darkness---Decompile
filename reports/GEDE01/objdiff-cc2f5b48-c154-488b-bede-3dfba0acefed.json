@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "assignment_id": "cc2f5b48-c154-488b-bede-3dfba0acefed",
+  "target": "fn_801BE354",
+  "compiler": "GC/1.2.5n",
+  "source": "eternal-darkness-decomp/src/game/game_fn_801BE354.c",
+  "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801BE354 --format json-pretty -o build/GEDE01/objdiff-cc2f5b48-canonical.json",
+  "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801BE354 --format json-pretty -c function_reloc_diffs=name_address -o build/GEDE01/objdiff-cc2f5b48-reloc-strict.json",
+  "canonical_raw_measurement": {
+    "retail": {"size": "160", "match_percent": 95.0, "instruction_records": 41},
+    "generated": {"size": "160", "match_percent": 95.0, "instruction_records": 41}
+  },
+  "relocation_strict_raw_measurement": {
+    "retail": {"size": "160", "match_percent": 95.0, "instruction_records": 41},
+    "generated": {"size": "160", "match_percent": 95.0, "instruction_records": 41},
+    "retail_call_instruction_raw": {"address": "52", "size": 4, "formatted": "bl fn_801CC408", "relocation": {"type": 10, "type_name": "R_PPC_REL24", "target_symbol": 6}},
+    "generated_call_instruction_raw": {"address": "52", "size": 4, "formatted": "bl fn_801CC408", "relocation": {"type": 10, "type_name": "R_PPC_REL24", "target_symbol": 6}},
+    "raw_addend_fields": {"retail_present": false, "generated_present": false},
+    "reloc_diff": {"retail": null, "generated": null}
+  },
+  "raw_epilogue_diff": {
+    "retail": [{"address": "140", "formatted": "lmw r27, 0x1c(r1)"}, {"address": "144", "formatted": "lwz r0, 0x34(r1)"}],
+    "generated": [{"address": "140", "formatted": "lwz r0, 0x34(r1)"}, {"address": "144", "formatted": "lmw r27, 0x1c(r1)"}]
+  },
+  "attempt_log": [
+    {"variant": "preserved corrected array layout and source ordering", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "opt_lifetimes off", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "use_lmw_stmw on", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "register unsigned long copy of command pointer", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "command parameter declared unsigned long and cast at member uses", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "explicit void return statement", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "opt_propagation off", "score": 93.625, "retail_size": 160, "generated_size": 160},
+    {"variant": "opt_common_subs off", "score": 53.775, "retail_size": 160, "generated_size": 176},
+    {"variant": "optimization_level 3", "score": 89.25, "retail_size": 160, "generated_size": 160},
+    {"variant": "opt_dead_assignments off", "score": 95.0, "retail_size": 160, "generated_size": 160}
+  ],
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw_tail": ["[895/897] DOL build/GEDE01/main.dol", "[896/897] CHECK config/GEDE01/build.sha1", "build/GEDE01/main.dol: OK", "[897/897] PROGRESS"],
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_sha1_raw_output": ["ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol", "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"],
+  "legal_audit_command": "rg -n 'asm\\s*\\(|__asm|#pragma.*asm' src/game/game_fn_801BE354.c",
+  "legal_audit_raw_output": "",
+  "legal_audit_exit": 1,
+  "divergence": "All body instructions and the sole fn_801CC408 R_PPC_REL24 relocation match. Only the independent epilogue restores differ: retail emits lmw r27 at 140 then lwz LR at 144; generated emits lwz LR at 140 then lmw r27 at 144."
+}
