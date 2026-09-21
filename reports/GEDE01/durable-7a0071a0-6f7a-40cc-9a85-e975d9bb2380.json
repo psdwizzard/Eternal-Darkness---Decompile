@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "7a0071a0-6f7a-40cc-9a85-e975d9bb2380",
+  "attempt": 8,
+  "base_commit": "2d8f4a83fb13b74f47d933678aa99b3225412437",
+  "target": "fn_80182514",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7a0071a0-6f7a-40cc-9a85-e975d9bb2380.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff remain 97.32919%. Three prologue argument-register moves differ at 0x10/0x14/0x18; the effect stack store at candidate 0x44 precedes the item load instead of following it at retail 0x48; item+0x2B is computed at candidate 0x1D4 before the conditional branch rather than at retail 0x1E0 in its else arm. All 33 relocation offset/type/target/addend tuples match exactly. Raw instruction-word equality is 152/161 (94.40993788819875%); this is a separate metric, not canonical objdiff."
+}
