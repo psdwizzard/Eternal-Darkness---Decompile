@@ -18,15 +18,19 @@ extern void fn_801AD8B4(void);
 void fn_801A9CDC(void)
 {
     int previous = fn_801A9B38();
+    int value;
+    int target;
     int minimum = 100;
-    Entry* entry = lbl_80607CB0;
+    int next;
+    int old_distance;
+    int new_distance;
     int count;
 
-    for (count = 4; count != 0; count--, entry++) {
-        int delta = entry->delta;
-        if (delta != 0) {
-            int value = entry->value;
-            int next = value + delta;
+    for (count = 0; count < 4; count++) {
+        Entry* entry = &lbl_80607CB0[count];
+        if (entry->delta != 0) {
+            value = entry->value;
+            next = value + entry->delta;
             if (next <= 0) {
                 entry->value = 0;
                 entry->delta = 0;
@@ -34,9 +38,7 @@ void fn_801A9CDC(void)
                 entry->value = 100;
                 entry->delta = 0;
             } else {
-                int target = entry->target;
-                int old_distance;
-                int new_distance;
+                target = entry->target;
                 if (next != target) {
                     old_distance = target - value;
                     if (old_distance < 0) {

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "be6cc08b-1445-409b-9845-46cfdd4900c0",
+  "attempt": 4,
+  "base_commit": "ff64a6b30c627d5432aaf4f7f0ea8552de92a4c4",
+  "target": "fn_801A9CDC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-be6cc08b-1445-409b-9845-46cfdd4900c0.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both score 97.916664% with exact 240-byte retail and generated sizes. The distinct array-index induction form removes the prior extra base-pointer move and emits lbl_80607CB0@l directly into r4. Remaining differences are register coloring: minimum r6 versus retail r7, next r7 versus retail r8, target r0 versus retail r6, and the two distance temporaries use r5/r8 versus retail r0/r5. The fn_801A9B38 and fn_801AD8B4 call relocations and lbl_80607CB0 HA/LO relocation target/addends remain correct under function_reloc_diffs=name_address. The final linked DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
