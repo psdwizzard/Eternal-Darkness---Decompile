@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "0ea4a18c-17b2-40b0-a43c-eabb49f0d00a",
+  "attempt": 4,
+  "base_commit": "dab5d7a54f059100e34e475aa9fdeb829f452c9c",
+  "target": "fn_80053048",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0ea4a18c-17b2-40b0-a43c-eabb49f0d00a-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0ea4a18c-17b2-40b0-a43c-eabb49f0d00a.json"
+  ],
+  "divergence": "Fresh canonical and function_reloc_diffs=name_address raw objdiff reports are byte-identical at 96.30189%, with exact 424-byte size, 107 displayed instruction rows per side, and 33 relocation-bearing rows per side. The 22 aligned differing rows remain register-allocation and scheduling differences: retail uses r28 for the record pointer, r27 for the copied transition type, and r24/r26 for the inner slot/mask while generated code uses r27, r26, and r28/r24 respectively; the second call-argument move is at generated 0xDC instead of retail 0xE4, and cleanup exchanges r27/r28. Attempt 4 newly tested declaration-order coloring (96.254715% and 96.20755%), an explicit u16 argument temporary (codegen-neutral at 96.30189%), a syntactic live-range coalescing expression (codegen-neutral), and a separately declared slot counter (92.19811%); all were rejected in favor of the preserved best honest-C reconstruction. The full build passes and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
