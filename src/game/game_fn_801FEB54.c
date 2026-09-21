@@ -1,23 +1,21 @@
 typedef unsigned int u32;
 
-extern volatile int lbl_8064D808[2];
-extern volatile u32 lbl_8064D810[2];
-extern volatile u32 lbl_8064D818[2];
-extern volatile u32 lbl_8064D820[2];
-extern volatile u32 lbl_8064D828[2];
-extern volatile u32 lbl_8064D830[2];
-extern volatile u32 lbl_8064D838[2];
-extern volatile u32 lbl_8064D840[2];
-extern volatile u32 lbl_8064D848[2];
-extern volatile u32 lbl_8064D850[2];
-extern volatile u32 lbl_8064D858[2];
+extern int lbl_8064D808[2];
+extern u32 lbl_8064D810[2];
+extern u32 lbl_8064D818[2];
+extern u32 lbl_8064D820[2];
+extern u32 lbl_8064D828[2];
+extern u32 lbl_8064D830[2];
+extern u32 lbl_8064D838[2];
+extern u32 lbl_8064D840[2];
+extern u32 lbl_8064D848[2];
+extern u32 lbl_8064D850[2];
+extern u32 lbl_8064D858[2];
 extern char lbl_802FC880[];
 extern char lbl_802FC8AC[];
 
 extern void fn_800F8BAC(const char*, const char*, int);
 
-/* NonMatching: behavior-complete and size-exact. The remaining instructions
- * differ only in scheduling the final cache-address calculation and stores. */
 void fn_801FEB54(int frame, int effects, int particles, int trails,
                  int textures, int anims)
 {
