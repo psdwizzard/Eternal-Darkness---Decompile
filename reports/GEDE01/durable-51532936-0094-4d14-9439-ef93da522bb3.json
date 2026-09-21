@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "51532936-0094-4d14-9439-ef93da522bb3",
+  "attempt": 6,
+  "base_commit": "665b44146d00938810aec23bea10ec5ecbba8eb7",
+  "target": "fn_800C4AA0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-51532936-0094-4d14-9439-ef93da522bb3.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-51532936-0094-4d14-9439-ef93da522bb3.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-51532936-0094-4d14-9439-ef93da522bb3.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-51532936-0094-4d14-9439-ef93da522bb3.json",
+    "eternal-darkness-decomp/reports/GEDE01/trials-51532936-0094-4d14-9439-ef93da522bb3.json"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff both score 95.0%, with 204-byte retail and compiled functions. Retail (left/target/obj) retains out in r31 and state_ref/state in r30; compiled C (right/base/src) uses r30 and r31 respectively. At +0x6c retail loads the selected resource into r3 then copies r3 to r29; compiled C loads it directly into r29 then copies r29 to r3. Remaining differences are one prologue scheduling insert/delete pair and nine argument mismatches. All 15 ELF relocation entries match in offset, type, target, and zero addend (17 relocation-bearing rendered instructions per side). New local-aggregate scalarization, typed-return, and state-container hypotheses stayed at 95.0%; resource-local reuse and a byte-bitfield flag regressed to 88.92157%/208 bytes and 90.588234%/208 bytes. All trial changes were discarded; the sole existing honest NonMatching C is unchanged. Full canonical DOL/all-source build succeeded; DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f verified against retail. Raw build and SHA-1 outputs are preserved in verification evidence."
+}

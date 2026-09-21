@@ -1,0 +1,22 @@
+{
+  "retail": {
+    "argv": [
+      "build/binutils/powerpc-eabi-readelf",
+      "-Wr",
+      "build/GEDE01/obj/game/game_fn_800C4AA0.o"
+    ],
+    "exit_code": 0,
+    "stdout": "\nRelocation section '.rela.text' at offset 0x10c contains 15 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000020  0000040a R_PPC_REL24            00000000   fn_80201B8C + 0\n0000002c  0000050a R_PPC_REL24            00000000   fn_80200C38 + 0\n00000030  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064CA88 + 0\n00000046  00000706 R_PPC_ADDR16_HA        00000000   lbl_803251E4 + 0\n0000004e  00000704 R_PPC_ADDR16_LO        00000000   lbl_803251E4 + 0\n00000054  0000080a R_PPC_REL24            00000000   fn_801A7324 + 0\n00000058  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064CA88 + 0\n0000005e  00000706 R_PPC_ADDR16_HA        00000000   lbl_803251E4 + 0\n00000062  00000704 R_PPC_ADDR16_LO        00000000   lbl_803251E4 + 0\n00000074  0000090a R_PPC_REL24            00000000   fn_801A74D8 + 0\n00000078  00000a6d R_PPC_EMB_SDA21        00000000   lbl_8064B714 + 0\n00000084  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064CA88 + 0\n00000088  00000a6d R_PPC_EMB_SDA21        00000000   lbl_8064B714 + 0\n0000008c  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064CA88 + 0\n00000094  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064CA88 + 0\n",
+    "stderr": ""
+  },
+  "compiled": {
+    "argv": [
+      "build/binutils/powerpc-eabi-readelf",
+      "-Wr",
+      "build/GEDE01/src/game/game_fn_800C4AA0.o"
+    ],
+    "exit_code": 0,
+    "stdout": "\nRelocation section '.rela.text' at offset 0x100 contains 15 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000020  0000060a R_PPC_REL24            00000000   fn_80201B8C + 0\n0000002c  0000070a R_PPC_REL24            00000000   fn_80200C38 + 0\n00000030  0000036d R_PPC_EMB_SDA21        00000000   lbl_8064CA88 + 0\n00000046  00000406 R_PPC_ADDR16_HA        00000000   lbl_803251E4 + 0\n0000004e  00000404 R_PPC_ADDR16_LO        00000000   lbl_803251E4 + 0\n00000054  0000080a R_PPC_REL24            00000000   fn_801A7324 + 0\n00000058  0000036d R_PPC_EMB_SDA21        00000000   lbl_8064CA88 + 0\n0000005e  00000406 R_PPC_ADDR16_HA        00000000   lbl_803251E4 + 0\n00000062  00000404 R_PPC_ADDR16_LO        00000000   lbl_803251E4 + 0\n00000074  0000090a R_PPC_REL24            00000000   fn_801A74D8 + 0\n00000078  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064B714 + 0\n00000084  0000036d R_PPC_EMB_SDA21        00000000   lbl_8064CA88 + 0\n00000088  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064B714 + 0\n0000008c  0000036d R_PPC_EMB_SDA21        00000000   lbl_8064CA88 + 0\n00000094  0000036d R_PPC_EMB_SDA21        00000000   lbl_8064CA88 + 0\n",
+    "stderr": ""
+  }
+}
