@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "11d5a0ca-b526-4d1f-a679-a8652892843f",
+  "attempt": 4,
+  "base_commit": "65e16d15bbf265623e9dc8974ec9ebb3c329960e",
+  "target": "fn_8018AD14",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-11d5a0ca-b526-4d1f-a679-a8652892843f.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is size-exact at 412/412 bytes and 95.67961%, with 26 relocation-bearing instruction annotations on each side. Retail fallback offsets 0xe0-0xf0 emit li r20, lis r3 fn_8018D020@ha, lwz r21, mr r23,r20, then addi r22 fn_8018D020@l; generated emits lis r3, lwz r22, addi r23, li r20, li r21. Thus the remaining divergence is instruction scheduling, register allocation, zero-copy selection, and callback relocation placement, while relocation targets and addends agree. A new block-scope hypothesis for both fallback induction values regressed to 95.53398%; moving byte_offset after pointer declarations and splitting i initialization around the object-data reload were codegen no-ops at 95.67961%; a callback local ordered after the reload grew generated code to 416 bytes and scored 95.38835%. The strongest honest C reconstruction was retained. python3 configure.py and .tools/bin/ninja -j2 completed successfully; build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f; python3 tools/legal_audit.py passed with 19363 tracked project files inspected."
+}
