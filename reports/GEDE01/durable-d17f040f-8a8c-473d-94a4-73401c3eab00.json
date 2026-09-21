@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "d17f040f-8a8c-473d-94a4-73401c3eab00",
+  "attempt": 5,
+  "base_commit": "41d1ecb4b80bca338841bb901e963ddfb1e85d26",
+  "target": "fn_800606BC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d17f040f-8a8c-473d-94a4-73401c3eab00.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d17f040f-8a8c-473d-94a4-73401c3eab00-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-d17f040f-8a8c-473d-94a4-73401c3eab00.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-d17f040f-8a8c-473d-94a4-73401c3eab00.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are both 96.015625% for exact 256-byte functions, with all 12 R_PPC_REL24 offsets, targets, types, and zero addends equal. Remaining text differences are an equivalent register-coloring rotation: retail uses r29 for owner then event, r28 for value, and r30 for resolved, while generated code uses r28 for owner, r30 for value, and r29 for resolved then event; the r28 save is correspondingly scheduled at generated 0x1c versus retail 0x24."
+}

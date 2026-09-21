@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "assignment_id": "d17f040f-8a8c-473d-94a4-73401c3eab00",
+  "working_directory": "eternal-darkness-decomp",
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_output_tail": "[887/889] DOL build/GEDE01/main.dol\n[888/889] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[889/889] PROGRESS"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol && cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol; printf 'cmp_exit=%s\\n' \"$?\"",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\ncmp_exit=0"
+  },
+  "source_policy_audit": {
+    "command": "rg -n '__asm|asm\\s*\\(' src/game/game_fn_800606BC.c; test $(rg -l 's32 fn_800606BC\\(' src --glob '*.c' | wc -l) -eq 1",
+    "raw_output": "",
+    "exit_code": 0,
+    "conclusion": "No inline or whole-function assembly is present, and fn_800606BC has exactly one C definition in its independent translation unit."
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800606BC fn_800606BC -o reports/GEDE01/objdiff-d17f040f-8a8c-473d-94a4-73401c3eab00.json --format json-pretty",
+    "raw_output": "INFO Writing to reports/GEDE01/objdiff-d17f040f-8a8c-473d-94a4-73401c3eab00.json",
+    "size_bytes": [256, 256],
+    "match_percent": 96.015625
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800606BC fn_800606BC -o reports/GEDE01/objdiff-d17f040f-8a8c-473d-94a4-73401c3eab00-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_output": "INFO Writing to reports/GEDE01/objdiff-d17f040f-8a8c-473d-94a4-73401c3eab00-reloc-strict.json",
+    "size_bytes": [256, 256],
+    "match_percent": 96.015625,
+    "raw_relocations_generated": "00000028 R_PPC_REL24 fn_801A7498 + 0\n00000030 R_PPC_REL24 fn_80201814 + 0\n00000044 R_PPC_REL24 fn_800607BC + 0\n00000050 R_PPC_REL24 fn_80128EE4 + 0\n00000060 R_PPC_REL24 fn_80201B8C + 0\n00000088 R_PPC_REL24 fn_801A717C + 0\n00000098 R_PPC_REL24 fn_8012B344 + 0\n000000a4 R_PPC_REL24 fn_801A7470 + 0\n000000b0 R_PPC_REL24 fn_801A74A0 + 0\n000000bc R_PPC_REL24 fn_801A74A8 + 0\n000000d0 R_PPC_REL24 fn_8020123C + 0\n000000d8 R_PPC_REL24 fn_801A7228 + 0",
+    "raw_relocations_retail": "00000028 R_PPC_REL24 fn_801A7498 + 0\n00000030 R_PPC_REL24 fn_80201814 + 0\n00000044 R_PPC_REL24 fn_800607BC + 0\n00000050 R_PPC_REL24 fn_80128EE4 + 0\n00000060 R_PPC_REL24 fn_80201B8C + 0\n00000088 R_PPC_REL24 fn_801A717C + 0\n00000098 R_PPC_REL24 fn_8012B344 + 0\n000000a4 R_PPC_REL24 fn_801A7470 + 0\n000000b0 R_PPC_REL24 fn_801A74A0 + 0\n000000bc R_PPC_REL24 fn_801A74A8 + 0\n000000d0 R_PPC_REL24 fn_8020123C + 0\n000000d8 R_PPC_REL24 fn_801A7228 + 0"
+  }
+}

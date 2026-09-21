@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "d17f040f-8a8c-473d-94a4-73401c3eab00",
+  "target": "fn_800606BC",
+  "hypothesis": "Moving event from branch scope to function scope while grouping value and resolved in one declaration might change MWCC interference-node ordering, allowing event to coalesce with the owner lifetime and rotate owner/value/resolved to retail r29/r28/r30 without changing operations.",
+  "exact_source_delta": "-    void *value;\n-    void *resolved;\n+    void *value, *resolved;\n+    void *event;\n@@\n-        void *event = fn_801A717C();\n+        event = fn_801A717C();",
+  "commands": [
+    ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_800606BC.o",
+    "python3 tools/fndiff.py game/game_fn_800606BC.c fn_800606BC"
+  ],
+  "raw_measurement": "[1/1] MWCC build/GEDE01/src/game/game_fn_800606BC.o\ntarget 256 bytes  base 256 bytes  match 96.015625",
+  "outcome": "falsified: generated instructions and the 96.015625% score were identical to the baseline; the clearer accepted source was restored"
+}
