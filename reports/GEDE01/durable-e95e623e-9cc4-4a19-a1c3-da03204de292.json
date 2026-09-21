@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "e95e623e-9cc4-4a19-a1c3-da03204de292",
+  "attempt": 6,
+  "base_commit": "f0d91a608b2817f025f6c8a1bed688aaf036c444",
+  "target": "fn_8018AD14",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e95e623e-9cc4-4a19-a1c3-da03204de292.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-e95e623e-9cc4-4a19-a1c3-da03204de292.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-e95e623e-9cc4-4a19-a1c3-da03204de292.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-e95e623e-9cc4-4a19-a1c3-da03204de292.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-e95e623e-9cc4-4a19-a1c3-da03204de292.txt"
+  ],
+  "divergence": "Retained independent NonMatching C derives the vertex offset from i * 0x18 instead of carrying an explicit byte_offset. Fresh canonical and functionRelocDiffs=all objdiff improve from 95.67961% to 96.11651%, with retail/generated sizes 412/412 bytes. Retail fallback 0xe0..0xf0 is li r20,0; lis r3,fn_8018D020@ha; lwz r21,0x4c(r24); mr r23,r20; addi r22,r3,fn_8018D020@l. Generated is lis r3,fn_8018D020@ha; lwz r21,0x4c(r24); mr r22,r27; li r20,0; addi r23,r3,fn_8018D020@l. Generated carries a running vertex pointer in r22 and callback in r23, while retail carries byte offset in r23 and callback in r22, changing call argument moves and the stride update. Callback HA relocation is at 0xe2 generated versus 0xe6 retail; LO is 0xf2 on both. All 18 actual ELF relocations agree in type, target, and addend, but offsets do not all agree. Highest measured experimental score was 96.61165% for an equivalent countdown loop at 408 bytes, discarded because it removes the retail upward induction variable and changes the save/restore register range. The strongest size-exact upward-index reconstruction is retained. Canonical compiler/settings and NonMatching registration unchanged. python3 configure.py and .tools/bin/ninja -j2 passed; main.dol SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f; legal audit passed (19380 tracked project files inspected)."
+}

@@ -24,7 +24,6 @@ void fn_8018AD14(u8* object)
     u16 vertex_size;
     u16 index_size;
     u16 color_size;
-    int byte_offset;
     int j;
     u8* object_data;
     u8* vertex_data;
@@ -66,12 +65,11 @@ void fn_8018AD14(u8* object)
         fn_8018A310(*(u8**)(object + 0x4C), lbl_80607900, vertex_data, count);
     } else {
         int i;
-        byte_offset = i = 0;
+        i = 0;
         object_data = *(u8**)(object + 0x4C);
         for (; i < count; i++) {
-            fn_80188A7C(object_data, vertex_data + byte_offset, fn_8018D020);
+            fn_80188A7C(object_data, vertex_data + i * 0x18, fn_8018D020);
             object_data += 0x38;
-            byte_offset += 0x18;
         }
     }
 
