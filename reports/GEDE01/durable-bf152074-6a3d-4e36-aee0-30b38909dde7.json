@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "bf152074-6a3d-4e36-aee0-30b38909dde7",
+  "attempt": 5,
+  "base_commit": "dbb87351aff2e84ea134340df0b9c888079d3bf6",
+  "target": "fn_801952E8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bf152074-6a3d-4e36-aee0-30b38909dde7.json"
+  ],
+  "divergence": "Canonical and relocation-strict score is 95.685356% at 1284/1284 bytes with all 12 relocation targets and addends agreeing. Retail uses record base r3, destination r6, and count r7 in the populate loop while GC/1.3 retains the base in r7, uses count r8, and folds destination offsets; final-loop cursor formation is scheduled later. A distinct volatile record-field hypothesis regressed to 95.31152% and 1288 bytes, while destination-only pre-biasing optimized back to the retained baseline."
+}
