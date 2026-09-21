@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "41f1b91f-745c-4af8-bcda-ddff4be1eddc",
+  "attempt": 4,
+  "base_commit": "19b37f0de87d97d2d8401dc9a23b6b223f28b186",
+  "target": "fn_8012AC74",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-41f1b91f-745c-4af8-bcda-ddff4be1eddc.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-41f1b91f-745c-4af8-bcda-ddff4be1eddc-reloc-strict.json"
+  ],
+  "divergence": "Best canonical and relocation-strict score remains 95.5921%; generated code is 308 bytes versus retail's 304. Retail keeps owner/flags in r31/r29 while GC/1.3 keeps them in r29/r31, and the predicate has one extra li r7,1 plus temporary-register coloring differences; all eight R_PPC_REL24 relocation targets and addends agree. A distinct lifetime-splitting/register-parameter hypothesis reproduced 95.5921%. Reusing the true local as the range bound also reproduced 95.5921% because GC/1.3 constant-propagated it; deriving that local from mode == 3 produced retail's downstream r5/r6/r7 predicate coloring and mr r7,r6 but added four instructions and regressed to 90.447365%. The retained source was rebuilt before measurement and the rebuilt DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
