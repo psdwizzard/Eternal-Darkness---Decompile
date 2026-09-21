@@ -36,10 +36,10 @@ int fn_800DC9A8(void *context)
     unsigned short height;
     float upper;
 
-    /* NonMatching: behavior-complete reconstruction. The retail object is four
-     * bytes larger because it preserves the initial list head separately from
-     * the iterator. Remaining instruction differences are register allocation;
-     * the synthesized u16-to-double bias also retains a TU-local relocation. */
+    /* NonMatching: behavior-complete reconstruction. A comma-expression loop
+     * initializer tests the hypothesis that the original source introduced
+     * the iterator and counter as one induction setup. GC/1.3 still coalesces
+     * the list head with the iterator, leaving the retail-only copy absent. */
 
     fn_80201B9C(context);
     blocked = 0;
@@ -54,8 +54,7 @@ int fn_800DC9A8(void *context)
         kind = fn_8011FB4C(owner);
         height = fn_8011F760(owner);
         upper = lbl_8064F4E4 + height;
-        item = list;
-        for (i = 0; i < count; i++) {
+        for (item = list, i = 0; i < count; i++) {
             float *position;
             void *candidate;
             void *candidate_owner;

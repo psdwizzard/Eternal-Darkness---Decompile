@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "2b016840-e228-4f4c-b34c-bde38b859ea2",
+  "attempt": 3,
+  "base_commit": "60543eaf9d3e676622b491943fbe4e6d83c36ab0",
+  "target": "fn_800DC9A8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b016840-e228-4f4c-b34c-bde38b859ea2.json"
+  ],
+  "divergence": "Relocation-strict objdiff remains 96.41791%: retail is 536 bytes and generated C is 532 bytes, with 27 relocation-bearing instructions on each side. This attempt tested a distinct combined iterator/counter induction-initializer hypothesis; GC/1.3 emitted the same best code and still coalesced the initial list head with the r23 iterator, omitting retail's mr r23,r24. The remaining instruction deltas are the resulting nonvolatile-register allocation, and the generated unsigned-short conversion bias still targets split-TU local @29 instead of retail lbl_8064F4F0. All call relocations and the two named vertical-bound constant relocations agree. The full build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
