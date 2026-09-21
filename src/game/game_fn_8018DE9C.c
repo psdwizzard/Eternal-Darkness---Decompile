@@ -2,6 +2,9 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef signed short s16;
 typedef unsigned int u32;
+extern const float lbl_80650A68;
+extern const float lbl_80650AB4;
+extern const float lbl_80650AB8;
 extern u8 lbl_80607120[];
 extern s16 lbl_80607900[];
 extern int lbl_8064D738;
@@ -25,7 +28,6 @@ void fn_8018DE9C(u8* object)
     register u8* transform;
     u8* self;
     u16* coordinate;
-    s16* scratch;
     int i;
     u8 count;
     u16 vertex_size;
@@ -52,7 +54,6 @@ void fn_8018DE9C(u8* object)
     }
     object_data = *(u8**)(self + 0x4C);
     color = color_data;
-    scratch = lbl_80607900;
     coordinate = (u16*)transform;
     i = 0;
     for (; i < count; i++) {
@@ -72,23 +73,22 @@ void fn_8018DE9C(u8* object)
                 color += 4;
             }
         }
-        *(u32*)scratch = *(u32*)(object_data + 0xA);
-        scratch[2] = *(u16*)(object_data + 0xE);
+        *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);
+        lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);
         coordinate++;
         object_data += 0x38;
-        scratch += 3;
     }
     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);
     fn_80211A48(transform + 0x60, transform + 0x6C, transform + 0x60);
     {
         float value = *(float*)(transform + 0x68);
-        if (value < 0.0f) value = -value;
-        if (value > 1.0f) *(float*)(transform + 0x68) = *(float*)(transform + 0x74);
+        if (value < lbl_80650A68) value = -value;
+        if (value > lbl_80650AB4) *(float*)(transform + 0x68) = *(float*)(transform + 0x74);
     }
     {
         float value = *(float*)(transform + 0x68);
-        if (value < 0.0f) value = -value;
-        fn_80211380(transform + 0x78, transform + 0x60, 0.5f * value);
+        if (value < lbl_80650A68) value = -value;
+        fn_80211380(transform + 0x78, transform + 0x60, lbl_80650AB8 * value);
     }
     DCFlushRange(vertex_data, vertex_size);
     DCFlushRange(index_data, index_size);

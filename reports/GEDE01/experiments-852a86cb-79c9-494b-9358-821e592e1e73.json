@@ -1,0 +1,854 @@
+{
+  "base_commit": "4699695f625149aaf3025d960da54524af7e33ea",
+  "working_directory": "eternal-darkness-decomp",
+  "runs": [
+    {
+      "variant": "baseline",
+      "source_diff": "",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-t",
+            "commands",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018DE9C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018DE9C.d build/GEDE01/src/game/game_fn_8018DE9C.d\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018DE9C.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-baseline-canonical.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-baseline-canonical.json\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-c",
+            "functionRelocDiffs=all",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-baseline-strict.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-baseline-strict.json\n"
+        }
+      ],
+      "canonical": {
+        "match_percent": 96.18881,
+        "target_size": "572",
+        "generated_size": "576",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-baseline-canonical.json"
+      },
+      "strict": {
+        "match_percent": 96.18881,
+        "target_size": "572",
+        "generated_size": "576",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-baseline-strict.json"
+      }
+    },
+    {
+      "variant": "indexed_scratch",
+      "source_diff": "--- src/game/game_fn_8018DE9C.c (base)\n+++ src/game/game_fn_8018DE9C.c (indexed_scratch)\n@@ -25,7 +25,6 @@\n     register u8* transform;\n     u8* self;\n     u16* coordinate;\n-    s16* scratch;\n     int i;\n     u8 count;\n     u16 vertex_size;\n@@ -52,7 +51,6 @@\n     }\n     object_data = *(u8**)(self + 0x4C);\n     color = color_data;\n-    scratch = lbl_80607900;\n     coordinate = (u16*)transform;\n     i = 0;\n     for (; i < count; i++) {\n@@ -72,11 +70,10 @@\n                 color += 4;\n             }\n         }\n-        *(u32*)scratch = *(u32*)(object_data + 0xA);\n-        scratch[2] = *(u16*)(object_data + 0xE);\n+        *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);\n+        lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);\n         coordinate++;\n         object_data += 0x38;\n-        scratch += 3;\n     }\n     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);\n     fn_80211A48(transform + 0x60, transform + 0x6C, transform + 0x60);\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-t",
+            "commands",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018DE9C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018DE9C.d build/GEDE01/src/game/game_fn_8018DE9C.d\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018DE9C.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-indexed_scratch-canonical.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-indexed_scratch-canonical.json\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-c",
+            "functionRelocDiffs=all",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-indexed_scratch-strict.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-indexed_scratch-strict.json\n"
+        }
+      ],
+      "canonical": {
+        "match_percent": 97.97203,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-indexed_scratch-canonical.json"
+      },
+      "strict": {
+        "match_percent": 97.97203,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-indexed_scratch-strict.json"
+      }
+    },
+    {
+      "variant": "named_float_constants",
+      "source_diff": "--- src/game/game_fn_8018DE9C.c (base)\n+++ src/game/game_fn_8018DE9C.c (named_float_constants)\n@@ -2,6 +2,9 @@\n typedef unsigned short u16;\n typedef signed short s16;\n typedef unsigned int u32;\n+extern float lbl_80650A68;\n+extern float lbl_80650AB4;\n+extern float lbl_80650AB8;\n extern u8 lbl_80607120[];\n extern s16 lbl_80607900[];\n extern int lbl_8064D738;\n@@ -25,7 +28,6 @@\n     register u8* transform;\n     u8* self;\n     u16* coordinate;\n-    s16* scratch;\n     int i;\n     u8 count;\n     u16 vertex_size;\n@@ -52,7 +54,6 @@\n     }\n     object_data = *(u8**)(self + 0x4C);\n     color = color_data;\n-    scratch = lbl_80607900;\n     coordinate = (u16*)transform;\n     i = 0;\n     for (; i < count; i++) {\n@@ -72,23 +73,22 @@\n                 color += 4;\n             }\n         }\n-        *(u32*)scratch = *(u32*)(object_data + 0xA);\n-        scratch[2] = *(u16*)(object_data + 0xE);\n+        *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);\n+        lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);\n         coordinate++;\n         object_data += 0x38;\n-        scratch += 3;\n     }\n     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);\n     fn_80211A48(transform + 0x60, transform + 0x6C, transform + 0x60);\n     {\n         float value = *(float*)(transform + 0x68);\n-        if (value < 0.0f) value = -value;\n-        if (value > 1.0f) *(float*)(transform + 0x68) = *(float*)(transform + 0x74);\n+        if (value < lbl_80650A68) value = -value;\n+        if (value > lbl_80650AB4) *(float*)(transform + 0x68) = *(float*)(transform + 0x74);\n     }\n     {\n         float value = *(float*)(transform + 0x68);\n-        if (value < 0.0f) value = -value;\n-        fn_80211380(transform + 0x78, transform + 0x60, 0.5f * value);\n+        if (value < lbl_80650A68) value = -value;\n+        fn_80211380(transform + 0x78, transform + 0x60, lbl_80650AB8 * value);\n     }\n     DCFlushRange(vertex_data, vertex_size);\n     DCFlushRange(index_data, index_size);\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-t",
+            "commands",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018DE9C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018DE9C.d build/GEDE01/src/game/game_fn_8018DE9C.d\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018DE9C.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-named_float_constants-canonical.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-named_float_constants-canonical.json\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-c",
+            "functionRelocDiffs=all",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-named_float_constants-strict.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-named_float_constants-strict.json\n"
+        }
+      ],
+      "canonical": {
+        "match_percent": 98.111885,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-named_float_constants-canonical.json"
+      },
+      "strict": {
+        "match_percent": 98.111885,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-named_float_constants-strict.json"
+      }
+    },
+    {
+      "variant": "inline_body",
+      "source_diff": "--- src/game/game_fn_8018DE9C.c (base)\n+++ src/game/game_fn_8018DE9C.c (inline_body)\n@@ -17,7 +17,7 @@\n extern void fn_8018D0D0(void*, void*, s16);\n extern void fn_8018865C(void*, void*, void*);\n \n-void fn_8018DE9C(u8* object)\n+static inline void render_body(u8* object)\n {\n     register u8* vertex_data;\n     register u8* index_data;\n@@ -25,7 +25,6 @@\n     register u8* transform;\n     u8* self;\n     u16* coordinate;\n-    s16* scratch;\n     int i;\n     u8 count;\n     u16 vertex_size;\n@@ -52,7 +51,6 @@\n     }\n     object_data = *(u8**)(self + 0x4C);\n     color = color_data;\n-    scratch = lbl_80607900;\n     coordinate = (u16*)transform;\n     i = 0;\n     for (; i < count; i++) {\n@@ -72,11 +70,10 @@\n                 color += 4;\n             }\n         }\n-        *(u32*)scratch = *(u32*)(object_data + 0xA);\n-        scratch[2] = *(u16*)(object_data + 0xE);\n+        *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);\n+        lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);\n         coordinate++;\n         object_data += 0x38;\n-        scratch += 3;\n     }\n     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);\n     fn_80211A48(transform + 0x60, transform + 0x6C, transform + 0x60);\n@@ -100,3 +97,5 @@\n         fn_801ED57C(saved);\n     }\n }\n+\n+void fn_8018DE9C(u8* object) { render_body(object); }\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-t",
+            "commands",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018DE9C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018DE9C.d build/GEDE01/src/game/game_fn_8018DE9C.d\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018DE9C.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_body-canonical.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_body-canonical.json\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-c",
+            "functionRelocDiffs=all",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_body-strict.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_body-strict.json\n"
+        }
+      ],
+      "canonical": {
+        "match_percent": 97.0979,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_body-canonical.json"
+      },
+      "strict": {
+        "match_percent": 97.0979,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_body-strict.json"
+      }
+    },
+    {
+      "variant": "coordinate_indexed",
+      "source_diff": "--- src/game/game_fn_8018DE9C.c (base)\n+++ src/game/game_fn_8018DE9C.c (coordinate_indexed)\n@@ -24,8 +24,6 @@\n     register u8* color_data;\n     register u8* transform;\n     u8* self;\n-    u16* coordinate;\n-    s16* scratch;\n     int i;\n     u8 count;\n     u16 vertex_size;\n@@ -52,8 +50,6 @@\n     }\n     object_data = *(u8**)(self + 0x4C);\n     color = color_data;\n-    scratch = lbl_80607900;\n-    coordinate = (u16*)transform;\n     i = 0;\n     for (; i < count; i++) {\n         struct { u32 word; u16 half; } point;\n@@ -61,7 +57,7 @@\n         point.word = lbl_80651D78;\n         point.half = lbl_80651D7C;\n         shade = (int)((float)i * *(float*)(transform + 0x30)) & 0x3F;\n-        fn_8018168C(object_data, &point, (s16)shade, coordinate[7]);\n+        fn_8018168C(object_data, &point, (s16)shade, ((u16*)transform)[i + 7]);\n         *(s16*)(object_data + 0xE) = *(s16*)(self + 0x14);\n         if (fn_80180430(self + 0x24, (u8)i) != 0)\n             *(s16*)(object_data + 0xE) += *(s16*)(object_data + 0x14);\n@@ -72,11 +68,9 @@\n                 color += 4;\n             }\n         }\n-        *(u32*)scratch = *(u32*)(object_data + 0xA);\n-        scratch[2] = *(u16*)(object_data + 0xE);\n-        coordinate++;\n+        *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);\n+        lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);\n         object_data += 0x38;\n-        scratch += 3;\n     }\n     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);\n     fn_80211A48(transform + 0x60, transform + 0x6C, transform + 0x60);\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-t",
+            "commands",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018DE9C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018DE9C.d build/GEDE01/src/game/game_fn_8018DE9C.d\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018DE9C.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-coordinate_indexed-canonical.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-coordinate_indexed-canonical.json\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-c",
+            "functionRelocDiffs=all",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-coordinate_indexed-strict.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-coordinate_indexed-strict.json\n"
+        }
+      ],
+      "canonical": {
+        "match_percent": 97.97203,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-coordinate_indexed-canonical.json"
+      },
+      "strict": {
+        "match_percent": 97.97203,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-coordinate_indexed-strict.json"
+      }
+    },
+    {
+      "variant": "unsigned_counter",
+      "source_diff": "--- src/game/game_fn_8018DE9C.c (base)\n+++ src/game/game_fn_8018DE9C.c (unsigned_counter)\n@@ -25,8 +25,7 @@\n     register u8* transform;\n     u8* self;\n     u16* coordinate;\n-    s16* scratch;\n-    int i;\n+    unsigned int i;\n     u8 count;\n     u16 vertex_size;\n     u16 index_size;\n@@ -52,7 +51,6 @@\n     }\n     object_data = *(u8**)(self + 0x4C);\n     color = color_data;\n-    scratch = lbl_80607900;\n     coordinate = (u16*)transform;\n     i = 0;\n     for (; i < count; i++) {\n@@ -60,7 +58,7 @@\n         int shade;\n         point.word = lbl_80651D78;\n         point.half = lbl_80651D7C;\n-        shade = (int)((float)i * *(float*)(transform + 0x30)) & 0x3F;\n+        shade = (int)((float)(int)i * *(float*)(transform + 0x30)) & 0x3F;\n         fn_8018168C(object_data, &point, (s16)shade, coordinate[7]);\n         *(s16*)(object_data + 0xE) = *(s16*)(self + 0x14);\n         if (fn_80180430(self + 0x24, (u8)i) != 0)\n@@ -72,11 +70,10 @@\n                 color += 4;\n             }\n         }\n-        *(u32*)scratch = *(u32*)(object_data + 0xA);\n-        scratch[2] = *(u16*)(object_data + 0xE);\n+        *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);\n+        lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);\n         coordinate++;\n         object_data += 0x38;\n-        scratch += 3;\n     }\n     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);\n     fn_80211A48(transform + 0x60, transform + 0x6C, transform + 0x60);\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-t",
+            "commands",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018DE9C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018DE9C.d build/GEDE01/src/game/game_fn_8018DE9C.d\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018DE9C.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-unsigned_counter-canonical.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-unsigned_counter-canonical.json\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-c",
+            "functionRelocDiffs=all",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-unsigned_counter-strict.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-unsigned_counter-strict.json\n"
+        }
+      ],
+      "canonical": {
+        "match_percent": 97.552444,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-unsigned_counter-canonical.json"
+      },
+      "strict": {
+        "match_percent": 97.552444,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-unsigned_counter-strict.json"
+      }
+    },
+    {
+      "variant": "inline_reverse_buffers",
+      "source_diff": "--- src/game/game_fn_8018DE9C.c (base)\n+++ src/game/game_fn_8018DE9C.c (inline_reverse_buffers)\n@@ -17,15 +17,14 @@\n extern void fn_8018D0D0(void*, void*, s16);\n extern void fn_8018865C(void*, void*, void*);\n \n-void fn_8018DE9C(u8* object)\n+static inline void render_body(u8* object)\n {\n+    register u8* color_data;\n+    register u8* index_data;\n     register u8* vertex_data;\n-    register u8* index_data;\n-    register u8* color_data;\n     register u8* transform;\n     u8* self;\n     u16* coordinate;\n-    s16* scratch;\n     int i;\n     u8 count;\n     u16 vertex_size;\n@@ -52,7 +51,6 @@\n     }\n     object_data = *(u8**)(self + 0x4C);\n     color = color_data;\n-    scratch = lbl_80607900;\n     coordinate = (u16*)transform;\n     i = 0;\n     for (; i < count; i++) {\n@@ -72,11 +70,10 @@\n                 color += 4;\n             }\n         }\n-        *(u32*)scratch = *(u32*)(object_data + 0xA);\n-        scratch[2] = *(u16*)(object_data + 0xE);\n+        *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);\n+        lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);\n         coordinate++;\n         object_data += 0x38;\n-        scratch += 3;\n     }\n     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);\n     fn_80211A48(transform + 0x60, transform + 0x6C, transform + 0x60);\n@@ -100,3 +97,5 @@\n         fn_801ED57C(saved);\n     }\n }\n+\n+void fn_8018DE9C(u8* object) { render_body(object); }\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-t",
+            "commands",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018DE9C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018DE9C.d build/GEDE01/src/game/game_fn_8018DE9C.d\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018DE9C.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_reverse_buffers-canonical.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_reverse_buffers-canonical.json\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-c",
+            "functionRelocDiffs=all",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_reverse_buffers-strict.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_reverse_buffers-strict.json\n"
+        }
+      ],
+      "canonical": {
+        "match_percent": 97.51748,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_reverse_buffers-canonical.json"
+      },
+      "strict": {
+        "match_percent": 97.51748,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_reverse_buffers-strict.json"
+      }
+    },
+    {
+      "variant": "inline_no_register",
+      "source_diff": "--- src/game/game_fn_8018DE9C.c (base)\n+++ src/game/game_fn_8018DE9C.c (inline_no_register)\n@@ -17,15 +17,14 @@\n extern void fn_8018D0D0(void*, void*, s16);\n extern void fn_8018865C(void*, void*, void*);\n \n-void fn_8018DE9C(u8* object)\n+static inline void render_body(u8* object)\n {\n-    register u8* vertex_data;\n-    register u8* index_data;\n-    register u8* color_data;\n-    register u8* transform;\n+    u8* vertex_data;\n+    u8* index_data;\n+    u8* color_data;\n+    u8* transform;\n     u8* self;\n     u16* coordinate;\n-    s16* scratch;\n     int i;\n     u8 count;\n     u16 vertex_size;\n@@ -52,7 +51,6 @@\n     }\n     object_data = *(u8**)(self + 0x4C);\n     color = color_data;\n-    scratch = lbl_80607900;\n     coordinate = (u16*)transform;\n     i = 0;\n     for (; i < count; i++) {\n@@ -72,11 +70,10 @@\n                 color += 4;\n             }\n         }\n-        *(u32*)scratch = *(u32*)(object_data + 0xA);\n-        scratch[2] = *(u16*)(object_data + 0xE);\n+        *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);\n+        lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);\n         coordinate++;\n         object_data += 0x38;\n-        scratch += 3;\n     }\n     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);\n     fn_80211A48(transform + 0x60, transform + 0x6C, transform + 0x60);\n@@ -100,3 +97,5 @@\n         fn_801ED57C(saved);\n     }\n }\n+\n+void fn_8018DE9C(u8* object) { render_body(object); }\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-t",
+            "commands",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018DE9C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018DE9C.d build/GEDE01/src/game/game_fn_8018DE9C.d\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018DE9C.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_no_register-canonical.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_no_register-canonical.json\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-c",
+            "functionRelocDiffs=all",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_no_register-strict.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_no_register-strict.json\n"
+        }
+      ],
+      "canonical": {
+        "match_percent": 97.0979,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_no_register-canonical.json"
+      },
+      "strict": {
+        "match_percent": 97.0979,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-inline_no_register-strict.json"
+      }
+    },
+    {
+      "variant": "no_register",
+      "source_diff": "--- src/game/game_fn_8018DE9C.c (base)\n+++ src/game/game_fn_8018DE9C.c (no_register)\n@@ -2,6 +2,9 @@\n typedef unsigned short u16;\n typedef signed short s16;\n typedef unsigned int u32;\n+extern float lbl_80650A68;\n+extern float lbl_80650AB4;\n+extern float lbl_80650AB8;\n extern u8 lbl_80607120[];\n extern s16 lbl_80607900[];\n extern int lbl_8064D738;\n@@ -19,13 +22,12 @@\n \n void fn_8018DE9C(u8* object)\n {\n-    register u8* vertex_data;\n-    register u8* index_data;\n-    register u8* color_data;\n-    register u8* transform;\n+    u8* vertex_data;\n+    u8* index_data;\n+    u8* color_data;\n+    u8* transform;\n     u8* self;\n     u16* coordinate;\n-    s16* scratch;\n     int i;\n     u8 count;\n     u16 vertex_size;\n@@ -52,7 +54,6 @@\n     }\n     object_data = *(u8**)(self + 0x4C);\n     color = color_data;\n-    scratch = lbl_80607900;\n     coordinate = (u16*)transform;\n     i = 0;\n     for (; i < count; i++) {\n@@ -72,23 +73,22 @@\n                 color += 4;\n             }\n         }\n-        *(u32*)scratch = *(u32*)(object_data + 0xA);\n-        scratch[2] = *(u16*)(object_data + 0xE);\n+        *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);\n+        lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);\n         coordinate++;\n         object_data += 0x38;\n-        scratch += 3;\n     }\n     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);\n     fn_80211A48(transform + 0x60, transform + 0x6C, transform + 0x60);\n     {\n         float value = *(float*)(transform + 0x68);\n-        if (value < 0.0f) value = -value;\n-        if (value > 1.0f) *(float*)(transform + 0x68) = *(float*)(transform + 0x74);\n+        if (value < lbl_80650A68) value = -value;\n+        if (value > lbl_80650AB4) *(float*)(transform + 0x68) = *(float*)(transform + 0x74);\n     }\n     {\n         float value = *(float*)(transform + 0x68);\n-        if (value < 0.0f) value = -value;\n-        fn_80211380(transform + 0x78, transform + 0x60, 0.5f * value);\n+        if (value < lbl_80650A68) value = -value;\n+        fn_80211380(transform + 0x78, transform + 0x60, lbl_80650AB8 * value);\n     }\n     DCFlushRange(vertex_data, vertex_size);\n     DCFlushRange(index_data, index_size);\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-t",
+            "commands",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018DE9C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018DE9C.d build/GEDE01/src/game/game_fn_8018DE9C.d\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018DE9C.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-no_register-canonical.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-no_register-canonical.json\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-c",
+            "functionRelocDiffs=all",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-no_register-strict.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-no_register-strict.json\n"
+        }
+      ],
+      "canonical": {
+        "match_percent": 98.111885,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-no_register-canonical.json"
+      },
+      "strict": {
+        "match_percent": 98.111885,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-no_register-strict.json"
+      }
+    },
+    {
+      "variant": "explicit_conversion",
+      "source_diff": "--- src/game/game_fn_8018DE9C.c (base)\n+++ src/game/game_fn_8018DE9C.c (explicit_conversion)\n@@ -2,6 +2,10 @@\n typedef unsigned short u16;\n typedef signed short s16;\n typedef unsigned int u32;\n+extern double lbl_80650A70;\n+extern float lbl_80650A68;\n+extern float lbl_80650AB4;\n+extern float lbl_80650AB8;\n extern u8 lbl_80607120[];\n extern s16 lbl_80607900[];\n extern int lbl_8064D738;\n@@ -25,7 +29,6 @@\n     register u8* transform;\n     u8* self;\n     u16* coordinate;\n-    s16* scratch;\n     int i;\n     u8 count;\n     u16 vertex_size;\n@@ -52,15 +55,17 @@\n     }\n     object_data = *(u8**)(self + 0x4C);\n     color = color_data;\n-    scratch = lbl_80607900;\n     coordinate = (u16*)transform;\n     i = 0;\n     for (; i < count; i++) {\n         struct { u32 word; u16 half; } point;\n         int shade;\n+        union { double number; struct { u32 high; u32 low; } words; } conversion;\n         point.word = lbl_80651D78;\n         point.half = lbl_80651D7C;\n-        shade = (int)((float)i * *(float*)(transform + 0x30)) & 0x3F;\n+        conversion.words.high = 0x43300000;\n+        conversion.words.low = (u32)i ^ 0x80000000;\n+        shade = (int)((float)(conversion.number - lbl_80650A70) * *(float*)(transform + 0x30)) & 0x3F;\n         fn_8018168C(object_data, &point, (s16)shade, coordinate[7]);\n         *(s16*)(object_data + 0xE) = *(s16*)(self + 0x14);\n         if (fn_80180430(self + 0x24, (u8)i) != 0)\n@@ -72,23 +77,22 @@\n                 color += 4;\n             }\n         }\n-        *(u32*)scratch = *(u32*)(object_data + 0xA);\n-        scratch[2] = *(u16*)(object_data + 0xE);\n+        *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);\n+        lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);\n         coordinate++;\n         object_data += 0x38;\n-        scratch += 3;\n     }\n     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);\n     fn_80211A48(transform + 0x60, transform + 0x6C, transform + 0x60);\n     {\n         float value = *(float*)(transform + 0x68);\n-        if (value < 0.0f) value = -value;\n-        if (value > 1.0f) *(float*)(transform + 0x68) = *(float*)(transform + 0x74);\n+        if (value < lbl_80650A68) value = -value;\n+        if (value > lbl_80650AB4) *(float*)(transform + 0x68) = *(float*)(transform + 0x74);\n     }\n     {\n         float value = *(float*)(transform + 0x68);\n-        if (value < 0.0f) value = -value;\n-        fn_80211380(transform + 0x78, transform + 0x60, 0.5f * value);\n+        if (value < lbl_80650A68) value = -value;\n+        fn_80211380(transform + 0x78, transform + 0x60, lbl_80650AB8 * value);\n     }\n     DCFlushRange(vertex_data, vertex_size);\n     DCFlushRange(index_data, index_size);\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-t",
+            "commands",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018DE9C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018DE9C.d build/GEDE01/src/game/game_fn_8018DE9C.d\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018DE9C.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-explicit_conversion-canonical.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-explicit_conversion-canonical.json\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-c",
+            "functionRelocDiffs=all",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-explicit_conversion-strict.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-explicit_conversion-strict.json\n"
+        }
+      ],
+      "canonical": {
+        "match_percent": 88.013985,
+        "target_size": "572",
+        "generated_size": "560",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-explicit_conversion-canonical.json"
+      },
+      "strict": {
+        "match_percent": 88.013985,
+        "target_size": "572",
+        "generated_size": "560",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-explicit_conversion-strict.json"
+      }
+    },
+    {
+      "variant": "const_named_floats",
+      "source_diff": "--- src/game/game_fn_8018DE9C.c (base)\n+++ src/game/game_fn_8018DE9C.c (const_named_floats)\n@@ -2,6 +2,9 @@\n typedef unsigned short u16;\n typedef signed short s16;\n typedef unsigned int u32;\n+extern const float lbl_80650A68;\n+extern const float lbl_80650AB4;\n+extern const float lbl_80650AB8;\n extern u8 lbl_80607120[];\n extern s16 lbl_80607900[];\n extern int lbl_8064D738;\n@@ -25,7 +28,6 @@\n     register u8* transform;\n     u8* self;\n     u16* coordinate;\n-    s16* scratch;\n     int i;\n     u8 count;\n     u16 vertex_size;\n@@ -52,7 +54,6 @@\n     }\n     object_data = *(u8**)(self + 0x4C);\n     color = color_data;\n-    scratch = lbl_80607900;\n     coordinate = (u16*)transform;\n     i = 0;\n     for (; i < count; i++) {\n@@ -72,23 +73,22 @@\n                 color += 4;\n             }\n         }\n-        *(u32*)scratch = *(u32*)(object_data + 0xA);\n-        scratch[2] = *(u16*)(object_data + 0xE);\n+        *(u32*)&lbl_80607900[i * 3] = *(u32*)(object_data + 0xA);\n+        lbl_80607900[i * 3 + 2] = *(u16*)(object_data + 0xE);\n         coordinate++;\n         object_data += 0x38;\n-        scratch += 3;\n     }\n     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);\n     fn_80211A48(transform + 0x60, transform + 0x6C, transform + 0x60);\n     {\n         float value = *(float*)(transform + 0x68);\n-        if (value < 0.0f) value = -value;\n-        if (value > 1.0f) *(float*)(transform + 0x68) = *(float*)(transform + 0x74);\n+        if (value < lbl_80650A68) value = -value;\n+        if (value > lbl_80650AB4) *(float*)(transform + 0x68) = *(float*)(transform + 0x74);\n     }\n     {\n         float value = *(float*)(transform + 0x68);\n-        if (value < 0.0f) value = -value;\n-        fn_80211380(transform + 0x78, transform + 0x60, 0.5f * value);\n+        if (value < lbl_80650A68) value = -value;\n+        fn_80211380(transform + 0x78, transform + 0x60, lbl_80650AB8 * value);\n     }\n     DCFlushRange(vertex_data, vertex_size);\n     DCFlushRange(index_data, index_size);\n",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-t",
+            "commands",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018DE9C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018DE9C.d build/GEDE01/src/game/game_fn_8018DE9C.d\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_8018DE9C.o"
+          ],
+          "returncode": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018DE9C.o\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-const_named_floats-canonical.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-const_named_floats-canonical.json\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_8018DE9C",
+            "fn_8018DE9C",
+            "-c",
+            "functionRelocDiffs=all",
+            "-o",
+            "reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-const_named_floats-strict.json",
+            "--format",
+            "json"
+          ],
+          "returncode": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-const_named_floats-strict.json\n"
+        }
+      ],
+      "canonical": {
+        "match_percent": 98.111885,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-const_named_floats-canonical.json"
+      },
+      "strict": {
+        "match_percent": 98.111885,
+        "target_size": "572",
+        "generated_size": "572",
+        "raw_output": "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73-const_named_floats-strict.json"
+      }
+    }
+  ],
+  "selected_variant": "const_named_floats"
+}

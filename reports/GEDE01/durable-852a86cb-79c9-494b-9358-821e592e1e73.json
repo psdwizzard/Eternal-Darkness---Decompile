@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "assignment_id": "852a86cb-79c9-494b-9358-821e592e1e73",
+  "attempt": 5,
+  "base_commit": "4699695f625149aaf3025d960da54524af7e33ea",
+  "target": "fn_8018DE9C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-852a86cb-79c9-494b-9358-821e592e1e73.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-852a86cb-79c9-494b-9358-821e592e1e73-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-852a86cb-79c9-494b-9358-821e592e1e73.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-852a86cb-79c9-494b-9358-821e592e1e73.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-852a86cb-79c9-494b-9358-821e592e1e73.py",
+    "eternal-darkness-decomp/reports/GEDE01/divergence-852a86cb-79c9-494b-9358-821e592e1e73.json",
+    "eternal-darkness-decomp/reports/GEDE01/constants-852a86cb-79c9-494b-9358-821e592e1e73.json",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-852a86cb-79c9-494b-9358-821e592e1e73.md"
+  ],
+  "divergence": "Improved canonical and relocation-strict objdiff from 96.18881% to 98.111885%; generated .text is now exactly 572 bytes. Indexed scratch stores eliminate the extra address-copy instruction. Named retail float symbols correct inherited 1.0f and 0.5f literals to measured 360.0f and 0.01745329238474369f. Remaining 44 instruction rows differ: 43 register-operand rows and the double-bias relocation at offset 0x70 (retail lbl_80650A70 + 0, generated @31 + 0, R_PPC_EMB_SDA21). All other 25 actual relocation entries have identical offsets, types, targets and addends. Retail object/transform/vertex/index/color/conversion-base/scratch/coordinate registers are r27/r28/r31/r30/r29/r26/r24/r25; generated uses r31/r25/r28/r27/r26/r30/r29/r24. Retained one NonMatching translation unit; canonical build and required DOL SHA-1 pass. Raw staged legal-audit output is recorded in verification evidence."
+}
