@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "assignment_id": "6fb712d2-d630-4d00-b00a-46371854d8ef",
+  "target": "fn_801952E8",
+  "unit": "main/game/game_fn_801952E8",
+  "compiler": "GC/1.3",
+  "hypothesis": {
+    "description": "Use independent source/destination pointer induction, then lexical record-pointer lifetimes, to induce retail's r3 record-base, r6 destination, and r7 count allocation instead of the preserved indexed-loop allocation.",
+    "pointer_induction_raw_output": "target 1284 bytes  base 1140 bytes  match 85.61682",
+    "lexical_lifetime_raw_output": "target 1284 bytes  base 1288 bytes  match 95.31152",
+    "result": "Both new variants regressed and were rejected; the size-exact accepted-base reconstruction was restored."
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801952E8 fn_801952E8 -o build/GEDE01/objdiff-6fb712d2-canonical.json --format json-pretty",
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-6fb712d2-canonical.json",
+    "target_size": 1284,
+    "base_size": 1284,
+    "match_percent": 95.685356,
+    "target_relocations": 12,
+    "base_relocations": 12
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801952E8 fn_801952E8 -o build/GEDE01/objdiff-6fb712d2-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_output": "INFO Writing to build/GEDE01/objdiff-6fb712d2-reloc-strict.json",
+    "target_size": 1284,
+    "base_size": 1284,
+    "match_percent": 95.685356,
+    "target_relocations": 12,
+    "base_relocations": 12,
+    "relocation_targets_and_addends": "All 12 relocation offsets, types, resolved target addresses, and addends agree. The canonical and relocation-strict JSON files are byte-identical (cmp_exit=0)."
+  },
+  "instruction_diff": {
+    "command": "python3 tools/fndiff.py game/game_fn_801952E8.c fn_801952E8",
+    "raw_output": "target 1284 bytes  base 1284 bytes  match 95.685356",
+    "divergence": "Populate loop 0x0204-0x03c8: retail reloads record base into r3, forms record+0x38 in r6, and uses r7 as induction count; generated retains record base in r7, uses r8 as count, and folds destination offsets. Final-loop setup 0x047c-0x048c loads/forms the record cursor before mtctr/cmpwi in retail but after cmpwi in generated."
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output": "legal audit passed (19323 tracked project files inspected)",
+    "independent_translation_unit": "src/game/game_fn_801952E8.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false
+  }
+}
