@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "abedc39b-22b3-4933-a1de-49b3d4e27096",
+  "attempt": 5,
+  "base_commit": "0aba5ab1d50f57e7c054739baf644a913ff18144",
+  "target": "fn_8018AD14",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-abedc39b-22b3-4933-a1de-49b3d4e27096.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is size-exact at 412/412 bytes and 95.67961%. Retail fallback offsets 0xe0-0xf0 emit li r20, lis r3 fn_8018D020@ha, lwz r21, mr r23,r20, then addi r22 fn_8018D020@l; generated emits lis r3, lwz r22, addi r23, li r20, li r21. Thus instruction scheduling, saved-register allocation, zero-copy selection, and callback relocation placement remain divergent, while relocation targets and addends agree. The distinct hypothesis of narrowing the first loop's inner j index to its actual loop body regressed to 94.951454% at the same 412/412 bytes, showing that scope changes the saved-register interference graph but not toward retail; it was discarded and the strongest honest C reconstruction retained. python3 configure.py and .tools/bin/ninja -j2 completed successfully; build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f; python3 tools/legal_audit.py passed with 19378 tracked project files inspected."
+}
