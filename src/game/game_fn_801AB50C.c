@@ -40,13 +40,14 @@ extern float lbl_80650E74;
 extern void fn_801B05B0(int, int);
 extern void fn_801AB048(Record*);
 extern Record* fn_801AB2EC(void);
-extern int fn_801B0B64();
-extern int fn_8011F130(void*);
-extern void fn_801AAE68(int, unsigned char, int, int, float, int, int, int,
-                       unsigned short, int);
+extern int fn_801B0B64(void*, int);
+extern void* fn_8011F130(void*);
+extern int fn_801AAE68(unsigned short, unsigned char, unsigned char, float,
+                       Vec3*, signed char, unsigned char, unsigned char,
+                       unsigned short, unsigned int);
 extern int fn_80048688(void);
 extern SecondaryRecord* fn_8015C28C(int);
-extern int fn_800486E8(void);
+extern unsigned short fn_800486E8(void);
 extern int fn_801AF85C(int);
 extern Record* fn_801AB3CC(void);
 extern void fn_801B0BB4(int, Vec3*);
@@ -55,7 +56,7 @@ extern int fn_801B05E8(unsigned short, int, int, int, Vec3*, unsigned char,
                       int, int);
 extern void fn_801B097C(int, int, int);
 extern void fn_801B09F0(int, unsigned char);
-extern int fn_801C9078(void);
+extern int fn_801C9078(void*);
 
 void fn_801AB50C(Record* record)
 {
@@ -96,10 +97,11 @@ void fn_801AB50C(Record* record)
             break;
         case 5:
             if (record->timer != 0) {
-                int limit = record->initial_volume;
-                int value = record->target_volume + limit / record->timer;
-                limit = limit >= value ? value : limit;
-                record->target_volume = limit;
+                record->target_volume = (unsigned char)(
+                    record->initial_volume <
+                            record->target_volume + record->initial_volume / record->timer
+                        ? record->initial_volume
+                        : record->target_volume + record->initial_volume / record->timer);
                 record->timer--;
             } else {
                 record->target_volume = record->initial_volume;
@@ -111,12 +113,12 @@ void fn_801AB50C(Record* record)
                 if (record->handle != -1) {
                     switch (record->id) {
                     case 0x17:
-                        if (fn_801B0B64(0) > 0x1A0298) {
-                            if (lbl_8064D2EC == 0 && record->target_volume != 0) {
-                                unsigned int volume = record->target_volume;
-                                int source = fn_8011F130(lbl_8064C4E4);
+                        if (fn_801B0B64(0, record->handle) > 0x1A0298) {
+                            unsigned int volume;
+                            if (lbl_8064D2EC == 0 && (volume = record->target_volume) != 0) {
+                                Vec3* source = fn_8011F130(lbl_8064C4E4);
                                 fn_801AAE68(0x266, volume > 0x7F ? 0x7F : volume,
-                                           0, source, lbl_80650E74, 2, 1, 0,
+                                           0, lbl_80650E74, source, 2, 1, 0,
                                            (unsigned short)lbl_8064D18C, 0);
                                 lbl_8064D2EC = 1;
                             }
@@ -125,23 +127,25 @@ void fn_801AB50C(Record* record)
                         }
                         break;
                     case 0x1E6:
-                        if (fn_80048688() != 0 &&
-                            fn_801B0B64(0, record->handle) > 0x26FC78) {
+                        if (fn_80048688() == 0)
+                            break;
+                        if (fn_801B0B64(0, record->handle) > 0x26FC78) {
                             if (lbl_8064D2E0 == 0) {
                                 SecondaryRecord* other = fn_8015C28C(2);
                                 unsigned int a = other->active;
                                 unsigned int b = record->target_volume;
                                 if (a != 0 || b != 0) {
-                                    int sound = fn_800486E8();
-                                    int source = fn_8011F130(lbl_8064C4E4);
+                                    unsigned short sound = fn_800486E8();
+                                    Vec3* source = fn_8011F130(lbl_8064C4E4);
                                     int av = a + 0x1E;
                                     if (av > 0x7F) av = 0x7F;
-                                    if (b > 0x7F) b = 0x7F;
-                                    fn_801AAE68(sound, (unsigned char)av, 0, source,
-                                               lbl_80650E74, 2, 1, 0,
+                                    av = (unsigned char)av;
+                                    a = b > 0x7F ? 0x7F : b;
+                                    fn_801AAE68(sound, (unsigned char)av, 0, lbl_80650E74,
+                                               source, 2, 1, 0,
                                                (unsigned short)lbl_8064D18C, 0);
-                                    fn_801AAE68(0x267, b, 0,
-                                               source, lbl_80650E74, 2, 1, 0,
+                                    fn_801AAE68(0x267, a, 0,
+                                               lbl_80650E74, source, 2, 1, 0,
                                                (unsigned short)lbl_8064D18C, 0);
                                     lbl_8064D2E0 = 1;
                                 }
@@ -151,12 +155,12 @@ void fn_801AB50C(Record* record)
                         }
                         break;
                     case 0x1EA:
-                        if (fn_801B0B64(0) > 0x2AD6DE) {
-                            if (lbl_8064D2E4 == 0 && record->target_volume != 0) {
-                                unsigned int volume = record->target_volume;
-                                int source = fn_8011F130(lbl_8064C4E4);
+                        if (fn_801B0B64(0, record->handle) > 0x2AD6DE) {
+                            unsigned int volume;
+                            if (lbl_8064D2E4 == 0 && (volume = record->target_volume) != 0) {
+                                Vec3* source = fn_8011F130(lbl_8064C4E4);
                                 fn_801AAE68(0x266, volume > 0x7F ? 0x7F : volume,
-                                           0, source, lbl_80650E74, 2, 1, 0,
+                                           0, lbl_80650E74, source, 2, 1, 0,
                                            (unsigned short)lbl_8064D18C, 0);
                                 lbl_8064D2E4 = 1;
                             }
@@ -165,12 +169,12 @@ void fn_801AB50C(Record* record)
                         }
                         break;
                     case 0x1EB:
-                        if (fn_801B0B64(0) > 0x2AD6DE) {
-                            if (lbl_8064D2E8 == 0 && record->target_volume != 0) {
-                                unsigned int volume = record->target_volume;
-                                int source = fn_8011F130(lbl_8064C4E4);
+                        if (fn_801B0B64(0, record->handle) > 0x2AD6DE) {
+                            unsigned int volume;
+                            if (lbl_8064D2E8 == 0 && (volume = record->target_volume) != 0) {
+                                Vec3* source = fn_8011F130(lbl_8064C4E4);
                                 fn_801AAE68(0x266, volume > 0x7F ? 0x7F : volume,
-                                           0, source, lbl_80650E74, 2, 1, 0,
+                                           0, lbl_80650E74, source, 2, 1, 0,
                                            (unsigned short)lbl_8064D18C, 0);
                                 lbl_8064D2E8 = 1;
                             }
@@ -231,7 +235,7 @@ void fn_801AB50C(Record* record)
         case 1:
             break;
         case 2:
-            if (fn_801C9078() == 0)
+            if ((unsigned int)fn_801C9078(record) == 0)
                 fn_801AB048(record);
             break;
         case 3:
@@ -251,12 +255,12 @@ void fn_801AB50C(Record* record)
             if (record->timer != 0) {
                 if (record->initial_aux != 0) {
                     int value = record->current_volume + record->initial_aux / record->timer;
-                    if (record->initial_aux < value) value = record->initial_aux;
+                    value = record->initial_aux < value ? record->initial_aux : value;
                     record->current_volume = (unsigned char)value;
                 }
                 if (record->target_aux != 0) {
                     int value = record->current_aux + record->target_aux / record->timer;
-                    if (record->target_aux < value) value = record->target_aux;
+                    value = record->target_aux < value ? record->target_aux : value;
                     record->current_aux = (unsigned char)value;
                 }
                 record->timer--;
