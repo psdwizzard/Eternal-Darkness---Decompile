@@ -1,0 +1,60 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_801EFA68.c
++++ b/eternal-darkness-decomp/src/game/game_fn_801EFA68.c
+@@ -48,7 +48,7 @@
+ extern void OSInit(void);
+ extern void DVDInit(void);
+ extern void OSSetErrorHandler(int, void*);
+-extern void fn_8015DAB0(char*, int, u32);
++extern void fn_8015DAB0(void*);
+ extern void fn_80215D2C(int);
+ extern void fn_801EF788(void);
+ extern void fn_80216EAC(void);
+@@ -89,13 +89,14 @@
+ extern void fn_80145004(void);
+ extern void fn_801EF400(void);
+ 
+-void fn_801EFA68(DisplayConfig* config, int mode)
++void fn_801EFA68(DisplayConfig* config)
+ {
+     void* arenaLo;
+     void* arenaHi;
+     void* newLo;
+     u16 height;
+     u16 width;
++    u32 framebufferSize;
+     DisplayState* state = &lbl_8064D71C;
+     char* label = lbl_802FC2C0;
+     u32 initialValue = lbl_80651358;
+@@ -104,7 +105,7 @@
+     U16ToDouble heightValue;
+     U16ToDouble widthValue;
+ 
+-    fn_8015DAB0(label, mode, initialValue);
++    fn_8015DAB0(label);
+     OSInit();
+     DVDInit();
+     fn_80215D2C(1);
+@@ -125,10 +126,11 @@
+     memset(arenaLo, 0, (u8*)arenaHi - (u8*)arenaLo);
+     height = lbl_8064C38C->height;
+     width = lbl_8064C38C->width;
++    framebufferSize = ((u16)((width + 15) & ~15) * height) << 1;
+     state->field_0 = lbl_802662C0;
+     state->field_4 = (void*)(((u32)arenaLo + 31) & ~31);
+     OSSetArenaLo((void*)(((u32)state->field_4 +
+-        ((((width + 15) & ~15) * height) << 1) + 31) & ~31));
++        framebufferSize + 31) & ~31));
+ 
+     newLo = OSGetArenaLo();
+     arenaHi = OSGetArenaHi();
+@@ -152,9 +154,9 @@
+     lbl_8064D6D8 = 0;
+ 
+     widthValue.words.high = 0x43300000;
++    heightValue.words.low = lbl_8064C38C->height;
+     widthValue.words.low = lbl_8064C38C->width;
+     heightValue.words.high = 0x43300000;
+-    heightValue.words.low = lbl_8064C38C->height;
+     fn_8022B94C(lbl_80651348, lbl_80651348,
+                 (float)(widthValue.value - lbl_80651350),
+                 (float)(heightValue.value - lbl_80651350), lbl_80651348,

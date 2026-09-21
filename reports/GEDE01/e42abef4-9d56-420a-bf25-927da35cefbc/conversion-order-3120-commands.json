@@ -1,0 +1,50 @@
+[
+  {
+    "command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_801EFA68.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801EFA68.o\n"
+  },
+  {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_801EFA68",
+      "fn_801EFA68",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3120-canonical.json"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": " INFO Writing to reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3120-canonical.json\n"
+  },
+  {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_801EFA68",
+      "fn_801EFA68",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3120-strict.json",
+      "-c",
+      "functionRelocDiffs=all"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": " INFO Writing to reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3120-strict.json\n"
+  }
+]

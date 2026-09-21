@@ -1,0 +1,960 @@
+{
+  "assignment_id": "e42abef4-9d56-420a-bf25-927da35cefbc",
+  "target": "fn_801EFA68",
+  "best_score": 98.51542,
+  "retail_size": "908",
+  "generated_size": "916",
+  "status": "attempted",
+  "accepted_base": "a83620c53978edc11586cc4634ba9c4bfb3775f4",
+  "history": "history.json",
+  "historical_reconciliation": "128eaa5 changes reports only; its source matches the accepted base. Historical 92.92951% is an inherited assertion, not a reproduced measurement. The historical patch was not committed and is not claimed as recovered. This assignment preserves raw measurements and exact patches for every new experiment.",
+  "new_hypothesis": "The extraneous fn_8015DAB0 arguments keep r4 live. Its existing C reconstruction accepts one ResourceTable pointer; remove unused call arguments and unused mode parameter. Retail also truncates aligned width to u16 and computes framebuffer size before pointer stores. These changes match the startup and framebuffer allocation sequences.",
+  "additional_tests": "Source-level union assignment orders under unchanged GC/1.3 settings; retain order 0132. No explicit operand-narrowing rerun from attempt 4.",
+  "compiler": "GC/1.3; canonical configure.py flags, recorded in compiler-command.log",
+  "canonical_equals_strict": true,
+  "source_sha256": "1adb27e5bab1739207e536eb300aa2233e70aef2d7d3196571bae87a973fbb6c",
+  "row_counts": {
+    "DIFF_ARG_MISMATCH": 3,
+    "DIFF_REPLACE": 2,
+    "DIFF_INSERT": 2
+  },
+  "differences": [
+    {
+      "kind": "DIFF_ARG_MISMATCH",
+      "retail": {
+        "address": "480",
+        "size": 4,
+        "formatted": "stw r3, 0x14(r1)",
+        "parts": [
+          {
+            "opcode": {
+              "mnemonic": "stw",
+              "opcode": 443
+            }
+          },
+          {
+            "arg": {
+              "opaque": "r3"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "signed": "20"
+            }
+          },
+          {
+            "basic": "("
+          },
+          {
+            "arg": {
+              "opaque": "r1"
+            }
+          },
+          {
+            "basic": ")"
+          }
+        ]
+      },
+      "generated": {
+        "address": "480",
+        "size": 4,
+        "formatted": "stw r4, 0x10(r1)",
+        "parts": [
+          {
+            "opcode": {
+              "mnemonic": "stw",
+              "opcode": 443
+            }
+          },
+          {
+            "arg": {
+              "opaque": "r4"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "signed": "16"
+            }
+          },
+          {
+            "basic": "("
+          },
+          {
+            "arg": {
+              "opaque": "r1"
+            }
+          },
+          {
+            "basic": ")"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "DIFF_ARG_MISMATCH",
+      "retail": {
+        "address": "492",
+        "size": 4,
+        "formatted": "stw r4, 0x10(r1)",
+        "parts": [
+          {
+            "opcode": {
+              "mnemonic": "stw",
+              "opcode": 443
+            }
+          },
+          {
+            "arg": {
+              "opaque": "r4"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "signed": "16"
+            }
+          },
+          {
+            "basic": "("
+          },
+          {
+            "arg": {
+              "opaque": "r1"
+            }
+          },
+          {
+            "basic": ")"
+          }
+        ]
+      },
+      "generated": {
+        "address": "492",
+        "size": 4,
+        "formatted": "stw r3, 0x14(r1)",
+        "parts": [
+          {
+            "opcode": {
+              "mnemonic": "stw",
+              "opcode": 443
+            }
+          },
+          {
+            "arg": {
+              "opaque": "r3"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "signed": "20"
+            }
+          },
+          {
+            "basic": "("
+          },
+          {
+            "arg": {
+              "opaque": "r1"
+            }
+          },
+          {
+            "basic": ")"
+          }
+        ]
+      }
+    },
+    {
+      "kind": "DIFF_REPLACE",
+      "retail": {
+        "address": "508",
+        "size": 4,
+        "formatted": "fsubs f3, f0, f4",
+        "parts": [
+          {
+            "opcode": {
+              "mnemonic": "fsubs",
+              "opcode": 476
+            }
+          },
+          {
+            "arg": {
+              "opaque": "f3"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "opaque": "f0"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "opaque": "f4"
+            }
+          }
+        ]
+      },
+      "generated": {
+        "address": "508",
+        "size": 4,
+        "formatted": "fsub f3, f0, f4",
+        "parts": [
+          {
+            "opcode": {
+              "mnemonic": "fsub",
+              "opcode": 500
+            }
+          },
+          {
+            "arg": {
+              "opaque": "f3"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "opaque": "f0"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "opaque": "f4"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "DIFF_REPLACE",
+      "retail": {
+        "address": "520",
+        "size": 4,
+        "formatted": "fsubs f4, f0, f4",
+        "parts": [
+          {
+            "opcode": {
+              "mnemonic": "fsubs",
+              "opcode": 476
+            }
+          },
+          {
+            "arg": {
+              "opaque": "f4"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "opaque": "f0"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "opaque": "f4"
+            }
+          }
+        ]
+      },
+      "generated": {
+        "address": "520",
+        "size": 4,
+        "formatted": "frsp f3, f3",
+        "parts": [
+          {
+            "opcode": {
+              "mnemonic": "frsp",
+              "opcode": 497
+            }
+          },
+          {
+            "arg": {
+              "opaque": "f3"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "opaque": "f3"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "DIFF_INSERT",
+      "retail": null,
+      "generated": {
+        "address": "524",
+        "size": 4,
+        "formatted": "fsub f4, f0, f4",
+        "parts": [
+          {
+            "opcode": {
+              "mnemonic": "fsub",
+              "opcode": 500
+            }
+          },
+          {
+            "arg": {
+              "opaque": "f4"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "opaque": "f0"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "opaque": "f4"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "DIFF_INSERT",
+      "retail": null,
+      "generated": {
+        "address": "528",
+        "size": 4,
+        "formatted": "frsp f4, f4",
+        "parts": [
+          {
+            "opcode": {
+              "mnemonic": "frsp",
+              "opcode": 497
+            }
+          },
+          {
+            "arg": {
+              "opaque": "f4"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "opaque": "f4"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "DIFF_ARG_MISMATCH",
+      "retail": {
+        "address": "616",
+        "size": 4,
+        "formatted": "lfd f2, lbl_80651350@sda21",
+        "parts": [
+          {
+            "opcode": {
+              "mnemonic": "lfd",
+              "opcode": 457
+            }
+          },
+          {
+            "arg": {
+              "opaque": "f2"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "reloc": true
+            }
+          },
+          {
+            "basic": "@sda21"
+          }
+        ],
+        "relocation": {
+          "type": 109,
+          "type_name": "R_PPC_EMB_SDA21",
+          "target_symbol": 40
+        }
+      },
+      "generated": {
+        "address": "624",
+        "size": 4,
+        "formatted": "lfd f2, @22@sda21",
+        "parts": [
+          {
+            "opcode": {
+              "mnemonic": "lfd",
+              "opcode": 457
+            }
+          },
+          {
+            "arg": {
+              "opaque": "f2"
+            }
+          },
+          {
+            "separator": true
+          },
+          {
+            "arg": {
+              "reloc": true
+            }
+          },
+          {
+            "basic": "@sda21"
+          }
+        ],
+        "relocation": {
+          "type": 109,
+          "type_name": "R_PPC_EMB_SDA21",
+          "target_symbol": 3
+        }
+      }
+    }
+  ],
+  "experiments": [
+    {
+      "name": "baseline",
+      "canonical_score": 97.73568,
+      "strict_score": 97.73568,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/baseline-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/baseline-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/baseline.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/baseline-commands.json"
+    },
+    {
+      "name": "conversion-order-0132",
+      "canonical_score": 98.51542,
+      "strict_score": 98.51542,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0132-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0132-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0132.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0132-commands.json"
+    },
+    {
+      "name": "conversion-order-0213",
+      "canonical_score": 98.462555,
+      "strict_score": 98.462555,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0213-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0213-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0213.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0213-commands.json"
+    },
+    {
+      "name": "conversion-order-0231",
+      "canonical_score": 98.4185,
+      "strict_score": 98.4185,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0231-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0231-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0231.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0231-commands.json"
+    },
+    {
+      "name": "conversion-order-0312",
+      "canonical_score": 98.44934,
+      "strict_score": 98.44934,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0312-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0312-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0312.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0312-commands.json"
+    },
+    {
+      "name": "conversion-order-0321",
+      "canonical_score": 98.44934,
+      "strict_score": 98.44934,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0321-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0321-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0321.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-0321-commands.json"
+    },
+    {
+      "name": "conversion-order-1023",
+      "canonical_score": 93.81938,
+      "strict_score": 93.81938,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1023-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1023-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1023.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1023-commands.json"
+    },
+    {
+      "name": "conversion-order-1032",
+      "canonical_score": 93.85022,
+      "strict_score": 93.85022,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1032-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1032-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1032.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1032-commands.json"
+    },
+    {
+      "name": "conversion-order-1203",
+      "canonical_score": 93.81938,
+      "strict_score": 93.81938,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1203-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1203-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1203.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1203-commands.json"
+    },
+    {
+      "name": "conversion-order-1230",
+      "canonical_score": 93.81938,
+      "strict_score": 93.81938,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1230-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1230-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1230.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1230-commands.json"
+    },
+    {
+      "name": "conversion-order-1302",
+      "canonical_score": 98.30396,
+      "strict_score": 98.30396,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1302-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1302-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1302.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1302-commands.json"
+    },
+    {
+      "name": "conversion-order-1320",
+      "canonical_score": 98.30396,
+      "strict_score": 98.30396,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1320-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1320-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1320.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-1320-commands.json"
+    },
+    {
+      "name": "conversion-order-2013",
+      "canonical_score": 98.37885,
+      "strict_score": 98.37885,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2013-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2013-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2013.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2013-commands.json"
+    },
+    {
+      "name": "conversion-order-2031",
+      "canonical_score": 98.422905,
+      "strict_score": 98.422905,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2031-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2031-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2031.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2031-commands.json"
+    },
+    {
+      "name": "conversion-order-2103",
+      "canonical_score": 98.40088,
+      "strict_score": 98.40088,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2103-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2103-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2103.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2103-commands.json"
+    },
+    {
+      "name": "conversion-order-2130",
+      "canonical_score": 98.40088,
+      "strict_score": 98.40088,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2130-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2130-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2130.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2130-commands.json"
+    },
+    {
+      "name": "conversion-order-2301",
+      "canonical_score": 98.422905,
+      "strict_score": 98.422905,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2301-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2301-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2301.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2301-commands.json"
+    },
+    {
+      "name": "conversion-order-2310",
+      "canonical_score": 98.46696,
+      "strict_score": 98.46696,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2310-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2310-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2310.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-2310-commands.json"
+    },
+    {
+      "name": "conversion-order-3012",
+      "canonical_score": 93.78854,
+      "strict_score": 93.78854,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3012-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3012-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3012.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3012-commands.json"
+    },
+    {
+      "name": "conversion-order-3021",
+      "canonical_score": 93.78854,
+      "strict_score": 93.78854,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3021-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3021-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3021.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3021-commands.json"
+    },
+    {
+      "name": "conversion-order-3102",
+      "canonical_score": 98.2467,
+      "strict_score": 98.2467,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3102-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3102-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3102.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3102-commands.json"
+    },
+    {
+      "name": "conversion-order-3120",
+      "canonical_score": 98.2467,
+      "strict_score": 98.2467,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3120-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3120-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3120.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3120-commands.json"
+    },
+    {
+      "name": "conversion-order-3201",
+      "canonical_score": 93.78854,
+      "strict_score": 93.78854,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3201-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3201-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3201.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3201-commands.json"
+    },
+    {
+      "name": "conversion-order-3210",
+      "canonical_score": 93.81057,
+      "strict_score": 93.81057,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3210-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3210-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3210.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/conversion-order-3210-commands.json"
+    },
+    {
+      "name": "height-product",
+      "canonical_score": 98.0,
+      "strict_score": 98.0,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/height-product-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/height-product-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/height-product.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/height-product-commands.json"
+    },
+    {
+      "name": "layout-correct-size-after-stores",
+      "canonical_score": 98.0,
+      "strict_score": 98.0,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-after-stores-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-after-stores-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-after-stores.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-after-stores-commands.json"
+    },
+    {
+      "name": "layout-correct-size-after-stores-reversed",
+      "canonical_score": 98.022026,
+      "strict_score": 98.022026,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-after-stores-reversed-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-after-stores-reversed-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-after-stores-reversed.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-after-stores-reversed-commands.json"
+    },
+    {
+      "name": "layout-correct-size-before-stores",
+      "canonical_score": 98.462555,
+      "strict_score": 98.462555,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-before-stores-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-before-stores-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-before-stores.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-before-stores-commands.json"
+    },
+    {
+      "name": "layout-correct-size-before-stores-reversed",
+      "canonical_score": 98.26432,
+      "strict_score": 98.26432,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-before-stores-reversed-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-before-stores-reversed-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-before-stores-reversed.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-before-stores-reversed-commands.json"
+    },
+    {
+      "name": "layout-correct-size-between-stores",
+      "canonical_score": 98.0,
+      "strict_score": 98.0,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-between-stores-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-between-stores-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-between-stores.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-between-stores-commands.json"
+    },
+    {
+      "name": "layout-correct-size-between-stores-reversed",
+      "canonical_score": 98.022026,
+      "strict_score": 98.022026,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-between-stores-reversed-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-between-stores-reversed-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-between-stores-reversed.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-between-stores-reversed-commands.json"
+    },
+    {
+      "name": "layout-correct-size-pointer-locals",
+      "canonical_score": 98.462555,
+      "strict_score": 98.462555,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-pointer-locals-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-pointer-locals-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-pointer-locals.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/layout-correct-size-pointer-locals-commands.json"
+    },
+    {
+      "name": "low-word-first",
+      "canonical_score": 93.387665,
+      "strict_score": 93.387665,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/low-word-first-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/low-word-first-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/low-word-first.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/low-word-first-commands.json"
+    },
+    {
+      "name": "one-pointer-call",
+      "canonical_score": 97.77974,
+      "strict_score": 97.77974,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/one-pointer-call-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/one-pointer-call-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/one-pointer-call.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/one-pointer-call-commands.json"
+    },
+    {
+      "name": "retained",
+      "canonical_score": 98.51542,
+      "strict_score": 98.51542,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/retained-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/retained-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/retained.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/retained-commands.json"
+    },
+    {
+      "name": "size-after-stores",
+      "canonical_score": 97.95595,
+      "strict_score": 97.95595,
+      "valid_reconstruction": false,
+      "note": "Rejected: broad declaration replacement accidentally inserted fields into DisplayConfig; corrected in layout-correct-size variants.",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-after-stores-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-after-stores-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-after-stores.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-after-stores-commands.json"
+    },
+    {
+      "name": "size-after-stores-reversed",
+      "canonical_score": 97.977974,
+      "strict_score": 97.977974,
+      "valid_reconstruction": false,
+      "note": "Rejected: broad declaration replacement accidentally inserted fields into DisplayConfig; corrected in layout-correct-size variants.",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-after-stores-reversed-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-after-stores-reversed-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-after-stores-reversed.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-after-stores-reversed-commands.json"
+    },
+    {
+      "name": "size-before-stores",
+      "canonical_score": 98.4185,
+      "strict_score": 98.4185,
+      "valid_reconstruction": false,
+      "note": "Rejected: broad declaration replacement accidentally inserted fields into DisplayConfig; corrected in layout-correct-size variants.",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-before-stores-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-before-stores-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-before-stores.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-before-stores-commands.json"
+    },
+    {
+      "name": "size-before-stores-reversed",
+      "canonical_score": 98.22026,
+      "strict_score": 98.22026,
+      "valid_reconstruction": false,
+      "note": "Rejected: broad declaration replacement accidentally inserted fields into DisplayConfig; corrected in layout-correct-size variants.",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-before-stores-reversed-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-before-stores-reversed-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-before-stores-reversed.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-before-stores-reversed-commands.json"
+    },
+    {
+      "name": "size-between-stores",
+      "canonical_score": 97.95595,
+      "strict_score": 97.95595,
+      "valid_reconstruction": false,
+      "note": "Rejected: broad declaration replacement accidentally inserted fields into DisplayConfig; corrected in layout-correct-size variants.",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-between-stores-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-between-stores-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-between-stores.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-between-stores-commands.json"
+    },
+    {
+      "name": "size-between-stores-reversed",
+      "canonical_score": 97.977974,
+      "strict_score": 97.977974,
+      "valid_reconstruction": false,
+      "note": "Rejected: broad declaration replacement accidentally inserted fields into DisplayConfig; corrected in layout-correct-size variants.",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-between-stores-reversed-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-between-stores-reversed-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-between-stores-reversed.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-between-stores-reversed-commands.json"
+    },
+    {
+      "name": "size-pointer-locals",
+      "canonical_score": 98.4185,
+      "strict_score": 98.4185,
+      "valid_reconstruction": false,
+      "note": "Rejected: broad declaration replacement accidentally inserted fields into DisplayConfig; corrected in layout-correct-size variants.",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-pointer-locals-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-pointer-locals-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-pointer-locals.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/size-pointer-locals-commands.json"
+    },
+    {
+      "name": "u16-aligned-width",
+      "canonical_score": 98.0,
+      "strict_score": 98.0,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/u16-aligned-width-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/u16-aligned-width-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/u16-aligned-width.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/u16-aligned-width-commands.json"
+    },
+    {
+      "name": "width-aligned-first",
+      "canonical_score": 98.04405,
+      "strict_score": 98.04405,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/width-aligned-first-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/width-aligned-first-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/width-aligned-first.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/width-aligned-first-commands.json"
+    },
+    {
+      "name": "width-aligned-local",
+      "canonical_score": 98.04405,
+      "strict_score": 98.04405,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/width-aligned-local-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/width-aligned-local-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/width-aligned-local.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/width-aligned-local-commands.json"
+    },
+    {
+      "name": "width-first",
+      "canonical_score": 98.0,
+      "strict_score": 98.0,
+      "valid_reconstruction": true,
+      "note": "",
+      "canonical": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/width-first-canonical.json",
+      "strict": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/width-first-strict.json",
+      "patch_from_accepted_base": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/width-first.patch",
+      "commands": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/width-first-commands.json"
+    }
+  ],
+  "dol_verification": "NonMatching remains linked from the retail object, so the whole-DOL SHA-1 validates the build but does not establish a C match.",
+  "constraints": "Only assigned source and assignment reports changed. No registration or split changes needed. No compiler-policy, gate, runtime, neighboring function, or global-progress edits. No assembly or extra C translation unit retained."
+}

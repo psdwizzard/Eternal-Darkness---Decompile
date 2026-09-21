@@ -1,0 +1,40 @@
+[
+  {
+    "command": [
+      "python3",
+      "configure.py"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output_file": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/configure.log"
+  },
+  {
+    "command": [
+      ".tools/bin/ninja",
+      "-j2"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output_file": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/build.log"
+  },
+  {
+    "command": [
+      "sha1sum",
+      "build/GEDE01/main.dol"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output_file": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/sha1.log"
+  },
+  {
+    "command": [
+      ".tools/bin/ninja",
+      "-t",
+      "commands",
+      "build/GEDE01/src/game/game_fn_801EFA68.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output_file": "eternal-darkness-decomp/reports/GEDE01/e42abef4-9d56-420a-bf25-927da35cefbc/compiler-command.log"
+  }
+]
