@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "e63ca12a-5787-47f3-9400-949de513a7a4",
+  "attempt": 5,
+  "base_commit": "eda05efc3b16650966bccf7fb789a401225b0287",
+  "target": "fn_800A1AF0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e63ca12a-5787-47f3-9400-949de513a7a4.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-e63ca12a-5787-47f3-9400-949de513a7a4.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-e63ca12a-5787-47f3-9400-949de513a7a4.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-e63ca12a-5787-47f3-9400-949de513a7a4.json"
+  ],
+  "divergence": "Canonical and relocation-strict (function_reloc_diffs=name_address) objdiff remain 95.0% at 160/160 bytes. The only differing instruction words are the adjacent pair at offsets 0x44 and 0x48: retail stores stw r11,0xC(r1) before addi r7,r1,0x8; compiled GC/1.3 emits the address calculation first. All three R_PPC_REL24 relocations agree in offset, target and zero addend: 0x54 fn_8012C62C, 0x78 fn_8012F58C, 0x80 fn_8012C278. Attempt 5 tested a new individually boxed four-byte value/full-width bitfield copy-DAG hypothesis: nine local-only variants reproduce 95.0%; two all-value aggregate variants expand to 172 bytes and score 92.0%. Seven selective-volatile-input variants score 89.075% or 95.0%. The preserved 238c182f source was already present byte-for-byte on the accepted base and remains the sole honest NonMatching reconstruction. Canonical compiler settings, registration, splits and neighboring source are unchanged. Fresh configure.py and ninja -j2 succeeded; legal audit passed; DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f. As this unit remains NonMatching, that DOL verification checks baseline integration, not a successful C match."
+}
