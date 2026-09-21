@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "f4fb9fd0-4574-4a86-a8ab-ee5358f036f4",
+  "attempt": 6,
+  "base_commit": "bdd16be340554b66efc12987d07eaf45fb03e2a3",
+  "target": "fn_8006330C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f4fb9fd0-4574-4a86-a8ab-ee5358f036f4.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f4fb9fd0-4574-4a86-a8ab-ee5358f036f4-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-f4fb9fd0-4574-4a86-a8ab-ee5358f036f4.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-f4fb9fd0-4574-4a86-a8ab-ee5358f036f4.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-f4fb9fd0-4574-4a86-a8ab-ee5358f036f4-baseline.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff improve from 98.81094% to 99.84245%, with 2412 bytes on each side. Exactly 19 instruction words (34 bytes) differ, all in offsets 0x7A4..0x88C: retail holds the event pointer in r25 and the short mode in r26, while the candidate swaps those registers. The two objects have 131 actual .rela.text entries, identical in offset, type, target and addend. The switch range, ED/3A nested accessor calls, const-qualified float argument scheduling, fallback branches and event-3 mask allocation now match. Preserved as one independent NonMatching C translation unit. The canonical full DOL, which retains the retail object for this NonMatching function, verifies SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f. Assignment-specific experiments preserve exact patches, commands and raw measurements; verification preserves raw build and SHA-1 command output."
+}
