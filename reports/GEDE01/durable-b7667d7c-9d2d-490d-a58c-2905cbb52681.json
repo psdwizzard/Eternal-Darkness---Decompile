@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b7667d7c-9d2d-490d-a58c-2905cbb52681",
+  "attempt": 4,
+  "base_commit": "81d9080c0b53adb7993301459f135cb8c557eb87",
+  "target": "fn_800A1AF0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b7667d7c-9d2d-490d-a58c-2905cbb52681.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict direct objdiff are byte-identical (SHA-256 db144c1c9d6c749e4ca7cd6e9b0dc4489e9e2ef86ed18b9206dcf1119d616ea0) and measure a size-exact 160/160-byte function at 95.0%. All three R_PPC_REL24 relocations agree at offsets 0x54, 0x78, and 0x80, including the fn_8012C62C, fn_8012F58C, and fn_8012C278 targets and zero addends. The sole codegen divergence remains instruction scheduling: generated GC/1.3 materializes addi r7,r1,0x8 before stw r11,0xC(r1), while retail emits the store first. Attempt 4 tested a distinct conditional data-dependency hypothesis intended to force the second-local store before third-local address formation; it did force that dependency but retained a runtime condition, expanded the function to 176 bytes, and regressed the score to 72.525%. A nested scalar-lifetime variant and a void-return callee declaration both reproduced the retained 95.0% schedule, so the strongest honest NonMatching reconstruction was preserved unchanged. Fresh python3 configure.py and .tools/bin/ninja -j2 completed successfully, and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
