@@ -1,0 +1,364 @@
+{
+  "version": 1,
+  "assignment_id": "65cf7b32-f0ed-4147-aac5-db5b7af193e3",
+  "target": "fn_800A3E94",
+  "status": "matched",
+  "hypothesis": "The retail li r3,18 initializes an optimizer-generated remainder loop, not the original source loop. Start the empty C loop at zero and execute 19 iterations; GC/1.3 -O4,p retains the exact six-instruction remainder skeleton. Prior attempts started at 18 or wrapped a callback assignment/dispatch in a one-iteration loop.",
+  "preserved_attempts_reviewed": [
+    "9fc35838033c5141f4ac3b6c0a9eb78ba8a80018",
+    "ae6564e18049dc54f5cb5d0bbd4b6b82a005f19b",
+    "df4f186e29f65a7a71223504923385000010b71d",
+    "82d504084d16fb131ec2b405401077f2ddc25fb9"
+  ],
+  "measurements": {
+    "canonical": {
+      "retail_size": 560,
+      "candidate_size": 560,
+      "match_percent": 100.0,
+      "differing_instructions": []
+    },
+    "strict": {
+      "retail_size": 560,
+      "candidate_size": 560,
+      "match_percent": 100.0,
+      "differing_instructions": []
+    }
+  },
+  "independent_verification": {
+    "text_bytes": 560,
+    "text_equal": true,
+    "text_sha256": "2ee0511ca43eed9c6292429c9a6e330d307f7c2cefe4a75c34c488202d2a4eef",
+    "relocations_equal": true,
+    "explicit_relocations": [
+      {
+        "offset": 48,
+        "type": 109,
+        "target": "lbl_8064C940",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 176,
+        "type": 10,
+        "target": "fn_800A1E94",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 184,
+        "type": 10,
+        "target": "fn_800A2DBC",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 232,
+        "type": 10,
+        "target": "fn_800A2ED8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 244,
+        "type": 10,
+        "target": "fn_800A30F4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 254,
+        "type": 6,
+        "target": "lbl_8031D6C8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 262,
+        "type": 4,
+        "target": "lbl_8031D6C8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 272,
+        "type": 10,
+        "target": "memset",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 278,
+        "type": 6,
+        "target": "lbl_8031D6C8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 282,
+        "type": 6,
+        "target": "fn_800A1D18",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 286,
+        "type": 4,
+        "target": "lbl_8031D6C8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 290,
+        "type": 6,
+        "target": "fn_800A1D1C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 298,
+        "type": 6,
+        "target": "fn_800A2308",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 302,
+        "type": 6,
+        "target": "fn_800A2200",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 306,
+        "type": 6,
+        "target": "fn_800A2220",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 314,
+        "type": 4,
+        "target": "fn_800A1D18",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 318,
+        "type": 6,
+        "target": "fn_800A22D8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 322,
+        "type": 6,
+        "target": "fn_800A1D20",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 330,
+        "type": 6,
+        "target": "fn_800A1D24",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 338,
+        "type": 4,
+        "target": "fn_800A1D1C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 346,
+        "type": 4,
+        "target": "fn_800A2308",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 350,
+        "type": 4,
+        "target": "fn_800A2200",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 354,
+        "type": 4,
+        "target": "fn_800A2220",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 362,
+        "type": 4,
+        "target": "fn_800A22D8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 366,
+        "type": 4,
+        "target": "fn_800A1D20",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 378,
+        "type": 4,
+        "target": "fn_800A1D24",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 484,
+        "type": 10,
+        "target": "fn_800CFCD4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 496,
+        "type": 10,
+        "target": "fn_800D3B68",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "offset": 508,
+        "type": 10,
+        "target": "fn_800D67A4",
+        "target_value": 0,
+        "addend": 0
+      }
+    ],
+    "relocation_note": "Undefined ELF target values are zero in both objects; full linked DOL equality verifies resolved target addresses.",
+    "dol_equal": true,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "commands": [
+    {
+      "working_directory": "eternal-darkness-decomp",
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_outputs": [
+        "eternal-darkness-decomp/reports/GEDE01/configure-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt"
+      ]
+    },
+    {
+      "working_directory": "eternal-darkness-decomp",
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_outputs": [
+        "eternal-darkness-decomp/reports/GEDE01/build-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt"
+      ]
+    },
+    {
+      "working_directory": "eternal-darkness-decomp",
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A3E94 fn_800A3E94 -o reports/GEDE01/canonical-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.json --format json-pretty",
+      "exit_code": 0,
+      "raw_outputs": [
+        "eternal-darkness-decomp/reports/GEDE01/canonical-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.json",
+        "eternal-darkness-decomp/reports/GEDE01/canonical-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt"
+      ]
+    },
+    {
+      "working_directory": "eternal-darkness-decomp",
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A3E94 fn_800A3E94 -o reports/GEDE01/strict-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_outputs": [
+        "eternal-darkness-decomp/reports/GEDE01/strict-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.json",
+        "eternal-darkness-decomp/reports/GEDE01/strict-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt"
+      ]
+    },
+    {
+      "working_directory": "eternal-darkness-decomp",
+      "command": "readelf -Wr -Ws build/GEDE01/obj/game/game_fn_800A3E94.o",
+      "exit_code": 0,
+      "raw_outputs": [
+        "eternal-darkness-decomp/reports/GEDE01/retail-relocations-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt"
+      ]
+    },
+    {
+      "working_directory": "eternal-darkness-decomp",
+      "command": "readelf -Wr -Ws build/GEDE01/src/game/game_fn_800A3E94.o",
+      "exit_code": 0,
+      "raw_outputs": [
+        "eternal-darkness-decomp/reports/GEDE01/candidate-relocations-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt"
+      ]
+    },
+    {
+      "working_directory": "eternal-darkness-decomp",
+      "command": "python3 reports/GEDE01/verify-65cf7b32-f0ed-4147-aac5-db5b7af193e3.py",
+      "exit_code": 0,
+      "raw_outputs": [
+        "eternal-darkness-decomp/reports/GEDE01/verification-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.json"
+      ]
+    },
+    {
+      "working_directory": "eternal-darkness-decomp",
+      "command": "sha1sum -c config/GEDE01/build.sha1; sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_outputs": [
+        "eternal-darkness-decomp/reports/GEDE01/dol-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt"
+      ]
+    },
+    {
+      "working_directory": "eternal-darkness-decomp",
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_outputs": [
+        "eternal-darkness-decomp/reports/GEDE01/legal-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt"
+      ]
+    }
+  ],
+  "probe": {
+    "source_change": "Only change terminal loop initial value from 18 to 0.",
+    "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_800A3E94.o; build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A3E94 fn_800A3E94 -o reports/GEDE01/probe-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.json --format json-pretty",
+    "build_exit_code": 0,
+    "objdiff_exit_code": 0,
+    "match_percent": 100,
+    "raw_outputs": [
+      "eternal-darkness-decomp/reports/GEDE01/probe-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt",
+      "eternal-darkness-decomp/reports/GEDE01/probe-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.json"
+    ]
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "optimization": "-O4,p",
+    "policy_changed": false,
+    "registration": "Matching",
+    "translation_unit": "eternal-darkness-decomp/src/game/game_fn_800A3E94.c"
+  },
+  "scope_audit": {
+    "source_only_function": "fn_800A3E94",
+    "inline_or_whole_function_assembly": false,
+    "register_bindings": false,
+    "new_compiler_flags": false,
+    "neighbor_edits": false,
+    "global_progress_edits": false,
+    "private_inputs_or_binaries_committed": false,
+    "preexisting_unstaged_change": "CLAUDE.md was already modified at entry; left untouched and excluded from commit."
+  },
+  "reproduction_script": "eternal-darkness-decomp/reports/GEDE01/verify-65cf7b32-f0ed-4147-aac5-db5b7af193e3.py",
+  "divergence": "",
+  "raw_artifact_sha256": {
+    "eternal-darkness-decomp/reports/GEDE01/build-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt": "0e4da2839193cae272a9f0b1d5fb8f424fd200cdf22ba5ba007e48da2fa97a18",
+    "eternal-darkness-decomp/reports/GEDE01/candidate-relocations-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt": "66df984eac463a20dd21872e157d8fd526c30395da1f77c4f584d94692ca2b86",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.json": "997a5de9912a3e3e269e4c4b2abc5016feb400b6b02a17724dca8fa2d12ac151",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt": "11dca5d269fa383249360d7a4feaf2353b89463bf6e79796d9092983e46ebcc5",
+    "eternal-darkness-decomp/reports/GEDE01/configure-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "eternal-darkness-decomp/reports/GEDE01/dol-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt": "1e1b9ee2ac5f7116243bc41563764744fd16f21e6877abe7a21b6230beefc57c",
+    "eternal-darkness-decomp/reports/GEDE01/legal-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt": "e3d8850c98fe4b0eac41812f55f06fac39e0e4f53017a8b705cbd9c48491374c",
+    "eternal-darkness-decomp/reports/GEDE01/probe-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.json": "997a5de9912a3e3e269e4c4b2abc5016feb400b6b02a17724dca8fa2d12ac151",
+    "eternal-darkness-decomp/reports/GEDE01/probe-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt": "a29cc3e482d44ca98ade250050d94e419d5c8bab513a89d8d3a45e6dc7b4a93a",
+    "eternal-darkness-decomp/reports/GEDE01/retail-relocations-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt": "fc648957892fdfaba276070bc6891a9611b538dce9fe469e15d801ea0411ea21",
+    "eternal-darkness-decomp/reports/GEDE01/strict-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.json": "997a5de9912a3e3e269e4c4b2abc5016feb400b6b02a17724dca8fa2d12ac151",
+    "eternal-darkness-decomp/reports/GEDE01/strict-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.txt": "268871af568bcfe961e0702f7649c6d18913eaa60d2bf7c7018b62ebbaaeed6a",
+    "eternal-darkness-decomp/reports/GEDE01/verification-65cf7b32-f0ed-4147-aac5-db5b7af193e3.raw.json": "0cbf4ce3701d373f9ca6d83e89b980395dec3549dc83f724f470dce43d797f48",
+    "eternal-darkness-decomp/reports/GEDE01/verify-65cf7b32-f0ed-4147-aac5-db5b7af193e3.py": "3091340f3476fb5db1cbd60b523626e040108ae91ba30a10fb6be65adf0e0ca4"
+  },
+  "raw_output_preservation": "Complete outputs retained without filtering, including linker warnings, CRLF, and readelf trailing spaces. Whitespace check warnings occur only in those raw logs."
+}

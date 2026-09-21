@@ -64,10 +64,7 @@ extern void fn_800D3B68(Object800A3E94*);
 extern void fn_800D67A4(Object800A3E94*);
 
 /*
- * Behavior-complete reconstruction of the game-state object initializer and
- * callback-table setup. Objdiff evidence records the remaining compiler-
- * retained terminal-loop difference; no inline assembly or register binding
- * is used.
+ * Game-state object initializer and callback-table setup.
  */
 void fn_800A3E94(Object800A3E94* object, int kind)
 {
@@ -133,7 +130,11 @@ void fn_800A3E94(Object800A3E94* object, int kind)
         break;
     }
 
-    for (i = 18; i < 19;) {
+    /* The empty 19-iteration loop is intentional: GC/1.3 removes the
+     * unrolled iterations but retains a CTR remainder loop starting at 18.
+     * Starting the C loop at 18 instead removes it entirely.
+     */
+    for (i = 0; i < 19;) {
         i++;
     }
 }
