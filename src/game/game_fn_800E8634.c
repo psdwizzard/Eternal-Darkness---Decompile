@@ -14,9 +14,8 @@ extern void fn_80201D14(void *, int);
 
 int fn_800E8634(void *callback, void *object)
 {
-    int handle;
+    int handle = fn_80201B54(object);
 
-    handle = fn_80201B54(object);
     if (lbl_8064D18C != fn_80201EB8(object)) {
         fn_802006D4(handle, handle, 1, 18, 0);
         fn_80201138(18, object, 1, 57, 0, lbl_8064F7EC);
