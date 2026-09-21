@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "bd76bf91-1461-4346-a089-d3b1c99a3752",
+  "attempt": 5,
+  "base_commit": "375837a1303256e8ce4ca40c422f59b19c7065d5",
+  "target": "fn_801BEC38",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bd76bf91-1461-4346-a089-d3b1c99a3752.json"
+  ],
+  "divergence": "Canonical and explicit relocation-strict objdiff both measure 95.39007%: retail is 564 bytes/141 instructions versus generated 552 bytes/138 instructions. All 17 relocation type/target/addend tuples agree. GC/1.2.5n allocates selected/offset/id as generated r30/r29/r31 instead of retail r31/r30/r29, colors the destination voice directly into r3 instead of retail r5, and omits retail's command-path mr r4,r31 plus both mr r3,r5 call-argument copies; generated frame is 40 bytes instead of retail 48 bytes. The distinct byte-cursor recurrence hypothesis regressed to 93.049644% (544 bytes/136 instructions) and was reverted."
+}

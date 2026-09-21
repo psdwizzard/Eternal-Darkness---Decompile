@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "assignment_id": "bd76bf91-1461-4346-a089-d3b1c99a3752",
+  "target": "fn_801BEC38",
+  "compiler": "GC/1.2.5n",
+  "preserved_attempts_reviewed": [
+    "1f24fb839e78a426ce4333b6b9249c264015eef1",
+    "fbc1ff65dab688c663c7cd3f7050f1f5a5e58e3e",
+    "f61cd4ed7c31c1d5ab697e3511d9951243283c1a",
+    "4f68cdd612214e23227e7d44caadfa7f5d9a66a5"
+  ],
+  "experiment": {
+    "hypothesis": "Retail may express the voice scan as a byte-pointer cursor recurrence rather than an integer byte offset. Keeping the cursor live across calls could change MWCC's nonvolatile interference graph and rotate selected/loop/id into retail r31/r30/r29 while materializing the destination voice separately.",
+    "source_patch": "@@ declarations\n-    u32 offset;\n+    u8* cursor;\n@@ scan initialization\n-            offset = 0;\n+            cursor = (u8*)lbl_8064D3D0;\n@@ scan body\n-                voice = (Voice*)((u8*)lbl_8064D3D0 + offset);\n+                voice = (Voice*)cursor;\n@@ induction\n-                offset += 0x404;\n+                cursor += 0x404;",
+    "commands": [
+      ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801BEC38.o",
+      "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801BEC38 -o build/GEDE01/bd76bf91-cursor-canonical.json --format json-pretty fn_801BEC38",
+      "jq -r '.left.symbols[]?,.right.symbols[]? | select(.name==\"fn_801BEC38\") | [.size,.match_percent] | @tsv' build/GEDE01/bd76bf91-cursor-canonical.json"
+    ],
+    "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801BEC38.o\n",
+    "raw_objdiff_output": " INFO Writing to build/GEDE01/bd76bf91-cursor-canonical.json\n564\t93.049644\n544\t93.049644\n",
+    "raw_report_sha256": "9dfe944b30a7b0dcc5559b65b0c310b345e334b5524f731e277a3e63ff357f1e",
+    "result": "Regression: generated code shrank from 552 bytes/138 instructions to 544 bytes/136 instructions and scored 93.049644%. It retained the wrong selected/id coloring and additionally hoisted lbl_8064D3D0 into r29, so the variant was reverted."
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801BEC38 -o build/GEDE01/bd76bf91-final-canonical.json --format json-pretty fn_801BEC38",
+    "raw_command_output": " INFO Writing to build/GEDE01/bd76bf91-final-canonical.json\n",
+    "raw_measure_command": "jq -r '.left.symbols[]?,.right.symbols[]? | select(.name==\"fn_801BEC38\") | [.size,.match_percent,([.instructions[]|select(.instruction != null)]|length)] | @tsv' build/GEDE01/bd76bf91-final-canonical.json",
+    "raw_measure_output": "564\t95.39007\t141\n552\t95.39007\t138\n",
+    "raw_report_sha256": "d1a6135dc2fdfa0da243fc51dea7862c1a46adde231641cc96c5c23f069986a2"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801BEC38.o -2 build/GEDE01/src/game/game_fn_801BEC38.o -o build/GEDE01/bd76bf91-final-reloc-strict.json --format json-pretty fn_801BEC38",
+    "raw_command_output": " INFO Writing to build/GEDE01/bd76bf91-final-reloc-strict.json\n",
+    "raw_measure_command": "jq -r '.left.symbols[]?,.right.symbols[]? | select(.name==\"fn_801BEC38\") | [.size,.match_percent,([.instructions[]|select(.instruction != null)]|length)] | @tsv' build/GEDE01/bd76bf91-final-reloc-strict.json",
+    "raw_measure_output": "564\t95.39007\t141\n552\t95.39007\t138\n",
+    "raw_report_sha256": "d1a6135dc2fdfa0da243fc51dea7862c1a46adde231641cc96c5c23f069986a2",
+    "canonical_report_byte_comparison": "cmp exit 0"
+  },
+  "relocations": {
+    "retail_count": 17,
+    "generated_count": 17,
+    "type_target_addend_equal": true,
+    "retail_sequence": [
+      "R_PPC_ADDR16_HA:lbl_8061A504:0",
+      "R_PPC_ADDR16_LO:lbl_8061A504:0",
+      "R_PPC_NONE:lbl_8061A504:0",
+      "R_PPC_ADDR16_HA:lbl_80619C20:0",
+      "R_PPC_ADDR16_LO:lbl_80619C20:0",
+      "R_PPC_EMB_SDA21:lbl_8064D3D0:0",
+      "R_PPC_REL24:fn_801C14D0:0",
+      "R_PPC_EMB_SDA21:lbl_8064D3D0:0",
+      "R_PPC_REL24:fn_801C09C4:0",
+      "R_PPC_NONE:lbl_80619C20:528",
+      "R_PPC_EMB_SDA21:lbl_8064D3D4:0",
+      "R_PPC_ADDR16_HA:lbl_8061A504:0",
+      "R_PPC_ADDR16_LO:lbl_8061A504:0",
+      "R_PPC_NONE:lbl_8061A504:0",
+      "R_PPC_REL24:fn_801C14D0:0",
+      "R_PPC_EMB_SDA21:lbl_8064D3D0:0",
+      "R_PPC_REL24:fn_801C09C4:0"
+    ],
+    "generated_sequence": [
+      "R_PPC_ADDR16_HA:lbl_8061A504:0",
+      "R_PPC_ADDR16_LO:lbl_8061A504:0",
+      "R_PPC_NONE:lbl_8061A504:0",
+      "R_PPC_ADDR16_HA:lbl_80619C20:0",
+      "R_PPC_ADDR16_LO:lbl_80619C20:0",
+      "R_PPC_EMB_SDA21:lbl_8064D3D0:0",
+      "R_PPC_REL24:fn_801C14D0:0",
+      "R_PPC_EMB_SDA21:lbl_8064D3D0:0",
+      "R_PPC_REL24:fn_801C09C4:0",
+      "R_PPC_NONE:lbl_80619C20:528",
+      "R_PPC_EMB_SDA21:lbl_8064D3D4:0",
+      "R_PPC_ADDR16_HA:lbl_8061A504:0",
+      "R_PPC_ADDR16_LO:lbl_8061A504:0",
+      "R_PPC_NONE:lbl_8061A504:0",
+      "R_PPC_REL24:fn_801C14D0:0",
+      "R_PPC_EMB_SDA21:lbl_8064D3D0:0",
+      "R_PPC_REL24:fn_801C09C4:0"
+    ]
+  },
+  "build_verification": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+    ],
+    "raw_build_output_tail": "[896/898] DOL build/GEDE01/main.dol\n[897/898] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[898/898] PROGRESS\nProgress:\n  All: 58.16% fuzzy, 48.14% matched, 48.11% linked (6277 / 7068 files)\n    Code: 1107464 / 2300692 bytes (6043 / 8214 functions)\n    Data: 39594 / 4305642 bytes (0.92%)\n  Game Code: 93.67% fuzzy, 77.50% matched, 77.45% linked (6259 / 6633 files)\n    Code: 1104436 / 1425104 bytes (5981 / 6354 functions)\n    Data: 39370 / 40426 bytes (97.39%)\n  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\n    Code: 3028 / 3028 bytes (62 / 62 functions)\n    Data: 224 / 224 bytes (100.00%)\n",
+    "raw_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\n"
+  },
+  "best": {
+    "match_percent": 95.39007,
+    "retail_bytes": 564,
+    "generated_bytes": 552,
+    "retail_instructions": 141,
+    "generated_instructions": 138,
+    "divergence": "GC/1.2.5n allocates selected/offset/id as generated r30/r29/r31 instead of retail r31/r30/r29, colors the destination voice directly into r3 instead of retail r5, and omits retail's command-path mr r4,r31 plus both mr r3,r5 call-argument copies. Generated frame is 40 bytes instead of retail 48 bytes."
+  }
+}
