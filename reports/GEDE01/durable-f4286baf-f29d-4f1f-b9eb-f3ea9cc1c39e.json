@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f4286baf-f29d-4f1f-b9eb-f3ea9cc1c39e",
+  "attempt": 4,
+  "base_commit": "4c1008cbdda704ec21a8cc953259774f871eb367",
+  "target": "fn_8006B96C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f4286baf-f29d-4f1f-b9eb-f3ea9cc1c39e.json"
+  ],
+  "divergence": "Relocation-strict objdiff is 96.47619% with exact 840/840-byte text and 32/32 instruction relocations. Remaining code differences include a saved-register permutation (retail event/count/result/requirements/events/condition/index use r26/r31/r30/r29/r28/r27/r25; generated uses r31/r29/r28/r27/r26/r25/r30), requirements-base scheduling (retail addi at 0x170 inside the matched-event path; generated addi at 0x158 before the loop), the resulting mode-4 bdnz target difference (retail 0x160; generated 0x164), and retail addi r28,r5,0 versus generated mr r26,r5 at 0x230. The distinct index-only/delayed-requirements hypothesis restored the 0x160 loop target but emitted add plus displacement-lwz instead of addi plus lwzx and scored 96.45238%, so it was rejected in favor of the stronger preserved reconstruction."
+}
