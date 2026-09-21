@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "46adb979-4f01-4183-bf10-b4045bdaed2b",
+  "attempt": 3,
+  "base_commit": "50a95ae5832cc9d0dfdcfbeaa1fec239a0a24723",
+  "target": "fn_801F0CB0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-46adb979-4f01-4183-bf10-b4045bdaed2b.json"
+  ],
+  "divergence": "Best canonical and relocation-strict score is 95.844444%, improved from 95.28889%; retail and GC/1.3 are both 900 bytes. The retained direct-indexed record-array spelling restores retail's separate +0x658 base materialization and all five zero-offset record stores, but GC/1.3 emits addi r4/base then slwi r3/index where retail emits slwi r4/index then addi r3/base. The initial emitter-address construction remains differently scheduled and allocated. The three conversion-double relocations now strictly target retail lbl_80651360 and lbl_80651350. The canonical build passes DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

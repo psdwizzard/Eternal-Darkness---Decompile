@@ -44,10 +44,9 @@ extern void fn_80227C08(void*, s32);
 
 #pragma use_lmw_stmw on
 
-/* NonMatching: behavior-complete reconstruction. GC/1.3 emits 896 bytes
- * instead of retail's 900: it reschedules the initial emitter address, folds
- * the record-base addend into its stores, and owns the signed/unsigned
- * conversion doubles in this TU. */
+/* NonMatching: behavior-complete, size-exact reconstruction. GC/1.3 still
+ * reschedules the initial emitter address and reverses the two record-address
+ * temporaries. The conversion-bias constants are externalized after compile. */
 void fn_801F0CB0(u8* source, Vec3* target, void* owner, s32 index, u8 mode,
                  Vec3* color, u8* attributes)
 {
@@ -104,7 +103,7 @@ void fn_801F0CB0(u8* source, Vec3* target, void* owner, s32 index, u8 mode,
     } else {
         Vec3 basis = lbl_8023B798;
         Vec3 cross;
-        AimRecord* record;
+        AimRecord* records;
 
         direction.x = target->x - *(float*)(source + 0);
         direction.y = target->y - *(float*)(source + 4);
@@ -121,10 +120,10 @@ void fn_801F0CB0(u8* source, Vec3* target, void* owner, s32 index, u8 mode,
             fn_80227BE0(emitter, &value);
         }
         fn_80211BA0(&transformed, &basis, &cross);
-        record = &((AimRecord*)(base + 0x658))[index];
-        record->direction = cross;
-        record->distance = red;
-        record->owner = owner;
+        records = (AimRecord*)(base + 0x658);
+        records[index].direction = cross;
+        records[index].distance = red;
+        records[index].owner = owner;
         fn_80227B0C(emitter, transformed.x, transformed.y, transformed.z);
         fn_80227874(emitter, lbl_80651348, lbl_80651348,
                     lbl_8065134C, lbl_806513AC,
