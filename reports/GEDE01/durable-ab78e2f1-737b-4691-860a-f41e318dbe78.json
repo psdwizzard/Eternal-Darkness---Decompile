@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "assignment_id": "ab78e2f1-737b-4691-860a-f41e318dbe78",
+  "attempt": 6,
+  "base_commit": "eafc68db3d6f71db1fe25482023bd1f6f3bb2aa6",
+  "target": "fn_8018D998",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ab78e2f1-737b-4691-860a-f41e318dbe78.json",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-ab78e2f1-737b-4691-860a-f41e318dbe78.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-ab78e2f1-737b-4691-860a-f41e318dbe78.log",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-ab78e2f1-737b-4691-860a-f41e318dbe78.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-ab78e2f1-737b-4691-860a-f41e318dbe78.json",
+    "eternal-darkness-decomp/reports/GEDE01/baseline-ab78e2f1-737b-4691-860a-f41e318dbe78.json",
+    "eternal-darkness-decomp/reports/GEDE01/analysis-ab78e2f1-737b-4691-860a-f41e318dbe78.md"
+  ],
+  "divergence": "Canonical and relocation-strict (function_reloc_diffs=name_address) objdiff both measure 98.12884%, size-exact at 652/652 bytes. There are 51 differing instruction rows: 50 register-argument differences and one relocation-target difference at text offset 0x74 (R_PPC_EMB_SDA21): retail lbl_80650A70 + 0, generated @36 + 0. Generated object/transform/vertex/index/color/scratch/coordinate/conversion-high registers are r31/r25/r28/r27/r26/r29/r24/r30, versus retail r27/r28/r31/r30/r29/r24/r25/r26. Actual ELF .rela.text has 27 entries on each side: 26 agree in offset/type/target/addend; the bias symbol differs. Objdiff displays 34 relocation-bearing instruction rows including inferred references; that is not 34 equal ELF relocations. The source remains NonMatching. Full canonical build and legal audit pass; main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f, using retail code for this NonMatching TU."
+}

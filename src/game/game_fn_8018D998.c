@@ -3,6 +3,10 @@ typedef unsigned short u16;
 typedef signed short s16;
 typedef unsigned int u32;
 
+extern float lbl_80650A68;
+extern float lbl_80650AB4;
+extern float lbl_80650AB8;
+
 extern u8 lbl_80607120[];
 extern s16 lbl_80607900[];
 extern int lbl_8064D738;
@@ -28,7 +32,7 @@ void fn_8018D998(u8* object)
     register u8* transform;
     u8* self;
     u16* coordinate;
-    s16* scratch;
+    int scratch_index;
     int i;
     int phase;
     u8 count;
@@ -57,7 +61,7 @@ void fn_8018D998(u8* object)
     }
 
     object_data = *(u8**)(self + 0x4C);
-    scratch = lbl_80607900;
+    scratch_index = 0;
     color = color_data;
     coordinate = (u16*)transform;
     i = 0;
@@ -74,8 +78,8 @@ void fn_8018D998(u8* object)
             }
         }
         fn_8018168C(object_data, &point, (s16)shade, coordinate[7]);
-        *(u32*)scratch = *(u32*)(object_data + 0xA);
-        scratch[2] = *(u16*)(object_data + 0xE);
+        *(u32*)&lbl_80607900[scratch_index] = *(u32*)(object_data + 0xA);
+        lbl_80607900[scratch_index + 2] = *(u16*)(object_data + 0xE);
         {
             int j;
             for (j = 0; j < object_data[0x20]; j++) {
@@ -89,26 +93,26 @@ void fn_8018D998(u8* object)
             phase = 0;
         }
         coordinate++;
-        scratch += 3;
+        scratch_index += 3;
     }
 
     fn_8018A574(transform, self, lbl_80607900, (s16*)vertex_data);
     fn_80211A48(transform + 0x60, transform + 0x6C, transform + 0x60);
     {
         float value = *(float*)(transform + 0x68);
-        if (value < 0.0f) {
+        if (value < lbl_80650A68) {
             value = -value;
         }
-        if (value > 1.0f) {
+        if (value > lbl_80650AB4) {
             *(float*)(transform + 0x68) = *(float*)(transform + 0x74);
         }
     }
     {
         float value = *(float*)(transform + 0x68);
-        if (value < 0.0f) {
+        if (value < lbl_80650A68) {
             value = -value;
         }
-        fn_80211380(transform + 0x78, transform + 0x60, 0.5f * value);
+        fn_80211380(transform + 0x78, transform + 0x60, lbl_80650AB8 * value);
     }
     DCFlushRange(vertex_data, vertex_size);
     DCFlushRange(index_data, index_size);
