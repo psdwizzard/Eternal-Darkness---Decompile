@@ -1,0 +1,149 @@
+{
+  "hypothesis": "Tail aggregate assignment or full-width bitfield store lowering may change store scheduling dependencies independently of the failed pointer alias and expression sequencing variants.",
+  "variants": [
+    {
+      "name": "tail_aggregate",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A852C.o"
+          ],
+          "exit_code": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A852C.o\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A852C",
+            "fn_801A852C",
+            "-o",
+            "reports/GEDE01/experiment-220bb767-e8ac-4a16-b193-4938a484f4cd-tail_aggregate.json",
+            "--format",
+            "json-pretty",
+            "-c",
+            "function_reloc_diffs=name_address"
+          ],
+          "exit_code": 0,
+          "output": " INFO Writing to reports/GEDE01/experiment-220bb767-e8ac-4a16-b193-4938a484f4cd-tail_aggregate.json\n"
+        }
+      ],
+      "score": 94.7619,
+      "size": "176",
+      "source_diff_from_retained": "--- retained\n+++ tail_aggregate\n@@ -1,8 +1,14 @@\n typedef unsigned short u16;\n typedef unsigned long u32;\n \n+typedef struct Tail801A852C {\n+    u32 word6;\n+    u32 word7;\n+} Tail801A852C;\n+\n typedef struct Descriptor801A852C {\n-    u32 words[8];\n+    u32 words[6];\n+    Tail801A852C tail;\n } Descriptor801A852C;\n \n extern const volatile Descriptor801A852C lbl_8023B2B0;\n@@ -17,10 +23,10 @@\n         ((u16*)&descriptor)[index] = replacement;\n     }\n     {\n-        u32 last = *value;\n-        volatile u32* descriptor_word6 = &descriptor.words[6];\n-        *descriptor_word6 = word6;\n-        descriptor.words[7] = last;\n+        Tail801A852C tail;\n+        tail.word7 = *value;\n+        tail.word6 = word6;\n+        descriptor.tail = tail;\n     }\n     fn_801EDA7C(&descriptor, 0, 0x2BF, 0);\n }\n"
+    },
+    {
+      "name": "tail_aggregate_volatile",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A852C.o"
+          ],
+          "exit_code": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A852C.o\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A852C",
+            "fn_801A852C",
+            "-o",
+            "reports/GEDE01/experiment-220bb767-e8ac-4a16-b193-4938a484f4cd-tail_aggregate_volatile.json",
+            "--format",
+            "json-pretty",
+            "-c",
+            "function_reloc_diffs=name_address"
+          ],
+          "exit_code": 0,
+          "output": " INFO Writing to reports/GEDE01/experiment-220bb767-e8ac-4a16-b193-4938a484f4cd-tail_aggregate_volatile.json\n"
+        }
+      ],
+      "score": 94.7619,
+      "size": "176",
+      "source_diff_from_retained": "--- retained\n+++ tail_aggregate_volatile\n@@ -1,8 +1,14 @@\n typedef unsigned short u16;\n typedef unsigned long u32;\n \n+typedef struct Tail801A852C {\n+    u32 word6;\n+    u32 word7;\n+} Tail801A852C;\n+\n typedef struct Descriptor801A852C {\n-    u32 words[8];\n+    u32 words[6];\n+    volatile Tail801A852C tail;\n } Descriptor801A852C;\n \n extern const volatile Descriptor801A852C lbl_8023B2B0;\n@@ -17,10 +23,10 @@\n         ((u16*)&descriptor)[index] = replacement;\n     }\n     {\n-        u32 last = *value;\n-        volatile u32* descriptor_word6 = &descriptor.words[6];\n-        *descriptor_word6 = word6;\n-        descriptor.words[7] = last;\n+        Tail801A852C tail;\n+        tail.word7 = *value;\n+        tail.word6 = word6;\n+        descriptor.tail = tail;\n     }\n     fn_801EDA7C(&descriptor, 0, 0x2BF, 0);\n }\n"
+    },
+    {
+      "name": "fullwidth_bitfield",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A852C.o"
+          ],
+          "exit_code": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A852C.o\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A852C",
+            "fn_801A852C",
+            "-o",
+            "reports/GEDE01/experiment-220bb767-e8ac-4a16-b193-4938a484f4cd-fullwidth_bitfield.json",
+            "--format",
+            "json-pretty",
+            "-c",
+            "function_reloc_diffs=name_address"
+          ],
+          "exit_code": 0,
+          "output": " INFO Writing to reports/GEDE01/experiment-220bb767-e8ac-4a16-b193-4938a484f4cd-fullwidth_bitfield.json\n"
+        }
+      ],
+      "score": 95.2381,
+      "size": "168",
+      "source_diff_from_retained": "--- retained\n+++ fullwidth_bitfield\n@@ -2,7 +2,9 @@\n typedef unsigned long u32;\n \n typedef struct Descriptor801A852C {\n-    u32 words[8];\n+    u32 words[6];\n+    unsigned long word6 : 32;\n+    u32 word7;\n } Descriptor801A852C;\n \n extern const volatile Descriptor801A852C lbl_8023B2B0;\n@@ -18,9 +20,8 @@\n     }\n     {\n         u32 last = *value;\n-        volatile u32* descriptor_word6 = &descriptor.words[6];\n-        *descriptor_word6 = word6;\n-        descriptor.words[7] = last;\n+        descriptor.word6 = word6;\n+        descriptor.word7 = last;\n     }\n     fn_801EDA7C(&descriptor, 0, 0x2BF, 0);\n }\n"
+    },
+    {
+      "name": "fullwidth_bitfield_volatile",
+      "commands": [
+        {
+          "argv": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_801A852C.o"
+          ],
+          "exit_code": 0,
+          "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801A852C.o\n"
+        },
+        {
+          "argv": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_801A852C",
+            "fn_801A852C",
+            "-o",
+            "reports/GEDE01/experiment-220bb767-e8ac-4a16-b193-4938a484f4cd-fullwidth_bitfield_volatile.json",
+            "--format",
+            "json-pretty",
+            "-c",
+            "function_reloc_diffs=name_address"
+          ],
+          "exit_code": 0,
+          "output": " INFO Writing to reports/GEDE01/experiment-220bb767-e8ac-4a16-b193-4938a484f4cd-fullwidth_bitfield_volatile.json\n"
+        }
+      ],
+      "score": 95.2381,
+      "size": "168",
+      "source_diff_from_retained": "--- retained\n+++ fullwidth_bitfield_volatile\n@@ -2,7 +2,9 @@\n typedef unsigned long u32;\n \n typedef struct Descriptor801A852C {\n-    u32 words[8];\n+    u32 words[6];\n+    volatile unsigned long word6 : 32;\n+    u32 word7;\n } Descriptor801A852C;\n \n extern const volatile Descriptor801A852C lbl_8023B2B0;\n@@ -18,9 +20,8 @@\n     }\n     {\n         u32 last = *value;\n-        volatile u32* descriptor_word6 = &descriptor.words[6];\n-        *descriptor_word6 = word6;\n-        descriptor.words[7] = last;\n+        descriptor.word6 = word6;\n+        descriptor.word7 = last;\n     }\n     fn_801EDA7C(&descriptor, 0, 0x2BF, 0);\n }\n"
+    }
+  ]
+}

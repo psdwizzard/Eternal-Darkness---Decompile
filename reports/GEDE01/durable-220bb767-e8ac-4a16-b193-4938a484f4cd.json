@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "assignment_id": "220bb767-e8ac-4a16-b193-4938a484f4cd",
+  "attempt": 6,
+  "base_commit": "5fd4814a884ea7ca8ed4b47d64375bf911e4eaf8",
+  "target": "fn_801A852C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-220bb767-e8ac-4a16-b193-4938a484f4cd.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-220bb767-e8ac-4a16-b193-4938a484f4cd.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-220bb767-e8ac-4a16-b193-4938a484f4cd.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-220bb767-e8ac-4a16-b193-4938a484f4cd.json",
+    "eternal-darkness-decomp/reports/GEDE01/audit-220bb767-e8ac-4a16-b193-4938a484f4cd.py",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-220bb767-e8ac-4a16-b193-4938a484f4cd.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-220bb767-e8ac-4a16-b193-4938a484f4cd-fullwidth_bitfield.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-220bb767-e8ac-4a16-b193-4938a484f4cd-fullwidth_bitfield_volatile.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-220bb767-e8ac-4a16-b193-4938a484f4cd-tail_aggregate.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-220bb767-e8ac-4a16-b193-4938a484f4cd-tail_aggregate_volatile.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both measure 95.2381%, with retail and generated text sizes both 168 bytes. Generated stw r6, 0x20(r1) is at offset 0x80 after li r4, 0 and li r5, 0x2BF; retail places that store at 0x78 before those two loads. Raw instruction words differ only at offsets 0x78, 0x7C, and 0x80. All 3 actual ELF relocations match in offset, type, target name, and signed addend; all 11 objdiff relocation-bearing instructions also match. A distinct tail-aggregate lowering hypothesis added two stores (176 bytes, 94.7619%); full-width bitfield lowering retained the 95.2381% schedule. The original best NonMatching source is retained unchanged. Canonical configure and full Ninja build pass; DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f; legal audit passes."
+}
