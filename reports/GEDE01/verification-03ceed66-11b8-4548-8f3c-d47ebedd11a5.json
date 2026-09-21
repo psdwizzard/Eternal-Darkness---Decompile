@@ -1,0 +1,90 @@
+{
+  "assignment_id": "03ceed66-11b8-4548-8f3c-d47ebedd11a5",
+  "target": "fn_8012AC74",
+  "compiler": "GC/1.3",
+  "source": "eternal-darkness-decomp/src/game/game_fn_8012AC74.c",
+  "canonical_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -lang=c",
+  "scores": {
+    "canonical": 100.0,
+    "all": 100.0,
+    "name_address": 100.0
+  },
+  "text_bytes_equal": true,
+  "text_size": 304,
+  "text_sha256": "e9e6a0d5352fa08aafd2c5fd003c51834d52f605de79b819f19d188c16c6073e",
+  "relocation_targets_and_addends_equal": true,
+  "relocations": [
+    {
+      "offset": "00000028",
+      "type": "R_PPC_REL24",
+      "symbol_value": "00000000",
+      "target": "fn_8011EB1C",
+      "addend": "0"
+    },
+    {
+      "offset": "00000034",
+      "type": "R_PPC_REL24",
+      "symbol_value": "00000000",
+      "target": "fn_8011EB04",
+      "addend": "0"
+    },
+    {
+      "offset": "000000b0",
+      "type": "R_PPC_REL24",
+      "symbol_value": "00000000",
+      "target": "fn_8013A140",
+      "addend": "0"
+    },
+    {
+      "offset": "000000bc",
+      "type": "R_PPC_REL24",
+      "symbol_value": "00000000",
+      "target": "fn_8011F770",
+      "addend": "0"
+    },
+    {
+      "offset": "000000d4",
+      "type": "R_PPC_REL24",
+      "symbol_value": "00000000",
+      "target": "fn_80211A48",
+      "addend": "0"
+    },
+    {
+      "offset": "000000e4",
+      "type": "R_PPC_REL24",
+      "symbol_value": "00000000",
+      "target": "fn_80211A48",
+      "addend": "0"
+    },
+    {
+      "offset": "000000fc",
+      "type": "R_PPC_REL24",
+      "symbol_value": "00000000",
+      "target": "fn_80139F28",
+      "addend": "0"
+    },
+    {
+      "offset": "0000010c",
+      "type": "R_PPC_REL24",
+      "symbol_value": "00000000",
+      "target": "fn_80211A6C",
+      "addend": "0"
+    }
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "source_sha256": "94897895edda0abbae64c7ccc56d56eac658b768fd9dfeb7399fd37f406623be",
+  "explanation": "Previous reconstruction was already present unchanged from preserved commit f53af586881a2da9eb6672757f8ebb9d047969ff. Replacing manually materialized unsigned-range boolean locals with condition = (mode == 3) && ((type == 2 || type == 3) || type == 0x57) fixes predicate lowering, producing 304 bytes and 95.85526%. Declaring the two pointer parameters with their vector types removes alias locals and fixes all remaining callee-saved register allocation. Final full build completed after source and Matching registration changes and before final measurements. No compiler settings or splits were changed.",
+  "build_commands": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0
+    }
+  ],
+  "compiler_command_raw": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_8012AC74.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8012AC74.d build/GEDE01/src/game/game_fn_8012AC74.d\n",
+  "legal_audit_raw": "legal audit passed (19442 tracked project files inspected)\n",
+  "build_log_encoding": "Text output, CRLF normalized to LF."
+}
