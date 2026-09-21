@@ -69,90 +69,91 @@ int fn_800DCBC0(void *context, int phase, void *message, int *handled)
             fn_801E8328(2, context);
             return 1;
         }
-        return 0;
-    }
-    if (phase == 1) {
-    if (kind == 190) {
-        fn_800DB9B0(context);
-        fn_800DB62C(context);
-        return 1;
-    }
-    if (kind == 75) {
-        fn_800DBB24(context, message);
-        return 1;
-    }
-    if (kind == 3) {
-        void *source = fn_8011FE4C();
-        int source_model;
-        int object_model;
-        int source_kind;
-        int object_kind;
-        int existing;
+    } else if (phase == 1) {
+        if (kind == 190) {
+            fn_800DB9B0(context);
+            fn_800DB62C(context);
+            return 1;
+        }
+        if (kind == 75) {
+            fn_800DBB24(context, message);
+            return 1;
+        }
+        if (kind == 3) {
+            int source_model;
+            int object_model;
+            int source_kind;
+            int object_kind;
+            int existing;
 
-        fn_8011FAEC();
-        source_model = fn_80128EAC(source);
-        object_model = fn_80128EAC(object);
-        source_kind = fn_8011FCE4(source);
-        object_kind = fn_8011FCE4(object);
+            /* The message is no longer needed; reuse it for the source object. */
+            message = fn_8011FE4C();
+            fn_8011FAEC();
+            source_model = fn_80128EAC(message);
+            object_model = fn_80128EAC(object);
+            source_kind = fn_8011FCE4(message);
+            object_kind = fn_8011FCE4(object);
 
-        if (object_kind != source_kind) {
-            if (fn_80042748(object, (u16)source_kind) != 0) {
-                object_kind = source_kind;
-                fn_8011FC38(object, source_kind, 0);
-            } else if (fn_80042748(object, 0) != 0) {
-                object_kind = 0;
-                fn_8011FC38(object, 0, 0);
-            } else {
-                LinkedObject *linked = fn_8004279C(object);
-                if (linked != 0) {
-                    object_kind = linked->kind;
-                    fn_8011FC38(object, object_kind, 0);
+            if (object_kind != source_kind) {
+                if (fn_80042748(object, (u16)source_kind) != 0) {
+                    object_kind = source_kind;
+                    fn_8011FC38(object, source_kind, 0);
+                } else if (fn_80042748(object, 0) != 0) {
+                    object_kind = 0;
+                    fn_8011FC38(object, 0, 0);
+                } else {
+                    LinkedObject *linked = fn_8004279C(object);
+                    if (linked != 0) {
+                        object_kind = linked->kind;
+                        fn_8011FC38(object, object_kind, 0);
+                    }
                 }
             }
-        }
 
-        existing = fn_8012A100(object, 15);
-        if (object_kind == source_kind) {
-            int other = fn_8012A100(object, source_model);
-            int object_flag = fn_801290D0(object) & 2;
-            int source_flag = fn_801290D0(source) & 2;
-            int different = object_flag != source_flag;
-            int flags;
+            existing = fn_8012A100(object, 15);
+            if (object_kind == source_kind) {
+                int other = fn_8012A100(object, source_model);
+                int object_flag = fn_801290D0(object) & 2;
+                int source_flag = fn_801290D0(message) & 2;
+                int different = source_flag != object_flag;
 
-            fn_8012915C(object);
-            fn_8012915C(source);
-            if ((object_model != source_model || different) && other != 0 &&
-                fn_8011EB04(source) != 101 &&
-                fn_8011EB04(source) != 121 &&
-                fn_8011EB04(source) != 122 &&
-                fn_8011EB04(source) != 120) {
-                flags = 0x30;
-                if (fn_8012915C(source) == 0)
-                    flags = 0x10030;
-                if (different)
-                    flags |= fn_801290D0(source) & 2;
-                if (fn_80127208(source) == 0)
-                    flags |= 0x20000;
-                fn_801294DC(object, source_model, flags, 9);
-            } else if (existing != 0 && object_model != source_model) {
+                fn_8012915C(object);
+                fn_8012915C(message);
+                if ((object_model != source_model || different) && other != 0 &&
+                    fn_8011EB04(message) != 101 &&
+                    fn_8011EB04(message) != 121 &&
+                    fn_8011EB04(message) != 122 &&
+                    fn_8011EB04(message) != 120) {
+                    /* Dispatch is complete; reuse kind for the transition flags. */
+                    kind = 0x30;
+                    if (fn_8012915C(message) == 0)
+                        kind = 0x10030;
+                    if (different)
+                        kind |= fn_801290D0(message) & 2;
+                    if (fn_80127208(message) == 0)
+                        kind |= 0x20000;
+                    fn_801294DC(object, source_model, kind, 9);
+                } else if (existing != 0 && object_model != source_model) {
+                    fn_801291F0(object, 15, 3);
+                    fn_801294DC(object, 15, 0x30, 9);
+                }
+            } else if (existing != 0) {
                 fn_801291F0(object, 15, 3);
                 fn_801294DC(object, 15, 0x30, 9);
             }
-        } else if (existing != 0) {
-            fn_801291F0(object, 15, 3);
-            fn_801294DC(object, 15, 0x30, 9);
-        }
 
-        fn_801296F8(object, fn_80129748(source));
-        if (fn_8011EB04(object) == 112) {
-            fn_80201C24(context);
-            if (fn_80157994() != 0)
-                fn_80124664(object, 26, 8, lbl_8064F460);
-            else
-                fn_80124664(object, 26, 8, lbl_8064F464);
+            fn_801296F8(object, fn_80129748(message));
+            if (fn_8011EB04(object) == 112) {
+                fn_80201C24(context);
+                if (fn_80157994() != 0)
+                    fn_80124664(object, 26, 8, lbl_8064F460);
+                else
+                    fn_80124664(object, 26, 8, lbl_8064F464);
+            }
+            return 1;
         }
-        return 1;
-    }
+    } else {
+        return 0;
     }
     return 0;
 }
