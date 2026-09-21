@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FA4F0 fn_801FA4F0 -o reports/GEDE01/objdiff-f4b44b30-7c3a-4853-bcb5-21414cabbc5e-canonical.raw.json --format json-pretty",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FA4F0 -o reports/GEDE01/objdiff-f4b44b30-7c3a-4853-bcb5-21414cabbc5e.json --format json-pretty -c function_reloc_diffs=name_address fn_801FA4F0",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_command_outputs": {
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_sha1_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical_objdiff": "INFO Writing to reports/GEDE01/objdiff-f4b44b30-7c3a-4853-bcb5-21414cabbc5e-canonical.raw.json",
+    "relocation_strict_objdiff": "INFO Writing to reports/GEDE01/objdiff-f4b44b30-7c3a-4853-bcb5-21414cabbc5e.json"
+  },
+  "measurements": {
+    "retail_size": 380,
+    "candidate_size": 384,
+    "canonical_match_percent": 95.41053,
+    "relocation_strict_match_percent": 95.41053,
+    "relocation_strict_equal": false
+  },
+  "focused_trial": {
+    "hypothesis": "Place the ObjectState base assignment in the first condition via a comma expression so GC/1.3 couples address definition to the persistent local lifetime and may select r31 directly for the low-half addi.",
+    "raw_output": "reports/GEDE01/objdiff-f4b44b30-7c3a-4853-bcb5-21414cabbc5e-trial-assignment-expression.raw.json",
+    "candidate_size": 384,
+    "match_percent": 95.41053,
+    "result": "Codegen-neutral; reverted. This is distinct from prior register hints, array declarations, split-arm base pointers, and direct-global access trials."
+  },
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_801FA4F0.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "gate_or_compiler_policy_changes": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
