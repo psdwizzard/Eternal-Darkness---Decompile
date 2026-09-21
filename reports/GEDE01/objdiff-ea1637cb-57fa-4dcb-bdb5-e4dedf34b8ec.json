@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "assignment_id": "ea1637cb-57fa-4dcb-bdb5-e4dedf34b8ec",
+  "target": "fn_8008CEF0",
+  "compiler": "MWCC GC/1.3 (canonical game configuration, -use_lmw_stmw on)",
+  "hypothesis": "The vector-angle helper consumes a bitwise Vec3 copy and retail keeps the two selection result pairs in branch-local lifetimes. Explicit word copies and branch-local declarations remove the prior aggregate temporary, recover retail's 0xA0 frame, and align the full vector fallback instruction sequence.",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8008CEF0 fn_8008CEF0 -o build/GEDE01/fndiff_fn_8008CEF0.json --format json",
+    "raw_summary": "target 1068 bytes  base 1068 bytes  match 98.91386",
+    "retail_instructions": 267,
+    "generated_instructions": 267,
+    "retail_relocations": 53,
+    "generated_relocations": 53
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8008CEF0 fn_8008CEF0 -o build/GEDE01/fndiff_fn_8008CEF0_reloc_strict.json --format json -c function_reloc_diffs=name_address",
+    "raw_summary": "target 1068 bytes  base 1068 bytes  match 98.91386",
+    "raw_cmp": "canonical and relocation-strict JSON outputs are byte-identical (cmp_exit=0)",
+    "result": "nonmatching; 53/53 relocations and identical instruction counts, with remaining operand mismatches"
+  },
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol",
+      "python3 tools/legal_audit.py"
+    ],
+    "ninja_raw_final": "build/GEDE01/main.dol: OK",
+    "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_verified": true,
+    "legal_audit_raw": "legal audit passed (19754 tracked project files inspected)"
+  },
+  "improvement": "Score improved from 94.865166% to 98.91386%; generated size fell from 1072 to the retail 1068 bytes, generated instruction count fell from 268 to the retail 267, and frame size changed from 0xB0 to retail's 0xA0.",
+  "divergence": "The opcode and control-flow sequence now aligns at 267/267 instructions and the vector fallback block aligns instruction-for-instruction. Remaining differences are nonvolatile register allocation: retail maps object/position/fallback/transform/runtime/target/value/low/high to r26/r27/r23/r31/r30/r29/r28/r24/r25, while generated code maps them to r30/r31/r27/r26/r25/r24/r23/r28/r29. One displayed constant-pool relocation is named lbl_8064EC18 in retail versus the local generated pool symbol @51; strict relocation comparison remains nonmatching at 98.91386%."
+}

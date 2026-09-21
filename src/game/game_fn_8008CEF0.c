@@ -44,8 +44,7 @@ extern const float lbl_8064EC14;
 
 /*
  * NonMatching: behavior-complete reconstruction of the interaction selector.
- * The generated frame, nonvolatile allocation, aggregate-copy schedule, and
- * several branch shapes still differ from retail.
+ * The generated nonvolatile allocation still differs from retail.
  */
 int fn_8008CEF0(void* object, void* position, void* context)
 {
@@ -56,9 +55,9 @@ int fn_8008CEF0(void* object, void* position, void* context)
     int target;
     int value;
     void* mode;
-    Vec3 unused_position, world_position, query_position, stored_position;
+    Vec3 unused_position, stored_position, world_position, query_position;
     s16 denominator, numerator;
-    int low, high, first, second;
+    int low, high;
     int result = 0;
     int pending = 1;
     float ratio;
@@ -79,6 +78,7 @@ int fn_8008CEF0(void* object, void* position, void* context)
 
     if (*(s16*)((u8*)fallback + 30) == 0) {
         if (ratio > lbl_8064EC08 && low != 0) {
+            int first;
             first = fn_8008D9F4(object, position, context, 1);
             if (first == 0) {
                 fn_800073D8(lbl_8064D18C);
@@ -90,6 +90,7 @@ int fn_8008CEF0(void* object, void* position, void* context)
             result = 1;
             pending = 0;
         } else if (ratio < lbl_8064EC0C && (low != 0 || high != 0)) {
+            int first, second;
             first = fn_8008D9F4(object, position, context, 1);
             second = fn_8008D9F4(object, position, context, 2);
             if (first == 0 && second == 0) {
@@ -102,6 +103,7 @@ int fn_8008CEF0(void* object, void* position, void* context)
                 pending = 0;
             }
         } else if ((low != 0 || high != 0) && fn_80036E50(mode) == 6) {
+            int first, second;
             first = fn_8008D9F4(object, position, context, 1);
             second = fn_8008D9F4(object, position, context, 2);
             if (first != 0 || second != 0) {
@@ -122,10 +124,18 @@ int fn_8008CEF0(void* object, void* position, void* context)
             result = 1;
         } else if ((u8)lbl_8064D5A8 == 0) {
             float facing, current, angle, magnitude;
+            u32 world_z, world_y, world_x;
 
             fn_8011F114(&world_position, lbl_8064C4E4);
-            stored_position = world_position;
-            query_position = world_position;
+            world_x = *(u32*)&world_position.x;
+            world_y = *(u32*)&world_position.y;
+            world_z = *(u32*)&world_position.z;
+            *(u32*)&stored_position.x = world_x;
+            *(u32*)&stored_position.y = world_y;
+            *(u32*)&stored_position.z = world_z;
+            *(u32*)&query_position.x = world_x;
+            *(u32*)&query_position.y = world_y;
+            *(u32*)&query_position.z = world_z;
             facing = fn_8012B7D0(position, &query_position);
             current = fn_8012B750(position);
             fn_8017A12C(&angle, current, facing);
