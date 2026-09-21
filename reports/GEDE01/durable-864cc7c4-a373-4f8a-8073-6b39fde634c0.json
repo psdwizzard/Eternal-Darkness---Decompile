@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "864cc7c4-a373-4f8a-8073-6b39fde634c0",
+  "attempt": 4,
+  "base_commit": "5b4cfd7ec42ae98edd7d0f816087c47e8ad9a76c",
+  "target": "fn_80088E44",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-864cc7c4-a373-4f8a-8073-6b39fde634c0.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-864cc7c4-a373-4f8a-8073-6b39fde634c0-canonical.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-864cc7c4-a373-4f8a-8073-6b39fde634c0-relocation-strict.raw.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are separately measured at 95.89796%, size-exact at 196/196 bytes, with both R_PPC_REL24 targets and zero addends equal. Retail retains &work->state in r31 and state+0x40 in r25; the best GC/1.3 C candidate folds state byte accesses to work+0xC0..0xC3 and retains only work+0x98 as its table base. A new Callback-pointer/direct-value hybrid retained both retail bases but changed four indexed load/address forms and scored 95.85714%, so the preserved 95.89796% reconstruction remains best."
+}

@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "assignment_id": "864cc7c4-a373-4f8a-8073-6b39fde634c0",
+  "target": "fn_80088E44",
+  "compiler": "GC/1.3",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical": "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_80088E44.o -2 build/GEDE01/src/game/game_fn_80088E44.o -o reports/GEDE01/objdiff-864cc7c4-a373-4f8a-8073-6b39fde634c0-canonical.raw.json --format json-pretty fn_80088E44",
+    "relocation_strict": "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_80088E44.o -2 build/GEDE01/src/game/game_fn_80088E44.o -o reports/GEDE01/objdiff-864cc7c4-a373-4f8a-8073-6b39fde634c0-relocation-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address fn_80088E44",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_evidence": {
+    "canonical": "reports/GEDE01/objdiff-864cc7c4-a373-4f8a-8073-6b39fde634c0-canonical.raw.json",
+    "canonical_sha256": "05a81f80760b81d605ca8c703d79b943701fa7d7c0ccca9d8611a0938b215949",
+    "relocation_strict": "reports/GEDE01/objdiff-864cc7c4-a373-4f8a-8073-6b39fde634c0-relocation-strict.raw.json",
+    "relocation_strict_sha256": "05a81f80760b81d605ca8c703d79b943701fa7d7c0ccca9d8611a0938b215949"
+  },
+  "measurements": {
+    "canonical_match_percent": 95.89796,
+    "relocation_strict_match_percent": 95.89796,
+    "retail_size": 196,
+    "candidate_size": 196,
+    "matching_relocations": [
+      {"offset": 48, "type": "R_PPC_REL24", "target": "fn_8006C9C0", "addend": 0},
+      {"offset": 140, "type": "R_PPC_REL24", "target": "fn_8006C9E4", "addend": 0}
+    ],
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "attempt_4_variants": [
+    {
+      "name": "derive child through state base",
+      "result": "196 bytes; optimizer reconstructed work and emitted the same work-relative state accesses as the preserved best"
+    },
+    {
+      "name": "rebase incoming work parameter to embedded state",
+      "result": "196 bytes; dead-copy propagation again reconstructed the original work pointer and emitted the same work-relative state accesses"
+    },
+    {
+      "name": "sibling fn_8006EB60 Callback-pointer idiom for all indexed tables",
+      "result": "196 bytes; 95.85714%; kept state folded to work and changed indexed load scheduling"
+    },
+    {
+      "name": "Callback-pointer callback/argument plus direct State values",
+      "result": "196 bytes; 95.85714%; successfully retained retail's r31 state base and r25 table base, but generated rlwinm/add/lhz and lwzx forms at offsets 0x3c-0x54 instead of retail's rlwinm/addi/lhzx and add/lwz forms"
+    },
+    {
+      "name": "direct State callback plus Callback-pointer argument/value",
+      "result": "200 bytes; added an extra indexed-address instruction and moved the conditional tail by four bytes"
+    }
+  ],
+  "best": "Preserved attempt-3 mixed typed-state/raw-table source at 95.89796% remains best.",
+  "divergence": "The best candidate is size-exact and relocation-exact, but GC/1.3 folds the embedded State base into the incoming work pointer: retail emits addi r31,r3,0x58 and addi r25,r31,0x40, then uses r31+0x68..0x6b for state bytes; the candidate retains work in r25, forms only work+0x98 in r26, and uses work+0xc0..0xc3. The attempt-4 sibling-source variant proves both bases can be retained with the same frame and size, but then four indexed table/value instructions diverge, so it does not improve the canonical or relocation-strict score."
+}

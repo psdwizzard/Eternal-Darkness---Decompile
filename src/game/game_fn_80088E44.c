@@ -46,11 +46,11 @@ int fn_80088E44(FullWork* work)
     child = work->child;
     if (child != 0) {
         value = child->value >> 16;
-        entry = (u8*)base + 0x40;
+        entry = (u8*)base->callbacks;
         fn_8006C9C0(child);
-        current = entry[0x28];
-        first = entry[0x2A];
-        last = entry[0x2B];
+        current = base->current;
+        first = base->first;
+        last = base->last;
         callback = *(Callback*)(entry + current * 4);
         argument = *(void**)(entry + 0x10 + current * 4);
         if (value == *(u16*)(entry + 0x20 + current * 2) && current < 4 &&
