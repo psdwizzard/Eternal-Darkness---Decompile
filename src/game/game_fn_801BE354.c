@@ -8,15 +8,18 @@ typedef struct StreamCommand {
     u32 adjustment;
 } StreamCommand;
 
+/* Flags occupy a packed 64-bit word; this command sets bit 45. */
+#pragma pack(4)
 typedef struct StreamState {
     u8 pad_000[0x114];
-    u32 flags_114;
-    u8 pad_118[0x58];
+    unsigned long long flags_114;
+    u8 pad_11C[0x54];
     u32 base_170[2];
     u32 delta_178[2];
     u32 target_180[2];
     u32 step_188[2];
 } StreamState;
+#pragma pack()
 
 extern void fn_801CC408(u32*);
 
@@ -36,5 +39,5 @@ void fn_801BE354(StreamState* state, StreamCommand* command, u8 index)
     } else {
         state->delta_178[index] = adjustment;
     }
-    state->flags_114 |= 0x2000;
+    state->flags_114 |= 0x200000000000ULL;
 }
