@@ -98,7 +98,7 @@ void fn_801AB50C(Record* record)
             if (record->timer != 0) {
                 int limit = record->initial_volume;
                 int value = record->target_volume + limit / record->timer;
-                if (limit >= value) limit = value;
+                limit = limit >= value ? value : limit;
                 record->target_volume = limit;
                 record->timer--;
             } else {
@@ -227,6 +227,9 @@ void fn_801AB50C(Record* record)
             fn_801B09F0(record->handle, record->target_volume);
     } else {
         switch (record->state) {
+        case 0:
+        case 1:
+            break;
         case 2:
             if (fn_801C9078() == 0)
                 fn_801AB048(record);
