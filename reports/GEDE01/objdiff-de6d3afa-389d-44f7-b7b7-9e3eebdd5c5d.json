@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "assignment_id": "de6d3afa-389d-44f7-b7b7-9e3eebdd5c5d",
+  "tool": "objdiff-cli v3.6.1 via tools/fndiff.py and direct JSON export",
+  "command": "python3 tools/fndiff.py game/game_fn_8015B274.c fn_8015B274",
+  "canonical_compiler_settings": true,
+  "raw_summary": "target 852 bytes  base 860 bytes  match 98.356804",
+  "target_bytes": 852,
+  "generated_bytes": 860,
+  "match_percent": 98.356804,
+  "target_relocation_instructions": 24,
+  "generated_relocation_instructions": 26,
+  "relocation_strict_match": false,
+  "relocation_observation": "Generated code adds R_PPC_REL24 calls to _savegpr_22 at offset 16 and _restgpr_22 at offset 840. All 24 shared relocation records have corresponding types, resolved target names, and addends, but their instruction offsets are four bytes later in generated code: for example DCFlushRange is retail offset 824 and generated offset 828. lbl_8024F038 R_PPC_NONE addends are 176, 200, and 232 on both sides.",
+  "raw_objdiff_output": "eternal-darkness-decomp/reports/GEDE01/raw-objdiff-de6d3afa-389d-44f7-b7b7-9e3eebdd5c5d.json",
+  "raw_text_output": "eternal-darkness-decomp/reports/GEDE01/raw-fndiff-de6d3afa-389d-44f7-b7b7-9e3eebdd5c5d.txt",
+  "relocation_output": "eternal-darkness-decomp/reports/GEDE01/relocations-de6d3afa-389d-44f7-b7b7-9e3eebdd5c5d.tsv",
+  "build_audit_output": "eternal-darkness-decomp/reports/GEDE01/build-audit-de6d3afa-389d-44f7-b7b7-9e3eebdd5c5d.txt",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "divergence": "The variable-reuse hypothesis corrected expansion-stack depth allocation to retail r24 and raised the score from 98.098595%. Compressed-byte count remains r23 instead of retail r22. Canonical prologue/epilogue still emit _savegpr_22/_restgpr_22 rather than retail stmw/lmw, adding eight bytes and two relocations."
+}

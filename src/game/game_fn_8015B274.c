@@ -39,7 +39,6 @@ int fn_8015B274(void* source, void* destination, u8* output, int unused,
     u8* out = output;
     char* strings = lbl_8024F038;
     int index;
-    int depth;
     int count;
     int value;
 
@@ -107,14 +106,14 @@ int fn_8015B274(void* source, void* destination, u8* output, int unused,
             code = fn_8015B5C8(&stream) & 0xff;
         }
 
-        count = (u8)fn_8015B5C8(&stream) << 8;
-        count += (u8)fn_8015B5C8(&stream);
-        depth = 0;
+        code = (u8)fn_8015B5C8(&stream) << 8;
+        code += (u8)fn_8015B5C8(&stream);
+        count = 0;
         for (;;) {
-            if (depth != 0) {
-                value = expansion[--depth];
+            if (count != 0) {
+                value = expansion[--count];
             } else {
-                if (count-- == 0) {
+                if (code-- == 0) {
                     break;
                 }
                 value = (u8)fn_8015B5C8(&stream);
@@ -123,8 +122,8 @@ int fn_8015B274(void* source, void* destination, u8* output, int unused,
                 *out++ = value;
                 written++;
             } else {
-                expansion[depth++] = second[value];
-                expansion[depth++] = first[value];
+                expansion[count++] = second[value];
+                expansion[count++] = first[value];
             }
         }
     } while (stream.source != 0 || stream.remaining != 0);
