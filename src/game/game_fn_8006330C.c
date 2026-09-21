@@ -25,7 +25,7 @@ s32 fn_8003D7B4(s32);                        /* extern */
 s32 fn_8003DED0(s32, s32, void *);           /* extern */
 s32 fn_80048708(s32);                        /* extern */
 s32 fn_80064B38(s32, s32, u32 *);            /* extern */
-u32 fn_800654F8();                                  /* extern */
+u32 fn_800654F8(s32);                               /* extern */
 s32 fn_800674E4(s32, s32);                   /* extern */
 s32 fn_80067650(s32, s32);                   /* extern */
 s32 fn_80067A18(s32);                        /* extern */
@@ -52,9 +52,9 @@ s32 fn_801A74A8(s32, s32);                   /* extern */
 s32 fn_801A7518(s32, s16);                   /* extern */
 s32 fn_801A7538(s32, s32);            /* extern */
 s32 fn_801A764C(s32, f32 *);                  /* extern */
-s32 fn_801AAE68(s32, s32, s32, f32 *, s32, s32, s32, u16, f32); /* extern */
-s32 fn_801E7974(s32);                        /* extern */
-s32 fn_801E79A0(s32);                        /* extern */
+s32 fn_801AAE68(f32, s32, s32, s32, f32 *, s32, s32, s32, u16, s32); /* extern */
+s32 fn_801E7974(s32, s32);                   /* extern */
+s32 fn_801E79A0(s32, s32);                   /* extern */
 s32 fn_801E8328(s32, s32);            /* extern */
 s32 fn_80200C10(s32);                               /* extern */
 s32 fn_80200C20(s32);                               /* extern */
@@ -79,19 +79,16 @@ s32 fn_8006330C(s32 arg0, s32 arg1, s32 arg2, u32 *arg3) {
     s16 temp_r0;
     s32 temp_r0_2;
     s32 temp_r25;
-    s32 temp_r25_2;
+    s16 phi_r26;
+    u32 temp_r25_2;
     s32 temp_r26;
     s32 temp_r28;
     s32 temp_r28_2;
+    void *temp_r27;
+    void *temp_r31;
     s32 temp_r30;
     s32 temp_r30_2;
     s32 temp_r30_3;
-    void *temp_r27;
-    void *temp_r31;
-    s32 phi_r28;
-    s16 phi_r26;
-    f32 effect_scale;
-    u16 effect_id;
 
     temp_r26 = fn_80200C10(arg2);
     temp_r25 = fn_80201BC8(arg0);
@@ -115,14 +112,16 @@ s32 fn_8006330C(s32 arg0, s32 arg1, s32 arg2, u32 *arg3) {
             return 1;
         }
         if (temp_r26 == 0xBB) {
-            if (fn_80200C38(arg2) != 0) {
-                fn_801E7974(lbl_8064C4E0);
+            temp_r30_2 = fn_80200C38(arg2);
+            if (temp_r30_2 != 0) {
+                fn_801E7974(lbl_8064C4E0, temp_r30_2);
             }
             return 1;
         }
         if (temp_r26 == 0xBC) {
-            if (fn_80200C38(arg2) != 0) {
-                fn_801E79A0(lbl_8064C4E0);
+            temp_r30_2 = fn_80200C38(arg2);
+            if (temp_r30_2 != 0) {
+                fn_801E79A0(lbl_8064C4E0, temp_r30_2);
             }
             return 1;
         }
@@ -157,10 +156,8 @@ s32 fn_8006330C(s32 arg0, s32 arg1, s32 arg2, u32 *arg3) {
             if (fn_8011FF38() != 0) {
                 fn_8011FA8C(temp_r25, 0, 0x20000000);
                 sp8 = 0;
-                effect_scale = lbl_8064E648;
-                effect_id = (u16)lbl_8064D18C;
-                fn_801AAE68(0x1F1, 0x64, 0, sp10, 2, 2, 0,
-                            effect_id, effect_scale);
+                fn_801AAE68(lbl_8064E648, 0x1F1, 0x64, 0, sp10, 2, 2, 0,
+                            (u16)lbl_8064D18C, sp8);
             }
             return 1;
         }
@@ -173,24 +170,24 @@ s32 fn_8006330C(s32 arg0, s32 arg1, s32 arg2, u32 *arg3) {
             return 1;
         }
         if (temp_r26 == 0xED) {
-            temp_r30_2 = fn_80200C38(arg2);
+            temp_r30 = fn_80200C38(arg2);
             temp_r28 = fn_80200C28(arg2);
-            fn_8020123C(0xB, fn_80200C20(arg2), temp_r28, temp_r30_2);
+            fn_8020123C(0xB, fn_80200C20(arg2), temp_r28, temp_r30);
             fn_801A7228(fn_80200C38(arg2));
             return 1;
         }
         if (temp_r26 == 0x3A) {
-            temp_r30_3 = fn_80200C38(arg2);
-            temp_r28_2 = fn_80200C28(arg2);
-            fn_8020123C(0x27, fn_80200C20(arg2), temp_r28_2, temp_r30_3);
+            temp_r30 = fn_80200C38(arg2);
+            temp_r28 = fn_80200C28(arg2);
+            fn_8020123C(0x27, fn_80200C20(arg2), temp_r28, temp_r30);
             fn_801A7228(fn_80200C38(arg2));
             return 1;
         }
         if (temp_r26 == 0xB) {
             fn_800359A0(arg0, fn_80201814(fn_80200C20(arg2)));
-            fn_80200C38(arg2);
+            temp_r0_2 = fn_800654F8(fn_80200C38(arg2));
             if (arg3 != 0U) {
-                *arg3 = fn_800654F8();
+                *arg3 = temp_r0_2;
             }
             return 1;
         }
@@ -315,17 +312,17 @@ s32 fn_8006330C(s32 arg0, s32 arg1, s32 arg2, u32 *arg3) {
             return 1;
         }
         if (temp_r26 == 3) {
-            phi_r28 = 3;
+            temp_r28 = 3;
             if ((u8) M2C_FIELD(temp_r27, u8 *, 0x9E) == 1U) {
-                phi_r28 = 7;
+                temp_r28 = 7;
             }
             if ((lbl_8064D5A8 & 0xF) == 0) {
                 fn_8014D100(temp_r25, lbl_802FC5BC + 0x18, 2, 1);
             }
-            if ((lbl_8064D5A8 & phi_r28) == 0) {
+            if ((lbl_8064D5A8 & temp_r28) == 0) {
                 fn_80072354(M2C_FIELD(temp_r27, s32 *, 0x90));
-                temp_r0 = M2C_FIELD(temp_r27, s16 *, 0x98);
                 temp_r25_2 = fn_801A717C();
+                temp_r0 = M2C_FIELD(temp_r27, s16 *, 0x98);
                 phi_r26 = 1;
                 if (temp_r0 < 0x43) {
                     if (temp_r0 < 0x40) {
