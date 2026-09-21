@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "assignment_id": "5d4e6c39-e389-400c-a7fc-9144114bd445",
+  "reviewed_preserved_commits": [
+    "13dbbfe05e8ed26fd1e81f58ac05080b155954fa",
+    "a480bacabd978adb02a4d4440bf31caa28f1ccab",
+    "3a574ac5dfeb84d9a7b698816a35b6e523b10510",
+    "0cf264d98bbf397b17fddf0fe5f6dc725904bd2b",
+    "b9e42882451b6fa2b48d48c416ec0c686af92331"
+  ],
+  "recovery": "Accepted base already contains the same standalone C reconstruction and NonMatching GC/1.3 registration as preserved commit 13dbbfe. Final source restored byte-for-byte from that commit.",
+  "source_sha256": "f18de9403bd3fd548f72a4dbd204a24604cedf0ec0c56318e0de8ae9db41b13b",
+  "canonical": {
+    "retail_size": "380",
+    "candidate_size": "384",
+    "match_percent": 95.41053
+  },
+  "relocation_strict": {
+    "retail_size": "380",
+    "candidate_size": "384",
+    "match_percent": 95.41053
+  },
+  "relocation_equality": false,
+  "trials": [
+    {
+      "hypothesis": "Carry the base through memcpy's returned destination on the zero-offset restore copy, changing pointer live ranges without changing memory effects.",
+      "transform_from_preserved_source": {
+        "replace": {
+          "memcpy(&data->active[0], &data->saved_active[0], 0x660);": "data = (ObjectState*)memcpy(&data->active[0], &data->saved_active[0], 0x660);"
+        }
+      },
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5d4e6c39-e389-400c-a7fc-9144114bd445-trial-memcpy-return.raw.json",
+      "retail_size": "380",
+      "candidate_size": "388",
+      "match_percent": 89.936844,
+      "result": "Adds mr r31,r3 after the restore copy, changes subsequent argument scheduling, and retains the original prologue/zero-offset divergences. Reverted.",
+      "compile_exit_code": 0,
+      "objdiff_exit_code": 0
+    },
+    {
+      "hypothesis": "Change dispatch to a two-case switch to test whether comparison lowering and scheduling allow the persistent global base to form directly in r31.",
+      "transform_from_preserved_source": {
+        "replace": {
+          "if (state == 1) {": "switch (state) {\n    case 1:",
+          "} else if (state == 2) {": "break;\n    case 2:"
+        }
+      },
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5d4e6c39-e389-400c-a7fc-9144114bd445-trial-switch.raw.json",
+      "retail_size": "380",
+      "candidate_size": "392",
+      "match_percent": 88.98947,
+      "result": "Emits a signed compare against 2 and additional dispatch branches; the extra base move remains. Reverted.",
+      "compile_exit_code": 0,
+      "objdiff_exit_code": 0
+    },
+    {
+      "hypothesis": "Use an unsigned-long address value instead of a pointer, to test whether integer IR avoids the pointer-copy coalescing failure. Unlike the previous incomplete-array trial, arithmetic is performed in integer registers before conversion to void*.",
+      "transform_from_preserved_source": {
+        "base": "unsigned long data = (unsigned long)&lbl_8063C6B8;",
+        "operands": "Replace all data member addresses with (void*)(data + offset).",
+        "member_offsets": {
+          "saved_tail": 5340,
+          "tail": 3536,
+          "saved_active[0]": 5440,
+          "active[0]": 0,
+          "saved_active[12]": 7072,
+          "active[12]": 1632,
+          "saved_object24": 8704,
+          "object25": 3400,
+          "saved_object25": 8840,
+          "object24": 3264
+        }
+      },
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-5d4e6c39-e389-400c-a7fc-9144114bd445-trial-integer-base.raw.json",
+      "retail_size": "380",
+      "candidate_size": "384",
+      "match_percent": 95.41053,
+      "result": "Codegen-neutral; same size and score as the baseline. Reverted.",
+      "compile_exit_code": 0,
+      "objdiff_exit_code": 0
+    }
+  ],
+  "commands_working_directory": "eternal-darkness-decomp",
+  "raw_command_outputs": {
+    "dol_sha1": {
+      "argv": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "exit_code": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    },
+    "legal_audit": {
+      "argv": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "stdout": "legal audit passed (19456 tracked project files inspected)\n",
+      "stderr": ""
+    },
+    "configure": {
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "log": "eternal-darkness-decomp/reports/GEDE01/configure-5d4e6c39-e389-400c-a7fc-9144114bd445.log"
+    },
+    "initial_build": {
+      "exit_code": 0,
+      "log": "eternal-darkness-decomp/reports/GEDE01/build-5d4e6c39-e389-400c-a7fc-9144114bd445.log"
+    },
+    "final_build": {
+      "exit_code": 0,
+      "log": "eternal-darkness-decomp/reports/GEDE01/build-final-5d4e6c39-e389-400c-a7fc-9144114bd445.log"
+    },
+    "staged_legal_audit": {
+      "exit_code": 0,
+      "stdout": "legal audit passed (19468 tracked project files inspected)\n",
+      "stderr": ""
+    }
+  },
+  "configure_command": "python3 configure.py",
+  "build_command": ".tools/bin/ninja -j2",
+  "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FA4F0 fn_801FA4F0 -o reports/GEDE01/objdiff-5d4e6c39-e389-400c-a7fc-9144114bd445-canonical.raw.json --format json-pretty",
+  "strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801FA4F0 fn_801FA4F0 -o reports/GEDE01/objdiff-5d4e6c39-e389-400c-a7fc-9144114bd445.json --format json-pretty -c function_reloc_diffs=name_address",
+  "divergence": "Canonical and relocation-strict objdiff remain 95.41053% (380 retail bytes versus 384 generated bytes). Retail cmplwi is at 0x10 before lis at 0x14 and forms the base with addi r31,r3,@l at 0x1c. Candidate lis is at 0x10, addi r3,r3,@l at 0x18, cmplwi at 0x1c, and extra mr r31,r3 at 0x28. Candidate uses mr instead of addi for both zero-offset memcpy operands and reverses save-copy address setup order. All 32 real relocation types, target names and addends agree in sequence, but instruction/relocation offsets differ; exact relocation equality is false.",
+  "dol_scope": "NonMatching function remains linked from the retail split object; successful whole-DOL verification does not imply that the C candidate matches.",
+  "scope_audit": {
+    "independent_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "compiler_policy_changes": false,
+    "neighbor_edits": false,
+    "runtime_or_global_progress_edits": false,
+    "private_inputs_or_generated_binaries_to_commit": false,
+    "preexisting_CLAUDE_md_edit_preserved": true
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "sha256": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715",
+    "canonical_c_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -DVERSION_GEDE01 -DNDEBUG=1 -lang=c",
+    "registration": "Object(NonMatching, \"game/game_fn_801FA4F0.c\", mw_version=\"GC/1.3\")"
+  },
+  "trial_compile_command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801FA4F0.o",
+  "log_note": "Raw build logs retain CodeWarrior CRLF warning lines. Staged whitespace check passes with git -c core.whitespace=cr-at-eol diff --cached --check; no repository settings were changed."
+}
