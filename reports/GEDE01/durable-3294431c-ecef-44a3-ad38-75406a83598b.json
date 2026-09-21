@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "3294431c-ecef-44a3-ad38-75406a83598b",
+  "attempt": 6,
+  "base_commit": "18e7367511460737df478813c33a9368587785f5",
+  "target": "fn_8008D5D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3294431c-ecef-44a3-ad38-75406a83598b.json",
+    "eternal-darkness-decomp/reports/GEDE01/probes-3294431c-ecef-44a3-ad38-75406a83598b.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 96.17647%, with 272-byte retail and generated code and all 13 R_PPC_REL24 relocation offsets, targets and zero addends identical. Retail allocates object/target/mode to r29/r28/r30; generated code uses r28/r30/r29. Retail saves r28 at function offset 0x24 (36), generated at 0x1c (28). New lifetime-reuse, aggregate-scalar-replacement, target-ID typing and declaration-order probes did not improve the accepted reconstruction; it remains NonMatching and unchanged. Canonical build passes and the retail-fallback DOL is byte-identical at SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
