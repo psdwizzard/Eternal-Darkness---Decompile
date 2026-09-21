@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "f7ace6ad-c187-4631-9296-dfc6123e23c4",
+  "attempt": 5,
+  "base_commit": "f13998d09e2adac91b7d1c33262c4f07289ae09a",
+  "target": "fn_80053048",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f7ace6ad-c187-4631-9296-dfc6123e23c4-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f7ace6ad-c187-4631-9296-dfc6123e23c4.json"
+  ],
+  "divergence": "Fresh canonical and function_reloc_diffs=name_address raw objdiff reports are byte-identical at 96.30189%, with exact 424-byte size, 107 instruction rows and 33 relocation-bearing rows per side. The 22 differing instruction rows remain register-allocation and scheduling differences: retail uses r28 for the record pointer, r27 for the copied transition type, and r24/r26 for the inner slot/mask while generated code uses r27, r26, and r28/r24 respectively; the second call-argument move is at generated 0xDC instead of retail 0xE4, and cleanup exchanges r27/r28. Attempt 5 newly tested jointly narrowing the record-pointer and copied-type live ranges behind a guarded lexical block; it regressed to 96.113205% at the same 424-byte size and was rejected. The preserved best honest-C reconstruction remains 96.30189%."
+}
