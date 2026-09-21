@@ -78,16 +78,21 @@ void fn_801952E8(u8* object, int populate)
     ys = (s16*)(state + 0x42);
     zs = (s16*)(state + 0x5C);
     if (populate) {
-        records = *(VertexRecord**)(object + 0x4C);
-        for (i = 0; i < count; i++) {
-            records[i + 1].x = xs[i];
-            records[i + 1].y = ys[i];
-            records[i + 1].z = zs[i];
+        records = *(VertexRecord**)(object + 0x4C) + 1;
+        i = 0;
+        while (i < count) {
+            records->x = xs[i];
+            records->y = ys[i];
+            records->z = zs[i];
+            records++;
+            i++;
         }
     }
-    records[count + 1].x = second[0];
-    records[count + 1].y = second[1];
-    records[count + 1].z = second[2];
+    records = (VertexRecord*)((u8*)*(VertexRecord**)(object + 0x4C) +
+                             count * sizeof(VertexRecord) + sizeof(VertexRecord));
+    records[0].x = second[0];
+    records[0].y = second[1];
+    records[0].z = second[2];
 
     if (!(*(u32*)(state + 0x7C) & 0x40)) {
         if (*(u32*)(state + 0x7C) & 0x8000) {
@@ -107,8 +112,8 @@ void fn_801952E8(u8* object, int populate)
         *(u16*)(state + 0x10) &= 7;
         *(u16*)(state + 0x12) &= 7;
         *(u16*)(state + 0x14) &= 7;
-        records = *(VertexRecord**)(object + 0x4C);
-        records++;
+        records = (VertexRecord*)((u8*)*(VertexRecord**)(object + 0x4C) +
+                                 sizeof(VertexRecord));
         {
             u32 bit = 8;
             for (i = 0; i < count; i++, records++, xs++, ys++, zs++) {

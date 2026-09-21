@@ -1,0 +1,183 @@
+{
+  "version": 1,
+  "assignment_id": "644d8520-51e4-4e9b-890b-2cbbcb7cbec2",
+  "attempt": 6,
+  "base_commit": "3cb116599ec1f9d3af4f4d018c050b90b2877e73",
+  "target": "fn_801952E8",
+  "status": "matched",
+  "unit": "main/game/game_fn_801952E8",
+  "compiler": "GC/1.3",
+  "compiler_settings": "Unchanged canonical flags, including -O4,p and -use_lmw_stmw on.",
+  "hypothesis": {
+    "prior_attempts_reviewed": [
+      "90c35a4f7c2883bf4dcc5f99c21168f258d5d747",
+      "3abf3605a8f2e5d86aa96cee8bb6d078c7eb7890",
+      "0ae8fa25d8538eadc3ac43a1b08b015487c3747b",
+      "4798233288dd7850dc03066c32d90c93c55a71fd",
+      "62fc2a60e1e5c4ea634e82c0ee13f772031231c7"
+    ],
+    "baseline_score": 95.685356,
+    "distinct_successful_hypothesis": "MWCC loop optimization depends on the ordering of the two induction updates. Advance records before incrementing i, retain indexed coordinate reads, and reuse records rather than introducing a new destination variable. Form endpoint and bounds cursor addresses through byte pointers. This produces all retail instructions and register allocations.",
+    "experiments_file": "eternal-darkness-decomp/reports/GEDE01/experiments-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.json",
+    "unregistered_constants_score": 99.96885
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801952E8 fn_801952E8 -o reports/GEDE01/canonical-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.json --format json",
+    "raw_output": "INFO Writing to reports/GEDE01/canonical-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.json",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/canonical-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.json",
+    "target_size": 1284,
+    "base_size": 1284,
+    "match_percent": 100.0
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801952E8 fn_801952E8 -o reports/GEDE01/strict-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.json --format json -c function_reloc_diffs=name_address",
+    "raw_output": "INFO Writing to reports/GEDE01/strict-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.json",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/strict-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.json",
+    "target_size": 1284,
+    "base_size": 1284,
+    "match_percent": 100.0,
+    "target_relocations": 12,
+    "base_relocations": 12,
+    "targets_and_addends": "All 12 relocation offsets, types, target names, target addresses, and zero addends agree in independent ELF comparison."
+  },
+  "constant_registration": {
+    "existing_mechanism": "configure.py: game_section_externalizations, using the existing add_game_externalization_rules and guarded externalize_elf_symbol.py. No policy, gate, compiler flag, or tool changes.",
+    "mappings": {
+      "@73": "lbl_80650B58",
+      "@75": "lbl_80650B68"
+    },
+    "guards": "Existing --require-section-symbols checks the complete two-symbol .sdata2 section; each generated constant is byte-checked against the immutable retail DOL before externalization."
+  },
+  "independent_verification": {
+    "command": "python3 reports/GEDE01/verify-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.py",
+    "script": "eternal-darkness-decomp/reports/GEDE01/verify-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.py",
+    "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/verification-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.json",
+    "result": {
+      "object_text_bytes_equal": true,
+      "object_text_size": 1284,
+      "object_text_sha1": "cc3ea2b97744bb604b8a4306d351451f6abe28eb",
+      "relocation_targets_types_offsets_and_addends_equal": true,
+      "relocations": [
+        {
+          "offset": 72,
+          "type": 10,
+          "target": "fn_801F6D90",
+          "target_address": 2149543312,
+          "addend": 0
+        },
+        {
+          "offset": 92,
+          "type": 10,
+          "target": "fn_801F6D90",
+          "target_address": 2149543312,
+          "addend": 0
+        },
+        {
+          "offset": 164,
+          "type": 109,
+          "target": "lbl_80650B58",
+          "target_address": 2154105688,
+          "addend": 0
+        },
+        {
+          "offset": 176,
+          "type": 109,
+          "target": "lbl_80650B68",
+          "target_address": 2154105704,
+          "addend": 0
+        },
+        {
+          "offset": 432,
+          "type": 10,
+          "target": "fn_80194F80",
+          "target_address": 2149142400,
+          "addend": 0
+        },
+        {
+          "offset": 452,
+          "type": 10,
+          "target": "fn_80194AC4",
+          "target_address": 2149141188,
+          "addend": 0
+        },
+        {
+          "offset": 492,
+          "type": 10,
+          "target": "fn_80194E80",
+          "target_address": 2149142144,
+          "addend": 0
+        },
+        {
+          "offset": 512,
+          "type": 10,
+          "target": "fn_801950D4",
+          "target_address": 2149142740,
+          "addend": 0
+        },
+        {
+          "offset": 1012,
+          "type": 10,
+          "target": "fn_80194F80",
+          "target_address": 2149142400,
+          "addend": 0
+        },
+        {
+          "offset": 1032,
+          "type": 10,
+          "target": "fn_80194AC4",
+          "target_address": 2149141188,
+          "addend": 0
+        },
+        {
+          "offset": 1072,
+          "type": 10,
+          "target": "fn_80194E80",
+          "target_address": 2149142144,
+          "addend": 0
+        },
+        {
+          "offset": 1092,
+          "type": 10,
+          "target": "fn_801950D4",
+          "target_address": 2149142740,
+          "addend": 0
+        }
+      ],
+      "canonical_percent": 100.0,
+      "strict_percent": 100.0,
+      "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+      "linked_function_equals_retail": true,
+      "linked_function_sha1": "f10d01f4136eea02c2af11dcc724e3f97128c95a"
+    }
+  },
+  "instruction_diff": {
+    "command": "python3 tools/fndiff.py game/game_fn_801952E8.c fn_801952E8",
+    "raw_output": "target 1284 bytes  base 1284 bytes  match 100.0",
+    "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/instructions-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.txt",
+    "divergence": ""
+  },
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2 > reports/GEDE01/build-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.txt 2>&1",
+    "exit_code": 0,
+    "raw_output": "build/GEDE01/main.dol: OK",
+    "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/build-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.txt",
+    "source_linked": true,
+    "log_encoding": "Compiler CRLF normalized to LF; output text otherwise unchanged."
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/legal-644d8520-51e4-4e9b-890b-2cbbcb7cbec2.txt",
+    "independent_translation_unit": "src/game/game_fn_801952E8.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "private_or_generated_binaries_in_commit": false,
+    "raw_output": "legal audit passed (19341 tracked project files inspected)"
+  },
+  "scope": "Only assigned C source, its configure.py registration, and assignment-specific reports. Existing split is unchanged. Pre-existing CLAUDE.md worktree change is excluded from the commit. No progress.json, README.md, runtime, neighboring source, or shared-input edits.",
+  "divergence": ""
+}
