@@ -24,11 +24,6 @@ typedef struct Quaternion {
     float w;
 } Quaternion;
 
-typedef struct Locals {
-    SixBytes setup;
-    void* vectors;
-} Locals;
-
 extern u8 lbl_80607120[];
 extern void* lbl_8064D738;
 extern u32 lbl_80651D50;
@@ -59,9 +54,10 @@ extern void fn_80211710(Matrix34, Vec3*, Vec3*);
 
 int fn_801861C4(u8* self)
 {
-    /* NonMatching: the distinct translation matrix and aggregate declaration
-     * order recover retail's 0x200-byte frame. Canonical GC/1.3 still rotates
-     * the long-lived r25-r31 values and schedules the clamp loads differently. */
+    /* NonMatching: distinct setup/vector locals and a named dot-product
+     * temporary recover retail's size and floating argument moves. Canonical
+     * GC/1.3 still rotates the long-lived r25-r31 values and stack slots. */
+    SixBytes setup;
     Vec3 direction;
     Vec3 origin;
     Quaternion rotation;
@@ -73,8 +69,9 @@ int fn_801861C4(u8* self)
     Matrix34 z_rotation;
     Matrix34 combined;
     Matrix34 result;
-    Locals locals;
+    void* vectors;
     float length;
+    float dot;
     int changed = 0;
     int vector_offset;
     u8* self_local = self;
@@ -85,14 +82,14 @@ int fn_801861C4(u8* self)
     u8* entry;
 
     state = self_local + 0x8C;
-    locals.setup.word = lbl_80651D50;
-    locals.setup.half = lbl_80651D54;
+    setup.word = lbl_80651D50;
+    setup.half = lbl_80651D54;
     generation = *(u16*)(self_local + 0xA);
     entry = *(u8**)(self_local + 0x4C);
     count = self_local[1];
     *(u16*)(self_local + 0xA) = generation + 1;
 
-    fn_8018D788(lbl_8064D738, self_local, &locals.vectors,
+    fn_8018D788(lbl_8064D738, self_local, &vectors,
                 *(u16*)(lbl_80607120 + 2));
     fn_801869F8(state, 0, *(u16*)(state + 8));
 
@@ -111,8 +108,8 @@ int fn_801861C4(u8* self)
             }
         }
         fn_8018680C(state, entry,
-                    (Vec3*)((u8*)locals.vectors + vector_offset),
-                    index, &locals.setup, count);
+                    (Vec3*)((u8*)vectors + vector_offset),
+                    index, &setup, count);
         if ((int)generation == (int)*(u16*)(entry + 8) &&
             (state[5] & 1) == 0) {
             fn_8018E230(entry, entry + 0x2B, 1, self_local[2],
@@ -123,7 +120,7 @@ int fn_801861C4(u8* self)
     }
 
     origin = lbl_8023B068;
-    entry = locals.vectors;
+    entry = vectors;
     vector_offset = (self_local[1] & 0x7F) << 1;
     fn_80210FB0(transform);
     fn_80211A48((Vec3*)(state + 0x60), (Vec3*)(state + 0x6C),
@@ -148,9 +145,9 @@ int fn_801861C4(u8* self)
     length = fn_80211B08(&direction);
     if (length > lbl_80650A28) {
         fn_80211AAC(&direction, &direction);
+        dot = fn_80211B44(&origin, (Vec3*)(state + 0x54));
         fn_8017A244(&direction, &rotation,
-                    (float)fn_80102340(length,
-                        fn_80211B44(&origin, (Vec3*)(state + 0x54))));
+                    (float)fn_80102340(length, dot));
         fn_802114E0(transform, &rotation);
     }
     fn_80210FDC(transform, result, transform);

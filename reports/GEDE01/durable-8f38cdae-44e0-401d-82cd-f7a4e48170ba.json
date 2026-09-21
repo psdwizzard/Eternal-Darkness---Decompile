@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "8f38cdae-44e0-401d-82cd-f7a4e48170ba",
+  "attempt": 4,
+  "base_commit": "bfc1ca9ad751f1083f39fb0ef499399f47516de5",
+  "target": "fn_801861C4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8f38cdae-44e0-401d-82cd-f7a4e48170ba.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8f38cdae-44e0-401d-82cd-f7a4e48170ba-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8f38cdae-44e0-401d-82cd-f7a4e48170ba-baseline.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 96.090225% with exact 1064-byte size and 43 relocation-bearing instructions per side, improving the preserved 94.8985%/1060-byte baseline. A named dot-product temporary restores retail offset 0x278 `fmr f0, f1` and the exact three-move fn_80102340 argument sequence; splitting setup and vector-pointer locals further improves alignment. The first remaining difference is offset 0x1C: retail `mr r26, r3` versus generated `mr r25, r3`, starting the long-lived r25-r31 allocation rotation. Stack topology also remains different: retail stores setup at r1+0x8/r1+0xC and the vector pointer at r1+0x44, while generated stores the pointer at r1+0x8 and setup at r1+0xC/r1+0x10; small aggregate operands are consequently four bytes high and matrix operands eight bytes low."
+}
