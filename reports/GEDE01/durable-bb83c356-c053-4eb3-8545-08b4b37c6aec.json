@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "assignment_id": "bb83c356-c053-4eb3-8545-08b4b37c6aec",
+  "attempt": 6,
+  "base_commit": "62890ff6ffeb0c6086b78a70037f9e47bf947026",
+  "target": "fn_8014BEC4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bb83c356-c053-4eb3-8545-08b4b37c6aec.json",
+    "eternal-darkness-decomp/reports/GEDE01/analysis-bb83c356-c053-4eb3-8545-08b4b37c6aec.json",
+    "eternal-darkness-decomp/reports/GEDE01/hypotheses-bb83c356-c053-4eb3-8545-08b4b37c6aec-union.json",
+    "eternal-darkness-decomp/reports/GEDE01/hypotheses-bb83c356-c053-4eb3-8545-08b4b37c6aec-union.py",
+    "eternal-darkness-decomp/reports/GEDE01/hypotheses-bb83c356-c053-4eb3-8545-08b4b37c6aec.json",
+    "eternal-darkness-decomp/reports/GEDE01/hypotheses-bb83c356-c053-4eb3-8545-08b4b37c6aec.py",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bb83c356-c053-4eb3-8545-08b4b37c6aec-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bb83c356-c053-4eb3-8545-08b4b37c6aec-order-021.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bb83c356-c053-4eb3-8545-08b4b37c6aec-order-102.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bb83c356-c053-4eb3-8545-08b4b37c6aec-order-120.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bb83c356-c053-4eb3-8545-08b4b37c6aec-order-201.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bb83c356-c053-4eb3-8545-08b4b37c6aec-order-210.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bb83c356-c053-4eb3-8545-08b4b37c6aec-union-012.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bb83c356-c053-4eb3-8545-08b4b37c6aec-union-021.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-bb83c356-c053-4eb3-8545-08b4b37c6aec.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-bb83c356-c053-4eb3-8545-08b4b37c6aec.json"
+  ],
+  "divergence": "Best retained canonical and relocation-strict objdiff score is 96.26214%, both 412 bytes. Retail uses lis r8 and relocation-bearing lwzu r5 followed by lwz/lwz/stw/stw/stw for the initial Vec3 copy; GC/1.3 emits lis r3 and lfsu f2 followed by lfs/lfs/stfs/stfs/stfs. Retail moves r28,r5 before r27,r4; compiled code reverses these moves. All later instructions and all 17 relocation offsets, types, targets, and addends agree. New nonmonotonic word-copy and per-component union hypotheses retain an extra addi and regress to 416 bytes."
+}

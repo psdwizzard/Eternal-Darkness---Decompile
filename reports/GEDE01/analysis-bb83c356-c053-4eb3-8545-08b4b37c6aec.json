@@ -1,0 +1,65 @@
+{
+  "assignment_id": "bb83c356-c053-4eb3-8545-08b4b37c6aec",
+  "target": "fn_8014BEC4",
+  "source": "eternal-darkness-decomp/src/game/game_fn_8014BEC4.c",
+  "source_sha256": "af0c08324eeec2742488e402c05403e1eabc8a82bcdb444fab992c8c545f461e",
+  "source_identical_to_preserved_commit": "693721787113070c8593bee1dabeb60e982b36db",
+  "reviewed_preserved_commits": [
+    "693721787113070c8593bee1dabeb60e982b36db",
+    "28ba6b69604895795eb4d53cfaef9272af92b708",
+    "39229ce91ae792e79d6654d8847f63475066d995",
+    "b5e60a19f1d0e4f58eaebfaa2c3065bfe576de8f",
+    "15a4113a013d2cb1276e5968a1ea68559643b14d"
+  ],
+  "hypothesis": "Nonmonotonic scalar word-copy ordering could suppress contiguous aggregate-copy recognition, allowing update-form address folding. Five previously untested permutations regressed to 416 bytes (95.5534 to 95.56311%). Per-component unions were tested as a distinct alias representation in natural and 0,2,1 orders, also 416 bytes (95.58253 and 95.56311%).",
+  "conclusion": "Retain the existing independent NonMatching C translation unit unchanged; no registration, split, compiler-policy, runtime, or global progress edits are required. All experiments used the canonical GC/1.3 settings. No assembly or private input is committed. The DOL is built using the original object for this NonMatching function; its hash verifies build integrity, not a C match.",
+  "preserved_attempt_review": "Read preserved attempt-5 verification and attempt-2/3 envelopes through git show; earlier hypotheses and attempt-1/4 diagnoses supplied in assignment. Current source already equals preserved attempt-5 source.",
+  "instruction_differences": [
+    {
+      "offset": 8,
+      "retail": "lis r8, lbl_8023A718@ha",
+      "compiled": "lis r3, lbl_8023A718@ha"
+    },
+    {
+      "offset": 20,
+      "retail": "mr r28, r5",
+      "compiled": "mr r27, r4"
+    },
+    {
+      "offset": 24,
+      "retail": "mr r27, r4",
+      "compiled": "mr r28, r5"
+    },
+    {
+      "offset": 36,
+      "retail": "lwzu r5, lbl_8023A718@l(r8)",
+      "compiled": "lfsu f2, lbl_8023A718@l(r3)"
+    },
+    {
+      "offset": 40,
+      "retail": "lwz r4, 0x4(r8)",
+      "compiled": "lfs f1, 0x4(r3)"
+    },
+    {
+      "offset": 44,
+      "retail": "lwz r0, 0x8(r8)",
+      "compiled": "lfs f0, 0x8(r3)"
+    },
+    {
+      "offset": 48,
+      "retail": "stw r5, 0x14(r1)",
+      "compiled": "stfs f2, 0x14(r1)"
+    },
+    {
+      "offset": 52,
+      "retail": "stw r4, 0x18(r1)",
+      "compiled": "stfs f1, 0x18(r1)"
+    },
+    {
+      "offset": 56,
+      "retail": "stw r0, 0x1c(r1)",
+      "compiled": "stfs f0, 0x1c(r1)"
+    }
+  ],
+  "all_instructions_from_offset_60_equal": true
+}

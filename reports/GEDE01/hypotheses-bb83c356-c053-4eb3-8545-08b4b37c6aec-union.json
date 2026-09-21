@@ -1,0 +1,78 @@
+[
+  {
+    "order": [
+      0,
+      1,
+      2
+    ],
+    "replacement": "    offset.x.bits = lbl_8023A718.x.bits;\n    offset.y.bits = lbl_8023A718.y.bits;\n    offset.z.bits = lbl_8023A718.z.bits;",
+    "compile": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8014BEC4.o"
+      ],
+      "returncode": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8014BEC4.o\n"
+    },
+    "comparison": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8014BEC4",
+        "fn_8014BEC4",
+        "-o",
+        "reports/GEDE01/objdiff-bb83c356-c053-4eb3-8545-08b4b37c6aec-union-012.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "returncode": 0,
+      "output": " INFO Writing to reports/GEDE01/objdiff-bb83c356-c053-4eb3-8545-08b4b37c6aec-union-012.json\n"
+    },
+    "score": 95.58253,
+    "size": "416"
+  },
+  {
+    "order": [
+      0,
+      2,
+      1
+    ],
+    "replacement": "    offset.x.bits = lbl_8023A718.x.bits;\n    offset.z.bits = lbl_8023A718.z.bits;\n    offset.y.bits = lbl_8023A718.y.bits;",
+    "compile": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8014BEC4.o"
+      ],
+      "returncode": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8014BEC4.o\n"
+    },
+    "comparison": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8014BEC4",
+        "fn_8014BEC4",
+        "-o",
+        "reports/GEDE01/objdiff-bb83c356-c053-4eb3-8545-08b4b37c6aec-union-021.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "returncode": 0,
+      "output": " INFO Writing to reports/GEDE01/objdiff-bb83c356-c053-4eb3-8545-08b4b37c6aec-union-021.json\n"
+    },
+    "score": 95.56311,
+    "size": "416"
+  }
+]
