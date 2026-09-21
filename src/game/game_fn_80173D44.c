@@ -25,9 +25,9 @@ extern void* fn_80148008(Vec3f*, Descriptor*, EffectParams*,
                          u8* (*)(void*, void*, void*));
 extern void* fn_80156938(void*);
 extern void fn_8017FF1C(void*, int);
-extern const u32 lbl_80651CA0;
-extern const u16 lbl_80651CA4;
-extern const u32 lbl_806506F4;
+extern u32 lbl_80651CA0;
+extern u16 lbl_80651CA4;
+extern u32 lbl_806506F4;
 extern const float lbl_806506F8;
 extern const char lbl_8024FF00[];
 

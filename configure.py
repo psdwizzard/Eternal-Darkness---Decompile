@@ -10025,9 +10025,8 @@ config.libs = [
             # 87.977776%: exact-size honest C; the packed rotation initializer
             # and Vec3 aggregate copy remain scheduled differently from retail.
             Object(NonMatching, "game/game_fn_80173BDC.c"),
-            # 90.660710%: exact-size honest C; initializer/prologue scheduling
-            # and later value/register lifetimes remain different from retail.
-            Object(NonMatching, "game/game_fn_80173D44.c"),
+            # Ordinary extern globals preserve the retail initializer/prologue schedule.
+            Object(Matching, "game/game_fn_80173D44.c"),
             # 95.675000%: honest C; removing a load-bearing volatile exposes an
             # eight-byte size and broad stack/register scheduling divergence.
             Object(NonMatching, "game/game_fn_80173F04.c", extra_cflags=["-use_lmw_stmw on"]),
