@@ -97,7 +97,7 @@ void fn_801D9D14(Object* self)
             *(u32*)(self->bytes + 0x154) = xyz[0];
             *(u32*)(self->bytes + 0x158) = xyz[1];
             *(u32*)(self->bytes + 0x15C) = xyz[2];
-            memcpy(self->bytes + 0x160, init, 6);
+            memcpy(effect + 0xA4, init, 6);
             *(u32*)(self->bytes + 0x150) = 0;
             self->bytes[0x166] = 4;
             fn_801E8328(0x10, self->bytes + 0xBC);

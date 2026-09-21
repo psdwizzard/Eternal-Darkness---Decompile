@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "cface620-0280-4199-a166-37d6f58b42b0",
+  "attempt": 4,
+  "base_commit": "7e0e5e237007a35e1e93eccf48f511202b7bc0af",
+  "target": "fn_801D9D14",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-cface620-0280-4199-a166-37d6f58b42b0.json"
+  ],
+  "divergence": "Fresh canonical relocation-aware objdiff measures 98.30556% with exact 720-byte retail and generated functions (180 instructions each), improving the preserved 98.272224% attempt. The distinct minimal extended-lifetime hypothesis keeps effect live only for the later memcpy destination: this makes retail and generated both use r30+0xA4 at 0x1CC while preserving self in r31 and effect in r30. Extending effect to any following store reproduces the documented whole-function r30/r31 swap. Remaining differences are the retail early lbl_80651160 load into f0 and li r5 scheduling, generated use of f1 for the constant/f0 for Z, and generated self-relative r31+0x154/0x158/0x15C, r31+0x150, and r31+0x166 stores where retail uses effect-relative r30+0x98/0x9C/0xA0, r30+0x94, and r30+0xAA. All call and SDA relocation targets and addends agree. The full canonical build succeeds and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
