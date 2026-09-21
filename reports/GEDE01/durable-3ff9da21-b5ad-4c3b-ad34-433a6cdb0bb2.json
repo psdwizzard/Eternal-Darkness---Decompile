@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "3ff9da21-b5ad-4c3b-ad34-433a6cdb0bb2",
+  "attempt": 5,
+  "base_commit": "f13381fbe82aff453a76012456996a7dcc0a43cc",
+  "target": "fn_801A852C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3ff9da21-b5ad-4c3b-ad34-433a6cdb0bb2.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-3ff9da21-b5ad-4c3b-ad34-433a6cdb0bb2.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-3ff9da21-b5ad-4c3b-ad34-433a6cdb0bb2.json"
+  ],
+  "divergence": "Best fresh canonical and relocation-strict objdiff score is 95.2381% with retail and generated sizes both 168 bytes and all 11 relocation-bearing instructions equal in address, type, target, and addend. GC/1.3 emits stw r6, 0x20(r1) at function offset 0x80, after li r4, 0 and li r5, 0x2BF; retail emits the same store at offset 0x78, before those two call-argument loads. All other instructions align. A distinct volatile-pointer alias-analysis hypothesis produced the identical schedule. The canonical full build succeeds and build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
