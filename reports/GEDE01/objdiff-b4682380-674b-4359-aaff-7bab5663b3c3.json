@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "assignment_id": "b4682380-674b-4359-aaff-7bab5663b3c3",
+  "tool": "objdiff-cli v3.6.1 via tools/fndiff.py and direct JSON export",
+  "command": "python3 tools/fndiff.py game/game_fn_8015B274.c fn_8015B274",
+  "canonical_compiler_settings": true,
+  "raw_summary": "target 852 bytes  base 860 bytes  match 98.098595",
+  "target_bytes": 852,
+  "generated_bytes": 860,
+  "match_percent": 98.098595,
+  "target_relocation_instructions": 24,
+  "generated_relocation_instructions": 26,
+  "relocation_strict_match": false,
+  "relocation_observation": "The generated object adds R_PPC_REL24 calls to _savegpr_22 at offset 16 and _restgpr_22 at offset 840. The 24 shared relocation-bearing instructions resolve to the same targets/types/addends but are not offset-identical: generated offsets are four bytes later through most of the body, including DCFlushRange at retail offset 824 versus generated offset 828. Retail uses inline stmw/lmw instead. lbl_8024F038 R_PPC_NONE addends remain 176, 200, and 232 on both sides.",
+  "raw_objdiff_output": "eternal-darkness-decomp/reports/GEDE01/raw-objdiff-b4682380-674b-4359-aaff-7bab5663b3c3.json",
+  "raw_text_output": "eternal-darkness-decomp/reports/GEDE01/raw-fndiff-b4682380-674b-4359-aaff-7bab5663b3c3.txt",
+  "build_audit_output": "eternal-darkness-decomp/reports/GEDE01/build-audit-b4682380-674b-4359-aaff-7bab5663b3c3.txt",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "divergence": "Canonical code is 860 bytes versus retail 852 because it emits _savegpr_22/_restgpr_22 calls instead of inline stmw/lmw, adding two relocations. The remaining body mismatch is a register-allocation swap: retail uses r22 for compressed-byte count and r24 for expansion-stack depth, while generated code uses r24 and r22 respectively."
+}

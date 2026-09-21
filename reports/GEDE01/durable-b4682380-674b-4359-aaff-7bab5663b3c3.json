@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b4682380-674b-4359-aaff-7bab5663b3c3",
+  "attempt": 3,
+  "base_commit": "44f90ab5379ee5df5ff8c230263fa0154f487bc6",
+  "target": "fn_8015B274",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b4682380-674b-4359-aaff-7bab5663b3c3.json"
+  ],
+  "divergence": "Canonical objdiff is 98.098595% (852 retail bytes versus 860 generated). Canonical prologue/epilogue use _savegpr_22/_restgpr_22 rather than retail stmw/lmw, producing 26 versus 24 relocation-bearing instructions and shifting DCFlushRange from retail offset 824 to generated offset 828. The remaining body difference is the equivalent r22/r24 allocation swap between compressed-byte count and expansion-stack depth."
+}

@@ -33,13 +33,14 @@ int fn_8015B274(void* source, void* destination, u8* output, int unused,
     BitStream stream;
     u8 first[0x100];
     u8 second[0x100];
+    int code;
+    void* input = source;
+    u32 written = 0;
     u8* out = output;
     char* strings = lbl_8024F038;
-    u32 written = 0;
-    int code;
     int index;
-    int count;
     int depth;
+    int count;
     int value;
 
     fn_80158E7C(3);
@@ -49,7 +50,7 @@ int fn_8015B274(void* source, void* destination, u8* output, int unused,
 
     memset(&stream, 0, sizeof(stream));
     stream.total = 0;
-    stream.source = source;
+    stream.source = input;
     stream.destination = destination;
     stream.remaining = 0;
     stream.mode = mode;
@@ -60,7 +61,7 @@ int fn_8015B274(void* source, void* destination, u8* output, int unused,
     fn_8015B628(&stream);
 
     if (mode == 0) {
-        for (count = 0; count < 0x40; count++) {
+        for (count = 0; (u32)count < 0x40; count++) {
             *out++ = fn_8015B5C8(&stream);
         }
     } else if (mode == 1) {
@@ -77,7 +78,7 @@ int fn_8015B274(void* source, void* destination, u8* output, int unused,
     }
 
     do {
-        code = (u8)fn_8015B5C8(&stream);
+        code = fn_8015B5C8(&stream) & 0xff;
         for (index = 0; index < 0x100; index++) {
             first[index] = index;
         }
@@ -103,7 +104,7 @@ int fn_8015B274(void* source, void* destination, u8* output, int unused,
             if (index == 0x100) {
                 break;
             }
-            code = (u8)fn_8015B5C8(&stream);
+            code = fn_8015B5C8(&stream) & 0xff;
         }
 
         count = (u8)fn_8015B5C8(&stream) << 8;
