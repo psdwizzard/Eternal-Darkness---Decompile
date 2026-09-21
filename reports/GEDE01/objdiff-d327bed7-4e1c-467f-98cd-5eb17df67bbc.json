@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "assignment_id": "d327bed7-4e1c-467f-98cd-5eb17df67bbc",
+  "target": "fn_801BE354",
+  "compiler": "GC/1.2.5n",
+  "source": "eternal-darkness-decomp/src/game/game_fn_801BE354.c",
+  "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801BE354 --format json-pretty -o build/GEDE01/objdiff-d327bed7-canonical.json",
+  "relocation_strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801BE354 --format json-pretty -c function_reloc_diffs=name_address -o build/GEDE01/objdiff-d327bed7-reloc-strict.json",
+  "canonical_raw_measurement": {
+    "retail": {"name": "fn_801BE354", "size": "160", "match_percent": 95.0},
+    "generated": {"name": "fn_801BE354", "size": "160", "match_percent": 95.0}
+  },
+  "relocation_strict_raw_measurement": {
+    "retail": {"name": "fn_801BE354", "size": "160", "match_percent": 95.0},
+    "generated": {"name": "fn_801BE354", "size": "160", "match_percent": 95.0},
+    "retail_call_instruction_raw": {"address": "52", "formatted": "bl fn_801CC408", "relocation": {"type": 10, "type_name": "R_PPC_REL24", "target_symbol": 6}},
+    "generated_call_instruction_raw": {"address": "52", "formatted": "bl fn_801CC408", "relocation": {"type": 10, "type_name": "R_PPC_REL24", "target_symbol": 6}},
+    "retail_addend_field_present": false,
+    "generated_addend_field_present": false,
+    "reloc_diff": {"retail": null, "generated": null}
+  },
+  "raw_epilogue_diff": {
+    "retail": [
+      {"address": "140", "formatted": "lmw r27, 0x1c(r1)"},
+      {"address": "144", "formatted": "lwz r0, 0x34(r1)", "diff_kind": "DIFF_DELETE"}
+    ],
+    "generated": [
+      {"address": "140", "formatted": "lwz r0, 0x34(r1)", "diff_kind": "DIFF_INSERT"},
+      {"address": "144", "formatted": "lmw r27, 0x1c(r1)"}
+    ]
+  },
+  "attempt_log": [
+    {"variant": "accepted-base honest C baseline", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "use_lmw_stmw on plus opt_lifetimes off", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "register storage class on both scalar locals", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "register storage class on all parameters and both scalar locals", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "optimization_level 2", "score": 90.625, "retail_size": 160, "generated_size": 160},
+    {"variant": "optimization_level 1", "score": 10.75},
+    {"variant": "named final flags value local", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "named final flags pointer local", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "reversed scalar declaration order", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "value local alone declared long", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "adjustment local alone declared long", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "explicit optimization_level 4 plus use_lmw_stmw on", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "explicit optimization_level 4 plus use_lmw_stmw on plus opt_lifetimes off", "score": 95.0, "retail_size": 160, "generated_size": 160},
+    {"variant": "equivalent old-style C parameter definition", "score": 95.0, "retail_size": 160, "generated_size": 160}
+  ],
+  "retained_variant": "accepted-base honest C baseline; no tested alternative improved its score",
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw_tail": [
+    "[894/897] LINK build/GEDE01/main.elf",
+    "[895/897] DOL build/GEDE01/main.dol",
+    "[896/897] CHECK config/GEDE01/build.sha1",
+    "build/GEDE01/main.dol: OK",
+    "[897/897] PROGRESS"
+  ],
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_sha1_raw_output": [
+    "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  ],
+  "legal_audit_command": "rg -n 'asm\\s*\\(|__asm|#pragma.*asm' src/game/game_fn_801BE354.c",
+  "legal_audit_raw_output": "",
+  "legal_audit_exit": 1,
+  "divergence": "Canonical and relocation-strict objdiff are both 95.0% at 160/160 bytes. All 35 body instructions and the sole fn_801CC408 R_PPC_REL24 relocation match, with no encoded addend field on either side (addend zero). Only the independent epilogue restores differ: retail emits lmw r27 at 140 then lwz LR at 144; generated emits lwz LR at 140 then lmw r27 at 144."
+}
