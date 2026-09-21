@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "3f5313be-e7de-46b2-bfbf-2794eb1cf1b8",
+  "attempt": 6,
+  "base_commit": "a30aee164a819a82b55a1c12054d4ce793a39d09",
+  "target": "fn_8018CB70",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3f5313be-e7de-46b2-bfbf-2794eb1cf1b8.json",
+    "eternal-darkness-decomp/reports/GEDE01/probes-3f5313be-e7de-46b2-bfbf-2794eb1cf1b8.json",
+    "eternal-darkness-decomp/reports/GEDE01/analysis-3f5313be-e7de-46b2-bfbf-2794eb1cf1b8.md",
+    "eternal-darkness-decomp/reports/GEDE01/probes-3f5313be-e7de-46b2-bfbf-2794eb1cf1b8.py",
+    "eternal-darkness-decomp/reports/GEDE01/verify-3f5313be-e7de-46b2-bfbf-2794eb1cf1b8.py"
+  ],
+  "divergence": "Canonical GC/1.3 produces 424 bytes at 95.896225% in both canonical and relocation-strict objdiff, with zero relocations in both objects. Retail initializes count in r8, count-minus-eight in r6, group in r9, and second-buffer pointer in r7 in clrlwi/offset-shift/subi/group-init/pointer-add order. Generated code uses count r7 and pointer r8 in clrlwi/offset-shift/pointer-add/group-init/subi order; the colors persist in the later count comparisons and outer pointer reset. Sequential postincrement stores, outer do/while, and outer update-expression probes were byte-identical to baseline; inner postincrement and inclusive-bound variants scored 50.433964% and 91.396225%. The original NonMatching reconstruction is retained unchanged. Build and legal audit passed; DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
