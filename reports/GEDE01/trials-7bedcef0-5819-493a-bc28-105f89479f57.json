@@ -1,0 +1,479 @@
+[
+  {
+    "hypothesis": "baseline accepted scalar reconstruction",
+    "source_sha256": "a85b0e71519e8b1600850da05df0a932fe09bcf848cb50d50168d3909e9965f6",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 95.50848,
+    "size": "236"
+  },
+  {
+    "hypothesis": "early return after first branch, removing else region",
+    "source_sha256": "ff8757021eca0fa8738054641ee87509a42baa4cebfd8b5eefe4830a5e18edda",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 90.42373,
+    "size": "240"
+  },
+  {
+    "hypothesis": "single iteration do while region",
+    "source_sha256": "f1849e6e7ec01f364905de514f4e5db8dae49f4d0df78da414b74cb06e2b71da",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 95.50848,
+    "size": "236"
+  },
+  {
+    "hypothesis": "goto common exit from first branch",
+    "source_sha256": "618398e10914e6c3656458f42ccd6232f48e85166a109b6721a393bf8da43f7c",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 95.50848,
+    "size": "236"
+  },
+  {
+    "hypothesis": "inline branch body scope; helper parameters void *object, int handle, void *callback",
+    "source_sha256": "1dd35b10a548e115220e135e37d0209b64ba5ec1c87a0790d392488a4713d3bd",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 95.50848,
+    "size": "236"
+  },
+  {
+    "hypothesis": "inline branch body scope; helper parameters int handle, void *object, void *callback",
+    "source_sha256": "cee37b1310c82d7b3b4e8df68bd5dafb6850166854ef2eef901828ba964237a1",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 95.50848,
+    "size": "236"
+  },
+  {
+    "hypothesis": "inline branch body scope; helper parameters void *callback, void *object, int handle",
+    "source_sha256": "6f77dd5a816c82aba9c71e39791ebdc96db424bcccaf043ba5aa339e3bb47533",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 95.50848,
+    "size": "236"
+  },
+  {
+    "hypothesis": "inline address-taken scalar reader: object",
+    "source_sha256": "5b836fb2499892c825b5827964febc28c0fc2b44f996e03b01d17f1b1fd52394",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 95.50848,
+    "size": "236"
+  },
+  {
+    "hypothesis": "inline address-taken scalar reader: handle",
+    "source_sha256": "052b6361a0773442d51b103f8e1d521f5c0028a5dea5f34ac862dd58e3222ae1",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 95.50848,
+    "size": "236"
+  },
+  {
+    "hypothesis": "inline address-taken scalar reader: callback",
+    "source_sha256": "3fddb3883d2345e369e79ad02ff16b59e45d1839b87e2b113f378b22aaaaa5ef",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 95.50848,
+    "size": "236"
+  },
+  {
+    "hypothesis": "invert condition and exchange lexical branch order",
+    "source_sha256": "ebeecadfba28ae4e1de30398769e376ee08e04f0c78f57fbfd18272f0bdc9c26",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 48.22034,
+    "size": "236"
+  },
+  {
+    "hypothesis": "inline only unequal branch",
+    "source_sha256": "918c4b3d5715f3c3b1534cbd41dba8be015a141d2c6418020dccd6aaef100973",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 95.50848,
+    "size": "236"
+  },
+  {
+    "hypothesis": "inline only equal branch",
+    "source_sha256": "4d2624474c16d6ba99b1a433e4dc79e2b602ba37276af79edaa2ab7978a49ea7",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 95.50848,
+    "size": "236"
+  },
+  {
+    "hypothesis": "lossless int-return handle promotion to long long",
+    "source_sha256": "955d836074127546c6468e92d7175e29cfb3369113caa9037c7d6297971b55de",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 95.50848,
+    "size": "236"
+  },
+  {
+    "hypothesis": "lossless int-return handle promotion to unsigned long long",
+    "source_sha256": "3f5b66aa9be1da9e6eb50b6a98c29a6c3bb6a159d0f773aca3f2bd66df1a57d8",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 95.50848,
+    "size": "236"
+  },
+  {
+    "hypothesis": "lossless int-return handle promotion to double",
+    "source_sha256": "1447288659e037c81ada971edcf6b2c6bcefa907306562c9ef5fc122f5ed609b",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 2,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\nFAILED: [code=2] build/GEDE01/src/game/game_fn_800E8634.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_800E8634.c\n# ------------------------------------\n#      24: fn_8020104C((int)(201),(void*)(handle),(void*)(handle),(int)(0),(float)(lbl_8064F800))\n#   Error:                                       ^\n#   illegal explicit conversion from 'double' to\n#   'void *'\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n",
+    "compile_stderr": ""
+  },
+  {
+    "hypothesis": "lossless int-return handle promotion to double, with explicit int casts before pointer ABI conversions",
+    "source_sha256": "84ac9e670f2442d51d790836c0c51f4481f0045a336dd1ac3aeb3a786ef9856e",
+    "compile_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "-v",
+      "build/GEDE01/src/game/game_fn_800E8634.o"
+    ],
+    "compile_exit": 0,
+    "compile_stdout": "[1/1] tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_800E8634.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800E8634.d build/GEDE01/src/game/game_fn_800E8634.d\n",
+    "compile_stderr": "",
+    "diff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800E8634",
+      "fn_800E8634",
+      "-o",
+      "-",
+      "--format",
+      "json"
+    ],
+    "diff_exit": 0,
+    "score": 58.0,
+    "size": "288"
+  }
+]

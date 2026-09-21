@@ -1,0 +1,33 @@
+{
+  "assignment_id": "7bedcef0-5819-493a-bc28-105f89479f57",
+  "target": "fn_800E8634",
+  "retained_source": "eternal-darkness-decomp/src/game/game_fn_800E8634.c",
+  "retained_source_sha256": "a85b0e71519e8b1600850da05df0a932fe09bcf848cb50d50168d3909e9965f6",
+  "registration": "NonMatching (unchanged)",
+  "source_decision": "Retain the accepted base scalar reconstruction: every size-exact new variant ties its score; more elaborate forms bring no improvement. Preserved attempt 4 named comparison temporary is codegen-equivalent and does not need recovery.",
+  "prior_attempts_reviewed": [
+    {
+      "commit": "9164c3a2c81a7fd85b551263b4e031cdb989c907",
+      "lesson": "Combined callback comparison preserves best scalar allocation; pointer-to-integer coercion did not correct coloring."
+    },
+    {
+      "commit": "25c21f4f9b45a915367ca5606f184c4cf18d5490",
+      "lesson": "Same 95.50848% register-color divergence."
+    },
+    {
+      "commit": "4a4b98f4408c67b4f19f389ef74781b339615c2d",
+      "lesson": "Declaration timing, register qualifications, saved-object and late aliases do not correct allocation."
+    },
+    {
+      "commit": "18416621075695a643324b631cf71d33861c8a29",
+      "lesson": "Integer ABI parameters, aggregate scalarization, call-expression assignment, complete prototypes and named comparison temporary failed; raw build and hash evidence absent."
+    }
+  ],
+  "new_hypotheses": [
+    "Change control-flow region and exit structure to alter allocator traversal/liveness ordering without changing executed calls.",
+    "Inline branch bodies with different parameter scopes and orders, then use address-taken scalar readers that can be promoted after inlining.",
+    "Losslessly widen the int-return handle to change allocator value classification; convert back at ABI call boundaries."
+  ],
+  "constraints": "One independent C TU; canonical GC/1.3 flags; no assembler, compiler-policy changes, registration changes, neighboring source edits or runtime changes. No remote push.",
+  "dol_scope": "NonMatching candidate is compiled and compared independently. Canonical DOL build retains the original target object, so its hash is a build-integrity check rather than evidence of a candidate byte match."
+}
