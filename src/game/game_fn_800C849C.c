@@ -16,6 +16,7 @@ void fn_800C849C(void *object, Vec3 *position, float step)
 {
     Vec3 copy = *position;
     float target = fn_8012B7D0(object, &copy);
+    /* NonMatching: retail retains this value with frsp; volatile gives a reload. */
     volatile float current = fn_8012B750(object);
     float difference;
     fn_8017A12C(&difference, current, target);

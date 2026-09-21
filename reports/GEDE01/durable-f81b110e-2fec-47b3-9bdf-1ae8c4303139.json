@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f81b110e-2fec-47b3-9bdf-1ae8c4303139",
+  "attempt": 6,
+  "base_commit": "bf6f5819ca3131c45570010f17c6c0910411112f",
+  "target": "fn_800C849C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f81b110e-2fec-47b3-9bdf-1ae8c4303139.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both score 96.07843%, with retail and candidate each 204 bytes. Retail emits frsp f1,f1 at instruction offset 0x5C, then addi r3,r1,0x8 at 0x60; candidate emits that addi at 0x5C, then lfs f1,0xC(r1) at 0x60. Both call fn_8017A12C at 0x64. All seven relocations agree in offset, type, ELF-resolved symbol target, and addend. Independent double-temporary narrowing scored 88.23529%; volatile assignment-expression forwarding scored 94.117645%. Retained the best existing honest NonMatching reconstruction."
+}
