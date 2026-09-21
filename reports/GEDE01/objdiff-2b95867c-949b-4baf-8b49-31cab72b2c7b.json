@@ -1,0 +1,493 @@
+{
+  "version": 1,
+  "assignment_id": "2b95867c-949b-4baf-8b49-31cab72b2c7b",
+  "target": "fn_801F0CB0",
+  "cwd": "eternal-darkness-decomp",
+  "measurements": {
+    "canonical": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801F0CB0",
+        "fn_801F0CB0",
+        "-o",
+        "reports/GEDE01/objdiff-2b95867c-949b-4baf-8b49-31cab72b2c7b-canonical.json",
+        "--format",
+        "json-pretty"
+      ],
+      "function_reloc_diffs": "project/tool default (no override)",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-2b95867c-949b-4baf-8b49-31cab72b2c7b-canonical.json\n",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-2b95867c-949b-4baf-8b49-31cab72b2c7b-canonical.json",
+      "raw_output_sha256": "bd0bc7073d707e11f401995e381f3146cc06e92547fef898fea0a0003c8d6fad",
+      "retail_size": "900",
+      "candidate_size": "900",
+      "retail_match_percent": 98.32445,
+      "candidate_match_percent": 98.32445
+    },
+    "relocation-strict": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801F0CB0",
+        "fn_801F0CB0",
+        "-o",
+        "reports/GEDE01/objdiff-2b95867c-949b-4baf-8b49-31cab72b2c7b-relocation-strict.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "function_reloc_diffs": "name_address",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-2b95867c-949b-4baf-8b49-31cab72b2c7b-relocation-strict.json\n",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-2b95867c-949b-4baf-8b49-31cab72b2c7b-relocation-strict.json",
+      "raw_output_sha256": "bd0bc7073d707e11f401995e381f3146cc06e92547fef898fea0a0003c8d6fad",
+      "retail_size": "900",
+      "candidate_size": "900",
+      "retail_match_percent": 98.32445,
+      "candidate_match_percent": 98.32445
+    }
+  },
+  "same_offset_instruction_differences": [
+    {
+      "offset": "0x24",
+      "retail": "stmw r25, 0x64(r1)",
+      "candidate": "stmw r24, 0x60(r1)"
+    },
+    {
+      "offset": "0x28",
+      "retail": "lwz r0, lbl_8064D6F8@sda21",
+      "candidate": "lwz r10, lbl_8064D6F8@sda21"
+    },
+    {
+      "offset": "0x30",
+      "retail": "lwz r6, lbl_8064D738@sda21",
+      "candidate": "lwz r0, lbl_8064D738@sda21"
+    },
+    {
+      "offset": "0x34",
+      "retail": "lis r10, lbl_8063BEA0@ha",
+      "candidate": "lis r11, lbl_8063BEA0@ha"
+    },
+    {
+      "offset": "0x38",
+      "retail": "slwi r0, r0, 3",
+      "candidate": "slwi r6, r10, 3"
+    },
+    {
+      "offset": "0x40",
+      "retail": "add r0, r29, r0",
+      "candidate": "add r3, r29, r6"
+    },
+    {
+      "offset": "0x44",
+      "retail": "addi r31, r10, lbl_8063BEA0@l",
+      "candidate": "addi r31, r11, lbl_8063BEA0@l"
+    },
+    {
+      "offset": "0x48",
+      "retail": "slwi r6, r6, 9",
+      "candidate": "slwi r0, r0, 9"
+    },
+    {
+      "offset": "0x4c",
+      "retail": "lwz r26, 0x10(r27)",
+      "candidate": "lwz r25, 0x10(r27)"
+    },
+    {
+      "offset": "0x50",
+      "retail": "slwi r0, r0, 6",
+      "candidate": "slwi r3, r3, 6"
+    },
+    {
+      "offset": "0x54",
+      "retail": "addi r3, r31, 0x258",
+      "candidate": "addi r26, r31, 0x258"
+    },
+    {
+      "offset": "0x58",
+      "retail": "add r30, r6, r0",
+      "candidate": "add r30, r3, r0"
+    },
+    {
+      "offset": "0x6c",
+      "retail": "mr r25, r9",
+      "candidate": "mr r24, r9"
+    },
+    {
+      "offset": "0x70",
+      "retail": "add r30, r3, r30",
+      "candidate": "add r30, r26, r30"
+    },
+    {
+      "offset": "0xa4",
+      "retail": "cmplwi r25, 0x0",
+      "candidate": "cmplwi r24, 0x0"
+    },
+    {
+      "offset": "0xc0",
+      "retail": "xoris r3, r26, 0x8000",
+      "candidate": "xoris r3, r25, 0x8000"
+    },
+    {
+      "offset": "0x160",
+      "retail": "lfs f1, 0x0(r25)",
+      "candidate": "lfs f1, 0x0(r24)"
+    },
+    {
+      "offset": "0x164",
+      "retail": "lfs f0, 0x4(r25)",
+      "candidate": "lfs f0, 0x4(r24)"
+    },
+    {
+      "offset": "0x16c",
+      "retail": "lfs f2, 0x8(r25)",
+      "candidate": "lfs f2, 0x8(r24)"
+    },
+    {
+      "offset": "0x184",
+      "retail": "lfs f0, 0x0(r25)",
+      "candidate": "lfs f0, 0x0(r24)"
+    },
+    {
+      "offset": "0x188",
+      "retail": "mr r4, r25",
+      "candidate": "mr r4, r24"
+    },
+    {
+      "offset": "0x198",
+      "retail": "stfs f0, 0x0(r25)",
+      "candidate": "stfs f0, 0x0(r24)"
+    },
+    {
+      "offset": "0x19c",
+      "retail": "lfs f0, 0x4(r25)",
+      "candidate": "lfs f0, 0x4(r24)"
+    },
+    {
+      "offset": "0x1a4",
+      "retail": "stfs f0, 0x4(r25)",
+      "candidate": "stfs f0, 0x4(r24)"
+    },
+    {
+      "offset": "0x1a8",
+      "retail": "lfs f0, 0x8(r25)",
+      "candidate": "lfs f0, 0x8(r24)"
+    },
+    {
+      "offset": "0x1b0",
+      "retail": "stfs f0, 0x8(r25)",
+      "candidate": "stfs f0, 0x8(r24)"
+    },
+    {
+      "offset": "0x1cc",
+      "retail": "lbz r4, 0xe(r25)",
+      "candidate": "lbz r4, 0xe(r24)"
+    },
+    {
+      "offset": "0x1e4",
+      "retail": "lbz r4, 0x10(r25)",
+      "candidate": "lbz r4, 0x10(r24)"
+    },
+    {
+      "offset": "0x1f4",
+      "retail": "lhz r4, 0xc(r25)",
+      "candidate": "lhz r4, 0xc(r24)"
+    },
+    {
+      "offset": "0x214",
+      "retail": "lbz r4, 0xf(r25)",
+      "candidate": "lbz r4, 0xf(r24)"
+    },
+    {
+      "offset": "0x2e8",
+      "retail": "slwi r4, r29, 5",
+      "candidate": "addi r3, r26, 0x400"
+    },
+    {
+      "offset": "0x2ec",
+      "retail": "addi r3, r31, 0x658",
+      "candidate": "slwi r4, r29, 5"
+    },
+    {
+      "offset": "0x370",
+      "retail": "lmw r25, 0x64(r1)",
+      "candidate": "lmw r24, 0x60(r1)"
+    }
+  ],
+  "instruction_counts": {
+    "left": 225,
+    "right": 225
+  },
+  "relocation_verification": {
+    "basis": "readelf -rW raw outputs in verification report; compare offsets, relocation types, target names and explicit addends",
+    "retail_count": 41,
+    "candidate_count": 41,
+    "all_equal": true,
+    "entries": [
+      {
+        "offset": "00000028",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064D6F8",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000030",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064D738",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000036",
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8063BEA0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000046",
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8063BEA0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000005c",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_80651394",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000060",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_80651398",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000068",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8065139C",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000078",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064C390",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000007c",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_806513A0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000084",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8064C390",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000000bc",
+        "type": "R_PPC_REL24",
+        "target": "fn_80227BE0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000000d0",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_80651348",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000000e0",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_80651360",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000000ec",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_806513A4",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000000fc",
+        "type": "R_PPC_REL24",
+        "target": "fn_80227874",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000010c",
+        "type": "R_PPC_REL24",
+        "target": "fn_80211710",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000120",
+        "type": "R_PPC_REL24",
+        "target": "fn_80227AE0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000138",
+        "type": "R_PPC_REL24",
+        "target": "fn_80227BE0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000148",
+        "type": "R_PPC_REL24",
+        "target": "fn_80211710",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000015c",
+        "type": "R_PPC_REL24",
+        "target": "fn_80227AE0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000180",
+        "type": "R_PPC_REL24",
+        "target": "fn_800ED720",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000001b4",
+        "type": "R_PPC_REL24",
+        "target": "fn_802117F0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000001c8",
+        "type": "R_PPC_REL24",
+        "target": "fn_80227AF0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000001dc",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_80651350",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000001f0",
+        "type": "R_PPC_REL24",
+        "target": "fn_80227890",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000204",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_80651350",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000020c",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_806513A8",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000021c",
+        "type": "R_PPC_REL24",
+        "target": "fn_80227A10",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000226",
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8023B798",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "0000022a",
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8023B798",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000288",
+        "type": "R_PPC_REL24",
+        "target": "fn_800ED720",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000002c0",
+        "type": "R_PPC_REL24",
+        "target": "fn_802117F0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000002d4",
+        "type": "R_PPC_REL24",
+        "target": "fn_80227BE0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "000002e4",
+        "type": "R_PPC_REL24",
+        "target": "fn_80211BA0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000324",
+        "type": "R_PPC_REL24",
+        "target": "fn_80227B0C",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000328",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_80651348",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000330",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_8065134C",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000338",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_806513AC",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000340",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_806513B0",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000344",
+        "type": "R_PPC_REL24",
+        "target": "fn_80227874",
+        "addend": "+ 0"
+      },
+      {
+        "offset": "00000354",
+        "type": "R_PPC_REL24",
+        "target": "fn_80227C08",
+        "addend": "+ 0"
+      }
+    ]
+  },
+  "canonical_configuration_provenance": {
+    "project": "objdiff.json (generated by python3 configure.py)",
+    "project_has_options": false,
+    "invocation_override": null,
+    "strict_invocation_override": {
+      "function_reloc_diffs": "name_address"
+    }
+  }
+}

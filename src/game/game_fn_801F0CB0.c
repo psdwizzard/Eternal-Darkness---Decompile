@@ -42,27 +42,39 @@ extern void fn_80227B0C(void*, float, float, float);
 extern void fn_80227BE0(void*, s32*);
 extern void fn_80227C08(void*, s32);
 
+typedef struct EmitterSlot {
+    u8 data[0x40];
+} EmitterSlot;
+
+/* Aim records follow the sixteen emitter slots in the shared pool. */
+static inline AimRecord* aim_records(EmitterSlot* pool)
+{
+    return (AimRecord*)(pool + 16);
+}
+
 #pragma use_lmw_stmw on
 
-/* NonMatching: behavior-complete, size-exact reconstruction. GC/1.3 still
- * reschedules the initial emitter address and reverses the two record-address
- * temporaries. The conversion-bias constants are externalized after compile. */
+/* NonMatching: size-exact reconstruction. Reusing the typed emitter pool
+ * preserves the emitter-address grouping, but GC/1.3 retains the pool in an
+ * extra saved register and schedules the record base before its index.
+ * The conversion-bias constants use the existing audited externalization. */
 void fn_801F0CB0(u8* source, Vec3* target, void* owner, s32 index, u8 mode,
                  Vec3* color, u8* attributes)
 {
     u8* base;
+    EmitterSlot* emitterBase;
     void* emitter;
     Vec3 transformed;
     Vec3 direction;
+    s32 scale = *(s32*)(source + 0x10);
     float red = lbl_80651394;
     float green = lbl_80651398;
     float blue = lbl_8065139C;
-    s32 scale;
 
     base = lbl_8063BEA0;
-    scale = *(s32*)(source + 0x10);
-    emitter = base + 0x258 +
-              (lbl_8064D738 << 9) + ((index + (lbl_8064D6F8 << 3)) << 6);
+    emitterBase = (EmitterSlot*)(base + 0x258);
+    emitter = emitterBase + (index + (lbl_8064D6F8 << 3)) +
+              (lbl_8064D738 << 3);
 
     if (index == 0) {
         lbl_8064C390 -= lbl_806513A0;
@@ -120,7 +132,7 @@ void fn_801F0CB0(u8* source, Vec3* target, void* owner, s32 index, u8 mode,
             fn_80227BE0(emitter, &value);
         }
         fn_80211BA0(&transformed, &basis, &cross);
-        records = (AimRecord*)(base + 0x658);
+        records = aim_records(emitterBase);
         records[index].direction = cross;
         records[index].distance = red;
         records[index].owner = owner;

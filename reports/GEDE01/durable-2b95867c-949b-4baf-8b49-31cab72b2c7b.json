@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "assignment_id": "2b95867c-949b-4baf-8b49-31cab72b2c7b",
+  "attempt": 5,
+  "base_commit": "781a69fbc980612b3fb88c312c33ed2917d63d15",
+  "target": "fn_801F0CB0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b95867c-949b-4baf-8b49-31cab72b2c7b.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b95867c-949b-4baf-8b49-31cab72b2c7b-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b95867c-949b-4baf-8b49-31cab72b2c7b-relocation-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-2b95867c-949b-4baf-8b49-31cab72b2c7b.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-2b95867c-949b-4baf-8b49-31cab72b2c7b.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2b95867c-949b-4baf-8b49-31cab72b2c7b-baseline.json"
+  ],
+  "divergence": "Best freshly rebuilt canonical and relocation-strict score is 98.32445%, improved from the preserved 95.844444% candidate; both sides are 900 bytes. A new typed emitter-pool base shared with the following aim-record array preserves retail-like separate +0x258 and shifted-offset-sum construction; slot-first arithmetic and an inlined typed record-base accessor improve scheduling/register selection. Remaining differences: GC/1.3 keeps the pool base in r26, uses r25 for scale and r24 for attributes (retail uses r26 and r25), and saves/restores r24 at stack +0x60 rather than r25 at +0x64. Initial address temporaries use r10/r11/r6/r3/r0 instead of retail r0/r10/r6; +0x258 is formed into r26 instead of r3. At +0x2e8/+0x2ec the candidate emits addi r3,r26,0x400 then slwi r4,r29,5, whereas retail emits slwi r4,r29,5 then addi r3,r31,0x658. There are 33 differing same-offset formatted instructions, including propagated attribute-register operands. All 41 relocation offsets/types/targets/addends agree, including lbl_80651360 at +0xe0 and lbl_80651350 at +0x1dc/+0x204, all with addend zero. Only fn_801F0CB0 is emitted; the helper is fully inlined. NonMatching registration is retained. Full canonical build, legal and signature audits pass; DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f. Separately labeled raw canonical/strict outputs and exact commands, full build/audit stdout, relocation tables, and all experiment results are preserved."
+}
