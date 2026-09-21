@@ -19,10 +19,10 @@ void fn_801A9CDC(void)
 {
     int previous = fn_801A9B38();
     int value;
+    int old_distance;
     int target;
     int minimum = 100;
     int next;
-    int old_distance;
     int new_distance;
     int count;
 
