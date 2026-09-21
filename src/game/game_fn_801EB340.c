@@ -17,6 +17,8 @@ void fn_801EB340(u8* dl, void* tex_obj)
     u16 width;
     u16 height;
     u8 mipmap;
+    u32 size_hi;
+    u32 size_mid;
     u32 image_hi;
     u32 image_mid;
     u32 image_lo;
@@ -25,8 +27,8 @@ void fn_801EB340(u8* dl, void* tex_obj)
     int flags = 0;
     int amount;
     int done = 0;
-    u32 w;
-    u32 h;
+    u16 w;
+    u16 h;
     u32 m;
     u32 f;
 
@@ -35,19 +37,21 @@ void fn_801EB340(u8* dl, void* tex_obj)
     w = width - 1;
     h = height - 1;
     m = mipmap & 1;
-    format = f % 16u;
     width = w;
     height = h;
     width = w & 0x3FF;
     height = h & 0x3FF;
     mipmap = m;
+    format = f % 16u;
     format = (f % 16u) << 4;
     DCInvalidateRange(dl, 0x20);
 
     amount = 0;
-    size = width | ((u32)height << 10);
     image_value = (u32)image & ~0x30000000;
+    size = ((u32)height << 10) | width;
+    size_hi = size >> 16;
     image_hi = image_value >> 21;
+    size_mid = size >> 8;
     image_mid = image_value >> 13;
     image_lo = image_value >> 5;
 
@@ -74,8 +78,8 @@ void fn_801EB340(u8* dl, void* tex_obj)
                 break;
             case 0x88:
                 flags |= 1;
-                dl[2] = format | (size >> 16);
-                dl[3] = size >> 8;
+                dl[2] = format | size_hi;
+                dl[3] = size_mid;
                 dl[4] = size;
                 DCFlushRange(dl, 3);
                 break;
