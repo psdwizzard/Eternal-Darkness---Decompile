@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "0bc4b08b-e73e-4356-9a56-ea04a697052b",
+  "attempt": 5,
+  "base_commit": "ad40d35567c4843e4a056c99f20b5a0ad81dd945",
+  "target": "fn_8018CB70",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0bc4b08b-e73e-4356-9a56-ea04a697052b.json"
+  ],
+  "divergence": "Canonical GC/1.3 remains size-exact at 424 bytes and relocation-strict 95.896225%, with zero relocations in both objects. Retail emits the count in r8, count-minus-eight in r6, group in r9, and second-buffer pointer in r7 in clrlwi/offset-shift/subi/group-init/pointer-add order; canonical output uses count r7 and pointer r8 in clrlwi/offset-shift/pointer-add/group-init/subi order, with those colors persisting in later comparisons and the outer reset. A distinct integer-address live-range hypothesis and a register-priority follow-up both produced byte-identical objects and objdiff reports, so the prior honest C was retained. The canonical rebuild passed, legal audit passed, and main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
