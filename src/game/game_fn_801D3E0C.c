@@ -5,22 +5,23 @@ typedef unsigned int u32;
 #define MAGNITUDE_SWITCH(first, second, third) \
     switch (value & 0x70000) {                 \
     case 0x10000:                              \
-        *x = 0; *y = 0; *z = first; return;   \
+        *x = 0; *y = 0; *z = first; break;    \
     case 0x20000:                              \
-        *x = 0; *y = 0; *z = second; return;  \
+        *x = 0; *y = 0; *z = second; break;   \
     case 0x40000:                              \
-        *x = 0; *y = 0; *z = third; return;   \
-    default: return;                            \
+        *x = 0; *y = 0; *z = third; break;    \
+    default: break;                             \
     }
 
 #define LOW_SWITCH(a1, a2, a3, b1, b2, b3, c1, c2, c3, d1, d2, d3) \
     switch (value & 0xF) {                                         \
-    case 1: MAGNITUDE_SWITCH(a1, a2, a3);                          \
-    case 4: MAGNITUDE_SWITCH(b1, b2, b3);                          \
-    case 2: MAGNITUDE_SWITCH(c1, c2, c3);                          \
-    case 8: MAGNITUDE_SWITCH(d1, d2, d3);                          \
-    default: return;                                                \
-    }
+    case 1: MAGNITUDE_SWITCH(a1, a2, a3); break;                   \
+    case 4: MAGNITUDE_SWITCH(b1, b2, b3); break;                   \
+    case 2: MAGNITUDE_SWITCH(c1, c2, c3); break;                   \
+    case 8: MAGNITUDE_SWITCH(d1, d2, d3); break;                   \
+    default: break;                                                 \
+    }                                                               \
+    break
 
 void fn_801D3E0C(u32 value, s16* x, s16* y, s16* z)
 {
