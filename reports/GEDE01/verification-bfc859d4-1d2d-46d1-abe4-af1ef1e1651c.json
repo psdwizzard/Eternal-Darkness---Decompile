@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "assignment_id": "bfc859d4-1d2d-46d1-abe4-af1ef1e1651c",
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output_tail": [
+        "[888/890] DOL build/GEDE01/main.dol",
+        "[889/890] CHECK config/GEDE01/build.sha1",
+        "build/GEDE01/main.dol: OK",
+        "[890/890] PROGRESS"
+      ]
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "python3 tools/fndiff.py game/game_fn_8019FAB8.c fn_8019FAB8",
+      "exit_code": 0,
+      "raw_output_summary": "target 508 bytes  base 508 bytes  match 96.18898"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8019FAB8 fn_8019FAB8 -o reports/GEDE01/objdiff-bfc859d4-1d2d-46d1-abe4-af1ef1e1651c.json --format json -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to reports/GEDE01/objdiff-bfc859d4-1d2d-46d1-abe4-af1ef1e1651c.json"
+    }
+  ],
+  "canonical": {
+    "compiler": "GC/1.3",
+    "compiler_flags": ["-use_lmw_stmw on"],
+    "generated_size": 508,
+    "retail_size": 508,
+    "match_percent": 96.18898
+  },
+  "relocation_strict": {
+    "comparison": "function_reloc_diffs=name_address",
+    "generated_relocation_instruction_count": 16,
+    "retail_relocation_instruction_count": 16,
+    "relocation_diff_instructions": 0,
+    "result": "all relocation-bearing instructions agree in type, target name/address, and addend"
+  },
+  "remaining_instruction_differences": {
+    "argument_mismatch": 14,
+    "insert": 2,
+    "delete": 2
+  },
+  "distinct_hypothesis": {
+    "description": "Remove the redundant long-lived point_base alias and re-form source directly from points at each loop, to free the retail r28 cursor register.",
+    "raw_output_summary": "target 508 bytes  base 504 bytes  match 96.2126",
+    "result": "The cursor moved to retail r28, but the saved-register set shrank from r24-r31 to r25-r31, output shortened by four bytes, and register allocation shifted globally; the variant was discarded."
+  },
+  "legal_audit": {
+    "inline_assembly": false,
+    "whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "runtime_or_progress_edits": false,
+    "private_or_generated_inputs_staged": false
+  }
+}

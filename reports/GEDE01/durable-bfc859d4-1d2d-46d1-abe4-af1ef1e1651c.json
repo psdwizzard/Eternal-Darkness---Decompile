@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "bfc859d4-1d2d-46d1-abe4-af1ef1e1651c",
+  "attempt": 5,
+  "base_commit": "aee08144dcb267b87d319e66fbad4793197ec58d",
+  "target": "fn_8019FAB8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bfc859d4-1d2d-46d1-abe4-af1ef1e1651c.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-bfc859d4-1d2d-46d1-abe4-af1ef1e1651c.json"
+  ],
+  "divergence": "Canonical GC/1.3 output is size-exact at 508/508 bytes and reaches 96.18898%; relocation-strict objdiff reports no relocation-bearing instruction differences across all 16 relocations. Eighteen aligned instruction differences remain: 14 argument/register mismatches plus two insertions and two deletions. The first four-point loop assigns its cursor and byte offset to r27/r25 instead of retail r28/r27, reversing the cursor/offset updates. The outer loop keeps its index in r25 instead of retail r24, and its inner-loop cursor/index/stride initialization is scheduled before the retail loop-body shape, with the inner counter in r24 instead of r25. Removing the redundant long-lived point_base alias moved the cursor to r28 but shortened output to 504 bytes and globally shifted saved registers, so the size-exact reconstruction was retained."
+}
