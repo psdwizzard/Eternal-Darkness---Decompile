@@ -10,6 +10,7 @@ typedef struct Vec3s {
 int fn_8017D1E0(Vec3s* first, Vec3s* second, u16 distance, u16 close,
                 u16 limit, s16* counter)
 {
+    int delta;
     int result = 0;
     u16 dx;
     u16 dy;
@@ -19,7 +20,7 @@ int fn_8017D1E0(Vec3s* first, Vec3s* second, u16 distance, u16 close,
         distance = close;
     }
     {
-        int delta = second->x - first->x;
+        delta = second->x - first->x;
         if (delta >= 0) goto x_positive;
         delta = -delta;
 x_positive:
@@ -27,7 +28,7 @@ x_positive:
     }
     if (dx < distance) {
         {
-            int delta = second->y - first->y;
+            delta = second->y - first->y;
             if (delta >= 0) goto y_positive;
             delta = -delta;
 y_positive:
@@ -35,7 +36,7 @@ y_positive:
         }
         if (dy < distance) {
             {
-                int delta = second->z - first->z;
+                delta = second->z - first->z;
                 if (delta >= 0) goto z_positive;
                 delta = -delta;
 z_positive:

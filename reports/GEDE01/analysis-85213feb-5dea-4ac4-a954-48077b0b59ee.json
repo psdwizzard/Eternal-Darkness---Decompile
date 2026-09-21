@@ -1,0 +1,190 @@
+{
+  "retained_variant": "shared-delta",
+  "canonical_score": 95.28302,
+  "strict_score": 95.28302,
+  "retail_bytes": 212,
+  "generated_bytes": 212,
+  "instruction_count": 53,
+  "mismatched_instruction_count": 34,
+  "instruction_differences": [
+    {
+      "offset": 0,
+      "retail": "clrlwi r10, r5, 16",
+      "generated": "clrlwi r9, r5, 16"
+    },
+    {
+      "offset": 4,
+      "retail": "clrlwi r9, r6, 16",
+      "generated": "clrlwi r0, r6, 16"
+    },
+    {
+      "offset": 8,
+      "retail": "cmplw r10, r9",
+      "generated": "cmplw r9, r0"
+    },
+    {
+      "offset": 12,
+      "retail": "li r0, 0x0",
+      "generated": "li r10, 0x0"
+    },
+    {
+      "offset": 24,
+      "retail": "lha r10, 0x0(r3)",
+      "generated": "lha r9, 0x0(r3)"
+    },
+    {
+      "offset": 28,
+      "retail": "lha r9, 0x0(r4)",
+      "generated": "lha r0, 0x0(r4)"
+    },
+    {
+      "offset": 32,
+      "retail": "subf. r9, r10, r9",
+      "generated": "subf. r0, r9, r0"
+    },
+    {
+      "offset": 40,
+      "retail": "neg r9, r9",
+      "generated": "neg r0, r0"
+    },
+    {
+      "offset": 44,
+      "retail": "clrlwi r11, r9, 16",
+      "generated": "clrlwi r11, r0, 16"
+    },
+    {
+      "offset": 48,
+      "retail": "clrlwi r9, r5, 16",
+      "generated": "clrlwi r0, r5, 16"
+    },
+    {
+      "offset": 52,
+      "retail": "cmplw r11, r9",
+      "generated": "cmplw r11, r0"
+    },
+    {
+      "offset": 60,
+      "retail": "lha r10, 0x2(r3)",
+      "generated": "lha r9, 0x2(r3)"
+    },
+    {
+      "offset": 64,
+      "retail": "lha r9, 0x2(r4)",
+      "generated": "lha r0, 0x2(r4)"
+    },
+    {
+      "offset": 68,
+      "retail": "subf. r9, r10, r9",
+      "generated": "subf. r0, r9, r0"
+    },
+    {
+      "offset": 76,
+      "retail": "neg r9, r9",
+      "generated": "neg r0, r0"
+    },
+    {
+      "offset": 80,
+      "retail": "clrlwi r10, r9, 16",
+      "generated": "clrlwi r9, r0, 16"
+    },
+    {
+      "offset": 84,
+      "retail": "clrlwi r9, r5, 16",
+      "generated": "clrlwi r0, r5, 16"
+    },
+    {
+      "offset": 88,
+      "retail": "cmplw r10, r9",
+      "generated": "cmplw r9, r0"
+    },
+    {
+      "offset": 96,
+      "retail": "lha r9, 0x4(r3)",
+      "generated": "lha r3, 0x4(r3)"
+    },
+    {
+      "offset": 100,
+      "retail": "lha r3, 0x4(r4)",
+      "generated": "lha r0, 0x4(r4)"
+    },
+    {
+      "offset": 104,
+      "retail": "subf. r3, r9, r3",
+      "generated": "subf. r0, r3, r0"
+    },
+    {
+      "offset": 112,
+      "retail": "neg r3, r3",
+      "generated": "neg r0, r0"
+    },
+    {
+      "offset": 116,
+      "retail": "clrlwi r4, r3, 16",
+      "generated": "clrlwi r3, r0, 16"
+    },
+    {
+      "offset": 120,
+      "retail": "clrlwi r3, r5, 16",
+      "generated": "clrlwi r0, r5, 16"
+    },
+    {
+      "offset": 124,
+      "retail": "cmplw r4, r3",
+      "generated": "cmplw r3, r0"
+    },
+    {
+      "offset": 132,
+      "retail": "clrlwi r3, r6, 16",
+      "generated": "clrlwi r0, r6, 16"
+    },
+    {
+      "offset": 136,
+      "retail": "cmplw r11, r3",
+      "generated": "cmplw r11, r0"
+    },
+    {
+      "offset": 144,
+      "retail": "cmplw r10, r3",
+      "generated": "cmplw r9, r0"
+    },
+    {
+      "offset": 152,
+      "retail": "cmplw r4, r3",
+      "generated": "cmplw r3, r0"
+    },
+    {
+      "offset": 160,
+      "retail": "li r0, 0x1",
+      "generated": "li r10, 0x1"
+    },
+    {
+      "offset": 184,
+      "retail": "addi r3, r3, 0x1",
+      "generated": "addi r0, r3, 0x1"
+    },
+    {
+      "offset": 188,
+      "retail": "cmpw r3, r4",
+      "generated": "cmpw r0, r4"
+    },
+    {
+      "offset": 196,
+      "retail": "mr r4, r3",
+      "generated": "mr r4, r0"
+    },
+    {
+      "offset": 204,
+      "retail": "mr r3, r0",
+      "generated": "mr r3, r10"
+    }
+  ],
+  "retail_relocations": 0,
+  "generated_relocations": 0,
+  "relocation_targets_and_addends": "Both ELF objects have no relocation records, verified with readelf -SWsr; target/addend equality is vacuous.",
+  "canonical_settings": "GC/1.3; unmodified canonical flags, full compiler command in verification report.",
+  "nonmatching_linkage": "The source remains NonMatching. The DOL gate validates the canonical build using the retail split for this function; it does not establish a match for this candidate.",
+  "build_target": "ninja -j2 build/GEDE01/ok builds and validates the canonical DOL without invoking the global progress-writing default target.",
+  "failed_experiments": "Experiments with build exit 2 are syntax failures and have no score. Their subsequent objdiff output refers to the previous successful object and must not be attributed to the failed source.",
+  "reproduction": "Each experiment record includes complete source, source SHA-256, compiler build command/output and raw objdiff. To replay, write its source to the assigned source file and run its recorded commands from eternal-darkness-decomp. Helper measure() automates those steps. Only shared-delta is retained as a C translation unit.",
+  "previous_attempts": "Read all four preserved sources/result envelopes and raw objdiff; history report preserves those reads. fd8b1f9e adds register; 93a813ad separates declaration/init; c78f0e4e supplies the accepted arithmetic/control flow. No undocumented historical experiment is treated as verified."
+}
