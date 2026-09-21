@@ -37,9 +37,8 @@ int fn_8019FAB8(u8* object)
     Vec3 fallback_position;
     ShortVec3 points[4];
     float best_distance;
-    int offset;
-    int inner;
     int outer;
+    int inner;
     u8* source;
     ShortVec3* point_base;
     int count;
@@ -61,23 +60,16 @@ int fn_8019FAB8(u8* object)
     base = *(Vec3*)source;
 
     point_base = points;
-    source = (u8*)point_base;
-    offset = 0;
-    for (outer = 0; outer < 4; outer++) {
-        fn_80179B64((Vec3*)(*(u8**)(object + 0x8C) + offset + 0xC), (ShortVec3*)source);
-        offset += 0xC;
-        source += 6;
+    for (inner = 0; inner < 4; inner++) {
+        fn_80179B64((Vec3*)(*(u8**)(object + 0x8C) + inner * 0xC + 0xC), point_base + inner);
     }
     fn_8013CCEC(&candidate, &base, points, 4, 1);
     fn_80211A6C(&candidate, &base, &direction);
     best_distance = fn_80211B08(&direction);
 
-    offset = 0x3C;
     for (outer = 1; outer < count; outer++) {
-        source = (u8*)point_base;
         for (inner = 0; inner < 4; inner++) {
-            fn_80179B64((Vec3*)(*(u8**)(object + 0x8C) + offset + inner * 0xC + 0xC), (ShortVec3*)source);
-            source += 6;
+            fn_80179B64((Vec3*)(*(u8**)(object + 0x8C) + outer * 0x3C + inner * 0xC + 0xC), point_base + inner);
         }
         fn_8013CCEC(&loop_position, &base, points, 4, 1);
         fn_80211A6C(&loop_position, &base, &direction);
@@ -88,7 +80,6 @@ int fn_8019FAB8(u8* object)
                 best_distance = distance;
             }
         }
-        offset += 0x3C;
     }
 
     if (fn_801AC908(*(int*)(object + 0x94), &candidate, 0xFF) == 0 &&
