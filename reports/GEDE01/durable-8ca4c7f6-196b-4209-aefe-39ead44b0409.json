@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "8ca4c7f6-196b-4209-aefe-39ead44b0409",
+  "attempt": 4,
+  "base_commit": "7d0e78bb15b73bf1435c78ff686b69ab7b34ed98",
+  "target": "fn_80132B24",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8ca4c7f6-196b-4209-aefe-39ead44b0409.json"
+  ],
+  "divergence": "Best canonical score remains 95.078125%: the 260-byte candidate is four bytes longer than the 256-byte retail function because GC/1.3 materializes lbl_8030F540 with addi r0 then copies it to loop-carried r28, whereas retail emits addi r28 directly. Retail also loads the first Pair word into r3 and stores it before forming the fn_801FE8DC output pointer; the candidate uses r6 and forms that pointer first. All nine relocation type/target/addend tuples match in sequence, but seven offsets are shifted by +4, so relocation-strict comparison fails."
+}

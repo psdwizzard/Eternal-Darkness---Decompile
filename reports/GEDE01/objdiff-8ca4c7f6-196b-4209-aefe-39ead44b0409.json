@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "assignment_id": "8ca4c7f6-196b-4209-aefe-39ead44b0409",
+  "target": "fn_80132B24",
+  "compiler": "GC/1.3",
+  "cflags_extra": [
+    "-use_lmw_stmw on"
+  ],
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80132B24.c fn_80132B24",
+    "readelf -rW build/GEDE01/obj/game/game_fn_80132B24.o",
+    "readelf -rW build/GEDE01/src/game/game_fn_80132B24.o",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_measurements": {
+    "build_tail": [
+      "[893/898] MWCC build/GEDE01/src/game/game_fn_80132B24.o",
+      "[894/898] REPORT",
+      "[895/898] LINK build/GEDE01/main.elf",
+      "[896/898] DOL build/GEDE01/main.dol",
+      "[897/898] CHECK config/GEDE01/build.sha1",
+      "build/GEDE01/main.dol: OK",
+      "[898/898] PROGRESS"
+    ],
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "fndiff_summary": "target 256 bytes  base 260 bytes  match 95.078125",
+    "instruction_differences": [
+      "target 0x002c: addi r28, r3, lbl_8030F540@l | candidate: addi r0, r3, lbl_8030F540@l",
+      "target after 0x0030: no instruction | candidate: mr r28, r0",
+      "target 0x0080: lwz r3, 0x0(r26) | candidate: lwz r6, 0x0(r26)",
+      "target 0x0098: stw r3, 0x6c(r28), followed at 0x009c by addi r3, r28, 0x54 | candidate forms r3 at 0x0094, then stores r6 at 0x0098"
+    ],
+    "retail_readelf_relocations": [
+      "00000026 R_PPC_ADDR16_HA lbl_8030F540 + 0",
+      "0000002e R_PPC_ADDR16_LO lbl_8030F540 + 0",
+      "00000044 R_PPC_REL24 fn_801FD6F4 + 0",
+      "00000058 R_PPC_EMB_SDA21 lbl_8065024C + 0",
+      "00000074 R_PPC_REL24 fn_801FD6AC + 0",
+      "0000008c R_PPC_EMB_SDA21 lbl_80650228 + 0",
+      "0000009c R_PPC_EMB_SDA21 lbl_80650250 + 0",
+      "000000c4 R_PPC_REL24 fn_801FE8DC + 0",
+      "000000d0 R_PPC_REL24 fn_801E8328 + 0"
+    ],
+    "candidate_readelf_relocations": [
+      "00000026 R_PPC_ADDR16_HA lbl_8030F540 + 0",
+      "0000002e R_PPC_ADDR16_LO lbl_8030F540 + 0",
+      "00000048 R_PPC_REL24 fn_801FD6F4 + 0",
+      "0000005c R_PPC_EMB_SDA21 lbl_8065024C + 0",
+      "00000078 R_PPC_REL24 fn_801FD6AC + 0",
+      "00000090 R_PPC_EMB_SDA21 lbl_80650228 + 0",
+      "000000a0 R_PPC_EMB_SDA21 lbl_80650250 + 0",
+      "000000c8 R_PPC_REL24 fn_801FE8DC + 0",
+      "000000d4 R_PPC_REL24 fn_801E8328 + 0"
+    ]
+  },
+  "relocation_strict": {
+    "relocation_sequence_type_target_addend_equal": true,
+    "actual_offsets_equal": false,
+    "count_each": 9,
+    "code_match": false,
+    "strict_match": false
+  },
+  "experiments": [
+    {
+      "hypothesis": "Move all induction initializers into one for statement so MWCC coalesces the global-address result directly into the loop-carried register",
+      "score": 92.09375,
+      "result": "The extra mr remained and induction registers were permuted",
+      "retained": false
+    },
+    {
+      "hypothesis": "Use block-scoped initialized declarations in target register order",
+      "score": 94.453125,
+      "result": "The extra mr remained and i/offset register assignment changed",
+      "retained": false
+    },
+    {
+      "hypothesis": "Change the global pointee declaration to char and cast only at initialization",
+      "score": 95.078125,
+      "result": "Generated code was unchanged",
+      "retained": false
+    },
+    {
+      "hypothesis": "Carry the slot address as an unsigned integer and create a typed per-iteration view",
+      "score": 95.078125,
+      "result": "Generated code was unchanged",
+      "retained": false
+    },
+    {
+      "hypothesis": "Apply the register storage-class hint to the loop-carried slot pointer",
+      "score": 95.078125,
+      "result": "Generated code was unchanged",
+      "retained": false
+    },
+    {
+      "hypothesis": "Retain the prior Pair structure assignment reconstruction",
+      "score": 95.078125,
+      "result": "Best canonical result; honest C retained at the accepted base",
+      "retained": true
+    }
+  ],
+  "provenance": "The retained Pair-assignment source, configure.py registration, and split were already present at base commit 7d0e78bb15b73bf1435c78ff686b69ab7b34ed98. Preserved commit 6c6f726bccfdf3de47b63a09d5132bb8dd431599 supplied the prior diagnosis; all declaration/lifetime and integer-induction experiments above were independently rebuilt in this worktree and reverted when they failed to improve the score.",
+  "legal_audit": "Honest C only; no inline or whole-function assembly; independent translation unit retained; no shared reconstruction, gate changes, compiler-policy changes, neighboring function edits, runtime edits, or global-progress edits."
+}
