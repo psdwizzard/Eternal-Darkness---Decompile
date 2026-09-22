@@ -1,5 +1,6 @@
 typedef unsigned char u8;
 typedef signed short s16;
+typedef signed int s32;
 typedef unsigned int u32;
 
 typedef struct KindInfo {
@@ -11,7 +12,7 @@ typedef struct KindInfo {
 extern const u32 lbl_802FC5BC[];
 extern void fn_801E3644(void);
 extern void fn_801499C4(void);
-extern void* fn_80201814(u32);
+extern void* fn_80201814(s32);
 extern KindInfo* fn_80201B8C(void*);
 extern void* fn_801D0D78();
 extern void fn_801D0CA4(void*);
@@ -24,22 +25,22 @@ extern void fn_80149B38(void*);
 extern void fn_80149EB8(void*);
 extern void fn_801A39DC(void*);
 extern void fn_80184740(void*);
-extern s16 fn_801D3A34(u32, u32);
-extern u32 fn_801CEB2C(u32);
-extern u32 fn_801D38E8(u32);
-extern u32 fn_80201AE4(void);
+extern s16 fn_801D3A34(s32, u32);
+extern u32 fn_801CEB2C(s32);
+extern u32 fn_801D38E8(s32);
+extern s32 fn_80201AE4(void);
 extern void fn_801E8328(u32, void*, u32);
 
-void* fn_801E3020(u32 runtime, u32 flags, void* position, u32 source,
-                  u32 owner, void** output_a, void** output_b,
-                  void** output_c, void** output_d, u32 resource)
+void* fn_801E3020(s32 runtime, s32 flags, void* position, s32 source,
+                  s32 owner, void** output_a, void** output_b,
+                  void** output_c, void** output_d, s32 resource)
 {
     KindInfo* info;
     void* object;
     u8* work;
     u8* data;
     u8* secondary;
-    u32 special;
+    s32 special;
 
     info = fn_80201B8C(fn_80201814(owner));
     special = 0;
