@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "assignment_id": "7c09219a-bc3a-4f26-807f-bc66c6ccd695",
+  "target": "fn_801E3020",
+  "compiler": "GC/1.3",
+  "canonical": true,
+  "relocation_strict": true,
+  "raw_measurement": {
+    "command": "python3 tools/fndiff.py game/game_fn_801E3020.c fn_801E3020",
+    "stdout": "target 728 bytes  base 728 bytes  match 93.95055",
+    "target_size": 728,
+    "candidate_size": 728,
+    "match_percent": 93.95055,
+    "target_relocation_instructions": 29,
+    "candidate_relocation_instructions": 29,
+    "aligned_instruction_rows": 186,
+    "diff_counts": {
+      "none": 141,
+      "argument_mismatch": 35,
+      "insert": 4,
+      "delete": 4,
+      "replace": 2
+    }
+  },
+  "hypothesis_test": {
+    "description": "Move the long-lived special discriminator before pointer locals to change MWCC interference-graph/coloring order.",
+    "result": "rejected",
+    "raw_stdout": "target 728 bytes  base 728 bytes  match 92.10989",
+    "observed_divergence": "The declaration-order change rotated previously correct position/object/work registers and reduced the score; it was reverted."
+  },
+  "verification": {
+    "configure": "python3 configure.py: exit 0",
+    "build": ".tools/bin/ninja -j2: exit 0; build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "legal_audit": "legal audit passed (20287 tracked project files inspected)"
+  },
+  "relocation_note": "All 29 relocation-bearing instruction rows align in count; the final lbl_802FC5BC reference retains target and +12 addend. The candidate is not a match because instruction equality is below 100%."
+}
