@@ -59,7 +59,7 @@ void fn_8017EE58(u8* object, ShortCoord3* first, ShortCoord3* second,
     current.z = first->z;
 
     while ((u8)i < object[1] - 1) {
-        u8* entry = *(u8**)(object + 0x4C) + (u8)i * 0x38;
+        u8* entry = *(u8**)(object + 0x4C) + (i & 0xFF) * 0x38;
 
         memcpy(&work, &base, sizeof(work));
         if (work.x != 0) {
@@ -77,7 +77,7 @@ void fn_8017EE58(u8* object, ShortCoord3* first, ShortCoord3* second,
                     *(u16*)(config + 8), 1);
         fn_801805E0(entry + 0x58, 4, config[1], 0, config + 0x20,
                     lbl_80650938);
-        fn_80180518(object + 0x24, (u8)i + 1, 1);
+        fn_80180518(object + 0x24, (u8)((u8)i + 1), 1);
         i += 2;
     }
 
