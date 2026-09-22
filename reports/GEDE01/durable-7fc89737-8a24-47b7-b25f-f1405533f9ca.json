@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "7fc89737-8a24-47b7-b25f-f1405533f9ca",
+  "attempt": 6,
+  "base_commit": "ffab2a737511eb52be86ba5e239f2811aa52de6b",
+  "target": "fn_800D3598",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7fc89737-8a24-47b7-b25f-f1405533f9ca.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-7fc89737-8a24-47b7-b25f-f1405533f9ca.py"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff both score 93.088234% at 136/136 bytes. Retail keeps object/id in r31 and value in r30; generated code uses object/id in r30 and value in r31. Retail moves object to r31 at 0x10 before saving r30 at 0x14; generated code saves r30 at 0x10 before moving object to r30 at 0x14. All five relocation offsets, types, targets, and zero addends agree. Aggregate scalar-replacement variants emit 128 bytes at 86.76471% or 132 bytes at 89.85294% by removing retail temporary moves; none improves the retained candidate."
+}
