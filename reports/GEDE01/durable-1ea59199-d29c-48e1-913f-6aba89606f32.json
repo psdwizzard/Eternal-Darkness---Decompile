@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "1ea59199-d29c-48e1-913f-6aba89606f32",
+  "attempt": 6,
+  "base_commit": "cbdeb1d5ef999cbc1b8430333d0e4524ace8b381",
+  "target": "fn_801F3528",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1ea59199-d29c-48e1-913f-6aba89606f32.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1ea59199-d29c-48e1-913f-6aba89606f32-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-1ea59199-d29c-48e1-913f-6aba89606f32.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-1ea59199-d29c-48e1-913f-6aba89606f32.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-1ea59199-d29c-48e1-913f-6aba89606f32.json"
+  ],
+  "divergence": "Canonical and relocation-strict name/address objdiff both measure 97.4375%, size-exact at 128/128 bytes. At function offsets 0x18 and 0x20, retail stores red r8 to stack 0xC before the 0x4330 high word r7 to stack 0x8; generated code stores high word r0 to 0x8 first and red r8 to 0xC second. Register allocation differs throughout: retail uses r7/r6/r4/r0 for the conversion high word, lbl_8063C608 base, blue, and alpha; generated code uses r0/r4/r6/r7 respectively. At 0x08 the unsigned-conversion constant relocation targets generated object-local @6 instead of retail lbl_80651350. The other three relocations have the intended named globals, and all four addends are zero. The packed-word store remains correctly placed at 0x64. New destination-pointer lifetime, local-width, early-float, register-hint, const-local, volatile-input, and explicit-double hypotheses did not improve the retained baseline; no compiler policy or relocation rewrite was introduced."
+}

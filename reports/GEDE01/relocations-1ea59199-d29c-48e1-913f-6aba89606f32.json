@@ -1,0 +1,44 @@
+{
+  "commands": [
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-objdump",
+        "-dr",
+        "build/GEDE01/obj/game/game_fn_801F3528.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nbuild/GEDE01/obj/game/game_fn_801F3528.o:     file format elf32-powerpc\n\n\nDisassembly of section .text:\n\n00000000 <fn_801F3528>:\n   0:\t94 21 ff d0 \tstwu    r1,-48(r1)\n   4:\t3c e0 43 30 \tlis     r7,17200\n   8:\tc8 80 00 00 \tlfd     f4,0(0)\n\t\t\t8: R_PPC_EMB_SDA21\tlbl_80651350\n   c:\t3c c0 00 00 \tlis     r6,0\n\t\t\te: R_PPC_ADDR16_HA\tlbl_8063C608\n  10:\t89 03 00 00 \tlbz     r8,0(r3)\n  14:\t88 a3 00 01 \tlbz     r5,1(r3)\n  18:\t91 01 00 0c \tstw     r8,12(r1)\n  1c:\t88 83 00 02 \tlbz     r4,2(r3)\n  20:\t90 e1 00 08 \tstw     r7,8(r1)\n  24:\t88 03 00 03 \tlbz     r0,3(r3)\n  28:\tc8 01 00 08 \tlfd     f0,8(r1)\n  2c:\t90 a1 00 14 \tstw     r5,20(r1)\n  30:\tec 60 20 28 \tfsubs   f3,f0,f4\n  34:\t80 63 00 00 \tlwz     r3,0(r3)\n  38:\t90 e1 00 10 \tstw     r7,16(r1)\n  3c:\tc8 01 00 10 \tlfd     f0,16(r1)\n  40:\t90 81 00 1c \tstw     r4,28(r1)\n  44:\tec 40 20 28 \tfsubs   f2,f0,f4\n  48:\t90 e1 00 18 \tstw     r7,24(r1)\n  4c:\tc8 01 00 18 \tlfd     f0,24(r1)\n  50:\td4 66 00 00 \tstfsu   f3,0(r6)\n\t\t\t52: R_PPC_ADDR16_LO\tlbl_8063C608\n  54:\tec 20 20 28 \tfsubs   f1,f0,f4\n  58:\t90 01 00 24 \tstw     r0,36(r1)\n  5c:\t90 e1 00 20 \tstw     r7,32(r1)\n  60:\tc8 01 00 20 \tlfd     f0,32(r1)\n  64:\t90 60 00 00 \tstw     r3,0(0)\n\t\t\t64: R_PPC_EMB_SDA21\tlbl_8064C384\n  68:\tec 00 20 28 \tfsubs   f0,f0,f4\n  6c:\td0 46 00 04 \tstfs    f2,4(r6)\n  70:\td0 26 00 08 \tstfs    f1,8(r6)\n  74:\td0 06 00 0c \tstfs    f0,12(r6)\n  78:\t38 21 00 30 \taddi    r1,r1,48\n  7c:\t4e 80 00 20 \tblr\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-r",
+        "build/GEDE01/obj/game/game_fn_801F3528.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0xc0 contains 4 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000008  0000046d R_PPC_EMB_SDA21   00000000   lbl_80651350 + 0\n0000000e  00000506 R_PPC_ADDR16_HA   00000000   lbl_8063C608 + 0\n00000052  00000504 R_PPC_ADDR16_LO   00000000   lbl_8063C608 + 0\n00000064  0000066d R_PPC_EMB_SDA21   00000000   lbl_8064C384 + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-objdump",
+        "-dr",
+        "build/GEDE01/src/game/game_fn_801F3528.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nbuild/GEDE01/src/game/game_fn_801F3528.o:     file format elf32-powerpc\n\n\nDisassembly of section .text:\n\n00000000 <fn_801F3528>:\n   0:\t94 21 ff d0 \tstwu    r1,-48(r1)\n   4:\t3c 00 43 30 \tlis     r0,17200\n   8:\tc8 80 00 00 \tlfd     f4,0(0)\n\t\t\t8: R_PPC_EMB_SDA21\t@6\n   c:\t3c 80 00 00 \tlis     r4,0\n\t\t\te: R_PPC_ADDR16_HA\tlbl_8063C608\n  10:\t89 03 00 00 \tlbz     r8,0(r3)\n  14:\t88 a3 00 01 \tlbz     r5,1(r3)\n  18:\t90 01 00 08 \tstw     r0,8(r1)\n  1c:\t88 c3 00 02 \tlbz     r6,2(r3)\n  20:\t91 01 00 0c \tstw     r8,12(r1)\n  24:\t88 e3 00 03 \tlbz     r7,3(r3)\n  28:\tc8 01 00 08 \tlfd     f0,8(r1)\n  2c:\t90 a1 00 14 \tstw     r5,20(r1)\n  30:\tec 60 20 28 \tfsubs   f3,f0,f4\n  34:\t80 63 00 00 \tlwz     r3,0(r3)\n  38:\t90 01 00 10 \tstw     r0,16(r1)\n  3c:\tc8 01 00 10 \tlfd     f0,16(r1)\n  40:\t90 c1 00 1c \tstw     r6,28(r1)\n  44:\tec 40 20 28 \tfsubs   f2,f0,f4\n  48:\t90 01 00 18 \tstw     r0,24(r1)\n  4c:\tc8 01 00 18 \tlfd     f0,24(r1)\n  50:\td4 64 00 00 \tstfsu   f3,0(r4)\n\t\t\t52: R_PPC_ADDR16_LO\tlbl_8063C608\n  54:\tec 20 20 28 \tfsubs   f1,f0,f4\n  58:\t90 e1 00 24 \tstw     r7,36(r1)\n  5c:\t90 01 00 20 \tstw     r0,32(r1)\n  60:\tc8 01 00 20 \tlfd     f0,32(r1)\n  64:\t90 60 00 00 \tstw     r3,0(0)\n\t\t\t64: R_PPC_EMB_SDA21\tlbl_8064C384\n  68:\tec 00 20 28 \tfsubs   f0,f0,f4\n  6c:\td0 44 00 04 \tstfs    f2,4(r4)\n  70:\td0 24 00 08 \tstfs    f1,8(r4)\n  74:\td0 04 00 0c \tstfs    f0,12(r4)\n  78:\t38 21 00 30 \taddi    r1,r1,48\n  7c:\t4e 80 00 20 \tblr\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-r",
+        "build/GEDE01/src/game/game_fn_801F3528.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0xc0 contains 4 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000008  0000046d R_PPC_EMB_SDA21   00000000   @6 + 0\n0000000e  00000506 R_PPC_ADDR16_HA   00000000   lbl_8063C608 + 0\n00000052  00000504 R_PPC_ADDR16_LO   00000000   lbl_8063C608 + 0\n00000064  0000066d R_PPC_EMB_SDA21   00000000   lbl_8064C384 + 0\n",
+      "stderr": ""
+    }
+  ]
+}
