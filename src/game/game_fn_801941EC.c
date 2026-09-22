@@ -14,15 +14,15 @@ extern void fn_80193F3C(u8, int, Vec3s*, Vec3s*, float, float, s16, u8, u8);
 void fn_801941EC(u8* state, u8* input, Vec3s* output)
 {
     Vec3s points[18];
-    int i;
-    int stride;
     u8 count;
     u8 interior;
     u8 last;
-    u8 last2;
     u8 last3;
+    int i;
+    u8 last2;
     s16 offset;
     s16 step;
+    int stride;
     float x_offset;
     float y_offset;
 
@@ -53,13 +53,14 @@ void fn_801941EC(u8* state, u8* input, Vec3s* output)
     output[1].z = points[1].z;
     output += 2;
 
-    for (i = 0; i < interior; i++) {
+    for (i = 0; i < interior;) {
         fn_80187120(points[i + 1].x, points[i + 1].y,
                     points[i + 3].x, points[i + 3].y,
                     &x_offset, &y_offset);
         fn_80193F3C(state[0xB], i, &points[i + 2], output, x_offset, y_offset,
                     offset, state[4], state[5]);
         offset += step;
+        i++;
         output += 2;
     }
 
