@@ -54,9 +54,9 @@ int fn_80087D64(Work* work)
     if (state->mode == 6) {
         fn_8006BEE4(state, fn_8006EA4C);
         if (fn_801A6D94(lbl_8064C824)) {
-            int i;
-            int offset;
             u8* entry;
+            int offset;
+            int i;
 
             offset = fn_8006ECD4(work, 6) * 0x2C;
             entry = (u8*)work + offset;

@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "assignment_id": "b949a19f-3981-487f-81c9-35878ba32521",
+  "target": "fn_80087D64",
+  "compiler": "GC/1.3",
+  "compiler_flags_delta": ["-use_lmw_stmw on"],
+  "hypothesis": "Within the mode-6 block, declare entry before offset and loop index so MWCC graph coloring reuses the dead state register for entry.",
+  "source_sha256": "daa0f65eef74485df240cbc90f49e5c950cd1ee05cefae249c00466ab580f521",
+  "object_sha256": "e2256151677f9180c4a4c5916c3ad6b6d19bc3b608e455e86546fe053c5e7206",
+  "objdiff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80087D64 -o reports/GEDE01/objdiff-b949a19f-3981-487f-81c9-35878ba32521.raw.json --format json fn_80087D64",
+  "objdiff_raw_summary": "left/retail fn_80087D64 size=352 match_percent=93.38636; right/candidate fn_80087D64 size=360 match_percent=93.38636",
+  "match_percent": 93.38636,
+  "retail_size": 352,
+  "candidate_size": 360,
+  "relocation_strict": {
+    "passed": false,
+    "retail_relocation_instruction_count": 14,
+    "candidate_relocation_instruction_count": 14,
+    "retail_sites": [20, 36, 64, 76, 108, 116, 120, 124, 128, 148, 188, 224, 268, 316],
+    "candidate_sites": [20, 36, 64, 76, 108, 116, 120, 124, 128, 148, 188, 224, 268, 324],
+    "types_in_order": ["R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_ADDR16_HA", "R_PPC_ADDR16_LO", "R_PPC_REL24", "R_PPC_EMB_SDA21", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24", "R_PPC_REL24"],
+    "targets_in_order": ["fn_8006ED98", "fn_80201814", "fn_80088A04", "fn_8006ECD4", "fn_8006EA4C", "fn_8006EA4C", "fn_8006BEE4", "lbl_8064C824", "fn_801A6D94", "fn_8006ECD4", "fn_8006DEF8", "fn_8006DEF8", "fn_8006ED3C", "fn_800496EC"],
+    "addends_in_order": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "raw_observation": "Types, targets, and zero addends agree in order. Strict equality fails because the final fn_800496EC relocation is at retail +316 but candidate +324; the first 13 sites agree exactly."
+  },
+  "build_commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+  "build_raw_result": "Fresh canonical build completed 908/908 with exit status 0, including LINK main.elf, DOL main.dol, CHECK config/GEDE01/build.sha1, and build/GEDE01/main.dol: OK.",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+  "dol_sha1_raw_output": [
+    "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol"
+  ],
+  "divergence": "Candidate remains 8 bytes longer. The declaration-order change fixes the mode-6 entry pointer allocation (candidate now uses r28 like retail), but an extra r26 save/restore remains; object/owner are swapped between r30/r29; mode-6 offset and loop index use r27/r26 rather than retail r29/r27; the mode-7 halfword store uses indexed addressing; and the else-path uses an indexed first byte store plus different scheduling. The final relocation remains shifted by 8 bytes."
+}
