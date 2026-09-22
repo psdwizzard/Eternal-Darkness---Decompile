@@ -24,7 +24,7 @@ int fn_800A78E0(void* context, Event800A78E0* event, void* extra)
     values[0] = lbl_8023975C[0];
     values[1] = lbl_8023975C[1];
     values[2] = lbl_8023975C[2];
-    mapped = values[event->index - 1];
+    mapped = *(u32*)((u8*)values + (event->index - 1) * sizeof(u32));
 
     if (lbl_8064B81C == 0) {
         event->kind = 0;

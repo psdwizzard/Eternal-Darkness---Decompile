@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "0041c35a-89db-44d2-900f-76a23235ebfe",
+  "attempt": 5,
+  "base_commit": "445987a629eeb8891e8b3c423e363cb6fe498338",
+  "target": "fn_800A78E0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0041c35a-89db-44d2-900f-76a23235ebfe.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-0041c35a-89db-44d2-900f-76a23235ebfe-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-0041c35a-89db-44d2-900f-76a23235ebfe.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-0041c35a-89db-44d2-900f-76a23235ebfe.json",
+    "eternal-darkness-decomp/reports/GEDE01/verify-0041c35a-89db-44d2-900f-76a23235ebfe.py"
+  ],
+  "divergence": "Byte-address indexing improves canonical and relocation-strict objdiff from 94.63265% to 98.96939%. Retail is 392 bytes; candidate is 396 bytes. The local-copy load/store schedule now agrees with retail. The remaining difference is an extra subi r6, r6, 1 at candidate offset 0x3c and addi r6, r1, 0x8 at 0x50 instead of retail addi r6, r1, 0x4 at 0x4c; subsequent instruction and relocation offsets shift by four bytes. All 10 relocation types, resolved symbol targets, and addends agree in sequence. The independent C translation unit remains NonMatching under unchanged canonical GC/1.3 settings. Full DOL verification therefore uses the original split object, not the candidate."
+}
