@@ -52,8 +52,7 @@ void* fn_8017CCD8(void* data, u32 size, u32 count)
     lbl_8060630C.managers =
         (Manager*)((u8*)lbl_8060630C.managers + sizeof(Manager));
     lbl_8060630C.manager_count++;
-    lbl_8060630C.entries =
-        (Entry*)((u8*)lbl_8060630C.entries + saved_count * sizeof(Entry));
+    lbl_8060630C.entries += saved_count & 0xFFFF;
     lbl_8060630C.entry_count += saved_count;
     return manager;
 }
