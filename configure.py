@@ -87,6 +87,17 @@ config.asflags = ["-mgekko", "--strip-local-absolute", "-I include", f"-I build/
 config.ldflags = ["-fp hardware", "-nodefaults"]
 config.custom_build_rules = [
     {
+        "name": "externalize_game_800DC4D4_unsigned_bias",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @73 lbl_8064F4F0 "
+            "orig/GEDE01/sys/main.dol --require-whole-section && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@73=lbl_8064F4F0 --remove-section=.sdata2 "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    },
+    {
         "name": "externalize_game_801E504C_constants",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @42 lbl_80651288 "
@@ -3487,6 +3498,11 @@ for rule in config.custom_build_rules:
 guarded_externalize_rules.add("externalize_string_pool_80250588")
 config.custom_build_steps = {
     "post-compile": [
+        {
+            "outputs": [f"build/{VERSION}/src/game/game_fn_800DC4D4.externalized"],
+            "rule": "externalize_game_800DC4D4_unsigned_bias",
+            "inputs": [f"build/{VERSION}/src/game/game_fn_800DC4D4.o"],
+        },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_80050B08.externalized"],
             "rule": "externalize_game_80050B08_jumptables",
@@ -8002,7 +8018,7 @@ config.libs = [
             Object(Matching, "game/game_fn_800DC2B8.c"),
             Object(Matching, "game/game_fn_800DC398.c"),
             Object(Matching, "game/game_fn_800DC3A0.c", extra_cflags=["-use_lmw_stmw on"]),
-            Object(NonMatching, "game/game_fn_800DC4D4.c", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_800DC4D4.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/game_fn_800DC9A8.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/game_fn_800DCBC0.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_800DCFE0.c", extra_cflags=["-use_lmw_stmw on"]),
