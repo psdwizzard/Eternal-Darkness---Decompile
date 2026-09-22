@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "16bc6140-b63b-4716-a9dd-ed77a8b78fda",
+  "attempt": 4,
+  "base_commit": "7e2e49f573bbf5fb3b08dfe86da292c989fdacbd",
+  "target": "fn_801941EC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-16bc6140-b63b-4716-a9dd-ed77a8b78fda.json"
+  ],
+  "divergence": "Canonical GC/1.3 emits 724 bytes and relocation-strict objdiff measures 93.8011%. All three R_PPC_REL24 relocations match at 0x54, 0x15C, and 0x190 to fn_801870D0, fn_80187120, and fn_80193F3C with zero addends. The remaining mismatch is the established callee-saved register-color permutation plus interleaved final y/z extrapolation. A new shared-s16-delta hypothesis forced truncation/sign-extension, grew output to 736 bytes, and scored 91.37016%. A new volatile-destination hypothesis successfully forced sequential x/y/z arithmetic but changed destination address formation to one add plus displaced stores, grew output to 728 bytes, and scored 92.121544%; both were rejected in favor of the best honest reconstruction."
+}
