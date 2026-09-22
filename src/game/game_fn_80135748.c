@@ -8,25 +8,24 @@ extern int lbl_8064CFAC;
 extern u32 lbl_8064CFB0;
 extern u8 lbl_8064CFA4;
 
-/* NonMatching: size-exact pool reset; remaining differences are register
- * allocation and instruction scheduling in the setup and unrolled clear loop. */
+/* Resets the pool and returns its aligned data start. */
 u32 fn_80135748(u32* end_out)
 {
     int i;
     Slot* slot;
-    u32 aligned;
+    char* aligned;
     u32 end;
     int count;
 
     lbl_8064CFA4 = 1;
     count = lbl_8064CFAC;
-    aligned = ((u32)lbl_8064CF88->data + 31) & ~31;
-    end = (u32)(lbl_8064CF80 + lbl_8064CFB0) - aligned;
+    aligned = (char*)(((u32)lbl_8064CF88->data + 31) & ~31);
+    end = (u32)(lbl_8064CF80 + lbl_8064CFB0) - (u32)aligned;
     if (end_out != 0) *end_out = end;
     for (i = 0; i < count; i++) {
         slot = &lbl_8064CF88[i];
         slot->state = 0;
         slot->owner = 0;
     }
-    return aligned;
+    return (u32)aligned;
 }
