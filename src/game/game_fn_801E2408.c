@@ -37,7 +37,7 @@ extern void fn_801FE934(void*, s32);
 extern s32 fn_801D3A34(u32, s32);
 extern s32 fn_801CEB2C(u32);
 extern void fn_8014E9B0(void*, void*, u8, s32, void*, s32, s32, s32);
-extern s32 fn_80201814(s32);
+extern u32 fn_80201814(s32);
 extern Context* fn_80201B8C(void);
 extern void fn_8020123C(s32, s32, s32, s32);
 extern s32 fn_80201B64(void);
@@ -62,6 +62,8 @@ static s32 is_allowed(u32 object)
     return lbl_8023BA30[fn_801D38E8(object)].values[*lbl_8064C5A8] == 1;
 }
 
+#define SUBJECT (*(u32*)(object + 4))
+
 void fn_801E2408(u8* object)
 {
     s32 id;
@@ -78,11 +80,11 @@ void fn_801E2408(u8* object)
         return;
     }
 
-    subject = *(u32*)(object + 4);
+    subject = SUBJECT;
 
     switch (*(u16*)(object + 0xFF4)) {
     case 0:
-        fn_801FE934(object + 0x44, 6);
+        fn_801FE934(*(void**)(object + 0x44), 6);
         id = fn_801D3A34(subject, 0x35);
         kind = (u8)fn_801CEB2C(subject);
         fn_8014E9B0(work, object + 0x38, kind, id, lbl_802FC5BC + 0xC, 2, 4, 1);
@@ -124,8 +126,8 @@ void fn_801E2408(u8* object)
             u32 word;
             u16 half;
         } config;
-        u32 first;
         u32 second;
+        u32 first;
 
         config.word = lbl_80651F38;
         config.half = lbl_80651F3C;
@@ -148,37 +150,37 @@ void fn_801E2408(u8* object)
     }
     case 90:
         if (fn_80201814(*(s32*)(object + 0xC)) != 0 && fn_80201B64() != 8) {
-            fn_800CDAD8(subject, *(s32*)(object + 0xC), 1, lbl_8065122C);
+            fn_800CDAD8(SUBJECT, *(s32*)(object + 0xC), 1, lbl_8065122C);
             switch (lbl_8064D18C) {
             case 27:
             case 345:
-                if ((subject & 0x70000) == 0x40000 && is_allowed(subject))
+                if ((SUBJECT & 0x70000) == 0x40000 && is_allowed(SUBJECT))
                     fn_8016B400(1598, 0, 0);
                 break;
             case 32:
-                if ((subject & 0x70000) == 0x40000 && is_allowed(subject))
+                if ((SUBJECT & 0x70000) == 0x40000 && is_allowed(SUBJECT))
                     fn_8016B400(1878, 0, 0);
                 break;
             case 67:
-                if (is_allowed(subject))
+                if (is_allowed(SUBJECT))
                     fn_8016B400(1569, 0, 0);
                 break;
             case 99:
-                if (fn_801E79FC(lbl_8064C4E0, 690) == 0 && is_allowed(subject)) {
+                if (fn_801E79FC(lbl_8064C4E0, 690) == 0 && is_allowed(SUBJECT)) {
                     fn_800CCE78(0, 99);
                     fn_801E7974(lbl_8064C4E0, 690);
                 }
                 break;
             case 196:
                 if (fn_802066E0(fn_80201AE4(), 0xE98A39BB) != 0) {
-                    if (is_allowed(subject))
+                    if (is_allowed(SUBJECT))
                         fn_8016B400(2783, 0, 0);
                     else
                         fn_8011DD8C(4, 0);
                 }
                 break;
             case 255:
-                if (is_allowed(subject))
+                if (is_allowed(SUBJECT))
                     fn_8016B400(1861, 0, 0);
                 break;
             }
@@ -193,3 +195,5 @@ void fn_801E2408(u8* object)
     }
     }
 }
+
+#undef SUBJECT

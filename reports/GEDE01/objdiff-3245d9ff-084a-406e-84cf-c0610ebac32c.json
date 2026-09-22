@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "assignment_id": "3245d9ff-084a-406e-84cf-c0610ebac32c",
+  "attempt": 4,
+  "target": "fn_801E2408",
+  "unit": "main/game/game_fn_801E2408",
+  "source": {
+    "path": "eternal-darkness-decomp/src/game/game_fn_801E2408.c",
+    "sha256": "12cf878556d9be1af4e80475705b1e355ff7235c8c62163b5cb7081bd7932a35",
+    "classification": "independent honest-C NonMatching reconstruction"
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "extra_cflags": ["-use_lmw_stmw on"],
+    "registration": "Object(NonMatching, \"game/game_fn_801E2408.c\", mw_version=\"GC/1.3\", extra_cflags=[\"-use_lmw_stmw on\"])"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E2408 fn_801E2408 -o build/GEDE01/objdiff-3245d9ff-canonical.raw.json --format json-pretty",
+    "raw_report_sha256": "b10840dc80c8dab79f92cee29c3ea90cb15d4983bb715ccb2a53905b9b5ff814",
+    "measurement_command": "jq direct fn_801E2408 symbol size, match_percent, instruction alignment rows, diff kinds, and relocation-bearing rows from build/GEDE01/objdiff-3245d9ff-canonical.raw.json",
+    "measurement_raw_output": "retail_bytes=1600 generated_bytes=1604 match_percent=96.3 retail_real_instructions=400 generated_real_instructions=401 aligned_rows=405 equal_rows=320 arg_mismatch_rows=73 delete_rows=4 insert_rows=5 replace_rows=3 retail_relocation_bearing_rows=111 generated_relocation_bearing_rows=111"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E2408 fn_801E2408 -o build/GEDE01/objdiff-3245d9ff-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "config": "function_reloc_diffs=name_address",
+    "raw_report_sha256": "b10840dc80c8dab79f92cee29c3ea90cb15d4983bb715ccb2a53905b9b5ff814",
+    "cmp_command": "cmp build/GEDE01/objdiff-3245d9ff-canonical.raw.json build/GEDE01/objdiff-3245d9ff-reloc-strict.raw.json",
+    "cmp_raw_output": "cmp_exit=0",
+    "measurement_raw_output": "retail_bytes=1600 generated_bytes=1604 match_percent=96.3 retail_real_instructions=400 generated_real_instructions=401 aligned_rows=405 equal_rows=320 arg_mismatch_rows=73 delete_rows=4 insert_rows=5 replace_rows=3 retail_relocation_bearing_rows=111 generated_relocation_bearing_rows=111"
+  },
+  "experiments": [
+    {
+      "description": "Preserved best candidate baseline",
+      "raw_output": "match_percent=93.09 retail_bytes=1600 generated_bytes=1604 retail_real_instructions=400 generated_real_instructions=401 differing_rows=101/101"
+    },
+    {
+      "description": "Correct case-0 pointer indirection and unsigned predicate return",
+      "raw_output": "match_percent=94.0275 retail_bytes=1600 generated_bytes=1604"
+    },
+    {
+      "description": "Do not keep the subject snapshot live through case 90; reload the aliased object field after calls",
+      "raw_output": "match_percent=96.28 retail_bytes=1600 generated_bytes=1604"
+    },
+    {
+      "description": "Retained case-90 reload hypothesis plus reversed case-80 first/second declaration order",
+      "raw_output": "match_percent=96.3 retail_bytes=1600 generated_bytes=1604 retail_real_instructions=400 generated_real_instructions=401"
+    }
+  ],
+  "divergence": "Generated code remains four bytes and one real instruction longer than retail. The case-90 field reloads now reproduce retail alias behavior and raise the score to 96.3%, while reversing the case-80 word declarations matches its stack addresses. GC/1.3 still assigns object/subject/effect across r29/r31/r28 instead of retail r31/r28/r29, batches nonvolatile-register saves in the prologue, reverses the two byte-adjustment temporary registers, and schedules callback/float stores around memcpy differently. The aligned diff contains 73 argument mismatches, 4 deletes, 5 inserts, and 3 replacements; canonical and relocation-strict raw reports are byte-identical with 111 relocation-bearing rows on each side.",
+  "build_verification": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2", "sha1sum build/GEDE01/main.dol", "python3 tools/legal_audit.py"],
+    "ninja_raw_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "legal_audit_raw_output": "legal audit passed (20301 tracked project files inspected)"
+  }
+}
