@@ -35,7 +35,7 @@ void fn_80080A38(Vec3 *result, const Vec3 *start, Vec3 *end,
                  int adjust_hit, int shorten)
 {
     /* NonMatching: behavior-complete, size-exact reconstruction. Remaining
-     * differences are endpoint word-load order and FP expression scheduling. */
+     * differences are FP register allocation and expression scheduling. */
     Segment segment;
     Hit hit;
     Vec3 scaled;
@@ -53,23 +53,26 @@ void fn_80080A38(Vec3 *result, const Vec3 *start, Vec3 *end,
             {
                 unsigned int *src = (unsigned int *)&segment.end;
                 unsigned int *dst = (unsigned int *)end;
-                unsigned int second = src[1];
                 unsigned int first = src[0];
-                dst[0] = first;
                 {
-                    unsigned int third = src[2];
+                    unsigned int second = src[1];
+                    dst[0] = first;
+                    first = src[2];
                     dst[1] = second;
-                    dst[2] = third;
                 }
+                dst[2] = first;
             }
         }
     }
     if (adjust_hit) {
         void *context = fn_8015C348(2);
         if (fn_8013F898(context, &segment, &hit)) {
-            float x = hit.position.x + segment.direction.x * segment.width;
-            float z = hit.position.z + segment.direction.z * segment.width;
+            float first = segment.direction.x;
+            float x = hit.position.x + first * segment.width;
             float y = hit.position.y + segment.direction.y * segment.width;
+            float z;
+            first = segment.direction.z;
+            z = hit.position.z + first * segment.width;
             end->x = x;
             end->y = y;
             end->z = z;

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "4a38b2a4-6301-4c2c-b6f5-9451bd2ff2e7",
+  "attempt": 6,
+  "base_commit": "2f23c489840e84ad1baee3f88085b13ba3a20223",
+  "target": "fn_80080A38",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4a38b2a4-6301-4c2c-b6f5-9451bd2ff2e7.json",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-4a38b2a4-6301-4c2c-b6f5-9451bd2ff2e7.json",
+    "eternal-darkness-decomp/reports/GEDE01/work-4a38b2a4-6301-4c2c-b6f5-9451bd2ff2e7.json"
+  ],
+  "divergence": "Canonical and relocation-strict (function_reloc_diffs=name_address) objdiff are 97.16049%, size-exact at 324/324 bytes. All 10 relocation offsets, types, target names, and addends agree. The endpoint copy at 0x9c..0xb0 now matches exactly. Six instruction words differ: width uses f4 instead of retail f5 (0xdc), x FMA and y-addend load are reversed at 0xe8/0xec, x result uses f5 instead of retail f4 (0xec/0xfc), and the y/z FMAs use width f4 instead of f5 (0xf8/0x100). Raw .text comparison has 312/324 equal bytes. Canonical configure/build and legal audit passed; DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f. Retained as one independent NonMatching C translation unit."
+}
