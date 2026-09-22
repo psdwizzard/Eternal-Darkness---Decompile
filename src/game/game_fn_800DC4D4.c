@@ -40,10 +40,11 @@ int fn_800DC4D4(void *context)
         mode = 1;
     }
     if (!mode) {
-        void *scan = fn_80204A8C();
+        void *scan_base = fn_80204A8C();
         int count = fn_80204D98();
         int owner_group = fn_8011FB4C(owner);
         float upper = lbl_8064F4E4 + (float)fn_8011F760(owner);
+        void *scan = scan_base;
         for (i = 0; i < count; i++) {
             void *entry, *candidate, *candidate_owner, *candidate_state;
             float *position; float dz; u32 distance, flags; int active;

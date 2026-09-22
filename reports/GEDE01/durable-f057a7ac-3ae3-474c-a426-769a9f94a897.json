@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f057a7ac-3ae3-474c-a426-769a9f94a897",
+  "attempt": 4,
+  "base_commit": "b8a924dec8adcead0b1cec0bc2770b603206d6db",
+  "target": "fn_800DC4D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f057a7ac-3ae3-474c-a426-769a9f94a897.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff is 97.23948% (1236 retail bytes versus 1220 generated). The separate scan-base lifetime now reproduces retail's r19-to-r23 copy and u16 conversion load schedule, but register allocation and branch layout still differ, and the generated u16-to-float bias relocation targets compiler-local @74 instead of retail lbl_8064F4F0. Relocation offsets, targets, and addends are therefore not strictly equal."
+}
