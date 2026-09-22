@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "assignment_id": "ef30b27e-9b3b-4771-8e14-63b66feed6c5",
+  "attempt": 6,
+  "base_commit": "38078217282110cf9421ca73459ca7fb40654e14",
+  "target": "fn_80023258",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ef30b27e-9b3b-4771-8e14-63b66feed6c5.json",
+    "eternal-darkness-decomp/reports/GEDE01/analysis-ef30b27e-9b3b-4771-8e14-63b66feed6c5.log",
+    "eternal-darkness-decomp/reports/GEDE01/analyze-ef30b27e-9b3b-4771-8e14-63b66feed6c5.py",
+    "eternal-darkness-decomp/reports/GEDE01/baseline-ef30b27e-9b3b-4771-8e14-63b66feed6c5.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-ef30b27e-9b3b-4771-8e14-63b66feed6c5.log",
+    "eternal-darkness-decomp/reports/GEDE01/hash-ef30b27e-9b3b-4771-8e14-63b66feed6c5.log",
+    "eternal-darkness-decomp/reports/GEDE01/history-ef30b27e-9b3b-4771-8e14-63b66feed6c5.log",
+    "eternal-darkness-decomp/reports/GEDE01/legal-ef30b27e-9b3b-4771-8e14-63b66feed6c5.log",
+    "eternal-darkness-decomp/reports/GEDE01/notes-ef30b27e-9b3b-4771-8e14-63b66feed6c5.md",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-ef30b27e-9b3b-4771-8e14-63b66feed6c5.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-ef30b27e-9b3b-4771-8e14-63b66feed6c5.log",
+    "eternal-darkness-decomp/reports/GEDE01/trial-inline-ef30b27e-9b3b-4771-8e14-63b66feed6c5.json",
+    "eternal-darkness-decomp/reports/GEDE01/trial-inline-ef30b27e-9b3b-4771-8e14-63b66feed6c5.log",
+    "eternal-darkness-decomp/reports/GEDE01/trial-inline-ef30b27e-9b3b-4771-8e14-63b66feed6c5.patch"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 93.8327% (1052 retail bytes versus 1028 generated). The 33 aligned differences comprise 17 argument mismatches, 10 deletes, 4 inserts, and 2 replacements. MWCC folds retail global + 0x1C fade/presentation bases in r29/r7/r4 into r31-relative accesses and cleanup data + 0x640 in r6 into r30-relative stores, with scheduling differences. All 61 ordered relocation target/type/addend triples agree, but offsets differ. New TU-local helper auto-inlining trial retained the same function-relative instructions and score; the full patch, compiler invocation, and raw measurement are preserved, while source was restored. Final canonical build and required DOL SHA-1 passed with raw logs. Existing independent NonMatching C reconstruction remains unchanged."
+}

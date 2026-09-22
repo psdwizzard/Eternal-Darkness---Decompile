@@ -1,0 +1,78 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_80023258.c
++++ b/eternal-darkness-decomp/src/game/game_fn_80023258.c
+@@ -51,6 +51,26 @@
+ extern void fn_8022A2F4(s32);
+ extern void fn_8022A5D8(s32, s32, s32, s32);
+ 
++static void advance_fade(FrontEndState* fade_state)
++{
++    s32 value;
++    if (fade_state->fade < 255) {
++        value = fade_state->fade + 4;
++        fade_state->fade = value;
++        fade_state->fade = value < 255 ? value : 255;
++    }
++}
++
++static void present_first(FrontEndState* state, u8 alpha)
++{
++    fn_8002188C(state->first_kind, state->first_image, alpha);
++}
++
++static void present_second(FrontEndState* state, u8 alpha)
++{
++    fn_8002188C(state->second_kind, state->second_image, alpha);
++}
++
+ void fn_80023258(void)
+ {
+     u8* data = lbl_8023D020;
+@@ -60,34 +80,29 @@
+     void* image;
+     volatile u32 color;
+     u32 call_color;
+-    s32 value;
+ 
+-    if (fade_state->fade < 255) {
+-        value = fade_state->fade + 4;
+-        fade_state->fade = value;
+-        fade_state->fade = value < 255 ? value : 255;
+-    }
++    advance_fade(fade_state);
+ 
+     fn_8022A5D8(1, 4, 5, 0);
+     state = (FrontEndState*)(global + 0x1C);
+     if ((state->flags & 0x20) != 0) {
+         if (fade_state->fade != 255) {
+-            fn_8002188C(state->second_kind, state->second_image, (u8)(255 - fade_state->fade));
++            present_second(state, (u8)(255 - fade_state->fade));
+         }
+         if (fade_state->fade != 0) {
+-            fn_8002188C(state->first_kind, state->first_image, (u8)fade_state->fade);
++            present_first(state, (u8)fade_state->fade);
+         }
+     } else if (fade_state->fade != 255) {
+         color = lbl_8064DF30;
+         image = fn_801EB080();
+-        fn_8002188C(state->second_kind, state->second_image, 255);
++        present_second(state, 255);
+         fn_8022A5D8(1, 4, 5, 0);
+         fn_80226EA0(0, 0, 640, 480);
+         fn_80226FA4(640, 480, 4, 0);
+         fn_802276AC(image, 0);
+         fn_802266B0();
+         fn_801ECC4C();
+-        fn_8002188C(state->first_kind, state->first_image, 255);
++        present_first(state, 255);
+         fn_801ECC4C();
+         fn_80021714();
+         fn_80228474(lbl_8063C638 + lbl_8064D738 * 32, image,
+@@ -125,7 +140,7 @@
+         *(s32*)(data + 0x66C) = 0;
+         *(s32*)(global + 0x98) = 0;
+         *(s32*)(data + 0x668) = 255;
+-        fn_8002188C(state->first_kind, state->first_image, 255);
++        present_first(state, 255);
+     }
+     fn_8022A5D8(1, 4, 5, 15);
+ }

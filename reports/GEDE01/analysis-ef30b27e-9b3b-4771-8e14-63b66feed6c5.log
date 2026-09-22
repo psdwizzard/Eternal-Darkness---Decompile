@@ -1,0 +1,46 @@
+baseline {"retail_size": "1052", "generated_size": "1028", "match_percent": 93.8327, "diff_kinds": {"DIFF_NONE": 234, "DIFF_DELETE": 10, "DIFF_ARG_MISMATCH": 17, "DIFF_INSERT": 4, "DIFF_REPLACE": 2}}
+trial-inline {"retail_size": "1052", "generated_size": "1028", "match_percent": 93.8327, "diff_kinds": {"DIFF_NONE": 234, "DIFF_DELETE": 10, "DIFF_ARG_MISMATCH": 17, "DIFF_INSERT": 4, "DIFF_REPLACE": 2}}
+objdiff {"retail_size": "1052", "generated_size": "1028", "match_percent": 93.8327, "diff_kinds": {"DIFF_NONE": 234, "DIFF_DELETE": 10, "DIFF_ARG_MISMATCH": 17, "DIFF_INSERT": 4, "DIFF_REPLACE": 2}}
+objdiff-strict {"retail_size": "1052", "generated_size": "1028", "match_percent": 93.8327, "diff_kinds": {"DIFF_NONE": 234, "DIFF_DELETE": 10, "DIFF_ARG_MISMATCH": 17, "DIFF_INSERT": 4, "DIFF_REPLACE": 2}}
+trial_relative_instructions_equal_baseline True
+trial_emitted_symbols [('advance_fade', '44'), ('present_first', '48'), ('present_second', '48'), ('fn_80023258', '1028')]
+retained_generated_json_equals_baseline True
+obj real_relocation_count 61
+src real_relocation_count 61
+ordered_type_target_addend_equal True
+relocation_offsets_equal False
+all_addends_zero True
+Aligned differences (addresses are actual instruction addresses, not alignment-row indices):
+{"kind": "DIFF_DELETE", "retail": ["40", "addi r29, r31, 0x1c"], "generated": ["0", null]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["44", "lwz r3, 0x14(r29)"], "generated": ["40", "lwz r3, 0x30(r31)"]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["68", "stw r3, 0x14(r29)"], "generated": ["64", "stw r3, 0x30(r31)"]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["80", "stw r0, 0x14(r29)"], "generated": ["76", "stw r0, 0x30(r31)"]}
+{"kind": "DIFF_DELETE", "retail": ["104", "addi r7, r31, 0x1c"], "generated": ["0", null]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["108", "lwz r0, 0x30(r7)"], "generated": ["100", "lwz r0, 0x4c(r31)"]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["120", "lwz r0, 0x14(r29)"], "generated": ["112", "lwz r0, 0x30(r31)"]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["136", "lbz r3, 0x3f(r7)"], "generated": ["128", "lbz r3, 0x5b(r31)"]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["140", "lwz r4, 0x20(r7)"], "generated": ["132", "lwz r4, 0x3c(r31)"]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["152", "lwz r0, 0x14(r29)"], "generated": ["144", "lwz r0, 0x30(r31)"]}
+{"kind": "DIFF_DELETE", "retail": ["164", "addi r4, r31, 0x1c"], "generated": ["0", null]}
+{"kind": "DIFF_DELETE", "retail": ["168", "clrlwi r5, r0, 24"], "generated": ["0", null]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["172", "lbz r3, 0x3e(r4)"], "generated": ["156", "lbz r3, 0x5a(r31)"]}
+{"kind": "DIFF_INSERT", "retail": ["0", null], "generated": ["160", "clrlwi r5, r0, 24"]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["176", "lwz r4, 0x1c(r4)"], "generated": ["164", "lwz r4, 0x38(r31)"]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["188", "lwz r0, 0x14(r29)"], "generated": ["176", "lwz r0, 0x30(r31)"]}
+{"kind": "DIFF_DELETE", "retail": ["212", "addi r4, r31, 0x1c"], "generated": ["0", null]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["220", "lbz r3, 0x3f(r4)"], "generated": ["204", "lbz r3, 0x5b(r31)"]}
+{"kind": "DIFF_DELETE", "retail": ["224", "mr r29, r0"], "generated": ["0", null]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["228", "lwz r4, 0x20(r4)"], "generated": ["208", "lwz r4, 0x3c(r31)"]}
+{"kind": "DIFF_INSERT", "retail": ["0", null], "generated": ["212", "mr r29, r0"]}
+{"kind": "DIFF_INSERT", "retail": ["0", null], "generated": ["304", "lbz r3, 0x5a(r31)"]}
+{"kind": "DIFF_REPLACE", "retail": ["320", "addi r4, r31, 0x1c"], "generated": ["308", "li r5, 0xff"]}
+{"kind": "DIFF_DELETE", "retail": ["324", "li r5, 0xff"], "generated": ["0", null]}
+{"kind": "DIFF_DELETE", "retail": ["328", "lbz r3, 0x3e(r4)"], "generated": ["0", null]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["332", "lwz r4, 0x1c(r4)"], "generated": ["312", "lwz r4, 0x38(r31)"]}
+{"kind": "DIFF_REPLACE", "retail": ["968", "addi r6, r30, 0x640"], "generated": ["948", "li r0, 0xff"]}
+{"kind": "DIFF_DELETE", "retail": ["972", "li r0, 0xff"], "generated": ["0", null]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["976", "stw r4, 0x2c(r6)"], "generated": ["952", "stw r4, 0x66c(r30)"]}
+{"kind": "DIFF_DELETE", "retail": ["980", "lbz r3, 0x3e(r7)"], "generated": ["0", null]}
+{"kind": "DIFF_INSERT", "retail": ["0", null], "generated": ["960", "lbz r3, 0x5a(r31)"]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["992", "lwz r4, 0x1c(r7)"], "generated": ["968", "lwz r4, 0x38(r31)"]}
+{"kind": "DIFF_ARG_MISMATCH", "retail": ["996", "stw r0, 0x28(r6)"], "generated": ["972", "stw r0, 0x668(r30)"]}

@@ -1,0 +1,75 @@
+$ git show 121e2c521e19ab0f8ec44959f499bae922579ff6:eternal-darkness-decomp/reports/GEDE01/durable-b802550d-9485-415f-b7a3-789a53a3dea9.json
+{
+  "version": 1,
+  "assignment_id": "b802550d-9485-415f-b7a3-789a53a3dea9",
+  "attempt": 5,
+  "base_commit": "38078217282110cf9421ca73459ca7fb40654e14",
+  "target": "fn_80023258",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b802550d-9485-415f-b7a3-789a53a3dea9.json"
+  ],
+  "divergence": "Fresh canonical objdiff v3.6.1 measures 93.8327%: retail is 1052 bytes and generated is 1028 bytes. Both sides retain 61 real relocations, while the aligned code diff has 17 argument mismatches, 10 deletes, 4 inserts, and 2 replacements. The remaining differences are concentrated in canonical MWCC folding retail's persistent lbl_80302400 + 0x1C fade pointer in r29 and transient presentation pointers into direct r31-relative accesses; retail later reuses r29 for the fn_801EB080 result. Final cleanup similarly materializes lbl_8023D020 + 0x640 while generated folds stores into r30-relative accesses. A new leaf-field-pointer hypothesis using a dedicated pointer to the fade scalar compiled identically at 93.8327%, so the stronger existing honest-C reconstruction was retained unchanged. A fresh canonical build passed and build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
+$ git show 121e2c521e19ab0f8ec44959f499bae922579ff6:eternal-darkness-decomp/src/game/game_fn_80023258.c | SHA256 comparison
+5fe2ee33710ae195697ab8bc078f755348aab2da0f410c8ea306020bddb4e4af identical_to_accepted_base=True
+$ git show 71293c8d4a1a7ae48f0cc7cedcec7c72348976cc:eternal-darkness-decomp/reports/GEDE01/durable-5200fa91-6219-40f7-b106-83e1aa3eb21f.json
+{
+  "version": 1,
+  "assignment_id": "5200fa91-6219-40f7-b106-83e1aa3eb21f",
+  "attempt": 4,
+  "base_commit": "9d4aff72d49791bb290031adda6e6ebe67b18573",
+  "target": "fn_80023258",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-5200fa91-6219-40f7-b106-83e1aa3eb21f.json"
+  ],
+  "divergence": "Fresh relocation-strict objdiff v3.6.1 measures 93.8327%: retail is 1052 bytes and generated is 1028 bytes. Both sides contain the same ordered sequence of 61 real relocations by formatted target, relocation type, and zero addend. The 33 aligned diff records remain concentrated in canonical MWCC folding retail's persistent lbl_80302400 + 0x1C fade pointer (r29) and transient presentation pointers into direct r31-relative accesses; retail later reuses r29 for the fn_801EB080 result. Final cleanup likewise materializes lbl_8023D020 + 0x640 while generated folds stores into r30-relative accesses. New nested-member address formation, register storage-class, and single reassigned fade/image temporary hypotheses all compiled identically at 93.8327%, so the stronger existing honest-C reconstruction was retained unchanged. A fresh canonical build passed and build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
+$ git show 71293c8d4a1a7ae48f0cc7cedcec7c72348976cc:eternal-darkness-decomp/src/game/game_fn_80023258.c | SHA256 comparison
+5fe2ee33710ae195697ab8bc078f755348aab2da0f410c8ea306020bddb4e4af identical_to_accepted_base=True
+$ git show 30e4df3ae0599be93871e8475c6f3f03ea091555:eternal-darkness-decomp/reports/GEDE01/durable-91714b8a-7839-4d1e-aa6c-d927c94f2a84.json
+{
+  "version": 1,
+  "assignment_id": "91714b8a-7839-4d1e-aa6c-d927c94f2a84",
+  "attempt": 3,
+  "base_commit": "eeeceb85f77533283bdd984649cd165f7367131e",
+  "target": "fn_80023258",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-91714b8a-7839-4d1e-aa6c-d927c94f2a84.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff v3.6.1 both measure 93.8327%: retail is 1052 bytes and generated is 1028 bytes. Both sides contain the same ordered sequence of 61 real relocations by formatted target, relocation type, and zero addend. The 33 aligned diff records comprise 17 argument mismatches, 10 deletes, 4 inserts, and 2 replacements, concentrated in retail retaining lbl_80302400 + 0x1C in r29 and transient presentation pointers while canonical MWCC folds those address materializations into direct r31-relative accesses; retail later reuses r29 for the fn_801EB080 result. Final cleanup similarly materializes lbl_8023D020 + 0x640 while generated folds stores into r30-relative accesses. The stronger existing honest-C reconstruction recovered from the preserved attempt was retained unchanged. A fresh canonical build passed, no inline or whole-function assembly is present, and build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
+$ git show 30e4df3ae0599be93871e8475c6f3f03ea091555:eternal-darkness-decomp/src/game/game_fn_80023258.c | SHA256 comparison
+5fe2ee33710ae195697ab8bc078f755348aab2da0f410c8ea306020bddb4e4af identical_to_accepted_base=True
+$ git show b20a8aa274ceba3062f22d82ba6c73e5266ef360:eternal-darkness-decomp/reports/GEDE01/durable-9f3284ab-e557-4a34-9a87-49b295351537.json
+{
+  "version": 1,
+  "assignment_id": "9f3284ab-e557-4a34-9a87-49b295351537",
+  "attempt": 2,
+  "base_commit": "2c345cf4bec3b85f78136fd6fab6ae1aa59bbb92",
+  "target": "fn_80023258",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9f3284ab-e557-4a34-9a87-49b295351537.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff v3.6.1 both measure 93.8327%: retail is 1052 bytes and generated is 1028 bytes. Both sides contain the same ordered sequence of 61 real relocations by formatted target, relocation type, and zero addend. The 33 aligned diff records comprise 17 argument mismatches, 10 deletes, 4 inserts, and 2 replacements, concentrated in retail retaining lbl_80302400 + 0x1C in r29 and transient presentation pointers while canonical MWCC folds those address materializations into direct r31-relative accesses; retail later reuses r29 for the fn_801EB080 result. Final cleanup similarly materializes data + 0x640 while generated folds stores into r30-relative accesses. The stronger existing honest-C reconstruction was preserved unchanged. A fresh canonical build passed, and build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
+$ git show b20a8aa274ceba3062f22d82ba6c73e5266ef360:eternal-darkness-decomp/src/game/game_fn_80023258.c | SHA256 comparison
+5fe2ee33710ae195697ab8bc078f755348aab2da0f410c8ea306020bddb4e4af identical_to_accepted_base=True
+$ git show 7abd97b673a6a33d4fc7f49a3164855138247d74:eternal-darkness-decomp/reports/GEDE01/durable-934263d0-f7c8-4df8-b539-31670e489dac.json
+{
+  "version": 1,
+  "assignment_id": "934263d0-f7c8-4df8-b539-31670e489dac",
+  "attempt": 1,
+  "base_commit": "007eee89645c92614b828154e1eea0d390f1f11e",
+  "target": "fn_80023258",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-934263d0-f7c8-4df8-b539-31670e489dac.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff v3.6.1 both measure 93.8327%: retail is 1052 bytes (263 instructions) and generated is 1028 bytes (257 instructions). Both sides contain the same ordered sequence of 61 real relocations by formatted target, relocation type, and zero addend, but their offsets diverge after omitted address-materialization instructions. The 33 aligned diff records are concentrated in canonical MWCC folding retail's persistent global + 0x1C fade pointer (r29) and transient presentation pointers (r7/r4) into direct r31-relative accesses; retail later reuses r29 for the fn_801EB080 result. The final cleanup similarly folds retail's r30 + 0x640 temporary r6 into direct r30-relative stores. Pointer-qualification and address-spelling trials either remained at 93.8327% or regressed to 92.775665%, so the stronger pre-existing honest C reconstruction was preserved. A fresh canonical build passed, and build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
+$ git show 7abd97b673a6a33d4fc7f49a3164855138247d74:eternal-darkness-decomp/src/game/game_fn_80023258.c | SHA256 comparison
+5fe2ee33710ae195697ab8bc078f755348aab2da0f410c8ea306020bddb4e4af identical_to_accepted_base=True
