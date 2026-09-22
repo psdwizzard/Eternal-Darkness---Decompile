@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "e9317b4f-fc0e-4cd1-970a-eea318d02bc9",
+  "attempt": 6,
+  "base_commit": "d81483660a14e72cf67d2acefd6dfd243d3c148b",
+  "target": "fn_8018A88C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e9317b4f-fc0e-4cd1-970a-eea318d02bc9.json"
+  ],
+  "divergence": "Canonical and separately invoked relocation-strict objdiff improved from 94.85714% to 96.71429%, both 420 bytes. Retail initializes i in r19 at offset 220, copies it to byte offset r21 at 228, and holds fn_8018D020 in r20. Generated code initializes running vertex pointer r20 from r26 at 224, holds callback in r21, and initializes i at 232. Call setup at 244/248 and induction increment at 296 differ. All 18 relocations have matching types, targets and addends in order, but callback HA/LO instruction offsets are 224/232 retail versus 220/228 generated (ELF relocation field offsets 226/234 versus 222/230). NonMatching retained; canonical build passed and rebuilt/retail DOL SHA-1 both ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
