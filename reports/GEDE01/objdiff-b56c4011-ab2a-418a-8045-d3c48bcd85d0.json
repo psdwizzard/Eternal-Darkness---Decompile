@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "assignment_id": "b56c4011-ab2a-418a-8045-d3c48bcd85d0",
+  "attempt": 5,
+  "target": "fn_801E2408",
+  "unit": "main/game/game_fn_801E2408",
+  "source": {
+    "path": "eternal-darkness-decomp/src/game/game_fn_801E2408.c",
+    "sha256": "12cf878556d9be1af4e80475705b1e355ff7235c8c62163b5cb7081bd7932a35",
+    "classification": "independent honest-C NonMatching reconstruction"
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "registration": "Object(NonMatching, game/game_fn_801E2408.c, mw_version=GC/1.3, extra_cflags=[-use_lmw_stmw on])"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E2408 fn_801E2408 -o build/GEDE01/objdiff-b56c4011-canonical.raw.json --format json-pretty",
+    "raw_report_sha256": "b10840dc80c8dab79f92cee29c3ea90cb15d4983bb715ccb2a53905b9b5ff814",
+    "measurement_raw_output": "retail_bytes=1600 generated_bytes=1604 match_percent=96.3 retail_real_instructions=400 generated_real_instructions=401 aligned_rows=405 equal_rows=320 arg_mismatch_rows=73 delete_rows=4 insert_rows=5 replace_rows=3 retail_relocation_bearing_rows=111 generated_relocation_bearing_rows=111"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E2408 fn_801E2408 -o build/GEDE01/objdiff-b56c4011-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "config": "function_reloc_diffs=name_address",
+    "raw_report_sha256": "b10840dc80c8dab79f92cee29c3ea90cb15d4983bb715ccb2a53905b9b5ff814",
+    "cmp_raw_output": "cmp_exit=0",
+    "measurement_raw_output": "retail_bytes=1600 generated_bytes=1604 match_percent=96.3 retail_real_instructions=400 generated_real_instructions=401 aligned_rows=405 equal_rows=320 arg_mismatch_rows=73 delete_rows=4 insert_rows=5 replace_rows=3 retail_relocation_bearing_rows=111 generated_relocation_bearing_rows=111"
+  },
+  "experiments": [
+    {
+      "description": "Give each repeated action case its own lexical id/kind lifetime to alter interference and rotate object/subject/id toward retail r31/r28/r29",
+      "raw_output": "match_percent=95.01 retail_bytes=1600 generated_bytes=1616; generated object/work became r30/r31 and only three nonvolatile GPRs were saved"
+    },
+    {
+      "description": "Introduce an explicit register-qualified object alias initialized from the incoming argument to prioritize the object web",
+      "raw_output": "match_percent=96.3 retail_bytes=1600 generated_bytes=1604; object code and raw report remained byte-identical to baseline"
+    }
+  ],
+  "divergence": "The distinct lifetime-splitting hypothesis regressed to 95.01% and the explicit object alias was codegen-neutral, so the preserved 96.3% candidate remains best. Generated code is four bytes and one instruction longer. GC/1.3 still colors object/subject/id as r29/r31/r28 versus retail r31/r28/r29; retail also saves r31 immediately before assigning the object while generated batches r31/r30/r29 saves, and byte-adjustment temporaries plus callback/float-store scheduling remain different. Canonical and relocation-strict reports are byte-identical, including 111 relocation-bearing rows per side.",
+  "build_verification": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2", "sha1sum build/GEDE01/main.dol", "python3 tools/legal_audit.py"],
+    "ninja_raw_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "legal_audit_raw_output": "legal audit passed (20305 tracked project files inspected)"
+  }
+}
