@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "9390f13c-3f04-4bab-b1b2-03f6b60e83c2",
+  "attempt": 5,
+  "base_commit": "035422b267732f533454e79c186cc35f99c67c02",
+  "target": "fn_8018AA30",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9390f13c-3f04-4bab-b1b2-03f6b60e83c2.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-callback-9390f13c-3f04-4bab-b1b2-03f6b60e83c2.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-9390f13c-3f04-4bab-b1b2-03f6b60e83c2.json"
+  ],
+  "divergence": "Canonical GC/1.3 produces a size-exact 420-byte function at 94.85714%, not relocation-strict 100%. Retail emits li r19,0 at offset 220, fn_8018D020 HA/LO relocations at offsets 224/232 into r20, and mr r21,r19 at offset 228. The retained object emits callback HA/LO at offsets 220/228 into r21, li r20,0 at offset 224, and li r19,0 at offset 232; uses at offsets 244, 248, and 296 swap r20/r21. The distinct split-initialization hypothesis remained 94.85714% and folded byte_offset=i to li. The reproduced explicit callback local gets loop r19, callback r20, and offset r21 but adds mr r20,r0, yielding 424 bytes and 94.666664%."
+}
