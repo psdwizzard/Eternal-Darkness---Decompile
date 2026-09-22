@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "assignment_id": "6fb7b957-958b-4e76-baf9-9f2529bfe491",
+  "attempt": 5,
+  "target": "fn_80050B08",
+  "compiler": "canonical project configuration (GC/1.3, -use_lmw_stmw on)",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80050B08.c fn_80050B08 --diff-objdump",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80050B08 fn_80050B08 -o build/GEDE01/fn_80050B08-attempt5-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80050B08 fn_80050B08 -o build/GEDE01/fn_80050B08-attempt5-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "canonical_objdiff_raw": {
+    "target_bytes": 5904,
+    "generated_bytes": 5884,
+    "match_percent": 95.50203,
+    "aligned_instruction_rows": 1492,
+    "differing_rows": 540,
+    "diff_kinds": {
+      "DIFF_ARG_MISMATCH": 495,
+      "DIFF_DELETE": 21,
+      "DIFF_INSERT": 16,
+      "DIFF_OP_MISMATCH": 3,
+      "DIFF_REPLACE": 5
+    }
+  },
+  "relocation_strict_objdiff_raw": {
+    "configuration": "function_reloc_diffs=name_address",
+    "target_bytes": 5904,
+    "generated_bytes": 5884,
+    "match_percent": 95.50203,
+    "target_relocations": 100,
+    "generated_relocations": 100,
+    "target_relocation_types": {
+      "R_PPC_ADDR16_HA": 15,
+      "R_PPC_ADDR16_LO": 15,
+      "R_PPC_NONE": 25,
+      "R_PPC_REL24": 45
+    },
+    "generated_relocation_types": {
+      "R_PPC_ADDR16_HA": 15,
+      "R_PPC_ADDR16_LO": 15,
+      "R_PPC_NONE": 25,
+      "R_PPC_REL24": 45
+    },
+    "relocation_targets_and_addends_equal": false,
+    "strict_match": false
+  },
+  "build_result_raw": "build/GEDE01/main.dol: OK",
+  "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "legal_audit_raw": "legal audit passed (19766 tracked project files inspected)",
+  "hypothesis": "Retail treats the initialized type field as a flag accumulator. Replacing the twenty branch-local assignments of 2 or 4 with |= operations reproduces retail ori instructions and improves the canonical and relocation-strict score from the preserved best 94.80352% to 95.50203%. Keeping mutable arg0, rather than combining the flag hypothesis with a copied actor local, was independently measured at 95.50203% versus 95.48509%.",
+  "divergence": "Retail remains 5904 bytes versus 5884 generated. The flag-accumulator source form reduces opcode mismatches from six to three and replacements from 25 to five, but long-lived register allocation remains different and now accounts for 495 operand mismatches. Switch layout still has 21 deletions and 16 insertions; jump-table relocation targets/addends remain unequal despite matching 100-relocation counts and type totals."
+}

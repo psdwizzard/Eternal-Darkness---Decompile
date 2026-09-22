@@ -53,7 +53,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
     case 228:
     case 230:
     case 231:
-        var_r28 = 2;
+        var_r28 |= 2;
         switch (arg2) {                             /* switch 2; irregular */
         case 0x47:                                  /* switch 2 */
             var_r22 = 0x1CF;
@@ -108,7 +108,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 95:                                        /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 3 */
         case 0x24:                                  /* switch 3 */
             var_r22 = 0x172;
@@ -160,7 +160,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         break;
     case 120:                                       /* switch 1 */
     case 48:                                        /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 4 */
         case 0x24:                                  /* switch 4 */
             var_r22 = 0x5F;
@@ -201,7 +201,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 61:                                        /* switch 1 */
-        var_r28 = 2;
+        var_r28 |= 2;
         switch (arg2) {                             /* switch 5; irregular */
         case 0x41:                                  /* switch 5 */
             var_r22 = 0xD2;
@@ -242,7 +242,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         break;
     case 210:                                       /* switch 1 */
     case 62:                                        /* switch 1 */
-        var_r28 = 2;
+        var_r28 |= 2;
         switch (arg2) {                             /* switch 6; irregular */
         case 0x41:                                  /* switch 6 */
             var_r22 = 0x2A0;
@@ -282,7 +282,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 99:                                        /* switch 1 */
-        var_r28 = 2;
+        var_r28 |= 2;
         switch (arg2) {                             /* switch 7; irregular */
         case 0x47:                                  /* switch 7 */
             break;
@@ -306,7 +306,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 233:                                       /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 8; irregular */
         case 0x24:                                  /* switch 8 */
         case 0x25:                                  /* switch 8 */
@@ -344,7 +344,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         break;
     case 256:                                       /* switch 1 */
     case 113:                                       /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 9; irregular */
         case 0x1C:                                  /* switch 9 */
             var_r22 = 0x141;
@@ -384,7 +384,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 116:                                       /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 10 */
         case 0x41:                                  /* switch 10 */
             var_r22 = 0x174;
@@ -437,7 +437,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 118:                                       /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 11 */
         case 0x41:                                  /* switch 11 */
             var_r22 = 0x180;
@@ -484,7 +484,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 126:                                       /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 12 */
         case 0x41:                                  /* switch 12 */
             var_r22 = 0x17A;
@@ -531,7 +531,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 92:                                        /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 13 */
         case 0x41:                                  /* switch 13 */
             var_r22 = 0x14F;
@@ -578,7 +578,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 193:                                       /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 14 */
         case 0x41:                                  /* switch 14 */
             var_r22 = 0x176;
@@ -625,7 +625,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 97:                                        /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 15 */
         case 0x41:                                  /* switch 15 */
             var_r22 = 0x176;
@@ -683,7 +683,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 123:                                       /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 16 */
         case 0x41:                                  /* switch 16 */
             var_r22 = 0x14F;
@@ -730,7 +730,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 124:                                       /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 17 */
         case 0x41:                                  /* switch 17 */
             var_r22 = 0x186;
@@ -777,7 +777,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 96:                                        /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 18 */
         case 0x41:                                  /* switch 18 */
             var_r3_2 = 0x186;
@@ -828,7 +828,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 125:                                       /* switch 1 */
-        var_r28 = 4;
+        var_r28 |= 4;
         switch (arg2) {                             /* switch 19 */
         case 0x41:                                  /* switch 19 */
             var_r22 = 0x151;
@@ -948,7 +948,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 186:                                       /* switch 1 */
-        var_r28 = 2;
+        var_r28 |= 2;
         switch (arg2) {                             /* switch 21; irregular */
         case 0x47:                                  /* switch 21 */
             var_r22 = 0x1CF;
@@ -1008,7 +1008,7 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         break;
     case -1:                                        /* switch 1 */
         if ((s32) M2C_FIELD(&lbl_803003C8, s32 *, 8) == 0xD) {
-            var_r28 = 2;
+            var_r28 |= 2;
             switch (arg2) {                         /* switch 22; irregular */
             case 0x47:                              /* switch 22 */
                 var_r22 = 0x1CF;
