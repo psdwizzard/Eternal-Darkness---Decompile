@@ -4,6 +4,8 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 
 typedef struct Pair { u32 first; u32 second; } Pair;
+typedef struct State { void* inherited; u16 flags; u16 pad; } State;
+typedef struct Context { u8 pad[0x17C]; State state[24]; } Context;
 
 extern void fn_80125ECC(void*);
 extern void fn_8012BFE4(u8*);
@@ -27,8 +29,8 @@ void fn_8012C804(u8* dst, u8* src, int index)
     index_offset = index * 4;
 
     for (i = 0; i < 24; i++) {
-        *(u16*)(dst + 0x180 + i * 8) = 0;
-        *(void**)(dst + 0x17C + i * 8) = 0;
+        ((Context*)dst)->state[i].flags = 0;
+        ((Context*)dst)->state[i].inherited = 0;
     }
 
     graph = *(u8**)(*(u8**)(*(u8**)(dst + 0x240) + index_offset) + 4);
@@ -45,16 +47,16 @@ void fn_8012C804(u8* dst, u8* src, int index)
                     *(u16*)(dst + 0x180 + slot * 8) |= 1;
                 }
             }
-        } else if (*(u16*)(src + 0x180 + entry * 8) & 1) {
-            *(u16*)(dst + 0x180 + entry * 8) |= 1;
+        } else if (((Context*)src)->state[entry].flags & 1) {
+            ((Context*)dst)->state[entry].flags |= 1;
         }
     }
 
     {
         s8 slot = *(s8*)(graph + 0xC);
         if (slot != -1) {
-            u8* state = dst + slot * 8;
-            *(u16*)(state + 0x180) |= 1;
+            Context* context = (Context*)dst;
+            context->state[slot].flags |= 1;
         }
     }
 
@@ -81,7 +83,7 @@ void fn_8012C804(u8* dst, u8* src, int index)
     for (offset = 0, i = 0; offset < *(u16*)(graph + 6); i += 2, offset++) {
         entry = *(u16*)(*(u8**)(graph + 8) + i);
         if (!(entry & 0x8000)) {
-            inherited = *(void**)(src + 0x17C + entry * 8);
+            inherited = ((State*)(src + 0x17C))[entry].inherited;
             break;
         }
     }

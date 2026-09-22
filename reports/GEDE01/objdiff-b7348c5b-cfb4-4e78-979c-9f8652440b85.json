@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "assignment_id": "b7348c5b-cfb4-4e78-979c-9f8652440b85",
+  "target": "fn_8012C804",
+  "tool": "objdiff-cli via tools/fndiff.py",
+  "raw_summary": "target 704 bytes  base 704 bytes  match 96.505684",
+  "canonical": {
+    "target_size": 704,
+    "candidate_size": 704,
+    "target_instructions": 176,
+    "candidate_instructions": 176,
+    "match_percent": 96.505684
+  },
+  "relocation_strict": {
+    "target_count": 4,
+    "candidate_count": 4,
+    "records_equal": true,
+    "raw_objdiff_records": "left/right: 28 R_PPC_REL24 fn_80125ECC; 196 R_PPC_REL24 fn_8012C478; 556 R_PPC_REL24 fn_8012BFE4; 672 R_PPC_REL24 fn_8012CAC4",
+    "records": [
+      {"offset": 28, "type": "R_PPC_REL24", "target": "fn_80125ECC", "addend": 0},
+      {"offset": 196, "type": "R_PPC_REL24", "target": "fn_8012C478", "addend": 0},
+      {"offset": 556, "type": "R_PPC_REL24", "target": "fn_8012BFE4", "addend": 0},
+      {"offset": 672, "type": "R_PPC_REL24", "target": "fn_8012CAC4", "addend": 0}
+    ]
+  },
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw_result": "build/GEDE01/main.dol: OK",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_raw_result": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "hypothesis": "Model the 0x17C region as an array of eight-byte State records. This recovers retail indexed state-flag addressing, graph-slot addressing, and the inherited-pointer base-add/displacement-load sequence.",
+  "divergence": "Size-exact honest C and all relocations strict-equal. Remaining instruction differences are MWCC register allocation: the initial zero uses r31 instead of retail r29; graph entry/child temporaries use r4/r5 instead of r3/r4/r5; the object-copy loop uses r5/r6/r7 instead of retail r6/r7/r5; and the inherited-state path uses r6/r5 instead of retail r5/r6."
+}
