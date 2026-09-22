@@ -18,6 +18,11 @@ typedef struct Ramp {
     u8 pad2E[2];
 } Ramp;
 
+typedef struct RampState {
+    u8 pad[0x5D4];
+    Ramp ramps[32];
+} RampState;
+
 extern u8 lbl_80619860[];
 extern u32 lbl_8064D3C8;
 extern const float lbl_80650EC8;
@@ -102,25 +107,29 @@ update_type:
         }
         break;
 
-    default:
-        ramp = (Ramp*)(base + 0x5D4) + selector;
-        ramp->value = value;
-        ramp->voice = voice;
-        if (duration != 0) {
-            ramp->previous = ramp->current;
-            ramp->target = lbl_80650EC8 * (float)amount;
-            ramp->step = 0.0f;
-            ramp->reciprocal = 1.0f / (float)duration;
+    default: {
+        u32 ramp_duration = duration;
+        RampState* state = (RampState*)((Ramp*)base + selector);
+        u32* voice_field;
+        state->ramps[0].value = value;
+        *(voice_field = &state->ramps[0].voice) = voice;
+        if (ramp_duration != 0) {
+            state->ramps[0].previous = state->ramps[0].current;
+            state->ramps[0].target = lbl_80650EC8 * (float)amount;
+            state->ramps[0].step = 0.0f;
+            state->ramps[0].reciprocal = 1.0f / (float)ramp_duration;
         } else {
+            ramp = &state->ramps[0];
             target = lbl_80650EC8 * (float)amount;
-            ramp->target = target;
-            ramp->current = target;
-            if (ramp->voice != 0xFFFFFFFFU) {
+            state->ramps[0].target = target;
+            state->ramps[0].current = target;
+            if (*voice_field != 0xFFFFFFFFU) {
                 fn_801B7A10(ramp);
             }
         }
         lbl_8064D3C8 |= 1U << selector;
         break;
+    }
     }
 }
 

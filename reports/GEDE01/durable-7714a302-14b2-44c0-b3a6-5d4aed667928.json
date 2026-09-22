@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "7714a302-14b2-44c0-b3a6-5d4aed667928",
+  "attempt": 5,
+  "base_commit": "56e3fb0ad14b404d493cb2e956d65942d8921e21",
+  "target": "fn_801B8164",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7714a302-14b2-44c0-b3a6-5d4aed667928.json",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-7714a302-14b2-44c0-b3a6-5d4aed667928.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-7714a302-14b2-44c0-b3a6-5d4aed667928.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-7714a302-14b2-44c0-b3a6-5d4aed667928.log"
+  ],
+  "divergence": "GC/1.2.5n emits 1040 bytes whose complete .text bytes equal retail; canonical and relocation-strict objdiff both measure 99.75%. All instruction scheduling and register allocation now agree. Thirteen SDA21 relocations still target compiler-local @79 (zero), @80 (one), and @82 (unsigned conversion bias), instead of retail lbl_80650ED8, lbl_80650F04, and lbl_80650EF0; types and addends agree. Raw ELF evidence also records the normal SDA21 offset representation difference (MWCC instruction+2 versus dtk instruction start) on 26 records. No constant externalization or compiler-policy change was introduced; function remains NonMatching."
+}
