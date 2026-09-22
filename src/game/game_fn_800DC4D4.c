@@ -1,5 +1,6 @@
 typedef unsigned int u32;
 typedef unsigned short u16;
+typedef unsigned char u8;
 
 extern void *fn_80201B9C(void *); extern void *fn_80201B94(void *);
 extern void *fn_80201BC8(void *); extern float *fn_8011F130(void *);
@@ -28,12 +29,17 @@ extern float lbl_8064F4E4, lbl_8064F4E8, lbl_8064F4EC, lbl_8064F464;
 int fn_800DC4D4(void *context)
 {
     void *cursor = fn_80201B9C(context);
+    int mode = 0;
+    int result = 0;
     void *output = fn_80201B94(context);
     void *owner = fn_80201BC8(context);
     float *origin = fn_8011F130(owner);
     int i;
     fn_80204844(fn_80201B9C(owner), 0x20);
-    if (!fn_8006D344(fn_8006D444(), 0x20200, 0)) {
+    if (fn_8006D344(fn_8006D444(), 0x20200, 0)) {
+        mode = 1;
+    }
+    if (!mode) {
         void *scan = fn_80204A8C();
         int count = fn_80204D98();
         int owner_group = fn_8011FB4C(owner);
@@ -58,17 +64,17 @@ int fn_800DC4D4(void *context)
             if (flags & 0x10) {
                 u32 value;
                 fn_8012DBE8(candidate_owner, 15, &value);
-                if ((value & 0xff) == 0 && active) {
+                if (((u8 *)&value)[3] == 0 && active) {
                     u32 a = lbl_8064F4D8, b = lbl_8064F4D4, c = lbl_8064F4D0;
                     fn_8012C62C(candidate_owner, 15, &c, &b, &a, 4);
                     fn_8011FA8C(candidate_owner, 0, 0x10000);
-                } else if ((value & 0xff) == 0xff && !active) {
+                } else if (((u8 *)&value)[3] == 0xff && !active) {
                     u32 a = lbl_80651AFC, b = lbl_8064F4E0, c = lbl_8064F4DC;
                     fn_8012C62C(candidate_owner, 15, &c, &b, &a, 4);
                     fn_8011FA8C(candidate_owner, 0x10000, 0);
                 }
             }
-            if (dz > upper || dz < lbl_8064F4E8) continue;
+            if (!(dz <= upper) || !(dz >= lbl_8064F4E8)) continue;
             flags = fn_80157894(candidate_state);
             if (distance <= 500 && ((fn_80157888(candidate_state) & 0x20) || (flags & 0x18))) {
                 if (!(flags & 0x40)) {
@@ -79,12 +85,15 @@ int fn_800DC4D4(void *context)
             if (flags & 8) continue;
             if ((flags & 0x10) && !active) continue;
             if (distance > 250) continue;
-            if (fn_8015821C(candidate_state) == 188 && !fn_80204888(105)) return 0;
+            if (fn_8015821C(candidate_state) == 188) {
+                if (!fn_80204888(105)) goto done;
+            }
             if (fn_8004919C() && fn_8012FA54(candidate_owner, 15) &&
                 !(fn_80157894(candidate_state) & 0x80)) {
-                fn_80201E68(output, (int)entry); return 1;
+                fn_80201E68(output, (int)entry);
+                result = 1;
+                goto done;
             }
-            return 0;
         }
     } else {
         while (cursor != 0) {
@@ -97,7 +106,9 @@ int fn_800DC4D4(void *context)
                     float dz = position[2] - origin[2];
                     if (dz < lbl_8064F464) dz = -dz;
                     if (distance <= 250 && dz <= lbl_8064F4EC) {
-                        fn_80201E68(output, (int)fn_80201B54(cursor)); return 1;
+                        fn_80201E68(output, (int)fn_80201B54(cursor));
+                        result = 1;
+                        goto done;
                     }
                 }
             }
@@ -105,5 +116,6 @@ int fn_800DC4D4(void *context)
         }
     }
     fn_80201E68(output, -1);
-    return 0;
+done:
+    return result;
 }

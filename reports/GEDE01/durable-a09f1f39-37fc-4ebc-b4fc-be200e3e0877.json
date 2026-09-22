@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a09f1f39-37fc-4ebc-b4fc-be200e3e0877",
+  "attempt": 3,
+  "base_commit": "10efdac11535323dd025f5391ba3d08c3a605128",
+  "target": "fn_800DC4D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a09f1f39-37fc-4ebc-b4fc-be200e3e0877.json"
+  ],
+  "divergence": "Canonical objdiff is 96.705505% (1236 retail bytes versus 1216 generated). Both objects have 62 relocation-bearing instructions, but instruction scheduling, register allocation, branch layout, relocation offsets, and targets are not strictly equal; notably, the generated u16-to-float bias relocation targets compiler-local @74 instead of retail lbl_8064F4F0. Reproduce noninteractively with: build/tools/objdiff-cli diff -p . -u main/game/game_fn_800DC4D4 -o reports/GEDE01/objdiff-a09f1f39-37fc-4ebc-b4fc-be200e3e0877.json --format json-pretty fn_800DC4D4"
+}
