@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "6c9a2c63-8ae9-4611-b6a1-615447877bb6",
+  "attempt": 6,
+  "base_commit": "c95a12d50340d3824ab97e0aacdf8ebdcace4022",
+  "target": "fn_801F08B8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6c9a2c63-8ae9-4611-b6a1-615447877bb6.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6c9a2c63-8ae9-4611-b6a1-615447877bb6-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-6c9a2c63-8ae9-4611-b6a1-615447877bb6.txt",
+    "eternal-darkness-decomp/src/game/game_fn_801F08B8.c"
+  ],
+  "divergence": "Canonical and relocation-strict GC/1.3 objdiff are 98.55173% and size-exact at 580 bytes, with 22 relocation-bearing instructions on each side. Generated code differs only in four address-formation instruction slots for the fourth vertex halfword: it forms offset+format before loading the vertex base, while retail forms vertices+offset+4 and uses format as the lhzx base. Full build passes and DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

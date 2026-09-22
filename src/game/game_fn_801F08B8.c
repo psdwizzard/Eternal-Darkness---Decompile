@@ -43,14 +43,14 @@ extern void fn_801F0AFC(void);
 
 void fn_801F08B8(DrawInput* input, EntryOwner* owner, void* value)
 {
+    Entry* entries = owner->entries;
     int special;
     int format;
     int i;
     int offset;
-    Entry* entries = owner->entries;
 
-    lbl_8064D728++;
     special = entries[input->index].field_e != -1;
+    lbl_8064D728++;
     if (entries[input->index].field_a != -1 ||
         entries[input->index].field_1f != 0xFF) {
         fn_801ECEC8(1, 3, 0);
@@ -82,7 +82,7 @@ void fn_801F08B8(DrawInput* input, EntryOwner* owner, void* value)
     fn_801EB8AC(input);
     fn_80226AB4(0x98, special, input->count);
     format <<= 1;
-    for (i = 0, offset = 0; i < input->count; i++, offset += 12) {
+    for (i = 0, offset = 0; i < input->count; offset += 12, i++) {
         fn_801F0B18(*(u16*)((u8*)input->vertices + offset));
         fn_801F0B0C(*(u16*)((u8*)input->vertices + offset + 2));
         fn_801F0B00(*(u16*)((u8*)input->vertices + offset + 4));

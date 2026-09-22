@@ -1,0 +1,15 @@
+assignment_id=6c9a2c63-8ae9-4611-b6a1-615447877bb6
+target=fn_801F08B8
+compiler=GC/1.3
+configure_command=python3 configure.py
+build_command=.tools/bin/ninja -j2
+build_result=success (908/908; build/GEDE01/main.dol: OK)
+dol_sha1_command=sha1sum build/GEDE01/main.dol
+dol_sha1_output=ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol
+canonical_command=build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F08B8 -o reports/GEDE01/objdiff-6c9a2c63-8ae9-4611-b6a1-615447877bb6.json --format json-pretty fn_801F08B8
+canonical_output=retail_bytes=580 generated_bytes=580 match_percent=98.55173 relocations_left=22 relocations_right=22
+relocation_strict_command=build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F08B8 -o reports/GEDE01/objdiff-6c9a2c63-8ae9-4611-b6a1-615447877bb6-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_801F08B8
+relocation_strict_output=retail_bytes=580 generated_bytes=580 match_percent=98.55173 relocations_left=22 relocations_right=22
+source=src/game/game_fn_801F08B8.c
+source_change=Moved the entries declaration ahead of scalar locals to reproduce retail r31/r30 lifetime coloring; placed the global counter increment after the field_e sentinel read so its aliasing store prevents reuse of the selected Entry address; reversed the comma-expression loop updates to reproduce retail offset-before-index scheduling.
+divergence=The generated fourth vertex halfword address uses add offset,format; load vertices; add 4; lhzx vertices,index. Retail loads vertices; adds offset; adds 4; then uses format as the indexed-load base. All other instructions, sizes, and relocation counts match.
