@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "880205f4-e727-4e13-859d-fb455df65539",
+  "attempt": 5,
+  "base_commit": "7c642753fe7e718ae3cc2a78765161235ddd13b5",
+  "target": "fn_8001DE84",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-880205f4-e727-4e13-859d-fb455df65539.json"
+  ],
+  "divergence": "Best canonical score remains 94.18889% (retail 360 bytes, generated 356). This attempt tested the distinct MWCC register-storage-class hypothesis for the root, Info, and Work pointer locals; the committed source diff is byte-identical to the prior best, showing that MWCC ignores these hints here. Retail materializes +0x1C and +0x98 interior bases, while generated code folds them into r31, schedules previous_value earlier, and rematerializes lbl_80302400 for fn_80228B50. Generated code therefore has 9 relocations versus retail's 7 and shifts the calls and tail sites four bytes early. The canonical DOL SHA-1 was verified as ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

@@ -53,9 +53,9 @@ extern void fn_80228B50(void*, void*, s32, u32);
 
 void fn_8001DE84(u8 mode, u32 value)
 {
-    u8* state = lbl_80302400;
-    Info* info = (Info*)(state + 0x1C);
-    Work* work = (Work*)(state + 0x98);
+    register u8* state = lbl_80302400;
+    register Info* info = (Info*)(state + 0x1C);
+    register Work* work = (Work*)(state + 0x98);
     s32 i;
 
     info->flags &= ~2U;
