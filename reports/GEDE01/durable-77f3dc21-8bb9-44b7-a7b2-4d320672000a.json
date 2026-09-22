@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "77f3dc21-8bb9-44b7-a7b2-4d320672000a",
+  "attempt": 5,
+  "base_commit": "f48469bc132dbbaa93922081ea48a08a401123be",
+  "target": "fn_8001DFEC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-77f3dc21-8bb9-44b7-a7b2-4d320672000a.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 93.80488% (baseline 92.30488%). Generated .text is 320 bytes versus retail 328. Retail materializes info at r31+0x1C in r7 and work at r31+0x98 in r7; generated code folds both into r31-relative accesses and omits those two addi instructions. Work-setup scheduling also differs (li r6 moves before the pointer store). The values fill loop now has the retail r4=r31+0xC0 base and zero-based store offsets, and the redundant root HA/LO reload is removed. Both objects have seven relocations with the same ordered types, symbol names, and zero addends, but the early call sites shift 0x44/0x4C to 0x40/0x48, the clear call shifts 0x80 to 0x78, and the final data HA/LO relocations shift 0x11E/0x126 to 0x116/0x11E. Bytes are not identical; retain NonMatching."
+}

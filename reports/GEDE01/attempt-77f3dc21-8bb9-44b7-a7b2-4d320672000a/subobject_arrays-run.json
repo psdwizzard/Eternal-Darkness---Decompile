@@ -1,0 +1,91 @@
+{
+  "name": "subobject_arrays",
+  "timestamp_utc": "2026-09-22T23:14:03.189733+00:00",
+  "source_sha256": "d4db33d95bcfb98df87cb024fdacd22382f5f1f055b09f7b539e44fe62580cbc",
+  "commands": [
+    {
+      "argv": [
+        ".tools/bin/ninja",
+        "-j2",
+        "-v",
+        "build/GEDE01/src/game/game_fn_8001DFEC.o"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/subobject_arrays-compiler.log"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8001DFEC",
+        "fn_8001DFEC",
+        "-o",
+        "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/subobject_arrays-canonical.json",
+        "--format",
+        "json-pretty"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/subobject_arrays-canonical.log"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8001DFEC",
+        "fn_8001DFEC",
+        "-o",
+        "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/subobject_arrays-strict.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/subobject_arrays-strict.log"
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-objdump",
+        "-dr",
+        "build/GEDE01/obj/game/game_fn_8001DFEC.o"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/subobject_arrays-retail-disassembly.txt"
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/obj/game/game_fn_8001DFEC.o"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/subobject_arrays-retail-relocations.txt"
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-objdump",
+        "-dr",
+        "build/GEDE01/src/game/game_fn_8001DFEC.o"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/subobject_arrays-generated-disassembly.txt"
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/src/game/game_fn_8001DFEC.o"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/subobject_arrays-generated-relocations.txt"
+    }
+  ],
+  "canonical_match_percent": 92.30488,
+  "strict_match_percent": 92.30488
+}

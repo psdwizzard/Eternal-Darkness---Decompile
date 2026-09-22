@@ -1,0 +1,91 @@
+{
+  "name": "final",
+  "timestamp_utc": "2026-09-22T23:16:49.924253+00:00",
+  "source_sha256": "04f3c01ca5dc12c71ec1802a5763118cc72f8c62e6d172954166293d0e1820a5",
+  "commands": [
+    {
+      "argv": [
+        ".tools/bin/ninja",
+        "-j2",
+        "-v",
+        "build/GEDE01/src/game/game_fn_8001DFEC.o"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/final-compiler.log"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8001DFEC",
+        "fn_8001DFEC",
+        "-o",
+        "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/final-canonical.json",
+        "--format",
+        "json-pretty"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/final-canonical.log"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8001DFEC",
+        "fn_8001DFEC",
+        "-o",
+        "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/final-strict.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/final-strict.log"
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-objdump",
+        "-dr",
+        "build/GEDE01/obj/game/game_fn_8001DFEC.o"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/final-retail-disassembly.txt"
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/obj/game/game_fn_8001DFEC.o"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/final-retail-relocations.txt"
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-objdump",
+        "-dr",
+        "build/GEDE01/src/game/game_fn_8001DFEC.o"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/final-generated-disassembly.txt"
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/src/game/game_fn_8001DFEC.o"
+      ],
+      "exit_code": 0,
+      "output": "reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/final-generated-relocations.txt"
+    }
+  ],
+  "canonical_match_percent": 93.80488,
+  "strict_match_percent": 93.80488
+}

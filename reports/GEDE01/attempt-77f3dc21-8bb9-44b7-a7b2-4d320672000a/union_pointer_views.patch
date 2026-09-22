@@ -1,0 +1,37 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8001DFEC.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8001DFEC.c
+@@ -42,7 +42,7 @@
+     u8 clear[0x100];
+ } GlobalState;
+ 
+-extern GlobalState lbl_80302400;
++extern u8 lbl_80302400[];
+ extern DataState lbl_8023D660;
+ 
+ typedef struct TypeA TypeA;
+@@ -57,10 +57,13 @@
+     Work* work;
+     Info* info;
+     GlobalState* state;
++    union { u8* bytes; Info* info; Work* work; } view;
+ 
+-    state = &lbl_80302400;
+-    info = &state->info;
+-    work = &state->work;
++    state = (GlobalState*)lbl_80302400;
++    view.bytes = (u8*)state + 0x1C;
++    info = view.info;
++    view.bytes = (u8*)state + 0x98;
++    work = view.work;
+ 
+     info->previous_mode = info->mode;
+     info->previous_value = info->value;
+@@ -79,7 +82,7 @@
+     fn_80228B50(state->clear, state->values, 0, sizeof(state->clear));
+ 
+     for (i = 0; i < 0x100; i++) {
+-        state->values[i] = 0xFF;
++        ((u16*)((u8*)state + 0xC0))[i] = 0xFF;
+     }
+ 
+     lbl_8023D660.field2C = 0xFF;

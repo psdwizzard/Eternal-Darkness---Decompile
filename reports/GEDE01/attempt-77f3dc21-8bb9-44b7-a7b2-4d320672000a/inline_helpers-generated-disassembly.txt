@@ -1,0 +1,98 @@
+
+build/GEDE01/src/game/game_fn_8001DFEC.o:     file format elf32-powerpc
+
+
+Disassembly of section .text:
+
+00000000 <fn_8001DFEC>:
+   0:	94 21 ff f0 	stwu    r1,-16(r1)
+   4:	7c 08 02 a6 	mflr    r0
+   8:	3c a0 00 00 	lis     r5,0
+			a: R_PPC_ADDR16_HA	lbl_80302400
+   c:	90 01 00 14 	stw     r0,20(r1)
+  10:	93 e1 00 0c 	stw     r31,12(r1)
+  14:	3b e5 00 00 	addi    r31,r5,0
+			16: R_PPC_ADDR16_LO	lbl_80302400
+  18:	80 1f 00 4c 	lwz     r0,76(r31)
+  1c:	88 df 00 5a 	lbz     r6,90(r31)
+  20:	80 bf 00 38 	lwz     r5,56(r31)
+  24:	54 00 07 fa 	rlwinm  r0,r0,0,31,29
+  28:	98 7f 00 5a 	stb     r3,90(r31)
+  2c:	38 7f 00 60 	addi    r3,r31,96
+  30:	98 df 00 5b 	stb     r6,91(r31)
+  34:	90 bf 00 3c 	stw     r5,60(r31)
+  38:	90 9f 00 38 	stw     r4,56(r31)
+  3c:	90 1f 00 4c 	stw     r0,76(r31)
+  40:	48 00 00 01 	bl      40 <fn_8001DFEC+0x40>
+			40: R_PPC_REL24	fn_8020EFBC
+  44:	38 7f 00 60 	addi    r3,r31,96
+  48:	48 00 00 01 	bl      48 <fn_8001DFEC+0x48>
+			48: R_PPC_REL24	fn_8020F0F8
+  4c:	3c 60 00 00 	lis     r3,0
+			4e: R_PPC_ADDR16_HA	lbl_80302400
+  50:	38 00 00 00 	li      r0,0
+  54:	38 63 00 00 	addi    r3,r3,0
+			56: R_PPC_ADDR16_LO	lbl_80302400
+  58:	90 1f 00 98 	stw     r0,152(r31)
+  5c:	38 83 00 c0 	addi    r4,r3,192
+  60:	38 a0 00 00 	li      r5,0
+  64:	90 9f 00 ac 	stw     r4,172(r31)
+  68:	38 63 02 c0 	addi    r3,r3,704
+  6c:	38 c0 01 00 	li      r6,256
+  70:	90 1f 00 9c 	stw     r0,156(r31)
+  74:	90 1f 00 a0 	stw     r0,160(r31)
+  78:	90 1f 00 a4 	stw     r0,164(r31)
+  7c:	90 1f 00 a8 	stw     r0,168(r31)
+  80:	48 00 00 01 	bl      80 <fn_8001DFEC+0x80>
+			80: R_PPC_REL24	fn_80228B50
+  84:	38 00 00 08 	li      r0,8
+  88:	7f e4 fb 78 	mr      r4,r31
+  8c:	38 60 00 ff 	li      r3,255
+  90:	7c 09 03 a6 	mtctr   r0
+  94:	b0 64 00 c0 	sth     r3,192(r4)
+  98:	b0 64 00 c2 	sth     r3,194(r4)
+  9c:	b0 64 00 c4 	sth     r3,196(r4)
+  a0:	b0 64 00 c6 	sth     r3,198(r4)
+  a4:	b0 64 00 c8 	sth     r3,200(r4)
+  a8:	b0 64 00 ca 	sth     r3,202(r4)
+  ac:	b0 64 00 cc 	sth     r3,204(r4)
+  b0:	b0 64 00 ce 	sth     r3,206(r4)
+  b4:	b0 64 00 d0 	sth     r3,208(r4)
+  b8:	b0 64 00 d2 	sth     r3,210(r4)
+  bc:	b0 64 00 d4 	sth     r3,212(r4)
+  c0:	b0 64 00 d6 	sth     r3,214(r4)
+  c4:	b0 64 00 d8 	sth     r3,216(r4)
+  c8:	b0 64 00 da 	sth     r3,218(r4)
+  cc:	b0 64 00 dc 	sth     r3,220(r4)
+  d0:	b0 64 00 de 	sth     r3,222(r4)
+  d4:	b0 64 00 e0 	sth     r3,224(r4)
+  d8:	b0 64 00 e2 	sth     r3,226(r4)
+  dc:	b0 64 00 e4 	sth     r3,228(r4)
+  e0:	b0 64 00 e6 	sth     r3,230(r4)
+  e4:	b0 64 00 e8 	sth     r3,232(r4)
+  e8:	b0 64 00 ea 	sth     r3,234(r4)
+  ec:	b0 64 00 ec 	sth     r3,236(r4)
+  f0:	b0 64 00 ee 	sth     r3,238(r4)
+  f4:	b0 64 00 f0 	sth     r3,240(r4)
+  f8:	b0 64 00 f2 	sth     r3,242(r4)
+  fc:	b0 64 00 f4 	sth     r3,244(r4)
+ 100:	b0 64 00 f6 	sth     r3,246(r4)
+ 104:	b0 64 00 f8 	sth     r3,248(r4)
+ 108:	b0 64 00 fa 	sth     r3,250(r4)
+ 10c:	b0 64 00 fc 	sth     r3,252(r4)
+ 110:	b0 64 00 fe 	sth     r3,254(r4)
+ 114:	38 84 00 40 	addi    r4,r4,64
+ 118:	42 00 ff 7c 	bdnz    94 <fn_8001DFEC+0x94>
+ 11c:	3c 60 00 00 	lis     r3,0
+			11e: R_PPC_ADDR16_HA	lbl_8023D660
+ 120:	38 80 00 ff 	li      r4,255
+ 124:	38 63 00 00 	addi    r3,r3,0
+			126: R_PPC_ADDR16_LO	lbl_8023D660
+ 128:	38 00 00 00 	li      r0,0
+ 12c:	90 83 00 2c 	stw     r4,44(r3)
+ 130:	90 03 00 28 	stw     r0,40(r3)
+ 134:	83 e1 00 0c 	lwz     r31,12(r1)
+ 138:	80 01 00 14 	lwz     r0,20(r1)
+ 13c:	7c 08 03 a6 	mtlr    r0
+ 140:	38 21 00 10 	addi    r1,r1,16
+ 144:	4e 80 00 20 	blr

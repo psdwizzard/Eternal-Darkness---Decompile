@@ -1,0 +1,13 @@
+# Assignment 77f3dc21-8bb9-44b7-a7b2-4d320672000a
+
+All commands run from `eternal-darkness-decomp` unless noted. The baseline is commit `f48469bc132dbbaa93922081ea48a08a401123be`. Each `*.patch` is independently relative to that baseline source, not the preceding experiment. Each `*-run.json` records the source SHA-256, exact argv, exit code, and command-output filenames. Paths in those command records are relative to the stated command directory. The main evidence JSON lists worktree-relative artifact paths.
+
+To reproduce a variant in an isolated checkout of the accepted base, apply its patch with `git apply` from the worktree root, then run `python3 configure.py`, `.tools/bin/ninja -j2`, and `python3 reports/GEDE01/attempt-77f3dc21-8bb9-44b7-a7b2-4d320672000a/experiment.py NAME` from the project directory. The runner measures whatever source is currently present; it does not select or apply patches. Use a fresh base for every variant. `patch-validation.json` confirms each preserved patch reconstructs its measured source SHA-256. The baseline patch is intentionally empty. The final patch differs from opaque_global_cast_loop only by an explanatory comment.
+
+The aggregate_work_reset experiment was rejected by canonical C compilation because its automatic aggregate initializer contains a nonconstant expression. Its exact patch and failed compiler output are retained; there is no objdiff measurement for a failed compilation. aggregate_work_copy is the valid C follow-up with a zero initializer and subsequent pointer assignment.
+
+The final retained source contains only fn_8001DFEC, no helper functions, assembly, pragmas, or new includes. It remains independently registered NonMatching with unchanged GC/1.3 settings. Canonical and relocation-strict commands were run independently. A successful DOL hash checks the normal project build, which continues to link this NonMatching function from its retail object. It does not establish that this C candidate matches.
+
+Preserved attempts 31a22082426e1319b19df7f3a881cd9ad56625b0 and ac79796932d103a8fd51598fd1807bbb398af296 were inspected before experimenting. Their reported integer-offset, register, volatile-pointee, byte-pointer, local-lifetime, and pointer-increment attempts were not re-labelled as new work. In particular, the old 77.85366% volatile claim is historical and not asserted as a new measurement here.
+
+A pre-existing tracked CLAUDE.md modification was present at entry. It contains this worker's injected instructions. The assignment permits edits only to the target TU, its registration, and assignment reports, so this file was not edited, restored, staged, or included in the assignment commit. The integrator must account for this pre-existing worktree change.

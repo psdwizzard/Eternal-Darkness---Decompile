@@ -1,0 +1,68 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8001DFEC.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8001DFEC.c
+@@ -51,9 +51,35 @@
+ extern void fn_8020F0F8(TypeB*);
+ extern void fn_80228B50(void*, void*, s32, u32);
+ 
++static inline void update_info(Info* info, u8 mode, u32 value)
++{
++    info->previous_mode = info->mode;
++    info->previous_value = info->value;
++    info->mode = mode;
++    info->value = value;
++    info->flags &= ~2U;
++}
++
++static inline void reset_work(Work* work, u16* values)
++{
++    work->field00 = 0;
++    work->values = values;
++    work->field04 = 0;
++    work->field08 = 0;
++    work->field0C = 0;
++    work->field10 = 0;
++}
++
++static inline void reset_values(u16* values)
++{
++    s32 i;
++    for (i = 0; i < 0x100; i++) {
++        values[i] = 0xFF;
++    }
++}
++
+ void fn_8001DFEC(u8 mode, u32 value)
+ {
+-    s32 i;
+     Work* work;
+     Info* info;
+     GlobalState* state;
+@@ -62,25 +88,14 @@
+     info = &state->info;
+     work = &state->work;
+ 
+-    info->previous_mode = info->mode;
+-    info->previous_value = info->value;
+-    info->mode = mode;
+-    info->value = value;
+-    info->flags &= ~2U;
++    update_info(info, mode, value);
+     fn_8020EFBC((TypeA*)state->object60);
+     fn_8020F0F8((TypeB*)((u8*)info + 0x44));
+ 
+-    work->field00 = 0;
+-    work->values = state->values;
+-    work->field04 = 0;
+-    work->field08 = 0;
+-    work->field0C = 0;
+-    work->field10 = 0;
++    reset_work(work, state->values);
+     fn_80228B50(state->clear, state->values, 0, sizeof(state->clear));
+ 
+-    for (i = 0; i < 0x100; i++) {
+-        state->values[i] = 0xFF;
+-    }
++    reset_values(state->values);
+ 
+     lbl_8023D660.field2C = 0xFF;
+     lbl_8023D660.field28 = 0;

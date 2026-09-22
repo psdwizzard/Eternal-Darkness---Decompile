@@ -1,0 +1,25 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8001DFEC.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8001DFEC.c
+@@ -34,9 +34,9 @@
+ 
+ typedef struct GlobalState {
+     u8 pad00[0x1C];
+-    Info info;
++    Info info[1];
+     u8 object60[0x38];
+-    Work work;
++    Work work[1];
+     u8 padB0[0x10];
+     u16 values[0x100];
+     u8 clear[0x100];
+@@ -59,8 +59,8 @@
+     GlobalState* state;
+ 
+     state = &lbl_80302400;
+-    info = &state->info;
+-    work = &state->work;
++    info = state->info;
++    work = state->work;
+ 
+     info->previous_mode = info->mode;
+     info->previous_value = info->value;

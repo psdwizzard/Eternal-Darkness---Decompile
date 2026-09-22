@@ -42,7 +42,8 @@ typedef struct GlobalState {
     u8 clear[0x100];
 } GlobalState;
 
-extern GlobalState lbl_80302400;
+/* Keep the external storage opaque; this TU supplies its local layout view. */
+extern u8 lbl_80302400[];
 extern DataState lbl_8023D660;
 
 typedef struct TypeA TypeA;
@@ -58,7 +59,7 @@ void fn_8001DFEC(u8 mode, u32 value)
     Info* info;
     GlobalState* state;
 
-    state = &lbl_80302400;
+    state = (GlobalState*)lbl_80302400;
     info = &state->info;
     work = &state->work;
 
@@ -79,7 +80,7 @@ void fn_8001DFEC(u8 mode, u32 value)
     fn_80228B50(state->clear, state->values, 0, sizeof(state->clear));
 
     for (i = 0; i < 0x100; i++) {
-        state->values[i] = 0xFF;
+        ((u16*)((u8*)state + 0xC0))[i] = 0xFF;
     }
 
     lbl_8023D660.field2C = 0xFF;

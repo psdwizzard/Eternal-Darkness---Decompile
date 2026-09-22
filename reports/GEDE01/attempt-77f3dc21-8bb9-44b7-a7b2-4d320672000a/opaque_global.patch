@@ -1,0 +1,20 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8001DFEC.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8001DFEC.c
+@@ -42,7 +42,7 @@
+     u8 clear[0x100];
+ } GlobalState;
+ 
+-extern GlobalState lbl_80302400;
++extern u8 lbl_80302400[];
+ extern DataState lbl_8023D660;
+ 
+ typedef struct TypeA TypeA;
+@@ -58,7 +58,7 @@
+     Info* info;
+     GlobalState* state;
+ 
+-    state = &lbl_80302400;
++    state = (GlobalState*)lbl_80302400;
+     info = &state->info;
+     work = &state->work;
+ 
