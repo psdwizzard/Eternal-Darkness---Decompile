@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "assignment_id": "1a7bacba-bf88-4a9e-87e8-16ee32e1828e",
+  "attempt": 6,
+  "base_commit": "ae61f3ce53e8971d85456d1e29136ff2b68f326e",
+  "target": "fn_801EF5EC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1a7bacba-bf88-4a9e-87e8-16ee32e1828e.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1a7bacba-bf88-4a9e-87e8-16ee32e1828e-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1a7bacba-bf88-4a9e-87e8-16ee32e1828e-baseline.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-1a7bacba-bf88-4a9e-87e8-16ee32e1828e.json",
+    "eternal-darkness-decomp/reports/GEDE01/analysis-1a7bacba-bf88-4a9e-87e8-16ee32e1828e.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-1a7bacba-bf88-4a9e-87e8-16ee32e1828e.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-1a7bacba-bf88-4a9e-87e8-16ee32e1828e.txt"
+  ],
+  "divergence": "Corrected a missing DisplayConfig* argument to fn_802177EC, verified by its retail callee dereference of incoming r3. Best canonical and relocation-strict objdiff improve from 94.223305% to 94.32039%, with exact 412-byte sizes and 40 relocations per object. Remaining generated cmpwi versus retail cmplwi at 0x14; framebuffer store at generated 0x50 versus retail 0x4C; unsigned-conversion scheduling at 0x58..0x80; generated @18 versus retail lbl_80651350 relocation targets (addend 0), at generated 0x58/0xE8 versus retail 0x6C/0xE8. The corrected-argument/u32-return variant fixes the comparison but scores 92.96117%; the highest-scoring honest candidate is preserved as NonMatching. Canonical DOL SHA-1 verified ea24b6af954876ce072562ff39cdb4c81d32be1f; NonMatching code is not linked into that DOL."
+}

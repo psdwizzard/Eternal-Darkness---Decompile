@@ -28,7 +28,7 @@ extern float lbl_8065134C;
 
 extern int fn_80218308(void);
 extern void fn_801EFE84(int);
-extern void fn_802177EC(void);
+extern void fn_802177EC(DisplayConfig*);
 extern void fn_802180A4(void*);
 extern void fn_8022B94C(float, float, float, float, float, float);
 extern void fn_8022B970(int, int, u16, u16);
@@ -52,7 +52,7 @@ void fn_801EF5EC(void)
 
     fn_801EFE84(1);
     lbl_8064C38C = (DisplayConfig*)lbl_802FC500;
-    fn_802177EC();
+    fn_802177EC(lbl_8064C38C);
     fn_802180A4(lbl_8064D71C.field_0);
     lbl_8064D718 = (u32)lbl_8064D71C.field_4;
 
