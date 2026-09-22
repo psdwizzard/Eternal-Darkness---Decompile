@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "assignment_id": "e88bec18-fb55-45c4-b2d2-5d23c07a0e20",
+  "target": "fn_8012C804",
+  "tool": "objdiff-cli via tools/fndiff.py",
+  "raw_summary": "target 704 bytes  base 704 bytes  match 96.505684",
+  "canonical": {
+    "target_size": 704,
+    "candidate_size": 704,
+    "target_instructions": 176,
+    "candidate_instructions": 176,
+    "match_percent": 96.505684
+  },
+  "relocation_strict": {
+    "target_count": 4,
+    "candidate_count": 4,
+    "records_equal": true,
+    "raw_target_records": "28 bl fn_80125ECC R_PPC_REL24; 196 bl fn_8012C478 R_PPC_REL24; 556 bl fn_8012BFE4 R_PPC_REL24; 672 bl fn_8012CAC4 R_PPC_REL24",
+    "raw_candidate_records": "28 bl fn_80125ECC R_PPC_REL24; 196 bl fn_8012C478 R_PPC_REL24; 556 bl fn_8012BFE4 R_PPC_REL24; 672 bl fn_8012CAC4 R_PPC_REL24",
+    "records": [
+      {"offset": 28, "type": "R_PPC_REL24", "target": "fn_80125ECC", "addend": 0},
+      {"offset": 196, "type": "R_PPC_REL24", "target": "fn_8012C478", "addend": 0},
+      {"offset": 556, "type": "R_PPC_REL24", "target": "fn_8012BFE4", "addend": 0},
+      {"offset": 672, "type": "R_PPC_REL24", "target": "fn_8012CAC4", "addend": 0}
+    ]
+  },
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw_result": "build/GEDE01/main.dol: OK",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_raw_result": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "legal_audit_command": "rg -n 'asm\\s*\\(|__asm|GLOBAL_ASM' src/game/game_fn_8012C804.c",
+  "legal_audit_raw_result": "no matches",
+  "hypothesis": "A single source-level zero value shared by the unrolled state initialization and graph-loop counters might reproduce retail's r29 zero lifetime and its mr r31,r29 handoff. A destructive entry &= 0x7FFF normalization might separately prevent MWCC from fusing the child mask and scale.",
+  "experiment_raw_results": [
+    "shared-zero/live-range variant: target 704 bytes  base 708 bytes  match 95.454544; an extra li r29,0 was emitted before the retail-aligned initialization sequence",
+    "destructive-entry-normalization variant: target 704 bytes  base 704 bytes  match 96.505684; generated instructions were unchanged from the preserved best candidate"
+  ],
+  "divergence": "Size-exact honest C and all four relocations strict-equal. Remaining differences are MWCC register allocation: retail keeps the initialization zero in r29 then copies it to graph offset r31, while candidate uses r31 then separately initializes r29; graph entry/child normalization uses retail r3/r4/r5 versus candidate r4/r5; the object-copy loop uses retail source/flags/counter r7/r5/r6 versus candidate r6/r7/r5; and inherited graph/pointer values use retail r6/r5 versus candidate r5/r6."
+}
