@@ -45,17 +45,20 @@ int fn_80089A34(Work* work)
 {
     void* guard = fn_801A717C();
     u8* runtime = *(u8**)(work->bytes + 0xC4);
+    Work* workCopy = work;
+    u8* runtimeFlags;
     int index;
     int result = 0;
     void* owner;
+    u8* memory;
 
     fn_8006ED3C(work, 0xB, &index);
     owner = fn_80201814(*(void**)(work->bytes + 0x38));
+    memory = *(u8**)(*(u8**)(work->bytes + 0xC4) + 0x15C);
     if (owner != 0) {
         Vec3 position;
         Vec3 direction = lbl_80239554;
         EffectDescriptor descriptor;
-        u8* memory;
         int slot;
         int identifier;
         void* scene;
@@ -64,8 +67,8 @@ int fn_80089A34(Work* work)
         int i;
 
         descriptor.table = lbl_80239560;
-        memory = *(u8**)(runtime + 0x15C);
         slot = *(int*)(memory + 0x1780);
+        runtimeFlags = *(u8**)(workCopy->bytes + 0xC4);
         identifier = *(int*)(memory + 0x1740 + slot * 4);
         scene = fn_80201BC8(owner);
         fn_80201B8C(owner);
@@ -81,7 +84,7 @@ int fn_80089A34(Work* work)
 
         direction.x = (float)(8 - (int)(fn_800FBFB0() & 15));
         direction.y = (float)(8 - (int)(fn_800FBFB0() & 15));
-        direction.z = 0.0f;
+        direction.z = 8.0f;
         if (fn_8011F6A4(scene, 0x14, identifier, -1, &descriptor, 1) != -1) {
             position = *(Vec3*)(descriptor.header + 8);
             fn_8014D478(scene, &position, &direction, 0x10, 4,
@@ -112,10 +115,10 @@ int fn_80089A34(Work* work)
             if (lbl_8064B820 != 0)
                 fn_8014CBE8(owner, 0x14, (void*)lbl_802FC5BC, identifier,
                             (void*)(lbl_802FC5BC + 0x18));
-            flags = *(u32*)(runtime + 0x20);
+            flags = *(u32*)(runtimeFlags + 0x20);
             flags |= 0x10000000;
             flags |= 0x1200;
-            *(u32*)(runtime + 0x20) = flags;
+            *(u32*)(runtimeFlags + 0x20) = flags;
             fn_8011E174(0x100, 1);
             goto identifier_done;
         }
@@ -123,7 +126,7 @@ identifier_one:
         {
             void* state = fn_80036D38(owner);
             int stateValue = *(int*)((u8*)state + 0x44);
-            *(u32*)(runtime + 0x20) |= 3;
+            *(u32*)(runtimeFlags + 0x20) |= 3;
             if (spawned != 0) {
                 void* animation = fn_80158598(((void*)fn_80201B54(owner)), 0);
                 int handle = fn_80157FE0(animation, 4, 0);
@@ -134,15 +137,15 @@ identifier_one:
             for (i = 0; i < 16; i++) {
                 direction.x = (float)(8 - (int)(fn_800FBFB0() & 15));
                 direction.y = (float)(8 - (int)(fn_800FBFB0() & 15));
-                direction.z = 0.0f;
+                direction.z = 8.0f;
                 fn_8012B690(scene, &descriptor.table.positions[i], &position);
                 fn_8014D478(scene, &position, &direction, 0, 4,
                             (void*)(lbl_802FC5BC + 0x18), 1);
             }
-            work->bytes[index * 0x2C + 0x6A] = 0;
-            work->bytes[index * 0x2C + 0x6B] = 0;
-            work->bytes[index * 0x2C + 0x68] = 4;
-            fn_8006DEF8(work, 0xB, 0, 0, 0);
+            workCopy->bytes[index * 0x2C + 0x6A] = 0;
+            workCopy->bytes[index * 0x2C + 0x6B] = 0;
+            workCopy->bytes[index * 0x2C + 0x68] = 4;
+            fn_8006DEF8(workCopy, 0xB, 0, 0, 0);
             fn_8020123C(8, stateValue, *(void**)(work->bytes + 0x38), 0);
             goto identifier_done;
         }
