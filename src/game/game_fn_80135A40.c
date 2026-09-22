@@ -41,9 +41,14 @@ int fn_80135A40(Vec3* point, void* object, u16 descriptor_index,
     u8* descriptor;
     u8* group;
     MeshIndex* indices;
-    volatile u16 group_count;
-    volatile u16 group_index;
+    u16 group_count;
+    u16 group_index;
+    int end;
+    int first_index;
+    int second_index;
+    int third_index;
     int found;
+    int current;
     float best;
 
     info = fn_8011F950(object);
@@ -58,16 +63,12 @@ int fn_80135A40(Vec3* point, void* object, u16 descriptor_index,
     if (vertices != 0) {
         for (group_index = 0; group_index < group_count;
              group_index++, group += 4) {
-            int current;
-            int end;
-            int first_index;
-            int second_index;
             Vec3 first;
             Vec3 second;
 
             current = *(u16*)(group + 2);
             end = current + group[1];
-            first_index = lbl_805AAE40[indices[current].vertex];
+            first_index = lbl_805AAE40[indices[(u16)current].vertex];
             fn_801380E0(vertices + first_index * 3, &first.x);
             fn_801380E0(vertices + first_index * 3 + 1, &first.y);
             fn_801380E0(vertices + first_index * 3 + 2, &first.z);
@@ -78,7 +79,6 @@ int fn_80135A40(Vec3* point, void* object, u16 descriptor_index,
             current += 2;
 
             while (current < end) {
-                int third_index;
                 Vec3 third;
                 Vec3 candidate;
 

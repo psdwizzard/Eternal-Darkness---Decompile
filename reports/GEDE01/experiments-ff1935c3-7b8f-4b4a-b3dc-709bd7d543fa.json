@@ -1,0 +1,157 @@
+{
+  "experiments": [
+    {
+      "name": "narrow",
+      "hypothesis": "Explicit u16 first index prevents derived-pointer common subexpression across calls.",
+      "patch_from_baseline": "--- \n+++ \n@@ -67,7 +67,7 @@\n \n             current = *(u16*)(group + 2);\n             end = current + group[1];\n-            first_index = lbl_805AAE40[indices[current].vertex];\n+            first_index = lbl_805AAE40[indices[(u16)current].vertex];\n             fn_801380E0(vertices + first_index * 3, &first.x);\n             fn_801380E0(vertices + first_index * 3 + 1, &first.y);\n             fn_801380E0(vertices + first_index * 3 + 2, &first.z);\n",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_80135A40.o"
+          ],
+          "exit_code": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80135A40.o\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_80135A40",
+            "fn_80135A40",
+            "-o",
+            "reports/GEDE01/probe-narrow-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.json",
+            "--format",
+            "json-pretty"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/probe-narrow-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.json\n"
+        }
+      ],
+      "score": 96.24519
+    },
+    {
+      "name": "natural-spill",
+      "hypothesis": "Counters may be normal register-pressure spills, which are allocated above Vec3 objects.",
+      "patch_from_baseline": "--- \n+++ \n@@ -41,8 +41,8 @@\n     u8* descriptor;\n     u8* group;\n     MeshIndex* indices;\n-    volatile u16 group_count;\n-    volatile u16 group_index;\n+    u16 group_count;\n+    u16 group_index;\n     int found;\n     float best;\n \n@@ -67,7 +67,7 @@\n \n             current = *(u16*)(group + 2);\n             end = current + group[1];\n-            first_index = lbl_805AAE40[indices[current].vertex];\n+            first_index = lbl_805AAE40[indices[(u16)current].vertex];\n             fn_801380E0(vertices + first_index * 3, &first.x);\n             fn_801380E0(vertices + first_index * 3 + 1, &first.y);\n             fn_801380E0(vertices + first_index * 3 + 2, &first.z);\n",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_80135A40.o"
+          ],
+          "exit_code": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80135A40.o\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_80135A40",
+            "fn_80135A40",
+            "-o",
+            "reports/GEDE01/probe-natural-spill-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.json",
+            "--format",
+            "json-pretty"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/probe-natural-spill-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.json\n"
+        }
+      ],
+      "score": 99.0625
+    },
+    {
+      "name": "count-late",
+      "hypothesis": "Retail descriptor field scheduling may follow pointer setup before counter load.",
+      "patch_from_baseline": "--- \n+++ \n@@ -49,9 +49,9 @@\n     info = fn_8011F950(object);\n     vertices = fn_8011FA6C(object, lbl_8064D738);\n     descriptor = info->descriptors + descriptor_index * 0x114;\n-    group_count = *(u16*)descriptor;\n     group = info->groups + (*(u16*)(descriptor + 2) * 4);\n     indices = info->indices + *(u16*)(descriptor + 0xE);\n+    group_count = *(u16*)descriptor;\n     found = 0;\n     best = lbl_80650278;\n \n@@ -67,7 +67,7 @@\n \n             current = *(u16*)(group + 2);\n             end = current + group[1];\n-            first_index = lbl_805AAE40[indices[current].vertex];\n+            first_index = lbl_805AAE40[indices[(u16)current].vertex];\n             fn_801380E0(vertices + first_index * 3, &first.x);\n             fn_801380E0(vertices + first_index * 3 + 1, &first.y);\n             fn_801380E0(vertices + first_index * 3 + 2, &first.z);\n",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_80135A40.o"
+          ],
+          "exit_code": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80135A40.o\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_80135A40",
+            "fn_80135A40",
+            "-o",
+            "reports/GEDE01/probe-count-late-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.json",
+            "--format",
+            "json-pretty"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/probe-count-late-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.json\n"
+        }
+      ],
+      "score": 95.72596
+    },
+    {
+      "name": "ordered-function-locals",
+      "hypothesis": "Reverse declaration order matches observed descending nonvolatile register assignments: end, first, second, third, found, current.",
+      "patch_from_baseline": "--- \n+++ \n@@ -41,9 +41,14 @@\n     u8* descriptor;\n     u8* group;\n     MeshIndex* indices;\n-    volatile u16 group_count;\n-    volatile u16 group_index;\n+    u16 group_count;\n+    u16 group_index;\n+    int end;\n+    int first_index;\n+    int second_index;\n+    int third_index;\n     int found;\n+    int current;\n     float best;\n \n     info = fn_8011F950(object);\n@@ -58,16 +63,12 @@\n     if (vertices != 0) {\n         for (group_index = 0; group_index < group_count;\n              group_index++, group += 4) {\n-            int current;\n-            int end;\n-            int first_index;\n-            int second_index;\n             Vec3 first;\n             Vec3 second;\n \n             current = *(u16*)(group + 2);\n             end = current + group[1];\n-            first_index = lbl_805AAE40[indices[current].vertex];\n+            first_index = lbl_805AAE40[indices[(u16)current].vertex];\n             fn_801380E0(vertices + first_index * 3, &first.x);\n             fn_801380E0(vertices + first_index * 3 + 1, &first.y);\n             fn_801380E0(vertices + first_index * 3 + 2, &first.z);\n@@ -78,7 +79,6 @@\n             current += 2;\n \n             while (current < end) {\n-                int third_index;\n                 Vec3 third;\n                 Vec3 candidate;\n \n",
+      "runs": [
+        {
+          "command": [
+            ".tools/bin/ninja",
+            "-j2",
+            "build/GEDE01/src/game/game_fn_80135A40.o"
+          ],
+          "exit_code": 0,
+          "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80135A40.o\n",
+          "stderr": ""
+        },
+        {
+          "command": [
+            "build/tools/objdiff-cli",
+            "diff",
+            "-p",
+            ".",
+            "-u",
+            "main/game/game_fn_80135A40",
+            "fn_80135A40",
+            "-o",
+            "reports/GEDE01/probe-ordered-function-locals-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.json",
+            "--format",
+            "json-pretty"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": " INFO Writing to reports/GEDE01/probe-ordered-function-locals-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.json\n"
+        }
+      ],
+      "score": 100.0
+    }
+  ],
+  "baseline_git_source": "04e8e4b669dcb90a9abc78bae2306681c0ef5ef8:eternal-darkness-decomp/src/game/game_fn_80135A40.c",
+  "baseline_source_sha256": "7d5f189f848e6367f7dbf5f36c86c9fbf1614c49e736a34d2f8c20ec4f506846",
+  "prior_attempts_reviewed": [
+    "6cb75c005047f5c780f33131f79b612d0f797258",
+    "16162ce5abf4bbb08585f12960b8c50aa46863f2",
+    "ececd4ade1d32990152be024deb0c7365a02d261",
+    "905179dfa9eedf98844c029090bfc8aa0fc093db"
+  ],
+  "result": "The redundant u16 cast on the first index blocks incorrect pointer commoning. Ordinary counters then spill naturally at retail stack offsets. Function-scope integer declarations in end/first_index/second_index/third_index/found/current order reproduce nonvolatile register assignments. Canonical GC/1.3 settings unchanged."
+}

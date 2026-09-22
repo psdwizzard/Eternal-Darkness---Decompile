@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "assignment_id": "ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa",
+  "commands": [
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80135A40",
+        "fn_80135A40",
+        "-o",
+        "reports/GEDE01/objdiff-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.json",
+        "--format",
+        "json-pretty"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.json\n"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80135A40",
+        "fn_80135A40",
+        "-o",
+        "reports/GEDE01/objdiff-relocation-strict-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-relocation-strict-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.json\n"
+    },
+    {
+      "command": [
+        "python3",
+        "configure.py"
+      ],
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/configure-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.txt"
+    },
+    {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2"
+      ],
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/build-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.txt"
+    },
+    {
+      "command": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/sha1-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/legal-ff1935c3-7b8f-4b4a-b3dc-709bd7d543fa.txt"
+    }
+  ],
+  "compiler": "GC/1.3",
+  "flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+  "canonical_match_percent": 100,
+  "relocation_strict_match_percent": 100,
+  "size_bytes": 832,
+  "elf_relocations_per_side": 22,
+  "note": "Historical count 25 includes three objdiff-inferred indexed-load annotations; actual ELF .rela.text contains 22 entries on each side.",
+  "expected_and_actual_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "raw_canonical_build_rule": "# game/game_fn_80135A40.c: game (linked True)\nbuild build/GEDE01/src/game/game_fn_80135A40.o: mwcc_sjis $\n    src/game/game_fn_80135A40.c | compilers/$mw_version/mwcceppc.exe $\n    tools/mwcc_wrapper.py build/tools/sjiswrap.exe tools/transform_dep.py $\n    || pre-compile\n  mw_version = GC/1.3\n  cflags = -nodefaults -proc gekko -align powerpc -enum int -fp hardware $\n      -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma $\n      \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract $\n      on -str reuse -multibyte -i include -i build/GEDE01/include $\n      -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on\n"
+}
