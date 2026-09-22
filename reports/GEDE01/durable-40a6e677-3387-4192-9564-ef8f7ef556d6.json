@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "40a6e677-3387-4192-9564-ef8f7ef556d6",
+  "attempt": 6,
+  "base_commit": "89641081c4fa0758cf593a37294fb203a8b473c3",
+  "target": "fn_8017EE58",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-40a6e677-3387-4192-9564-ef8f7ef556d6.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-40a6e677-3387-4192-9564-ef8f7ef556d6.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-40a6e677-3387-4192-9564-ef8f7ef556d6.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-40a6e677-3387-4192-9564-ef8f7ef556d6.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-40a6e677-3387-4192-9564-ef8f7ef556d6.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff remain 99.928055%, size-exact at 556 bytes. Distinct induction-type/live-range, full typed-object/entry, inlined-predicate, and integer-promotion hypotheses did not improve the accepted reconstruction; it is retained unchanged as the sole independent NonMatching C translation unit. The only two differing instruction words are at 0x1B4 (retail 889c0001: lbz r4,1(r28); generated 887c0001: lbz r3,1(r28)) and 0x1BC (retail 3804ffff: subi r0,r4,1; generated 3803ffff: subi r0,r3,1). All 27 actual ELF relocations and all 28 objdiff relocation-bearing instructions match by offset, type, resolved target name, and addend. python3 configure.py and .tools/bin/ninja -j2 passed; legal audit passed; built and retail main.dol compare byte-identical and both have SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f. The DOL uses the existing NonMatching retail fallback and does not establish a C match."
+}
