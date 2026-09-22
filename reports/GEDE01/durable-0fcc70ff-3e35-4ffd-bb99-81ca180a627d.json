@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "assignment_id": "0fcc70ff-3e35-4ffd-bb99-81ca180a627d",
+  "attempt": 4,
+  "base_commit": "c4cddb3594a2de8caa09157ab28fdf917ff55d9e",
+  "target": "fn_80088298",
+  "status": "attempted",
+  "evidence": ["eternal-darkness-decomp/reports/GEDE01/objdiff-0fcc70ff-3e35-4ffd-bb99-81ca180a627d.json"],
+  "divergence": "Canonical GC/1.3 remains 96.768295% at the exact 656-byte/164-instruction retail size with all 33 relocation tuples equal. Attempt 4 explicitly reused one generic local for the early object pointer and later notification owner; identical output proves MWCC already coalesced those disjoint lifetimes. Register hints and named final-store lvalues were also identical; explicit scaled-offset and byte-base variants regressed to 96.73781% and 95.79269%. Remaining differences are work/object coloring (retail work r30 and reused object/owner r29 versus generated r29/r30) and the final two mode-7 state stores (retail mulli/add/stb-displacement versus generated mulli/addi/stbx)."
+}

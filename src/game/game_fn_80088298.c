@@ -39,11 +39,10 @@ int fn_80088298(Work* work)
 {
     Owner* owner;
     EventState* state;
-    void* object;
+    void* object_or_owner;
     Object44* current;
     void* other;
     Object8C* info;
-    Owner* notification_owner;
     int mode6_index;
     int index;
     int callback_index;
@@ -53,11 +52,11 @@ int fn_80088298(Work* work)
 
     state = fn_8006ED98(work);
     owner = work->owner;
-    object = fn_80201814(work->object_id);
+    object_or_owner = fn_80201814(work->object_id);
     current = fn_80036D38();
     other = fn_80201814(current->object_id);
-    info = fn_80201B8C(object);
-    notification_owner = work->owner;
+    info = fn_80201B8C(object_or_owner);
+    object_or_owner = work->owner;
 
     if (state->mode == 6) {
         fn_8006ED3C(work, 6, &mode6_index);
@@ -96,7 +95,7 @@ int fn_80088298(Work* work)
         slot = (SlotView*)((u8*)work + index * 0x2C);
         slot->state = 2;
         fn_8006DEF8(work, 7, 0, 0, 0);
-        if ((*(unsigned int*)((u8*)notification_owner + 0x20) & 0x20) == 0)
+        if ((*(unsigned int*)((u8*)object_or_owner + 0x20) & 0x20) == 0)
             fn_8020104C(0x51, 0, info->object->object_id, 0, lbl_8064EB78);
         fn_8015C8A4(2, 0);
         fn_801B08BC(-1, 0x1B, 0);
