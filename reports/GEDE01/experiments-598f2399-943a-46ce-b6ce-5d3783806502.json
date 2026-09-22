@@ -1,0 +1,693 @@
+[
+  {
+    "name": "baseline",
+    "patch": "",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F378.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.6861,
+    "size": "892",
+    "diff_stdout": "",
+    "diff_stderr": " INFO Writing to /home/rabbit/src/darkfoundry-new/.darkfoundry/worktrees/50c29326-0acb-40d9-995f-1837de479183/eternal-darkness-decomp/reports/GEDE01/variant-598f2399-943a-46ce-b6ce-5d3783806502.json\n",
+    "differences": [
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "232",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "240",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "252",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r4, r26",
+        "right": "mr r4, r27",
+        "offset": "308",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "324",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "356",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr. r27, r3",
+        "right": "mr. r26, r3",
+        "offset": "368",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "384",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "lwz r27, 0x5c(r1)",
+        "right": "lwz r26, 0x5c(r1)",
+        "offset": "436",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "444",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "464",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "800",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "808",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "cmplwi r26, 0x0",
+        "right": "cmplwi r27, 0x0",
+        "offset": "812",
+        "kind": "DIFF_ARG_MISMATCH"
+      }
+    ]
+  },
+  {
+    "name": "register_iterator",
+    "patch": "--- \n+++ \n@@ -41,7 +41,7 @@\n     u8* entry = *(u8**)(self + 0x4C);\n \n     if (*(u16*)(self + 0xA) < *(u16*)(self + 0xC)) {\n-        u8* iterator;\n+        register u8* iterator;\n         Vec3 position;\n \n         position.x = *(s16*)(entry + 0xA);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F378.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.6861,
+    "size": "892",
+    "diff_stdout": "",
+    "diff_stderr": " INFO Writing to /home/rabbit/src/darkfoundry-new/.darkfoundry/worktrees/50c29326-0acb-40d9-995f-1837de479183/eternal-darkness-decomp/reports/GEDE01/variant-598f2399-943a-46ce-b6ce-5d3783806502.json\n",
+    "differences": [
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "232",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "240",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "252",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r4, r26",
+        "right": "mr r4, r27",
+        "offset": "308",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "324",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "356",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr. r27, r3",
+        "right": "mr. r26, r3",
+        "offset": "368",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "384",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "lwz r27, 0x5c(r1)",
+        "right": "lwz r26, 0x5c(r1)",
+        "offset": "436",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "444",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "464",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "800",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "808",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "cmplwi r26, 0x0",
+        "right": "cmplwi r27, 0x0",
+        "offset": "812",
+        "kind": "DIFF_ARG_MISMATCH"
+      }
+    ]
+  },
+  {
+    "name": "register_other_x",
+    "patch": "--- \n+++ \n@@ -60,7 +60,7 @@\n                 Vec3 other_position;\n                 Vec3 entry_position;\n                 Vec3 fetched_position;\n-                int other_x;\n+                register int other_x;\n                 void* object;\n                 void* owner;\n                 u32 bound_x;\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F378.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.6861,
+    "size": "892",
+    "diff_stdout": "",
+    "diff_stderr": " INFO Writing to /home/rabbit/src/darkfoundry-new/.darkfoundry/worktrees/50c29326-0acb-40d9-995f-1837de479183/eternal-darkness-decomp/reports/GEDE01/variant-598f2399-943a-46ce-b6ce-5d3783806502.json\n",
+    "differences": [
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "232",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "240",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "252",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r4, r26",
+        "right": "mr r4, r27",
+        "offset": "308",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "324",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "356",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr. r27, r3",
+        "right": "mr. r26, r3",
+        "offset": "368",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "384",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "lwz r27, 0x5c(r1)",
+        "right": "lwz r26, 0x5c(r1)",
+        "offset": "436",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "444",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "464",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "800",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "808",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "cmplwi r26, 0x0",
+        "right": "cmplwi r27, 0x0",
+        "offset": "812",
+        "kind": "DIFF_ARG_MISMATCH"
+      }
+    ]
+  },
+  {
+    "name": "register_object",
+    "patch": "--- \n+++ \n@@ -61,7 +61,7 @@\n                 Vec3 entry_position;\n                 Vec3 fetched_position;\n                 int other_x;\n-                void* object;\n+                register void* object;\n                 void* owner;\n                 u32 bound_x;\n                 int bound_z;\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F378.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.6861,
+    "size": "892",
+    "diff_stdout": "",
+    "diff_stderr": " INFO Writing to /home/rabbit/src/darkfoundry-new/.darkfoundry/worktrees/50c29326-0acb-40d9-995f-1837de479183/eternal-darkness-decomp/reports/GEDE01/variant-598f2399-943a-46ce-b6ce-5d3783806502.json\n",
+    "differences": [
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "232",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "240",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "252",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r4, r26",
+        "right": "mr r4, r27",
+        "offset": "308",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "324",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "356",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr. r27, r3",
+        "right": "mr. r26, r3",
+        "offset": "368",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "384",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "lwz r27, 0x5c(r1)",
+        "right": "lwz r26, 0x5c(r1)",
+        "offset": "436",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "444",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "464",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "800",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "808",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "cmplwi r26, 0x0",
+        "right": "cmplwi r27, 0x0",
+        "offset": "812",
+        "kind": "DIFF_ARG_MISMATCH"
+      }
+    ]
+  },
+  {
+    "name": "register_owner",
+    "patch": "--- \n+++ \n@@ -62,7 +62,7 @@\n                 Vec3 fetched_position;\n                 int other_x;\n                 void* object;\n-                void* owner;\n+                register void* owner;\n                 u32 bound_x;\n                 int bound_z;\n                 u32 delta_x;\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F378.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.6861,
+    "size": "892",
+    "diff_stdout": "",
+    "diff_stderr": " INFO Writing to /home/rabbit/src/darkfoundry-new/.darkfoundry/worktrees/50c29326-0acb-40d9-995f-1837de479183/eternal-darkness-decomp/reports/GEDE01/variant-598f2399-943a-46ce-b6ce-5d3783806502.json\n",
+    "differences": [
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "232",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "240",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "252",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r4, r26",
+        "right": "mr r4, r27",
+        "offset": "308",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "324",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "356",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr. r27, r3",
+        "right": "mr. r26, r3",
+        "offset": "368",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "384",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "lwz r27, 0x5c(r1)",
+        "right": "lwz r26, 0x5c(r1)",
+        "offset": "436",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "444",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "464",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "800",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "808",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "cmplwi r26, 0x0",
+        "right": "cmplwi r27, 0x0",
+        "offset": "812",
+        "kind": "DIFF_ARG_MISMATCH"
+      }
+    ]
+  },
+  {
+    "name": "iterator_function_scope",
+    "patch": "--- \n+++ \n@@ -38,10 +38,10 @@\n \n int fn_8018F378(u8* self)\n {\n+    u8* iterator;\n     u8* entry = *(u8**)(self + 0x4C);\n \n     if (*(u16*)(self + 0xA) < *(u16*)(self + 0xC)) {\n-        u8* iterator;\n         Vec3 position;\n \n         position.x = *(s16*)(entry + 0xA);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F378.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.6861,
+    "size": "892",
+    "diff_stdout": "",
+    "diff_stderr": " INFO Writing to /home/rabbit/src/darkfoundry-new/.darkfoundry/worktrees/50c29326-0acb-40d9-995f-1837de479183/eternal-darkness-decomp/reports/GEDE01/variant-598f2399-943a-46ce-b6ce-5d3783806502.json\n",
+    "differences": [
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "232",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "240",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "252",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r4, r26",
+        "right": "mr r4, r27",
+        "offset": "308",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "324",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "356",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr. r27, r3",
+        "right": "mr. r26, r3",
+        "offset": "368",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "384",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "lwz r27, 0x5c(r1)",
+        "right": "lwz r26, 0x5c(r1)",
+        "offset": "436",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "444",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "464",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "800",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "808",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "cmplwi r26, 0x0",
+        "right": "cmplwi r27, 0x0",
+        "offset": "812",
+        "kind": "DIFF_ARG_MISMATCH"
+      }
+    ]
+  },
+  {
+    "name": "iterator_after_position",
+    "patch": "--- \n+++ \n@@ -41,8 +41,8 @@\n     u8* entry = *(u8**)(self + 0x4C);\n \n     if (*(u16*)(self + 0xA) < *(u16*)(self + 0xC)) {\n+        Vec3 position;\n         u8* iterator;\n-        Vec3 position;\n \n         position.x = *(s16*)(entry + 0xA);\n         position.y = *(s16*)(entry + 0xC);\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F378.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 99.6861,
+    "size": "892",
+    "diff_stdout": "",
+    "diff_stderr": " INFO Writing to /home/rabbit/src/darkfoundry-new/.darkfoundry/worktrees/50c29326-0acb-40d9-995f-1837de479183/eternal-darkness-decomp/reports/GEDE01/variant-598f2399-943a-46ce-b6ce-5d3783806502.json\n",
+    "differences": [
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "232",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "240",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "252",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r4, r26",
+        "right": "mr r4, r27",
+        "offset": "308",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "324",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "356",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr. r27, r3",
+        "right": "mr. r26, r3",
+        "offset": "368",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "384",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "lwz r27, 0x5c(r1)",
+        "right": "lwz r26, 0x5c(r1)",
+        "offset": "436",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "444",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r27",
+        "right": "mr r3, r26",
+        "offset": "464",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r3, r26",
+        "right": "mr r3, r27",
+        "offset": "800",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "mr r26, r3",
+        "right": "mr r27, r3",
+        "offset": "808",
+        "kind": "DIFF_ARG_MISMATCH"
+      },
+      {
+        "left": "cmplwi r26, 0x0",
+        "right": "cmplwi r27, 0x0",
+        "offset": "812",
+        "kind": "DIFF_ARG_MISMATCH"
+      }
+    ]
+  },
+  {
+    "name": "other_x_before_iterator",
+    "patch": "--- \n+++ \n@@ -41,6 +41,7 @@\n     u8* entry = *(u8**)(self + 0x4C);\n \n     if (*(u16*)(self + 0xA) < *(u16*)(self + 0xC)) {\n+        int other_x;\n         u8* iterator;\n         Vec3 position;\n \n@@ -60,7 +61,6 @@\n                 Vec3 other_position;\n                 Vec3 entry_position;\n                 Vec3 fetched_position;\n-                int other_x;\n                 void* object;\n                 void* owner;\n                 u32 bound_x;\n",
+    "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F378.o\n",
+    "build_stderr": "",
+    "build_exit": 0,
+    "score": 100.0,
+    "size": "892",
+    "diff_stdout": "",
+    "diff_stderr": " INFO Writing to /home/rabbit/src/darkfoundry-new/.darkfoundry/worktrees/50c29326-0acb-40d9-995f-1837de479183/eternal-darkness-decomp/reports/GEDE01/variant-598f2399-943a-46ce-b6ce-5d3783806502.json\n",
+    "differences": []
+  }
+]
