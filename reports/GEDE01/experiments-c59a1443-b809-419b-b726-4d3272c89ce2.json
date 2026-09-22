@@ -1,0 +1,203 @@
+[
+  {
+    "name": "baseline",
+    "source_sha256": "f3bc8771b305dfea15234e870a4991e370434c68f7ec87a208758945010a8ff5",
+    "patch_from_base": "",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_800A0140.o"
+    ],
+    "build_exit": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_800A0140.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800A0140",
+      "-o",
+      "reports/GEDE01/variant-baseline-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+      "fn_800A0140"
+    ],
+    "objdiff_exit": 0,
+    "objdiff_raw": " INFO Writing to reports/GEDE01/variant-baseline-c59a1443-b809-419b-b726-4d3272c89ce2.json\n",
+    "raw_file": "eternal-darkness-decomp/reports/GEDE01/variant-baseline-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+    "score": 96.35537,
+    "size": "480"
+  },
+  {
+    "name": "split_objects",
+    "source_sha256": "2f2df425fc4234259e997a68153718c117d12d0691bf51f1d70875c6bf69b43f",
+    "patch_from_base": "--- \n+++ \n@@ -59,6 +59,8 @@\n     register void* transform;\n     Context800A0140* context;\n     void* object;\n+    void* lateObject;\n+    void* finalObject;\n     Vec800A0140 position;\n     u32 input;\n     int direction;\n@@ -87,14 +89,14 @@\n                 state->index = i;\n                 fn_8006DEF8(state, context->mode, 0, 0, 0);\n             }\n-            object = fn_80201814(state->resource);\n+            lateObject = fn_80201814(state->resource);\n             info = ((Info800A0140*)fn_80201B8C());\n             fn_8020104C(0x51, 0, info->owner->resource, 0, lbl_8064EDB8);\n-            object = fn_80201814(fn_80036D38(object)->resource);\n+            finalObject = fn_80201814(fn_80036D38(lateObject)->resource);\n             fn_800C1B50(state->resource, 15, 1, lbl_8064EDB8, lbl_8064EDB8);\n             fn_8011F114(&position, transform);\n             fn_8012AC74(transform, &position, 3);\n-            fn_802020B4(object, 0);\n+            fn_802020B4(finalObject, 0);\n             fn_801A5C30(0);\n         }\n     }\n",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_800A0140.o"
+    ],
+    "build_exit": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_800A0140.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800A0140",
+      "-o",
+      "reports/GEDE01/variant-split_objects-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+      "fn_800A0140"
+    ],
+    "objdiff_exit": 0,
+    "objdiff_raw": " INFO Writing to reports/GEDE01/variant-split_objects-c59a1443-b809-419b-b726-4d3272c89ce2.json\n",
+    "raw_file": "eternal-darkness-decomp/reports/GEDE01/variant-block_objects-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+    "score": 97.72727,
+    "size": "484",
+    "raw_file_note": "Byte-identical raw objdiff output deduplicated; command records retain the executed output path."
+  },
+  {
+    "name": "block_objects",
+    "source_sha256": "f431651bdfbe9c3ecf9a5713da20c59a68c3580f4191b30593be4c65b85a8b02",
+    "patch_from_base": "--- \n+++ \n@@ -83,18 +83,20 @@\n     } else if (lbl_8064C934 < lbl_8064EE1C || lbl_8064C934 > lbl_8064EE20) {\n         context->counter++;\n         if (context->counter >= 40) {\n+            void* lateObject;\n+            void* finalObject;\n             for (i = 0; i < 3; i++) {\n                 state->index = i;\n                 fn_8006DEF8(state, context->mode, 0, 0, 0);\n             }\n-            object = fn_80201814(state->resource);\n+            lateObject = fn_80201814(state->resource);\n             info = ((Info800A0140*)fn_80201B8C());\n             fn_8020104C(0x51, 0, info->owner->resource, 0, lbl_8064EDB8);\n-            object = fn_80201814(fn_80036D38(object)->resource);\n+            finalObject = fn_80201814(fn_80036D38(lateObject)->resource);\n             fn_800C1B50(state->resource, 15, 1, lbl_8064EDB8, lbl_8064EDB8);\n             fn_8011F114(&position, transform);\n             fn_8012AC74(transform, &position, 3);\n-            fn_802020B4(object, 0);\n+            fn_802020B4(finalObject, 0);\n             fn_801A5C30(0);\n         }\n     }\n",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_800A0140.o"
+    ],
+    "build_exit": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_800A0140.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800A0140",
+      "-o",
+      "reports/GEDE01/variant-block_objects-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+      "fn_800A0140"
+    ],
+    "objdiff_exit": 0,
+    "objdiff_raw": " INFO Writing to reports/GEDE01/variant-block_objects-c59a1443-b809-419b-b726-4d3272c89ce2.json\n",
+    "raw_file": "eternal-darkness-decomp/reports/GEDE01/variant-block_objects-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+    "score": 97.72727,
+    "size": "484"
+  },
+  {
+    "name": "remove_register",
+    "source_sha256": "ffcf3fda798023be160bde25b2f6923258a08ecad0a8ca089bd1f1c538de9feb",
+    "patch_from_base": "--- \n+++ \n@@ -53,10 +53,10 @@\n extern double lbl_8064EE28;\n extern double lbl_8064EE30;\n \n-int fn_800A0140(register State800A0140* state)\n+int fn_800A0140(State800A0140* state)\n {\n     int i;\n-    register void* transform;\n+    void* transform;\n     Context800A0140* context;\n     void* object;\n     Vec800A0140 position;\n",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_800A0140.o"
+    ],
+    "build_exit": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_800A0140.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800A0140",
+      "-o",
+      "reports/GEDE01/variant-remove_register-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+      "fn_800A0140"
+    ],
+    "objdiff_exit": 0,
+    "objdiff_raw": " INFO Writing to reports/GEDE01/variant-remove_register-c59a1443-b809-419b-b726-4d3272c89ce2.json\n",
+    "raw_file": "eternal-darkness-decomp/reports/GEDE01/variant-baseline-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+    "score": 96.35537,
+    "size": "480",
+    "raw_file_note": "Byte-identical raw objdiff output deduplicated; command records retain the executed output path."
+  },
+  {
+    "name": "split_remove_register",
+    "source_sha256": "ac22e387669898ae94808988dae7b59e7637e59deea9fc6f5a907eed841e6b7f",
+    "patch_from_base": "--- \n+++ \n@@ -53,12 +53,14 @@\n extern double lbl_8064EE28;\n extern double lbl_8064EE30;\n \n-int fn_800A0140(register State800A0140* state)\n+int fn_800A0140(State800A0140* state)\n {\n     int i;\n-    register void* transform;\n+    void* transform;\n     Context800A0140* context;\n     void* object;\n+    void* lateObject;\n+    void* finalObject;\n     Vec800A0140 position;\n     u32 input;\n     int direction;\n@@ -87,14 +89,14 @@\n                 state->index = i;\n                 fn_8006DEF8(state, context->mode, 0, 0, 0);\n             }\n-            object = fn_80201814(state->resource);\n+            lateObject = fn_80201814(state->resource);\n             info = ((Info800A0140*)fn_80201B8C());\n             fn_8020104C(0x51, 0, info->owner->resource, 0, lbl_8064EDB8);\n-            object = fn_80201814(fn_80036D38(object)->resource);\n+            finalObject = fn_80201814(fn_80036D38(lateObject)->resource);\n             fn_800C1B50(state->resource, 15, 1, lbl_8064EDB8, lbl_8064EDB8);\n             fn_8011F114(&position, transform);\n             fn_8012AC74(transform, &position, 3);\n-            fn_802020B4(object, 0);\n+            fn_802020B4(finalObject, 0);\n             fn_801A5C30(0);\n         }\n     }\n",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_800A0140.o"
+    ],
+    "build_exit": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_800A0140.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800A0140",
+      "-o",
+      "reports/GEDE01/variant-split_remove_register-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+      "fn_800A0140"
+    ],
+    "objdiff_exit": 0,
+    "objdiff_raw": " INFO Writing to reports/GEDE01/variant-split_remove_register-c59a1443-b809-419b-b726-4d3272c89ce2.json\n",
+    "raw_file": "eternal-darkness-decomp/reports/GEDE01/variant-block_objects-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+    "score": 97.72727,
+    "size": "484",
+    "raw_file_note": "Byte-identical raw objdiff output deduplicated; command records retain the executed output path."
+  },
+  {
+    "name": "register_loop",
+    "source_sha256": "76ff62208b42de9e97f5d559031ffbe78124e138ec63905d829db73336d16343",
+    "patch_from_base": "--- \n+++ \n@@ -55,7 +55,7 @@\n \n int fn_800A0140(register State800A0140* state)\n {\n-    int i;\n+    register int i;\n     register void* transform;\n     Context800A0140* context;\n     void* object;\n",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_800A0140.o"
+    ],
+    "build_exit": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_800A0140.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800A0140",
+      "-o",
+      "reports/GEDE01/variant-register_loop-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+      "fn_800A0140"
+    ],
+    "objdiff_exit": 0,
+    "objdiff_raw": " INFO Writing to reports/GEDE01/variant-register_loop-c59a1443-b809-419b-b726-4d3272c89ce2.json\n",
+    "raw_file": "eternal-darkness-decomp/reports/GEDE01/variant-baseline-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+    "score": 96.35537,
+    "size": "480",
+    "raw_file_note": "Byte-identical raw objdiff output deduplicated; command records retain the executed output path."
+  },
+  {
+    "name": "register_object",
+    "source_sha256": "56bf1db52e2c17129ea5b74b8554d78b283600482bb15cb06ec97200287841e6",
+    "patch_from_base": "--- \n+++ \n@@ -58,7 +58,7 @@\n     int i;\n     register void* transform;\n     Context800A0140* context;\n-    void* object;\n+    register void* object;\n     Vec800A0140 position;\n     u32 input;\n     int direction;\n",
+    "build_command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_800A0140.o"
+    ],
+    "build_exit": 0,
+    "build_raw": "[1/1] MWCC build/GEDE01/src/game/game_fn_800A0140.o\n",
+    "objdiff_command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_800A0140",
+      "-o",
+      "reports/GEDE01/variant-register_object-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+      "fn_800A0140"
+    ],
+    "objdiff_exit": 0,
+    "objdiff_raw": " INFO Writing to reports/GEDE01/variant-register_object-c59a1443-b809-419b-b726-4d3272c89ce2.json\n",
+    "raw_file": "eternal-darkness-decomp/reports/GEDE01/variant-baseline-c59a1443-b809-419b-b726-4d3272c89ce2.json",
+    "score": 96.35537,
+    "size": "480",
+    "raw_file_note": "Byte-identical raw objdiff output deduplicated; command records retain the executed output path."
+  }
+]

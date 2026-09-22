@@ -53,17 +53,21 @@ extern float lbl_8064EE20;
 extern double lbl_8064EE28;
 extern double lbl_8064EE30;
 
-int fn_800A0140(register State800A0140* state)
+int fn_800A0140(void* argument)
 {
-    int i;
+    State800A0140* state;
     register void* transform;
+    int i;
     Context800A0140* context;
     void* object;
+    void* lateObject;
+    void* finalObject;
     Vec800A0140 position;
     u32 input;
     int direction;
     Info800A0140* info;
 
+    state = (State800A0140*)argument;
     context = fn_8006ED98(state);
     object = fn_80201814(state->resource);
     transform = fn_80201BC8(object);
@@ -87,14 +91,14 @@ int fn_800A0140(register State800A0140* state)
                 state->index = i;
                 fn_8006DEF8(state, context->mode, 0, 0, 0);
             }
-            object = fn_80201814(state->resource);
+            lateObject = fn_80201814(state->resource);
             info = ((Info800A0140*)fn_80201B8C());
             fn_8020104C(0x51, 0, info->owner->resource, 0, lbl_8064EDB8);
-            object = fn_80201814(fn_80036D38(object)->resource);
+            finalObject = fn_80201814(fn_80036D38(lateObject)->resource);
             fn_800C1B50(state->resource, 15, 1, lbl_8064EDB8, lbl_8064EDB8);
             fn_8011F114(&position, transform);
             fn_8012AC74(transform, &position, 3);
-            fn_802020B4(object, 0);
+            fn_802020B4(finalObject, 0);
             fn_801A5C30(0);
         }
     }

@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "assignment_id": "c59a1443-b809-419b-b726-4d3272c89ce2",
+  "target": "fn_800A0140",
+  "base_commit": "3215b21547e8423246b673d4d6b9214e06b57040",
+  "prior_attempt_review": {
+    "commits": [
+      "5c5a3112ab6ad96ffa245aa4a890fd557d948ec1",
+      "d9652459805d7867114039073c5d64562a77e9d7",
+      "f6baa00ceb0d856b2a7a9eca9fc8dffb242e2798",
+      "af8378e2b0e66d9bddd641d99779f600c7b80bda",
+      "3b3dd78a3aa8ff4047302b032e55bba79379692f"
+    ],
+    "reconciliation": "Accepted-base source is identical to preserved 3b3dd78a3 source. Earlier reports were read via git show. The prior do/while and early loop initialization experiments were not repeated. The new local-state experiment was combined with newly separated object lifetimes, unlike the prior neutral alias-only experiment."
+  },
+  "compiler": {
+    "revision": "GC/1.3 (mwcc_242_53)",
+    "flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c",
+    "policy_changed": false
+  },
+  "hypothesis": "Distinct early, intermediate, and final object pointer locals change MWCC live-range coalescing; the final returned object may then move through r0. After this split, local typed-state and declaration ordering can change nonvolatile register coloring without inserting any operations.",
+  "results": [
+    {
+      "variant": "accepted baseline",
+      "canonical_percent": 96.35537,
+      "bytes": 480
+    },
+    {
+      "variant": "split object pointer lifetimes",
+      "canonical_percent": 97.72727,
+      "bytes": 484,
+      "result": "Recovered r3 through r0 pointer transfer and all relocation offsets."
+    },
+    {
+      "variant": "split lifetimes plus local typed state, ordered state/transform/i/context declarations",
+      "canonical_percent": 100.0,
+      "bytes": 484,
+      "result": "Recovered retail nonvolatile allocation; all 121 instructions and 32 relocations now agree."
+    }
+  ],
+  "retained_source": "eternal-darkness-decomp/src/game/game_fn_800A0140.c",
+  "source_sha256": "d3339884e478c9a744d9e34ebf4bd0c9acd7ff27cd25cc02decd1e340af78df7",
+  "canonical_percent": 100.0,
+  "relocation_strict_percent": 100.0,
+  "objdiff_commands": [
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A0140 -o reports/GEDE01/objdiff-c59a1443-b809-419b-b726-4d3272c89ce2.json fn_800A0140",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A0140 -c function_reloc_diffs=all -o reports/GEDE01/objdiff-strict-c59a1443-b809-419b-b726-4d3272c89ce2.json fn_800A0140"
+  ],
+  "raw_evidence_policy": "Canonical and strict JSON files are the actual unmodified objdiff-cli output. Independent ELF parser output records every relocation offset/type/target/addend and exact text hashes. Experiment ledgers retain executed commands, source diffs, stdout and raw output references; byte-identical experiment JSON outputs were deduplicated.",
+  "legal_scope": {
+    "independent_C_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighbor_edits": false,
+    "compiler_policy_edits": false,
+    "gate_edits": false,
+    "runtime_edits": false,
+    "global_progress_edits": false,
+    "private_inputs_or_generated_binaries_committed": false,
+    "registration": "Matching",
+    "splits": "Already correct; unchanged",
+    "preexisting_CLAUDE_md_edit": "Present before work; left untouched and excluded from commit"
+  },
+  "divergence": "",
+  "final_build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol"
+    ],
+    "exit_code": 0,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matching_source_linked": true
+  }
+}
