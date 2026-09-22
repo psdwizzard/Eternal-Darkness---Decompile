@@ -48,16 +48,18 @@ void fn_80188384(u8* input)
     count2 -= 2;
     for (i2 = 2; (u16)i2 < count2; i2 += 2) {
         u16 index = i2;
-        u16 next = i2 + 1;
         fn_80188578(index);
         fn_8018856C(index);
         fn_80188560(index);
-        fn_80188578(next);
-        fn_8018856C(next);
-        fn_80188560(next);
-        fn_80188578(next);
-        fn_8018856C(next);
-        fn_80188560(next);
+        {
+            u16 next = i2 + 1;
+            fn_80188578(next);
+            fn_8018856C(next);
+            fn_80188560(next);
+            fn_80188578(next);
+            fn_8018856C(next);
+            fn_80188560(next);
+        }
         fn_80188578(index);
         fn_8018856C(index);
         fn_80188560(index);
