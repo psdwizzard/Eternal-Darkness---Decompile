@@ -18,7 +18,6 @@ extern void* fn_8022B374(void);
 void fn_80188384(u8* input)
 {
     int count2;
-    int i2;
     u16 count;
     int i;
 
@@ -46,13 +45,13 @@ void fn_80188384(u8* input)
     fn_8018856C(0);
     fn_80188560(0);
     count2 -= 2;
-    for (i2 = 2; (u16)i2 < count2; i2 += 2) {
-        u16 index = i2;
+    for (i = 2; (u16)i < count2; i += 2) {
+        u16 index = i;
         fn_80188578(index);
         fn_8018856C(index);
         fn_80188560(index);
         {
-            u16 next = i2 + 1;
+            u16 next = i + 1;
             fn_80188578(next);
             fn_8018856C(next);
             fn_80188560(next);
@@ -65,11 +64,11 @@ void fn_80188384(u8* input)
         fn_80188560(index);
     }
     {
-        u16 index = i2;
+        u16 index = i;
         fn_80188578(index);
         fn_8018856C(index);
         fn_80188560(index);
-        index = i2 + 1;
+        index = i + 1;
         fn_80188578(index);
         fn_8018856C(index);
         fn_80188560(index);

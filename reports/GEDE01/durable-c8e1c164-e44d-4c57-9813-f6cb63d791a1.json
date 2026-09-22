@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c8e1c164-e44d-4c57-9813-f6cb63d791a1",
+  "attempt": 5,
+  "base_commit": "210936e1a842b859603eebbe3f06d3859f9800b2",
+  "target": "fn_80188384",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c8e1c164-e44d-4c57-9813-f6cb63d791a1.json"
+  ],
+  "divergence": "Fresh canonical GC/1.3 relocation-strict objdiff is size-exact at 472/472 bytes and 96.65254%, improving the preserved 96.48305% attempt. Reusing one induction variable across both loops makes the final truncated i + 1 value use retail's r30 and removes two operand mismatches. All 43 relocation-bearing instructions remain aligned on each side. The remaining diff has 32 operand/register mismatches and one paired prologue move-position insertion/deletion: retail moves the input pointer into r30 at offset 0x14 before saving r29/r28, while generated code saves those registers and moves the pointer into r28 at offset 0x1c. Retail begins with pointer/count/induction/truncated-index in r30/r29/r28/r31, while generated uses r28/r30/r31/r29; the related register-color cycles persist through both loops. Canonical build succeeded and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
