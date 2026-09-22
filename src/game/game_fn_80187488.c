@@ -17,8 +17,8 @@ void fn_80187488(Entry* entry, u16* flags, s16* bounds, int axis, int start,
                  int end, s16* first, s16* second, int add, int delta)
 {
     s16* bound;
-    int a = second[axis];
     int b = first[axis];
+    int a = second[axis];
     int peak;
     int step;
     int current;
