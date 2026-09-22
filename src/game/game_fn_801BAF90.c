@@ -38,6 +38,7 @@ void fn_801BAF90(u32 id)
     u8* cleanup;
     u8* cache_slots;
     u32 offset;
+    u32 nested_cache;
 
     fn_801CE2B8();
     index = find_stream(id);
@@ -47,15 +48,16 @@ void fn_801BAF90(u32 id)
         cleanup = (u8*)slots + 0x5D;
         fn_801CD1E0(cleanup[offset * sizeof(StreamSlot)]);
         cache_slots = (u8*)slots + 0x60;
-        cache = *(u32*)(cache_slots + offset * sizeof(StreamSlot));
+        cache = *(volatile u32*)(cache_slots + offset * sizeof(StreamSlot));
         if (cache != (u32)-1) {
             fn_801CE2B8();
             index = fn_801B9D1C(cache);
             if (index != (u32)-1) {
                 fn_801BB3A0(cache);
                 fn_801CD1E0(cleanup[index * sizeof(StreamSlot)]);
-                if (*(u32*)(cache_slots + index * sizeof(StreamSlot)) != (u32)-1) {
-                    fn_801BAF90(*(u32*)(cache_slots + index * sizeof(StreamSlot)));
+                nested_cache = *(volatile u32*)(cache_slots + index * sizeof(StreamSlot));
+                if (nested_cache != (u32)-1) {
+                    fn_801BAF90(nested_cache);
                 }
                 slots[index].state = 0;
             }

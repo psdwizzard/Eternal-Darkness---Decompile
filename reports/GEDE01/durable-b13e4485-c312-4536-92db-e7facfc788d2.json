@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b13e4485-c312-4536-92db-e7facfc788d2",
+  "attempt": 4,
+  "base_commit": "220d63adec5c1beecfa61087137ded19730e261c",
+  "target": "fn_801BAF90",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b13e4485-c312-4536-92db-e7facfc788d2.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff are byte-identical at an improved 94.42424%: retail and generated text are both 528 bytes/132 instructions, with 49 retail versus 47 generated instruction relocations. Volatile one-read cache temporaries remove the prior extra instruction and make extab and extabindex both 100%, but GC/1.2.5n still assigns the stream base/search index to r30/r29 instead of retail r29/r30, folds retail's separate add-plus-lwz cache accesses into lwzx, and rematerializes multiplied offsets for both state clears. The final DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
