@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "assignment_id": "e59c23c7-36ad-44b8-89ae-d78c0bcef5c9",
+  "target": "fn_801E504C",
+  "compiler": "GC/1.3",
+  "compiler_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+  "experiments": [
+    {
+      "name": "preserved-baseline",
+      "source_patch": "none",
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E504C -o build/GEDE01/objdiff-5bc-baseline.json -c function_reloc_diffs=name_address fn_801E504C",
+      "raw_output": "left .text size=996 match_percent=94.273094; right .text size=980; left .rela.text size=684; right .rela.text size=660"
+    },
+    {
+      "name": "combined-direct-switch-and-sequenced-s16-conversion",
+      "source_patch": "second switch expression changed from ((s8)lbl_8064C31A - 'c') to lbl_8064C31A with literal c/l/r cases; yextent changed from int to s16; fn_80226AB4 third argument changed from 4 to (xextent = (s16)size, 4); later xextent assignment removed",
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801E504C.o && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E504C -o build/GEDE01/objdiff-e59-trial-combined.json -c function_reloc_diffs=name_address fn_801E504C",
+      "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801E504C.o\nleft .text size=996 match_percent=92.79518; right .text size=976"
+    },
+    {
+      "name": "recovered-missing-n-case",
+      "source_patch": "added case 'n' - 'c' sharing the case 'l' - 'c' handler in the post-newline switch",
+      "retail_table_probe_command": "build/binutils/powerpc-eabi-objdump -s --start-address=0x80264954 --stop-address=0x80264994 build/GEDE01/main.elf",
+      "retail_table_probe_raw_output": "80264954 801e5290 801e53f4 801e53f4 801e53f4\n80264964 801e53f4 801e53f4 801e53f4 801e53f4\n80264974 801e53f4 801e5264 801e53f4 801e5264\n80264984 801e53f4 801e53f4 801e53f4 801e5270",
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801E504C.o && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E504C -o build/GEDE01/objdiff-e59-trial-missing-n.json -c function_reloc_diffs=name_address fn_801E504C",
+      "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801E504C.o\nleft .text size=996 match_percent=95.77911; right .text size=976; generated switch uses cmplwi range 15 and a 16-entry jump table"
+    },
+    {
+      "name": "n-case-with-pre-s16-post-int",
+      "source_patch": "moved xextent assignment before fn_80226AB4 as xextent = (s16)size; changed post-call yextent assignment to yextent = (int)size",
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801E504C.o && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E504C -o build/GEDE01/objdiff-e59-trial-n-mixed-casts.json -c function_reloc_diffs=name_address fn_801E504C",
+      "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801E504C.o\nleft .text size=996 match_percent=96.25703; right .text size=988"
+    },
+    {
+      "name": "retained-n-case-with-pre-int-post-s16",
+      "source_patch": "added case 'n' - 'c' sharing the left-alignment handler; moved xextent before fn_80226AB4 as xextent = (int)size; retained post-call yextent = (s16)size; removed the old later xextent = (s16)size",
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801E504C.o && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E504C -o build/GEDE01/objdiff-e59-trial-n-swapped-casts.json -c function_reloc_diffs=name_address fn_801E504C",
+      "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801E504C.o\nleft .text size=996 match_percent=97.58233; right .text size=988"
+    },
+    {
+      "name": "exact-size-short-height-and-explicit-x-short-use",
+      "source_patch": "on top of retained shape, changed glyph_height from int to s16 and explicitly cast xextent to s16 at both vertex uses",
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801E504C.o && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E504C -o build/GEDE01/objdiff-e59-trial-n-types.json -c function_reloc_diffs=name_address fn_801E504C",
+      "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801E504C.o\nleft .text size=996 match_percent=95.58634; right .text size=996"
+    },
+    {
+      "name": "explicit-x-short-use-only",
+      "source_patch": "on top of retained shape, explicitly cast xextent to s16 at both vertex uses",
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801E504C.o && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E504C -o build/GEDE01/objdiff-e59-trial-n-xcast.json -c function_reloc_diffs=name_address fn_801E504C",
+      "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801E504C.o\nleft .text size=996 match_percent=95.044174; right .text size=992"
+    },
+    {
+      "name": "hoisted-extent-declarations",
+      "source_patch": "on top of retained shape, moved xextent and yextent declarations from the draw block to function scope around cursor declaration",
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801E504C.o && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E504C -o build/GEDE01/objdiff-e59-trial-n-hoist-extents.json -c function_reloc_diffs=name_address fn_801E504C",
+      "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801E504C.o\nleft .text size=996 match_percent=97.58233; right .text size=988; declaration hoist was codegen-neutral"
+    }
+  ],
+  "canonical_build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_output_tail": "[899/904] MWCC build/GEDE01/src/game/game_fn_801E504C.o\n[900/904] REPORT\n[901/904] LINK build/GEDE01/main.elf\n[902/904] DOL build/GEDE01/main.dol\n[903/904] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[904/904] PROGRESS"
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "final_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E504C -o reports/GEDE01/objdiff-e59c23c7-36ad-44b8-89ae-d78c0bcef5c9.json -c function_reloc_diffs=name_address fn_801E504C",
+    "configuration": "function_reloc_diffs=name_address",
+    "raw_output": "INFO Writing to reports/GEDE01/objdiff-e59c23c7-36ad-44b8-89ae-d78c0bcef5c9.json\nleft fn_801E504C size=996 match_percent=97.58233; right fn_801E504C size=988 match_percent=97.58233; left .rela.text size=684; right .rela.text size=684"
+  }
+}

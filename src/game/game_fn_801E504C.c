@@ -93,6 +93,7 @@ void fn_801E504C(TextState* state)
             lbl_8064C314 = scale;
             switch ((s8)lbl_8064C31A - 'c') {
             case 'l' - 'c':
+            case 'n' - 'c':
                 lbl_8064D574 = state->x;
                 break;
             case 'r' - 'c':
@@ -110,6 +111,7 @@ void fn_801E504C(TextState* state)
             int xextent;
             int yextent;
             u16 glyph;
+            xextent = (int)size;
             fn_80226AB4(0x80, 5, 4);
             yextent = (s16)size;
             fn_801E4198(lbl_8064D574, lbl_8064D578 + yextent, -1);
@@ -117,7 +119,6 @@ void fn_801E504C(TextState* state)
             fn_801E418C(glyph + 3);
             fn_801E4198(lbl_8064D574, lbl_8064D578, -1);
             fn_801E418C(glyph);
-            xextent = (s16)size;
             fn_801E4198(lbl_8064D574 + xextent, lbl_8064D578, -1);
             fn_801E418C(glyph + 1);
             fn_801E4198(lbl_8064D574 + xextent, lbl_8064D578 + yextent, -1);
