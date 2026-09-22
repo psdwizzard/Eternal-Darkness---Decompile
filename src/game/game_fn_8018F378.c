@@ -41,8 +41,8 @@ int fn_8018F378(u8* self)
     u8* entry = *(u8**)(self + 0x4C);
 
     if (*(u16*)(self + 0xA) < *(u16*)(self + 0xC)) {
-        Vec3 position;
         void* iterator;
+        Vec3 position;
 
         position.x = *(s16*)(entry + 0xA);
         position.y = *(s16*)(entry + 0xC);
@@ -60,10 +60,11 @@ int fn_8018F378(u8* self)
                 Vec3 other_position;
                 Vec3 entry_position;
                 Vec3 fetched_position;
-                void* owner;
+                int other_x;
                 void* object;
-                u16 bound_x;
-                u16 bound_z;
+                void* owner;
+                u32 bound_x;
+                int bound_z;
                 u32 delta_x;
                 u32 delta_z;
 
@@ -81,18 +82,19 @@ int fn_8018F378(u8* self)
                 if (object == 0)
                     continue;
                 bound_x = fn_8011F760(object);
-                bound_z = (u16)fn_8011F6F0(object);
-                delta_x = fn_80179064((int)other_position.x,
+                bound_z = (int)fn_8011F6F0(object);
+                other_x = (int)other_position.x;
+                delta_x = fn_80179064(other_x,
                                       (int)other_position.y,
                                       *(s16*)(entry + 0xA),
                                       *(s16*)(entry + 0xC));
-                delta_z = fn_80179064((int)other_position.x,
+                delta_z = fn_80179064(other_x,
                                       (int)other_position.z,
                                       *(s16*)(entry + 0xA),
                                       *(s16*)(entry + 0xE));
                 if (delta_x > bound_z || delta_z > bound_x)
                     continue;
-                if ((u32)fn_8020123C(0x3B, 0, owner, 0) != 1)
+                if ((u32)(fn_8020123C(0x3B, 0, owner, 0) & 0xFFFFFFFFULL) != 1)
                     continue;
 
                 {
@@ -100,7 +102,7 @@ int fn_8018F378(u8* self)
                     fn_801A74A0(effect, 0);
                     fn_801A74A8(effect, owner);
                     fn_801A7538(effect, 1);
-                    fn_801A7518(effect, *(s16*)(self + 0xAC));
+                    fn_801A7518(effect, (s16)*(u16*)(self + 0xAC));
                     fn_801A7588(effect, 0x8000);
                     fn_801A764C(effect, &position);
                     fn_801A7470(effect, 0xB);
