@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "3c7e6aaa-9528-4d46-8513-977941e013ca",
+  "attempt": 5,
+  "base_commit": "4fcb094cc61d2aabded6567899880c83cf9b2cbf",
+  "target": "fn_801941EC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3c7e6aaa-9528-4d46-8513-977941e013ca.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-3c7e6aaa-9528-4d46-8513-977941e013ca.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-3c7e6aaa-9528-4d46-8513-977941e013ca.log"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 95.23757% (724 bytes on both sides), improved from 93.8011%. The callee-saved register permutation is resolved. Exactly 12 instruction words differ, all within 0xDC..0x10C: MWCC interleaves final y/z extrapolation loads/arithmetic and hoists lha r0,0x10(r1) to 0xF4 before the state+0x22/state+0x24 loads, while retail emits sequential per-component groups then state loads then points[0].x. All three R_PPC_REL24 relocations match at 0x54, 0x15C, and 0x190 to fn_801870D0, fn_80187120, and fn_80193F3C, each with addend zero. Remains NonMatching."
+}
