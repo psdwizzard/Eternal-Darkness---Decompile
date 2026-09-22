@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "bc917dec-bf19-4e4a-b4b0-cc932586dbb2",
+  "attempt": 3,
+  "base_commit": "5df67931a2bf1dcbeac2c535bead641e1adc69c7",
+  "target": "fn_8001DFEC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-bc917dec-bf19-4e4a-b4b0-cc932586dbb2.json"
+  ],
+  "divergence": "Canonical and relocation-strict direct objdiff both measure 92.30488% with equal 328-byte code. Retail derives info/work/values interior pointers at lbl_80302400+0x1C/+0x98/+0xC0; canonical GC/1.3 folds them into r31 and reloads lbl_80302400 around fn_80228B50. Retail has 7 relocations versus generated 9: the early calls move from retail instruction sites 0x44/0x4C to generated 0x40/0x48, and generated adds an extra lbl_80302400 HA/LO pair at 0x4E/0x56. All targets and addends are recorded in evidence."
+}

@@ -53,10 +53,14 @@ extern void fn_80228B50(void*, void*, s32, u32);
 
 void fn_8001DFEC(u8 mode, u32 value)
 {
-    GlobalState* state = &lbl_80302400;
-    Info* info = &state->info;
-    Work* work = &state->work;
     s32 i;
+    Work* work;
+    Info* info;
+    GlobalState* state;
+
+    state = &lbl_80302400;
+    info = &state->info;
+    work = &state->work;
 
     info->previous_mode = info->mode;
     info->previous_value = info->value;
