@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "43dbe7c4-91a8-407d-82f3-2015029d6fd6",
+  "attempt": 5,
+  "base_commit": "1b3755feaaae4faa77959d86a70acbf3bf6c4ee8",
+  "target": "fn_80088298",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-43dbe7c4-91a8-407d-82f3-2015029d6fd6.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-43dbe7c4-91a8-407d-82f3-2015029d6fd6.json"
+  ],
+  "divergence": "Canonical and relocation-strict score improved from 96.768295% to 98.04878%, at 656 bytes/164 instructions. All 164 opcodes and all 33 relocation tuples (address, type, target name/value, signed addend) agree. 49 instruction words still differ solely in registers/operand order: work is generated in r31 versus retail r30; info is generated in r30 versus retail r31; mode-6 callback scaling and loop address operands differ; mode-7 index/address temporaries use r4/r5/r8 and constant stores use r0/r9 versus retail index r0 and constants r9/r10. The final two mode-7 addi/stbx forms are fixed to add/stb-displacement. Exact differing offsets and register operands are recorded as metadata."
+}

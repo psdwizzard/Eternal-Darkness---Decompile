@@ -46,7 +46,7 @@ int fn_80088298(Work* work)
     int mode6_index;
     int index;
     int callback_index;
-    int offset;
+    unsigned int slot_address;
     int i;
     SlotView* slot;
 
@@ -63,11 +63,11 @@ int fn_80088298(Work* work)
         if (fn_801A6D94(lbl_8064C824)) {
             callback_index = fn_8006ECD4(work, 6);
             fn_8006BEE4(state, fn_8006EA4C);
-            offset = callback_index * 0x2C;
-            ((u8*)work)[offset + 0x68] = 4;
+            callback_index *= 0x2C;
+            ((u8*)work)[callback_index + 0x68] = 4;
             fn_8006DEF8(work, 6, 0, 0, 0);
             for (i = 0; i < 4; i++) {
-                ((u8*)work)[offset + 0x68] = i;
+                ((u8*)work)[callback_index + 0x68] = i;
                 fn_8006DEF8(work, 6, 0, 0, 0);
             }
             owner->active = 0;
@@ -79,20 +79,32 @@ int fn_80088298(Work* work)
         fn_801A5C30(1);
         fn_802020B4(other, 1);
         fn_8006ED3C(work, 7, &index);
-        slot = (SlotView*)((u8*)work + index * 0x2C);
+        slot_address = index * 0x2C;
+        slot_address += (unsigned int)work;
+        slot = (SlotView*)slot_address;
         slot->field6A = 3;
-        slot = (SlotView*)((u8*)work + index * 0x2C);
+        slot_address = index * 0x2C;
+        slot_address += (unsigned int)work;
+        slot = (SlotView*)slot_address;
         slot->field6B = 3;
-        slot = (SlotView*)((u8*)work + index * 0x2C);
+        slot_address = index * 0x2C;
+        slot_address += (unsigned int)work;
+        slot = (SlotView*)slot_address;
         slot->state = 4;
         fn_8006DEF8(work, 7, 0, 0, 0);
-        slot = (SlotView*)((u8*)work + index * 0x2C);
+        slot_address = index * 0x2C;
+        slot_address += (unsigned int)work;
+        slot = (SlotView*)slot_address;
         slot->state = 0;
         fn_8006DEF8(work, 7, 0, 0, 0);
-        slot = (SlotView*)((u8*)work + index * 0x2C);
+        slot_address = index * 0x2C;
+        slot_address += (unsigned int)work;
+        slot = (SlotView*)slot_address;
         slot->state = 1;
         fn_8006DEF8(work, 7, 0, 0, 0);
-        slot = (SlotView*)((u8*)work + index * 0x2C);
+        slot_address = index * 0x2C;
+        slot_address += (unsigned int)work;
+        slot = (SlotView*)slot_address;
         slot->state = 2;
         fn_8006DEF8(work, 7, 0, 0, 0);
         if ((*(unsigned int*)((u8*)object_or_owner + 0x20) & 0x20) == 0)

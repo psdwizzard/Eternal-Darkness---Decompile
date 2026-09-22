@@ -1,0 +1,1222 @@
+{
+  "version": 1,
+  "assignment_id": "43dbe7c4-91a8-407d-82f3-2015029d6fd6",
+  "target": "fn_80088298",
+  "compiler": "GC/1.3",
+  "extra_cflags": [
+    "-use_lmw_stmw on"
+  ],
+  "canonical": {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80088298",
+      "fn_80088298",
+      "-o",
+      "reports/GEDE01/objdiff-43dbe7c4-91a8-407d-82f3-2015029d6fd6-scratch.json",
+      "--format",
+      "json-pretty"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/objdiff-43dbe7c4-91a8-407d-82f3-2015029d6fd6-scratch.json\n",
+    "raw_sections": [
+      {
+        "name": ".text",
+        "kind": "SECTION_CODE",
+        "size": "656",
+        "match_percent": 98.04878
+      },
+      {
+        "name": ".rela.text",
+        "size": "396"
+      },
+      {
+        "name": ".symtab",
+        "size": "368"
+      },
+      {
+        "name": ".strtab",
+        "size": "263"
+      },
+      {
+        "name": ".shstrtab",
+        "size": "38"
+      }
+    ],
+    "raw_symbol": {
+      "name": "fn_80088298",
+      "size": "656",
+      "flags": 1,
+      "target_symbol": 1,
+      "match_percent": 98.04878
+    },
+    "expected_instruction_count": 164,
+    "generated_instruction_count": 164,
+    "opcode_mismatch_count": 0,
+    "formatted_instruction_mismatch_count": 49
+  },
+  "relocation_strict": {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80088298",
+      "fn_80088298",
+      "-o",
+      "reports/GEDE01/objdiff-43dbe7c4-91a8-407d-82f3-2015029d6fd6-scratch.json",
+      "--format",
+      "json-pretty",
+      "-c",
+      "function_reloc_diffs=name_address"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/objdiff-43dbe7c4-91a8-407d-82f3-2015029d6fd6-scratch.json\n",
+    "raw_sections": [
+      {
+        "name": ".text",
+        "kind": "SECTION_CODE",
+        "size": "656",
+        "match_percent": 98.04878
+      },
+      {
+        "name": ".rela.text",
+        "size": "396"
+      },
+      {
+        "name": ".symtab",
+        "size": "368"
+      },
+      {
+        "name": ".strtab",
+        "size": "263"
+      },
+      {
+        "name": ".shstrtab",
+        "size": "38"
+      }
+    ],
+    "raw_symbol": {
+      "name": "fn_80088298",
+      "size": "656",
+      "flags": 1,
+      "target_symbol": 1,
+      "match_percent": 98.04878
+    },
+    "expected_instruction_count": 164,
+    "generated_instruction_count": 164,
+    "opcode_mismatch_count": 0,
+    "formatted_instruction_mismatch_count": 49
+  },
+  "operand_difference_metadata": [
+    {
+      "address": 16,
+      "mnemonic": "mr",
+      "expected_registers": [
+        "r30",
+        "r3"
+      ],
+      "generated_registers": [
+        "r31",
+        "r3"
+      ]
+    },
+    {
+      "address": 28,
+      "mnemonic": "lwz",
+      "expected_registers": [
+        "r28",
+        "r30"
+      ],
+      "generated_registers": [
+        "r28",
+        "r31"
+      ]
+    },
+    {
+      "address": 32,
+      "mnemonic": "lwz",
+      "expected_registers": [
+        "r3",
+        "r30"
+      ],
+      "generated_registers": [
+        "r3",
+        "r31"
+      ]
+    },
+    {
+      "address": 80,
+      "mnemonic": "mr",
+      "expected_registers": [
+        "r31",
+        "r3"
+      ],
+      "generated_registers": [
+        "r30",
+        "r3"
+      ]
+    },
+    {
+      "address": 84,
+      "mnemonic": "lwz",
+      "expected_registers": [
+        "r29",
+        "r30"
+      ],
+      "generated_registers": [
+        "r29",
+        "r31"
+      ]
+    },
+    {
+      "address": 96,
+      "mnemonic": "mr",
+      "expected_registers": [
+        "r3",
+        "r30"
+      ],
+      "generated_registers": [
+        "r3",
+        "r31"
+      ]
+    },
+    {
+      "address": 128,
+      "mnemonic": "mr",
+      "expected_registers": [
+        "r3",
+        "r30"
+      ],
+      "generated_registers": [
+        "r3",
+        "r31"
+      ]
+    },
+    {
+      "address": 144,
+      "mnemonic": "mr",
+      "expected_registers": [
+        "r29",
+        "r3"
+      ],
+      "generated_registers": [
+        "r30",
+        "r3"
+      ]
+    },
+    {
+      "address": 160,
+      "mnemonic": "mulli",
+      "expected_registers": [
+        "r29",
+        "r29"
+      ],
+      "generated_registers": [
+        "r29",
+        "r30"
+      ]
+    },
+    {
+      "address": 168,
+      "mnemonic": "mr",
+      "expected_registers": [
+        "r3",
+        "r30"
+      ],
+      "generated_registers": [
+        "r3",
+        "r31"
+      ]
+    },
+    {
+      "address": 176,
+      "mnemonic": "add",
+      "expected_registers": [
+        "r6",
+        "r30",
+        "r29"
+      ],
+      "generated_registers": [
+        "r6",
+        "r29",
+        "r31"
+      ]
+    },
+    {
+      "address": 204,
+      "mnemonic": "addi",
+      "expected_registers": [
+        "r29",
+        "r29"
+      ],
+      "generated_registers": [
+        "r30",
+        "r31"
+      ]
+    },
+    {
+      "address": 208,
+      "mnemonic": "stbx",
+      "expected_registers": [
+        "r27",
+        "r30",
+        "r29"
+      ],
+      "generated_registers": [
+        "r27",
+        "r29",
+        "r30"
+      ]
+    },
+    {
+      "address": 212,
+      "mnemonic": "mr",
+      "expected_registers": [
+        "r3",
+        "r30"
+      ],
+      "generated_registers": [
+        "r3",
+        "r31"
+      ]
+    },
+    {
+      "address": 316,
+      "mnemonic": "mr",
+      "expected_registers": [
+        "r3",
+        "r30"
+      ],
+      "generated_registers": [
+        "r3",
+        "r31"
+      ]
+    },
+    {
+      "address": 332,
+      "mnemonic": "lwz",
+      "expected_registers": [
+        "r0",
+        "r1"
+      ],
+      "generated_registers": [
+        "r4",
+        "r1"
+      ]
+    },
+    {
+      "address": 336,
+      "mnemonic": "li",
+      "expected_registers": [
+        "r10"
+      ],
+      "generated_registers": [
+        "r9"
+      ]
+    },
+    {
+      "address": 340,
+      "mnemonic": "li",
+      "expected_registers": [
+        "r9"
+      ],
+      "generated_registers": [
+        "r0"
+      ]
+    },
+    {
+      "address": 344,
+      "mnemonic": "mr",
+      "expected_registers": [
+        "r3",
+        "r30"
+      ],
+      "generated_registers": [
+        "r3",
+        "r31"
+      ]
+    },
+    {
+      "address": 348,
+      "mnemonic": "mulli",
+      "expected_registers": [
+        "r0",
+        "r0"
+      ],
+      "generated_registers": [
+        "r8",
+        "r4"
+      ]
+    },
+    {
+      "address": 364,
+      "mnemonic": "add",
+      "expected_registers": [
+        "r8",
+        "r30",
+        "r0"
+      ],
+      "generated_registers": [
+        "r8",
+        "r8",
+        "r31"
+      ]
+    },
+    {
+      "address": 372,
+      "mnemonic": "stb",
+      "expected_registers": [
+        "r10",
+        "r8"
+      ],
+      "generated_registers": [
+        "r9",
+        "r8"
+      ]
+    },
+    {
+      "address": 376,
+      "mnemonic": "lwz",
+      "expected_registers": [
+        "r0",
+        "r1"
+      ],
+      "generated_registers": [
+        "r8",
+        "r1"
+      ]
+    },
+    {
+      "address": 380,
+      "mnemonic": "mulli",
+      "expected_registers": [
+        "r0",
+        "r0"
+      ],
+      "generated_registers": [
+        "r8",
+        "r8"
+      ]
+    },
+    {
+      "address": 384,
+      "mnemonic": "add",
+      "expected_registers": [
+        "r8",
+        "r30",
+        "r0"
+      ],
+      "generated_registers": [
+        "r8",
+        "r8",
+        "r31"
+      ]
+    },
+    {
+      "address": 388,
+      "mnemonic": "stb",
+      "expected_registers": [
+        "r10",
+        "r8"
+      ],
+      "generated_registers": [
+        "r9",
+        "r8"
+      ]
+    },
+    {
+      "address": 392,
+      "mnemonic": "lwz",
+      "expected_registers": [
+        "r0",
+        "r1"
+      ],
+      "generated_registers": [
+        "r8",
+        "r1"
+      ]
+    },
+    {
+      "address": 396,
+      "mnemonic": "mulli",
+      "expected_registers": [
+        "r0",
+        "r0"
+      ],
+      "generated_registers": [
+        "r8",
+        "r8"
+      ]
+    },
+    {
+      "address": 400,
+      "mnemonic": "add",
+      "expected_registers": [
+        "r8",
+        "r30",
+        "r0"
+      ],
+      "generated_registers": [
+        "r8",
+        "r8",
+        "r31"
+      ]
+    },
+    {
+      "address": 404,
+      "mnemonic": "stb",
+      "expected_registers": [
+        "r9",
+        "r8"
+      ],
+      "generated_registers": [
+        "r0",
+        "r8"
+      ]
+    },
+    {
+      "address": 412,
+      "mnemonic": "lwz",
+      "expected_registers": [
+        "r0",
+        "r1"
+      ],
+      "generated_registers": [
+        "r5",
+        "r1"
+      ]
+    },
+    {
+      "address": 416,
+      "mnemonic": "li",
+      "expected_registers": [
+        "r9"
+      ],
+      "generated_registers": [
+        "r0"
+      ]
+    },
+    {
+      "address": 420,
+      "mnemonic": "mr",
+      "expected_registers": [
+        "r3",
+        "r30"
+      ],
+      "generated_registers": [
+        "r3",
+        "r31"
+      ]
+    },
+    {
+      "address": 428,
+      "mnemonic": "mulli",
+      "expected_registers": [
+        "r0",
+        "r0"
+      ],
+      "generated_registers": [
+        "r8",
+        "r5"
+      ]
+    },
+    {
+      "address": 444,
+      "mnemonic": "add",
+      "expected_registers": [
+        "r8",
+        "r30",
+        "r0"
+      ],
+      "generated_registers": [
+        "r8",
+        "r8",
+        "r31"
+      ]
+    },
+    {
+      "address": 448,
+      "mnemonic": "stb",
+      "expected_registers": [
+        "r9",
+        "r8"
+      ],
+      "generated_registers": [
+        "r0",
+        "r8"
+      ]
+    },
+    {
+      "address": 456,
+      "mnemonic": "lwz",
+      "expected_registers": [
+        "r0",
+        "r1"
+      ],
+      "generated_registers": [
+        "r5",
+        "r1"
+      ]
+    },
+    {
+      "address": 460,
+      "mnemonic": "li",
+      "expected_registers": [
+        "r9"
+      ],
+      "generated_registers": [
+        "r0"
+      ]
+    },
+    {
+      "address": 464,
+      "mnemonic": "mr",
+      "expected_registers": [
+        "r3",
+        "r30"
+      ],
+      "generated_registers": [
+        "r3",
+        "r31"
+      ]
+    },
+    {
+      "address": 472,
+      "mnemonic": "mulli",
+      "expected_registers": [
+        "r0",
+        "r0"
+      ],
+      "generated_registers": [
+        "r8",
+        "r5"
+      ]
+    },
+    {
+      "address": 488,
+      "mnemonic": "add",
+      "expected_registers": [
+        "r8",
+        "r30",
+        "r0"
+      ],
+      "generated_registers": [
+        "r8",
+        "r8",
+        "r31"
+      ]
+    },
+    {
+      "address": 492,
+      "mnemonic": "stb",
+      "expected_registers": [
+        "r9",
+        "r8"
+      ],
+      "generated_registers": [
+        "r0",
+        "r8"
+      ]
+    },
+    {
+      "address": 500,
+      "mnemonic": "lwz",
+      "expected_registers": [
+        "r0",
+        "r1"
+      ],
+      "generated_registers": [
+        "r5",
+        "r1"
+      ]
+    },
+    {
+      "address": 504,
+      "mnemonic": "li",
+      "expected_registers": [
+        "r9"
+      ],
+      "generated_registers": [
+        "r0"
+      ]
+    },
+    {
+      "address": 508,
+      "mnemonic": "mr",
+      "expected_registers": [
+        "r3",
+        "r30"
+      ],
+      "generated_registers": [
+        "r3",
+        "r31"
+      ]
+    },
+    {
+      "address": 516,
+      "mnemonic": "mulli",
+      "expected_registers": [
+        "r0",
+        "r0"
+      ],
+      "generated_registers": [
+        "r8",
+        "r5"
+      ]
+    },
+    {
+      "address": 532,
+      "mnemonic": "add",
+      "expected_registers": [
+        "r8",
+        "r30",
+        "r0"
+      ],
+      "generated_registers": [
+        "r8",
+        "r8",
+        "r31"
+      ]
+    },
+    {
+      "address": 536,
+      "mnemonic": "stb",
+      "expected_registers": [
+        "r9",
+        "r8"
+      ],
+      "generated_registers": [
+        "r0",
+        "r8"
+      ]
+    },
+    {
+      "address": 556,
+      "mnemonic": "lwz",
+      "expected_registers": [
+        "r5",
+        "r31"
+      ],
+      "generated_registers": [
+        "r5",
+        "r30"
+      ]
+    }
+  ],
+  "elf_verification": {
+    "expected_text_size": 656,
+    "generated_text_size": 656,
+    "text_bytes_equal": false,
+    "equal_byte_count": 576,
+    "equal_instruction_word_count": 115,
+    "expected_text_sha256": "ede0feb3f4d80512000c6805e9778edaef3d7c18db5e93a49f6edb511f441e92",
+    "generated_text_sha256": "199614139677928685f4535d9890e5d37c4a78bee2f76f8cf34a081684ab5347",
+    "relocation_tuples_equal": true,
+    "expected_relocations": [
+      {
+        "address": 20,
+        "type": 10,
+        "target": "fn_8006ED98",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 40,
+        "type": 10,
+        "target": "fn_80201814",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 48,
+        "type": 10,
+        "target": "fn_80036D38",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 56,
+        "type": 10,
+        "target": "fn_80201814",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 72,
+        "type": 10,
+        "target": "fn_80201B8C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 108,
+        "type": 10,
+        "target": "fn_8006ED3C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 112,
+        "type": 109,
+        "target": "lbl_8064C824",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 116,
+        "type": 10,
+        "target": "fn_801A6D94",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 136,
+        "type": 10,
+        "target": "fn_8006ECD4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 142,
+        "type": 6,
+        "target": "fn_8006EA4C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 150,
+        "type": 4,
+        "target": "fn_8006EA4C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 156,
+        "type": 10,
+        "target": "fn_8006BEE4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 196,
+        "type": 10,
+        "target": "fn_8006DEF8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 232,
+        "type": 10,
+        "target": "fn_8006DEF8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 256,
+        "type": 109,
+        "target": "lbl_8064C824",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 260,
+        "type": 10,
+        "target": "fn_801A6E04",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 268,
+        "type": 10,
+        "target": "fn_801A5C30",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 280,
+        "type": 10,
+        "target": "fn_802020B4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 300,
+        "type": 10,
+        "target": "fn_801A5C30",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 312,
+        "type": 10,
+        "target": "fn_802020B4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 328,
+        "type": 10,
+        "target": "fn_8006ED3C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 408,
+        "type": 10,
+        "target": "fn_8006DEF8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 452,
+        "type": 10,
+        "target": "fn_8006DEF8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 496,
+        "type": 10,
+        "target": "fn_8006DEF8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 540,
+        "type": 10,
+        "target": "fn_8006DEF8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 564,
+        "type": 109,
+        "target": "lbl_8064EB78",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 580,
+        "type": 10,
+        "target": "fn_8020104C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 592,
+        "type": 10,
+        "target": "fn_8015C8A4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 608,
+        "type": 10,
+        "target": "fn_801B08BC",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 612,
+        "type": 109,
+        "target": "lbl_8064C824",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 616,
+        "type": 10,
+        "target": "fn_801A6E04",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 620,
+        "type": 109,
+        "target": "lbl_8064C91D",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 628,
+        "type": 109,
+        "target": "lbl_8064C91D",
+        "target_value": 0,
+        "addend": 0
+      }
+    ],
+    "generated_relocations": [
+      {
+        "address": 20,
+        "type": 10,
+        "target": "fn_8006ED98",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 40,
+        "type": 10,
+        "target": "fn_80201814",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 48,
+        "type": 10,
+        "target": "fn_80036D38",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 56,
+        "type": 10,
+        "target": "fn_80201814",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 72,
+        "type": 10,
+        "target": "fn_80201B8C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 108,
+        "type": 10,
+        "target": "fn_8006ED3C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 112,
+        "type": 109,
+        "target": "lbl_8064C824",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 116,
+        "type": 10,
+        "target": "fn_801A6D94",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 136,
+        "type": 10,
+        "target": "fn_8006ECD4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 142,
+        "type": 6,
+        "target": "fn_8006EA4C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 150,
+        "type": 4,
+        "target": "fn_8006EA4C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 156,
+        "type": 10,
+        "target": "fn_8006BEE4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 196,
+        "type": 10,
+        "target": "fn_8006DEF8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 232,
+        "type": 10,
+        "target": "fn_8006DEF8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 256,
+        "type": 109,
+        "target": "lbl_8064C824",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 260,
+        "type": 10,
+        "target": "fn_801A6E04",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 268,
+        "type": 10,
+        "target": "fn_801A5C30",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 280,
+        "type": 10,
+        "target": "fn_802020B4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 300,
+        "type": 10,
+        "target": "fn_801A5C30",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 312,
+        "type": 10,
+        "target": "fn_802020B4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 328,
+        "type": 10,
+        "target": "fn_8006ED3C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 408,
+        "type": 10,
+        "target": "fn_8006DEF8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 452,
+        "type": 10,
+        "target": "fn_8006DEF8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 496,
+        "type": 10,
+        "target": "fn_8006DEF8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 540,
+        "type": 10,
+        "target": "fn_8006DEF8",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 564,
+        "type": 109,
+        "target": "lbl_8064EB78",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 580,
+        "type": 10,
+        "target": "fn_8020104C",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 592,
+        "type": 10,
+        "target": "fn_8015C8A4",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 608,
+        "type": 10,
+        "target": "fn_801B08BC",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 612,
+        "type": 109,
+        "target": "lbl_8064C824",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 616,
+        "type": 10,
+        "target": "fn_801A6E04",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 620,
+        "type": 109,
+        "target": "lbl_8064C91D",
+        "target_value": 0,
+        "addend": 0
+      },
+      {
+        "address": 628,
+        "type": 109,
+        "target": "lbl_8064C91D",
+        "target_value": 0,
+        "addend": 0
+      }
+    ]
+  },
+  "source_sha256": "fabc88af6e7d8c76dd0fde452dff1be50fa881162fbc2209f92487d9e4dc31aa",
+  "base_commit": "1b3755feaaae4faa77959d86a70acbf3bf6c4ee8",
+  "attempt": 5,
+  "registration": "NonMatching; unchanged",
+  "experiments": "eternal-darkness-decomp/reports/GEDE01/experiments-43dbe7c4-91a8-407d-82f3-2015029d6fd6.json",
+  "new_hypothesis": [
+    "Previously untested: separate mode-7 integer address construction from field displacement so MWCC cannot select the final addi/stbx addressing form. Confirmed: all six mode-7 stores now use add plus displacement stb, including the final two.",
+    "Previously untested: scale callback_index in place instead of introducing a distinct offset local. Confirmed: loop counter moves to retail r27 and score first rises to 96.92073.",
+    "Pointer-base-first versus scaled-offset-first address construction changes nonvolatile register coloring. Offset-first is best at 98.04878; base-first gives 98.018295."
+  ],
+  "compiler_command": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80088298.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80088298.d build/GEDE01/src/game/game_fn_80088298.d",
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "raw_output_excerpt": "[905/907] DOL build/GEDE01/main.dol\n[906/907] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[907/907] PROGRESS\n",
+    "warnings": "Existing linker warnings: Section .ignored is unknown. Section ignored.",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "interpretation": "NonMatching uses the retail split object in the linked image. This DOL verification checks build integrity and is not a claim that this C reconstruction is byte-identical."
+  },
+  "divergence": "Canonical and relocation-strict score improved from 96.768295% to 98.04878%, at 656 bytes/164 instructions. All 164 opcodes and all 33 relocation tuples (address, type, target name/value, signed addend) agree. 49 instruction words still differ solely in registers/operand order: work is generated in r31 versus retail r30; info is generated in r30 versus retail r31; mode-6 callback scaling and loop address operands differ; mode-7 index/address temporaries use r4/r5/r8 and constant stores use r0/r9 versus retail index r0 and constants r9/r10. The final two mode-7 addi/stbx forms are fixed to add/stb-displacement. Exact differing offsets and register operands are recorded as metadata.",
+  "legal_audit": {
+    "policy": "Only independent C source, source experiment deltas, and measured metadata are retained. No binaries, private inputs, complete generated disassembly, inline assembly, toolchain changes, neighboring functions, runtime files, or global progress changes.",
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (20280 tracked project files inspected)\n"
+  },
+  "reproduce_measurements": "python3 reports/GEDE01/verify-43dbe7c4-91a8-407d-82f3-2015029d6fd6.py",
+  "verification_script": "eternal-darkness-decomp/reports/GEDE01/verify-43dbe7c4-91a8-407d-82f3-2015029d6fd6.py"
+}
