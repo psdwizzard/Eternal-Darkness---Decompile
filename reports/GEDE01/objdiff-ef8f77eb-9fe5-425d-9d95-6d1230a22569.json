@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "assignment_id": "ef8f77eb-9fe5-425d-9d95-6d1230a22569",
+  "target": "fn_800A0140",
+  "compiler": "mwcc_242_53 (GC/1.3 canonical project configuration)",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "sha1sum build/GEDE01/main.dol",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A0140 -o build/GEDE01/fndiff-ef8f77eb-9fe5-425d-9d95-6d1230a22569.json fn_800A0140"
+  ],
+  "raw_measured_output": {
+    "configure_exit": 0,
+    "ninja_exit": 0,
+    "build_check": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "objdiff": "match_percent=96.35537 retail_size=484 generated_size=480 retail_instructions=121 generated_instructions=120 retail_relocations=32 generated_relocations=32"
+  },
+  "canonical_objdiff": {
+    "match_percent": 96.35537,
+    "retail_bytes": 484,
+    "generated_bytes": 480,
+    "retail_instructions": 121,
+    "generated_instructions": 120
+  },
+  "relocation_strict": {
+    "matched": false,
+    "retail_count": 32,
+    "generated_count": 32,
+    "targets_types_addends": "All 32 generated relocations have the same type, symbolic target, and zero addend as retail in sequence. Offsets match through retail/generated offset 368. Because generated code is one instruction shorter in the final block, the last five call relocations occur four bytes early: retail 396/408/424/436/444 versus generated 392/404/420/432/440.",
+    "retail_offsets": [32, 44, 48, 56, 60, 64, 80, 104, 120, 136, 140, 164, 176, 192, 196, 200, 208, 216, 228, 292, 312, 320, 332, 348, 356, 364, 368, 396, 408, 424, 436, 444],
+    "generated_offsets": [32, 44, 48, 56, 60, 64, 80, 104, 120, 136, 140, 164, 176, 192, 196, 200, 208, 216, 228, 292, 312, 320, 332, 348, 356, 364, 368, 392, 404, 420, 432, 440],
+    "types_targets_addends_in_sequence": [
+      "R_PPC_REL24 fn_8006ED98 +0", "R_PPC_REL24 fn_80201814 +0", "R_PPC_REL24 fn_80201BC8 +0", "R_PPC_REL24 fn_80128EE4 +0", "R_PPC_EMB_SDA21 lbl_8064C934 +0", "R_PPC_EMB_SDA21 lbl_8064EE1C +0", "R_PPC_EMB_SDA21 lbl_8064EE20 +0", "R_PPC_EMB_SDA21 lbl_8064EE28 +0", "R_PPC_EMB_SDA21 lbl_8064EE30 +0", "R_PPC_EMB_SDA21 lbl_8064C930 +0", "R_PPC_EMB_SDA21 lbl_8064EDB0 +0", "R_PPC_REL24 fn_800C1B50 +0", "R_PPC_REL24 fn_8011F114 +0", "R_PPC_REL24 fn_8012AC74 +0", "R_PPC_EMB_SDA21 lbl_8064C934 +0", "R_PPC_EMB_SDA21 lbl_8064C930 +0", "R_PPC_EMB_SDA21 lbl_8064C934 +0", "R_PPC_EMB_SDA21 lbl_8064EE1C +0", "R_PPC_EMB_SDA21 lbl_8064EE20 +0", "R_PPC_REL24 fn_8006DEF8 +0", "R_PPC_REL24 fn_80201814 +0", "R_PPC_REL24 fn_80201B8C +0", "R_PPC_EMB_SDA21 lbl_8064EDB8 +0", "R_PPC_REL24 fn_8020104C +0", "R_PPC_REL24 fn_80036D38 +0", "R_PPC_REL24 fn_80201814 +0", "R_PPC_EMB_SDA21 lbl_8064EDB8 +0", "R_PPC_REL24 fn_800C1B50 +0", "R_PPC_REL24 fn_8011F114 +0", "R_PPC_REL24 fn_8012AC74 +0", "R_PPC_REL24 fn_802020B4 +0", "R_PPC_REL24 fn_801A5C30 +0"
+    ]
+  },
+  "hypothesis_and_result": "Unlike the preserved four-argument attempts, this attempt corrects fn_800C1B50 to the five-argument, two-float signature already demonstrated by nearby matched callers. Passing lbl_8064C934 as the fifth argument and duplicating lbl_8064EDB8 in the later call produces retail's f2 sample lifetime and fmr f2,f1. Direct global expressions plus volatile qualification of the lower bound produce retail's f0 comparisons and the previously missing offset-216 reload/relocation. This raises the measured score from 94.13223% to 96.35537% and restores the full relocation count.",
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_800A0140.c",
+    "registration": "Object(NonMatching, \"game/game_fn_800A0140.c\")",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "compiler_or_gate_changes": false
+  },
+  "divergence": "Canonical GC/1.3 still colors the persistent state, loop/final-object, and context/final-object lifetimes as r28, r30, and r31, while retail uses r30, r28, and r28 respectively; transform now agrees in r29 and all floating operations agree. After the final fn_80201814 call, retail transfers r3 through r0 into r28 using two moves, while generated uses one mr r31,r3 and schedules the state load/fmr/li sequence differently. This makes generated code one instruction/four bytes shorter and shifts only the final five call relocation offsets by -4. The function therefore is not canonical or relocation-strict 100%."
+}

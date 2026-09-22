@@ -36,7 +36,7 @@ extern void *fn_80201814();
 extern void *fn_80201BC8();
 extern void *fn_80201B8C();
 extern u32 fn_80128EE4(void);
-extern void fn_800C1B50(int, int, int, float);
+extern void fn_800C1B50(int, int, int, float, float);
 extern void fn_8011F114();
 extern void fn_8012AC74(void*, Vec800A0140*, int);
 extern void fn_8020104C(int, void*, void*, int, float);
@@ -48,20 +48,19 @@ extern float lbl_8064C930;
 extern float lbl_8064C934;
 extern float lbl_8064EDB0;
 extern float lbl_8064EDB8;
-extern float lbl_8064EE1C;
+extern volatile float lbl_8064EE1C;
 extern float lbl_8064EE20;
 extern double lbl_8064EE28;
 extern double lbl_8064EE30;
 
-int fn_800A0140(State800A0140* state)
+int fn_800A0140(register State800A0140* state)
 {
-    Context800A0140* context;
-    void* transform;
-    void* object;
     int i;
+    register void* transform;
+    Context800A0140* context;
+    void* object;
     Vec800A0140 position;
     u32 input;
-    float value;
     int direction;
     Info800A0140* info;
 
@@ -69,19 +68,19 @@ int fn_800A0140(State800A0140* state)
     object = fn_80201814(state->resource);
     transform = fn_80201BC8(object);
     input = fn_80128EE4();
-    value = lbl_8064C934;
-
-    if (value >= lbl_8064EE1C && value <= lbl_8064EE20 && (input & 0xF) != 0) {
+    if (lbl_8064C934 >= lbl_8064EE1C && lbl_8064C934 <= lbl_8064EE20 &&
+        (input & 0xF) != 0) {
         direction = 2;
-        if (value > lbl_8064EE28 && value < lbl_8064EE30) {
+        if (lbl_8064C934 > lbl_8064EE28 && lbl_8064C934 < lbl_8064EE30) {
             direction = 1;
         }
         fn_800C1B50(state->resource, 15, direction,
-                    lbl_8064C930 < lbl_8064EDB0 ? -lbl_8064C930 : lbl_8064C930);
+                    lbl_8064C930 < lbl_8064EDB0 ? -lbl_8064C930 : lbl_8064C930,
+                    lbl_8064C934);
         fn_8011F114(&position, transform);
         fn_8012AC74(transform, &position, 3);
         lbl_8064C934 += lbl_8064C930;
-    } else if (value < lbl_8064EE1C || value > lbl_8064EE20) {
+    } else if (lbl_8064C934 < lbl_8064EE1C || lbl_8064C934 > lbl_8064EE20) {
         context->counter++;
         if (context->counter >= 40) {
             for (i = 0; i < 3; i++) {
@@ -92,7 +91,7 @@ int fn_800A0140(State800A0140* state)
             info = ((Info800A0140*)fn_80201B8C());
             fn_8020104C(0x51, 0, info->owner->resource, 0, lbl_8064EDB8);
             object = fn_80201814(fn_80036D38(object)->resource);
-            fn_800C1B50(state->resource, 15, 1, lbl_8064EDB8);
+            fn_800C1B50(state->resource, 15, 1, lbl_8064EDB8, lbl_8064EDB8);
             fn_8011F114(&position, transform);
             fn_8012AC74(transform, &position, 3);
             fn_802020B4(object, 0);
