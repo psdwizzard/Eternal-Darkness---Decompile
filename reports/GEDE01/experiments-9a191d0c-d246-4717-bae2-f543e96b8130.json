@@ -1,0 +1,587 @@
+{
+  "assignment_id": "9a191d0c-d246-4717-bae2-f543e96b8130",
+  "hypothesis": "GC/1.3 recognizes the structured outer while loop and hoists the unsigned conversion bias. Expressing its equivalent explicit backedge prevents this hoist without manual floating-point conversion or compiler-policy changes.",
+  "initial_variants": [
+    {
+      "variant": "goto",
+      "match_percent": 99.26471,
+      "retail_bytes": "952",
+      "candidate_bytes": "952"
+    },
+    {
+      "variant": "inline",
+      "match_percent": 93.89496,
+      "retail_bytes": "952",
+      "candidate_bytes": "960"
+    },
+    {
+      "variant": "operands",
+      "match_percent": 94.46218,
+      "retail_bytes": "952",
+      "candidate_bytes": "960"
+    },
+    {
+      "variant": "parser",
+      "match_percent": 93.85294,
+      "retail_bytes": "952",
+      "candidate_bytes": "960"
+    },
+    {
+      "variant": "parsergoto",
+      "match_percent": 99.45378,
+      "retail_bytes": "952",
+      "candidate_bytes": "952"
+    },
+    {
+      "variant": "scope",
+      "match_percent": 99.28571,
+      "retail_bytes": "952",
+      "candidate_bytes": "952"
+    },
+    {
+      "variant": "scope2",
+      "match_percent": 99.411766,
+      "retail_bytes": "952",
+      "candidate_bytes": "952"
+    }
+  ],
+  "parser_refinements": {
+    "aggregate": [
+      {
+        "variant": "int number; int digits;",
+        "match_percent": 98.94958,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "int digits; int number;",
+        "match_percent": 98.94958,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "number_array",
+        "match_percent": 99.4958,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "digits_array",
+        "match_percent": 99.45378,
+        "candidate_bytes": "952"
+      }
+    ],
+    "digit": [
+      {
+        "variant": "int_condition",
+        "match_percent": 92.466385,
+        "candidate_bytes": "944",
+        "parser_instructions": [
+          "li r3, 0x0",
+          "addi r26, r26, 0x1",
+          "b 0xbc",
+          "mulli r3, r3, 0xa",
+          "addi r4, r4, 0x1",
+          "addi r26, r26, 0x1",
+          "add r3, r0, r3",
+          "subi r3, r3, 0x30",
+          "lbz r0, 0x0(r26)",
+          "extsb r0, r0"
+        ]
+      },
+      {
+        "variant": "int_body",
+        "match_percent": 99.53782,
+        "candidate_bytes": "952",
+        "parser_instructions": [
+          "li r4, 0x0",
+          "li r5, 0x0",
+          "addi r27, r27, 0x1",
+          "b 0xc4",
+          "mulli r5, r5, 0xa",
+          "extsb r0, r3",
+          "addi r4, r4, 0x1",
+          "addi r27, r27, 0x1",
+          "add r5, r0, r5",
+          "subi r5, r5, 0x30"
+        ]
+      },
+      {
+        "variant": "s8_condition",
+        "match_percent": 92.466385,
+        "candidate_bytes": "944",
+        "parser_instructions": [
+          "li r3, 0x0",
+          "addi r26, r26, 0x1",
+          "b 0xbc",
+          "mulli r3, r3, 0xa",
+          "addi r4, r4, 0x1",
+          "addi r26, r26, 0x1",
+          "add r3, r0, r3",
+          "subi r3, r3, 0x30",
+          "lbz r0, 0x0(r26)",
+          "extsb r0, r0"
+        ]
+      },
+      {
+        "variant": "s8_body",
+        "match_percent": 99.53782,
+        "candidate_bytes": "952",
+        "parser_instructions": [
+          "li r4, 0x0",
+          "li r5, 0x0",
+          "addi r27, r27, 0x1",
+          "b 0xc4",
+          "mulli r5, r5, 0xa",
+          "extsb r0, r3",
+          "addi r4, r4, 0x1",
+          "addi r27, r27, 0x1",
+          "add r5, r0, r5",
+          "subi r5, r5, 0x30"
+        ]
+      },
+      {
+        "variant": "u8_condition",
+        "match_percent": 92.466385,
+        "candidate_bytes": "944",
+        "parser_instructions": [
+          "li r3, 0x0",
+          "addi r26, r26, 0x1",
+          "b 0xbc",
+          "mulli r3, r3, 0xa",
+          "addi r4, r4, 0x1",
+          "addi r26, r26, 0x1",
+          "add r3, r0, r3",
+          "subi r3, r3, 0x30",
+          "lbz r0, 0x0(r26)",
+          "extsb r0, r0"
+        ]
+      },
+      {
+        "variant": "u8_body",
+        "match_percent": 92.94958,
+        "candidate_bytes": "948",
+        "parser_instructions": [
+          "li r5, 0x0",
+          "addi r26, r26, 0x1",
+          "b 0xc0",
+          "mulli r5, r5, 0xa",
+          "extsb r0, r3",
+          "addi r4, r4, 0x1",
+          "addi r26, r26, 0x1",
+          "add r5, r0, r5",
+          "subi r5, r5, 0x30",
+          "lbz r3, 0x0(r26)"
+        ]
+      }
+    ],
+    "expressions": [
+      {
+        "variant": "number = *text + number * 10 - '0';",
+        "match_percent": 98.69748,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "number = number * 10 + *text - '0';",
+        "match_percent": 98.69748,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "number *= 10;\n                    number += *text - '0';",
+        "match_percent": 99.53782,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "number *= 10;\n                    number = *text - ('0' - number);",
+        "match_percent": 99.07563,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "number *= 10;\n                    number = (number - '0') + *text;",
+        "match_percent": 99.47479,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "number = *text + (number * 10 - '0');",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      }
+    ],
+    "lifetimes": [
+      {
+        "variant": "register_number",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "register_digits",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "register_both",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "declaration_swap",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "number_outer",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "digits_outer",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "char_temp",
+        "match_percent": 99.43277,
+        "candidate_bytes": "952"
+      }
+    ],
+    "loops": [
+      {
+        "variant": "break_loop",
+        "match_percent": 92.71008,
+        "candidate_bytes": "948"
+      },
+      {
+        "variant": "for_initialized",
+        "match_percent": 92.92857,
+        "candidate_bytes": "948"
+      },
+      {
+        "variant": "chain_init",
+        "match_percent": 92.92857,
+        "candidate_bytes": "948"
+      },
+      {
+        "variant": "chain_init_reverse",
+        "match_percent": 92.88655,
+        "candidate_bytes": "948"
+      },
+      {
+        "variant": "initialize_declarations",
+        "match_percent": 99.47479,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "advance_before_init",
+        "match_percent": 99.47479,
+        "candidate_bytes": "952"
+      }
+    ],
+    "order": [
+      {
+        "variant": "order01234",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "order01243",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "order01324",
+        "match_percent": 99.47479,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "order01342",
+        "match_percent": 99.47479,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "order01423",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "order01432",
+        "match_percent": 99.47479,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "order02134",
+        "match_percent": 99.47479,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "order02143",
+        "match_percent": 99.47479,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "order20134",
+        "match_percent": 99.47479,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "order20143",
+        "match_percent": 99.47479,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "number = *text++ + number - '0';\n                    digits++;",
+        "match_percent": 98.21008,
+        "candidate_bytes": "956"
+      },
+      {
+        "variant": "number += *text++ - '0';\n                    digits++;",
+        "match_percent": 97.37395,
+        "candidate_bytes": "956"
+      },
+      {
+        "variant": "number = (int)*text++ + number;\n                    number -= '0';\n                    digits++;",
+        "match_percent": 97.39496,
+        "candidate_bytes": "956"
+      },
+      {
+        "variant": "number = *text + number;\n                    number -= '0';\n                    ++text;\n                    ++digits;",
+        "match_percent": 99.45378,
+        "candidate_bytes": "952"
+      }
+    ],
+    "parameter": [
+      {
+        "variant": "parameter_as_number",
+        "match_percent": 92.94958,
+        "candidate_bytes": "948"
+      },
+      {
+        "variant": "parameter_as_digits",
+        "match_percent": 92.94958,
+        "candidate_bytes": "948"
+      }
+    ],
+    "parser": [
+      {
+        "index": 0,
+        "form": "while",
+        "expression": "number *= 10;\n                    number += *text;",
+        "initialization": "number = 0;\n                digits = 0;",
+        "match_percent": 99.47479,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 1,
+        "form": "while",
+        "expression": "number *= 10;\n                    number += *text;",
+        "initialization": "digits = 0;\n                number = 0;",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 2,
+        "form": "while",
+        "expression": "number = *text + number * 10;",
+        "initialization": "number = 0;\n                digits = 0;",
+        "match_percent": 99.45378,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 3,
+        "form": "while",
+        "expression": "number = *text + number * 10;",
+        "initialization": "digits = 0;\n                number = 0;",
+        "match_percent": 99.4958,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 4,
+        "form": "while",
+        "expression": "number = number * 10 + *text;",
+        "initialization": "number = 0;\n                digits = 0;",
+        "match_percent": 99.45378,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 5,
+        "form": "while",
+        "expression": "number = number * 10 + *text;",
+        "initialization": "digits = 0;\n                number = 0;",
+        "match_percent": 99.4958,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 6,
+        "form": "while",
+        "expression": "number *= 10;\n                    number = *text + number;",
+        "initialization": "number = 0;\n                digits = 0;",
+        "match_percent": 99.45378,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 7,
+        "form": "while",
+        "expression": "number *= 10;\n                    number = *text + number;",
+        "initialization": "digits = 0;\n                number = 0;",
+        "match_percent": 99.4958,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 8,
+        "form": "for",
+        "expression": "number *= 10;\n                    number += *text;",
+        "initialization": "number = 0;\n                digits = 0;",
+        "match_percent": 99.47479,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 9,
+        "form": "for",
+        "expression": "number *= 10;\n                    number += *text;",
+        "initialization": "digits = 0;\n                number = 0;",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 10,
+        "form": "for",
+        "expression": "number = *text + number * 10;",
+        "initialization": "number = 0;\n                digits = 0;",
+        "match_percent": 99.45378,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 11,
+        "form": "for",
+        "expression": "number = *text + number * 10;",
+        "initialization": "digits = 0;\n                number = 0;",
+        "match_percent": 99.4958,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 12,
+        "form": "for",
+        "expression": "number = number * 10 + *text;",
+        "initialization": "number = 0;\n                digits = 0;",
+        "match_percent": 99.45378,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 13,
+        "form": "for",
+        "expression": "number = number * 10 + *text;",
+        "initialization": "digits = 0;\n                number = 0;",
+        "match_percent": 99.4958,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 14,
+        "form": "for",
+        "expression": "number *= 10;\n                    number = *text + number;",
+        "initialization": "number = 0;\n                digits = 0;",
+        "match_percent": 99.45378,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 15,
+        "form": "for",
+        "expression": "number *= 10;\n                    number = *text + number;",
+        "initialization": "digits = 0;\n                number = 0;",
+        "match_percent": 99.4958,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 16,
+        "form": "goto",
+        "expression": "number *= 10;\n                    number += *text;",
+        "initialization": "number = 0;\n                digits = 0;",
+        "match_percent": 99.47479,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 17,
+        "form": "goto",
+        "expression": "number *= 10;\n                    number += *text;",
+        "initialization": "digits = 0;\n                number = 0;",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 18,
+        "form": "goto",
+        "expression": "number = *text + number * 10;",
+        "initialization": "number = 0;\n                digits = 0;",
+        "match_percent": 99.45378,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 19,
+        "form": "goto",
+        "expression": "number = *text + number * 10;",
+        "initialization": "digits = 0;\n                number = 0;",
+        "match_percent": 99.4958,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 20,
+        "form": "goto",
+        "expression": "number = number * 10 + *text;",
+        "initialization": "number = 0;\n                digits = 0;",
+        "match_percent": 99.45378,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 21,
+        "form": "goto",
+        "expression": "number = number * 10 + *text;",
+        "initialization": "digits = 0;\n                number = 0;",
+        "match_percent": 99.4958,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 22,
+        "form": "goto",
+        "expression": "number *= 10;\n                    number = *text + number;",
+        "initialization": "number = 0;\n                digits = 0;",
+        "match_percent": 99.45378,
+        "candidate_bytes": "952"
+      },
+      {
+        "index": 23,
+        "form": "goto",
+        "expression": "number *= 10;\n                    number = *text + number;",
+        "initialization": "digits = 0;\n                number = 0;",
+        "match_percent": 99.4958,
+        "candidate_bytes": "952"
+      }
+    ],
+    "types": [
+      {
+        "variant": "counter_reused_for_height",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "number_reused_for_height",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "long_number",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "long_digits",
+        "match_percent": 99.51681,
+        "candidate_bytes": "952"
+      },
+      {
+        "variant": "short_number",
+        "match_percent": 98.40336,
+        "candidate_bytes": "960"
+      },
+      {
+        "variant": "short_digits",
+        "match_percent": 99.09664,
+        "candidate_bytes": "956"
+      }
+    ]
+  }
+}

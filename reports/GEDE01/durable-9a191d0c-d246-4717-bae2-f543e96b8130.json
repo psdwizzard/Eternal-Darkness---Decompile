@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "9a191d0c-d246-4717-bae2-f543e96b8130",
+  "attempt": 5,
+  "base_commit": "5823ead336fbb3ad816a2971ee4d9b493d4bd1dc",
+  "target": "fn_801E645C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9a191d0c-d246-4717-bae2-f543e96b8130.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9a191d0c-d246-4717-bae2-f543e96b8130-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-9a191d0c-d246-4717-bae2-f543e96b8130.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-9a191d0c-d246-4717-bae2-f543e96b8130.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-9a191d0c-d246-4717-bae2-f543e96b8130.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.53782%, improving the preserved semantically faithful 93.89496% attempt. Retail and candidate are both 952 bytes with a 0x50 frame. Explicit outer backedges prevent GC/1.3 from hoisting the unsigned-conversion bias into f30, while preserving all retail single-precision instructions, including final fmadds. Ten instructions at function offsets 0xAC, 0xB4, 0xBC, 0xC0, 0xDC, 0xE4, 0xEC, 0xF4, 0xFC, and 0x104 exchange r4/r5 for the decimal accumulator, digit count, and following font load. Eight relocation identities remain unequal: compiler-local @54/@56 versus retail lbl_80651288/lbl_80651268. Both objects contain 31 .rela.text entries, all addends zero; constant bytes agree but relocation identities do not. Registration remains NonMatching; no compiler policy or gate changes."
+}
