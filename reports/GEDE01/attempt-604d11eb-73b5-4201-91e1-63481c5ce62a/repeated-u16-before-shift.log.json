@@ -1,0 +1,16 @@
+{
+  "hypothesis": "Eliminate named glyph local so repeated texture index is compiler CSE temporary, potentially colored after current.",
+  "source_patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/repeated-u16-before-shift.patch",
+  "commands": [
+    {
+      "argv": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801E504C.o"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 2,
+      "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801E504C.o\nFAILED: [code=2] build/GEDE01/src/game/game_fn_801E504C.o \ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_801E504C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801E504C.d build/GEDE01/src/game/game_fn_801E504C.d\n### mwcceppc.exe Compiler:\n#    File: src\\game\\game_fn_801E504C.c\n# ------------------------------------\n#      24: u8 ((u16)current * 4)_width[1];\n#   Error:          ^^^^^^^\n#   ')' expected\n#   Too many errors printed, aborting program\n\nUser break, cancelled...\nninja: build stopped: subcommand failed.\n"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_801E504C.c
++++ b/eternal-darkness-decomp/src/game/game_fn_801E504C.c
+@@ -68,10 +68,10 @@
+ 
+     while (cursor[0] != 0 || cursor[1] != 0) {
+         float scale = lbl_8064C314;
+-        int glyph_height = (s16)(scale *
++        int glyph_height = (int)(scale *
+             lbl_80633418[(s8)state->align]->height);
+         int current;
+-        if (glyph_height > lbl_8064C318)
++        if ((s16)glyph_height > lbl_8064C318)
+             lbl_8064C318 = glyph_height;
+         lbl_8064D57C = 0;
+         while (*cursor == '\\')
+@@ -87,8 +87,9 @@
+             lbl_8064C318 = 0;
+             ++cursor;
+             if (*cursor == 0)
+-                break;
+-            measured = command = 0;
++                continue;
++            measured = 0;
++            command = 0;
+             fn_801E645C(cursor, lbl_8064D580, &measured, &command);
+             lbl_8064C314 = scale;
+             switch ((s8)lbl_8064C31A - 'c') {
+@@ -106,22 +107,23 @@
+             continue;
+         }
+ 
+-        if (lbl_8064D578 + glyph_height >= state->y) {
++        if (lbl_8064D578 + (s16)glyph_height >= state->y) {
+             float size = lbl_80651260 * scale;
+             int xextent;
+             int yextent;
+             u16 glyph;
+             xextent = (int)size;
+             fn_80226AB4(0x80, 5, 4);
+-            yextent = (s16)size;
+-            fn_801E4198(lbl_8064D574, lbl_8064D578 + yextent, -1);
+-            glyph = (u8)current * 4;
++            yextent = (int)size;
++            fn_801E4198(lbl_8064D574, lbl_8064D578 + (s16)yextent, -1);
++            glyph = (u16)current * 4;
+             fn_801E418C(glyph + 3);
+             fn_801E4198(lbl_8064D574, lbl_8064D578, -1);
+             fn_801E418C(glyph);
++            xextent = (s16)xextent;
+             fn_801E4198(lbl_8064D574 + xextent, lbl_8064D578, -1);
+             fn_801E418C(glyph + 1);
+-            fn_801E4198(lbl_8064D574 + xextent, lbl_8064D578 + yextent, -1);
++            fn_801E4198(lbl_8064D574 + xextent, lbl_8064D578 + (s16)yextent, -1);
+             fn_801E418C(glyph + 2);
+             fn_801E4188();
+         }

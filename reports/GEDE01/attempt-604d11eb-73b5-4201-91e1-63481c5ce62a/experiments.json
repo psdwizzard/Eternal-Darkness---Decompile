@@ -1,0 +1,740 @@
+{
+  "base_commit": "f061dad5f31cdc03c9cf00de6b89a337c4d937d6",
+  "experiments": [
+    {
+      "name": "all-function-scope",
+      "score": 98.85542,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Hoist all draw and character locals together, unlike prior extent-only hoist.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/all-function-scope.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/all-function-scope.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/all-function-scope.json"
+    },
+    {
+      "name": "control-flow-glyph",
+      "score": 97.63052,
+      "sizes": [
+        "996",
+        "988"
+      ],
+      "hypothesis": "Retail branches to loop test after newline NUL; stores measured before command; glyph mask is u16-before-shift, not u8.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/control-flow-glyph.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/control-flow-glyph.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/control-flow-glyph.json"
+    },
+    {
+      "name": "cse-int-shift",
+      "score": 99.13654,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Eliminate named glyph local so repeated texture index is compiler CSE temporary, potentially colored after current.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/cse-int-shift.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/cse-int-shift.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/cse-int-shift.json"
+    },
+    {
+      "name": "cse-u16-before-shift",
+      "score": 98.839355,
+      "sizes": [
+        "996",
+        "1000"
+      ],
+      "hypothesis": "Eliminate named glyph local so repeated texture index is compiler CSE temporary, potentially colored after current.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/cse-u16-before-shift.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/cse-u16-before-shift.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/cse-u16-before-shift.json"
+    },
+    {
+      "name": "cse-u16-shift",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Eliminate named glyph local so repeated texture index is compiler CSE temporary, potentially colored after current.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/cse-u16-shift.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/cse-u16-shift.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/cse-u16-shift.json"
+    },
+    {
+      "name": "current-char-on-prototypes",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Recheck current byte type after removing prototype-implied argument narrowing.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/current-char-on-prototypes.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/current-char-on-prototypes.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/current-char-on-prototypes.json"
+    },
+    {
+      "name": "current-s16",
+      "score": 98.85542,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Signed-short current may share glyph mask semantics and adjust live ranges.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/current-s16.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/current-s16.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/current-s16.json"
+    },
+    {
+      "name": "current-s8",
+      "score": 98.85542,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Char current matches byte load without a full-width local.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/current-s8.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/current-s8.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/current-s8.json"
+    },
+    {
+      "name": "delayed-x-assignment",
+      "score": 98.7751,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Narrow the horizontal extent once, after the second texture coordinate call, rather than per-use casts.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/delayed-x-assignment.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/delayed-x-assignment.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/delayed-x-assignment.json"
+    },
+    {
+      "name": "explicit-casts-short-prototype",
+      "score": 98.85542,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Keep actual short ABI signature while adding explicit narrowing of arithmetic arguments.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/explicit-casts-short-prototype.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/explicit-casts-short-prototype.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/explicit-casts-short-prototype.json"
+    },
+    {
+      "name": "glyph-after-first-texcoord",
+      "score": 99.45783,
+      "sizes": [
+        "996",
+        "1000"
+      ],
+      "hypothesis": "Define named glyph after first texture call, allowing CSE from preceding expression.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-after-first-texcoord.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-after-first-texcoord.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-after-first-texcoord.json"
+    },
+    {
+      "name": "glyph-after-second-vertex",
+      "score": 99.45783,
+      "sizes": [
+        "996",
+        "1000"
+      ],
+      "hypothesis": "Move named glyph definition to second texture call while retaining preceding CSE expression.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-after-second-vertex.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-after-second-vertex.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-after-second-vertex.json"
+    },
+    {
+      "name": "glyph-argument-assignment",
+      "score": 99.33735,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Define glyph in first call argument rather than preceding statement.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-argument-assignment.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-argument-assignment.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-argument-assignment.json"
+    },
+    {
+      "name": "glyph-cast-whole-int",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Equivalent glyph truncation/shift spelling tests which internal temporary is colored last.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-cast-whole-int.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-cast-whole-int.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-cast-whole-int.json"
+    },
+    {
+      "name": "glyph-early",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Move glyph definition before first vertex call to test live-range priority versus scheduler sinking.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-early.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-early.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-early.json"
+    },
+    {
+      "name": "glyph-explicit-int-arg",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Explicit promotion of the zero-offset texture index.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-explicit-int-arg.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-explicit-int-arg.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-explicit-int-arg.json"
+    },
+    {
+      "name": "glyph-explicit-u32-arg",
+      "score": 99.33735,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Explicit unsigned promotion before the int parameter conversion.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-explicit-u32-arg.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-explicit-u32-arg.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-explicit-u32-arg.json"
+    },
+    {
+      "name": "glyph-function-scope",
+      "score": 98.85542,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Give glyph a whole-function lexical scope before measured locals.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-function-scope.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-function-scope.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-function-scope.json"
+    },
+    {
+      "name": "glyph-int-truncated-short-callee",
+      "score": 99.8996,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Full-width variable holding a truncated glyph, with short-prototype texture boundary.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-int-truncated-short-callee.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-int-truncated-short-callee.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-int-truncated-short-callee.json"
+    },
+    {
+      "name": "glyph-int-truncated",
+      "score": 98.935745,
+      "sizes": [
+        "996",
+        "1000"
+      ],
+      "hypothesis": "Signed full-width variable holding already narrowed glyph.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-int-truncated.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-int-truncated.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-int-truncated.json"
+    },
+    {
+      "name": "glyph-int",
+      "score": 98.534134,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Full-width shifted glyph changes interference priority while call prototype truncates.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-int.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-int.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-int.json"
+    },
+    {
+      "name": "glyph-no-inner-cast",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Equivalent glyph truncation/shift spelling tests which internal temporary is colored last.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-no-inner-cast.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-no-inner-cast.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-no-inner-cast.json"
+    },
+    {
+      "name": "glyph-shift-no-cast",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Equivalent glyph truncation/shift spelling tests which internal temporary is colored last.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-shift-no-cast.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-shift-no-cast.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-shift-no-cast.json"
+    },
+    {
+      "name": "glyph-shift",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Equivalent glyph truncation/shift spelling tests which internal temporary is colored last.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-shift.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-shift.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-shift.json"
+    },
+    {
+      "name": "glyph-short",
+      "score": 98.21285,
+      "sizes": [
+        "996",
+        "1000"
+      ],
+      "hypothesis": "Signed-short glyph local still truncates at unsigned callee boundary but may change coloring.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-short.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-short.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-short.json"
+    },
+    {
+      "name": "glyph-texture-signedshort",
+      "score": 97.8514,
+      "sizes": [
+        "996",
+        "1008"
+      ],
+      "hypothesis": "Texture index callee stores low halfword; signed parameter changes argument-normalization type nodes.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-texture-signedshort.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-texture-signedshort.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-texture-signedshort.json"
+    },
+    {
+      "name": "glyph-two-assigns",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Equivalent glyph truncation/shift spelling tests which internal temporary is colored last.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-two-assigns.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-two-assigns.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-two-assigns.json"
+    },
+    {
+      "name": "glyph-u32-arithmetic",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Unsigned full-width multiplication before assignment narrowing.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-u32-arithmetic.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-u32-arithmetic.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-u32-arithmetic.json"
+    },
+    {
+      "name": "glyph-u32-cast-whole",
+      "score": 98.935745,
+      "sizes": [
+        "996",
+        "1000"
+      ],
+      "hypothesis": "Equivalent glyph truncation/shift spelling tests which internal temporary is colored last.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-u32-cast-whole.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-u32-cast-whole.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-u32-cast-whole.json"
+    },
+    {
+      "name": "glyph-u32",
+      "score": 98.534134,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Unsigned full-width shifted glyph changes allocation and narrowing.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-u32.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-u32.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-u32.json"
+    },
+    {
+      "name": "glyph-unsigned-offsets",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Unsigned coordinate arithmetic changes promotion nodes while retaining halfword result.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-unsigned-offsets.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-unsigned-offsets.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-unsigned-offsets.json"
+    },
+    {
+      "name": "height-short-local",
+      "score": 97.89156,
+      "sizes": [
+        "996",
+        "988"
+      ],
+      "hypothesis": "After control-flow repair, short height should keep raw bits because newline only stores low 16 bits.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/height-short-local.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/height-short-local.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/height-short-local.json"
+    },
+    {
+      "name": "raw-height",
+      "score": 97.61044,
+      "sizes": [
+        "996",
+        "992"
+      ],
+      "hypothesis": "Keep raw integer height until signed comparisons, allowing raw r5 to remain live on newline path.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/raw-height.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/raw-height.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/raw-height.json"
+    },
+    {
+      "name": "register-glyph",
+      "score": 98.85542,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Prioritize glyph local in register coloring.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/register-glyph.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/register-glyph.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/register-glyph.json"
+    },
+    {
+      "name": "register-state",
+      "score": 98.85542,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Prioritize the long-lived state parameter through register storage class.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/register-state.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/register-state.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/register-state.json"
+    },
+    {
+      "name": "register-x",
+      "score": 98.85542,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Prioritize raw horizontal extent in register coloring.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/register-x.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/register-x.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/register-x.json"
+    },
+    {
+      "name": "repeated-int-shift",
+      "score": null,
+      "sizes": null,
+      "hypothesis": "Eliminate named glyph local so repeated texture index is compiler CSE temporary, potentially colored after current.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/repeated-int-shift.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/repeated-int-shift.patch",
+      "raw_objdiff": null
+    },
+    {
+      "name": "repeated-u16-before-shift",
+      "score": null,
+      "sizes": null,
+      "hypothesis": "Eliminate named glyph local so repeated texture index is compiler CSE temporary, potentially colored after current.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/repeated-u16-before-shift.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/repeated-u16-before-shift.patch",
+      "raw_objdiff": null
+    },
+    {
+      "name": "repeated-u16-shift",
+      "score": null,
+      "sizes": null,
+      "hypothesis": "Eliminate named glyph local so repeated texture index is compiler CSE temporary, potentially colored after current.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/repeated-u16-shift.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/repeated-u16-shift.patch",
+      "raw_objdiff": null
+    },
+    {
+      "name": "retained-pre-externalization",
+      "score": 99.8996,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Retain exact 249-instruction source; only generated symbol mappings remain divergent.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/retained-pre-externalization.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/retained-pre-externalization.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/retained-pre-externalization.json"
+    },
+    {
+      "name": "texcoord-assignment-cast",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Explicit cast at glyph definition in addition to declared u16 type.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-assignment-cast.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-assignment-cast.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-assignment-cast.json"
+    },
+    {
+      "name": "texcoord-explicit-short",
+      "score": 99.33735,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Explicit texture argument narrowing without changing unsigned-short ABI prototype.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-explicit-short.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-explicit-short.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-explicit-short.json"
+    },
+    {
+      "name": "texcoord-glyph-int",
+      "score": 99.09638,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "A full-width glyph temporary explicitly narrowed at every texture call removes implicit u16 assignment.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-glyph-int.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-glyph-int.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-glyph-int.json"
+    },
+    {
+      "name": "texcoord-glyph-short",
+      "score": 98.69478,
+      "sizes": [
+        "996",
+        "1000"
+      ],
+      "hypothesis": "Signed-short glyph with explicit unsigned argument conversion.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-glyph-short.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-glyph-short.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-glyph-short.json"
+    },
+    {
+      "name": "texcoord-glyph-u32",
+      "score": 99.09638,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Unsigned full-width glyph with explicit argument narrowing.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-glyph-u32.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-glyph-u32.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-glyph-u32.json"
+    },
+    {
+      "name": "texcoord-int-prototype",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Texture call full-width prototype with explicit unsigned-short argument casts.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-int-prototype.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-int-prototype.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-int-prototype.json"
+    },
+    {
+      "name": "texcoord-u32-prototype",
+      "score": 99.33735,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Unsigned full-width texture prototype.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-u32-prototype.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-u32-prototype.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texcoord-u32-prototype.json"
+    },
+    {
+      "name": "texture-long",
+      "score": 99.33735,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Same 32-bit ABI, distinct long type node.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texture-long.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texture-long.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texture-long.json"
+    },
+    {
+      "name": "texture-unsigned-long",
+      "score": 99.33735,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Same 32-bit ABI with unsigned long promotion.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texture-unsigned-long.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texture-unsigned-long.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/texture-unsigned-long.json"
+    },
+    {
+      "name": "vertex-explicit-int",
+      "score": 99.33735,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Explicitly narrow at int-prototyped vertex calls to distinguish prototype-driven optimization.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-explicit-int.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-explicit-int.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-explicit-int.json"
+    },
+    {
+      "name": "vertex-long",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Same 32-bit coordinate ABI with long parameter nodes.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-long.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-long.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-long.json"
+    },
+    {
+      "name": "vertex-only-x-int",
+      "score": 99.33735,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Distinguish which vertex parameter narrowing changes allocation.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-only-x-int.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-only-x-int.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-only-x-int.json"
+    },
+    {
+      "name": "vertex-only-y-int",
+      "score": 98.63454,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Distinguish vertical prototype narrowing independently.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-only-y-int.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-only-y-int.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-only-y-int.json"
+    },
+    {
+      "name": "vertex-short-z",
+      "score": 98.7751,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Match the actual callee three-short signature.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-short-z.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-short-z.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/vertex-short-z.json"
+    },
+    {
+      "name": "x-argument-assignment",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Narrow horizontal extent in first consuming argument.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/x-argument-assignment.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/x-argument-assignment.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/x-argument-assignment.json"
+    },
+    {
+      "name": "x-long",
+      "score": 99.61848,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Raw conversion to signed long can alter intermediate allocation without altering PPC arithmetic.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/x-long.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/x-long.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/x-long.json"
+    },
+    {
+      "name": "x-short-local",
+      "score": 97.8514,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "With delayed assignment preserved, short x local may defer initial normalization to its first use.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/x-short-local.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/x-short-local.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/x-short-local.json"
+    },
+    {
+      "name": "y-argument-assignment",
+      "score": 98.895584,
+      "sizes": [
+        "996",
+        "992"
+      ],
+      "hypothesis": "Initialize vertical extent within first vertex argument.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-argument-assignment.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-argument-assignment.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-argument-assignment.json"
+    },
+    {
+      "name": "y-commuted",
+      "score": 98.75502,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Commuting vertical addition may place old Y into r4 and converted height into r0.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-commuted.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-commuted.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-commuted.json"
+    },
+    {
+      "name": "y-int-on-prototypes",
+      "score": 99.25703,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Recheck promoted vertical extent after correcting prototype-driven coloring.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-int-on-prototypes.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-int-on-prototypes.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-int-on-prototypes.json"
+    },
+    {
+      "name": "y-late-cast",
+      "score": 96.78715,
+      "sizes": [
+        "996",
+        "984"
+      ],
+      "hypothesis": "Represent vertical conversion as a raw int with narrowing at uses.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-late-cast.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-late-cast.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-late-cast.json"
+    },
+    {
+      "name": "y-short",
+      "score": 98.85542,
+      "sizes": [
+        "996",
+        "996"
+      ],
+      "hypothesis": "Narrow y local prevents promoted signed-short CSE across vertex arguments.",
+      "log": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-short.log.json",
+      "patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-short.patch",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/y-short.json"
+    }
+  ]
+}

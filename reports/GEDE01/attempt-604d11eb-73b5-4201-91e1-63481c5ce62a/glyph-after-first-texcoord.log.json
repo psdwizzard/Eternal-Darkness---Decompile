@@ -1,0 +1,39 @@
+{
+  "hypothesis": "Define named glyph after first texture call, allowing CSE from preceding expression.",
+  "source_patch": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-after-first-texcoord.patch",
+  "commands": [
+    {
+      "argv": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801E504C.o"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801E504C.o\n"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801E504C",
+        "-o",
+        "reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-after-first-texcoord.json",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "fn_801E504C"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": " INFO Writing to reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/glyph-after-first-texcoord.json\n"
+    }
+  ],
+  "score": 99.45783,
+  "sizes": [
+    "996",
+    "1000"
+  ]
+}

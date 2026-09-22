@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "assignment_id": "604d11eb-73b5-4201-91e1-63481c5ce62a",
+  "target": "fn_801E504C",
+  "historical_evidence_read": [
+    "HEAD:eternal-darkness-decomp/reports/GEDE01/durable-e59c23c7-36ad-44b8-89ae-d78c0bcef5c9.json",
+    "HEAD:eternal-darkness-decomp/reports/GEDE01/audit-e59c23c7-36ad-44b8-89ae-d78c0bcef5c9.json"
+  ],
+  "baseline_score": 97.58233,
+  "final_canonical_score": 100.0,
+  "final_relocation_strict_score": 100.0,
+  "retained_changes": [
+    "Keep glyph_height as the raw signed integer conversion; narrow only for the height comparisons. The newline addition stores the low halfword.",
+    "Branch to the loop test when the character after newline is NUL; preserve measured-before-command store order.",
+    "Keep xextent raw until the third vertex, then narrow once; declare yextent as s16.",
+    "Pass explicitly narrowed coordinates through three full-width GPR parameters. Every coordinate still has the signed-short ABI value expected by the halfword FIFO callee; no callee was edited.",
+    "Store the already-u16-truncated glyph index in an int local, with a u16 texture-coordinate callee parameter. This produces the retail r24-r31 allocation and 18-bit-mask rotate.",
+    "Register the existing guarded externalizer only for this TU: @42 to lbl_80651288, @45 to lbl_80651268, and @44 to jumptable_80264954. Constant-section coverage and all jump-table relocation targets are checked before removing their local sections. No compiler flags, shared tools, or gate policy changed.",
+    "Promote only game/game_fn_801E504C.c to Matching; no split changes were needed."
+  ],
+  "experiments_index": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/experiments.json",
+  "experiment_reproduction": "From eternal-darkness-decomp, run python3 reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/experiment.py NAME. Each patch applies to the assignment base. Restore the committed final source before running verify.py for final verification. Three repeated-* trials recorded compiler errors from overbroad text replacement; corrected cse-* trials preserve the intended experiments.",
+  "verification_script": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/verify.py",
+  "verification_commands": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/verification-commands.json",
+  "raw_byte_relocation_evidence": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/byte-relocation-verification.json",
+  "text_bytes": 996,
+  "instructions": 249,
+  "text_sha256": "2df6824f353e8e76bde8696ec758dfe679ad7173d08c1433a3475a4750d8900d",
+  "relocations": 57,
+  "relocation_fields_verified": [
+    "offset",
+    "type",
+    "target",
+    "addend"
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "scope": "Only this function source, its configure.py build registration, and assignment-specific reports. Pre-existing CLAUDE.md modification left untouched; no remote push.",
+  "legal_audit": "Passed; complete invocation and output in verification-commands.json.",
+  "baseline_raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/attempt-604d11eb-73b5-4201-91e1-63481c5ce62a/baseline.json"
+}

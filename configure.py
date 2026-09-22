@@ -87,6 +87,23 @@ config.asflags = ["-mgekko", "--strip-local-absolute", "-I include", f"-I build/
 config.ldflags = ["-fp hardware", "-nodefaults"]
 config.custom_build_rules = [
     {
+        "name": "externalize_game_801E504C_constants",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @42 lbl_80651288 "
+            "orig/GEDE01/sys/main.dol --require-section-symbols=@42,@45 && "
+            "python3 tools/externalize_elf_symbol.py $in @45 lbl_80651268 "
+            "orig/GEDE01/sys/main.dol && "
+            "python3 tools/externalize_elf_symbol.py $in @44 jumptable_80264954 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match --require-whole-section && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@42=lbl_80651288 --redefine-sym=@45=lbl_80651268 "
+            "--redefine-sym=@44=jumptable_80264954 "
+            "--remove-section=.sdata2 --remove-section=.data "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    },
+    {
         "name": "externalize_game_80154F74_divisor",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @28 lbl_80650608 "
@@ -5360,6 +5377,14 @@ for function in game_jumptable_externalizations:
             "inputs": [f"build/{VERSION}/src/game/game_fn_{function}.o"],
         }
     )
+
+config.custom_build_steps["post-compile"].append(
+    {
+        "outputs": [f"build/{VERSION}/src/game/game_fn_801E504C.externalized"],
+        "rule": "externalize_game_801E504C_constants",
+        "inputs": [f"build/{VERSION}/src/game/game_fn_801E504C.o"],
+    }
+)
 
 config.custom_build_steps["post-compile"].append(
     {
@@ -12050,7 +12075,8 @@ config.libs = [
             Object(Matching, "game/game_fn_801E4704.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(NonMatching, "game/game_fn_801E47B8.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E5014.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
-            Object(NonMatching, "game/game_fn_801E504C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            # Exact 996-byte C body; guarded retail constants and jump table.
+            Object(Matching, "game/game_fn_801E504C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E5430.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E5448.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E5594.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
