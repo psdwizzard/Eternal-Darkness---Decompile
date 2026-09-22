@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "assignment_id": "e62e0927-504e-4df8-8be3-4cb741bc3f2b",
+  "attempt": 6,
+  "base_commit": "06f210f31d1d5228daccafea912c46bf5dc90a1b",
+  "target": "fn_80188384",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e62e0927-504e-4df8-8be3-4cb741bc3f2b.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-e62e0927-504e-4df8-8be3-4cb741bc3f2b.json",
+    "eternal-darkness-decomp/reports/GEDE01/elf-e62e0927-504e-4df8-8be3-4cb741bc3f2b.json",
+    "eternal-darkness-decomp/reports/GEDE01/probe-e62e0927-504e-4df8-8be3-4cb741bc3f2b.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-e62e0927-504e-4df8-8be3-4cb741bc3f2b.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-e62e0927-504e-4df8-8be3-4cb741bc3f2b.log"
+  ],
+  "divergence": "Canonical GC/1.3 and relocation-strict objdiff both measure 96.99152%, size-exact at 472/472 bytes, improved from 96.65254%. Sharing one u16 index across both loops and the final call pairs removes five operand mismatches. Remaining: 27 operand/register mismatches plus one paired prologue move-position insertion/deletion (30 differing raw instruction words). Retail begins with input/count/induction/truncated-index in r30/r29/r28/r31; generated uses r28/r29/r30/r31. Retail moves input to r30 at 0x14; generated moves it to r28 at 0x1c. In the second loop retail uses r28/r31/r28/r29/r30 for loaded count/limit/induction/truncated index/next; generated uses r29/r31/r30/r29/r28. At 0x168 retail truncates into r30, generated into r29. All 43 relocation records are identical including offsets, types, target names and addends. NonMatching retained. Canonical DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

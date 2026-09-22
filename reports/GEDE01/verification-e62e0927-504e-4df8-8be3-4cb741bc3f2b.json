@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "assignment_id": "e62e0927-504e-4df8-8be3-4cb741bc3f2b",
+  "base_commit": "06f210f31d1d5228daccafea912c46bf5dc90a1b",
+  "target": "fn_80188384",
+  "compiler": "GC/1.3",
+  "compiler_policy_changed": false,
+  "registration": "NonMatching (unchanged)",
+  "split": "0x80188384..0x8018855C (unchanged)",
+  "build_commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2"
+  ],
+  "build_exit_code": 0,
+  "build_log": "eternal-darkness-decomp/reports/GEDE01/build-e62e0927-504e-4df8-8be3-4cb741bc3f2b.log",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_hash_caveat": "Canonical link retains retail object for this NonMatching TU; hash verifies the canonical build, not equivalence of this C candidate.",
+  "compiler_command": "tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_80188384.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80188384.d build/GEDE01/src/game/game_fn_80188384.d",
+  "objdiff_version": {
+    "command": [
+      "build/tools/objdiff-cli",
+      "--version"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "stdout": "objdiff-cli 3.6.1\n",
+    "stderr": ""
+  },
+  "objdiff_commands": [
+    [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80188384",
+      "fn_80188384",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/objdiff-canonical-e62e0927-504e-4df8-8be3-4cb741bc3f2b.json"
+    ],
+    [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_80188384",
+      "fn_80188384",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/objdiff-e62e0927-504e-4df8-8be3-4cb741bc3f2b.json"
+    ]
+  ],
+  "canonical_percent": 96.99152,
+  "strict_percent": 96.99152,
+  "target_size": 472,
+  "generated_size": 472,
+  "diff_kinds": {
+    "NONE": 90,
+    "DIFF_DELETE": 1,
+    "DIFF_INSERT": 1,
+    "DIFF_ARG_MISMATCH": 27
+  },
+  "elf_comparison_command": [
+    "python3",
+    "notes/pr18-evidence/elfcmp.py",
+    "eternal-darkness-decomp/build/GEDE01/obj/game/game_fn_80188384.o",
+    "eternal-darkness-decomp/build/GEDE01/src/game/game_fn_80188384.o",
+    "fn_80188384"
+  ],
+  "raw_elf_comparison": {
+    "fn": "fn_80188384",
+    "target_found": true,
+    "base_found": true,
+    "size_target": 472,
+    "size_base": 472,
+    "text_identical": false,
+    "nrelocs_target": 43,
+    "nrelocs_base": 43,
+    "relocs_identical": true,
+    "diff_insn_offsets": [
+      20,
+      24,
+      28,
+      40,
+      44,
+      72,
+      80,
+      108,
+      112,
+      144,
+      148,
+      160,
+      236,
+      240,
+      248,
+      276,
+      280,
+      284,
+      292,
+      300,
+      308,
+      316,
+      324,
+      356,
+      360,
+      364,
+      372,
+      380,
+      388,
+      396
+    ],
+    "n_diff_insns": 30
+  },
+  "source_sha256": "3598fe4567d03f78af47d449db98d60dc75653b6b119d2bebde5ed50917449ac",
+  "legal_audit": {
+    "command": [
+      "python3",
+      "tools/legal_audit.py"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "stdout": "legal audit passed (20287 tracked project files inspected)\n",
+    "stderr": ""
+  },
+  "scope_note": "Pre-existing CLAUDE.md changes left untouched and excluded from the commit. No runtime/global progress/neighboring source edits. No remote push. No private inputs or generated binaries staged.",
+  "build_log_line_endings": "Compiler CRLF normalized to LF; output text retained."
+}

@@ -20,13 +20,14 @@ void fn_80188384(u8* input)
     int count2;
     u16 count;
     int i;
+    u16 index;
 
     fn_801ECC4C();
     count = *(u16*)(input + 2);
     fn_8022B2AC(lbl_80606780, *(u16*)(input + 6));
     fn_80226AB4(0x80, 5, count);
     for (i = 0; (u16)i < count; i++) {
-        u16 index = i;
+        index = i;
         fn_80188578(index);
         fn_8018856C(index);
         fn_80188560(index);
@@ -46,7 +47,7 @@ void fn_80188384(u8* input)
     fn_80188560(0);
     count2 -= 2;
     for (i = 2; (u16)i < count2; i += 2) {
-        u16 index = i;
+        index = i;
         fn_80188578(index);
         fn_8018856C(index);
         fn_80188560(index);
@@ -64,7 +65,7 @@ void fn_80188384(u8* input)
         fn_80188560(index);
     }
     {
-        u16 index = i;
+        index = i;
         fn_80188578(index);
         fn_8018856C(index);
         fn_80188560(index);
