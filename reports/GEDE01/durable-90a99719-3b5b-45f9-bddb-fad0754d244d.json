@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "90a99719-3b5b-45f9-bddb-fad0754d244d",
+  "attempt": 6,
+  "base_commit": "5e9687fa949cba344046e74b47db3865ee7cc7b3",
+  "target": "fn_801861C4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-90a99719-3b5b-45f9-bddb-fad0754d244d.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-90a99719-3b5b-45f9-bddb-fad0754d244d-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verify-90a99719-3b5b-45f9-bddb-fad0754d244d.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-90a99719-3b5b-45f9-bddb-fad0754d244d.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.92481%; retail and generated text are exactly 1064 bytes. All 39 ELF relocation offsets, types, targets and addends match. Exactly four instruction words (four bytes) differ: +0x324 retail lis r25,0x4330 versus generated lis r31,0x4330; +0x334, +0x34C and +0x354 retail stw r25 to stack offsets 0x1B0,0x1A8,0x1A0 versus generated stw r31. All other 262 instruction words, stack layout and instruction scheduling match. The source remains NonMatching. Final DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f; as a NonMatching build it still links the retail target."
+}

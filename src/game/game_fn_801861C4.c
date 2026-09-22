@@ -17,6 +17,12 @@ typedef struct Vec3 {
 
 typedef float Matrix34[3][4];
 
+typedef struct Buffers {
+    u8* vertices;
+    u8* colors;
+    u8* indices;
+} Buffers;
+
 typedef struct Quaternion {
     float x;
     float y;
@@ -29,11 +35,11 @@ extern void* lbl_8064D738;
 extern u32 lbl_80651D50;
 extern u16 lbl_80651D54;
 extern Vec3 lbl_8023B068;
-extern float lbl_80650A20;
-extern float lbl_80650A24;
-extern double lbl_80650A28;
+extern const float lbl_80650A20;
+extern const float lbl_80650A24;
+extern const double lbl_80650A28;
 
-extern void fn_8018D788(void*, void*, void**, u16);
+extern void fn_8018D788(void*, void*, Buffers*, u16);
 extern void fn_801869F8(void*, int, u16);
 extern void fn_8018E26C(void*, void*);
 extern void fn_8018680C(void*, void*, Vec3*, int, SixBytes*, u8);
@@ -54,10 +60,11 @@ extern void fn_80211710(Matrix34, Vec3*, Vec3*);
 
 int fn_801861C4(u8* self)
 {
-    /* NonMatching: distinct setup/vector locals and a named dot-product
-     * temporary recover retail's size and floating argument moves. Canonical
-     * GC/1.3 still rotates the long-lived r25-r31 values and stack slots. */
+    /* NonMatching: the conversion loop's hoisted 0x4330 uses r31 instead
+     * of retail's r25. Buffers matches the three outputs of fn_8018D788;
+     * indexed access lets GC/1.3 synthesize the first loop's byte offset. */
     SixBytes setup;
+    Buffers buffers;
     Vec3 direction;
     Vec3 origin;
     Quaternion rotation;
@@ -69,17 +76,18 @@ int fn_801861C4(u8* self)
     Matrix34 z_rotation;
     Matrix34 combined;
     Matrix34 result;
-    void* vectors;
     float length;
     float dot;
     int changed = 0;
-    int vector_offset;
     u8* self_local = self;
     u8 count;
-    u16 generation;
+    int generation;
     int index;
     u8* state;
     u8* entry;
+    int vertex_index;
+    int vertex_count;
+    u8* vertex;
 
     state = self_local + 0x8C;
     setup.word = lbl_80651D50;
@@ -89,12 +97,11 @@ int fn_801861C4(u8* self)
     count = self_local[1];
     *(u16*)(self_local + 0xA) = generation + 1;
 
-    fn_8018D788(lbl_8064D738, self_local, &vectors,
+    fn_8018D788(lbl_8064D738, self_local, &buffers,
                 *(u16*)(lbl_80607120 + 2));
     fn_801869F8(state, 0, *(u16*)(state + 8));
 
     index = 0;
-    vector_offset = 0;
     for (; index < count; index++) {
         if (entry[0] != 0) {
             fn_8018E26C(entry, entry + 0x2B);
@@ -108,7 +115,7 @@ int fn_801861C4(u8* self)
             }
         }
         fn_8018680C(state, entry,
-                    (Vec3*)((u8*)vectors + vector_offset),
+                    &((Vec3*)buffers.vertices)[index],
                     index, &setup, count);
         if ((int)generation == (int)*(u16*)(entry + 8) &&
             (state[5] & 1) == 0) {
@@ -116,21 +123,32 @@ int fn_801861C4(u8* self)
                         self_local[4], 0);
         }
         entry += 0x38;
-        vector_offset += 0xC;
     }
 
     origin = lbl_8023B068;
-    entry = vectors;
-    vector_offset = (self_local[1] & 0x7F) << 1;
+    vertex = buffers.vertices;
+    vertex_count = (self_local[1] & 0x7F) << 1;
     fn_80210FB0(transform);
     fn_80211A48((Vec3*)(state + 0x60), (Vec3*)(state + 0x6C),
                 (Vec3*)(state + 0x60));
-    if (*(float*)(state + 0x60) > lbl_80650A20)
-        *(float*)(state + 0x60) = *(float*)(state + 0x6C);
-    if (*(float*)(state + 0x64) > lbl_80650A20)
-        *(float*)(state + 0x64) = *(float*)(state + 0x70);
-    if (*(float*)(state + 0x68) > lbl_80650A20)
-        *(float*)(state + 0x68) = *(float*)(state + 0x74);
+    {
+        float angle = *(float*)(state + 0x60);
+        if (angle > lbl_80650A20)
+            angle = *(float*)(state + 0x6C);
+        *(float*)(state + 0x60) = angle;
+    }
+    {
+        float angle = *(float*)(state + 0x64);
+        if (angle > lbl_80650A20)
+            angle = *(float*)(state + 0x70);
+        *(float*)(state + 0x64) = angle;
+    }
+    {
+        float angle = *(float*)(state + 0x68);
+        if (angle > lbl_80650A20)
+            angle = *(float*)(state + 0x74);
+        *(float*)(state + 0x68) = angle;
+    }
 
     fn_80211268(x_rotation, 0x78,
                 lbl_80650A24 * *(float*)(state + 0x60));
@@ -156,17 +174,17 @@ int fn_801861C4(u8* self)
                  (float)*(s16*)(self_local + 0x14));
     fn_80210FDC(translation, transform, transform);
 
-    index = 0;
-    while (index < vector_offset) {
-        transformed.x = (float)*(s16*)(entry + 0);
-        transformed.y = (float)*(s16*)(entry + 2);
-        transformed.z = (float)*(s16*)(entry + 4);
+    vertex_index = 0;
+    while (vertex_index < vertex_count) {
+        transformed.x = (float)*(s16*)(vertex + 0);
+        transformed.y = (float)*(s16*)(vertex + 2);
+        transformed.z = (float)*(s16*)(vertex + 4);
         fn_80211710(transform, &transformed, &transformed);
-        *(s16*)(entry + 0) = (s16)transformed.x;
-        *(s16*)(entry + 2) = (s16)transformed.y;
-        *(s16*)(entry + 4) = (s16)transformed.z;
-        entry += 6;
-        index++;
+        *(s16*)(vertex + 0) = (s16)transformed.x;
+        *(s16*)(vertex + 2) = (s16)transformed.y;
+        *(s16*)(vertex + 4) = (s16)transformed.z;
+        vertex += 6;
+        vertex_index++;
     }
 
     if ((*(u16*)(state + 0x40) & 2) != 0 ||
