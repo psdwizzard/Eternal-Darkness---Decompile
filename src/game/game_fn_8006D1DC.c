@@ -13,25 +13,12 @@ Entry *fn_8006D1DC(s32 kind)
     Entry *result = 0;
     s32 i;
 
-    for (i = 0; i < 33;) {
+    #pragma unroll 4
+    for (i = 0; i < 44; entry++, i++) {
         if (entry->kind == kind) {
             result = entry;
             break;
         }
-        if ((++entry)->kind == kind) {
-            result = entry;
-            break;
-        }
-        if ((++entry)->kind == kind) {
-            result = entry;
-            break;
-        }
-        if ((++entry)->kind == kind) {
-            result = entry;
-            break;
-        }
-        entry++;
-        i += 3;
     }
     return result;
 }
