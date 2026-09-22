@@ -83,10 +83,13 @@ void fn_801F08B8(DrawInput* input, EntryOwner* owner, void* value)
     fn_80226AB4(0x98, special, input->count);
     format <<= 1;
     for (i = 0, offset = 0; i < input->count; offset += 12, i++) {
+        u8* fourth;
         fn_801F0B18(*(u16*)((u8*)input->vertices + offset));
         fn_801F0B0C(*(u16*)((u8*)input->vertices + offset + 2));
         fn_801F0B00(*(u16*)((u8*)input->vertices + offset + 4));
-        fn_801F0B00(*(u16*)((u8*)input->vertices + offset + 4 + format));
+        fourth = (u8*)input->vertices + offset;
+        fourth += 4;
+        fn_801F0B00(*(u16*)((u8*)format + (u32)fourth));
     }
     fn_801F0AFC();
 }

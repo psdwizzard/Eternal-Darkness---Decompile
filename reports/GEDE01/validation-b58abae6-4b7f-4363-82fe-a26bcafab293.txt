@@ -1,0 +1,29 @@
+assignment_id=b58abae6-4b7f-4363-82fe-a26bcafab293
+target=fn_801F08B8
+compiler=GC/1.3
+
+canonical_command=build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F08B8 -o reports/GEDE01/objdiff-b58abae6-4b7f-4363-82fe-a26bcafab293.json --format json-pretty fn_801F08B8
+canonical_match_percent=99.93104
+canonical_retail_text_size=580
+canonical_generated_text_size=580
+canonical_retail_relocations=22
+canonical_generated_relocations=22
+
+relocation_strict_command=build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F08B8 -o reports/GEDE01/objdiff-b58abae6-4b7f-4363-82fe-a26bcafab293-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_801F08B8
+relocation_strict_match_percent=99.93104
+relocation_strict_retail_text_size=580
+relocation_strict_generated_text_size=580
+relocation_strict_retail_relocations=22
+relocation_strict_generated_relocations=22
+
+remaining_retail_524=addi r0, r3, 0x4
+remaining_generated_524=addi r3, r3, 0x4
+remaining_retail_528=lhzx r3, r30, r0
+remaining_generated_528=lhzx r3, r30, r3
+
+configure_command=python3 configure.py
+build_command=.tools/bin/ninja -j2
+build_exit_code=0
+build_steps=909
+dol_sha1_command=sha1sum build/GEDE01/main.dol
+dol_sha1=ea24b6af954876ce072562ff39cdb4c81d32be1f
