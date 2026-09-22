@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "assignment_id": "259a7b0d-45ac-49b6-aea7-58c21b39518a",
+  "attempt": 6,
+  "base_commit": "95d24cdd38aafcd5ac482c44d87d57643009f505",
+  "target": "fn_8001DE84",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-259a7b0d-45ac-49b6-aea7-58c21b39518a.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-259a7b0d-45ac-49b6-aea7-58c21b39518a.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-259a7b0d-45ac-49b6-aea7-58c21b39518a.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-259a7b0d-45ac-49b6-aea7-58c21b39518a.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-259a7b0d-45ac-49b6-aea7-58c21b39518a.json",
+    "eternal-darkness-decomp/reports/GEDE01/analysis-259a7b0d-45ac-49b6-aea7-58c21b39518a.json"
+  ],
+  "divergence": "Canonical and relocation-strict scores improve from 94.18889% to 96.28889% after writing mode before copying previous_value. Generated code remains 356 bytes versus retail 360. Retail materializes Info +0x1C at offsets 0x20 and 0x48 and Work +0x98 at 0x54; generated code folds these field displacements into r31, rematerializes lbl_80302400 for the call arguments, and allocates the old value in r7 rather than retail r8. The mode/value store order now agrees. Generated relocations total 9 versus retail 7: extra lbl_80302400 HA/LO sites at 0x46/0x52, all three calls four bytes early (0x38/0x40/0x94 versus 0x3C/0x44/0x98), and the lbl_8023D660 pair four bytes early (0x132/0x13A versus 0x136/0x13E). Shared relocation targets and zero addends agree, but counts, sites, and .text bytes do not."
+}

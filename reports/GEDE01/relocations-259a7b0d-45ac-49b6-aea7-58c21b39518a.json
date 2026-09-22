@@ -1,0 +1,62 @@
+{
+  "runs": [
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8001DE84",
+        "fn_8001DE84",
+        "-o",
+        "reports/GEDE01/objdiff-259a7b0d-45ac-49b6-aea7-58c21b39518a.json",
+        "--format",
+        "json-pretty"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-259a7b0d-45ac-49b6-aea7-58c21b39518a.json\n"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8001DE84",
+        "fn_8001DE84",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "reports/GEDE01/objdiff-strict-259a7b0d-45ac-49b6-aea7-58c21b39518a.json",
+        "--format",
+        "json-pretty"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-strict-259a7b0d-45ac-49b6-aea7-58c21b39518a.json\n"
+    },
+    {
+      "command": [
+        "readelf",
+        "-Wr",
+        "build/GEDE01/obj/game/game_fn_8001DE84.o"
+      ],
+      "returncode": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x1a8 contains 7 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000406 R_PPC_ADDR16_HA        00000000   lbl_80302400 + 0\n00000016  00000404 R_PPC_ADDR16_LO        00000000   lbl_80302400 + 0\n0000003c  0000050a R_PPC_REL24            00000000   fn_8020EFBC + 0\n00000044  0000060a R_PPC_REL24            00000000   fn_8020F0F8 + 0\n00000098  0000070a R_PPC_REL24            00000000   fn_80228B50 + 0\n00000136  00000806 R_PPC_ADDR16_HA        00000000   lbl_8023D660 + 0\n0000013e  00000804 R_PPC_ADDR16_LO        00000000   lbl_8023D660 + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "readelf",
+        "-Wr",
+        "build/GEDE01/src/game/game_fn_8001DE84.o"
+      ],
+      "returncode": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x198 contains 9 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000306 R_PPC_ADDR16_HA        00000000   lbl_80302400 + 0\n00000016  00000304 R_PPC_ADDR16_LO        00000000   lbl_80302400 + 0\n00000038  0000050a R_PPC_REL24            00000000   fn_8020EFBC + 0\n00000040  0000060a R_PPC_REL24            00000000   fn_8020F0F8 + 0\n00000046  00000306 R_PPC_ADDR16_HA        00000000   lbl_80302400 + 0\n00000052  00000304 R_PPC_ADDR16_LO        00000000   lbl_80302400 + 0\n00000094  0000070a R_PPC_REL24            00000000   fn_80228B50 + 0\n00000132  00000406 R_PPC_ADDR16_HA        00000000   lbl_8023D660 + 0\n0000013a  00000404 R_PPC_ADDR16_LO        00000000   lbl_8023D660 + 0\n",
+      "stderr": ""
+    }
+  ]
+}

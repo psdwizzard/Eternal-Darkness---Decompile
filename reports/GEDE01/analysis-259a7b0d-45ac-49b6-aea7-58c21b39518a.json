@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "assignment_id": "259a7b0d-45ac-49b6-aea7-58c21b39518a",
+  "target": "fn_8001DE84",
+  "status": "attempted",
+  "best_canonical_percent": 96.28889,
+  "best_relocation_strict_percent": 96.28889,
+  "strict_config": "function_reloc_diffs=name_address",
+  "retail_bytes": 360,
+  "generated_bytes": 356,
+  "retail_relocations": 7,
+  "generated_relocations": 9,
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "source_status": "NonMatching; DOL verification uses the existing retail fallback for this unit and is not proof of source equality.",
+  "retained_change": "Move info->mode = mode before info->previous_value = info->value. The distinct fields do not overlap; each old value is copied before its corresponding current field is overwritten.",
+  "new_hypotheses": [
+    "Pointer-to-u32 arithmetic to distinguish integer and pointer address-folding paths: no improvement.",
+    "Private automatic inline C helper boundaries and return/out parameters to test optimization pass ordering: no improvement.",
+    "Independent scalar update ordering: 0213 improves from 94.18889% to 96.28889%; other five legal orders were measured including the inherited order.",
+    "Call-argument store forwarding, flags bitfield lowering, restrict views, cursor stores, and union pointer representation: no improvement; cursor experiment explicitly rejected as an unsound scalar-member array model."
+  ],
+  "prior_attempts_reviewed": [
+    "c9d3a479f2f640825c28cfa4b54e56d3555939da",
+    "0201e7bd484425c21bba9d7a75c5b44e90eb4997",
+    "fe4ac6ac399bcb014851c2d5afa629978814e119",
+    "7283224f9801ee00211f73992c2bf0c0e10a7335",
+    "4d7305aa67983c8578def6a38727ad9e560f1365"
+  ],
+  "canonical_compiler": "GC/1.3 mwcceppc.exe with unchanged configure.py flags; exact command captured in verification report.",
+  "legal_audit": {
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "runtime_or_neighbor_edits": false,
+    "compiler_or_gate_policy_changes": false,
+    "progress_or_readme_edits": false,
+    "generated_binaries_or_private_inputs_in_commit": false,
+    "existing_CLAUDE_modification": "Pre-existing; left untouched and excluded from commit."
+  },
+  "divergence": "Canonical and relocation-strict scores improve from 94.18889% to 96.28889% after writing mode before copying previous_value. Generated code remains 356 bytes versus retail 360. Retail materializes Info +0x1C at offsets 0x20 and 0x48 and Work +0x98 at 0x54; generated code folds these field displacements into r31, rematerializes lbl_80302400 for the call arguments, and allocates the old value in r7 rather than retail r8. The mode/value store order now agrees. Generated relocations total 9 versus retail 7: extra lbl_80302400 HA/LO sites at 0x46/0x52, all three calls four bytes early (0x38/0x40/0x94 versus 0x3C/0x44/0x98), and the lbl_8023D660 pair four bytes early (0x132/0x13A versus 0x136/0x13E). Shared relocation targets and zero addends agree, but counts, sites, and .text bytes do not.",
+  "raw_evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-259a7b0d-45ac-49b6-aea7-58c21b39518a.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-259a7b0d-45ac-49b6-aea7-58c21b39518a.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-259a7b0d-45ac-49b6-aea7-58c21b39518a.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-259a7b0d-45ac-49b6-aea7-58c21b39518a.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-259a7b0d-45ac-49b6-aea7-58c21b39518a.json"
+  ]
+}

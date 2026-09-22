@@ -63,8 +63,8 @@ void fn_8001DE84(u8 mode, u32 value)
     fn_8020F0F8((TypeB*)((u8*)info + 0x44));
 
     info->previous_mode = info->mode;
-    info->previous_value = info->value;
     info->mode = mode;
+    info->previous_value = info->value;
     info->value = value;
     info->field14 = 0;
 
