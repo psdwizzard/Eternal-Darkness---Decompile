@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "assignment_id": "e851622c-a6cc-44d8-bf66-21ad9f06a64e",
+  "target": "fn_8017A5A8",
+  "compiler": "mwcc_242_53 (GC/1.3)",
+  "objdiff_version_raw": "objdiff-cli 3.6.1",
+  "source": "eternal-darkness-decomp/src/game/game_fn_8017A5A8.c",
+  "hypothesis": "Nearby matching branch-based absolute-value code in game_fn_801790A4.c uses opt_common_subs off. Test whether disabling that pass, or alternatively lifetime optimization, prevents MWCC from coalescing the magnitude phi into dot's f1 register.",
+  "experiments": [
+    {
+      "variant": "explicit magnitude branches with #pragma opt_common_subs off",
+      "command": ".tools/bin/ninja -j2; build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017A5A8 -c function_reloc_diffs=name_address fn_8017A5A8",
+      "raw_result": "retail_size=136 generated_size=128 match_percent=93.382355; generated branch diamond remained bge 0x3c; fneg f1,f1; no fmr"
+    },
+    {
+      "variant": "explicit magnitude branches with #pragma opt_lifetimes off",
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8017A5A8.o; build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017A5A8 -c function_reloc_diffs=name_address fn_8017A5A8",
+      "raw_result": "retail_size=136 generated_size=128 match_percent=93.382355; output was identical to the opt_common_subs and baseline variants"
+    }
+  ],
+  "final_build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_output_tail": [
+      "[906/908] DOL build/GEDE01/main.dol",
+      "[907/908] CHECK config/GEDE01/build.sha1",
+      "build/GEDE01/main.dol: OK",
+      "[908/908] PROGRESS",
+      "Progress:",
+      "  All: 58.20% fuzzy, 48.69% matched, 48.62% linked (6287 / 7068 files)",
+      "    Code: 1120236 / 2300692 bytes (6054 / 8214 functions)",
+      "    Data: 39606 / 4305642 bytes (0.92%)",
+      "  Game Code: 93.75% fuzzy, 78.39% matched, 78.27% linked (6269 / 6633 files)",
+      "    Code: 1117208 / 1425104 bytes (5992 / 6354 functions)",
+      "    Data: 39382 / 40426 bytes (97.42%)",
+      "  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)",
+      "    Code: 3028 / 3028 bytes (62 / 62 functions)",
+      "    Data: 224 / 224 bytes (100.00%)"
+    ]
+  },
+  "canonical_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017A5A8 -o build/GEDE01/e851622c-canonical.json --format json-pretty fn_8017A5A8",
+    "settings": "canonical defaults",
+    "raw_summary": {
+      "retail_size": 136,
+      "generated_size": 128,
+      "retail_instruction_count": 34,
+      "generated_instruction_count": 32,
+      "match_percent": 93.382355
+    }
+  },
+  "relocation_strict_objdiff": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017A5A8 -o build/GEDE01/e851622c-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_8017A5A8",
+    "settings": "function_reloc_diffs=name_address",
+    "raw_summary": {
+      "retail_size": 136,
+      "generated_size": 128,
+      "retail_instruction_count": 34,
+      "generated_instruction_count": 32,
+      "match_percent": 93.382355
+    },
+    "relocations_equal": true,
+    "relocation_count_each": 6
+  },
+  "raw_relocations": {
+    "retail_command": "readelf -r build/GEDE01/obj/game/game_fn_8017A5A8.o",
+    "generated_command": "readelf -r build/GEDE01/src/game/game_fn_8017A5A8.o",
+    "retail": [
+      "00000020 R_PPC_EMB_SDA21 lbl_80650878 + 0",
+      "00000024 R_PPC_REL24 fn_8017A574 + 0",
+      "00000028 R_PPC_EMB_SDA21 lbl_80650860 + 0",
+      "0000002c R_PPC_EMB_SDA21 lbl_80650878 + 0",
+      "00000048 R_PPC_EMB_SDA21 lbl_806508CC + 0",
+      "00000054 R_PPC_REL24 fn_8003315C + 0"
+    ],
+    "generated": [
+      "00000020 R_PPC_EMB_SDA21 lbl_80650878 + 0",
+      "00000024 R_PPC_REL24 fn_8017A574 + 0",
+      "00000028 R_PPC_EMB_SDA21 lbl_80650860 + 0",
+      "0000002c R_PPC_EMB_SDA21 lbl_80650878 + 0",
+      "00000040 R_PPC_EMB_SDA21 lbl_806508CC + 0",
+      "0000004c R_PPC_REL24 fn_8003315C + 0"
+    ],
+    "comparison": "All six relocation types, targets, ordering, and addends (+0) agree. Later offsets differ only because generated code omits the branch and fmr instructions."
+  },
+  "raw_instruction_divergence": {
+    "retail": [
+      "0x34 bge 0x40",
+      "0x38 fneg f0, f1",
+      "0x3c b 0x44",
+      "0x40 fmr f0, f1",
+      "0x44 fsubs f2, f2, f0",
+      "0x4c fcmpo cr0, f2, f0"
+    ],
+    "generated": [
+      "0x34 bge 0x3c [DIFF_ARG_MISMATCH]",
+      "0x38 fneg f1, f1 [DIFF_ARG_MISMATCH]",
+      "<retail branch deleted>",
+      "<retail fmr deleted>",
+      "0x3c fsubs f1, f2, f1 [DIFF_ARG_MISMATCH]",
+      "0x44 fcmpo cr0, f1, f0 [DIFF_ARG_MISMATCH]"
+    ]
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol; cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "raw_output": [
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+      "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol",
+      "cmp_exit=0"
+    ]
+  },
+  "legal_audit": {
+    "independent_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "compiler_policy_change": false,
+    "retained_nonmatching_reconstructions": 1
+  }
+}
