@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "f1b4f73e-5a50-4ea2-8bca-6cac71179e56",
+  "attempt": 4,
+  "base_commit": "f4c70cc67fc3b8f0b90f78e5dbaa040bc1fd20ca",
+  "target": "fn_801E645C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f1b4f73e-5a50-4ea2-8bca-6cac71179e56.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f1b4f73e-5a50-4ea2-8bca-6cac71179e56-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-f1b4f73e-5a50-4ea2-8bca-6cac71179e56.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 93.89496% (952-byte retail text versus 960-byte candidate). The retained semantically faithful C uses single-precision width arithmetic. GC/1.3 hoists the second integer-to-double bias into callee-saved f30, forcing a 0x60 frame and f30 save/restore, while retail uses a 0x50 frame and rematerializes lbl_80651268@sda21 at its uses. The numeric escape parser also colors value/digit temporaries differently. Retail has 31 .rela.text entries versus candidate 30, all observed addends zero; candidate compiler-local conversion constants do not have retail's relocation identities. A distinct explicit-conversion-plus-float-rounding hypothesis preserved semantics but regressed to 92.76471% by adding rounding code, so it was rejected."
+}
