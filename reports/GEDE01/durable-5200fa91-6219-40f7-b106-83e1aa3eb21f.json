@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "5200fa91-6219-40f7-b106-83e1aa3eb21f",
+  "attempt": 4,
+  "base_commit": "9d4aff72d49791bb290031adda6e6ebe67b18573",
+  "target": "fn_80023258",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-5200fa91-6219-40f7-b106-83e1aa3eb21f.json"
+  ],
+  "divergence": "Fresh relocation-strict objdiff v3.6.1 measures 93.8327%: retail is 1052 bytes and generated is 1028 bytes. Both sides contain the same ordered sequence of 61 real relocations by formatted target, relocation type, and zero addend. The 33 aligned diff records remain concentrated in canonical MWCC folding retail's persistent lbl_80302400 + 0x1C fade pointer (r29) and transient presentation pointers into direct r31-relative accesses; retail later reuses r29 for the fn_801EB080 result. Final cleanup likewise materializes lbl_8023D020 + 0x640 while generated folds stores into r30-relative accesses. New nested-member address formation, register storage-class, and single reassigned fade/image temporary hypotheses all compiled identically at 93.8327%, so the stronger existing honest-C reconstruction was retained unchanged. A fresh canonical build passed and build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
