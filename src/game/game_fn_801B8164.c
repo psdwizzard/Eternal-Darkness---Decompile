@@ -48,8 +48,8 @@ void fn_801B8164(u8 amount, u16 duration_arg, u8 selector, u8 value,
 {
     u32 duration = duration_arg;
     u8* base = lbl_80619860;
-    u32 i;
     Ramp* ramp;
+    u32 i;
     u8 type;
     float target;
 
@@ -60,7 +60,7 @@ void fn_801B8164(u8 amount, u16 duration_arg, u8 selector, u8 value,
     switch (selector) {
     case 0xFF:
         target = lbl_80650EC8 * (float)amount;
-        for (i = 0, ramp = (Ramp*)(base + 0x5D4); i < 32;
+        for (ramp = (Ramp*)(base + 0x5D4), i = 0; i < 32;
              ++i, ++ramp) {
             if (ramp->type == 0 || ramp->type == 1) {
                 SET_RAMP(ramp, 0xFFFFFFFFU);
@@ -71,7 +71,7 @@ void fn_801B8164(u8 amount, u16 duration_arg, u8 selector, u8 value,
 
     case 0xFC:
         target = lbl_80650EC8 * (float)amount;
-        for (i = 0, ramp = (Ramp*)(base + 0x5D4); i < 32;
+        for (ramp = (Ramp*)(base + 0x5D4), i = 0; i < 32;
              ++i, ++ramp) {
             if (ramp->type == 2 || ramp->type == 3) {
                 SET_RAMP(ramp, 0xFFFFFFFFU);
@@ -93,7 +93,7 @@ void fn_801B8164(u8 amount, u16 duration_arg, u8 selector, u8 value,
         type = 1;
 update_type:
         target = lbl_80650EC8 * (float)amount;
-        for (i = 0, ramp = (Ramp*)(base + 0x5D4); i < 32;
+        for (ramp = (Ramp*)(base + 0x5D4), i = 0; i < 32;
              ++i, ++ramp) {
             if (ramp->type == type) {
                 SET_RAMP(ramp, 0xFFFFFFFFU);

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "56fab09a-2dfa-4b20-9c5b-88458cd79be8",
+  "attempt": 3,
+  "base_commit": "ec9950bef29bb74013cb23d09c5d2230393f849b",
+  "target": "fn_801B8164",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-56fab09a-2dfa-4b20-9c5b-88458cd79be8.json"
+  ],
+  "divergence": "GC/1.2.5n emits an exact-size 1040-byte function at 93.56154% relocation-strict objdiff. Reordering the ramp-pointer declaration and each loop initializer ahead of the index improved scheduling versus the preserved 93.176926% attempt, but in the aggregate/group loops retail still assigns the ramp pointer to r28 and the index to r27 while the reconstruction assigns the pointer to r27 and index to r28; pointer loads/stores, mask shifts, induction, comparison, and increments therefore differ. Generated float-conversion relocations still target compiler-local @79/@80/@82 rather than retail lbl_80650ED8/lbl_80650F04/lbl_80650EF0. The default single-selector path still differs in scheduling and volatile/nonvolatile register allocation around ramp address formation, voice/value stores, duration test/reload, integer-to-float conversion, and target/current stores. Switch dispatch, all group paths, behavior, frame, total size, and epilogue are present, but these differences prevent 100%."
+}
