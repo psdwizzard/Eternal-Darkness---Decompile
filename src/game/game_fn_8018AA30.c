@@ -59,12 +59,11 @@ void fn_8018AA30(u8* object)
         }
         fn_8018A3D8(*(void**)(object + 0x4C), lbl_80607900, vertex_data, count);
     } else {
-        int byte_offset;
         int i;
 
-        i = byte_offset = 0;
+        i = 0;
         for (; i < count; i++) {
-            fn_80188B44(object_data, vertex_data + byte_offset,
+            fn_80188B44(object_data, vertex_data + i * 0x18,
                         fn_8018D020);
             {
                 int j;
@@ -74,7 +73,6 @@ void fn_8018AA30(u8* object)
                 }
             }
             object_data += 0x38;
-            byte_offset += 0x18;
         }
     }
 

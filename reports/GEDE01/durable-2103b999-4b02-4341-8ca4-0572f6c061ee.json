@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "2103b999-4b02-4341-8ca4-0572f6c061ee",
+  "attempt": 6,
+  "base_commit": "44b56e6347039e84e3827eab700a97f9e239c43f",
+  "target": "fn_8018AA30",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-2103b999-4b02-4341-8ca4-0572f6c061ee.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-2103b999-4b02-4341-8ca4-0572f6c061ee.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-2103b999-4b02-4341-8ca4-0572f6c061ee.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-2103b999-4b02-4341-8ca4-0572f6c061ee.json"
+  ],
+  "divergence": "420-byte NonMatching C reconstruction improves canonical and relocation-strict objdiff to 96.71429%. Retail initializes i in r19 at offset 220, callback in r20 via HA/LO at instruction offsets 224/232, and byte offset in r21 with mr r21,r19 at 228. Generated code uses a moving vertex pointer in r20 (mr r20,r26 at 224), callback in r21 via HA/LO at 220/228, and initializes i at 232. Call argument instructions at 244/248 and pointer increment at 296 differ. Both objects have 18 real relocations with matching target names/types/addends, but callback relocation field offsets move from 226/234 to 222/230. This is not a byte or relocation-strict match."
+}
