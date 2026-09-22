@@ -13,6 +13,11 @@ typedef struct EffectDescriptor {
     u8 header[0x28];
     PositionTable table;
 } EffectDescriptor;
+typedef struct EffectMemory {
+    u8 pad[0x1740];
+    int identifiers[16];
+    int slot;
+} EffectMemory;
 
 extern void* fn_801A717C(void);
 extern void fn_801A7228(void*);
@@ -50,11 +55,11 @@ int fn_80089A34(Work* work)
     int index;
     int result = 0;
     void* owner;
-    u8* memory;
+    EffectMemory* memory;
 
     fn_8006ED3C(work, 0xB, &index);
     owner = fn_80201814(*(void**)(work->bytes + 0x38));
-    memory = *(u8**)(*(u8**)(work->bytes + 0xC4) + 0x15C);
+    memory = *(EffectMemory**)(*(u8**)(work->bytes + 0xC4) + 0x15C);
     if (owner != 0) {
         Vec3 position;
         Vec3 direction = lbl_80239554;
@@ -67,9 +72,9 @@ int fn_80089A34(Work* work)
         int i;
 
         descriptor.table = lbl_80239560;
-        slot = *(int*)(memory + 0x1780);
+        slot = memory->slot;
         runtimeFlags = *(u8**)(workCopy->bytes + 0xC4);
-        identifier = *(int*)(memory + 0x1740 + slot * 4);
+        identifier = memory->identifiers[slot];
         scene = fn_80201BC8(owner);
         fn_80201B8C(owner);
         if (lbl_8064B820 != 0) {
@@ -156,10 +161,10 @@ identifier_other:
         }
 
 identifier_done:
-        (*(int*)(memory + 0x1780))++;
+        memory->slot++;
         result = 1;
-        slot = *(int*)(memory + 0x1780);
-        *(int*)(memory + 0x1780) = slot >= 16 ? 0 : slot;
+        slot = memory->slot;
+        memory->slot = slot >= 16 ? 0 : slot;
     }
     fn_801A7228(guard);
     return result;
