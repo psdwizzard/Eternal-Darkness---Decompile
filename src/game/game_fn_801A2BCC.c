@@ -15,14 +15,23 @@ void fn_801A2BCC(u8* object, void* input, s16* output, int count)
     fn_801A2AB4(lbl_8063C0C8, input, lbl_80607840, count);
 
     for (i = 0; i < count; i++) {
-        int radius = object[0x21];
-        int x = transformed[0];
-        int y = transformed[1];
-        int z = transformed[2];
-        int left = x - radius;
-        int top = y + radius;
-        int right = x + radius;
-        int bottom = y - radius;
+        int z;
+        int x;
+        int bottom;
+        int top;
+        int right;
+        int left;
+        int y;
+        int radius;
+
+        radius = object[0x21];
+        x = transformed[0];
+        y = transformed[1];
+        z = transformed[2];
+        left = x - radius;
+        top = y + radius;
+        right = x + radius;
+        bottom = y - radius;
 
         output[0] = left;
         output[1] = top;
