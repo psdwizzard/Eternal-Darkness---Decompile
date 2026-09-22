@@ -48,8 +48,8 @@ void fn_801B8164(u8 amount, u16 duration_arg, u8 selector, u8 value,
 {
     u32 duration = duration_arg;
     u8* base = lbl_80619860;
-    Ramp* ramp;
     u32 i;
+    Ramp* ramp;
     u8 type;
     float target;
 
