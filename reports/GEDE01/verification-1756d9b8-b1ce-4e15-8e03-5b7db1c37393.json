@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "assignment_id": "1756d9b8-b1ce-4e15-8e03-5b7db1c37393",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A78E0 -o reports/GEDE01/objdiff-1756d9b8-b1ce-4e15-8e03-5b7db1c37393.json --format json-pretty fn_800A78E0",
+    "relocation_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A78E0 -o reports/GEDE01/objdiff-1756d9b8-b1ce-4e15-8e03-5b7db1c37393-reloc-strict.json --format json-pretty fn_800A78E0",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "dol_compare": "cmp build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+  },
+  "raw_results": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "build_terminal_output": "[901/903] DOL build/GEDE01/main.dol\n[902/903] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[903/903] PROGRESS",
+    "canonical_objdiff_exit": 0,
+    "relocation_objdiff_exit": 0,
+    "canonical_relocation_report_cmp_exit": 0,
+    "left_text_size": 392,
+    "right_text_size": 392,
+    "left_match_percent": 94.63265,
+    "right_match_percent": 94.63265,
+    "relocation_strict": {
+      "left_count": 10,
+      "right_count": 10,
+      "type_target_addend_equal": true,
+      "entries": [
+        ["lis r7, lbl_8023975C@ha", "R_PPC_ADDR16_HA", 2, 0],
+        ["lwzu r9, lbl_8023975C@l(r7)", "R_PPC_ADDR16_LO", 2, 0],
+        ["lwz r0, lbl_8064B81C@sda21", "R_PPC_EMB_SDA21", 3, 0],
+        ["bl fn_800CA6DC", "R_PPC_REL24", 4, 0],
+        ["bl fn_800CA6DC", "R_PPC_REL24", 4, 0],
+        ["bl fn_800CD84C", "R_PPC_REL24", 5, 0],
+        ["bl fn_800CA6DC", "R_PPC_REL24", 4, 0],
+        ["bl fn_800CA6DC", "R_PPC_REL24", 4, 0],
+        ["bl fn_800A7860", "R_PPC_REL24", 6, 0],
+        ["bl fn_800CA6DC", "R_PPC_REL24", 4, 0]
+      ]
+    },
+    "built_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_cmp_exit": 0
+  }
+}

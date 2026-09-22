@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "1756d9b8-b1ce-4e15-8e03-5b7db1c37393",
+  "attempt": 4,
+  "base_commit": "8cb70631f5eb267983e91bfedbd51e82658d2293",
+  "target": "fn_800A78E0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1756d9b8-b1ce-4e15-8e03-5b7db1c37393.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1756d9b8-b1ce-4e15-8e03-5b7db1c37393-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-1756d9b8-b1ce-4e15-8e03-5b7db1c37393.json"
+  ],
+  "divergence": "Canonical objdiff is size-exact at 392/392 bytes and 94.63265%; relocation-strict comparison confirms all 10 relocation-bearing instructions have equal types, targets, and addends. Retail loads lbl_8023975C word 2 before lbl_8064B81C, then interleaves the three stack stores before lwzx; MWCC loads lbl_8064B81C before word 2 and delays the stores until around/after lwzx. A distinct explicit state-snapshot local was tested in attempt 4 to constrain the SDA load lifetime, but compiled identically and did not change scheduling. Fresh configure and full ninja build passed; built and retail DOL SHA-1 are ea24b6af954876ce072562ff39cdb4c81d32be1f and byte comparison exits 0."
+}
