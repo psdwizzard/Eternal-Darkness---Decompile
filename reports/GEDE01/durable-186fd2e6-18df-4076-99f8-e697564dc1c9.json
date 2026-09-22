@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "186fd2e6-18df-4076-99f8-e697564dc1c9",
+  "attempt": 5,
+  "base_commit": "f39bc8b9962ef822570a58fea056cf37e1d9a5bd",
+  "target": "fn_801F3528",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-186fd2e6-18df-4076-99f8-e697564dc1c9.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict name/address objdiff is size-exact at 128/128 bytes and 97.4375%. The retained source moves the packed-word publication ahead of the remaining component writes, placing the lbl_8064C384 store at the retail function offset 0x64. Remaining differences include an instruction-scheduling reversal at offsets 0x18 and 0x20: retail stores the red conversion low word (r8 to stack offset 0xC) at 0x18 and the 0x4330 conversion high word (r7 to stack offset 0x8) at 0x20, while generated code stores the conversion word (r0 to 0x8) at 0x18 and red (r8 to 0xC) at 0x20. Volatile-register coloring also differs throughout: retail uses r7/r6/r4/r0 for the 0x4330 conversion word, lbl_8063C608 base, blue, and alpha, while GC/1.3 uses r0/r4/r6/r7. The generated unsigned-conversion constant relocation targets object-local @6 instead of retail lbl_80651350; the other three relocation-bearing instructions target the intended named globals, and all relocation addends are zero. An explicit-union hypothesis using lbl_80651350 was tested but emitted 132 bytes and regressed to 45.40625%, so it was not retained. The full canonical rebuild passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
