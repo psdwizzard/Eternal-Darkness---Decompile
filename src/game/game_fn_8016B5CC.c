@@ -14,7 +14,6 @@ void* fn_8016B5CC(void* context, void* allocation, int size,
     int words;
     int offset;
     int index;
-    int* entry;
     void* replacement;
     int value;
 
@@ -34,12 +33,11 @@ void* fn_8016B5CC(void* context, void* allocation, int size,
         for (index = 0; index < 1536; index++) {
             value = lbl_805FAAD8[index];
             if (words < value) {
-                entry = &lbl_805FAAD8[index + 1];
-                if (*entry == 0) {
-                    *entry = value - words;
+                if (lbl_805FAAD8[index + 1] == 0) {
+                    lbl_805FAAD8[index + 1] = lbl_805FAAD8[index] - words;
                     lbl_805FAAD8[index] = -words;
                 } else {
-                    lbl_805FAAD8[index] = -value;
+                    lbl_805FAAD8[index] = -lbl_805FAAD8[index];
                 }
                 lbl_8064D1B8 -= lbl_805FAAD8[index];
                 return lbl_8064D1C8 + offset * 4;
