@@ -9,7 +9,19 @@ typedef struct KindInfo {
     u8 kind;
 } KindInfo;
 
-extern const u32 lbl_802FC5BC[];
+typedef struct PositionWords {
+    u32 x, y, z;
+} PositionWords;
+
+typedef struct ObjectState {
+    u32 unknown;
+    s32 runtime;
+    u8 enabled;
+    u8 pad[3];
+    u32 value;
+} ObjectState;
+
+extern u32 lbl_802FC5BC[];
 extern void fn_801E3644(void);
 extern void fn_801499C4(void);
 extern void* fn_80201814(s32);
@@ -29,18 +41,19 @@ extern s16 fn_801D3A34(s32, u32);
 extern u32 fn_801CEB2C(s32);
 extern u32 fn_801D38E8(s32);
 extern s32 fn_80201AE4(void);
-extern void fn_801E8328(u32, void*, u32);
+extern s32 fn_801E8328(u32, u32);
 
 void* fn_801E3020(s32 runtime, s32 flags, void* position, s32 source,
                   s32 owner, void** output_a, void** output_b,
                   void** output_c, void** output_d, s32 resource)
 {
     KindInfo* info;
+    s32 special;
     void* object;
     u8* work;
     u8* data;
     u8* secondary;
-    s32 special;
+    ObjectState* state;
 
     info = fn_80201B8C(fn_80201814(owner));
     special = 0;
@@ -53,13 +66,14 @@ void* fn_801E3020(s32 runtime, s32 flags, void* position, s32 source,
     ((u8*)object)[0xFF1] = 3;
     *(u32*)((u8*)object + 8) = runtime;
     fn_801D0CA4(object);
-    ((u8*)object)[0xC4] = 1;
-    *(u32*)((u8*)object + 0xC8) = 0;
-    *(u32*)((u8*)object + 0xC0) = runtime;
-    *output_a = (u8*)object + 0xC4;
-    *output_b = (u8*)object + 0xBC;
+    state = (ObjectState*)((u8*)object + 0xBC);
+    state->enabled = 1;
+    state->value = 0;
+    state->runtime = runtime;
+    *output_a = &state->enabled;
+    *output_b = state;
     if (output_d != 0) {
-        *output_d = (u8*)object + 0xC8;
+        *output_d = &state->value;
     }
 
     work = (u8*)object + 0xCC;
@@ -80,9 +94,7 @@ void* fn_801E3020(s32 runtime, s32 flags, void* position, s32 source,
         *(s16*)(work + 4) = fn_801D3A34(flags, 49);
         work[0] = fn_801CEB2C(flags);
         data = work + 0x14;
-        *(u32*)(work + 0x24) = *(u32*)((u8*)object + 0x38);
-        *(u32*)(work + 0x28) = *(u32*)((u8*)object + 0x3C);
-        *(u32*)(work + 0x2C) = *(u32*)((u8*)object + 0x40);
+        *(PositionWords*)(work + 0x24) = *(PositionWords*)((u8*)object + 0x38);
         *(s16*)(work + 0x34) = 250;
         *(u32*)(work + 0x20) = runtime;
         work[0x3D] = (5 - (work[0] >> 1)) * 5;
@@ -116,7 +128,7 @@ void* fn_801E3020(s32 runtime, s32 flags, void* position, s32 source,
             *(u32*)(secondary + 0x28) = runtime;
             *(u32*)(secondary + 0x2C) = lbl_802FC5BC[3];
             secondary[0x2F] = 224;
-            fn_801E8328(27, work, lbl_802FC5BC[3]);
+            fn_801E8328(27, (u32)work);
         } else {
             fn_80149EB8(*(void**)(work + 0xC0));
         }
