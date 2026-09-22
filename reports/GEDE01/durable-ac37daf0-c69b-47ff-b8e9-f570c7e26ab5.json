@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "ac37daf0-c69b-47ff-b8e9-f570c7e26ab5",
+  "attempt": 4,
+  "base_commit": "2546c556d7669327b28d8319cd25bce77a55ac42",
+  "target": "fn_8018F378",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ac37daf0-c69b-47ff-b8e9-f570c7e26ab5.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is 99.6861% with exact 892-byte retail and generated text sizes. This attempt tested a distinct concrete type-driven coloring hypothesis by typing the iterator as u8*; it preserves exact instruction selection but does not alter GC/1.3 allocation. The remaining 14 instruction differences are register allocation only: retail assigns r26 to the iterator and reuses r27 for the object/X value, while canonical assigns r27 to the iterator and reuses r26 for object/X. Both sides contain 30 relocation-bearing instructions, with zero relocation mismatch rows. A clean canonical rebuild produced DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

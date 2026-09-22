@@ -41,7 +41,7 @@ int fn_8018F378(u8* self)
     u8* entry = *(u8**)(self + 0x4C);
 
     if (*(u16*)(self + 0xA) < *(u16*)(self + 0xC)) {
-        void* iterator;
+        u8* iterator;
         Vec3 position;
 
         position.x = *(s16*)(entry + 0xA);
