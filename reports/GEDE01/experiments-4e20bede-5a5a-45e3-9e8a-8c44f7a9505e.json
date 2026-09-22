@@ -1,0 +1,86 @@
+{
+  "baseline_match_percent": 99.93104,
+  "method": "Each variant was built with .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F08B8.o and measured using build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F08B8 fn_801F08B8 -o build/GEDE01/fndiff_fn_801F08B8.json --format json. All variants used the accepted base as input. Stopped on first 100% result.",
+  "initial_expression_probe": "Folding +4 into the call expression generated add r0,r0,r29; add r3,r0,r30; lhz r3,4(r3), so rejected.",
+  "variants": [
+    {
+      "hypothesis": "integer_u32",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_801F08B8.o\n",
+      "build_stderr": "",
+      "build_exit_code": 0,
+      "match_percent": 99.93104,
+      "size": "580",
+      "tail": [
+        "lwz r0, 0x4(r28)",
+        "add r3, r0, r29",
+        "addi r3, r3, 0x4",
+        "lhzx r3, r30, r3",
+        "bl fn_801F0B00",
+        "addi r29, r29, 0xc",
+        "addi r27, r27, 0x1",
+        "lhz r0, 0x0(r28)",
+        "cmpw r27, r0",
+        "blt 0x1d8",
+        "bl fn_801F0AFC",
+        "lmw r27, 0xc(r1)",
+        "lwz r0, 0x24(r1)",
+        "mtlr r0",
+        "addi r1, r1, 0x20",
+        "blr "
+      ]
+    },
+    {
+      "hypothesis": "integer_int",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_801F08B8.o\n",
+      "build_stderr": "",
+      "build_exit_code": 0,
+      "match_percent": 99.93104,
+      "size": "580",
+      "tail": [
+        "lwz r0, 0x4(r28)",
+        "add r3, r0, r29",
+        "addi r3, r3, 0x4",
+        "lhzx r3, r30, r3",
+        "bl fn_801F0B00",
+        "addi r29, r29, 0xc",
+        "addi r27, r27, 0x1",
+        "lhz r0, 0x0(r28)",
+        "cmpw r27, r0",
+        "blt 0x1d8",
+        "bl fn_801F0AFC",
+        "lmw r27, 0xc(r1)",
+        "lwz r0, 0x24(r1)",
+        "mtlr r0",
+        "addi r1, r1, 0x20",
+        "blr "
+      ]
+    },
+    {
+      "hypothesis": "distinct_integer",
+      "build_stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_801F08B8.o\n",
+      "build_stderr": "",
+      "build_exit_code": 0,
+      "match_percent": 100.0,
+      "size": "580",
+      "tail": [
+        "lwz r0, 0x4(r28)",
+        "add r3, r0, r29",
+        "addi r0, r3, 0x4",
+        "lhzx r3, r30, r0",
+        "bl fn_801F0B00",
+        "addi r29, r29, 0xc",
+        "addi r27, r27, 0x1",
+        "lhz r0, 0x0(r28)",
+        "cmpw r27, r0",
+        "blt 0x1d8",
+        "bl fn_801F0AFC",
+        "lmw r27, 0xc(r1)",
+        "lwz r0, 0x24(r1)",
+        "mtlr r0",
+        "addi r1, r1, 0x20",
+        "blr "
+      ]
+    }
+  ],
+  "selected": "distinct_integer"
+}

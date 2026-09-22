@@ -1,0 +1,80 @@
+{
+  "assignment_id": "4e20bede-5a5a-45e3-9e8a-8c44f7a9505e",
+  "target": "fn_801F08B8",
+  "command_working_directory": "eternal-darkness-decomp",
+  "compiler": "GC/1.3",
+  "canonical_settings": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -DVERSION_GEDE01 -DNDEBUG=1 -lang=c",
+  "source_sha256": "cc40ec149a72539d789307501706c0650ad940b948b91899875a7b2fbc761325",
+  "historical_review": {
+    "a2b67f6b5a32418736b4e3305f1ce6eadef7bb6f": "Accepted base already contains this 99.93104% candidate. Same-variable fourth += 4 coalesces the address with r3.",
+    "3a325332411e43fdff4e1de09f20a9ee5988f1b5": "98.55173%: address formation order mismatch.",
+    "78756849723a106fe78ebe40cd8c7f3707930ca0": "93.15862%: earlier lifetime, predicate, and scheduling problems."
+  },
+  "new_hypothesis": "Give the +4 address a distinct u32 local instead of updating the pointer local; this permits separate register coloring while retaining the address-formation sequence. Merely changing the existing local to u32 or int did not change codegen.",
+  "source_change": "Declare u32 address; replace fourth += 4 with address = (u32)fourth + 4; use address in indexed load. No compiler settings or pragmas changed.",
+  "registration_change": "Only target Object changed from NonMatching to Matching. Existing independent TU split retained.",
+  "configure": {
+    "command": "python3 configure.py",
+    "exit_code": 0
+  },
+  "build": {
+    "command": ".tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_output": "eternal-darkness-decomp/reports/GEDE01/build-4e20bede-5a5a-45e3-9e8a-8c44f7a9505e.txt",
+    "compiled_target_linked": true,
+    "log_normalization": "CRLF converted to LF; complete output retained."
+  },
+  "objdiff": [
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801F08B8",
+        "-o",
+        "reports/GEDE01/objdiff-4e20bede-5a5a-45e3-9e8a-8c44f7a9505e.json",
+        "--format",
+        "json-pretty",
+        "fn_801F08B8"
+      ],
+      "exit_code": 0,
+      "match_percent": 100.0,
+      "retail_size": "580",
+      "generated_size": "580"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801F08B8",
+        "-o",
+        "reports/GEDE01/objdiff-4e20bede-5a5a-45e3-9e8a-8c44f7a9505e-reloc-strict.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "fn_801F08B8"
+      ],
+      "exit_code": 0,
+      "match_percent": 100.0,
+      "retail_size": "580",
+      "generated_size": "580"
+    }
+  ],
+  "scope_audit": "No assembly, neighboring function edits, runtime code changes, global progress edits, generated binaries, or private inputs included. Pre-existing CLAUDE.md modification left untouched.",
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "stdout": "legal audit passed (20318 tracked project files inspected)\n"
+  }
+}
