@@ -15,14 +15,12 @@ extern void fn_8012CAC4(u8*, int, void*);
 /* NonMatching: honest reconstruction of the complete state-clone path. */
 void fn_8012C804(u8* dst, u8* src, int index)
 {
-    int i;
     int index_offset;
-    int offset;
+    int i;
     u8* selected_object;
     u8* graph;
     u8* src_object;
     u16 entry;
-    u16 flags;
     void* inherited;
 
     fn_80125ECC(dst);
@@ -34,10 +32,11 @@ void fn_8012C804(u8* dst, u8* src, int index)
     }
 
     graph = *(u8**)(*(u8**)(*(u8**)(dst + 0x240) + index_offset) + 4);
-    for (offset = 0, i = 0; offset < *(u16*)(graph + 6); i += 2, offset++) {
-        entry = *(u16*)(*(u8**)(graph + 8) + i);
+    for (i = 0; i < *(u16*)(graph + 6); i++) {
+        entry = *(u16*)(*(u8**)(graph + 8) + i * 2);
         if (entry & 0x8000) {
-            int child = entry & 0x7FFF;
+            /* Clear the child tag after integer promotion. */
+            int child = entry & ~0x8000;
             src_object = (*(u8***)(src + 0x240))[child];
             if (*(u16*)(src_object + 8) & 1) {
                 fn_8012C478(dst, child, 1);
@@ -60,13 +59,13 @@ void fn_8012C804(u8* dst, u8* src, int index)
         }
     }
 
-    for (offset = 0, i = 0; offset < 18; i += 4, offset++) {
-        src_object = *(u8**)(*(u8**)(src + 0x240) + i);
+    for (i = 0; i < 18; i++) {
+        src_object = *(u8**)(*(u8**)(src + 0x240) + i * 4);
         if (src_object != 0) {
-            flags = *(u16*)(src_object + 0xA);
-            selected_object = *(u8**)(*(u8**)(dst + 0x240) + i);
-            if (flags & 0x3F) {
-                *(u16*)(selected_object + 0xA) = flags;
+            entry = *(u16*)(src_object + 0xA);
+            selected_object = *(u8**)(*(u8**)(dst + 0x240) + i * 4);
+            if (entry & 0x3F) {
+                *(u16*)(selected_object + 0xA) = entry;
                 *(u32*)(selected_object + 0x3C) = *(u32*)(src_object + 0x3C);
                 *(u16*)(selected_object + 0x40) = *(u16*)(src_object + 0x40);
                 *(u32*)(selected_object + 0x54) = *(u32*)(src_object + 0x54);
@@ -80,8 +79,8 @@ void fn_8012C804(u8* dst, u8* src, int index)
 
     inherited = 0;
     graph = *(u8**)(*(u8**)(*(u8**)(src + 0x240) + index_offset) + 4);
-    for (offset = 0, i = 0; offset < *(u16*)(graph + 6); i += 2, offset++) {
-        entry = *(u16*)(*(u8**)(graph + 8) + i);
+    for (i = 0; i < *(u16*)(graph + 6); i++) {
+        entry = *(u16*)(*(u8**)(graph + 8) + i * 2);
         if (!(entry & 0x8000)) {
             inherited = ((State*)(src + 0x17C))[entry].inherited;
             break;
