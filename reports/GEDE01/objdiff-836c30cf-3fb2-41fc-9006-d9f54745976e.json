@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "assignment_id": "836c30cf-3fb2-41fc-9006-d9f54745976e",
+  "target": "fn_80088298",
+  "compiler": "GC/1.3",
+  "compiler_flags": ["-use_lmw_stmw on"],
+  "objdiff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80088298 fn_80088298 -o build/GEDE01/fn_80088298-final.json --format json-pretty -c function_reloc_diffs=name_address",
+  "objdiff_exit_code": 0,
+  "raw_measurement": {
+    "expected_text_size": 656,
+    "generated_text_size": 656,
+    "expected_instruction_count": 164,
+    "generated_instruction_count": 164,
+    "match_percent": 96.768295,
+    "expected_relocation_count": 33,
+    "generated_relocation_count": 33,
+    "relocations_equal_by_address_type_target_addend": true
+  },
+  "measured_variants": [
+    {"name":"accepted_base","match_percent":93.164635,"result":"656 bytes; repeated SlotView expressions lower to addi plus stbx in mode 7"},
+    {"name":"typed_prototypes_only","match_percent":93.164635,"result":"no codegen change; retained to remove default-promotion ambiguity"},
+    {"name":"real_array_member","match_percent":93.164635,"result":"SlotArray::slots[index] optimized identically to the accepted base"},
+    {"name":"separately_assigned_slot_pointer","match_percent":96.60976,"result":"produced retail add-base plus displacement-store form for four of six mode-7 stores"},
+    {"name":"split_branch_output_indices_wrong_order","match_percent":96.56707,"result":"stack slots inverted: mode 6 used 0x8 and mode 7 used 0xC"},
+    {"name":"split_branch_output_indices_reordered","match_percent":96.61585,"result":"retail stack slots aligned: mode 6 uses 0xC and mode 7 uses 0x8"},
+    {"name":"separated_local_declarations_and_initialization","match_percent":96.768295,"result":"retail r27 state and r28 owner allocation aligned; retained best"},
+    {"name":"volatile_last_two_slot_stores","match_percent":96.768295,"result":"no codegen change; rejected"},
+    {"name":"local_work_alias","match_percent":96.768295,"result":"coalesced with parameter and made no codegen change; rejected"}
+  ],
+  "raw_relocations": [
+    [20,"R_PPC_REL24","fn_8006ED98",0],[40,"R_PPC_REL24","fn_80201814",0],[48,"R_PPC_REL24","fn_80036D38",0],[56,"R_PPC_REL24","fn_80201814",0],[72,"R_PPC_REL24","fn_80201B8C",0],[108,"R_PPC_REL24","fn_8006ED3C",0],[112,"R_PPC_EMB_SDA21","lbl_8064C824",0],[116,"R_PPC_REL24","fn_801A6D94",0],[136,"R_PPC_REL24","fn_8006ECD4",0],[140,"R_PPC_ADDR16_HA","fn_8006EA4C",0],[148,"R_PPC_ADDR16_LO","fn_8006EA4C",0],[156,"R_PPC_REL24","fn_8006BEE4",0],[196,"R_PPC_REL24","fn_8006DEF8",0],[232,"R_PPC_REL24","fn_8006DEF8",0],[256,"R_PPC_EMB_SDA21","lbl_8064C824",0],[260,"R_PPC_REL24","fn_801A6E04",0],[268,"R_PPC_REL24","fn_801A5C30",0],[280,"R_PPC_REL24","fn_802020B4",0],[300,"R_PPC_REL24","fn_801A5C30",0],[312,"R_PPC_REL24","fn_802020B4",0],[328,"R_PPC_REL24","fn_8006ED3C",0],[408,"R_PPC_REL24","fn_8006DEF8",0],[452,"R_PPC_REL24","fn_8006DEF8",0],[496,"R_PPC_REL24","fn_8006DEF8",0],[540,"R_PPC_REL24","fn_8006DEF8",0],[564,"R_PPC_EMB_SDA21","lbl_8064EB78",0],[580,"R_PPC_REL24","fn_8020104C",0],[592,"R_PPC_REL24","fn_8015C8A4",0],[608,"R_PPC_REL24","fn_801B08BC",0],[612,"R_PPC_EMB_SDA21","lbl_8064C824",0],[616,"R_PPC_REL24","fn_801A6E04",0],[620,"R_PPC_EMB_SDA21","lbl_8064C91D",0],[628,"R_PPC_EMB_SDA21","lbl_8064C91D",0]
+  ],
+  "raw_remaining_divergence": {
+    "register_allocation": {"expected":["0x10 mr r30,r3","0x2C mr r29,r3"],"generated":["0x10 mr r29,r3","0x2C mr r30,r3"]},
+    "last_mode7_store": {"expected":["0x204 mulli r0,r0,0x2c","0x214 add r8,r30,r0","0x218 stb r9,0x68(r8)"],"generated":["0x204 mulli r8,r0,0x2c","0x214 addi r0,r8,0x68","0x218 stbx r9,r29,r0"]}
+  },
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "exit_code": 0,
+    "dol_check_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  }
+}

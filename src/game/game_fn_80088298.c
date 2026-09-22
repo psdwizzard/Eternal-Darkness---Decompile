@@ -16,17 +16,16 @@ typedef struct SlotView {
 } SlotView;
 
 extern EventState* fn_8006ED98(Work*);
-extern void *fn_8006ED3C();
+extern void fn_8006ED3C(Work*, int, int*);
 extern int fn_8006ECD4(Work*, int);
 extern void fn_8006DEF8(Work*, int, void*, void*, int);
 extern void fn_8006EA4C(void);
 extern void fn_8006BEE4(void*, void (*)(void));
 extern Object44* fn_80036D38(void);
-extern void *fn_80201814();
-extern void *fn_80201B8C();
+extern void *fn_80201814(int);
+extern void *fn_80201B8C(void*);
 extern void fn_802020B4(void*, int);
-extern void fn_8020104C(int, void*, void*, int, float);
-#define fn_8020104C(a,b,c,d,e) fn_8020104C((int)(a),(void*)(b),(void*)(c),(int)(d),(float)(e))
+extern void fn_8020104C(int, void*, int, int, float);
 extern int lbl_8064C824;
 extern int fn_801A6D94(int);
 extern void fn_801A6E04(int);
@@ -38,20 +37,30 @@ extern u8 lbl_8064C91D;
 
 int fn_80088298(Work* work)
 {
-    EventState* state = fn_8006ED98(work);
-    Owner* owner = work->owner;
-    void* object = fn_80201814(work->object_id);
-    Object44* current = fn_80036D38();
-    void* other = fn_80201814(current->object_id);
-    Object8C* info = fn_80201B8C(object);
-    Owner* notification_owner = work->owner;
+    Owner* owner;
+    EventState* state;
+    void* object;
+    Object44* current;
+    void* other;
+    Object8C* info;
+    Owner* notification_owner;
+    int mode6_index;
     int index;
     int callback_index;
     int offset;
     int i;
+    SlotView* slot;
+
+    state = fn_8006ED98(work);
+    owner = work->owner;
+    object = fn_80201814(work->object_id);
+    current = fn_80036D38();
+    other = fn_80201814(current->object_id);
+    info = fn_80201B8C(object);
+    notification_owner = work->owner;
 
     if (state->mode == 6) {
-        fn_8006ED3C(work, 6, &index);
+        fn_8006ED3C(work, 6, &mode6_index);
         if (fn_801A6D94(lbl_8064C824)) {
             callback_index = fn_8006ECD4(work, 6);
             fn_8006BEE4(state, fn_8006EA4C);
@@ -71,15 +80,21 @@ int fn_80088298(Work* work)
         fn_801A5C30(1);
         fn_802020B4(other, 1);
         fn_8006ED3C(work, 7, &index);
-        ((SlotView*)((u8*)work + index * 0x2C))->field6A = 3;
-        ((SlotView*)((u8*)work + index * 0x2C))->field6B = 3;
-        ((SlotView*)((u8*)work + index * 0x2C))->state = 4;
+        slot = (SlotView*)((u8*)work + index * 0x2C);
+        slot->field6A = 3;
+        slot = (SlotView*)((u8*)work + index * 0x2C);
+        slot->field6B = 3;
+        slot = (SlotView*)((u8*)work + index * 0x2C);
+        slot->state = 4;
         fn_8006DEF8(work, 7, 0, 0, 0);
-        ((SlotView*)((u8*)work + index * 0x2C))->state = 0;
+        slot = (SlotView*)((u8*)work + index * 0x2C);
+        slot->state = 0;
         fn_8006DEF8(work, 7, 0, 0, 0);
-        ((SlotView*)((u8*)work + index * 0x2C))->state = 1;
+        slot = (SlotView*)((u8*)work + index * 0x2C);
+        slot->state = 1;
         fn_8006DEF8(work, 7, 0, 0, 0);
-        ((SlotView*)((u8*)work + index * 0x2C))->state = 2;
+        slot = (SlotView*)((u8*)work + index * 0x2C);
+        slot->state = 2;
         fn_8006DEF8(work, 7, 0, 0, 0);
         if ((*(unsigned int*)((u8*)notification_owner + 0x20) & 0x20) == 0)
             fn_8020104C(0x51, 0, info->object->object_id, 0, lbl_8064EB78);
