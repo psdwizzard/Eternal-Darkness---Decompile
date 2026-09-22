@@ -19,7 +19,7 @@ typedef struct Hit {
     Vec3 position;
 } Hit;
 
-extern float lbl_8064EA60;
+extern const float lbl_8064EA60;
 extern float lbl_8064EA78;
 extern void *lbl_8064C4E4;
 
@@ -35,7 +35,7 @@ void fn_80080A38(Vec3 *result, const Vec3 *start, Vec3 *end,
                  int adjust_hit, int shorten)
 {
     /* NonMatching: behavior-complete, size-exact reconstruction. Remaining
-     * differences are two word-load slots and FP expression scheduling. */
+     * differences are endpoint word-load order and FP expression scheduling. */
     Segment segment;
     Hit hit;
     Vec3 scaled;
