@@ -14,7 +14,7 @@ extern void fn_800EB458(const char *, ...);
 extern int fn_8011EB04(void *);
 #define fn_8011EB04(a) fn_8011EB04((void *)(a))
 extern int fn_801A9EF4(int, int);
-extern u16 fn_801A9F44(s32, s32 *);
+extern void *fn_801A9F44(s32, void **);
 extern u8 lbl_80238E60[];
 extern const char lbl_8024104C[];
 extern u8 lbl_803003C8[];
@@ -27,10 +27,11 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
     u8 sp8;
     s32 var_r28;
     s8 var_r31;
-    u16 var_r21;
     u16 var_r22;
+    u16 var_r21;
     u16 var_r3;
     u16 var_r3_2;
+    u32 selector;
     u8 *var_r23 = lbl_80238E60;
 
     var_r22 = 0xFFFF;
@@ -69,15 +70,15 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             break;
         case 0x1C:                                  /* switch 2 */
             sp8 = 0x64;
-            var_r31 = 2;
             var_r22 = fn_80049818(arg1, arg3);
+            var_r31 = 2;
             var_r21 = 0x5DC;
             break;
         case 0x1B:                                  /* switch 2 */
             sp30[0] = M2C_FIELD(var_r23, s32 *, 0xB0);
             sp30[1] = M2C_FIELD(var_r23, s32 *, 0xB4);
             sp30[2] = M2C_FIELD(var_r23, s32 *, 0xB8);
-            var_r22 = fn_801A9F44(3, sp30);
+            var_r22 = (u16)(u32)fn_801A9F44(3, (void **)sp30);
             sp8 = 0x64;
             var_r31 = 2;
             var_r21 = 0x3E8;
@@ -95,8 +96,8 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             var_r21 = 0x7D0;
             break;
         case 0x4D:                                  /* switch 2 */
-            var_r31 = 2;
             var_r22 = fn_80050A7C(arg1, &sp8);
+            var_r31 = 2;
             var_r21 = 0x3E8;
             break;
         case 0x56:                                  /* switch 2 */
@@ -129,8 +130,9 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             var_r21 = 0x9C4;
             break;
         case 0x41:                                  /* switch 3 */
+            selector = fn_80050A48();
             var_r3 = 0x5E;
-            if (fn_80050A48() == 0x40U) {
+            if (selector == 0x40U) {
                 var_r3 = 0x202;
             }
             var_r22 = var_r3;
@@ -210,8 +212,8 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             var_r21 = 0x3E8;
             break;
         case 0x4D:                                  /* switch 5 */
-            var_r31 = 2;
             var_r22 = fn_80050A7C(arg1, &sp8);
+            var_r31 = 2;
             var_r21 = 0x3E8;
             break;
         case 0x1B:                                  /* switch 5 */
@@ -234,8 +236,8 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             break;
         case 0x1C:                                  /* switch 5 */
             sp8 = 0x64;
-            var_r31 = 2;
             var_r22 = fn_80049818(arg1, arg3);
+            var_r31 = 2;
             var_r21 = 0x5DC;
             break;
         }
@@ -251,8 +253,8 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             var_r21 = 0x3E8;
             break;
         case 0x4D:                                  /* switch 6 */
-            var_r31 = 2;
             var_r22 = fn_80050A7C(arg1, &sp8);
+            var_r31 = 2;
             var_r21 = 0x3E8;
             break;
         case 0x47:                                  /* switch 6 */
@@ -275,8 +277,8 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             break;
         case 0x1C:                                  /* switch 6 */
             sp8 = 0x64;
-            var_r31 = 2;
             var_r22 = fn_80049818(arg1, arg3);
+            var_r31 = 2;
             var_r21 = 0x5DC;
             break;
         }
@@ -299,15 +301,18 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             var_r21 = 0xBB8;
             break;
         case 0x4D:                                  /* switch 7 */
-            var_r31 = 2;
             var_r22 = fn_80050A7C(arg1, &sp8);
+            var_r31 = 2;
             var_r21 = 0x3E8;
             break;
         }
         break;
+    case 112:
     case 233:                                       /* switch 1 */
         var_r28 |= 4;
         switch (arg2) {                             /* switch 8; irregular */
+        case 0x47:
+            break;
         case 0x24:                                  /* switch 8 */
         case 0x25:                                  /* switch 8 */
         case 0x26:                                  /* switch 8 */
@@ -330,8 +335,8 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             break;
         case 0x1C:                                  /* switch 8 */
             sp8 = 0x64;
-            var_r31 = 2;
             var_r22 = fn_80049818(arg1, arg3);
+            var_r31 = 2;
             var_r21 = 0x5DC;
             break;
         case 0x39:                                  /* switch 8 */
@@ -672,10 +677,9 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         }
         break;
     case 198:                                       /* switch 1 */
-        var_r28 = 1;
-        if (arg2 != 0x41) {
-
-        } else {
+        var_r28 |= 1;
+        switch (arg2) {
+        case 0x41:
             var_r22 = 0x269;
             sp8 = 0x64;
             var_r31 = 2;
@@ -780,8 +784,9 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
         var_r28 |= 4;
         switch (arg2) {                             /* switch 18 */
         case 0x41:                                  /* switch 18 */
+            selector = fn_80050A48();
             var_r3_2 = 0x186;
-            if (fn_80050A48() == 0x80U) {
+            if (selector == 0x80U) {
                 var_r3_2 = 0x203;
             }
             var_r22 = var_r3_2;
@@ -909,15 +914,15 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             break;
         case 0x1C:                                  /* switch 20 */
             sp8 = 0x64;
-            var_r31 = 2;
             var_r22 = fn_80049818(arg1, arg3);
+            var_r31 = 2;
             var_r21 = 0x5DC;
             break;
         case 0x1B:                                  /* switch 20 */
             sp24[0] = M2C_FIELD(var_r23, s32 *, 0xBC);
             sp24[1] = M2C_FIELD(var_r23, s32 *, 0xC0);
             sp24[2] = M2C_FIELD(var_r23, s32 *, 0xC4);
-            var_r22 = fn_801A9F44(3, sp24);
+            var_r22 = (u16)(u32)fn_801A9F44(3, (void **)sp24);
             sp8 = 0x64;
             var_r31 = 2;
             var_r21 = 0x3E8;
@@ -935,8 +940,8 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             var_r21 = 0x7D0;
             break;
         case 0x4D:                                  /* switch 20 */
-            var_r31 = 2;
             var_r22 = fn_80050A7C(arg1, &sp8);
+            var_r31 = 2;
             var_r21 = 0x3E8;
             break;
         case 0x56:                                  /* switch 20 */
@@ -964,15 +969,15 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             break;
         case 0x1C:                                  /* switch 21 */
             sp8 = 0x64;
-            var_r31 = 2;
             var_r22 = fn_80049818(arg1, arg3);
+            var_r31 = 2;
             var_r21 = 0x5DC;
             break;
         case 0x1B:                                  /* switch 21 */
             sp18[0] = M2C_FIELD(var_r23, s32 *, 0xC8);
             sp18[1] = M2C_FIELD(var_r23, s32 *, 0xCC);
             sp18[2] = M2C_FIELD(var_r23, s32 *, 0xD0);
-            var_r22 = fn_801A9F44(3, sp18);
+            var_r22 = (u16)(u32)fn_801A9F44(3, (void **)sp18);
             sp8 = 0x64;
             var_r31 = 2;
             var_r21 = 0x3E8;
@@ -990,16 +995,15 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
             var_r21 = 0x7D0;
             break;
         case 0x4D:                                  /* switch 21 */
-            var_r31 = 2;
             var_r22 = fn_80050A7C(arg1, &sp8);
+            var_r31 = 2;
             var_r21 = 0x3E8;
             break;
         }
         break;
     case -2:                                        /* switch 1 */
-        if (arg2 != 0x1C) {
-
-        } else {
+        switch (arg2) {
+        case 0x1C:
             sp8 = 0x46;
             var_r22 = fn_801A9EF4(0x2CC, 0x2CD);
             var_r31 = 2;
@@ -1024,15 +1028,15 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
                 break;
             case 0x1C:                              /* switch 22 */
                 sp8 = 0x64;
-                var_r31 = 2;
                 var_r22 = fn_80049818(arg1, arg3);
+                var_r31 = 2;
                 var_r21 = 0x5DC;
                 break;
             case 0x1B:                              /* switch 22 */
                 spC[0] = M2C_FIELD(var_r23, s32 *, 0xD4);
                 spC[1] = M2C_FIELD(var_r23, s32 *, 0xD8);
                 spC[2] = M2C_FIELD(var_r23, s32 *, 0xDC);
-                var_r22 = fn_801A9F44(3, spC);
+                var_r22 = (u16)(u32)fn_801A9F44(3, (void **)spC);
                 sp8 = 0x64;
                 var_r31 = 2;
                 var_r21 = 0x3E8;
@@ -1050,8 +1054,8 @@ u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4, u16 *arg5, s32
                 var_r21 = 0x7D0;
                 break;
             case 0x4D:                              /* switch 22 */
-                var_r31 = 2;
                 var_r22 = fn_80050A7C(arg1, &sp8);
+                var_r31 = 2;
                 var_r21 = 0x3E8;
                 break;
             case 0x56:                              /* switch 22 */

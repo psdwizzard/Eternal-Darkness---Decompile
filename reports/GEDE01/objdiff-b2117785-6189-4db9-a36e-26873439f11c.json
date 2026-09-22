@@ -1,0 +1,669 @@
+{
+  "version": 1,
+  "assignment_id": "b2117785-6189-4db9-a36e-26873439f11c",
+  "attempt": 6,
+  "target": "fn_80050B08",
+  "compiler": "Canonical GC/1.3 configuration, -O4,p, -use_lmw_stmw on; unchanged compiler policy",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2 > build/GEDE01/b2117785-matching-build.log 2>&1",
+    "python3 reports/GEDE01/verify-b2117785-6189-4db9-a36e-26873439f11c.py"
+  ],
+  "objdiff_raw_files": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b2117785-6189-4db9-a36e-26873439f11c-canonical.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b2117785-6189-4db9-a36e-26873439f11c-reloc-strict.raw.json"
+  ],
+  "canonical_objdiff_raw": {
+    "target_bytes": 5904,
+    "generated_bytes": 5904,
+    "match_percent": 100.0,
+    "aligned_instruction_rows": 1476,
+    "differing_rows": 0,
+    "diff_kinds": {}
+  },
+  "relocation_strict_objdiff_raw": {
+    "target_bytes": 5904,
+    "generated_bytes": 5904,
+    "match_percent": 100.0,
+    "aligned_instruction_rows": 1476,
+    "differing_rows": 0,
+    "diff_kinds": {}
+  },
+  "text_byte_verification": {
+    "bytes_equal": true,
+    "bytes": 5904,
+    "target_sha1": "6abd420f1810955af4c39b96cd2075cadc007f9a",
+    "generated_sha1": "6abd420f1810955af4c39b96cd2075cadc007f9a"
+  },
+  "relocation_verification": {
+    "targets_and_addends_equal": true,
+    "count_per_object": 75,
+    "normalized_offset_type_target_addend": [
+      [
+        "0000000a",
+        "R_PPC_ADDR16_HA",
+        "lbl_80238E60",
+        "+",
+        "0"
+      ],
+      [
+        "0000003a",
+        "R_PPC_ADDR16_LO",
+        "lbl_80238E60",
+        "+",
+        "0"
+      ],
+      [
+        "00000058",
+        "R_PPC_REL24",
+        "fn_8011EB04",
+        "+",
+        "0"
+      ],
+      [
+        "00000254",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "00000280",
+        "R_PPC_REL24",
+        "fn_80049818",
+        "+",
+        "0"
+      ],
+      [
+        "000002b4",
+        "R_PPC_REL24",
+        "fn_801A9F44",
+        "+",
+        "0"
+      ],
+      [
+        "000002f0",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "00000314",
+        "R_PPC_REL24",
+        "fn_80050A7C",
+        "+",
+        "0"
+      ],
+      [
+        "00000352",
+        "R_PPC_ADDR16_HA",
+        "jumptable_802416FC",
+        "+",
+        "0"
+      ],
+      [
+        "0000035a",
+        "R_PPC_ADDR16_LO",
+        "jumptable_802416FC",
+        "+",
+        "0"
+      ],
+      [
+        "000003b0",
+        "R_PPC_REL24",
+        "fn_80050A48",
+        "+",
+        "0"
+      ],
+      [
+        "00000414",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "00000442",
+        "R_PPC_ADDR16_HA",
+        "jumptable_8024166C",
+        "+",
+        "0"
+      ],
+      [
+        "0000044a",
+        "R_PPC_ADDR16_LO",
+        "jumptable_8024166C",
+        "+",
+        "0"
+      ],
+      [
+        "000004d8",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "00000560",
+        "R_PPC_REL24",
+        "fn_80050A7C",
+        "+",
+        "0"
+      ],
+      [
+        "0000057c",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "000005d8",
+        "R_PPC_REL24",
+        "fn_80049818",
+        "+",
+        "0"
+      ],
+      [
+        "00000658",
+        "R_PPC_REL24",
+        "fn_80050A7C",
+        "+",
+        "0"
+      ],
+      [
+        "0000068c",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "000006d0",
+        "R_PPC_REL24",
+        "fn_80049818",
+        "+",
+        "0"
+      ],
+      [
+        "00000738",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "0000075c",
+        "R_PPC_REL24",
+        "fn_80050A7C",
+        "+",
+        "0"
+      ],
+      [
+        "0000081c",
+        "R_PPC_REL24",
+        "fn_80049818",
+        "+",
+        "0"
+      ],
+      [
+        "0000092e",
+        "R_PPC_ADDR16_HA",
+        "jumptable_802415D4",
+        "+",
+        "0"
+      ],
+      [
+        "00000936",
+        "R_PPC_ADDR16_LO",
+        "jumptable_802415D4",
+        "+",
+        "0"
+      ],
+      [
+        "000009f4",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "00000a22",
+        "R_PPC_ADDR16_HA",
+        "jumptable_80241544",
+        "+",
+        "0"
+      ],
+      [
+        "00000a2a",
+        "R_PPC_ADDR16_LO",
+        "jumptable_80241544",
+        "+",
+        "0"
+      ],
+      [
+        "00000ab8",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "00000afe",
+        "R_PPC_ADDR16_HA",
+        "jumptable_802414B4",
+        "+",
+        "0"
+      ],
+      [
+        "00000b06",
+        "R_PPC_ADDR16_LO",
+        "jumptable_802414B4",
+        "+",
+        "0"
+      ],
+      [
+        "00000b94",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "00000bda",
+        "R_PPC_ADDR16_HA",
+        "jumptable_80241424",
+        "+",
+        "0"
+      ],
+      [
+        "00000be2",
+        "R_PPC_ADDR16_LO",
+        "jumptable_80241424",
+        "+",
+        "0"
+      ],
+      [
+        "00000c58",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "00000cb6",
+        "R_PPC_ADDR16_HA",
+        "jumptable_8024138C",
+        "+",
+        "0"
+      ],
+      [
+        "00000cbe",
+        "R_PPC_ADDR16_LO",
+        "jumptable_8024138C",
+        "+",
+        "0"
+      ],
+      [
+        "00000d86",
+        "R_PPC_ADDR16_HA",
+        "jumptable_802412F4",
+        "+",
+        "0"
+      ],
+      [
+        "00000d8e",
+        "R_PPC_ADDR16_LO",
+        "jumptable_802412F4",
+        "+",
+        "0"
+      ],
+      [
+        "00000e7e",
+        "R_PPC_ADDR16_HA",
+        "jumptable_80241264",
+        "+",
+        "0"
+      ],
+      [
+        "00000e86",
+        "R_PPC_ADDR16_LO",
+        "jumptable_80241264",
+        "+",
+        "0"
+      ],
+      [
+        "00000f14",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "00000f5a",
+        "R_PPC_ADDR16_HA",
+        "jumptable_802411D4",
+        "+",
+        "0"
+      ],
+      [
+        "00000f62",
+        "R_PPC_ADDR16_LO",
+        "jumptable_802411D4",
+        "+",
+        "0"
+      ],
+      [
+        "00000ff0",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "00001036",
+        "R_PPC_ADDR16_HA",
+        "jumptable_80241144",
+        "+",
+        "0"
+      ],
+      [
+        "0000103e",
+        "R_PPC_ADDR16_LO",
+        "jumptable_80241144",
+        "+",
+        "0"
+      ],
+      [
+        "0000104c",
+        "R_PPC_REL24",
+        "fn_80050A48",
+        "+",
+        "0"
+      ],
+      [
+        "000010e0",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "00001126",
+        "R_PPC_ADDR16_HA",
+        "jumptable_802410AC",
+        "+",
+        "0"
+      ],
+      [
+        "0000112e",
+        "R_PPC_ADDR16_LO",
+        "jumptable_802410AC",
+        "+",
+        "0"
+      ],
+      [
+        "000011cc",
+        "R_PPC_REL24",
+        "fn_80050A48",
+        "+",
+        "0"
+      ],
+      [
+        "00001210",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "000012bc",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "000012e8",
+        "R_PPC_REL24",
+        "fn_80049818",
+        "+",
+        "0"
+      ],
+      [
+        "0000131c",
+        "R_PPC_REL24",
+        "fn_801A9F44",
+        "+",
+        "0"
+      ],
+      [
+        "00001358",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "0000137c",
+        "R_PPC_REL24",
+        "fn_80050A7C",
+        "+",
+        "0"
+      ],
+      [
+        "00001418",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "00001444",
+        "R_PPC_REL24",
+        "fn_80049818",
+        "+",
+        "0"
+      ],
+      [
+        "00001478",
+        "R_PPC_REL24",
+        "fn_801A9F44",
+        "+",
+        "0"
+      ],
+      [
+        "000014b4",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "000014d8",
+        "R_PPC_REL24",
+        "fn_80050A7C",
+        "+",
+        "0"
+      ],
+      [
+        "00001508",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "0000151e",
+        "R_PPC_ADDR16_HA",
+        "lbl_803003C8",
+        "+",
+        "0"
+      ],
+      [
+        "00001522",
+        "R_PPC_ADDR16_LO",
+        "lbl_803003C8",
+        "+",
+        "0"
+      ],
+      [
+        "000015ac",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "000015d8",
+        "R_PPC_REL24",
+        "fn_80049818",
+        "+",
+        "0"
+      ],
+      [
+        "0000160c",
+        "R_PPC_REL24",
+        "fn_801A9F44",
+        "+",
+        "0"
+      ],
+      [
+        "00001648",
+        "R_PPC_REL24",
+        "fn_801A9EF4",
+        "+",
+        "0"
+      ],
+      [
+        "0000166c",
+        "R_PPC_REL24",
+        "fn_80050A7C",
+        "+",
+        "0"
+      ],
+      [
+        "000016d2",
+        "R_PPC_ADDR16_HA",
+        "lbl_8024104C",
+        "+",
+        "0"
+      ],
+      [
+        "000016da",
+        "R_PPC_ADDR16_LO",
+        "lbl_8024104C",
+        "+",
+        "0"
+      ],
+      [
+        "000016f4",
+        "R_PPC_REL24",
+        "fn_800EB458",
+        "+",
+        "0"
+      ]
+    ],
+    "target_readelf_raw": "\nRelocation section '.rela.text' at offset 0x1750 contains 75 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000406 R_PPC_ADDR16_HA        00000000   lbl_80238E60 + 0\n0000003a  00000404 R_PPC_ADDR16_LO        00000000   lbl_80238E60 + 0\n00000058  0000050a R_PPC_REL24            00000000   fn_8011EB04 + 0\n00000254  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000280  0000070a R_PPC_REL24            00000000   fn_80049818 + 0\n000002b4  0000080a R_PPC_REL24            00000000   fn_801A9F44 + 0\n000002f0  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000314  0000090a R_PPC_REL24            00000000   fn_80050A7C + 0\n00000352  00000a06 R_PPC_ADDR16_HA        00000000   jumptable_802416FC + 0\n0000035a  00000a04 R_PPC_ADDR16_LO        00000000   jumptable_802416FC + 0\n000003b0  00000b0a R_PPC_REL24            00000000   fn_80050A48 + 0\n00000414  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000442  00000c06 R_PPC_ADDR16_HA        00000000   jumptable_8024166C + 0\n0000044a  00000c04 R_PPC_ADDR16_LO        00000000   jumptable_8024166C + 0\n000004d8  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000560  0000090a R_PPC_REL24            00000000   fn_80050A7C + 0\n0000057c  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n000005d8  0000070a R_PPC_REL24            00000000   fn_80049818 + 0\n00000658  0000090a R_PPC_REL24            00000000   fn_80050A7C + 0\n0000068c  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n000006d0  0000070a R_PPC_REL24            00000000   fn_80049818 + 0\n00000738  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n0000075c  0000090a R_PPC_REL24            00000000   fn_80050A7C + 0\n0000081c  0000070a R_PPC_REL24            00000000   fn_80049818 + 0\n0000092e  00000d06 R_PPC_ADDR16_HA        00000000   jumptable_802415D4 + 0\n00000936  00000d04 R_PPC_ADDR16_LO        00000000   jumptable_802415D4 + 0\n000009f4  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000a22  00000e06 R_PPC_ADDR16_HA        00000000   jumptable_80241544 + 0\n00000a2a  00000e04 R_PPC_ADDR16_LO        00000000   jumptable_80241544 + 0\n00000ab8  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000afe  00000f06 R_PPC_ADDR16_HA        00000000   jumptable_802414B4 + 0\n00000b06  00000f04 R_PPC_ADDR16_LO        00000000   jumptable_802414B4 + 0\n00000b94  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000bda  00001006 R_PPC_ADDR16_HA        00000000   jumptable_80241424 + 0\n00000be2  00001004 R_PPC_ADDR16_LO        00000000   jumptable_80241424 + 0\n00000c58  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000cb6  00001106 R_PPC_ADDR16_HA        00000000   jumptable_8024138C + 0\n00000cbe  00001104 R_PPC_ADDR16_LO        00000000   jumptable_8024138C + 0\n00000d86  00001206 R_PPC_ADDR16_HA        00000000   jumptable_802412F4 + 0\n00000d8e  00001204 R_PPC_ADDR16_LO        00000000   jumptable_802412F4 + 0\n00000e7e  00001306 R_PPC_ADDR16_HA        00000000   jumptable_80241264 + 0\n00000e86  00001304 R_PPC_ADDR16_LO        00000000   jumptable_80241264 + 0\n00000f14  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000f5a  00001406 R_PPC_ADDR16_HA        00000000   jumptable_802411D4 + 0\n00000f62  00001404 R_PPC_ADDR16_LO        00000000   jumptable_802411D4 + 0\n00000ff0  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00001036  00001506 R_PPC_ADDR16_HA        00000000   jumptable_80241144 + 0\n0000103e  00001504 R_PPC_ADDR16_LO        00000000   jumptable_80241144 + 0\n0000104c  00000b0a R_PPC_REL24            00000000   fn_80050A48 + 0\n000010e0  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00001126  00001606 R_PPC_ADDR16_HA        00000000   jumptable_802410AC + 0\n0000112e  00001604 R_PPC_ADDR16_LO        00000000   jumptable_802410AC + 0\n000011cc  00000b0a R_PPC_REL24            00000000   fn_80050A48 + 0\n00001210  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n000012bc  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n000012e8  0000070a R_PPC_REL24            00000000   fn_80049818 + 0\n0000131c  0000080a R_PPC_REL24            00000000   fn_801A9F44 + 0\n00001358  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n0000137c  0000090a R_PPC_REL24            00000000   fn_80050A7C + 0\n00001418  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00001444  0000070a R_PPC_REL24            00000000   fn_80049818 + 0\n00001478  0000080a R_PPC_REL24            00000000   fn_801A9F44 + 0\n000014b4  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n000014d8  0000090a R_PPC_REL24            00000000   fn_80050A7C + 0\n00001508  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n0000151e  00001706 R_PPC_ADDR16_HA        00000000   lbl_803003C8 + 0\n00001522  00001704 R_PPC_ADDR16_LO        00000000   lbl_803003C8 + 0\n000015ac  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n000015d8  0000070a R_PPC_REL24            00000000   fn_80049818 + 0\n0000160c  0000080a R_PPC_REL24            00000000   fn_801A9F44 + 0\n00001648  0000060a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n0000166c  0000090a R_PPC_REL24            00000000   fn_80050A7C + 0\n000016d2  00001806 R_PPC_ADDR16_HA        00000000   lbl_8024104C + 0\n000016da  00001804 R_PPC_ADDR16_LO        00000000   lbl_8024104C + 0\n000016f4  0000190a R_PPC_REL24            00000000   fn_800EB458 + 0\n",
+    "generated_readelf_raw": "\nRelocation section '.rela.text' at offset 0x1b68 contains 75 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000f06 R_PPC_ADDR16_HA        00000000   lbl_80238E60 + 0\n0000003a  00000f04 R_PPC_ADDR16_LO        00000000   lbl_80238E60 + 0\n00000058  0000120a R_PPC_REL24            00000000   fn_8011EB04 + 0\n00000254  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000280  0000140a R_PPC_REL24            00000000   fn_80049818 + 0\n000002b4  0000150a R_PPC_REL24            00000000   fn_801A9F44 + 0\n000002f0  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000314  0000160a R_PPC_REL24            00000000   fn_80050A7C + 0\n00000352  00000306 R_PPC_ADDR16_HA        00000650   jumptable_802416FC + 0\n0000035a  00000304 R_PPC_ADDR16_LO        00000650   jumptable_802416FC + 0\n000003b0  0000170a R_PPC_REL24            00000000   fn_80050A48 + 0\n00000414  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000442  00000406 R_PPC_ADDR16_HA        000005c0   jumptable_8024166C + 0\n0000044a  00000404 R_PPC_ADDR16_LO        000005c0   jumptable_8024166C + 0\n000004d8  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000560  0000160a R_PPC_REL24            00000000   fn_80050A7C + 0\n0000057c  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n000005d8  0000140a R_PPC_REL24            00000000   fn_80049818 + 0\n00000658  0000160a R_PPC_REL24            00000000   fn_80050A7C + 0\n0000068c  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n000006d0  0000140a R_PPC_REL24            00000000   fn_80049818 + 0\n00000738  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n0000075c  0000160a R_PPC_REL24            00000000   fn_80050A7C + 0\n0000081c  0000140a R_PPC_REL24            00000000   fn_80049818 + 0\n0000092e  00000506 R_PPC_ADDR16_HA        00000528   jumptable_802415D4 + 0\n00000936  00000504 R_PPC_ADDR16_LO        00000528   jumptable_802415D4 + 0\n000009f4  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000a22  00000606 R_PPC_ADDR16_HA        00000498   jumptable_80241544 + 0\n00000a2a  00000604 R_PPC_ADDR16_LO        00000498   jumptable_80241544 + 0\n00000ab8  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000afe  00000706 R_PPC_ADDR16_HA        00000408   jumptable_802414B4 + 0\n00000b06  00000704 R_PPC_ADDR16_LO        00000408   jumptable_802414B4 + 0\n00000b94  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000bda  00000806 R_PPC_ADDR16_HA        00000378   jumptable_80241424 + 0\n00000be2  00000804 R_PPC_ADDR16_LO        00000378   jumptable_80241424 + 0\n00000c58  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000cb6  00000906 R_PPC_ADDR16_HA        000002e0   jumptable_8024138C + 0\n00000cbe  00000904 R_PPC_ADDR16_LO        000002e0   jumptable_8024138C + 0\n00000d86  00000a06 R_PPC_ADDR16_HA        00000248   jumptable_802412F4 + 0\n00000d8e  00000a04 R_PPC_ADDR16_LO        00000248   jumptable_802412F4 + 0\n00000e7e  00000b06 R_PPC_ADDR16_HA        000001b8   jumptable_80241264 + 0\n00000e86  00000b04 R_PPC_ADDR16_LO        000001b8   jumptable_80241264 + 0\n00000f14  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00000f5a  00000c06 R_PPC_ADDR16_HA        00000128   jumptable_802411D4 + 0\n00000f62  00000c04 R_PPC_ADDR16_LO        00000128   jumptable_802411D4 + 0\n00000ff0  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00001036  00000d06 R_PPC_ADDR16_HA        00000098   jumptable_80241144 + 0\n0000103e  00000d04 R_PPC_ADDR16_LO        00000098   jumptable_80241144 + 0\n0000104c  0000170a R_PPC_REL24            00000000   fn_80050A48 + 0\n000010e0  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00001126  00000e06 R_PPC_ADDR16_HA        00000000   jumptable_802410AC + 0\n0000112e  00000e04 R_PPC_ADDR16_LO        00000000   jumptable_802410AC + 0\n000011cc  0000170a R_PPC_REL24            00000000   fn_80050A48 + 0\n00001210  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n000012bc  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n000012e8  0000140a R_PPC_REL24            00000000   fn_80049818 + 0\n0000131c  0000150a R_PPC_REL24            00000000   fn_801A9F44 + 0\n00001358  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n0000137c  0000160a R_PPC_REL24            00000000   fn_80050A7C + 0\n00001418  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n00001444  0000140a R_PPC_REL24            00000000   fn_80049818 + 0\n00001478  0000150a R_PPC_REL24            00000000   fn_801A9F44 + 0\n000014b4  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n000014d8  0000160a R_PPC_REL24            00000000   fn_80050A7C + 0\n00001508  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n0000151e  00001006 R_PPC_ADDR16_HA        00000000   lbl_803003C8 + 0\n00001522  00001004 R_PPC_ADDR16_LO        00000000   lbl_803003C8 + 0\n000015ac  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n000015d8  0000140a R_PPC_REL24            00000000   fn_80049818 + 0\n0000160c  0000150a R_PPC_REL24            00000000   fn_801A9F44 + 0\n00001648  0000130a R_PPC_REL24            00000000   fn_801A9EF4 + 0\n0000166c  0000160a R_PPC_REL24            00000000   fn_80050A7C + 0\n000016d2  00001106 R_PPC_ADDR16_HA        00000000   lbl_8024104C + 0\n000016da  00001104 R_PPC_ADDR16_LO        00000000   lbl_8024104C + 0\n000016f4  0000180a R_PPC_REL24            00000000   fn_800EB458 + 0\n"
+  },
+  "jump_table_verification": {
+    "tables": 12,
+    "entries": 440,
+    "bytes": 1760,
+    "method": "Existing externalize_elf_symbol.py --require-relocation-match on each table; --require-section-symbols covers all twelve tables before section removal. All guards passed in the canonical build. No instruction rewriting or gate changes."
+  },
+  "dol_sha1_raw": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+  "legal_audit_raw": "legal audit passed (19775 tracked project files inspected)\n",
+  "build_output": "eternal-darkness-decomp/reports/GEDE01/build-b2117785-6189-4db9-a36e-26873439f11c.log",
+  "hypothesis": "Branch-label fidelity and call-crossing live ranges, rather than compiler flags: restore actor 112, the empty selector 0x47 arm, and two single-case switches; move response-state assignments after helper calls; read the selector before initializing its conditional result; correct the pointer-return selector prototype; declare the result before the duration to reproduce the remaining register tie.",
+  "measured_sequence": [
+    {
+      "variant": "fresh preserved source",
+      "score": 95.50203,
+      "bytes": 5884
+    },
+    {
+      "variant": "missing actor and empty selector labels",
+      "score": 95.729,
+      "bytes": 5896
+    },
+    {
+      "variant": "single-case switches and final flag accumulator",
+      "score": 95.91193,
+      "bytes": 5904
+    },
+    {
+      "variant": "pointer-return helper prototype",
+      "score": 96.060974,
+      "bytes": 5904
+    },
+    {
+      "variant": "fourteen response-state assignments after calls",
+      "score": 98.59078,
+      "bytes": 5904
+    },
+    {
+      "variant": "conditional expression probe",
+      "score": 98.80081,
+      "bytes": 5904
+    },
+    {
+      "variant": "selector evaluated before default assignment",
+      "score": 98.875336,
+      "bytes": 5904
+    },
+    {
+      "variant": "base",
+      "score": 98.875336,
+      "size": "5904",
+      "diff_kinds": {
+        "null": 1144,
+        "DIFF_ARG_MISMATCH": 332
+      }
+    },
+    {
+      "variant": "declaration_order",
+      "score": 99.87805,
+      "size": "5904",
+      "diff_kinds": {
+        "null": 1440,
+        "DIFF_ARG_MISMATCH": 36
+      }
+    },
+    {
+      "variant": "initialization_order",
+      "score": 98.875336,
+      "size": "5904",
+      "diff_kinds": {
+        "null": 1144,
+        "DIFF_ARG_MISMATCH": 332
+      }
+    },
+    {
+      "variant": "duration_register",
+      "score": 98.875336,
+      "size": "5904",
+      "diff_kinds": {
+        "null": 1144,
+        "DIFF_ARG_MISMATCH": 332
+      }
+    },
+    {
+      "variant": "result_register",
+      "score": 98.875336,
+      "size": "5904",
+      "diff_kinds": {
+        "null": 1144,
+        "DIFF_ARG_MISMATCH": 332
+      }
+    },
+    {
+      "variant": "retail-verified jump-table registration",
+      "score": 100.0,
+      "bytes": 5904
+    }
+  ],
+  "divergence": ""
+}

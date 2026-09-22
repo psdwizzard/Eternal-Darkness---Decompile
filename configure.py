@@ -158,6 +158,50 @@ config.custom_build_rules = [
         "description": "EXTERNALIZE $in",
     },
     {
+        "name": "externalize_game_80050B08_jumptables",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @237 jumptable_802416FC "
+            "orig/GEDE01/sys/main.dol --require-relocation-match --require-section-symbols=@237,@238,@239,@240,@241,@242,@243,@244,@245,@246,@247,@248 && "
+            "python3 tools/externalize_elf_symbol.py $in @238 jumptable_8024166C "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "python3 tools/externalize_elf_symbol.py $in @239 jumptable_802415D4 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "python3 tools/externalize_elf_symbol.py $in @240 jumptable_80241544 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "python3 tools/externalize_elf_symbol.py $in @241 jumptable_802414B4 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "python3 tools/externalize_elf_symbol.py $in @242 jumptable_80241424 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "python3 tools/externalize_elf_symbol.py $in @243 jumptable_8024138C "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "python3 tools/externalize_elf_symbol.py $in @244 jumptable_802412F4 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "python3 tools/externalize_elf_symbol.py $in @245 jumptable_80241264 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "python3 tools/externalize_elf_symbol.py $in @246 jumptable_802411D4 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "python3 tools/externalize_elf_symbol.py $in @247 jumptable_80241144 "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "python3 tools/externalize_elf_symbol.py $in @248 jumptable_802410AC "
+            "orig/GEDE01/sys/main.dol --require-relocation-match && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@237=jumptable_802416FC "
+            "--redefine-sym=@238=jumptable_8024166C "
+            "--redefine-sym=@239=jumptable_802415D4 "
+            "--redefine-sym=@240=jumptable_80241544 "
+            "--redefine-sym=@241=jumptable_802414B4 "
+            "--redefine-sym=@242=jumptable_80241424 "
+            "--redefine-sym=@243=jumptable_8024138C "
+            "--redefine-sym=@244=jumptable_802412F4 "
+            "--redefine-sym=@245=jumptable_80241264 "
+            "--redefine-sym=@246=jumptable_802411D4 "
+            "--redefine-sym=@247=jumptable_80241144 "
+            "--redefine-sym=@248=jumptable_802410AC "
+            "--remove-section=.data --rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE JUMPTABLES $in",
+    },
+    {
         "name": "externalize_game_80175A08_jumptable",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @23 jumptable_802504E4 "
@@ -3426,6 +3470,11 @@ guarded_externalize_rules.add("externalize_string_pool_80250588")
 config.custom_build_steps = {
     "post-compile": [
         {
+            "outputs": [f"build/{VERSION}/src/game/game_fn_80050B08.externalized"],
+            "rule": "externalize_game_80050B08_jumptables",
+            "inputs": [f"build/{VERSION}/src/game/game_fn_80050B08.o"],
+        },
+        {
             "outputs": [f"build/{VERSION}/src/game/game_fn_80175A08.externalized"],
             "rule": "externalize_game_80175A08_jumptable",
             "inputs": [f"build/{VERSION}/src/game/game_fn_80175A08.o"],
@@ -6510,7 +6559,7 @@ config.libs = [
     Object(Matching, "game/game_fn_80050A20.c"),
     Object(Matching, "game/game_fn_80050A48.c"),
     Object(Matching, "game/game_fn_80050A7C.c"),
-    Object(NonMatching, "game/game_fn_80050B08.c", extra_cflags=["-use_lmw_stmw on"]),
+    Object(Matching, "game/game_fn_80050B08.c", extra_cflags=["-use_lmw_stmw on"]),
     Object(Matching, "game/game_fn_80052218.c"),
     Object(Matching, "game/game_fn_80052228.c"),
     Object(Matching, "game/game_fn_80052250.c"),
