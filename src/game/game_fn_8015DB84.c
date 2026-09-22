@@ -37,9 +37,11 @@ void fn_8015DB84(ResourceTable* table, void* context, u32 index)
 {
     EntryPair* pair = fn_8015DB74(table, index);
     EntryA* entry = pair->first;
-    int different = 0;
+    long long different;
 
-    if (entry->field21 != entry->field22) {
+    if (entry->field21 == ((volatile EntryA*)entry)->field22) {
+        different = 0;
+    } else {
         different = 1;
     }
     fn_80228474(context, entry->data, entry->field2, entry->field0,

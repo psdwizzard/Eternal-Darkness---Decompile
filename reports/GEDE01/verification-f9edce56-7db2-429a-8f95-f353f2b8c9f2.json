@@ -1,0 +1,173 @@
+{
+  "assignment_id": "f9edce56-7db2-429a-8f95-f353f2b8c9f2",
+  "commands": [
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015DB84",
+        "fn_8015DB84",
+        "-o",
+        "reports/GEDE01/objdiff-f9edce56-7db2-429a-8f95-f353f2b8c9f2.json",
+        "--format",
+        "json-pretty"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/objdiff-f9edce56-7db2-429a-8f95-f353f2b8c9f2.json\n"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015DB84",
+        "fn_8015DB84",
+        "-o",
+        "reports/GEDE01/objdiff-strict-f9edce56-7db2-429a-8f95-f353f2b8c9f2.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to reports/GEDE01/objdiff-strict-f9edce56-7db2-429a-8f95-f353f2b8c9f2.json\n"
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/obj/game/game_fn_8015DB84.o"
+      ],
+      "exit_code": 0,
+      "output": "\nRelocation section '.rela.text' at offset 0x110 contains 4 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000001c  0000040a R_PPC_REL24            00000000   fn_8015DB74 + 0\n00000060  0000050a R_PPC_REL24            00000000   fn_80228474 + 0\n00000088  0000066d R_PPC_EMB_SDA21        00000000   lbl_80650640 + 0\n000000b4  0000070a R_PPC_REL24            00000000   fn_80228730 + 0\n"
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-objdump",
+        "-dr",
+        "build/GEDE01/obj/game/game_fn_8015DB84.o"
+      ],
+      "exit_code": 0,
+      "output": "\nbuild/GEDE01/obj/game/game_fn_8015DB84.o:     file format elf32-powerpc\n\n\nDisassembly of section .text:\n\n00000000 <fn_8015DB84>:\n   0:\t94 21 ff e0 \tstwu    r1,-32(r1)\n   4:\t7c 08 02 a6 \tmflr    r0\n   8:\t90 01 00 24 \tstw     r0,36(r1)\n   c:\t93 e1 00 1c \tstw     r31,28(r1)\n  10:\t93 c1 00 18 \tstw     r30,24(r1)\n  14:\t7c 9e 23 78 \tmr      r30,r4\n  18:\t7c a4 2b 78 \tmr      r4,r5\n  1c:\t48 00 00 01 \tbl      1c <fn_8015DB84+0x1c>\n\t\t\t1c: R_PPC_REL24\tfn_8015DB74\n  20:\t7c 7f 1b 78 \tmr      r31,r3\n  24:\t81 23 00 00 \tlwz     r9,0(r3)\n  28:\t88 69 00 21 \tlbz     r3,33(r9)\n  2c:\t88 09 00 22 \tlbz     r0,34(r9)\n  30:\t7c 03 00 40 \tcmplw   r3,r0\n  34:\t40 82 00 0c \tbne     40 <fn_8015DB84+0x40>\n  38:\t39 40 00 00 \tli      r10,0\n  3c:\t48 00 00 08 \tb       44 <fn_8015DB84+0x44>\n  40:\t39 40 00 01 \tli      r10,1\n  44:\t80 89 00 08 \tlwz     r4,8(r9)\n  48:\t7f c3 f3 78 \tmr      r3,r30\n  4c:\ta0 a9 00 02 \tlhz     r5,2(r9)\n  50:\ta0 c9 00 00 \tlhz     r6,0(r9)\n  54:\t80 e9 00 04 \tlwz     r7,4(r9)\n  58:\t81 09 00 0c \tlwz     r8,12(r9)\n  5c:\t81 29 00 10 \tlwz     r9,16(r9)\n  60:\t48 00 00 01 \tbl      60 <fn_8015DB84+0x60>\n\t\t\t60: R_PPC_REL24\tfn_80228474\n  64:\t80 ff 00 00 \tlwz     r7,0(r31)\n  68:\t3c a0 43 30 \tlis     r5,17200\n  6c:\t90 a1 00 08 \tstw     r5,8(r1)\n  70:\t7f c3 f3 78 \tmr      r3,r30\n  74:\t88 87 00 21 \tlbz     r4,33(r7)\n  78:\t38 c0 00 00 \tli      r6,0\n  7c:\t88 07 00 22 \tlbz     r0,34(r7)\n  80:\t39 00 00 00 \tli      r8,0\n  84:\t90 81 00 0c \tstw     r4,12(r1)\n  88:\tc8 40 00 00 \tlfd     f2,0(0)\n\t\t\t88: R_PPC_EMB_SDA21\tlbl_80650640\n  8c:\tc8 01 00 08 \tlfd     f0,8(r1)\n  90:\t90 01 00 14 \tstw     r0,20(r1)\n  94:\tec 20 10 28 \tfsubs   f1,f0,f2\n  98:\t80 87 00 14 \tlwz     r4,20(r7)\n  9c:\t90 a1 00 10 \tstw     r5,16(r1)\n  a0:\t80 a7 00 18 \tlwz     r5,24(r7)\n  a4:\tc8 01 00 10 \tlfd     f0,16(r1)\n  a8:\tc0 67 00 1c \tlfs     f3,28(r7)\n  ac:\tec 40 10 28 \tfsubs   f2,f0,f2\n  b0:\t88 e7 00 20 \tlbz     r7,32(r7)\n  b4:\t48 00 00 01 \tbl      b4 <fn_8015DB84+0xb4>\n\t\t\tb4: R_PPC_REL24\tfn_80228730\n  b8:\t80 01 00 24 \tlwz     r0,36(r1)\n  bc:\t83 e1 00 1c \tlwz     r31,28(r1)\n  c0:\t83 c1 00 18 \tlwz     r30,24(r1)\n  c4:\t7c 08 03 a6 \tmtlr    r0\n  c8:\t38 21 00 20 \taddi    r1,r1,32\n  cc:\t4e 80 00 20 \tblr\n"
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/src/game/game_fn_8015DB84.o"
+      ],
+      "exit_code": 0,
+      "output": "\nRelocation section '.rela.text' at offset 0x24c contains 4 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000001c  0000040a R_PPC_REL24            00000000   fn_8015DB74 + 0\n00000060  0000050a R_PPC_REL24            00000000   fn_80228474 + 0\n00000088  0000036d R_PPC_EMB_SDA21        00000000   lbl_80650640 + 0\n000000b4  0000060a R_PPC_REL24            00000000   fn_80228730 + 0\n"
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-objdump",
+        "-dr",
+        "build/GEDE01/src/game/game_fn_8015DB84.o"
+      ],
+      "exit_code": 0,
+      "output": "\nbuild/GEDE01/src/game/game_fn_8015DB84.o:     file format elf32-powerpc\n\n\nDisassembly of section .text:\n\n00000000 <fn_8015DB84>:\n   0:\t94 21 ff e0 \tstwu    r1,-32(r1)\n   4:\t7c 08 02 a6 \tmflr    r0\n   8:\t90 01 00 24 \tstw     r0,36(r1)\n   c:\t93 e1 00 1c \tstw     r31,28(r1)\n  10:\t93 c1 00 18 \tstw     r30,24(r1)\n  14:\t7c 9e 23 78 \tmr      r30,r4\n  18:\t7c a4 2b 78 \tmr      r4,r5\n  1c:\t48 00 00 01 \tbl      1c <fn_8015DB84+0x1c>\n\t\t\t1c: R_PPC_REL24\tfn_8015DB74\n  20:\t7c 7f 1b 78 \tmr      r31,r3\n  24:\t81 23 00 00 \tlwz     r9,0(r3)\n  28:\t88 69 00 21 \tlbz     r3,33(r9)\n  2c:\t88 09 00 22 \tlbz     r0,34(r9)\n  30:\t7c 03 00 40 \tcmplw   r3,r0\n  34:\t40 82 00 0c \tbne     40 <fn_8015DB84+0x40>\n  38:\t39 40 00 00 \tli      r10,0\n  3c:\t48 00 00 08 \tb       44 <fn_8015DB84+0x44>\n  40:\t39 40 00 01 \tli      r10,1\n  44:\t80 89 00 08 \tlwz     r4,8(r9)\n  48:\t7f c3 f3 78 \tmr      r3,r30\n  4c:\ta0 a9 00 02 \tlhz     r5,2(r9)\n  50:\ta0 c9 00 00 \tlhz     r6,0(r9)\n  54:\t80 e9 00 04 \tlwz     r7,4(r9)\n  58:\t81 09 00 0c \tlwz     r8,12(r9)\n  5c:\t81 29 00 10 \tlwz     r9,16(r9)\n  60:\t48 00 00 01 \tbl      60 <fn_8015DB84+0x60>\n\t\t\t60: R_PPC_REL24\tfn_80228474\n  64:\t80 ff 00 00 \tlwz     r7,0(r31)\n  68:\t3c a0 43 30 \tlis     r5,17200\n  6c:\t90 a1 00 08 \tstw     r5,8(r1)\n  70:\t7f c3 f3 78 \tmr      r3,r30\n  74:\t88 87 00 21 \tlbz     r4,33(r7)\n  78:\t38 c0 00 00 \tli      r6,0\n  7c:\t88 07 00 22 \tlbz     r0,34(r7)\n  80:\t39 00 00 00 \tli      r8,0\n  84:\t90 81 00 0c \tstw     r4,12(r1)\n  88:\tc8 40 00 00 \tlfd     f2,0(0)\n\t\t\t88: R_PPC_EMB_SDA21\tlbl_80650640\n  8c:\tc8 01 00 08 \tlfd     f0,8(r1)\n  90:\t90 01 00 14 \tstw     r0,20(r1)\n  94:\tec 20 10 28 \tfsubs   f1,f0,f2\n  98:\t80 87 00 14 \tlwz     r4,20(r7)\n  9c:\t90 a1 00 10 \tstw     r5,16(r1)\n  a0:\t80 a7 00 18 \tlwz     r5,24(r7)\n  a4:\tc8 01 00 10 \tlfd     f0,16(r1)\n  a8:\tc0 67 00 1c \tlfs     f3,28(r7)\n  ac:\tec 40 10 28 \tfsubs   f2,f0,f2\n  b0:\t88 e7 00 20 \tlbz     r7,32(r7)\n  b4:\t48 00 00 01 \tbl      b4 <fn_8015DB84+0xb4>\n\t\t\tb4: R_PPC_REL24\tfn_80228730\n  b8:\t80 01 00 24 \tlwz     r0,36(r1)\n  bc:\t83 e1 00 1c \tlwz     r31,28(r1)\n  c0:\t83 c1 00 18 \tlwz     r30,24(r1)\n  c4:\t7c 08 03 a6 \tmtlr    r0\n  c8:\t38 21 00 20 \taddi    r1,r1,32\n  cc:\t4e 80 00 20 \tblr\n"
+    },
+    {
+      "argv": [
+        ".tools/bin/ninja",
+        "-t",
+        "commands",
+        "build/GEDE01/src/game/game_fn_8015DB84.o"
+      ],
+      "exit_code": 0,
+      "output": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_8015DB84.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8015DB84.d build/GEDE01/src/game/game_fn_8015DB84.d\n"
+    },
+    {
+      "argv": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "exit_code": 0,
+      "output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n"
+    },
+    {
+      "argv": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "output": "legal audit passed (20115 tracked project files inspected)\n"
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "canonical_percent": 100.0,
+  "relocation_strict_percent": 100.0,
+  "canonical_and_strict_files_identical": true,
+  "text": {
+    "retail": {
+      "object": "build/GEDE01/obj/game/game_fn_8015DB84.o",
+      "size": 208,
+      "sha256": "75409f0f2515cf54b76d45a300041d1e46ecf302b64bb15b0cb260c6d28ffcfe"
+    },
+    "generated": {
+      "object": "build/GEDE01/src/game/game_fn_8015DB84.o",
+      "size": 208,
+      "sha256": "75409f0f2515cf54b76d45a300041d1e46ecf302b64bb15b0cb260c6d28ffcfe"
+    }
+  },
+  "text_bytes_equal": true,
+  "relocations": [
+    {
+      "offset": "0x1c",
+      "type": "R_PPC_REL24",
+      "target": "fn_8015DB74",
+      "addend": 0
+    },
+    {
+      "offset": "0x60",
+      "type": "R_PPC_REL24",
+      "target": "fn_80228474",
+      "addend": 0
+    },
+    {
+      "offset": "0x88",
+      "type": "R_PPC_EMB_SDA21",
+      "target": "lbl_80650640",
+      "addend": 0
+    },
+    {
+      "offset": "0xb4",
+      "type": "R_PPC_REL24",
+      "target": "fn_80228730",
+      "addend": 0
+    }
+  ],
+  "compiler": "GC/1.3",
+  "compiler_command": "tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_8015DB84.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8015DB84.d build/GEDE01/src/game/game_fn_8015DB84.d",
+  "scope": "Only this function source and its existing configure.py registration changed; splits.txt already supplies the independent TU. No flags or gates changed. Existing normalization updated for emitted @10.",
+  "provenance": {
+    "accepted_base": "826e32243c44b19533cb1dee25f6a2c832b18d32",
+    "preserved_attempt_reviewed": "2e60f928e338ca31ad03ccdf6a6867b8a09e7d1e"
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "full_build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "log": "eternal-darkness-decomp/reports/GEDE01/build-f9edce56-7db2-429a-8f95-f353f2b8c9f2.log",
+    "matching_object_linked": true,
+    "log_note": "Compiler/linker CRLF line endings normalized to LF; output otherwise unchanged."
+  }
+}
