@@ -16,14 +16,16 @@ float fn_8017A5A8(const Vec4* left, const Vec4* right, float limit)
     float result = lbl_80650878;
     float dot = fn_8017A574(left, right);
     float magnitude;
+    float difference = lbl_80650878;
 
     if (dot < lbl_80650860) {
         magnitude = -dot;
     } else {
-        magnitude = dot;
+        magnitude = (double)dot;
     }
 
-    if (lbl_80650878 - magnitude > lbl_806508CC) {
+    difference -= magnitude;
+    if (difference > lbl_806508CC) {
         float random = fn_8003315C();
         if (random > limit) {
             result = limit / random;
