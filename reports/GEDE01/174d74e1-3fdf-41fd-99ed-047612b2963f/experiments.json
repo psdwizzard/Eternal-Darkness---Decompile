@@ -1,0 +1,308 @@
+[
+  {
+    "name": "baseline",
+    "source": "typedef unsigned char u8;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct Entry {\n    u8 state;\n    u8 pad[3];\n    void* data;\n    struct Entry* next;\n} Entry;\n\ntypedef struct Manager {\n    void* data;\n    u16 count;\n    u16 pad;\n    u32 size;\n    Entry* entries;\n    Entry* current;\n    Entry* first;\n    Entry* last;\n} Manager;\n\ntypedef struct BufferState {\n    Manager* managers;\n    Entry* entries;\n    u16 manager_count;\n    u16 entry_count;\n} BufferState;\n\nextern BufferState lbl_8060630C;\nextern void* memset(void*, int, u32);\nextern void fn_8017CF74(Manager*);\n\nvoid* fn_8017CCD8(void* data, u32 size, u32 count)\n{\n    u32 saved_count = count;\n    void* saved_data = data;\n    Manager* manager;\n    u32 saved_size = size;\n\n    manager = lbl_8060630C.managers;\n    memset(saved_data, 0, saved_size * (u16)saved_count);\n    manager->data = saved_data;\n    manager->size = saved_size;\n    manager->count = saved_count;\n    manager->entries = lbl_8060630C.entries;\n    manager->current = lbl_8060630C.entries;\n    manager->first = 0;\n    manager->last = 0;\n    fn_8017CF74(manager);\n\n    lbl_8060630C.managers =\n        (Manager*)((u8*)lbl_8060630C.managers + sizeof(Manager));\n    lbl_8060630C.manager_count++;\n    lbl_8060630C.entries += saved_count & 0xFFFF;\n    lbl_8060630C.entry_count += saved_count;\n    return manager;\n}\n",
+    "runs": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017CCD8.o\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-1",
+          "build/GEDE01/obj/game/game_fn_8017CCD8.o",
+          "-2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o",
+          "fn_8017CCD8",
+          "--format",
+          "json",
+          "-o",
+          "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/baseline.json"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/baseline.json\n"
+      }
+    ],
+    "score": 95.87273,
+    "raw_objdiff": "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/baseline.json"
+  },
+  {
+    "name": "byte-stride",
+    "source": "typedef unsigned char u8;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct Entry {\n    u8 state;\n    u8 pad[3];\n    void* data;\n    struct Entry* next;\n} Entry;\n\ntypedef struct Manager {\n    void* data;\n    u16 count;\n    u16 pad;\n    u32 size;\n    Entry* entries;\n    Entry* current;\n    Entry* first;\n    Entry* last;\n} Manager;\n\ntypedef struct BufferState {\n    Manager* managers;\n    Entry* entries;\n    u16 manager_count;\n    u16 entry_count;\n} BufferState;\n\nextern BufferState lbl_8060630C;\nextern void* memset(void*, int, u32);\nextern void fn_8017CF74(Manager*);\n\nvoid* fn_8017CCD8(void* data, u32 size, u32 count)\n{\n    u32 saved_count = count;\n    void* saved_data = data;\n    Manager* manager;\n    u32 saved_size = size;\n\n    manager = lbl_8060630C.managers;\n    memset(saved_data, 0, saved_size * (u16)saved_count);\n    manager->data = saved_data;\n    manager->size = saved_size;\n    manager->count = saved_count;\n    manager->entries = lbl_8060630C.entries;\n    manager->current = lbl_8060630C.entries;\n    manager->first = 0;\n    manager->last = 0;\n    fn_8017CF74(manager);\n\n    lbl_8060630C.managers =\n        (Manager*)((u8*)lbl_8060630C.managers + sizeof(Manager));\n    lbl_8060630C.manager_count++;\n    lbl_8060630C.entries = (Entry*)((u8*)lbl_8060630C.entries + 12 * (saved_count & 0xFFFF));\n    lbl_8060630C.entry_count += saved_count;\n    return manager;\n}\n",
+    "runs": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017CCD8.o\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-1",
+          "build/GEDE01/obj/game/game_fn_8017CCD8.o",
+          "-2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o",
+          "fn_8017CCD8",
+          "--format",
+          "json",
+          "-o",
+          "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/byte-stride.json"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/byte-stride.json\n"
+      }
+    ],
+    "score": 95.87273,
+    "raw_objdiff": "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/byte-stride.json"
+  },
+  {
+    "name": "byte-stride-signed",
+    "source": "typedef unsigned char u8;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct Entry {\n    u8 state;\n    u8 pad[3];\n    void* data;\n    struct Entry* next;\n} Entry;\n\ntypedef struct Manager {\n    void* data;\n    u16 count;\n    u16 pad;\n    u32 size;\n    Entry* entries;\n    Entry* current;\n    Entry* first;\n    Entry* last;\n} Manager;\n\ntypedef struct BufferState {\n    Manager* managers;\n    Entry* entries;\n    u16 manager_count;\n    u16 entry_count;\n} BufferState;\n\nextern BufferState lbl_8060630C;\nextern void* memset(void*, int, u32);\nextern void fn_8017CF74(Manager*);\n\nvoid* fn_8017CCD8(void* data, u32 size, u32 count)\n{\n    u32 saved_count = count;\n    void* saved_data = data;\n    Manager* manager;\n    u32 saved_size = size;\n\n    manager = lbl_8060630C.managers;\n    memset(saved_data, 0, saved_size * (u16)saved_count);\n    manager->data = saved_data;\n    manager->size = saved_size;\n    manager->count = saved_count;\n    manager->entries = lbl_8060630C.entries;\n    manager->current = lbl_8060630C.entries;\n    manager->first = 0;\n    manager->last = 0;\n    fn_8017CF74(manager);\n\n    lbl_8060630C.managers =\n        (Manager*)((u8*)lbl_8060630C.managers + sizeof(Manager));\n    lbl_8060630C.manager_count++;\n    lbl_8060630C.entries = (Entry*)((u8*)lbl_8060630C.entries + 12 * (int)(saved_count & 0xFFFF));\n    lbl_8060630C.entry_count += saved_count;\n    return manager;\n}\n",
+    "runs": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017CCD8.o\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-1",
+          "build/GEDE01/obj/game/game_fn_8017CCD8.o",
+          "-2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o",
+          "fn_8017CCD8",
+          "--format",
+          "json",
+          "-o",
+          "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/byte-stride-signed.json"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/byte-stride-signed.json\n"
+      }
+    ],
+    "score": 95.87273,
+    "raw_objdiff": "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/byte-stride-signed.json"
+  },
+  {
+    "name": "byte-stride-shift",
+    "source": "typedef unsigned char u8;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct Entry {\n    u8 state;\n    u8 pad[3];\n    void* data;\n    struct Entry* next;\n} Entry;\n\ntypedef struct Manager {\n    void* data;\n    u16 count;\n    u16 pad;\n    u32 size;\n    Entry* entries;\n    Entry* current;\n    Entry* first;\n    Entry* last;\n} Manager;\n\ntypedef struct BufferState {\n    Manager* managers;\n    Entry* entries;\n    u16 manager_count;\n    u16 entry_count;\n} BufferState;\n\nextern BufferState lbl_8060630C;\nextern void* memset(void*, int, u32);\nextern void fn_8017CF74(Manager*);\n\nvoid* fn_8017CCD8(void* data, u32 size, u32 count)\n{\n    u32 saved_count = count;\n    void* saved_data = data;\n    Manager* manager;\n    u32 saved_size = size;\n\n    manager = lbl_8060630C.managers;\n    memset(saved_data, 0, saved_size * (u16)saved_count);\n    manager->data = saved_data;\n    manager->size = saved_size;\n    manager->count = saved_count;\n    manager->entries = lbl_8060630C.entries;\n    manager->current = lbl_8060630C.entries;\n    manager->first = 0;\n    manager->last = 0;\n    fn_8017CF74(manager);\n\n    lbl_8060630C.managers =\n        (Manager*)((u8*)lbl_8060630C.managers + sizeof(Manager));\n    lbl_8060630C.manager_count++;\n    lbl_8060630C.entries = (Entry*)((u8*)lbl_8060630C.entries + ((saved_count & 0xFFFF) << 3) + ((saved_count & 0xFFFF) << 2));\n    lbl_8060630C.entry_count += saved_count;\n    return manager;\n}\n",
+    "runs": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017CCD8.o\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-1",
+          "build/GEDE01/obj/game/game_fn_8017CCD8.o",
+          "-2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o",
+          "fn_8017CCD8",
+          "--format",
+          "json",
+          "-o",
+          "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/byte-stride-shift.json"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/byte-stride-shift.json\n"
+      }
+    ],
+    "score": 86.23637,
+    "raw_objdiff": "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/byte-stride-shift.json"
+  },
+  {
+    "name": "integer-address",
+    "source": "typedef unsigned char u8;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct Entry {\n    u8 state;\n    u8 pad[3];\n    void* data;\n    struct Entry* next;\n} Entry;\n\ntypedef struct Manager {\n    void* data;\n    u16 count;\n    u16 pad;\n    u32 size;\n    Entry* entries;\n    Entry* current;\n    Entry* first;\n    Entry* last;\n} Manager;\n\ntypedef struct BufferState {\n    Manager* managers;\n    Entry* entries;\n    u16 manager_count;\n    u16 entry_count;\n} BufferState;\n\nextern BufferState lbl_8060630C;\nextern void* memset(void*, int, u32);\nextern void fn_8017CF74(Manager*);\n\nvoid* fn_8017CCD8(void* data, u32 size, u32 count)\n{\n    u32 saved_count = count;\n    void* saved_data = data;\n    Manager* manager;\n    u32 saved_size = size;\n\n    manager = lbl_8060630C.managers;\n    memset(saved_data, 0, saved_size * (u16)saved_count);\n    manager->data = saved_data;\n    manager->size = saved_size;\n    manager->count = saved_count;\n    manager->entries = lbl_8060630C.entries;\n    manager->current = lbl_8060630C.entries;\n    manager->first = 0;\n    manager->last = 0;\n    fn_8017CF74(manager);\n\n    lbl_8060630C.managers =\n        (Manager*)((u8*)lbl_8060630C.managers + sizeof(Manager));\n    lbl_8060630C.manager_count++;\n    lbl_8060630C.entries = (Entry*)((u32)lbl_8060630C.entries + 12 * (saved_count & 0xFFFF));\n    lbl_8060630C.entry_count += saved_count;\n    return manager;\n}\n",
+    "runs": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017CCD8.o\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-1",
+          "build/GEDE01/obj/game/game_fn_8017CCD8.o",
+          "-2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o",
+          "fn_8017CCD8",
+          "--format",
+          "json",
+          "-o",
+          "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/integer-address.json"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/integer-address.json\n"
+      }
+    ],
+    "score": 95.87273,
+    "raw_objdiff": "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/integer-address.json"
+  },
+  {
+    "name": "reverse-byte-add",
+    "source": "typedef unsigned char u8;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct Entry {\n    u8 state;\n    u8 pad[3];\n    void* data;\n    struct Entry* next;\n} Entry;\n\ntypedef struct Manager {\n    void* data;\n    u16 count;\n    u16 pad;\n    u32 size;\n    Entry* entries;\n    Entry* current;\n    Entry* first;\n    Entry* last;\n} Manager;\n\ntypedef struct BufferState {\n    Manager* managers;\n    Entry* entries;\n    u16 manager_count;\n    u16 entry_count;\n} BufferState;\n\nextern BufferState lbl_8060630C;\nextern void* memset(void*, int, u32);\nextern void fn_8017CF74(Manager*);\n\nvoid* fn_8017CCD8(void* data, u32 size, u32 count)\n{\n    u32 saved_count = count;\n    void* saved_data = data;\n    Manager* manager;\n    u32 saved_size = size;\n\n    manager = lbl_8060630C.managers;\n    memset(saved_data, 0, saved_size * (u16)saved_count);\n    manager->data = saved_data;\n    manager->size = saved_size;\n    manager->count = saved_count;\n    manager->entries = lbl_8060630C.entries;\n    manager->current = lbl_8060630C.entries;\n    manager->first = 0;\n    manager->last = 0;\n    fn_8017CF74(manager);\n\n    lbl_8060630C.managers =\n        (Manager*)((u8*)lbl_8060630C.managers + sizeof(Manager));\n    lbl_8060630C.manager_count++;\n    lbl_8060630C.entries = (Entry*)(12 * (saved_count & 0xFFFF) + (u8*)lbl_8060630C.entries);\n    lbl_8060630C.entry_count += saved_count;\n    return manager;\n}\n",
+    "runs": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017CCD8.o\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-1",
+          "build/GEDE01/obj/game/game_fn_8017CCD8.o",
+          "-2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o",
+          "fn_8017CCD8",
+          "--format",
+          "json",
+          "-o",
+          "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/reverse-byte-add.json"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/reverse-byte-add.json\n"
+      }
+    ],
+    "score": 95.87273,
+    "raw_objdiff": "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/reverse-byte-add.json"
+  },
+  {
+    "name": "commute-entry-count",
+    "source": "typedef unsigned char u8;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct Entry {\n    u8 state;\n    u8 pad[3];\n    void* data;\n    struct Entry* next;\n} Entry;\n\ntypedef struct Manager {\n    void* data;\n    u16 count;\n    u16 pad;\n    u32 size;\n    Entry* entries;\n    Entry* current;\n    Entry* first;\n    Entry* last;\n} Manager;\n\ntypedef struct BufferState {\n    Manager* managers;\n    Entry* entries;\n    u16 manager_count;\n    u16 entry_count;\n} BufferState;\n\nextern BufferState lbl_8060630C;\nextern void* memset(void*, int, u32);\nextern void fn_8017CF74(Manager*);\n\nvoid* fn_8017CCD8(void* data, u32 size, u32 count)\n{\n    u32 saved_count = count;\n    void* saved_data = data;\n    Manager* manager;\n    u32 saved_size = size;\n\n    manager = lbl_8060630C.managers;\n    memset(saved_data, 0, saved_size * (u16)saved_count);\n    manager->data = saved_data;\n    manager->size = saved_size;\n    manager->count = saved_count;\n    manager->entries = lbl_8060630C.entries;\n    manager->current = lbl_8060630C.entries;\n    manager->first = 0;\n    manager->last = 0;\n    fn_8017CF74(manager);\n\n    lbl_8060630C.managers =\n        (Manager*)((u8*)lbl_8060630C.managers + sizeof(Manager));\n    lbl_8060630C.manager_count++;\n    lbl_8060630C.entries += saved_count & 0xFFFF;\n    lbl_8060630C.entry_count = saved_count + lbl_8060630C.entry_count;\n    return manager;\n}\n",
+    "runs": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017CCD8.o\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-1",
+          "build/GEDE01/obj/game/game_fn_8017CCD8.o",
+          "-2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o",
+          "fn_8017CCD8",
+          "--format",
+          "json",
+          "-o",
+          "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/commute-entry-count.json"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/commute-entry-count.json\n"
+      }
+    ],
+    "score": 95.87273,
+    "raw_objdiff": "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/commute-entry-count.json"
+  },
+  {
+    "name": "signed-entry-count-add",
+    "source": "typedef unsigned char u8;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct Entry {\n    u8 state;\n    u8 pad[3];\n    void* data;\n    struct Entry* next;\n} Entry;\n\ntypedef struct Manager {\n    void* data;\n    u16 count;\n    u16 pad;\n    u32 size;\n    Entry* entries;\n    Entry* current;\n    Entry* first;\n    Entry* last;\n} Manager;\n\ntypedef struct BufferState {\n    Manager* managers;\n    Entry* entries;\n    u16 manager_count;\n    u16 entry_count;\n} BufferState;\n\nextern BufferState lbl_8060630C;\nextern void* memset(void*, int, u32);\nextern void fn_8017CF74(Manager*);\n\nvoid* fn_8017CCD8(void* data, u32 size, u32 count)\n{\n    u32 saved_count = count;\n    void* saved_data = data;\n    Manager* manager;\n    u32 saved_size = size;\n\n    manager = lbl_8060630C.managers;\n    memset(saved_data, 0, saved_size * (u16)saved_count);\n    manager->data = saved_data;\n    manager->size = saved_size;\n    manager->count = saved_count;\n    manager->entries = lbl_8060630C.entries;\n    manager->current = lbl_8060630C.entries;\n    manager->first = 0;\n    manager->last = 0;\n    fn_8017CF74(manager);\n\n    lbl_8060630C.managers =\n        (Manager*)((u8*)lbl_8060630C.managers + sizeof(Manager));\n    lbl_8060630C.manager_count++;\n    lbl_8060630C.entries += saved_count & 0xFFFF;\n    lbl_8060630C.entry_count += (int)saved_count;\n    return manager;\n}\n",
+    "runs": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017CCD8.o\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-1",
+          "build/GEDE01/obj/game/game_fn_8017CCD8.o",
+          "-2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o",
+          "fn_8017CCD8",
+          "--format",
+          "json",
+          "-o",
+          "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/signed-entry-count-add.json"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/signed-entry-count-add.json\n"
+      }
+    ],
+    "score": 95.87273,
+    "raw_objdiff": "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/signed-entry-count-add.json"
+  },
+  {
+    "name": "pointer-manager-increment",
+    "source": "typedef unsigned char u8;\ntypedef unsigned short u16;\ntypedef unsigned int u32;\n\ntypedef struct Entry {\n    u8 state;\n    u8 pad[3];\n    void* data;\n    struct Entry* next;\n} Entry;\n\ntypedef struct Manager {\n    void* data;\n    u16 count;\n    u16 pad;\n    u32 size;\n    Entry* entries;\n    Entry* current;\n    Entry* first;\n    Entry* last;\n} Manager;\n\ntypedef struct BufferState {\n    Manager* managers;\n    Entry* entries;\n    u16 manager_count;\n    u16 entry_count;\n} BufferState;\n\nextern BufferState lbl_8060630C;\nextern void* memset(void*, int, u32);\nextern void fn_8017CF74(Manager*);\n\nvoid* fn_8017CCD8(void* data, u32 size, u32 count)\n{\n    u32 saved_count = count;\n    void* saved_data = data;\n    Manager* manager;\n    u32 saved_size = size;\n\n    manager = lbl_8060630C.managers;\n    memset(saved_data, 0, saved_size * (u16)saved_count);\n    manager->data = saved_data;\n    manager->size = saved_size;\n    manager->count = saved_count;\n    manager->entries = lbl_8060630C.entries;\n    manager->current = lbl_8060630C.entries;\n    manager->first = 0;\n    manager->last = 0;\n    fn_8017CF74(manager);\n\n    lbl_8060630C.managers =\n        lbl_8060630C.managers + 1;\n    lbl_8060630C.manager_count++;\n    lbl_8060630C.entries += saved_count & 0xFFFF;\n    lbl_8060630C.entry_count += saved_count;\n    return manager;\n}\n",
+    "runs": [
+      {
+        "command": [
+          ".tools/bin/ninja",
+          "-j2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o"
+        ],
+        "returncode": 0,
+        "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8017CCD8.o\n"
+      },
+      {
+        "command": [
+          "build/tools/objdiff-cli",
+          "diff",
+          "-1",
+          "build/GEDE01/obj/game/game_fn_8017CCD8.o",
+          "-2",
+          "build/GEDE01/src/game/game_fn_8017CCD8.o",
+          "fn_8017CCD8",
+          "--format",
+          "json",
+          "-o",
+          "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/pointer-manager-increment.json"
+        ],
+        "returncode": 0,
+        "output": " INFO Writing to reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/pointer-manager-increment.json\n"
+      }
+    ],
+    "score": 95.87273,
+    "raw_objdiff": "reports/GEDE01/174d74e1-3fdf-41fd-99ed-047612b2963f/pointer-manager-increment.json"
+  }
+]
