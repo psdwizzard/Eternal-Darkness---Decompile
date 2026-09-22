@@ -1,0 +1,30 @@
+{
+  "compiler": "GC/1.3",
+  "compiler_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+  "commands_cwd": "eternal-darkness-decomp",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801DD200 fn_801DD200 -o reports/GEDE01/objdiff-49ef8a3d-7d75-4d11-be9b-b2b8dd22b88c-canonical.json --format json",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801DD200 fn_801DD200 -c function_reloc_diffs=name_address -o reports/GEDE01/objdiff-49ef8a3d-7d75-4d11-be9b-b2b8dd22b88c.json --format json"
+  ],
+  "build_exit_code": 0,
+  "canonical_match_percent": 100.0,
+  "relocation_strict_match_percent": 100.0,
+  "text_bytes": 1308,
+  "instruction_count": 327,
+  "registration": "Matching; compiler options unchanged",
+  "splits": "Existing independent translation unit already covers 0x801DD200..0x801DD71C; no split changes needed",
+  "source_sha256": "7c0fd85515bb8ad43e369c4218b258776e42c2a023932caa8b78634317c65f32",
+  "scope": "Only assigned source, its configure.py registration, and assignment-specific reports changed. Pre-existing CLAUDE.md edit excluded. No remote push or policy edits.",
+  "dol_sha1_raw": {
+    "command": "sha1sum eternal-darkness-decomp/build/GEDE01/main.dol",
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  eternal-darkness-decomp/build/GEDE01/main.dol\n"
+  },
+  "legal_audit": {
+    "command": "python3 eternal-darkness-decomp/tools/legal_audit.py",
+    "exit_code": 0,
+    "stdout": "legal audit passed (19807 tracked project files inspected)\n"
+  },
+  "build_log_encoding": "Linker CRLF line endings normalized to LF; output content retained."
+}
