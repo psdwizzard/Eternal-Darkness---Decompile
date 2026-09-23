@@ -1,0 +1,78 @@
+--- indexed-cursor
++++ inner-pointers
+@@ -65,6 +65,10 @@
+             f32 center_x;
+             f32 center_y;
+ 
++            Vec3f* point1 = &points.points[1];
++            Vec3f* point2 = &points.points[2];
++            Vec3f* point3 = &points.points[3];
++
+             source0 = initial->points[0];
+             source1 = initial->points[1];
+             source2 = initial->points[2];
+@@ -80,45 +84,45 @@
+             source2.x = extent;
+             source2.y = extent;
+             points.points[0] = source0;
+-            points.points[1] = source1;
+-            points.points[2] = source2;
++            *point1 = source1;
++            *point2 = source2;
+             source3.x = -extent;
+             source3.y = extent;
+-            points.points[3] = source3;
++            *point3 = source3;
+ 
+             value = *(u32*)(entry + 0x48);
+             fn_801A852C(&value, 0, *(u32*)(entry + 0x38), 0x80000000);
+             fn_80211268(matrix, 'z', *(f32*)(entry + 0x40));
+             fn_80211710(matrix, &points.points[0], &points.points[0]);
+-            fn_80211710(matrix, &points.points[1], &points.points[1]);
+-            fn_80211710(matrix, &points.points[2], &points.points[2]);
+-            fn_80211710(matrix, &points.points[3], &points.points[3]);
++            fn_80211710(matrix, point1, point1);
++            fn_80211710(matrix, point2, point2);
++            fn_80211710(matrix, point3, point3);
+ 
+             if (lbl_8064CBA4 == 1) {
+                 points.points[0].x /= lbl_8064DF74;
+-                points.points[1].x /= lbl_8064DF74;
+-                points.points[2].x /= lbl_8064DF74;
+-                points.points[3].x /= lbl_8064DF74;
++                point1->x /= lbl_8064DF74;
++                point2->x /= lbl_8064DF74;
++                point3->x /= lbl_8064DF74;
+             }
+ 
+             points.points[0].x = lbl_8064DF78 * (points.points[0].x + center_x);
+-            points.points[1].x = lbl_8064DF78 * (points.points[1].x + center_x);
+-            points.points[2].x = lbl_8064DF78 * (points.points[2].x + center_x);
+-            points.points[3].x = lbl_8064DF78 * (points.points[3].x + center_x);
++            point1->x = lbl_8064DF78 * (point1->x + center_x);
++            point2->x = lbl_8064DF78 * (point2->x + center_x);
++            point3->x = lbl_8064DF78 * (point3->x + center_x);
+             points.points[0].y = lbl_8064DF78 * (points.points[0].y + center_y);
+-            points.points[1].y = lbl_8064DF78 * (points.points[1].y + center_y);
+-            points.points[2].y = lbl_8064DF78 * (points.points[2].y + center_y);
+-            points.points[3].y = lbl_8064DF78 * (points.points[3].y + center_y);
++            point1->y = lbl_8064DF78 * (point1->y + center_y);
++            point2->y = lbl_8064DF78 * (point2->y + center_y);
++            point3->y = lbl_8064DF78 * (point3->y + center_y);
+ 
+             fn_801ECF50(8);
+             fn_80226AB4(0x80, 2, 4);
+             fn_80026754((s32)points.points[0].x, (s32)points.points[0].y, -0x20);
+             fn_80026744(lbl_8064DF58, lbl_8064DF58);
+-            fn_80026754((s32)points.points[1].x, (s32)points.points[1].y, -0x20);
++            fn_80026754((s32)point1->x, (s32)point1->y, -0x20);
+             fn_80026744(lbl_8064DF64, lbl_8064DF58);
+-            fn_80026754((s32)points.points[2].x, (s32)points.points[2].y, -0x20);
++            fn_80026754((s32)point2->x, (s32)point2->y, -0x20);
+             fn_80026744(lbl_8064DF64, lbl_8064DF64);
+-            fn_80026754((s32)points.points[3].x, (s32)points.points[3].y, -0x20);
++            fn_80026754((s32)point3->x, (s32)point3->y, -0x20);
+             fn_80026744(lbl_8064DF58, lbl_8064DF64);
+             fn_80026740();
+         }
+[1/1] MWCC build/GEDE01/src/game/game_fn_80026320.o

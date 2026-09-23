@@ -1,0 +1,51 @@
+--- indexed-cursor
++++ pointer-x
+@@ -65,6 +65,10 @@
+             f32 center_x;
+             f32 center_y;
+ 
++            Vec3f* point1 = &points.points[1];
++            Vec3f* point2 = &points.points[2];
++            Vec3f* point3 = &points.points[3];
++
+             source0 = initial->points[0];
+             source1 = initial->points[1];
+             source2 = initial->points[2];
+@@ -96,15 +100,15 @@
+ 
+             if (lbl_8064CBA4 == 1) {
+                 points.points[0].x /= lbl_8064DF74;
+-                points.points[1].x /= lbl_8064DF74;
+-                points.points[2].x /= lbl_8064DF74;
+-                points.points[3].x /= lbl_8064DF74;
++                point1->x /= lbl_8064DF74;
++                point2->x /= lbl_8064DF74;
++                point3->x /= lbl_8064DF74;
+             }
+ 
+             points.points[0].x = lbl_8064DF78 * (points.points[0].x + center_x);
+-            points.points[1].x = lbl_8064DF78 * (points.points[1].x + center_x);
+-            points.points[2].x = lbl_8064DF78 * (points.points[2].x + center_x);
+-            points.points[3].x = lbl_8064DF78 * (points.points[3].x + center_x);
++            point1->x = lbl_8064DF78 * (point1->x + center_x);
++            point2->x = lbl_8064DF78 * (point2->x + center_x);
++            point3->x = lbl_8064DF78 * (point3->x + center_x);
+             points.points[0].y = lbl_8064DF78 * (points.points[0].y + center_y);
+             points.points[1].y = lbl_8064DF78 * (points.points[1].y + center_y);
+             points.points[2].y = lbl_8064DF78 * (points.points[2].y + center_y);
+@@ -114,11 +118,11 @@
+             fn_80226AB4(0x80, 2, 4);
+             fn_80026754((s32)points.points[0].x, (s32)points.points[0].y, -0x20);
+             fn_80026744(lbl_8064DF58, lbl_8064DF58);
+-            fn_80026754((s32)points.points[1].x, (s32)points.points[1].y, -0x20);
++            fn_80026754((s32)point1->x, (s32)points.points[1].y, -0x20);
+             fn_80026744(lbl_8064DF64, lbl_8064DF58);
+-            fn_80026754((s32)points.points[2].x, (s32)points.points[2].y, -0x20);
++            fn_80026754((s32)point2->x, (s32)points.points[2].y, -0x20);
+             fn_80026744(lbl_8064DF64, lbl_8064DF64);
+-            fn_80026754((s32)points.points[3].x, (s32)points.points[3].y, -0x20);
++            fn_80026754((s32)point3->x, (s32)points.points[3].y, -0x20);
+             fn_80026744(lbl_8064DF58, lbl_8064DF64);
+             fn_80026740();
+         }
+[1/1] MWCC build/GEDE01/src/game/game_fn_80026320.o

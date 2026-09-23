@@ -1,0 +1,82 @@
+--- indexed-cursor
++++ output-pointer
+@@ -57,6 +57,7 @@
+             s32 extent = *(s32*)(entry + 0x34);
+             u32 value;
+             Quad points;
++            Vec3f* output = points.points;
+             Vec3f source0;
+             Vec3f source1;
+             Vec3f source2;
+@@ -79,46 +80,46 @@
+             source1.y = -extent;
+             source2.x = extent;
+             source2.y = extent;
+-            points.points[0] = source0;
+-            points.points[1] = source1;
+-            points.points[2] = source2;
++            output[0] = source0;
++            output[1] = source1;
++            output[2] = source2;
+             source3.x = -extent;
+             source3.y = extent;
+-            points.points[3] = source3;
++            output[3] = source3;
+ 
+             value = *(u32*)(entry + 0x48);
+             fn_801A852C(&value, 0, *(u32*)(entry + 0x38), 0x80000000);
+             fn_80211268(matrix, 'z', *(f32*)(entry + 0x40));
+-            fn_80211710(matrix, &points.points[0], &points.points[0]);
+-            fn_80211710(matrix, &points.points[1], &points.points[1]);
+-            fn_80211710(matrix, &points.points[2], &points.points[2]);
+-            fn_80211710(matrix, &points.points[3], &points.points[3]);
++            fn_80211710(matrix, &output[0], &output[0]);
++            fn_80211710(matrix, &output[1], &output[1]);
++            fn_80211710(matrix, &output[2], &output[2]);
++            fn_80211710(matrix, &output[3], &output[3]);
+ 
+             if (lbl_8064CBA4 == 1) {
+-                points.points[0].x /= lbl_8064DF74;
+-                points.points[1].x /= lbl_8064DF74;
+-                points.points[2].x /= lbl_8064DF74;
+-                points.points[3].x /= lbl_8064DF74;
++                output[0].x /= lbl_8064DF74;
++                output[1].x /= lbl_8064DF74;
++                output[2].x /= lbl_8064DF74;
++                output[3].x /= lbl_8064DF74;
+             }
+ 
+-            points.points[0].x = lbl_8064DF78 * (points.points[0].x + center_x);
+-            points.points[1].x = lbl_8064DF78 * (points.points[1].x + center_x);
+-            points.points[2].x = lbl_8064DF78 * (points.points[2].x + center_x);
+-            points.points[3].x = lbl_8064DF78 * (points.points[3].x + center_x);
+-            points.points[0].y = lbl_8064DF78 * (points.points[0].y + center_y);
+-            points.points[1].y = lbl_8064DF78 * (points.points[1].y + center_y);
+-            points.points[2].y = lbl_8064DF78 * (points.points[2].y + center_y);
+-            points.points[3].y = lbl_8064DF78 * (points.points[3].y + center_y);
++            output[0].x = lbl_8064DF78 * (output[0].x + center_x);
++            output[1].x = lbl_8064DF78 * (output[1].x + center_x);
++            output[2].x = lbl_8064DF78 * (output[2].x + center_x);
++            output[3].x = lbl_8064DF78 * (output[3].x + center_x);
++            output[0].y = lbl_8064DF78 * (output[0].y + center_y);
++            output[1].y = lbl_8064DF78 * (output[1].y + center_y);
++            output[2].y = lbl_8064DF78 * (output[2].y + center_y);
++            output[3].y = lbl_8064DF78 * (output[3].y + center_y);
+ 
+             fn_801ECF50(8);
+             fn_80226AB4(0x80, 2, 4);
+-            fn_80026754((s32)points.points[0].x, (s32)points.points[0].y, -0x20);
++            fn_80026754((s32)output[0].x, (s32)output[0].y, -0x20);
+             fn_80026744(lbl_8064DF58, lbl_8064DF58);
+-            fn_80026754((s32)points.points[1].x, (s32)points.points[1].y, -0x20);
++            fn_80026754((s32)output[1].x, (s32)output[1].y, -0x20);
+             fn_80026744(lbl_8064DF64, lbl_8064DF58);
+-            fn_80026754((s32)points.points[2].x, (s32)points.points[2].y, -0x20);
++            fn_80026754((s32)output[2].x, (s32)output[2].y, -0x20);
+             fn_80026744(lbl_8064DF64, lbl_8064DF64);
+-            fn_80026754((s32)points.points[3].x, (s32)points.points[3].y, -0x20);
++            fn_80026754((s32)output[3].x, (s32)output[3].y, -0x20);
+             fn_80026744(lbl_8064DF58, lbl_8064DF64);
+             fn_80026740();
+         }
+[1/1] MWCC build/GEDE01/src/game/game_fn_80026320.o

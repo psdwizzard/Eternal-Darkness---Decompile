@@ -1,0 +1,26 @@
+--- indexed-cursor
++++ vector-initializers
+@@ -57,18 +57,14 @@
+             s32 extent = *(s32*)(entry + 0x34);
+             u32 value;
+             Quad points;
+-            Vec3f source0;
+-            Vec3f source1;
+-            Vec3f source2;
+-            Vec3f source3;
++            Vec3f source0 = initial->points[0];
++            Vec3f source1 = initial->points[1];
++            Vec3f source2 = initial->points[2];
++            Vec3f source3 = initial->points[3];
+             Mtx matrix;
+             f32 center_x;
+             f32 center_y;
+ 
+-            source0 = initial->points[0];
+-            source1 = initial->points[1];
+-            source2 = initial->points[2];
+-            source3 = initial->points[3];
+ 
+             center_x = *(f32*)(entry + 0x2C);
+             center_y = *(f32*)(entry + 0x30);
+[1/1] MWCC build/GEDE01/src/game/game_fn_80026320.o

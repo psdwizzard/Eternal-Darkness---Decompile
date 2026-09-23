@@ -1,0 +1,27 @@
+--- indexed-cursor
++++ vector-source-pointer
+@@ -47,7 +47,7 @@
+ {
+     s32 i;
+     u8* entry;
+-    const Quad* initial = &lbl_80238BF8;
++    const Vec3f* initial = lbl_80238BF8.points;
+ 
+     fn_80225F4C(13, lbl_802515D0, 4);
+ 
+@@ -65,10 +65,10 @@
+             f32 center_x;
+             f32 center_y;
+ 
+-            source0 = initial->points[0];
+-            source1 = initial->points[1];
+-            source2 = initial->points[2];
+-            source3 = initial->points[3];
++            source0 = initial[0];
++            source1 = initial[1];
++            source2 = initial[2];
++            source3 = initial[3];
+ 
+             center_x = *(f32*)(entry + 0x2C);
+             center_y = *(f32*)(entry + 0x30);
+[1/1] MWCC build/GEDE01/src/game/game_fn_80026320.o

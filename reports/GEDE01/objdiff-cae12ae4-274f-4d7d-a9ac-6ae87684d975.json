@@ -1,0 +1,242 @@
+{
+  "version": 1,
+  "assignment_id": "cae12ae4-274f-4d7d-a9ac-6ae87684d975",
+  "attempt": 5,
+  "target": "fn_80026320",
+  "base_commit": "f21f78020bf6f511d343736d3a7b4ce057dc72a4",
+  "status": "attempted",
+  "source": "eternal-darkness-decomp/src/game/game_fn_80026320.c",
+  "source_sha256": "75ab5566218950826b32af4dc36986402157f7a3a2aa557f86c28bba2a768127",
+  "compiler": {
+    "version": "GC/1.3",
+    "policy": "existing canonical settings unchanged",
+    "unit": {
+      "name": "main/game/game_fn_80026320",
+      "target_path": "build/GEDE01/obj/game/game_fn_80026320.o",
+      "base_path": "build/GEDE01/src/game/game_fn_80026320.o",
+      "scratch": {
+        "platform": "gc_wii",
+        "compiler": "mwcc_242_53",
+        "c_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -DVERSION_GEDE01 -DNDEBUG=1 -lang=c",
+        "ctx_path": "build/GEDE01/src/game/game_fn_80026320.ctx",
+        "build_ctx": true
+      },
+      "metadata": {
+        "complete": false,
+        "reverse_fn_order": false,
+        "source_path": "src/game/game_fn_80026320.c",
+        "progress_categories": [
+          "game"
+        ],
+        "auto_generated": false
+      }
+    }
+  },
+  "preserved_attempts_reviewed": [
+    "598de771009da795165178f5f26278ebe0870599",
+    "0ac45dc52032cfd12fe3be4784f7c3d0c40812bf",
+    "29bad41098a33bad8f7ccd1845e156af01553204",
+    "e8c98e572f1288e56c890d5e22bf54b41ddcf36b"
+  ],
+  "new_hypothesis": "Prior diagnosis of conversion folding was wrong: retail writes eight corner coordinates, while inherited C wrote only seven and had incorrect signs. Restore source1.x=extent, source1.y=-extent, source2.x=extent; read center coordinates before modifying temporaries; index the entry cursor. These semantic and scheduling corrections improve 90.420456% / 1032 bytes to 97.71591% / 1056 bytes.",
+  "retail_corner_evidence": {
+    "source1_x": "positive conversion stored to 0x24(r1), then copied to second vertex x",
+    "source1_y": "negative conversion stored to 0x28(r1), then copied to second vertex y",
+    "source2_x": "positive conversion stored to 0x18(r1), then copied to third vertex x"
+  },
+  "measurements": [
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-all-corners-before-copy.raw.json",
+      "match_percent": 97.71591,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-array-components.raw.json",
+      "match_percent": 97.71591,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-array-early-center.raw.json",
+      "match_percent": 97.29924,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-array.raw.json",
+      "match_percent": 92.454544,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-canonical.raw.json",
+      "match_percent": 97.71591,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-early-center.raw.json",
+      "match_percent": 97.29924,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-explicit-pointers.raw.json",
+      "match_percent": 96.405304,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-hypothesis.raw.json",
+      "match_percent": 92.454544,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-indexed-cursor.raw.json",
+      "match_percent": 97.71591,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-inner-pointers.raw.json",
+      "match_percent": 97.71591,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-outer-quad.raw.json",
+      "match_percent": 97.29924,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-output-pointer.raw.json",
+      "match_percent": 97.71591,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-pointer-arithmetic.raw.json",
+      "match_percent": 97.71591,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-pointer-x.raw.json",
+      "match_percent": 97.71591,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-reloc-strict.raw.json",
+      "match_percent": 97.71591,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-separate-vertices.raw.json",
+      "match_percent": 92.11364,
+      "target_size": 1056,
+      "generated_size": 1044
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-vector-initializers.raw.json",
+      "match_percent": 97.71591,
+      "target_size": 1056,
+      "generated_size": 1056
+    },
+    {
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-vector-source-pointer.raw.json",
+      "match_percent": 97.71591,
+      "target_size": 1056,
+      "generated_size": 1056
+    }
+  ],
+  "relocation_audit": {
+    "method": "readelf -Wr on target and generated ELF, compare offset/type/target/addend",
+    "target_actual_elf_relocations": 32,
+    "generated_actual_elf_relocations": 32,
+    "identical_actual_elf_relocations": 31,
+    "mismatches": [
+      {
+        "offset": "0xc4",
+        "target": [
+          "R_PPC_EMB_SDA21",
+          "lbl_8064DF80",
+          "0"
+        ],
+        "generated": [
+          "R_PPC_EMB_SDA21",
+          "@32",
+          "0"
+        ]
+      }
+    ],
+    "note": "Objdiff additionally synthesizes twelve R_PPC_NONE records for aggregate loads; these are not actual ELF relocation entries.",
+    "objdiff_relocation_rows": {
+      "left": 44,
+      "right": 44
+    }
+  },
+  "divergence": "Canonical and relocation-strict objdiff: 97.71591%; both functions are 1056 bytes. Remaining differences: cursor setup moves from retail offset 0x4c to generated 0x40; aggregate/conversion GPR allocation at 0x64-0x1e0; quad vertices 1-3 use r1-relative accesses instead of r29/r28/r27-relative accesses. At offset 0xc4, R_PPC_EMB_SDA21 targets retail lbl_8064DF80 versus generated @32 (both addends zero). The eight corner conversions and subsequent float-to-int temporary stack slots now agree.",
+  "build": {
+    "commands": [
+      [
+        ".tools/bin/ninja",
+        "-j2"
+      ],
+      [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_80026320.o"
+      ],
+      [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80026320",
+        "fn_80026320",
+        "-o",
+        "reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-canonical.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80026320",
+        "fn_80026320",
+        "-o",
+        "reports/GEDE01/objdiff-cae12ae4-274f-4d7d-a9ac-6ae87684d975-reloc-strict.raw.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ]
+    ],
+    "all_exit_codes": 0,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "limitation": "Function remains NonMatching and is excluded from linked DOL; DOL verification validates the existing link gate, not candidate equivalence."
+  },
+  "legal_audit": {
+    "independent_C_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "new_compiler_flags_or_policy": false,
+    "shared_reconstruction": false,
+    "neighbor_function_changes": false,
+    "registration": "Existing NonMatching registration and 0x80026320-0x80026740 split retained",
+    "scope": "Only target C source and assignment-specific reports changed; pre-existing CLAUDE.md modification left unstaged.",
+    "private_inputs_or_binaries_committed": false
+  }
+}

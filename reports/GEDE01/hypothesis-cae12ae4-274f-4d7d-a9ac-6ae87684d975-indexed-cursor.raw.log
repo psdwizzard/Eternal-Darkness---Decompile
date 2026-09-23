@@ -1,0 +1,14 @@
+--- early-center
++++ indexed-cursor
+@@ -51,8 +51,8 @@
+ 
+     fn_80225F4C(13, lbl_802515D0, 4);
+ 
+-    entry = batch->data;
+-    for (i = 0; i < 11; i++, entry += 0x24) {
++    for (i = 0; i < 11; i++) {
++        entry = batch->data + i * 0x24;
+         if (entry[0x4B] != 0) {
+             s32 extent = *(s32*)(entry + 0x34);
+             u32 value;
+[1/1] MWCC build/GEDE01/src/game/game_fn_80026320.o

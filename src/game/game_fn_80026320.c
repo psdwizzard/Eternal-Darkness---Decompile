@@ -40,9 +40,9 @@ extern void fn_80026754(s32, s32, s32);
 extern void fn_80026744(f32, f32);
 extern void fn_80026740(void);
 
-/* NonMatching: behavior-complete reconstruction of the eleven-entry debug
- * quad pass. Retail's aggregate-copy schedule and signed-int conversions keep
- * a different r19-r30/FPR live-range assignment and emit 24 additional bytes. */
+/* NonMatching: the eight signed corner assignments and conversion stack
+ * slots agree with retail. Remaining differences are GPR allocation, quad
+ * addressing, cursor setup order, and the compiler-generated bias symbol. */
 void fn_80026320(BatchEntry* batch)
 {
     s32 i;
@@ -51,8 +51,8 @@ void fn_80026320(BatchEntry* batch)
 
     fn_80225F4C(13, lbl_802515D0, 4);
 
-    entry = batch->data;
-    for (i = 0; i < 11; i++, entry += 0x24) {
+    for (i = 0; i < 11; i++) {
+        entry = batch->data + i * 0x24;
         if (entry[0x4B] != 0) {
             s32 extent = *(s32*)(entry + 0x34);
             u32 value;
@@ -70,10 +70,14 @@ void fn_80026320(BatchEntry* batch)
             source2 = initial->points[2];
             source3 = initial->points[3];
 
+            center_x = *(f32*)(entry + 0x2C);
+            center_y = *(f32*)(entry + 0x30);
+
             source0.x = -extent;
             source0.y = -extent;
-            source1.y = extent;
-            source2.x = -extent;
+            source1.x = extent;
+            source1.y = -extent;
+            source2.x = extent;
             source2.y = extent;
             points.points[0] = source0;
             points.points[1] = source1;
@@ -81,8 +85,6 @@ void fn_80026320(BatchEntry* batch)
             source3.x = -extent;
             source3.y = extent;
             points.points[3] = source3;
-            center_x = *(f32*)(entry + 0x2C);
-            center_y = *(f32*)(entry + 0x30);
 
             value = *(u32*)(entry + 0x48);
             fn_801A852C(&value, 0, *(u32*)(entry + 0x38), 0x80000000);
