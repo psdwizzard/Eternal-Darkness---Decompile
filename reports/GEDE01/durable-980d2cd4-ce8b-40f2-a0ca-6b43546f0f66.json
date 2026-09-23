@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "980d2cd4-ce8b-40f2-a0ca-6b43546f0f66",
+  "attempt": 3,
+  "base_commit": "c129bc918c5de71cb8c3adb503e18c49344caa8b",
+  "target": "fn_8011EE04",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-980d2cd4-ce8b-40f2-a0ca-6b43546f0f66.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-980d2cd4-ce8b-40f2-a0ca-6b43546f0f66.json",
+    "eternal-darkness-decomp/reports/GEDE01/report-980d2cd4-ce8b-40f2-a0ca-6b43546f0f66.json"
+  ],
+  "divergence": "Canonical project-report fuzzy_match_percent is 91.12572%; raw per-symbol diff match_percent is 90.48% on both canonical and relocation-strict bases, with equal 700-byte code size and 33 relocations per side. Two strict R_PPC_EMB_SDA21 unsigned-conversion relocations remain retail lbl_80650078 versus generated compiler-local @35. Remaining instruction differences are scheduling/register allocation around the lbl_8023A680 vector copy and fn_8011F890 setup, post-call scalar initialization, and late byte-field stores. Attempt 3 tested a distinct typed three-word aggregate-copy hypothesis for lbl_8023A680; MWCC emitted byte-identical code at the same 90.48%, so that no-benefit source churn was not retained. The retained source uses the established fn_80120AD0 argument order (object, null position, 100, 522, lbl_80650070, lbl_80650068). Full build passed; retail and rebuilt DOL SHA-1 are both ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
