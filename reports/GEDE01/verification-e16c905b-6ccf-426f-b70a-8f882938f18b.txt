@@ -1,0 +1,38 @@
+COMMAND python3 configure.py
+EXIT 0
+
+COMMAND .tools/bin/ninja -j2
+EXIT 0
+OUTPUT build/GEDE01/main.dol: OK
+
+COMMAND sha1sum orig/GEDE01/sys/main.dol build/GEDE01/main.dol
+ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol
+ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol
+
+COMMAND build/tools/objdiff-cli diff -p . -u main/game/game_fn_80154F74 --format json-pretty -o reports/GEDE01/objdiff-e16c905b-6ccf-426f-b70a-8f882938f18b.json fn_80154F74
+EXIT 0
+RAW_OUTPUT_FILE reports/GEDE01/objdiff-e16c905b-6ccf-426f-b70a-8f882938f18b.json
+
+COMMAND jq '{left_sections:.left.sections,right_sections:.right.sections,left_symbol:(.left.symbols[0]|{size,match_percent}),right_symbol:(.right.symbols[0]|{size,match_percent})}' reports/GEDE01/objdiff-e16c905b-6ccf-426f-b70a-8f882938f18b.json
+{
+  "left_sections": [
+    {"name":".text","kind":"SECTION_CODE","size":"340","match_percent":92.89412},
+    {"name":".rela.text","size":"72"},
+    {"name":".symtab","size":"128"},
+    {"name":".strtab","size":"81"},
+    {"name":".shstrtab","size":"38"}
+  ],
+  "right_sections": [
+    {"name":".text","kind":"SECTION_CODE","size":"340"},
+    {"name":".rela.text","size":"72"},
+    {"name":".ignored","size":"116"},
+    {"name":".symtab","size":"128"},
+    {"name":".strtab","size":"81"},
+    {"name":".shstrtab","size":"47"}
+  ],
+  "left_symbol":{"size":"340","match_percent":92.89412},
+  "right_symbol":{"size":"340","match_percent":92.89412}
+}
+
+REJECTED_HYPOTHESIS_RAW_OUTPUT_FILE reports/GEDE01/experiment-e16c905b-6ccf-426f-b70a-8f882938f18b.json
+REJECTED_HYPOTHESIS_RESULT target .text 340 bytes, candidate .text 336 bytes, match_percent 85.94118, .rela.text 72 bytes on both sides

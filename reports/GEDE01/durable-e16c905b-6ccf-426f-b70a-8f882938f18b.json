@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "e16c905b-6ccf-426f-b70a-8f882938f18b",
+  "attempt": 4,
+  "base_commit": "1955ac0efd3bf7224a0aabffc01a4170cb1d50bf",
+  "target": "fn_80154F74",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-e16c905b-6ccf-426f-b70a-8f882938f18b.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-e16c905b-6ccf-426f-b70a-8f882938f18b.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-e16c905b-6ccf-426f-b70a-8f882938f18b.txt"
+  ],
+  "divergence": "Relocation-strict objdiff is 92.89412% with exact 340/340-byte .text, equal 72-byte .rela.text sections, and all six relocation types, targets, and zero addends equal. Retail saves r26-r31, anchors r31 at &batch.entries, and keeps the u16 loop index in r9; canonical GC/1.3 saves r27-r31, recomputes the indexed-store base in volatile registers, and keeps the index in r4, shifting the first recursive call from target +0xd8 to candidate +0xdc. The distinct flat-Batch standalone &batch.entries pointer hypothesis forced the retail six-register prologue/base lifetime but made MWCC reorder the index_count/store sequence and emit 336 bytes at 85.94118%, so the stronger preserved candidate remains."
+}
