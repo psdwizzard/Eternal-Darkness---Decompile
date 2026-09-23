@@ -1,0 +1,83 @@
+[
+  {
+    "name": "register-parameter",
+    "score": 98.139534,
+    "size": "1376",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80151D00.o\n",
+    "diff_output": " INFO Writing to reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-register-parameter.raw.json\n",
+    "patch": "--- \n+++ \n@@ -66,10 +66,10 @@\n extern void fn_80199E18(void);\n extern void fn_8014F700(Vec3f*, s16, void*);\n extern void fn_80149E28(void*);\n-void fn_80151D00(u8* arg)\n+void fn_80151D00(register u8* instance)\n {\n-    u8* work = arg + 8;\n-    u8* instance = arg;\n+    u8* work = instance + 8;\n+    u8* arg;\n     Vec3f position0;\n     Vec3f position1;\n     u8 key0[8];\n",
+    "diff_output_note": "The temporary trial dump was discarded; score/size are derived measurements, not raw objdiff JSON. Final canonical and strict dumps are retained separately."
+  },
+  {
+    "name": "register-all",
+    "score": 98.139534,
+    "size": "1376",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80151D00.o\n",
+    "diff_output": " INFO Writing to reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-register-all.raw.json\n",
+    "patch": "--- \n+++ \n@@ -66,10 +66,10 @@\n extern void fn_80199E18(void);\n extern void fn_8014F700(Vec3f*, s16, void*);\n extern void fn_80149E28(void*);\n-void fn_80151D00(u8* arg)\n+void fn_80151D00(register u8* instance)\n {\n-    u8* work = arg + 8;\n-    u8* instance = arg;\n+    register u8* work = instance + 8;\n+    register u8* arg;\n     Vec3f position0;\n     Vec3f position1;\n     u8 key0[8];\n",
+    "diff_output_note": "The temporary trial dump was discarded; score/size are derived measurements, not raw objdiff JSON. Final canonical and strict dumps are retained separately."
+  },
+  {
+    "name": "register-scoped",
+    "score": 97.325584,
+    "size": "1376",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80151D00.o\n",
+    "diff_output": " INFO Writing to reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-register-scoped.raw.json\n",
+    "patch": "--- \n+++ \n@@ -66,10 +66,9 @@\n extern void fn_80199E18(void);\n extern void fn_8014F700(Vec3f*, s16, void*);\n extern void fn_80149E28(void*);\n-void fn_80151D00(u8* arg)\n+void fn_80151D00(register u8* instance)\n {\n-    u8* work = arg + 8;\n-    u8* instance = arg;\n+    u8* work = instance + 8;\n     Vec3f position0;\n     Vec3f position1;\n     u8 key0[8];\n@@ -109,7 +108,7 @@\n         descriptor.field28 = 1;\n         position1 = *(Vec3f*)(work + 0x2C);\n         if (fn_80148008(&position1, key0, &descriptor, fn_8019ADE4) != 0) {\n-            arg = fn_80156938();\n+            register u8* arg = fn_80156938();\n             fn_8017FF1C(arg, 2);\n             fn_8017FE1C(arg, fn_8018B058);\n             *(void**)(work + 0x254) = arg;\n@@ -136,6 +135,7 @@\n                      *(u32*)(work + 0x24), amount, optional,\n                      *(u16*)(work + 0x0A));\n     } else if (FRAME == END + 10 && *(s32*)work == 0) {\n+        register u8* arg;\n         Vec3s* object_position;\n         *(u32*)key1 = lbl_80651C40;\n         *(u16*)(key1 + 4) = lbl_80651C44;\n@@ -158,6 +158,7 @@\n \n     if (*(s32*)(instance + 0x1324) == lbl_8064D18C) {\n         if (FRAME == 0) {\n+            register u8* arg;\n             *(u32*)key2 = lbl_80651C48;\n             *(u16*)(key2 + 4) = lbl_80651C4C;\n             arg = work + 0x44;\n",
+    "diff_output_note": "The temporary trial dump was discarded; score/size are derived measurements, not raw objdiff JSON. Final canonical and strict dumps are retained separately."
+  },
+  {
+    "name": "work-snapshot",
+    "score": 97.601746,
+    "size": "1380",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80151D00.o\n",
+    "diff_output": " INFO Writing to reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-work-snapshot.raw.json\n",
+    "patch": "--- \n+++ \n@@ -66,10 +66,10 @@\n extern void fn_80199E18(void);\n extern void fn_8014F700(Vec3f*, s16, void*);\n extern void fn_80149E28(void*);\n-void fn_80151D00(u8* arg)\n+void fn_80151D00(u8* instance)\n {\n-    u8* work = arg + 8;\n-    u8* instance = arg;\n+    u8* arg = instance + 8;\n+    u8* work = arg;\n     Vec3f position0;\n     Vec3f position1;\n     u8 key0[8];\n",
+    "diff_output_note": "The temporary trial dump was discarded; score/size are derived measurements, not raw objdiff JSON. Final canonical and strict dumps are retained separately."
+  },
+  {
+    "name": "const-snapshot",
+    "score": 99.02616,
+    "size": "1380",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80151D00.o\n",
+    "diff_output": " INFO Writing to reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-const-snapshot.raw.json\n",
+    "patch": "--- \n+++ \n@@ -69,7 +69,7 @@\n void fn_80151D00(u8* arg)\n {\n     u8* work = arg + 8;\n-    u8* instance = arg;\n+    u8* const instance = arg;\n     Vec3f position0;\n     Vec3f position1;\n     u8 key0[8];\n",
+    "diff_output_note": "The temporary trial dump was discarded; score/size are derived measurements, not raw objdiff JSON. Final canonical and strict dumps are retained separately."
+  },
+  {
+    "name": "typed-instance",
+    "score": 98.139534,
+    "size": "1376",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80151D00.o\n",
+    "diff_output": " INFO Writing to reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-typed-instance.raw.json\n",
+    "patch": "--- \n+++ \n@@ -66,10 +66,12 @@\n extern void fn_80199E18(void);\n extern void fn_8014F700(Vec3f*, s16, void*);\n extern void fn_80149E28(void*);\n-void fn_80151D00(u8* arg)\n+typedef struct Instance { u8 bytes[0x132E]; } Instance;\n+void fn_80151D00(Instance* self)\n {\n-    u8* work = arg + 8;\n-    u8* instance = arg;\n+    u8* work = self->bytes + 8;\n+    u8* instance = self->bytes;\n+    u8* arg;\n     Vec3f position0;\n     Vec3f position1;\n     u8 key0[8];\n",
+    "diff_output_note": "The temporary trial dump was discarded; score/size are derived measurements, not raw objdiff JSON. Final canonical and strict dumps are retained separately."
+  },
+  {
+    "name": "instance-first-shared",
+    "score": 98.139534,
+    "size": "1376",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80151D00.o\n",
+    "diff_output": " INFO Writing to reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-instance-first-shared.raw.json\n",
+    "patch": "--- \n+++ \n@@ -66,10 +66,11 @@\n extern void fn_80199E18(void);\n extern void fn_8014F700(Vec3f*, s16, void*);\n extern void fn_80149E28(void*);\n-void fn_80151D00(u8* arg)\n+void fn_80151D00(u8* input)\n {\n-    u8* work = arg + 8;\n-    u8* instance = arg;\n+    u8* instance = input;\n+    u8* work = instance + 8;\n+    u8* arg;\n     Vec3f position0;\n     Vec3f position1;\n     u8 key0[8];\n",
+    "diff_output_note": "The temporary trial dump was discarded; score/size are derived measurements, not raw objdiff JSON. Final canonical and strict dumps are retained separately."
+  },
+  {
+    "name": "work-first-shared",
+    "score": 98.139534,
+    "size": "1376",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80151D00.o\n",
+    "diff_output": " INFO Writing to reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-work-first-shared.raw.json\n",
+    "patch": "--- \n+++ \n@@ -66,10 +66,11 @@\n extern void fn_80199E18(void);\n extern void fn_8014F700(Vec3f*, s16, void*);\n extern void fn_80149E28(void*);\n-void fn_80151D00(u8* arg)\n+void fn_80151D00(u8* input)\n {\n-    u8* work = arg + 8;\n-    u8* instance = arg;\n+    u8* work = input + 8;\n+    u8* instance = input;\n+    u8* arg;\n     Vec3f position0;\n     Vec3f position1;\n     u8 key0[8];\n",
+    "diff_output_note": "The temporary trial dump was discarded; score/size are derived measurements, not raw objdiff JSON. Final canonical and strict dumps are retained separately."
+  },
+  {
+    "name": "instance-scratch-work",
+    "score": 98.139534,
+    "size": "1376",
+    "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_80151D00.o\n",
+    "diff_output": " INFO Writing to reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-instance-scratch-work.raw.json\n",
+    "patch": "--- \n+++ \n@@ -66,10 +66,11 @@\n extern void fn_80199E18(void);\n extern void fn_8014F700(Vec3f*, s16, void*);\n extern void fn_80149E28(void*);\n-void fn_80151D00(u8* arg)\n+void fn_80151D00(u8* input)\n {\n-    u8* work = arg + 8;\n-    u8* instance = arg;\n+    u8* instance = input;\n+    u8* arg;\n+    u8* work = instance + 8;\n     Vec3f position0;\n     Vec3f position1;\n     u8 key0[8];\n",
+    "diff_output_note": "The temporary trial dump was discarded; score/size are derived measurements, not raw objdiff JSON. Final canonical and strict dumps are retained separately."
+  }
+]

@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "assignment_id": "084dc2e7-c133-48c3-9420-a9579e8e23c6",
+  "target": "fn_80151D00",
+  "canonical_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-canonical.raw.json",
+  "relocation_strict_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-reloc-strict.raw.json",
+  "build_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-build.raw.json",
+  "verification_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-verification.raw.json",
+  "experiments": "eternal-darkness-decomp/reports/GEDE01/objdiff-084dc2e7-c133-48c3-9420-a9579e8e23c6-experiments.json",
+  "canonical": {
+    "match_percent": 99.084305,
+    "retail_bytes": 1376,
+    "generated_bytes": 1380,
+    "diff_counts": {
+      "NONE": 301,
+      "DIFF_INSERT": 1,
+      "DIFF_ARG_MISMATCH": 43
+    }
+  },
+  "relocation_strict": {
+    "config": "function_reloc_diffs=name_address",
+    "raw_report_byte_identical_to_canonical": true
+  },
+  "hypothesis": "Recover a typed 0x94-byte effect descriptor with signed mode, then follow the dependency/store sequence observed in retail: enabled, duration, resource, kind, mode, zero fields, flags, secondary kind, scale, field38, field28. Typed fields alone gave 93.76744%; reordering gave 99.084305% and removed all descriptor scheduling differences.",
+  "prior_reports_reviewed": [
+    "06d2050e-5de1-4e61-a966-5c4148263b2c",
+    "21f52e36-919d-4cda-9f26-d221453390e3",
+    "57ebb005-59f2-43f5-b58a-eb355e26adc6",
+    "95a2ddb5-6adf-4f5d-87f8-aad640407950"
+  ],
+  "prior_diagnosis_correction": "Prior claims of full persistent-register correction were inaccurate: the raw report shows r31/r29 exchange after the first scratch assignment, beyond the extra entry copy.",
+  "source_sha256": "3a1603bb4593fdcad6c8e24de2e6445be91f6872fc6da555b13fdfc31124bacd",
+  "compiler": "GC/1.3; existing canonical flags and -use_lmw_stmw on unchanged",
+  "registration": "NonMatching, unchanged",
+  "divergence": "Canonical and relocation-strict score 99.084305%. Descriptor initialization now matches retail instruction-for-instruction after a +4-byte shift. Generated code remains 1380 versus retail 1376 bytes because of entry mr r29,r31 at generated offset 0x20. After the first scratch assignment, generated instance/scratch use r29/r31 instead of retail r31/r29; 41 register-argument differences plus two constant-target differences remain (43 DIFF_ARG_MISMATCH and one DIFF_INSERT total). All 40 relocation-bearing instructions are shifted by four bytes; the two retail lbl_80650588 targets at 0x2F8 and 0x47C appear as generated @76 at 0x2FC and 0x480. Relocation types and addends agree, but these target names do not. This is NonMatching."
+}

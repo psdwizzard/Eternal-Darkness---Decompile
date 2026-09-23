@@ -12,6 +12,27 @@ typedef struct Vec3s {
     s16 z;
 } Vec3s;
 
+typedef struct EffectDescriptor {
+    u8 unknown0;
+    u8 enabled;
+    u8 kind;
+    s8 mode;
+    s16 resource;
+    u16 duration;
+    u8 unknown08[0x0E];
+    u8 flags;
+    u8 kind2;
+    u8 unknown18[4];
+    u32 field1C;
+    u32 field20;
+    u32 field24;
+    u32 field28;
+    u8 unknown2C[8];
+    float scale;
+    u32 field38;
+    u8 unknown3C[0x58];
+} EffectDescriptor;
+
 #define FRAME (*(u16*)(instance + 0x132C))
 #define END (*(u16*)(work + 0x12))
 
@@ -55,7 +76,7 @@ void fn_80151D00(u8* arg)
     u8 key1[8];
     u8 key2[8];
     u32 effect_key;
-    u8 descriptor[0x94];
+    EffectDescriptor descriptor;
 
     if (*(s32*)(instance + 8) != 0 && *(s32*)(work + 4) == 0) {
         *(u16*)(work + 0x18) = *(u16*)(instance + 0x132C) + *(u16*)(work + 0x16);
@@ -73,21 +94,21 @@ void fn_80151D00(u8* arg)
     if (FRAME == END - 60) {
         *(u32*)key0 = lbl_80651C38;
         *(u16*)(key0 + 4) = lbl_80651C3C;
-        fn_8019B13C(descriptor);
-        descriptor[1] = 1;
-        descriptor[2] = 0xF5;
-        descriptor[3] = (u8)-7;
-        *(u16*)(descriptor + 4) = *(s16*)(work + 0x0E);
-        *(u16*)(descriptor + 6) = *(u16*)(work + 0x18) - END + 20;
-        descriptor[0x16] = 7;
-        descriptor[0x17] = 0xF5;
-        *(u32*)(descriptor + 0x1C) = 0;
-        *(u32*)(descriptor + 0x20) = 0;
-        *(u32*)(descriptor + 0x28) = 1;
-        *(float*)(descriptor + 0x34) = lbl_80650584;
-        *(u32*)(descriptor + 0x38) = *(u32*)(work + 0x24);
+        fn_8019B13C(&descriptor);
+        descriptor.enabled = 1;
+        descriptor.duration = *(u16*)(work + 0x18) - END + 20;
+        descriptor.resource = *(s16*)(work + 0x0E);
+        descriptor.kind = 0xF5;
+        descriptor.mode = -7;
+        descriptor.field1C = 0;
+        descriptor.field20 = 0;
+        descriptor.flags = 7;
+        descriptor.kind2 = 0xF5;
+        descriptor.scale = lbl_80650584;
+        descriptor.field38 = *(u32*)(work + 0x24);
+        descriptor.field28 = 1;
         position1 = *(Vec3f*)(work + 0x2C);
-        if (fn_80148008(&position1, key0, descriptor, fn_8019ADE4) != 0) {
+        if (fn_80148008(&position1, key0, &descriptor, fn_8019ADE4) != 0) {
             arg = fn_80156938();
             fn_8017FF1C(arg, 2);
             fn_8017FE1C(arg, fn_8018B058);
