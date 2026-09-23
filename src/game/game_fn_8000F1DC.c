@@ -30,8 +30,9 @@ s32 fn_8000F1DC(void* script)
     void* script_reg;
     s32 arg2;
     s32 arg1;
-    s32 arg4 = 0;
-    s32 arg3 = 0;
+    s32 arg4;
+    s32 arg3;
+    s32 arg_count;
     void* entity;
     Object* object;
     ObjectData* data;
@@ -41,7 +42,10 @@ s32 fn_8000F1DC(void* script)
     u32 flags;
 
     script_reg = script;
-    switch (fn_8016A598(script_reg)) {
+    arg4 = 0;
+    arg_count = fn_8016A598(script_reg);
+    arg3 = 0;
+    switch (arg_count) {
     case 2:
         arg1 = (s32)fn_8016A694(script_reg, 1);
         arg2 = (s32)fn_8016A694(script_reg, 2);
@@ -69,10 +73,10 @@ s32 fn_8000F1DC(void* script)
         data->y = y;
         data->value = arg4;
         flags = fn_80036D5C(entity);
-        if (arg3 != 0) {
-            flags = (flags | 0x8000) & ~0x80;
-        } else {
+        if (arg3 == 0) {
             flags = (flags | 0x80) & ~0x8000;
+        } else {
+            flags = (flags | 0x8000) & ~0x80;
         }
         fn_80036DA4(entity, flags);
     }
