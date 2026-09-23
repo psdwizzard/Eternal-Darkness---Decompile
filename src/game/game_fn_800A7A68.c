@@ -44,6 +44,8 @@ extern void fn_80204230(void);
 extern void fn_802042A4(void);
 extern char lbl_8031D790[];
 
+enum Kind { KindInvalid = -1, KindFour = 4 };
+
 int fn_800A7A68(void* context, void* object)
 {
     State* state = fn_80201B8C(context);
@@ -73,48 +75,61 @@ int fn_800A7A68(void* context, void* object)
             void* targetData = fn_80201BC8(targetObject);
             fn_8011F114(&targetPosition, targetData);
         }
-        found = fn_801294DC(object, 4, 0, 6);
-        if (found != 0) {
-            effect = fn_801A717C();
-            first = 1;
-            actor = fn_80072354(state->field90);
-            fn_801A7460(effect, 4);
-            fn_801A74A0(effect, owner);
-            fn_801A74A8(effect, target);
-            fn_801A74C8(effect, 1);
-            fn_801A7560(effect, 0x8244);
-            callbackIndex = 0;
-            fn_801A7538(effect, *((u8*)actor + (((unsigned)callbackIndex >> 28) & 8) + 0x2B));
-            fn_801A7518(effect, 5);
-            fn_801A7550(effect, 12);
-            fn_801A7558(effect, 7);
-            fn_801A764C(effect, &copy);
-            fn_801A7598(effect, 450);
-            fn_801292E0(object, &count, &entries);
-            for (index = 0; index < count; index++) {
-                Entry* entry = &entries[index];
-                int callback;
-                if (entry->kind != 1) continue;
-                callback = entry->value >> 17;
-                if (first) {
-                    first = 0;
-                    fn_801287C4(found, fn_8003B8A0, effect, callback);
-                    if (fn_80201C2C(context) != 0 && fn_80205288(context) != 0) {
-                        void* link = fn_80201C24();
-                        fn_801A7680(effect, link);
-                        fn_801A7478(effect, lbl_8031D790);
-                        fn_80129334(object, 1, &callbackIndex, -1);
-                        fn_801287C4(found, fn_800C3ADC, effect, callbackIndex - 1);
+        {
+            /* Keep enum conversions: MWCC retains the constant-kind guard. */
+            enum Kind kind = 4;
+            if (kind != -1) {
+                found = fn_801294DC(object, 4, 0, 6);
+                if (found != 0) {
+                    effect = fn_801A717C();
+                    first = 1;
+                    actor = fn_80072354(state->field90);
+                    fn_801A7460(effect, 4);
+                    fn_801A74A0(effect, owner);
+                    fn_801A74A8(effect, target);
+                    fn_801A74C8(effect, 1);
+                    fn_801A7560(effect, 0x8244);
+                    {
+                        enum Kind selector = 0;
+                        unsigned offset = ((unsigned)selector >> 28) & 8;
+                        u8* fields;
+                        /* The sign bit selects the alternate field eight bytes later. */
+                        fields = actor;
+                        fields += offset;
+                        fn_801A7538(effect, fields[0x2B]);
                     }
-                } else {
-                    fn_801287C4(found, fn_8003BD48, effect, callback);
+                    fn_801A7518(effect, 5);
+                    fn_801A7550(effect, 12);
+                    fn_801A7558(effect, 7);
+                    fn_801A764C(effect, &copy);
+                    fn_801A7598(effect, 450);
+                    fn_801292E0(object, &count, &entries);
+                    for (index = 0; index < count; index++) {
+                        Entry* entry = &entries[index];
+                        int callback;
+                        if (entry->kind != 1) continue;
+                        callback = entry->value >> 17;
+                        if (first) {
+                            first = 0;
+                            fn_801287C4(found, fn_8003B8A0, effect, callback);
+                            if (fn_80201C2C(context) != 0 && fn_80205288(context) != 0) {
+                                void* link = fn_80201C24();
+                                fn_801A7680(effect, link);
+                                fn_801A7478(effect, lbl_8031D790);
+                                fn_80129334(object, 1, &callbackIndex, -1);
+                                fn_801287C4(found, fn_800C3ADC, effect, callbackIndex - 1);
+                            }
+                        } else {
+                            fn_801287C4(found, fn_8003BD48, effect, callback);
+                        }
+                    }
+                    fn_80128C28(found, fn_80204230, effect);
+                    fn_80128C44(found, fn_802042A4, effect);
+                    fn_80201D2C(context, 6);
+                    fn_80201D14(context, 1);
+                    return 1;
                 }
             }
-            fn_80128C28(found, fn_80204230, effect);
-            fn_80128C44(found, fn_802042A4, effect);
-            fn_80201D2C(context, 6);
-            fn_80201D14(context, 1);
-            return 1;
         }
     }
     return 0;

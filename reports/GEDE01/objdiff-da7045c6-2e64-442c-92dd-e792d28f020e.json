@@ -1,0 +1,2343 @@
+{
+  "version": 1,
+  "assignment_id": "da7045c6-2e64-442c-92dd-e792d28f020e",
+  "target": "fn_800A7A68",
+  "hypothesis_and_result": "Enum-typed constant locals inhibit early scalar constant folding in canonical MWCC GC/1.3. They retain both the kind guard and sign-bit extract. A separately assigned and incremented byte pointer recovers the retail add/lbz sequence. The final independent C translation unit contains no helper functions or assembly.",
+  "compiler_command": "tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_800A7A68.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_800A7A68.d build/GEDE01/src/game/game_fn_800A7A68.d",
+  "compiler_sha1": {
+    "command": "sha1sum compilers/GC/1.3/mwcceppc.exe",
+    "exit_code": 0,
+    "stdout": "b18d7887262e6b591c146c9dc4f58a4be7c0e939  compilers/GC/1.3/mwcceppc.exe\n",
+    "stderr": ""
+  },
+  "objdiff_version": {
+    "command": "build/tools/objdiff-cli --version",
+    "exit_code": 0,
+    "stdout": "objdiff-cli 3.6.1\n",
+    "stderr": ""
+  },
+  "measurements": {
+    "canonical": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A7A68 fn_800A7A68 --format json -o -",
+      "exit_code": 0,
+      "stderr": "",
+      "raw_metadata_json": "{\"left\":{\"sections\":[{\"name\":\".text\",\"kind\":\"SECTION_CODE\",\"size\":\"716\",\"match_percent\":100.0},{\"name\":\".rela.text\",\"size\":\"588\"},{\"name\":\".symtab\",\"size\":\"704\"},{\"name\":\".strtab\",\"size\":\"513\"},{\"name\":\".shstrtab\",\"size\":\"38\"}],\"symbols\":[{\"name\":\"fn_800A7A68\",\"size\":\"716\",\"flags\":1,\"target_symbol\":1,\"match_percent\":100.0}]},\"right\":{\"sections\":[{\"name\":\".text\",\"kind\":\"SECTION_CODE\",\"size\":\"716\"},{\"name\":\".rela.text\",\"size\":\"588\"},{\"name\":\".symtab\",\"size\":\"704\"},{\"name\":\".strtab\",\"size\":\"513\"},{\"name\":\".shstrtab\",\"size\":\"53\"},{\"name\":\".comment\",\"size\":\"396\"}],\"symbols\":[{\"name\":\"fn_800A7A68\",\"size\":\"716\",\"flags\":1,\"target_symbol\":1,\"match_percent\":100.0}]}}",
+      "metadata_projection": "Preserve all raw sections and symbols; omit only instruction arrays to avoid distributing generated disassembly.",
+      "instruction_counts": {
+        "left": 179,
+        "right": 179
+      }
+    },
+    "name_address": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A7A68 fn_800A7A68 --format json -o - -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "stderr": "",
+      "raw_metadata_json": "{\"left\":{\"sections\":[{\"name\":\".text\",\"kind\":\"SECTION_CODE\",\"size\":\"716\",\"match_percent\":100.0},{\"name\":\".rela.text\",\"size\":\"588\"},{\"name\":\".symtab\",\"size\":\"704\"},{\"name\":\".strtab\",\"size\":\"513\"},{\"name\":\".shstrtab\",\"size\":\"38\"}],\"symbols\":[{\"name\":\"fn_800A7A68\",\"size\":\"716\",\"flags\":1,\"target_symbol\":1,\"match_percent\":100.0}]},\"right\":{\"sections\":[{\"name\":\".text\",\"kind\":\"SECTION_CODE\",\"size\":\"716\"},{\"name\":\".rela.text\",\"size\":\"588\"},{\"name\":\".symtab\",\"size\":\"704\"},{\"name\":\".strtab\",\"size\":\"513\"},{\"name\":\".shstrtab\",\"size\":\"53\"},{\"name\":\".comment\",\"size\":\"396\"}],\"symbols\":[{\"name\":\"fn_800A7A68\",\"size\":\"716\",\"flags\":1,\"target_symbol\":1,\"match_percent\":100.0}]}}",
+      "metadata_projection": "Preserve all raw sections and symbols; omit only instruction arrays to avoid distributing generated disassembly.",
+      "instruction_counts": {
+        "left": 179,
+        "right": 179
+      }
+    },
+    "relocation_strict": {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800A7A68 fn_800A7A68 --format json -o - -c function_reloc_diffs=all",
+      "exit_code": 0,
+      "stderr": "",
+      "raw_metadata_json": "{\"left\":{\"sections\":[{\"name\":\".text\",\"kind\":\"SECTION_CODE\",\"size\":\"716\",\"match_percent\":100.0},{\"name\":\".rela.text\",\"size\":\"588\"},{\"name\":\".symtab\",\"size\":\"704\"},{\"name\":\".strtab\",\"size\":\"513\"},{\"name\":\".shstrtab\",\"size\":\"38\"}],\"symbols\":[{\"name\":\"fn_800A7A68\",\"size\":\"716\",\"flags\":1,\"target_symbol\":1,\"match_percent\":100.0}]},\"right\":{\"sections\":[{\"name\":\".text\",\"kind\":\"SECTION_CODE\",\"size\":\"716\"},{\"name\":\".rela.text\",\"size\":\"588\"},{\"name\":\".symtab\",\"size\":\"704\"},{\"name\":\".strtab\",\"size\":\"513\"},{\"name\":\".shstrtab\",\"size\":\"53\"},{\"name\":\".comment\",\"size\":\"396\"}],\"symbols\":[{\"name\":\"fn_800A7A68\",\"size\":\"716\",\"flags\":1,\"target_symbol\":1,\"match_percent\":100.0}]}}",
+      "metadata_projection": "Preserve all raw sections and symbols; omit only instruction arrays to avoid distributing generated disassembly.",
+      "instruction_counts": {
+        "left": 179,
+        "right": 179
+      }
+    }
+  },
+  "relocations": {
+    "retail": {
+      "command": "readelf -rW build/GEDE01/obj/game/game_fn_800A7A68.o",
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x30c contains 49 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000018  0000040a R_PPC_REL24            00000000   fn_80201B8C + 0\n00000024  0000050a R_PPC_REL24            00000000   fn_80201B94 + 0\n00000034  0000060a R_PPC_REL24            00000000   fn_8011F114 + 0\n00000054  0000070a R_PPC_REL24            00000000   fn_80128EE4 + 0\n0000005c  0000080a R_PPC_REL24            00000000   fn_80201C48 + 0\n0000006c  0000090a R_PPC_REL24            00000000   fn_80201B54 + 0\n0000007c  00000a0a R_PPC_REL24            00000000   fn_80201814 + 0\n00000088  00000b0a R_PPC_REL24            00000000   fn_80201BC8 + 0\n00000098  0000060a R_PPC_REL24            00000000   fn_8011F114 + 0\n000000b8  00000c0a R_PPC_REL24            00000000   fn_801294DC + 0\n000000c4  00000d0a R_PPC_REL24            00000000   fn_801A717C + 0\n000000d8  00000e0a R_PPC_REL24            00000000   fn_80072354 + 0\n000000e8  00000f0a R_PPC_REL24            00000000   fn_801A7460 + 0\n000000f4  0000100a R_PPC_REL24            00000000   fn_801A74A0 + 0\n00000100  0000110a R_PPC_REL24            00000000   fn_801A74A8 + 0\n0000010c  0000120a R_PPC_REL24            00000000   fn_801A74C8 + 0\n0000011c  0000130a R_PPC_REL24            00000000   fn_801A7560 + 0\n00000134  0000140a R_PPC_REL24            00000000   fn_801A7538 + 0\n00000140  0000150a R_PPC_REL24            00000000   fn_801A7518 + 0\n0000014c  0000160a R_PPC_REL24            00000000   fn_801A7550 + 0\n00000158  0000170a R_PPC_REL24            00000000   fn_801A7558 + 0\n00000164  0000180a R_PPC_REL24            00000000   fn_801A764C + 0\n00000170  0000190a R_PPC_REL24            00000000   fn_801A7598 + 0\n00000180  00001a0a R_PPC_REL24            00000000   fn_801292E0 + 0\n000001b6  00001b06 R_PPC_ADDR16_HA        00000000   fn_8003B8A0 + 0\n000001be  00001b04 R_PPC_ADDR16_LO        00000000   fn_8003B8A0 + 0\n000001c8  00001c0a R_PPC_REL24            00000000   fn_801287C4 + 0\n000001d0  00001d0a R_PPC_REL24            00000000   fn_80201C2C + 0\n000001e0  00001e0a R_PPC_REL24            00000000   fn_80205288 + 0\n000001ec  00001f0a R_PPC_REL24            00000000   fn_80201C24 + 0\n000001fc  0000200a R_PPC_REL24            00000000   fn_801A7680 + 0\n00000202  00002106 R_PPC_ADDR16_HA        00000000   lbl_8031D790 + 0\n0000020a  00002104 R_PPC_ADDR16_LO        00000000   lbl_8031D790 + 0\n0000020c  0000220a R_PPC_REL24            00000000   fn_801A7478 + 0\n00000220  0000230a R_PPC_REL24            00000000   fn_80129334 + 0\n0000022a  00002406 R_PPC_ADDR16_HA        00000000   fn_800C3ADC + 0\n0000022e  00002404 R_PPC_ADDR16_LO        00000000   fn_800C3ADC + 0\n0000023c  00001c0a R_PPC_REL24            00000000   fn_801287C4 + 0\n00000246  00002506 R_PPC_ADDR16_HA        00000000   fn_8003BD48 + 0\n0000024e  00002504 R_PPC_ADDR16_LO        00000000   fn_8003BD48 + 0\n00000254  00001c0a R_PPC_REL24            00000000   fn_801287C4 + 0\n0000026e  00002606 R_PPC_ADDR16_HA        00000000   fn_80204230 + 0\n00000276  00002604 R_PPC_ADDR16_LO        00000000   fn_80204230 + 0\n0000027c  0000270a R_PPC_REL24            00000000   fn_80128C28 + 0\n00000282  00002806 R_PPC_ADDR16_HA        00000000   fn_802042A4 + 0\n0000028a  00002804 R_PPC_ADDR16_LO        00000000   fn_802042A4 + 0\n00000290  0000290a R_PPC_REL24            00000000   fn_80128C44 + 0\n0000029c  00002a0a R_PPC_REL24            00000000   fn_80201D2C + 0\n000002a8  00002b0a R_PPC_REL24            00000000   fn_80201D14 + 0\n",
+      "stderr": "",
+      "normalized_offset_type_target_addend": [
+        [
+          "00000018",
+          "R_PPC_REL24",
+          "fn_80201B8C",
+          "+",
+          "0"
+        ],
+        [
+          "00000024",
+          "R_PPC_REL24",
+          "fn_80201B94",
+          "+",
+          "0"
+        ],
+        [
+          "00000034",
+          "R_PPC_REL24",
+          "fn_8011F114",
+          "+",
+          "0"
+        ],
+        [
+          "00000054",
+          "R_PPC_REL24",
+          "fn_80128EE4",
+          "+",
+          "0"
+        ],
+        [
+          "0000005c",
+          "R_PPC_REL24",
+          "fn_80201C48",
+          "+",
+          "0"
+        ],
+        [
+          "0000006c",
+          "R_PPC_REL24",
+          "fn_80201B54",
+          "+",
+          "0"
+        ],
+        [
+          "0000007c",
+          "R_PPC_REL24",
+          "fn_80201814",
+          "+",
+          "0"
+        ],
+        [
+          "00000088",
+          "R_PPC_REL24",
+          "fn_80201BC8",
+          "+",
+          "0"
+        ],
+        [
+          "00000098",
+          "R_PPC_REL24",
+          "fn_8011F114",
+          "+",
+          "0"
+        ],
+        [
+          "000000b8",
+          "R_PPC_REL24",
+          "fn_801294DC",
+          "+",
+          "0"
+        ],
+        [
+          "000000c4",
+          "R_PPC_REL24",
+          "fn_801A717C",
+          "+",
+          "0"
+        ],
+        [
+          "000000d8",
+          "R_PPC_REL24",
+          "fn_80072354",
+          "+",
+          "0"
+        ],
+        [
+          "000000e8",
+          "R_PPC_REL24",
+          "fn_801A7460",
+          "+",
+          "0"
+        ],
+        [
+          "000000f4",
+          "R_PPC_REL24",
+          "fn_801A74A0",
+          "+",
+          "0"
+        ],
+        [
+          "00000100",
+          "R_PPC_REL24",
+          "fn_801A74A8",
+          "+",
+          "0"
+        ],
+        [
+          "0000010c",
+          "R_PPC_REL24",
+          "fn_801A74C8",
+          "+",
+          "0"
+        ],
+        [
+          "0000011c",
+          "R_PPC_REL24",
+          "fn_801A7560",
+          "+",
+          "0"
+        ],
+        [
+          "00000134",
+          "R_PPC_REL24",
+          "fn_801A7538",
+          "+",
+          "0"
+        ],
+        [
+          "00000140",
+          "R_PPC_REL24",
+          "fn_801A7518",
+          "+",
+          "0"
+        ],
+        [
+          "0000014c",
+          "R_PPC_REL24",
+          "fn_801A7550",
+          "+",
+          "0"
+        ],
+        [
+          "00000158",
+          "R_PPC_REL24",
+          "fn_801A7558",
+          "+",
+          "0"
+        ],
+        [
+          "00000164",
+          "R_PPC_REL24",
+          "fn_801A764C",
+          "+",
+          "0"
+        ],
+        [
+          "00000170",
+          "R_PPC_REL24",
+          "fn_801A7598",
+          "+",
+          "0"
+        ],
+        [
+          "00000180",
+          "R_PPC_REL24",
+          "fn_801292E0",
+          "+",
+          "0"
+        ],
+        [
+          "000001b6",
+          "R_PPC_ADDR16_HA",
+          "fn_8003B8A0",
+          "+",
+          "0"
+        ],
+        [
+          "000001be",
+          "R_PPC_ADDR16_LO",
+          "fn_8003B8A0",
+          "+",
+          "0"
+        ],
+        [
+          "000001c8",
+          "R_PPC_REL24",
+          "fn_801287C4",
+          "+",
+          "0"
+        ],
+        [
+          "000001d0",
+          "R_PPC_REL24",
+          "fn_80201C2C",
+          "+",
+          "0"
+        ],
+        [
+          "000001e0",
+          "R_PPC_REL24",
+          "fn_80205288",
+          "+",
+          "0"
+        ],
+        [
+          "000001ec",
+          "R_PPC_REL24",
+          "fn_80201C24",
+          "+",
+          "0"
+        ],
+        [
+          "000001fc",
+          "R_PPC_REL24",
+          "fn_801A7680",
+          "+",
+          "0"
+        ],
+        [
+          "00000202",
+          "R_PPC_ADDR16_HA",
+          "lbl_8031D790",
+          "+",
+          "0"
+        ],
+        [
+          "0000020a",
+          "R_PPC_ADDR16_LO",
+          "lbl_8031D790",
+          "+",
+          "0"
+        ],
+        [
+          "0000020c",
+          "R_PPC_REL24",
+          "fn_801A7478",
+          "+",
+          "0"
+        ],
+        [
+          "00000220",
+          "R_PPC_REL24",
+          "fn_80129334",
+          "+",
+          "0"
+        ],
+        [
+          "0000022a",
+          "R_PPC_ADDR16_HA",
+          "fn_800C3ADC",
+          "+",
+          "0"
+        ],
+        [
+          "0000022e",
+          "R_PPC_ADDR16_LO",
+          "fn_800C3ADC",
+          "+",
+          "0"
+        ],
+        [
+          "0000023c",
+          "R_PPC_REL24",
+          "fn_801287C4",
+          "+",
+          "0"
+        ],
+        [
+          "00000246",
+          "R_PPC_ADDR16_HA",
+          "fn_8003BD48",
+          "+",
+          "0"
+        ],
+        [
+          "0000024e",
+          "R_PPC_ADDR16_LO",
+          "fn_8003BD48",
+          "+",
+          "0"
+        ],
+        [
+          "00000254",
+          "R_PPC_REL24",
+          "fn_801287C4",
+          "+",
+          "0"
+        ],
+        [
+          "0000026e",
+          "R_PPC_ADDR16_HA",
+          "fn_80204230",
+          "+",
+          "0"
+        ],
+        [
+          "00000276",
+          "R_PPC_ADDR16_LO",
+          "fn_80204230",
+          "+",
+          "0"
+        ],
+        [
+          "0000027c",
+          "R_PPC_REL24",
+          "fn_80128C28",
+          "+",
+          "0"
+        ],
+        [
+          "00000282",
+          "R_PPC_ADDR16_HA",
+          "fn_802042A4",
+          "+",
+          "0"
+        ],
+        [
+          "0000028a",
+          "R_PPC_ADDR16_LO",
+          "fn_802042A4",
+          "+",
+          "0"
+        ],
+        [
+          "00000290",
+          "R_PPC_REL24",
+          "fn_80128C44",
+          "+",
+          "0"
+        ],
+        [
+          "0000029c",
+          "R_PPC_REL24",
+          "fn_80201D2C",
+          "+",
+          "0"
+        ],
+        [
+          "000002a8",
+          "R_PPC_REL24",
+          "fn_80201D14",
+          "+",
+          "0"
+        ]
+      ],
+      "count": 49
+    },
+    "generated": {
+      "command": "readelf -rW build/GEDE01/src/game/game_fn_800A7A68.o",
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x300 contains 49 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000018  0000040a R_PPC_REL24            00000000   fn_80201B8C + 0\n00000024  0000050a R_PPC_REL24            00000000   fn_80201B94 + 0\n00000034  0000060a R_PPC_REL24            00000000   fn_8011F114 + 0\n00000054  0000070a R_PPC_REL24            00000000   fn_80128EE4 + 0\n0000005c  0000080a R_PPC_REL24            00000000   fn_80201C48 + 0\n0000006c  0000090a R_PPC_REL24            00000000   fn_80201B54 + 0\n0000007c  00000a0a R_PPC_REL24            00000000   fn_80201814 + 0\n00000088  00000b0a R_PPC_REL24            00000000   fn_80201BC8 + 0\n00000098  0000060a R_PPC_REL24            00000000   fn_8011F114 + 0\n000000b8  00000c0a R_PPC_REL24            00000000   fn_801294DC + 0\n000000c4  00000d0a R_PPC_REL24            00000000   fn_801A717C + 0\n000000d8  00000e0a R_PPC_REL24            00000000   fn_80072354 + 0\n000000e8  00000f0a R_PPC_REL24            00000000   fn_801A7460 + 0\n000000f4  0000100a R_PPC_REL24            00000000   fn_801A74A0 + 0\n00000100  0000110a R_PPC_REL24            00000000   fn_801A74A8 + 0\n0000010c  0000120a R_PPC_REL24            00000000   fn_801A74C8 + 0\n0000011c  0000130a R_PPC_REL24            00000000   fn_801A7560 + 0\n00000134  0000140a R_PPC_REL24            00000000   fn_801A7538 + 0\n00000140  0000150a R_PPC_REL24            00000000   fn_801A7518 + 0\n0000014c  0000160a R_PPC_REL24            00000000   fn_801A7550 + 0\n00000158  0000170a R_PPC_REL24            00000000   fn_801A7558 + 0\n00000164  0000180a R_PPC_REL24            00000000   fn_801A764C + 0\n00000170  0000190a R_PPC_REL24            00000000   fn_801A7598 + 0\n00000180  00001a0a R_PPC_REL24            00000000   fn_801292E0 + 0\n000001b6  00001b06 R_PPC_ADDR16_HA        00000000   fn_8003B8A0 + 0\n000001be  00001b04 R_PPC_ADDR16_LO        00000000   fn_8003B8A0 + 0\n000001c8  00001c0a R_PPC_REL24            00000000   fn_801287C4 + 0\n000001d0  00001d0a R_PPC_REL24            00000000   fn_80201C2C + 0\n000001e0  00001e0a R_PPC_REL24            00000000   fn_80205288 + 0\n000001ec  00001f0a R_PPC_REL24            00000000   fn_80201C24 + 0\n000001fc  0000200a R_PPC_REL24            00000000   fn_801A7680 + 0\n00000202  00000306 R_PPC_ADDR16_HA        00000000   lbl_8031D790 + 0\n0000020a  00000304 R_PPC_ADDR16_LO        00000000   lbl_8031D790 + 0\n0000020c  0000210a R_PPC_REL24            00000000   fn_801A7478 + 0\n00000220  0000220a R_PPC_REL24            00000000   fn_80129334 + 0\n0000022a  00002306 R_PPC_ADDR16_HA        00000000   fn_800C3ADC + 0\n0000022e  00002304 R_PPC_ADDR16_LO        00000000   fn_800C3ADC + 0\n0000023c  00001c0a R_PPC_REL24            00000000   fn_801287C4 + 0\n00000246  00002406 R_PPC_ADDR16_HA        00000000   fn_8003BD48 + 0\n0000024e  00002404 R_PPC_ADDR16_LO        00000000   fn_8003BD48 + 0\n00000254  00001c0a R_PPC_REL24            00000000   fn_801287C4 + 0\n0000026e  00002506 R_PPC_ADDR16_HA        00000000   fn_80204230 + 0\n00000276  00002504 R_PPC_ADDR16_LO        00000000   fn_80204230 + 0\n0000027c  0000260a R_PPC_REL24            00000000   fn_80128C28 + 0\n00000282  00002706 R_PPC_ADDR16_HA        00000000   fn_802042A4 + 0\n0000028a  00002704 R_PPC_ADDR16_LO        00000000   fn_802042A4 + 0\n00000290  0000280a R_PPC_REL24            00000000   fn_80128C44 + 0\n0000029c  0000290a R_PPC_REL24            00000000   fn_80201D2C + 0\n000002a8  00002a0a R_PPC_REL24            00000000   fn_80201D14 + 0\n",
+      "stderr": "",
+      "normalized_offset_type_target_addend": [
+        [
+          "00000018",
+          "R_PPC_REL24",
+          "fn_80201B8C",
+          "+",
+          "0"
+        ],
+        [
+          "00000024",
+          "R_PPC_REL24",
+          "fn_80201B94",
+          "+",
+          "0"
+        ],
+        [
+          "00000034",
+          "R_PPC_REL24",
+          "fn_8011F114",
+          "+",
+          "0"
+        ],
+        [
+          "00000054",
+          "R_PPC_REL24",
+          "fn_80128EE4",
+          "+",
+          "0"
+        ],
+        [
+          "0000005c",
+          "R_PPC_REL24",
+          "fn_80201C48",
+          "+",
+          "0"
+        ],
+        [
+          "0000006c",
+          "R_PPC_REL24",
+          "fn_80201B54",
+          "+",
+          "0"
+        ],
+        [
+          "0000007c",
+          "R_PPC_REL24",
+          "fn_80201814",
+          "+",
+          "0"
+        ],
+        [
+          "00000088",
+          "R_PPC_REL24",
+          "fn_80201BC8",
+          "+",
+          "0"
+        ],
+        [
+          "00000098",
+          "R_PPC_REL24",
+          "fn_8011F114",
+          "+",
+          "0"
+        ],
+        [
+          "000000b8",
+          "R_PPC_REL24",
+          "fn_801294DC",
+          "+",
+          "0"
+        ],
+        [
+          "000000c4",
+          "R_PPC_REL24",
+          "fn_801A717C",
+          "+",
+          "0"
+        ],
+        [
+          "000000d8",
+          "R_PPC_REL24",
+          "fn_80072354",
+          "+",
+          "0"
+        ],
+        [
+          "000000e8",
+          "R_PPC_REL24",
+          "fn_801A7460",
+          "+",
+          "0"
+        ],
+        [
+          "000000f4",
+          "R_PPC_REL24",
+          "fn_801A74A0",
+          "+",
+          "0"
+        ],
+        [
+          "00000100",
+          "R_PPC_REL24",
+          "fn_801A74A8",
+          "+",
+          "0"
+        ],
+        [
+          "0000010c",
+          "R_PPC_REL24",
+          "fn_801A74C8",
+          "+",
+          "0"
+        ],
+        [
+          "0000011c",
+          "R_PPC_REL24",
+          "fn_801A7560",
+          "+",
+          "0"
+        ],
+        [
+          "00000134",
+          "R_PPC_REL24",
+          "fn_801A7538",
+          "+",
+          "0"
+        ],
+        [
+          "00000140",
+          "R_PPC_REL24",
+          "fn_801A7518",
+          "+",
+          "0"
+        ],
+        [
+          "0000014c",
+          "R_PPC_REL24",
+          "fn_801A7550",
+          "+",
+          "0"
+        ],
+        [
+          "00000158",
+          "R_PPC_REL24",
+          "fn_801A7558",
+          "+",
+          "0"
+        ],
+        [
+          "00000164",
+          "R_PPC_REL24",
+          "fn_801A764C",
+          "+",
+          "0"
+        ],
+        [
+          "00000170",
+          "R_PPC_REL24",
+          "fn_801A7598",
+          "+",
+          "0"
+        ],
+        [
+          "00000180",
+          "R_PPC_REL24",
+          "fn_801292E0",
+          "+",
+          "0"
+        ],
+        [
+          "000001b6",
+          "R_PPC_ADDR16_HA",
+          "fn_8003B8A0",
+          "+",
+          "0"
+        ],
+        [
+          "000001be",
+          "R_PPC_ADDR16_LO",
+          "fn_8003B8A0",
+          "+",
+          "0"
+        ],
+        [
+          "000001c8",
+          "R_PPC_REL24",
+          "fn_801287C4",
+          "+",
+          "0"
+        ],
+        [
+          "000001d0",
+          "R_PPC_REL24",
+          "fn_80201C2C",
+          "+",
+          "0"
+        ],
+        [
+          "000001e0",
+          "R_PPC_REL24",
+          "fn_80205288",
+          "+",
+          "0"
+        ],
+        [
+          "000001ec",
+          "R_PPC_REL24",
+          "fn_80201C24",
+          "+",
+          "0"
+        ],
+        [
+          "000001fc",
+          "R_PPC_REL24",
+          "fn_801A7680",
+          "+",
+          "0"
+        ],
+        [
+          "00000202",
+          "R_PPC_ADDR16_HA",
+          "lbl_8031D790",
+          "+",
+          "0"
+        ],
+        [
+          "0000020a",
+          "R_PPC_ADDR16_LO",
+          "lbl_8031D790",
+          "+",
+          "0"
+        ],
+        [
+          "0000020c",
+          "R_PPC_REL24",
+          "fn_801A7478",
+          "+",
+          "0"
+        ],
+        [
+          "00000220",
+          "R_PPC_REL24",
+          "fn_80129334",
+          "+",
+          "0"
+        ],
+        [
+          "0000022a",
+          "R_PPC_ADDR16_HA",
+          "fn_800C3ADC",
+          "+",
+          "0"
+        ],
+        [
+          "0000022e",
+          "R_PPC_ADDR16_LO",
+          "fn_800C3ADC",
+          "+",
+          "0"
+        ],
+        [
+          "0000023c",
+          "R_PPC_REL24",
+          "fn_801287C4",
+          "+",
+          "0"
+        ],
+        [
+          "00000246",
+          "R_PPC_ADDR16_HA",
+          "fn_8003BD48",
+          "+",
+          "0"
+        ],
+        [
+          "0000024e",
+          "R_PPC_ADDR16_LO",
+          "fn_8003BD48",
+          "+",
+          "0"
+        ],
+        [
+          "00000254",
+          "R_PPC_REL24",
+          "fn_801287C4",
+          "+",
+          "0"
+        ],
+        [
+          "0000026e",
+          "R_PPC_ADDR16_HA",
+          "fn_80204230",
+          "+",
+          "0"
+        ],
+        [
+          "00000276",
+          "R_PPC_ADDR16_LO",
+          "fn_80204230",
+          "+",
+          "0"
+        ],
+        [
+          "0000027c",
+          "R_PPC_REL24",
+          "fn_80128C28",
+          "+",
+          "0"
+        ],
+        [
+          "00000282",
+          "R_PPC_ADDR16_HA",
+          "fn_802042A4",
+          "+",
+          "0"
+        ],
+        [
+          "0000028a",
+          "R_PPC_ADDR16_LO",
+          "fn_802042A4",
+          "+",
+          "0"
+        ],
+        [
+          "00000290",
+          "R_PPC_REL24",
+          "fn_80128C44",
+          "+",
+          "0"
+        ],
+        [
+          "0000029c",
+          "R_PPC_REL24",
+          "fn_80201D2C",
+          "+",
+          "0"
+        ],
+        [
+          "000002a8",
+          "R_PPC_REL24",
+          "fn_80201D14",
+          "+",
+          "0"
+        ]
+      ],
+      "count": 49
+    }
+  },
+  "byte_verification": {
+    "method": "Read the ELF32 big-endian section table and compare complete .text byte strings, independently of objdiff.",
+    "equal": true,
+    "size": 716,
+    "sha256": {
+      "retail": "5701190a0ffcc6568c7cce842fe5f1c92cad1abf1d5481800d35a2425ec03f61",
+      "generated": "5701190a0ffcc6568c7cce842fe5f1c92cad1abf1d5481800d35a2425ec03f61"
+    }
+  },
+  "relocation_verification": {
+    "equal": true,
+    "count": 49,
+    "compared_fields": [
+      "offset",
+      "type",
+      "target symbol",
+      "addend sign",
+      "addend value"
+    ],
+    "all_addends_zero": true
+  },
+  "experiments": [
+    {
+      "name": "inline-both",
+      "source_sha256": "f65c69cb1aabafe41aa4f8e46eba75186ff6e921e9a5eab38bd7d2ecb4673dc1",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.13966,
+      "size": "692"
+    },
+    {
+      "name": "baseline",
+      "source_sha256": "9d9ece6604a54aa2afaf0b44e35d197136e0884bcd79313bd6c62d4c7dcdbeff",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "guard-struct",
+      "source_sha256": "d5581a5866292215bc5220717e137eab22a9e96ce5d5b53fad236cbe34c0742e",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "guard-union",
+      "source_sha256": "ac839c6abc39847fdea091bdf0d22c613fb509fc324e59239b1d57b57118736f",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.765366,
+      "size": "716"
+    },
+    {
+      "name": "guard-bitfield",
+      "source_sha256": "9b5965ee2dd4081b888f614aeaadd560abf362693db6172c67669aa27388047a",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "guard-bitfield8",
+      "source_sha256": "bf633e58dd3210e3f03d20527c3b15c4e1e20163abae0e217a6f9566dbd0170d",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "guard-pointer",
+      "source_sha256": "8f958880838f67db7291678e3bc87769907814aacf7f4593d67eeced99296786",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.765366,
+      "size": "716"
+    },
+    {
+      "name": "guard-array",
+      "source_sha256": "559342543e250f5c45b2807073611d3f8b73beb1e19e10410b0da55dae8eff07",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "guard-registervolatile",
+      "source_sha256": "78110b5524528370728338be7f5198a2be4d21a3d89ad47aa032242f2b15c650",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 96.70391,
+      "size": "728"
+    },
+    {
+      "name": "guard-pointer-inspect",
+      "source_sha256": "8f958880838f67db7291678e3bc87769907814aacf7f4593d67eeced99296786",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.765366,
+      "size": "716"
+    },
+    {
+      "name": "nested-unsignedalias",
+      "source_sha256": "68b77ff8bc67d4a0d75a32984a77883e64e38e61bfc1b1699973cb57d27f1500",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.43575,
+      "size": "716"
+    },
+    {
+      "name": "nested-floatunion",
+      "source_sha256": "6d358a30e212cefa0cba335a308f5267d7608cc650a28f5dff7e1c778482ed07",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "nested-shortalias",
+      "source_sha256": "e9dc156b035d2935f02e893da882fa5efc538958c6b9170cf534c9fa15d1f667",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.8771,
+      "size": "720"
+    },
+    {
+      "name": "nested-volatilecast",
+      "source_sha256": "b2ec76a7d5b2779eba6061d522365032f38492a633d6230e7882df74da9add2f",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.8771,
+      "size": "720"
+    },
+    {
+      "name": "nested-compoundptr",
+      "source_sha256": "c00da9e3d4eafca06621f3b81aac21afe09151ce56384812ec2df59608837c2c",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "nested-callbackalias",
+      "source_sha256": "4b3f74e654ff12c2dfe7391d78930791bca732787bee56a593501236dcb7a1cc",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.59776,
+      "size": "720"
+    },
+    {
+      "name": "inline-valid-pointer-6",
+      "source_sha256": "0fac287cc590b7a582c2b257fc6f72ab651cf7b6d02d470bbe385a4291f3e97b",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "inline-valid-pointer-21",
+      "source_sha256": "a94249f53c69c844227b6542552627c33b9183d28bf567983c03e21c55244c89",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.8771,
+      "size": "720"
+    },
+    {
+      "name": "inline-valid-value-6",
+      "source_sha256": "a325035b6102dd6d140aad2b09903ce27f491e677f87dd5a5fa6ea467f5f6539",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "inline-valid-value-21",
+      "source_sha256": "b5f8bab1cc1d1a5f99973472737dba4064b1453501b8f1a5ba5ecb8fdfef063a",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.8771,
+      "size": "720"
+    },
+    {
+      "name": "unsignedalias-inspect",
+      "source_sha256": "68b77ff8bc67d4a0d75a32984a77883e64e38e61bfc1b1699973cb57d27f1500",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.43575,
+      "size": "716"
+    },
+    {
+      "name": "inline-cast-unsignedalias",
+      "source_sha256": "7007eece2c160b6f818b6b0c6d2e0bffa28da37032cd1c6af0b0cb00ed730a3e",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.43575,
+      "size": "716"
+    },
+    {
+      "name": "inline-cast-union",
+      "source_sha256": "c9066d90e4e67fac603ebc1f21a696ae5a6cddf2eaa3a1154b5baa172e670d0f",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.43575,
+      "size": "716"
+    },
+    {
+      "name": "inline-cast-pointer",
+      "source_sha256": "3ff07877a92fe464af6ff5d9b23b13eeb3eedf654848fb4e64e5ab7cb91b8457",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.43575,
+      "size": "716"
+    },
+    {
+      "name": "selector-alias-separate",
+      "source_sha256": "8a63b992fa6782134b0d88f7935e0f91cc92112e390eb392b4873892909626c7",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 96.98324,
+      "size": "708"
+    },
+    {
+      "name": "selector-alias-callback",
+      "source_sha256": "c9becbeb5c8931ce5c8798f8224db4258adb04e95dc6b631074e35b9ac02dcbb",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.06704,
+      "size": "708"
+    },
+    {
+      "name": "selector-alias-union",
+      "source_sha256": "7903ac06a43ba92750fb16c2f451efabdda6efc52ecba47d0fc17363ced6e994",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 96.98324,
+      "size": "708"
+    },
+    {
+      "name": "selector-alias-short",
+      "source_sha256": "19dc5ca79526e1675fd00090fa4667cdee3d65c743163050be0b4373ec0b3fa1",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 96.98324,
+      "size": "708"
+    },
+    {
+      "name": "kind-int-as-int",
+      "source_sha256": "71560fe5c53bc60c9106b7fc8ca2ad2035af470b677881a0e1d8499898b982fe",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.43575,
+      "size": "716"
+    },
+    {
+      "name": "kind-int-as-unsigned",
+      "source_sha256": "43011a6af7c98eed6602ead5b00a701d0ee9763be279e36fed15beeb3a1f0ce6",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.51397,
+      "size": "720"
+    },
+    {
+      "name": "kind-unsigned-as-int",
+      "source_sha256": "5be4b897560639c2b306ef6a5045dfa715aa90cab451b5ed8e07b5a5c5559893",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.43575,
+      "size": "716"
+    },
+    {
+      "name": "kind-unsigned-as-unsigned",
+      "source_sha256": "e7321797ac9cb746c39204673a44c19279e3f01208c92ea4be6ecef91c7ea607",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.51397,
+      "size": "720"
+    },
+    {
+      "name": "kind-long-as-int",
+      "source_sha256": "e7ccf47be394d3220b45278f7fa486639a1758929718f7b5a4ca8436fb7b0ae6",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.43575,
+      "size": "716"
+    },
+    {
+      "name": "kind-long-as-unsigned",
+      "source_sha256": "ce81dcb5969ac3d506437b3bee04539c9723920c0470135b8b5f16338ca2b140",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.51397,
+      "size": "720"
+    },
+    {
+      "name": "kind-unsigned long-as-int",
+      "source_sha256": "78ef75b3b2d1f048060c65467b922e74474e8e301f983b5c2b37cdc01bae9e0a",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.43575,
+      "size": "716"
+    },
+    {
+      "name": "kind-unsigned long-as-unsigned",
+      "source_sha256": "d2af23e0341f00f6f49e98552081e27a0fc71c79a0b46d7c2a9635bcba0907f8",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.51397,
+      "size": "720"
+    },
+    {
+      "name": "reuse-callback-unsigned",
+      "source_sha256": "b0e2a75547674b4de80a4002a09b1f34a1751097853fa8e1090ed756559bade0",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.59776,
+      "size": "720"
+    },
+    {
+      "name": "reuse-callback-signed",
+      "source_sha256": "92897e0a7e995b14758850ed6749a5e78f5c0e380f7b333bca91bc51f53c9322",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.519554,
+      "size": "716"
+    },
+    {
+      "name": "reuse-count-signed",
+      "source_sha256": "a59e4a9b488f5eef44c8df16f14c76684067ccf4f56e4010f03a669406191dec",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.18436,
+      "size": "716"
+    },
+    {
+      "name": "reuse-index-signed",
+      "source_sha256": "327e78663ea2b84493e4894fe482daaa7dc4bd971043a925fbeb81154ea15c97",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 94.223465,
+      "size": "728"
+    },
+    {
+      "name": "aggregate-struct-return",
+      "source_sha256": "484b925e898bca181943c8c997b828b332e036d13f771b60cdd431ee7bf30336",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.8771,
+      "size": "720"
+    },
+    {
+      "name": "aggregate-union-return",
+      "source_sha256": "3dc075bfec73efbfa7a4f1c8a56aeac85e86b902e07b6ea834cf801843ad1830",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.8771,
+      "size": "720"
+    },
+    {
+      "name": "aggregate-union-arg",
+      "source_sha256": "5190420bef40ee1162c73404b1d5dae74a513e2a1db9193c3e78543af35903d0",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.8771,
+      "size": "720"
+    },
+    {
+      "name": "aggregate-struct-arg",
+      "source_sha256": "5f8433d1ffc2f1cc58417485a50b12d8e7c04414027fb2ced14ed375bb4167b6",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.8771,
+      "size": "720"
+    },
+    {
+      "name": "aggregate-inline-indirect",
+      "source_sha256": "78dd105a1b7eb0ea179e84243fc0c7d2748d2f6e7b1a7c7e27a42212a3557ea9",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "aggregate-pointer-store",
+      "source_sha256": "607b5faf5698d0e8c67f0f3eba9ff26687f7117d4c982dbc9d05d34e90c62979",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.43575,
+      "size": "716"
+    },
+    {
+      "name": "aggregate-union-char",
+      "source_sha256": "1ac6159c487989476f87caf11f740edf7dee195f7645d4c1eb6da7d3e0c0b450",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.60894,
+      "size": "736"
+    },
+    {
+      "name": "selector-local-selector / 2 * 8",
+      "source_sha256": "4c24dece18096078057975df42788bfecb1ee86c7b222af237c0315fcb133985",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-inline-selector / 2 * 8",
+      "source_sha256": "f48c9ae90fb095bb7729d993b97145297e0dec927cf00ae96b2eee344b50e6d9",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-local-selector / 8 * 8",
+      "source_sha256": "c22ea16a705f666d8b11cec0a1bc28297cb060e89252a823ca8e867135de8625",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-inline-selector / 8 * 8",
+      "source_sha256": "1746cde0f77ac52a5df81df543c86e2b7c783ed20cd5d8b77587879b346274be",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-local-selector / 16 * 8",
+      "source_sha256": "a855c45edc2693bc2215dcf8e1330c365f89c80519b5b04c9368cdbe5fcb91bf",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-inline-selector / 16 * 8",
+      "source_sha256": "62d722e18c8ba92a82e1c6d41c1a489e5d98ec08717f2cc353be33c814877ce0",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-local-selector % 2 * 8",
+      "source_sha256": "f291625144397405e006f790547fd1f7b7bdd820ed9012da05c801d63d32ef12",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-inline-selector % 2 * 8",
+      "source_sha256": "f046bc5f493704407a19fa55f0b873066b7f703b718295a9013d9a640458dd48",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-local-(selector < 0 ? 8 : 0)",
+      "source_sha256": "9dfd9280b447645f3c5d701e1745620f76f2c77ce2dae9c656addecd8dc36f87",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-inline-(selector < 0 ? 8 : 0)",
+      "source_sha256": "85802ffbd0bd83e043f86abb48fbeee4ce3f80fea7e8bec5d5cb58c536e8c747",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-local-(selector >> 31) & 8",
+      "source_sha256": "c08e0de4f17f390eea5ec749fc28f7763a887af1d016a2ceda98085e090987d6",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-inline-(selector >> 31) & 8",
+      "source_sha256": "09d8cdb03653559fe7a70bf040cdbe6b25c3caa6dac35a5c5e4f3150b66eff4e",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-local-((unsigned)selector >> 31) * 8",
+      "source_sha256": "0acf263e2c4c08099f35703d66e08f3c20642b8fceaa7f6f4bd8c72bb5c2ba0d",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-inline-((unsigned)selector >> 31) * 8",
+      "source_sha256": "af3f3352bd79937eff17b90db92457ee55ef4447a4bbab028127120bb24bfa80",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-local-(selector + (selector < 0)) * 8",
+      "source_sha256": "3123b421bf21ecf342adeb2025fc46aa5e720255910f9be19767b2c004cda4cd",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "selector-inline-(selector + (selector < 0)) * 8",
+      "source_sha256": "8eca66900fbf551aff114435982436d4f26fd0ed6b7a29947ea72756be3d22d5",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 95.50279,
+      "size": "692"
+    },
+    {
+      "name": "switch-4-switch (%s) { case -1: break; default:",
+      "source_sha256": "d8595d2661a9a404893020b6a76eb82c1da466052b11385d05feb472063a88ab",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "switch-4-switch (%s) { case -1: goto done; default:",
+      "source_sha256": "edfc023a740649d4de8ea1dfa7430be4f5dd6c810e3a6be13574187cd51ee025",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "switch-4-switch (%s) { default:",
+      "source_sha256": "f2a6783f74d5c3c5778d74e9f4c75c531fe881afc7ec5ca22da092f300480b58",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "switch-kind-switch (%s) { case -1: break; default:",
+      "source_sha256": "9ae8622ace0834935573741b83a4a92e0b44248854ae2f264ef7f2290b9c3ea7",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "switch-kind-switch (%s) { case -1: goto done; default:",
+      "source_sha256": "d41a4a5a724a58cfba7f00c77e89b1a41bd7f13420afcdf8a6e825ad0e18e233",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "switch-kind-switch (%s) { default:",
+      "source_sha256": "f70d9c2fa03dc2a58203fee33a4445b56e363de7fe993b68a9aabcc36a33b289",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "combined-*(int*)&callbackIndex-*(int*)&callbackIndex",
+      "source_sha256": "26c0f4e5f8a0fc69c8b10e152bf95c4aa481c12338b68c0980259d9d15bd888f",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.18436,
+      "size": "724"
+    },
+    {
+      "name": "combined-*(int*)&callbackIndex-*(unsigned*)&callbackIndex",
+      "source_sha256": "fb047689742effb2a5a294c2126734ba43c122d4ca5f84fd84cacba58f4c3a31",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.18436,
+      "size": "724"
+    },
+    {
+      "name": "combined-*(int*)&callbackIndex-callbackIndex",
+      "source_sha256": "17dd6f9621e92c9910c1c8b4ee63c27a652ca7c684cfdffc1f0694e1fe394092",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.519554,
+      "size": "716"
+    },
+    {
+      "name": "combined-(int)*(unsigned*)&callbackIndex-*(int*)&callbackIndex",
+      "source_sha256": "50e25ff0145401b685a5e82ff9e5d18be608144b11b386c61fb3a6d3f2930331",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.18436,
+      "size": "724"
+    },
+    {
+      "name": "combined-(int)*(unsigned*)&callbackIndex-*(unsigned*)&callbackIndex",
+      "source_sha256": "de059b924a6ffedfb54acb8a77ed089113d9fab1d24cbd8cc850ea392f5cefae",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.18436,
+      "size": "724"
+    },
+    {
+      "name": "combined-(int)*(unsigned*)&callbackIndex-callbackIndex",
+      "source_sha256": "9504f8cd97ac8e2961e72f94f1aac76e41a49f8c54e4f66e6fc0c68813793c0d",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.519554,
+      "size": "716"
+    },
+    {
+      "name": "combined-(int)*(int*)&callbackIndex-*(int*)&callbackIndex",
+      "source_sha256": "731d1015c185e16a387d167dadd011263fbe98495b590d667bfad5a3a88a739e",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.18436,
+      "size": "724"
+    },
+    {
+      "name": "combined-(int)*(int*)&callbackIndex-*(unsigned*)&callbackIndex",
+      "source_sha256": "c2d4c8c04a2aa13b996f3de456f3e7f29430475a0e602a600da1b707eb605f9b",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.18436,
+      "size": "724"
+    },
+    {
+      "name": "combined-(int)*(int*)&callbackIndex-callbackIndex",
+      "source_sha256": "095e5c808bc8b45a29e72442349263008a4aba0337a1bf153a8a22aa4000c7ce",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.519554,
+      "size": "716"
+    },
+    {
+      "name": "combined-inspect",
+      "source_sha256": "3b9be18ecd5a16b0155d8ed083a25e16beda4b2fa0e9d5483b097f4849d3d6a6",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.18436,
+      "size": "724"
+    },
+    {
+      "name": "fields-baseline-struct",
+      "source_sha256": "51032857ae0ca69b68c707f81f21b86af44ecc015f44c3cb47cddbc1ca0c81bd",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "fields-baseline-localbase",
+      "source_sha256": "dd23b5138c5194f50fd4d2d74f9427fce1679bf022869ac8178f57d6cdf0ac35",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "fields-baseline-voidlocal",
+      "source_sha256": "f56a9570c481e294c0463fdfe58beabe97eef8fc2c9068a7474d41aa11dfef5e",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "fields-aliasguard-struct",
+      "source_sha256": "6a8ada1bbcfdf7fd5e528c943ad43148c2f3e88efabe19b156cf70c6362ca0d4",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.519554,
+      "size": "716"
+    },
+    {
+      "name": "fields-aliasguard-localbase",
+      "source_sha256": "38ea41979f40d467c9eb5563a2ed49530ae9d38f385f76ffb5418879e67b38c6",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.519554,
+      "size": "716"
+    },
+    {
+      "name": "fields-aliasguard-voidlocal",
+      "source_sha256": "f0804c6344619717698cf95483f75628ec340c2b49d495a31d3629696969c289",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.519554,
+      "size": "716"
+    },
+    {
+      "name": "fields-combined-struct",
+      "source_sha256": "023f6d86324beee7c9d0d2b8f17661b47e18e6352deb6157f20f0a7776d575dc",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.18436,
+      "size": "724"
+    },
+    {
+      "name": "fields-combined-localbase",
+      "source_sha256": "4e22a3531af180712aa285de9b5993a58519b49d6ec265911a13717dad06c0fd",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.18436,
+      "size": "724"
+    },
+    {
+      "name": "fields-combined-voidlocal",
+      "source_sha256": "da135e68caf655d01e90869d1ff6a4f527927770fbb288e94fcce93a91633b1f",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.18436,
+      "size": "724"
+    },
+    {
+      "name": "guard-lifetime-overwrite",
+      "source_sha256": "88d2ee7ca1ffb350b48138908564a1f135fd7baaa7d2c7e09b1ab89f7fd289a1",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 96.17319,
+      "size": "724"
+    },
+    {
+      "name": "guard-lifetime-self",
+      "source_sha256": "639e73ea86e208fd3ff989dc369780e6a921c231cb2b1db201da85baffa22c87",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.96089,
+      "size": "720"
+    },
+    {
+      "name": "guard-lifetime-pointerincrement",
+      "source_sha256": "b0ec8ebb199cc8f6886887c4bfc0eb65511ccd21597d5b7a86b1f1cda5bd4405",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.36871,
+      "size": "724"
+    },
+    {
+      "name": "guard-lifetime-comma",
+      "source_sha256": "1749540c03e2b6e51ff8a71565eb557ef141abf838b1a77b2b12370607d5de9d",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.519554,
+      "size": "716"
+    },
+    {
+      "name": "guard-existing-index",
+      "source_sha256": "06d175ea6ab156e99bfd531d4b80fe353b3ec18f983b0501ee4d08991158f93f",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 94.53072,
+      "size": "728"
+    },
+    {
+      "name": "guard-existing-first",
+      "source_sha256": "d2048f2a3feb6d643fea440b6e207c19fa8ababdf00ca0fdf4275bf9986c4e99",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 93.78212,
+      "size": "724"
+    },
+    {
+      "name": "guard-existing-count",
+      "source_sha256": "a867c01a8cec19cbb3206e6dfafea7dfff60285f26d9cfadcd9482a41be19bd3",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.519554,
+      "size": "716"
+    },
+    {
+      "name": "qualified-const int-*(const int*)&kind",
+      "source_sha256": "ef4d4a3946ee3ef3afb1ac70463d0e55d9cca08f670a27cdc2bf78ebac51a1a9",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.74302,
+      "size": "712"
+    },
+    {
+      "name": "qualified-const int-*(int*)&kind",
+      "source_sha256": "eb73eddbe4a05d00aab699c718674300dcf8b094f9f076de3665843db2194478",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.74302,
+      "size": "712"
+    },
+    {
+      "name": "qualified-const int-kind",
+      "source_sha256": "658ac5b6464f3191b109108d05818c1567b18288a7627094b913858708a7c735",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "qualified-const unsigned-*(const int*)&kind",
+      "source_sha256": "fe4e8f5a09cc39b123692b5a4d441a9ee62a734120f4aa93ce0b75012a5a17f9",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.74302,
+      "size": "712"
+    },
+    {
+      "name": "qualified-const unsigned-*(int*)&kind",
+      "source_sha256": "1df246d4147cefd2c62f331d4319a59c9087c071779c5394f5f2537dbb5ba850",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.74302,
+      "size": "712"
+    },
+    {
+      "name": "qualified-const unsigned-kind",
+      "source_sha256": "da7e8bb6d42c1c593b3495b0ddf84dd6b0e420e8823014ca8e9f77d8c4ace7bb",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "qualified-const long-*(const int*)&kind",
+      "source_sha256": "5a53c0c321f135f3a0b7825913040661ddf9d2d6e086342a56d6deaf75a591f8",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.74302,
+      "size": "712"
+    },
+    {
+      "name": "qualified-const long-*(int*)&kind",
+      "source_sha256": "e2b5ed5c195db2afde8c62cc6ea524eefc05c4e395fc43c73ec1e8083c62f305",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.74302,
+      "size": "712"
+    },
+    {
+      "name": "qualified-const long-kind",
+      "source_sha256": "0ffd720a1b8d6bcddd554d2b35d01aa850ebc181e3c88130f434f13a15a7e819",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "qualified-volatile int-*(const int*)&kind",
+      "source_sha256": "c5f52c55fa209d17b4a4c35c0b00f01e1b60487f5852aa2cba9318b4d3617244",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.8771,
+      "size": "720"
+    },
+    {
+      "name": "qualified-volatile int-*(int*)&kind",
+      "source_sha256": "ac8f18ce6a3ad6e5cd6e5a7c5b0832e379007136d4bdf0bdced2baf4dab728ad",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.8771,
+      "size": "720"
+    },
+    {
+      "name": "qualified-volatile int-kind",
+      "source_sha256": "c4be843443d2200e43411928f746d7e561dc75ed866c423ccfb90a0550f410c0",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.8771,
+      "size": "720"
+    },
+    {
+      "name": "qualified-reuse-*(const int*)&callbackIndex",
+      "source_sha256": "752008665b7a45dcea3f017775d3ee1c8f49d5a33e00ffd430989174bf30d442",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.519554,
+      "size": "716"
+    },
+    {
+      "name": "qualified-reuse-*(const unsigned*)&callbackIndex",
+      "source_sha256": "654bf416823ddbed2abe3b88f1fcdcc7a11896269cc9dd93936d5073e76ff296",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.519554,
+      "size": "716"
+    },
+    {
+      "name": "qualified-reuse-((const int*)&callbackIndex)[0]",
+      "source_sha256": "3a0433a0c941b204f9f845b1c4fee656462d2578a53b8ff6a04425a3af373287",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.519554,
+      "size": "716"
+    },
+    {
+      "name": "const-both-int-*(const int*)&selector-plain",
+      "source_sha256": "b7bd04b967f9c19d4e77d88dd20dc9a91df6f749161b33e597b3f1efbd330786",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.63129,
+      "size": "716"
+    },
+    {
+      "name": "const-both-int-*(const int*)&selector-field",
+      "source_sha256": "ee395068e72898ff6a93c6bd8c5043aa834ae436a187a819edbeee0b5a9a71a2",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.63129,
+      "size": "716"
+    },
+    {
+      "name": "const-both-int-*(const int*)&selector-block",
+      "source_sha256": "aa919dd329aa89d84de324f4a0e68cfc97451a85f1f3f89c2ec1a5652f7940a5",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.63129,
+      "size": "716"
+    },
+    {
+      "name": "const-both-int-*(const unsigned*)&selector-plain",
+      "source_sha256": "ae1f5a6d94db5959ff6714f733c3330158e0349a1b2c0c519390dd478d810cca",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.63129,
+      "size": "716"
+    },
+    {
+      "name": "const-both-int-*(const unsigned*)&selector-field",
+      "source_sha256": "eae7f82f01decbf7984c8870d503ee190a7a3374598cf789fd726ed5faa3bca6",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.63129,
+      "size": "716"
+    },
+    {
+      "name": "const-both-int-*(const unsigned*)&selector-block",
+      "source_sha256": "f300ebf98ec1367a848257d0e4f6e829642dd3264115d3ff6d69da8ff1322145",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.63129,
+      "size": "716"
+    },
+    {
+      "name": "const-both-unsigned-*(const int*)&selector-plain",
+      "source_sha256": "8422a29a688c22f6f3bacbbcd797beb5441325da045bcc12d96237ed5f0f0156",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.63129,
+      "size": "716"
+    },
+    {
+      "name": "const-both-unsigned-*(const int*)&selector-field",
+      "source_sha256": "07384c94caf27d33e0f6ce2dce49e0b335825ae21f2b59254a8b089b5e7908d8",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.63129,
+      "size": "716"
+    },
+    {
+      "name": "const-both-unsigned-*(const int*)&selector-block",
+      "source_sha256": "91648a5e29f9b4cc91f5e7da1fe0df1a93d01d5fd624ea6641e370760d922304",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.63129,
+      "size": "716"
+    },
+    {
+      "name": "const-both-unsigned-*(const unsigned*)&selector-plain",
+      "source_sha256": "51e9b244f85354b52f86a06ec0fe15e8e187b81d4127f87427f524ae98fb34ee",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.63129,
+      "size": "716"
+    },
+    {
+      "name": "const-both-unsigned-*(const unsigned*)&selector-field",
+      "source_sha256": "fa89bb0de451b0bbdcdaf7cb5b71719147beaff3de2c72dfdb401c37e0392c0d",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.63129,
+      "size": "716"
+    },
+    {
+      "name": "const-both-unsigned-*(const unsigned*)&selector-block",
+      "source_sha256": "c16435e724af2fcdb15c689a8d759435e6a01287f7bc20dbb59bdc59d7f875d5",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.63129,
+      "size": "716"
+    },
+    {
+      "name": "runtime-const-value",
+      "source_sha256": "f860651deb10013a8f4f75494c038aeeccd8823912fd9476e4b8c8625fd16941",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.43575,
+      "size": "716"
+    },
+    {
+      "name": "runtime-const-(callbackIndex = 4)",
+      "source_sha256": "7a078482688f9d8dfc12b832058a4e2643f6de22693c96c582aeed8b6a1c71e4",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.8771,
+      "size": "720"
+    },
+    {
+      "name": "runtime-const-identity(4)",
+      "source_sha256": "5474b7e54bd65a485d5ce87c2c12f59580bccb1e24e26e90198b0dfc6dbb9129",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.43575,
+      "size": "716"
+    },
+    {
+      "name": "runtime-const-4 + zero",
+      "source_sha256": "3860efd92e239e8bd82fa5eb5aa860d1b4629464c6e4a5d3bce711587399e7a4",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.43575,
+      "size": "716"
+    },
+    {
+      "name": "runtime-const-4",
+      "source_sha256": "3ea888d344db685f8faa9a984079f284eed7ed7daefad64d58fb1ebc95e81caa",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.74302,
+      "size": "712"
+    },
+    {
+      "name": "const-read-*(&kind)",
+      "source_sha256": "23537e7fed743a7c14dfab759a82968f698e74d1094cb63146830de10aff2ef8",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "const-read-(&kind)[0]",
+      "source_sha256": "894c25789b1ce638b056cc6a483f3761106f7c7ff24d889ae415906602aad76e",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "const-read-*p",
+      "source_sha256": "a7429cf1d694fd0539b3ff305f509833e9ebfd3709b157b12902f06303827aaa",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.74302,
+      "size": "712"
+    },
+    {
+      "name": "const-read-((const int*)p)[0]",
+      "source_sha256": "ffe7a6b3fdd4af84eea0c4f08c4dfa3aae8c7098ba938fc3ab694c69a8f31f0f",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.74302,
+      "size": "712"
+    },
+    {
+      "name": "const-read-*(p+zero)",
+      "source_sha256": "1365da5202fd01c4b798a31e142628df5dd5635e6fa7f4137056b65cb515f8cc",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.74302,
+      "size": "712"
+    },
+    {
+      "name": "const-read-(int)(unsigned)kind",
+      "source_sha256": "07a2c99dabd8943927d08ad39168d4829f99cc58be32db3ce1eab4a177b29494",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "scalar-enum Kind-kind",
+      "source_sha256": "832496eacb27508eb418f6348e0640ede0f229b93c439985bfc7eba299105371",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.07821,
+      "size": "712"
+    },
+    {
+      "name": "scalar-enum Kind-(int)kind",
+      "source_sha256": "35ab1ede32535ed65955dd2ba35e7f0c56ce12b349542ac3cec609ce152c302a",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.07821,
+      "size": "712"
+    },
+    {
+      "name": "scalar-signed char-kind",
+      "source_sha256": "bf7f63d833808fcebe3f16812faace4d17cf6b4caa411804176db943d790744c",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "scalar-signed char-(int)kind",
+      "source_sha256": "47f4e724814bbd0c2da5bf26f23c0f5939981b6a75d602d3eb31c5ef494d7b33",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "scalar-short-kind",
+      "source_sha256": "376ed4d34bdaaa1b8bbc4d4251ae158fe8c6e995e90ad71ba7d9f5238bbfd803",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "scalar-short-(int)kind",
+      "source_sha256": "1a16d2b14712a1dab8a06ac7089ad5e5efcb3b12b81a42a0b4b91754ce8db379",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "scalar-long long-kind",
+      "source_sha256": "c705c9e18b5c9e84ab0f412ca603898a8c2f80077d856257c8b14e690badecca",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "scalar-long long-(int)kind",
+      "source_sha256": "fe90c6bfc3dd30a291afa554d231dd543e4a5f379e140d0541d3f83c694f09a8",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "scalar-unsigned long long-kind",
+      "source_sha256": "f53dde32bc13bdbdf91c053511e8400545304a29c2d8bb8695642f88bfe378de",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "scalar-unsigned long long-(int)kind",
+      "source_sha256": "084ad1d826c5f1458ef6c265cc29b490df0ed1ca20541ecce61e64e91a10b405",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "scalar-float-kind",
+      "source_sha256": "472b3e227352bd90192de622daf77a9f2e19094b2a70da27f004e6f28a2f0bd1",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "scalar-float-(int)kind",
+      "source_sha256": "4fdd89cf6f9aa8d1c0ba4d297e165f53015d4e38c8310fee445224d43a7da075",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.06704,
+      "size": "724"
+    },
+    {
+      "name": "scalar-double-kind",
+      "source_sha256": "c847cd9385191ce0fa6bf749c9c789a24722844049aa1fb4f43cc8a0c7805050",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.40224,
+      "size": "700"
+    },
+    {
+      "name": "scalar-double-(int)kind",
+      "source_sha256": "a94d18c6ee915d321e698764702ce7b0cce70b0492a8c4521e6eae6543604ec0",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 97.06704,
+      "size": "724"
+    },
+    {
+      "name": "enum-selector-((unsigned)selector >> 28) & 8",
+      "source_sha256": "1b4023dac51ae834b191add9298b706674ba29d352cbbf7fb5b4656e50e98748",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-selector-selector < 0 ? 8 : 0",
+      "source_sha256": "489139d64f739f2896763ab2c5ff8040febe3d3fc41cd2e61c5400075665665f",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.463684,
+      "size": "724"
+    },
+    {
+      "name": "enum-selector-(selector >> 31) & 8",
+      "source_sha256": "c16f6a24fc11c0d41711bf4c0fab5fe03ab59c47e83a1c634b59949c9f099901",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.71508,
+      "size": "720"
+    },
+    {
+      "name": "enum-address-intaddress",
+      "source_sha256": "b78dbfe1d4ddb97b97b0e18f6e558ba33af3330717a6d64dfbf9f88c5df1facb",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-address-ptraddress",
+      "source_sha256": "b04b68bc6217255b3ff9ddce6a8630a80a954beb64e9fc199c2db1f1bc6ec562",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-address-intaddressbyte",
+      "source_sha256": "e1a71e3a9908d7731134160f02873cb2677eb282b16bccae487b6aef4f7a164d",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-address-offsetfirst",
+      "source_sha256": "491218cce10063eaa7cac0aed02cf634a9bdbd49ecd663438ff4149aaca775c8",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 98.910614,
+      "size": "716"
+    },
+    {
+      "name": "enum-address-signedaddress",
+      "source_sha256": "8e73c067cdb7463561b6fc45b4d74ca54a20d059b98733852bd9087c8d62eec3",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-address-voidaddress",
+      "source_sha256": "04213345eb2a562fc23a7c00091c5012a89ee832ac56de3523ad53d41448bcd2",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-address-ptrcastenum",
+      "source_sha256": "de8b2024c756eb282f5f958211e024b2d9c36f4dd3bdc2a65bf90cccbf43e8ca",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-slot-pad-40",
+      "source_sha256": "4a0e9c3758f2892a14ff6c61981c7aef1931dd5fa03905c3141530aaaaced6c2",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-slot-pad-43",
+      "source_sha256": "48eb7afd3530f2fb11649421e3bddd0b867b9fb5b8740698979c189f1a528b0a",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-field-slot-(unsigned)selector >> 31",
+      "source_sha256": "ba1a7e382be4a3ddfab51eec96b418b161fb3d2d62f7185ca2ae5700ede44c34",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-field-slot-((unsigned)selector >> 28) & 8",
+      "source_sha256": "2b79eb53249da50beeaed2d6337878350c8a0b7a16c9599c4f20a98a1d05cb3b",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.21788,
+      "size": "716"
+    },
+    {
+      "name": "enum-helper-field",
+      "source_sha256": "8d698fb05201f0f5370771e42acc7afbf7edc4144d3fe3d926b051da78421a06",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-helper-setfield",
+      "source_sha256": "2c6bcb516ca9f169b2826643e52de2922b1b950c671d4e3d50e05413724bb30b",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-helper-address",
+      "source_sha256": "7c65f4d1925a8d563fb952469b01af042ceb38b6685a2f272358d5f2d0b6e8e4",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-helper-setlocal",
+      "source_sha256": "80c7eefe04aa8cc0e648327ade67c8ad27c64b060249606a54d7b4846a46e478",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 100.0,
+      "size": "716"
+    },
+    {
+      "name": "enum-helper-typed16",
+      "source_sha256": "ae165f587843638a855e3452f55be16ffa7740d9ab4a05f6c6e60219ea5e4bac",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-helper-typed8",
+      "source_sha256": "6c3da994e35e19f0d927e26bc5bc86b213f679b904f5591bab324d65255093d5",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "enum-helper-narrowshift",
+      "source_sha256": "c215d5d16e5d58371dd5b0181ec8298604dd11bb8d871d04cfb17a301af6a299",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 99.301674,
+      "size": "716"
+    },
+    {
+      "name": "final-formatted",
+      "source_sha256": "bf7adf79e5cb61ea7b2a89f7f4799c48badb2847c05fbd1b725e23eea8d7f8a3",
+      "compiler_exit": 0,
+      "compiler_output": "",
+      "objdiff_exit": 0,
+      "score": 100.0,
+      "size": "716"
+    }
+  ],
+  "experiments_note": "Sequential canonical-compiler measurements. Hashes identify temporary variants; only the final matching reconstruction is retained. The baseline is the source at the assigned base commit. The final source diff preserves the successful enum and pointer-update hypothesis.",
+  "source_sha256": "bf7adf79e5cb61ea7b2a89f7f4799c48badb2847c05fbd1b725e23eea8d7f8a3",
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "raw_log_tail": "### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n### mwldeppc.exe Linker Warning:\n#   Section '.ignored' is unknown. Section ignored.\n[908/911] DOL build/GEDE01/main.dol\n[909/911] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[910/911] PROGRESS\nProgress:\n  All: 58.24% fuzzy, 48.96% matched, 48.88% linked (6297 / 7068 files)\n    Code: 1126428 / 2300692 bytes (6064 / 8214 functions)\n    Data: 39606 / 4305642 bytes (0.92%)\n  Game Code: 93.81% fuzzy, 78.83% matched, 78.71% linked (6279 / 6633 files)\n    Code: 1123400 / 1425104 bytes (6002 / 6354 functions)\n    Data: 39382 / 40426 bytes (97.42%)\n  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\n    Code: 3028 / 3028 bytes (62 / 62 functions)\n    Data: 224 / 224 bytes (100.00%)\n",
+    "log_sha256": "e6d6e635eede78e6d0d10b0cafb6be50aa8d4b3ae8fa54648c0f27c190b77376",
+    "registration": "Object(Matching, \"game/game_fn_800A7A68.c\", extra_cflags=[\"-use_lmw_stmw on\"])",
+    "raw_linkage_line": "# game/game_fn_800A7A68.c: game (linked True)"
+  },
+  "dol_verification": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "scope": "Matching source is linked True; the rebuilt DOL includes this reconstruction."
+  },
+  "preserved_attempts_reviewed": [
+    "e1614674e36658c546c09e9f1c2825d4c26c0398",
+    "c4fac8a4ae67a19358b92bdacf0392ecfccf6e41"
+  ],
+  "review_notes": "Prior 97.40224% and 92.53072% reports were read from HEAD, and their remaining instruction differences were inspected. Earlier failed-attempt diagnoses were supplied in the assignment. No compiler flags, policies, neighboring functions, runtime code, global progress, or README were edited. Pre-existing CLAUDE.md modification is excluded.",
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_code": 0,
+    "stdout": "legal audit passed (20663 tracked project files inspected)\n",
+    "stderr": ""
+  },
+  "staged_diff_check": {
+    "command": "git diff --cached --check",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "staged_paths": [
+    "eternal-darkness-decomp/configure.py",
+    "eternal-darkness-decomp/reports/GEDE01/durable-da7045c6-2e64-442c-92dd-e792d28f020e.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-da7045c6-2e64-442c-92dd-e792d28f020e.json",
+    "eternal-darkness-decomp/src/game/game_fn_800A7A68.c"
+  ]
+}
