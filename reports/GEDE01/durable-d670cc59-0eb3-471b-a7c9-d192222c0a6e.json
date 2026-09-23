@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "d670cc59-0eb3-471b-a7c9-d192222c0a6e",
+  "attempt": 4,
+  "base_commit": "b5acf134c26762c5139a44cd07e2fb3cce77cabc",
+  "target": "fn_8011EE04",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d670cc59-0eb3-471b-a7c9-d192222c0a6e.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-d670cc59-0eb3-471b-a7c9-d192222c0a6e.json",
+    "eternal-darkness-decomp/reports/GEDE01/report-d670cc59-0eb3-471b-a7c9-d192222c0a6e.json"
+  ],
+  "divergence": "Canonical project-report fuzzy_match_percent is 91.12572%; raw per-symbol diff match_percent is 90.48% on both canonical and relocation-strict bases, with equal 700-byte code size. Two strict R_PPC_EMB_SDA21 unsigned-conversion relocations remain retail lbl_80650078 versus generated compiler-local @35. Remaining instruction differences are scheduling/register allocation around the lbl_8023A680 vector copy and fn_8011F890 setup, post-call scalar initialization, and late byte-field stores. Attempt 4 tested a distinct explicit float-local live-range hypothesis for the fn_8011F890 arguments: it moved the float loads ahead of the vector stores but remained 90.48%, so the no-benefit source churn was not retained. Moving the lbl_80650074 load after the byte-5 store regressed raw matching to 89.24571% and was also reverted. The retained source uses the established fn_80120AD0 argument order (object, null position, 100, 522, lbl_80650070, lbl_80650068). Full build passed; rebuilt DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
