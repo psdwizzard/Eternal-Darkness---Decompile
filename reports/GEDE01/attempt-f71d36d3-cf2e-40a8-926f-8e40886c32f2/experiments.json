@@ -1,0 +1,156 @@
+[
+  {
+    "name": "baseline",
+    "hypothesis_or_outcome": "Accepted-base two-word aggregate; same source as preserved attempt 5.",
+    "source": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/baseline.c.txt",
+    "source_sha256": "9ab4b9c08644807478792192dba1607377a8b1120a37b636e53e8c54d61dc099",
+    "build_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/baseline-build.log",
+    "canonical": {
+      "match_percent": 96.61194,
+      "target_size": "268",
+      "candidate_size": "276",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/baseline-canonical.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/baseline-canonical.log"
+    },
+    "strict": {
+      "match_percent": 96.61194,
+      "target_size": "268",
+      "candidate_size": "276",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/baseline-strict.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/baseline-strict.log"
+    }
+  },
+  {
+    "name": "packed-u64",
+    "hypothesis_or_outcome": "New hypothesis: a single packed 64-bit descriptor tail permits direct stores without a named aggregate. Failed: eight-byte alignment makes the initial state copy use lfd/stfd, and the final register schedule still differs.",
+    "source": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/packed-u64.c.txt",
+    "source_sha256": "908df3498b527373d2c1ed6a09440c3cac6194b15677ac373f0adfc8079e939c",
+    "build_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/packed-u64-build.log",
+    "canonical": {
+      "match_percent": 71.791046,
+      "target_size": "268",
+      "candidate_size": "236",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/packed-u64-canonical.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/packed-u64-canonical.log"
+    },
+    "strict": {
+      "match_percent": 71.791046,
+      "target_size": "268",
+      "candidate_size": "236",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/packed-u64-strict.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/packed-u64-strict.log"
+    }
+  },
+  {
+    "name": "inline-setter",
+    "hypothesis_or_outcome": "Editing error removed the DrawState.tail field as well as the temporary; compiler rejected the source. No score.",
+    "source": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/inline-setter.c.txt",
+    "source_sha256": "25a5024048490b15b931ff9debfedf178e434090046bb840599a50486f6b5197",
+    "build_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/inline-setter-build.json"
+  },
+  {
+    "name": "inline-setter-fixed",
+    "hypothesis_or_outcome": "New hypothesis: an inlined setter exposes the value argument before direct stores without creating an aggregate. Size-exact, but register scheduling regresses.",
+    "source": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/inline-setter-fixed.c.txt",
+    "source_sha256": "56fcddf976332091b9515925ce06b8792284c9f02bf0161ce3871527d94af929",
+    "build_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/inline-setter-fixed-build.log",
+    "canonical": {
+      "match_percent": 92.76119,
+      "target_size": "268",
+      "candidate_size": "268",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/inline-setter-fixed-canonical.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/inline-setter-fixed-canonical.log"
+    },
+    "strict": {
+      "match_percent": 92.76119,
+      "target_size": "268",
+      "candidate_size": "268",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/inline-setter-fixed-strict.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/inline-setter-fixed-strict.log"
+    }
+  },
+  {
+    "name": "aggregate-return",
+    "hypothesis_or_outcome": "New hypothesis: an inline aggregate return lets return-slot optimization write directly into the state. Failed: same extra temporary as baseline.",
+    "source": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/aggregate-return.c.txt",
+    "source_sha256": "6c0f64873f48eee64bbc5d1e13a10c2841f715e180e2ced3635fac0208317f40",
+    "build_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/aggregate-return-build.log",
+    "canonical": {
+      "match_percent": 96.61194,
+      "target_size": "268",
+      "candidate_size": "276",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/aggregate-return-canonical.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/aggregate-return-canonical.log"
+    },
+    "strict": {
+      "match_percent": 96.61194,
+      "target_size": "268",
+      "candidate_size": "276",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/aggregate-return-strict.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/aggregate-return-strict.log"
+    }
+  },
+  {
+    "name": "color-struct",
+    "hypothesis_or_outcome": "New hypothesis: the final word is a four-byte color aggregate, copied directly. Size-exact but reproduces the scalar late-load mismatch.",
+    "source": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/color-struct.c.txt",
+    "source_sha256": "b76f094d98e8b7e2542c9a04f2bb0431c089ecf7f436dd7aab9daa45d0b817fe",
+    "build_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/color-struct-build.log",
+    "canonical": {
+      "match_percent": 92.80597,
+      "target_size": "268",
+      "candidate_size": "268",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/color-struct-canonical.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/color-struct-canonical.log"
+    },
+    "strict": {
+      "match_percent": 92.80597,
+      "target_size": "268",
+      "candidate_size": "268",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/color-struct-strict.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/color-struct-strict.log"
+    }
+  },
+  {
+    "name": "color-first",
+    "hypothesis_or_outcome": "Color aggregate copied before flags assignment. Compiler again selects the same late-load schedule.",
+    "source": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/color-first.c.txt",
+    "source_sha256": "108d859a1d2ede8e7d92c73e28c3c537aa5a5b1c2ad3425b615180fc5b60c547",
+    "build_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/color-first-build.log",
+    "canonical": {
+      "match_percent": 92.80597,
+      "target_size": "268",
+      "candidate_size": "268",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/color-first-canonical.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/color-first-canonical.log"
+    },
+    "strict": {
+      "match_percent": 92.80597,
+      "target_size": "268",
+      "candidate_size": "268",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/color-first-strict.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/color-first-strict.log"
+    }
+  },
+  {
+    "name": "final",
+    "hypothesis_or_outcome": "Restored accepted-base best source; no source or registration changes retained.",
+    "source": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/final.c.txt",
+    "source_sha256": "9ab4b9c08644807478792192dba1607377a8b1120a37b636e53e8c54d61dc099",
+    "build_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/final-build.log",
+    "canonical": {
+      "match_percent": 96.61194,
+      "target_size": "268",
+      "candidate_size": "276",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/final-canonical.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/final-canonical.log"
+    },
+    "strict": {
+      "match_percent": 96.61194,
+      "target_size": "268",
+      "candidate_size": "276",
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/final-strict.json",
+      "command_log": "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/final-strict.log"
+    }
+  }
+]

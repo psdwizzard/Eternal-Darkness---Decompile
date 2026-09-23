@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "assignment_id": "f71d36d3-cf2e-40a8-926f-8e40886c32f2",
+  "attempt": 6,
+  "base_commit": "430a8060e7202689d0f9d61477a7bf2150106d4e",
+  "target": "fn_801E7CBC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f71d36d3-cf2e-40a8-926f-8e40886c32f2.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-f71d36d3-cf2e-40a8-926f-8e40886c32f2.json",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/final-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/experiments.json",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/full-build.log",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/dol-sha1.log",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/relocation-audit.json",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-f71d36d3-cf2e-40a8-926f-8e40886c32f2/legal-audit.log"
+  ],
+  "divergence": "Retained best measures 96.61194% canonical and relocation-strict with objdiff-cli 3.6.1. GC/1.3 retains the eight-byte DrawTail temporary, uses a 0x50 rather than 0x40 frame, moves state from sp+0x08 to sp+0x10, uses r7 rather than r3 for 0x80000000, and adds stw r7,0x28(r1) and stw r0,0x2C(r1). Candidate is 276 bytes versus retail 268. All 12 physical relocation types, target names and addends agree in sequence, but eight call relocation sites are shifted by eight bytes. No match claimed."
+}

@@ -1,0 +1,63 @@
+[
+  {
+    "command": [
+      "git",
+      "show",
+      "9a65f96c21481bbedb6d916eb720dbc03216bccb:eternal-darkness-decomp/reports/GEDE01/durable-9b3b1fd5-c0d1-49db-bff9-d5f5a0cc0136.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"version\": 1,\n  \"assignment_id\": \"9b3b1fd5-c0d1-49db-bff9-d5f5a0cc0136\",\n  \"attempt\": 5,\n  \"base_commit\": \"430a8060e7202689d0f9d61477a7bf2150106d4e\",\n  \"target\": \"fn_801E7CBC\",\n  \"status\": \"attempted\",\n  \"evidence\": [\n    \"eternal-darkness-decomp/reports/GEDE01/objdiff-9b3b1fd5-c0d1-49db-bff9-d5f5a0cc0136.json\"\n  ],\n  \"divergence\": \"Best retained honest C is 96.710144%: GC/1.3 materializes the two-word tail aggregate at stack offsets 0x08/0x0C, expands the frame from retail 0x40 to 0x50, and adds two stores copying it to state, yielding 276 bytes versus 268. A distinct scalar-snapshot hypothesis forced the early value load without an aggregate but kept it in r7 and scored 92.791046%; embedding the stores in the call argument expression reverted to the documented late-load 92.80597% schedule. All relocation targets and addends align in the retained best candidate.\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "show",
+      "4a58aad0e265e5fa9cb7fb59a685fe322eef365e:eternal-darkness-decomp/reports/GEDE01/durable-5a08f89f-7043-4b5f-a497-6df3b6abab73.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"version\": 1,\n  \"assignment_id\": \"5a08f89f-7043-4b5f-a497-6df3b6abab73\",\n  \"attempt\": 4,\n  \"base_commit\": \"6424a69cacb130512ca988c15daa5ddb8c25bda0\",\n  \"target\": \"fn_801E7CBC\",\n  \"status\": \"attempted\",\n  \"evidence\": [\n    \"eternal-darkness-decomp/reports/GEDE01/objdiff-5a08f89f-7043-4b5f-a497-6df3b6abab73.json\",\n    \"eternal-darkness-decomp/reports/GEDE01/verification-5a08f89f-7043-4b5f-a497-6df3b6abab73.json\"\n  ],\n  \"divergence\": \"Best honest C is 96.61194%: the two-word aggregate recovers retail's early load and argument schedule, but GC/1.3 retains an eight-byte temporary, expands the frame from 0x40 to 0x50, and emits two extra tail-copy stores, producing 276 bytes versus retail's 268.\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "show",
+      "5035e00778af7c798c2912246bf0b59a283f321a:eternal-darkness-decomp/reports/GEDE01/durable-210bf385-0dde-466c-ad49-0bbc7e1cda96.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"version\": 1,\n  \"assignment_id\": \"210bf385-0dde-466c-ad49-0bbc7e1cda96\",\n  \"attempt\": 3,\n  \"base_commit\": \"d8c3b13b15b0face920468419380de4b092616ae\",\n  \"target\": \"fn_801E7CBC\",\n  \"status\": \"attempted\",\n  \"evidence\": [\n    \"eternal-darkness-decomp/reports/GEDE01/objdiff-210bf385-0dde-466c-ad49-0bbc7e1cda96.json\",\n    \"eternal-darkness-decomp/reports/GEDE01/verification-210bf385-0dde-466c-ad49-0bbc7e1cda96.json\"\n  ],\n  \"divergence\": \"Size-exact honest C at 92.80597%. At offsets 0x78-0x94 GC/1.3 schedules the two final descriptor stores and four fn_801EDA7C argument-setup instructions differently from retail, rotating volatile r0/r3/r5 assignments; all other instructions and every relocation target/addend align.\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "show",
+      "78ce86a6818f3f0fd19d5e95b113ed38d7f138a4:eternal-darkness-decomp/reports/GEDE01/durable-538c6045-13d2-4239-a51d-24d62735cc66.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"version\": 1,\n  \"assignment_id\": \"538c6045-13d2-4239-a51d-24d62735cc66\",\n  \"attempt\": 2,\n  \"base_commit\": \"674ccc28296924b11ab1be8591044781159af681\",\n  \"target\": \"fn_801E7CBC\",\n  \"status\": \"attempted\",\n  \"evidence\": [\n    \"eternal-darkness-decomp/reports/GEDE01/objdiff-538c6045-13d2-4239-a51d-24d62735cc66.json\",\n    \"eternal-darkness-decomp/reports/GEDE01/verification-538c6045-13d2-4239-a51d-24d62735cc66.json\"\n  ],\n  \"divergence\": \"Size-exact honest C at 92.80597%. At offsets 0x78-0x94 GC/1.3 schedules the two final descriptor stores and four fn_801EDA7C argument-setup instructions differently from retail, rotating volatile r0/r3/r5 assignments; all other instructions and every relocation target/addend align.\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "show",
+      "73a3c3417856582242ee71e0a5b4141e52f1609a:eternal-darkness-decomp/reports/GEDE01/durable-ef3b2f07-12dc-43c2-abbc-5d6628cc89b8.json"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"version\": 1,\n  \"assignment_id\": \"ef3b2f07-12dc-43c2-abbc-5d6628cc89b8\",\n  \"attempt\": 1,\n  \"base_commit\": \"db213e5034b64fcb72b82769b9fb10df83bbcd5c\",\n  \"target\": \"fn_801E7CBC\",\n  \"status\": \"attempted\",\n  \"evidence\": [\n    \"eternal-darkness-decomp/reports/GEDE01/objdiff-ef3b2f07-12dc-43c2-abbc-5d6628cc89b8.json\",\n    \"eternal-darkness-decomp/reports/GEDE01/verification-ef3b2f07-12dc-43c2-abbc-5d6628cc89b8.json\"\n  ],\n  \"divergence\": \"Size-exact honest C at 92.80597%. GC/1.3 schedules the final two descriptor stores and four fn_801EDA7C argument-setup instructions differently from retail, rotating volatile r0/r3/r5 assignments; all other instructions and all relocation targets/addends align.\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "show",
+      "9a65f96c21481bbedb6d916eb720dbc03216bccb:eternal-darkness-decomp/src/game/game_fn_801E7CBC.c"
+    ],
+    "exit_code": 0,
+    "stdout": "typedef unsigned int u32;\n\ntypedef struct Vec3 {\n    float x;\n    float y;\n    float z;\n} Vec3;\n\ntypedef struct DrawTail {\n    u32 flags;\n    u32 value;\n} DrawTail;\n\ntypedef struct DrawState {\n    u32 words[6];\n    DrawTail tail;\n} DrawState;\n\nextern DrawState lbl_8023B6A8;\nextern void fn_801ECC4C(void);\nextern void fn_801ED468(int);\nextern void fn_801EDA7C(void*, int, int, int);\nextern void fn_801ECF50(int);\nextern void fn_80226AB4(int, int, int);\nextern void fn_801E7BDC(float, float, float);\nextern void fn_801E7BD8(void);\n\n/* NonMatching: an explicit two-word tail aggregate reproduces retail's early\n * value load and argument schedule, but GC/1.3 retains the aggregate as an\n * eight-byte temporary and emits two extra stores when copying it into state. */\nvoid fn_801E7CBC(Vec3* a, Vec3* b, Vec3* c, Vec3* d, u32* value)\n{\n    DrawState state = lbl_8023B6A8;\n    DrawTail tail;\n\n    fn_801ECC4C();\n    fn_801ED468(0x1B);\n    tail.flags = 0x80000000;\n    tail.value = *value;\n    state.tail = tail;\n    fn_801EDA7C(&state, 0, 0x2BF, 0);\n    fn_801ECF50(4);\n    fn_80226AB4(0x80, 3, 4);\n    fn_801E7BDC(a->x, a->y, a->z);\n    fn_801E7BDC(b->x, b->y, b->z);\n    fn_801E7BDC(c->x, c->y, c->z);\n    fn_801E7BDC(d->x, d->y, d->z);\n    fn_801E7BD8();\n}\n",
+    "stderr": "",
+    "equal_to_retained_source": true
+  }
+]
