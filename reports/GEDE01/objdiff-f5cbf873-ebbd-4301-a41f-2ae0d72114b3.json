@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "assignment_id": "f5cbf873-ebbd-4301-a41f-2ae0d72114b3",
+  "attempt": 5,
+  "target": "fn_80109CB0",
+  "unit": "main/game/game_fn_80109CB0",
+  "compiler": "GC/1.3 (canonical configuration)",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80109CB0 fn_80109CB0 -o build/GEDE01/fn_80109CB0-attempt5-final.json --format json-pretty -c function_reloc_diffs=name_address",
+    "instruction_diff": "python3 tools/fndiff.py game/game_fn_80109CB0.c fn_80109CB0",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measured_outputs": {
+    "build": "[903/908] MWCC build/GEDE01/src/game/game_fn_80109CB0.o\n[906/908] DOL build/GEDE01/main.dol\n[907/908] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[908/908] PROGRESS",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "objdiff": "target 112 bytes  base 112 bytes  match 92.85714",
+    "generated_instruction_count": 28,
+    "retail_instruction_count": 28,
+    "instruction_diff_rows": [
+      "generated 0x0024: lwz r3, lbl_8064CCA0@sda21 [target lbl_8064CCA0 addend 0 type 109] | retail: absent (DIFF_DELETE)",
+      "generated 0x0028: li r4, 0x3 | retail 0x0024: li r4, 0x3",
+      "generated 0x002c: bge 0x34 | retail 0x0028: bge 0x30",
+      "generated 0x0030: li r4, 0x0 | retail 0x002c: li r4, 0x0",
+      "generated: absent | retail 0x0030: lwz r3, lbl_8064CCA0@sda21 [target lbl_8064CCA0 addend 0 type 109] (DIFF_INSERT)"
+    ],
+    "new_variant": "duplicated full fn_801E8B24 call in both signed-argument branches: target 112 bytes, base 128 bytes, match 78.35714"
+  },
+  "relocation_strict": {
+    "passed": false,
+    "equal_sites": "7/8",
+    "generated": [
+      "0x14 R_PPC_EMB_SDA21 lbl_8064CCA0 addend 0",
+      "0x18 R_PPC_REL24 fn_801E8D34 addend 0",
+      "0x24 R_PPC_EMB_SDA21 lbl_8064CCA0 addend 0",
+      "0x38 R_PPC_REL24 fn_801E8B24 addend 0",
+      "0x3c R_PPC_EMB_SDA21 lbl_8064CCA0 addend 0",
+      "0x40 R_PPC_REL24 fn_801E8D34 addend 0",
+      "0x54 R_PPC_REL24 fn_801A98F4 addend 0",
+      "0x58 R_PPC_REL24 fn_80144C40 addend 0"
+    ],
+    "retail": [
+      "0x14 R_PPC_EMB_SDA21 lbl_8064CCA0 addend 0",
+      "0x18 R_PPC_REL24 fn_801E8D34 addend 0",
+      "0x30 R_PPC_EMB_SDA21 lbl_8064CCA0 addend 0",
+      "0x38 R_PPC_REL24 fn_801E8B24 addend 0",
+      "0x3c R_PPC_EMB_SDA21 lbl_8064CCA0 addend 0",
+      "0x40 R_PPC_REL24 fn_801E8D34 addend 0",
+      "0x54 R_PPC_REL24 fn_801A98F4 addend 0",
+      "0x58 R_PPC_REL24 fn_80144C40 addend 0"
+    ],
+    "divergence": "The second lbl_8064CCA0 SDA21 relocation has the correct type, target, and zero addend, but occurs at generated offset 0x24 rather than retail offset 0x30."
+  },
+  "codegen_hypothesis": "Attempt 5 tested branch-tail merging, a distinct hypothesis from prior declaration, prototype, label, conditional-expression, and object-assignment variants: duplicate the complete fn_801E8B24 call in the negative and nonnegative branches so the optimizer could merge the common call after selecting r4 and thereby leave the global load at the join. GC/1.3 did not tail-merge these calls; it emitted both calls and grew the function to 128 bytes.",
+  "retained_reconstruction": "The pre-existing honest 112-byte NonMatching C reconstruction remains best at 92.85714%; no source, registration, or split change was needed on the accepted base.",
+  "legal_audit": {
+    "independent_translation_unit": "src/game/game_fn_80109CB0.c",
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
