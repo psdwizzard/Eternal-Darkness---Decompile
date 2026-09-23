@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "assignment_id": "7eca8d2a-5f7e-4a44-bd7c-78f101c47061",
+  "target": "fn_800746CC",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800746CC fn_800746CC -o build/GEDE01/attempt4-final-canonical.json --format json-pretty",
+    "raw_objdiff_measurement": {
+      "left": {"name":"fn_800746CC","size":"256","match_percent":92.171875},
+      "right": {"name":"fn_800746CC","size":"256","match_percent":92.171875}
+    },
+    "raw_diff_rows": [
+      "DIFF_INSERT: generated 0x10 stw r30,0x28(r1)",
+      "DIFF_INSERT: generated 0x14 stw r29,0x24(r1)",
+      "DIFF_ARG_MISMATCH: retail 0x10 mr r31,r3 | generated 0x18 mr r29,r4",
+      "DIFF_ARG_MISMATCH: retail 0x14 stw r30,0x28(r1) | generated 0x1c stw r28,0x20(r1)",
+      "DIFF_ARG_MISMATCH: retail 0x18 mr r30,r4 | generated 0x20 mr r28,r3",
+      "DIFF_DELETE: retail 0x1c stw r29,0x24(r1)",
+      "DIFF_DELETE: retail 0x20 stw r28,0x20(r1)",
+      "18 total DIFF_ARG_MISMATCH rows, 2 DIFF_INSERT rows, 2 DIFF_DELETE rows"
+    ]
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800746CC fn_800746CC -o build/GEDE01/attempt4-final-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_objdiff_measurement": {
+      "left": {"name":"fn_800746CC","size":"256","match_percent":92.171875},
+      "right": {"name":"fn_800746CC","size":"256","match_percent":92.171875}
+    },
+    "exact_offset_type_target_addend_sites": 13,
+    "total_sites": 13,
+    "retail_readelf_command": "build/binutils/powerpc-eabi-readelf -r build/GEDE01/obj/game/game_fn_800746CC.o",
+    "retail_readelf_raw_output": "Relocation section '.rela.text' at offset 0x140 contains 13 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000024  0000040a R_PPC_REL24       00000000   fn_80128EAC + 0\n00000034  0000050a R_PPC_REL24       00000000   fn_801A7498 + 0\n00000044  0000060a R_PPC_REL24       00000000   fn_801A7490 + 0\n00000054  0000070a R_PPC_REL24       00000000   fn_80201814 + 0\n00000058  0000080a R_PPC_REL24       00000000   fn_80201B8C + 0\n00000064  0000070a R_PPC_REL24       00000000   fn_80201814 + 0\n00000068  0000090a R_PPC_REL24       00000000   fn_80201BC8 + 0\n00000078  00000a0a R_PPC_REL24       00000000   fn_8011F114 + 0\n00000084  00000b0a R_PPC_REL24       00000000   fn_80178E94 + 0\n00000094  00000c0a R_PPC_REL24       00000000   fn_80128BE4 + 0\n000000b0  00000d0a R_PPC_REL24       00000000   fn_8020123C + 0\n000000c4  00000d0a R_PPC_REL24       00000000   fn_8020123C + 0\n000000d8  00000e0a R_PPC_REL24       00000000   fn_8011FA8C + 0",
+    "generated_readelf_command": "build/binutils/powerpc-eabi-readelf -r build/GEDE01/src/game/game_fn_800746CC.o",
+    "generated_readelf_raw_output": "Relocation section '.rela.text' at offset 0x134 contains 13 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000024  0000030a R_PPC_REL24       00000000   fn_80128EAC + 0\n00000034  0000040a R_PPC_REL24       00000000   fn_801A7498 + 0\n00000044  0000050a R_PPC_REL24       00000000   fn_801A7490 + 0\n00000054  0000060a R_PPC_REL24       00000000   fn_80201814 + 0\n00000058  0000070a R_PPC_REL24       00000000   fn_80201B8C + 0\n00000064  0000060a R_PPC_REL24       00000000   fn_80201814 + 0\n00000068  0000080a R_PPC_REL24       00000000   fn_80201BC8 + 0\n00000078  0000090a R_PPC_REL24       00000000   fn_8011F114 + 0\n00000084  00000a0a R_PPC_REL24       00000000   fn_80178E94 + 0\n00000094  00000b0a R_PPC_REL24       00000000   fn_80128BE4 + 0\n000000b0  00000c0a R_PPC_REL24       00000000   fn_8020123C + 0\n000000c4  00000c0a R_PPC_REL24       00000000   fn_8020123C + 0\n000000d8  00000d0a R_PPC_REL24       00000000   fn_8011FA8C + 0"
+  },
+  "attempt4_experiments": [
+    {
+      "hypothesis": "Keep object and original link as parameter-owned live ranges, with resolved first as a separate local, to change the allocator interference/coalescing graph rather than declaration order.",
+      "result": "rejected",
+      "raw_objdiff_measurement": {"retail_size":"256","generated_size":"256","match_percent":92.171875},
+      "codegen": "Identical to retained baseline: object/first/second/state remain r28/r29/r30/r31."
+    },
+    {
+      "hypothesis": "Move resolved locals into the guarded nested scope with declaration-time initialization, then add register-qualified parameters and nested locals.",
+      "result": "rejected",
+      "raw_objdiff_measurement": {"retail_size":"256","generated_size":"256","match_percent":92.171875},
+      "codegen": "Allocator changed roles to object/first/second/state r28/r31/r30/r29, still not retail r31/r30/r29/r28; register-qualified refinement was byte-identical to the nested form."
+    }
+  ],
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "raw_check_output": "build/GEDE01/main.dol: OK",
+    "sha1_command": "sha1sum build/GEDE01/main.dol",
+    "sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_verified": true
+  },
+  "codegen_divergence": "Retail assigns object/first/second/state to r31/r30/r29/r28 and interleaves the incoming r3/r4 moves with nonvolatile saves. Canonical GC/1.3 assigns those roles to r28/r29/r30/r31, saves r31-r29 before moving link to r29, then saves r28 before moving object to r28. Remaining body differences are the corresponding register substitutions; size, control flow, branch locations, call locations, and every relocation offset/type/target/addend agree."
+}
