@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "8cc15303-106b-4a85-bacf-b3361d991ee0",
+  "attempt": 5,
+  "base_commit": "86b6528f2d6e280f87110b78978e08636dfbe858",
+  "target": "fn_80124DBC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-8cc15303-106b-4a85-bacf-b3361d991ee0.json"
+  ],
+  "divergence": "Canonical GC/1.3 still emits _savegpr_27/_restgpr_27 calls instead of retail stmw/lmw (8 extra bytes and two extra R_PPC_REL24 relocations). The frame-equality check uses one beq instead of bne plus b (4 fewer bytes). Six slot accesses use addi plus indexed loads/stores instead of add plus fixed-displacement accesses. Net size: 844 versus 840 bytes. All four flag-clear sequences now match retail rlwinm."
+}

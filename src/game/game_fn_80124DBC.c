@@ -77,9 +77,9 @@ void fn_80124DBC(void* owner)
     }
 
     if (U32(owner, 0x254) & 0x10000000) {
-        U32((void*)U32(owner, 0x2A0), 0) &= ~2;
+        U32((void*)U32(owner, 0x2A0), 0) &= ~2u;
     } else {
-        U32((void*)U32(owner, 0x2A0), 0) &= ~2;
+        U32((void*)U32(owner, 0x2A0), 0) &= ~2u;
     }
     fn_80120B58(owner);
     if (U8(owner, 0x2DE) != 0) {
@@ -115,7 +115,7 @@ void fn_80124DBC(void* owner)
                     lbl_804F3650, first_count,
                     triple, scale);
     } else {
-        U32(owner, 0x254) &= ~0x80000;
+        U32(owner, 0x254) &= ~0x80000u;
         *(void**)((u8*)owner + 0x164 + lbl_8064D738 * 4) = 0;
         *(void**)((u8*)owner + 0x16C + lbl_8064D738 * 4) = 0;
     }
@@ -142,7 +142,7 @@ void fn_80124DBC(void* owner)
                 F32(owner, 0x14) = *(float*)((u8*)&hit + 8);
                 U32(owner, 0x254) |= 0x100;
             } else {
-                U32(owner, 0x254) &= ~0x100;
+                U32(owner, 0x254) &= ~0x100u;
             }
         } else {
             F32(owner, 0x14) = F32(owner, 8);

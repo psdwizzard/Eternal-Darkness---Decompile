@@ -1,0 +1,559 @@
+{
+  "version": 1,
+  "assignment_id": "8cc15303-106b-4a85-bacf-b3361d991ee0",
+  "target": "fn_80124DBC",
+  "recovered_from": "8a4f68ed08b64e820ce1d74cf91971f695a40489",
+  "base_reconciliation": "Target source on accepted base was byte-identical to preserved source; retained registration and split unchanged.",
+  "compiler_settings": {
+    "registration": "Object(NonMatching, \"game/game_fn_80124DBC.c\")",
+    "canonical_settings_preserved": true,
+    "raw_build_command": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_80124DBC.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80124DBC.d build/GEDE01/src/game/game_fn_80124DBC.d\n"
+  },
+  "hypothesis": "Use unsigned complement operands for word flag clears: GC/1.3 may recognize unsigned wrapping masks as rlwinm while signed complements materialize constants. This differs from prior byte-bitfield and declaration-order variants.",
+  "experiments": [
+    {
+      "variant": "accepted baseline",
+      "raw_summary": "target 840 bytes  base 864 bytes  match 90.333336"
+    },
+    {
+      "variant": "~2u, ~0x80000u, ~0x100u",
+      "raw_summary": "target 840 bytes  base 844 bytes  match 94.38095",
+      "retained": true
+    },
+    {
+      "variant": "apply slot index before fixed displacement in byte pointer expression",
+      "raw_summary": "target 840 bytes  base 844 bytes  match 94.38095",
+      "retained": false
+    },
+    {
+      "variant": "shifted base cast to padded struct with first/second fields at 0x164/0x16c",
+      "raw_summary": "target 840 bytes  base 844 bytes  match 94.38095",
+      "retained": false
+    },
+    {
+      "variant": "struct view with integer base address; then unsigned index arithmetic",
+      "raw_summary": "target 840 bytes  base 844 bytes  match 94.38095",
+      "retained": false
+    }
+  ],
+  "canonical": {
+    "command": "python3 tools/fndiff.py game/game_fn_80124DBC.c fn_80124DBC",
+    "raw_symbol_metadata": {
+      "left": {
+        "name": "fn_80124DBC",
+        "size": "840",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 94.38095
+      },
+      "right": {
+        "name": "fn_80124DBC",
+        "size": "844",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 94.38095
+      }
+    },
+    "raw_stdout": "target 840 bytes  base 844 bytes  match 94.38095\n  0x0000  stwu r1, -0xc0(r1)                                   | stwu r1, -0xc0(r1)\n  0x0004  mflr r0                                              | mflr r0\n  0x0008  stw r0, 0xc4(r1)                                     | stw r0, 0xc4(r1)\n  0x000c  stfd f31, 0xb0(r1)                                   | stfd f31, 0xb0(r1)\n  0x0010  psq_st f31, 0xb8(r1), 0, qr0                         | psq_st f31, 0xb8(r1), 0, qr0\n  0x0014  stfd f30, 0xa0(r1)                                   | stfd f30, 0xa0(r1)\n  0x0018  psq_st f30, 0xa8(r1), 0, qr0                         | psq_st f30, 0xa8(r1), 0, qr0\n* 0x001c  stmw r27, 0x8c(r1)                                   | addi r11, r1, 0xa0\n* 0x0020                                                       | bl _savegpr_27 [None+0 t10]\n  0x0024  lis r4, lbl_8063D378@ha [None+0 t6]                  | lis r4, lbl_8063D378@ha [None+0 t6]\n  0x0028  lwz r29, 0x3c(r3)                                    | lwz r29, 0x3c(r3)\n  0x002c  mr r27, r3                                           | mr r27, r3\n  0x0030  addi r4, r4, lbl_8063D378@l [None+0 t4]              | addi r4, r4, lbl_8063D378@l [None+0 t4]\n  0x0034  bl fn_8017968C [None+0 t10]                          | bl fn_8017968C [None+0 t10]\n  0x0038  lwz r0, 0x2a0(r27)                                   | lwz r0, 0x2a0(r27)\n  0x003c  fmr f30, f1                                          | fmr f30, f1\n  0x0040  lfs f31, 0x2ac(r27)                                  | lfs f31, 0x2ac(r27)\n  0x0044  cmplwi r0, 0x0                                       | cmplwi r0, 0x0\n  0x0048  beq 0x324                                            | beq 0x324\n  0x004c  lfs f0, lbl_80650110@sda21 [None+0 t109]             | lfs f0, lbl_80650110@sda21 [None+0 t109]\n  0x0050  fcmpu cr0, f0, f31                                   | fcmpu cr0, f0, f31\n* 0x0054  bne 0x58                                             | beq 0x324\n* 0x0058  b 0x324                                              | \n  0x005c  mr r3, r27                                           | mr r3, r27\n  0x0060  bl fn_80126050 [None+0 t10]                          | bl fn_80126050 [None+0 t10]\n  0x0064  cmpwi r3, 0x0                                        | cmpwi r3, 0x0\n  0x0068  beq 0x324                                            | beq 0x324\n  0x006c  lwz r0, 0x254(r27)                                   | lwz r0, 0x254(r27)\n  0x0070  rlwinm. r0, r0, 0, 3, 3                              | rlwinm. r0, r0, 0, 3, 3\n  0x0074  beq 0x88                                             | beq 0x88\n  0x0078  lwz r3, 0x2a0(r27)                                   | lwz r3, 0x2a0(r27)\n  0x007c  lwz r0, 0x0(r3)                                      | lwz r0, 0x0(r3)\n  0x0080  rlwinm r0, r0, 0, 31, 29                             | rlwinm r0, r0, 0, 31, 29\n  0x0084  stw r0, 0x0(r3)                                      | stw r0, 0x0(r3)\n  0x0088  b 0x98                                               | b 0x98\n  0x008c  lwz r3, 0x2a0(r27)                                   | lwz r3, 0x2a0(r27)\n  0x0090  lwz r0, 0x0(r3)                                      | lwz r0, 0x0(r3)\n  0x0094  rlwinm r0, r0, 0, 31, 29                             | rlwinm r0, r0, 0, 31, 29\n  0x0098  stw r0, 0x0(r3)                                      | stw r0, 0x0(r3)\n  0x009c  mr r3, r27                                           | mr r3, r27\n  0x00a0  bl fn_80120B58 [None+0 t10]                          | bl fn_80120B58 [None+0 t10]\n  0x00a4  lbz r0, 0x2de(r27)                                   | lbz r0, 0x2de(r27)\n  0x00a8  cmplwi r0, 0x0                                       | cmplwi r0, 0x0\n  0x00ac  beq 0xcc                                             | beq 0xcc\n  0x00b0  lbz r3, 0x2df(r27)                                   | lbz r3, 0x2df(r27)\n  0x00b4  cmplw r0, r3                                         | cmplw r0, r3\n  0x00b8  bge 0xc4                                             | bge 0xc4\n  0x00bc  li r0, 0x0                                           | li r0, 0x0\n  0x00c0  stb r0, 0x2de(r27)                                   | stb r0, 0x2de(r27)\n  0x00c4  b 0xcc                                               | b 0xcc\n  0x00c8  subf r0, r3, r0                                      | subf r0, r3, r0\n  0x00cc  stb r0, 0x2de(r27)                                   | stb r0, 0x2de(r27)\n  0x00d0  lwz r0, 0x254(r27)                                   | lwz r0, 0x254(r27)\n  0x00d4  rlwinm. r0, r0, 0, 12, 12                            | rlwinm. r0, r0, 0, 12, 12\n  0x00d8  beq 0x324                                            | beq 0x324\n  0x00dc  mr r3, r27                                           | mr r3, r27\n  0x00e0  bl fn_801248FC [None+0 t10]                          | bl fn_801248FC [None+0 t10]\n  0x00e4  mr r3, r27                                           | mr r3, r27\n  0x00e8  li r4, 0x0                                           | li r4, 0x0\n  0x00ec  bl fn_80124180 [None+0 t10]                          | bl fn_80124180 [None+0 t10]\n  0x00f0  mr r3, r29                                           | mr r3, r29\n  0x00f4  bl fn_801243A8 [None+0 t10]                          | bl fn_801243A8 [None+0 t10]\n  0x00f8  fmr f1, f31                                          | fmr f1, f31\n  0x00fc  lhz r3, 0x1e(r29)                                    | lhz r3, 0x1e(r29)\n  0x0100  bl fn_80130998 [None+0 t10]                          | bl fn_80130998 [None+0 t10]\n  0x0104  fmr f1, f31                                          | fmr f1, f31\n  0x0108  mr r0, r3                                            | mr r0, r3\n  0x010c  lhz r3, 0x1e(r29)                                    | lhz r3, 0x1e(r29)\n  0x0110  mr r31, r0                                           | mr r31, r0\n  0x0114  bl fn_80130998 [None+0 t10]                          | bl fn_80130998 [None+0 t10]\n  0x0118  lwz r0, 0x254(r27)                                   | lwz r0, 0x254(r27)\n  0x011c  mr r30, r3                                           | mr r30, r3\n  0x0120  rlwinm. r28, r0, 0, 9, 9                             | rlwinm. r28, r0, 0, 9, 9\n  0x0124  beq 0x128                                            | beq 0x128\n  0x0128  mulli r30, r30, 0x3                                  | mulli r30, r30, 0x3\n  0x012c  fmr f1, f31                                          | fmr f1, f31\n  0x0130  mr r3, r27                                           | mr r3, r27\n  0x0134  mr r4, r31                                           | mr r4, r31\n  0x0138  bl fn_80120744 [None+0 t10]                          | bl fn_80120744 [None+0 t10]\n  0x013c  lwz r0, lbl_8064D738@sda21 [None+0 t109]             | lwz r0, lbl_8064D738@sda21 [None+0 t109]\n  0x0140  fmr f1, f31                                          | fmr f1, f31\n  0x0144  mr r4, r30                                           | mr r4, r30\n* 0x0148  slwi r0, r0, 2                                       | slwi r5, r0, 2\n* 0x014c  add r5, r27, r0                                      | addi r0, r5, 0x164\n* 0x0150  stw r3, 0x164(r5)                                    | stwx r3, r27, r0\n  0x0154  mr r3, r27                                           | mr r3, r27\n  0x0158  bl fn_801208AC [None+0 t10]                          | bl fn_801208AC [None+0 t10]\n  0x015c  lwz r0, lbl_8064D738@sda21 [None+0 t109]             | lwz r0, lbl_8064D738@sda21 [None+0 t109]\n* 0x0160  slwi r0, r0, 2                                       | slwi r4, r0, 2\n* 0x0164  add r4, r27, r0                                      | addi r0, r4, 0x16c\n* 0x0168  stw r3, 0x16c(r4)                                    | stwx r3, r27, r0\n  0x016c  lwz r0, lbl_8064D738@sda21 [None+0 t109]             | lwz r0, lbl_8064D738@sda21 [None+0 t109]\n  0x0170  slwi r0, r0, 2                                       | slwi r0, r0, 2\n  0x0174  add r3, r27, r0                                      | add r3, r27, r0\n  0x0178  lwz r0, 0x164(r3)                                    | lwz r0, 0x164(r3)\n  0x017c  cmplwi r0, 0x0                                       | cmplwi r0, 0x0\n  0x0180  beq 0x1e0                                            | beq 0x1e0\n  0x0184  lwz r0, 0x16c(r3)                                    | lwz r0, 0x16c(r3)\n  0x0188  cmplwi r0, 0x0                                       | cmplwi r0, 0x0\n  0x018c  beq 0x1e0                                            | beq 0x1e0\n  0x0190  mr r3, r27                                           | mr r3, r27\n  0x0194  mr r4, r29                                           | mr r4, r29\n  0x0198  addi r5, r1, 0x14                                    | addi r5, r1, 0x14\n  0x019c  addi r6, r1, 0x10                                    | addi r6, r1, 0x10\n  0x01a0  bl fn_80124A40 [None+0 t10]                          | bl fn_80124A40 [None+0 t10]\n  0x01a4  lwz r0, lbl_8064D738@sda21 [None+0 t109]             | lwz r0, lbl_8064D738@sda21 [None+0 t109]\n  0x01a8  lis r3, lbl_804F3650@ha [None+0 t6]                  | lis r3, lbl_804F3650@ha [None+0 t6]\n  0x01ac  addi r9, r3, lbl_804F3650@l [None+0 t4]              | addi r9, r3, lbl_804F3650@l [None+0 t4]\n  0x01b0  fmr f1, f30                                          | fmr f1, f30\n  0x01b4  stw r28, 0x8(r1)                                     | stw r28, 0x8(r1)\n  0x01b8  slwi r0, r0, 2                                       | slwi r0, r0, 2\n  0x01bc  add r8, r27, r0                                      | add r8, r27, r0\n  0x01c0  mr r3, r27                                           | mr r3, r27\n  0x01c4  lwz r7, 0x164(r8)                                    | lwz r7, 0x164(r8)\n  0x01c8  lwz r5, 0x14(r1)                                     | lwz r5, 0x14(r1)\n  0x01cc  mr r4, r29                                           | mr r4, r29\n  0x01d0  lwz r6, 0x10(r1)                                     | lwz r6, 0x10(r1)\n  0x01d4  mr r10, r31                                          | mr r10, r31\n  0x01d8  lwz r8, 0x16c(r8)                                    | lwz r8, 0x16c(r8)\n  0x01dc  bl fn_80125300 [None+0 t10]                          | bl fn_80125300 [None+0 t10]\n  0x01e0  b 0x210                                              | b 0x210\n  0x01e4  lwz r0, 0x254(r27)                                   | lwz r0, 0x254(r27)\n  0x01e8  li r4, 0x0                                           | li r4, 0x0\n  0x01ec  rlwinm r0, r0, 0, 13, 11                             | rlwinm r0, r0, 0, 13, 11\n  0x01f0  stw r0, 0x254(r27)                                   | stw r0, 0x254(r27)\n  0x01f4  lwz r0, lbl_8064D738@sda21 [None+0 t109]             | lwz r0, lbl_8064D738@sda21 [None+0 t109]\n* 0x01f8  slwi r0, r0, 2                                       | slwi r3, r0, 2\n* 0x01fc  add r3, r27, r0                                      | addi r0, r3, 0x164\n* 0x0200  stw r4, 0x164(r3)                                    | stwx r4, r27, r0\n  0x0204  lwz r0, lbl_8064D738@sda21 [None+0 t109]             | lwz r0, lbl_8064D738@sda21 [None+0 t109]\n* 0x0208  slwi r0, r0, 2                                       | slwi r3, r0, 2\n* 0x020c  add r3, r27, r0                                      | addi r0, r3, 0x16c\n* 0x0210  stw r4, 0x16c(r3)                                    | stwx r4, r27, r0\n  0x0214  lwz r0, lbl_8064D738@sda21 [None+0 t109]             | lwz r0, lbl_8064D738@sda21 [None+0 t109]\n  0x0218  mulli r4, r31, 0x6                                   | mulli r4, r31, 0x6\n* 0x021c  slwi r0, r0, 2                                       | slwi r3, r0, 2\n* 0x0220  add r3, r27, r0                                      | addi r0, r3, 0x164\n* 0x0224  lwz r3, 0x164(r3)                                    | lwzx r3, r27, r0\n  0x0228  bl DCFlushRange [None+0 t10]                         | bl DCFlushRange [None+0 t10]\n  0x022c  lwz r0, lbl_8064D738@sda21 [None+0 t109]             | lwz r0, lbl_8064D738@sda21 [None+0 t109]\n  0x0230  mulli r4, r30, 0x6                                   | mulli r4, r30, 0x6\n* 0x0234  slwi r0, r0, 2                                       | slwi r3, r0, 2\n* 0x0238  add r3, r27, r0                                      | addi r0, r3, 0x16c\n* 0x023c  lwz r3, 0x16c(r3)                                    | lwzx r3, r27, r0\n  0x0240  bl DCFlushRange [None+0 t10]                         | bl DCFlushRange [None+0 t10]\n  0x0244  lhz r0, 0x2d0(r27)                                   | lhz r0, 0x2d0(r27)\n  0x0248  rlwinm. r0, r0, 0, 18, 18                            | rlwinm. r0, r0, 0, 18, 18\n  0x024c  beq 0x324                                            | beq 0x324\n  0x0250  mr r3, r27                                           | mr r3, r27\n  0x0254  bl fn_8011F134 [None+0 t10]                          | bl fn_8011F134 [None+0 t10]\n  0x0258  mr r4, r3                                            | mr r4, r3\n  0x025c  addis r0, r4, 0x0                                    | addis r0, r4, 0x0\n  0x0260  cmplwi r0, 0xffff                                    | cmplwi r0, 0xffff\n  0x0264  bne 0x278                                            | bne 0x278\n  0x0268  mr r3, r27                                           | mr r3, r27\n  0x026c  addi r5, r1, 0x24                                    | addi r5, r1, 0x24\n  0x0270  li r4, 0x0                                           | li r4, 0x0\n  0x0274  bl fn_80127F90 [None+0 t10]                          | bl fn_80127F90 [None+0 t10]\n  0x0278  b 0x284                                              | b 0x284\n  0x027c  mr r3, r27                                           | mr r3, r27\n  0x0280  addi r5, r1, 0x24                                    | addi r5, r1, 0x24\n  0x0284  bl fn_80127F90 [None+0 t10]                          | bl fn_80127F90 [None+0 t10]\n  0x0288  mr r3, r27                                           | mr r3, r27\n  0x028c  bl fn_8012AB2C [None+0 t10]                          | bl fn_8012AB2C [None+0 t10]\n  0x0290  lwz r0, 0x2c(r1)                                     | lwz r0, 0x2c(r1)\n  0x0294  mr r28, r3                                           | mr r28, r3\n  0x0298  lwz r6, 0x24(r1)                                     | lwz r6, 0x24(r1)\n  0x029c  addi r3, r1, 0x48                                    | addi r3, r1, 0x48\n  0x02a0  stw r0, 0x20(r1)                                     | stw r0, 0x20(r1)\n  0x02a4  addi r4, r1, 0x24                                    | addi r4, r1, 0x24\n  0x02a8  lwz r0, 0x28(r1)                                     | lwz r0, 0x28(r1)\n  0x02ac  addi r5, r1, 0x18                                    | addi r5, r1, 0x18\n  0x02b0  lfs f1, 0x20(r1)                                     | lfs f1, 0x20(r1)\n  0x02b4  lfs f0, lbl_80650180@sda21 [None+0 t109]             | lfs f0, lbl_80650180@sda21 [None+0 t109]\n  0x02b8  stw r6, 0x18(r1)                                     | stw r6, 0x18(r1)\n  0x02bc  fsubs f0, f1, f0                                     | fsubs f0, f1, f0\n  0x02c0  lfs f1, lbl_80650138@sda21 [None+0 t109]             | lfs f1, lbl_80650138@sda21 [None+0 t109]\n  0x02c4  stw r0, 0x1c(r1)                                     | stw r0, 0x1c(r1)\n  0x02c8  stfs f0, 0x20(r1)                                    | stfs f0, 0x20(r1)\n  0x02cc  bl fn_8013F3C0 [None+0 t10]                          | bl fn_8013F3C0 [None+0 t10]\n  0x02d0  cmplwi r28, 0x0                                      | cmplwi r28, 0x0\n  0x02d4  beq 0x31c                                            | beq 0x31c\n  0x02d8  mr r3, r28                                           | mr r3, r28\n  0x02dc  addi r4, r1, 0x48                                    | addi r4, r1, 0x48\n  0x02e0  addi r5, r1, 0x30                                    | addi r5, r1, 0x30\n  0x02e4  li r6, 0x0                                           | li r6, 0x0\n  0x02e8  li r7, 0x0                                           | li r7, 0x0\n  0x02ec  bl fn_8013FBE4 [None+0 t10]                          | bl fn_8013FBE4 [None+0 t10]\n  0x02f0  cmplwi r3, 0x0                                       | cmplwi r3, 0x0\n  0x02f4  beq 0x30c                                            | beq 0x30c\n  0x02f8  lfs f0, 0x38(r1)                                     | lfs f0, 0x38(r1)\n  0x02fc  stfs f0, 0x14(r27)                                   | stfs f0, 0x14(r27)\n  0x0300  lwz r0, 0x254(r27)                                   | lwz r0, 0x254(r27)\n  0x0304  ori r0, r0, 0x100                                    | ori r0, r0, 0x100\n  0x0308  stw r0, 0x254(r27)                                   | stw r0, 0x254(r27)\n  0x030c  b 0x324                                              | b 0x324\n  0x0310  lwz r0, 0x254(r27)                                   | lwz r0, 0x254(r27)\n  0x0314  rlwinm r0, r0, 0, 24, 22                             | rlwinm r0, r0, 0, 24, 22\n  0x0318  stw r0, 0x254(r27)                                   | stw r0, 0x254(r27)\n  0x031c  b 0x324                                              | b 0x324\n  0x0320  lfs f0, 0x8(r27)                                     | lfs f0, 0x8(r27)\n  0x0324  stfs f0, 0x14(r27)                                   | stfs f0, 0x14(r27)\n  0x0328  psq_l f31, 0xb8(r1), 0, qr0                          | psq_l f31, 0xb8(r1), 0, qr0\n  0x032c  lfd f31, 0xb0(r1)                                    | lfd f31, 0xb0(r1)\n  0x0330  psq_l f30, 0xa8(r1), 0, qr0                          | psq_l f30, 0xa8(r1), 0, qr0\n* 0x0334                                                       | addi r11, r1, 0xa0\n  0x0338  lfd f30, 0xa0(r1)                                    | lfd f30, 0xa0(r1)\n* 0x033c  lmw r27, 0x8c(r1)                                    | bl _restgpr_27 [None+0 t10]\n  0x0340  lwz r0, 0xc4(r1)                                     | lwz r0, 0xc4(r1)\n  0x0344  mtlr r0                                              | mtlr r0\n  0x0348  addi r1, r1, 0xc0                                    | addi r1, r1, 0xc0\n  0x034c  blr                                                  | blr\n",
+    "matched": false
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80124DBC fn_80124DBC -c function_reloc_diffs=name_address -o build/GEDE01/strict-8cc15303.json --format json",
+    "raw_symbol_metadata": {
+      "left": {
+        "name": "fn_80124DBC",
+        "size": "840",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 94.38095
+      },
+      "right": {
+        "name": "fn_80124DBC",
+        "size": "844",
+        "flags": 1,
+        "target_symbol": 1,
+        "match_percent": 94.38095
+      }
+    },
+    "matched": false
+  },
+  "elf_verification": {
+    "tuple_fields": [
+      "function_relative_offset",
+      "ELF_relocation_type",
+      "target_symbol_name",
+      "signed_addend"
+    ],
+    "target_relocations": [
+      [
+        34,
+        6,
+        "lbl_8063D378",
+        0
+      ],
+      [
+        46,
+        4,
+        "lbl_8063D378",
+        0
+      ],
+      [
+        48,
+        10,
+        "fn_8017968C",
+        0
+      ],
+      [
+        72,
+        109,
+        "lbl_80650110",
+        0
+      ],
+      [
+        92,
+        10,
+        "fn_80126050",
+        0
+      ],
+      [
+        156,
+        10,
+        "fn_80120B58",
+        0
+      ],
+      [
+        220,
+        10,
+        "fn_801248FC",
+        0
+      ],
+      [
+        232,
+        10,
+        "fn_80124180",
+        0
+      ],
+      [
+        240,
+        10,
+        "fn_801243A8",
+        0
+      ],
+      [
+        252,
+        10,
+        "fn_80130998",
+        0
+      ],
+      [
+        272,
+        10,
+        "fn_80130998",
+        0
+      ],
+      [
+        308,
+        10,
+        "fn_80120744",
+        0
+      ],
+      [
+        312,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        340,
+        10,
+        "fn_801208AC",
+        0
+      ],
+      [
+        344,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        360,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        412,
+        10,
+        "fn_80124A40",
+        0
+      ],
+      [
+        416,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        422,
+        6,
+        "lbl_804F3650",
+        0
+      ],
+      [
+        426,
+        4,
+        "lbl_804F3650",
+        0
+      ],
+      [
+        472,
+        10,
+        "fn_80125300",
+        0
+      ],
+      [
+        496,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        512,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        528,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        548,
+        10,
+        "DCFlushRange",
+        0
+      ],
+      [
+        552,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        572,
+        10,
+        "DCFlushRange",
+        0
+      ],
+      [
+        592,
+        10,
+        "fn_8011F134",
+        0
+      ],
+      [
+        624,
+        10,
+        "fn_80127F90",
+        0
+      ],
+      [
+        640,
+        10,
+        "fn_80127F90",
+        0
+      ],
+      [
+        648,
+        10,
+        "fn_8012AB2C",
+        0
+      ],
+      [
+        688,
+        109,
+        "lbl_80650180",
+        0
+      ],
+      [
+        700,
+        109,
+        "lbl_80650138",
+        0
+      ],
+      [
+        712,
+        10,
+        "fn_8013F3C0",
+        0
+      ],
+      [
+        744,
+        10,
+        "fn_8013FBE4",
+        0
+      ]
+    ],
+    "candidate_relocations": [
+      [
+        32,
+        10,
+        "_savegpr_27",
+        0
+      ],
+      [
+        38,
+        6,
+        "lbl_8063D378",
+        0
+      ],
+      [
+        50,
+        4,
+        "lbl_8063D378",
+        0
+      ],
+      [
+        52,
+        10,
+        "fn_8017968C",
+        0
+      ],
+      [
+        76,
+        109,
+        "lbl_80650110",
+        0
+      ],
+      [
+        92,
+        10,
+        "fn_80126050",
+        0
+      ],
+      [
+        156,
+        10,
+        "fn_80120B58",
+        0
+      ],
+      [
+        220,
+        10,
+        "fn_801248FC",
+        0
+      ],
+      [
+        232,
+        10,
+        "fn_80124180",
+        0
+      ],
+      [
+        240,
+        10,
+        "fn_801243A8",
+        0
+      ],
+      [
+        252,
+        10,
+        "fn_80130998",
+        0
+      ],
+      [
+        272,
+        10,
+        "fn_80130998",
+        0
+      ],
+      [
+        308,
+        10,
+        "fn_80120744",
+        0
+      ],
+      [
+        312,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        340,
+        10,
+        "fn_801208AC",
+        0
+      ],
+      [
+        344,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        360,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        412,
+        10,
+        "fn_80124A40",
+        0
+      ],
+      [
+        416,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        422,
+        6,
+        "lbl_804F3650",
+        0
+      ],
+      [
+        426,
+        4,
+        "lbl_804F3650",
+        0
+      ],
+      [
+        472,
+        10,
+        "fn_80125300",
+        0
+      ],
+      [
+        496,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        512,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        528,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        548,
+        10,
+        "DCFlushRange",
+        0
+      ],
+      [
+        552,
+        109,
+        "lbl_8064D738",
+        0
+      ],
+      [
+        572,
+        10,
+        "DCFlushRange",
+        0
+      ],
+      [
+        592,
+        10,
+        "fn_8011F134",
+        0
+      ],
+      [
+        624,
+        10,
+        "fn_80127F90",
+        0
+      ],
+      [
+        640,
+        10,
+        "fn_80127F90",
+        0
+      ],
+      [
+        648,
+        10,
+        "fn_8012AB2C",
+        0
+      ],
+      [
+        688,
+        109,
+        "lbl_80650180",
+        0
+      ],
+      [
+        700,
+        109,
+        "lbl_80650138",
+        0
+      ],
+      [
+        712,
+        10,
+        "fn_8013F3C0",
+        0
+      ],
+      [
+        744,
+        10,
+        "fn_8013FBE4",
+        0
+      ],
+      [
+        824,
+        10,
+        "_restgpr_27",
+        0
+      ]
+    ],
+    "relocations_identical": false,
+    "target_size": 840,
+    "candidate_size": 844,
+    "text_identical": false,
+    "target_text_sha256": "b66eaef4b625e48c976b8b0dbd55fd9ea1e4abba62dbb6c902c84189ff63edec",
+    "candidate_text_sha256": "a1080d0f263aa14b54462bbec757841599e61024c5f5c3894ad9407a332d50f7"
+  },
+  "divergence": "Canonical GC/1.3 still emits _savegpr_27/_restgpr_27 calls instead of retail stmw/lmw (8 extra bytes and two extra R_PPC_REL24 relocations). The frame-equality check uses one beq instead of bne plus b (4 fewer bytes). Six slot accesses use addi plus indexed loads/stores instead of add plus fixed-displacement accesses. Net size: 844 versus 840 bytes. All four flag-clear sequences now match retail rlwinm.",
+  "limitations": "NonMatching candidate is compiled and compared independently; the canonical DOL continues to link the retail object for this function.",
+  "build": {
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "raw_output_excerpt": "[912/914] DOL build/GEDE01/main.dol\n[913/914] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[914/914] PROGRESS\nProgress:\n  All: 58.28% fuzzy, 49.08% matched, 49.00% linked (6303 / 7068 files)\n    Code: 1129160 / 2300692 bytes (6070 / 8214 functions)\n    Data: 39606 / 4305642 bytes (0.92%)\n  Game Code: 93.88% fuzzy, 79.02% matched, 78.90% linked (6285 / 6633 files)\n    Code: 1126132 / 1425104 bytes (6008 / 6354 functions)\n    Data: 39382 / 40426 bytes (97.42%)\n  SDK/Runtime: 100.00% fuzzy, 100.00% matched, 100.00% linked (18 / 18 files)\n    Code: 3028 / 3028 bytes (62 / 62 functions)\n    Data: 224 / 224 bytes (100.00%)\n"
+  },
+  "dol_sha1": {
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matched": true
+  },
+  "legal_audit": {
+    "command": "python3 eternal-darkness-decomp/tools/legal_audit.py",
+    "exit_code": 0,
+    "raw_output": "legal audit passed (21201 tracked project files inspected)\n"
+  },
+  "scope_audit": {
+    "source_changes": "Four signed mask complements changed to unsigned mask complements; one independent C translation unit retained.",
+    "configure_and_splits_unchanged": true,
+    "pre_existing_unrelated_modification": "CLAUDE.md left untouched and excluded from commit",
+    "inline_assembly": false,
+    "compiler_pragmas": false,
+    "new_compiler_flags": false
+  }
+}
