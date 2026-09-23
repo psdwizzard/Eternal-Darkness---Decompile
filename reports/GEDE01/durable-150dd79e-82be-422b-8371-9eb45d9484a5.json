@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "150dd79e-82be-422b-8371-9eb45d9484a5",
+  "attempt": 3,
+  "base_commit": "785b781170c9dbecdda10b2cd9b004ee64d7e64e",
+  "target": "fn_80195AEC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-150dd79e-82be-422b-8371-9eb45d9484a5.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 89.57746% for size-exact 2556-byte .text with 552-byte .rela.text on each side. Retail saves r17-r31 while the candidate saves r16-r31, rotating pervasive long-lived registers; the candidate also emits a local 8-byte .sdata2 integer-to-float constant instead of retail lbl_80650B58 relocation targets. Attempt 3 tested eliminating the function-wide cached flags local: ordinary direct object+0x108 reads compiled identically to the prior best, while volatile direct reads regressed to 88.44288% and 2588 bytes, so the size-exact ordinary form is retained."
+}

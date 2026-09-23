@@ -12,7 +12,6 @@ void fn_801875FC(u8*, u16*, s16*, int, int, int, s16*, s16*, int, int);
 
 void fn_80195AEC(u8* object)
 {
-    u32 flags = *(u32*)(object + 0x108);
     u8 count = object[0x97] - 4;
     u16* flags0 = (u16*)(object + 0x9c);
     int end = ((*flags0 & 7) + 1);
@@ -26,9 +25,9 @@ void fn_80195AEC(u8* object)
     s16* bounds2 = (s16*)(object + 0xe8);
     s16* starts = (s16*)(object + 0x10);
 
-    if (flags & 0x8000) {
-        if (flags & 0x32000) {
-            if (flags & 0x10000) {
+    if (*(u32*)(object + 0x108) & 0x8000) {
+        if (*(u32*)(object + 0x108) & 0x32000) {
+            if (*(u32*)(object + 0x108) & 0x10000) {
                 fn_801875FC(owner + 0x38, flags0, bounds0, 0, 0, count,
                             starts, (s16*)(object + 0xa2), mode, end);
             } else {
@@ -49,7 +48,7 @@ void fn_80195AEC(u8* object)
                 fn_80187320(owner + 0x38, flags2, bounds2, 2, 0, count,
                             starts[2], kind, *(float*)(object + 0x114), end);
             }
-        } else if (flags & 0x100) {
+        } else if (*(u32*)(object + 0x108) & 0x100) {
             int half = count >> 1;
             int rest;
             float step;
@@ -67,7 +66,7 @@ void fn_80195AEC(u8* object)
             fn_80187320(owner + 0x38 + half * 0x38, flags2, bounds2, 2,
                         half, count, base, kind,
                         *(float*)(object + 0x114) / (float)rest, end);
-        } else if (flags & 0x400) {
+        } else if (*(u32*)(object + 0x108) & 0x400) {
             int half = count >> 1;
             int rest = count - half;
             float step;
@@ -103,8 +102,8 @@ void fn_80195AEC(u8* object)
                         starts[2], kind, *(float*)(object + 0x114), end);
         }
     } else {
-        if (flags & 0x32000) {
-            if (flags & 0x10000) {
+        if (*(u32*)(object + 0x108) & 0x32000) {
+            if (*(u32*)(object + 0x108) & 0x10000) {
                 fn_80187488(owner + 0x38, flags0, bounds0, 0, 0, count,
                             starts, (s16*)(object + 0xa2), mode, end);
             } else {
@@ -125,7 +124,7 @@ void fn_80195AEC(u8* object)
                 fn_801871F0(owner + 0x38, flags2, bounds2, 2, 0, count,
                             starts[2], *(s16*)(object + 0xac), kind, end);
             }
-        } else if (flags & 0x100) {
+        } else if (*(u32*)(object + 0x108) & 0x100) {
             int half = count >> 1;
             int rest;
             int step;
@@ -143,7 +142,7 @@ void fn_80195AEC(u8* object)
             fn_801871F0(owner + 0x38 + half * 0x38, flags2, bounds2, 2,
                         half, count, base, *(s16*)(object + 0xac) / rest,
                         kind, end);
-        } else if (flags & 0x400) {
+        } else if (*(u32*)(object + 0x108) & 0x400) {
             int half = count >> 1;
             int rest = count - half;
             int step;
