@@ -1,0 +1,1158 @@
+{
+  "version": 1,
+  "assignment_id": "acdd1e87-01b3-4d20-835d-775ef2e831b0",
+  "target": "fn_801599BC",
+  "status": "attempted",
+  "base_commit": "705c6973fdfeac7ef6f90ebb410fd9ae2f12a4dd",
+  "source": "eternal-darkness-decomp/src/game/game_fn_801599BC.c",
+  "source_sha256": "6affd877aee8e99b9a5e2e8f09b37ee9f0e90b8806da8e746183771d9d5e04dc",
+  "recovery": {
+    "commit": "6080bb62673a98af391e2b4f93c8def13ee359d0",
+    "command": [
+      "git",
+      "show",
+      "6080bb62673a98af391e2b4f93c8def13ee359d0:eternal-darkness-decomp/src/game/game_fn_801599BC.c"
+    ],
+    "historical_evidence": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/history.json",
+    "warning": "Historical 94.509575% source contained incorrect 0x1A9A00 stride. This assignment remeasured recovered alias form after correction: 94.509575% in both modes. The historical source/evidence is not the retained reconstruction."
+  },
+  "hypothesis": "Move offset increment into the for-loop update clause after i++, initialize offset only after memset, and store offset before state/kind. Unlike the earlier countdown, pointer-termination and aliased-load hypotheses, MWCC recognizes a loop-header induction variable and keeps retail's rolling r8 addis/subi updates rather than constant-folding each slot or hoisting register-register adds.",
+  "compiler": {
+    "version": "GC/1.3",
+    "canonical": true,
+    "flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+    "registration": "unchanged NonMatching independent C TU; no policy or neighboring edits"
+  },
+  "final": {
+    "canonical_percent": 99.82758,
+    "relocation_strict_percent": 99.82758,
+    "strict_config": "function_reloc_diffs=name_address",
+    "retail_bytes": 1044,
+    "generated_bytes": 1044,
+    "run_record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/final-run.json",
+    "canonical_raw": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/final-canonical.json",
+    "strict_raw": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/final-strict.json",
+    "byte_and_relocation_audit": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/byte-relocation-audit.json",
+    "audit_command": [
+      "python3",
+      "reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/audit.py"
+    ],
+    "differences": [
+      {
+        "offset": "0x358",
+        "retail": "lwz r0, lbl_8064D17C@sda21",
+        "generated": "lwz r7, lbl_8064D17C@sda21"
+      },
+      {
+        "offset": "0x37c",
+        "retail": "subi r3, r3, 0x6600",
+        "generated": "subi r0, r3, 0x6600"
+      },
+      {
+        "offset": "0x388",
+        "retail": "cmpwi r0, 0x4",
+        "generated": "cmpwi r7, 0x4"
+      },
+      {
+        "offset": "0x38c",
+        "retail": "stw r3, 0x14(r6)",
+        "generated": "stw r0, 0x14(r6)"
+      },
+      {
+        "offset": "0x3a4",
+        "retail": "stw r3, 0x2c(r6)",
+        "generated": "stw r0, 0x2c(r6)"
+      },
+      {
+        "offset": "0x3bc",
+        "retail": "stw r3, 0x44(r6)",
+        "generated": "stw r0, 0x44(r6)"
+      },
+      {
+        "offset": "0x3cc",
+        "retail": "stw r3, 0x5c(r6)",
+        "generated": "stw r0, 0x5c(r6)"
+      },
+      {
+        "offset": "0x3d0",
+        "retail": "stw r0, lbl_8064D178@sda21",
+        "generated": "stw r7, lbl_8064D178@sda21"
+      },
+      {
+        "offset": "0x3d8",
+        "retail": "mulli r4, r0, 0x18",
+        "generated": "mulli r4, r7, 0x18"
+      }
+    ]
+  },
+  "experiments": [
+    {
+      "name": "assignment-expression",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/assignment-expression-run.json",
+      "source_sha256": "ae86c7975660554ea8f6de0f1b2055560cb34c85842b44665e75a944e52b0567",
+      "results": {
+        "canonical": {
+          "percent": 93.83908,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/assignment-expression-canonical.json"
+        },
+        "strict": {
+          "percent": 93.83908,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/assignment-expression-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "chained-offset",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/chained-offset-run.json",
+      "source_sha256": "93c5cc8fce8e011ddc1b58953464a59243b8e837fac0772819aa90004a58c62e",
+      "results": {
+        "canonical": {
+          "percent": 92.47893,
+          "retail_bytes": 1044,
+          "generated_bytes": 1036,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/chained-offset-canonical.json"
+        },
+        "strict": {
+          "percent": 92.47893,
+          "retail_bytes": 1044,
+          "generated_bytes": 1036,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/chained-offset-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "compound-offset",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/compound-offset-run.json",
+      "source_sha256": "75f23edb1b927ccdc081665c10acc6f974cf8a2683e4ce72353d514045249597",
+      "results": {
+        "canonical": {
+          "percent": 91.63602,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/compound-offset-canonical.json"
+        },
+        "strict": {
+          "percent": 91.63602,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/compound-offset-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "condition-neq",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/condition-neq-run.json",
+      "source_sha256": "3432961e77b70b4762144793b23252a5c77ed5724bd248e1e4e2ef884fa79b27",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/condition-neq-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/condition-neq-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "corrected-alias",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/corrected-alias-run.json",
+      "source_sha256": "8202fa0e2ecbc1833a1a97f98d750d67b9d9c9e4eddffaa780a9c746f52a05dc",
+      "results": {
+        "canonical": {
+          "percent": 94.509575,
+          "retail_bytes": 1044,
+          "generated_bytes": 1032,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/corrected-alias-canonical.json"
+        },
+        "strict": {
+          "percent": 94.509575,
+          "retail_bytes": 1044,
+          "generated_bytes": 1032,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/corrected-alias-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "entry-header",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/entry-header-run.json",
+      "source_sha256": "d13f92e735b64a15f7a35f62455540e112909a51a4e7f91be2355e4d1870cf62",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/entry-header-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/entry-header-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "explicit-literal",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/explicit-literal-run.json",
+      "source_sha256": "e91705dc99989e04deca9bc8301903f79e04ff6010ea3ba78128a64098aac976",
+      "results": {
+        "canonical": {
+          "percent": 91.63602,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/explicit-literal-canonical.json"
+        },
+        "strict": {
+          "percent": 91.63602,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/explicit-literal-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "explicit-sequential",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/explicit-sequential-run.json",
+      "source_sha256": "e7bf4cde86d5af076ea6acaeae5a6adda92a2c5c6c4493f4a12f14c1932f9db9",
+      "results": {
+        "canonical": {
+          "percent": 93.39847,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/explicit-sequential-canonical.json"
+        },
+        "strict": {
+          "percent": 93.39847,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/explicit-sequential-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "final",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/final-run.json",
+      "source_sha256": "6affd877aee8e99b9a5e2e8f09b37ee9f0e90b8806da8e746183771d9d5e04dc",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/final-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/final-strict.json"
+        }
+      },
+      "retained": true
+    },
+    {
+      "name": "global-slot",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/global-slot-run.json",
+      "source_sha256": "9b6315a068f01b7ff168852b04988cd1fac471849a3c0446f1fc34098251bc89",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/global-slot-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/global-slot-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "header-entry-6",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-entry-6-run.json",
+      "source_sha256": "f3661a9527dc4420f810a71a62b2a02d61304bc3f05eeeb0dc4929e6c3269e2c",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-entry-6-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-entry-6-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "header-entry-7",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-entry-7-run.json",
+      "source_sha256": "65dd87c0d8cc0ccba3f516160edeb63f75518f9f1c3d9e93e60d1743ddfd71af",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-entry-7-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-entry-7-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "header-entry-8",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-entry-8-run.json",
+      "source_sha256": "36e94e18373ae00093ffed870074bbb82b25d8886d16781835772761d1e8487c",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-entry-8-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-entry-8-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "header-induction",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-induction-run.json",
+      "source_sha256": "5d50bd2be662fb7eb5a83e1fd5f8e04d91eb2859d13d9c0ef9769b0b4d2829bb",
+      "results": {
+        "canonical": {
+          "percent": 97.337166,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-induction-canonical.json"
+        },
+        "strict": {
+          "percent": 97.337166,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-induction-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "header-initialization",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-initialization-run.json",
+      "source_sha256": "6affd877aee8e99b9a5e2e8f09b37ee9f0e90b8806da8e746183771d9d5e04dc",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-initialization-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/header-initialization-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "index-entry",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/index-entry-run.json",
+      "source_sha256": "88a9ccd4ca578a6c6b4d4bc28403816139a0a8cb358901788deba4a0b6609d2d",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/index-entry-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/index-entry-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "init-before-header",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/init-before-header-run.json",
+      "source_sha256": "a81a569cf7dfee593cbc767e95f9330e6eb60bb7880df372536cd71f7c428676",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/init-before-header-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/init-before-header-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "init-offset-first",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/init-offset-first-run.json",
+      "source_sha256": "85ff36d014f41b411e09457ae1d457b21cd8e647143c27fc4bcd2432166e726f",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/init-offset-first-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/init-offset-first-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "kind-before-state",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/kind-before-state-run.json",
+      "source_sha256": "fd8eaa09babd7e81dc926370b4e48d8ef3b349963b62741b4844e8c5eb0063a0",
+      "results": {
+        "canonical": {
+          "percent": 97.68199,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/kind-before-state-canonical.json"
+        },
+        "strict": {
+          "percent": 97.68199,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/kind-before-state-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "offset-first-alias",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/offset-first-alias-run.json",
+      "source_sha256": "688db17ef789de0200fc4e56f6c146caf7c9d2924835bd1908db212c5eb420d8",
+      "results": {
+        "canonical": {
+          "percent": 94.651344,
+          "retail_bytes": 1044,
+          "generated_bytes": 1032,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/offset-first-alias-canonical.json"
+        },
+        "strict": {
+          "percent": 94.651344,
+          "retail_bytes": 1044,
+          "generated_bytes": 1032,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/offset-first-alias-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "offset-first-loaded-literal",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/offset-first-loaded-literal-run.json",
+      "source_sha256": "632c1590ea318fc69854b74a5b2e7dad8f7d75d8f066091500b2207dc6f3389f",
+      "results": {
+        "canonical": {
+          "percent": 93.39847,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/offset-first-loaded-literal-canonical.json"
+        },
+        "strict": {
+          "percent": 93.39847,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/offset-first-loaded-literal-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "offset-increment-first",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/offset-increment-first-run.json",
+      "source_sha256": "5ce5c0a2daa334280c8788168e48afba30cecb0c86652beeb555a4006ffc1a67",
+      "results": {
+        "canonical": {
+          "percent": 91.63602,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/offset-increment-first-canonical.json"
+        },
+        "strict": {
+          "percent": 91.63602,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/offset-increment-first-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "original-store-order-header",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/original-store-order-header-run.json",
+      "source_sha256": "0915b36580dc46d8cfc1906b5b51e8cc344c2f8c14fff53995e1e392bd6c52f2",
+      "results": {
+        "canonical": {
+          "percent": 93.63602,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/original-store-order-header-canonical.json"
+        },
+        "strict": {
+          "percent": 93.63602,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/original-store-order-header-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "pointer-induction",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/pointer-induction-run.json",
+      "source_sha256": "8a2254cb8be28d12159671dc8003305c57e46f5fa94228cb5d2cb79034609d75",
+      "results": {
+        "canonical": {
+          "percent": 91.28352,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/pointer-induction-canonical.json"
+        },
+        "strict": {
+          "percent": 91.28352,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/pointer-induction-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "pointer-loaded",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/pointer-loaded-run.json",
+      "source_sha256": "9de25c083cdc5284b64496b1bfda29d3096a3cd646d491fb360b272d45cd4bfa",
+      "results": {
+        "canonical": {
+          "percent": 93.39847,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/pointer-loaded-canonical.json"
+        },
+        "strict": {
+          "percent": 93.39847,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/pointer-loaded-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "register-literal",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/register-literal-run.json",
+      "source_sha256": "297a9c97cd6bac0cb6a9dea1a322ff72d7fe5e2c13a5f60e40a7732e2e99619a",
+      "results": {
+        "canonical": {
+          "percent": 91.63602,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/register-literal-canonical.json"
+        },
+        "strict": {
+          "percent": 91.63602,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/register-literal-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "register-loaded",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/register-loaded-run.json",
+      "source_sha256": "e22edb0cd3346af7d5bb484753c3aed438b851c4fd36d2fc2573fcbe7b16ab9f",
+      "results": {
+        "canonical": {
+          "percent": 93.39847,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/register-loaded-canonical.json"
+        },
+        "strict": {
+          "percent": 93.39847,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/register-loaded-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "separate-index",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/separate-index-run.json",
+      "source_sha256": "32fa81ae95e05e282b073f69a7faf22132616055fc7365812c8e6aea148c147b",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/separate-index-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/separate-index-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "size-before-state",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-before-state-run.json",
+      "source_sha256": "d3f45d2c8bd5f5681e520a3a20d907e965d3b488b6b6e4841b35f6488f17a0a2",
+      "results": {
+        "canonical": {
+          "percent": 95.796936,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-before-state-canonical.json"
+        },
+        "strict": {
+          "percent": 95.796936,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-before-state-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "size-first-assignment",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-first-assignment-run.json",
+      "source_sha256": "3b3667a33bcb050de84d07d25192c859079d8f3334944da9e5ab22a4b52c94aa",
+      "results": {
+        "canonical": {
+          "percent": 92.60536,
+          "retail_bytes": 1044,
+          "generated_bytes": 1036,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-first-assignment-canonical.json"
+        },
+        "strict": {
+          "percent": 92.60536,
+          "retail_bytes": 1044,
+          "generated_bytes": 1036,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-first-assignment-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "size-increment-expression",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-increment-expression-run.json",
+      "source_sha256": "3d42c5cf9ff87458eec1a8376759072fad5f6bd2ffb4e5da6699d7b8d5e2c9e7",
+      "results": {
+        "canonical": {
+          "percent": 97.44444,
+          "retail_bytes": 1044,
+          "generated_bytes": 1032,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-increment-expression-canonical.json"
+        },
+        "strict": {
+          "percent": 97.44444,
+          "retail_bytes": 1044,
+          "generated_bytes": 1032,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-increment-expression-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "size-local",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-local-run.json",
+      "source_sha256": "df5bccb1ecad63c7c95c91af05224025d9d86822563ca23924288293452026fd",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-local-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-local-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "size-unsigned",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-unsigned-run.json",
+      "source_sha256": "42d8582d0d2b8d5f41f571abb912902cf92543b999cec238e6e2e79e750575e4",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-unsigned-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/size-unsigned-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "slot-assign-expression",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-assign-expression-run.json",
+      "source_sha256": "0eef07c5148528f1c2296cdfb847a9fa1d0c8140b6b5b3c19081d59695e05b9a",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-assign-expression-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-assign-expression-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "slot-decl-last",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-decl-last-run.json",
+      "source_sha256": "5210518dc512ee23f935f5b2c6ce334d26b65c7d58f49fece231c9fe87796f6c",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-decl-last-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-decl-last-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "slot-load-after-entry",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-load-after-entry-run.json",
+      "source_sha256": "b0c30ae37ba777eb57292274c556ffb2824ee1980e47f802603375c8e72ee5f3",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-load-after-entry-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-load-after-entry-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "slot-load-before-loop",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-load-before-loop-run.json",
+      "source_sha256": "4446a60cf0584f81f090097c77c0a5a5e8b931c3bf16d88ff472ee6bd1d4ad6e",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-load-before-loop-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-load-before-loop-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "slot-register",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-register-run.json",
+      "source_sha256": "c202225ccd1c22819e95115ed72dc616874d5cce31ecd57222db85448fc39721",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-register-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-register-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "slot-reuse-count",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-reuse-count-run.json",
+      "source_sha256": "d2a2673c30c79b28730f57c097724045954ac67a27ed8fe28f0505edad4ed602",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-reuse-count-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-reuse-count-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "slot-reuse-i",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-reuse-i-run.json",
+      "source_sha256": "b600b3da26da7a50903bae7713e1577775106ee794d335fca11fddb5431b3045",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-reuse-i-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-reuse-i-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "slot-store-condition",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-store-condition-run.json",
+      "source_sha256": "4e3e7d563e92201652a1bf4b4dc4bcd3ce713d5cfa4c69f34a6ea47809a3d748",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-store-condition-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-store-condition-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "slot-unsigned",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-unsigned-run.json",
+      "source_sha256": "fb5b96684d1e0ab2478297a09248f65d265dca43449515a3025cc59042e39024",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-unsigned-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-unsigned-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "slot-via-active",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-via-active-run.json",
+      "source_sha256": "ac83ba85dbc3d4c39dd5e6307f7ea22b4511d7cca3c133ce17a7b8fe9db5e061",
+      "results": {
+        "canonical": {
+          "percent": 99.67433,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-via-active-canonical.json"
+        },
+        "strict": {
+          "percent": 99.67433,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/slot-via-active-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "state-before-offset",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/state-before-offset-run.json",
+      "source_sha256": "a91f27e722efc0adbe70bca6646c647a88a01c996a102985ac7bfff084eb8b72",
+      "results": {
+        "canonical": {
+          "percent": 93.93487,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/state-before-offset-canonical.json"
+        },
+        "strict": {
+          "percent": 93.93487,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/state-before-offset-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "stride-header-assignment",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-header-assignment-run.json",
+      "source_sha256": "dc95afe9ddb1b32a08b0b0ab49fa2943e1fbac88564b55988b383d35b53777cd",
+      "results": {
+        "canonical": {
+          "percent": 97.00383,
+          "retail_bytes": 1044,
+          "generated_bytes": 1032,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-header-assignment-canonical.json"
+        },
+        "strict": {
+          "percent": 97.00383,
+          "retail_bytes": 1044,
+          "generated_bytes": 1032,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-header-assignment-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "stride-local-after-call",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-after-call-run.json",
+      "source_sha256": "f6558f5b15a3df3d93e65859737853588d6b03da84da85024451304c18b0d80c",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-after-call-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-after-call-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "stride-local-before-call",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-before-call-run.json",
+      "source_sha256": "5c7689538e02a3c4691090cc213823361e1bba610e9a0fddc117f31cf563b25b",
+      "results": {},
+      "compile_failed": true,
+      "retained": false
+    },
+    {
+      "name": "stride-local-header-literal",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-header-literal-run.json",
+      "source_sha256": "a55a4d6fca6fb6337441b79abf192b62df420ac173ff39d3d86e73b90b55aaa8",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-header-literal-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-header-literal-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "stride-local-header",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-header-run.json",
+      "source_sha256": "f7690679da5c728bd3184ee8057cd44ab692de07d5de20f36e745d36b6b59d38",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-header-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-header-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "unsigned-index",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/unsigned-index-run.json",
+      "source_sha256": "0d1263264cb06e2a8ca5c0c5b38972ff86cd5ecedaa117531a3ab984806d3e3c",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/unsigned-index-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/unsigned-index-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "unsigned-loaded",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/unsigned-loaded-run.json",
+      "source_sha256": "591cef2cf6b99fb7d28e70694e3e562273a85be7c87fe401f8979c4fe5eab18b",
+      "results": {
+        "canonical": {
+          "percent": 93.39847,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/unsigned-loaded-canonical.json"
+        },
+        "strict": {
+          "percent": 93.39847,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/unsigned-loaded-strict.json"
+        }
+      },
+      "retained": false
+    },
+    {
+      "name": "volatile-global-preload",
+      "record": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/volatile-global-preload-run.json",
+      "source_sha256": "ba0b8f294e87aa41cead493ccce4108f48f381634b3d1e942ac9351b5c11b6ca",
+      "results": {
+        "canonical": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/volatile-global-preload-canonical.json"
+        },
+        "strict": {
+          "percent": 99.82758,
+          "retail_bytes": 1044,
+          "generated_bytes": 1044,
+          "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/volatile-global-preload-strict.json"
+        }
+      },
+      "retained": false
+    }
+  ],
+  "experiment_notes": {
+    "records": "Each experiment record contains its exact full source and ordered command argv, return codes and raw combined output. Associated canonical/strict JSON files are complete unmodified objdiff outputs. Only the final source exists as a C translation unit.",
+    "stride-local-before-call": "Rejected compile failure: broad textual replacement accidentally put an initializer on the struct size field. The exact source and compiler diagnostic are preserved; no score is claimed.",
+    "volatile-global-preload": "Rejected exploratory qualifier change; it gave no improvement and is not retained.",
+    "final-strict-all-symbols": "Extra objdiff invocation omitted the positional symbol; this tool still filters undefined symbols. ELF symbol tables are therefore used directly by audit.py to compare real relocation target names and addends."
+  },
+  "verification": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/verification.json",
+  "legal_audit": {
+    "argv": [
+      "python3",
+      "tools/legal_audit.py"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "raw_log": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/legal-audit.log"
+  },
+  "scope_notes": [
+    "No compiler settings, registration, splits, runtime, README or global progress files changed.",
+    "Existing unrelated CLAUDE.md modification was present at entry and remains untouched and uncommitted.",
+    "DOL checksum verifies the full canonical build with the retail object retained for this NonMatching function; it does not imply this candidate is a byte match."
+  ],
+  "divergence": "Corrected the erroneous 0x1A9A00 slot stride to retail 0x199A00. Canonical and relocation-strict objdiff both measure 99.82758%; both text sections are 1044 bytes. Nine instruction words differ only in register allocation: generated slot index is r7 instead of retail r0 (0x358, 0x388, 0x3D0, 0x3D8), and generated stride is r0 instead of retail r3 (0x37C, 0x38C, 0x3A4, 0x3BC, 0x3CC). All remaining text bytes and all 36 ELF relocations, including targets and addends, agree. Retained NonMatching.",
+  "additional_objdiff_invocation": {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_801599BC",
+      "-o",
+      "reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/final-strict-all-symbols.json",
+      "--format",
+      "json",
+      "-c",
+      "function_reloc_diffs=name_address"
+    ],
+    "returncode": 0,
+    "raw_output": " INFO Writing to reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/final-strict-all-symbols.json\n"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "assignment_id": "acdd1e87-01b3-4d20-835d-775ef2e831b0",
+  "attempt": 5,
+  "base_commit": "705c6973fdfeac7ef6f90ebb410fd9ae2f12a4dd",
+  "target": "fn_801599BC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-acdd1e87-01b3-4d20-835d-775ef2e831b0.json",
+    "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/final-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/final-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/byte-relocation-audit.json",
+    "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/verification.json",
+    "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/legal-audit.log"
+  ],
+  "divergence": "Corrected the erroneous 0x1A9A00 slot stride to retail 0x199A00. Canonical and relocation-strict objdiff both measure 99.82758%; both text sections are 1044 bytes. Nine instruction words differ only in register allocation: generated slot index is r7 instead of retail r0 (0x358, 0x388, 0x3D0, 0x3D8), and generated stride is r0 instead of retail r3 (0x37C, 0x38C, 0x3A4, 0x3BC, 0x3CC). All remaining text bytes and all 36 ELF relocations, including targets and addends, agree. Retained NonMatching."
+}

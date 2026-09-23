@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "assignment_id": "b4f39005-1cbc-442f-9536-d222550279d6",
+  "target": "fn_801599BC",
+  "compiler": "canonical project configuration; configure.py registration retains -use_lmw_stmw on",
+  "baseline": {
+    "source_form": "offset += 0x1A9A00",
+    "canonical_percent": 91.27969,
+    "relocation_strict_percent": 91.27969,
+    "retail_text_bytes": 1044,
+    "generated_text_bytes": 1044
+  },
+  "experiments": [
+    {
+      "hypothesis": "Defeat fixed-trip constant propagation while retaining the existing loop by deriving the next offset through the two just-written, potentially aliased Slot fields.",
+      "exact_source": "offset = entry->offset + entry->size;",
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801599BC.o && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801599BC -o build/GEDE01/fn_801599BC-alias.json --format json-pretty -c function_reloc_diffs=name_address fn_801599BC",
+      "raw_result": "{\"left_size\":\"1044\",\"match\":94.509575,\"right_size\":\"1032\"}",
+      "retained": true
+    },
+    {
+      "hypothesis": "Use only the stored offset as an alias barrier while retaining a literal increment, seeking retail's repeated addis/subi pairs.",
+      "exact_source": "offset = entry->offset + 0x1A9A00;",
+      "command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801599BC.o && build/tools/objdiff-cli diff -p . -u main/game/game_fn_801599BC -o build/GEDE01/fn_801599BC-loaded-offset.json --format json-pretty -c function_reloc_diffs=name_address fn_801599BC",
+      "raw_result": "{\"match\":92.91571,\"left_size\":\"1044\",\"right_size\":\"1044\"}",
+      "retained": false
+    }
+  ],
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801599BC -o build/GEDE01/fn_801599BC-final-canonical.json --format json-pretty fn_801599BC",
+    "raw_stdout": "INFO Writing to build/GEDE01/fn_801599BC-final-canonical.json",
+    "raw_measurement": "{\"match\":94.509575,\"left_size\":\"1044\",\"right_size\":\"1032\",\"left_relocations\":99,\"right_relocations\":99}"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801599BC -o build/GEDE01/fn_801599BC-final-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_801599BC",
+    "configuration": "function_reloc_diffs=name_address",
+    "raw_stdout": "INFO Writing to build/GEDE01/fn_801599BC-final-strict.json",
+    "raw_measurement": "{\"match\":94.509575,\"left_size\":\"1044\",\"right_size\":\"1032\",\"left_relocations\":99,\"right_relocations\":99}"
+  },
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "raw_terminal_output": "[907/909] DOL build/GEDE01/main.dol\n[908/909] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[909/909] PROGRESS",
+    "status": 0
+  },
+  "dol_sha1": {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "raw_stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "raw_stdout": "legal audit passed (20684 tracked project files inspected)",
+    "status": 0
+  },
+  "divergence": "The prefix remains instruction-identical through the memset at generated offset 0x350. Retail then advances one offset in r8 with three addis/subi immediate pairs and emits 1044 bytes. The retained alias-sensitive C makes MWCC carry the successive offsets, improving strict score to 94.509575%, but it materializes 0x1A9A00 once in r0 and uses three register-register adds into r10/r9/r8, producing 1032 bytes. It also hoists the lbl_8064D17C load/comparison ahead of all four unrolled slot stores instead of scheduling the comparison after the first slot stores."
+}

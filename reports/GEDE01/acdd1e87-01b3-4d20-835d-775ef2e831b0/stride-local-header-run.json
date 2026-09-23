@@ -1,0 +1,53 @@
+{
+  "name": "stride-local-header",
+  "cwd": "eternal-darkness-decomp",
+  "source": "typedef struct Buffer {\n    char pad0[0x120];\n    int owner;\n    char pad124[4];\n    void* aux_a;\n    void* aux_b;\n    char pad130[0x8010];\n    short state;\n} Buffer;\n\ntypedef struct Saved {\n    Buffer* buffer;\n    void* aux_a;\n    void* aux_b;\n} Saved;\n\ntypedef struct BufferSet {\n    int bank;\n    int active;\n    short state;\n    short pad_a;\n    Buffer* volatile buffers[7];\n} BufferSet;\n\ntypedef struct Slot {\n    short state;\n    short pad2;\n    int pad4;\n    int pad8;\n    int kind;\n    int offset;\n    int size;\n} Slot;\n\nextern BufferSet lbl_805B6FE0;\nextern Slot lbl_805B6F80[4];\nextern int lbl_8064D168;\nextern int lbl_8064D17C;\nextern int lbl_8064D178;\nextern int lbl_8064D144;\nextern char lbl_8024F038[];\n\nextern int fn_800460FC(void);\nextern int fn_800460F4(void);\nextern void* fn_801FEA8C(int, int, char*, int);\nextern void* memset(void*, int, unsigned int);\n\nvoid fn_801599BC(int fresh, int clear)\n{\n    Saved saved[2];\n    int count = fn_800460FC();\n    int i;\n\n    if (fresh == 1) {\n        for (i = 0; i < count; i++) {\n            saved[i].buffer = lbl_805B6FE0.buffers[i];\n            saved[i].aux_a = lbl_805B6FE0.buffers[i]->aux_a;\n            saved[i].aux_b = lbl_805B6FE0.buffers[i]->aux_b;\n        }\n    }\n    if (clear == 1) {\n        memset(&lbl_805B6FE0, 0, 0x1C);\n    }\n    if (count == 1) {\n        lbl_805B6FE0.active = -1;\n    } else {\n        lbl_805B6FE0.active = lbl_805B6FE0.bank ^ 1;\n    }\n    lbl_805B6FE0.state = -1;\n\n    for (i = 0; i < count; i++) {\n        if (fresh == 0) {\n            lbl_805B6FE0.buffers[i] = fn_801FEA8C(0x8148, 1, lbl_8024F038, 0x761);\n            memset(lbl_805B6FE0.buffers[i], 0, 0x8148);\n            lbl_805B6FE0.buffers[i]->aux_a = fn_801FEA8C(0xC360, 1, lbl_8024F038, 0x763);\n            lbl_805B6FE0.buffers[i]->aux_b = fn_801FEA8C(0xC360, 1, lbl_8024F038, 0x764);\n        } else {\n            lbl_805B6FE0.buffers[i] = saved[i].buffer;\n            if (clear == 1) {\n                memset(lbl_805B6FE0.buffers[i], 0, 0x8148);\n            }\n            lbl_805B6FE0.buffers[i]->aux_a = saved[i].aux_a;\n            lbl_805B6FE0.buffers[i]->aux_b = saved[i].aux_b;\n        }\n        if (clear == 1) {\n            lbl_805B6FE0.buffers[i]->state = -1;\n            lbl_805B6FE0.buffers[i]->owner = (&lbl_8064D168)[i];\n        }\n    }\n\n    if (clear != 0) {\n        int slot;\n        int size;\n        int offset;\n        Slot* entry;\n        lbl_8064D17C = fn_800460F4();\n        memset(lbl_805B6F80, 0, 0x60);\n        entry = lbl_805B6F80;\n        for (i = 0, offset = 0x600000, size = 0x199A00; i < 4; i++, offset += size) {\n            entry->offset = offset;\n            entry->state = -1;\n            entry->kind = 5;\n            entry->size = size;\n            entry++;\n        }\n        slot = lbl_8064D17C;\n        lbl_8064D178 = slot;\n        if (slot < 4) {\n            lbl_805B6F80[slot].kind = -1;\n            lbl_805B6F80[slot].size = 0xDBCAA0 - lbl_805B6F80[slot].offset;\n        }\n    }\n    lbl_8064D144 = 0;\n}\n",
+  "source_sha256": "f7690679da5c728bd3184ee8057cd44ab692de07d5de20f36e745d36b6b59d38",
+  "runs": [
+    {
+      "argv": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_801599BC.o"
+      ],
+      "returncode": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801599BC.o\n"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801599BC",
+        "-o",
+        "reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-header-canonical.json",
+        "--format",
+        "json",
+        "fn_801599BC"
+      ],
+      "returncode": 0,
+      "output": " INFO Writing to reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-header-canonical.json\n"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801599BC",
+        "-o",
+        "reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-header-strict.json",
+        "--format",
+        "json",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "fn_801599BC"
+      ],
+      "returncode": 0,
+      "output": " INFO Writing to reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/stride-local-header-strict.json\n"
+    }
+  ]
+}

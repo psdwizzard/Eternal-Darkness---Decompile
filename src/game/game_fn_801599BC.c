@@ -90,17 +90,16 @@ void fn_801599BC(int fresh, int clear)
 
     if (clear != 0) {
         int slot;
-        int offset = 0x600000;
+        int offset;
         Slot* entry;
         lbl_8064D17C = fn_800460F4();
         memset(lbl_805B6F80, 0, 0x60);
         entry = lbl_805B6F80;
-        for (i = 0; i < 4; i++) {
+        for (i = 0, offset = 0x600000; i < 4; i++, offset += 0x199A00) {
+            entry->offset = offset;
             entry->state = -1;
             entry->kind = 5;
-            entry->offset = offset;
-            entry->size = 0x1A9A00;
-            offset += 0x1A9A00;
+            entry->size = 0x199A00;
             entry++;
         }
         slot = lbl_8064D17C;

@@ -1,0 +1,67 @@
+{
+  "runs": [
+    {
+      "cwd": "eternal-darkness-decomp",
+      "argv": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "returncode": 0,
+      "output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n"
+    },
+    {
+      "cwd": "eternal-darkness-decomp",
+      "argv": [
+        "sha256sum",
+        "compilers/GC/1.3/mwcceppc.exe"
+      ],
+      "returncode": 0,
+      "output": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715  compilers/GC/1.3/mwcceppc.exe\n"
+    },
+    {
+      "cwd": "eternal-darkness-decomp",
+      "argv": [
+        "build/tools/objdiff-cli",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "objdiff-cli 3.6.1\n"
+    },
+    {
+      "cwd": "eternal-darkness-decomp",
+      "argv": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "src/game/game_fn_801599BC.c"
+      ],
+      "returncode": 0,
+      "output": ""
+    },
+    {
+      "cwd": "eternal-darkness-decomp",
+      "argv": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "returncode": 0,
+      "output": "legal audit passed (20857 tracked project files inspected)\n"
+    }
+  ],
+  "full_build": {
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2"
+    ],
+    "returncode": 0,
+    "raw_log": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/final-build.log"
+  },
+  "configure": {
+    "argv": [
+      "python3",
+      "configure.py"
+    ],
+    "raw_log": "eternal-darkness-decomp/reports/GEDE01/acdd1e87-01b3-4d20-835d-775ef2e831b0/final-configure.log"
+  }
+}
