@@ -1,5 +1,6 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
+typedef struct Color { u8 r, g, b, a; } Color;
 typedef struct GameObject GameObject;
 typedef struct Vec3 { float x, y, z; } Vec3;
 
@@ -13,8 +14,9 @@ struct GameObject {
 
 extern int lbl_8064D18C, lbl_8064C504;
 extern void* lbl_8064D558;
-extern float lbl_80651088, lbl_8065108C, lbl_80651090;
-extern float lbl_80651094, lbl_80651098, lbl_8065109C, lbl_806510A0;
+extern Color lbl_80651088, lbl_8065108C, lbl_80651090;
+extern Color lbl_80651094, lbl_80651098, lbl_8065109C;
+extern float lbl_806510A0;
 
 extern int fn_80027948(); extern void fn_8002A4C8(void); extern void fn_8002A508(void);
 extern void fn_8002A590(void); extern void fn_8002A754(void); extern void fn_8002AA18(void);
@@ -29,9 +31,9 @@ extern int fn_80155DB4(); extern int fn_801568B8(); extern int fn_801568C0();
 extern int fn_801568C8(); extern int fn_801568D8(); extern int fn_801568E4();
 extern int fn_801568F0(); extern int fn_801568FC(); extern int fn_80156904();
 extern int fn_8015690C(); extern int fn_80156918(); extern void* fn_80156DA0();
-extern int fn_80156F80(); extern int fn_801570F8(); extern int fn_80157888();
-extern int fn_80157894(); extern int fn_801579F4(); extern int fn_80157B3C();
-extern int fn_80157B60(); extern int fn_80157B80(); extern int fn_80157BD0();
+extern int fn_80156F80(); extern int fn_801570F8(); extern int fn_80157888(void*);
+extern int fn_80157894(void*); extern int fn_801579F4(); extern int fn_80157B3C();
+extern int fn_80157B60(); extern int fn_80157B80(); extern unsigned int fn_80157BD0();
 extern int fn_80157BE8(); extern int fn_8015821C(); extern int fn_80158264();
 extern int fn_80158550(); extern int fn_80158598(); extern int fn_801938FC();
 extern int fn_801B05B0(); extern int fn_801CEB2C(); extern int fn_801D1318();
@@ -41,31 +43,37 @@ extern int fn_801D3CAC(); extern int fn_801E2CF4(); extern int fn_801E6CA0();
 extern int fn_801E8328(); extern int fn_801FDF74(); extern int fn_801FE22C();
 extern int fn_801FE934(); extern int fn_802006D4(); extern void* fn_802015A4();
 extern void* fn_80201814(); extern int fn_80201ADC(); extern void* fn_80201AE4();
-extern void* fn_80201B54(); extern void* fn_80201BC8(); extern void* fn_80201C24();
-extern void* fn_80201C2C(); extern int fn_80201D24(); extern int fn_80201D54();
+extern void* fn_80201B54(); extern void* fn_80201BC8(); extern void* fn_80201C24(void*);
+extern void* fn_80201C2C(void*); extern int fn_80201D24(); extern int fn_80201D54();
 extern void* fn_80204A8C(); extern int fn_80204CE4(); extern int fn_80204E0C();
 extern int fn_80204F54(); extern int fn_8020123C();
 
 void fn_801D2440(GameObject* object)
 {
-    void *actor, *info, *current, *data, *other, *other_info;
-    void *owner, *item, *result, *target;
-    int count, value, flag, color;
-    Vec3 point;
-    float a[3], b[3];
-    u8 query[0x30];
-    u8* payload;
     void* object_owner;
-    void* player;
-    int effect;
+    void* info;
+    void* data;
+    int count;
 
     if (object->type != lbl_8064D18C) {
+        void* actor;
+        void* info;
+        void* current;
+        void* data;
+        void* other;
+        void* other_info;
+        void* owner;
+        void* result;
+        void* target;
+        int count;
+        int value;
+
         actor = object->actorBC;
         info = fn_80201814(actor);
-        current = fn_80201C24();
-        if (fn_80157894() & 1) {
-            fn_80201ADC();
-            current = fn_80201C2C();
+        current = fn_80201C24(info);
+        if (fn_80157894(current) & 1) {
+            target = (void*)fn_80201ADC();
+            current = fn_80201C2C(target);
             if (object->stateFF4 <= 80) fn_80204E0C(info, current);
             else {
                 other_info = fn_80201814(object->actorC0);
@@ -77,7 +85,7 @@ void fn_801D2440(GameObject* object)
             owner = fn_80201AE4();
             target = (void*)fn_80201ADC();
             if (target != 0) {
-                other = fn_80201C2C();
+                other = fn_80201C2C(target);
                 data = (void*)fn_80155DB4(info);
                 fn_80204E0C(info, other);
                 count = fn_801579F4(current);
@@ -102,9 +110,24 @@ void fn_801D2440(GameObject* object)
 
     object_owner = object->owner;
     switch (object->stateFF4) {
-    case 0:
-        actor = object->actorBC; info = fn_80201814(actor); current = fn_80201C24();
-        flag = fn_80157888(); other = object->actorC4;
+    case 0: {
+        void* actor;
+        void* info;
+        void* current;
+        void* data;
+        void* other;
+        void* other_info;
+        void* owner;
+        void* result;
+        void* target;
+        int count;
+        int value;
+        int flag;
+        int color;
+        u8* payload;
+
+        actor = object->actorBC; info = fn_80201814(actor); current = fn_80201C24(info);
+        flag = fn_80157888(current); other = object->actorC4;
         count = fn_801579F4(current); other_info = fn_80201814((void*)count);
         if (flag & 1) {
             lbl_8064D558 = actor;
@@ -125,11 +148,11 @@ void fn_801D2440(GameObject* object)
             fn_801568C0(result, fn_801D3024); fn_801568B8(result, fn_8002AC60);
             fn_801568FC(result, 0); fn_80156904(result, 0);
         }
-        if (other != fn_80201AE4()) fn_801570F8(data, fn_80155DB4(fn_80201814(other)));
+        if ((int)other != (int)fn_80201AE4()) fn_801570F8(data, fn_80155DB4(fn_80201814(other)));
         payload = object->payloadC8; *(void**)(payload + 0xC0) = fn_80149E04();
         if (*(void**)(payload + 0xC0) == 0) break;
         fn_80147E88(payload); fn_8014A178(payload, *(void**)(payload + 0xC0));
-        payload[0xBC] = 4; actor = object->owner; color = fn_801CEB2C(actor);
+        payload[0xBC] = 4; actor = object->owner; color = (u8)fn_801CEB2C(actor);
         *(u8*)*(void**)(payload + 0xC0) = color; fn_80149B38(*(void**)(payload + 0xC0));
         fn_801938FC(payload); *(u16*)(payload + 6) = 80;
         result = (void*)fn_801D38E8(actor); fn_801D3CAC(result, 0, payload + 0x14);
@@ -138,26 +161,42 @@ void fn_801D2440(GameObject* object)
         *(u16*)(payload + 0xAE) = 250; *(Vec3*)(payload + 0xB0) = object->position;
         fn_801D1F78(*(void**)(payload + 0xC0), payload + 0xAC, *(void**)(payload + 0xA8));
         fn_801E8328(17, payload); break;
+    }
     case 20:
         fn_801FDF74(object->resource44, 0x7A120);
-        fn_801E2CF4(object, object->payloadC8, object->actorBC, 1, 1, 15, 53, 4, 10, 15, 1, 1, 80); break;
+        fn_801E2CF4(object, object->payloadC8, object->actorBC, 1, 15, 53, 4, 10, 15, 1, 1, 80); break;
     case 30:
         info = fn_80201814(object->actorBC); fn_8011FA8C(fn_80201BC8(info), 0, 0x10000);
         data = (void*)fn_80155DB4(info); fn_801568C0(data, fn_801D3088);
-        count = fn_801579F4(fn_80201C24());
+        count = fn_801579F4(fn_80201C24(info));
         if (count > 0) { data = (void*)fn_80155DB4(fn_80201814((void*)count)); fn_801568C0(data, fn_801D3088); }
         fn_801FE934(object->resource44, 9); break;
     case 40:
-        fn_801E2CF4(object, object->payloadC8, object->actorBC, 2, 1, 15, 53, 4, 10, 15, 1, 2, 60); break;
+        fn_801E2CF4(object, object->payloadC8, object->actorBC, 1, 15, 53, 4, 10, 15, 1, 2, 60); break;
     case 60:
-        fn_801E2CF4(object, object->payloadC8, object->actorBC, 3, 1, 15, 53, 4, 10, 15, 1, 3, 40); break;
-    case 80:
-        if (object->actorC4 != fn_80201AE4()) break;
-        actor = object->actorBC; info = fn_80201814(actor); fn_80201C24();
-        if (!(fn_80157894() & 1)) break;
+        fn_801E2CF4(object, object->payloadC8, object->actorBC, 1, 15, 53, 4, 10, 15, 1, 3, 40); break;
+    case 80: {
+        void* actor;
+        void* info;
+        void* current;
+        void* data;
+        void* item;
+        void* target;
+        Vec3 point;
+        Color a2;
+        Color a1;
+        Color a0;
+        Color b2;
+        Color b1;
+        Color b0;
+        u8 query[0x30];
+
+        if ((int)object->actorC4 != (int)fn_80201AE4()) break;
+        actor = object->actorBC; info = fn_80201814(actor); current = fn_80201C24(info);
+        if (!(fn_80157894(current) & 1)) break;
         current = fn_80201BC8(info);
-        a[2] = lbl_80651088; a[1] = lbl_8065108C; a[0] = lbl_80651090;
-        fn_8012C62C(current, 15, &a[2], &a[1], &a[0], 4);
+        a0 = lbl_80651090; a1 = lbl_8065108C; a2 = lbl_80651088;
+        fn_8012C62C(current, 15, &a2, &a1, &a0, 4);
         fn_8011F114(&point, current); fn_801D1C34(query, actor, &point);
         item = fn_80034708(query); target = fn_80201BC8(item);
         if (target != 0) {
@@ -167,21 +206,38 @@ void fn_801D2440(GameObject* object)
         fn_80201D54(item, *(void**)(query + 0x2C)); fn_80201D24(item, 1);
         fn_802015A4(item); fn_800CCA44(item); data = fn_80156DA0(3, &point);
         if (data != 0) {
-            void (*cb)(void) = fn_8002A590;
+            void (*cb)(void);
             if (fn_8011FCB0(target)) cb = fn_8002A508;
+            else cb = fn_8002A590;
             fn_801568C8(data, cb, fn_8002AC60, fn_8002AA18);
             fn_801568C0(data, fn_801D3088); fn_801568B8(data, fn_8002AC60);
             fn_801568FC(data, 0); fn_80156904(data, 0);
             fn_8015690C(data, fn_8002A4C8); fn_80156918(data, item);
         }
-        b[2] = lbl_80651094; b[1] = lbl_80651098; b[0] = lbl_8065109C;
-        fn_8012C62C(target, 15, &b[2], &b[1], &b[0], 4);
+        b0 = lbl_8065109C; b1 = lbl_80651098; b2 = lbl_80651094;
+        fn_8012C62C(target, 15, &b2, &b1, &b0, 4);
         fn_80204CE4(item, fn_80204A8C()); object->actorC0 = fn_80201B54(item); break;
-    case 100:
+    }
+    case 100: {
+        void* actor;
+        void* info;
+        void* current;
+        void* data;
+        void* other;
+        void* other_info;
+        void* result;
+        void* target;
+        int count;
+        int value;
+        int flag;
+        int color;
+        void* player;
+        int effect;
+
         player = fn_80201AE4(); actor = object->actorBC; other = object->actorC4;
-        info = fn_80201814(actor); data = (void*)fn_80155DB4(info); current = fn_80201C24();
-        if (other == player) {
-            flag = fn_80157888(); fn_801568FC(data, fn_8002AA18);
+        info = fn_80201814(actor); data = (void*)fn_80155DB4(info); current = fn_80201C24(info);
+        if ((int)other == (int)player) {
+            flag = fn_80157888(current); fn_801568FC(data, fn_8002AA18);
             if (flag & 1) {
                 fn_802006D4(actor, actor, -1, 75, 0);
                 fn_80157B60(current, (u8)fn_801D38E8(object_owner));
@@ -189,7 +245,7 @@ void fn_801D2440(GameObject* object)
                 fn_80157B3C(current, (u8)color); fn_80157B80(current, 2); flag = 1;
                 count = fn_801579F4(current);
                 if (count > 0) {
-                    fn_80201814((void*)count); target = fn_80201C24();
+                    other_info = fn_80201814((void*)count); target = fn_80201C24(other_info);
                     fn_802006D4((void*)count, (void*)count, -1, 75, 0);
                     fn_80157B60(target, (u8)fn_801D38E8(object_owner));
                     color = ((short)fn_801CEB2C(object_owner) >> 1) + 1;
@@ -197,7 +253,7 @@ void fn_801D2440(GameObject* object)
                 }
             } else {
                 fn_80204F54(info); fn_8020123C(57, actor, actor, 0);
-                actor = object->actorC0; fn_80201814(actor); current = fn_80201C24(); flag = 0;
+                actor = object->actorC0; info = fn_80201814(actor); current = fn_80201C24(info); flag = 0;
                 if (fn_8015821C(current) == 131) {
                     value = (u8)fn_801D38E8(object_owner);
                     color = (u8)(((short)fn_801CEB2C(object_owner) >> 1) + 1);
@@ -225,5 +281,6 @@ void fn_801D2440(GameObject* object)
         }
         if (object->callback != 0) object->callback(object, object->callback_arg);
         fn_801D2FA4(object); break;
+    }
     }
 }

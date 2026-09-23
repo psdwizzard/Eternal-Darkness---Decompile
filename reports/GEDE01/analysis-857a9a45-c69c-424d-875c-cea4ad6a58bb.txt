@@ -1,0 +1,28 @@
+Assignment 857a9a45-c69c-424d-875c-cea4ad6a58bb, attempt 5
+
+Recovered evidence and source from a1404e812b869d05f657f88c6b4dec48f0fae97a. The accepted base already contains that exact source (byte comparison verified). Studied its raw objdiff/build evidence and earlier reconstruction differences, plus the supplied review findings. Preserved the fresh object->owner load after fn_8014A178 and the separate case-100 original current, result, player, and effect values. Did not repeat the rejected nested-result-materialization experiment.
+
+Distinct hypotheses tested:
+- Packed four-byte records, not floating-point arrays, explain case-80 integer copies. The retail words are FFFFFFFF, 000000FB, FFFFFF00, FFFFFF00, 00000005, FFFFFFFF. fn_8012C62C copies these words and inspects individual bytes. Color scalars in reversed declaration order reproduce the original stack offsets and load/store scheduling.
+- The callback is selected after fn_8011FCB0, rather than kept live across it. The conditional assignment restores that call/selection ordering.
+- Locals scoped to the early branch and individual switch arms reduce unintended lifetime coupling. Reverse pointer-declaration ordering and register qualifiers did not improve this candidate; neither did moving the case-100 locals to function scope. Raw commands and measured summaries are in the experiments log.
+
+Correctness fixes exposed by direct retail comparison:
+- Explicitly pass info to fn_80201C24, target to fn_80201C2C, and current to fn_80157888/fn_80157894. In particular, retail reloads info before the case-30 and case-100 fn_80201C24 calls; the inherited source omitted these arguments.
+- Remove the extra fourth argument in all three fn_801E2CF4 calls. Retail passes object,payload,actor,1,15,53,4,10,15,1,phase,limit (12 arguments). The previous calls had 13 and shifted both register and stack arguments. This correction also restores the stack parameter area, allowing the color/query stack slots to match.
+- Preserve the case-0 color as an eight-bit value and use unsigned comparison for fn_80157BD0's zero-extended return. Compare actor handles as signed words where retail uses cmpw.
+
+Final measurement: canonical and function_reloc_diffs=name_address relocation-strict both 97.44033%. Retail text is 2916 bytes / 729 instructions; candidate text is 2884 bytes / 721 instructions. This is NOT a byte match. Registration remains NonMatching under the unchanged canonical GC/1.3 flags including -O4,p and -use_lmw_stmw on. No compiler policy, assembly, split, neighboring function, or registration changes were needed.
+
+Remaining codegen divergence:
+- Retail frame is 0xA0 with stmw r23,0x7C(r1); candidate frame is 0x90 with stmw r24,0x70(r1).
+- Long-lived owner uses retail r28 versus candidate r26. The case-100 effect occupies retail r23 versus candidate r27. Other branch-local values also receive different r24-r30 assignments.
+- Retail uses extra r0 transfer moves at function-relative 0x140/0x148, 0x168, 0x2A4/0x2AC, 0x358, 0x3C0, 0x6B4/0x6BC, 0xAA0, 0xAB8/0xAC0, and 0xAE0. Candidate coalesces several into argument-register moves; other inserted/reordered moves leave a net eight-instruction difference. Branch destinations consequently differ.
+- Payload setup around retail 0x448 also has different scheduling. Raw aligned instruction and relocation evidence is retained in both objdiff files.
+
+Validation: python3 configure.py, .tools/bin/ninja -j2, target-object build, legal audit, sha1sum, and sha1sum -c all pass. The DOL hash is ea24b6af954876ce072562ff39cdb4c81d32be1f. As a NonMatching function, the matching DOL retains retail code for this function; the DOL gate is not proof that this candidate matches. Both objdiff modes remain below 100%, so no promotion is requested.
+
+Only the target C source and assignment-specific reports are committed. The pre-existing CLAUDE.md modification is excluded. Work finished within the 25-minute bound, without delegation, toolchain changes, runtime changes, or remote pushes.
+
+Source SHA-256: ef4d8a1412471e6de9f83c8d90ce4828d7dcf208697923ab243eb96a7e5c40cd
+Accepted-base/preserved source SHA-256: 868acc0961d8b61626fb4d464cf5d8f3088622300ab74628f22e360638f024e5

@@ -1,0 +1,102 @@
+Hypothesis 1: correct omitted getter parameters and remove extra fn_801E2CF4 parameter; preserve pointer semantics.
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D2440.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801D2440.o
+
+exit_code=0
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json -o reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json fn_801D2440
+ INFO Writing to reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json
+
+exit_code=0
+Measured [('left', '2916', 93.401924), ('right', '2884', 93.401924)]
+Earlier measured variants: Color arrays plus callback selection: 95.74623%, 2872 bytes. All-arm local scopes: 96.754456%, 2884 bytes. Scalar colors: 96.96433%, 2868 bytes.
+
+Variant: reverse scalar color declarations; local scopes []
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D2440.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801D2440.o
+exit_code=0
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json -o reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json fn_801D2440
+ INFO Writing to reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json
+exit_code=0
+Raw objdiff symbol summary: {'name': 'fn_801D2440', 'size': '2916', 'flags': 1, 'target_symbol': 1, 'match_percent': 96.97531, 'instructions': 'omitted from summary'} right_size=2868
+
+Variant: reverse scalar color declarations; local scopes ['if']
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D2440.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801D2440.o
+exit_code=0
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json -o reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json fn_801D2440
+ INFO Writing to reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json
+exit_code=0
+Raw objdiff symbol summary: {'name': 'fn_801D2440', 'size': '2916', 'flags': 1, 'target_symbol': 1, 'match_percent': 97.03018, 'instructions': 'omitted from summary'} right_size=2872
+
+Variant: reverse scalar color declarations; local scopes ['0']
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D2440.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801D2440.o
+exit_code=0
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json -o reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json fn_801D2440
+ INFO Writing to reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json
+exit_code=0
+Raw objdiff symbol summary: {'name': 'fn_801D2440', 'size': '2916', 'flags': 1, 'target_symbol': 1, 'match_percent': 97.11248, 'instructions': 'omitted from summary'} right_size=2872
+
+Variant: reverse scalar color declarations; local scopes ['80']
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D2440.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801D2440.o
+exit_code=0
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json -o reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json fn_801D2440
+ INFO Writing to reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json
+exit_code=0
+Raw objdiff symbol summary: {'name': 'fn_801D2440', 'size': '2916', 'flags': 1, 'target_symbol': 1, 'match_percent': 96.9273, 'instructions': 'omitted from summary'} right_size=2868
+
+Variant: reverse scalar color declarations; local scopes ['100']
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D2440.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801D2440.o
+exit_code=0
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json -o reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json fn_801D2440
+ INFO Writing to reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json
+exit_code=0
+Raw objdiff symbol summary: {'name': 'fn_801D2440', 'size': '2916', 'flags': 1, 'target_symbol': 1, 'match_percent': 97.20713, 'instructions': 'omitted from summary'} right_size=2880
+
+Variant: reverse scalar color declarations; local scopes ['if', '0', '80', '100']
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D2440.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801D2440.o
+exit_code=0
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json -o reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json fn_801D2440
+ INFO Writing to reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json
+exit_code=0
+Raw objdiff symbol summary: {'name': 'fn_801D2440', 'size': '2916', 'flags': 1, 'target_symbol': 1, 'match_percent': 97.44033, 'instructions': 'omitted from summary'} right_size=2884
+Selected score 97.44033
+
+Variant: reverse declaration order
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D2440.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801D2440.o
+exit_code=0
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json -o reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json fn_801D2440
+ INFO Writing to reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json
+exit_code=0
+[('left', '2916', 97.16598), ('right', '2884', 97.16598)]
+
+Variant: register-qualified locals
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D2440.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801D2440.o
+exit_code=0
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json -o reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json fn_801D2440
+ INFO Writing to reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json
+exit_code=0
+[('left', '2916', 97.44033), ('right', '2884', 97.44033)]
+
+Variant: case100 declarations before owner
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D2440.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801D2440.o
+exit_code=0
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json -o reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json fn_801D2440
+ INFO Writing to reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json
+exit_code=0
+[('left', '2916', 97.06996), ('right', '2880', 97.06996)]
+
+Variant: case100 declarations after owner
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D2440.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801D2440.o
+exit_code=0
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json -o reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json fn_801D2440
+ INFO Writing to reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json
+exit_code=0
+[('left', '2916', 97.13854), ('right', '2880', 97.13854)]

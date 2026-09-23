@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "857a9a45-c69c-424d-875c-cea4ad6a58bb",
+  "attempt": 5,
+  "base_commit": "93d23f6ca8c62dbbaf955e2a5cdff50a8b1a754b",
+  "target": "fn_801D2440",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-857a9a45-c69c-424d-875c-cea4ad6a58bb-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-857a9a45-c69c-424d-875c-cea4ad6a58bb.log",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-857a9a45-c69c-424d-875c-cea4ad6a58bb.log",
+    "eternal-darkness-decomp/reports/GEDE01/analysis-857a9a45-c69c-424d-875c-cea4ad6a58bb.txt"
+  ],
+  "divergence": "Canonical and relocation-strict (function_reloc_diffs=name_address) objdiff both score 97.44033%. Retail is 2916 bytes (729 instructions); candidate is 2884 bytes (721 instructions). Retail saves r23-r31 in a 0xA0 frame; candidate saves r24-r31 in a 0x90 frame. Remaining differences are r24-r30 lifetime/allocation, saved-value r0 transfer moves around calls (including offsets 0x140, 0x168, 0x358, 0x3C0, 0x6B4, 0xAA0, 0xAB8, 0xAE0), and payload initialization scheduling. Fixed inherited omitted getter arguments, extra fn_801E2CF4 arguments, and packed-color types; preserved both reviewed owner/current semantics. Full build, target-object build, legal audit and required DOL SHA-1 pass. Remains NonMatching."
+}
