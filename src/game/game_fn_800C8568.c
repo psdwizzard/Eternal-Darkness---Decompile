@@ -1,6 +1,10 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef struct Vec3 { float x, y, z; } Vec3;
+typedef union ScanScratch {
+    Vec3 position;
+    u16 radius;
+} ScanScratch;
 
 #pragma use_lmw_stmw on
 
@@ -38,12 +42,12 @@ int fn_800C8568(void *self, void *target, Vec3 *position, void *arg3,
         int candidate_id;
         unsigned int distance;
         void *runtime;
-        Vec3 candidate_position;
+        ScanScratch scratch;
         Vec3 runtime_position;
         Vec3 default_position;
         Vec3 *selected_position;
 
-        if (candidate != self) {
+        if (self != candidate) {
             candidate_id = fn_80201B54(candidate);
             if (fn_80201EB8(candidate) == self_kind) {
                 runtime = fn_80201BC8(candidate);
@@ -54,12 +58,13 @@ int fn_800C8568(void *self, void *target, Vec3 *position, void *arg3,
                     default_position = lbl_802398A8;
                     selected_position = &default_position;
                 }
-                candidate_position = *selected_position;
+                scratch.position = *selected_position;
                 if (candidate_id == 1) {
                     ;
                 }
-                distance = fn_80178E94(position, &candidate_position);
-                if (distance <= (u16)radius) {
+                distance = fn_80178E94(position, &scratch.position);
+                scratch.radius = radius;
+                if (distance <= scratch.radius) {
                     fn_801A74A8(target, candidate_id);
                     if ((u8)fn_80204508(candidate, self)) {
                         fn_8020123C(0x37, self_id, candidate_id, 0);

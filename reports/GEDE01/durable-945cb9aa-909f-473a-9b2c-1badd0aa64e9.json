@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "945cb9aa-909f-473a-9b2c-1badd0aa64e9",
+  "attempt": 4,
+  "base_commit": "c66f9eae86fe6233f5501485beaefeac10755f41",
+  "target": "fn_800C8568",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-945cb9aa-909f-473a-9b2c-1badd0aa64e9.json"
+  ],
+  "divergence": "Canonical relocation-strict objdiff measures 95.60%: retail is 500 bytes and generated C is 492 bytes. The behavior-preserving union lifetime barrier retains the original 32-bit radius for fn_800C928C while matching retail's 0x60 frame, stmw r20, argument register assignment, and post-distance clrlwi. Canonical still removes retail's inert cmpwi r27,1 / bne +4 / nop at offsets 0xFC-0x104 and emits an extra dead sth r24,0x24(r1) after clrlwi, producing the net eight-byte gap and shifting later relocation offsets. Both sides contain 24 relocation-bearing instructions. The canonical build completed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
