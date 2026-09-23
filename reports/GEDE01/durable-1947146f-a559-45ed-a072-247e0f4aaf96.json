@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "1947146f-a559-45ed-a072-247e0f4aaf96",
+  "attempt": 4,
+  "base_commit": "bad11d3ada58554721c8f58e5d08bca0cc072fda",
+  "target": "fn_801E7014",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1947146f-a559-45ed-a072-247e0f4aaf96.json"
+  ],
+  "divergence": "Best canonical and relocation-strict score improved to 92.293106% (232 retail bytes versus 236 generated). GC/1.3 hoists lbl_80651284 into f4 and copies it to f5, while retail loads it later into f2 and reloads it before the final selection; generated also uses local @21 instead of lbl_80651288 for signed conversion and differs in FPR assignment and conversion stack-store order."
+}

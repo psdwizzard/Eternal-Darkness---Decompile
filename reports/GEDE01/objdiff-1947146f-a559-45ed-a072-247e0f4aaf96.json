@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "assignment_id": "1947146f-a559-45ed-a072-247e0f4aaf96",
+  "attempt": 4,
+  "target": "fn_801E7014",
+  "compiler": "GC/1.3",
+  "compiler_flags": "-use_lmw_stmw on",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E7014 -o build/GEDE01/objdiff-1947146f-canonical.json --format json-pretty fn_801E7014",
+    "strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E7014 -c function_reloc_diffs=name_address -o build/GEDE01/objdiff-1947146f-strict.json --format json-pretty fn_801E7014",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "dol_compare": "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol"
+  },
+  "raw_measured_outputs": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "build_sha1_gate": "build/GEDE01/main.dol: OK",
+    "canonical_objdiff_exit": 0,
+    "strict_objdiff_exit": 0,
+    "retail_size_bytes": 232,
+    "generated_size_bytes": 236,
+    "canonical_percent": 92.293106,
+    "relocation_strict_percent": 92.293106,
+    "strict_relocation_mode": "function_reloc_diffs=name_address",
+    "built_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_cmp_exit": 0
+  },
+  "strict_diff": {
+    "retail_relocation_count": 14,
+    "generated_relocation_count": 13,
+    "relocation_targets_and_addends_checked": true,
+    "first_relocation_difference": "retail 0x80 lfd f2,lbl_80651288@sda21; generated 0x84 lfd f2,@21@sda21; both have null addends",
+    "instruction_divergences": [
+      "generated hoists lbl_80651284 into f4 before the integer-to-float conversion and copies it to f5; retail loads the low bound into f2 after fsubs and overwrites that register with the value on the greater-than path",
+      "generated swaps the stack stores for the conversion pair and therefore places its signed-conversion lfd four bytes later than retail",
+      "generated computes the updated value in f0 and holds the selected maximum in f5; retail uses f1 and f2",
+      "generated retains the low bound in f4 and emits fmr f1,f4 at 0xC4; retail reloads lbl_80651284 into f0 at 0xC0",
+      "generated is 236 bytes versus retail's 232 bytes because of the hoisted-low-bound fmr"
+    ]
+  },
+  "attempts": [
+    {
+      "candidate": "preserved direct nested CLAMP reconstruction",
+      "percent": 90.51724,
+      "generated_size_bytes": 244,
+      "preserved": false
+    },
+    {
+      "candidate": "volatile low-bound reload-pressure hypothesis",
+      "percent": 91.72414,
+      "generated_size_bytes": 248,
+      "preserved": false,
+      "result": "forced reloads but added excess low-bound loads and clamp joins"
+    },
+    {
+      "candidate": "asymmetric explicit maximum and delayed result selection",
+      "percent": 92.293106,
+      "generated_size_bytes": 236,
+      "preserved": true,
+      "result": "reproduced the retail clamp branch skeleton and improved both canonical and strict scores, but retained the low bound in f4 and introduced one fmr"
+    },
+    {
+      "candidate": "relationally reversed but equivalent MAX macro spelling",
+      "percent": 90.086205,
+      "generated_size_bytes": 244,
+      "preserved": false,
+      "result": "reversed the first floating comparison and did not change the duplicated join shape"
+    }
+  ],
+  "scope_audit": {
+    "function_translation_unit": "src/game/game_fn_801E7014.c",
+    "configure_registration": "Object(NonMatching, game/game_fn_801E7014.c, mw_version=GC/1.3, extra_cflags=[-use_lmw_stmw on])",
+    "split": ".text 0x801E7014..0x801E70FC",
+    "runtime_source_changed_from_base": true,
+    "inline_or_whole_function_assembly": false,
+    "neighboring_functions_changed": false,
+    "generated_binaries_staged": false,
+    "legal_audit": "honest independent C reconstruction only; no retail binary content, generated binaries, shared reconstruction, or private inputs added"
+  }
+}

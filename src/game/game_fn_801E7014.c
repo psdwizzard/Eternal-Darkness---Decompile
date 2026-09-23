@@ -37,9 +37,26 @@ void fn_801E7014(s16 amount)
         lbl_8064C33C.channel.b += amount;
         break;
     case 3:
+    {
+        float maximum;
+        float result;
+
         lbl_8064C340 += lbl_80651294 * amount;
-        lbl_8064C340 = CLAMP(lbl_8064C340, lbl_80651284, lbl_80651298);
+        maximum = lbl_80651284;
+        if (lbl_8064C340 > maximum) {
+            maximum = lbl_8064C340;
+        }
+        if (lbl_80651298 < maximum) {
+            result = lbl_80651298;
+        } else {
+            result = lbl_80651284;
+            if (lbl_8064C340 > result) {
+                result = lbl_8064C340;
+            }
+        }
+        lbl_8064C340 = result;
         break;
+    }
     }
     fn_80144C40();
 }
