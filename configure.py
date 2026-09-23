@@ -3165,6 +3165,7 @@ config.custom_build_rules = [
 ]
 
 game_section_externalizations = {
+    "801A4430": (".sdata2", [("@51", "lbl_80650D88"), ("@55", "lbl_80650D90")]),
     "8014BA14": (".sdata2", [("@68", "lbl_806504B0")]),
     "800B2EC0": (".sdata2", [("@41", "lbl_8064F020")]),
     "8001CA04": (".sdata2", [("@18", "lbl_8064DE60")]),
@@ -11067,7 +11068,8 @@ config.libs = [
             Object(Matching, "game/game_fn_801A4410.c"),
             Object(Matching, "game/game_fn_801A4418.c"),
             Object(Matching, "game/game_fn_801A4420.c"),
-            Object(NonMatching, "game/game_fn_801A4430.c", extra_cflags=["-use_lmw_stmw on"]),
+            # Canonical and relocation-strict 100%; exact 1092-byte function.
+            Object(Matching, "game/game_fn_801A4430.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801A4874.s"),
             Object(Matching, "game/game_fn_801A4880.c"),
             Object(Matching, "game/game_fn_801A48EC.c", extra_cflags=["-use_lmw_stmw on"]),

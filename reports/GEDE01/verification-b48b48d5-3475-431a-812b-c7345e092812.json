@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "assignment_id": "b48b48d5-3475-431a-812b-c7345e092812",
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_exit_code": 0,
+  "raw_outputs": [
+    {
+      "command": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "exit_code": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "stdout": "legal audit passed (20613 tracked project files inspected)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "objdiff_commands": [
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801A4430 -o reports/GEDE01/objdiff-b48b48d5-3475-431a-812b-c7345e092812.json --format json-pretty fn_801A4430",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801A4430 -o reports/GEDE01/objdiff-strict-b48b48d5-3475-431a-812b-c7345e092812.json --format json-pretty -c function_reloc_diffs=all fn_801A4430"
+  ]
+}
