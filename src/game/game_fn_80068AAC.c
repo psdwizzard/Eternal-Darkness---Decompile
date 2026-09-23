@@ -29,11 +29,10 @@ extern Vec3 lbl_80239060, lbl_8023906C;
 extern u32 lbl_8064E714, lbl_8064E718, lbl_8064E71C, lbl_80651958;
 
 extern int fn_80201EB8();
-extern void fn_8012AB2C(void *);
+extern void *fn_8012AB2C(u8 *);
 extern void fn_8011F114();
 extern unsigned long long fn_8020123C();
-extern void fn_8020104C(int, void*, void*, int, float);
-#define fn_8020104C(a,b,c,d,e) fn_8020104C((int)(a),(void*)(b),(void*)(c),(int)(d),(float)(e))
+extern void fn_8020104C(int, int, int, int, float);
 extern void *fn_80201B9C();
 extern int fn_80038308(s32, s32, u16 *);
 extern s32 *fn_800681C8(void);
@@ -53,7 +52,8 @@ extern u8 fn_80204508(s32, s32);
 extern u32 fn_80178E94(Vec3 *, Vec3 *);
 extern void fn_8013F4D0(Vec3 *, Vec3 *, Vec3 *);
 extern s32 fn_8014317C(Vec3 *, Vec3 *, void *, s32, s32);
-extern void fn_80068074(s32), fn_800CA2C8(s32), fn_80068870(s32, void *, RuntimeState **, u16);
+extern void fn_80068074(s32), fn_80068870(s32, void *, RuntimeState **, u16);
+extern int fn_800CA2C8(void *);
 extern void fn_800CC860(s32, s32, s32), fn_800BE8D4(s32), fn_8011E174(s32, s32);
 extern void fn_800A5390(s32, void *, ActorInfo *, s32, s32, s32, s32);
 extern void fn_80067A18(s32), fn_80201D34(s32, s32), fn_80201D1C(s32, s32);
@@ -177,7 +177,7 @@ void fn_80068AAC(s32 source, s32 object_id, void *effect, RuntimeState **state,
         list_item = fn_80201BC0(list_item);
     }
 
-    fn_800CA2C8(object_id);
+    fn_800CA2C8((void *)object_id);
     fn_80068870(object_id, effect, state, duration);
     fn_800CC860(object_id, 1, 0);
     fn_800BE8D4(source);

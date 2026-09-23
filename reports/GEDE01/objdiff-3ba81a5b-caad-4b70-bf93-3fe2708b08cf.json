@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "assignment_id": "3ba81a5b-caad-4b70-bf93-3fe2708b08cf",
+  "attempt": 3,
+  "target": "fn_80068AAC",
+  "compiler": "GC/1.3",
+  "commands": [
+    {
+      "argv": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "stdout": "[907/909] DOL build/GEDE01/main.dol\n[908/909] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[909/909] PROGRESS"
+    },
+    {
+      "argv": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80068AAC fn_80068AAC -o build/GEDE01/objdiff-fn_80068AAC-attempt3-final.json --format json",
+      "exit_code": 0,
+      "stdout": "INFO Writing to build/GEDE01/objdiff-fn_80068AAC-attempt3-final.json"
+    },
+    {
+      "argv": "jq '{match_percent:.right.symbols[0].match_percent,retail_size:.left.symbols[0].size,generated_size:.right.symbols[0].size,retail_instructions:([.left.symbols[0].instructions[]|select(.instruction!=null)]|length),generated_instructions:([.right.symbols[0].instructions[]|select(.instruction!=null)]|length),retail_relocations:([.left.symbols[0].instructions[]|select(.instruction.relocation!=null)]|length),generated_relocations:([.right.symbols[0].instructions[]|select(.instruction.relocation!=null)]|length)}' build/GEDE01/objdiff-fn_80068AAC-attempt3-final.json",
+      "exit_code": 0,
+      "stdout": "{\n  \"match_percent\": 91.333336,\n  \"retail_size\": \"1332\",\n  \"generated_size\": \"1316\",\n  \"retail_instructions\": 333,\n  \"generated_instructions\": 329,\n  \"retail_relocations\": 70,\n  \"generated_relocations\": 73\n}"
+    },
+    {
+      "argv": "sha1sum orig/GEDE01/sys/main.dol build/GEDE01/main.dol",
+      "exit_code": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "argv": "rg -n '__asm|asm\\s*\\(|\\.long|\\.4byte|register\\s+' src/game/game_fn_80068AAC.c",
+      "exit_code": 1,
+      "stdout": ""
+    }
+  ],
+  "canonical": {
+    "match_percent": 91.333336,
+    "retail_size": 1332,
+    "generated_size": 1316,
+    "retail_instruction_count": 333,
+    "generated_instruction_count": 329,
+    "matched": false
+  },
+  "relocation_strict": {
+    "matched": false,
+    "retail_relocation_bearing_instructions": 70,
+    "generated_relocation_bearing_instructions": 73,
+    "targets_and_addends_equal": false,
+    "reason": "The initial lbl_80239060 copy still uses lis/addi with three relocation-bearing loads instead of retail lis/lwzu with two offset loads; subsequent relocation positions also differ around retail-only null/assertion control flow."
+  },
+  "hypothesis_and_variants": [
+    {
+      "hypothesis": "Incorrect callee prototypes and the fn_8020104C cast macro distort argument lifetimes and register coloring.",
+      "result": "Corrected fn_8012AB2C, fn_8020104C, and fn_800CA2C8 declarations and removed the cast macro. Machine code and score were unchanged at 91.333336%. The declaration corrections were retained."
+    },
+    {
+      "hypothesis": "An explicit three-word copy can produce retail's lwzu relocation pattern.",
+      "result": "Explicit u32 word stores remained 91.333336% and retained 73 relocation-bearing instructions; reverted."
+    },
+    {
+      "hypothesis": "Declaration order or a single EffectParams aggregate accounts for retail's stack-slot ordering and 0xf0 frame.",
+      "result": "Declaration order was codegen-neutral. EffectParams regressed to 89.82282% and 1320 bytes; non-volatile aggregate initialization regressed to 90.46847% and 1284 bytes. Both were reverted. An unused volatile 0x30-byte local did not change the frame, ruling out simple padding."
+    }
+  ],
+  "dol_sha1": {
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "retail": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "generated": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matched": true
+  },
+  "legal_audit": {
+    "inline_or_whole_function_assembly_found": false,
+    "shared_reconstruction_found": false,
+    "scan_exit_code": 1
+  },
+  "divergence": "Best honest C remains 91.333336%. Canonical GC/1.3 emits a 0xc0 frame instead of retail's 0xf0 frame even though the live Vec3 stack offsets agree; retail assigns source/object/effect/state/actor/event to r26-r31 and owner/list/objects to r25-r23, while generated assigns the parameters to r23-r28 and those persistent locals to r31-r29. Retail also has null/assertion-shaped branch+nop sequences absent from generated code. Generated is 16 bytes and four instructions shorter and has three extra relocation-bearing instructions."
+}
