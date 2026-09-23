@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "57356029-7c9f-4554-80e8-bc3aef764a4e",
+  "attempt": 5,
+  "base_commit": "40dc98ef2431865dfd5e5a4ed7da58c47139a57f",
+  "target": "fn_8000F1DC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-57356029-7c9f-4554-80e8-bc3aef764a4e.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict comparisons both score 94.02778% with exact 432-byte size, and their raw JSON outputs are byte-identical (SHA-256 62fdc9fbb03e44fe08520a428a2c36e12771b391f1a613d4464b015cda826a23). All 16 call relocations agree in address, R_PPC_REL24 type, target symbol, and zero addend. The retained counted-switch reconstruction still differs primarily in register coloring: generated uses script/arg3/arg4/arg1/arg2/entity/data in r27/r28/r29/r30/r31/r30/r27 while retail uses r31/r27/r28/r29/r30/r29/r31. At final flag selection generated preserves flags in r5, moves entity to r3 before selection, and branches with bne; retail keeps flags in r3, forms the selected mask directly in r4, and moves entity to r3 afterward. This attempt tested explicit register-qualified priority and direct parameter use, which compiled identically at 94.02778%, and a conditional expression passed directly to fn_80036DA4, which changed the branch layout but regressed to 93.82407%; both were rejected. A fresh python3 configure.py and .tools/bin/ninja -j2 build completed, and build/GEDE01/main.dol has SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
