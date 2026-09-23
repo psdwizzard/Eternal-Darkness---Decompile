@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "4ba7edfa-eaba-4f6b-8b15-82ceee492767",
+  "attempt": 4,
+  "base_commit": "44b06bd7d9c02ac24bcf78f9c321390c625d5f72",
+  "target": "fn_801D1B7C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4ba7edfa-eaba-4f6b-8b15-82ceee492767.json"
+  ],
+  "divergence": "Fresh relocation-strict direct objdiff remains 92.11364%: retail is 176 bytes (44 instructions) and generated C is 164 bytes (41 actual instructions). GC/1.3 folds retail addi r3,r7,0 / addi r3,r7,12 / addi r3,r7,24 row-base setup into the following indexed address and lfs displacements, causing a 12-byte deficit and shifted switch branch targets; all five external relocations match in type, target, and addend. New attempt-4 hypotheses were tested: a union-mediated row pointer and an inline accessor boundary folded identically, while modeling the three rows as named aggregate fields also folded identically through a hoisted pointer; directly naming those global fields retained inner addi instructions but emitted a separate lis in every arm and regressed to 79.38636%, so no experimental variant was retained. The canonical python3 configure.py and .tools/bin/ninja -j2 build completed, and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
