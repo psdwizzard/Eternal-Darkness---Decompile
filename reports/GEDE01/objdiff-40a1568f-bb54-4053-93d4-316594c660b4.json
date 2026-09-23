@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "assignment_id": "40a1568f-bb54-4053-93d4-316594c660b4",
+  "target": "fn_8017D508",
+  "compiler": "GC/1.3 (canonical project configuration)",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017D508 fn_8017D508 -o build/GEDE01/durable-40a1568f-final-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017D508 fn_8017D508 -o build/GEDE01/durable-40a1568f-final-reloc-strict.json --format json-pretty -c function_reloc_diffs=name_address",
+    "python3 tools/fndiff.py game/game_fn_8017D508.c fn_8017D508",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/legal_audit.py"
+  ],
+  "raw_measured_outputs": [
+    "build/GEDE01/main.dol: OK",
+    "target 504 bytes  base 504 bytes  match 100.0",
+    "canonical objdiff: left fn_8017D508 size 504 match_percent 100.0; right fn_8017D508 size 504 match_percent 100.0",
+    "relocation-strict objdiff: left fn_8017D508 size 504 match_percent 100.0; right fn_8017D508 size 504 match_percent 100.0",
+    "relocation-strict records: retail 0; generated 0",
+    "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "legal audit passed (20657 tracked project files inspected)"
+  ],
+  "instruction_measurement": {
+    "retail_bytes": 504,
+    "generated_bytes": 504,
+    "retail_instructions": 126,
+    "generated_instructions": 126,
+    "canonical_match_percent": 100.0,
+    "relocation_strict_match_percent": 100.0
+  },
+  "relocation_strict": {
+    "equal": true,
+    "retail_count": 0,
+    "generated_count": 0,
+    "comparison_fields": ["offset", "type", "target", "addend"],
+    "records": []
+  },
+  "ownership": {
+    "source": "src/game/game_fn_8017D508.c",
+    "configure_registration": "Object(Matching, \"game/game_fn_8017D508.c\")",
+    "split": ".text start:0x8017D508 end:0x8017D700"
+  },
+  "attempt_notes": [
+    "The three preserved attempts all retained the scalar-local reconstruction and its 91.666664% result.",
+    "A distinct aggregate-lifetime hypothesis replaced the scalar dx/dy/dz locals with one Vec3s delta. Assigning delta members in y, z, x source order reproduces retail's scheduling and register allocation while retaining the same semantics.",
+    "The aggregate shape keeps the positive acceleration bound in r0, the negative bound in r30, and dx in r31, eliminating the prior extra move and matching all 126 instructions.",
+    "No neighboring function, compiler policy, split boundary, gate, progress file, generated binary, or private input is included."
+  ]
+}
