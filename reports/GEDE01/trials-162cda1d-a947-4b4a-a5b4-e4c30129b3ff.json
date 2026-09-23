@@ -1,0 +1,833 @@
+{
+  "hypothesis": "Initialization result/source temporary lifetimes and declaration order; modes 0=in-place arithmetic, 1=separate target store and result expression, 2=nested target assignment expression. Each order lists declaration order of x/y/z.",
+  "measurements": [
+    {
+      "variant": "xyz(0, 0, 0)",
+      "score": 99.893166,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(0, 0, 1)",
+      "score": 99.893166,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(0, 0, 2)",
+      "score": 99.74359,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(0, 1, 0)",
+      "score": 99.70085,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(0, 1, 1)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(0, 1, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(0, 2, 0)",
+      "score": 99.70085,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(0, 2, 1)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(0, 2, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(1, 0, 0)",
+      "score": 99.72222,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(1, 0, 1)",
+      "score": 98.82478,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(1, 0, 2)",
+      "score": 98.73932,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(1, 1, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(1, 1, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(1, 1, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(1, 2, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(1, 2, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(1, 2, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(2, 0, 0)",
+      "score": 99.72222,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(2, 0, 1)",
+      "score": 98.82478,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(2, 0, 2)",
+      "score": 98.73932,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(2, 1, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(2, 1, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(2, 1, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(2, 2, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(2, 2, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "xyz(2, 2, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(0, 0, 0)",
+      "score": 99.893166,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(0, 0, 1)",
+      "score": 99.893166,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(0, 0, 2)",
+      "score": 99.74359,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(0, 1, 0)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(0, 1, 1)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(0, 1, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(0, 2, 0)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(0, 2, 1)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(0, 2, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(1, 0, 0)",
+      "score": 99.72222,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(1, 0, 1)",
+      "score": 98.82478,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(1, 0, 2)",
+      "score": 98.73932,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(1, 1, 0)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(1, 1, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(1, 1, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(1, 2, 0)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(1, 2, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(1, 2, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(2, 0, 0)",
+      "score": 99.72222,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(2, 0, 1)",
+      "score": 98.82478,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(2, 0, 2)",
+      "score": 98.73932,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(2, 1, 0)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(2, 1, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(2, 1, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(2, 2, 0)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(2, 2, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "xzy(2, 2, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(0, 0, 0)",
+      "score": 99.72222,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(0, 0, 1)",
+      "score": 99.72222,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(0, 0, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(0, 1, 0)",
+      "score": 99.70085,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(0, 1, 1)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(0, 1, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(0, 2, 0)",
+      "score": 99.70085,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(0, 2, 1)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(0, 2, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(1, 0, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(1, 0, 1)",
+      "score": 98.888885,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(1, 0, 2)",
+      "score": 98.80342,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(1, 1, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(1, 1, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(1, 1, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(1, 2, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(1, 2, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(1, 2, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(2, 0, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(2, 0, 1)",
+      "score": 98.888885,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(2, 0, 2)",
+      "score": 98.80342,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(2, 1, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(2, 1, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(2, 1, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(2, 2, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(2, 2, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "yxz(2, 2, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(0, 0, 0)",
+      "score": 99.72222,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(0, 0, 1)",
+      "score": 99.72222,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(0, 0, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(0, 1, 0)",
+      "score": 99.70085,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(0, 1, 1)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(0, 1, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(0, 2, 0)",
+      "score": 99.70085,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(0, 2, 1)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(0, 2, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(1, 0, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(1, 0, 1)",
+      "score": 98.888885,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(1, 0, 2)",
+      "score": 98.80342,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(1, 1, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(1, 1, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(1, 1, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(1, 2, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(1, 2, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(1, 2, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(2, 0, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(2, 0, 1)",
+      "score": 98.888885,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(2, 0, 2)",
+      "score": 98.80342,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(2, 1, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(2, 1, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(2, 1, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(2, 2, 0)",
+      "score": 98.07692,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(2, 2, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "yzx(2, 2, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(0, 0, 0)",
+      "score": 99.893166,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(0, 0, 1)",
+      "score": 99.893166,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(0, 0, 2)",
+      "score": 99.74359,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(0, 1, 0)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(0, 1, 1)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(0, 1, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(0, 2, 0)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(0, 2, 1)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(0, 2, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(1, 0, 0)",
+      "score": 98.82478,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(1, 0, 1)",
+      "score": 98.82478,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(1, 0, 2)",
+      "score": 98.73932,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(1, 1, 0)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(1, 1, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(1, 1, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(1, 2, 0)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(1, 2, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(1, 2, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(2, 0, 0)",
+      "score": 98.82478,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(2, 0, 1)",
+      "score": 98.82478,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(2, 0, 2)",
+      "score": 98.73932,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(2, 1, 0)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(2, 1, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(2, 1, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(2, 2, 0)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(2, 2, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zxy(2, 2, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(0, 0, 0)",
+      "score": 99.72222,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(0, 0, 1)",
+      "score": 99.72222,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(0, 0, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(0, 1, 0)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(0, 1, 1)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(0, 1, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(0, 2, 0)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(0, 2, 1)",
+      "score": 99.65812,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(0, 2, 2)",
+      "score": 99.57265,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(1, 0, 0)",
+      "score": 98.888885,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(1, 0, 1)",
+      "score": 98.888885,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(1, 0, 2)",
+      "score": 98.80342,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(1, 1, 0)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(1, 1, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(1, 1, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(1, 2, 0)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(1, 2, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(1, 2, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(2, 0, 0)",
+      "score": 98.888885,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(2, 0, 1)",
+      "score": 98.888885,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(2, 0, 2)",
+      "score": 98.80342,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(2, 1, 0)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(2, 1, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(2, 1, 2)",
+      "score": 97.948715,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(2, 2, 0)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(2, 2, 1)",
+      "score": 98.03419,
+      "size": "936"
+    },
+    {
+      "variant": "zyx(2, 2, 2)",
+      "score": 97.948715,
+      "size": "936"
+    }
+  ],
+  "explicit_lower_hypothesis": "Separate lower-offset temporary; mode 0 stores y subtraction back into lower, mode 1 subtracts lower from y in place, mode 2 assigns target.y-minus-lower to y.",
+  "explicit_lower_measurements": [
+    {
+      "variant": "x,y,z,lower:0",
+      "score": 99.80769,
+      "size": "936"
+    },
+    {
+      "variant": "x,y,z,lower:1",
+      "score": 99.893166,
+      "size": "936"
+    },
+    {
+      "variant": "x,y,z,lower:2",
+      "score": 100.0,
+      "size": "936"
+    }
+  ]
+}

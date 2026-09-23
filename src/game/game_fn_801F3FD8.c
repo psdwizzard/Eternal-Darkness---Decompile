@@ -20,9 +20,9 @@ typedef struct Candidate {
     u8 subtype;
     u8 pad2E[6];
     EffectRec effect;
+    u8 attributes[0x18];
     Vec3 color;
-    u8 pad54[0xC];
-    u8 attributes[0x1C];
+    u8 pad6C[0x10];
 } Candidate;
 
 extern s32 lbl_8064D18C;
@@ -55,18 +55,32 @@ void fn_801F3FD8(Vec3* point, s32 duration)
     s32 raw_cap;
     s32 cap;
     s32 candidate_index = 0;
-    s32 extra_count = 4;
+    s32 extra_count;
     s32 i;
 
     raw_cap = fn_801FD258();
     candidates = fn_801FD240();
     cap = raw_cap;
-    target.x = point->x;
-    effect.pos.x = target.x - lbl_806513F0;
-    target.y = point->y;
-    effect.pos.y = target.y - lbl_806513F0;
-    target.z = point->z;
-    effect.pos.z = lbl_806513F4 + target.z;
+    extra_count = 4;
+    {
+        float x;
+        float y;
+        float z;
+        float lower;
+        x = point->x;
+        target.x = x;
+        lower = lbl_806513F0;
+        x -= lower;
+        y = point->y;
+        target.y = y;
+        y = target.y - lower;
+        z = point->z;
+        target.z = z;
+        z = lbl_806513F4 + z;
+        effect.pos.x = x;
+        effect.pos.y = y;
+        effect.pos.z = z;
+    }
     effect.value = lbl_806513EC;
     effect.intensity = duration;
     if (raw_cap > 3) cap = 3;
@@ -82,43 +96,45 @@ void fn_801F3FD8(Vec3* point, s32 duration)
 
     if (cap > 0) {
         s32 remaining = 4 - cap;
-        extra_count = 4;
-        if (remaining <= 4) extra_count = remaining;
+        s32 limited = 4;
+        if (remaining <= 4) limited = remaining;
+        extra_count = limited;
         seen_mask = 0x10 << extra_count;
         enabled_mask = seen_mask;
     }
 
     {
-    float upper = lbl_806513F4;
-    float lower = lbl_806513F0;
-    for (i = 0; i < extra_count; i++) {
-        s32 effect_index = i + 4;
-        ordinary_mask |= 0x10 << i;
-        active_mask |= ordinary_mask;
-        effect.pos.x = point->x - lower;
-        effect.pos.y = point->y - lower;
-        effect.pos.z = upper + point->z;
-        switch (i) {
-        case 0:
-            break;
-        case 1:
-            effect.pos.x += lbl_806513F8;
-            break;
-        case 2:
-            effect.pos.x += lbl_806513F8;
-            effect.pos.y += lbl_806513F8;
-            break;
-        case 3:
-            effect.pos.y += lbl_806513F8;
-            break;
+        float upper;
+        float lower;
+        lower = lbl_806513F0;
+        upper = lbl_806513F4;
+        for (i = 0; i < extra_count; i++) {
+            s32 effect_index = i + 4;
+            ordinary_mask |= 0x10 << i;
+            active_mask |= ordinary_mask;
+            effect.pos.x = point->x - lower;
+            effect.pos.y = point->y - lower;
+            effect.pos.z = upper + point->z;
+            switch (i) {
+            case 0:
+                break;
+            case 1:
+                effect.pos.x += lbl_806513F8;
+                break;
+            case 2:
+                effect.pos.x += lbl_806513F8;
+                effect.pos.y += lbl_806513F8;
+                break;
+            case 3:
+                effect.pos.y += lbl_806513F8;
+                break;
+            }
+            effect.intensity = 5000;
+            fn_801F0CB0(&effect, &target, 0, effect_index, 1, 0, 0);
         }
-        effect.intensity = 5000;
-        fn_801F0CB0(&effect, &target, 0, effect_index, 1, 0, 0);
     }
-    }
-
-    while (candidate_index < cap) {
-        candidate = **candidates;
+    for (i = 0; candidate_index < cap; i++) {
+        candidate = *candidates[i];
         if (candidate.id == lbl_8064D18C &&
             (!fn_8015E4E8() || candidate.subtype == 7)) {
             s32 valid = 1;
@@ -127,22 +143,22 @@ void fn_801F3FD8(Vec3* point, s32 duration)
                 if (candidate.id != fn_8011FB4C()) valid = 0;
             }
             if (valid) {
+                s32 effect_index = (extra_count + 4) + candidate_index;
                 seen_mask |= enabled_mask << candidate_index;
                 active_mask |= seen_mask;
                 if (candidate.kind == 1) {
                     fn_801F0CB0(&candidate.effect, point, 0,
-                                 extra_count + candidate_index + 4, 0,
+                                 effect_index, 0,
                                  &candidate.color, candidate.attributes);
                     candidate_index++;
                 } else {
                     fn_801F0CB0(&candidate.effect, point, 0,
-                                 extra_count + candidate_index + 4, 0,
+                                 effect_index, 0,
                                  &candidate.color, 0);
                     candidate_index++;
                 }
             }
         }
-        candidates++;
     }
 
     fn_801F10BC(active_mask & (seen_mask | 0xF),

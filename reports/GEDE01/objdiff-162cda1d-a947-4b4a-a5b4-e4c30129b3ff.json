@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "assignment_id": "162cda1d-a947-4b4a-a5b4-e4c30129b3ff",
+  "attempt": 5,
+  "base_commit": "de11df145f4e590067523ddfe3597276926196eb",
+  "target": "fn_801F3FD8",
+  "unit": "main/game/game_fn_801F3FD8",
+  "source": {
+    "path": "eternal-darkness-decomp/src/game/game_fn_801F3FD8.c",
+    "sha256": "071a40120bb8ed224a616f9009f4a34ded1428fd5db57f13c98efc8ac55f978b",
+    "classification": "independent C translation unit",
+    "compiler": "existing canonical GC/1.3",
+    "compiler_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c"
+  },
+  "preserved_attempts_studied": [
+    "15e9b7c650c79d9ec58fb23c15a1b68d729dd0e1",
+    "0660fde9dd970763e1e3321f62456ae81015ff91",
+    "b06a1955ca1e7efd6e34c16cfe5212b3b960c37f",
+    "48535b6874e543f8b23e4715b54726eb6031ddb2"
+  ],
+  "historical_best_match_percent": 92.149574,
+  "distinct_hypotheses_and_findings": [
+    "Corrected candidate argument storage: retail argument r8 points to candidate+0x60 and r9 to candidate+0x48; the prior reconstruction reversed these fields.",
+    "Indexed candidate traversal generates the retail strength-reduced cursor copy and GPR allocation; an explicit pointer cursor coalesced with the original pointer.",
+    "A shared candidate slot expression grouped as (extra_count + 4) + candidate_index reproduces retail argument scheduling across both branches.",
+    "Initializing extra_count after obtaining raw_cap and candidates allows the raw-count/capped-count copy and register reuse. A distinct limited local reproduces the later minimum-result copy.",
+    "Separating loop-constant declarations from assignments retains f30/f31 allocation while loading lower before upper.",
+    "Initialization uses explicit x/y/z result locals and a lower-offset local; loading/storing y before assigning target.y - lower yields exact retail FPR lifetimes."
+  ],
+  "milestones": [
+    {
+      "hypothesis": "correct candidate layout only",
+      "match_percent": 92.15812
+    },
+    {
+      "hypothesis": "group target-coordinate stores",
+      "match_percent": 94.209404
+    },
+    {
+      "hypothesis": "separate bounded-count temporary",
+      "match_percent": 94.70085
+    },
+    {
+      "hypothesis": "indexed candidate scan",
+      "match_percent": 95.36325
+    },
+    {
+      "hypothesis": "shared regrouped candidate slot",
+      "match_percent": 97.67094
+    },
+    {
+      "hypothesis": "separate loop-constant assignments",
+      "match_percent": 97.75641
+    },
+    {
+      "hypothesis": "extra_count initialized after cap copy",
+      "match_percent": 98.16239
+    },
+    {
+      "hypothesis": "in-place initialization result locals",
+      "match_percent": 99.893166
+    },
+    {
+      "hypothesis": "explicit lower temporary and target.y expression",
+      "match_percent": 100.0
+    }
+  ],
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F3FD8 fn_801F3FD8 -o reports/GEDE01/objdiff-162cda1d-a947-4b4a-a5b4-e4c30129b3ff-canonical.raw.json --format json-pretty",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-162cda1d-a947-4b4a-a5b4-e4c30129b3ff-canonical.raw.json",
+    "match_percent": 100.0,
+    "retail_text_bytes": 936,
+    "generated_text_bytes": 936,
+    "aligned_instruction_rows": 234,
+    "differing_aligned_instruction_rows": 0,
+    "raw_report_sha256": "dd3171a0c09d76132e61f179a3d59ca486984bae653959c91a01c5f522ac0100"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F3FD8 fn_801F3FD8 -o reports/GEDE01/objdiff-162cda1d-a947-4b4a-a5b4-e4c30129b3ff-relocation-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "config": "function_reloc_diffs=name_address",
+    "match_percent": 100.0,
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-162cda1d-a947-4b4a-a5b4-e4c30129b3ff-relocation-strict.raw.json",
+    "raw_report_sha256": "dd3171a0c09d76132e61f179a3d59ca486984bae653959c91a01c5f522ac0100"
+  },
+  "byte_and_relocation_verification": {
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/byte-relocations-162cda1d-a947-4b4a-a5b4-e4c30129b3ff.json",
+    "method": "Direct ELF32 big-endian extraction of fn_801F3FD8 symbol bytes and SHT_RELA records. Compare text bytes and ordered (relative offset, relocation type, symbol name, signed addend) tuples.",
+    "text_bytes_equal": true,
+    "relocations_equal": true,
+    "relocation_entries_each_side": 26,
+    "text_sha256": "862780262c6a3b18a0f740aea3c81c751231933d551a01173778b8cc65a7fce7"
+  },
+  "trial_measurements": "eternal-darkness-decomp/reports/GEDE01/trials-162cda1d-a947-4b4a-a5b4-e4c30129b3ff.json",
+  "divergence": "",
+  "build_verification": {
+    "command_results": "eternal-darkness-decomp/reports/GEDE01/build-162cda1d-a947-4b4a-a5b4-e4c30129b3ff.json",
+    "raw_log": "eternal-darkness-decomp/reports/GEDE01/build-162cda1d-a947-4b4a-a5b4-e4c30129b3ff.log",
+    "configure_exit_status": 0,
+    "ninja_exit_status": 0,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matching_registration_linked": true,
+    "log_encoding": "UTF-8; compiler CRLF line endings normalized to LF; output text otherwise preserved",
+    "log_original_sha256": "ab29d288d3879f05b102cde1e9419dafd25153c0a6f42e69d20c0b04007e5dfa"
+  },
+  "legal_audit": {
+    "raw_log": "eternal-darkness-decomp/reports/GEDE01/legal-audit-162cda1d-a947-4b4a-a5b4-e4c30129b3ff.log",
+    "command": "python3 tools/legal_audit.py",
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "progress_or_readme_edits": false,
+    "generated_binaries_or_private_inputs_committed": false,
+    "preexisting_CLAUDE_md_change": "untouched and excluded from commit",
+    "exit_status": 0
+  }
+}
