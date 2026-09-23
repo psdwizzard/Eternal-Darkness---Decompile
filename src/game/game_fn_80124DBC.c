@@ -48,11 +48,11 @@ extern void DCFlushRange(void*, u32);
 
 void fn_80124DBC(void* owner)
 {
-    void* table = (void*)U32(owner, 0x3C);
-    float scale = fn_8017968C(owner, lbl_8063D378);
-    float frame = F32(owner, 0x2AC);
     s32 first_count;
     s32 second_count;
+    void* table;
+    float frame;
+    float scale;
     u32 first;
     u32 second;
     s32 triple;
@@ -61,6 +61,10 @@ void fn_80124DBC(void* owner)
     Shape shape;
     Hit hit;
     void* collision;
+
+    table = (void*)U32(owner, 0x3C);
+    scale = fn_8017968C(owner, lbl_8063D378);
+    frame = F32(owner, 0x2AC);
 
     if (U32(owner, 0x2A0) == 0) {
         return;
@@ -73,9 +77,9 @@ void fn_80124DBC(void* owner)
     }
 
     if (U32(owner, 0x254) & 0x10000000) {
-        U32((void*)U32(owner, 0x2A0), 0) &= ~4;
+        U32((void*)U32(owner, 0x2A0), 0) &= ~2;
     } else {
-        U32((void*)U32(owner, 0x2A0), 0) &= ~4;
+        U32((void*)U32(owner, 0x2A0), 0) &= ~2;
     }
     fn_80120B58(owner);
     if (U8(owner, 0x2DE) != 0) {

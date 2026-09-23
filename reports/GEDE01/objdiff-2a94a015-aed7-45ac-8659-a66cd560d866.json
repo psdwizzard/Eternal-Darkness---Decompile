@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "assignment_id": "2a94a015-aed7-45ac-8659-a66cd560d866",
+  "target": "fn_80124DBC",
+  "hypothesis": "Reorder long-lived local declarations while preserving evaluation order so canonical MWCC assigns first_count/second_count/table to r31/r30/r29 and frame/scale to f31/f30, matching retail.",
+  "compiler_settings": {
+    "registration": "Object(NonMatching, \"game/game_fn_80124DBC.c\")",
+    "extra_cflags": [],
+    "canonical_settings_preserved": true
+  },
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80124DBC.c fn_80124DBC",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "canonical": {
+    "target_bytes": 840,
+    "candidate_bytes": 864,
+    "match_percent": 90.333336,
+    "matched": false,
+    "raw_summary": "target 840 bytes  base 864 bytes  match 90.333336"
+  },
+  "relocation_strict": {
+    "target_relocation_instructions": 35,
+    "candidate_relocation_instructions": 37,
+    "matched": false,
+    "raw_measurement": "left size 840 match 90.333336 relocations 35; right size 864 match 90.333336 relocations 37",
+    "reason": "Candidate has additional R_PPC_REL24 relocations at generated offsets 0x20 and 0x350 for _savegpr_27 and _restgpr_27. Consequently relocation offsets after the prologue are not strict-identical even where targets and addends otherwise agree."
+  },
+  "build": {
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "raw_check_output": "build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "built": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matched": true
+  },
+  "measured_improvement": "Declaration ordering raised canonical objdiff from preserved 89.78571% to 90.333336% and aligned table/first_count/second_count and scale/frame register allocation with retail.",
+  "divergence": "Canonical GC/1.3 still emits addi/bl _savegpr_27 and addi/bl _restgpr_27 instead of retail stmw/lmw, leaving the candidate 24 bytes larger and adding two relocations. Remaining source-codegen differences are the equality-test branch shape, constant materialization plus and for flag clears instead of retail rlwinm, and indexed/addi-plus-indexed slot accesses instead of retail add-plus-displacement accesses."
+}
