@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d5c2f1bc-acff-49ee-8108-cb335bbed2f6",
+  "attempt": 3,
+  "base_commit": "e446e1ac033610373cf3981bd8e332a5115c2044",
+  "target": "fn_801F8748",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d5c2f1bc-acff-49ee-8108-cb335bbed2f6.json"
+  ],
+  "divergence": "Best canonical relocation-strict objdiff score is 89.42759%: retail is 580 bytes and generated code is 552 bytes. Reversing the Vec3 declaration order aligns retail normal/ray stack slots, and reversing the commutative dot-product terms aligns the final fmuls/fmadds operand order. Remaining differences are the 0xB0 retail frame versus 0x90 generated frame, two-step derived-global base materialization and base-relative stores versus folded r31 offsets, and one generated frsp before the two final float stores. Both .rela.text sections are 300 bytes. Fresh python3 configure.py and .tools/bin/ninja -j2 completed successfully; build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

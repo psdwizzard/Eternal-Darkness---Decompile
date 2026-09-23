@@ -47,8 +47,8 @@ int fn_801F8748(void* arg0, void* arg1, void* arg2, void* arg3, int check)
     Vec3 object_copy;
     Vec3 first_offset;
     Vec3 second_offset;
-    Vec3 normal;
     Vec3 ray;
+    Vec3 normal;
     Vec3 object_position;
     Vec3* second_position;
     Vec3* position;
@@ -97,7 +97,7 @@ int fn_801F8748(void* arg0, void* arg1, void* arg2, void* arg3, int check)
     fn_80211A6C(&g->ray_a, &g->ray_b, &normal);
     normal.z = lbl_80651464;
     fn_80211A90(&normal, &normal, lbl_80651478 / fn_80211B08(&normal));
-    plane = normal.y * ray.y + normal.x * ray.x;
+    plane = normal.x * ray.x + normal.y * ray.y;
     g->plane = -plane;
     ((float*)g->second)[0x7F] = g->plane;
     fn_801FA410(3);
