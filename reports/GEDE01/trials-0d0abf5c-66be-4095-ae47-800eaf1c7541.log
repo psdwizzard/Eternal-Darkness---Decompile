@@ -1,0 +1,649 @@
+
+TRIAL float
+---
++++
+@@ -59,7 +59,7 @@
+     Vec3* position;
+     StatePart* second_base;
+     StatePart* base;
+-    double plane;
++    float plane;
+     int allowed = 1;
+
+     if (check && fn_8013BAAC(lbl_806514A4)) {
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F8748.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801F8748.o
+EXIT 0
+$ build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801F8748.o -2 build/GEDE01/src/game/game_fn_801F8748.o -c function_reloc_diffs=all -o reports/GEDE01/trial-float-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+ INFO Writing to reports/GEDE01/trial-float-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+EXIT 0
+{"name": ".text", "kind": "SECTION_CODE", "size": "580", "match_percent": 89.4}
+
+TRIAL cast-neg
+---
++++
+@@ -101,7 +101,7 @@
+     normal.z = lbl_80651464;
+     fn_80211A90(&normal, &normal, lbl_80651478 / fn_80211B08(&normal));
+     plane = normal.x * ray.x + normal.y * ray.y;
+-    ((StatePart*)g->first)->plane = -plane;
++    ((StatePart*)g->first)->plane = -(float)plane;
+     ((StatePart*)g->second)->plane = ((StatePart*)g->first)->plane;
+     fn_801FA410(3);
+     g->ray_a_active = 1;
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F8748.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801F8748.o
+EXIT 0
+$ build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801F8748.o -2 build/GEDE01/src/game/game_fn_801F8748.o -c function_reloc_diffs=all -o reports/GEDE01/trial-cast-neg-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+ INFO Writing to reports/GEDE01/trial-cast-neg-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+EXIT 0
+{"name": ".text", "kind": "SECTION_CODE", "size": "580", "match_percent": 89.4}
+
+TRIAL integer-address
+---
++++
+@@ -70,7 +70,7 @@
+     }
+
+     fn_801F8620();
+-    second_position = &((StatePart*)g->second)->position;
++    second_position = (Vec3*)((unsigned int)g->second + 0x198);
+     if (!fn_801FA198(arg0, second_position, 0, 0, arg3, 1, 0, 0, (int)arg1)) {
+         goto failed;
+     }
+@@ -79,7 +79,7 @@
+     object_copy = object_position;
+     arg3 = fn_8011FE34(arg1);
+     fn_801F9AF8(second_position, arg2, &first_offset);
+-    position = &((StatePart*)g->first)->position;
++    position = (Vec3*)((unsigned int)g->first + 0x198);
+     fn_801F9AF8(position, arg2, &second_offset);
+     fn_802114E0(object_transform, arg3);
+     fn_80211710(object_transform, &first_offset, &first_offset);
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F8748.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801F8748.o
+EXIT 0
+$ build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801F8748.o -2 build/GEDE01/src/game/game_fn_801F8748.o -c function_reloc_diffs=all -o reports/GEDE01/trial-integer-address-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+ INFO Writing to reports/GEDE01/trial-integer-address-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+EXIT 0
+{"name": ".text", "kind": "SECTION_CODE", "size": "580", "match_percent": 89.46896}
+
+TRIAL parallel-float
+---
++++
+@@ -59,7 +59,7 @@
+     Vec3* position;
+     StatePart* second_base;
+     StatePart* base;
+-    double plane;
++    float plane;
+     int allowed = 1;
+
+     if (check && fn_8013BAAC(lbl_806514A4)) {
+@@ -101,8 +101,8 @@
+     normal.z = lbl_80651464;
+     fn_80211A90(&normal, &normal, lbl_80651478 / fn_80211B08(&normal));
+     plane = normal.x * ray.x + normal.y * ray.y;
++    ((StatePart*)g->second)->plane = -plane;
+     ((StatePart*)g->first)->plane = -plane;
+-    ((StatePart*)g->second)->plane = ((StatePart*)g->first)->plane;
+     fn_801FA410(3);
+     g->ray_a_active = 1;
+     g->ray_b_active = 1;
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F8748.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801F8748.o
+EXIT 0
+$ build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801F8748.o -2 build/GEDE01/src/game/game_fn_801F8748.o -c function_reloc_diffs=all -o reports/GEDE01/trial-parallel-float-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+ INFO Writing to reports/GEDE01/trial-parallel-float-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+EXIT 0
+{"name": ".text", "kind": "SECTION_CODE", "size": "580", "match_percent": 90.1931}
+
+TRIAL parallel-double
+---
++++
+@@ -101,8 +101,8 @@
+     normal.z = lbl_80651464;
+     fn_80211A90(&normal, &normal, lbl_80651478 / fn_80211B08(&normal));
+     plane = normal.x * ray.x + normal.y * ray.y;
++    ((StatePart*)g->second)->plane = -plane;
+     ((StatePart*)g->first)->plane = -plane;
+-    ((StatePart*)g->second)->plane = ((StatePart*)g->first)->plane;
+     fn_801FA410(3);
+     g->ray_a_active = 1;
+     g->ray_b_active = 1;
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F8748.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801F8748.o
+EXIT 0
+$ build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801F8748.o -2 build/GEDE01/src/game/game_fn_801F8748.o -c function_reloc_diffs=all -o reports/GEDE01/trial-parallel-double-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+ INFO Writing to reports/GEDE01/trial-parallel-double-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+EXIT 0
+{"name": ".text", "kind": "SECTION_CODE", "size": "580", "match_percent": 89.53793}
+
+TRIAL inline-accessor
+---
++++
+@@ -44,6 +44,11 @@
+ extern void fn_80211A90(Vec3*, Vec3*, float);
+ extern void fn_801FA410(int);
+
++static inline Vec3* state_position(StatePart* state)
++{
++    return &state->position;
++}
++
+ #pragma opt_lifetimes off
+ int fn_801F8748(void* arg0, void* arg1, void* arg2, void* arg3, int check)
+ {
+@@ -70,7 +75,7 @@
+     }
+
+     fn_801F8620();
+-    second_position = &((StatePart*)g->second)->position;
++    second_position = state_position((StatePart*)g->second);
+     if (!fn_801FA198(arg0, second_position, 0, 0, arg3, 1, 0, 0, (int)arg1)) {
+         goto failed;
+     }
+@@ -79,7 +84,7 @@
+     object_copy = object_position;
+     arg3 = fn_8011FE34(arg1);
+     fn_801F9AF8(second_position, arg2, &first_offset);
+-    position = &((StatePart*)g->first)->position;
++    position = state_position((StatePart*)g->first);
+     fn_801F9AF8(position, arg2, &second_offset);
+     fn_802114E0(object_transform, arg3);
+     fn_80211710(object_transform, &first_offset, &first_offset);
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F8748.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801F8748.o
+EXIT 0
+$ build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801F8748.o -2 build/GEDE01/src/game/game_fn_801F8748.o -c function_reloc_diffs=all -o reports/GEDE01/trial-inline-accessor-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+ INFO Writing to reports/GEDE01/trial-inline-accessor-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+EXIT 0
+{"name": ".text", "kind": "SECTION_CODE", "size": "580", "match_percent": 90.1931}
+
+TRIAL typed-parallel
+---
++++
+@@ -14,8 +14,8 @@
+ } StatePart;
+
+ typedef struct GlobalState {
+-    unsigned char first[0x660];
+-    unsigned char second[0x660];
++    StatePart first;
++    StatePart second;
+     Vec3 ray_a;
+     unsigned char padCCC[0x34];
+     int ray_a_active;
+@@ -70,7 +70,7 @@
+     }
+
+     fn_801F8620();
+-    second_position = &((StatePart*)g->second)->position;
++    second_position = &g->second.position;
+     if (!fn_801FA198(arg0, second_position, 0, 0, arg3, 1, 0, 0, (int)arg1)) {
+         goto failed;
+     }
+@@ -79,21 +79,21 @@
+     object_copy = object_position;
+     arg3 = fn_8011FE34(arg1);
+     fn_801F9AF8(second_position, arg2, &first_offset);
+-    position = &((StatePart*)g->first)->position;
++    position = &g->first.position;
+     fn_801F9AF8(position, arg2, &second_offset);
+     fn_802114E0(object_transform, arg3);
+     fn_80211710(object_transform, &first_offset, &first_offset);
+     fn_80211710(object_transform, &second_offset, &second_offset);
+     fn_80211A6C(&second_offset, &first_offset, &ray);
+
+-    second_base = (StatePart*)g->second;
+-    base = (StatePart*)g->first;
++    second_base = &g->second;
++    base = &g->first;
+     second_position->x = first_offset.x + object_copy.x;
+-    second_base[0].position.y = first_offset.y + object_copy.y;
+-    second_base[0].position.z = first_offset.z + object_copy.z;
++    second_base->position.y = first_offset.y + object_copy.y;
++    second_base->position.z = first_offset.z + object_copy.z;
+     position->x = second_offset.x + object_copy.x;
+-    base[0].position.y = second_offset.y + object_copy.y;
+-    base[0].position.z = second_offset.z + object_copy.z;
++    base->position.y = second_offset.y + object_copy.y;
++    base->position.z = second_offset.z + object_copy.z;
+
+     ray.z = lbl_80651464;
+     fn_80211A90(&ray, &ray, lbl_80651478 / fn_80211B08(&ray));
+@@ -101,8 +101,8 @@
+     normal.z = lbl_80651464;
+     fn_80211A90(&normal, &normal, lbl_80651478 / fn_80211B08(&normal));
+     plane = normal.x * ray.x + normal.y * ray.y;
+-    ((StatePart*)g->second)->plane = -plane;
+-    ((StatePart*)g->first)->plane = -plane;
++    g->second.plane = -plane;
++    g->first.plane = -plane;
+     fn_801FA410(3);
+     g->ray_a_active = 1;
+     g->ray_b_active = 1;
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F8748.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801F8748.o
+EXIT 0
+$ build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801F8748.o -2 build/GEDE01/src/game/game_fn_801F8748.o -c function_reloc_diffs=all -o reports/GEDE01/trial-typed-parallel-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+ INFO Writing to reports/GEDE01/trial-typed-parallel-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+EXIT 0
+{"name": ".text", "kind": "SECTION_CODE", "size": "580", "match_percent": 90.1931}
+
+TRIAL register-pointers
+---
++++
+@@ -14,8 +14,8 @@
+ } StatePart;
+
+ typedef struct GlobalState {
+-    unsigned char first[0x660];
+-    unsigned char second[0x660];
++    StatePart first;
++    StatePart second;
+     Vec3 ray_a;
+     unsigned char padCCC[0x34];
+     int ray_a_active;
+@@ -47,7 +47,7 @@
+ #pragma opt_lifetimes off
+ int fn_801F8748(void* arg0, void* arg1, void* arg2, void* arg3, int check)
+ {
+-    GlobalState* g = &lbl_8063C6B8;
++    register GlobalState* g = &lbl_8063C6B8;
+     Matrix34 object_transform;
+     Vec3 object_copy;
+     Vec3 first_offset;
+@@ -55,10 +55,10 @@
+     Vec3 ray;
+     Vec3 normal;
+     Vec3 object_position;
+-    Vec3* second_position;
+-    Vec3* position;
+-    StatePart* second_base;
+-    StatePart* base;
++    register Vec3* second_position;
++    register Vec3* position;
++    register StatePart* second_base;
++    register StatePart* base;
+     float plane;
+     int allowed = 1;
+
+@@ -70,7 +70,7 @@
+     }
+
+     fn_801F8620();
+-    second_position = &((StatePart*)g->second)->position;
++    second_position = &g->second.position;
+     if (!fn_801FA198(arg0, second_position, 0, 0, arg3, 1, 0, 0, (int)arg1)) {
+         goto failed;
+     }
+@@ -79,21 +79,21 @@
+     object_copy = object_position;
+     arg3 = fn_8011FE34(arg1);
+     fn_801F9AF8(second_position, arg2, &first_offset);
+-    position = &((StatePart*)g->first)->position;
++    position = &g->first.position;
+     fn_801F9AF8(position, arg2, &second_offset);
+     fn_802114E0(object_transform, arg3);
+     fn_80211710(object_transform, &first_offset, &first_offset);
+     fn_80211710(object_transform, &second_offset, &second_offset);
+     fn_80211A6C(&second_offset, &first_offset, &ray);
+
+-    second_base = (StatePart*)g->second;
+-    base = (StatePart*)g->first;
++    second_base = &g->second;
++    base = &g->first;
+     second_position->x = first_offset.x + object_copy.x;
+-    second_base[0].position.y = first_offset.y + object_copy.y;
+-    second_base[0].position.z = first_offset.z + object_copy.z;
++    second_base->position.y = first_offset.y + object_copy.y;
++    second_base->position.z = first_offset.z + object_copy.z;
+     position->x = second_offset.x + object_copy.x;
+-    base[0].position.y = second_offset.y + object_copy.y;
+-    base[0].position.z = second_offset.z + object_copy.z;
++    base->position.y = second_offset.y + object_copy.y;
++    base->position.z = second_offset.z + object_copy.z;
+
+     ray.z = lbl_80651464;
+     fn_80211A90(&ray, &ray, lbl_80651478 / fn_80211B08(&ray));
+@@ -101,8 +101,8 @@
+     normal.z = lbl_80651464;
+     fn_80211A90(&normal, &normal, lbl_80651478 / fn_80211B08(&normal));
+     plane = normal.x * ray.x + normal.y * ray.y;
+-    ((StatePart*)g->second)->plane = -plane;
+-    ((StatePart*)g->first)->plane = -plane;
++    g->second.plane = -plane;
++    g->first.plane = -plane;
+     fn_801FA410(3);
+     g->ray_a_active = 1;
+     g->ray_b_active = 1;
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F8748.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801F8748.o
+EXIT 0
+$ build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801F8748.o -2 build/GEDE01/src/game/game_fn_801F8748.o -c function_reloc_diffs=all -o reports/GEDE01/trial-register-pointers-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+ INFO Writing to reports/GEDE01/trial-register-pointers-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+EXIT 0
+{"name": ".text", "kind": "SECTION_CODE", "size": "580", "match_percent": 90.1931}
+
+TRIAL direct-global
+---
++++
+@@ -14,8 +14,8 @@
+ } StatePart;
+
+ typedef struct GlobalState {
+-    unsigned char first[0x660];
+-    unsigned char second[0x660];
++    StatePart first;
++    StatePart second;
+     Vec3 ray_a;
+     unsigned char padCCC[0x34];
+     int ray_a_active;
+@@ -70,7 +70,7 @@
+     }
+
+     fn_801F8620();
+-    second_position = &((StatePart*)g->second)->position;
++    second_position = &lbl_8063C6B8.second.position;
+     if (!fn_801FA198(arg0, second_position, 0, 0, arg3, 1, 0, 0, (int)arg1)) {
+         goto failed;
+     }
+@@ -79,33 +79,33 @@
+     object_copy = object_position;
+     arg3 = fn_8011FE34(arg1);
+     fn_801F9AF8(second_position, arg2, &first_offset);
+-    position = &((StatePart*)g->first)->position;
++    position = &lbl_8063C6B8.first.position;
+     fn_801F9AF8(position, arg2, &second_offset);
+     fn_802114E0(object_transform, arg3);
+     fn_80211710(object_transform, &first_offset, &first_offset);
+     fn_80211710(object_transform, &second_offset, &second_offset);
+     fn_80211A6C(&second_offset, &first_offset, &ray);
+
+-    second_base = (StatePart*)g->second;
+-    base = (StatePart*)g->first;
++    second_base = &lbl_8063C6B8.second;
++    base = &lbl_8063C6B8.first;
+     second_position->x = first_offset.x + object_copy.x;
+-    second_base[0].position.y = first_offset.y + object_copy.y;
+-    second_base[0].position.z = first_offset.z + object_copy.z;
++    second_base->position.y = first_offset.y + object_copy.y;
++    second_base->position.z = first_offset.z + object_copy.z;
+     position->x = second_offset.x + object_copy.x;
+-    base[0].position.y = second_offset.y + object_copy.y;
+-    base[0].position.z = second_offset.z + object_copy.z;
++    base->position.y = second_offset.y + object_copy.y;
++    base->position.z = second_offset.z + object_copy.z;
+
+     ray.z = lbl_80651464;
+     fn_80211A90(&ray, &ray, lbl_80651478 / fn_80211B08(&ray));
+-    fn_80211A6C(&g->ray_a, &g->ray_b, &normal);
++    fn_80211A6C(&lbl_8063C6B8.ray_a, &lbl_8063C6B8.ray_b, &normal);
+     normal.z = lbl_80651464;
+     fn_80211A90(&normal, &normal, lbl_80651478 / fn_80211B08(&normal));
+     plane = normal.x * ray.x + normal.y * ray.y;
+-    ((StatePart*)g->second)->plane = -plane;
+-    ((StatePart*)g->first)->plane = -plane;
++    lbl_8063C6B8.second.plane = -plane;
++    lbl_8063C6B8.first.plane = -plane;
+     fn_801FA410(3);
+-    g->ray_a_active = 1;
+-    g->ray_b_active = 1;
++    lbl_8063C6B8.ray_a_active = 1;
++    lbl_8063C6B8.ray_b_active = 1;
+     return 1;
+
+ failed:
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F8748.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801F8748.o
+EXIT 0
+$ build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801F8748.o -2 build/GEDE01/src/game/game_fn_801F8748.o -c function_reloc_diffs=all -o reports/GEDE01/trial-direct-global-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+ INFO Writing to reports/GEDE01/trial-direct-global-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+EXIT 0
+{"name": ".text", "kind": "SECTION_CODE", "size": "580", "match_percent": 86.848274}
+
+TRIAL global-array
+---
++++
+@@ -14,8 +14,8 @@
+ } StatePart;
+
+ typedef struct GlobalState {
+-    unsigned char first[0x660];
+-    unsigned char second[0x660];
++    StatePart first;
++    StatePart second;
+     Vec3 ray_a;
+     unsigned char padCCC[0x34];
+     int ray_a_active;
+@@ -25,7 +25,7 @@
+     int ray_b_active;
+ } GlobalState;
+
+-extern GlobalState lbl_8063C6B8;
++extern GlobalState lbl_8063C6B8[1];
+ extern float lbl_80651464;
+ extern float lbl_80651478;
+ extern float lbl_806514A4;
+@@ -47,7 +47,7 @@
+ #pragma opt_lifetimes off
+ int fn_801F8748(void* arg0, void* arg1, void* arg2, void* arg3, int check)
+ {
+-    GlobalState* g = &lbl_8063C6B8;
++    GlobalState* g = lbl_8063C6B8;
+     Matrix34 object_transform;
+     Vec3 object_copy;
+     Vec3 first_offset;
+@@ -70,7 +70,7 @@
+     }
+
+     fn_801F8620();
+-    second_position = &((StatePart*)g->second)->position;
++    second_position = &g->second.position;
+     if (!fn_801FA198(arg0, second_position, 0, 0, arg3, 1, 0, 0, (int)arg1)) {
+         goto failed;
+     }
+@@ -79,21 +79,21 @@
+     object_copy = object_position;
+     arg3 = fn_8011FE34(arg1);
+     fn_801F9AF8(second_position, arg2, &first_offset);
+-    position = &((StatePart*)g->first)->position;
++    position = &g->first.position;
+     fn_801F9AF8(position, arg2, &second_offset);
+     fn_802114E0(object_transform, arg3);
+     fn_80211710(object_transform, &first_offset, &first_offset);
+     fn_80211710(object_transform, &second_offset, &second_offset);
+     fn_80211A6C(&second_offset, &first_offset, &ray);
+
+-    second_base = (StatePart*)g->second;
+-    base = (StatePart*)g->first;
++    second_base = &g->second;
++    base = &g->first;
+     second_position->x = first_offset.x + object_copy.x;
+-    second_base[0].position.y = first_offset.y + object_copy.y;
+-    second_base[0].position.z = first_offset.z + object_copy.z;
++    second_base->position.y = first_offset.y + object_copy.y;
++    second_base->position.z = first_offset.z + object_copy.z;
+     position->x = second_offset.x + object_copy.x;
+-    base[0].position.y = second_offset.y + object_copy.y;
+-    base[0].position.z = second_offset.z + object_copy.z;
++    base->position.y = second_offset.y + object_copy.y;
++    base->position.z = second_offset.z + object_copy.z;
+
+     ray.z = lbl_80651464;
+     fn_80211A90(&ray, &ray, lbl_80651478 / fn_80211B08(&ray));
+@@ -101,8 +101,8 @@
+     normal.z = lbl_80651464;
+     fn_80211A90(&normal, &normal, lbl_80651478 / fn_80211B08(&normal));
+     plane = normal.x * ray.x + normal.y * ray.y;
+-    ((StatePart*)g->second)->plane = -plane;
+-    ((StatePart*)g->first)->plane = -plane;
++    g->second.plane = -plane;
++    g->first.plane = -plane;
+     fn_801FA410(3);
+     g->ray_a_active = 1;
+     g->ray_b_active = 1;
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F8748.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801F8748.o
+EXIT 0
+$ build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801F8748.o -2 build/GEDE01/src/game/game_fn_801F8748.o -c function_reloc_diffs=all -o reports/GEDE01/trial-global-array-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+ INFO Writing to reports/GEDE01/trial-global-array-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+EXIT 0
+{"name": ".text", "kind": "SECTION_CODE", "size": "580", "match_percent": 90.1931}
+
+TRIAL direct-global-array
+---
++++
+@@ -14,8 +14,8 @@
+ } StatePart;
+
+ typedef struct GlobalState {
+-    unsigned char first[0x660];
+-    unsigned char second[0x660];
++    StatePart first;
++    StatePart second;
+     Vec3 ray_a;
+     unsigned char padCCC[0x34];
+     int ray_a_active;
+@@ -25,7 +25,7 @@
+     int ray_b_active;
+ } GlobalState;
+
+-extern GlobalState lbl_8063C6B8;
++extern GlobalState lbl_8063C6B8[1];
+ extern float lbl_80651464;
+ extern float lbl_80651478;
+ extern float lbl_806514A4;
+@@ -47,7 +47,7 @@
+ #pragma opt_lifetimes off
+ int fn_801F8748(void* arg0, void* arg1, void* arg2, void* arg3, int check)
+ {
+-    GlobalState* g = &lbl_8063C6B8;
++    GlobalState* g = lbl_8063C6B8;
+     Matrix34 object_transform;
+     Vec3 object_copy;
+     Vec3 first_offset;
+@@ -70,7 +70,7 @@
+     }
+
+     fn_801F8620();
+-    second_position = &((StatePart*)g->second)->position;
++    second_position = &lbl_8063C6B8[0].second.position;
+     if (!fn_801FA198(arg0, second_position, 0, 0, arg3, 1, 0, 0, (int)arg1)) {
+         goto failed;
+     }
+@@ -79,33 +79,33 @@
+     object_copy = object_position;
+     arg3 = fn_8011FE34(arg1);
+     fn_801F9AF8(second_position, arg2, &first_offset);
+-    position = &((StatePart*)g->first)->position;
++    position = &lbl_8063C6B8[0].first.position;
+     fn_801F9AF8(position, arg2, &second_offset);
+     fn_802114E0(object_transform, arg3);
+     fn_80211710(object_transform, &first_offset, &first_offset);
+     fn_80211710(object_transform, &second_offset, &second_offset);
+     fn_80211A6C(&second_offset, &first_offset, &ray);
+
+-    second_base = (StatePart*)g->second;
+-    base = (StatePart*)g->first;
++    second_base = &lbl_8063C6B8[0].second;
++    base = &lbl_8063C6B8[0].first;
+     second_position->x = first_offset.x + object_copy.x;
+-    second_base[0].position.y = first_offset.y + object_copy.y;
+-    second_base[0].position.z = first_offset.z + object_copy.z;
++    second_base->position.y = first_offset.y + object_copy.y;
++    second_base->position.z = first_offset.z + object_copy.z;
+     position->x = second_offset.x + object_copy.x;
+-    base[0].position.y = second_offset.y + object_copy.y;
+-    base[0].position.z = second_offset.z + object_copy.z;
++    base->position.y = second_offset.y + object_copy.y;
++    base->position.z = second_offset.z + object_copy.z;
+
+     ray.z = lbl_80651464;
+     fn_80211A90(&ray, &ray, lbl_80651478 / fn_80211B08(&ray));
+-    fn_80211A6C(&g->ray_a, &g->ray_b, &normal);
++    fn_80211A6C(&lbl_8063C6B8[0].ray_a, &lbl_8063C6B8[0].ray_b, &normal);
+     normal.z = lbl_80651464;
+     fn_80211A90(&normal, &normal, lbl_80651478 / fn_80211B08(&normal));
+     plane = normal.x * ray.x + normal.y * ray.y;
+-    ((StatePart*)g->second)->plane = -plane;
+-    ((StatePart*)g->first)->plane = -plane;
++    lbl_8063C6B8[0].second.plane = -plane;
++    lbl_8063C6B8[0].first.plane = -plane;
+     fn_801FA410(3);
+-    g->ray_a_active = 1;
+-    g->ray_b_active = 1;
++    lbl_8063C6B8[0].ray_a_active = 1;
++    lbl_8063C6B8[0].ray_b_active = 1;
+     return 1;
+
+ failed:
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F8748.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801F8748.o
+EXIT 0
+$ build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801F8748.o -2 build/GEDE01/src/game/game_fn_801F8748.o -c function_reloc_diffs=all -o reports/GEDE01/trial-direct-global-array-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+ INFO Writing to reports/GEDE01/trial-direct-global-array-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+EXIT 0
+{"name": ".text", "kind": "SECTION_CODE", "size": "580", "match_percent": 86.848274}
+
+TRIAL member-arrays
+---
++++
+@@ -14,8 +14,8 @@
+ } StatePart;
+
+ typedef struct GlobalState {
+-    StatePart first;
+-    StatePart second;
++    StatePart first[1];
++    StatePart second[1];
+     Vec3 ray_a;
+     unsigned char padCCC[0x34];
+     int ray_a_active;
+@@ -70,7 +70,7 @@
+     }
+
+     fn_801F8620();
+-    second_position = &g->second.position;
++    second_position = &g->second[0].position;
+     if (!fn_801FA198(arg0, second_position, 0, 0, arg3, 1, 0, 0, (int)arg1)) {
+         goto failed;
+     }
+@@ -79,15 +79,15 @@
+     object_copy = object_position;
+     arg3 = fn_8011FE34(arg1);
+     fn_801F9AF8(second_position, arg2, &first_offset);
+-    position = &g->first.position;
++    position = &g->first[0].position;
+     fn_801F9AF8(position, arg2, &second_offset);
+     fn_802114E0(object_transform, arg3);
+     fn_80211710(object_transform, &first_offset, &first_offset);
+     fn_80211710(object_transform, &second_offset, &second_offset);
+     fn_80211A6C(&second_offset, &first_offset, &ray);
+
+-    second_base = &g->second;
+-    base = &g->first;
++    second_base = g->second;
++    base = g->first;
+     second_position->x = first_offset.x + object_copy.x;
+     second_base->position.y = first_offset.y + object_copy.y;
+     second_base->position.z = first_offset.z + object_copy.z;
+@@ -101,8 +101,8 @@
+     normal.z = lbl_80651464;
+     fn_80211A90(&normal, &normal, lbl_80651478 / fn_80211B08(&normal));
+     plane = normal.x * ray.x + normal.y * ray.y;
+-    g->second.plane = -plane;
+-    g->first.plane = -plane;
++    g->second[0].plane = -plane;
++    g->first[0].plane = -plane;
+     fn_801FA410(3);
+     g->ray_a_active = 1;
+     g->ray_b_active = 1;
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801F8748.o
+[1/1] MWCC build/GEDE01/src/game/game_fn_801F8748.o
+EXIT 0
+$ build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_801F8748.o -2 build/GEDE01/src/game/game_fn_801F8748.o -c function_reloc_diffs=all -o reports/GEDE01/trial-member-arrays-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+ INFO Writing to reports/GEDE01/trial-member-arrays-0d0abf5c-66be-4095-ae47-800eaf1c7541.json
+EXIT 0
+{"name": ".text", "kind": "SECTION_CODE", "size": "580", "match_percent": 90.1931}

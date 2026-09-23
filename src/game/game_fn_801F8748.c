@@ -2,15 +2,20 @@ typedef struct Vec3 {
     float x, y, z;
 } Vec3;
 
-typedef struct GlobalState {
+/* fn_802114E0 writes all 12 entries; fn_80211710 transforms a Vec3. */
+typedef float Matrix34[3][4];
+
+typedef struct StatePart {
     unsigned char pad000[0x198];
     Vec3 position;
     unsigned char pad1A4[0x58];
     float plane;
     unsigned char pad200[0x460];
-    unsigned char second[0x198];
-    Vec3 second_position;
-    unsigned char pad800[0x4BC];
+} StatePart;
+
+typedef struct GlobalState {
+    StatePart first;
+    StatePart second;
     Vec3 ray_a;
     unsigned char padCCC[0x34];
     int ray_a_active;
@@ -32,8 +37,8 @@ extern int fn_801FA198(void*, void*, int, int, void*, int, int, int, int);
 extern void fn_8011F114(Vec3*, void*);
 extern void* fn_8011FE34(void*);
 extern void fn_801F9AF8(void*, void*, Vec3*);
-extern void fn_802114E0(Vec3*, void*);
-extern void fn_80211710(Vec3*, Vec3*, Vec3*);
+extern void fn_802114E0(Matrix34, void*);
+extern void fn_80211710(Matrix34, Vec3*, Vec3*);
 extern void fn_80211A6C(Vec3*, Vec3*, Vec3*);
 extern float fn_80211B08(Vec3*);
 extern void fn_80211A90(Vec3*, Vec3*, float);
@@ -43,7 +48,7 @@ extern void fn_801FA410(int);
 int fn_801F8748(void* arg0, void* arg1, void* arg2, void* arg3, int check)
 {
     GlobalState* g = &lbl_8063C6B8;
-    Vec3 object_normal;
+    Matrix34 object_transform;
     Vec3 object_copy;
     Vec3 first_offset;
     Vec3 second_offset;
@@ -52,9 +57,9 @@ int fn_801F8748(void* arg0, void* arg1, void* arg2, void* arg3, int check)
     Vec3 object_position;
     Vec3* second_position;
     Vec3* position;
-    GlobalState* second_base;
-    GlobalState* base;
-    double plane;
+    StatePart* second_base;
+    StatePart* base;
+    float plane;
     int allowed = 1;
 
     if (check && fn_8013BAAC(lbl_806514A4)) {
@@ -65,8 +70,7 @@ int fn_801F8748(void* arg0, void* arg1, void* arg2, void* arg3, int check)
     }
 
     fn_801F8620();
-    second_position = (Vec3*)((unsigned char*)g + 0x660);
-    second_position = (Vec3*)((unsigned char*)second_position + 0x198);
+    second_position = &g->second.position;
     if (!fn_801FA198(arg0, second_position, 0, 0, arg3, 1, 0, 0, (int)arg1)) {
         goto failed;
     }
@@ -75,16 +79,15 @@ int fn_801F8748(void* arg0, void* arg1, void* arg2, void* arg3, int check)
     object_copy = object_position;
     arg3 = fn_8011FE34(arg1);
     fn_801F9AF8(second_position, arg2, &first_offset);
-    position = (Vec3*)((unsigned char*)g + 0x0);
-    position = (Vec3*)((unsigned char*)position + 0x198);
+    position = &g->first.position;
     fn_801F9AF8(position, arg2, &second_offset);
-    fn_802114E0(&object_normal, arg3);
-    fn_80211710(&object_normal, &first_offset, &first_offset);
-    fn_80211710(&object_normal, &second_offset, &second_offset);
+    fn_802114E0(object_transform, arg3);
+    fn_80211710(object_transform, &first_offset, &first_offset);
+    fn_80211710(object_transform, &second_offset, &second_offset);
     fn_80211A6C(&second_offset, &first_offset, &ray);
 
-    second_base = (GlobalState*)((unsigned char*)g + 0x660);
-    base = (GlobalState*)((unsigned char*)g + 0x0);
+    second_base = &g->second;
+    base = &g->first;
     second_position->x = first_offset.x + object_copy.x;
     second_base->position.y = first_offset.y + object_copy.y;
     second_base->position.z = first_offset.z + object_copy.z;
@@ -98,8 +101,8 @@ int fn_801F8748(void* arg0, void* arg1, void* arg2, void* arg3, int check)
     normal.z = lbl_80651464;
     fn_80211A90(&normal, &normal, lbl_80651478 / fn_80211B08(&normal));
     plane = normal.x * ray.x + normal.y * ray.y;
-    g->plane = -plane;
-    ((float*)g->second)[0x7F] = g->plane;
+    g->second.plane = -plane;
+    g->first.plane = -plane;
     fn_801FA410(3);
     g->ray_a_active = 1;
     g->ray_b_active = 1;
