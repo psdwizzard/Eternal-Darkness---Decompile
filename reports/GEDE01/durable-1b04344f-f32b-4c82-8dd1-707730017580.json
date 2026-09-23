@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "1b04344f-f32b-4c82-8dd1-707730017580",
+  "attempt": 5,
+  "base_commit": "25e7bfd0f057b1e554a8b10b27332269a9e5628b",
+  "target": "fn_801F7234",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-1b04344f-f32b-4c82-8dd1-707730017580.json"
+  ],
+  "divergence": "Best canonical and relocation-strict score remains 92.39231%: retail emits 520 bytes while canonical GC/1.3 emits 500. Retail preserves five explicit special-state pointer-materialization addi instructions that canonical folds into lbl_8063C6B8-base-relative field loads, and retail schedules the symbol low-half materialization after the flags test. A distinct volatile-qualified subobject-pointer probe emitted 504 bytes at 89.34615%, and declaration/lifetime reorder probes emitted 500 bytes at 91.96923% or the unchanged 92.39231%."
+}

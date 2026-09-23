@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "assignment_id": "1b04344f-f32b-4c82-8dd1-707730017580",
+  "target": "fn_801F7234",
+  "compiler": "GC/1.3",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F7234 fn_801F7234 -o reports/GEDE01/objdiff-1b04344f-f32b-4c82-8dd1-707730017580-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F7234 fn_801F7234 -o reports/GEDE01/objdiff-1b04344f-f32b-4c82-8dd1-707730017580.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol",
+    "rg -n '#pragma[[:space:]]+asm|__asm|asm[[:space:]]*\\(' src/game/game_fn_801F7234.c"
+  ],
+  "raw_measurement": "retail_text_bytes=520 generated_text_bytes=500 canonical_match_percent=92.39231 relocation_strict_match_percent=92.39231 retail_rela_text_bytes=132 generated_rela_text_bytes=132 aligned_diff_rows_left=25 aligned_diff_rows_right=25",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_verified": true,
+  "legal_audit": {
+    "source": "src/game/game_fn_801F7234.c",
+    "whole_function_or_inline_assembly_matches": 0,
+    "independent_translation_unit": true,
+    "runtime_or_neighbor_edits_in_attempt": false,
+    "private_or_generated_inputs_staged": false
+  },
+  "hypothesis_tested": "Retail may have expressed the two special states through volatile-qualified subobject pointers, preserving the explicit address materializations that canonical GC/1.3 otherwise folds into lbl_8063C6B8-base-relative loads. The probe emitted 504 bytes and scored 89.34615%, while a declaration/lifetime reorder emitted 500 bytes at either 91.96923% or the unchanged 92.39231%; both probes were reverted.",
+  "recovery": "The accepted base already contains the independent honest-C reconstruction recovered from preserved attempt history. The best 500-byte source was retained unchanged after the distinct qualified-subobject and declaration/lifetime probes failed."
+}
