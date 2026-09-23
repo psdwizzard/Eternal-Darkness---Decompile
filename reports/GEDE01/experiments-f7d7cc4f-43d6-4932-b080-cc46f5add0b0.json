@@ -1,0 +1,169 @@
+{
+  "assignment_id": "f7d7cc4f-43d6-4932-b080-cc46f5add0b0",
+  "preserved_source_commit": "3777ebb3b21b25a27c52c5a37eb584c005cc5cdb",
+  "accepted_base_source_identical": true,
+  "baseline_source_sha256": "cd4996b510b68e54a85d0c7d454077bb1bf5940a6f75debce65c0179fe03eef1",
+  "retained_experiment": "pair-temporaries",
+  "best_experimental_raw_symbol_match_percent": 98.8,
+  "best_retained_raw_symbol_match_percent": 96.05143,
+  "reason_for_rejecting_higher_score": "The 98.8% candidates remove const from lbl_8023A680 or change its external array type. The storage definition is const volatile u32[4]; retain the accepted declaration rather than introduce a new qualifier/type disagreement just for alias scheduling. The inherited omission of volatile is unchanged. No function prototypes were changed.",
+  "compiler": "GC/1.3, unchanged canonical Object registration and flags",
+  "measurement_commands": [
+    ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8011EE04.o",
+    "build/tools/objdiff-cli diff -1 build/GEDE01/obj/game/game_fn_8011EE04.o -2 build/GEDE01/src/game/game_fn_8011EE04.o -o reports/GEDE01/<experiment>-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json fn_8011EE04"
+  ],
+  "experiments": [
+    {
+      "experiment": "const",
+      "hypothesis_and_disposition": "Retained scalar const-correctness hypothesis: qualify lbl_80650068/6C/70/74 as const; otherwise accepted source unchanged.",
+      "raw_symbol_match_percent": 95.96571,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/const-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "mutable-vector",
+      "hypothesis_and_disposition": "Scalar const declarations plus mutable u32 array declaration for lbl_8023A680, original individual word assignments. Rejected qualifier weakening.",
+      "raw_symbol_match_percent": 97.542854,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/mutable-vector-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "vector-aggregate",
+      "hypothesis_and_disposition": "Scalar const declarations plus mutable external Vector {float x,y,z} and aggregate copy. Rejected external type/qualifier change.",
+      "raw_symbol_match_percent": 98.8,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/vector-aggregate-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "const-vector-aggregate",
+      "hypothesis_and_disposition": "Same aggregate trial but const external Vector. No benefit over const-only, external array type not preserved.",
+      "raw_symbol_match_percent": 95.96571,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/const-vector-aggregate-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "qualified-aggregate-locals",
+      "hypothesis_and_disposition": "Mutable aggregate plus explicitly loaded zero/unit float locals before copy. Rejected qualifier weakening; no improvement over mutable aggregate.",
+      "raw_symbol_match_percent": 98.8,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/qualified-aggregate-locals-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "volatile-vector",
+      "hypothesis_and_disposition": "Preserve defining data array declaration const volatile u32[4], copy through const volatile Vector view. No benefit over scalar const correction.",
+      "raw_symbol_match_percent": 95.96571,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/volatile-vector-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "vector-view",
+      "hypothesis_and_disposition": "Preserve original const u32[4] declaration; aggregate copy via Vector view. No benefit over scalar const correction.",
+      "raw_symbol_match_percent": 95.96571,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/vector-view-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "memcpy",
+      "hypothesis_and_disposition": "Preserve original const u32[4]; replace three assignments with memcpy(object+12,lbl_8023A680,12), declaring unsigned long size. Regressed.",
+      "raw_symbol_match_percent": 91.77143,
+      "retail_size": 700,
+      "candidate_size": 688,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/memcpy-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "mutable-array-view",
+      "hypothesis_and_disposition": "Scalar const declarations; mutable u32[4] source viewed as const Vector. Rejected qualifier weakening.",
+      "raw_symbol_match_percent": 98.8,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/mutable-array-view-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "typed-object",
+      "hypothesis_and_disposition": "Mutable-array-view plus typed Object fields at the original byte offsets; entry loop retains byte traversal. Same score; rejected qualifier weakening and no-benefit layout churn.",
+      "raw_symbol_match_percent": 98.8,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/typed-object-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "explicit-conversion",
+      "hypothesis_and_disposition": "Mutable-array-view plus two local union {double value; u32 words[2]} conversions: low word fn_80140E68(), high word 0x43300000, subtract external const double lbl_80650078 and cast to float. Resolves names but emits fsub/frsp, reverses stack slots/FPRs and grows code to 708 bytes. Rejected.",
+      "raw_symbol_match_percent": 96.88,
+      "retail_size": 700,
+      "candidate_size": 708,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/explicit-conversion-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "before-conversion-load",
+      "hypothesis_and_disposition": "Mutable-array-view; reuse x and z locals to load zero/unit before u16 sample store, then pass x,x,z. Regressed.",
+      "raw_symbol_match_percent": 97.8,
+      "retail_size": 700,
+      "candidate_size": 704,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/before-conversion-load-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "strict-experiment",
+      "hypothesis_and_disposition": "Relocation-strict measurement of before-conversion-load.",
+      "raw_symbol_match_percent": 97.8,
+      "retail_size": 700,
+      "candidate_size": 704,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/strict-experiment-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "inline-copy",
+      "hypothesis_and_disposition": "Original const u32[4], scalar const declarations, TU-local static inline CopyVector helper copying a three-float aggregate. Inlines but no benefit over scalar const correction.",
+      "raw_symbol_match_percent": 95.96571,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/inline-copy-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "pair-temporaries",
+      "hypothesis_and_disposition": "Retained: original const u32[4], scalar const declarations, explicitly read first two words into u32 temporaries before writing them and copying third word.",
+      "raw_symbol_match_percent": 96.05143,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/pair-temporaries-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "volatile-pair",
+      "hypothesis_and_disposition": "Pair-temporaries with const volatile u32[4] matching the synthetic storage TU qualifier; regressed.",
+      "raw_symbol_match_percent": 95.96571,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/volatile-pair-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "ordered-vector-access",
+      "hypothesis_and_disposition": "Volatile-pair plus volatile destination word stores; rejected unnecessary volatile object access.",
+      "raw_symbol_match_percent": 96.0,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/ordered-vector-access-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "argument-copy",
+      "hypothesis_and_disposition": "Mutable-array-view with aggregate copy as comma expression in first fn_8011F890 argument; no improvement; rejected qualifier weakening and expression churn.",
+      "raw_symbol_match_percent": 98.8,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/argument-copy-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    },
+    {
+      "experiment": "mutable-pair",
+      "hypothesis_and_disposition": "Pair-temporaries with mutable u32[4]; rejected qualifier weakening.",
+      "raw_symbol_match_percent": 98.56,
+      "retail_size": 700,
+      "candidate_size": 700,
+      "evidence": "eternal-darkness-decomp/reports/GEDE01/mutable-pair-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json"
+    }
+  ]
+}

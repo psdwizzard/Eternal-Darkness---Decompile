@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "assignment_id": "f7d7cc4f-43d6-4932-b080-cc46f5add0b0",
+  "attempt": 5,
+  "base_commit": "1c38ee4bc41e09a11d66142ff97e409a3ee3d81a",
+  "target": "fn_8011EE04",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json",
+    "eternal-darkness-decomp/reports/GEDE01/report-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-final-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.log",
+    "eternal-darkness-decomp/reports/GEDE01/legal-audit-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.log"
+  ],
+  "divergence": "Canonical project-report fuzzy_match_percent improved from 91.12572% to 96.44572%; canonical and relocation-strict raw per-symbol match_percent improved from 90.48% to 96.05143%, both with equal 700-byte code size. The retained new hypothesis makes read-only scalar declarations const and explicitly reads two vector words before writing them. All post-call scalar initialization and late byte-field differences are eliminated. Remaining instruction scheduling/register differences are confined to the lbl_8023A680 copy and fn_8011F890 argument setup at offsets 0x10C-0x13C. Two R_PPC_EMB_SDA21 relocations at offsets 0xC4 and 0xF4 still target generated compiler-local @34 instead of retail lbl_80650078, with addend zero on both sides. Raw readelf confirms 30 .rela.text entries per object. The best experimental score was 98.8%, rejected because it weakened the vector source const declaration/changed its external type. An explicit source union conversion resolved constant names but regressed by emitting fsub/frsp and increasing code size to 708 bytes; not retained. No compiler policy or normalization was added. Full canonical build and legal audit passed; retail and rebuilt DOL SHA-1 are ea24b6af954876ce072562ff39cdb4c81d32be1f. This remains one independent NonMatching C translation unit; the DOL uses its retail object."
+}

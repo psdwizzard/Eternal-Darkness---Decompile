@@ -1,0 +1,123 @@
+{
+  "assignment_id": "f7d7cc4f-43d6-4932-b080-cc46f5add0b0",
+  "cwd": "eternal-darkness-decomp",
+  "commands": [
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "--version"
+      ],
+      "returncode": 0,
+      "stdout": "objdiff-cli 3.6.1\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "sha1sum",
+        "orig/GEDE01/sys/main.dol",
+        "build/GEDE01/main.dol"
+      ],
+      "returncode": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  orig/GEDE01/sys/main.dol\nea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "returncode": 0,
+      "stdout": "legal audit passed (20900 tracked project files inspected)\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/obj/game/game_fn_8011EE04.o"
+      ],
+      "returncode": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x2fc contains 30 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000044  0000040a R_PPC_REL24            00000000   fn_80140E58 + 0\n0000004c  0000050a R_PPC_REL24            00000000   fn_8011FDF0 + 0\n00000074  0000060a R_PPC_REL24            00000000   fn_80128754 + 0\n00000080  0000070a R_PPC_REL24            00000000   fn_801287B0 + 0\n0000008c  0000040a R_PPC_REL24            00000000   fn_80140E58 + 0\n000000a0  0000040a R_PPC_REL24            00000000   fn_80140E58 + 0\n000000b4  0000080a R_PPC_REL24            00000000   fn_80140E68 + 0\n000000c4  0000096d R_PPC_EMB_SDA21        00000000   lbl_80650078 + 0\n000000e4  0000080a R_PPC_REL24            00000000   fn_80140E68 + 0\n000000f4  0000096d R_PPC_EMB_SDA21        00000000   lbl_80650078 + 0\n0000010a  00000a06 R_PPC_ADDR16_HA        00000000   lbl_8023A680 + 0\n0000010c  00000b6d R_PPC_EMB_SDA21        00000000   lbl_80650068 + 0\n00000112  00000a04 R_PPC_ADDR16_LO        00000000   lbl_8023A680 + 0\n00000114  00000c6d R_PPC_EMB_SDA21        00000000   lbl_8065006C + 0\n00000144  00000d0a R_PPC_REL24            00000000   fn_8011F890 + 0\n00000148  00000b6d R_PPC_EMB_SDA21        00000000   lbl_80650068 + 0\n0000014e  00000e06 R_PPC_ADDR16_HA        00000000   lbl_8024EDD4 + 0\n00000150  00000f6d R_PPC_EMB_SDA21        00000000   lbl_80650070 + 0\n0000015e  00000e04 R_PPC_ADDR16_LO        00000000   lbl_8024EDD4 + 0\n00000178  0000100a R_PPC_REL24            00000000   fn_80179F48 + 0\n000001ec  0000110a R_PPC_REL24            00000000   fn_8011FE5C + 0\n000001f0  00000f6d R_PPC_EMB_SDA21        00000000   lbl_80650070 + 0\n00000200  0000120a R_PPC_REL24            00000000   fn_8011FB44 + 0\n00000214  0000130a R_PPC_REL24            00000000   fn_80128C50 + 0\n0000022c  0000146d R_PPC_EMB_SDA21        00000000   lbl_80650074 + 0\n0000024c  0000150a R_PPC_REL24            00000000   fn_8012260C + 0\n00000260  0000160a R_PPC_REL24            00000000   fn_801261F4 + 0\n00000264  00000f6d R_PPC_EMB_SDA21        00000000   lbl_80650070 + 0\n0000026c  00000b6d R_PPC_EMB_SDA21        00000000   lbl_80650068 + 0\n0000027c  0000170a R_PPC_REL24            00000000   fn_80120AD0 + 0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "build/GEDE01/src/game/game_fn_8011EE04.o"
+      ],
+      "returncode": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x2f8 contains 30 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000044  00000b0a R_PPC_REL24            00000000   fn_80140E58 + 0\n0000004c  00000c0a R_PPC_REL24            00000000   fn_8011FDF0 + 0\n00000074  00000d0a R_PPC_REL24            00000000   fn_80128754 + 0\n00000080  00000e0a R_PPC_REL24            00000000   fn_801287B0 + 0\n0000008c  00000b0a R_PPC_REL24            00000000   fn_80140E58 + 0\n000000a0  00000b0a R_PPC_REL24            00000000   fn_80140E58 + 0\n000000b4  00000f0a R_PPC_REL24            00000000   fn_80140E68 + 0\n000000c4  0000046d R_PPC_EMB_SDA21        00000000   @34 + 0\n000000e4  00000f0a R_PPC_REL24            00000000   fn_80140E68 + 0\n000000f4  0000046d R_PPC_EMB_SDA21        00000000   @34 + 0\n0000010a  00000506 R_PPC_ADDR16_HA        00000000   lbl_8023A680 + 0\n0000010e  00000504 R_PPC_ADDR16_LO        00000000   lbl_8023A680 + 0\n00000110  0000066d R_PPC_EMB_SDA21        00000000   lbl_80650068 + 0\n0000012c  0000076d R_PPC_EMB_SDA21        00000000   lbl_8065006C + 0\n00000144  0000100a R_PPC_REL24            00000000   fn_8011F890 + 0\n00000148  0000066d R_PPC_EMB_SDA21        00000000   lbl_80650068 + 0\n0000014e  00000906 R_PPC_ADDR16_HA        00000000   lbl_8024EDD4 + 0\n00000150  0000086d R_PPC_EMB_SDA21        00000000   lbl_80650070 + 0\n0000015e  00000904 R_PPC_ADDR16_LO        00000000   lbl_8024EDD4 + 0\n00000178  0000110a R_PPC_REL24            00000000   fn_80179F48 + 0\n000001ec  0000120a R_PPC_REL24            00000000   fn_8011FE5C + 0\n000001f0  0000086d R_PPC_EMB_SDA21        00000000   lbl_80650070 + 0\n00000200  0000130a R_PPC_REL24            00000000   fn_8011FB44 + 0\n00000214  0000140a R_PPC_REL24            00000000   fn_80128C50 + 0\n0000022c  00000a6d R_PPC_EMB_SDA21        00000000   lbl_80650074 + 0\n0000024c  0000150a R_PPC_REL24            00000000   fn_8012260C + 0\n00000260  0000160a R_PPC_REL24            00000000   fn_801261F4 + 0\n00000264  0000086d R_PPC_EMB_SDA21        00000000   lbl_80650070 + 0\n0000026c  0000066d R_PPC_EMB_SDA21        00000000   lbl_80650068 + 0\n0000027c  0000170a R_PPC_REL24            00000000   fn_80120AD0 + 0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "sha256sum",
+        "compilers/GC/1.3/mwcceppc.exe",
+        "src/game/game_fn_8011EE04.c"
+      ],
+      "returncode": 0,
+      "stdout": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715  compilers/GC/1.3/mwcceppc.exe\n2fa2931ad8ac55381d49ad054c5e400c1c3f81c0fa141ee6f776c0a0e53fae97  src/game/game_fn_8011EE04.c\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "report_provenance": "Unmodified target-unit subtree extracted from build/GEDE01/report.json generated by the full canonical Ninja build; full unrelated project units omitted.",
+  "compiler_command": "tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_8011EE04.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8011EE04.d build/GEDE01/src/game/game_fn_8011EE04.d",
+  "source_registration": "Object(NonMatching, \"game/game_fn_8011EE04.c\"), unchanged",
+  "text_comparison": {
+    "retail_size": 700,
+    "candidate_size": 700,
+    "retail_sha256": "8c1bb6f756724ac372dcab807a9ffb64cbf1b6249140f4a8b6cf191640b23fbd",
+    "candidate_sha256": "a8fa86cd73ec0c51135f97ba1698334127388bd92ea9999b9f2a2427661e090b",
+    "differing_word_offsets": [
+      "0x10c",
+      "0x110",
+      "0x114",
+      "0x124",
+      "0x128",
+      "0x12c",
+      "0x130",
+      "0x134",
+      "0x138",
+      "0x13c"
+    ]
+  },
+  "dol_gate_caveat": "The reconstruction remains NonMatching. The unchanged-DOL gate verifies the normal build, which uses the retail object for this function; it does not establish a match for candidate C.",
+  "canonical_build": {
+    "configure_command": "python3 configure.py",
+    "configure_returncode": 0,
+    "configure_log": "eternal-darkness-decomp/reports/GEDE01/configure-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.log",
+    "build_command": ".tools/bin/ninja -j2",
+    "build_returncode": 0,
+    "build_log": "eternal-darkness-decomp/reports/GEDE01/build-final-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.log"
+  },
+  "final_diff_commands": [
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8011EE04 fn_8011EE04 -o reports/GEDE01/objdiff-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json --format json-pretty",
+      "returncode": 0
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8011EE04 fn_8011EE04 -o reports/GEDE01/objdiff-strict-f7d7cc4f-43d6-4932-b080-cc46f5add0b0.json --format json-pretty -c function_reloc_diffs=name_address",
+      "returncode": 0
+    }
+  ],
+  "measures": {
+    "canonical_project_report_fuzzy_match_percent": 96.44572,
+    "canonical_raw_symbol_match_percent": 96.05143,
+    "relocation_strict_raw_symbol_match_percent": 96.05143,
+    "retail_text_relocation_entries": 30,
+    "candidate_text_relocation_entries": 30
+  },
+  "scope_review": "Only fn_8011EE04 source and assignment-specific reports changed. Accepted source was byte-identical to preserved attempt 4. Canonical GC/1.3 compiler settings, NonMatching registration, splits, function prototypes, runtime, progress.json and README.md unchanged. Pre-existing CLAUDE.md edit left untouched. No remote push.",
+  "raw_log_line_endings": "MWLD writes CRLF warning lines. Build logs retain raw bytes. Plain git diff --cached --check flags those CR bytes; git -c core.whitespace=cr-at-eol diff --cached --check accepts them without modifying any repository setting. Source diff has no whitespace errors."
+}

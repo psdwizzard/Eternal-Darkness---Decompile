@@ -5,7 +5,9 @@ typedef unsigned int u32;
 /*
  * Honest reconstruction of the object initializer. It preserves the retail
  * call order, random bounds, transform setup, 24-entry state initialization,
- * and type-205 special case. Remaining work is exact MWCC scheduling.
+ * and type-205 special case. The scalar constants live in read-only .sdata2;
+ * const qualification is required for MWCC to schedule their loads correctly.
+ * Remaining work is vector-copy scheduling and conversion-constant identity.
  */
 
 extern float fn_80140E58(void);
@@ -23,10 +25,10 @@ extern int fn_801261F4(void*);
 extern void fn_80120AD0(void*, const void*, u16, u32, float, float);
 extern const u32 lbl_8023A680[4];
 extern u8 lbl_8024EDD4[];
-extern float lbl_80650068;
-extern float lbl_8065006C;
-extern float lbl_80650070;
-extern float lbl_80650074;
+extern const float lbl_80650068;
+extern const float lbl_8065006C;
+extern const float lbl_80650070;
+extern const float lbl_80650074;
 
 void* fn_8011EE04(void* parent, float x, float y, float z)
 {
@@ -67,9 +69,13 @@ void* fn_8011EE04(void* parent, float x, float y, float z)
     }
     *(u16*)(object + 712) = (u16)sample;
 
-    *(u32*)(object + 12) = lbl_8023A680[0];
-    *(u32*)(object + 16) = lbl_8023A680[1];
-    *(u32*)(object + 20) = lbl_8023A680[2];
+    {
+        u32 first = lbl_8023A680[0];
+        u32 second = lbl_8023A680[1];
+        *(u32*)(object + 12) = first;
+        *(u32*)(object + 16) = second;
+        *(u32*)(object + 20) = lbl_8023A680[2];
+    }
     fn_8011F890(object, lbl_80650068, lbl_80650068, lbl_8065006C);
     sample = lbl_80650068;
     *(float*)(object + 612) = sample;
