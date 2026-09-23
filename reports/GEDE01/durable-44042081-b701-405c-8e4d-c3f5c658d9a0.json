@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "44042081-b701-405c-8e4d-c3f5c658d9a0",
+  "attempt": 5,
+  "base_commit": "dbf3e2123f4a4ae8ff2ca4d9cf082f4221fa8241",
+  "target": "fn_80079D24",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-44042081-b701-405c-8e4d-c3f5c658d9a0.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-44042081-b701-405c-8e4d-c3f5c658d9a0-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-44042081-b701-405c-8e4d-c3f5c658d9a0.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-44042081-b701-405c-8e4d-c3f5c658d9a0.json",
+    "eternal-darkness-decomp/reports/GEDE01/analysis-44042081-b701-405c-8e4d-c3f5c658d9a0.json"
+  ],
+  "divergence": "Canonical and explicit name_address relocation-strict objdiff both measure 97.18644%; retail is 1180 bytes, candidate 1188. At retail +0x1c stmw r21,0x34(r1), candidate emits addi r11,r1,0x60 then bl _savegpr_21. Retail lmw r21,0x34(r1) at +0x488 is replaced by a helper sequence at candidate +0x488/+0x490, with lfd f30 interleaved. Retail parameters use r26-r30 and result r31; candidate parameters use r24-r28 and result r30. Retail state/target_state/distance/valid/visible use r22/r23/r24/r25/r21; candidate uses r29/r31/r21/r22/r23. This shifts ordinary instruction offsets by four bytes and rotates 101 aligned instruction arguments. Both duplicated cleanup blocks, low-byte result tests, bit-2 masks, vector stack slots, and f30/f31 roles now agree structurally. Candidate has 60 relocation sites versus retail 58 due to _savegpr_21 and _restgpr_21; the other 58 ordered relocation types, symbol names, symbol values and signed addends are equal, but offsets differ. Exact relocation records are unequal. Canonical compiler settings remain unchanged; unit remains NonMatching."
+}

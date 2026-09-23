@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "assignment_id": "44042081-b701-405c-8e4d-c3f5c658d9a0",
+  "recovered_commit": "bbce3850af5ba04c4e4c1e9bd5e1df6ebf1b67d8",
+  "experiments": [
+    {
+      "description": "Recovered bbce3850 candidate unchanged.",
+      "score": 92.98305,
+      "reference_bytes": 1180,
+      "candidate_bytes": 1156,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-44042081-b701-405c-8e4d-c3f5c658d9a0-baseline.json",
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80079D24",
+        "fn_80079D24",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "reports/GEDE01/objdiff-44042081-b701-405c-8e4d-c3f5c658d9a0-baseline.json",
+        "--format",
+        "json-pretty"
+      ]
+    },
+    {
+      "description": "New hypothesis: duplicated nested cleanup paths and result initialization before cleanup calls. Also corrected low-byte call-result tests and ~4 bit mask from retail instructions.",
+      "score": 96.9661,
+      "reference_bytes": 1180,
+      "candidate_bytes": 1188,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-44042081-b701-405c-8e4d-c3f5c658d9a0-experiment.json",
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80079D24",
+        "fn_80079D24",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "reports/GEDE01/objdiff-44042081-b701-405c-8e4d-c3f5c658d9a0-experiment.json",
+        "--format",
+        "json-pretty"
+      ]
+    },
+    {
+      "description": "Declared speed before vertical, aligning speed=f31 and vertical=f30.",
+      "score": 97.18644,
+      "reference_bytes": 1180,
+      "candidate_bytes": 1188,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-44042081-b701-405c-8e4d-c3f5c658d9a0-float-order.json",
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80079D24",
+        "fn_80079D24",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "reports/GEDE01/objdiff-44042081-b701-405c-8e4d-c3f5c658d9a0-float-order.json",
+        "--format",
+        "json-pretty"
+      ]
+    },
+    {
+      "description": "Explicit register parameter/result hints: no improvement; hints removed.",
+      "score": 97.18644,
+      "reference_bytes": 1180,
+      "candidate_bytes": 1188,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-44042081-b701-405c-8e4d-c3f5c658d9a0-register.json",
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80079D24",
+        "fn_80079D24",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "reports/GEDE01/objdiff-44042081-b701-405c-8e4d-c3f5c658d9a0-register.json",
+        "--format",
+        "json-pretty"
+      ]
+    }
+  ],
+  "canonical_score": 97.18644,
+  "strict_score": 97.18644,
+  "strict_cli_overrides": {
+    "function_reloc_diffs": "name_address"
+  },
+  "project_diff_options": {
+    "min_version": "2.0.0-beta.5",
+    "build_target": false,
+    "progress_categories": [
+      {
+        "id": "game",
+        "name": "Game Code"
+      },
+      {
+        "id": "sdk",
+        "name": "SDK/Runtime"
+      }
+    ]
+  },
+  "project_unit": {
+    "name": "main/game/game_fn_80079D24",
+    "target_path": "build/GEDE01/obj/game/game_fn_80079D24.o",
+    "base_path": "build/GEDE01/src/game/game_fn_80079D24.o",
+    "scratch": {
+      "platform": "gc_wii",
+      "compiler": "mwcc_242_53",
+      "c_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -DVERSION_GEDE01 -DNDEBUG=1 -lang=c",
+      "ctx_path": "build/GEDE01/src/game/game_fn_80079D24.ctx",
+      "build_ctx": true
+    },
+    "metadata": {
+      "complete": false,
+      "reverse_fn_order": false,
+      "source_path": "src/game/game_fn_80079D24.c",
+      "progress_categories": [
+        "game"
+      ],
+      "auto_generated": false
+    }
+  },
+  "compiler_policy": "Unchanged GC/1.3 canonical command is recorded verbatim in verification evidence; no use_lmw_stmw override or pragma added.",
+  "source_sha256": "d1b6a78a328d92b88f74b4a965a88f0d74c12ec36eb00dbc3222fcbdab46c560",
+  "relocation_verification": "Explicit strict CLI run plus independent ELF32 RELA extraction and raw readelf tables. Signed addends are extracted directly, not inferred from counts. Extra helper relocations and shifted offsets prohibit a match.",
+  "dol_scope": "Whole-DOL verification uses retail object for this NonMatching unit; it proves the canonical build remains retail-identical, not that the candidate matches.",
+  "divergence": "Canonical and explicit name_address relocation-strict objdiff both measure 97.18644%; retail is 1180 bytes, candidate 1188. At retail +0x1c stmw r21,0x34(r1), candidate emits addi r11,r1,0x60 then bl _savegpr_21. Retail lmw r21,0x34(r1) at +0x488 is replaced by a helper sequence at candidate +0x488/+0x490, with lfd f30 interleaved. Retail parameters use r26-r30 and result r31; candidate parameters use r24-r28 and result r30. Retail state/target_state/distance/valid/visible use r22/r23/r24/r25/r21; candidate uses r29/r31/r21/r22/r23. This shifts ordinary instruction offsets by four bytes and rotates 101 aligned instruction arguments. Both duplicated cleanup blocks, low-byte result tests, bit-2 masks, vector stack slots, and f30/f31 roles now agree structurally. Candidate has 60 relocation sites versus retail 58 due to _savegpr_21 and _restgpr_21; the other 58 ordered relocation types, symbol names, symbol values and signed addends are equal, but offsets differ. Exact relocation records are unequal. Canonical compiler settings remain unchanged; unit remains NonMatching.",
+  "scope": "Only target C source and assignment-specific reports changed. Registration remains NonMatching. Pre-existing CLAUDE.md modification excluded."
+}
