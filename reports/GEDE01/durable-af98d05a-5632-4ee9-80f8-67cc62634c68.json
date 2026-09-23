@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "assignment_id": "af98d05a-5632-4ee9-80f8-67cc62634c68",
+  "attempt": 6,
+  "base_commit": "cf0f192ea8cd1b27dce7a8885130cbb108835b11",
+  "target": "fn_801F7234",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-af98d05a-5632-4ee9-80f8-67cc62634c68.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-af98d05a-5632-4ee9-80f8-67cc62634c68-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-af98d05a-5632-4ee9-80f8-67cc62634c68.json",
+    "eternal-darkness-decomp/reports/GEDE01/probes-af98d05a-5632-4ee9-80f8-67cc62634c68.json",
+    "eternal-darkness-decomp/reports/GEDE01/configure-af98d05a-5632-4ee9-80f8-67cc62634c68.log",
+    "eternal-darkness-decomp/reports/GEDE01/build-af98d05a-5632-4ee9-80f8-67cc62634c68.log"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are both 93.61539% (retail 520 bytes, generated 496 bytes). Integer-domain special-state addresses correct the initial symbol-low-half scheduling, but GC/1.3 still folds six retail addi pointer materializations: two for the y/z equality loads, one for field_34, one for the vector copy, and two for the delta y/z loads. Four callback/field_40 loads still use r31-relative addresses instead of r3-relative addresses, and the loop initialization emits mr r30,r31 instead of addi r30,r31,0. There are 23 differing aligned rows per side. All 11 real ELF relocation types, targets and addends correspond, but instruction offsets after the missing addi instructions differ."
+}

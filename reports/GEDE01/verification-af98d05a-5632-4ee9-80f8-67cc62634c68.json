@@ -1,0 +1,245 @@
+{
+  "version": 1,
+  "assignment_id": "af98d05a-5632-4ee9-80f8-67cc62634c68",
+  "attempt": 6,
+  "base_commit": "cf0f192ea8cd1b27dce7a8885130cbb108835b11",
+  "target": "fn_801F7234",
+  "compiler": "GC/1.3",
+  "compiler_policy_changed": false,
+  "source": "eternal-darkness-decomp/src/game/game_fn_801F7234.c",
+  "source_sha256": "8fac0a18e21d8a2d73262c110666de483c6204fe7be9c3f30bdc8f0418672e4d",
+  "baseline": {
+    "canonical_percent": 92.39231,
+    "relocation_strict_percent": 92.39231,
+    "generated_bytes": 500,
+    "preserved_commit": "bbf22ae204b3604fa7bcd7d5de6ad465ada44580",
+    "source_recovery": "The accepted base already contained the preserved independent C reconstruction."
+  },
+  "final": {
+    "canonical_percent": 93.61539,
+    "relocation_strict_percent": 93.61539,
+    "retail_bytes": 520,
+    "generated_bytes": 496,
+    "aligned_diff_rows": {
+      "left": 23,
+      "right": 23
+    },
+    "registration": "NonMatching, unchanged",
+    "candidate_linked_into_dol": false,
+    "divergence": "Canonical and relocation-strict objdiff are both 93.61539% (retail 520 bytes, generated 496 bytes). Integer-domain special-state addresses correct the initial symbol-low-half scheduling, but GC/1.3 still folds six retail addi pointer materializations: two for the y/z equality loads, one for field_34, one for the vector copy, and two for the delta y/z loads. Four callback/field_40 loads still use r31-relative addresses instead of r3-relative addresses, and the loop initialization emits mr r30,r31 instead of addi r30,r31,0. There are 23 differing aligned rows per side. All 11 real ELF relocation types, targets and addends correspond, but instruction offsets after the missing addi instructions differ."
+  },
+  "hypotheses": {
+    "inline_accessor": "Tested automatic inlining of special-state pointer accessors and separate operations as a possible barrier to address folding; no improvement. Aggregate-return and union-punning probes regressed. No compiler flags or pragmas were added.",
+    "integer_address": "Forming every reference to both special states in the 32-bit unsigned integer address domain changes common-expression formation and fixes initial symbol materialization scheduling. Referencing only one special state this way retains the old result. A local macro retains only this best C reconstruction. Address arithmetic remains equivalent on the target 32-bit PowerPC ABI.",
+    "root_layout": "Nested state arrays and named special-state members retained the old 500-byte code."
+  },
+  "commands_cwd": "eternal-darkness-decomp",
+  "required_builds": [
+    {
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/configure-af98d05a-5632-4ee9-80f8-67cc62634c68.log"
+    },
+    {
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/build-af98d05a-5632-4ee9-80f8-67cc62634c68.log",
+      "log_note": "Compiler/linker CRLF line endings normalized to LF; diagnostic contents preserved."
+    }
+  ],
+  "objdiff_commands": [
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F7234 fn_801F7234 -o reports/GEDE01/objdiff-af98d05a-5632-4ee9-80f8-67cc62634c68-canonical.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F7234 fn_801F7234 -o reports/GEDE01/objdiff-af98d05a-5632-4ee9-80f8-67cc62634c68.json --format json-pretty -c function_reloc_diffs=name_address"
+  ],
+  "raw_verification_outputs": [
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    },
+    {
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "stdout": "legal audit passed (20580 tracked project files inspected)\n",
+      "stderr": ""
+    },
+    {
+      "command": "readelf -r build/GEDE01/obj/game/game_fn_801F7234.o",
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x248 contains 11 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000016  00000406 R_PPC_ADDR16_HA   00000000   lbl_8063C6B8 + 0\n0000001e  00000404 R_PPC_ADDR16_LO   00000000   lbl_8063C6B8 + 0\n000000c4  0000050a R_PPC_REL24       00000000   fn_801FA354 + 0\n000000d8  0000050a R_PPC_REL24       00000000   fn_801FA354 + 0\n00000114  0000066d R_PPC_EMB_SDA21   00000000   lbl_80651478 + 0\n0000013c  0000070a R_PPC_REL24       00000000   fn_801F692C + 0\n0000015c  0000080a R_PPC_REL24       00000000   fn_801F6998 + 0\n00000168  0000090a R_PPC_REL24       00000000   fn_801F69E0 + 0\n0000018c  00000a0a R_PPC_REL24       00000000   fn_801F6950 + 0\n000001d0  00000b0a R_PPC_REL24       00000000   fn_80211AAC + 0\n000001f0  00000c0a R_PPC_REL24       00000000   fn_801F69BC + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": "readelf -r build/GEDE01/src/game/game_fn_801F7234.o",
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x224 contains 11 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000016  00000306 R_PPC_ADDR16_HA   00000000   lbl_8063C6B8 + 0\n0000001e  00000304 R_PPC_ADDR16_LO   00000000   lbl_8063C6B8 + 0\n000000c4  0000050a R_PPC_REL24       00000000   fn_801FA354 + 0\n000000d8  0000050a R_PPC_REL24       00000000   fn_801FA354 + 0\n0000010c  0000046d R_PPC_EMB_SDA21   00000000   lbl_80651478 + 0\n00000134  0000060a R_PPC_REL24       00000000   fn_801F692C + 0\n00000154  0000070a R_PPC_REL24       00000000   fn_801F6998 + 0\n0000015c  0000080a R_PPC_REL24       00000000   fn_801F69E0 + 0\n0000017c  0000090a R_PPC_REL24       00000000   fn_801F6950 + 0\n000001b8  00000a0a R_PPC_REL24       00000000   fn_80211AAC + 0\n000001d8  00000b0a R_PPC_REL24       00000000   fn_801F69BC + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": "readelf -s build/GEDE01/src/game/game_fn_801F7234.o",
+      "exit_code": 0,
+      "stdout": "\nSymbol table '.symtab' contains 13 entries:\n   Num:    Value  Size Type    Bind   Vis      Ndx Name\n     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND \n     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS game_fn_801F7234.c\n     2: 00000000     0 SECTION LOCAL  DEFAULT    1 .text\n     3: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8063C6B8\n     4: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_80651478\n     5: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801FA354\n     6: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801F692C\n     7: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801F6998\n     8: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801F69E0\n     9: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801F6950\n    10: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_80211AAC\n    11: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801F69BC\n    12: 00000000   496 FUNC    GLOBAL DEFAULT    1 fn_801F7234\n",
+      "stderr": ""
+    }
+  ],
+  "real_elf_relocations": {
+    "retail": [
+      {
+        "offset": "00000016",
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8063C6B8",
+        "addend": "0"
+      },
+      {
+        "offset": "0000001e",
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8063C6B8",
+        "addend": "0"
+      },
+      {
+        "offset": "000000c4",
+        "type": "R_PPC_REL24",
+        "target": "fn_801FA354",
+        "addend": "0"
+      },
+      {
+        "offset": "000000d8",
+        "type": "R_PPC_REL24",
+        "target": "fn_801FA354",
+        "addend": "0"
+      },
+      {
+        "offset": "00000114",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_80651478",
+        "addend": "0"
+      },
+      {
+        "offset": "0000013c",
+        "type": "R_PPC_REL24",
+        "target": "fn_801F692C",
+        "addend": "0"
+      },
+      {
+        "offset": "0000015c",
+        "type": "R_PPC_REL24",
+        "target": "fn_801F6998",
+        "addend": "0"
+      },
+      {
+        "offset": "00000168",
+        "type": "R_PPC_REL24",
+        "target": "fn_801F69E0",
+        "addend": "0"
+      },
+      {
+        "offset": "0000018c",
+        "type": "R_PPC_REL24",
+        "target": "fn_801F6950",
+        "addend": "0"
+      },
+      {
+        "offset": "000001d0",
+        "type": "R_PPC_REL24",
+        "target": "fn_80211AAC",
+        "addend": "0"
+      },
+      {
+        "offset": "000001f0",
+        "type": "R_PPC_REL24",
+        "target": "fn_801F69BC",
+        "addend": "0"
+      }
+    ],
+    "generated": [
+      {
+        "offset": "00000016",
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8063C6B8",
+        "addend": "0"
+      },
+      {
+        "offset": "0000001e",
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8063C6B8",
+        "addend": "0"
+      },
+      {
+        "offset": "000000c4",
+        "type": "R_PPC_REL24",
+        "target": "fn_801FA354",
+        "addend": "0"
+      },
+      {
+        "offset": "000000d8",
+        "type": "R_PPC_REL24",
+        "target": "fn_801FA354",
+        "addend": "0"
+      },
+      {
+        "offset": "0000010c",
+        "type": "R_PPC_EMB_SDA21",
+        "target": "lbl_80651478",
+        "addend": "0"
+      },
+      {
+        "offset": "00000134",
+        "type": "R_PPC_REL24",
+        "target": "fn_801F692C",
+        "addend": "0"
+      },
+      {
+        "offset": "00000154",
+        "type": "R_PPC_REL24",
+        "target": "fn_801F6998",
+        "addend": "0"
+      },
+      {
+        "offset": "0000015c",
+        "type": "R_PPC_REL24",
+        "target": "fn_801F69E0",
+        "addend": "0"
+      },
+      {
+        "offset": "0000017c",
+        "type": "R_PPC_REL24",
+        "target": "fn_801F6950",
+        "addend": "0"
+      },
+      {
+        "offset": "000001b8",
+        "type": "R_PPC_REL24",
+        "target": "fn_80211AAC",
+        "addend": "0"
+      },
+      {
+        "offset": "000001d8",
+        "type": "R_PPC_REL24",
+        "target": "fn_801F69BC",
+        "addend": "0"
+      }
+    ],
+    "ordered_type_target_addend_sequences_equal": true,
+    "relocation_offsets_equal": false
+  },
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_sha1_verified": true,
+  "dol_scope": "The verified DOL uses the retail object for this NonMatching unit. Its hash does not establish a candidate byte match.",
+  "legal_audit": {
+    "whole_function_or_inline_assembly_matches": 0,
+    "independent_translation_unit": true,
+    "only_defined_function": "fn_801F7234",
+    "runtime_or_neighbor_edits": false,
+    "global_progress_or_readme_edits": false,
+    "shared_inputs_modified": false,
+    "generated_binaries_or_private_inputs_in_commit": false
+  },
+  "raw_probe_measurements": "eternal-darkness-decomp/reports/GEDE01/probes-af98d05a-5632-4ee9-80f8-67cc62634c68.json",
+  "staged_legal_audit": {
+    "command": "python3 eternal-darkness-decomp/tools/legal_audit.py",
+    "exit_code": 0,
+    "stdout": "legal audit passed (20587 tracked project files inspected)\n",
+    "stderr": ""
+  }
+}
