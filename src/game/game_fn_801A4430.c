@@ -52,7 +52,7 @@ void fn_801A4430(u8* object, void* position, u8* descriptor, u8* config)
 
     setup.word = lbl_80651E88;
     setup.half = lbl_80651E8C;
-    fn_801804AC(object, config + 0x24, position, &setup);
+    fn_801804AC(object, config + 0x24, descriptor, &setup);
     object[0] = 0x80;
     object[1] = count;
     object[4] = config[3];
@@ -98,8 +98,10 @@ void fn_801A4430(u8* object, void* position, u8* descriptor, u8* config)
         break;
     }
     case 3:
+    {
+        float scale = lbl_80650D7C;
         for (i = 0; (u8)i < count; i++, entry += 0x38) {
-            float angle = lbl_80650D7C * (float)(u8)i / (float)count;
+            float angle = scale * (float)(u8)i / (float)count;
             s16 coord[3];
             coord[0] = (s16)((float)*(u16*)(config + 0x22) * fn_80048C2C(angle) + (float)*(s16*)(config + 0x2a));
             coord[1] = (s16)((float)*(u16*)(config + 0x22) * fn_80048C50(angle) + (float)*(s16*)(config + 0x2c));
@@ -107,6 +109,7 @@ void fn_801A4430(u8* object, void* position, u8* descriptor, u8* config)
             fn_80180554(entry, coord, descriptor, &setup, 0, 0);
         }
         break;
+    }
     }
 
     entry = *(u8**)(object + 0x4c);

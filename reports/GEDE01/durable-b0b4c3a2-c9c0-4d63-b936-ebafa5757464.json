@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "b0b4c3a2-c9c0-4d63-b936-ebafa5757464",
+  "attempt": 4,
+  "base_commit": "5314ac8d478dcb0fd291f31c73469aba1df1a7c9",
+  "target": "fn_801A4430",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b0b4c3a2-c9c0-4d63-b936-ebafa5757464.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff are both 95.190475% and size-exact at 1092 bytes with 41 relocations on each side. Hoisting the mode-3 scale into an explicit loop-invariant local now produces retail's 0x110-byte frame and f28-f31 save/use shape, and forwarding descriptor rather than the unused position parameter to fn_801804AC removes the prior extra instruction. Remaining divergence is the initial setup/texture load and store schedule, stack-local placement (generated locals generally begin four bytes earlier and mode-3 conversion temporaries eight bytes earlier), mode-1/mode-2 loop increment scheduling, and relocation targets for the compiler conversion constants."
+}
