@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "3ad7aa35-31b0-4171-afb9-d4b9881e9243",
+  "attempt": 4,
+  "base_commit": "6e5404b0c055d33059890fe6714e90826006e83b",
+  "target": "fn_800A7A68",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-3ad7aa35-31b0-4171-afb9-d4b9881e9243.json"
+  ],
+  "divergence": "Relocation-strict canonical objdiff is 92.53072%: retail is 716 bytes and generated code is 688 bytes. A narrow targetData block recovers retail's mr r0,r3; mr r4,r0 scheduling after fn_80201BC8, improving the preserved 91.94414% candidate. The corrected base + (signed_index < 0 ? 8 : 0) field selection is represented as (((unsigned)index >> 28) & 8), but canonical MWCC constant-folds index=0 and omits retail's li/rlwinm/add sequence. It also folds the constant kind != -1 guard and differs in equivalent argument/temporary scheduling around fn_801292E0, the first-entry flag clear, and fn_801A7680. Readelf confirms both objects have 49 ordered relocation type/target/addend rows with all addends zero; offsets diverge after the omitted code. The full canonical build passed and the unlinked NonMatching no-regression DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

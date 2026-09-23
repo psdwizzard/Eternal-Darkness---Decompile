@@ -69,7 +69,10 @@ int fn_800A7A68(void* context, void* object)
     owner = ((void*)fn_80201B54(context));
     targetObject = fn_80201814(target);
     if (targetObject != 0) {
-        fn_8011F114(&targetPosition, fn_80201BC8(targetObject));
+        {
+            void* targetData = fn_80201BC8(targetObject);
+            fn_8011F114(&targetPosition, targetData);
+        }
         found = fn_801294DC(object, 4, 0, 6);
         if (found != 0) {
             effect = fn_801A717C();
@@ -80,7 +83,8 @@ int fn_800A7A68(void* context, void* object)
             fn_801A74A8(effect, target);
             fn_801A74C8(effect, 1);
             fn_801A7560(effect, 0x8244);
-            fn_801A7538(effect, *((u8*)actor + 0x2B));
+            index = 0;
+            fn_801A7538(effect, *((u8*)actor + (((unsigned)index >> 28) & 8) + 0x2B));
             fn_801A7518(effect, 5);
             fn_801A7550(effect, 12);
             fn_801A7558(effect, 7);
