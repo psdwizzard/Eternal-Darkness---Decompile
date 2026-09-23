@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "assignment_id": "42ca8f68-7127-4a9f-acce-1403321912ff",
+  "target": "fn_8017D318",
+  "command_working_directory": "eternal-darkness-decomp",
+  "measurements": [
+    {
+      "basis": "canonical",
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017D318 -o - --format json fn_8017D318",
+      "exit_code": 0,
+      "raw_stdout": "eternal-darkness-decomp/reports/GEDE01/objdiff-42ca8f68-7127-4a9f-acce-1403321912ff-canonical.json",
+      "raw_stderr": "eternal-darkness-decomp/reports/GEDE01/objdiff-42ca8f68-7127-4a9f-acce-1403321912ff-canonical.stderr.log",
+      "sha256": "f925b9fac5bad8a12b49e507871a893d42290459f14f732d86c5fdeb835df6b9",
+      "match_percent": 100.0,
+      "bytes_per_side": 496,
+      "instructions_per_side": 124
+    },
+    {
+      "basis": "strict",
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8017D318 -o - --format json -c function_reloc_diffs=all fn_8017D318",
+      "exit_code": 0,
+      "raw_stdout": "eternal-darkness-decomp/reports/GEDE01/objdiff-42ca8f68-7127-4a9f-acce-1403321912ff-strict.json",
+      "raw_stderr": "eternal-darkness-decomp/reports/GEDE01/objdiff-42ca8f68-7127-4a9f-acce-1403321912ff-strict.stderr.log",
+      "sha256": "f925b9fac5bad8a12b49e507871a893d42290459f14f732d86c5fdeb835df6b9",
+      "match_percent": 100.0,
+      "bytes_per_side": 496,
+      "instructions_per_side": 124
+    },
+    {
+      "basis": "configure",
+      "command": "python3 configure.py",
+      "exit_code": 0,
+      "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/configure-42ca8f68-7127-4a9f-acce-1403321912ff.log"
+    },
+    {
+      "basis": "build",
+      "command": ".tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/build-42ca8f68-7127-4a9f-acce-1403321912ff.log"
+    },
+    {
+      "basis": "dol",
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/dol-42ca8f68-7127-4a9f-acce-1403321912ff.log"
+    },
+    {
+      "basis": "legal",
+      "command": "python3 tools/legal_audit.py",
+      "exit_code": 0,
+      "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/legal-42ca8f68-7127-4a9f-acce-1403321912ff.log"
+    },
+    {
+      "basis": "relocations",
+      "command": "readelf -r build/GEDE01/obj/game/game_fn_8017D318.o build/GEDE01/src/game/game_fn_8017D318.o",
+      "exit_code": 0,
+      "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/relocations-42ca8f68-7127-4a9f-acce-1403321912ff.log"
+    },
+    {
+      "basis": "compiler",
+      "command": ".tools/bin/ninja -t commands build/GEDE01/src/game/game_fn_8017D318.o",
+      "exit_code": 0,
+      "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/compiler-42ca8f68-7127-4a9f-acce-1403321912ff.log"
+    }
+  ],
+  "source_recovery": {
+    "commit": "141fdf31e9a437ad052796f3472a50571cee92df",
+    "hypothesis": "Vec3s aggregate local with y, z, x assignments produces the retail register allocation and instruction scheduling. Recover the preserved successful hypothesis; do not repeat the failed scalar-lifetime or argument-width variants.",
+    "scope": "Only target independent C translation unit and its Matching registration changed; splits already correct. No compiler policy changes or assembly."
+  },
+  "relocation_verification": "Both ELF objects have no relocations. Complete strict JSON retained with function_reloc_diffs=all; relocation targets and addends are identically empty.",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "prior_review_correction": "Raw stdout bytes are retained directly in separate canonical and strict JSON files without jq, filtering, or reserialization."
+}

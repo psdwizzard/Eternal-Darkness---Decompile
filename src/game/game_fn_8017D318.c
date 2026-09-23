@@ -13,17 +13,19 @@ typedef struct Vec3s {
 void fn_8017D318(Vec3s* position, Vec3s* target, s16 z_offset,
                  Vec3s* velocity, s16 acceleration, s16 speed)
 {
-    s16 dx = target->x - position->x;
-    s16 dz = target->z - position->z - z_offset;
-    s16 dy = target->y - position->y;
+    Vec3s delta;
 
-    dx = CLAMP(dx, -acceleration, acceleration);
-    dy = CLAMP(dy, -acceleration, acceleration);
-    dz = CLAMP(dz, -acceleration, acceleration);
+    delta.y = target->y - position->y;
+    delta.z = target->z - position->z - z_offset;
+    delta.x = target->x - position->x;
 
-    velocity->x += dx;
-    velocity->y += dy;
-    velocity->z += dz;
+    delta.x = CLAMP(delta.x, -acceleration, acceleration);
+    delta.y = CLAMP(delta.y, -acceleration, acceleration);
+    delta.z = CLAMP(delta.z, -acceleration, acceleration);
+
+    velocity->x += delta.x;
+    velocity->y += delta.y;
+    velocity->z += delta.z;
 
     velocity->x = CLAMP(velocity->x, -speed, speed);
     velocity->y = CLAMP(velocity->y, -speed, speed);
