@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "assignment_id": "5e879465-aca5-4f5f-b1b3-1652bd33caef",
+  "attempt": 5,
+  "base_commit": "04b175317b9490520445d8b1d06ef75e9b67ca1c",
+  "target": "fn_801A7BA0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-5e879465-aca5-4f5f-b1b3-1652bd33caef.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-5e879465-aca5-4f5f-b1b3-1652bd33caef.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-hypothesis-5e879465-aca5-4f5f-b1b3-1652bd33caef.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-5e879465-aca5-4f5f-b1b3-1652bd33caef.txt",
+    "eternal-darkness-decomp/reports/GEDE01/configure-5e879465-aca5-4f5f-b1b3-1652bd33caef.txt",
+    "eternal-darkness-decomp/reports/GEDE01/build-object-5e879465-aca5-4f5f-b1b3-1652bd33caef.txt",
+    "eternal-darkness-decomp/reports/GEDE01/build-hypothesis-5e879465-aca5-4f5f-b1b3-1652bd33caef.txt",
+    "eternal-darkness-decomp/reports/GEDE01/sha1-5e879465-aca5-4f5f-b1b3-1652bd33caef.txt",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-5e879465-aca5-4f5f-b1b3-1652bd33caef.txt",
+    "eternal-darkness-decomp/reports/GEDE01/provenance-5e879465-aca5-4f5f-b1b3-1652bd33caef.txt",
+    "eternal-darkness-decomp/reports/GEDE01/legal-audit-5e879465-aca5-4f5f-b1b3-1652bd33caef.txt",
+    "eternal-darkness-decomp/reports/GEDE01/notes-5e879465-aca5-4f5f-b1b3-1652bd33caef.md"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 92.052086%: retail is 384 bytes, generated is 392. GC/1.3 emits addi r11 plus R_PPC_REL24 calls to _savegpr_23 (0x14) and _restgpr_23 (0x174), with absent/null objdiff addends, instead of retail inline stmw r23 (0x18) and lmw r23 (0x16c). Nonvolatile allocation rotates (retail x r31/entry r23/i r24/draw_y r25/detail_x r26/status_x r27/line_y r28/strings r29/set r30; generated r23/r24/r25/r26/r27/r28/r29/r30/r31). Prologue string-address scheduling differs. Generated loop increments i/entry/line_y at 0x154/0x158/0x15c versus retail line_y/i/entry at 0x150/0x154/0x158. Delaying the string-pointer initialization until after fn_8015C390 retained helper calls and 392 bytes and reduced strict similarity to 88.71875%; reverted."
+}
