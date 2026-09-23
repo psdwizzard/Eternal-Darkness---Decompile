@@ -35,7 +35,7 @@ typedef struct GlobalState {
 
 typedef struct Block32 { u32 word[8]; } Block32;
 
-extern GlobalState lbl_80302400;
+extern u8 lbl_80302400[];
 extern u8 lbl_8023D020[];
 extern Block32 lbl_80238978;
 extern Block32 lbl_80238998;
@@ -75,11 +75,10 @@ extern void fn_8022A814(u32, u32);
 
 void fn_8001E144(u32 mode)
 {
-    GlobalState* global = &lbl_80302400;
-    u8* data = lbl_8023D020;
+    GlobalState* global = (GlobalState*)lbl_80302400;
+    u8* data = (u8*)&lbl_8023D020;
     Context* context = &global->context;
     Timings* timings = &global->timings;
-    u32 sizes[5];
     void* object;
     u8* initial_data;
     fn_8022A814(0, 0);
@@ -92,7 +91,7 @@ void fn_8001E144(u32 mode)
     lbl_8064C670 = 0;
     context->argument = mode;
     context->flags = 0;
-    object = global->object;
+    object = context + 1;
     initial_data = data + 0x83C;
     fn_8020EF54(object, initial_data);
     lbl_8064C6D0 = 0;
@@ -111,7 +110,7 @@ void fn_8001E144(u32 mode)
         fn_801A99B4();
     }
     {
-    Context* active = &global->context;
+    Context* active = context;
     active->handle = 0;
     active->end = 0;
 
@@ -129,10 +128,11 @@ void fn_8001E144(u32 mode)
         timings->fourth = 1500;
     case 0:
         {
+            u32 size;
             void* start = fn_80138164();
-            active->handle = fn_80024638(data + 0x848, start, &sizes[4]);
+            active->handle = fn_80024638(data + 0x848, start, &size);
             fn_8015DAB0((void*)active->handle);
-            active->end = (u32)start + ((sizes[4] + 31) & ~31);
+            active->end = (u32)start + ((size + 31) & ~31);
         }
         if (context->flags & 4) {
             context->resource = fn_801A98F4(629, 100);
@@ -145,10 +145,11 @@ void fn_8001E144(u32 mode)
         break;
     case 3:
     {
+        u32 size;
         void* start = fn_80138164();
-        active->handle = fn_80024638(data + 0x848, start, &sizes[3]);
+        active->handle = fn_80024638(data + 0x848, start, &size);
         fn_8015DAB0((void*)active->handle);
-        active->end = (u32)start + ((sizes[3] + 31) & ~31);
+        active->end = (u32)start + ((size + 31) & ~31);
         fn_8015D458(data + 0x858, (void*)active->end, fn_8015AA14());
         fn_8015DAB0((void*)active->end);
         active->state = 253;
@@ -156,10 +157,11 @@ void fn_8001E144(u32 mode)
     }
     case 4:
     {
+        u32 size;
         void* start = fn_80138164();
-        active->handle = fn_80024638(data + 0x848, start, &sizes[2]);
+        active->handle = fn_80024638(data + 0x848, start, &size);
         fn_8015DAB0((void*)active->handle);
-        active->end = (u32)start + ((sizes[2] + 31) & ~31);
+        active->end = (u32)start + ((size + 31) & ~31);
         fn_8015D458(data + 0x858, (void*)active->end, fn_8015AA14());
         fn_8015DAB0((void*)active->end);
         fn_801E6F9C(fn_801E6CA0(lbl_8064C504, 0, 39, 0, 1), 0);
@@ -169,13 +171,14 @@ void fn_8001E144(u32 mode)
     case 5:
         {
             void* second = fn_8015AA0C();
+            u32 size;
             void* start = fn_80138164();
-            active->handle = fn_80024638(data + 0x848, start, &sizes[1]);
+            active->handle = fn_80024638(data + 0x848, start, &size);
             fn_8015DAB0((void*)active->handle);
-            active->end = (u32)start + ((sizes[1] + 31) & ~31);
+            active->end = (u32)start + ((size + 31) & ~31);
             fn_8015D458(data + 0x858, (void*)active->end, fn_8015AA14());
             fn_8015DAB0((void*)active->end);
-            lbl_8064C51C = fn_80024638(data + 0x864, second, &sizes[1]);
+            lbl_8064C51C = fn_80024638(data + 0x864, second, &size);
         }
         fn_801E85A8();
         lbl_8064CA68 = 1;
@@ -193,10 +196,11 @@ void fn_8001E144(u32 mode)
         break;
     case 14:
     {
+        u32 size;
         void* start = fn_80138164();
-        active->handle = fn_80024638(data + 0x848, start, &sizes[0]);
+        active->handle = fn_80024638(data + 0x848, start, &size);
         fn_8015DAB0((void*)active->handle);
-        active->end = (u32)start + ((sizes[0] + 31) & ~31);
+        active->end = (u32)start + ((size + 31) & ~31);
         fn_8015D458(data + 0x858, (void*)active->end, fn_8015AA14());
         fn_8015DAB0((void*)active->end);
         active->state = 252;

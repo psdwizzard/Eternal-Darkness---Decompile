@@ -1,0 +1,23 @@
+{
+  "compiler": "GC/1.3",
+  "canonical_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+  "registration": "NonMatching; existing -use_lmw_stmw on unchanged",
+  "target_bytes": 1216,
+  "generated_bytes": 1200,
+  "canonical_percent": 93.44079,
+  "relocation_strict_percent": 93.44079,
+  "raw_reports_byte_identical": true,
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "source_sha256": "5278865ea444d7b9240e5afef827e45357f8298e0e37a75c709c1ab7f547dc6a",
+  "object_sha256": "35b7614ff98d8a4298e4156cc18fc40b459459e2e177b5b000f6dced5b0813c5",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "sha1sum build/GEDE01/main.dol",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8001E144 fn_8001E144 -o reports/GEDE01/objdiff-a3234a55-c82f-4136-80ca-001b82bbd2d5-canonical.json --format json",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8001E144 fn_8001E144 -c function_reloc_diffs=all -o reports/GEDE01/objdiff-a3234a55-c82f-4136-80ca-001b82bbd2d5.json --format json",
+    "python3 tools/legal_audit.py"
+  ],
+  "command_working_directory": "eternal-darkness-decomp",
+  "dol_uses_nonmatching_retail_fallback": true
+}

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "assignment_id": "a3234a55-c82f-4136-80ca-001b82bbd2d5",
+  "attempt": 5,
+  "base_commit": "afcc71df141dc2a84a56a443da222166c8bb7c01",
+  "target": "fn_8001E144",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a3234a55-c82f-4136-80ca-001b82bbd2d5.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a3234a55-c82f-4136-80ca-001b82bbd2d5-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-a3234a55-c82f-4136-80ca-001b82bbd2d5/validation.json",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-a3234a55-c82f-4136-80ca-001b82bbd2d5/relocations.json",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-a3234a55-c82f-4136-80ca-001b82bbd2d5/experiment-measurements.json",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-a3234a55-c82f-4136-80ca-001b82bbd2d5/notes.md",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-a3234a55-c82f-4136-80ca-001b82bbd2d5/configure.log",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-a3234a55-c82f-4136-80ca-001b82bbd2d5/build.log",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-a3234a55-c82f-4136-80ca-001b82bbd2d5/dol-sha1.log",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-a3234a55-c82f-4136-80ca-001b82bbd2d5/legal-audit.log",
+    "eternal-darkness-decomp/reports/GEDE01/attempt-a3234a55-c82f-4136-80ca-001b82bbd2d5/experiment-details.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both improved from 89.023026% to 93.44079%. Distinct case-local address-taken size scalars replace the five-element array, removing cross-case address reuse and restoring the retail per-case move sequences. Byte-storage views and explicit data-array address formation remove redundant global-address reloads. Retail is 1216 bytes; the retained GC/1.3 candidate is 1200 bytes. Generated code retains r30 global, r31 data, r29 shared context and r23 mode, while retail uses r30 global, r29 data, r31 context, r28 timings, r27 post-dispatch context and r26 mode. Timing, post-dispatch context, resource and block-region address materializations still fold into existing bases; context is materialized before memset rather than after it. Scheduling/register differences remain, and all 15 jump-table relocation addends differ. Source remains NonMatching. Full configure/Ninja build and legal audit pass; DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f, using the retail fallback for this function."
+}
