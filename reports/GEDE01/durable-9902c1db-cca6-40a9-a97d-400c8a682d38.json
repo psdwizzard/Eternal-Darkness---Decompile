@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9902c1db-cca6-40a9-a97d-400c8a682d38",
+  "attempt": 3,
+  "base_commit": "144f0c44d21e4078a3dce84467fd4f890cea323d",
+  "target": "fn_80198850",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9902c1db-cca6-40a9-a97d-400c8a682d38.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff are both 91.4%: retail is 380 bytes and generated C is 360 bytes. The inlined unsigned absolute-value helper hypothesis improves on the preserved 90.663155% attempt without changing semantics, but canonical GC/1.3 still saves r25-r31 instead of retail r24-r31 and elides retail's five intermediate moves (three absolute-distance result moves, the pre-loop point-pointer move, and the late count move). Both R_PPC_REL24 relocations agree by symbol index (2 and 3), target (fn_801989CC and memcpy), type, and implicit zero addend. The full build succeeds and build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

@@ -5,6 +5,14 @@ typedef unsigned int u32;
 extern void fn_801989CC(u8, void*, s16*);
 extern void* memcpy(void*, const void*, unsigned long);
 
+static inline u32 absolute(u32 value)
+{
+    if ((int)value < 0) {
+        value = -value;
+    }
+    return value;
+}
+
 void fn_80198850(void* context, s16* points, u8 count, s16* center,
                  s16* offset)
 {
@@ -23,12 +31,9 @@ void fn_80198850(void* context, s16* points, u8 count, s16* center,
 
     point = points;
     for (i = 0; i < count; i++) {
-        dx = points[0] - point[0];
-        if ((int)dx < 0) dx = -dx;
-        dy = points[1] - point[1];
-        if ((int)dy < 0) dy = -dy;
-        dz = points[2] - point[2];
-        if ((int)dz < 0) dz = -dz;
+        dx = absolute(points[0] - point[0]);
+        dy = absolute(points[1] - point[1]);
+        dz = absolute(points[2] - point[2]);
         if (dx > max_x) {
             max_x = dx;
             extreme[0] = point[0];
