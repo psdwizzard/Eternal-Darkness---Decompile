@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "f52e444a-fa93-4010-be9f-cce8916b6953",
+  "attempt": 5,
+  "base_commit": "8cda957d20d6e590dd58d647abca8c1911c9c6bc",
+  "target": "fn_800D3620",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f52e444a-fa93-4010-be9f-cce8916b6953.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-f52e444a-fa93-4010-be9f-cce8916b6953.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-f52e444a-fa93-4010-be9f-cce8916b6953.py",
+    "eternal-darkness-decomp/reports/GEDE01/verify-f52e444a-fa93-4010-be9f-cce8916b6953.py"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff remains 91.01887%: retail is 212 bytes, generated is 204. Retail saves r28-r31 and assigns state/object/resource/value to r31/r30/r28/r29, reusing r30 for id; generated saves r29-r31, assigns state/object/resource/value/id to r29/r30/r31/r30/r31, and shifts call offsets by four bytes. Parameter register qualifiers and full prototypes produce identical code. Bounded-loop variants are not unrolled and score 56.509434% and 65.09434%. Historical overwrite-object reproduction scores 90.830185% with 212 bytes and state/object/resource/value in r28/r29/r31/r30. All 11 final relocation types, targets, symbol values and addends agree."
+}
