@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "899bfba5-df4f-4812-ae29-530e483f1516",
+  "attempt": 5,
+  "base_commit": "f4e1fa8bd8bde93ac9ed247e07cd20ad7a5bcd31",
+  "target": "fn_800C8568",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-899bfba5-df4f-4812-ae29-530e483f1516.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-899bfba5-df4f-4812-ae29-530e483f1516.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 95.60%; retail is 500 bytes and generated C is 492 bytes. The preserved union reconstruction retains the full 32-bit radius for fn_800C928C and matches the 0x60 frame/stmw r20. Generated C omits retail's inert cmpwi r27,1 at 0xFC, bne at 0x100 targeting 0x108, and nop at 0x104, and adds sth r24,0x24(r1) at generated offset 0x100 after clrlwi. Later instructions shift by eight bytes; the final call's addi r7 and argument moves are scheduled differently. Pointer temporaries, scoped scratch lifetime, bitfield/word union members, old-style call declaration, aggregate copy, inline normalization, and comma-expression call lowering did not improve the preserved best score. Relocation types, targets, target values, and addends agree in sequence, but offsets do not; this is NonMatching."
+}
