@@ -39,6 +39,7 @@ extern u8 lbl_80325B80[];
 
 void fn_800DBF60(int owner, void *context, int level, void *effect, float amount)
 {
+    int effect_kind;
     void *state = fn_80201C24(context);
     int kind = fn_80201B54(context);
 
@@ -49,13 +50,14 @@ void fn_800DBF60(int owner, void *context, int level, void *effect, float amount
     {
         void *source = fn_80201814(owner);
         if (source != 0) {
-            void *action = fn_80155DB4(context);
             u8 position[16];
-            void *link;
-            void *object;
             u8 object_kind;
             void *node;
+            void *action;
+            void *link;
+            void *object;
 
+            action = fn_80155DB4(context);
             fn_80201E78(position, source);
             link = fn_80157924(state);
             if (link != 0) {
@@ -70,6 +72,8 @@ void fn_800DBF60(int owner, void *context, int level, void *effect, float amount
             fn_80120B4C(object);
             object_kind = fn_80157AB8(state);
             fn_80147E88(lbl_80325B80);
+            /* Preserve the kind before reusing its 32-bit work slot for a packet base. */
+            effect_kind = kind;
             *(int *)(lbl_80325B80 + 0xa8) = kind;
             node = fn_80149E04();
             if (node != 0) {
@@ -78,8 +82,8 @@ void fn_800DBF60(int owner, void *context, int level, void *effect, float amount
                     lbl_80325B80[0xbc] |= 0x10;
                 }
                 {
-                    u8 *amount_packet = lbl_80325B80;
-                    fn_8019917C(amount_packet);
+                    kind = (int)lbl_80325B80;
+                    fn_8019917C((void *)kind);
                     {
                         u8 *packet = lbl_80325B80;
                         packet[0] = 0x18;
@@ -87,7 +91,7 @@ void fn_800DBF60(int owner, void *context, int level, void *effect, float amount
                         packet[1] = 3;
                         *(s8 *)(packet + 3) = -10;
                         if (amount > lbl_8064F464) {
-                            *(u16 *)(amount_packet + 6) = (int)amount;
+                            *(u16 *)((u8 *)kind + 6) = (int)amount;
                         } else {
                             *(int *)(packet + 0x1c) = 1;
                         }
@@ -109,14 +113,14 @@ void fn_800DBF60(int owner, void *context, int level, void *effect, float amount
             }
 
             {
-                u16 flags = fn_8006749C(object_kind);
-                s16 duration = (5 - (u8)level) * 20;
+                u16 flags = (u16)fn_8006749C(object_kind);
+                u16 duration = 20 * (5 - (u8)level);
                 flags |= 0x202;
                 fn_80120AD0(object, 0, duration, flags, lbl_8064F460,
                              lbl_8064F460);
             }
             if (effect != 0) {
-                fn_800DC3A0(effect, kind, fn_8011F130(object), object_kind, level,
+                fn_800DC3A0(effect, effect_kind, fn_8011F130(object), object_kind, level,
                             (int)amount);
                 if (fn_801E855C(0x14, effect, 0) == 0) {
                     fn_801E8328(0x14, effect);

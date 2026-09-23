@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "7573c765-2c84-4e97-bc2e-432a8c256a6c",
+  "attempt": 5,
+  "base_commit": "b18da00dbb04ce537269f5148736156f54fb71a2",
+  "target": "fn_800DBF60",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7573c765-2c84-4e97-bc2e-432a8c256a6c.json"
+  ],
+  "divergence": "NonMatching: 98.71277% canonical AND name_address relocation-strict objdiff, 752/752 bytes. All 47 relocation offsets/types/targets/addends are equal. Eight actual instruction words differ (nine aligned objdiff rows): constants at 0x0174/0x0178 and flags/duration setup at 0x0250, 0x025c, 0x0260, 0x026c, 0x0270, 0x0274. Retail masks flags with clrlwi r6,r0,16 at 0x026c; candidate instead masks duration with clrlwi r0,r0,16 at 0x0270 and emits li r4,0 earlier at 0x026c. Candidate and retail both call fn_80120AD0 at 0x0278."
+}
