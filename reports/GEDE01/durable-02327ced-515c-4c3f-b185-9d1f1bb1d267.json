@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "02327ced-515c-4c3f-b185-9d1f1bb1d267",
+  "attempt": 3,
+  "base_commit": "5871ba57faa4c0c289ef83af32ff9680ff6b88e8",
+  "target": "fn_8001E144",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-02327ced-515c-4c3f-b185-9d1f1bb1d267.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-02327ced-515c-4c3f-b185-9d1f1bb1d267-canonical.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 89.023026%: retail is 1216 bytes while GC/1.3 emits 1204 bytes. A new exact-integer-address derivation hypothesis for context, timings, and active was tested to inhibit pointer common-subexpression folding, but it emitted a byte-identical object and was reverted. Retail retains r30 global, r29 data, r31 context, r28 timing, r27 post-dispatch context, and r26 mode lifetimes; generated code instead keeps r30 global, r31 data, r29 context, and r28 mode, folds timing and post-dispatch context accesses into existing bases, and omits three address-materialization instructions. This shifts downstream branch and jump-table relocation addends. The required full python3 configure.py and .tools/bin/ninja -j2 build completed successfully, and build/GEDE01/main.dol verified at ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
