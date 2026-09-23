@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "assignment_id": "db653e32-7ff5-4c4c-a871-e6fe273310c7",
+  "attempt": 4,
+  "target": "fn_801F3FD8",
+  "unit": "main/game/game_fn_801F3FD8",
+  "source": {
+    "path": "eternal-darkness-decomp/src/game/game_fn_801F3FD8.c",
+    "sha256": "871db74d7c3fb94629b76de523c822d806d0bdbb74298d96ec5c0ff019d60cec",
+    "classification": "independent honest C reconstruction",
+    "compiler": "existing canonical Metrowerks CodeWarrior for GameCube GC/1.3"
+  },
+  "hypothesis": "Model retail's count as separate raw and capped values, initialize extra_count at declaration to extend its register lifetime, and materialize the extra-effect call index as a loop local so MWCC schedules r6 before the accumulated-mask OR.",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F3FD8 fn_801F3FD8 -o reports/GEDE01/objdiff-db653e32-7ff5-4c4c-a871-e6fe273310c7-canonical.raw.json --format json-pretty",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-db653e32-7ff5-4c4c-a871-e6fe273310c7-canonical.raw.json",
+    "raw_report_sha256": "c16902be7418de9341efce3817a58ec245a36de9e66f5a943a5caf9ba32d0dfb",
+    "retail_text_bytes": 936,
+    "generated_text_bytes": 932,
+    "match_percent": 92.149574,
+    "aligned_instruction_rows": 240,
+    "differing_aligned_instruction_rows": 46,
+    "relocation_entries_each_side": 26
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801F3FD8 fn_801F3FD8 -o reports/GEDE01/objdiff-db653e32-7ff5-4c4c-a871-e6fe273310c7-relocation-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "config": "function_reloc_diffs=name_address",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-db653e32-7ff5-4c4c-a871-e6fe273310c7-relocation-strict.raw.json",
+    "raw_report_sha256": "c16902be7418de9341efce3817a58ec245a36de9e66f5a943a5caf9ba32d0dfb",
+    "raw_report_byte_identical_to_canonical": true,
+    "match_percent": 92.149574,
+    "relocation_assessment": "All 26 relocation types, targets, and addends occur on both sides. Strict equality fails because initialization SDA21 relocations remain at different instruction offsets and lbl_806513F4/lbl_806513F0 loop constants load in the opposite order."
+  },
+  "build_verification": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol"
+    ],
+    "ninja_exit_status": 0,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f"
+  },
+  "legal_audit": {
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "progress_or_readme_edits": false,
+    "generated_binaries_or_private_inputs_committed": false,
+    "preexisting_CLAUDE_md_change": "untouched and excluded from commit"
+  },
+  "divergence": "Generated code remains four bytes short with 46 differing aligned rows. The initial raw-count/capped-count move is optimized away, initialization uses different FPR scheduling, loop constant loads remain reversed in address order, and the candidate-copy/call region allocates the cursor and local addresses to different GPRs."
+}

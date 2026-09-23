@@ -52,13 +52,15 @@ void fn_801F3FD8(Vec3* point, s32 duration)
     u32 ordinary_mask = 0x10;
     u32 seen_mask = 0;
     u32 enabled_mask = 0;
+    s32 raw_cap;
     s32 cap;
     s32 candidate_index = 0;
-    s32 extra_count;
+    s32 extra_count = 4;
     s32 i;
 
-    cap = fn_801FD258();
+    raw_cap = fn_801FD258();
     candidates = fn_801FD240();
+    cap = raw_cap;
     target.x = point->x;
     effect.pos.x = target.x - lbl_806513F0;
     target.y = point->y;
@@ -67,7 +69,7 @@ void fn_801F3FD8(Vec3* point, s32 duration)
     effect.pos.z = lbl_806513F4 + target.z;
     effect.value = lbl_806513EC;
     effect.intensity = duration;
-    if (cap > 3) cap = 3;
+    if (raw_cap > 3) cap = 3;
 
     fn_801F0CB0(&effect, &target, 0, 0, 0, 0, 0);
     effect.pos.x += lbl_806513F8;
@@ -78,7 +80,6 @@ void fn_801F3FD8(Vec3* point, s32 duration)
     fn_801F0CB0(&effect, &target, 0, 3, 0, 0, 0);
     active_mask |= 0xF;
 
-    extra_count = 4;
     if (cap > 0) {
         s32 remaining = 4 - cap;
         extra_count = 4;
@@ -91,6 +92,7 @@ void fn_801F3FD8(Vec3* point, s32 duration)
     float upper = lbl_806513F4;
     float lower = lbl_806513F0;
     for (i = 0; i < extra_count; i++) {
+        s32 effect_index = i + 4;
         ordinary_mask |= 0x10 << i;
         active_mask |= ordinary_mask;
         effect.pos.x = point->x - lower;
@@ -111,7 +113,7 @@ void fn_801F3FD8(Vec3* point, s32 duration)
             break;
         }
         effect.intensity = 5000;
-        fn_801F0CB0(&effect, &target, 0, i + 4, 1, 0, 0);
+        fn_801F0CB0(&effect, &target, 0, effect_index, 1, 0, 0);
     }
     }
 
