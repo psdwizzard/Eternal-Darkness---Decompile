@@ -1,0 +1,460 @@
+{
+  "version": 1,
+  "assignment_id": "cb0256aa-d283-4be7-8970-a1fa2874c02a",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "configure.py"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/configure-final-cb0256aa-d283-4be7-8970-a1fa2874c02a.log"
+    },
+    {
+      "argv": [
+        ".tools/bin/ninja",
+        "-j2"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/build-final-cb0256aa-d283-4be7-8970-a1fa2874c02a.log"
+    },
+    {
+      "argv": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/dol-sha1-cb0256aa-d283-4be7-8970-a1fa2874c02a.log"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "--version"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-version-cb0256aa-d283-4be7-8970-a1fa2874c02a.log"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801950D4",
+        "fn_801950D4",
+        "-o",
+        "reports/GEDE01/objdiff-cb0256aa-d283-4be7-8970-a1fa2874c02a.json",
+        "--format",
+        "json-pretty"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-invocation-cb0256aa-d283-4be7-8970-a1fa2874c02a.log"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_801950D4",
+        "fn_801950D4",
+        "-o",
+        "reports/GEDE01/objdiff-strict-cb0256aa-d283-4be7-8970-a1fa2874c02a.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "functionRelocDiffs=all"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-invocation-cb0256aa-d283-4be7-8970-a1fa2874c02a.log"
+    },
+    {
+      "argv": [
+        "readelf",
+        "-Wr",
+        "-s",
+        "build/GEDE01/obj/game/game_fn_801950D4.o"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/relocations-retail-cb0256aa-d283-4be7-8970-a1fa2874c02a.log"
+    },
+    {
+      "argv": [
+        "readelf",
+        "-Wr",
+        "-s",
+        "build/GEDE01/src/game/game_fn_801950D4.o"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/relocations-generated-cb0256aa-d283-4be7-8970-a1fa2874c02a.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "tools/fndiff.py",
+        "game/game_fn_801950D4.c",
+        "fn_801950D4"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/instructions-cb0256aa-d283-4be7-8970-a1fa2874c02a.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/legal-audit-cb0256aa-d283-4be7-8970-a1fa2874c02a.log"
+    },
+    {
+      "argv": [
+        "readelf",
+        "-x",
+        ".text",
+        "build/GEDE01/obj/game/game_fn_801950D4.o"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/text-retail-cb0256aa-d283-4be7-8970-a1fa2874c02a.log"
+    },
+    {
+      "argv": [
+        "readelf",
+        "-x",
+        ".text",
+        "build/GEDE01/src/game/game_fn_801950D4.o"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": "eternal-darkness-decomp/reports/GEDE01/text-generated-cb0256aa-d283-4be7-8970-a1fa2874c02a.log"
+    }
+  ],
+  "objdiff_unit": {
+    "name": "main/game/game_fn_801950D4",
+    "target_path": "build/GEDE01/obj/game/game_fn_801950D4.o",
+    "base_path": "build/GEDE01/src/game/game_fn_801950D4.o",
+    "scratch": {
+      "platform": "gc_wii",
+      "compiler": "mwcc_242_53",
+      "c_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+      "ctx_path": "build/GEDE01/src/game/game_fn_801950D4.ctx",
+      "build_ctx": true
+    },
+    "metadata": {
+      "complete": false,
+      "reverse_fn_order": false,
+      "source_path": "src/game/game_fn_801950D4.c",
+      "progress_categories": [
+        "game"
+      ],
+      "auto_generated": false
+    }
+  },
+  "compiler_command": "tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_801950D4.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801950D4.d build/GEDE01/src/game/game_fn_801950D4.d",
+  "strict_settings": {
+    "functionRelocDiffs": "all"
+  },
+  "source_sha256": "1330cecc47c32b110f9c23ba1284d98ad820aeec2e52c7c3eb61e950966080bc",
+  "note": "NonMatching object is not linked into retail DOL; hash verifies preserved retail build, not completion of this reconstruction.",
+  "measurements": {
+    "canonical": {
+      "score": 98.00752,
+      "retail_size": 532,
+      "generated_size": 532,
+      "raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-cb0256aa-d283-4be7-8970-a1fa2874c02a.json"
+    },
+    "relocation_strict": {
+      "score": 98.00752,
+      "retail_size": 532,
+      "generated_size": 532,
+      "raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-cb0256aa-d283-4be7-8970-a1fa2874c02a.json"
+    }
+  },
+  "resolved_relocations": {
+    "retail": [
+      {
+        "offset": "0x00000068",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80186C88",
+        "addend": 0
+      },
+      {
+        "offset": "0x00000080",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80186C88",
+        "addend": 0
+      },
+      {
+        "offset": "0x000000a0",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x000000cc",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x000000fc",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x0000012c",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x0000014c",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x00000174",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x00000194",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x000001bc",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x000001e4",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80186C88",
+        "addend": 0
+      }
+    ],
+    "generated": [
+      {
+        "offset": "0x00000068",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80186C88",
+        "addend": 0
+      },
+      {
+        "offset": "0x00000080",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80186C88",
+        "addend": 0
+      },
+      {
+        "offset": "0x000000a0",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x000000cc",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x000000fc",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x0000012c",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x0000014c",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x00000174",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x00000194",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x000001bc",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80193D64",
+        "addend": 0
+      },
+      {
+        "offset": "0x000001e4",
+        "type": "R_PPC_REL24",
+        "symbol": "fn_80186C88",
+        "addend": 0
+      }
+    ]
+  },
+  "relocation_comparison": "11/11 equal by .text offset, relocation type, resolved symbol name and explicit addend.",
+  "exact_text_word_differences": [
+    {
+      "offset": "0x50",
+      "retail": "7f3ccb78",
+      "generated": "7f3ecb78"
+    },
+    {
+      "offset": "0x64",
+      "retail": "5739fe7e",
+      "generated": "573cfe7e"
+    },
+    {
+      "offset": "0x70",
+      "retail": "7f84e378",
+      "generated": "7fc4f378"
+    },
+    {
+      "offset": "0x88",
+      "retail": "7f24cb78",
+      "generated": "7f84e378"
+    },
+    {
+      "offset": "0x94",
+      "retail": "541e083c",
+      "generated": "5419083c"
+    },
+    {
+      "offset": "0x9c",
+      "retail": "7fc5f378",
+      "generated": "7f25cb78"
+    },
+    {
+      "offset": "0xa8",
+      "retail": "7c99e050",
+      "generated": "7c9cf050"
+    },
+    {
+      "offset": "0xac",
+      "retail": "7c19f1d6",
+      "generated": "7c1cc9d6"
+    },
+    {
+      "offset": "0xb8",
+      "retail": "5728083c",
+      "generated": "57880dfc"
+    },
+    {
+      "offset": "0xe0",
+      "retail": "573cfe7e",
+      "generated": "573ffe7e"
+    },
+    {
+      "offset": "0xf0",
+      "retail": "7f84e378",
+      "generated": "7fe4fb78"
+    },
+    {
+      "offset": "0xf4",
+      "retail": "7fc5f378",
+      "generated": "7fa7eb78"
+    },
+    {
+      "offset": "0xf8",
+      "retail": "7fa7eb78",
+      "generated": "7fc5f378"
+    },
+    {
+      "offset": "0x104",
+      "retail": "7ffcc850",
+      "generated": "7f9fc850"
+    },
+    {
+      "offset": "0x108",
+      "retail": "7c1cf1d6",
+      "generated": "7c1ff1d6"
+    },
+    {
+      "offset": "0x114",
+      "retail": "579e083c",
+      "generated": "57fe0dfc"
+    },
+    {
+      "offset": "0x118",
+      "retail": "7fe4fb78",
+      "generated": "7f84e378"
+    },
+    {
+      "offset": "0x120",
+      "retail": "7ca3fbd6",
+      "generated": "7ca3e3d6"
+    },
+    {
+      "offset": "0x134",
+      "retail": "7f84e378",
+      "generated": "7fe4fb78"
+    },
+    {
+      "offset": "0x154",
+      "retail": "7c1cc9d6",
+      "generated": "7c1fc9d6"
+    },
+    {
+      "offset": "0x15c",
+      "retail": "7fe4fb78",
+      "generated": "7f84e378"
+    },
+    {
+      "offset": "0x16c",
+      "retail": "7ca5fbd6",
+      "generated": "7ca5e3d6"
+    },
+    {
+      "offset": "0x17c",
+      "retail": "7f84e378",
+      "generated": "7fe4fb78"
+    },
+    {
+      "offset": "0x19c",
+      "retail": "7c1cc9d6",
+      "generated": "7c1fc9d6"
+    },
+    {
+      "offset": "0x1a4",
+      "retail": "7fe4fb78",
+      "generated": "7f84e378"
+    },
+    {
+      "offset": "0x1b4",
+      "retail": "7ca5fbd6",
+      "generated": "7ca5e3d6"
+    }
+  ],
+  "exact_text_matching_bytes": 489,
+  "instruction_difference_count": 26,
+  "scope_audit": "Only target independent C translation unit and assignment reports changed. Existing NonMatching registration and split retained. No assembly, compiler-policy changes, neighboring source edits, runtime edits, or progress edits.",
+  "raw_log_note": "Tool stdout preserved, including trailing spaces in readelf and fndiff output. Final build captured with universal-newline translation."
+}

@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "assignment_id": "cb0256aa-d283-4be7-8970-a1fa2874c02a",
+  "attempt": 5,
+  "base_commit": "69696d0ed92e48d057741d5cd9f7caa0221b7233",
+  "target": "fn_801950D4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-cb0256aa-d283-4be7-8970-a1fa2874c02a.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-cb0256aa-d283-4be7-8970-a1fa2874c02a.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-cb0256aa-d283-4be7-8970-a1fa2874c02a.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-final-cb0256aa-d283-4be7-8970-a1fa2874c02a.log",
+    "eternal-darkness-decomp/reports/GEDE01/configure-final-cb0256aa-d283-4be7-8970-a1fa2874c02a.log",
+    "eternal-darkness-decomp/reports/GEDE01/dol-sha1-cb0256aa-d283-4be7-8970-a1fa2874c02a.log",
+    "eternal-darkness-decomp/reports/GEDE01/hypothesis-cb0256aa-d283-4be7-8970-a1fa2874c02a.txt",
+    "eternal-darkness-decomp/reports/GEDE01/hypothesis-unsignedshift-cb0256aa-d283-4be7-8970-a1fa2874c02a.txt",
+    "eternal-darkness-decomp/reports/GEDE01/instructions-cb0256aa-d283-4be7-8970-a1fa2874c02a.log",
+    "eternal-darkness-decomp/reports/GEDE01/legal-audit-cb0256aa-d283-4be7-8970-a1fa2874c02a.log",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-invocation-cb0256aa-d283-4be7-8970-a1fa2874c02a.log",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-strict-invocation-cb0256aa-d283-4be7-8970-a1fa2874c02a.log",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-version-cb0256aa-d283-4be7-8970-a1fa2874c02a.log",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-generated-cb0256aa-d283-4be7-8970-a1fa2874c02a.log",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-retail-cb0256aa-d283-4be7-8970-a1fa2874c02a.log",
+    "eternal-darkness-decomp/reports/GEDE01/variant-signed_width_shift-cb0256aa-d283-4be7-8970-a1fa2874c02a.json",
+    "eternal-darkness-decomp/reports/GEDE01/variant-unsigned_width-cb0256aa-d283-4be7-8970-a1fa2874c02a.json",
+    "eternal-darkness-decomp/reports/GEDE01/variant-unsigned_width_shift-cb0256aa-d283-4be7-8970-a1fa2874c02a.json",
+    "eternal-darkness-decomp/reports/GEDE01/variants-cb0256aa-d283-4be7-8970-a1fa2874c02a.json",
+    "eternal-darkness-decomp/reports/GEDE01/text-retail-cb0256aa-d283-4be7-8970-a1fa2874c02a.log",
+    "eternal-darkness-decomp/reports/GEDE01/text-generated-cb0256aa-d283-4be7-8970-a1fa2874c02a.log"
+  ],
+  "divergence": "Canonical and explicit functionRelocDiffs=all objdiff both 98.007520%; 532/532 bytes, 26 unequal instruction words. Branch-local full/half-width, stride and remainder register allocation differs, plus argument-move scheduling at 0xF4/0xF8. At 0xB8 retail slwi r8,r25,1 versus generated clrlslwi r8,r28,24,1; at 0x114 retail slwi r30,r28,1 versus generated clrlslwi r30,r31,24,1. These introduce an extra u8 mask, not merely register coloring. All 11 call relocations match offsets, types, resolved targets and zero addends. Five wider-width lifetime/coalescing variants regressed; recovered 98.007520% source retained as NonMatching."
+}

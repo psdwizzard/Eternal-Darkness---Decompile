@@ -1,0 +1,47 @@
+{
+  "hypothesis": "Use a function-scope int/u32 width with explicit u8 narrowing at initialization, then mutate this same wide local to half-width. Unlike the previous branch-local integer shadow, this tests width lifetime/coalescing across the branch join. Test casted and direct shifts without compiler-setting changes.",
+  "baseline": "Recovered source from 0ccec00f3df508335bdff4f192c006cd88300d4d (98.007520%).",
+  "variants": [
+    {
+      "variant": "unsigned_width",
+      "width_type": "u32",
+      "shift": "(u8)width >> 1",
+      "score": 97.59399,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801950D4.o\n",
+      "raw": "reports/GEDE01/variant-unsigned_width-cb0256aa-d283-4be7-8970-a1fa2874c02a.json"
+    },
+    {
+      "variant": "unsigned_width_shift",
+      "width_type": "u32",
+      "shift": "width >> 1",
+      "score": 95.22556,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801950D4.o\n",
+      "raw": "reports/GEDE01/variant-unsigned_width_shift-cb0256aa-d283-4be7-8970-a1fa2874c02a.json"
+    },
+    {
+      "variant": "signed_width_shift",
+      "width_type": "int",
+      "shift": "width >> 1",
+      "score": 93.947365,
+      "build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_801950D4.o\n",
+      "raw": "reports/GEDE01/variant-signed_width_shift-cb0256aa-d283-4be7-8970-a1fa2874c02a.json"
+    }
+  ],
+  "additional_variants": [
+    {
+      "width_type": "int",
+      "initialization": "(u8)(state[0xB] - 4)",
+      "shift": "(u8)width >> 1",
+      "score": 96.729324,
+      "raw": "eternal-darkness-decomp/reports/GEDE01/hypothesis-cb0256aa-d283-4be7-8970-a1fa2874c02a.txt"
+    },
+    {
+      "width_type": "int",
+      "initialization": "(u8)(state[0xB] - 4)",
+      "shift": "(u32)width >> 1",
+      "score": 95.97744,
+      "raw": "eternal-darkness-decomp/reports/GEDE01/hypothesis-unsignedshift-cb0256aa-d283-4be7-8970-a1fa2874c02a.txt"
+    }
+  ],
+  "decision": "All five regress; restore best 98.007520% u8 width source. No experimental C files retained."
+}
