@@ -3165,6 +3165,7 @@ config.custom_build_rules = [
 ]
 
 game_section_externalizations = {
+    "801E7014": (".sdata2", [("@19", "lbl_80651288")]),
     "801A4430": (".sdata2", [("@51", "lbl_80650D88"), ("@55", "lbl_80650D90")]),
     "8014BA14": (".sdata2", [("@68", "lbl_806504B0")]),
     "800B2EC0": (".sdata2", [("@41", "lbl_8064F020")]),
@@ -12128,7 +12129,7 @@ config.libs = [
             Object(Matching, "game/game_fn_801E6F64.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E6F9C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E7004.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
-            Object(NonMatching, "game/game_fn_801E7014.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
+            Object(Matching, "game/game_fn_801E7014.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E70FC.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E714C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801E717C.c", mw_version="GC/1.3", extra_cflags=["-use_lmw_stmw on"]),

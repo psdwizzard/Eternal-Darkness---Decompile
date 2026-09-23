@@ -38,20 +38,23 @@ void fn_801E7014(s16 amount)
         break;
     case 3:
     {
+        float value;
         float maximum;
         float result;
 
-        lbl_8064C340 += lbl_80651294 * amount;
+        value = lbl_80651294 * amount + lbl_8064C340;
+        lbl_8064C340 = value;
         maximum = lbl_80651284;
-        if (lbl_8064C340 > maximum) {
-            maximum = lbl_8064C340;
+        if (value > maximum) {
+            maximum = value;
         }
         if (lbl_80651298 < maximum) {
             result = lbl_80651298;
         } else {
-            result = lbl_80651284;
-            if (lbl_8064C340 > result) {
-                result = lbl_8064C340;
+            /* Re-read the lower bound for the second selection. */
+            result = *(const volatile float *)&lbl_80651284;
+            if (value > result) {
+                result = value;
             }
         }
         lbl_8064C340 = result;
