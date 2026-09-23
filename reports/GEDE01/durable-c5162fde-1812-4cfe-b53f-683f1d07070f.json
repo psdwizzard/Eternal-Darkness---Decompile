@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "c5162fde-1812-4cfe-b53f-683f1d07070f",
+  "attempt": 9,
+  "base_commit": "9727a7fd2b1efcc36d49b4342317f31794f898ef",
+  "target": "fn_801E5BD8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c5162fde-1812-4cfe-b53f-683f1d07070f.json",
+    "eternal-darkness-decomp/reports/GEDE01/reproduce-c5162fde-1812-4cfe-b53f-683f1d07070f.py"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 92.789474%: retail/generated .text is 304/296 bytes and 76/74 instructions. Retail loads the font at 0x1c, compares index at 0x20, shifts into r8, materializes three bases with addi +0x50/+0x28/+0x0, and uses three stwx stores. Generated loads the font at 0x20 (not 0x28), compares index at 0x28, shifts into r7, forms an indexed aggregate address, folds +0x50/+0x28 into stw, and reloads strings[2] at 0x58 rather than 0x8 from the strings base. Both ELF .rela.text tables contain six relocations with equal types, targets, and zero addends; font and trailing counter relocation offsets differ with scheduling/size. Early font capture, an inline C store helper, and register base hints regressed to 89.63158%, 89.697365%, and 89.60526%; raw measurements and reproduction commands are preserved. Retained source is identical to accepted base and preserved commit."
+}
