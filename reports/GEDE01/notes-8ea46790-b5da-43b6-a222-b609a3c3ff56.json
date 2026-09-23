@@ -1,0 +1,29 @@
+{
+  "preserved_attempts_reviewed": [
+    "8788de5eb641db7708ac43226d7e8cfc66577a2d",
+    "34cbee2f0268e9b0620dda66b679bf55ceece7f4"
+  ],
+  "reconciliation": "Started at accepted base 1f1dec0310; recovered only the target TU from 8788de5eb6, then corrected it. Existing configure.py and splits registration remain unchanged and NonMatching.",
+  "experiments": [
+    {
+      "hypothesis": "The return handle from fn_80201814 is the argument to fn_80201B8C, not objects[iter].",
+      "retail_evidence": "0x80068D14 bl fn_80201814; 0x80068D18 mr r24,r3; 0x80068D1C bl fn_80201B8C. No instruction replaces r3 between calls.",
+      "measured_stdout": "target 1332 bytes  base 1312 bytes  match 93.75075",
+      "result": "Retained. Corrects a semantic dependency absent from attempt 4, which reported 92.324326%."
+    },
+    {
+      "hypothesis": "The frame discrepancy includes an undersized segment and an omitted separate query-output local, not just padding or declaration order.",
+      "support": [
+        "Existing src/game/game_fn_8013F4D0.c writes Vec3 first, second, axis and float length (0x28 bytes). Previous target TU supplied only a 0xC-byte Vec3.",
+        "Retail uses r1+0x7C for the segment, r1+0x40 for target_pos, and a distinct r1+0x4C as the second argument to fn_8014317C. Existing callers also supply a separate query-output vector.",
+        "Retail offset 0xD8 moves object_id into r3 before fn_800681C8; the previous no-argument declaration omitted this instruction. Neighboring callee source remains untouched."
+      ],
+      "changes": "Added independent Segment type and local, separate query_pos local, pointer return for fn_8014317C (retail cmplwi), and fn_800681C8(object_id).",
+      "measured_stdout": "target 1332 bytes  base 1316 bytes  match 94.315315",
+      "result": "Retained. Parameter registers now match retail r26-r31, owner r25 and list_item r24. Frame grows from 0xC0 to 0xE0 but retail is 0xF0."
+    }
+  ],
+  "remaining": "Retail conditional nop sequences at function offsets 0xF8-0x104 and 0x230-0x238 remain absent. No inline assembly or policy exception was used. The initial volatile Vec3 copy remains inherited from prior reconstruction; constant-copy instruction selection, scalar/vector stack slots, indexed loop versus advancing pointer, and some local register lifetimes differ.",
+  "verification_note": "Objdiff relocation-bearing instruction counts include synthetic data references. The ELF RELA audit separately resolves each actual relocation target name, type, site and signed addend. A count comparison alone is not treated as a relocation match.",
+  "scope": "Only target source and assignment reports changed; no neighboring source, compiler flags, runtime code, global progress, or shared inputs edited. Pre-existing CLAUDE.md change excluded."
+}
