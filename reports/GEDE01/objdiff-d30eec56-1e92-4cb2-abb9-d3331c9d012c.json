@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "assignment_id": "d30eec56-1e92-4cb2-abb9-d3331c9d012c",
+  "target": "fn_80124DBC",
+  "compiler_settings": {
+    "registration": "Object(NonMatching, \"game/game_fn_80124DBC.c\")",
+    "extra_cflags": [],
+    "canonical_settings_preserved": true
+  },
+  "recovered_from": "592199d8f12b7784f8cb1d9de951d06591043965",
+  "hypothesis": "Express repeated output slots as typed void-pointer-array indexing and make the frame comparison continuation explicit, to seek retail add-plus-displacement addressing and branch shape without changing compiler flags.",
+  "experiment": {
+    "typed_slot_result": "MWCC canonicalized the typed-array expressions to the same instructions and unchanged 90.333336 percent score.",
+    "explicit_branch_result": "MWCC folded the explicit continuation to the same direct beq and unchanged 90.333336 percent score.",
+    "rejected_bitfield_result": "Word flag clears expressed as C bitfields produced byte lbz/rlwimi/stb sequences; size fell to 856 bytes but similarity fell to 89.52381 percent, so this variant was reverted.",
+    "preserved_candidate": "The recovered canonical 90.333336 percent reconstruction remains the best legal candidate."
+  },
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_80124DBC.c fn_80124DBC",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "canonical": {
+    "target_bytes": 840,
+    "candidate_bytes": 864,
+    "match_percent": 90.333336,
+    "matched": false,
+    "raw_output": "target 840 bytes  base 864 bytes  match 90.333336"
+  },
+  "relocation_strict": {
+    "target_relocation_instructions": 35,
+    "candidate_relocation_instructions": 37,
+    "matched": false,
+    "raw_output": "left size=840 match=90.333336 relocations=35 types={R_PPC_ADDR16_HA:2,R_PPC_ADDR16_LO:2,R_PPC_REL24:20,R_PPC_EMB_SDA21:11}; right size=864 match=90.333336 relocations=37 types={R_PPC_REL24:22,R_PPC_ADDR16_HA:2,R_PPC_ADDR16_LO:2,R_PPC_EMB_SDA21:11}",
+    "reason": "Generated offsets 0x20 and 0x350 carry extra R_PPC_REL24 relocations to _savegpr_27 and _restgpr_27, while retail uses inline stmw and lmw. Relocation offsets therefore also diverge after the prologue."
+  },
+  "build": {
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "raw_output": "ninja exit_code=0; build/GEDE01/main.dol: OK"
+  },
+  "dol_sha1": {
+    "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "built": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "matched": true
+  },
+  "divergence": "Canonical GC/1.3 emits _savegpr_27/_restgpr_27 calls instead of retail stmw/lmw, making the candidate 24 bytes larger and adding two R_PPC_REL24 relocations. Remaining differences are the frame-equality branch shape, li/and rather than retail rlwinm flag clears, and addi-plus-indexed rather than retail add-plus-displacement output-slot accesses."
+}
