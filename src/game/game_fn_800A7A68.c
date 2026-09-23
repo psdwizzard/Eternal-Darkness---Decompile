@@ -1,7 +1,6 @@
 typedef unsigned char u8;
 typedef struct Vec3 { float x, y, z; } Vec3;
 typedef struct Entry { int value; int kind; int pad8; } Entry;
-typedef struct EntryList { int count; Entry* entries; } EntryList;
 typedef struct State { u8 pad0[0x90]; void* field90; } State;
 
 extern void *fn_80201B8C(void*);
@@ -57,7 +56,8 @@ int fn_800A7A68(void* context, void* object)
     void* owner;
     void* found;
     void* effect;
-    EntryList list;
+    Entry* entries;
+    int count;
     int index;
     int callbackIndex;
     int first;
@@ -83,24 +83,25 @@ int fn_800A7A68(void* context, void* object)
             fn_801A74A8(effect, target);
             fn_801A74C8(effect, 1);
             fn_801A7560(effect, 0x8244);
-            index = 0;
-            fn_801A7538(effect, *((u8*)actor + (((unsigned)index >> 28) & 8) + 0x2B));
+            callbackIndex = 0;
+            fn_801A7538(effect, *((u8*)actor + (((unsigned)callbackIndex >> 28) & 8) + 0x2B));
             fn_801A7518(effect, 5);
             fn_801A7550(effect, 12);
             fn_801A7558(effect, 7);
             fn_801A764C(effect, &copy);
             fn_801A7598(effect, 450);
-            fn_801292E0(object, &list.count, &list.entries);
-            for (index = 0; index < list.count; index++) {
-                Entry* entry = &list.entries[index];
+            fn_801292E0(object, &count, &entries);
+            for (index = 0; index < count; index++) {
+                Entry* entry = &entries[index];
                 int callback;
                 if (entry->kind != 1) continue;
                 callback = entry->value >> 17;
                 if (first) {
-                    fn_801287C4(found, fn_8003B8A0, effect, callback);
                     first = 0;
+                    fn_801287C4(found, fn_8003B8A0, effect, callback);
                     if (fn_80201C2C(context) != 0 && fn_80205288(context) != 0) {
-                        fn_801A7680(effect, fn_80201C24());
+                        void* link = fn_80201C24();
+                        fn_801A7680(effect, link);
                         fn_801A7478(effect, lbl_8031D790);
                         fn_80129334(object, 1, &callbackIndex, -1);
                         fn_801287C4(found, fn_800C3ADC, effect, callbackIndex - 1);

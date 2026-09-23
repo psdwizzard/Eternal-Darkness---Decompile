@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "4529bf16-42bc-475c-9018-a776d49cafbb",
+  "attempt": 5,
+  "base_commit": "46e54f27c2e5ef822518a0bc26fb2217a51a1655",
+  "target": "fn_800A7A68",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-4529bf16-42bc-475c-9018-a776d49cafbb.json"
+  ],
+  "divergence": "Relocation-strict canonical objdiff is 97.40224%: retail is 716 bytes and generated code is 700 bytes. Separating the count and entries outputs, reversing their declaration order, clearing first before the callback, and using a narrow link local recover the previously divergent fn_801292E0, first-entry flag, and fn_801A7680 scheduling. Reusing the address-taken callbackIndex for the zero selector recovers retail's li r0,0 but canonical MWCC emits stw r0,8(r1), folds the sign-bit extract, and generates lbz r4,0x2b(r27) instead of retail's rlwinm/add/lbz sequence. The other remaining difference is the retail-only li r0,4; cmpwi r0,-1; beq constant-kind guard. Readelf reports 49 relocations in each object, with identical ordered type/target/addend tuple SHA-256 values and all addends zero; relocation offsets shift across omitted/extra instructions. The full canonical build passed and the unlinked NonMatching no-regression DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
