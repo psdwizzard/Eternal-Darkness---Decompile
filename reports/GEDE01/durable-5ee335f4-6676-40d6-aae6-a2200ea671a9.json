@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "5ee335f4-6676-40d6-aae6-a2200ea671a9",
+  "attempt": 4,
+  "base_commit": "7e2a85a1beaa8afa3147d9558b441a88772a30a9",
+  "target": "fn_801AD528",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-5ee335f4-6676-40d6-aae6-a2200ea671a9.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-5ee335f4-6676-40d6-aae6-a2200ea671a9-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-5ee335f4-6676-40d6-aae6-a2200ea671a9.log"
+  ],
+  "divergence": "Fresh canonical and function_reloc_diffs=name_address relocation-strict objdiff both score 90.18868%: retail is 212 bytes and canonical GC/1.3 emits 208. Attempt 4 tested a different narrow alias/codegen hypothesis: direct active-member addressing, integer-address and pointer-to-array active addressing, base-before-offset declaration order, and a structured handle-only lvalue all normalized to the retained 90.18868% emission; making only the symbol declaration non-volatile while retaining explicit volatile active/handle accesses regressed to 67.0566%. The retained honest C materializes lbl_8060B204 through r3/r0 after mulli, preserves the combined slot pointer in r3, and derives r30 with addi at generated offset 0x40. Retail materializes the base in r4 before mulli and independently recomputes base-plus-index into r30 with add/addi at retail offsets 0x40-0x44. The omitted add makes generated code four bytes shorter and shifts later branches and the epilogue; call relocation targets and addends otherwise agree. The mandated full build succeeded, main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f, and the legal audit passed."
+}
