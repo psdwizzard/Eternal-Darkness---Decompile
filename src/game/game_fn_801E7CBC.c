@@ -6,8 +6,14 @@ typedef struct Vec3 {
     float z;
 } Vec3;
 
+typedef struct DrawTail {
+    u32 flags;
+    u32 value;
+} DrawTail;
+
 typedef struct DrawState {
-    u32 words[8];
+    u32 words[6];
+    DrawTail tail;
 } DrawState;
 
 extern DrawState lbl_8023B6A8;
@@ -19,17 +25,19 @@ extern void fn_80226AB4(int, int, int);
 extern void fn_801E7BDC(float, float, float);
 extern void fn_801E7BD8(void);
 
-/* NonMatching: behavior- and size-exact. The remaining mismatch is confined to
- * scheduling and volatile-register selection for the final two state words and
- * the four arguments to fn_801EDA7C. */
+/* NonMatching: an explicit two-word tail aggregate reproduces retail's early
+ * value load and argument schedule, but GC/1.3 retains the aggregate as an
+ * eight-byte temporary and emits two extra stores when copying it into state. */
 void fn_801E7CBC(Vec3* a, Vec3* b, Vec3* c, Vec3* d, u32* value)
 {
     DrawState state = lbl_8023B6A8;
+    DrawTail tail;
 
     fn_801ECC4C();
     fn_801ED468(0x1B);
-    state.words[6] = 0x80000000;
-    state.words[7] = *value;
+    tail.flags = 0x80000000;
+    tail.value = *value;
+    state.tail = tail;
     fn_801EDA7C(&state, 0, 0x2BF, 0);
     fn_801ECF50(4);
     fn_80226AB4(0x80, 3, 4);

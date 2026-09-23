@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "assignment_id": "5a08f89f-7043-4b5f-a497-6df3b6abab73",
+  "target": "fn_801E7CBC",
+  "compiler": "GC/1.3",
+  "compiler_flags": ["-use_lmw_stmw on"],
+  "build_command": "python3 configure.py && .tools/bin/ninja -j2",
+  "build_raw_output": "[906/908] DOL build/GEDE01/main.dol; [907/908] CHECK config/GEDE01/build.sha1; build/GEDE01/main.dol: OK; [908/908] PROGRESS",
+  "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+  "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+  "measurement_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E7CBC -o reports/GEDE01/objdiff-5a08f89f-7043-4b5f-a497-6df3b6abab73.json --format json-pretty -c function_reloc_diffs=name_address fn_801E7CBC",
+  "measurement_raw_output": "objdiff_exit=0 match_percent=96.61194 retail_bytes=268 generated_bytes=276 retail_instructions=67 generated_instructions=69 retail_relocation_annotations=20 generated_relocation_annotations=20 retail_rela_text_bytes=144 generated_rela_text_bytes=144",
+  "relocation_audit_raw_output": "Both sides contain 20 relocation annotations and 144-byte .rela.text sections. Corresponding external relocation types, targets, and addends remain equal; generated instruction addresses after the inserted tail-copy stores are shifted by 8 bytes, so this result is not relocation-strict 100% and is not claimed matched.",
+  "legal_audit": "Independent C translation unit; no inline or whole-function assembly; no shared reconstruction; no fallback jump; no neighboring function, gate, compiler-policy, progress.json, or README.md edit.",
+  "best_match_percent": 96.61194,
+  "hypothesis": "Model the last two descriptor words as a named two-word aggregate so GC/1.3 preserves the retail early value load and call-argument schedule instead of scalarizing both stores into the prior volatile-register rotation.",
+  "divergence": "The hypothesis improves the score from 92.80597% to 96.61194% and reproduces retail's lwz-before-lis scheduling, but GC/1.3 retains an eight-byte DrawTail temporary. It emits a 0x50 rather than 0x40 frame, moves state from sp+0x8 to sp+0x10, uses r7 for 0x80000000, and inserts stw r7,0x28(r1) plus stw r0,0x2C(r1) before fn_801EDA7C. Generated code is 276 bytes/69 instructions versus retail's 268 bytes/67 instructions."
+}
