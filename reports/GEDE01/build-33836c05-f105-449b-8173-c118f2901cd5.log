@@ -1,0 +1,41 @@
+$ python3 configure.py
+exit_code=0
+
+$ .tools/bin/ninja -j2
+exit_code=0
+build/GEDE01/main.dol: OK
+
+$ .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_801D2440.o
+ninja: no work to do.
+exit_code=0
+
+$ sha1sum build/GEDE01/main.dol
+ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol
+exit_code=0
+
+$ sha1sum -c config/GEDE01/build.sha1
+build/GEDE01/main.dol: OK
+exit_code=0
+
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json-pretty -o reports/GEDE01/objdiff-33836c05-f105-449b-8173-c118f2901cd5-canonical.json fn_801D2440
+INFO Writing to reports/GEDE01/objdiff-33836c05-f105-449b-8173-c118f2901cd5-canonical.json
+exit_code=0
+
+$ build/tools/objdiff-cli diff -p . -u main/game/game_fn_801D2440 --format json-pretty -c function_reloc_diffs=name_address -o reports/GEDE01/objdiff-33836c05-f105-449b-8173-c118f2901cd5.json fn_801D2440
+INFO Writing to reports/GEDE01/objdiff-33836c05-f105-449b-8173-c118f2901cd5.json
+exit_code=0
+
+$ measured report summary
+canonical: left_size=2916 right_size=2896 match_percent=91.05075
+relocation_strict(function_reloc_diffs=name_address): left_size=2916 right_size=2896 match_percent=91.05075
+
+$ rejected distinct hypothesis
+Materializing the nested fn_80201BC8/fn_80155DB4 call results in explicit C temporaries generated the retail move sequence locally, but changed global register allocation and reduced the measured score to 90.776405%; the change was reverted.
+
+$ build/binutils/powerpc-eabi-objdump -dr build/GEDE01/src/game/game_fn_801D2440.o | head
+00000000 <fn_801D2440>:
+   0: 94 21 ff 60  stwu r1,-160(r1)
+   4: 7c 08 02 a6  mflr r0
+   8: 90 01 00 a4  stw r0,164(r1)
+   c: be e1 00 7c  stmw r23,124(r1)
+  10: 7c 7f 1b 78  mr r31,r3

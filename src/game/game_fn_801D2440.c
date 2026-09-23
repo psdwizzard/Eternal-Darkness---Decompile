@@ -55,6 +55,9 @@ void fn_801D2440(GameObject* object)
     float a[3], b[3];
     u8 query[0x30];
     u8* payload;
+    void* object_owner;
+    void* player;
+    int effect;
 
     if (object->type != lbl_8064D18C) {
         actor = object->actorBC;
@@ -97,7 +100,7 @@ void fn_801D2440(GameObject* object)
         return;
     }
 
-    owner = object->owner;
+    object_owner = object->owner;
     switch (object->stateFF4) {
     case 0:
         actor = object->actorBC; info = fn_80201814(actor); current = fn_80201C24();
@@ -175,43 +178,43 @@ void fn_801D2440(GameObject* object)
         fn_8012C62C(target, 15, &b[2], &b[1], &b[0], 4);
         fn_80204CE4(item, fn_80204A8C()); object->actorC0 = fn_80201B54(item); break;
     case 100:
-        owner = fn_80201AE4(); actor = object->actorBC; other = object->actorC4;
+        player = fn_80201AE4(); actor = object->actorBC; other = object->actorC4;
         info = fn_80201814(actor); data = (void*)fn_80155DB4(info); current = fn_80201C24();
-        if (other == owner) {
+        if (other == player) {
             flag = fn_80157888(); fn_801568FC(data, fn_8002AA18);
             if (flag & 1) {
                 fn_802006D4(actor, actor, -1, 75, 0);
-                fn_80157B60(current, (u8)fn_801D38E8(object->owner));
-                color = ((short)fn_801CEB2C(object->owner) >> 1) + 1;
+                fn_80157B60(current, (u8)fn_801D38E8(object_owner));
+                color = ((short)fn_801CEB2C(object_owner) >> 1) + 1;
                 fn_80157B3C(current, (u8)color); fn_80157B80(current, 2); flag = 1;
                 count = fn_801579F4(current);
                 if (count > 0) {
                     fn_80201814((void*)count); target = fn_80201C24();
                     fn_802006D4((void*)count, (void*)count, -1, 75, 0);
-                    fn_80157B60(target, (u8)fn_801D38E8(object->owner));
-                    color = ((short)fn_801CEB2C(object->owner) >> 1) + 1;
+                    fn_80157B60(target, (u8)fn_801D38E8(object_owner));
+                    color = ((short)fn_801CEB2C(object_owner) >> 1) + 1;
                     fn_80157B3C(target, (u8)color);
                 }
             } else {
                 fn_80204F54(info); fn_8020123C(57, actor, actor, 0);
                 actor = object->actorC0; fn_80201814(actor); current = fn_80201C24(); flag = 0;
                 if (fn_8015821C(current) == 131) {
-                    value = (u8)fn_801D38E8(object->owner);
-                    color = (u8)(((short)fn_801CEB2C(object->owner) >> 1) + 1);
+                    value = (u8)fn_801D38E8(object_owner);
+                    color = (u8)(((short)fn_801CEB2C(object_owner) >> 1) + 1);
                     fn_80157B60(current, value); fn_80157B3C(current, color);
                     fn_800DC398(color); fn_800DC2B8(actor, value, color);
                 }
                 fn_80157B80(current, 0x200);
             }
-            if (object->id != (int)owner && fn_80157BD0(current) == 18) value = 24;
+            if (object->id != (int)player && fn_80157BD0(current) == 18) value = 24;
             else value = fn_80157BE8(current);
             result = (void*)fn_801E6CA0(lbl_8064C504, 0, value, 0, 1);
-            fn_80027948(result, 0, owner, actor, flag, 0, 0);
+            fn_80027948(result, 0, player, actor, flag, 0, 0);
         } else {
-            value = fn_80047D6C(); fn_802006D4(actor, actor, -1, 75, 0);
-            fn_80157B60(current, (u8)fn_801D38E8(object->owner));
-            color = (u8)(((short)fn_801CEB2C(object->owner) >> 1) + 1);
-            fn_80157B3C(current, color); fn_800DBF60(other, info, color, value, lbl_806510A0);
+            effect = fn_80047D6C(); fn_802006D4(actor, actor, -1, 75, 0);
+            fn_80157B60(current, (u8)fn_801D38E8(object_owner));
+            color = (u8)(((short)fn_801CEB2C(object_owner) >> 1) + 1);
+            fn_80157B3C(current, color); fn_800DBF60(other, info, color, effect, lbl_806510A0);
             fn_801568F0(data); fn_801568E4(data); fn_801568D8(data);
             result = fn_80201BC8(info); other_info = fn_80201814(other);
             fn_8011FE3C(result, fn_80201BC8(other_info));
