@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "assignment_id": "c5a47e91-45e6-4c39-b462-8c622f34eea5",
+  "attempt": 3,
+  "target": "fn_800DBF60",
+  "compiler": "GC/1.3",
+  "compiler_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma cats off -pragma warn_notinlined off -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on",
+  "source": "eternal-darkness-decomp/src/game/game_fn_800DBF60.c",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_800DBF60.c fn_800DBF60",
+    "build/binutils/powerpc-eabi-readelf -r build/GEDE01/obj/game/game_fn_800DBF60.o",
+    "build/binutils/powerpc-eabi-readelf -r build/GEDE01/src/game/game_fn_800DBF60.o",
+    "python3 tools/legal_audit.py",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "measurements": {
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "ninja_verification_stdout": "build/GEDE01/main.dol: OK",
+    "objdiff_stdout": "target 752 bytes  base 744 bytes  match 96.50532",
+    "target_bytes": 752,
+    "candidate_bytes": 744,
+    "different_instruction_rows": 43,
+    "match_percent": 96.50532,
+    "relocation_strict": {
+      "target_readelf_stdout_header": "Relocation section '.rela.text' at offset 0x330 contains 47 entries:",
+      "candidate_readelf_stdout_header": "Relocation section '.rela.text' at offset 0x31c contains 47 entries:",
+      "target_count": 47,
+      "candidate_count": 47,
+      "targets_types_addends_in_sequence_equal": true,
+      "equal_offsets_types_targets_addends": false,
+      "first_offset_divergence": "target 000000fa R_PPC_ADDR16_LO lbl_80325B80 + 0; candidate 000000f6 R_PPC_ADDR16_LO lbl_80325B80 + 0"
+    },
+    "representative_codegen_diff": [
+      "0x00f4 target: mr r28, r22 | candidate: no instruction",
+      "0x0140 both: addi r22, r3, lbl_80325B80@l",
+      "0x0154 both: addi r29, r3, lbl_80325B80@l",
+      "0x0174 target: li r4, 3 | candidate: li r0, -10",
+      "0x0178 target: li r0, -10 | candidate: li r4, 3",
+      "0x0208 both: lis r3, lbl_80325B80@ha",
+      "0x0210 both: addi r4, r3, lbl_80325B80@l",
+      "0x0250 target: clrlwi r3, r3, 16 | candidate: clrlwi r4, r3, 16",
+      "0x0260 target: mulli r4, r0, 20 | candidate: mulli r0, r0, 20",
+      "0x0278 target: li r4, 0 | candidate: no instruction"
+    ],
+    "legal_audit_stdout": "legal audit passed (20483 tracked project files inspected)",
+    "legal_audit_exit_code": 0,
+    "dol_sha1_stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_sha1_expected": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_sha1_matches": true
+  },
+  "preserved_attempt_reconciliation": "The accepted base already contained the source from preserved commit 1e1e181020fe4b84599b3386814ae0e6ea1d34b2, including the recovered fn_8011F130 call and signed level parameter. This attempt retained those fixes and tested a different lifetime/scoping hypothesis.",
+  "reconstruction_change": "Declared amount_packet only immediately before fn_8019917C, declared packet in a nested scope after that call, and passed lbl_80325B80 explicitly to fn_80148300. This makes GC/1.3 allocate the two persistent bases exactly as retail does (r22 and r29) and rematerialize the callback base. Splitting flags and duration into typed locals further improved final argument scheduling. Score increased from the preserved 92.835106% to 96.50532%, and relocation counts improved from 47/45 to 47/47.",
+  "conclusion": "NonMatching honest C. Relocation identities and addends are all recovered in retail order, but strict equality fails because the candidate omits retail's mr r28,r22 live-range split at 0x00f4, shifting every later relocation by four bytes; a second four-byte deficit remains in final flags/duration argument setup. The remaining 43 differing rows also include broad callee-saved register renaming and reversed scheduling of the 3 and -10 byte constants."
+}
