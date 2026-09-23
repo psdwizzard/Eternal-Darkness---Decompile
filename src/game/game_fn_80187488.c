@@ -14,11 +14,12 @@ typedef struct Entry {
 extern int fn_800FBFB0(void);
 
 void fn_80187488(Entry* entry, u16* flags, s16* bounds, int axis, int start,
-                 int end, s16* first, s16* second, int add, int delta)
+                 int end, volatile s16* first, volatile s16* second, int add,
+                 int delta)
 {
     s16* bound;
-    int b = first[axis];
     int a = second[axis];
+    int b = first[axis];
     int peak;
     int step;
     int current;
