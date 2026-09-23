@@ -1,0 +1,88 @@
+{
+  "commands": [
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-r",
+        "-s",
+        "-x",
+        ".text",
+        "build/GEDE01/obj/game/game_fn_802042A4.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0xb4 contains 4 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000020  0000040a R_PPC_REL24       00000000   fn_801A7548 + 0\n00000030  0000050a R_PPC_REL24       00000000   fn_801A7498 + 0\n0000004c  0000060a R_PPC_REL24       00000000   fn_8020123C + 0\n00000054  0000070a R_PPC_REL24       00000000   fn_801A7228 + 0\n\nSymbol table '.symtab' contains 8 entries:\n   Num:    Value  Size Type    Bind   Vis      Ndx Name\n     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND \n     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS game_fn_802042A4.c\n     2: 00000000     0 SECTION LOCAL  DEFAULT    1 .text\n     3: 00000000   116 FUNC    GLOBAL DEFAULT    1 fn_802042A4\n     4: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801A7548\n     5: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801A7498\n     6: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_8020123C\n     7: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801A7228\n\nHex dump of section '.text':\n NOTE: This section has relocations against it, but these have NOT been applied to this dump.\n  0x00000000 9421fff0 7c0802a6 90010014 93e1000c .!..|...........\n  0x00000010 7c9f2379 93c10008 41820040 7fe3fb78 |.#y....A..@...x\n  0x00000020 48000001 7c601b78 7fe3fb78 7c1e0378 H...|`.x...x|..x\n  0x00000030 48000001 2c1e0000 7c641b78 41820014 H...,...|d.xA...\n  0x00000040 7fc3f378 7c852378 38c00000 48000001 ...x|.#x8...H...\n  0x00000050 7fe3fb78 48000001 80010014 38600001 ...xH.......8`..\n  0x00000060 83e1000c 83c10008 7c0803a6 38210010 ........|...8!..\n  0x00000070 4e800020                            N.. \n\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-r",
+        "-s",
+        "-x",
+        ".text",
+        "build/GEDE01/src/game/game_fn_802042A4.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0xa8 contains 4 entries:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n00000020  0000030a R_PPC_REL24       00000000   fn_801A7548 + 0\n00000030  0000040a R_PPC_REL24       00000000   fn_801A7498 + 0\n0000004c  0000050a R_PPC_REL24       00000000   fn_8020123C + 0\n00000054  0000060a R_PPC_REL24       00000000   fn_801A7228 + 0\n\nSymbol table '.symtab' contains 8 entries:\n   Num:    Value  Size Type    Bind   Vis      Ndx Name\n     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND \n     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS game_fn_802042A4.c\n     2: 00000000     0 SECTION LOCAL  DEFAULT    1 .text\n     3: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801A7548\n     4: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801A7498\n     5: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_8020123C\n     6: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801A7228\n     7: 00000000   116 FUNC    GLOBAL DEFAULT    1 fn_802042A4\n\nHex dump of section '.text':\n NOTE: This section has relocations against it, but these have NOT been applied to this dump.\n  0x00000000 9421fff0 7c0802a6 90010014 93e1000c .!..|...........\n  0x00000010 7c9f2379 93c10008 41820040 7fe3fb78 |.#y....A..@...x\n  0x00000020 48000001 7c601b78 7fe3fb78 7c1e0378 H...|`.x...x|..x\n  0x00000030 48000001 2c1e0000 7c641b78 41820014 H...,...|d.xA...\n  0x00000040 7fc3f378 7c852378 38c00000 48000001 ...x|.#x8...H...\n  0x00000050 7fe3fb78 48000001 80010014 38600001 ...xH.......8`..\n  0x00000060 83e1000c 83c10008 7c0803a6 38210010 ........|...8!..\n  0x00000070 4e800020                            N.. \n\n",
+      "stderr": ""
+    }
+  ],
+  "relocation_tuples": [
+    [
+      [
+        "00000020",
+        "R_PPC_REL24",
+        "fn_801A7548",
+        "0"
+      ],
+      [
+        "00000030",
+        "R_PPC_REL24",
+        "fn_801A7498",
+        "0"
+      ],
+      [
+        "0000004c",
+        "R_PPC_REL24",
+        "fn_8020123C",
+        "0"
+      ],
+      [
+        "00000054",
+        "R_PPC_REL24",
+        "fn_801A7228",
+        "0"
+      ]
+    ],
+    [
+      [
+        "00000020",
+        "R_PPC_REL24",
+        "fn_801A7548",
+        "0"
+      ],
+      [
+        "00000030",
+        "R_PPC_REL24",
+        "fn_801A7498",
+        "0"
+      ],
+      [
+        "0000004c",
+        "R_PPC_REL24",
+        "fn_8020123C",
+        "0"
+      ],
+      [
+        "00000054",
+        "R_PPC_REL24",
+        "fn_801A7228",
+        "0"
+      ]
+    ]
+  ],
+  "relocations_equal": true,
+  "text_bytes_equal": true,
+  "size_bytes": 116,
+  "real_instruction_count": 29
+}
