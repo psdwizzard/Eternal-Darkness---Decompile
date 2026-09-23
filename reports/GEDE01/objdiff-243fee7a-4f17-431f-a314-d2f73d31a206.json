@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "assignment_id": "243fee7a-4f17-431f-a314-d2f73d31a206",
+  "target": "fn_80109D20",
+  "source": "eternal-darkness-decomp/src/game/game_fn_80109D20.c",
+  "source_sha256": "2b297a8740f63cdf3f7d1305639c159b20c55d47c51b5727b0462b96038a3fa2",
+  "base_commit": "ce8702b23dacbd4b73f6123292a5c73536ea126d",
+  "reconciliation": "Accepted base already contains the byte-identical C source from a5af88405778b38e70b3bd404ce3790fb1fefad4 and its independent NonMatching registration/split. No recovery edit was needed.",
+  "compiler": "GC/1.3, unchanged canonical configure.py flags; no pragmas or per-object changes",
+  "prior_attempts_studied": [
+    "a5af88405778b38e70b3bd404ce3790fb1fefad4",
+    "461bb8379c18f7d090e8da0080838b95948f3bb6",
+    "7ed8a9ba519bb411025b9876c0d2ea810c74747a",
+    "5bac06f8d6627719f759ebfc16e1cf251f61bbdd",
+    "0d7b44453398f9ab8db603e5759ac95fa7f05955"
+  ],
+  "measurements": {
+    "canonical": {
+      "match_percent": 92.85714,
+      "retail_bytes": 112,
+      "generated_bytes": 112,
+      "retail_instructions": 28,
+      "generated_instructions": 28
+    },
+    "reloc-strict": {
+      "match_percent": 92.85714,
+      "retail_bytes": 112,
+      "generated_bytes": 112,
+      "retail_instructions": 28,
+      "generated_instructions": 28
+    },
+    "aggregate": {
+      "match_percent": 89.28571,
+      "retail_bytes": 112,
+      "generated_bytes": 116,
+      "retail_instructions": 28,
+      "generated_instructions": 29
+    },
+    "inline": {
+      "match_percent": 92.85714,
+      "retail_bytes": 112,
+      "generated_bytes": 112,
+      "retail_instructions": 28,
+      "generated_instructions": 28
+    }
+  },
+  "commands": [
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80109D20",
+        "fn_80109D20",
+        "-o",
+        "reports/GEDE01/objdiff-243fee7a-4f17-431f-a314-d2f73d31a206-canonical.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": " INFO Writing to reports/GEDE01/objdiff-243fee7a-4f17-431f-a314-d2f73d31a206-canonical.raw.json\n",
+      "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-243fee7a-4f17-431f-a314-d2f73d31a206-canonical.raw.json"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80109D20",
+        "fn_80109D20",
+        "-o",
+        "reports/GEDE01/objdiff-243fee7a-4f17-431f-a314-d2f73d31a206-reloc-strict.raw.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "cwd": "eternal-darkness-decomp",
+      "exit_code": 0,
+      "raw_output": " INFO Writing to reports/GEDE01/objdiff-243fee7a-4f17-431f-a314-d2f73d31a206-reloc-strict.raw.json\n",
+      "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-243fee7a-4f17-431f-a314-d2f73d31a206-reloc-strict.raw.json"
+    },
+    {
+      "command": [
+        "python3",
+        "eternal-darkness-decomp/tools/legal_audit.py"
+      ],
+      "exit_code": 0,
+      "raw_output": "legal audit passed (20502 tracked project files inspected)\n"
+    }
+  ],
+  "build_raw_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-243fee7a-4f17-431f-a314-d2f73d31a206-build.raw.json",
+  "relocations_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-243fee7a-4f17-431f-a314-d2f73d31a206-relocations.raw.json",
+  "relocation_extraction": "Read both ELF32 big-endian .rela.text tables with Python struct; resolve target symbol indexes through each linked symbol/string table; preserve every offset, numeric relocation type, target name and signed addend.",
+  "experiments": [
+    {
+      "hypothesis": "Aggregate scalar replacement may coalesce the preloaded object field into ABI r3 while retaining branch-based mode selection.",
+      "change": "Replace the scalar mode local with a local struct { void* object; int mode; int zero; }; assign object=lbl_8064CCA0, mode=2, zero=0 after the first call; conditionally set mode=1; pass the three fields.",
+      "result": "89.28571%, 116 bytes. The pointer loads into r0 at 0x20, before mr r31,r3, and an extra mr r3,r0 appears at 0x34. Rejected; original restored.",
+      "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-243fee7a-4f17-431f-a314-d2f73d31a206-aggregate.raw.json"
+    },
+    {
+      "hypothesis": "Canonical auto inlining of a local mode selector may preserve its explicit branch while moving the first call argument load ahead of the inlined mode body.",
+      "change": "Temporarily introduce static inline int select_mode(short arg) { int mode=2; if(arg<0) mode=1; return mode; } and use select_mode(arg) as the second argument. This is local C with no assembly or shared reconstruction.",
+      "result": "92.85714%, 112 bytes. Helper fully inlined; generated load remains at 0x30. No improvement. Helper removed and original restored.",
+      "raw_output_file": "eternal-darkness-decomp/reports/GEDE01/objdiff-243fee7a-4f17-431f-a314-d2f73d31a206-inline.raw.json"
+    }
+  ],
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "dol_note": "NonMatching reconstruction is compiled for comparison; the matching retail object remains linked. DOL identity is a build invariant, not evidence of a C match.",
+  "legal_audit": "Independent retained C has no inline/whole-function assembly or copied proprietary source. Only assignment-specific JSON evidence is changed; no binaries, private inputs, runtime, compiler policy, progress.json, README.md, or neighboring functions are committed.",
+  "divergence": "Canonical and relocation-strict objdiff both score 92.85714% at 112/112 bytes (28 actual instructions each). The R_PPC_EMB_SDA21 load of lbl_8064CCA0, addend 0, is at retail offset 0x24 and generated offset 0x30: generated li/bge/li mode selection precedes the load. All seven other relocation sites, types, targets and addends agree. The independent C remains NonMatching."
+}
