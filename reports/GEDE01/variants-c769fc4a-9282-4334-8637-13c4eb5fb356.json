@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "assignment_id": "c769fc4a-9282-4334-8637-13c4eb5fb356",
+  "hypothesis": "Explicit register storage class on the parameter shadow and first-call result might reverse MWCC's nonvolatile live-range coloring and reproduce retail's delayed r30 save.",
+  "build_command": ".tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_802042A4.o",
+  "measurement_command_template": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_802042A4 fn_802042A4 -o OUTPUT --format json-pretty -c function_reloc_diffs=name_address",
+  "variants": [
+    {
+      "name": "register_object_copy_and_first",
+      "source_delta": "register int objectCopy = object; register int first = fn_801A7548(objectCopy); all persistent-object uses changed to objectCopy",
+      "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_802042A4.o",
+      "raw_objdiff_output": "INFO Writing to build/GEDE01/c769-register-both.json",
+      "score": 91.89655,
+      "retail_size": 116,
+      "generated_size": 116,
+      "retail_instruction_count": 29,
+      "generated_instruction_count": 29
+    },
+    {
+      "name": "register_parameter_and_first",
+      "source_delta": "register storage class applied directly to parameter object and local first",
+      "raw_build_output": "[1/1] MWCC build/GEDE01/src/game/game_fn_802042A4.o",
+      "raw_objdiff_output": "INFO Writing to build/GEDE01/c769-register-param-first.json",
+      "score": 91.89655,
+      "retail_size": 116,
+      "generated_size": 116,
+      "retail_instruction_count": 29,
+      "generated_instruction_count": 29
+    }
+  ],
+  "result": "Both distinct register-storage variants were codegen-identical to the retained baseline. The honest pre-existing reconstruction was restored byte-for-byte."
+}

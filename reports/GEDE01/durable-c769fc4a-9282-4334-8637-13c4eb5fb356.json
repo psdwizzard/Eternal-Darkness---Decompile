@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "c769fc4a-9282-4334-8637-13c4eb5fb356",
+  "attempt": 5,
+  "base_commit": "1f13cdad5afca725383f364cfa309ba2a259078e",
+  "target": "fn_802042A4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c769fc4a-9282-4334-8637-13c4eb5fb356.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c769fc4a-9282-4334-8637-13c4eb5fb356-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-c769fc4a-9282-4334-8637-13c4eb5fb356.json",
+    "eternal-darkness-decomp/reports/GEDE01/variants-c769fc4a-9282-4334-8637-13c4eb5fb356.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff remain 91.89655% with size-exact 116-byte code and 29 real instructions per side; objdiff's extra insertion/deletion rows are alignment placeholders, not instructions. All four R_PPC_REL24 calls have corresponding targets and zero addends. Retail keeps object in r31 and first in r30, while GC/1.3 keeps object in r30 and first in r31, yielding seven operand mismatches plus save/mr alignment insertion/deletion placeholders. A distinct explicit-register-storage hypothesis was tested on both a parameter shadow plus first result and the parameter plus first result; both produced the identical 91.89655% output. The honest reconstruction is unchanged. The prescribed build passed, the DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f, and the legal audit passed."
+}
