@@ -1,0 +1,15 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8018F948.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8018F948.c
+@@ -26,7 +26,11 @@
+ extern void fn_8018FFBC(void*, u32*, u32*, u8);
+ extern void fn_801F5A04(void*, s16, void*, void*);
+ 
+-void fn_8018F948(u8* object, void* first, void* second, u8* config)
++void fn_8018F948(object, first, second, config)
++u8* config;
++void* second;
++void* first;
++u8* object;
+ {
+     u8 i;
+     u8* cfg;

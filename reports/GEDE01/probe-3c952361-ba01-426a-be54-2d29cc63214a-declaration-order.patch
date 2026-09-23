@@ -1,0 +1,27 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8018F948.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8018F948.c
+@@ -28,17 +28,17 @@
+ 
+ void fn_8018F948(u8* object, void* first, void* second, u8* config)
+ {
++    u8* entry;
++    u8* cfg;
++    void* snd;
++    void* fst;
++    u8* obj;
++    u8* values;
++    u8 count;
+     u8 i;
+-    u8* cfg;
+-    void* fst;
+-    void* snd;
+-    u8* obj;
+     ShortCoord3 fixed;
+     u32 first_value;
+     u32 second_value;
+-    u8 count;
+-    u8* entry;
+-    u8* values;
+ 
+     cfg = config;
+     fst = first;

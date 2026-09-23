@@ -1,0 +1,198 @@
+[
+  {
+    "command": [
+      ".tools/bin/ninja",
+      "-t",
+      "commands",
+      "build/GEDE01/src/game/game_fn_8018F948.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_8018F948.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_8018F948.d build/GEDE01/src/game/game_fn_8018F948.d\n"
+  },
+  {
+    "command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_8018F948.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F948.o\n"
+  },
+  {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_8018F948",
+      "fn_8018F948",
+      "-o",
+      "reports/GEDE01/objdiff-3c952361-ba01-426a-be54-2d29cc63214a-baseline.json",
+      "--format",
+      "json-pretty"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": " INFO Writing to reports/GEDE01/objdiff-3c952361-ba01-426a-be54-2d29cc63214a-baseline.json\n"
+  },
+  {
+    "probe": "baseline",
+    "match_percent": 91.197914,
+    "retail_size": "384",
+    "compiled_size": "384",
+    "object_sha256": "e8996bd52b6ed504867c2bb0d4e116ffdece84a2d1c6a31ec348ebc4f977924d"
+  },
+  {
+    "command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_8018F948.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F948.o\n"
+  },
+  {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_8018F948",
+      "fn_8018F948",
+      "-o",
+      "reports/GEDE01/objdiff-3c952361-ba01-426a-be54-2d29cc63214a-memcpy-coordinates.json",
+      "--format",
+      "json-pretty"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": " INFO Writing to reports/GEDE01/objdiff-3c952361-ba01-426a-be54-2d29cc63214a-memcpy-coordinates.json\n"
+  },
+  {
+    "probe": "memcpy-coordinates",
+    "match_percent": 88.177086,
+    "retail_size": "384",
+    "compiled_size": "396",
+    "object_sha256": "86eafb46805c9c8ede6c385783ec9f5fd3d2e84b643d760047913f6e60fa0c20"
+  },
+  {
+    "command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_8018F948.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F948.o\n"
+  },
+  {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_8018F948",
+      "fn_8018F948",
+      "-o",
+      "reports/GEDE01/objdiff-3c952361-ba01-426a-be54-2d29cc63214a-declaration-order.json",
+      "--format",
+      "json-pretty"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": " INFO Writing to reports/GEDE01/objdiff-3c952361-ba01-426a-be54-2d29cc63214a-declaration-order.json\n"
+  },
+  {
+    "probe": "declaration-order",
+    "match_percent": 91.197914,
+    "retail_size": "384",
+    "compiled_size": "384",
+    "object_sha256": "3ce368c353d47b35b07fde106e63821462037034f3f4f6d70710318550ed30f1"
+  },
+  {
+    "command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_8018F948.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F948.o\n"
+  },
+  {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_8018F948",
+      "fn_8018F948",
+      "-o",
+      "reports/GEDE01/objdiff-3c952361-ba01-426a-be54-2d29cc63214a-inline-coordinate-return.json",
+      "--format",
+      "json-pretty"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": " INFO Writing to reports/GEDE01/objdiff-3c952361-ba01-426a-be54-2d29cc63214a-inline-coordinate-return.json\n"
+  },
+  {
+    "probe": "inline-coordinate-return",
+    "match_percent": 91.197914,
+    "retail_size": "384",
+    "compiled_size": "384",
+    "object_sha256": "e8996bd52b6ed504867c2bb0d4e116ffdece84a2d1c6a31ec348ebc4f977924d"
+  },
+  {
+    "command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_8018F948.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F948.o\n"
+  },
+  {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_8018F948",
+      "fn_8018F948",
+      "-o",
+      "reports/GEDE01/objdiff-3c952361-ba01-426a-be54-2d29cc63214a-knr-parameter-declarations.json",
+      "--format",
+      "json-pretty"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": " INFO Writing to reports/GEDE01/objdiff-3c952361-ba01-426a-be54-2d29cc63214a-knr-parameter-declarations.json\n"
+  },
+  {
+    "probe": "knr-parameter-declarations",
+    "match_percent": 91.197914,
+    "retail_size": "384",
+    "compiled_size": "384",
+    "object_sha256": "e8996bd52b6ed504867c2bb0d4e116ffdece84a2d1c6a31ec348ebc4f977924d"
+  },
+  {
+    "command": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_8018F948.o"
+    ],
+    "cwd": "eternal-darkness-decomp",
+    "exit_code": 0,
+    "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8018F948.o\n"
+  }
+]

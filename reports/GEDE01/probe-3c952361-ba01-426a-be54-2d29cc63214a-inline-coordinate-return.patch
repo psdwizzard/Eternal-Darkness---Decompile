@@ -1,0 +1,23 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8018F948.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8018F948.c
+@@ -26,6 +26,11 @@
+ extern void fn_8018FFBC(void*, u32*, u32*, u8);
+ extern void fn_801F5A04(void*, s16, void*, void*);
+ 
++static inline ShortCoord3 fixed_coordinates(void)
++{
++    return lbl_80651D80;
++}
++
+ void fn_8018F948(u8* object, void* first, void* second, u8* config)
+ {
+     u8 i;
+@@ -45,7 +50,7 @@
+     snd = second;
+     obj = object;
+     values = cfg + 0x14;
+-    fixed = lbl_80651D80;
++    fixed = fixed_coordinates();
+     entry = *(u8**)(obj + 0x4C);
+     count = cfg[0];
+     fn_801804AC(obj, fst, snd, &fixed);

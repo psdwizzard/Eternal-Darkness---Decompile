@@ -1,0 +1,11 @@
+--- a/eternal-darkness-decomp/src/game/game_fn_8018F948.c
++++ b/eternal-darkness-decomp/src/game/game_fn_8018F948.c
+@@ -45,7 +45,7 @@
+     snd = second;
+     obj = object;
+     values = cfg + 0x14;
+-    fixed = lbl_80651D80;
++    memcpy(&fixed, &lbl_80651D80, sizeof(fixed));
+     entry = *(u8**)(obj + 0x4C);
+     count = cfg[0];
+     fn_801804AC(obj, fst, snd, &fixed);
