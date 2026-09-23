@@ -50,8 +50,8 @@ int fn_80187E40(u8* self)
             *(float*)(self_local + 0xB8) = value;
 
             bound = lbl_80650A58;
-            value = *(volatile float*)(self_local + 0xB0) +
-                    *(volatile float*)(self_local + 0xBC);
+            value = *(volatile float*)(self_local + 0xB0);
+            value += *(volatile float*)(self_local + 0xBC);
             if (value > bound) {
                 bound = value;
             }
@@ -67,8 +67,8 @@ int fn_80187E40(u8* self)
             *(float*)(self_local + 0xBC) = value;
 
             bound = lbl_80650A58;
-            value = *(volatile float*)(self_local + 0xB4) +
-                    *(volatile float*)(self_local + 0xC0);
+            value = *(volatile float*)(self_local + 0xB4);
+            value += *(volatile float*)(self_local + 0xC0);
             if (value > bound) {
                 bound = value;
             }
