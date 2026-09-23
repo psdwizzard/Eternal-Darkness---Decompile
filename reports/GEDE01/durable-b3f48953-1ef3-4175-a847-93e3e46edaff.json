@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "b3f48953-1ef3-4175-a847-93e3e46edaff",
+  "attempt": 5,
+  "base_commit": "65a44792b6059497d0345aee776855031ff872c7",
+  "target": "fn_801AD528",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b3f48953-1ef3-4175-a847-93e3e46edaff.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-b3f48953-1ef3-4175-a847-93e3e46edaff-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-b3f48953-1ef3-4175-a847-93e3e46edaff.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-b3f48953-1ef3-4175-a847-93e3e46edaff.log",
+    "eternal-darkness-decomp/reports/GEDE01/verification-b3f48953-1ef3-4175-a847-93e3e46edaff.json"
+  ],
+  "divergence": "Fresh canonical and function_reloc_diffs=name_address relocation-strict objdiff both measure 90.18868%: retail is 212 bytes and canonical GC/1.3 emits 208. The distinct hypothesis was that pointer-expression evaluation/IR shape or inline address-helper boundaries could inhibit cross-branch common-subexpression sharing without changing compiler policy or observable memory accesses. Reversed addition operands, typed strides, rvalue qualifiers, helper argument orders and out-parameters did not improve the baseline; control-flow forms also failed. Subtracting a negated offset avoided address sharing but introduced neg/subf (86.79245%); inline return helpers changed register allocation (89.0566%); a one-case switch introduced an extra branch (89.62264%). All 49 fresh measurements are recorded; the best existing honest NonMatching C source is restored byte-for-byte. Remaining divergence: retail materializes lbl_8060B204 in r4 at offsets 0x20-0x24 before mulli at 0x28 and recomputes base-plus-index into r30 with add/addi at 0x40-0x44. Generated code emits mulli at 0x20, materializes the base through r3/r0 at 0x24-0x28, keeps base-plus-index in r3, and emits only addi r30,r3,4 at 0x40. The missing add shifts later instructions and branches by four bytes. Raw relocation records confirm equal relocation target/type/addend sequences, including all calls; later relocation offsets differ by four bytes. The mandated full build and legal audit pass, and main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f. No compiler, registration, split, runtime, or global-progress changes were retained."
+}

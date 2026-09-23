@@ -1,0 +1,212 @@
+{
+  "assignment_id": "b3f48953-1ef3-4175-a847-93e3e46edaff",
+  "commands": [
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_801AD528.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_801AD528.o",
+        "--format",
+        "json-pretty",
+        "-o",
+        "reports/GEDE01/objdiff-b3f48953-1ef3-4175-a847-93e3e46edaff-canonical.json"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-b3f48953-1ef3-4175-a847-93e3e46edaff-canonical.json\n"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_801AD528.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_801AD528.o",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "--format",
+        "json-pretty",
+        "-o",
+        "reports/GEDE01/objdiff-b3f48953-1ef3-4175-a847-93e3e46edaff.json"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-b3f48953-1ef3-4175-a847-93e3e46edaff.json\n"
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-Wr",
+        "build/GEDE01/obj/game/game_fn_801AD528.o"
+      ],
+      "returncode": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x114 contains 11 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000022  00000406 R_PPC_ADDR16_HA        00000000   lbl_8060B204 + 0\n00000026  00000404 R_PPC_ADDR16_LO        00000000   lbl_8060B204 + 0\n00000050  0000050a R_PPC_REL24            00000000   fn_801AD7C0 + 0\n0000005a  00000406 R_PPC_ADDR16_HA        00000000   lbl_8060B204 + 0\n0000005e  00000404 R_PPC_ADDR16_LO        00000000   lbl_8060B204 + 0\n00000074  0000060a R_PPC_REL24            00000000   fn_801AD4B4 + 0\n0000007a  00000406 R_PPC_ADDR16_HA        00000000   lbl_8060B204 + 0\n0000007e  00000404 R_PPC_ADDR16_LO        00000000   lbl_8060B204 + 0\n00000090  0000070a R_PPC_REL24            00000000   fn_801AD404 + 0\n000000a0  0000080a R_PPC_REL24            00000000   fn_801AD490 + 0\n000000b0  0000070a R_PPC_REL24            00000000   fn_801AD404 + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-Wr",
+        "build/GEDE01/src/game/game_fn_801AD528.o"
+      ],
+      "returncode": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x104 contains 11 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000026  00000306 R_PPC_ADDR16_HA        00000000   lbl_8060B204 + 0\n0000002a  00000304 R_PPC_ADDR16_LO        00000000   lbl_8060B204 + 0\n0000004c  0000040a R_PPC_REL24            00000000   fn_801AD7C0 + 0\n00000056  00000306 R_PPC_ADDR16_HA        00000000   lbl_8060B204 + 0\n0000005a  00000304 R_PPC_ADDR16_LO        00000000   lbl_8060B204 + 0\n00000070  0000050a R_PPC_REL24            00000000   fn_801AD4B4 + 0\n00000076  00000306 R_PPC_ADDR16_HA        00000000   lbl_8060B204 + 0\n0000007a  00000304 R_PPC_ADDR16_LO        00000000   lbl_8060B204 + 0\n0000008c  0000060a R_PPC_REL24            00000000   fn_801AD404 + 0\n0000009c  0000070a R_PPC_REL24            00000000   fn_801AD490 + 0\n000000ac  0000060a R_PPC_REL24            00000000   fn_801AD404 + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".tools/bin/ninja",
+        "-t",
+        "commands",
+        "build/GEDE01/src/game/game_fn_801AD528.o"
+      ],
+      "returncode": 0,
+      "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -schedule off -opt nopeephole -MMD -c src/game/game_fn_801AD528.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801AD528.d build/GEDE01/src/game/game_fn_801AD528.d\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "--version"
+      ],
+      "returncode": 0,
+      "stdout": "objdiff-cli 3.6.1\n",
+      "stderr": ""
+    }
+  ],
+  "sha256": {
+    "src/game/game_fn_801AD528.c": "1ddf96406cb26f545ada7676050a7ab087ca8c4ed6d797fd4c2fb93174af9d1a",
+    "compilers/GC/1.3/mwcceppc.exe": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715",
+    "build/GEDE01/obj/game/game_fn_801AD528.o": "b65634eb3fcdd75aca36dc0d6faca55e06ea552dcb6bf1f58c3b1ec0b5c5d67f",
+    "build/GEDE01/src/game/game_fn_801AD528.o": "2b2757f4df17b88c9fae68756f6a8e5cbc09a97f38bb3f61908e049bae518efc"
+  },
+  "relocation_note": "Raw readelf outputs retained above. Relocation locations after the omitted add shift by four bytes; symbol targets, types, and explicit addends are compared separately below.",
+  "relocation_sequences": {
+    "retail": [
+      {
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8060B204",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8060B204",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_REL24",
+        "target": "fn_801AD7C0",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8060B204",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8060B204",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_REL24",
+        "target": "fn_801AD4B4",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8060B204",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8060B204",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_REL24",
+        "target": "fn_801AD404",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_REL24",
+        "target": "fn_801AD490",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_REL24",
+        "target": "fn_801AD404",
+        "addend": "+ 0"
+      }
+    ],
+    "generated": [
+      {
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8060B204",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8060B204",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_REL24",
+        "target": "fn_801AD7C0",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8060B204",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8060B204",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_REL24",
+        "target": "fn_801AD4B4",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_ADDR16_HA",
+        "target": "lbl_8060B204",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_ADDR16_LO",
+        "target": "lbl_8060B204",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_REL24",
+        "target": "fn_801AD404",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_REL24",
+        "target": "fn_801AD490",
+        "addend": "+ 0"
+      },
+      {
+        "type": "R_PPC_REL24",
+        "target": "fn_801AD404",
+        "addend": "+ 0"
+      }
+    ]
+  },
+  "relocation_targets_types_addends_equal": true,
+  "command_working_directory": "eternal-darkness-decomp",
+  "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "full_build_returncode": 0,
+  "legal_audit_returncode": 0,
+  "retained_source_matches_base_commit": true,
+  "retained_registration": "Object(NonMatching, \"game/game_fn_801AD528.c\", extra_cflags=[\"-schedule off\", \"-opt nopeephole\"])",
+  "retained_source_matches_preserved_attempt": true
+}
