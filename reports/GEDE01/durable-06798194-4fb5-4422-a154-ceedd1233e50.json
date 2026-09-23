@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "06798194-4fb5-4422-a154-ceedd1233e50",
+  "attempt": 6,
+  "base_commit": "b49afddc20d139f650a19656cddad70a7beba48d",
+  "target": "fn_801D1B7C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-06798194-4fb5-4422-a154-ceedd1233e50.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-06798194-4fb5-4422-a154-ceedd1233e50.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-06798194-4fb5-4422-a154-ceedd1233e50.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 97.61364% (172 candidate versus 176 retail bytes). Retail addi r3,r7,0 at +0x74 is folded away; the first row add uses r7 instead of r3, and branch destinations after that point shift by four bytes. All five external relocations agree in offset, type, target and addend. Unsigned integer address updates avoid the rejected out-of-bounds intermediate pointer; the target remains NonMatching. Canonical DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

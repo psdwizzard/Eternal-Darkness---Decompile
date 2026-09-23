@@ -33,15 +33,25 @@ f32 fn_801D1B7C(int arg0, int arg1, u8 arg2)
     }
 
     value = lbl_8023BA30[arg1][arg0];
+    /* GC uses 32-bit unsigned long addresses. Keep the biased intermediate
+     * as an integer: arg2 == 4 must not form values[row].values + 4.
+     * The final address is always element 0, 1, or 2 of the selected row.
+     */
     switch (value) {
     case -1: {
-        return values[0].values[arg2 - 2];
+        unsigned long row = (unsigned long)values[0].values;
+        row += (unsigned long)arg2 * sizeof(f32);
+        return *(f32*)(row - 2 * sizeof(f32));
     }
     case 1: {
-        return values[1].values[arg2 - 2];
+        unsigned long row = (unsigned long)values[1].values;
+        row += (unsigned long)arg2 * sizeof(f32);
+        return *(f32*)(row - 2 * sizeof(f32));
     }
     default: {
-        return values[2].values[arg2 - 2];
+        unsigned long row = (unsigned long)values[2].values;
+        row += (unsigned long)arg2 * sizeof(f32);
+        return *(f32*)(row - 2 * sizeof(f32));
     }
     }
 }
