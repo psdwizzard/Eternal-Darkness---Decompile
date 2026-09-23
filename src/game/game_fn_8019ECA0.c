@@ -39,11 +39,11 @@ void fn_8019ECA0(u8* obj)
     int saved;
     DrawFn draw;
 
-    fn_8018D788(lbl_8064D738, obj, &buffers, *(u16*)((u8*)&setup + 2));
     fields = obj + 0x8C;
+    fn_8018D788(lbl_8064D738, obj, &buffers, *(u16*)((u8*)&setup + 2));
     entry = *(u8**)(obj + 0x4C);
     count = obj[1];
-    color = buffers.colors;
+    color = buffers.indices;
     draw = fn_8019EF50;
     if (*(int*)fields == 0)
         draw = fn_8019EFAC;

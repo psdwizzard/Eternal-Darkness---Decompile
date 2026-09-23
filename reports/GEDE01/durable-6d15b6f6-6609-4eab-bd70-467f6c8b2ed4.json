@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "6d15b6f6-6609-4eab-bd70-467f6c8b2ed4",
+  "attempt": 4,
+  "base_commit": "4e2da0bed4887d129fabfa7509cc14a197e1ce3d",
+  "target": "fn_8019ECA0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6d15b6f6-6609-4eab-bd70-467f6c8b2ed4.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6d15b6f6-6609-4eab-bd70-467f6c8b2ed4-canonical.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both score 95.01744%: retail is 688 bytes and generated honest C is 684 bytes, with 52 relocation-bearing instructions on each side. Moving the long-lived obj+0x8C pointer before fn_8018D788 restores retail's pre-call addi and early call schedule; using the third returned buffer for the per-entry byte loop also restores retail's stack-slot 0x10 load. GC/1.3 still allocates obj/entry/draw/color/count/offset/loop roles differently across r21-r29 and emits three independent zero initializations instead of retail's li r21 followed by mr r28,r21 and later li r26, leaving one fewer instruction. The signed-integer conversion constant still relocates to generated local pool symbol @25 rather than retail lbl_80650C60. python3 configure.py and .tools/bin/ninja -j2 completed successfully; build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
