@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "c7463536-adaa-4ed0-81fb-012632b36977",
+  "attempt": 6,
+  "base_commit": "8172097874843379fb6a80ad0f8184be1e73a199",
+  "target": "fn_80109CB0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c7463536-adaa-4ed0-81fb-012632b36977.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-c7463536-adaa-4ed0-81fb-012632b36977.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-c7463536-adaa-4ed0-81fb-012632b36977.log"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff: 92.85714%, 112/112 bytes. Retail loads lbl_8064CCA0 into r3 at offset 0x24 before mode selection; generated C loads it at 0x30 after mode selection. The second SDA21 relocation has the correct target and zero addend but the wrong site (7/8 sites equal). Prior reports reversed retail and generated; objdiff target_path/left is retail, base_path/right is generated."
+}
