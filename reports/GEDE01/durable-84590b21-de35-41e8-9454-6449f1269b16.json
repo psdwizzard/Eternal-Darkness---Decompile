@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "assignment_id": "84590b21-de35-41e8-9454-6449f1269b16",
+  "attempt": 5,
+  "base_commit": "92c2d3ce83647183b4817c2369f0483a364ac242",
+  "target": "fn_80154F74",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-84590b21-de35-41e8-9454-6449f1269b16.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-84590b21-de35-41e8-9454-6449f1269b16-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-84590b21-de35-41e8-9454-6449f1269b16.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-84590b21-de35-41e8-9454-6449f1269b16.txt",
+    "eternal-darkness-decomp/reports/GEDE01/measurements-84590b21-de35-41e8-9454-6449f1269b16.json",
+    "eternal-darkness-decomp/reports/GEDE01/measure-84590b21-de35-41e8-9454-6449f1269b16.py"
+  ],
+  "divergence": "Improved canonical and relocation-strict objdiff from the recovered 92.89412% baseline to 96.011765%, with 340/340-byte .text but not byte equality (220/340 bytes equal at the same offsets). A u32 induction variable narrowed to u16 at comparison/indexing reproduces retail r9/r4 usage; an explicit timestamp conditional removes the duplicate zero load. Remaining: retail saves r26-r31 and retains r31=&batch.entries, while GC/1.3 saves r27-r31 and rotates the input registers. Candidate omits the interior-pointer setup at retail +0x2c, so constructor and timestamp calls occur at +0x30/+0x54 versus +0x34/+0x58. At candidate +0xa4 it recomputes &batch in r5, scales the count in r6, and uses offset 0x24 instead of retail r31 plus offset 0x10; later recursive calls now align at +0xd8/+0xf8. All six relocation types, target names, and zero addends agree, but the first two relocation offsets differ. Union/alias and inline-helper hypotheses with explicit interior pointers reordered the index-count store and failed to improve the best candidate; raw measurements and source diffs are preserved. Only this independent C TU remains NonMatching; canonical GC/1.3 flags and externalization checks are unchanged (only the local literal name changes @28 to @29). Original and rebuilt DOL SHA-1 both equal ea24b6af954876ce072562ff39cdb4c81d32be1f; the NonMatching candidate is not linked into the verified DOL."
+}

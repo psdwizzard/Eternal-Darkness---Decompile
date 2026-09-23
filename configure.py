@@ -117,10 +117,10 @@ config.custom_build_rules = [
     {
         "name": "externalize_game_80154F74_divisor",
         "command": (
-            "python3 tools/externalize_elf_symbol.py $in @28 lbl_80650608 "
+            "python3 tools/externalize_elf_symbol.py $in @29 lbl_80650608 "
             "orig/GEDE01/sys/main.dol --require-whole-section && "
             "build/binutils/powerpc-eabi-objcopy "
-            "--redefine-sym=@28=lbl_80650608 --remove-section=.sdata2 "
+            "--redefine-sym=@29=lbl_80650608 --remove-section=.sdata2 "
             "--rename-section=.comment=.ignored $in && touch $out"
         ),
         "description": "EXTERNALIZE $in",

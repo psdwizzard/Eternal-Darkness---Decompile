@@ -36,26 +36,24 @@ void fn_80154F74(Entry* entries, u16 first, u16 last, int kind, int flag)
     Batch batch;
     Batch* batch_ptr = &batch;
     int span;
-    u16 index;
+    u32 index;
     u32 stamp;
     float value;
 
     fn_801A1A4C(batch_ptr);
-    stamp = 0;
     batch.kind = kind;
     batch.pad66 = 0;
     batch.index_count = 0;
     batch.entries = entries;
     batch.flag = flag;
-    if (flag != 0)
-        stamp = fn_8015E780();
+    stamp = flag != 0 ? fn_8015E780() : 0;
     batch.stamp = stamp;
 
     if (entries != 0) {
         value = entries->value;
         span = last - first;
-        for (index = 0; index < span; index++) {
-            Entry* entry = &entries[index];
+        for (index = 0; (u16)index < span; index++) {
+            Entry* entry = &entries[(u16)index];
             if (kind == entry->kind && value == entry->value) {
                 batch.indices[batch.index_count] = index;
                 batch.index_count++;
