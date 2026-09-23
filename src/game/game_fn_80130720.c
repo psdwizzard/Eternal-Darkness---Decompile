@@ -36,27 +36,28 @@ extern void fn_80130980(void);
 extern void fn_80130984(float, float, float);
 extern void fn_800EBA80(int, Vec3*, Color*, int, float);
 
-static void emit(float* value)
+static void emit(Vec3* value)
 {
-    fn_80130984(value[0], value[1], value[2]);
+    fn_80130984(value->x, value->y, value->z);
 }
 
 void fn_80130720(Object* object)
 {
     Color first_source;
     Color first_color;
-    Color second_source;
+    Object* saved_object = object;
+    volatile Color second_source;
     Color second_color;
     Color third_color;
     Color fourth_color;
     Color effect_color_a;
     Color effect_color_b;
     Color final_color;
-    float (*vectors)[3] = lbl_805AADC8;
+    Vec3* vectors = (Vec3*)lbl_805AADC8;
 
-    fn_80125ECC(object);
+    fn_80125ECC(saved_object);
     if (lbl_8064CF30 != 0) {
-        if (object == lbl_8064C4E4) {
+        if (saved_object == lbl_8064C4E4) {
             fn_801ED468(27);
             fn_80226D28(0);
             fn_801ED118();
@@ -69,37 +70,36 @@ void fn_80130720(Object* object)
             first_color = first_source;
             fn_801ECD74(&first_color);
             fn_80226AB4(168, 3, 2);
-            emit(vectors[7]);
-            emit(vectors[8]);
+            emit(&vectors[7]);
+            emit(&vectors[8]);
             fn_80130980();
 
-            second_source = lbl_802FC5BC[7];
-            second_color = second_source;
+            second_color = (second_source = lbl_802FC5BC[7]);
             fn_801ECD74(&second_color);
             fn_80226AB4(168, 3, 2);
-            emit(vectors[3]);
-            emit(vectors[4]);
+            emit(&vectors[3]);
+            emit(&vectors[4]);
             fn_80130980();
 
             third_color = lbl_802FC5BC[8];
             fn_801ECD74(&third_color);
             fn_80226AB4(168, 3, 2);
-            emit(vectors[1]);
-            emit(vectors[2]);
+            emit(&vectors[1]);
+            emit(&vectors[2]);
             fn_80130980();
 
             fourth_color = lbl_802FC5BC[11];
             fn_801ECD74(&fourth_color);
             fn_80226AB4(168, 3, 2);
-            emit(vectors[5]);
-            emit(vectors[6]);
+            emit(&vectors[5]);
+            emit(&vectors[6]);
             fn_80130980();
 
             effect_color_a = lbl_802FC5BC[13];
-            fn_800EBA80(0, (Vec3*)vectors[0], &effect_color_a, 100,
+            fn_800EBA80(0, &vectors[0], &effect_color_a, 100,
                         lbl_80650218);
             effect_color_b = lbl_802FC5BC[5];
-            fn_800EBA80(0, (Vec3*)vectors[9], &effect_color_b, 100,
+            fn_800EBA80(0, &vectors[9], &effect_color_b, 100,
                         lbl_8065021C);
             fn_80226D28(1);
             final_color = lbl_802FC5BC[3];
