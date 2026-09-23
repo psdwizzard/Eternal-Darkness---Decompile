@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "215f94e4-6a4d-43c0-a2a6-5d8254db601c",
+  "attempt": 4,
+  "base_commit": "fc0908266a2143fa81d3a6c4e9a69b7aa5fdfab4",
+  "target": "fn_80195AEC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-215f94e4-6a4d-43c0-a2a6-5d8254db601c.json"
+  ],
+  "divergence": "Canonical objdiff measures 91.31768%: retail .text is 2556 bytes and the candidate is 2568 bytes; both .rela.text sections are 552 bytes. Delaying half/rest/entry live ranges raised the prior 89.57746% best, but the remaining codegen differs in register allocation and scheduling (retail saves r17-r31 while the candidate saves r18-r31), and the candidate still emits a local 8-byte .sdata2 signed-integer conversion constant (@62) instead of retail lbl_80650B58 relocation targets, so relocation-strict comparison is not 100%. The full canonical build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
