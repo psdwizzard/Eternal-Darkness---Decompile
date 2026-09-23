@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f136fbd9-ebd7-40cc-ac35-b382de00d383",
+  "attempt": 5,
+  "base_commit": "7183d6d8f08b4854dcdca33981bf268b3e8fb9bf",
+  "target": "fn_8019ECA0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f136fbd9-ebd7-40cc-ac35-b382de00d383.json"
+  ],
+  "divergence": "Fresh relocation-strict objdiff improves the preserved 95.01744% reconstruction to a size-exact 96.41279%: retail and generated code are both 688 bytes and 173 instructions, with 52 relocation-bearing instructions on each side. Moving the three zero initializations into one chained for-loop initializer exposes the missing shared-lifetime dependency and restores exact size, but GC/1.3 realizes it as slwi/add for the per-entry field pointer while retail uses li r21 followed by mr r28,r21; it also keeps different obj/entry/draw/color/count/offset/loop allocation across r21-r29. The signed-integer conversion constant still relocates to generated local pool symbol @25 rather than retail lbl_80650C60. python3 configure.py and .tools/bin/ninja -j2 completed successfully; build/GEDE01/main.dol has required SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f, and the legal audit passed with 20598 tracked project files inspected."
+}

@@ -47,9 +47,7 @@ void fn_8019ECA0(u8* obj)
     draw = fn_8019EF50;
     if (*(int*)fields == 0)
         draw = fn_8019EFAC;
-    offset = 0;
-    matrix_offset = 0;
-    for (i = 0; i < count; i++) {
+    for (i = matrix_offset = offset = 0; i < count; i++) {
         int radius = entry[0x21];
         fn_8018D020(buffers.vertices + offset,
                     (float)(*(s16*)(entry + 0x0A) - radius),
