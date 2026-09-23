@@ -1,0 +1,77 @@
+diff --git a/eternal-darkness-decomp/src/game/game_fn_801BACE8.c b/eternal-darkness-decomp/src/game/game_fn_801BACE8.c
+index d9faf2d15..4f892f2bb 100644
+--- a/eternal-darkness-decomp/src/game/game_fn_801BACE8.c
++++ b/eternal-darkness-decomp/src/game/game_fn_801BACE8.c
+@@ -7,13 +7,18 @@ typedef struct StreamSlot {
+     u8 state;
+     u8 pad09[0x3F];
+     u32 voice;
++    u8 pad4C[4];
+     u32 parameter;
+-    u8 pad50[0x10];
++    u8 pad54[0xC];
+     u32 cache;
+ } StreamSlot;
+ 
+ extern StreamSlot lbl_8061AE48[];
+-extern u32 lbl_80619C20[];
++extern struct {
++    u32 rate;
++    u8 rest[0x210];
++} lbl_80619C20;
++
+ extern float lbl_80650F18;
+ extern void fn_801CE2B8(void);
+ extern void fn_801CE280(void);
+@@ -35,39 +40,30 @@ static inline u32 find_stream(u32 id)
+ void fn_801BACE8(u32 id, u32 parameter)
+ {
+     StreamSlot* slots = lbl_8061AE48;
+-    u32 offset;
+-    u8* parameter_base;
+-    u8* state_base;
+-    u8* cache_base;
+     int index;
+     u32 cache;
+ 
+     fn_801CE2B8();
+     index = find_stream(id);
+     if (index != (u32)-1) {
+-        offset = index * sizeof(StreamSlot);
+-        parameter_base = (u8*)slots + 0x50;
+-        state_base = (u8*)slots + 8;
+-        *(u32*)(parameter_base + offset) = parameter;
+-        if (state_base[offset] == 2) {
+-            fn_801CCB98(*(u32*)((u8*)slots + offset + 0x48),
+-                        (int)((float)lbl_80619C20[0] * lbl_80650F18 /
+-                              (float)parameter));
++        slots[index].parameter = parameter;
++        if (slots[index].state == 2) {
++            fn_801CCB98(slots[index].voice,
++                        (int)(lbl_80650F18 * (float)parameter /
++                              (float)lbl_80619C20.rate));
+         }
+-        cache_base = (u8*)slots + 0x60;
+-        cache = *(u32*)(cache_base + offset);
++        cache = slots[index].cache;
+         if (cache != (u32)-1) {
+             fn_801CE2B8();
+             index = fn_801B9D1C(cache);
+             if (index != (u32)-1) {
+-                offset = index * sizeof(StreamSlot);
+-                *(u32*)(parameter_base + offset) = parameter;
+-                if (state_base[offset] == 2) {
+-                    fn_801CCB98(*(u32*)((u8*)slots + offset + 0x48),
+-                                (int)((float)lbl_80619C20[0] * lbl_80650F18 /
+-                                      (float)parameter));
++                slots[index].parameter = parameter;
++                if (slots[index].state == 2) {
++                    fn_801CCB98(slots[index].voice,
++                                (int)(lbl_80650F18 * (float)parameter /
++                                      (float)lbl_80619C20.rate));
+                 }
+-                cache = *(u32*)(cache_base + offset);
++                cache = slots[index].cache;
+                 if (cache != (u32)-1) {
+                     fn_801BACE8(cache, parameter);
+                 }

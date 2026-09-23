@@ -7,13 +7,18 @@ typedef struct StreamSlot {
     u8 state;
     u8 pad09[0x3F];
     u32 voice;
+    u8 pad4C[4];
     u32 parameter;
-    u8 pad50[0x10];
+    u8 pad54[0xC];
     u32 cache;
 } StreamSlot;
 
 extern StreamSlot lbl_8061AE48[];
-extern u32 lbl_80619C20[];
+extern struct {
+    u32 rate;
+    u8 rest[0x210];
+} lbl_80619C20;
+
 extern float lbl_80650F18;
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
@@ -49,10 +54,11 @@ void fn_801BACE8(u32 id, u32 parameter)
         parameter_base = (u8*)slots + 0x50;
         state_base = (u8*)slots + 8;
         *(u32*)(parameter_base + offset) = parameter;
+        /* Retail scales parameter by the global rate, in this operand order. */
         if (state_base[offset] == 2) {
-            fn_801CCB98(*(u32*)((u8*)slots + offset + 0x48),
-                        (int)((float)lbl_80619C20[0] * lbl_80650F18 /
-                              (float)parameter));
+            fn_801CCB98(((StreamSlot*)((u8*)slots + offset))->voice,
+                        (int)(lbl_80650F18 * (float)parameter /
+                              (float)lbl_80619C20.rate));
         }
         cache_base = (u8*)slots + 0x60;
         cache = *(u32*)(cache_base + offset);
@@ -63,9 +69,9 @@ void fn_801BACE8(u32 id, u32 parameter)
                 offset = index * sizeof(StreamSlot);
                 *(u32*)(parameter_base + offset) = parameter;
                 if (state_base[offset] == 2) {
-                    fn_801CCB98(*(u32*)((u8*)slots + offset + 0x48),
-                                (int)((float)lbl_80619C20[0] * lbl_80650F18 /
-                                      (float)parameter));
+                    fn_801CCB98(((StreamSlot*)((u8*)slots + offset))->voice,
+                                (int)(lbl_80650F18 * (float)parameter /
+                                      (float)lbl_80619C20.rate));
                 }
                 cache = *(u32*)(cache_base + offset);
                 if (cache != (u32)-1) {

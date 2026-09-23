@@ -1,0 +1,113 @@
+argv: ["git", "show", "01b43a2b8c74db42f2a9462b704c6a5d4da8fe2c:eternal-darkness-decomp/src/game/game_fn_801BACE8.c"]
+typedef unsigned char u8;
+typedef unsigned int u32;
+
+typedef struct StreamSlot {
+    u32 id;
+    u32 flags;
+    u8 state;
+    u8 pad09[0x3F];
+    u32 voice;
+    u32 parameter;
+    u8 pad50[0x10];
+    u32 cache;
+} StreamSlot;
+
+extern StreamSlot lbl_8061AE48[];
+extern u32 lbl_80619C20[];
+extern float lbl_80650F18;
+extern void fn_801CE2B8(void);
+extern void fn_801CE280(void);
+extern int fn_801B9D1C(u32);
+extern void fn_801CCB98(u32, u32);
+
+static inline u32 find_stream(u32 id)
+{
+    u32 i;
+
+    for (i = 0; i < 64; i++) {
+        if (lbl_8061AE48[i].state != 0 && lbl_8061AE48[i].id == id) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void fn_801BACE8(u32 id, u32 parameter)
+{
+    StreamSlot* slots = lbl_8061AE48;
+    u32 offset;
+    u8* parameter_base;
+    u8* state_base;
+    u8* cache_base;
+    int index;
+    u32 cache;
+
+    fn_801CE2B8();
+    index = find_stream(id);
+    if (index != (u32)-1) {
+        offset = index * sizeof(StreamSlot);
+        parameter_base = (u8*)slots + 0x50;
+        state_base = (u8*)slots + 8;
+        *(u32*)(parameter_base + offset) = parameter;
+        if (state_base[offset] == 2) {
+            fn_801CCB98(*(u32*)((u8*)slots + offset + 0x48),
+                        (int)((float)lbl_80619C20[0] * lbl_80650F18 /
+                              (float)parameter));
+        }
+        cache_base = (u8*)slots + 0x60;
+        cache = *(u32*)(cache_base + offset);
+        if (cache != (u32)-1) {
+            fn_801CE2B8();
+            index = fn_801B9D1C(cache);
+            if (index != (u32)-1) {
+                offset = index * sizeof(StreamSlot);
+                *(u32*)(parameter_base + offset) = parameter;
+                if (state_base[offset] == 2) {
+                    fn_801CCB98(*(u32*)((u8*)slots + offset + 0x48),
+                                (int)((float)lbl_80619C20[0] * lbl_80650F18 /
+                                      (float)parameter));
+                }
+                cache = *(u32*)(cache_base + offset);
+                if (cache != (u32)-1) {
+                    fn_801BACE8(cache, parameter);
+                }
+            }
+            fn_801CE280();
+        }
+    }
+    fn_801CE280();
+}
+
+exit_status: 0
+argv: ["git", "apply", "--check", "--directory=eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6-wlrkxn2f", "eternal-darkness-decomp/reports/GEDE01/member-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch"]
+exit_status: 0
+argv: ["git", "apply", "--directory=eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6-wlrkxn2f", "eternal-darkness-decomp/reports/GEDE01/member-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch"]
+exit_status: 0
+member patched_source_sha256: 3bf7343691759b612d2565a5e04aa4db410abe25891b5c6b93d9096d6d4eb9dd
+argv: ["git", "apply", "--check", "--directory=eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6-p6p80kxw", "eternal-darkness-decomp/reports/GEDE01/indexed-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch"]
+exit_status: 0
+argv: ["git", "apply", "--directory=eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6-p6p80kxw", "eternal-darkness-decomp/reports/GEDE01/indexed-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch"]
+exit_status: 0
+indexed patched_source_sha256: 979cf4076d31ce739b07660228f56a6992b945462250888a636b74a6e20033ac
+argv: ["git", "apply", "--check", "--directory=eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6-biwtitq0", "eternal-darkness-decomp/reports/GEDE01/stride-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch"]
+exit_status: 0
+argv: ["git", "apply", "--directory=eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6-biwtitq0", "eternal-darkness-decomp/reports/GEDE01/stride-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch"]
+exit_status: 0
+stride patched_source_sha256: 1ad484e6926a54897b213f91e178d7ede12343f6c746f110b4cbc1055994f491
+argv: ["git", "apply", "--check", "--directory=eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6-antni0fc", "eternal-darkness-decomp/reports/GEDE01/array-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch"]
+exit_status: 0
+argv: ["git", "apply", "--directory=eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6-antni0fc", "eternal-darkness-decomp/reports/GEDE01/array-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch"]
+exit_status: 0
+array patched_source_sha256: 759f430df73e86f29dd4e3dea55152ba98e7f81d72480c52b841a6191757e45f
+argv: ["git", "apply", "--check", "--directory=eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6-yn6rf8z7", "eternal-darkness-decomp/reports/GEDE01/helper-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch"]
+exit_status: 0
+argv: ["git", "apply", "--directory=eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6-yn6rf8z7", "eternal-darkness-decomp/reports/GEDE01/helper-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch"]
+exit_status: 0
+helper patched_source_sha256: 963f9c2d6415f160ed398aa6a44e48dcf117ce265c1fa3a08b40acf6185bc03c
+argv: ["git", "apply", "--check", "--directory=eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6-q22n_ci8", "eternal-darkness-decomp/reports/GEDE01/final-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch"]
+exit_status: 0
+argv: ["git", "apply", "--directory=eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6-q22n_ci8", "eternal-darkness-decomp/reports/GEDE01/final-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch"]
+exit_status: 0
+final patched_source_sha256: 4b2285a96165d6b735ab8b520c75fd93192ccc3ea0141197000be47084fbbd84
+final patched source equals retained source: true

@@ -1,0 +1,317 @@
+{
+  "version": 1,
+  "assignment_id": "148b17fd-5a74-4da9-bee9-f4367f5a76d6",
+  "target": "fn_801BACE8",
+  "accepted_base": "01b43a2b8c74db42f2a9462b704c6a5d4da8fe2c",
+  "preserved_attempts_reviewed": [
+    "24d0b57c2be02fd88c2e5cf45b1ab3a183311bed",
+    "201e2322cfddc6c9f3a6f56a4abde3fb8703e169",
+    "a30ebf6702d5af69c2af4060a1f4125e4c2bf720",
+    "45cc90c7aef35e32adf76388da9ebff80f2c6248"
+  ],
+  "reconciliation": "The accepted base already contains the source retained by the preserved attempts. Prior evidence was studied with git show; its invalid embedded patch and condensed build summaries are not relied on for new measurements. New patches are proper git unified diffs against the accepted base, validated and applied in temporary directories inside this worktree.",
+  "new_finding": "Retail offsets 0x188/0x194/0x1A4/0x1AC convert parameter to f1; 0x18C/0x1A0/0x1A8/0x1B4/0x1C0 convert the global value to f0. fmuls at 0x1BC computes scale*parameter, followed by fdivs f0,f1,f0 at 0x1C4. The second block repeats this. Baseline C reversed parameter and global in the quotient. The corrected source matches these operand roles.",
+  "source": "eternal-darkness-decomp/src/game/game_fn_801BACE8.c",
+  "compiler": {
+    "version": "GC/1.2.5n",
+    "registration": "NonMatching; extra_cflags=[\"-Cpp_exceptions on\"]",
+    "policy_changed": false,
+    "raw_command_evidence": "eternal-darkness-decomp/reports/GEDE01/object-audit-148b17fd-5a74-4da9-bee9-f4367f5a76d6.log"
+  },
+  "experiments": [
+    {
+      "label": "baseline",
+      "hypothesis": "Accepted-base source, reproduced without changes.",
+      "canonical": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 89.3353,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 684,
+          "instructions": 171,
+          "match_percent": 89.3353,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "relocation_strict": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 89.3353,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 684,
+          "instructions": 171,
+          "match_percent": 89.3353,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "patch": null,
+      "raw_commands": "eternal-darkness-decomp/reports/GEDE01/commands-148b17fd-5a74-4da9-bee9-f4367f5a76d6-baseline.log",
+      "canonical_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-baseline-canonical.json",
+      "strict_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-baseline-strict.json",
+      "full_configure_ninja": true
+    },
+    {
+      "label": "member",
+      "hypothesis": "Correct reversed floating-point numerator/divisor; declare the global as a struct with a scalar first member; express voice/cache reads as members. Float instruction order and global load addressing improve.",
+      "canonical": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 676,
+          "instructions": 169,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "relocation_strict": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 676,
+          "instructions": 169,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "patch": "eternal-darkness-decomp/reports/GEDE01/member-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch",
+      "raw_commands": "eternal-darkness-decomp/reports/GEDE01/commands-148b17fd-5a74-4da9-bee9-f4367f5a76d6-member.log",
+      "canonical_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-member-canonical.json",
+      "strict_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-member-strict.json",
+      "full_configure_ninja": true
+    },
+    {
+      "label": "indexed",
+      "hypothesis": "Use natural slots[index].field accesses and correct the struct parameter offset to 0x50. Loses the retained field-base CSE and changes save/restore layout; rejected.",
+      "canonical": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 89.70588,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 688,
+          "instructions": 172,
+          "match_percent": 89.70588,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "relocation_strict": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 89.70588,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 688,
+          "instructions": 172,
+          "match_percent": 89.70588,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "patch": "eternal-darkness-decomp/reports/GEDE01/indexed-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch",
+      "raw_commands": "eternal-darkness-decomp/reports/GEDE01/commands-148b17fd-5a74-4da9-bee9-f4367f5a76d6-indexed.log",
+      "canonical_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-indexed-canonical.json",
+      "strict_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-indexed-strict.json",
+      "full_configure_ninja": false
+    },
+    {
+      "label": "stride",
+      "hypothesis": "Keep byte-offset parameter/state bases while indexing voice and a strided cache structure. Multiplies the index again across the call and regresses; rejected.",
+      "canonical": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 93.75883,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 688,
+          "instructions": 172,
+          "match_percent": 93.75883,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "relocation_strict": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 93.75883,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 688,
+          "instructions": 172,
+          "match_percent": 93.75883,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "patch": "eternal-darkness-decomp/reports/GEDE01/stride-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch",
+      "raw_commands": "eternal-darkness-decomp/reports/GEDE01/commands-148b17fd-5a74-4da9-bee9-f4367f5a76d6-stride.log",
+      "canonical_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-stride-canonical.json",
+      "strict_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-stride-strict.json",
+      "full_configure_ninja": false
+    },
+    {
+      "label": "array",
+      "hypothesis": "Make voice/cache member fields one-element arrays to test address folding. Same generated size and similarity as member; not retained.",
+      "canonical": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 676,
+          "instructions": 169,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "relocation_strict": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 676,
+          "instructions": 169,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "patch": "eternal-darkness-decomp/reports/GEDE01/array-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch",
+      "raw_commands": "eternal-darkness-decomp/reports/GEDE01/commands-148b17fd-5a74-4da9-bee9-f4367f5a76d6-array.log",
+      "canonical_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-array-canonical.json",
+      "strict_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-array-strict.json",
+      "full_configure_ninja": false
+    },
+    {
+      "label": "helper",
+      "hypothesis": "Move voice calculation into a TU-local inline helper to test lowering order. Same generated size and similarity as member; not retained.",
+      "canonical": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 676,
+          "instructions": 169,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "relocation_strict": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 676,
+          "instructions": 169,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "patch": "eternal-darkness-decomp/reports/GEDE01/helper-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch",
+      "raw_commands": "eternal-darkness-decomp/reports/GEDE01/commands-148b17fd-5a74-4da9-bee9-f4367f5a76d6-helper.log",
+      "canonical_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-helper-canonical.json",
+      "strict_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-helper-strict.json",
+      "full_configure_ninja": false
+    },
+    {
+      "label": "final",
+      "hypothesis": "Retain member experiment semantics, fix StreamSlot.parameter offset to 0x50, and remove the unhelpful cache wrapper type. No codegen regression.",
+      "canonical": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 676,
+          "instructions": 169,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "relocation_strict": {
+        "left": {
+          "text_bytes": 680,
+          "instructions": 170,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        },
+        "right": {
+          "text_bytes": 676,
+          "instructions": 169,
+          "match_percent": 95.28824,
+          "nonzero_type_instruction_relocations": 18
+        }
+      },
+      "patch": "eternal-darkness-decomp/reports/GEDE01/final-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch",
+      "raw_commands": "eternal-darkness-decomp/reports/GEDE01/commands-148b17fd-5a74-4da9-bee9-f4367f5a76d6-final.log",
+      "canonical_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-final-canonical.json",
+      "strict_raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-final-strict.json",
+      "full_configure_ninja": true
+    }
+  ],
+  "patch_replay": {
+    "script": "eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6.py",
+    "raw_log": "eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6.log",
+    "all_six_git_apply_checks_and_replays_pass": true,
+    "final_replay_matches_retained_source": true
+  },
+  "final_build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_statuses": [
+      0,
+      0
+    ],
+    "raw_log": "eternal-darkness-decomp/reports/GEDE01/commands-148b17fd-5a74-4da9-bee9-f4367f5a76d6-final.log",
+    "built_and_retail_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "qualification": "Registration remains NonMatching. The canonical DOL links the original object for this unit; its passing hash does not assert that the C candidate matches."
+  },
+  "legal_audit": {
+    "command": "python3 tools/legal_audit.py",
+    "exit_status": 0,
+    "raw_log": "eternal-darkness-decomp/reports/GEDE01/commands-148b17fd-5a74-4da9-bee9-f4367f5a76d6-final.log",
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "neighbor_edits": false,
+    "compiler_or_gate_changes": false,
+    "progress_or_readme_edits": false,
+    "generated_binaries_or_private_inputs_committed": false,
+    "preexisting_CLAUDE_md_change": "untouched and excluded from commit"
+  },
+  "divergence": "Canonical and relocation-strict similarity improved from 89.3353% to 95.28824%. Retail .text is 680 bytes/170 instructions; retained C emits 676 bytes/169 instructions. Parameter/field-base register allocation and prologue move ordering differ (retail parameter r27, generated r30). Voice loads use addi offset+0x48 plus lwzx instead of add base+offset plus lwz 0x48. Cache loads use lwzx instead of add+lwz, with an extra cache-preserving move in the first path. Two R_PPC_EMB_SDA21 conversion-bias targets remain compiler-local @38 instead of retail lbl_80650F10. Both objects contain 18 actual .text relocation records with zero addends; historical 58/56 counts included objdiff R_PPC_NONE analysis annotations. Extab matches, but extabindex records 0x2A4 instead of retail 0x2A8. The candidate also emits an eight-byte compiler-local .sdata2 conversion constant.",
+  "source_sha256": "4b2285a96165d6b735ab8b520c75fd93192ccc3ea0141197000be47084fbbd84",
+  "staged_audit_log": "eternal-darkness-decomp/reports/GEDE01/final-audit-148b17fd-5a74-4da9-bee9-f4367f5a76d6.log"
+}

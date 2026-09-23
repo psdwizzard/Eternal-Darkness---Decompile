@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "assignment_id": "148b17fd-5a74-4da9-bee9-f4367f5a76d6",
+  "attempt": 5,
+  "base_commit": "01b43a2b8c74db42f2a9462b704c6a5d4da8fe2c",
+  "target": "fn_801BACE8",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-148b17fd-5a74-4da9-bee9-f4367f5a76d6-final-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-148b17fd-5a74-4da9-bee9-f4367f5a76d6.json",
+    "eternal-darkness-decomp/reports/GEDE01/commands-148b17fd-5a74-4da9-bee9-f4367f5a76d6-final.log",
+    "eternal-darkness-decomp/reports/GEDE01/object-audit-148b17fd-5a74-4da9-bee9-f4367f5a76d6.log",
+    "eternal-darkness-decomp/reports/GEDE01/final-148b17fd-5a74-4da9-bee9-f4367f5a76d6.patch",
+    "eternal-darkness-decomp/reports/GEDE01/replay-148b17fd-5a74-4da9-bee9-f4367f5a76d6.log"
+  ],
+  "divergence": "Canonical and relocation-strict similarity improved from 89.3353% to 95.28824%. Retail .text is 680 bytes/170 instructions; retained C emits 676 bytes/169 instructions. Parameter/field-base register allocation and prologue move ordering differ (retail parameter r27, generated r30). Voice loads use addi offset+0x48 plus lwzx instead of add base+offset plus lwz 0x48. Cache loads use lwzx instead of add+lwz, with an extra cache-preserving move in the first path. Two R_PPC_EMB_SDA21 conversion-bias targets remain compiler-local @38 instead of retail lbl_80650F10. Both objects contain 18 actual .text relocation records with zero addends; historical 58/56 counts included objdiff R_PPC_NONE analysis annotations. Extab matches, but extabindex records 0x2A4 instead of retail 0x2A8. The candidate also emits an eight-byte compiler-local .sdata2 conversion constant."
+}

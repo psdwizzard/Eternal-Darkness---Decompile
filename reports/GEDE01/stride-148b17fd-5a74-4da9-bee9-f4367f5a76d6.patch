@@ -1,0 +1,64 @@
+diff --git a/eternal-darkness-decomp/src/game/game_fn_801BACE8.c b/eternal-darkness-decomp/src/game/game_fn_801BACE8.c
+index d9faf2d15..5a69b7c22 100644
+--- a/eternal-darkness-decomp/src/game/game_fn_801BACE8.c
++++ b/eternal-darkness-decomp/src/game/game_fn_801BACE8.c
+@@ -13,7 +13,15 @@ typedef struct StreamSlot {
+ } StreamSlot;
+ 
+ extern StreamSlot lbl_8061AE48[];
+-extern u32 lbl_80619C20[];
++extern struct {
++    u32 rate;
++    u8 rest[0x210];
++} lbl_80619C20;
++
++typedef struct StreamCache {
++    u32 id;
++    u8 stride[0x60];
++} StreamCache;
+ extern float lbl_80650F18;
+ extern void fn_801CE2B8(void);
+ extern void fn_801CE280(void);
+@@ -38,7 +46,7 @@ void fn_801BACE8(u32 id, u32 parameter)
+     u32 offset;
+     u8* parameter_base;
+     u8* state_base;
+-    u8* cache_base;
++    StreamCache* cache_base;
+     int index;
+     u32 cache;
+ 
+@@ -50,12 +58,12 @@ void fn_801BACE8(u32 id, u32 parameter)
+         state_base = (u8*)slots + 8;
+         *(u32*)(parameter_base + offset) = parameter;
+         if (state_base[offset] == 2) {
+-            fn_801CCB98(*(u32*)((u8*)slots + offset + 0x48),
+-                        (int)((float)lbl_80619C20[0] * lbl_80650F18 /
+-                              (float)parameter));
++            fn_801CCB98(slots[index].voice,
++                        (int)(lbl_80650F18 * (float)parameter /
++                              (float)lbl_80619C20.rate));
+         }
+-        cache_base = (u8*)slots + 0x60;
+-        cache = *(u32*)(cache_base + offset);
++        cache_base = (StreamCache*)((u8*)slots + 0x60);
++        cache = cache_base[index].id;
+         if (cache != (u32)-1) {
+             fn_801CE2B8();
+             index = fn_801B9D1C(cache);
+@@ -63,11 +71,11 @@ void fn_801BACE8(u32 id, u32 parameter)
+                 offset = index * sizeof(StreamSlot);
+                 *(u32*)(parameter_base + offset) = parameter;
+                 if (state_base[offset] == 2) {
+-                    fn_801CCB98(*(u32*)((u8*)slots + offset + 0x48),
+-                                (int)((float)lbl_80619C20[0] * lbl_80650F18 /
+-                                      (float)parameter));
++                    fn_801CCB98(slots[index].voice,
++                                (int)(lbl_80650F18 * (float)parameter /
++                                      (float)lbl_80619C20.rate));
+                 }
+-                cache = *(u32*)(cache_base + offset);
++                cache = cache_base[index].id;
+                 if (cache != (u32)-1) {
+                     fn_801BACE8(cache, parameter);
+                 }
