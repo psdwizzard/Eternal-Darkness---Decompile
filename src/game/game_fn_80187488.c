@@ -14,51 +14,50 @@ typedef struct Entry {
 extern int fn_800FBFB0(void);
 
 void fn_80187488(Entry* entry, u16* flags, s16* bounds, int axis, int start,
-                 int end, volatile s16* first, volatile s16* second, int add,
+                 int end, s16* first, s16* second, int add,
                  int delta)
 {
-    s16* bound;
-    int a = second[axis];
-    int b = first[axis];
+    int a;
+    int b;
     int peak;
     int step;
     int current;
     int index;
     u32 mask;
 
-    if (a > b) {
-        peak = add + a;
+    if (second[axis] > first[axis]) {
+        peak = add + second[axis];
     } else {
-        peak = add + b;
+        peak = add + first[axis];
     }
+    a = second[axis];
+    b = first[axis];
     step = (2 * peak - b - a) / (end - start);
     current = b;
     index = start;
     mask = 1 << (start + 3);
-    bound = &bounds[start];
     while (index < end) {
         int hit = 0;
         if ((*flags & mask) != 0) {
             entry->coordinate[axis] += delta;
-            if (entry->coordinate[axis] >= *bound) hit = 1;
+            if (entry->coordinate[axis] >= bounds[index]) hit = 1;
         } else {
             entry->coordinate[axis] -= delta;
-            if (entry->coordinate[axis] <= *bound) hit = 1;
+            if (entry->coordinate[axis] <= bounds[index]) hit = 1;
         }
         if (hit) {
             int value;
-            entry->coordinate[axis] = *bound;
+            entry->coordinate[axis] = bounds[index];
             value = fn_800FBFB0() % step;
             if (step < 0) value = -value;
-            *bound = (s16)(current + value);
-            if (entry->coordinate[axis] < *bound) *flags |= mask;
+            bounds[index] = (s16)(current + value);
+            if (entry->coordinate[axis] < bounds[index]) *flags |= mask;
             else *flags &= ~mask;
         }
         current += step;
         if (current > peak) step = -step;
         mask <<= 1;
         entry++;
-        bound++;
         index++;
     }
 }

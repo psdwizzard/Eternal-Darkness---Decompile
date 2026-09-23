@@ -1,0 +1,129 @@
+{
+  "assignment_id": "ecf051a6-7d8b-4e91-9813-1b7fc05d51a8",
+  "commands": [
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80187488",
+        "fn_80187488",
+        "-o",
+        "reports/GEDE01/objdiff-canonical-ecf051a6-7d8b-4e91-9813-1b7fc05d51a8.json",
+        "--format",
+        "json"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-canonical-ecf051a6-7d8b-4e91-9813-1b7fc05d51a8.json\n"
+    },
+    {
+      "argv": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_80187488",
+        "fn_80187488",
+        "-c",
+        "function_reloc_diffs=name_address",
+        "-o",
+        "reports/GEDE01/objdiff-ecf051a6-7d8b-4e91-9813-1b7fc05d51a8.json",
+        "--format",
+        "json"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-ecf051a6-7d8b-4e91-9813-1b7fc05d51a8.json\n"
+    },
+    {
+      "argv": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-r",
+        "build/GEDE01/obj/game/game_fn_80187488.o",
+        "build/GEDE01/src/game/game_fn_80187488.o"
+      ],
+      "returncode": 0,
+      "stdout": "\nFile: build/GEDE01/obj/game/game_fn_80187488.o\n\nRelocation section '.rela.text' at offset 0x1b4 contains 1 entry:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n000000e8  0000040a R_PPC_REL24       00000000   fn_800FBFB0 + 0\n\nFile: build/GEDE01/src/game/game_fn_80187488.o\n\nRelocation section '.rela.text' at offset 0x1a8 contains 1 entry:\n Offset     Info    Type            Sym.Value  Sym. Name + Addend\n000000e8  0000030a R_PPC_REL24       00000000   fn_800FBFB0 + 0\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "returncode": 0,
+      "stdout": "legal audit passed (20458 tracked project files inspected)\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        ".tools/bin/ninja",
+        "-t",
+        "commands",
+        "build/GEDE01/src/game/game_fn_80187488.o"
+      ],
+      "returncode": 0,
+      "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80187488.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80187488.d build/GEDE01/src/game/game_fn_80187488.d\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "sha1sum",
+        "build/GEDE01/main.dol"
+      ],
+      "returncode": 0,
+      "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "tools/legal_audit.py"
+      ],
+      "phase": "after staging all assignment files",
+      "returncode": 0,
+      "stdout": "legal audit passed (20464 tracked project files inspected)\n",
+      "stderr": ""
+    }
+  ],
+  "text_byte_comparison": {
+    "objects": [
+      "build/GEDE01/obj/game/game_fn_80187488.o",
+      "build/GEDE01/src/game/game_fn_80187488.o"
+    ],
+    "size_bytes": 372,
+    "byte_equal": true,
+    "sha1": [
+      "73f685b9d4ad1c8074fe26c2dd96335a94a04f93",
+      "73f685b9d4ad1c8074fe26c2dd96335a94a04f93"
+    ],
+    "relocation": {
+      "offset": 232,
+      "type": "R_PPC_REL24",
+      "target": "fn_800FBFB0",
+      "addend": 0,
+      "equal": true
+    }
+  },
+  "build_status": "Passed full canonical build with target registered Matching; DOL SHA-1 equals required retail hash.",
+  "build_completion_evidence": "eternal-darkness-decomp/reports/GEDE01/build-ecf051a6-7d8b-4e91-9813-1b7fc05d51a8.txt",
+  "scope_audit": {
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "compiler_policy_changed": false,
+    "runtime_or_neighbor_source_edits": false,
+    "global_progress_edits": false,
+    "existing_split": "0x80187488..0x801875FC (unchanged)"
+  },
+  "commands_working_directory": "eternal-darkness-decomp",
+  "reviewed_preserved_attempts": [
+    "134f5d1afab5ab1227a15bfa17744b9d73d3fa02",
+    "95841c985c2e15217730a8a1e2d02029a116d3d9",
+    "5204b5e74e1d30340acc7df17151a5584557228d",
+    "b05df0cccf5b7e1d91d67c1896702d7776e6c73f"
+  ]
+}
