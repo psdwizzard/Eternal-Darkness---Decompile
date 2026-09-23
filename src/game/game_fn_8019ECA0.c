@@ -28,16 +28,13 @@ void fn_8019ECA0(u8* obj)
     Buffers buffers;
     float first[3][4];
     float second[3][4];
-    u8* entry;
-    u8* color;
-    u8* fields;
-    int count;
-    int offset;
-    int matrix_offset;
-    int i;
-    int j;
     int saved;
+    int j;
+    u8* fields;
+    u8 count;
+    u8* color;
     DrawFn draw;
+    u8* entry;
 
     fields = obj + 0x8C;
     fn_8018D788(lbl_8064D738, obj, &buffers, *(u16*)((u8*)&setup + 2));
@@ -47,27 +44,29 @@ void fn_8019ECA0(u8* obj)
     draw = fn_8019EF50;
     if (*(int*)fields == 0)
         draw = fn_8019EFAC;
-    for (i = matrix_offset = offset = 0; i < count; i++) {
-        int radius = entry[0x21];
-        fn_8018D020(buffers.vertices + offset,
-                    (float)(*(s16*)(entry + 0x0A) - radius),
-                    (float)(*(s16*)(entry + 0x0C) + radius),
-                    (float)(*(s16*)(entry + 0x0A) + radius),
-                    (float)(*(s16*)(entry + 0x0C) - radius),
-                    (float)*(s16*)(obj + 0x14));
-        for (j = 0; j < entry[0x20]; j++, color += 4)
-            color[3] = entry[0x2B];
-        fn_80211484(&first, lbl_80650C74, lbl_80650C74, lbl_80650C68);
-        fn_80211268((float (*)[3][4])(lbl_80607140 + lbl_8064D738 * 0x180 + matrix_offset),
-                    *(float*)(fields + 0x30 + i * 4), 90);
-        fn_80210FDC((float (*)[3][4])(lbl_80607140 + lbl_8064D738 * 0x180 + matrix_offset),
-                    &first, &second);
-        fn_80211484(&first, lbl_80650C78, lbl_80650C78, lbl_80650C68);
-        fn_80210FDC(&first, &second,
-                    (float (*)[3][4])(lbl_80607140 + lbl_8064D738 * 0x180 + matrix_offset));
-        entry += 0x38;
-        offset += 0x18;
-        matrix_offset += 0x30;
+    {
+        int i;
+
+        for (i = 0; i < count; i++) {
+            int radius = entry[0x21];
+            fn_8018D020(buffers.vertices + i * 0x18,
+                        (float)(*(s16*)(entry + 0x0A) - radius),
+                        (float)(*(s16*)(entry + 0x0C) + radius),
+                        (float)(*(s16*)(entry + 0x0A) + radius),
+                        (float)(*(s16*)(entry + 0x0C) - radius),
+                        (float)*(s16*)(obj + 0x14));
+            for (j = 0; j < entry[0x20]; j++, color += 4)
+                color[3] = entry[0x2B];
+            fn_80211484(&first, lbl_80650C74, lbl_80650C74, lbl_80650C68);
+            fn_80211268((float (*)[3][4])(lbl_80607140 + lbl_8064D738 * 0x180 + i * 0x30),
+                        *(float*)(fields + 0x30 + i * 4), 90);
+            fn_80210FDC((float (*)[3][4])(lbl_80607140 + lbl_8064D738 * 0x180 + i * 0x30),
+                        &first, &second);
+            fn_80211484(&first, lbl_80650C78, lbl_80650C78, lbl_80650C68);
+            fn_80210FDC(&first, &second,
+                        (float (*)[3][4])(lbl_80607140 + lbl_8064D738 * 0x180 + i * 0x30));
+            entry += 0x38;
+        }
     }
     saved = fn_801ED57C(0);
     DCFlushRange(lbl_80607140 + lbl_8064D738 * 0x180, 0x180);

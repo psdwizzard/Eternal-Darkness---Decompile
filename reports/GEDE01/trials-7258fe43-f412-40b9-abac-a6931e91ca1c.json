@@ -1,0 +1,816 @@
+{
+  "assignment_id": "7258fe43-f412-40b9-abac-a6931e91ca1c",
+  "target": "fn_8019ECA0",
+  "compiler": "GC/1.3",
+  "method": "Each trial changed only the assigned C source, built its object with .tools/bin/ninja -j2 build/GEDE01/src/game/game_fn_8019ECA0.o, then ran build/tools/objdiff-cli diff -p . -u main/game/game_fn_8019ECA0 fn_8019ECA0 -o -. Values below were extracted directly from those raw canonical results. Final raw canonical and strict outputs are preserved separately. Temporary variant source was discarded.",
+  "trials": [
+    {
+      "variant": "explicit_fields",
+      "canonical_match_percent": 95.14535,
+      "target_bytes": 688,
+      "base_bytes": 680,
+      "target_instructions": 172,
+      "base_instructions": 170
+    },
+    {
+      "variant": "explicit_cursor",
+      "canonical_match_percent": 95.02907,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "offset_first",
+      "canonical_match_percent": 95.01744,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "register_offset",
+      "canonical_match_percent": 96.41279,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "register_count",
+      "canonical_match_percent": 96.41279,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "register_obj",
+      "canonical_match_percent": 96.41279,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "register_entry",
+      "canonical_match_percent": 96.41279,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "register_draw",
+      "canonical_match_percent": 96.41279,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "register_i",
+      "canonical_match_percent": 96.41279,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "register_all",
+      "canonical_match_percent": 96.41279,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "count_u8",
+      "canonical_match_percent": 95.71512,
+      "target_bytes": 688,
+      "base_bytes": 692,
+      "target_instructions": 172,
+      "base_instructions": 173
+    },
+    {
+      "variant": "count_u16",
+      "canonical_match_percent": 95.71512,
+      "target_bytes": 688,
+      "base_bytes": 692,
+      "target_instructions": 172,
+      "base_instructions": 173
+    },
+    {
+      "variant": "count_s16",
+      "canonical_match_percent": 96.674416,
+      "target_bytes": 688,
+      "base_bytes": 692,
+      "target_instructions": 172,
+      "base_instructions": 173
+    },
+    {
+      "variant": "count_u32",
+      "canonical_match_percent": 96.12209,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "reuse_offset",
+      "canonical_match_percent": 96.41279,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "reuse_matrix",
+      "canonical_match_percent": 96.41279,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "reuse_i",
+      "canonical_match_percent": 96.41279,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "u8_cursor_offset = 0; matrix_offset = offset; i = 0",
+      "canonical_match_percent": 96.22093,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "u8_cursor_i = 0; matrix_offset = offset = 0",
+      "canonical_match_percent": 96.22093,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "u8_cursor_offset = 0; matrix_offset = offset; i = offset",
+      "canonical_match_percent": 96.22093,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "u8_indexed_offset = 0; matrix_offset = offset; i = 0",
+      "canonical_match_percent": 96.29651,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "u8_indexed_i = 0; matrix_offset = offset = 0",
+      "canonical_match_percent": 96.29651,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "u8_indexed_offset = 0; matrix_offset = offset; i = offset",
+      "canonical_match_percent": 96.29651,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "int_cursor_offset = 0; matrix_offset = offset; i = 0",
+      "canonical_match_percent": 95.02907,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "int_cursor_i = 0; matrix_offset = offset = 0",
+      "canonical_match_percent": 95.02907,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "int_cursor_offset = 0; matrix_offset = offset; i = offset",
+      "canonical_match_percent": 95.02907,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "int_indexed_offset = 0; matrix_offset = offset; i = 0",
+      "canonical_match_percent": 95.01744,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "int_indexed_i = 0; matrix_offset = offset = 0",
+      "canonical_match_percent": 95.01744,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "int_indexed_offset = 0; matrix_offset = offset; i = offset",
+      "canonical_match_percent": 95.01744,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "reverse_declarations",
+      "canonical_match_percent": 96.47093,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "retail_declarations",
+      "canonical_match_percent": 96.52907,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "reverse_retail_declarations",
+      "canonical_match_percent": 97.110466,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "local_obj_first",
+      "canonical_match_percent": 96.41279,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "local_obj_last",
+      "canonical_match_percent": 96.41279,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "original(False, True)int",
+      "canonical_match_percent": 96.16279,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "original(False, True)u8",
+      "canonical_match_percent": 96.94768,
+      "target_bytes": 688,
+      "base_bytes": 692,
+      "target_instructions": 172,
+      "base_instructions": 173
+    },
+    {
+      "variant": "reverse_retail(False, True)int",
+      "canonical_match_percent": 96.773254,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "reverse_retail(False, True)u8",
+      "canonical_match_percent": 97.38372,
+      "target_bytes": 688,
+      "base_bytes": 692,
+      "target_instructions": 172,
+      "base_instructions": 173
+    },
+    {
+      "variant": "original_derived_vertex_False_int",
+      "canonical_match_percent": 96.02907,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "original_derived_vertex_False_u8",
+      "canonical_match_percent": 96.81396,
+      "target_bytes": 688,
+      "base_bytes": 692,
+      "target_instructions": 172,
+      "base_instructions": 173
+    },
+    {
+      "variant": "original_derived_vertex_True_int",
+      "canonical_match_percent": 98.023254,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "original_derived_vertex_True_u8",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "reverse_retail_derived_vertex_False_int",
+      "canonical_match_percent": 96.02907,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "reverse_retail_derived_vertex_False_u8",
+      "canonical_match_percent": 96.69768,
+      "target_bytes": 688,
+      "base_bytes": 692,
+      "target_instructions": 172,
+      "base_instructions": 173
+    },
+    {
+      "variant": "reverse_retail_derived_vertex_True_int",
+      "canonical_match_percent": 97.906975,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "reverse_retail_derived_vertex_True_u8",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "base_saved_first",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "base_saved_last",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "base_saved_scope",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "reordered_saved_first",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "reordered_saved_last",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "reordered_saved_scope",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "arg_void*",
+      "canonical_match_percent": 97.523254,
+      "target_bytes": 688,
+      "base_bytes": 692,
+      "target_instructions": 172,
+      "base_instructions": 173
+    },
+    {
+      "variant": "arg_const void*",
+      "canonical_match_percent": 97.523254,
+      "target_bytes": 688,
+      "base_bytes": 692,
+      "target_instructions": 172,
+      "base_instructions": 173
+    },
+    {
+      "variant": "arg_u32",
+      "canonical_match_percent": 97.523254,
+      "target_bytes": 688,
+      "base_bytes": 692,
+      "target_instructions": 172,
+      "base_instructions": 173
+    },
+    {
+      "variant": "arg_char*",
+      "canonical_match_percent": 97.523254,
+      "target_bytes": 688,
+      "base_bytes": 692,
+      "target_instructions": 172,
+      "base_instructions": 173
+    },
+    {
+      "variant": "fields_float*",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "fields_u32*",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "loop_u32",
+      "canonical_match_percent": 98.19768,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "loop_u16",
+      "canonical_match_percent": 91.46512,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "loop_u8",
+      "canonical_match_percent": 90.73256,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "typed_vertex_float",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "typed_vertex_double",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "typed_vertex_u32",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "typed_vertex_u8",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "typed_matrix",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "typed_angle",
+      "canonical_match_percent": 96.34884,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "scoped_loop",
+      "canonical_match_percent": 98.924416,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "reuse_j_loop",
+      "canonical_match_percent": 98.924416,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "alias_('first', True, True)",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "alias_('first', True, False)",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "alias_('first', False, True)",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "alias_('first', False, False)",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "alias_('last', True, True)",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "alias_('last', True, False)",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "alias_('last', False, True)",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "alias_('last', False, False)",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "saved_u32",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "saved_unsigned long",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "saved_s16",
+      "canonical_match_percent": 97.325584,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "saved_u16",
+      "canonical_match_percent": 97.325584,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "shared_offset_('int', 'before')",
+      "canonical_match_percent": 96.93023,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "shared_offset_('int', 'after')",
+      "canonical_match_percent": 96.43604,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "shared_offset_('int', 'scope')",
+      "canonical_match_percent": 96.93023,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "shared_offset_('unsigned int', 'before')",
+      "canonical_match_percent": 96.93023,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "shared_offset_('unsigned int', 'after')",
+      "canonical_match_percent": 96.43604,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "shared_offset_('unsigned int', 'scope')",
+      "canonical_match_percent": 96.93023,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "shared_offset_('unsigned long', 'before')",
+      "canonical_match_percent": 96.93023,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "shared_offset_('unsigned long', 'after')",
+      "canonical_match_percent": 96.43604,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "shared_offset_('unsigned long', 'scope')",
+      "canonical_match_percent": 96.93023,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "limit_first_int",
+      "canonical_match_percent": 98.51744,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "limit_first_unsigned long",
+      "canonical_match_percent": 97.61628,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "limit_last_int",
+      "canonical_match_percent": 98.51744,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "limit_last_unsigned long",
+      "canonical_match_percent": 97.61628,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "limit_inner_int",
+      "canonical_match_percent": 98.51744,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "limit_inner_unsigned long",
+      "canonical_match_percent": 97.61628,
+      "target_bytes": 688,
+      "base_bytes": 684,
+      "target_instructions": 172,
+      "base_instructions": 171
+    },
+    {
+      "variant": "index_unsigned long",
+      "canonical_match_percent": 98.19768,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "index_signed long",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "initializer_0L",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "initializer_(int)0",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    },
+    {
+      "variant": "initializer_(u8)0",
+      "canonical_match_percent": 98.48837,
+      "target_bytes": 688,
+      "base_bytes": 688,
+      "target_instructions": 172,
+      "base_instructions": 172
+    }
+  ]
+}

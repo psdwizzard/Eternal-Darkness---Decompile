@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "7258fe43-f412-40b9-abac-a6931e91ca1c",
+  "attempt": 6,
+  "base_commit": "c9ac86b42085694d05285d73dad95be250e13eb6",
+  "target": "fn_8019ECA0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7258fe43-f412-40b9-abac-a6931e91ca1c.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-7258fe43-f412-40b9-abac-a6931e91ca1c-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-7258fe43-f412-40b9-abac-a6931e91ca1c.json",
+    "eternal-darkness-decomp/reports/GEDE01/trials-7258fe43-f412-40b9-abac-a6931e91ca1c.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-7258fe43-f412-40b9-abac-a6931e91ca1c.log"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff both improve from 96.41279% to 98.924416%. Retail and generated code are both 688 bytes and 172 actual instructions, with identical instruction addresses and mnemonics. Deriving both byte offsets from the signed loop index, retaining a byte-sized count, and scoping/reordering locals restores retail initialization and increment scheduling plus entry/draw/color registers. Remaining differences are obj/loop/vertex-offset/matrix-offset/field-pointer/count/saved-state register allocation across r21-r29 and one R_PPC_EMB_SDA21 relocation at text+0x94: generated @29+0 versus retail lbl_80650C60+0. All other 36 real ELF relocation offsets/types/targets/addends match; objdiff annotates 52 instructions per side including synthetic R_PPC_NONE annotations. Canonical configure and ninja -j2 pass; the unchanged NonMatching link produces required DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f. No compiler policy, normalization, neighboring function, or global progress changes. Legal audit passed with 20606 tracked project files inspected."
+}

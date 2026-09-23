@@ -1,0 +1,269 @@
+{
+  "version": 1,
+  "assignment_id": "7258fe43-f412-40b9-abac-a6931e91ca1c",
+  "target": "fn_8019ECA0",
+  "status": "attempted",
+  "base_commit": "c9ac86b42085694d05285d73dad95be250e13eb6",
+  "canonical_match_percent": 98.924416,
+  "relocation_strict_match_percent": 98.924416,
+  "target_bytes": 688,
+  "generated_bytes": 688,
+  "target_actual_instructions": 172,
+  "generated_actual_instructions": 172,
+  "objdiff_relocation_annotations_per_side": 52,
+  "actual_elf_relocations_per_side": 37,
+  "all_instruction_addresses_and_mnemonics_equal": true,
+  "text_byte_identical": false,
+  "differing_text_bytes": 41,
+  "differing_text_word_offsets": [
+    "0x1c",
+    "0x2c",
+    "0x34",
+    "0x5c",
+    "0x68",
+    "0x70",
+    "0x8c",
+    "0x98",
+    "0x9c",
+    "0xa0",
+    "0xa8",
+    "0xc0",
+    "0xf0",
+    "0x184",
+    "0x190",
+    "0x1ac",
+    "0x1dc",
+    "0x1e8",
+    "0x1ec",
+    "0x1f0",
+    "0x1f4",
+    "0x1f8",
+    "0x214",
+    "0x24c",
+    "0x250",
+    "0x254",
+    "0x268",
+    "0x28c"
+  ],
+  "relocation_mismatches": [
+    {
+      "target": [
+        "00000094",
+        "R_PPC_EMB_SDA21",
+        "lbl_80650C60",
+        "0"
+      ],
+      "generated": [
+        "00000094",
+        "R_PPC_EMB_SDA21",
+        "@29",
+        "0"
+      ]
+    }
+  ],
+  "all_relocation_addends_zero": true,
+  "instruction_differences": [
+    {
+      "offset": "0x1c",
+      "retail": "mr r22, r3",
+      "generated": "mr r21, r3"
+    },
+    {
+      "offset": "0x2c",
+      "retail": "mr r4, r22",
+      "generated": "mr r4, r21"
+    },
+    {
+      "offset": "0x34",
+      "retail": "addi r26, r22, 0x8c",
+      "generated": "addi r22, r21, 0x8c"
+    },
+    {
+      "offset": "0x5c",
+      "retail": "lwz r0, 0x0(r26)",
+      "generated": "lwz r0, 0x0(r22)"
+    },
+    {
+      "offset": "0x68",
+      "retail": "lwz r23, 0x4c(r22)",
+      "generated": "lwz r23, 0x4c(r21)"
+    },
+    {
+      "offset": "0x70",
+      "retail": "lbz r4, 0x1(r22)",
+      "generated": "lbz r4, 0x1(r21)"
+    },
+    {
+      "offset": "0x8c",
+      "retail": "li r21, 0x0",
+      "generated": "li r29, 0x0"
+    },
+    {
+      "offset": "0x94",
+      "retail": "lfd f31, lbl_80650C60@sda21",
+      "generated": "lfd f31, @29@sda21"
+    },
+    {
+      "offset": "0x98",
+      "retail": "mr r29, r26",
+      "generated": "mr r28, r22"
+    },
+    {
+      "offset": "0x9c",
+      "retail": "mr r28, r21",
+      "generated": "mr r27, r29"
+    },
+    {
+      "offset": "0xa0",
+      "retail": "mr r27, r4",
+      "generated": "mr r26, r4"
+    },
+    {
+      "offset": "0xa8",
+      "retail": "li r26, 0x0",
+      "generated": "li r22, 0x0"
+    },
+    {
+      "offset": "0xc0",
+      "retail": "lha r0, 0x14(r22)",
+      "generated": "lha r0, 0x14(r21)"
+    },
+    {
+      "offset": "0xf0",
+      "retail": "add r3, r3, r21",
+      "generated": "add r3, r3, r29"
+    },
+    {
+      "offset": "0x184",
+      "retail": "lfs f1, 0x30(r29)",
+      "generated": "lfs f1, 0x30(r28)"
+    },
+    {
+      "offset": "0x190",
+      "retail": "add r3, r0, r28",
+      "generated": "add r3, r0, r27"
+    },
+    {
+      "offset": "0x1ac",
+      "retail": "add r3, r0, r28",
+      "generated": "add r3, r0, r27"
+    },
+    {
+      "offset": "0x1dc",
+      "retail": "add r5, r0, r28",
+      "generated": "add r5, r0, r27"
+    },
+    {
+      "offset": "0x1e8",
+      "retail": "addi r21, r21, 0x18",
+      "generated": "addi r29, r29, 0x18"
+    },
+    {
+      "offset": "0x1ec",
+      "retail": "addi r29, r29, 0x4",
+      "generated": "addi r28, r28, 0x4"
+    },
+    {
+      "offset": "0x1f0",
+      "retail": "addi r28, r28, 0x30",
+      "generated": "addi r27, r27, 0x30"
+    },
+    {
+      "offset": "0x1f4",
+      "retail": "addi r26, r26, 0x1",
+      "generated": "addi r22, r22, 0x1"
+    },
+    {
+      "offset": "0x1f8",
+      "retail": "cmpw r26, r27",
+      "generated": "cmpw r22, r26"
+    },
+    {
+      "offset": "0x214",
+      "retail": "mr r21, r3",
+      "generated": "mr r22, r3"
+    },
+    {
+      "offset": "0x24c",
+      "retail": "lha r5, 0xe(r22)",
+      "generated": "lha r5, 0xe(r21)"
+    },
+    {
+      "offset": "0x250",
+      "retail": "mr r3, r22",
+      "generated": "mr r3, r21"
+    },
+    {
+      "offset": "0x254",
+      "retail": "addi r4, r22, 0x5c",
+      "generated": "addi r4, r21, 0x5c"
+    },
+    {
+      "offset": "0x268",
+      "retail": "mr r7, r27",
+      "generated": "mr r7, r26"
+    },
+    {
+      "offset": "0x28c",
+      "retail": "mr r3, r21",
+      "generated": "mr r3, r22"
+    }
+  ],
+  "new_hypothesis": "The vertex and matrix byte offsets are compiler-derived induction variables of one signed loop index; the loaded count retains its source byte type. Removing manual offsets restores retail zero sharing, field-pointer copy, and increment ordering. A block-scoped loop index and reordered ordinary local declarations restore entry/draw/color allocation. Explicit pointer walking alone regresses, and register hints do not change codegen.",
+  "prior_best_percent": 96.41279,
+  "retained_source_sha256": "99eee942e8176c0087fb85ee06fdf0d625dde0b7ba391cd721359ec8dec970fc",
+  "compiler_settings": "Unchanged canonical GC/1.3, -O4,p, -use_lmw_stmw on; no added pragmas or normalization rules.",
+  "raw_relocations": [
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-Wr",
+        "build/GEDE01/obj/game/game_fn_8019ECA0.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x2f0 contains 37 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000001a  00000406 R_PPC_ADDR16_HA        00000000   lbl_80607120 + 0\n00000022  00000404 R_PPC_ADDR16_LO        00000000   lbl_80607120 + 0\n00000024  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n00000058  0000060a R_PPC_REL24            00000000   fn_8018D788 + 0\n00000062  00000706 R_PPC_ADDR16_HA        00000000   fn_8019EF50 + 0\n00000066  00000704 R_PPC_ADDR16_LO        00000000   fn_8019EF50 + 0\n00000082  00000806 R_PPC_ADDR16_HA        00000000   fn_8019EFAC + 0\n00000086  00000804 R_PPC_ADDR16_LO        00000000   fn_8019EFAC + 0\n00000092  00000906 R_PPC_ADDR16_HA        00000000   lbl_80607140 + 0\n00000094  00000a6d R_PPC_EMB_SDA21        00000000   lbl_80650C60 + 0\n000000a6  00000904 R_PPC_ADDR16_LO        00000000   lbl_80607140 + 0\n00000140  00000b0a R_PPC_REL24            00000000   fn_8018D020 + 0\n00000168  00000c6d R_PPC_EMB_SDA21        00000000   lbl_80650C74 + 0\n00000170  00000d6d R_PPC_EMB_SDA21        00000000   lbl_80650C68 + 0\n00000178  00000e0a R_PPC_REL24            00000000   fn_80211484 + 0\n0000017c  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n00000194  00000f0a R_PPC_REL24            00000000   fn_80211268 + 0\n00000198  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n000001b0  0000100a R_PPC_REL24            00000000   fn_80210FDC + 0\n000001b4  0000116d R_PPC_EMB_SDA21        00000000   lbl_80650C78 + 0\n000001bc  00000d6d R_PPC_EMB_SDA21        00000000   lbl_80650C68 + 0\n000001c4  00000e0a R_PPC_REL24            00000000   fn_80211484 + 0\n000001c8  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n000001e0  0000100a R_PPC_REL24            00000000   fn_80210FDC + 0\n00000204  0000120a R_PPC_REL24            00000000   fn_801ED57C + 0\n00000208  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n0000020e  00000906 R_PPC_ADDR16_HA        00000000   lbl_80607140 + 0\n0000021e  00000904 R_PPC_ADDR16_LO        00000000   lbl_80607140 + 0\n00000224  0000130a R_PPC_REL24            00000000   DCFlushRange + 0\n00000230  0000130a R_PPC_REL24            00000000   DCFlushRange + 0\n0000023c  0000130a R_PPC_REL24            00000000   DCFlushRange + 0\n00000248  0000130a R_PPC_REL24            00000000   DCFlushRange + 0\n00000258  0000140a R_PPC_REL24            00000000   fn_8018D0D0 + 0\n0000025c  0000056d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n00000262  00000906 R_PPC_ADDR16_HA        00000000   lbl_80607140 + 0\n00000272  00000904 R_PPC_ADDR16_LO        00000000   lbl_80607140 + 0\n00000290  0000120a R_PPC_REL24            00000000   fn_801ED57C + 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-Wr",
+        "build/GEDE01/src/game/game_fn_8019ECA0.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x2f0 contains 37 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000001a  00000506 R_PPC_ADDR16_HA        00000000   lbl_80607120 + 0\n00000022  00000504 R_PPC_ADDR16_LO        00000000   lbl_80607120 + 0\n00000024  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n00000058  00000b0a R_PPC_REL24            00000000   fn_8018D788 + 0\n00000062  00000c06 R_PPC_ADDR16_HA        00000000   fn_8019EF50 + 0\n00000066  00000c04 R_PPC_ADDR16_LO        00000000   fn_8019EF50 + 0\n00000082  00000d06 R_PPC_ADDR16_HA        00000000   fn_8019EFAC + 0\n00000086  00000d04 R_PPC_ADDR16_LO        00000000   fn_8019EFAC + 0\n00000092  00000906 R_PPC_ADDR16_HA        00000000   lbl_80607140 + 0\n00000094  0000046d R_PPC_EMB_SDA21        00000000   @29 + 0\n000000a6  00000904 R_PPC_ADDR16_LO        00000000   lbl_80607140 + 0\n00000140  00000e0a R_PPC_REL24            00000000   fn_8018D020 + 0\n00000168  0000076d R_PPC_EMB_SDA21        00000000   lbl_80650C74 + 0\n00000170  0000086d R_PPC_EMB_SDA21        00000000   lbl_80650C68 + 0\n00000178  00000f0a R_PPC_REL24            00000000   fn_80211484 + 0\n0000017c  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n00000194  0000100a R_PPC_REL24            00000000   fn_80211268 + 0\n00000198  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n000001b0  0000110a R_PPC_REL24            00000000   fn_80210FDC + 0\n000001b4  00000a6d R_PPC_EMB_SDA21        00000000   lbl_80650C78 + 0\n000001bc  0000086d R_PPC_EMB_SDA21        00000000   lbl_80650C68 + 0\n000001c4  00000f0a R_PPC_REL24            00000000   fn_80211484 + 0\n000001c8  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n000001e0  0000110a R_PPC_REL24            00000000   fn_80210FDC + 0\n00000204  0000120a R_PPC_REL24            00000000   fn_801ED57C + 0\n00000208  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n0000020e  00000906 R_PPC_ADDR16_HA        00000000   lbl_80607140 + 0\n0000021e  00000904 R_PPC_ADDR16_LO        00000000   lbl_80607140 + 0\n00000224  0000130a R_PPC_REL24            00000000   DCFlushRange + 0\n00000230  0000130a R_PPC_REL24            00000000   DCFlushRange + 0\n0000023c  0000130a R_PPC_REL24            00000000   DCFlushRange + 0\n00000248  0000130a R_PPC_REL24            00000000   DCFlushRange + 0\n00000258  0000140a R_PPC_REL24            00000000   fn_8018D0D0 + 0\n0000025c  0000066d R_PPC_EMB_SDA21        00000000   lbl_8064D738 + 0\n00000262  00000906 R_PPC_ADDR16_HA        00000000   lbl_80607140 + 0\n00000272  00000904 R_PPC_ADDR16_LO        00000000   lbl_80607140 + 0\n00000290  0000120a R_PPC_REL24            00000000   fn_801ED57C + 0\n",
+      "stderr": ""
+    }
+  ],
+  "dol_hash": {
+    "command": [
+      "sha1sum",
+      "build/GEDE01/main.dol"
+    ],
+    "exit_code": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "stderr": ""
+  },
+  "required_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+  "full_build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "exit_code": 0,
+    "raw_log": "eternal-darkness-decomp/reports/GEDE01/build-7258fe43-f412-40b9-abac-a6931e91ca1c.log",
+    "log_note": "Linker CRLF line endings normalized to LF; all emitted lines retained."
+  },
+  "canonical_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8019ECA0 fn_8019ECA0 -o reports/GEDE01/objdiff-7258fe43-f412-40b9-abac-a6931e91ca1c-canonical.json --format json-pretty",
+  "strict_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8019ECA0 fn_8019ECA0 -c function_reloc_diffs=name_address -o reports/GEDE01/objdiff-7258fe43-f412-40b9-abac-a6931e91ca1c.json --format json-pretty",
+  "linkage_note": "The function remains registered NonMatching; the verified DOL uses its retail object. The DOL hash does not establish that this C reconstruction matches.",
+  "legal_audit": {
+    "command": [
+      "python3",
+      "tools/legal_audit.py"
+    ],
+    "exit_code": 0,
+    "stdout": "legal audit passed (20606 tracked project files inspected)\n",
+    "stderr": ""
+  }
+}
