@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "assignment_id": "a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe",
+  "target": "fn_80088A04",
+  "status": "attempted",
+  "source": {
+    "path": "eternal-darkness-decomp/src/game/game_fn_80088A04.c",
+    "sha256": "10faf37402fa7b920472fdb643a13bc54d38de3184400a75d6a951e1c7b2f871",
+    "registration": "Existing independent NonMatching translation unit retained; no configure.py or splits.txt changes."
+  },
+  "preserved_attempt_review": {
+    "commits": [
+      "259031f2b3d624d7115e1e071e65da2fea114263",
+      "4981c40d2a42c615297d1c151f304dcb9b9ef0af",
+      "1d2f54c8698ce7d59cbbafea478c470d47a7decc",
+      "b62e3c25d856152e2989faa56f77acbbe6433ca2"
+    ],
+    "source_sha256_all_and_base": "9744f8e5288d660de3cae5c7ed6061603280ef723e05f0ec99df615e9fa092cd",
+    "review": "All preserved source versions equal the accepted base. Reviewed previous raw diffs and verification/hypothesis reports through git show. Avoided repeating their declaration-only and guarded-block Settings variants."
+  },
+  "compiler": {
+    "version": "GC/1.3",
+    "policy": "Unmodified canonical python3 configure.py defaults",
+    "command_log": "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/compiler-command.log",
+    "digests": "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/tool-digests.log",
+    "historical_correction": "Previous verification labeled GC/1.2.5n; the accepted base canonical generated command selects GC/1.3."
+  },
+  "hypotheses": [
+    {
+      "hypothesis": "Aggregate/vector-copy lowering could change owner use weighting and nonvolatile-register allocation.",
+      "results": "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/experiments.json",
+      "outcome": "No improvement: aggregate assignment 82.96875%; separate float temporaries 81.859375%; array loop, unrolled array and local position pointer 88.359375%."
+    },
+    {
+      "hypothesis": "Settings field stride or remainder expression formation could change address-generation or arithmetic virtual-register allocation.",
+      "results": "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/experiments2.json",
+      "outcome": "Array representations unchanged. Computing the signed remainder immediately after the second RNG call gives 89.6875% and exactly reproduces retail arithmetic register allocation. Retained this two-line source change; no call or memory-store order changes."
+    },
+    {
+      "hypothesis": "With arithmetic corrected, Settings initialization between the first call and guard might alter the remaining register allocation.",
+      "results": "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/experiments3.json",
+      "outcome": "No improvement. Post-call initialization 88.75%, early returns 80%; remaining forms unchanged at 89.6875%."
+    }
+  ],
+  "canonical": {
+    "raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe.json",
+    "score": 89.6875,
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80088A04 -o reports/GEDE01/objdiff-a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe.json --format json-pretty fn_80088A04"
+  },
+  "relocation_strict": {
+    "raw": "eternal-darkness-decomp/reports/GEDE01/objdiff-a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe-relocation-strict.json",
+    "score": 89.6875,
+    "config": "function_reloc_diffs=name_address",
+    "audit": "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/relocation-audit.json",
+    "raw_relocations": [
+      "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/retail-relocations.log",
+      "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/generated-relocations.log"
+    ],
+    "material_count_per_side": 8,
+    "none_annotations_per_side": 4,
+    "targets_and_addends_agree": true
+  },
+  "byte_comparison": "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/byte-comparison.json",
+  "divergence": "Canonical and relocation-strict objdiff are 89.6875% at 256/256 bytes. Retail keeps owner in r31 and Settings in r30; generated code swaps them, changing four prologue instructions and ten owner/Settings memory-base instructions. The signed-remainder arithmetic now matches exactly. Raw .text comparison has 232/256 equal bytes and 14 differing words. All eight material relocation targets/addends agree; four R_PPC_NONE annotations occur on each side.",
+  "build": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2"
+    ],
+    "configure_log": "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/configure-final.log",
+    "build_log": "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/build-final.log",
+    "exit_status": 0,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "sha1_log": "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/dol-sha1.log",
+    "note": "NonMatching candidate is not linked into main.dol; DOL verification does not establish a match for this candidate."
+  },
+  "legal_audit": {
+    "log": "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/legal-audit.log",
+    "independent_c": true,
+    "assembly": false,
+    "shared_reconstruction": false,
+    "compiler_or_gate_changes": false,
+    "neighbor_edits": false,
+    "private_or_binary_artifacts_committed": false,
+    "unrelated_preexisting_change": "CLAUDE.md left unstaged and untouched"
+  },
+  "reproducibility": {
+    "experiment_scripts": [
+      "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/experiment.py",
+      "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/experiment2.py",
+      "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/experiment3.py"
+    ],
+    "verification_script": "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/verify.py",
+    "verification_log": "eternal-darkness-decomp/reports/GEDE01/a446d57c-7f5a-4b7a-abdc-d7ad03fe91fe/verify.log"
+  }
+}

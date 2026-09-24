@@ -51,11 +51,11 @@ int fn_80088A04(Work* work)
         int random;
 
         settings->angle = fn_800FBFB0() % 512;
-        random = fn_800FBFB0();
+        random = fn_800FBFB0() % 352;
         settings->scale = 128;
         input.x = settings->angle + 64;
         input.z = -1;
-        settings->phase = random % 352;
+        settings->phase = random;
         input.y = settings->phase + 64;
         fn_801F69F0(&input, &output, 0);
         owner->position.x = output.x;
