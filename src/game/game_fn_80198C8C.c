@@ -1,14 +1,6 @@
 typedef signed char s8;
 typedef unsigned char u8;
 
-typedef struct Entry {
-    u8 pad[0x2b];
-    u8 field_2b;
-    u8 pad_2c[3];
-    u8 field_2f;
-    u8 pad_30[8];
-} Entry;
-
 extern void fn_8018E230(u8*, u8*, u8, u8, s8, u8);
 extern void fn_8018E8B8(u8*, u8, int);
 
@@ -28,21 +20,29 @@ void fn_80198C8C(u8* object, u8 mode, u8 value, s8 step, u8 kind, u8 limit)
             entry[1] = kind;
             entry[7] = limit;
         } else {
-            u8 half = count >> 1;
-            u8 level = (step / 2) * ((value - 150) / step) + 60;
-            Entry* records;
+            u8 half;
+            u8 level;
+            u8* p;
 
+            half = count >> 1;
+            level = (step / 2) * ((value - 150) / step) + 60;
             entry[1] = kind;
             entry[5] = step;
-            records = *(Entry**)(object + 0x4c);
-            for (i = 0; i < count; i++)
-                records[i].field_2b = level;
-            records = *(Entry**)(object + 0x4c);
-            for (i = 0; i < half; i++)
-                records[i].field_2f = level;
-            records = *(Entry**)(object + 0x4c) + half;
-            for (i = 0; i < half; i++)
-                records[i].field_2f = value;
+            p = *(u8**)(object + 0x4c);
+            for (i = 0; i < count; i++) {
+                p[0x2b] = level;
+                p += 0x38;
+            }
+            p = *(u8**)(object + 0x4c);
+            for (i = 0; i < half; i++) {
+                p[0x2f] = level;
+                p += 0x38;
+            }
+            p = *(u8**)(object + 0x4c) + half * 0x38;
+            for (i = 0; i < half; i++) {
+                p[0x2f] = value;
+                p += 0x38;
+            }
         }
     } else {
         object[0xa2] = 8;

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d844e2fb-db39-4dd7-abcb-6feba36cc7a4",
+  "attempt": 3,
+  "base_commit": "1b6c3182153cd934fea740c4ebc175836f948e0b",
+  "target": "fn_80198C8C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d844e2fb-db39-4dd7-abcb-6feba36cc7a4.json"
+  ],
+  "divergence": "Fresh canonical relocation-strict objdiff is 96.06417% for equal 748-byte retail and generated functions. All four R_PPC_REL24 relocations agree (two fn_8018E230 and two fn_8018E8B8 calls, with zero addends). The remaining mode-6 setup differs in instruction scheduling and register allocation for half/level temporaries: 31 argument mismatches, 2 inserts, 2 deletes, and 3 replacements. Moving the 0x38 pointer increments into the three loop bodies eliminated the prior cleanup address recomputation and aligned loop/control-flow shape."
+}
