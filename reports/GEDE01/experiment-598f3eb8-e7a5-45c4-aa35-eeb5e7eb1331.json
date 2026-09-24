@@ -1,0 +1,5497 @@
+{
+  "experiments": [
+    {
+      "hypothesis": "Both sdata2 floats declared const to remove false store alias dependencies",
+      "score": 87.21154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r27)"
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r7, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r3, 0x20(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Only lbl_80651230 declared const",
+      "score": 83.51923,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x0(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lwz r7, 0x4(r27)"
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r3, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "stw r7, 0x20(r31)"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Only lbl_80651234 declared const",
+      "score": 86.96154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r4, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r4, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "lwz r3, 0x0(r27)"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r7, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r3, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "stw r7, 0x20(r31)"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Const floats, callback local before scale = lbl_80651230;",
+      "score": 87.21154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r27)"
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r7, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r3, 0x20(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Const floats, callback local before object->random_value =",
+      "score": 87.21154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r27)"
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r7, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r3, 0x20(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Const floats, callback local before object->position =",
+      "score": 87.21154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r27)"
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r7, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r3, 0x20(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Const floats, unsigned random local before callback local",
+      "score": 87.21154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r27)"
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r7, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r3, 0x20(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Const floats used directly as call arguments",
+      "score": 87.21154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r27)"
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r7, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r3, 0x20(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Const floats with independent scale arguments",
+      "score": 87.21154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r27)"
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r7, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r3, 0x20(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Const floats with modulo PRNG reduction",
+      "score": 87.21154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r27)"
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r7, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r3, 0x20(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Const floats with preincrement PRNG temporary",
+      "score": 87.21154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r27)"
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r7, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r3, 0x20(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Const floats with timer subobject pointer formed before PRNG",
+      "score": 87.21154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r27)"
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r7, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r3, 0x20(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Call argument pointer comma-expression grouping; const=False",
+      "score": 87.07692,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r4, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r4, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "lwz r8, 0x0(r27)"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "lwz r7, 0x4(r27)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r8, 0x1c(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "stw r7, 0x20(r31)"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Call argument scale comma-expression grouping; const=False",
+      "score": 87.07692,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r4, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r4, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "lwz r8, 0x0(r27)"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "lwz r7, 0x4(r27)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r8, 0x1c(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "stw r7, 0x20(r31)"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Call argument z_scale comma-expression grouping; const=False",
+      "score": 87.07692,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r4, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r4, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "lwz r8, 0x0(r27)"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "lwz r7, 0x4(r27)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r8, 0x1c(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "stw r7, 0x20(r31)"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Call argument pointer comma-expression grouping; const=True",
+      "score": 87.21154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r27)"
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r7, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r3, 0x20(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Call argument scale comma-expression grouping; const=True",
+      "score": 87.21154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r27)"
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r7, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r3, 0x20(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    },
+    {
+      "hypothesis": "Call argument z_scale comma-expression grouping; const=True",
+      "score": 87.21154,
+      "raw_generated_instructions": [
+        {
+          "size": 4,
+          "formatted": "stwu r1, -0x20(r1)"
+        },
+        {
+          "address": "4",
+          "size": 4,
+          "formatted": "mflr r0"
+        },
+        {
+          "address": "8",
+          "size": 4,
+          "formatted": "stw r0, 0x24(r1)"
+        },
+        {
+          "address": "12",
+          "size": 4,
+          "formatted": "stmw r27, 0xc(r1)"
+        },
+        {
+          "address": "16",
+          "size": 4,
+          "formatted": "mr r31, r3"
+        },
+        {
+          "address": "20",
+          "size": 4,
+          "formatted": "lis r3, 0x2"
+        },
+        {
+          "address": "24",
+          "size": 4,
+          "formatted": "mr r27, r4"
+        },
+        {
+          "address": "28",
+          "size": 4,
+          "formatted": "mr r28, r5"
+        },
+        {
+          "address": "32",
+          "size": 4,
+          "formatted": "mr r29, r6"
+        },
+        {
+          "address": "36",
+          "size": 4,
+          "formatted": "mr r30, r7"
+        },
+        {
+          "address": "40",
+          "size": 4,
+          "formatted": "lwz r0, lbl_8064D18C@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 2
+          }
+        },
+        {
+          "address": "44",
+          "size": 4,
+          "formatted": "sth r0, 0x34(r31)"
+        },
+        {
+          "address": "48",
+          "size": 4,
+          "formatted": "subi r0, r3, 0x7960"
+        },
+        {
+          "address": "52",
+          "size": 4,
+          "formatted": "stw r0, 0x4(r31)"
+        },
+        {
+          "address": "56",
+          "size": 4,
+          "formatted": "lwz r0, 0x4(r31)"
+        },
+        {
+          "address": "60",
+          "size": 4,
+          "formatted": "stw r0, 0xc(r31)"
+        },
+        {
+          "address": "64",
+          "size": 4,
+          "formatted": "bl fn_800FBFB0",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 5
+          }
+        },
+        {
+          "address": "68",
+          "size": 4,
+          "formatted": "clrlwi r3, r3, 28"
+        },
+        {
+          "address": "72",
+          "size": 4,
+          "formatted": "lfs f1, lbl_80651230@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 3
+          }
+        },
+        {
+          "address": "76",
+          "size": 4,
+          "formatted": "addi r0, r3, 0x1"
+        },
+        {
+          "address": "80",
+          "size": 4,
+          "formatted": "li r5, 0x258"
+        },
+        {
+          "address": "84",
+          "size": 4,
+          "formatted": "stw r0, 0x10(r31)"
+        },
+        {
+          "address": "88",
+          "size": 4,
+          "formatted": "lis r3, fn_801E2BF8@ha",
+          "relocation": {
+            "type": 6,
+            "type_name": "R_PPC_ADDR16_HA",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "92",
+          "size": 4,
+          "formatted": "addi r6, r3, fn_801E2BF8@l",
+          "relocation": {
+            "type": 4,
+            "type_name": "R_PPC_ADDR16_LO",
+            "target_symbol": 6
+          }
+        },
+        {
+          "address": "96",
+          "size": 4,
+          "formatted": "li r4, 0x1"
+        },
+        {
+          "address": "100",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r27)"
+        },
+        {
+          "address": "104",
+          "size": 4,
+          "formatted": "fmr f2, f1"
+        },
+        {
+          "address": "108",
+          "size": 4,
+          "formatted": "lwz r3, 0x4(r27)"
+        },
+        {
+          "address": "112",
+          "size": 4,
+          "formatted": "li r0, 0x4"
+        },
+        {
+          "address": "116",
+          "size": 4,
+          "formatted": "lfs f3, lbl_80651234@sda21",
+          "relocation": {
+            "type": 109,
+            "type_name": "R_PPC_EMB_SDA21",
+            "target_symbol": 4
+          }
+        },
+        {
+          "address": "120",
+          "size": 4,
+          "formatted": "stw r7, 0x1c(r31)"
+        },
+        {
+          "address": "124",
+          "size": 4,
+          "formatted": "stw r3, 0x20(r31)"
+        },
+        {
+          "address": "128",
+          "size": 4,
+          "formatted": "addi r3, r31, 0x4"
+        },
+        {
+          "address": "132",
+          "size": 4,
+          "formatted": "lwz r7, 0x8(r27)"
+        },
+        {
+          "address": "136",
+          "size": 4,
+          "formatted": "stw r7, 0x24(r31)"
+        },
+        {
+          "address": "140",
+          "size": 4,
+          "formatted": "lwz r7, 0x0(r28)"
+        },
+        {
+          "address": "144",
+          "size": 4,
+          "formatted": "stw r7, 0x28(r31)"
+        },
+        {
+          "address": "148",
+          "size": 4,
+          "formatted": "stw r6, 0x48(r31)"
+        },
+        {
+          "address": "152",
+          "size": 4,
+          "formatted": "sth r29, 0x2c(r31)"
+        },
+        {
+          "address": "156",
+          "size": 4,
+          "formatted": "stb r30, 0x36(r31)"
+        },
+        {
+          "address": "160",
+          "size": 4,
+          "formatted": "sth r5, 0x30(r31)"
+        },
+        {
+          "address": "164",
+          "size": 4,
+          "formatted": "stw r4, 0x70(r31)"
+        },
+        {
+          "address": "168",
+          "size": 4,
+          "formatted": "stb r0, 0x38(r31)"
+        },
+        {
+          "address": "172",
+          "size": 4,
+          "formatted": "bl fn_801FE8DC",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 7
+          }
+        },
+        {
+          "address": "176",
+          "size": 4,
+          "formatted": "mr r4, r31"
+        },
+        {
+          "address": "180",
+          "size": 4,
+          "formatted": "li r3, 0x13"
+        },
+        {
+          "address": "184",
+          "size": 4,
+          "formatted": "bl fn_801E8328",
+          "relocation": {
+            "type": 10,
+            "type_name": "R_PPC_REL24",
+            "target_symbol": 8
+          }
+        },
+        {
+          "address": "188",
+          "size": 4,
+          "formatted": "lmw r27, 0xc(r1)"
+        },
+        {
+          "address": "192",
+          "size": 4,
+          "formatted": "lwz r0, 0x24(r1)"
+        },
+        {
+          "address": "196",
+          "size": 4,
+          "formatted": "mtlr r0"
+        },
+        {
+          "address": "200",
+          "size": 4,
+          "formatted": "addi r1, r1, 0x20"
+        },
+        {
+          "address": "204",
+          "size": 4,
+          "formatted": "blr "
+        }
+      ]
+    }
+  ],
+  "assignment_id": "598f3eb8-e7a5-45c4-aa35-eeb5e7eb1331",
+  "baseline_score": 87.07692,
+  "conclusion": "Const qualification of both read-only sdata2 floats is the only retained source change; best score 87.21154. All further local-expression variants were codegen-identical within their qualifier choice."
+}

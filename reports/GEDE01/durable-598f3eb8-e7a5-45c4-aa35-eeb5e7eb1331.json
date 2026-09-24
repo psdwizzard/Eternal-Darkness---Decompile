@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "598f3eb8-e7a5-45c4-aa35-eeb5e7eb1331",
+  "attempt": 6,
+  "base_commit": "77e1d35dc8f11eb105e420c290073214e9ad4bb2",
+  "target": "fn_801E2B28",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-598f3eb8-e7a5-45c4-aa35-eeb5e7eb1331.json",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-598f3eb8-e7a5-45c4-aa35-eeb5e7eb1331.json",
+    "eternal-darkness-decomp/reports/GEDE01/reloc-strict-598f3eb8-e7a5-45c4-aa35-eeb5e7eb1331.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiment-598f3eb8-e7a5-45c4-aa35-eeb5e7eb1331.json"
+  ],
+  "divergence": "Canonical and relocation-strict GC/1.3 objdiff are 87.21154% (208 bytes/52 instructions). Read-only qualification improves the prior 87.07692% schedule, but generated clrlwi/addi use r3 instead of r4, the callback lis/addi move from instruction 0x48/0x58 to 0x58/0x5C, lbl_80651230 moves from 0x50 to 0x48, and aggregate copy uses r7/r3 instead of r8/r7. The timer address moves from 0x78 to 0x80 and the first two position stores from 0x7C/0x80 to 0x78/0x7C. All eight relocation target/type/zero-addend triples are represented; three relocation offsets differ. lbl_80651234 now matches at 0x74. Remains NonMatching."
+}

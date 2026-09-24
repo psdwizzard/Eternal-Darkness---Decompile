@@ -35,8 +35,8 @@ struct Object {
 };
 
 extern s32 lbl_8064D18C;
-extern f32 lbl_80651230;
-extern f32 lbl_80651234;
+extern const f32 lbl_80651230;
+extern const f32 lbl_80651234;
 
 extern u32 fn_800FBFB0(void);
 extern void fn_801FE8DC(s32*, f32, f32, f32);
