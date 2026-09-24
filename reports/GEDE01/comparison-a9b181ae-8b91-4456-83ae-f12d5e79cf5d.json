@@ -1,0 +1,123 @@
+{
+  "scores": {
+    "objdiff": 87.472725,
+    "objdiff-strict": 87.472725
+  },
+  "candidate_source_identical_to_preserved_commit": "42c84e535572fab81f92302d367ba6771e5dd51d",
+  "commands": [
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_801FA66C.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_801FA66C.o",
+        "fn_801FA66C",
+        "-o",
+        "reports/GEDE01/objdiff-a9b181ae-8b91-4456-83ae-f12d5e79cf5d.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-a9b181ae-8b91-4456-83ae-f12d5e79cf5d.json\n"
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-1",
+        "build/GEDE01/obj/game/game_fn_801FA66C.o",
+        "-2",
+        "build/GEDE01/src/game/game_fn_801FA66C.o",
+        "fn_801FA66C",
+        "-o",
+        "reports/GEDE01/objdiff-strict-a9b181ae-8b91-4456-83ae-f12d5e79cf5d.json",
+        "--format",
+        "json",
+        "-c",
+        "function_reloc_diffs=all"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": " INFO Writing to reports/GEDE01/objdiff-strict-a9b181ae-8b91-4456-83ae-f12d5e79cf5d.json\n"
+    },
+    {
+      "label": "retail",
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "-sW",
+        "build/GEDE01/obj/game/game_fn_801FA66C.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x11c contains 8 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000022  00000406 R_PPC_ADDR16_HA        00000000   lbl_8023B814 + 0\n00000026  00000506 R_PPC_ADDR16_HA        00000000   lbl_8063C6B8 + 0\n0000002a  00000404 R_PPC_ADDR16_LO        00000000   lbl_8023B814 + 0\n00000032  00000504 R_PPC_ADDR16_LO        00000000   lbl_8063C6B8 + 0\n0000006c  0000060a R_PPC_REL24            00000000   fn_801795A4 + 0\n00000070  0000076d R_PPC_EMB_SDA21        00000000   lbl_806514C4 + 0\n00000080  0000080a R_PPC_REL24            00000000   fn_80211380 + 0\n00000090  0000090a R_PPC_REL24            00000000   fn_80211710 + 0\n\nSymbol table '.symtab' contains 10 entries:\n   Num:    Value  Size Type    Bind   Vis      Ndx Name\n     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND \n     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS game_fn_801FA66C.c\n     2: 00000000     0 SECTION LOCAL  DEFAULT    1 .text\n     3: 00000000   220 FUNC    GLOBAL DEFAULT    1 fn_801FA66C\n     4: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8023B814\n     5: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8063C6B8\n     6: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801795A4\n     7: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_806514C4\n     8: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_80211380\n     9: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_80211710\n",
+      "stderr": ""
+    },
+    {
+      "label": "retail",
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-SW",
+        "build/GEDE01/obj/game/game_fn_801FA66C.o"
+      ],
+      "exit_code": 0,
+      "stdout": "There are 6 section headers, starting at offset 0x2b0:\n\nSection Headers:\n  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al\n  [ 0]                   NULL            00000000 000000 000000 00      0   0  0\n  [ 1] .text             PROGBITS        00000000 000040 0000dc 00  AX  0   0  4\n  [ 2] .rela.text        RELA            00000000 00011c 000060 0c   I  3   1  4\n  [ 3] .symtab           SYMTAB          00000000 00017c 0000a0 10      4   3  4\n  [ 4] .strtab           STRTAB          00000000 00021c 00006b 00      0   0  1\n  [ 5] .shstrtab         STRTAB          00000000 000287 000026 00      0   0  1\nKey to Flags:\n  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),\n  L (link order), O (extra OS processing required), G (group), T (TLS),\n  C (compressed), x (unknown), o (OS specific), E (exclude),\n  D (mbind), v (VLE), p (processor specific)\n",
+      "stderr": ""
+    },
+    {
+      "label": "candidate",
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-rW",
+        "-sW",
+        "build/GEDE01/src/game/game_fn_801FA66C.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x108 contains 8 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000022  00000406 R_PPC_ADDR16_HA        00000000   lbl_8023B814 + 0\n00000026  00000306 R_PPC_ADDR16_HA        00000000   lbl_8063C6B8 + 0\n0000002a  00000404 R_PPC_ADDR16_LO        00000000   lbl_8023B814 + 0\n00000032  00000304 R_PPC_ADDR16_LO        00000000   lbl_8063C6B8 + 0\n00000068  0000060a R_PPC_REL24            00000000   fn_801795A4 + 0\n0000006c  0000056d R_PPC_EMB_SDA21        00000000   lbl_806514C4 + 0\n0000007c  0000070a R_PPC_REL24            00000000   fn_80211380 + 0\n0000008c  0000080a R_PPC_REL24            00000000   fn_80211710 + 0\n\nSymbol table '.symtab' contains 10 entries:\n   Num:    Value  Size Type    Bind   Vis      Ndx Name\n     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND \n     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS game_fn_801FA66C.c\n     2: 00000000     0 SECTION LOCAL  DEFAULT    1 .text\n     3: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8063C6B8\n     4: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_8023B814\n     5: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND lbl_806514C4\n     6: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_801795A4\n     7: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_80211380\n     8: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND fn_80211710\n     9: 00000000   212 FUNC    GLOBAL DEFAULT    1 fn_801FA66C\n",
+      "stderr": ""
+    },
+    {
+      "label": "candidate",
+      "command": [
+        "build/binutils/powerpc-eabi-readelf",
+        "-SW",
+        "build/GEDE01/src/game/game_fn_801FA66C.o"
+      ],
+      "exit_code": 0,
+      "stdout": "There are 7 section headers, starting at offset 0x328:\n\nSection Headers:\n  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al\n  [ 0]                   NULL            00000000 000000 000000 00      0   0  0\n  [ 1] .text             PROGBITS        00000000 000034 0000d4 00  AX  0   0  4\n  [ 2] .rela.text        RELA            00000000 000108 000060 0c      3   1  4\n  [ 3] .symtab           SYMTAB          00000000 000168 0000a0 10      4   3  4\n  [ 4] .strtab           STRTAB          00000000 000208 00006b 01      0   0  1\n  [ 5] .shstrtab         STRTAB          00000000 000273 000035 01      0   0  1\n  [ 6] .comment          PROGBITS        00000000 0002a8 00007c 01      0   0  1\nKey to Flags:\n  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),\n  L (link order), O (extra OS processing required), G (group), T (TLS),\n  C (compressed), x (unknown), o (OS specific), E (exclude),\n  D (mbind), v (VLE), p (processor specific)\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        ".tools/bin/ninja",
+        "-t",
+        "commands",
+        "build/GEDE01/src/game/game_fn_801FA66C.o"
+      ],
+      "exit_code": 0,
+      "stdout": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -MMD -c src/game/game_fn_801FA66C.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_801FA66C.d build/GEDE01/src/game/game_fn_801FA66C.d\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "sha256sum",
+        "compilers/GC/1.3/mwcceppc.exe",
+        "src/game/game_fn_801FA66C.c"
+      ],
+      "exit_code": 0,
+      "stdout": "4e502c38465500d4fda8d966b268151a6c74c730508e3d9b7efd23d1a6083715  compilers/GC/1.3/mwcceppc.exe\n20c7f85fcd950a8f76615916a740e0c74b7a2fae9a219df177788521e6786c56  src/game/game_fn_801FA66C.c\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "build/tools/objdiff-cli",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "objdiff-cli 3.6.1\n",
+      "stderr": ""
+    }
+  ]
+}
