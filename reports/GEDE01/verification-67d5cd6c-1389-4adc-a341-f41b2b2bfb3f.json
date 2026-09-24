@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "assignment_id": "67d5cd6c-1389-4adc-a341-f41b2b2bfb3f",
+  "attempt": 4,
+  "target": "fn_80088A04",
+  "unit": "main/game/game_fn_80088A04",
+  "source": {
+    "path": "eternal-darkness-decomp/src/game/game_fn_80088A04.c",
+    "sha256": "9744f8e5288d660de3cae5c7ed6061603280ef723e05f0ec99df615e9fa092cd",
+    "disposition": "Retained the accepted-base honest C reconstruction without a source delta."
+  },
+  "compiler": {
+    "id": "mwcc_242_53",
+    "version": "GC/1.2.5n",
+    "policy": "canonical configure.py settings; no extra flags"
+  },
+  "attempt_4_hypothesis": {
+    "hypothesis": "Direct accesses to the Settings global, instead of an explicit long-lived Settings pointer local, might allow MWCC to retain the owner in r31 while independently assigning the global base to r30.",
+    "trials": [
+      {
+        "variant": "replace the Settings pointer local with direct lbl_8031D3B8 field accesses",
+        "relocation_strict_percent": 62.421875,
+        "result": "MWCC retained the owner in the desired r31, but did not retain the Settings address in r30; repeated address formation changed the function shape and regressed the score"
+      },
+      {
+        "variant": "restore the Settings pointer and reverse the two initialized local declaration lines",
+        "relocation_strict_percent": 88.359375,
+        "result": "byte-identical to the incumbent, showing declaration order does not alter MWCC's virtual-register allocation"
+      }
+    ],
+    "retained": "accepted-base incumbent; experimental variants rejected"
+  },
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80088A04 -o reports/GEDE01/objdiff-67d5cd6c-1389-4adc-a341-f41b2b2bfb3f.json --format json-pretty fn_80088A04",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-67d5cd6c-1389-4adc-a341-f41b2b2bfb3f.json",
+    "raw_report_sha256": "a48d2f7a178ed269843dc6664b8e28d65ae129977201d22d1ed56c8f1d8fd8df",
+    "target_size": 256,
+    "generated_size": 256,
+    "target_match_percent": 88.359375,
+    "generated_match_percent": 88.359375
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80088A04 -o reports/GEDE01/objdiff-67d5cd6c-1389-4adc-a341-f41b2b2bfb3f-relocation-strict.json --format json-pretty -c function_reloc_diffs=name_address fn_80088A04",
+    "config": "function_reloc_diffs=name_address",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-67d5cd6c-1389-4adc-a341-f41b2b2bfb3f-relocation-strict.json",
+    "raw_report_sha256": "a48d2f7a178ed269843dc6664b8e28d65ae129977201d22d1ed56c8f1d8fd8df",
+    "target_size": 256,
+    "generated_size": 256,
+    "target_match_percent": 88.359375,
+    "generated_match_percent": 88.359375,
+    "raw_report_byte_identical_to_canonical": true,
+    "relocation_audit": "Each side has 12 relocation-bearing instruction rows: eight material relocations (two R_PPC_ADDR16_HA, two R_PPC_ADDR16_LO, and four R_PPC_REL24) plus four R_PPC_NONE Settings-field annotations. Material relocation types, targets, and addends agree; all addends are zero. The four R_PPC_NONE annotations on each side target lbl_8031D3B8 with addends 0, 0, 40, and 20."
+  },
+  "divergence": "The size and control flow are exact. Retail retains the owner Work pointer in r31 and lbl_8031D3B8 in r30; generated code retains them in r30 and r31. This swaps the prologue/addi schedule and all owner/global field bases. The same allocation decision changes the signed remainder scheduling: retail uses r5/r4/r7/r6 for the multiplier constant, angle, mulhw result, and shifted quotient, while generated uses r4/r5/r0/r0 before the final r6 sign adjustment.",
+  "build_verification": {
+    "commands": [
+      "python3 configure.py",
+      ".tools/bin/ninja -j2",
+      "sha1sum build/GEDE01/main.dol"
+    ],
+    "result": "success; 913/913; build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "dol_note": "fn_80088A04 remains NonMatching and is excluded from the linked DOL."
+  },
+  "legal_audit": {
+    "independent_c_translation_unit": true,
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "gate_or_compiler_policy_changes": false,
+    "neighboring_function_edits": false,
+    "generated_binaries_committed": false,
+    "private_inputs_committed": false
+  }
+}
