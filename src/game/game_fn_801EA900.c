@@ -3,6 +3,11 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
+typedef struct Record {
+    u32 tag;
+    u32 data;
+} Record;
+
 typedef struct Entry {
     u8 pad00[0x2C];
     u32 data2C;
@@ -40,21 +45,18 @@ u32 fn_801EA900(const u8* source, Entry** output, u16 count)
         entry = &entries[outer];
         size = entry->data34;
         if (size != 0) {
-            u32 byteOffset = 0;
             int i = 0;
 
             entry->data34 = (u32)(source + offset);
             offset += size;
             while (i < entry->count30) {
-                u32* encoded = (u32*)(entry->data34 + byteOffset + 4);
-                size = *encoded;
+                size = ((Record*)entry->data34)[i].data;
                 if (size != 0) {
-                    *encoded = (u32)(source + offset);
+                    ((Record*)entry->data34)[i].data = (u32)(source + offset);
                     offset += size;
                 } else {
-                    *encoded = 0;
+                    ((Record*)entry->data34)[i].data = 0;
                 }
-                byteOffset += 8;
                 i++;
             }
         } else {
