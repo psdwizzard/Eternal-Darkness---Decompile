@@ -33,8 +33,8 @@ void* fn_801DD71C(int object_id, int kind, void* source_a, int count,
                   void (*callback)(void), u32 tag, s16 duration)
 {
     int flags;
-    int handle;
     void* result;
+    int handle;
     int low_index;
     int high_index;
     int owner;
@@ -86,7 +86,8 @@ void* fn_801DD71C(int object_id, int kind, void* source_a, int count,
             *(int*)(p + 0xf0) = -1;
             memcpy(p + 0xf8, source_b, (u8)count * 4);
             memcpy(p + 0x114, source_c, (u8)count * 12);
-            total = (u8)rows * (u8)count;
+            total = (u8)count;
+            total *= (u8)rows;
             fn_801D38BC(fn_801D38E8(flags), &outputs.word_value,
                          &outputs.short_value);
             outputs.copied_word = outputs.word_value;

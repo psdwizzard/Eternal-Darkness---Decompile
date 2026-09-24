@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9a9b3551-c5b4-4db4-a233-c29b3e0959b7",
+  "attempt": 4,
+  "base_commit": "e8be7a4beb5b0838572e47809469d73c223a54f4",
+  "target": "fn_801DD71C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9a9b3551-c5b4-4db4-a233-c29b3e0959b7.json"
+  ],
+  "divergence": "87.9885% on both canonical project-unit and explicit-path relocation-strict objdiff; retail and generated are both 696 bytes with 26 relocations, whose targets, types, and addends agree. The new split byte-count/product lifetime hypothesis is codegen-neutral. Remaining instruction differences start with handle/result coloring (retail r27/r29 versus generated r28/r27 before flags reuses r28 and handle moves to r29), followed by table-address temporary allocation, memcpy setup scheduling, product lifetime (retail r20 versus generated r21), and fn_801CE594 argument construction/scheduling."
+}
