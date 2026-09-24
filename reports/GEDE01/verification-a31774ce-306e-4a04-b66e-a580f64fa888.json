@@ -1,0 +1,38 @@
+[
+  {
+    "command": "sha1sum build/GEDE01/main.dol",
+    "returncode": 0,
+    "stdout": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n",
+    "stderr": ""
+  },
+  {
+    "command": "cmp build/GEDE01/main.dol orig/GEDE01/sys/main.dol",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": "python3 tools/legal_audit.py",
+    "returncode": 0,
+    "stdout": "legal audit passed (21400 tracked project files inspected)\n",
+    "stderr": ""
+  },
+  {
+    "command": "readelf -rW build/GEDE01/src/game/game_fn_80197D20.o",
+    "returncode": 0,
+    "stdout": "\nRelocation section '.rela.text' at offset 0x470 contains 13 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000506 R_PPC_ADDR16_HA        00000000   lbl_8023B0A0 + 0\n00000032  00000504 R_PPC_ADDR16_LO        00000000   lbl_8023B0A0 + 0\n00000084  0000090a R_PPC_REL24            00000000   fn_8018FEDC + 0\n000000a4  00000a0a R_PPC_REL24            00000000   fn_80198AAC + 0\n000000cc  00000b0a R_PPC_REL24            00000000   memcpy + 0\n000000e0  0000066d R_PPC_EMB_SDA21        00000000   lbl_80650BA8 + 0\n000000ec  0000076d R_PPC_EMB_SDA21        00000000   lbl_80650B94 + 0\n000000f4  0000046d R_PPC_EMB_SDA21        00000000   @61 + 0\n00000118  00000c0a R_PPC_REL24            00000000   fn_80179370 + 0\n00000138  00000d0a R_PPC_REL24            00000000   fn_80198154 + 0\n000003ec  00000e0a R_PPC_REL24            00000000   fn_80198318 + 0\n00000404  0000086d R_PPC_EMB_SDA21        00000000   lbl_80650BAC + 0\n0000040c  00000f0a R_PPC_REL24            00000000   fn_80198BF4 + 0\n",
+    "stderr": ""
+  },
+  {
+    "command": "readelf -rW build/GEDE01/obj/game/game_fn_80197D20.o",
+    "returncode": 0,
+    "stdout": "\nRelocation section '.rela.text' at offset 0x474 contains 13 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000406 R_PPC_ADDR16_HA        00000000   lbl_8023B0A0 + 0\n00000032  00000404 R_PPC_ADDR16_LO        00000000   lbl_8023B0A0 + 0\n00000084  0000050a R_PPC_REL24            00000000   fn_8018FEDC + 0\n000000a4  0000060a R_PPC_REL24            00000000   fn_80198AAC + 0\n000000cc  0000070a R_PPC_REL24            00000000   memcpy + 0\n000000e0  0000086d R_PPC_EMB_SDA21        00000000   lbl_80650BA8 + 0\n000000ec  0000096d R_PPC_EMB_SDA21        00000000   lbl_80650B94 + 0\n000000f4  00000a6d R_PPC_EMB_SDA21        00000000   lbl_80650B98 + 0\n00000118  00000b0a R_PPC_REL24            00000000   fn_80179370 + 0\n00000138  00000c0a R_PPC_REL24            00000000   fn_80198154 + 0\n000003ec  00000d0a R_PPC_REL24            00000000   fn_80198318 + 0\n00000404  00000e6d R_PPC_EMB_SDA21        00000000   lbl_80650BAC + 0\n0000040c  00000f0a R_PPC_REL24            00000000   fn_80198BF4 + 0\n",
+    "stderr": ""
+  },
+  {
+    "command": "python3 eternal-darkness-decomp/tools/legal_audit.py (after staging)",
+    "returncode": 0,
+    "stdout": "legal audit passed (21409 tracked project files inspected)\n",
+    "stderr": ""
+  }
+]

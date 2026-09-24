@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "assignment_id": "a31774ce-306e-4a04-b66e-a580f64fa888",
+  "target": "fn_80197D20",
+  "status": "attempted",
+  "best_match_percent": 89.732346,
+  "baseline_match_percent": 88.215614,
+  "source_sha256": "dd6b9e6588c0e904af0959630928691f70b9e60fbbe9994a7424ab818c05f0ed",
+  "canonical_compiler_invocation": "tools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80197D20.c -o build/GEDE01/src/game",
+  "history_review": {
+    "commits": [
+      "439a3dbab2031942d211b4676acf2c0b3fb316d7",
+      "9d88666dfbb5bc6ec834b787b9681a4363bd014e",
+      "37f5320aaf99586b4fcd7f01975ea2d2a38cba01",
+      "fa813cee66b5fee88bce350f4d357257921ede09"
+    ],
+    "reconciliation": "Accepted base already contains the exact source from 439a3db; verified by byte equality using git show. No historical report was copied as a fresh measurement. Earlier hypotheses covered leading locals, duplicate live ranges, volatile source reads and volatile local spills. This attempt tests integer representation/conversion boundaries and loop operand order under unchanged flags.",
+    "preserved_source_sha256": "a80d18b0ff4a881f96c24127f0ed342c85963a046412da78137a31490e599c00"
+  },
+  "hypothesis": "Unsigned half-count storage plus a signed call copy and narrow comparison prevents MWCC coalescing the two required register live ranges. Deferring saved_entry initialization recovers retail copy order. Masking seven bits before doubling the later object count restores retail clrlslwi semantics. Delta pointer declaration order and an explicit scale pointer improve scheduling.",
+  "semantic_notes": [
+    "half_count is bounded to 0..127, so the u8 comparison cast and signed promoted copy preserve its mathematical value.",
+    "Retail clrlslwi r5,r0,25,1 at text+0x134 retains seven input bits before doubling; the mask corrects the previous reconstruction when object[1] bit 7 is set.",
+    "Only target source and assignment-specific reports changed. Registration remains NonMatching; no assembly, shared TU, neighboring source, global progress, README, compiler flags or externalization changes."
+  ],
+  "experiments": "eternal-darkness-decomp/reports/GEDE01/experiments-a31774ce-306e-4a04-b66e-a580f64fa888.json",
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "log": "eternal-darkness-decomp/reports/GEDE01/build-a31774ce-306e-4a04-b66e-a580f64fa888.log",
+    "configure_log": "eternal-darkness-decomp/reports/GEDE01/configure-a31774ce-306e-4a04-b66e-a580f64fa888.log",
+    "verification": "eternal-darkness-decomp/reports/GEDE01/verification-a31774ce-306e-4a04-b66e-a580f64fa888.json",
+    "note": "DOL uses retail fallback for this NonMatching TU; the verified hash does not imply candidate equality.",
+    "log_format": "Captured terminal output with CRLF normalized to LF and trailing whitespace removed."
+  },
+  "relocation_audit": {
+    "generated_readelf": {
+      "command": "readelf -rW build/GEDE01/src/game/game_fn_80197D20.o",
+      "returncode": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x470 contains 13 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000506 R_PPC_ADDR16_HA        00000000   lbl_8023B0A0 + 0\n00000032  00000504 R_PPC_ADDR16_LO        00000000   lbl_8023B0A0 + 0\n00000084  0000090a R_PPC_REL24            00000000   fn_8018FEDC + 0\n000000a4  00000a0a R_PPC_REL24            00000000   fn_80198AAC + 0\n000000cc  00000b0a R_PPC_REL24            00000000   memcpy + 0\n000000e0  0000066d R_PPC_EMB_SDA21        00000000   lbl_80650BA8 + 0\n000000ec  0000076d R_PPC_EMB_SDA21        00000000   lbl_80650B94 + 0\n000000f4  0000046d R_PPC_EMB_SDA21        00000000   @61 + 0\n00000118  00000c0a R_PPC_REL24            00000000   fn_80179370 + 0\n00000138  00000d0a R_PPC_REL24            00000000   fn_80198154 + 0\n000003ec  00000e0a R_PPC_REL24            00000000   fn_80198318 + 0\n00000404  0000086d R_PPC_EMB_SDA21        00000000   lbl_80650BAC + 0\n0000040c  00000f0a R_PPC_REL24            00000000   fn_80198BF4 + 0\n",
+      "stderr": ""
+    },
+    "retail_readelf": {
+      "command": "readelf -rW build/GEDE01/obj/game/game_fn_80197D20.o",
+      "returncode": 0,
+      "stdout": "\nRelocation section '.rela.text' at offset 0x474 contains 13 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n0000000a  00000406 R_PPC_ADDR16_HA        00000000   lbl_8023B0A0 + 0\n00000032  00000404 R_PPC_ADDR16_LO        00000000   lbl_8023B0A0 + 0\n00000084  0000050a R_PPC_REL24            00000000   fn_8018FEDC + 0\n000000a4  0000060a R_PPC_REL24            00000000   fn_80198AAC + 0\n000000cc  0000070a R_PPC_REL24            00000000   memcpy + 0\n000000e0  0000086d R_PPC_EMB_SDA21        00000000   lbl_80650BA8 + 0\n000000ec  0000096d R_PPC_EMB_SDA21        00000000   lbl_80650B94 + 0\n000000f4  00000a6d R_PPC_EMB_SDA21        00000000   lbl_80650B98 + 0\n00000118  00000b0a R_PPC_REL24            00000000   fn_80179370 + 0\n00000138  00000c0a R_PPC_REL24            00000000   fn_80198154 + 0\n000003ec  00000d0a R_PPC_REL24            00000000   fn_80198318 + 0\n00000404  00000e6d R_PPC_EMB_SDA21        00000000   lbl_80650BAC + 0\n0000040c  00000f0a R_PPC_REL24            00000000   fn_80198BF4 + 0\n",
+      "stderr": ""
+    },
+    "bias_instruction": "lfd f2, @61@sda21"
+  },
+  "divergence": "Canonical and relocation-strict objdiff both 89.732346% (1076 generated and retail bytes), improved from fresh baseline 88.215614%. The r19-r31 save range, stack frame, count/half-count register copies, and first vertex loop now agree. Remaining differences: signed-conversion store scheduling; compiler-owned @61 SDA21 bias instead of retail lbl_80650B98 at text+0xf4 (both zero addend); unrolled delta loop uses r10 induction offset and different allocation/scheduling versus retail r8; final scale-loop index uses r25 versus retail r23. All 13 relocation slots have matching offsets, types and zero addends, but the conversion-bias target differs. Constant-pool identity remains a structural mismatch under the independent-TU/no-externalization/no-new-compiler-policy constraint; no promotion claimed.",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80197D20 fn_80197D20 -o reports/GEDE01/objdiff-a31774ce-306e-4a04-b66e-a580f64fa888-canonical.raw.json --format json-pretty",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-a31774ce-306e-4a04-b66e-a580f64fa888-canonical.raw.json",
+    "raw_measurement": {
+      "left": {
+        "size": "1076",
+        "match_percent": 89.732346
+      },
+      "right": {
+        "size": "1076",
+        "match_percent": 89.732346
+      }
+    }
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80197D20 fn_80197D20 -o reports/GEDE01/objdiff-a31774ce-306e-4a04-b66e-a580f64fa888-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-a31774ce-306e-4a04-b66e-a580f64fa888-reloc-strict.raw.json",
+    "raw_measurement": {
+      "left": {
+        "size": "1076",
+        "match_percent": 89.732346
+      },
+      "right": {
+        "size": "1076",
+        "match_percent": 89.732346
+      }
+    }
+  }
+}

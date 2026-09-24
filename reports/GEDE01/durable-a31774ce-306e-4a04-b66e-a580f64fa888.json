@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a31774ce-306e-4a04-b66e-a580f64fa888",
+  "attempt": 5,
+  "base_commit": "a5b14ff7188b98f9253e9295af318dace0e3b4ba",
+  "target": "fn_80197D20",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a31774ce-306e-4a04-b66e-a580f64fa888.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both 89.732346% (1076 generated and retail bytes), improved from fresh baseline 88.215614%. The r19-r31 save range, stack frame, count/half-count register copies, and first vertex loop now agree. Remaining differences: signed-conversion store scheduling; compiler-owned @61 SDA21 bias instead of retail lbl_80650B98 at text+0xf4 (both zero addend); unrolled delta loop uses r10 induction offset and different allocation/scheduling versus retail r8; final scale-loop index uses r25 versus retail r23. All 13 relocation slots have matching offsets, types and zero addends, but the conversion-bias target differs. Constant-pool identity remains a structural mismatch under the independent-TU/no-externalization/no-new-compiler-policy constraint; no promotion claimed."
+}
