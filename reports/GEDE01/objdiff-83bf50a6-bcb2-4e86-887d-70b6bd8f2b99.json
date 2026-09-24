@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "assignment_id": "83bf50a6-bcb2-4e86-887d-70b6bd8f2b99",
+  "attempt": 5,
+  "target": "fn_8015E9EC",
+  "base_commit": "fc924b473f3bbd4cbef0f72e76d980bd3fcfe7a9",
+  "canonical_compiler": "GC/1.3",
+  "canonical_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c",
+  "command_working_directory": "eternal-darkness-decomp",
+  "source": "eternal-darkness-decomp/src/game/game_fn_8015E9EC.c",
+  "source_sha256": "f9667affc28befc3ed527104348d76664da5f330a6cfe1bc72dce11be867c948",
+  "independent_translation_unit": true,
+  "split": {
+    "start": "0x8015E9EC",
+    "end": "0x8015EA7C",
+    "changed": false
+  },
+  "preserved_attempts_reviewed": [
+    {
+      "commit": "e1f73a1b5ac15399a820b9fb91c060430eab9e96",
+      "finding": "87.75%; signed/long, propagation pragma, register local and volatile local probes."
+    },
+    {
+      "commit": "a081206075ee3d853b9e8607c7b1a7eca4ccfc5f",
+      "finding": "87.75%; named locals, repeated expression, K&R parameters. Explicit saves make savegpr helper threshold irrelevant."
+    },
+    {
+      "commit": "7379ce17b4191a0fdc9e01c471fbc43039592039",
+      "finding": "87.75%; assignment spellings. Its row-index-based instruction/relocation offsets were incorrect; actual instruction addresses and readelf relocation offsets are used here."
+    },
+    {
+      "commit": "d52cafc169f110b92c5657b0f87e855ea8e00e7e",
+      "finding": "Handoff documents unprototyped cache call and register-qualified parameters producing identical code; not repeated."
+    }
+  ],
+  "new_hypothesis": "Widen the persistent aligned-size local to unsigned long long after the 32-bit alignment expression has completed. This changes temporary register allocation while both consumers still take its low 32 bits.",
+  "semantic_reasoning": "size remains unsigned int at the public ABI. Addition and masking still happen in 32-bit unsigned arithmetic, including wraparound. The masked value is then zero-extended into aligned; both calls convert back to u32 without losing any information.",
+  "measured_result": "The retained late-widening variant computes clrrwi r4,r0,5 at 0x1c and copies mr r31,r4 at 0x2c, exactly as retail. All earlier and later bytes also match.",
+  "probe_report": "eternal-darkness-decomp/reports/GEDE01/probe-83bf50a6-bcb2-4e86-887d-70b6bd8f2b99.json",
+  "probes_measured": 53,
+  "probe_scope": "Baseline plus width/conversion placement, inline helper lowering, equivalent arithmetic, aggregates/aliases, ABI-width pointer/integer parameter types, call prototype conversion types, all six three-local declaration orders, and const-local variants. Canonical flags unchanged throughout. No savegpr pragma or compiler-policy change.",
+  "canonical": {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_8015E9EC",
+      "fn_8015E9EC",
+      "-o",
+      "reports/GEDE01/objdiff-83bf50a6-bcb2-4e86-887d-70b6bd8f2b99-canonical.raw.json",
+      "--format",
+      "json-pretty"
+    ],
+    "match_percent": 100.0,
+    "retail_size_bytes": 144,
+    "generated_size_bytes": 144,
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-83bf50a6-bcb2-4e86-887d-70b6bd8f2b99-canonical.raw.json"
+  },
+  "relocation_strict": {
+    "command": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-p",
+      ".",
+      "-u",
+      "main/game/game_fn_8015E9EC",
+      "fn_8015E9EC",
+      "-o",
+      "reports/GEDE01/objdiff-83bf50a6-bcb2-4e86-887d-70b6bd8f2b99-reloc-strict.raw.json",
+      "--format",
+      "json-pretty",
+      "-c",
+      "function_reloc_diffs=name_address"
+    ],
+    "match_percent": 100.0,
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-83bf50a6-bcb2-4e86-887d-70b6bd8f2b99-reloc-strict.raw.json",
+    "explicit_elf_relocations_matched": 9,
+    "explicit_elf_relocations_total": 9,
+    "verification_report": "eternal-darkness-decomp/reports/GEDE01/verification-83bf50a6-bcb2-4e86-887d-70b6bd8f2b99.json"
+  },
+  "build_report": "eternal-darkness-decomp/reports/GEDE01/build-83bf50a6-bcb2-4e86-887d-70b6bd8f2b99.json",
+  "divergence": ""
+}

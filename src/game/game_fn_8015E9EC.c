@@ -9,8 +9,10 @@ extern void fn_8015E8E8(void);
 
 void fn_8015E9EC(u32 value, void* destination, u32 size)
 {
-    DCInvalidateRange(destination, size = (size + 0x1F) & ~0x1F);
-    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, size,
+    unsigned long long aligned;
+
+    DCInvalidateRange(destination, aligned = (unsigned long long)((size + 31) & ~31));
+    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (u32)aligned,
                 fn_8015E8E8);
     fn_8020D318(lbl_805E2BDC, 0, 1);
 }

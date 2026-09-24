@@ -1,0 +1,79 @@
+{
+  "canonical": {
+    "match_percent": 100.0,
+    "retail_size": 144,
+    "generated_size": 144,
+    "fresh_post_build_command": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "reports/GEDE01/objdiff-83bf50a6-bcb2-4e86-887d-70b6bd8f2b99-canonical.raw.json",
+        "--format",
+        "json-pretty"
+      ],
+      "exit_code": 0,
+      "raw_output": " INFO Writing to reports/GEDE01/objdiff-83bf50a6-bcb2-4e86-887d-70b6bd8f2b99-canonical.raw.json\n"
+    }
+  },
+  "reloc-strict": {
+    "match_percent": 100.0,
+    "retail_size": 144,
+    "generated_size": 144,
+    "fresh_post_build_command": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "reports/GEDE01/objdiff-83bf50a6-bcb2-4e86-887d-70b6bd8f2b99-reloc-strict.raw.json",
+        "--format",
+        "json-pretty",
+        "-c",
+        "function_reloc_diffs=name_address"
+      ],
+      "exit_code": 0,
+      "raw_output": " INFO Writing to reports/GEDE01/objdiff-83bf50a6-bcb2-4e86-887d-70b6bd8f2b99-reloc-strict.raw.json\n"
+    }
+  },
+  "retail": {
+    "command": [
+      "build/binutils/powerpc-eabi-readelf",
+      "-Wr",
+      "build/GEDE01/obj/game/game_fn_8015E9EC.o"
+    ],
+    "exit_code": 0,
+    "raw_readelf_output": "\nRelocation section '.rela.text' at offset 0xd0 contains 9 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000030  0000040a R_PPC_REL24            00000000   DCInvalidateRange + 0\n00000036  00000506 R_PPC_ADDR16_HA        00000000   lbl_805FAA40 + 0\n0000003a  00000606 R_PPC_ADDR16_HA        00000000   fn_8015E8E8 + 0\n0000003e  00000604 R_PPC_ADDR16_LO        00000000   fn_8015E8E8 + 0\n00000046  00000504 R_PPC_ADDR16_LO        00000000   lbl_805FAA40 + 0\n0000005c  0000070a R_PPC_REL24            00000000   fn_8021B730 + 0\n00000062  00000806 R_PPC_ADDR16_HA        00000000   lbl_805E2BDC + 0\n0000006a  00000804 R_PPC_ADDR16_LO        00000000   lbl_805E2BDC + 0\n00000070  0000090a R_PPC_REL24            00000000   fn_8020D318 + 0\n",
+    "text_sha256": "eab48ce1311a17837646f8d2de1c05d160eb892ac17900ac2c93a465413ad91a"
+  },
+  "generated": {
+    "command": [
+      "build/binutils/powerpc-eabi-readelf",
+      "-Wr",
+      "build/GEDE01/src/game/game_fn_8015E9EC.o"
+    ],
+    "exit_code": 0,
+    "raw_readelf_output": "\nRelocation section '.rela.text' at offset 0xc4 contains 9 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000030  0000050a R_PPC_REL24            00000000   DCInvalidateRange + 0\n00000036  00000306 R_PPC_ADDR16_HA        00000000   lbl_805FAA40 + 0\n0000003a  00000606 R_PPC_ADDR16_HA        00000000   fn_8015E8E8 + 0\n0000003e  00000604 R_PPC_ADDR16_LO        00000000   fn_8015E8E8 + 0\n00000046  00000304 R_PPC_ADDR16_LO        00000000   lbl_805FAA40 + 0\n0000005c  0000070a R_PPC_REL24            00000000   fn_8021B730 + 0\n00000062  00000406 R_PPC_ADDR16_HA        00000000   lbl_805E2BDC + 0\n0000006a  00000404 R_PPC_ADDR16_LO        00000000   lbl_805E2BDC + 0\n00000070  0000080a R_PPC_REL24            00000000   fn_8020D318 + 0\n",
+    "text_sha256": "eab48ce1311a17837646f8d2de1c05d160eb892ac17900ac2c93a465413ad91a"
+  },
+  "relocation_rows_equal": true,
+  "relocation_count": 9,
+  "text_bytes_equal": true,
+  "relocation_comparison_fields": [
+    "section-relative offset",
+    "relocation type",
+    "symbol name",
+    "addend"
+  ],
+  "relocation_comparison_ignores": "ELF symbol table indices, which need not be the same between independently produced objects.",
+  "source_sha256": "f9667affc28befc3ed527104348d76664da5f330a6cfe1bc72dce11be867c948"
+}

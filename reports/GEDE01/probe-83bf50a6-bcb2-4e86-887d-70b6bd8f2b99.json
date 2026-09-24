@@ -1,0 +1,4507 @@
+[
+  {
+    "name": "baseline",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, size = (size + 0x1F) & ~0x1F);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "inline_alignment_helper",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nstatic inline u32 align_size(u32 n) { return (n + 31) & ~31; }\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, size = align_size(size));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, size, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "inline_cache_alignment_helper",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nstatic inline u32 invalidate(void* p, u32 n) { n = (n + 31) & ~31; DCInvalidateRange(p,n); return n; }\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    size = invalidate(destination, size);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, size, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "unsigned_64_intermediate",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, size = ((unsigned long long)size + 31) & ~31ULL);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, size, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 78.05556,
+    "size": "156",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 78.05556
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "156"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "unsigned_64_persistent",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    unsigned long long aligned;\n    DCInvalidateRange(destination, aligned = ((unsigned long long)size + 31) & 0xFFFFFFE0ULL);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (u32)aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 88.05556,
+    "size": "156",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 88.05556
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "156"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "alignment_division",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, size = ((size + 31) / 32) * 32);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, size, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "alignment_shift",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, size = ((size + 31) >> 5) << 5);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, size, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "alignment_subtract_remainder",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    size += 31; DCInvalidateRange(destination, size -= size % 32);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, size, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 79.138885,
+    "size": "148",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 79.138885
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "148"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "alignment_pointer_roundtrip",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, size = (u32)(char*)((size + 31) & ~31));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, size, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "alignment_bitfield",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    union { struct { unsigned upper:27; unsigned lower:5; }; u32 word; } aligned;\n    aligned.upper = (size + 31) >> 5; aligned.lower = 0; DCInvalidateRange(destination, aligned.word);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, aligned.word, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 59.72222,
+    "size": "164",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 59.72222
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "164"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "alignment_union",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    union { u32 word; void* pointer; } aligned;\n    aligned.word = (size + 31) & ~31; DCInvalidateRange(destination, aligned.word);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, aligned.word, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "address_taken_local_alias",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    u32 aligned;\n    u32* alias = &aligned;\n    *alias = (size + 31) & ~31; DCInvalidateRange(destination, *alias);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, *alias, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "parameter_types_u32_void*_char*",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, char* size)\n{\n    u32 aligned;\n    DCInvalidateRange((void*)destination, aligned = ((u32)size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, (u32)value, (void*)destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "parameter_types_u32_u32_u32",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, u32 destination, u32 size)\n{\n    u32 aligned;\n    DCInvalidateRange((void*)destination, aligned = ((u32)size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, (u32)value, (void*)destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "parameter_types_u32_u32_char*",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, u32 destination, char* size)\n{\n    u32 aligned;\n    DCInvalidateRange((void*)destination, aligned = ((u32)size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, (u32)value, (void*)destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "parameter_types_void*_void*_u32",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(void* value, void* destination, u32 size)\n{\n    u32 aligned;\n    DCInvalidateRange((void*)destination, aligned = ((u32)size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, (u32)value, (void*)destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "parameter_types_void*_void*_char*",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(void* value, void* destination, char* size)\n{\n    u32 aligned;\n    DCInvalidateRange((void*)destination, aligned = ((u32)size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, (u32)value, (void*)destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "parameter_types_void*_u32_u32",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(void* value, u32 destination, u32 size)\n{\n    u32 aligned;\n    DCInvalidateRange((void*)destination, aligned = ((u32)size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, (u32)value, (void*)destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "parameter_types_void*_u32_char*",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(void* value, u32 destination, char* size)\n{\n    u32 aligned;\n    DCInvalidateRange((void*)destination, aligned = ((u32)size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, (u32)value, (void*)destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "enum_size",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nenum Size { SIZE_ZERO = 0, SIZE_MAX = 0x7fffffff };\nvoid fn_8015E9EC(u32 value, void* destination, enum Size size)\n{\n    u32 aligned;\n    DCInvalidateRange(destination, aligned = (size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "comma_call_in_size_argument",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    \n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (DCInvalidateRange(destination, size = (size + 31) & ~31), size), fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "comma_call_in_destination_argument",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    \n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, (DCInvalidateRange(destination, size = (size + 31) & ~31), destination), size, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "inline_wrapper_swapped_params",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nstatic inline void invalidate(u32* n, void* p) { *n = (*n + 31) & ~31; DCInvalidateRange(p,*n); }\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    invalidate(&size, destination);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, size, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "unsigned_64_narrow_before_call_unsigned long",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    unsigned long long aligned;\n    aligned = ((unsigned long long)size + 31) & 0xFFFFFFE0ULL; DCInvalidateRange(destination, (unsigned long)aligned);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (u32)aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 88.05556,
+    "size": "156",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 88.05556
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "156"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "unsigned_64_narrow_before_call_signed long",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    unsigned long long aligned;\n    aligned = ((unsigned long long)size + 31) & 0xFFFFFFE0ULL; DCInvalidateRange(destination, (signed long)aligned);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (u32)aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 88.05556,
+    "size": "156",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 88.05556
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "156"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "unsigned_64_narrow_before_call_int",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    unsigned long long aligned;\n    aligned = ((unsigned long long)size + 31) & 0xFFFFFFE0ULL; DCInvalidateRange(destination, (int)aligned);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (u32)aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 88.05556,
+    "size": "156",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 88.05556
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "156"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "unsigned_64_narrow_before_call_u32",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    unsigned long long aligned;\n    aligned = ((unsigned long long)size + 31) & 0xFFFFFFE0ULL; DCInvalidateRange(destination, (u32)aligned);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (u32)aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 88.05556,
+    "size": "156",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 88.05556
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "156"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_int_int",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, int);\nextern void fn_8021B730(void*, int, int, int, u32, void*, int, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (int)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (int)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_int_long",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, int);\nextern void fn_8021B730(void*, int, int, int, u32, void*, long, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (int)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (long)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_int_unsigned long",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, int);\nextern void fn_8021B730(void*, int, int, int, u32, void*, unsigned long, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (int)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (unsigned long)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_int_void*",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, int);\nextern void fn_8021B730(void*, int, int, int, u32, void*, void*, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (int)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (void*)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_long_int",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, long);\nextern void fn_8021B730(void*, int, int, int, u32, void*, int, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (long)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (int)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_long_long",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, long);\nextern void fn_8021B730(void*, int, int, int, u32, void*, long, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (long)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (long)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_long_unsigned long",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, long);\nextern void fn_8021B730(void*, int, int, int, u32, void*, unsigned long, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (long)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (unsigned long)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_long_void*",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, long);\nextern void fn_8021B730(void*, int, int, int, u32, void*, void*, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (long)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (void*)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_unsigned long_int",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, unsigned long);\nextern void fn_8021B730(void*, int, int, int, u32, void*, int, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (unsigned long)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (int)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_unsigned long_long",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, unsigned long);\nextern void fn_8021B730(void*, int, int, int, u32, void*, long, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (unsigned long)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (long)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_unsigned long_unsigned long",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, unsigned long);\nextern void fn_8021B730(void*, int, int, int, u32, void*, unsigned long, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (unsigned long)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (unsigned long)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_unsigned long_void*",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, unsigned long);\nextern void fn_8021B730(void*, int, int, int, u32, void*, void*, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (unsigned long)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (void*)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_void*_int",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, void*);\nextern void fn_8021B730(void*, int, int, int, u32, void*, int, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (void*)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (int)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_void*_long",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, void*);\nextern void fn_8021B730(void*, int, int, int, u32, void*, long, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (void*)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (long)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_void*_unsigned long",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, void*);\nextern void fn_8021B730(void*, int, int, int, u32, void*, unsigned long, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (void*)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (unsigned long)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "call_argument_types_void*_void*",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, void*);\nextern void fn_8021B730(void*, int, int, int, u32, void*, void*, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    DCInvalidateRange(destination, (void*)(size = (size + 0x1F) & ~0x1F));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (void*)size,\n                fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "all_declaration_orders_saved_value_saved_destination_aligned",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    u32 saved_value;\n    void* saved_destination;\n    u32 aligned;\n    saved_value = value; saved_destination = destination; DCInvalidateRange(saved_destination, aligned = (size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, saved_value, saved_destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "all_declaration_orders_saved_value_aligned_saved_destination",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    u32 saved_value;\n    u32 aligned;\n    void* saved_destination;\n    saved_value = value; saved_destination = destination; DCInvalidateRange(saved_destination, aligned = (size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, saved_value, saved_destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "all_declaration_orders_saved_destination_saved_value_aligned",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    void* saved_destination;\n    u32 saved_value;\n    u32 aligned;\n    saved_value = value; saved_destination = destination; DCInvalidateRange(saved_destination, aligned = (size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, saved_value, saved_destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "all_declaration_orders_saved_destination_aligned_saved_value",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    void* saved_destination;\n    u32 aligned;\n    u32 saved_value;\n    saved_value = value; saved_destination = destination; DCInvalidateRange(saved_destination, aligned = (size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, saved_value, saved_destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "all_declaration_orders_aligned_saved_value_saved_destination",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    u32 aligned;\n    u32 saved_value;\n    void* saved_destination;\n    saved_value = value; saved_destination = destination; DCInvalidateRange(saved_destination, aligned = (size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, saved_value, saved_destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "all_declaration_orders_aligned_saved_destination_saved_value",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    u32 aligned;\n    void* saved_destination;\n    u32 saved_value;\n    saved_value = value; saved_destination = destination; DCInvalidateRange(saved_destination, aligned = (size + 31) & ~31);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, saved_value, saved_destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "constant_local_const",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    const u32 aligned = (size + 31) & ~31;\n    DCInvalidateRange(destination, aligned);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "constant_local_register const",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    register const u32 aligned = (size + 31) & ~31;\n    DCInvalidateRange(destination, aligned);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.75,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.75
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "unsigned_64_after_add",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    unsigned long long aligned;\n    DCInvalidateRange(destination, aligned = (unsigned long long)(size + 31) & ~31ULL);\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (u32)aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 87.77778,
+    "size": "148",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 87.77778
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "148"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  },
+  {
+    "name": "unsigned_64_after_mask",
+    "source": "typedef unsigned int u32;\n\nextern char lbl_805FAA40[];\nextern char lbl_805E2BDC[];\nextern void DCInvalidateRange(void*, u32);\nextern void fn_8021B730(void*, int, int, int, u32, void*, u32, void*);\nextern int fn_8020D318(void*, int, int);\nextern void fn_8015E8E8(void);\n\nvoid fn_8015E9EC(u32 value, void* destination, u32 size)\n{\n    unsigned long long aligned;\n    DCInvalidateRange(destination, aligned = (unsigned long long)((size + 31) & ~31));\n    fn_8021B730(lbl_805FAA40, 8, 1, 0, value, destination, (u32)aligned, fn_8015E8E8);\n    fn_8020D318(lbl_805E2BDC, 0, 1);\n}\n",
+    "build": {
+      "command": [
+        ".tools/bin/ninja",
+        "-j2",
+        "build/GEDE01/src/game/game_fn_8015E9EC.o"
+      ],
+      "exit_code": 0,
+      "output": "[1/1] MWCC build/GEDE01/src/game/game_fn_8015E9EC.o\n"
+    },
+    "score": 100.0,
+    "size": "144",
+    "measurement": {
+      "command": [
+        "build/tools/objdiff-cli",
+        "diff",
+        "-p",
+        ".",
+        "-u",
+        "main/game/game_fn_8015E9EC",
+        "fn_8015E9EC",
+        "-o",
+        "build/GEDE01/fndiff_fn_8015E9EC.json",
+        "--format",
+        "json"
+      ],
+      "exit_code": 0,
+      "output": " INFO Writing to build/GEDE01/fndiff_fn_8015E9EC.json\n"
+    },
+    "raw_sections": {
+      "left": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144",
+          "match_percent": 100.0
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "38"
+        }
+      ],
+      "right": [
+        {
+          "name": ".text",
+          "kind": "SECTION_CODE",
+          "size": "144"
+        },
+        {
+          "name": ".rela.text",
+          "size": "108"
+        },
+        {
+          "name": ".symtab",
+          "size": "160"
+        },
+        {
+          "name": ".strtab",
+          "size": "112"
+        },
+        {
+          "name": ".shstrtab",
+          "size": "53"
+        },
+        {
+          "name": ".comment",
+          "size": "124"
+        }
+      ]
+    }
+  }
+]
