@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "111f04ea-0723-42ac-b8b9-8cdedf0b2005",
+  "attempt": 3,
+  "base_commit": "4730f918f24de8f020c4ae7f6c79cc1c7c380b0a",
+  "target": "fn_80068674",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-111f04ea-0723-42ac-b8b9-8cdedf0b2005.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-111f04ea-0723-42ac-b8b9-8cdedf0b2005-reloc-strict.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 88.67391% (retail 184 bytes, reconstruction 176 bytes), with all five R_PPC_REL24 calls agreeing in target and zero addend. Ground-truth full prototypes for fn_80201814, fn_80201B54, and fn_80201B64 were applied and are codegen-neutral. A distinct explicit byte-offset/assignment-condition hypothesis regressed to 84.434784%; keeping separate base and traversal aliases reached the retail 184-byte r25-r31 frame but regressed to 84.67391-84.891304% and emitted two walking pointers. The best canonical C still coalesces the array base and byte offset into one r31 walking pointer (lwz/stw), unlike retail's r30 base plus r31 offset (lwzx/stwx), and cannot express retail's terminal assertion-breakpoint nop without forbidden assembly."
+}
