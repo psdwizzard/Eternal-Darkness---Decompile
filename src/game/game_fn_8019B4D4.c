@@ -61,7 +61,7 @@ void fn_8019B4D4(u8* object, void* first, void* second, u8* config)
 
     fn_80180554(entry, first, second, &setup, 0, 0);
     default_texture = (Texture*)(lbl_802FC5BC + 0xC);
-    fn_801805E0(entry + 0x20, 4, config[1], 0, default_texture,
+    fn_801805E0(entry + 0x20, 4, (int)config[1], 0, default_texture,
                 lbl_80650BF8);
 
     if ((u8)((s8*)config)[0x16] != 0) {
