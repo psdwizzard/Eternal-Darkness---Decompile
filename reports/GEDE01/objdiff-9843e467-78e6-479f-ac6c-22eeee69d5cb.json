@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "assignment_id": "9843e467-78e6-479f-ac6c-22eeee69d5cb",
+  "target": "fn_8015E9EC",
+  "tool": "objdiff-cli 3.6.1",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8015E9EC fn_8015E9EC -o reports/GEDE01/objdiff-9843e467-78e6-479f-ac6c-22eeee69d5cb-canonical.raw.json --format json-pretty",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-9843e467-78e6-479f-ac6c-22eeee69d5cb-canonical.raw.json",
+    "raw_measurement_output": "target 144 bytes  base 144 bytes  match 87.75"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8015E9EC fn_8015E9EC -o reports/GEDE01/objdiff-9843e467-78e6-479f-ac6c-22eeee69d5cb-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_report": "eternal-darkness-decomp/reports/GEDE01/objdiff-9843e467-78e6-479f-ac6c-22eeee69d5cb-reloc-strict.raw.json",
+    "raw_measurement_output": "retail_bytes=144 generated_bytes=144 match_percent=87.75 relocations_matched=9 relocations_total=9",
+    "raw_generated_readelf_output": [
+      "00000030  0000050a R_PPC_REL24       00000000   DCInvalidateRange + 0",
+      "00000036  00000306 R_PPC_ADDR16_HA   00000000   lbl_805FAA40 + 0",
+      "0000003a  00000606 R_PPC_ADDR16_HA   00000000   fn_8015E8E8 + 0",
+      "0000003e  00000604 R_PPC_ADDR16_LO   00000000   fn_8015E8E8 + 0",
+      "00000046  00000304 R_PPC_ADDR16_LO   00000000   lbl_805FAA40 + 0",
+      "0000005c  0000070a R_PPC_REL24       00000000   fn_8021B730 + 0",
+      "00000062  00000406 R_PPC_ADDR16_HA   00000000   lbl_805E2BDC + 0",
+      "0000006a  00000404 R_PPC_ADDR16_LO   00000000   lbl_805E2BDC + 0",
+      "00000070  0000080a R_PPC_REL24       00000000   fn_8020D318 + 0"
+    ],
+    "raw_retail_readelf_output": [
+      "00000030  0000040a R_PPC_REL24       00000000   DCInvalidateRange + 0",
+      "00000036  00000506 R_PPC_ADDR16_HA   00000000   lbl_805FAA40 + 0",
+      "0000003a  00000606 R_PPC_ADDR16_HA   00000000   fn_8015E8E8 + 0",
+      "0000003e  00000604 R_PPC_ADDR16_LO   00000000   fn_8015E8E8 + 0",
+      "00000046  00000504 R_PPC_ADDR16_LO   00000000   lbl_805FAA40 + 0",
+      "0000005c  0000070a R_PPC_REL24       00000000   fn_8021B730 + 0",
+      "00000062  00000806 R_PPC_ADDR16_HA   00000000   lbl_805E2BDC + 0",
+      "0000006a  00000804 R_PPC_ADDR16_LO   00000000   lbl_805E2BDC + 0",
+      "00000070  0000090a R_PPC_REL24       00000000   fn_8020D318 + 0"
+    ]
+  },
+  "raw_codegen_divergence": [
+    "canonical 0x14 clrrwi r31,r0,5; retail 0x14 stw r30,0x18(r1)",
+    "canonical 0x18 stw r30,0x18(r1) and 0x1c mr r30,r4; retail schedules these at 0x14 and 0x18",
+    "canonical 0x20 mr r4,r31; retail 0x1c clrrwi r4,r0,5 and has no corresponding copy",
+    "canonical saves r29, copies value to r29, and copies destination to r3 at 0x24-0x2c; retail schedules the same block at 0x20-0x28 and emits mr r31,r4 at 0x2c"
+  ],
+  "variants_measured": [
+    "preserved assignment expression in DCInvalidateRange argument: 87.75%",
+    "explicit saved-destination, saved-value, aligned-size locals declared in desired lifetime order: 87.75% (byte-identical; not retained)",
+    "repeated alignment expression at both calls to avoid a named persistent size: 87.75% (optimized byte-identically; not retained)",
+    "K&R parameter declarations ordered destination, value, size to probe parameter coloring: 87.75% (byte-identical; not retained)",
+    "savegpr threshold was ruled out: the required retail and canonical functions both use the same three explicit nonvolatile saves/restores and identical 144-byte size"
+  ],
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2", "sha1sum build/GEDE01/main.dol", "cmp -s build/GEDE01/main.dol orig/GEDE01/sys/main.dol", "python3 tools/legal_audit.py"],
+    "raw_outputs": ["build/GEDE01/main.dol: OK", "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol", "DOL_CMP_EXIT=0", "legal audit passed (21409 tracked project files inspected)"]
+  },
+  "divergence": "Canonical and relocation-strict objdiff are size-exact at 144/144 bytes and 87.75%, with 9/9 relocation entries equal in object-relative offset, type, target, and addend. The only divergent window is 0x14-0x2c: retail forms aligned size in outgoing r4 and delays preservation into r31 until 0x2c, while canonical forms it directly in r31 at 0x14 and copies it to r4 at 0x20."
+}

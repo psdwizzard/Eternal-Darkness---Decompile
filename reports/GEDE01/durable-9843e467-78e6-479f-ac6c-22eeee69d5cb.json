@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "assignment_id": "9843e467-78e6-479f-ac6c-22eeee69d5cb",
+  "attempt": 3,
+  "base_commit": "a9a9a5ddc4348fe8f52e4775a2da7f477f6332f2",
+  "target": "fn_8015E9EC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9843e467-78e6-479f-ac6c-22eeee69d5cb.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9843e467-78e6-479f-ac6c-22eeee69d5cb-canonical.raw.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9843e467-78e6-479f-ac6c-22eeee69d5cb-reloc-strict.raw.json"
+  ],
+  "divergence": "Size-exact 144/144-byte canonical and relocation-strict score is 87.75%, with all 9/9 relocations equal. Divergence is confined to 0x14-0x2c: retail computes aligned size in r4 then preserves it in r31 at 0x2c; canonical computes it directly in r31 at 0x14 and copies it to r4 at 0x20."
+}
