@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "f642db36-6a45-4350-9a62-015e26df2ff4",
+  "attempt": 3,
+  "base_commit": "9ad34e43d9c97357927b3b04c4c916383ff6231a",
+  "target": "fn_801EA900",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f642db36-6a45-4350-9a62-015e26df2ff4.json"
+  ],
+  "divergence": "Canonical and relocation-strict GC/1.3 objdiff both measure 87.01613% for the size-exact 248-byte function, with zero relocations on either side. Retail keeps the accumulated source offset in r10, count in r6, and outer cursors/sizes in r5-r8; generated code colors the offset r9, count r7, and related temporaries differently. At retail offsets 0x80-0x94 the setup is add/li/stw/mr/add/li, while generated code schedules add/add/stw/li/li/li. Attempt 3 newly compiled leading source-parameter hoists (ordinary and register-qualified), declaration-order and register-offset variants, split initial-size and count locals, separate loop indices, integer-source typing, and explicit pointer-loop forms; none exceeded 87.01613%, so the accepted honest C reconstruction was retained unchanged."
+}
