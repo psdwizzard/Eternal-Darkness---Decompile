@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "9e229b7c-5b6a-4e88-8bba-0ded948d86ab",
+  "attempt": 5,
+  "base_commit": "a3a43533beeca2f41ebe1c170e5865dfe931eea1",
+  "target": "fn_80195AEC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9e229b7c-5b6a-4e88-8bba-0ded948d86ab.json",
+    "eternal-darkness-decomp/reports/GEDE01/reloc-strict-9e229b7c-5b6a-4e88-8bba-0ded948d86ab.json",
+    "eternal-darkness-decomp/reports/GEDE01/validation-9e229b7c-5b6a-4e88-8bba-0ded948d86ab.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-9e229b7c-5b6a-4e88-8bba-0ded948d86ab.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 93.76213% (up from 91.31768%). Retail .text is 2556 bytes; the retained candidate is 2568 bytes. Retail saves r17-r31 at stack offset 0x74; candidate saves r18-r31 at 0x78. Remaining differences include long-lived flags/count/mode allocation, branch-local promotion copies, and floating split-path scheduling. Both objects have 46 .text relocations (552-byte .rela.text), but four signed-integer conversion loads target candidate-local @60 instead of retail lbl_80650B58; matching relocation counts do not imply equal targets/addends. The independent honest-C source remains NonMatching under unchanged GC/1.3 compiler settings and unchanged registration. Full canonical configure/Ninja build passed; main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
