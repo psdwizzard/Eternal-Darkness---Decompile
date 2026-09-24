@@ -56,10 +56,15 @@ int fn_80173BDC(void* arg)
     position.z = source->z;
 
     fn_801839A4(&descriptor);
-    descriptor.bytes[20] = kind;
-    *(unsigned int*)&submit_position = *(unsigned int*)&position;
-    submit_position.y = position.y;
-    submit_position.z = position.z;
+    {
+        unsigned int x = ((unsigned int*)&position)[0];
+        unsigned int y = ((unsigned int*)&position)[1];
+        unsigned int z = ((unsigned int*)&position)[2];
+        descriptor.bytes[20] = kind;
+        ((unsigned int*)&submit_position)[0] = x;
+        ((unsigned int*)&submit_position)[1] = y;
+        ((unsigned int*)&submit_position)[2] = z;
+    }
     {
         void* effect = fn_80148008(&submit_position, &rotation, &descriptor,
                                    fn_801839D8);

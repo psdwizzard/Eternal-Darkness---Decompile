@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "096cdb2b-f3d4-4aba-a989-53653d65f84f",
+  "attempt": 5,
+  "base_commit": "c8dcaf48f0c2ae9b6d68a6268ee62161098f1891",
+  "target": "fn_80173BDC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-096cdb2b-f3d4-4aba-a989-53653d65f84f.json",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-096cdb2b-f3d4-4aba-a989-53653d65f84f.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-096cdb2b-f3d4-4aba-a989-53653d65f84f.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-096cdb2b-f3d4-4aba-a989-53653d65f84f.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 99.777780%, improved from 97.222220%, with exact 360-byte size and 90 instructions. All 19 relocation offset/type/target/addend entries match. Initialized word temporaries before the descriptor byte store correct copy opcodes and scheduling. Four instruction words differ solely by swapped r0/r8 allocation: offsets 0x108 and 0x12C use r0 instead of retail r8 for the first vector word; offsets 0x118 and 0x134 use r8 instead of retail r0 for the third word. Raw .text comparison matches 356/360 bytes and 86/90 instruction words. Retained as NonMatching; DOL verification uses retail assembly for this function."
+}
