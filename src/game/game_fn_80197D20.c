@@ -22,6 +22,7 @@ void fn_80197D20(u8* object, u8* vertices, void* info, u8 flags)
     Vec3 initial = lbl_8023B0A0;
     register void* info_local = info;
     u8 count = object[1];
+    register volatile int saved_half_count = object[1] >> 1;
     int half_count = (count >> 1) & 0x7f;
     u8* entry = *(u8**)(object + 0x4c);
     u8 flags_local = flags;
@@ -31,7 +32,6 @@ void fn_80197D20(u8* object, u8* vertices, void* info, u8 flags)
     register u8* saved_entry = entry;
     int index;
     int generated;
-    register int saved_half_count = object[1] >> 1;
     register int full_count = object[1];
 
     generated = 0;

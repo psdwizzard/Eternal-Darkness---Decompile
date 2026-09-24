@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "fbf4cc98-f2e6-46ec-9bd8-2a83b53024d4",
+  "attempt": 4,
+  "base_commit": "2ce6324642a54ef8fbac2809b54c603291d0c59a",
+  "target": "fn_80197D20",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-fbf4cc98-f2e6-46ec-9bd8-2a83b53024d4.json"
+  ],
+  "divergence": "Canonical and relocation-strict score 88.215614% (1080 generated versus 1076 retail bytes). Retail preserves r19-r31 with separate register-resident count and half-count copies; generated preserves r20-r31 and spills half-count at 0x8, changing allocation and unrolled-loop scheduling. All 13 zero-addend relocation slots exist, but the compiler-owned conversion bias is TU-local @61 rather than retail lbl_80650B98; fixing pool ownership is outside the permitted independent-TU scope."
+}

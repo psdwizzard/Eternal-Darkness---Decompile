@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "assignment_id": "fbf4cc98-f2e6-46ec-9bd8-2a83b53024d4",
+  "target": "fn_80197D20",
+  "canonical": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80197D20 fn_80197D20 -o reports/GEDE01/objdiff-fbf4cc98-f2e6-46ec-9bd8-2a83b53024d4-canonical.raw.json --format json-pretty",
+    "raw_report": "reports/GEDE01/objdiff-fbf4cc98-f2e6-46ec-9bd8-2a83b53024d4-canonical.raw.json",
+    "raw_measurement_output": "retail_bytes=1076 retail_instructions=269 match_percent=88.215614 relocations=13\ngenerated_bytes=1080 generated_instructions=270 match_percent=88.215614 relocations=13"
+  },
+  "relocation_strict": {
+    "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80197D20 fn_80197D20 -o reports/GEDE01/objdiff-fbf4cc98-f2e6-46ec-9bd8-2a83b53024d4-reloc-strict.raw.json --format json-pretty -c function_reloc_diffs=name_address",
+    "raw_report": "reports/GEDE01/objdiff-fbf4cc98-f2e6-46ec-9bd8-2a83b53024d4-reloc-strict.raw.json",
+    "raw_measurement_output": "retail_bytes=1076 retail_instructions=269 match_percent=88.215614 relocations=13\ngenerated_bytes=1080 generated_instructions=270 match_percent=88.215614 relocations=13",
+    "raw_relocation_output": "retail: lbl_8023B0A0@ha+0, lbl_8023B0A0@l+0, fn_8018FEDC+0, fn_80198AAC+0, memcpy+0, lbl_80650BA8@sda21+0, lbl_80650B94@sda21+0, lbl_80650B98@sda21+0, fn_80179370+0, fn_80198154+0, fn_80198318+0, lbl_80650BAC@sda21+0, fn_80198BF4+0\ngenerated: lbl_8023B0A0@ha+0, lbl_8023B0A0@l+0, fn_8018FEDC+0, fn_80198AAC+0, memcpy+0, lbl_80650BA8@sda21+0, lbl_80650B94@sda21+0, @61@sda21+0, fn_80179370+0, fn_80198154+0, fn_80198318+0, lbl_80650BAC@sda21+0, fn_80198BF4+0"
+  },
+  "experiments": [
+    {
+      "name": "distinct volatile source read for half-count",
+      "raw_measurement_output": "retail_bytes=1076 generated_bytes=1080 match_percent=86.68401; generated stmw r19,0x3c(r1), but parameter locals rotate away from retail and the extra lbz changes setup scheduling",
+      "retained": false
+    },
+    {
+      "name": "distinct volatile source read for full-count",
+      "raw_measurement_output": "retail_bytes=1076 generated_bytes=1072 match_percent=87.95911; generated remains stmw r20,0x40(r1)",
+      "retained": false
+    },
+    {
+      "name": "preserved volatile half-count local",
+      "raw_measurement_output": "retail_bytes=1076 generated_bytes=1080 match_percent=88.215614; generated stmw r20,0x40(r1) and spills the half-count copy at stack slot 0x8",
+      "retained": true
+    }
+  ],
+  "build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "raw_terminal_output": "build/GEDE01/main.dol: OK",
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "dol_cmp_raw_output": "DOL_CMP_EXIT=0"
+  },
+  "divergence": "Best candidate is 1080 bytes versus retail 1076. Retail preserves r19-r31 and keeps count in r19 and half-count in r20; GC/1.3 preserves r20-r31 and spills the distinct volatile half-count to stack slot 0x8, changing allocation and unrolled delta-loop scheduling. A distinct volatile object read proved that one more live value can force stmw r19, but rotated the parameter locals and regressed to 86.68401%. All 13 relocation-bearing instructions and zero addends exist; relocation-strict output shows only the synthesized signed-short-to-float bias target differs, generated TU-local @61 versus retail lbl_80650B98. An independent one-function TU cannot acquire the retail shared constant-pool ownership without forbidden externalization/configuration or a shared translation unit."
+}
