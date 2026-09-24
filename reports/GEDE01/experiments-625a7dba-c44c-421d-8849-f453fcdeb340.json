@@ -1,0 +1,1165 @@
+[
+  {
+    "variant": "baseline",
+    "source_patch": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-baseline.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-baseline.json\n"
+  },
+  {
+    "variant": "wide-half-late-narrow",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ wide-half-late-narrow/src/game/game_fn_80198C8C.c\n@@ -20,7 +20,7 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n-            u8 half;\n+            int half;\n             u8 level;\n             u8* p;\n \n@@ -34,12 +34,12 @@\n                 p += 0x38;\n             }\n             p = *(u8**)(object + 0x4c);\n-            for (i = 0; i < half; i++) {\n+            for (i = 0; i < (u8)half; i++) {\n                 p[0x2f] = level;\n                 p += 0x38;\n             }\n-            p = *(u8**)(object + 0x4c) + half * 0x38;\n-            for (i = 0; i < half; i++) {\n+            p = *(u8**)(object + 0x4c) + (u8)half * 0x38;\n+            for (i = 0; i < (u8)half; i++) {\n                 p[0x2f] = value;\n                 p += 0x38;\n             }\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-wide-half-late-narrow.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-wide-half-late-narrow.json\n"
+  },
+  {
+    "variant": "level-declared-first",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ level-declared-first/src/game/game_fn_80198C8C.c\n@@ -20,8 +20,8 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n             half = count >> 1;\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-level-declared-first.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-level-declared-first.json\n"
+  },
+  {
+    "variant": "quotient-before-half",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ quotient-before-half/src/game/game_fn_80198C8C.c\n@@ -23,9 +23,11 @@\n             u8 half;\n             u8 level;\n             u8* p;\n+            int bands;\n \n+            bands = (value - 150) / step;\n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            level = (step / 2) * bands + 60;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-quotient-before-half.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-quotient-before-half.json\n"
+  },
+  {
+    "variant": "difference-before-half",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ difference-before-half/src/game/game_fn_80198C8C.c\n@@ -23,9 +23,11 @@\n             u8 half;\n             u8 level;\n             u8* p;\n+            int difference;\n \n+            difference = value - 150;\n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            level = (step / 2) * (difference / step) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-difference-before-half.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-difference-before-half.json\n"
+  },
+  {
+    "variant": "wide-level-store-narrow",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ wide-level-store-narrow/src/game/game_fn_80198C8C.c\n@@ -21,7 +21,7 @@\n             entry[7] = limit;\n         } else {\n             u8 half;\n-            u8 level;\n+            int level;\n             u8* p;\n \n             half = count >> 1;\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-wide-level-store-narrow.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-wide-level-store-narrow.json\n"
+  },
+  {
+    "variant": "ordered-level-first",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-level-first/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,12 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n+            level = (step / 2) * ((value - 150) / step) + 60;\n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-level-first.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-level-first.json\n"
+  },
+  {
+    "variant": "ordered-half-after-stores",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-half-after-stores/src/game/game_fn_80198C8C.c\n@@ -20,14 +20,14 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n-            half = count >> 1;\n             level = (step / 2) * ((value - 150) / step) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n+            half = count >> 1;\n             p = *(u8**)(object + 0x4c);\n             for (i = 0; i < count; i++) {\n                 p[0x2b] = level;\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-half-after-stores.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-half-after-stores.json\n"
+  },
+  {
+    "variant": "ordered-stores-before-level",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-stores-before-level/src/game/game_fn_80198C8C.c\n@@ -20,14 +20,14 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n+            level = (step / 2) * ((value - 150) / step) + 60;\n             p = *(u8**)(object + 0x4c);\n             for (i = 0; i < count; i++) {\n                 p[0x2b] = level;\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-stores-before-level.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-stores-before-level.json\n"
+  },
+  {
+    "variant": "ordered-stores-before-both",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-stores-before-both/src/game/game_fn_80198C8C.c\n@@ -20,14 +20,14 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n+            entry[1] = kind;\n+            entry[5] = step;\n             half = count >> 1;\n             level = (step / 2) * ((value - 150) / step) + 60;\n-            entry[1] = kind;\n-            entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n             for (i = 0; i < count; i++) {\n                 p[0x2b] = level;\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-stores-before-both.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-stores-before-both.json\n"
+  },
+  {
+    "variant": "ordered-product-first",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-product-first/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,12 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            level = ((value - 150) / step) * (step / 2) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-product-first.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-product-first.json\n"
+  },
+  {
+    "variant": "ordered-split-narrow",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-split-narrow/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,14 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n+            int raw_level;\n \n+            raw_level = (step / 2) * ((value - 150) / step) + 60;\n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            level = raw_level;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-split-narrow.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-split-narrow.json\n"
+  },
+  {
+    "variant": "ordered-split-product",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-split-product/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,14 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n+            int product;\n \n+            product = (step / 2) * ((value - 150) / step);\n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            level = product + 60;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-split-product.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-split-product.json\n"
+  },
+  {
+    "variant": "ordered-half-divide",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-half-divide/src/game/game_fn_80198C8C.c\n@@ -20,11 +20,11 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n-            half = count >> 1;\n+            half = count / 2;\n             level = (step / 2) * ((value - 150) / step) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-half-divide.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-half-divide.json\n"
+  },
+  {
+    "variant": "ordered-split-difference",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-split-difference/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,14 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n+            int difference;\n \n+            difference = value - 150;\n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            level = (step / 2) * (difference / step) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-split-difference.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-split-difference.json\n"
+  },
+  {
+    "variant": "ordered-int-count",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-int-count/src/game/game_fn_80198C8C.c\n@@ -7,7 +7,7 @@\n void fn_80198C8C(u8* object, u8 mode, u8 value, s8 step, u8 kind, u8 limit)\n {\n     u8* entry = *(u8**)(object + 0x4c);\n-    u8 count = object[1];\n+    int count = object[1];\n     int i;\n \n     if (mode == 6) {\n@@ -20,8 +20,8 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n             half = count >> 1;\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-int-count.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-int-count.json\n"
+  },
+  {
+    "variant": "ordered-uint-count",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-uint-count/src/game/game_fn_80198C8C.c\n@@ -7,7 +7,7 @@\n void fn_80198C8C(u8* object, u8 mode, u8 value, s8 step, u8 kind, u8 limit)\n {\n     u8* entry = *(u8**)(object + 0x4c);\n-    u8 count = object[1];\n+    unsigned int count = object[1];\n     int i;\n \n     if (mode == 6) {\n@@ -20,8 +20,8 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n             half = count >> 1;\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-uint-count.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-uint-count.json\n"
+  },
+  {
+    "variant": "ordered-add-first",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-add-first/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,12 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            level = 60 + (step / 2) * ((value - 150) / step);\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-add-first.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-add-first.json\n"
+  },
+  {
+    "variant": "ordered-negative-offset",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-negative-offset/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,12 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            level = (step / 2) * ((value + -150) / step) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-negative-offset.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-negative-offset.json\n"
+  },
+  {
+    "variant": "ordered-half-assignment-shift",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-half-assignment-shift/src/game/game_fn_80198C8C.c\n@@ -20,11 +20,12 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n-            half = count >> 1;\n+            half = count;\n+            half >>= 1;\n             level = (step / 2) * ((value - 150) / step) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-half-assignment-shift.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-half-assignment-shift.json\n"
+  },
+  {
+    "variant": "ordered-separate-level-add",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-separate-level-add/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,13 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            level = (step / 2) * ((value - 150) / step);\n+            level += 60;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-separate-level-add.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-separate-level-add.json\n"
+  },
+  {
+    "variant": "ordered-signed-half",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-signed-half/src/game/game_fn_80198C8C.c\n@@ -20,8 +20,8 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n-            u8 half;\n             u8 level;\n+            s8 half;\n             u8* p;\n \n             half = count >> 1;\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-signed-half.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-signed-half.json\n"
+  },
+  {
+    "variant": "ordered-count-local-half",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-count-local-half/src/game/game_fn_80198C8C.c\n@@ -20,11 +20,11 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n-            half = count >> 1;\n+            half = object[1] >> 1;\n             level = (step / 2) * ((value - 150) / step) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-count-local-half.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-count-local-half.json\n"
+  },
+  {
+    "variant": "ordered-split-division",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-split-division/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,16 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n+            int bands;\n+            int half_step;\n \n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            bands = (value - 150) / step;\n+            half_step = step / 2;\n+            level = half_step * bands + 60;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-split-division.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-split-division.json\n"
+  },
+  {
+    "variant": "ordered-split-division-interleave",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-split-division-interleave/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,16 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n+            int bands;\n+            int half_step;\n \n+            bands = (value - 150) / step;\n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            half_step = step / 2;\n+            level = half_step * bands + 60;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-split-division-interleave.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-split-division-interleave.json\n"
+  },
+  {
+    "variant": "ordered-split-division-stores",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-split-division-stores/src/game/game_fn_80198C8C.c\n@@ -20,14 +20,18 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n+            int bands;\n+            int half_step;\n \n+            bands = (value - 150) / step;\n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            half_step = step / 2;\n             entry[1] = kind;\n             entry[5] = step;\n+            level = half_step * bands + 60;\n             p = *(u8**)(object + 0x4c);\n             for (i = 0; i < count; i++) {\n                 p[0x2b] = level;\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-split-division-stores.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-split-division-stores.json\n"
+  },
+  {
+    "variant": "ordered-comma-step",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-comma-step/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,11 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n-            half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            level = ((half = count >> 1), step / 2) * ((value - 150) / step) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-comma-step.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-comma-step.json\n"
+  },
+  {
+    "variant": "ordered-comma-bands",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-comma-bands/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,11 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n-            half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            level = (step / 2) * ((half = count >> 1), (value - 150) / step) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-comma-bands.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-comma-bands.json\n"
+  },
+  {
+    "variant": "ordered-comma-add",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-comma-add/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,11 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n \n-            half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            level = (step / 2) * ((value - 150) / step) + ((half = count >> 1), 60);\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-comma-add.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-comma-add.json\n"
+  },
+  {
+    "variant": "ordered-half-wide-intermediate",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-half-wide-intermediate/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,14 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n+            int half_count;\n \n-            half = count >> 1;\n+            half_count = count >> 1;\n             level = (step / 2) * ((value - 150) / step) + 60;\n+            half = half_count;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-half-wide-intermediate.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-half-wide-intermediate.json\n"
+  },
+  {
+    "variant": "ordered-half-wide-before-stores",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-half-wide-before-stores/src/game/game_fn_80198C8C.c\n@@ -20,14 +20,16 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n+            int half_count;\n \n-            half = count >> 1;\n+            half_count = count >> 1;\n             level = (step / 2) * ((value - 150) / step) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n+            half = half_count;\n             p = *(u8**)(object + 0x4c);\n             for (i = 0; i < count; i++) {\n                 p[0x2b] = level;\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-half-wide-before-stores.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-half-wide-before-stores.json\n"
+  },
+  {
+    "variant": "ordered-half-middle-product",
+    "source_patch": "--- base/src/game/game_fn_80198C8C.c\n+++ ordered-half-middle-product/src/game/game_fn_80198C8C.c\n@@ -20,12 +20,14 @@\n             entry[1] = kind;\n             entry[7] = limit;\n         } else {\n+            u8 level;\n             u8 half;\n-            u8 level;\n             u8* p;\n+            int bands;\n \n+            bands = (value - 150) / step;\n             half = count >> 1;\n-            level = (step / 2) * ((value - 150) / step) + 60;\n+            level = bands * (step / 2) + 60;\n             entry[1] = kind;\n             entry[5] = step;\n             p = *(u8**)(object + 0x4c);\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      "build/tools/objdiff-cli",
+      "diff",
+      "-1",
+      "build/GEDE01/obj/game/game_fn_80198C8C.o",
+      "-2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o",
+      "-c",
+      "function_reloc_diffs=name_address",
+      "--format",
+      "json",
+      "-o",
+      "reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-half-middle-product.json",
+      "fn_80198C8C"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": " INFO Writing to reports/GEDE01/experiment-625a7dba-c44c-421d-8849-f453fcdeb340-ordered-half-middle-product.json\n"
+  },
+  {
+    "cwd": "eternal-darkness-decomp",
+    "argv": [
+      ".tools/bin/ninja",
+      "-j2",
+      "build/GEDE01/src/game/game_fn_80198C8C.o"
+    ],
+    "returncode": 0,
+    "stdout": "[1/1] MWCC build/GEDE01/src/game/game_fn_80198C8C.o\n",
+    "stderr": ""
+  }
+]

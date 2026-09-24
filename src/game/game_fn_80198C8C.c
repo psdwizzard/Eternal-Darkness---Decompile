@@ -20,8 +20,8 @@ void fn_80198C8C(u8* object, u8 mode, u8 value, s8 step, u8 kind, u8 limit)
             entry[1] = kind;
             entry[7] = limit;
         } else {
-            u8 half;
             u8 level;
+            u8 half;
             u8* p;
 
             half = count >> 1;
