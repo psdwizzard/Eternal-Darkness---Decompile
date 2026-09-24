@@ -1,0 +1,87 @@
+{
+  "assignment_id": "83bace5a-cd04-4d5e-a67a-95ff69cda615",
+  "canonical_score": 98.695656,
+  "relocation_strict_score": 98.695656,
+  "retail_bytes": 184,
+  "candidate_bytes": 184,
+  "instruction_word_differences": [
+    {
+      "offset": "0x9c",
+      "retail": "60000000",
+      "candidate": "3b800000"
+    }
+  ],
+  "relocation_tables_equal": true,
+  "relocation_raw_outputs": [
+    {
+      "command": [
+        "readelf",
+        "-Wr",
+        "build/GEDE01/obj/game/game_fn_80068674.o"
+      ],
+      "exit_code": 0,
+      "output": "\nRelocation section '.rela.text' at offset 0xf8 contains 5 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000018  0000040a R_PPC_REL24            00000000   fn_800681C8 + 0\n00000044  0000050a R_PPC_REL24            00000000   fn_80201814 + 0\n00000050  0000060a R_PPC_REL24            00000000   fn_80201B64 + 0\n00000068  0000070a R_PPC_REL24            00000000   fn_80201B54 + 0\n00000074  0000030a R_PPC_REL24            00000000   fn_80068674 + 0\n"
+    },
+    {
+      "command": [
+        "readelf",
+        "-Wr",
+        "build/GEDE01/src/game/game_fn_80068674.o"
+      ],
+      "exit_code": 0,
+      "output": "\nRelocation section '.rela.text' at offset 0xec contains 5 entries:\n Offset     Info    Type                Sym. Value  Symbol's Name + Addend\n00000018  0000030a R_PPC_REL24            00000000   fn_800681C8 + 0\n00000044  0000040a R_PPC_REL24            00000000   fn_80201814 + 0\n00000050  0000050a R_PPC_REL24            00000000   fn_80201B64 + 0\n00000068  0000060a R_PPC_REL24            00000000   fn_80201B54 + 0\n00000074  0000070a R_PPC_REL24            00000000   fn_80068674 + 0\n"
+    }
+  ],
+  "compiler_command": {
+    "command": [
+      ".tools/bin/ninja",
+      "-t",
+      "commands",
+      "build/GEDE01/src/game/game_fn_80068674.o"
+    ],
+    "exit_code": 0,
+    "output": "\"/usr/bin/python3\" tools/download_tool.py sjiswrap build/tools/sjiswrap.exe --tag v1.2.2\ntools/mwcc_wrapper.py build/tools/sjiswrap.exe compilers/GC/1.3/mwcceppc.exe -nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on -MMD -c src/game/game_fn_80068674.c -o build/GEDE01/src/game && \"/usr/bin/python3\" tools/transform_dep.py build/GEDE01/src/game/game_fn_80068674.d build/GEDE01/src/game/game_fn_80068674.d\n"
+  },
+  "source_sha256": "6a7f9ca407977a104b6a365ff11f3edda6566270f668b47f617bb8bbf7301a6c",
+  "prototype_audit": {
+    "fn_800681C8": "s32 *fn_800681C8(void)",
+    "fn_80201814": "Entry80201814 *fn_80201814(int id)",
+    "fn_80201B54": "int fn_80201B54(int *object)",
+    "fn_80201B64": "int fn_80201B64(int *object)",
+    "note": "All match the corresponding independent in-tree source definitions; full prototypes retained in every experiment."
+  },
+  "scope": "Only target source and assignment-specific reports changed. Registration remains NonMatching. No assembly, new compiler policy, shared reconstruction, neighboring source, runtime or global-progress edits.",
+  "dol_sha1": {
+    "command": [
+      "sha1sum",
+      "build/GEDE01/main.dol"
+    ],
+    "exit_code": 0,
+    "output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol\n"
+  },
+  "legal_audit": {
+    "command": [
+      "python3",
+      "tools/legal_audit.py"
+    ],
+    "exit_code": 0,
+    "output": "legal audit passed (21284 tracked project files inspected)\n"
+  },
+  "diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit_code": 0,
+    "output": ""
+  },
+  "final_build": {
+    "command": "python3 configure.py && .tools/bin/ninja -j2",
+    "exit_code": 0,
+    "log": "eternal-darkness-decomp/reports/GEDE01/build-83bace5a-cd04-4d5e-a67a-95ff69cda615.log",
+    "note": "NonMatching function retains the retail object in the DOL. DOL equality verifies integration, not a source match.",
+    "log_normalization": "Compiler CRLF line endings normalized to LF; output otherwise unchanged."
+  }
+}

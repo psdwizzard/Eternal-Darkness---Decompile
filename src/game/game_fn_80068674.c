@@ -32,6 +32,8 @@ s32 fn_80068674(void *object, s32 excluded_id)
                 objects[(unsigned int)i] = 0;
             }
         }
+    } else {
+        total = 0;
     }
     return total;
 }

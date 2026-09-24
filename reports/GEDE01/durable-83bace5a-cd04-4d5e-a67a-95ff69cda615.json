@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "assignment_id": "83bace5a-cd04-4d5e-a67a-95ff69cda615",
+  "attempt": 5,
+  "base_commit": "a63298844fab821d75970659e84df089fe8050fe",
+  "target": "fn_80068674",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-83bace5a-cd04-4d5e-a67a-95ff69cda615.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-83bace5a-cd04-4d5e-a67a-95ff69cda615-reloc-strict.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-83bace5a-cd04-4d5e-a67a-95ff69cda615.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-83bace5a-cd04-4d5e-a67a-95ff69cda615.json",
+    "eternal-darkness-decomp/reports/GEDE01/build-83bace5a-cd04-4d5e-a67a-95ff69cda615.log"
+  ],
+  "divergence": "Improved canonical and relocation-strict objdiff from 95.54348% to 98.695656%, now 184/184 bytes. Explicit null-array else assignment total = 0 preserves the separate exit block and branch-over layout. Only instruction offset 0x9c differs: retail nop (0x60000000), candidate li r28,0 (0x3b800000). All other 45 instruction words and all five R_PPC_REL24 locations, targets and zero addends agree. Early-return-zero and terminal-null-return-label hypotheses measured 90.978264% and 94.347824%; retained null-else-reset-total measured 98.695656%. No assembly or compiler policy change used; source remains NonMatching."
+}
