@@ -25,6 +25,8 @@ typedef struct Object {
 
 extern void fn_80125ECC(void *);
 
+/* NonMatching: retail keeps offset/value in r3/r4 and forms object + scaled
+ * value before the 0x180 displacement; GC/1.3 uses r4/r3 and indexed access. */
 void fn_8012FB50(Object* object, int index)
 {
     Entry* entry;
