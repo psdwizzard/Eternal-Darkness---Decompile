@@ -1,0 +1,40 @@
+{
+  "target": "fn_80090FF4",
+  "prior_attempts_reviewed": [
+    "e80c86c0d8e5ed720aaec2c8ccfbb1be30753b43",
+    "981a5eed59d0985343a9b964f293fa1e9ca8bd80",
+    "8555b213b42dd9bdb2aeb5148e2fd5d7e9fb095b",
+    "2bda942ba7f3ee992ccd607006d9bce6f6f27777"
+  ],
+  "hypotheses": [
+    {
+      "expression": "(timer - 1) & ~-(1 >= timer)",
+      "reason": "At timer == 1, decrement is zero, so inclusive threshold 1 preserves clamp semantics while requesting retail subfic immediate 1; distinct from prior 0 >= timer and 1 > timer.",
+      "canonical_percent": 99.07895,
+      "size": 304,
+      "observed": "subfic r0,r6,1 now matches; four register-allocation differences per clamp remain.",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-threshold-6a6ae436-a493-4c26-a67a-ff6e2aa6b0ff.json"
+    },
+    {
+      "expression": "1 >= timer ? 0 : timer - 1",
+      "reason": "Use the inclusive threshold established by the first hypothesis, but express the result as selection instead of an explicit bitwise mask. Canonical if-conversion can then allocate the carry-chain mask to r5 and the decrement to r0, matching retail.",
+      "canonical_percent": 100.0,
+      "relocation_strict_percent": 100.0,
+      "size": 304,
+      "observed": "Both five-instruction clamp tails and all remaining instructions exactly match retail. No compiler options changed.",
+      "raw_objdiff": "eternal-darkness-decomp/reports/GEDE01/objdiff-6a6ae436-a493-4c26-a67a-ff6e2aa6b0ff.json"
+    }
+  ],
+  "semantics_check": {
+    "input_type": "signed 16-bit timer, promoted to int",
+    "values_checked": 65536,
+    "equivalent": true,
+    "original": "(timer - 1) & ~-(timer < 1)",
+    "final": "1 >= timer ? 0 : timer - 1",
+    "argument": "For timer <= 0 both produce zero; for timer == 1 decrement is already zero; for timer > 1 both produce timer - 1. No int overflow is possible for a signed short input."
+  },
+  "best_prior_percent": 97.5,
+  "result": "matched",
+  "compiler": "GC/1.3",
+  "compiler_flags": "-nodefaults -proc gekko -align powerpc -enum int -fp hardware -Cpp_exceptions off -O4,p -inline auto -pragma \"cats off\" -pragma \"warn_notinlined off\" -maxerrors 1 -nosyspath -RTTI off -fp_contract on -str reuse -multibyte -i include -i build/GEDE01/include -DVERSION_GEDE01 -DNDEBUG=1 -lang=c -use_lmw_stmw on"
+}

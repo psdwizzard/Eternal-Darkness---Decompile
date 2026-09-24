@@ -34,8 +34,8 @@ void fn_80090FF4(Object* object, Actor* actor, ActorState* state,
     owner = ((void*)fn_80201B54(object));
     flags = fn_8011FAEC(actor);
 
-    timers->first = (timers->first - 1) & ~-(timers->first < 1);
-    timers->second = (timers->second - 1) & ~-(timers->second < 1);
+    timers->first = 1 >= timers->first ? 0 : timers->first - 1;
+    timers->second = 1 >= timers->second ? 0 : timers->second - 1;
     fn_800BE010(object, state);
     if (fn_80201C48(arg4) != 0) {
         fn_800BDEE4(object, state);
