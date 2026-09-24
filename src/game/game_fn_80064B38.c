@@ -28,18 +28,18 @@ extern s32 fn_801A7510(s32 value);
 void fn_80064B38(s32 context, void *event, s32 *result)
 {
     s32 event_value;
+    s32 bit;
+    s32 index;
+    s32 amount;
     s32 output = 0;
     s32 owner;
-    s32 amount;
     u16 mask;
     s32 current;
-    s32 index;
     s16 first;
     s16 second;
     s32 extra1;
     s32 extra2;
     s32 extra3;
-    volatile s32 bit;
 
     event_value = fn_80200C38(event);
     current = fn_80201EB8((void *)context);
@@ -79,23 +79,27 @@ void fn_80064B38(s32 context, void *event, s32 *result)
         extra2 = fn_801A7508(event_value);
         extra3 = fn_801A7510(event_value);
 
-        bit = 1;
-        if ((s16)extra1 && fn_80038308((void *)context, 1, &first) &&
-            fn_80038464(context, 1, &second)) {
-            output |= fn_80064E2C(context, event_value, 1, 1 << bit,
-                                  extra1, first, second);
+        /* Single-channel ranges retain MWCC's runtime mask shifts. */
+        for (index = 1; index < 2; index++) {
+            if ((s16)extra1 && fn_80038308((void *)context, index, &first) &&
+                fn_80038464(context, index, &second)) {
+                output |= fn_80064E2C(context, event_value, index, 1 << index,
+                                      extra1, first, second);
+            }
         }
-        bit = 2;
-        if ((s16)extra2 && fn_80038308((void *)context, 2, &first) &&
-            fn_80038464(context, 2, &second)) {
-            output |= fn_80064E2C(context, event_value, 2, 1 << bit,
-                                  extra2, first, second);
+        for (index = 2; index < 3; index++) {
+            if ((s16)extra2 && fn_80038308((void *)context, index, &first) &&
+                fn_80038464(context, index, &second)) {
+                output |= fn_80064E2C(context, event_value, index, 1 << index,
+                                      extra2, first, second);
+            }
         }
-        bit = 3;
-        if ((s16)extra3 && fn_80038308((void *)context, 3, &first) &&
-            fn_80038464(context, 3, &second)) {
-            output |= fn_80064E2C(context, event_value, 3, 1 << bit,
-                                  extra3, first, second);
+        for (index = 3; index < 4; index++) {
+            if ((s16)extra3 && fn_80038308((void *)context, index, &first) &&
+                fn_80038464(context, index, &second)) {
+                output |= fn_80064E2C(context, event_value, index, 1 << index,
+                                      extra3, first, second);
+            }
         }
     }
 
