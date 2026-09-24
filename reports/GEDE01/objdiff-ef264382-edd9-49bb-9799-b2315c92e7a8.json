@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "assignment_id": "ef264382-edd9-49bb-9799-b2315c92e7a8",
+  "attempt": 3,
+  "target": "fn_8012C774",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "objdiff": "python3 tools/fndiff.py game/game_fn_8012C774.c fn_8012C774",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measurements": {
+    "configure_exit_code": 0,
+    "build_exit_code": 0,
+    "build_check_output": "build/GEDE01/main.dol: OK",
+    "objdiff_exit_code": 0,
+    "objdiff_output": "target 144 bytes  base 144 bytes  match 88.47222",
+    "candidate_size_bytes": 144,
+    "retail_size_bytes": 144,
+    "canonical_match_percent": 88.47222,
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  },
+  "relocation_strict": {
+    "equal": true,
+    "matched_sites": 2,
+    "total_sites": 2,
+    "raw_objdiff_rows": "candidate: offset 48 (0x30) R_PPC_REL24 fn_8012FA54 target_symbol=2 addend=0; offset 108 (0x6c) R_PPC_REL24 fn_8012C62C target_symbol=3 addend=0; retail: offset 48 (0x30) R_PPC_REL24 fn_8012FA54 target_symbol=2 addend=0; offset 108 (0x6c) R_PPC_REL24 fn_8012C62C target_symbol=3 addend=0",
+    "sites": [
+      {
+        "offset": "0x30",
+        "type": "R_PPC_REL24",
+        "candidate_target": "fn_8012FA54",
+        "candidate_addend": 0,
+        "retail_target": "fn_8012FA54",
+        "retail_addend": 0
+      },
+      {
+        "offset": "0x6c",
+        "type": "R_PPC_REL24",
+        "candidate_target": "fn_8012C62C",
+        "candidate_addend": 0,
+        "retail_target": "fn_8012C62C",
+        "retail_addend": 0
+      }
+    ]
+  },
+  "bounded_attempts": [
+    "Recovered the preserved size-exact honest C reconstruction from the accepted base and confirmed its 144-byte 88.47222% baseline.",
+    "Tested a distinct alias/materialization hypothesis using explicit four-byte memcpy operations. GC/1.3 emitted three real memcpy calls, growing the function to 168 bytes and regressing to 53.61111%.",
+    "Tested block-scoped scalar declaration initializers to alter optimizer lifetime and scheduling. The function remained 144 bytes but regressed to 88.361115% because stack-slot order changed without fixing the promoted loads.",
+    "Tested C compound literals as call arguments. GC/1.3 introduced static backing objects and redundant stack copies, growing the function to 168 bytes and regressing to 68.416664%.",
+    "Tested the combined hypothesis of right-to-left comma-expression assignments with volatile source and destination objects. It remained 144 bytes at 88.47222%; GC/1.3 still promoted c and b into r5 and r9 and hoisted all three source loads. The clean reconstruction was restored."
+  ],
+  "divergence": {
+    "range": "0x3c-0x68",
+    "candidate": "GC/1.3 loads c into r5 at 0x3c, b into r9 at 0x44, and a into r0 at 0x4c; it retains c and b across argument setup, then stores c at 0x54, b at 0x64, and a at 0x68.",
+    "retail": "Retail loads c through r0 at 0x3c and stores it at 0x4c, performs argument setup through 0x58, then reuses r0 for the b load/store at 0x5c/0x60 and a load/store at 0x64/0x68.",
+    "unchanged_regions": "The prologue, saved-register allocation, loop/control flow, calls, stack offsets, epilogue, 144-byte function size, and both relocation sites, types, targets, and addends agree."
+  }
+}
