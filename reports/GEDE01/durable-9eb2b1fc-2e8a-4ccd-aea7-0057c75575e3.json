@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "9eb2b1fc-2e8a-4ccd-aea7-0057c75575e3",
+  "attempt": 5,
+  "base_commit": "d8725a100904ba53c2e2ae0a724f1c6825a82d42",
+  "target": "fn_801BA2A4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9eb2b1fc-2e8a-4ccd-aea7-0057c75575e3.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-canonical-9eb2b1fc-2e8a-4ccd-aea7-0057c75575e3.json",
+    "eternal-darkness-decomp/reports/GEDE01/audit-9eb2b1fc-2e8a-4ccd-aea7-0057c75575e3.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-9eb2b1fc-2e8a-4ccd-aea7-0057c75575e3.json"
+  ],
+  "divergence": "Canonical and function_reloc_diffs=name_address objdiff both measure 97.82197% (retail 1056 bytes; generated 1064), improved from the freshly reproduced 92.018936% preserved baseline. Both now use a 0x78 frame and r14-r31 saves. Generated retains an extra slot-base copy (r16 to r30 at 0x50), different selected-slot/ID/offset/parameter registers, clrlwi channel conversions in place of retail addi, and a cache-field load before fn_801CD1C0. Text relocation names/types/addends agree in sequence, but offsets after the initial HA/LO pair differ; complete readelf target/addend mappings and actual strict invocation are in the audit. This is not a byte or relocation-strict match. Retained one independent NonMatching C TU, correcting the reserved-ID and main/auxiliary channel dataflow and coefficient layout. Canonical build and legal audit passed; main.dol SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f (NonMatching target links retail)."
+}
