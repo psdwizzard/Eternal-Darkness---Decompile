@@ -21,7 +21,8 @@ typedef struct StreamSlot {
     u32 cache;
 } StreamSlot;
 
-extern StreamSlot lbl_8061AE48[];
+/* Externalized to the retail stream table by this TU's build registration. */
+static StreamSlot streamInfo[64];
 extern u32 lbl_8064D3CC;
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
@@ -34,83 +35,85 @@ static inline u32 find_stream(u32 id)
     u32 i;
 
     for (i = 0; i < 64; i++) {
-        if (lbl_8061AE48[i].state != 0 && lbl_8061AE48[i].id == id) {
+        if (streamInfo[i].state != 0 && streamInfo[i].id == id) {
             return i;
         }
     }
     return -1;
 }
 
-void fn_801BA94C(u32 id, u32 volume, u32 left, u32 right, u32 aux_left, u32 aux_right)
+void fn_801BA94C(u32 id, u8 volume, u8 left, u8 right, u8 aux_left, u8 aux_right)
 {
-    StreamSlot* slots = lbl_8061AE48;
     u32 offset;
-    u8* state_base = (u8*)slots + 8;
-    u32 saved_volume = volume;
-    u32 saved_left = left;
-    u32 saved_right = right;
-    u32 saved_aux_left = aux_left;
-    u32 saved_aux_right = aux_right;
+    u8* state_base;
+    u8* cache_base;
     u32 index;
     u32 cache;
-    u32 actual_left;
-    u32 actual_right;
+    u8 actual_left;
+    u8 actual_right;
 
     fn_801CE2B8();
     index = find_stream(id);
     if (index != (u32)-1) {
         offset = index * sizeof(StreamSlot);
-        slots[index].saved_left = saved_left;
-        slots[index].saved_right = saved_right;
-        actual_left = saved_left;
-        actual_right = saved_right;
+        streamInfo[index].saved_left = left;
+        streamInfo[index].saved_right = right;
+        actual_right = right;
+        actual_left = left;
         if (lbl_8064D3CC & 1) {
             actual_left = 0x40;
             actual_right = 0;
         } else if (!(lbl_8064D3CC & 2)) {
             actual_right = 0;
         }
-        slots[index].volume = saved_volume;
-        slots[index].left = actual_left;
-        slots[index].right = actual_right;
-        slots[index].aux_left = saved_aux_left;
-        slots[index].aux_right = saved_aux_right;
+        streamInfo[index].volume = volume;
+        streamInfo[index].left = actual_left;
+        streamInfo[index].right = actual_right;
+        streamInfo[index].aux_left = aux_left;
+        streamInfo[index].aux_right = aux_right;
+        state_base = (u8*)streamInfo + 8;
         if (state_base[offset] == 2) {
-            fn_801CCCC4(slots[index].voice, 0, (u32)slots[index].left << 16,
-                        (u32)slots[index].right << 16,
-                        (float)slots[index].volume * (1.0f / 255.0f),
-                        (float)slots[index].aux_left * (1.0f / 255.0f),
-                        (float)slots[index].aux_right * (1.0f / 255.0f));
+            fn_801CCCC4(streamInfo[index].voice, 0, (u32)streamInfo[index].left << 16,
+                        (u32)streamInfo[index].right << 16,
+                        (float)streamInfo[index].volume * (1.0f / 127.0f),
+                        (float)streamInfo[index].aux_left * (1.0f / 127.0f),
+                        (float)streamInfo[index].aux_right * (1.0f / 127.0f));
         }
-        cache = slots[index].cache;
-        if (cache != (u32)-1) {
+        /* Each 0x64-byte slot is word aligned. Keep the shared cache-field base. */
+        cache_base = (u8*)streamInfo + 0x60;
+        offset = ((u32*)cache_base)[offset / sizeof(u32)];
+        if (offset != (u32)-1) {
             fn_801CE2B8();
-            index = fn_801B9D1C(cache);
+            index = fn_801B9D1C(offset);
             if (index != (u32)-1) {
-                u8 linked_left = saved_left;
-                u8 linked_right = saved_right;
+                StreamSlot* linked_slot;
+                u8 linked_left;
+                u8 linked_right;
+
+                linked_right = right;
+                linked_left = left;
 
                 offset = index * sizeof(StreamSlot);
-                slots = (StreamSlot*)((u8*)slots + offset);
-                slots->saved_left = saved_left;
-                slots->saved_right = saved_right;
+                linked_slot = (StreamSlot*)((u8*)streamInfo + offset);
+                linked_slot->saved_left = linked_left;
+                linked_slot->saved_right = linked_right;
                 fn_801BA128(&linked_left, &linked_right);
-                slots->volume = saved_volume;
-                slots->left = linked_left;
-                slots->right = linked_right;
-                slots->aux_left = saved_aux_left;
-                slots->aux_right = saved_aux_right;
+                linked_slot->volume = volume;
+                linked_slot->left = linked_left;
+                linked_slot->right = linked_right;
+                linked_slot->aux_left = aux_left;
+                linked_slot->aux_right = aux_right;
                 if (state_base[offset] == 2) {
-                    fn_801CCCC4(slots->voice, 0, (u32)slots->left << 16,
-                                (u32)slots->right << 16,
-                                (float)slots->volume * (1.0f / 255.0f),
-                                (float)slots->aux_left * (1.0f / 255.0f),
-                                (float)slots->aux_right * (1.0f / 255.0f));
+                    fn_801CCCC4(linked_slot->voice, 0, (u32)linked_slot->left << 16,
+                                (u32)linked_slot->right << 16,
+                                (float)linked_slot->volume * (1.0f / 127.0f),
+                                (float)linked_slot->aux_left * (1.0f / 127.0f),
+                                (float)linked_slot->aux_right * (1.0f / 127.0f));
                 }
-                cache = slots->cache;
+                cache = ((u32*)cache_base)[offset / sizeof(u32)];
                 if (cache != (u32)-1) {
-                    fn_801BA94C(cache, saved_volume, saved_left, saved_right,
-                                saved_aux_left, saved_aux_right);
+                    fn_801BA94C(cache, volume, left, right,
+                                aux_left, aux_right);
                 }
             }
             fn_801CE280();

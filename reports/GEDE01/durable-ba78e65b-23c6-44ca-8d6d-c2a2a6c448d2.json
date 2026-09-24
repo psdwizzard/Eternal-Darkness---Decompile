@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "assignment_id": "ba78e65b-23c6-44ca-8d6d-c2a2a6c448d2",
+  "attempt": 5,
+  "base_commit": "4e8853e9046d95ae0fe0e3b50a9ef79fb0c30416",
+  "target": "fn_801BA94C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ba78e65b-23c6-44ca-8d6d-c2a2a6c448d2.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ba78e65b-23c6-44ca-8d6d-c2a2a6c448d2-canonical.json",
+    "eternal-darkness-decomp/reports/GEDE01/relocations-ba78e65b-23c6-44ca-8d6d-c2a2a6c448d2.json",
+    "eternal-darkness-decomp/reports/GEDE01/disassembly-ba78e65b-23c6-44ca-8d6d-c2a2a6c448d2.txt",
+    "eternal-darkness-decomp/reports/GEDE01/build-ba78e65b-23c6-44ca-8d6d-c2a2a6c448d2.log",
+    "eternal-darkness-decomp/reports/GEDE01/verification-ba78e65b-23c6-44ca-8d6d-c2a2a6c448d2.log",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-ba78e65b-23c6-44ca-8d6d-c2a2a6c448d2.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 98.59307%; retail and generated text are both 924 bytes, with 19 differing instruction words. The 88-byte frame, stmw r23,0x34(r1), argument registers, early global base load, transient field addressing, and conversion stack slots now agree. Generated reuses identifier r28 for the slot offset/linked handle, uses r30 for the state base and r29 for the cache base; retail uses r30, r29 and r28 respectively. At offsets 0x268/0x26c and 0x354/0x358 generated clrrwi/lwzx pairs differ from retail add/lwz pairs. Relocation targets, types, addends and containing instruction offsets agree; five raw SDA21 relocation offsets differ by the standard immediate-halfword +2 convention. Corrected the preserved reconstruction's erroneous 1/255 volume scale to retail 1/127, verified from DOL bytes 3c010204. Canonical configure/build and legal audit passed; DOL SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f. Remains NonMatching."
+}

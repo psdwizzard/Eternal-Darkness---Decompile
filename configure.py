@@ -438,6 +438,22 @@ config.custom_build_rules = [
         "description": "EXTERNALIZE $in",
     },
     {
+        "name": "externalize_game_801BA94C_data",
+        "command": (
+            "python3 tools/retarget_elf_symbol.py $in streamInfo ...bss.0 && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=...bss.0=lbl_8061AE48 --globalize-symbol=lbl_8061AE48 $in && "
+            f"python3 tools/undefine_elf_static_pool.py $in lbl_8061AE48 config/{VERSION}/symbols.txt && "
+            "python3 tools/externalize_elf_symbol.py $in @48 lbl_80650F08 orig/GEDE01/sys/main.dol "
+            "--require-section-symbols=@48,@50 && "
+            "python3 tools/externalize_elf_symbol.py $in @50 lbl_80650F10 orig/GEDE01/sys/main.dol && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@48=lbl_80650F08 --redefine-sym=@50=lbl_80650F10 --remove-section=.sdata2 "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    },
+    {
         "name": "externalize_game_801BA15C_volume_constants",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @18 lbl_80650F08 orig/GEDE01/sys/main.dol && "
@@ -3701,6 +3717,11 @@ config.custom_build_steps = {
             "rule": "externalize_game_static_pool_merged",
             "inputs": [f"build/{VERSION}/src/game/game_fn_801BB1A0.o"],
             "variables": {"symbol": "lbl_8061AE48", "local": "streamInfo"},
+        },
+        {
+            "outputs": [f"build/{VERSION}/src/game/game_fn_801BA94C.externalized"],
+            "rule": "externalize_game_801BA94C_data",
+            "inputs": [f"build/{VERSION}/src/game/game_fn_801BA94C.o"],
         },
         {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801BA708.externalized"],

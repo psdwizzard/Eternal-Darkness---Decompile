@@ -1,0 +1,82 @@
+{
+  "assignment_id": "ba78e65b-23c6-44ca-8d6d-c2a2a6c448d2",
+  "hypothesis": "Use a shared cache-field base to recover its independent live range; preserve u8 pan/volume types and a static stream table to recover MWCC address common subexpressions.",
+  "baseline_percent": 89.69697,
+  "intermediate_unexternalized_trials": {
+    "reverse_ptr_decls": {
+      "match_percent": 97.52814,
+      "size": "916"
+    },
+    "reverse_ptr_init": {
+      "match_percent": 97.52814,
+      "size": "916"
+    },
+    "interleave_ptr_stores": {
+      "match_percent": 97.52814,
+      "size": "916"
+    },
+    "reverse_actual_init": {
+      "match_percent": 97.57143,
+      "size": "916"
+    },
+    "reverse_actual_decls": {
+      "match_percent": 97.52814,
+      "size": "916"
+    },
+    "offset_stores": {
+      "match_percent": 97.16017,
+      "size": "916"
+    },
+    "offset_loads": {
+      "match_percent": 91.90909,
+      "size": "916"
+    },
+    "slot_uninit": {
+      "match_percent": 97.52814,
+      "size": "916"
+    },
+    "id_snapshot": {
+      "match_percent": 97.52814,
+      "size": "916"
+    },
+    "slot_const": {
+      "match_percent": 97.52814,
+      "size": "916"
+    }
+  },
+  "additional_observed_milestones": [
+    {
+      "variant": "byte-sized parameters and snapshots",
+      "percent": 89.78788,
+      "text_size": 900
+    },
+    {
+      "variant": "five explicit byte-field bases",
+      "percent": 95.22078,
+      "text_size": 916
+    },
+    {
+      "variant": "separate linked-slot pointer and byte locals",
+      "percent": 97.49783,
+      "text_size": 916
+    },
+    {
+      "variant": "static table and word-indexed cache access, before externalization",
+      "percent": 98.4632,
+      "text_size": 924
+    },
+    {
+      "variant": "final, guarded externalization",
+      "percent": 98.59307,
+      "text_size": 924
+    }
+  ],
+  "semantic_correction": {
+    "retail_address": "0x80650F08",
+    "retail_bytes": "3c010204",
+    "retail_float": 0.007874015718698502,
+    "old_expression": "1.0f / 255.0f",
+    "corrected_expression": "1.0f / 127.0f"
+  },
+  "rejected": "Natural recursive body, inline linked helper, early pointer bases, and snapshot reordering did not reach a byte match. Pointer declaration-order and register-keyword changes did not improve code. All alternate source variants were removed; only the final independent C translation unit is retained."
+}
