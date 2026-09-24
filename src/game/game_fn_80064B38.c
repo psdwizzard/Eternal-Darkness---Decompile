@@ -39,7 +39,7 @@ void fn_80064B38(s32 context, void *event, s32 *result)
     s32 extra1;
     s32 extra2;
     s32 extra3;
-    s32 bit;
+    volatile s32 bit;
 
     event_value = fn_80200C38(event);
     current = fn_80201EB8((void *)context);
