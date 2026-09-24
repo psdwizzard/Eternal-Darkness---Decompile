@@ -1,20 +1,60 @@
-/* Independent C reconstruction of the retail targeting/reaction update. */
-/* This call site passes the speed as a signed halfword. */
-#define fn_8017D700 fn_8017D700_header_decl
-#include "src/game/game_targeting_types.h"
-#undef fn_8017D700
-extern void fn_8017D700(TargetVec3s*, void*, s32, void*, s32, s16, s32, s32);
-
-#define fn_80201B54(...) ((void *)fn_80201B54(__VA_ARGS__))
-
+typedef unsigned char u8;
+typedef signed short s16;
+typedef unsigned short u16;
+typedef signed int s32;
+typedef unsigned int u32;
+typedef struct TargetVec3s {
+    s16 x;
+    s16 y;
+    s16 z;
+} TargetVec3s;
+typedef struct TargetVec3f {
+    float x;
+    float y;
+    float z;
+} TargetVec3f;
+extern s32 lbl_8064D18C;
+extern const u32 lbl_8023A760[3];
+extern TargetVec3s* fn_8017FDA8(void*, s32);
+extern int fn_801AC9F4(s32, s32, TargetVec3f*, s32);
+extern void fn_8017D700(TargetVec3s*, TargetVec3s*, s16, TargetVec3s*, s16, s16,
+                        s16, s16);
+extern void* fn_80201814(s32);
+extern void* fn_80201890(int);
+extern void* fn_80201B9C(void);
+extern void* fn_80201BC8(void*);
+extern void* fn_80201BC0(void*);
+extern void* fn_80201B8C(u8*);
+extern s32 fn_80201B4C(void*);
+extern s32 fn_80201B54(s32*);
+extern s32 fn_80201EB8(void*);
+extern void fn_8011F114(TargetVec3f*, TargetVec3f*);
+extern s32 fn_8011EB1C(void*);
+extern u32 fn_80179004(TargetVec3f*, TargetVec3f*);
+extern float fn_8011F6F8(void);
+extern unsigned long long fn_8020123C(s32, s32, s32, s32);
+extern void* fn_801A717C(void);
+extern void fn_801A74A0(void*, s32);
+extern void fn_801A74A8(void*, u32);
+extern void fn_801A7538(void*, s32);
+extern void fn_801A7518(void*, s32);
+extern void fn_801A7588(void*, s32);
+extern void fn_801A764C(void*, TargetVec3f*);
+extern void fn_801A74D8(void*, s32);
+extern void fn_801A7668(void*, u32);
+extern void fn_801A7670(void*, s32);
+extern void fn_801A7228(void*);
+extern void fn_801D38BC(s32, u32*, s16*);
+extern void fn_80152404(TargetVec3f*, s16, u16, u8, u32*);
+extern void fn_80149E28(void*);
 extern s32 fn_8006D548(s32, u32, u32, TargetVec3f*, u32*, u32*, s32);
 
 void fn_80150A24(void* raw_instance)
 {
     /* Declaration order preserves the retail nonvolatile-register lifetimes. */
     void* reaction;
-    register TargetVec3s* effect_owner;
-    register TargetVec3s* packed_owner;
+    u32 effect_owner;
+    u32 packed_owner;
     TargetVec3s* current;
     u8* instance;
     u8* work;
@@ -24,6 +64,7 @@ void fn_80150A24(void* raw_instance)
     s32 reacted;
     void* candidate;
     void* actor;
+    u32 iterated;
     s32 radius;
     void* owner;
     s32 candidate_type;
@@ -49,8 +90,8 @@ void fn_80150A24(void* raw_instance)
             fn_801AC9F4(0x2B4, 100, &effect_point, 2);
         }
 
-        fn_8017D700(current, work, 0, work + 6, 3,
-                    *(u16*)(work + 12), 1, 10);
+        fn_8017D700(current, (TargetVec3s*)work, 0, (TargetVec3s*)(work + 6), 3,
+                    (s16) * (u16*)(work + 12), 1, 10);
         /* Unsigned negation followed by narrowing preserves the retail
          * conditional absolute value, including the 16-bit magnitude. */
         delta = *(s16*)(work + 0) - current->x;
@@ -66,9 +107,11 @@ void fn_80150A24(void* raw_instance)
                 iterator = fn_80201B9C();
                 moved = 0;
                 reacted = 0;
-                radius = (u32)fn_80201890(*(void**)(work + 0x18)) ? (s32)fn_8011F6F8() + 100 : 500;
-                packed_owner = (TargetVec3s*)owner;
-                effect_owner = (TargetVec3s*)owner;
+                radius = fn_80201890(*(s32*)(work + 0x18))
+                             ? (s32)fn_8011F6F8() + 100
+                             : 500;
+                packed_owner = (u32)owner;
+                effect_owner = (u32)owner;
                 origin.x = *(s16*)(work + 0);
                 origin.y = *(s16*)(work + 2);
                 origin.z = *(s16*)(work + 4);
@@ -83,8 +126,6 @@ void fn_80150A24(void* raw_instance)
                         selected = &fallback_point;
                     }
                     point = *selected;
-                    /* At 0x80150CC4 retail passes r22 directly even after the
-                     * NULL fallback; fn_8011EB1C owns the NULL-sentinel case. */
                     candidate_type = fn_80201EB8(iterator);
                     candidate_rank = fn_80201B4C(iterator);
                     if (lbl_8064D18C == candidate_type &&
@@ -92,20 +133,22 @@ void fn_80150A24(void* raw_instance)
                         fn_80179004(&origin, &point) < (u32)radius &&
                         fn_8011EB1C(candidate) != 4) {
                         moved = 1;
-                        if ((u32)(fn_8020123C(0x3B, 0, fn_80201B54(iterator), 0) & 0xFFFFFFFFULL) == 1) {
+                        if ((u32)(fn_8020123C(0x3B, 0, fn_80201B54(iterator),
+                                              0) &
+                                  0xFFFFFFFFULL) == 1) {
                             reaction = fn_801A717C();
                             if (reaction != 0) {
-                                actor = fn_80201B54(iterator);
+                                iterated = fn_80201B54(iterator);
                                 fn_801A74A0(reaction, 0);
-                                fn_801A74A8(reaction, actor);
+                                fn_801A74A8(reaction, iterated);
                                 fn_801A7538(reaction, 1);
                                 fn_801A7518(reaction, 5);
                                 fn_801A7588(reaction, 2);
                                 fn_801A764C(reaction, &origin);
                                 fn_801A74D8(reaction, 0x1800);
-                                fn_801A7668(reaction, (void*)effect_owner);
+                                fn_801A7668(reaction, effect_owner);
                                 fn_801A7670(reaction, 2);
-                                fn_8020123C(11, 0, actor, reaction);
+                                fn_8020123C(11, 0, iterated, (s32)reaction);
                                 fn_801A7228(reaction);
                                 reacted = 1;
                             }
@@ -117,7 +160,7 @@ void fn_80150A24(void* raw_instance)
                     u32 packed;
                     u32 packed_copy;
                     s16 kind;
-                    fn_801D38BC((TargetVec3s*)packed_owner, &packed, &kind);
+                    fn_801D38BC((s32)packed_owner, &packed, &kind);
                     packed_copy = packed;
                     fn_80152404(&origin, kind, radius, 4, &packed_copy);
                 }
@@ -128,9 +171,11 @@ void fn_80150A24(void* raw_instance)
                     *(s16*)(work + 2) = origin.y;
                     *(s16*)(work + 4) = origin.z;
                     *(u16*)(work + 12) = *(u16*)(work + 14);
-                    actor = fn_80201814(*(void**)(work + 0x18));
+                    actor = fn_80201814(*(s32*)(work + 0x18));
                     if (actor != 0) {
-                        saved = (TargetVec3f*)(*(u8**)((u8*)fn_80201B8C(actor) + 0x8C) + 0xA0);
+                        saved = (TargetVec3f*)(*(u8**)((u8*)fn_80201B8C(actor) +
+                                                       0x8C) +
+                                               0xA0);
                         *saved = origin;
                     }
                 } else {
@@ -139,8 +184,8 @@ void fn_80150A24(void* raw_instance)
                     completed = 1;
                 }
             }
-        } else if (*(u16*)(work + 12) > 1 &&
-                   (u32)dx < 500 && (u32)dy < 500 && (u32)dz < 500) {
+        } else if (*(u16*)(work + 12) > 1 && (u32)dx < 500 && (u32)dy < 500 &&
+                   (u32)dz < 500) {
             --*(u16*)(work + 12);
         }
     }

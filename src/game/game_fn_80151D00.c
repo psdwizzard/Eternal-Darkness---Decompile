@@ -1,40 +1,102 @@
-/* NonMatching: independent reconstruction of the 0x80151D00 event callback. */
-#include "src/game/types.h"
+typedef signed char s8;
+typedef unsigned char u8;
+typedef signed short s16;
+typedef unsigned short u16;
+typedef signed int s32;
+typedef unsigned int u32;
 typedef struct Vec3f {
     float x;
     float y;
     float z;
 } Vec3f;
-
 typedef struct Vec3s {
     s16 x;
     s16 y;
     s16 z;
 } Vec3s;
 
+typedef struct DescriptorKey {
+    u32 word;
+    u16 half;
+} DescriptorKey;
+
 typedef struct EffectDescriptor {
-    u8 unknown0;
-    u8 enabled;
-    u8 kind;
-    s8 mode;
-    s16 resource;
-    u16 duration;
-    u8 unknown08[0x0E];
-    u8 flags;
-    u8 kind2;
-    u8 unknown18[4];
-    u32 field1C;
-    u32 field20;
-    u32 field24;
-    u32 field28;
-    u8 unknown2C[8];
+    u8 field_00;
+    u8 field_01;
+    u8 field_02;
+    s8 field_03;
+    u16 field_04;
+    u16 field_06;
+    u8 pad_08[0xE];
+    u8 field_16;
+    u8 field_17;
+    u8 pad_18[4];
+    u32 field_1C;
+    u32 field_20;
+    u8 pad_24[4];
+    u32 field_28;
+    u8 pad_2C[8];
     float scale;
-    u32 field38;
-    u8 unknown3C[0x58];
+    u32 field_38;
+    u8 pad_3C[0x58];
 } EffectDescriptor;
 
-#define FRAME (*(u16*)(instance + 0x132C))
-#define END (*(u16*)(work + 0x12))
+typedef struct Command {
+    u8 pad_00[4];
+    u16 field_04;
+    u16 field_06;
+    u8 pad_08[0xC];
+    void *object;
+    u32 field_18;
+    u8 pad_1C[4];
+    u16 field_20;
+    u16 field_22;
+    u16 field_24;
+    u8 pad_26[6];
+    u32 field_2C;
+    u8 pad_30[0x60];
+    void (*callback)(void);
+    u32 field_94;
+    Vec3f position;
+    u8 key[6];
+    u8 kind;
+} Command;
+
+typedef struct Work {
+    s32 active;
+    s32 initialized;
+    u8 pad_08[2];
+    u16 field_0A;
+    s16 field_0C;
+    s16 field_0E;
+    s16 field_10;
+    u16 start_frame;
+    u16 field_14;
+    u16 field_16;
+    u16 end_frame;
+    u16 effect_frame;
+    u16 field_1C;
+    u16 stop_frame;
+    void *field_20;
+    u32 field_24;
+    s32 amount;
+    Vec3f position;
+    Vec3f target;
+    u8 command_storage[0x1F4];
+    void *tracked_effect;
+    u8 pad_23C[0x18];
+    void *object;
+    u32 effect_key;
+} Work;
+
+typedef struct Instance {
+    u8 pad_0000[8];
+    Work work;
+    u8 pad_0264[0x10C0];
+    s32 owner;
+    u8 pad_1328[4];
+    u16 frame;
+} Instance;
 
 extern u32 lbl_80651C38;
 extern u16 lbl_80651C3C;
@@ -44,14 +106,13 @@ extern u32 lbl_80651C48;
 extern u16 lbl_80651C4C;
 extern float lbl_80650584;
 extern s32 lbl_8064D18C;
-
 extern void fn_80199128(void*, s32);
-extern unsigned long long fn_8020123C();
+extern unsigned long long fn_8020123C(int, int, int, int);
 extern void fn_8019B134(void*, s32);
 extern void fn_8019B13C(void*);
 extern void* fn_80148008(Vec3f*, void*, void*, void (*)(void));
 extern void fn_8019ADE4(void);
-extern void *fn_80156938();
+extern void* fn_80156938(void*);
 extern void fn_8017FF1C(void*, s32);
 extern void fn_8017FE1C(void*, void (*)(void));
 extern void fn_8018B058(void);
@@ -61,137 +122,147 @@ extern void fn_8019A3A4(void*);
 extern void fn_8019A300(void);
 extern Vec3s* fn_8017FDA8(void*, s32);
 extern void* memcpy(void*, const void*, u32);
-extern int fn_801E8328();
+extern int fn_801E8328(u32, u32);
 extern void fn_80199EBC(void*);
 extern void fn_80199E18(void);
 extern void fn_8014F700(Vec3f*, s16, void*);
 extern void fn_80149E28(void*);
-void fn_80151D00(u8* arg)
-{
-    u8* work = arg + 8;
-    u8* instance = arg;
+
+void fn_80151D00(void* argument) {
+    Instance* instance = argument;
+    Work* work;
+    s32 amount;
     Vec3f position0;
     Vec3f position1;
-    u8 key0[8];
-    u8 key1[8];
-    u8 key2[8];
+    DescriptorKey key0;
+    DescriptorKey key1;
+    DescriptorKey key2;
     u32 effect_key;
     EffectDescriptor descriptor;
 
-    if (*(s32*)(instance + 8) != 0 && *(s32*)(work + 4) == 0) {
-        *(u16*)(work + 0x18) = *(u16*)(instance + 0x132C) + *(u16*)(work + 0x16);
-        if (*(void**)(work + 0x238) != 0)
-            fn_80199128(*(void**)(work + 0x238), 0);
-        *(u16*)(work + 0x1E) = *(u16*)(work + 0x18) - 50;
-        if (*(s32*)(work + 0x28) > 0)
-            fn_8020123C(0xE2, *(s32*)(work + 0x28), *(s32*)(work + 0x28), 0);
-        *(s32*)(work + 4) = 1;
+    work = &instance->work;
+    if ((instance->work.active != 0) && (work->initialized == 0)) {
+        work->end_frame = instance->frame + work->field_16;
+        if (work->tracked_effect != 0) {
+            fn_80199128(work->tracked_effect, 0);
+        }
+        work->stop_frame = work->end_frame - 50;
+        amount = work->amount;
+        if (amount > 0) {
+            fn_8020123C(0xE2, amount, amount, 0);
+        }
+        work->initialized = 1;
     }
-
-    if (*(void**)(work + 0x254) != 0 && FRAME == *(u16*)(work + 0x1E))
-        fn_8019B134(*(void**)(work + 0x254), 0);
-
-    if (FRAME == END - 60) {
-        *(u32*)key0 = lbl_80651C38;
-        *(u16*)(key0 + 4) = lbl_80651C3C;
+    if ((work->object != 0) && (instance->frame == work->stop_frame)) {
+        fn_8019B134(work->object, 0);
+    }
+    if (instance->frame == work->start_frame - 60) {
+        key0.word = lbl_80651C38;
+        key0.half = lbl_80651C3C;
         fn_8019B13C(&descriptor);
-        descriptor.enabled = 1;
-        descriptor.duration = *(u16*)(work + 0x18) - END + 20;
-        descriptor.resource = *(s16*)(work + 0x0E);
-        descriptor.kind = 0xF5;
-        descriptor.mode = -7;
-        descriptor.field1C = 0;
-        descriptor.field20 = 0;
-        descriptor.flags = 7;
-        descriptor.kind2 = 0xF5;
+        descriptor.field_01 = 1;
+        descriptor.field_06 = work->end_frame - work->start_frame + 20;
+        descriptor.field_04 = work->field_0E;
+        descriptor.field_02 = 0xF5;
+        descriptor.field_03 = -7;
+        descriptor.field_1C = 0;
+        descriptor.field_20 = 0;
+        descriptor.field_16 = 7;
+        descriptor.field_17 = 0xF5;
         descriptor.scale = lbl_80650584;
-        descriptor.field38 = *(u32*)(work + 0x24);
-        descriptor.field28 = 1;
-        position1 = *(Vec3f*)(work + 0x2C);
-        if (fn_80148008(&position1, key0, &descriptor, fn_8019ADE4) != 0) {
-            arg = fn_80156938();
-            fn_8017FF1C(arg, 2);
-            fn_8017FE1C(arg, fn_8018B058);
-            *(void**)(work + 0x254) = arg;
+        descriptor.field_38 = work->field_24;
+        descriptor.field_28 = 1;
+        position1 = work->position;
+        {
+            void* effect = fn_80148008(&position1, &key0, &descriptor, fn_8019ADE4);
+            if (effect != 0) {
+                void* object = fn_80156938(effect);
+                fn_8017FF1C(object, 2);
+                fn_8017FE1C(object, fn_8018B058);
+                work->object = object;
+            }
         }
-    } else if (FRAME >= END - 58 && FRAME <= END - 10 && *(void**)(work + 0x254) != 0) {
-        fn_801809B8(*(void**)(work + 0x254), FRAME - (END - 56));
+    } else if ((instance->frame >= work->start_frame - 58) &&
+               (instance->frame <= work->start_frame - 10) &&
+               (work->object != 0)) {
+        fn_801809B8(work->object, instance->frame - (work->start_frame - 56));
     }
-
-    if (FRAME >= *(u16*)(work + 0x18) - 50) {
-        s32 delta = *(u16*)(work + 0x18) - FRAME - 1;
-        u8 value = 0 > delta ? 0 : delta;
-        if (*(void**)(work + 0x254) != 0 && value != 0)
-            fn_801809B8(*(void**)(work + 0x254), value);
+    if (instance->frame >= work->end_frame - 50) {
+        s32 delta = work->end_frame - instance->frame - 1;
+        u8 value = (0 > delta) ? 0 : delta;
+        if ((work->object != 0) && (value != 0)) {
+            fn_801809B8(work->object, value);
+        }
     }
-
-    if (FRAME == END) {
-        s32 amount = *(s32*)(work + 0x28);
+    if (instance->frame == work->start_frame) {
+        s32 amount = work->amount;
         void* optional = 0;
-        if (amount > 0)
+        if (amount > 0) {
             optional = work;
-        fn_80152260(*(s32*)(instance + 0x1324), *(void**)(work + 0x20),
-                     (Vec3f*)(work + 0x38), 50, *(u16*)(work + 0x14),
-                     (s32)*(void**)(work + 0x254),
-                     *(u32*)(work + 0x24), amount, optional,
-                     *(u16*)(work + 0x0A));
-    } else if (FRAME == END + 10 && *(s32*)work == 0) {
-        Vec3s* object_position;
-        *(u32*)key1 = lbl_80651C40;
-        *(u16*)(key1 + 4) = lbl_80651C44;
-        arg = work + 0x1A4;
-        fn_8019A3A4(arg);
-        *(u16*)(arg + 4) = *(s16*)(work + 0x10);
-        *(u16*)(arg + 6) = *(u16*)(work + 0x14) - 20;
-        *(void**)(arg + 0x14) = *(void**)(work + 0x254);
-        *(u32*)(arg + 0x18) = *(u32*)(work + 0x24);
-        *(void (**)(void))(arg + 0x90) = fn_8019A300;
-        object_position = fn_8017FDA8(*(void**)(work + 0x254), 0);
-        *(float*)(arg + 0x98) = object_position->x;
-        *(float*)(arg + 0x9C) = object_position->y;
-        *(float*)(arg + 0xA0) = object_position->z;
-        memcpy(arg + 0xA4, key1, 6);
-        *(u32*)(arg + 0x94) = 0;
-        arg[0xAA] = 2;
-        fn_801E8328(0x10, arg);
-    }
-
-    if (*(s32*)(instance + 0x1324) == lbl_8064D18C) {
-        if (FRAME == 0) {
-            *(u32*)key2 = lbl_80651C48;
-            *(u16*)(key2 + 4) = lbl_80651C4C;
-            arg = work + 0x44;
-            fn_80199EBC(arg);
-            *(u16*)(arg + 6) = END - 10;
-            *(u16*)(arg + 4) = *(s16*)(work + 0x0E);
-            *(u16*)(arg + 0x20) = *(float*)(work + 0x2C);
-            *(u16*)(arg + 0x22) = *(float*)(work + 0x30);
-            *(u16*)(arg + 0x24) = *(float*)(work + 0x34);
-            *(u32*)(arg + 0x2C) = *(u32*)(work + 0x24);
-            *(void (**)(void))(arg + 0x90) = fn_80199E18;
-            memcpy(arg + 0xA4, key2, 6);
-            *(u32*)(arg + 0x94) = 0;
-            arg[0xAA] = 4;
-            fn_801E8328(0x10, arg);
         }
-        if (FRAME == *(u16*)(work + 0x1A) || FRAME == *(u16*)(work + 0x1A) + 10 ||
-            FRAME == *(u16*)(work + 0x1A) + 20) {
-            Vec3s* object_position = fn_8017FDA8(*(void**)(work + 0x254), 0);
+        fn_80152260(instance->owner, work->field_20, &work->target,
+                    50, work->field_14, (s32)work->object, work->field_24,
+                    amount, optional, work->field_0A);
+    } else if ((instance->frame == work->start_frame + 10) &&
+               (work->active == 0)) {
+        Command* command;
+        Vec3s* object_position;
+        key1.word = lbl_80651C40;
+        key1.half = lbl_80651C44;
+        command = (Command*)(work->command_storage + 0x160);
+        fn_8019A3A4(command);
+        command->field_04 = work->field_10;
+        command->field_06 = work->field_14 - 20;
+        command->object = work->object;
+        command->field_18 = work->field_24;
+        command->callback = fn_8019A300;
+        object_position = fn_8017FDA8(work->object, 0);
+        command->position.x = object_position->x;
+        command->position.y = object_position->y;
+        command->position.z = object_position->z;
+        memcpy(command->key, &key1, 6);
+        command->field_94 = 0;
+        command->kind = 2;
+        fn_801E8328(0x10, (u32)command);
+    }
+    if (instance->owner == lbl_8064D18C) {
+        if (instance->frame == 0) {
+            Command* command;
+            key2.word = lbl_80651C48;
+            key2.half = lbl_80651C4C;
+            command = (Command*)work->command_storage;
+            fn_80199EBC(command);
+            command->field_06 = work->start_frame - 10;
+            command->field_04 = work->field_0E;
+            command->field_20 = work->position.x;
+            command->field_22 = work->position.y;
+            command->field_24 = work->position.z;
+            command->field_2C = work->field_24;
+            command->callback = fn_80199E18;
+            memcpy(command->key, &key2, 6);
+            command->field_94 = 0;
+            command->kind = 4;
+            fn_801E8328(0x10, (u32)command);
+        }
+        if ((instance->frame == work->effect_frame) ||
+            (instance->frame == work->effect_frame + 10) ||
+            (instance->frame == work->effect_frame + 20)) {
+            Vec3s* object_position = fn_8017FDA8(work->object, 0);
             position0.x = object_position->x;
             position0.y = object_position->y;
             position0.z = object_position->z;
-            effect_key = *(u32*)(work + 0x258);
-            fn_8014F700(&position0, *(s16*)(work + 0x0C), &effect_key);
+            effect_key = work->effect_key;
+            fn_8014F700(&position0, work->field_0C, &effect_key);
         }
     }
-
-    if (FRAME == *(u16*)(work + 0x1A) + 20)
-        *(u16*)(work + 0x1A) += 0x8D;
-
-    if (*(s32*)(work + 0x28) > 0) {
-        if (*(s32*)work != 0 && FRAME == *(u16*)(work + 0x18))
+    if (instance->frame == work->effect_frame + 20) {
+        work->effect_frame += 0x8D;
+    }
+    if (work->amount > 0) {
+        if ((work->active != 0) && (instance->frame == work->end_frame)) {
             fn_80149E28(instance);
-    } else if (FRAME == *(u16*)(work + 0x18)) {
+        }
+    } else if (instance->frame == work->end_frame) {
         fn_80149E28(instance);
     }
 }

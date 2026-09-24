@@ -1,16 +1,5 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
-typedef unsigned int u32;
-
-typedef struct EntryView {
-    u8 pad[0x20];
-    u16 enabled;
-    u8 pad62[6];
-    u8 mode;
-    u8 pad69;
-    u8 flag;
-    u8 count;
-} EntryView;
 
 typedef struct Owner {
     u8 pad[0x159];
@@ -19,12 +8,21 @@ typedef struct Owner {
     u16 value160;
 } Owner;
 
+typedef struct Record {
+    u8 pad[0x20];
+    u16 value;
+    u8 pad22[8];
+    u8 field_2A;
+    u8 field_2B;
+} Record;
+
 typedef struct Work {
     u8 pad38[0x38];
     int object_id;
     u8 pad3C[4];
-    EntryView entries[3];
+    Record records[3];
     Owner* owner;
+    int pad;
 } Work;
 
 typedef struct State {
@@ -34,19 +32,19 @@ typedef struct State {
 extern State* fn_8006ED98(Work*);
 extern void *fn_8006ED3C();
 extern void *fn_80201814();
-extern void fn_80088A04(Work*);
+extern int fn_80088A04(Work*);
 extern int fn_8006ECD4(Work*, int);
-extern void fn_8006EA4C(void);
-extern void fn_8006BEE4(void*, void (*)(void));
+extern int fn_8006EA4C(Owner*);
+extern void fn_8006BEE4(void*, int (*)(Owner*));
 extern int lbl_8064C824;
 extern int fn_801A6D94(int);
-extern void fn_8006DEF8(Work*, u32, u32, u32, u16);
+extern void fn_8006DEF8(Work*, int, void*, void*, int);
 extern unsigned int fn_800496EC(void*);
 
 int fn_80087D64(Work* work)
 {
-    void* object;
     Owner* owner;
+    void* object;
     State* state;
 
     state = fn_8006ED98(work);
@@ -58,24 +56,27 @@ int fn_80087D64(Work* work)
 
         fn_80088A04(work);
         slot = fn_8006ECD4(work, 7);
-        work->entries[slot].enabled = 1;
+        work->records[slot].value = 1;
     }
 
     if (state->mode == 6) {
         fn_8006BEE4(state, fn_8006EA4C);
         if (fn_801A6D94(lbl_8064C824)) {
-            int slot;
             u8* entry;
+            int offset = fn_8006ECD4(work, 6) * 0x2C;
+            int data_offset;
             int i;
 
-            slot = fn_8006ECD4(work, 6);
-            entry = (u8*)work + slot * 0x2C;
+            entry = (u8*)work + offset;
             entry[0x68] = 4;
             fn_8006DEF8(work, 6, 0, 0, 0);
-            for (i = 0; i < 4; i++) {
-                work->entries[slot].mode = i;
+            i = 0;
+            data_offset = offset + 0x68;
+            do {
+                *(u8*)((unsigned int)work + data_offset) = i;
                 fn_8006DEF8(work, 6, 0, 0, 0);
-            }
+                i++;
+            } while (i < 4);
             entry[0x68] = 0;
             owner->active = 0;
         }
@@ -83,8 +84,8 @@ int fn_80087D64(Work* work)
         int index;
 
         fn_8006ED3C(work, 7, &index);
-        work->entries[index].flag = 0;
-        work->entries[index].count = 4;
+        work->records[index].field_2A = 0;
+        work->records[index].field_2B = 4;
         work->owner->value160 = fn_800496EC(object);
     }
     return 1;
