@@ -46,11 +46,11 @@ void fn_801BA94C(u32 id, u32 volume, u32 left, u32 right, u32 aux_left, u32 aux_
     StreamSlot* slots = lbl_8061AE48;
     u32 offset;
     u8* state_base = (u8*)slots + 8;
-    u32 saved_aux_right = aux_right;
-    u32 saved_aux_left = aux_left;
-    u32 saved_right = right;
-    u32 saved_left = left;
     u32 saved_volume = volume;
+    u32 saved_left = left;
+    u32 saved_right = right;
+    u32 saved_aux_left = aux_left;
+    u32 saved_aux_right = aux_right;
     u32 index;
     u32 cache;
     u32 actual_left;

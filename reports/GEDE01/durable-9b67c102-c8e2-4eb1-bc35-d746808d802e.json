@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "9b67c102-c8e2-4eb1-bc35-d746808d802e",
+  "attempt": 4,
+  "base_commit": "6dd8717d6557d44ef17d8466a28b61afb82bd01f",
+  "target": "fn_801BA94C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-9b67c102-c8e2-4eb1-bc35-d746808d802e.json"
+  ],
+  "divergence": "Fresh canonical and relocation-strict objdiff reports are byte-for-byte identical at 89.69697%, improving the preserved 89.67532% result by testing natural parameter-order snapshots before register coalescing. Retail text is 924 bytes and generated text is 900 bytes. Generated still uses a 96-byte frame with stmw r24,0x40(r1), colors the saved arguments in reverse register order r28 through r24, retains the identifier in r30, reuses r30 for the slot offset, and materializes the state-base pointer in r29 before the first call. Retail uses an 88-byte frame with stmw r23,0x34(r1), colors volume through aux-right in r23 through r27, retains the identifier in r28 while allocating the slot offset separately in r30, and delays the state-base addi into r29 until the first state test. The remaining register allocation changes indexed slot-field addressing, stack conversion slots, and compiler-local floating-constant symbols; external call relocation targets and addends remain semantically aligned. Canonical configure/build completed successfully and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
