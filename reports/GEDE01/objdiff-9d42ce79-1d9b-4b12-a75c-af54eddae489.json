@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "assignment_id": "9d42ce79-1d9b-4b12-a75c-af54eddae489",
+  "attempt": 19,
+  "base_commit": "dac8958d94eb18849da59f7ce2a013654a8445bb",
+  "target": "fn_8008A5B8",
+  "codegen_hypothesis": "Retain lbl_802FC5BC in a local base pointer across the query loop and express the -1 termination as fall-through from if (index != -1); together these produce the retail r31 lifetime and branch layout.",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "python3 tools/fndiff.py game/game_fn_8008A5B8.c fn_8008A5B8",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8008A5B8 fn_8008A5B8 -o build/GEDE01/fn_8008A5B8-canonical-attempt19.json --format json-pretty",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_8008A5B8 fn_8008A5B8 -o build/GEDE01/fn_8008A5B8-reloc-strict-attempt19.json --format json-pretty -c function_reloc_diffs=name_address",
+    "sha1sum build/GEDE01/main.dol",
+    "cmp -s build/GEDE01/fn_8008A5B8-canonical-attempt19.json build/GEDE01/fn_8008A5B8-reloc-strict-attempt19.json",
+    "readelf -rW build/GEDE01/obj/game/game_fn_8008A5B8.o",
+    "readelf -rW build/GEDE01/src/game/game_fn_8008A5B8.o"
+  ],
+  "raw_outputs": {
+    "configure_exit_code": 0,
+    "ninja_exit_code": 0,
+    "build_gate": "build/GEDE01/main.dol: OK",
+    "fndiff": "target 320 bytes  base 320 bytes  match 100.0",
+    "canonical_objdiff": "INFO Writing to build/GEDE01/fn_8008A5B8-canonical-attempt19.json; canonical left_size=320 left_match=100.0 right_size=320 right_match=100.0",
+    "relocation_strict_objdiff": "function_reloc_diffs=name_address; INFO Writing to build/GEDE01/fn_8008A5B8-reloc-strict-attempt19.json; strict left_size=320 left_match=100.0 right_size=320 right_match=100.0",
+    "canonical_and_strict_json_cmp": "objdiff_json_cmp_exit=0",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "retail_readelf": [
+      "0000000a R_PPC_ADDR16_HA lbl_802FC5BC + 0",
+      "00000016 R_PPC_ADDR16_LO lbl_802FC5BC + 0",
+      "0000005c R_PPC_REL24 fn_8006D548 + 0",
+      "0000006c R_PPC_EMB_SDA21 lbl_8064C4E4 + 0",
+      "0000007c R_PPC_REL24 fn_8011F114 + 0",
+      "000000d8 R_PPC_REL24 fn_80179064 + 0",
+      "000000f8 R_PPC_EMB_SDA21 lbl_8064EBBC + 0",
+      "0000010c R_PPC_REL24 fn_800EBA80 + 0"
+    ],
+    "generated_readelf": [
+      "0000000a R_PPC_ADDR16_HA lbl_802FC5BC + 0",
+      "00000016 R_PPC_ADDR16_LO lbl_802FC5BC + 0",
+      "0000005c R_PPC_REL24 fn_8006D548 + 0",
+      "0000006c R_PPC_EMB_SDA21 lbl_8064C4E4 + 0",
+      "0000007c R_PPC_REL24 fn_8011F114 + 0",
+      "000000d8 R_PPC_REL24 fn_80179064 + 0",
+      "000000f8 R_PPC_EMB_SDA21 lbl_8064EBBC + 0",
+      "0000010c R_PPC_REL24 fn_800EBA80 + 0"
+    ],
+    "retained_base_reference": "fndiff instruction 0x00f0 is lwz r0, 0x14(r31) on both sides; r31 is formed by lbl_802FC5BC@ha/@l, resolving to lbl_802FC5BC + 20."
+  },
+  "canonical_match_percent": 100.0,
+  "relocation_strict_match_percent": 100.0,
+  "relocation_targets_and_addends_match": true,
+  "source_scope": "Dedicated translation unit src/game/game_fn_8008A5B8.c; no inline or whole-function assembly; no neighboring function edits; splits.txt unchanged.",
+  "provenance": "C reconstruction recovered with git show from preserved local commit 68f94daecfcd3c6407c9373fe50550fc8e4f72a5 and independently rebuilt and verified on accepted base dac8958d94eb18849da59f7ce2a013654a8445bb.",
+  "divergence": ""
+}

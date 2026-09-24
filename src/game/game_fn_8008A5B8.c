@@ -17,9 +17,10 @@ extern void fn_8011F114();
 extern s32 fn_80179064(s32, s32, s32, s32);
 extern void fn_800EBA80(s32, Vec3*, void*, s32, float);
 
-/* NonMatching: honest reconstruction of the bounded spatial-query loop. */
+/* Bounded spatial-query loop. */
 void fn_8008A5B8(void* object)
 {
+    u8* data = lbl_802FC5BC;
     s32 index = 0;
     s32 done = 0;
 
@@ -36,23 +37,22 @@ void fn_8008A5B8(void* object)
 
         done = 1;
         index = fn_8006D548(2, object, 3, &found, &query, 0, index);
-        if (index == -1)
-            break;
-
-        if (lbl_8064C4E4 != 0) {
-            fn_8011F114(&current, lbl_8064C4E4);
-            resolved = current;
-            dx = (s32)found.x;
-            dz = (s32)found.y;
-            fx = (s32)resolved.x;
-            fz = (s32)resolved.y;
-            if (__abs(fn_80179064(dx, dz, fx, fz)) < 500) {
-                color = *(u32*)(lbl_802FC5BC + 0x14);
-                fn_800EBA80(2, &found, &color, 0x40,
-                            lbl_8064EBBC);
+        if (index != -1) {
+            if (lbl_8064C4E4 != 0) {
+                fn_8011F114(&current, lbl_8064C4E4);
+                resolved = current;
+                dx = (s32)found.x;
+                dz = (s32)found.y;
+                fx = (s32)resolved.x;
+                fz = (s32)resolved.y;
+                if (__abs(fn_80179064(dx, dz, fx, fz)) < 500) {
+                    color = *(u32*)(data + 0x14);
+                    fn_800EBA80(2, &found, &color, 0x40,
+                                lbl_8064EBBC);
+                }
             }
+            done = 0;
+            index++;
         }
-        done = 0;
-        index++;
     }
 }
