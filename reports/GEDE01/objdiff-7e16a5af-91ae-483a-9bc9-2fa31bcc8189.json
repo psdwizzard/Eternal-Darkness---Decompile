@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "assignment_id": "7e16a5af-91ae-483a-9bc9-2fa31bcc8189",
+  "target": "fn_800AA7F0",
+  "compiler": "mwcc_242_53",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "sha1sum build/GEDE01/main.dol",
+    "python3 tools/fndiff.py game/game_fn_800AA7F0.c fn_800AA7F0",
+    "python3 tools/legal_audit.py"
+  ],
+  "raw_measured_output": {
+    "configure": "exit status 0",
+    "build": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "objdiff": "target 176 bytes  base 176 bytes  match 89.40909",
+    "legal_audit": "legal audit passed (21284 tracked project files inspected)"
+  },
+  "code": {
+    "retail_size": 176,
+    "generated_size": 176,
+    "match_percent": 89.40909
+  },
+  "relocation_strict": {
+    "count": 7,
+    "targets_types_addends_equal": true,
+    "retail": [
+      {"offset": 44, "type": "R_PPC_REL24", "target": "fn_8014CBC0", "addend": 0},
+      {"offset": 52, "type": "R_PPC_ADDR16_HA", "target": "fn_800AA6F4", "addend": 0},
+      {"offset": 60, "type": "R_PPC_ADDR16_LO", "target": "fn_800AA6F4", "addend": 0},
+      {"offset": 64, "type": "R_PPC_EMB_SDA21", "target": "lbl_8064EF18", "addend": 0},
+      {"offset": 88, "type": "R_PPC_EMB_SDA21", "target": "lbl_8064EF78", "addend": 0},
+      {"offset": 140, "type": "R_PPC_REL24", "target": "fn_801FE8DC", "addend": 0},
+      {"offset": 152, "type": "R_PPC_REL24", "target": "fn_801E8328", "addend": 0}
+    ],
+    "generated": [
+      {"offset": 44, "type": "R_PPC_REL24", "target": "fn_8014CBC0", "addend": 0},
+      {"offset": 52, "type": "R_PPC_ADDR16_HA", "target": "fn_800AA6F4", "addend": 0},
+      {"offset": 60, "type": "R_PPC_ADDR16_LO", "target": "fn_800AA6F4", "addend": 0},
+      {"offset": 72, "type": "R_PPC_EMB_SDA21", "target": "lbl_8064EF18", "addend": 0},
+      {"offset": 76, "type": "R_PPC_EMB_SDA21", "target": "lbl_8064EF78", "addend": 0},
+      {"offset": 140, "type": "R_PPC_REL24", "target": "fn_801FE8DC", "addend": 0},
+      {"offset": 152, "type": "R_PPC_REL24", "target": "fn_801E8328", "addend": 0}
+    ]
+  },
+  "setup_window": {
+    "retail": ["lfs f1, lbl_8064EF18@sda21", "li r0, 2", "lwz r6, 0(r27)", "addi r3, r26, 4", "lwz r5, 4(r27)", "fmr f2, f1", "lfs f3, lbl_8064EF78@sda21"],
+    "generated": ["li r0, 2", "addi r3, r26, 4", "lfs f1, lbl_8064EF18@sda21", "lfs f3, lbl_8064EF78@sda21", "lwz r6, 0(r27)", "fmr f2, f1", "lwz r5, 4(r27)"],
+    "subsequent_instructions_equal": true
+  },
+  "attempt_8_hypotheses": [
+    {"name": "const-qualified input pointers", "result": "codegen-neutral at 89.40909%"},
+    {"name": "volatile float globals with the third load delayed until after the aggregate copy", "result": "regressed to 86.36364%"},
+    {"name": "initialized float declarations immediately after fn_8014CBC0", "result": "regressed to 75.15909%"},
+    {"name": "float declaration ordering and register-qualified first temporary", "result": "codegen-neutral at 89.40909%"}
+  ]
+}
