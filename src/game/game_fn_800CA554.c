@@ -9,17 +9,19 @@ typedef struct EventPayload {
 
 extern u32 fn_801DE5C4(void *);
 extern u32 fn_801DE5CC(void *);
-extern unsigned long long fn_8020123C();
+extern unsigned long long fn_8020123C(u8, u32, u32, void *);
 
-int fn_800CA554(register void *object, register u32 packed)
+int fn_800CA554(void *object, u32 packed)
 {
+    register u8 *savedObject = (u8 *)object;
     register u32 group;
+    register u32 savedPacked;
     EventPayload payload;
 
     group = packed >> 8;
-
-    payload.first = fn_801DE5C4(object);
-    payload.second = fn_801DE5CC(object);
-    fn_8020123C((u8)packed, group, group, &payload);
+    savedPacked = packed;
+    payload.first = fn_801DE5C4(savedObject);
+    payload.second = fn_801DE5CC(savedObject);
+    fn_8020123C((u8)savedPacked, group, group, &payload);
     return 1;
 }

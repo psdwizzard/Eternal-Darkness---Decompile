@@ -7865,9 +7865,8 @@ config.libs = [
             Object(Matching, "game/game_fn_800CA2C8.c"),
             Object(Matching, "game/game_fn_800CA4B8.c"),
             Object(Matching, "game/game_fn_800CA530.c"),
-            # 83.888885% size-exact honest-C reconstruction; remaining
-            # differences are equivalent r29-r31 allocation and prologue scheduling.
-            Object(NonMatching, "game/game_fn_800CA554.c"),
+            # Canonical and relocation-strict 100%; exact 108-byte function.
+            Object(Matching, "game/game_fn_800CA554.c"),
             Object(Matching, "game/game_fn_800CA5C0.c"),
             Object(Matching, "game/game_fn_800CA660.c"),
             Object(Matching, "game/game_fn_800CA6DC.c"),

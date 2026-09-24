@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "assignment_id": "c960341c-9e73-41da-99f4-cb0b606a7aee",
+  "target": "fn_800CA554",
+  "compiler": "mwcc_242_53 (GC/1.3)",
+  "commands": {
+    "configure": "python3 configure.py",
+    "build": ".tools/bin/ninja -j2",
+    "canonical_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800CA554 -o build/fn_800CA554-canonical-final.json --format json-pretty fn_800CA554",
+    "relocation_strict_objdiff": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_800CA554 -o build/fn_800CA554-strict-final.json --format json-pretty -c function_reloc_diffs=name_address fn_800CA554",
+    "dol_sha1": "sha1sum build/GEDE01/main.dol"
+  },
+  "raw_measured_outputs": {
+    "configure_exit": 0,
+    "build_exit": 0,
+    "build_final": "build/GEDE01/main.dol: OK",
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol",
+    "canonical": {
+      "command_exit": 0,
+      "retail_size": 108,
+      "generated_size": 108,
+      "retail_match_percent": 100.0,
+      "generated_match_percent": 100.0
+    },
+    "relocation_strict": {
+      "command_exit": 0,
+      "retail_size": 108,
+      "generated_size": 108,
+      "retail_match_percent": 100.0,
+      "generated_match_percent": 100.0,
+      "retail_relocations": [
+        "0x24 R_PPC_REL24 fn_801DE5C4 addend 0",
+        "0x30 R_PPC_REL24 fn_801DE5CC addend 0",
+        "0x48 R_PPC_REL24 fn_8020123C addend 0"
+      ],
+      "generated_relocations": [
+        "0x24 R_PPC_REL24 fn_801DE5C4 addend 0",
+        "0x30 R_PPC_REL24 fn_801DE5CC addend 0",
+        "0x48 R_PPC_REL24 fn_8020123C addend 0"
+      ],
+      "relocation_targets_and_addends_equal": true
+    }
+  },
+  "codegen_hypothesis": "Use the full four-argument prototype to reproduce retail's mr/mr/clrlwi argument schedule, and preserve the object through a pointer-typed u8 local so GC/1.3 distinguishes its live range without any pointer-to-integer coercion. This colors object/group/packed as r31/r30/r29 and matches retail exactly.",
+  "variants_measured": [
+    {
+      "name": "full_prototype_with_void_pointer_local",
+      "size": 108,
+      "match_percent": 83.888885,
+      "result": "Retail argument scheduling was reproduced, but saved registers remained permuted."
+    },
+    {
+      "name": "full_prototype_with_group_deferred_after_first_call",
+      "size": 100,
+      "match_percent": 84.0,
+      "result": "Object moved to r31, but GC/1.3 reused r31 for group and emitted only two saved-register spills."
+    },
+    {
+      "name": "full_prototype_with_u8_pointer_saved_object",
+      "size": 108,
+      "match_percent": 100.0,
+      "result": "Canonical and relocation-strict byte match; all relocation targets and zero addends agree."
+    }
+  ],
+  "legal_audit": {
+    "inline_or_whole_function_assembly": false,
+    "shared_reconstruction": false,
+    "compiler_policy_change": false,
+    "neighboring_function_edit": false,
+    "private_or_generated_inputs_committed": false
+  },
+  "worktree_note": "CLAUDE.md was already modified at assignment start and was deliberately left untouched and unstaged."
+}
