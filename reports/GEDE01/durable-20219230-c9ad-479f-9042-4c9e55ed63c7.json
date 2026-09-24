@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "20219230-c9ad-479f-9042-4c9e55ed63c7",
+  "attempt": 4,
+  "base_commit": "92dc2e76a08e28651db03c1fd8a882a2aac3740b",
+  "target": "fn_801BA2A4",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-20219230-c9ad-479f-9042-4c9e55ed63c7.json"
+  ],
+  "divergence": "Canonical GC/1.2.5n relocation-aware objdiff with function_reloc_diffs=name_address measures 92.018936%; retail and generated text are both 1056 bytes. Relocation targets, types, and addends agree, but relocation offsets differ at fn_801CE2B8 (retail 0x50/generated 0x54), four lbl_8064D3EC references (retail 0x110/0x124/0x12c/0x134 versus generated 0x112/0x126/0x12e/0x136), fn_801BA6C4 (0x270/0x26c), and lbl_8064D3CC (0x35c/0x352). Retail uses a 0x78 frame, preserves the slot-array base directly in r30, and uses r19 for the selected slot; generated uses a 0x70 frame, advances the base in r16 during the free-slot scan, copies the original base to r30, and uses r17 for the selected slot, shifting long-lived parameter registers. The retained nested success path, cache-id temporary, and inverse nested failure branches reproduce retail branch structure and exact text size. Full canonical build passed and build/GEDE01/main.dol SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

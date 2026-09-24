@@ -47,10 +47,10 @@ u32 fn_801BA2A4(u8 format, u32 source, u32 samples, u32 voice_flags,
 {
     StreamSlot* slots = lbl_8061AE48;
     u32 slot_index;
-    StreamSlot* slot;
     u32 id;
     u32 found;
     u32 bytes;
+    u8 cache_id;
 
     fn_801CE2B8();
 
@@ -59,10 +59,7 @@ u32 fn_801BA2A4(u8 format, u32 source, u32 samples, u32 voice_flags,
             break;
         }
     }
-    if (slot_index == 64) {
-        id = (u32)-1;
-        goto done;
-    }
+    if (slot_index != 64) {
 
     do {
         id = lbl_8064D3EC++;
@@ -76,34 +73,33 @@ u32 fn_801BA2A4(u8 format, u32 source, u32 samples, u32 voice_flags,
         }
     } while (found != 64);
 
-    slot = &slots[slot_index];
-    slot->id = id;
-    slot->flags = flags;
+    slots[slot_index].id = id;
+    slots[slot_index].flags = flags;
     bytes = fn_801BA6C4(samples, flags);
-    slot->source = source;
-    slot->samples = samples;
-    slot->buffer_bytes = bytes;
-    slot->callback = callback;
-    slot->voice = (u32)-1;
+    slots[slot_index].source = source;
+    slots[slot_index].samples = samples;
+    slots[slot_index].buffer_bytes = bytes;
+    slots[slot_index].callback = callback;
+    slots[slot_index].voice = (u32)-1;
 
     if (flags & 1) {
         if (position != 0) {
             int i;
             for (i = 0; i < 16; i++) {
-                slot->position[i] = position[i];
+                slots[slot_index].position[i] = position[i];
             }
-            *(unsigned short*)&slot->pad1C[4] = 8;
+            *(unsigned short*)&slots[slot_index].pad1C[4] = 8;
         }
-        slot->positional = 1;
+        slots[slot_index].positional = 1;
     } else {
-        slot->positional = 0;
+        slots[slot_index].positional = 0;
     }
 
-    slot->voice_flags = voice_flags;
-    slot->priority = priority;
-    slot->format = format;
-    slot->saved_left = left;
-    slot->saved_right = right;
+    slots[slot_index].voice_flags = voice_flags;
+    slots[slot_index].priority = priority;
+    slots[slot_index].format = format;
+    slots[slot_index].saved_left = left;
+    slots[slot_index].saved_right = right;
 
     if (lbl_8064D3CC & 1) {
         aux_left = 0x40;
@@ -112,24 +108,30 @@ u32 fn_801BA2A4(u8 format, u32 source, u32 samples, u32 voice_flags,
         aux_right = 0;
     }
 
-    slot->volume = volume;
-    slot->left = aux_left;
-    slot->right = aux_right;
-    slot->aux_left = left;
-    slot->aux_right = right;
-    slot->callback_arg = callback_arg;
-    slot->cache = (u32)-1;
-    slot->state = 3;
-    slot->cache_id = fn_801CD1C0(bytes, (u32)-1, aux_left, aux_right);
+    slots[slot_index].volume = volume;
+    slots[slot_index].left = aux_left;
+    slots[slot_index].right = aux_right;
+    slots[slot_index].aux_left = left;
+    slots[slot_index].aux_right = right;
+    slots[slot_index].callback_arg = callback_arg;
+    slots[slot_index].cache = (u32)-1;
+    slots[slot_index].state = 3;
+    cache_id = fn_801CD1C0(bytes, (u32)-1, aux_left, aux_right);
+    slots[slot_index].cache_id = cache_id;
 
-    if (slot->cache_id == 0xFF || (!(flags & 0x10000) && fn_801BB1A0(id) == 0)) {
+    if (cache_id != 0xFF) {
+        if (!(flags & 0x10000) && fn_801BB1A0(id) == 0) {
+            id = (u32)-1;
+        }
+    } else {
         id = (u32)-1;
     }
     if (id == (u32)-1) {
-        slot->state = 0;
+        slots[slot_index].state = 0;
     }
-
-done:
+    } else {
+        id = (u32)-1;
+    }
     fn_801CE280();
     return id;
 }
