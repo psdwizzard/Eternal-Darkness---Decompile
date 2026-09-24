@@ -17,8 +17,8 @@ typedef struct Effect {
     void* callback;
 } Effect;
 
-extern float lbl_8064EF18;
-extern float lbl_8064EF78;
+extern const float lbl_8064EF18;
+extern const float lbl_8064EF78;
 extern void fn_8014CBC0(Effect*);
 extern int fn_800AA6F4(void*);
 extern void fn_801FE8DC(int*, void*, float, float, float);
@@ -31,9 +31,11 @@ void fn_800AA7F0(Effect* effect, Vec3i* position, int* value, int kind,
         float first;
         float second;
         float third;
+        int* handle;
 
         fn_8014CBC0(effect);
-        effect->handle = 0;
+        handle = &effect->handle;
+        *handle = 0;
         first = lbl_8064EF18;
         third = lbl_8064EF78;
         effect->position = *position;
@@ -45,7 +47,7 @@ void fn_800AA7F0(Effect* effect, Vec3i* position, int* value, int kind,
         effect->fieldC = 0;
         effect->owner = owner;
         effect->mode = 2;
-        fn_801FE8DC(&effect->handle, fn_800AA6F4, first, second, third);
+        fn_801FE8DC(handle, fn_800AA6F4, first, second, third);
         fn_801E8328(0x13, effect);
     }
 }

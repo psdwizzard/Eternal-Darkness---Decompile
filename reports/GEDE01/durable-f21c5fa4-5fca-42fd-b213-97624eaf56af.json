@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "assignment_id": "f21c5fa4-5fca-42fd-b213-97624eaf56af",
+  "attempt": 9,
+  "base_commit": "29a1024710e2cab43226a48c81cc804dec6b0c8c",
+  "target": "fn_800AA7F0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-f21c5fa4-5fca-42fd-b213-97624eaf56af.json",
+    "eternal-darkness-decomp/reports/GEDE01/canonical-f21c5fa4-5fca-42fd-b213-97624eaf56af.json",
+    "eternal-darkness-decomp/reports/GEDE01/verification-f21c5fa4-5fca-42fd-b213-97624eaf56af.json",
+    "eternal-darkness-decomp/reports/GEDE01/experiments-f21c5fa4-5fca-42fd-b213-97624eaf56af.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff improve from 89.40909% to 99.77273%, size-exact at 176 bytes. The only differing instructions are at 0x34 (retail lis r3, fn_800AA6F4@ha; generated lis r4, fn_800AA6F4@ha) and 0x3c (retail addi r4, r3, fn_800AA6F4@l; generated addi r4, r4, fn_800AA6F4@l). All seven ELF relocations now match exactly, including offsets, targets, types and zero addends. All other instructions match. The preserved C declares the SDA2 float symbols const and uses a shared local handle pointer for the zero store and call. It remains NonMatching. Canonical build succeeds and DOL SHA-1 is ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
