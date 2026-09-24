@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "327127d8-c00e-4d41-9792-b22eef5d8db4",
+  "attempt": 5,
+  "base_commit": "02d6e3a295656a465a93aee99c936d482c600a68",
+  "target": "fn_8012C774",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-327127d8-c00e-4d41-9792-b22eef5d8db4.json"
+  ],
+  "divergence": "144-byte candidate reaches 94.30556% canonical and relocation-strict. Retail loads c into r5 at 0x3c and stores it at 0x54; candidate uses r7 and stores c at 0x5c. Candidate materializes the a/b copy addresses at 0x54/0x58 instead of retail 0x58/0x5c. Exactly four aligned instruction words differ (0x3c, 0x54, 0x58, 0x5c); both call relocations match in site, type, target, and addend. Historical reports reversed the candidate and retail sides."
+}
