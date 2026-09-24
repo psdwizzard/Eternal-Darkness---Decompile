@@ -89,10 +89,10 @@ config.custom_build_rules = [
     {
         "name": "externalize_game_80150A24_signed_bias",
         "command": (
-            "python3 tools/externalize_elf_symbol.py $in @70 lbl_80650588 "
+            "python3 tools/externalize_elf_symbol.py $in @71 lbl_80650588 "
             "orig/GEDE01/sys/main.dol --require-whole-section && "
             "build/binutils/powerpc-eabi-objcopy "
-            "--redefine-sym=@70=lbl_80650588 --remove-section=.sdata2 "
+            "--redefine-sym=@71=lbl_80650588 --remove-section=.sdata2 "
             "--rename-section=.comment=.ignored $in && touch $out"
         ),
         "description": "EXTERNALIZE $in",

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "c8aa0e37-652d-401d-a27f-bdf1bb2a212d",
+  "attempt": 4,
+  "base_commit": "66d7acde9ad1f3635d4bfce431a0c235da7186df",
+  "target": "fn_80150A24",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-c8aa0e37-652d-401d-a27f-bdf1bb2a212d.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff is 91.61128%: retail is 1276 bytes and generated is 1264 bytes, with 40 versus 42 relocation entries. The signed 32-bit <= -1 delta form removes the previous volatile stack traffic, but generated absolute values still use subf/cmpwi -1/bgt/neg instead of retail subf./bge/neg. Remaining divergence includes the nonvolatile-register allocation cycle, stack-slot layout, two extra lbl_8023A760 relocations from early HA/LO materialization, and related instruction scheduling. DOL SHA-1 is verified in validation-c8aa0e37-652d-401d-a27f-bdf1bb2a212d.json."
+}

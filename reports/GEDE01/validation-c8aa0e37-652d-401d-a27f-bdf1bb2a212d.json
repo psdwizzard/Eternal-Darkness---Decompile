@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "assignment_id": "c8aa0e37-652d-401d-a27f-bdf1bb2a212d",
+  "commands": [
+    "python3 configure.py",
+    ".tools/bin/ninja -j2",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80150A24 -o reports/GEDE01/objdiff-c8aa0e37-652d-401d-a27f-bdf1bb2a212d-canonical.json --format json-pretty fn_80150A24",
+    "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80150A24 -o reports/GEDE01/objdiff-c8aa0e37-652d-401d-a27f-bdf1bb2a212d.json --format json-pretty -c function_reloc_diffs=name_address fn_80150A24",
+    "sha1sum build/GEDE01/main.dol"
+  ],
+  "raw_results": {
+    "build_exit_code": 0,
+    "dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "expected_dol_sha1": "ea24b6af954876ce072562ff39cdb4c81d32be1f",
+    "canonical_match_percent": 91.61128,
+    "relocation_strict_match_percent": 91.61128,
+    "retail_text_bytes": 1276,
+    "generated_text_bytes": 1264,
+    "retail_rela_text_bytes": 480,
+    "generated_rela_text_bytes": 504,
+    "retail_relocation_entries": 40,
+    "generated_relocation_entries": 42
+  },
+  "hypothesis": "Use three signed 32-bit delta locals and spell the negative test as <= -1. This prevents GC/1.3's branchless absolute-value recognition without the prior volatile stack traffic.",
+  "observed_codegen": "For each axis generated code uses subf, cmpwi -1, bgt, neg; retail uses subf., bge, neg. The new form removes the prior 60 bytes of volatile stores/reloads and improves relocation-strict similarity from 87.44201% to 91.61128%.",
+  "artifacts": {
+    "canonical": "eternal-darkness-decomp/reports/GEDE01/objdiff-c8aa0e37-652d-401d-a27f-bdf1bb2a212d-canonical.json",
+    "relocation_strict": "eternal-darkness-decomp/reports/GEDE01/objdiff-c8aa0e37-652d-401d-a27f-bdf1bb2a212d.json"
+  }
+}

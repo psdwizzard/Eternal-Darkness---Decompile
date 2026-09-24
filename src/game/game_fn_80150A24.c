@@ -20,9 +20,8 @@ void fn_80150A24(void* raw_instance)
     TargetVec3f scratch;
     TargetVec3f fallback_point;
     TargetVec3f effect_point;
-    u16 dx, dy, dz;
+    s32 dx, dy, dz;
     u16 radius;
-    volatile s32 delta;
     s32 candidate_type;
     s32 candidate_rank;
     s32 moved;
@@ -40,19 +39,16 @@ void fn_80150A24(void* raw_instance)
 
         fn_8017D700(current, work, 0, work + 6, 3,
                     *(s16*)(work + 12), 1, 10);
-        delta = *(s16*)(work + 0) - current->x;
-        if (delta < 0)
-            delta = -delta;
-        dx = delta;
-        delta = *(s16*)(work + 2) - current->y;
-        if (delta < 0)
-            delta = -delta;
-        dy = delta;
-        delta = *(s16*)(work + 4) - current->z;
-        if (delta < 0)
-            delta = -delta;
-        dz = delta;
-        if (dx < 20 && dy < 20 && dz < 20) {
+        dx = *(s16*)(work + 0) - current->x;
+        if (dx <= -1)
+            dx = -dx;
+        dy = *(s16*)(work + 2) - current->y;
+        if (dy <= -1)
+            dy = -dy;
+        dz = *(s16*)(work + 4) - current->z;
+        if (dz <= -1)
+            dz = -dz;
+        if ((u32)dx < 20 && (u32)dy < 20 && (u32)dz < 20) {
             actor = *(void**)(work + 0x1C);
             if (actor != 0) {
                 owner = *(void**)(work + 0x14);
@@ -133,7 +129,7 @@ void fn_80150A24(void* raw_instance)
                 }
             }
         } else if (*(u16*)(work + 12) > 1 &&
-                   dx < 500 && dy < 500 && dz < 500) {
+                   (u32)dx < 500 && (u32)dy < 500 && (u32)dz < 500) {
             --*(u16*)(work + 12);
         }
     }
