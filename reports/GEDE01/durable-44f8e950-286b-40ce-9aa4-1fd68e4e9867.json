@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "44f8e950-286b-40ce-9aa4-1fd68e4e9867",
+  "attempt": 5,
+  "base_commit": "b6c8882e11d96b476f119f576fa92cf01069b6ab",
+  "target": "fn_801FA66C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-44f8e950-286b-40ce-9aa4-1fd68e4e9867.json"
+  ],
+  "divergence": "Fresh canonical relocation-aware objdiff remains 87.472725%: retail is 220 bytes and GC/1.3 emits 212 bytes. This attempt tested a distinct copy-codegen hypothesis by replacing the Vec3 structure assignment with three u32 pointer-indexed copies, aiming to preserve the saved-object base as a live pointer; MWCC emitted byte-identical code, so the experiment was reverted and the cleaner preserved reconstruction retained. Retail keeps the object offset in r8, explicitly forms r3=r31+0 before its indexed add, and forms r5=r31+0xCC0 before stores at +0x48/+0x4C/+0x50. The candidate keeps the offset in r7, folds the source indexed add into r31+r7, and folds the destination stores into r31+0xD08/+0xD0C/+0xD10, producing the eight-byte size deficit and associated r3/r5/r6/r7/r8 scheduling differences. Relocation targets and addends are recorded in the raw evidence. python3 configure.py and .tools/bin/ninja -j2 passed; tools/legal_audit.py passed 21443 tracked project files; build/GEDE01/main.dol and retail both have SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}
