@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "d847439f-6474-4033-9f84-3bfebfa02563",
+  "attempt": 4,
+  "base_commit": "bb12aafe697d0c5480ce03144b5b745cf4a49e13",
+  "target": "fn_801E2B28",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-d847439f-6474-4033-9f84-3bfebfa02563.json"
+  ],
+  "divergence": "Canonical GC/1.3 output remains exactly 208 bytes/52 instructions at 87.07692%. All 8 retail relocation targets, types, and zero addends are represented, but lbl_80651230 moves from retail 0x50 to generated 0x64 and lbl_80651234 moves from retail 0x74 to generated 0x6C. In the 0x50-0x78 window, retail loads lbl_80651230 at 0x50, copies f1 to f2 at 0x68, loads lbl_80651234 at 0x74, and forms object+4 at 0x78; generated code emits those operations at 0x64, 0x74, 0x6C, and 0x68 while advancing duration/enabled/type constants. Aggregate member typing and nested-scope const temporary lifetime hypotheses were codegen-identical and did not improve the schedule. Full build passed and build/GEDE01/main.dol SHA-1 was ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

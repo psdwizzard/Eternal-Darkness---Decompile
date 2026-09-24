@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "assignment_id": "d847439f-6474-4033-9f84-3bfebfa02563",
+  "target": "fn_801E2B28",
+  "compiler": "GC/1.3",
+  "compiler_flags": ["-use_lmw_stmw on"],
+  "objdiff_command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_801E2B28 fn_801E2B28 -o build/GEDE01/objdiff-d847439f-6474-4033-9f84-3bfebfa02563.raw.json --format json-pretty",
+  "objdiff_exit_code": 0,
+  "raw_measurement": {
+    "expected_text_size": 208,
+    "generated_text_size": 208,
+    "expected_instruction_count": 52,
+    "generated_instruction_count": 52,
+    "match_percent": 87.07692,
+    "expected_relocation_section_size": 96,
+    "generated_relocation_section_size": 96,
+    "expected_relocation_count": 8,
+    "generated_relocation_count": 8
+  },
+  "raw_relocations": {
+    "expected": [
+      {"address": 40, "formatted": "lwz r0, lbl_8064D18C@sda21", "type": "R_PPC_EMB_SDA21", "target": "lbl_8064D18C", "addend": 0},
+      {"address": 64, "formatted": "bl fn_800FBFB0", "type": "R_PPC_REL24", "target": "fn_800FBFB0", "addend": 0},
+      {"address": 72, "formatted": "lis r3, fn_801E2BF8@ha", "type": "R_PPC_ADDR16_HA", "target": "fn_801E2BF8", "addend": 0},
+      {"address": 80, "formatted": "lfs f1, lbl_80651230@sda21", "type": "R_PPC_EMB_SDA21", "target": "lbl_80651230", "addend": 0},
+      {"address": 88, "formatted": "addi r6, r3, fn_801E2BF8@l", "type": "R_PPC_ADDR16_LO", "target": "fn_801E2BF8", "addend": 0},
+      {"address": 116, "formatted": "lfs f3, lbl_80651234@sda21", "type": "R_PPC_EMB_SDA21", "target": "lbl_80651234", "addend": 0},
+      {"address": 172, "formatted": "bl fn_801FE8DC", "type": "R_PPC_REL24", "target": "fn_801FE8DC", "addend": 0},
+      {"address": 184, "formatted": "bl fn_801E8328", "type": "R_PPC_REL24", "target": "fn_801E8328", "addend": 0}
+    ],
+    "generated": [
+      {"address": 40, "formatted": "lwz r0, lbl_8064D18C@sda21", "type": "R_PPC_EMB_SDA21", "target": "lbl_8064D18C", "addend": 0},
+      {"address": 64, "formatted": "bl fn_800FBFB0", "type": "R_PPC_REL24", "target": "fn_800FBFB0", "addend": 0},
+      {"address": 72, "formatted": "lis r3, fn_801E2BF8@ha", "type": "R_PPC_ADDR16_HA", "target": "fn_801E2BF8", "addend": 0},
+      {"address": 88, "formatted": "addi r6, r3, fn_801E2BF8@l", "type": "R_PPC_ADDR16_LO", "target": "fn_801E2BF8", "addend": 0},
+      {"address": 100, "formatted": "lfs f1, lbl_80651230@sda21", "type": "R_PPC_EMB_SDA21", "target": "lbl_80651230", "addend": 0},
+      {"address": 108, "formatted": "lfs f3, lbl_80651234@sda21", "type": "R_PPC_EMB_SDA21", "target": "lbl_80651234", "addend": 0},
+      {"address": 172, "formatted": "bl fn_801FE8DC", "type": "R_PPC_REL24", "target": "fn_801FE8DC", "addend": 0},
+      {"address": 184, "formatted": "bl fn_801E8328", "type": "R_PPC_REL24", "target": "fn_801E8328", "addend": 0}
+    ]
+  },
+  "raw_divergent_instruction_window": {
+    "expected": [
+      [80, "lfs f1, lbl_80651230@sda21"], [84, "stw r0, 0x10(r31)"], [88, "addi r6, r3, fn_801E2BF8@l"], [92, "li r5, 0x258"], [96, "li r4, 0x1"], [100, "lwz r8, 0x0(r27)"], [104, "fmr f2, f1"], [108, "lwz r7, 0x4(r27)"], [112, "li r0, 0x4"], [116, "lfs f3, lbl_80651234@sda21"], [120, "addi r3, r31, 0x4"], [124, "stw r8, 0x1c(r31)"], [128, "stw r7, 0x20(r31)"], [132, "lwz r7, 0x8(r27)"]
+    ],
+    "generated": [
+      [80, "li r5, 0x258"], [84, "stw r0, 0x10(r31)"], [88, "addi r6, r3, fn_801E2BF8@l"], [92, "li r4, 0x1"], [96, "li r0, 0x4"], [100, "lfs f1, lbl_80651230@sda21"], [104, "addi r3, r31, 0x4"], [108, "lfs f3, lbl_80651234@sda21"], [112, "lwz r8, 0x0(r27)"], [116, "fmr f2, f1"], [120, "lwz r7, 0x4(r27)"], [124, "stw r8, 0x1c(r31)"], [128, "stw r7, 0x20(r31)"], [132, "lwz r7, 0x8(r27)"]
+    ]
+  },
+  "new_hypotheses_tested": [
+    {"hypothesis": "Using floating-point members for the aggregate position type may change aggregate-copy scheduling.", "result": "Codegen-identical 87.07692%; MWCC still lowered the copy with lwz/stw and retained the same schedule."},
+    {"hypothesis": "Starting const float temporary lifetimes in a nested block immediately after the random-value write may alter scheduler pressure.", "result": "Codegen-identical 87.07692%; restored the accepted top-of-function temporary declarations."}
+  ],
+  "build": {
+    "commands": ["python3 configure.py", ".tools/bin/ninja -j2"],
+    "exit_code": 0,
+    "dol_sha1_command": "sha1sum build/GEDE01/main.dol",
+    "dol_sha1_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+  }
+}
