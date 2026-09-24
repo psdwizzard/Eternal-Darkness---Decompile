@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "6c688d7a-fa15-495d-a21f-a4e094a35228",
+  "attempt": 3,
+  "base_commit": "ba68a2f7c161323f9128b84bb8b761b8852b1bcf",
+  "target": "fn_80150A24",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-6c688d7a-fa15-495d-a21f-a4e094a35228.json"
+  ],
+  "divergence": "Best canonical and relocation-strict objdiff is 87.44201%: retail is 1276 bytes and generated is 1336 bytes, with 43 versus 44 relocation-bearing instructions. Guarded externalization now makes the signed-conversion relocation target retail lbl_80650588. A volatile signed delta recovers retail's three conditional-negation absolute-value shapes but introduces 60 bytes of stack stores/reloads; the remaining divergence includes the nonvolatile-register allocation cycle, stack-slot layout, signed halfword argument load/extension schedule, and early HA/LO materialization of lbl_8023A760."
+}

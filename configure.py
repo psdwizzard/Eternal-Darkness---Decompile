@@ -87,6 +87,17 @@ config.asflags = ["-mgekko", "--strip-local-absolute", "-I include", f"-I build/
 config.ldflags = ["-fp hardware", "-nodefaults"]
 config.custom_build_rules = [
     {
+        "name": "externalize_game_80150A24_signed_bias",
+        "command": (
+            "python3 tools/externalize_elf_symbol.py $in @70 lbl_80650588 "
+            "orig/GEDE01/sys/main.dol --require-whole-section && "
+            "build/binutils/powerpc-eabi-objcopy "
+            "--redefine-sym=@70=lbl_80650588 --remove-section=.sdata2 "
+            "--rename-section=.comment=.ignored $in && touch $out"
+        ),
+        "description": "EXTERNALIZE $in",
+    },
+    {
         "name": "externalize_game_800DC4D4_unsigned_bias",
         "command": (
             "python3 tools/externalize_elf_symbol.py $in @73 lbl_8064F4F0 "
@@ -5418,6 +5429,14 @@ for function in game_jumptable_externalizations:
             "inputs": [f"build/{VERSION}/src/game/game_fn_{function}.o"],
         }
     )
+
+config.custom_build_steps["post-compile"].append(
+    {
+        "outputs": [f"build/{VERSION}/src/game/game_fn_80150A24.externalized"],
+        "rule": "externalize_game_80150A24_signed_bias",
+        "inputs": [f"build/{VERSION}/src/game/game_fn_80150A24.o"],
+    }
+)
 
 config.custom_build_steps["post-compile"].append(
     {

@@ -22,7 +22,7 @@ void fn_80150A24(void* raw_instance)
     TargetVec3f effect_point;
     u16 dx, dy, dz;
     u16 radius;
-    s32 delta;
+    volatile s32 delta;
     s32 candidate_type;
     s32 candidate_rank;
     s32 moved;

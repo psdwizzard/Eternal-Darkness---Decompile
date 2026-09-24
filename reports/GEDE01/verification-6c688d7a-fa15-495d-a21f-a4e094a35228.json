@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "assignment_id": "6c688d7a-fa15-495d-a21f-a4e094a35228",
+  "commands": [
+    {
+      "command": "python3 configure.py && .tools/bin/ninja -j2",
+      "exit_code": 0,
+      "raw_output_tail": "[907/910] DOL build/GEDE01/main.dol\n[908/910] CHECK config/GEDE01/build.sha1\nbuild/GEDE01/main.dol: OK\n[909/910] PROGRESS"
+    },
+    {
+      "command": "sha1sum build/GEDE01/main.dol",
+      "exit_code": 0,
+      "raw_output": "ea24b6af954876ce072562ff39cdb4c81d32be1f  build/GEDE01/main.dol"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80150A24 fn_80150A24 -o reports/GEDE01/objdiff-6c688d7a-fa15-495d-a21f-a4e094a35228-canonical.json --format json-pretty",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to reports/GEDE01/objdiff-6c688d7a-fa15-495d-a21f-a4e094a35228-canonical.json"
+    },
+    {
+      "command": "build/tools/objdiff-cli diff -p . -u main/game/game_fn_80150A24 fn_80150A24 -o reports/GEDE01/objdiff-6c688d7a-fa15-495d-a21f-a4e094a35228.json --format json-pretty -c function_reloc_diffs=name_address",
+      "exit_code": 0,
+      "raw_output": "INFO Writing to reports/GEDE01/objdiff-6c688d7a-fa15-495d-a21f-a4e094a35228.json"
+    }
+  ],
+  "measurements": {
+    "canonical_percent": 87.44201,
+    "relocation_strict_percent": 87.44201,
+    "retail_code_bytes": 1276,
+    "generated_code_bytes": 1336,
+    "retail_relocation_instructions": 43,
+    "generated_relocation_instructions": 44,
+    "externalization": "Guarded whole-section verification and retarget of compiler-local @70 to retail lbl_80650588 passed."
+  },
+  "trials": [
+    {
+      "hypothesis": "Mark the reused signed delta temporary volatile to inhibit GC/1.3 branchless absolute-value folding.",
+      "result": "Improved relocation-strict score from the preserved 87.09405% to 87.44201%; recovered the three conditional-negation shapes but added stack stores/reloads and grew generated code from 1276 to 1336 bytes."
+    },
+    {
+      "hypothesis": "Use three separately named signed delta temporaries to alter cross-axis lifetime allocation without volatile traffic.",
+      "result": "Generated code remained 1276 bytes but relocation-strict score regressed to 87.04702%; rejected."
+    }
+  ]
+}
