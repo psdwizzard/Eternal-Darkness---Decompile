@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "assignment_id": "17d8daf5-9000-457b-a988-992fb1755028",
+  "attempt": 4,
+  "base_commit": "2f35b40837c6b8ef59fda8ed0e74caf59f30a9f9",
+  "target": "fn_80068674",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-17d8daf5-9000-457b-a988-992fb1755028.json",
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-17d8daf5-9000-457b-a988-992fb1755028-reloc-strict.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 95.54348% (retail 184 bytes, reconstruction 176 bytes). Casting the signed loop index to unsigned for both array accesses prevents walking-pointer coalescing and reproduces retail's 0x30 frame, r25-r31 allocation, and lwzx/stwx loop; declaration order reproduces retail's r28 accumulator and r29 loop counter. All five R_PPC_REL24 calls agree in target and zero addend. Only retail's null-array assertion path remains: a branch over a terminal debugger-breakpoint nop, which requires forbidden inline assembly."
+}
