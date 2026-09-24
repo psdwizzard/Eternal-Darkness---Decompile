@@ -1,5 +1,9 @@
-/* NonMatching: independent honest-C reconstruction from retail control flow. */
+/* Independent C reconstruction of the retail targeting/reaction update. */
+/* This call site passes the speed as a signed halfword. */
+#define fn_8017D700 fn_8017D700_header_decl
 #include "src/game/game_targeting_types.h"
+#undef fn_8017D700
+extern void fn_8017D700(TargetVec3s*, void*, s32, void*, s32, s16, s32, s32);
 
 #define fn_80201B54(...) ((void *)fn_80201B54(__VA_ARGS__))
 
@@ -7,26 +11,34 @@ extern s32 fn_8006D548(s32, u32, u32, TargetVec3f*, u32*, u32*, s32);
 
 void fn_80150A24(void* raw_instance)
 {
-    u8* instance = raw_instance;
-    u8* work = instance + 8;
-    TargetVec3s* current;
-    void* actor;
-    void* iterator;
-    void* candidate;
+    /* Declaration order preserves the retail nonvolatile-register lifetimes. */
     void* reaction;
+    register TargetVec3s* effect_owner;
+    register TargetVec3s* packed_owner;
+    TargetVec3s* current;
+    u8* instance;
+    u8* work;
+    s32 completed;
+    void* iterator;
+    s32 moved;
+    s32 reacted;
+    void* candidate;
+    void* actor;
+    s32 radius;
     void* owner;
+    s32 candidate_type;
+    s32 candidate_rank;
+    TargetVec3f effect_point;
     TargetVec3f origin;
     TargetVec3f point;
     TargetVec3f scratch;
     TargetVec3f fallback_point;
-    TargetVec3f effect_point;
-    s32 dx, dy, dz;
-    u16 radius;
-    s32 candidate_type;
-    s32 candidate_rank;
-    s32 moved;
-    s32 reacted;
-    s32 completed = 0;
+    s32 delta;
+    u16 dx, dy, dz;
+
+    instance = raw_instance;
+    work = instance + 8;
+    completed = 0;
 
     if ((*(u16*)(instance + 0x132C) & 3) == 0 && *(void**)(work + 0x20) != 0) {
         current = fn_8017FDA8(*(void**)(work + 0x20), 0);
@@ -38,16 +50,15 @@ void fn_80150A24(void* raw_instance)
         }
 
         fn_8017D700(current, work, 0, work + 6, 3,
-                    *(s16*)(work + 12), 1, 10);
-        dx = *(s16*)(work + 0) - current->x;
-        if (dx <= -1)
-            dx = -dx;
-        dy = *(s16*)(work + 2) - current->y;
-        if (dy <= -1)
-            dy = -dy;
-        dz = *(s16*)(work + 4) - current->z;
-        if (dz <= -1)
-            dz = -dz;
+                    *(u16*)(work + 12), 1, 10);
+        /* Unsigned negation followed by narrowing preserves the retail
+         * conditional absolute value, including the 16-bit magnitude. */
+        delta = *(s16*)(work + 0) - current->x;
+        dx = (u16)(delta < 0 ? -(u32)delta : (u32)delta);
+        delta = *(s16*)(work + 2) - current->y;
+        dy = (u16)(delta < 0 ? -(u32)delta : (u32)delta);
+        delta = *(s16*)(work + 4) - current->z;
+        dz = (u16)(delta < 0 ? -(u32)delta : (u32)delta);
         if ((u32)dx < 20 && (u32)dy < 20 && (u32)dz < 20) {
             actor = *(void**)(work + 0x1C);
             if (actor != 0) {
@@ -55,7 +66,9 @@ void fn_80150A24(void* raw_instance)
                 iterator = fn_80201B9C();
                 moved = 0;
                 reacted = 0;
-                radius = fn_80201890(*(void**)(work + 0x18)) ? (u16)fn_8011F6F8() + 100 : 500;
+                radius = (u32)fn_80201890(*(void**)(work + 0x18)) ? (s32)fn_8011F6F8() + 100 : 500;
+                packed_owner = (TargetVec3s*)owner;
+                effect_owner = (TargetVec3s*)owner;
                 origin.x = *(s16*)(work + 0);
                 origin.y = *(s16*)(work + 2);
                 origin.z = *(s16*)(work + 4);
@@ -66,10 +79,7 @@ void fn_80150A24(void* raw_instance)
                         fn_8011F114(&scratch, candidate);
                         selected = &scratch;
                     } else {
-                        const volatile u32* fallback = lbl_8023A760;
-                        *(u32*)&fallback_point.x = fallback[0];
-                        *(u32*)&fallback_point.y = fallback[1];
-                        *(u32*)&fallback_point.z = fallback[2];
+                        fallback_point = *(const TargetVec3f*)lbl_8023A760;
                         selected = &fallback_point;
                     }
                     point = *selected;
@@ -77,12 +87,12 @@ void fn_80150A24(void* raw_instance)
                      * NULL fallback; fn_8011EB1C owns the NULL-sentinel case. */
                     candidate_type = fn_80201EB8(iterator);
                     candidate_rank = fn_80201B4C(iterator);
-                    if (candidate_type == lbl_8064D18C &&
+                    if (lbl_8064D18C == candidate_type &&
                         ((u32)candidate_rank <= 1 || candidate_rank == 2) &&
-                        fn_80179004(&origin, &point) < radius &&
+                        fn_80179004(&origin, &point) < (u32)radius &&
                         fn_8011EB1C(candidate) != 4) {
                         moved = 1;
-                        if ((u32)fn_8020123C(0x3B, 0, fn_80201B54(iterator), 0) == 1) {
+                        if ((u32)(fn_8020123C(0x3B, 0, fn_80201B54(iterator), 0) & 0xFFFFFFFFULL) == 1) {
                             reaction = fn_801A717C();
                             if (reaction != 0) {
                                 actor = fn_80201B54(iterator);
@@ -93,7 +103,7 @@ void fn_80150A24(void* raw_instance)
                                 fn_801A7588(reaction, 2);
                                 fn_801A764C(reaction, &origin);
                                 fn_801A74D8(reaction, 0x1800);
-                                fn_801A7668(reaction, owner);
+                                fn_801A7668(reaction, (void*)effect_owner);
                                 fn_801A7670(reaction, 2);
                                 fn_8020123C(11, 0, actor, reaction);
                                 fn_801A7228(reaction);
@@ -105,9 +115,11 @@ void fn_80150A24(void* raw_instance)
                 }
                 if (reacted) {
                     u32 packed;
+                    u32 packed_copy;
                     s16 kind;
-                    fn_801D38BC(owner, &packed, &kind);
-                    fn_80152404(&origin, kind, radius, 4, &packed);
+                    fn_801D38BC((TargetVec3s*)packed_owner, &packed, &kind);
+                    packed_copy = packed;
+                    fn_80152404(&origin, kind, radius, 4, &packed_copy);
                 }
                 if (moved) {
                     TargetVec3f* saved;
@@ -121,8 +133,7 @@ void fn_80150A24(void* raw_instance)
                         saved = (TargetVec3f*)(*(u8**)((u8*)fn_80201B8C(actor) + 0x8C) + 0xA0);
                         *saved = origin;
                     }
-                }
-                if (!moved) {
+                } else {
                     **(s32**)(work + 0x1C) = 1;
                     fn_80149E28(instance);
                     completed = 1;
