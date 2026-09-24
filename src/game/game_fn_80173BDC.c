@@ -27,7 +27,7 @@ extern void fn_801839D8(void);
 extern void* fn_80148008(Vec3f*, const Vec3s*, EffectDescriptor*, void (*)(void));
 extern void* fn_80156938(void*);
 extern void fn_8017FF1C(void*, int);
-extern const Vec3s lbl_806506EC;
+extern Vec3s lbl_806506EC;
 extern const char lbl_8024FF00[];
 
 int fn_80173BDC(void* arg)

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "ae9b65be-5c83-4eba-a0fa-6b2a274968cc",
+  "attempt": 3,
+  "base_commit": "dd11f7d8aecf98152ea63a8ba77d579709253877",
+  "target": "fn_80173BDC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-ae9b65be-5c83-4eba-a0fa-6b2a274968cc.json"
+  ],
+  "divergence": "Relocation-strict objdiff improved from the preserved 87.977776% baseline to 93.277780%, with exact 360-byte size, 90 instructions, and all 19 relocation type/target/addend entries at identical offsets. Declaring lbl_806506EC non-const corrected the prior prologue/initializer schedule, and the established per-object externalization maps compiler-local @11 to retail lbl_806506A8. Seven aligned diff rows remain near text offsets 0x108-0x138: GC/1.3 holds the first Vec3 word in r8 and stores it after preparing r4/r5, while retail uses r5, stores it at 0x120, then prepares r4/r5. Initializer syntax, parameter-local declaration order/direct use, effect-local lifetime, aggregate-vs-explicit-word copies, and descriptor-byte/aggregate-copy source order were tested; none improved this final schedule, and reversing the latter order fell to 88.777780%."
+}
