@@ -14,7 +14,7 @@ extern u8 lbl_805E7560[];
 extern int lbl_8064D144;
 extern void fn_80158E7C(int);
 extern int fn_80158E88(s16);
-extern void fn_80158ECC(s16);
+extern int fn_80158ECC(int);
 extern void fn_80158F6C(s16, int);
 extern int fn_8015A12C(void);
 extern int fn_8015E51C(void);
@@ -36,13 +36,17 @@ static s8 slot_busy(int slot)
     return *(s8*)((u8*)lbl_805B6FE0.slots[slot] + 0x8142);
 }
 
+/* NonMatching: unsigned queue storage is required for the -1/-2 sentinel
+ * tests, while the signed cast below reproduces retail's cmpwi for message 1.
+ * The remaining object-level differences are documented in the assignment
+ * objdiff evidence and durable result. */
 void fn_8015B800(void)
 {
     u32 message;
-    int state = 0;
-    int selection = -1;
-    int current;
     int action;
+    int current;
+    int selection = -1;
+    int state = 0;
     int found;
 
     fn_80158E7C(5);
@@ -57,22 +61,31 @@ void fn_8015B800(void)
             continue;
         }
         fn_80158E7C(6);
-        if (message == 1) state = 0;
+        if ((int)message == 1) state = 0;
         current = lbl_805B6FE0.secondary;
         action = 0;
         if (!slot_busy(lbl_805B6FE0.primary)) {
             found = fn_80158E88(slot_id(lbl_805B6FE0.primary));
-            action = (found == -1 || lbl_805B6F80[found].active == 0) ? 11 : 10;
+            if (found == -1 || lbl_805B6F80[found].active == 0)
+                action = 11;
+            else
+                action = 10;
         } else if (fn_8015E51C()) action = 9;
         else if (fn_8015E548(3)) action = 8;
         else if (lbl_805B6FE0.requested != -1) {
             if (current != -1 && !slot_busy(current)) {
                 found = fn_80158E88(lbl_805B6FE0.requested);
-                action = (found == -1 || lbl_805B6F80[found].active == 0) ? 7 : 6;
+                if (found == -1 || lbl_805B6F80[found].active == 0)
+                    action = 7;
+                else
+                    action = 6;
             }
         } else if (current != -1 && slot_id(current) != -1 && !slot_busy(current)) {
             found = fn_80158E88(slot_id(lbl_805B6FE0.primary));
-            action = (found == -1 || lbl_805B6F80[found].active == 0) ? 5 : 4;
+            if (found == -1 || lbl_805B6F80[found].active == 0)
+                action = 5;
+            else
+                action = 4;
         } else if (fn_8015E548(2)) action = 3;
         if (!action) {
             selection = fn_8015A12C();

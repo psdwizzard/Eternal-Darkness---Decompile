@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "db1e41de-bab6-432c-a2dc-69c67947b14d",
+  "attempt": 5,
+  "base_commit": "1c9aedce4a67bc3804f16e7213437cdd1651b621",
+  "target": "fn_8015B800",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-db1e41de-bab6-432c-a2dc-69c67947b14d.json"
+  ],
+  "divergence": "Fresh canonical and function_reloc_diffs=name_address direct objdiff outputs are byte-identical (SHA-256 d73f180273abeca5b792d9e5b763e75b0403644a03e92e9c42a085620fd54af9). The signed cast at message == 1 fixes the reviewed cmplwi/cmpwi mismatch and raises the function score to 93.64%, but the object remains nonmatching: retail has a 1200-byte .text function and no .data, while generated has a 1156-byte function inside 1220-byte .text plus 48-byte .data and 144-byte .rela.data. The aligned function diff contains 53 DIFF_ARG_MISMATCH, 5 DIFF_REPLACE, 12 DIFF_DELETE, and 1 DIFF_INSERT rows; persistent-register allocation and duplicated primary-slot loads remain, and strict comparison exposes retail jumptable_8024F168 versus generated compiler-local @118 relocations. Relocation-bearing instruction counts are 127 retail versus 115 generated."
+}
