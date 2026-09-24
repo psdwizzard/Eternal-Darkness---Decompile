@@ -57,7 +57,9 @@ int fn_80173BDC(void* arg)
 
     fn_801839A4(&descriptor);
     descriptor.bytes[20] = kind;
-    submit_position = position;
+    *(unsigned int*)&submit_position = *(unsigned int*)&position;
+    submit_position.y = position.y;
+    submit_position.z = position.z;
     {
         void* effect = fn_80148008(&submit_position, &rotation, &descriptor,
                                    fn_801839D8);

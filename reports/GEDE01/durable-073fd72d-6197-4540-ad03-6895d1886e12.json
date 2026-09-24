@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "073fd72d-6197-4540-ad03-6895d1886e12",
+  "attempt": 4,
+  "base_commit": "526a4266e598ba082e4172ccddc5b260a911aeed",
+  "target": "fn_80173BDC",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-073fd72d-6197-4540-ad03-6895d1886e12.json"
+  ],
+  "divergence": "Canonical and relocation-strict objdiff both measure 97.222220% with exact 360-byte size, 90 instructions, and all 19 relocation type/target/addend entries aligned. A mixed word/float copy of submit_position fixes the prior seven-row call-setup scheduling divergence. Six aligned rows remain at text offsets 0x108, 0x110, 0x118, 0x12C, 0x130, and 0x134: retail copies all three Vec3f words with lwz/stw using r8/r7/r0, while GC/1.3 chooses r0 for the first word and lfs/stfs through f1/f0 for the last two. Whole-aggregate, explicit all-word, volatile aggregate, and an 8-byte tail aggregate spellings restore integer moves but regress scheduling and score; the preserved mixed copy is the best measured honest C candidate."
+}
