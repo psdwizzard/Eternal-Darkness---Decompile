@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "34597ea0-b569-4e06-b5d5-17e00cafb99e",
+  "attempt": 3,
+  "base_commit": "4ba0e2f65872a84db2a55be0c2564b0f0b6ed488",
+  "target": "fn_801DD71C",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-34597ea0-b569-4e06-b5d5-17e00cafb99e.json"
+  ],
+  "divergence": "87.9885% on both canonical project-unit and explicit-path relocation-strict objdiff; retail and generated are both 696 bytes with 26 relocations, and relocation targets/types/addends agree. Moving flags first in declaration order improves the preserved 87.5% candidate by assigning flags to retail's r28. Remaining differences begin with handle/result-owner register allocation (retail r27/r29 versus generated r29/r27), then table-address temporary assignment, memcpy setup scheduling, total-product lifetime (retail r20 versus generated r21), and fn_801CE594 argument construction/scheduling. Canonical command used -p . -u main/game/game_fn_801DD71C; strict command used explicit retail build/GEDE01/obj/game/game_fn_801DD71C.o and generated build/GEDE01/src/game/game_fn_801DD71C.o paths."
+}

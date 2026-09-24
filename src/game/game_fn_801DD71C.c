@@ -32,9 +32,9 @@ void* fn_801DD71C(int object_id, int kind, void* source_a, int count,
                   void* source_b, void* source_c, int rows,
                   void (*callback)(void), u32 tag, s16 duration)
 {
-    void* result;
-    int handle;
     int flags;
+    int handle;
+    void* result;
     int low_index;
     int high_index;
     int owner;
