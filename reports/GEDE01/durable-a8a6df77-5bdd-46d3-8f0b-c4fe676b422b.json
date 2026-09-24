@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "assignment_id": "a8a6df77-5bdd-46d3-8f0b-c4fe676b422b",
+  "attempt": 3,
+  "base_commit": "1972cfeedd8571b98beecfbc9e66cc809afa8bbf",
+  "target": "fn_801BB3A0",
+  "status": "attempted",
+  "evidence": [
+    "eternal-darkness-decomp/reports/GEDE01/objdiff-a8a6df77-5bdd-46d3-8f0b-c4fe676b422b.json"
+  ],
+  "divergence": "Fresh relocation-aware objdiff improves the preserved 87.47857% candidate to 89.35714%: retail is 560 bytes, 140 instructions, and 51 relocation annotations, while generated C is 580 bytes, 145 instructions, and 49 relocation annotations. Treating the voice and cache loads as volatile accesses is the distinct successful codegen hypothesis: both voice paths now preserve explicit add-plus-lwz address formation, and the cache load no longer needs the prior r3-to-r30 move. The remaining exact blocker is register allocation: generated code still has only four saved GPRs (r28-r31), so -use_lmw_stmw on retains a 32-byte frame with individual stw/lwz saves; retail has five saved GPRs (r27-r31), a 40-byte frame, and stmw r27,0x14(r1)/lmw r27,0x14(r1). Generated cache accesses still fold add-plus-lwz into lwzx and the resulting r27/r28 register shift persists. The raw diff records 28 argument mismatches, 4 replacements, 8 inserts, and 3 deletes. python3 configure.py and .tools/bin/ninja -j2 completed successfully; tools/legal_audit.py passed 21437 tracked files; build/GEDE01/main.dol and retail both have SHA-1 ea24b6af954876ce072562ff39cdb4c81d32be1f."
+}

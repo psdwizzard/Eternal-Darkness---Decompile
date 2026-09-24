@@ -37,7 +37,8 @@ void fn_801BB3A0(u32 id)
     u8* state_base;
     u8* state;
     u8* cache_base;
-    u32* cache_slot;
+    volatile u32* cache_slot;
+    volatile u32* voice_slot;
     u32 cache;
 
     fn_801CE2B8();
@@ -47,11 +48,12 @@ void fn_801BB3A0(u32 id)
         state_base = (u8*)slots + 8;
         state = state_base + offset;
         if (*state != 1 && *state == 2) {
-            fn_801C20C8(*(u32*)((u8*)slots + index * sizeof(StreamSlot) + 0x48));
+            voice_slot = (volatile u32*)((u8*)slots + offset + 0x48);
+            fn_801C20C8(*voice_slot);
             *state = 3;
         }
         cache_base = (u8*)slots + 0x60;
-        cache_slot = (u32*)(cache_base + offset);
+        cache_slot = (volatile u32*)(cache_base + offset);
         cache = *cache_slot;
         if (cache != (u32)-1) {
             fn_801CE2B8();
@@ -61,10 +63,11 @@ void fn_801BB3A0(u32 id)
                 state_base += offset;
                 state = state_base;
                 if (*state != 1 && *state == 2) {
-                    fn_801C20C8(*(u32*)((u8*)slots + index * sizeof(StreamSlot) + 0x48));
+                    voice_slot = (volatile u32*)((u8*)slots + offset + 0x48);
+                    fn_801C20C8(*voice_slot);
                     *state = 3;
                 }
-                cache_slot = (u32*)(cache_base + offset);
+                cache_slot = (volatile u32*)(cache_base + offset);
                 cache = *cache_slot;
                 if (cache != (u32)-1) {
                     fn_801BB3A0(cache);
