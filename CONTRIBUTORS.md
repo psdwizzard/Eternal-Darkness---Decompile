@@ -13,7 +13,7 @@ commits are not visible here. This file is the durable record of who did what.
 
 ## Andrew ([@ateich](https://github.com/ateich))
 
-**554 functions, 181,468 matched code bytes.**
+**576 functions, 195,064 matched code bytes.**
 
 ### Script handlers and narrowed values ([#1](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/1), [#2](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/2), [#3](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/3)) — 6 functions, 7,488 bytes
 
@@ -401,6 +401,40 @@ in the landing evidence.
 | `fn_8008E430` | 576 |
 | `fn_8015BDF0` | 560 |
 | _63 more_ | 14,288 |
+
+### Prototype, source-shape, and allocation-order corrections ([#30](https://github.com/psdwizzard/Eternal-Darkness---Decompile/pull/30)) — 22 functions, 13,596 bytes
+
+Andrew recovered prototype types, declaration lifetimes, shared-address
+temporaries, saved parameters, and constant ownership needed for MWCC to emit
+twenty-two exact game functions. Every promoted function was independently
+rebuilt on the current base and measured at 100% on both the canonical and
+`function_reloc_diffs=name_address` bases. The legal audit passed and the
+rebuilt DOL remained byte-identical to retail.
+
+| Function | Bytes |
+| --- | ---: |
+| `fn_800173CC` | 564 |
+| `fn_80053048` | 424 |
+| `fn_800531F0` | 1,040 |
+| `fn_80064E2C` | 1,312 |
+| `fn_800BFF14` | 112 |
+| `fn_800C4AA0` | 204 |
+| `fn_800D3598` | 136 |
+| `fn_800D9064` | 328 |
+| `fn_800D9278` | 316 |
+| `fn_800DBF60` | 752 |
+| `fn_8011EE04` | 700 |
+| `fn_8014BEC4` | 412 |
+| `fn_8014C68C` | 292 |
+| `fn_8015DF60` | 320 |
+| `fn_80173F04` | 640 |
+| `fn_80193F3C` | 688 |
+| `fn_8019E0B0` | 1,232 |
+| `fn_801A260C` | 980 |
+| `fn_801A53C4` | 604 |
+| `fn_801D1F78` | 1,224 |
+| `fn_801E3644` | 776 |
+| `fn_801E5D94` | 540 |
 
 ### Late-September submissions — retained for verified integration
 

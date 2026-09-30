@@ -54,9 +54,9 @@ Verified DOL SHA-1: `ea24b6af954876ce072562ff39cdb4c81d32be1f`.
 
 | Metric | Matched | Total | Percent |
 | --- | ---: | ---: | ---: |
-| Code bytes | 1182792 | 2300692 | 51.41% |
-| Functions | 6139 | 8214 | 74.74% |
-| Objects (TUs) | 6371 | 7084 | 89.94% |
+| Code bytes | 1195156 | 2300692 | 51.95% |
+| Functions | 6160 | 8214 | 74.99% |
+| Objects (TUs) | 6393 | 7084 | 90.25% |
 <!-- progress:end -->
 
 <!-- contributors:start -->
@@ -70,9 +70,9 @@ relocation-strict bases, with the whole-DOL SHA-1 gate unchanged.
 
 | Contributor | Functions | Matched code bytes | Share of all matched code |
 | --- | ---: | ---: | ---: |
-| **Andrew** ([@ateich](https://github.com/ateich)) | 554 | 181,468 | 19.3% |
+| **Andrew** ([@ateich](https://github.com/ateich)) | 576 | 195,064 | 16.3% |
 
-That is **181,468 bytes of retail code** this project did not have to match on its own. Thank you.
+That is **195,064 bytes of retail code** this project did not have to match on its own. Thank you.
 
 Per-function credit, with byte counts and the PR each batch came from, is in
 [`CONTRIBUTORS.md`](CONTRIBUTORS.md). If you send work in, you get a line there.
