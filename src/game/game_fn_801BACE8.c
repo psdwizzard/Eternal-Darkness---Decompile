@@ -1,5 +1,6 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
+typedef signed int s32;
 
 typedef struct StreamSlot {
     u32 id;
@@ -8,77 +9,71 @@ typedef struct StreamSlot {
     u8 pad09[0x3F];
     u32 voice;
     u8 pad4C[4];
-    u32 parameter;
+    u32 frq;
     u8 pad54[0xC];
-    u32 cache;
+    unsigned long cache;
 } StreamSlot;
 
-extern StreamSlot lbl_8061AE48[];
-extern struct {
-    u32 rate;
-    u8 rest[0x210];
-} lbl_80619C20;
+typedef struct SynthInfo {
+    u32 mixFrq;
+    u8 pad04[0x210];
+} SynthInfo;
 
-extern float lbl_80650F18;
+static StreamSlot streamInfo[64];
+extern SynthInfo lbl_80619C20;
 extern void fn_801CE2B8(void);
 extern void fn_801CE280(void);
 extern int fn_801B9D1C(u32);
 extern void fn_801CCB98(u32, u32);
+void fn_801BACE8(u32 id, u32 frq);
 
 static inline u32 find_stream(u32 id)
 {
     u32 i;
 
     for (i = 0; i < 64; i++) {
-        if (lbl_8061AE48[i].state != 0 && lbl_8061AE48[i].id == id) {
+        if (streamInfo[i].state != 0 && id == streamInfo[i].id) {
             return i;
         }
     }
     return -1;
 }
 
-void fn_801BACE8(u32 id, u32 parameter)
+static inline void frq_linked(u32 id, u32 frq)
 {
-    StreamSlot* slots = lbl_8061AE48;
-    u32 offset;
-    u8* parameter_base;
-    u8* state_base;
-    u8* cache_base;
-    int index;
-    u32 cache;
+    u32 i;
+    s32 pitch;
 
     fn_801CE2B8();
-    index = find_stream(id);
-    if (index != (u32)-1) {
-        offset = index * sizeof(StreamSlot);
-        parameter_base = (u8*)slots + 0x50;
-        state_base = (u8*)slots + 8;
-        *(u32*)(parameter_base + offset) = parameter;
-        /* Retail scales parameter by the global rate, in this operand order. */
-        if (state_base[offset] == 2) {
-            fn_801CCB98(((StreamSlot*)((u8*)slots + offset))->voice,
-                        (int)(lbl_80650F18 * (float)parameter /
-                              (float)lbl_80619C20.rate));
+    i = fn_801B9D1C(id);
+    if (i != -1) {
+        streamInfo[i].frq = frq;
+        if (streamInfo[i].state == 2) {
+            pitch = (4096.f * frq) / lbl_80619C20.mixFrq;
+            fn_801CCB98(streamInfo[i].voice, pitch);
         }
-        cache_base = (u8*)slots + 0x60;
-        cache = *(u32*)(cache_base + offset);
-        if (cache != (u32)-1) {
-            fn_801CE2B8();
-            index = fn_801B9D1C(cache);
-            if (index != (u32)-1) {
-                offset = index * sizeof(StreamSlot);
-                *(u32*)(parameter_base + offset) = parameter;
-                if (state_base[offset] == 2) {
-                    fn_801CCB98(((StreamSlot*)((u8*)slots + offset))->voice,
-                                (int)(lbl_80650F18 * (float)parameter /
-                                      (float)lbl_80619C20.rate));
-                }
-                cache = *(u32*)(cache_base + offset);
-                if (cache != (u32)-1) {
-                    fn_801BACE8(cache, parameter);
-                }
-            }
-            fn_801CE280();
+        if (streamInfo[i].cache != 0xFFFFFFFF) {
+            fn_801BACE8(streamInfo[i].cache, frq);
+        }
+    }
+    fn_801CE280();
+}
+
+void fn_801BACE8(u32 id, u32 frq)
+{
+    u32 i;
+    s32 pitch;
+
+    fn_801CE2B8();
+    i = find_stream(id);
+    if (i != -1) {
+        streamInfo[i].frq = frq;
+        if (streamInfo[i].state == 2) {
+            pitch = (4096.f * frq) / lbl_80619C20.mixFrq;
+            fn_801CCB98(streamInfo[i].voice, pitch);
+        }
+        if (streamInfo[i].cache != 0xFFFFFFFF) {
+            frq_linked(streamInfo[i].cache, frq);
         }
     }
     fn_801CE280();

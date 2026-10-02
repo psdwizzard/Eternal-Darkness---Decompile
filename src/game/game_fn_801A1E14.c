@@ -11,6 +11,20 @@ typedef struct EffectState {
     u8 values[32];
 } EffectState;
 
+typedef struct Entry {
+    u8 pad_0[0x28];
+    u32 colors[4];
+} Entry;
+
+typedef struct EffectObject {
+    u8 pad_0[0x4C];
+    Entry* entry;
+    u8 pad_50[0x3C];
+    EffectState state;
+    u8 field_BC;
+    u8 field_BD;
+} EffectObject;
+
 typedef struct EffectConfig {
     u8 count;
     u8 pad_1[0x13];
@@ -23,23 +37,22 @@ extern const float lbl_80650D1C;
 extern u32 lbl_80607440[];
 extern void fn_801A1F8C(void*);
 
-void fn_801A1E14(u8* object, EffectConfig* config)
+void fn_801A1E14(EffectObject* object, EffectConfig* config)
 {
     EffectState* state;
-    u8* entry;
-    u32* table;
+    Entry* entry;
     float initial;
     int count;
     int i;
 
     initial = lbl_80650D1C;
-    state = (EffectState*)(object + 0x8C);
+    state = &object->state;
     state->field_0 = 0;
     state->field_2 = 0;
-    object[0xBD] = 0;
+    object->field_BD = 0;
     state->field_8 = initial;
     state->field_4 = config->value;
-    object[0xBC] = config->field_18;
+    object->field_BC = config->field_18;
 
     if (config->divisor != 0) {
         state->field_8 = initial;
@@ -49,18 +62,13 @@ void fn_801A1E14(u8* object, EffectConfig* config)
     }
 
     count = config->count;
-    table = lbl_80607440;
-    entry = *(u8**)(object + 0x4C);
-    i = 0;
-    if (count > 0) {
-        do {
-            ((u8*)state)[(u8)i + 0x10] = 0xFF;
-            *(u32*)(entry + 0x28) = table[((u8*)state)[(u8)i + 0x10]];
-            *(u32*)(entry + 0x2C) = table[((u8*)state)[(u8)i + 0x10]];
-            *(u32*)(entry + 0x30) = table[((u8*)state)[(u8)i + 0x10]];
-            *(u32*)(entry + 0x34) = table[((u8*)state)[(u8)i + 0x10]];
-            i++;
-        } while (i < count);
+    entry = object->entry;
+    for (i = 0; i < count; i++) {
+        state->values[i] = 0xFF;
+        entry->colors[0] = lbl_80607440[state->values[i]];
+        entry->colors[1] = lbl_80607440[state->values[i]];
+        entry->colors[2] = lbl_80607440[state->values[i]];
+        entry->colors[3] = lbl_80607440[state->values[i]];
     }
 
     fn_801A1F8C(object);

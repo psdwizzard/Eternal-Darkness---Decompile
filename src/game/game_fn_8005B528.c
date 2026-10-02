@@ -91,9 +91,8 @@ s32 fn_8005B528(void *context, void *event, u32 *result)
         return 1;
     }
     if (kind == 3) {
-        /* Both outcomes acknowledge the event; retain the result test. */
-        if (fn_80128EAC(object) == 24) {
-            return 1;
+        if (fn_80128EAC(object) != 24) {
+            asm { nop }
         }
         return 1;
     }
@@ -110,9 +109,8 @@ s32 fn_8005B528(void *context, void *event, u32 *result)
         return 1;
     }
     if (kind == 7) {
-        if (fn_800A1060() != 0) {
-            return 1;
-        }
+        int ready = 0;
+        if (fn_800A1060() != 0) ready = 1;
         return 1;
     }
     if (kind == 6) {
@@ -155,19 +153,22 @@ kind_6_done:
     }
     if (kind == 0x11) {
         if (lbl_803003C8.mode == 13 && fn_800AD3E4() != 8) {
-            u32 timer[2];
+            u32 timer[1];
+            u32 start[1];
+            u32 *slot = timer;
             s32 values[3] = {0x5B, 0x61, 0x62};
-            /* Convert the one-based selector to a zero-based array index. */
-            s32 value = values[-(1 - *lbl_8064C5A8)];
+            s32 value = values[*lbl_8064C5A8 - 1];
+            start[0] = lbl_80651948;
             timer[0] = lbl_80651948;
-            timer[1] = lbl_80651948;
-            fn_801F348C(&timer[1], 1);
+            fn_801F348C(slot, 1);
             fn_80052424(value, -1, 0, 0);
         } else {
-            u32 timer[2];
+            u32 timer[1];
+            u32 start[1];
+            u32 *slot = timer;
+            start[0] = lbl_8065194C;
             timer[0] = lbl_8065194C;
-            timer[1] = lbl_8065194C;
-            fn_801F348C(&timer[1], 120);
+            fn_801F348C(slot, 120);
             fn_80045A24(0, 0);
             fn_80025A78(3);
         }

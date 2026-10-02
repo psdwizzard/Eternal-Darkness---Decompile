@@ -3,35 +3,64 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 typedef unsigned long long u64;
 
-typedef void (*UpdateCallback)(u32, u16*, u32);
+typedef union AuxInfo {
+    struct {
+        long* left;
+        long* right;
+        long* surround;
+    } buffer;
+    struct {
+        u16 para[4];
+    } parameter;
+} AuxInfo;
 
-typedef struct Ramp {
-    float value;
+typedef void (*AuxCallback)(u8 reason, AuxInfo* info, void* user);
+
+typedef struct SynthJobTab {
+    void* lowPrecision;
+    void* event;
+    void* zeroOffset;
+} SynthJobTab;
+
+typedef struct SynthMasterFader {
+    float volume;
     float target;
-    float previous_target;
-    float step;
-    float step_delta;
-    float aux_value;
-    float aux_target;
-    float aux_previous_target;
-    float aux_step;
-    float aux_step_delta;
-    u32 voice;
-    u8 type;
-    u8 pad[3];
-} Ramp;
+    float start;
+    float time;
+    float deltaTime;
+    float pauseVol;
+    float pauseTarget;
+    float pauseStart;
+    float pauseTime;
+    float pauseDeltaTime;
+    u32 seqId;
+    u8 seqMode;
+    u8 pad2D[3];
+} SynthMasterFader;
 
-extern u8 lbl_80619860[];
-extern const float lbl_80650F00;
+typedef struct SynthInfo {
+    u32 mixFrq;
+    u32 numSamples;
+    u8 pad08[0x20C];
+} SynthInfo;
+
+static u32 synthTicksPerSecond[9][16];
+static SynthJobTab synthJobTable[32];
+static SynthInfo synthInfo;
+static SynthMasterFader synthMasterFader[32];
+static u8 synthTrackVolume[64];
+static void* synthAuxAUser[8];
+static AuxCallback synthAuxACallback[8];
+static void* synthAuxBUser[8];
+static AuxCallback synthAuxBCallback[8];
 extern u8 lbl_8064D3A1;
-extern u8 lbl_8064D3A4;
-extern u8 lbl_8064D3AC;
-extern u8 lbl_8064D3B4;
-extern u8 lbl_8064D3BC;
+extern u8 lbl_8064D3A4[8];
+extern u8 lbl_8064D3AC[8];
+extern u8 lbl_8064D3B4[8];
+extern u8 lbl_8064D3BC[8];
 extern u32 lbl_8064D3C4;
 extern u32 lbl_8064D3C8;
 extern u64 lbl_8064D3E0;
-
 extern void fn_801C044C(u32);
 extern void fn_801B797C(void*, void (*)(u32));
 extern void fn_801B6768(u32);
@@ -41,106 +70,89 @@ extern u8 fn_801CC6D4(void);
 extern u16 fn_801CBCE0(u8, u8, u8, u8);
 extern u16 fn_801CBD9C(u8, u8, u8, u8);
 extern void fn_801CD400(void);
-extern void fn_801B3770(void*);
-extern void fn_801B35BC(void*);
-extern void fn_801B3C14(void*, int, int);
+extern void fn_801B3770(u32);
+extern void fn_801B35BC(u32);
+extern void fn_801B3C14(u32, int, int);
 
-#define U32(p, o) (*(u32*)((p) + (o)))
+static inline void HandleVoices(void)
+{
+    SynthJobTab* jobTab = &synthJobTable[lbl_8064D3A1];
+    fn_801B797C(&jobTab->lowPrecision, fn_801B6768);
+    fn_801B797C(&jobTab->event, fn_801B75CC);
+    fn_801B797C(&jobTab->zeroOffset, fn_801B6F1C);
+    lbl_8064D3A1 = (lbl_8064D3A1 + 1) & 0x1f;
+}
 
-void fn_801B7A7C(u32 elapsed)
+static inline void HandleFaderTermination(SynthMasterFader* fade)
+{
+    switch (fade->seqMode) {
+    case 1:
+        fn_801B3770(fade->seqId);
+        break;
+    case 2:
+        fn_801B35BC(fade->seqId);
+        break;
+    case 3:
+        fn_801B3C14(fade->seqId, 0, 0);
+        break;
+    }
+}
+
+void fn_801B7A7C(u32 deltaTime)
 {
     u32 i;
-    u32 bit;
+    u32 s;
+    SynthMasterFader* fade;
+    u32 mask;
 
-    if (U32(lbl_80619860, 0x3C4) == 0) {
+    if (synthInfo.numSamples == 0) {
         return;
     }
 
-    fn_801C044C(elapsed);
-    {
-        u8* lists = lbl_80619860 + 0x240 + lbl_8064D3A1 * 12;
-        fn_801B797C(lists, fn_801B6768);
-        fn_801B797C(lists + 4, fn_801B75CC);
-        fn_801B797C(lists + 8, fn_801B6F1C);
-    }
-    lbl_8064D3A1 = (lbl_8064D3A1 + 1) & 0x1F;
-
-    if (!fn_801CC6D4()) {
-        if (lbl_8064D3C8 | lbl_8064D3C4) {
-            const float zero = lbl_80650F00;
-            Ramp* ramp = (Ramp*)(lbl_80619860 + 0x5D4);
-            bit = 1;
-            for (i = 0; i < 32; ++i, bit <<= 1, ++ramp) {
-                if (lbl_8064D3C8 & bit) {
-                    ramp->value =
-                        ramp->target -
-                        (float)(ramp->step *
-                            (ramp->target - ramp->previous_target));
-                    if ((ramp->step = ramp->step - ramp->step_delta) <= zero) {
-                        ramp->value = ramp->target;
-                        switch (ramp->type) {
-                        case 1:
-                            fn_801B3770((void*)ramp->voice);
-                            break;
-                        case 2:
-                            fn_801B35BC((void*)ramp->voice);
-                            break;
-                        case 3:
-                            fn_801B3C14((void*)ramp->voice, 0, 0);
-                            break;
-                        }
-                        if ((lbl_8064D3C8 &= ~bit) == 0 && !lbl_8064D3C4) {
+    fn_801C044C(deltaTime);
+    HandleVoices();
+    if (fn_801CC6D4() == 0) {
+        if ((lbl_8064D3C8 | lbl_8064D3C4) != 0) {
+            for (i = 0, fade = synthMasterFader, mask = 1; i < 32; mask <<= 1, ++i, ++fade) {
+                if ((lbl_8064D3C8 & mask) != 0) {
+                    fade->volume = fade->target - fade->time * (fade->target - fade->start);
+                    if ((fade->time -= fade->deltaTime) <= 0.f) {
+                        fade->volume = fade->target;
+                        HandleFaderTermination(fade);
+                        if (((lbl_8064D3C8 &= ~mask) == 0) && (lbl_8064D3C4 == 0)) {
                             break;
                         }
                     }
                 }
-                if (lbl_8064D3C4 & bit) {
-                    ramp->aux_value =
-                        ramp->aux_target -
-                        (float)(ramp->aux_step *
-                            (ramp->aux_target - ramp->aux_previous_target));
-                    if ((ramp->aux_step = ramp->aux_step - ramp->aux_step_delta) <=
-                        zero) {
-                        ramp->aux_value = ramp->aux_target;
-                        if ((lbl_8064D3C4 &= ~bit) == 0 && !lbl_8064D3C8) {
+                if ((lbl_8064D3C4 & mask) != 0) {
+                    fade->pauseVol =
+                        fade->pauseTarget - fade->pauseTime * (fade->pauseTarget - fade->pauseStart);
+                    if ((fade->pauseTime -= fade->pauseDeltaTime) <= 0.f) {
+                        fade->pauseVol = fade->pauseTarget;
+                        if (((lbl_8064D3C4 &= ~mask) == 0) && (lbl_8064D3C8 == 0)) {
                             break;
                         }
                     }
                 }
             }
         }
-
-        {
-            u16 values[4];
-            u16 aux_values[4];
-            u32* context = (u32*)(lbl_80619860 + 0xC14);
-            UpdateCallback* callback =
-                (UpdateCallback*)(lbl_80619860 + 0xC34);
-            UpdateCallback* aux_callback =
-                (UpdateCallback*)(lbl_80619860 + 0xC74);
-            for (i = 0; i < 8; ++i, ++context, ++callback, ++aux_callback) {
-                u32 channel;
-                u32* aux_context = context + 0x10;
-                if ((&lbl_8064D3BC)[i] != 0xFF) {
-                    for (channel = 0; channel < 4; ++channel) {
-                        values[channel] = fn_801CBCE0(
-                            (u8)i, (u8)channel, (&lbl_8064D3BC)[i],
-                            (&lbl_8064D3B4)[i]);
-                    }
-                    (*callback)(1, values, *context);
+        for (s = 0; s < 8; ++s) {
+            if (lbl_8064D3BC[s] != 0xff) {
+                AuxInfo info;
+                for (i = 0; i < 4; ++i) {
+                    info.parameter.para[i] = fn_801CBCE0(s, i, lbl_8064D3BC[s], lbl_8064D3B4[s]);
                 }
-                if ((&lbl_8064D3AC)[i] != 0xFF) {
-                    for (channel = 0; channel < 4; ++channel) {
-                        aux_values[channel] = fn_801CBD9C(
-                            (u8)i, (u8)channel, (&lbl_8064D3AC)[i],
-                            (&lbl_8064D3A4)[i]);
-                    }
-                    (*aux_callback)(1, aux_values, *aux_context);
+                synthAuxACallback[s](1, &info, synthAuxAUser[s]);
+            }
+            if (lbl_8064D3AC[s] != 0xff) {
+                AuxInfo info;
+                for (i = 0; i < 4; ++i) {
+                    info.parameter.para[i] = fn_801CBD9C(s, i, lbl_8064D3AC[s], lbl_8064D3A4[s]);
                 }
+                synthAuxBCallback[s](1, &info, synthAuxBUser[s]);
             }
         }
     }
-
     fn_801CD400();
-    lbl_8064D3E0 += elapsed;
+    lbl_8064D3E0 += deltaTime;
 }

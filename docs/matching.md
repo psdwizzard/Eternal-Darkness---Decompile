@@ -1182,3 +1182,166 @@ the other cases by one register (38 lines in every declaration order), and
 block-scoped vectors change the stack layout (47 lines or more).
 
 `fn_801941EC` needed only GC/1.3.2 (GC/1.3 is 16 lines off).
+
+## File statics, by-value structs, MusyX ports, and per-unit settings
+
+Twenty-three further functions match. Each builds with the whole-DOL SHA-1
+`ea24b6af954876ce072562ff39cdb4c81d32be1f` and reports 100% under both the
+default and `function_reloc_diffs=name_address` objdiff settings.
+
+### File statics
+
+Retail loads one base address and reaches several variables at fixed
+offsets from it. MWCC produces that form for data defined in the same file,
+so these units declare that data as file statics and rename the pooled block
+to the retail symbol after compiling.
+
+- `fn_8001DE84` uses the same block as `fn_8001DFEC`: zero-initialized
+  statics `head`, `info`, `object`, `work`, `values` and `clear` in address
+  order, under GC/1.3.2, renamed to `lbl_80302400` by the same
+  `externalize_game_static_data_pool` rule.
+- `fn_801B7A7C` is MusyX `synthHandle`. `synth.c`'s data are statics in
+  address order (`synthTicksPerSecond`, `synthJobTable`, `synthInfo`,
+  `synthMasterFader`, `synthTrackVolume`, the aux user and callback arrays);
+  GC/1.2.5n keeps declaration order, and retail adds the `+0x240` of the job
+  table after the index, as it does for a pooled static. The block is renamed
+  to `lbl_80619860`.
+- `fn_801415B4` is Tomas Möller's `coplanar_tri_tri`, with the published
+  `EDGE_EDGE_TEST`, `EDGE_AGAINST_TRI_EDGES` and `POINT_IN_TRI` macros, `int`
+  axes read from `lbl_8064D024`/`lbl_8064D022`, and the fixed triangle as
+  three `static float[2][3]` corners indexed by `lbl_8064D020`. Retail forms
+  each corner as block base plus 0, 24 or 48, then adds the index; GC/1.3.2
+  keeps the `addi rX, base, 0`. The block is renamed to `lbl_805B12B0`.
+- `fn_801C3278` is MusyX `vsSampleStartNotify`, with `vs` a file static
+  renamed to `lbl_80627D60`. The hardware callees take a `u32` voice, as in
+  the MusyX headers, so the `u8` voice is widened once and kept in `r30`.
+- `fn_801BACE8` (`sndStreamFrq`), `fn_801BAF90` (`sndStreamFree`) and
+  `fn_801BB3A0` (`sndStreamDeactivate`) follow `fn_801BA94C`: a static
+  `streamInfo`, the next-stream field as `unsigned long` compared with
+  `0xFFFFFFFF`, the lookup as a static inline and the second level written
+  out. `sndStreamFrq` computes `pitch = (4096.f * frq) / synthInfo.mixFrq`
+  into an `s32`.
+
+### Structs passed by value
+
+`fn_800D9428` passes three colours to `fn_800A1AF0` as 4-byte `Color`
+structs by value. MWCC copies each one to a stack temporary and passes its
+address, which is retail's argument setup; the store to `0x8(r1)` is the
+temporary for `detail = base`. `fn_800A1AF0`'s last parameter is `u16`.
+
+### Register order
+
+- `fn_800746CC`: `void *` parameters copied into `Object *object` and
+  `Link *link`, declared first, so they get `r31` and `r30`.
+- `fn_8000F1DC`: the parameter is used directly (retail's first instruction is
+  `mr r31, r3`); the flag update has two statements per arm with unsigned
+  masks (`flags = current | 0x8000; flags &= ~0x80U;`), which keeps the
+  branches retail has.
+- `fn_801E915C`: four loop counters (`i`, `j` for two loops, `k` for two
+  loops, `n`). A counter's first loop sets the strength-reduced offset with
+  `li`; a reused counter copies it with `mr`, and retail's pattern is
+  `li, li, mr, li, mr, li`. The sizes are read in the condition,
+  `(size = header->data30[i].data04) != 0`.
+- `fn_80154F74`: a 0x14-byte `BatchHeader` and the `BatchBody` that follows
+  it, with every body access through `BatchBody *b = &body`. The store
+  through `b` makes MWCC reload `index_count` as retail does.
+  `fn_801550C8` copies 0x90 bytes, header and body together.
+
+- `fn_8006D548`: MWCC gives the first-declared named local the highest
+  number, and it splits a variable used in separate places into compiler
+  temporaries, which get registers before every named local. Retail's
+  registers need `selected` declared first (it is also why `li r25,-1` comes before `li r22,0`), then
+  `entry`, then one loop counter each for cases 5 and 7 (`j`, `k`) ahead of
+  `count`. Cases 2-4 have their own block-local `i`, cases 4 and 5 their own
+  `found` after `best`, and the chosen entry goes into a block-local `match`;
+  cases 1 and 6 reuse `entry`. The candidate list is filled with
+  `candidates[count] = (unsigned char)i`, and the random pick is
+  `s32 *slot = &candidates[fn_800FBFB0() % count]; s32 pick = *slot;`, which
+  puts the array base in `r5` and the quotient in `r4` as retail does.
+
+- `fn_8019C7A8`: all locals are declared at the top of the function, in the
+  order that gives retail's registers; the `position` copy comes after `dx`
+  and `dz`; the first offset on each axis is written inside the anchor
+  expression rather than stored; and the per-entry vertex stride is
+  `outer * 4 * sizeof(Vertex)`. The unsigned stride makes the loop counter's
+  offset a back-end loop variable, which retail keeps in `r8`.
+
+- `fn_80089A34`: the parameter is a `void *` and the body works through a
+  typed `Work *work = arg;` copy, which retail keeps in its own register for
+  everything after the setup. `spawned` has no initializer (retail never sets
+  it when the spawn is skipped), the flag set is `0x100000 | 0x1200`, the
+  position table is its own local, `fn_8014CBE8` takes four arguments as its
+  own unit declares, and the identifier test is a `switch` over 2/3, 1 and
+  the rest.
+
+- `fn_8005B528`: the `nop` in the kind 3 test is `asm { nop }` as elsewhere in
+  the repo. Any inline asm makes MWCC lower `?:` to branches, so kind 7's
+  compare with no branch is written as a flag that is set and never read
+  (`int ready = 0; if (fn_800A1060() != 0) ready = 1;`). In kind 17 the two
+  stores of the timer value go to two one-element arrays, and the call takes a
+  pointer variable (`u32 *slot = timer; fn_801F348C(slot, ...)`): the first
+  array does not escape, so the selector load is not ordered after its store,
+  and the copy into `r3` that the allocator merges makes MWCC reschedule the
+  block after allocation, which gives retail's order and registers.
+
+- `fn_80140E70`: the first point's coordinates go through a small inline
+  `offset_coord(base, value)` into their own locals (`start_x`, `start_y`,
+  `start_z`). Values returned by an inline function are numbered after the
+  loop temporaries, which gives retail's `f30`/`f31`/`f29`; plain locals do not,
+  and inline parameters are evaluated right to left. The colour lookup comes
+  after the three coordinates and the loop locals are declared `z, y, x`.
+- `fn_801D8E40`: the parameter is `void *arg` copied into `Object *object`
+  (retail loads through `r3` before the `addi` for `data`), and `data` is
+  declared right after `object`. In case 110 the second half reads the
+  attachment again (`slot = &data->attachments[i]`, declared before
+  `attached`); the recomputed address gets a different register from
+  `attachment`, and MWCC's common-subexpression pass after allocation turns it
+  into retail's `mr r19, r21`. Case 110 keeps its subject in its own local
+  (`target`), and case 150 reads `subject` and keeps the second value in
+  `actor`, which gives retail's `r20`/`r21` and `r19`.
+- `fn_80026320`: each corner goes through a small inline
+  `set_corner(out, corner, x, y)` that takes the corner by value. Call
+  arguments are evaluated right to left, so the two conversions come before the
+  struct copy, and the copy words then get retail's registers. The x division
+  is a loop over the four corners, as retail's register-based corner accesses
+  need.
+- `fn_801F1A38`: the candidate loop indexes the list with the shared counter,
+  `for (i = 0; candidate_index < cap; i++) candidate = *candidates[i];`, as
+  `fn_801F3FD8` does. The clamps use file-local `MIN`/`MAX` macros, as other
+  files in the repo do. `extra_count = MIN(requested, 4 - cap - special_count);`
+  repeats the difference, and MWCC's front end keeps it in a temporary
+  numbered with its other expression temporaries, which gives retail's `r28`
+  and keeps the list in `r30`. Written as two `if` statements, the list is
+  spilled to the stack.
+
+### Per-unit settings and constants
+
+- `fn_801A1E14`: `-O4,s` through `cflags_with_optimization`. Retail's loop
+  is a counted loop that is not unrolled; `-O4,p` unrolls it eight times.
+- `fn_80124DBC` and `fn_800C030C`: `-use_lmw_stmw on`, as retail saves with
+  `stmw`. `fn_80124DBC`'s `Owner` fields replace the offset macros, which
+  gives retail's `add` plus displacement for the double-buffered pointers.
+- `fn_800C030C`: float constants as literals (retail reloads `1.0` after the
+  timer store), the timer ratio in its own local, and `fn_8017A010` declared
+  `(float *, float, float, float, int)`, as its neighbour `fn_800BE70C` does.
+  The eight constants are renamed through `game_section_externalizations`.
+- `fn_801B7A7C`: `-fp_contract off`, which 141 other GC/1.2.5n units already
+  use.
+- `fn_8006D548`: the four float constants and the switch jump table are renamed
+  by one rule, as `fn_801E504C` does, because both sections need renaming.
+- `fn_8019C7A8`: its int-to-float constant is renamed through
+  `game_section_externalizations`.
+- `fn_80089A34`: its existing `game_section_externalizations` entry now names
+  `@50` and `@52`.
+- `fn_8005B528`: GC/1.3.2. GC/1.3 lets the `values[*lbl_8064C5A8 - 1]` load
+  pass two of the array's initializing stores; 1.3.2 keeps it after them, as
+  retail does. The table stays the compiler's anonymous `.rodata` object, like
+  `fn_80050A7C`.
+- `fn_80140E70`: its 50.0, 30.0 and int-to-float constants are renamed through
+  `game_section_externalizations`.
+- `fn_80026320`: its int-to-float constant is renamed to `lbl_8064DF80`
+  through `game_section_externalizations`.
+- `fn_801D8E40`: its existing externalize rule now names `@232`, the
+  int-to-float constant, renamed to `lbl_80651110`.
+- `fn_801F1A38`: its existing externalize rule now names `@131`, the
+  int-to-float constant, renamed to `lbl_80651360`.

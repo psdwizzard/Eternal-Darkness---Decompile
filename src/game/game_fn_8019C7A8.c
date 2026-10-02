@@ -3,6 +3,28 @@ typedef unsigned short u16;
 typedef signed short s16;
 typedef unsigned int u32;
 
+typedef struct Vertex {
+    s16 x;
+    s16 y;
+    s16 z;
+} Vertex;
+
+typedef struct Color {
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 a;
+} Color;
+
+typedef struct Setup {
+    u16 pad00;
+    u16 offset;
+    u8 pad04[6];
+    u16 vertexSize;
+    u16 colorSize;
+    u16 indexSize;
+} Setup;
+
 typedef struct Buffers {
     u8* vertices;
     u8* indices;
@@ -15,64 +37,88 @@ typedef struct Vec3 {
     float z;
 } Vec3;
 
-extern u8 lbl_80607120[];
+typedef struct Entry {
+    u8 pad00[0xA];
+    s16 x;
+    s16 z;
+    u8 pad0E[0x12];
+    u8 count;
+    u8 pad21[0xA];
+    u8 alpha;
+    u8 pad2C[0xC];
+} Entry;
+
+typedef struct Object {
+    u8 pad00;
+    u8 count;
+    u8 pad02[0xC];
+    s16 id;
+    u8 pad10[0x3C];
+    Entry* entries;
+    u8 pad50[0xC];
+    u32 source;
+    u8 pad60[0x64];
+    Vec3 position;
+    Vec3 corners[3];
+} Object;
+
+extern Setup lbl_80607120;
 extern int lbl_8064D738;
-extern void fn_8018D788(int, void*, Buffers*, u16);
+extern void fn_8018D788(int, Object*, Buffers*, u16);
 extern void DCFlushRange(void*, u32);
 extern int fn_801ED57C(int);
-extern void fn_8018D0D0(void*, void*, s16);
+extern void fn_8018D0D0(Object*, u32*, int);
 extern void fn_801889D8(void*, void*, void*);
 
-void fn_8019C7A8(u8* object)
+void fn_8019C7A8(Object* object)
 {
-    u32 setup[4];
+    Setup setup;
     Buffers buffers;
     Vec3 position;
     Vec3 points[3];
+    s16 anchorX;
+    s16 offsetX;
+    int half;
+    s16 offsetY;
+    s16 midpointX;
+    int saved;
+    s16 anchorY;
+    int midpointZ;
     Vec3* pointBase;
-    u8* entry;
-    u8* color;
-    u8* vertex;
-    u8 count;
+    Vec3* point;
+    s16 x;
+    int midpointY;
+    Entry* entry;
+    Color* color;
+    Vertex* vertex;
+    s16 z;
+    int inner;
     int outer;
+    u8 count;
+    float dx;
+    float dz;
 
-    setup[0] = *(u32*)(lbl_80607120 + 0);
-    setup[1] = *(u32*)(lbl_80607120 + 4);
-    setup[2] = *(u32*)(lbl_80607120 + 8);
-    setup[3] = *(u32*)(lbl_80607120 + 12);
-    count = object[1];
-    fn_8018D788(lbl_8064D738, object, &buffers, *(u16*)((u8*)setup + 2));
+    setup = lbl_80607120;
+    count = object->count;
+    fn_8018D788(lbl_8064D738, object, &buffers, setup.offset);
     pointBase = points;
-    entry = *(u8**)(object + 0x4C);
-    color = buffers.colors;
+    entry = object->entries;
+    color = (Color*)buffers.colors;
 
     for (outer = 0; outer < count; outer++) {
-        s16 x = *(s16*)(entry + 0xA);
-        s16 z = *(s16*)(entry + 0xC);
-        s16 midpointX;
-        int midpointY;
-        int midpointZ;
-        s16 offsetX;
-        s16 offsetY;
-        s16 anchorX;
-        s16 anchorY;
-        int half;
-        Vec3* point;
-        int inner;
-        float dx;
-        float dz;
-
-        vertex = buffers.vertices + outer * 0x18;
-        position = *(Vec3*)(object + 0xC4);
-        dx = (float)x - *(float*)(object + 0xC4);
-        dz = (float)z - *(float*)(object + 0xC8);
-        points[0] = *(Vec3*)(object + 0xD0);
+        z = entry->z;
+        x = entry->x;
+        vertex = (Vertex*)(buffers.vertices + outer * 4 * sizeof(Vertex));
+        dx = (float)x - object->position.x;
+        dz = (float)z - object->position.y;
+        position = object->position;
+        points[0] = object->corners[0];
         points[0].x += dx;
         points[0].y += dz;
-        points[1] = *(Vec3*)(object + 0xDC);
+        points[1] = object->corners[1];
         points[1].x += dx;
         points[1].y += dz;
-        points[2] = *(Vec3*)(object + 0xE8);
+        points[2] = object->corners[2];
         points[2].x += dx;
         points[2].y += dz;
         position.x = (float)x;
@@ -85,11 +131,9 @@ void fn_8019C7A8(u8* object)
         half = (s16)(points[2].z - points[0].z) >> 1;
         midpointZ = (s16)(points[0].z + (float)half);
 
-        offsetX = (s16)((float)midpointX - position.x);
-        anchorX = (s16)(midpointX + (s16)(offsetX * 2));
+        anchorX = (s16)(midpointX + (s16)((s16)((float)midpointX - position.x) * 2));
+        anchorY = (s16)(midpointY + (s16)((s16)((float)midpointY - position.y) * 2));
         offsetX = (s16)((midpointX - anchorX) >> 1);
-        offsetY = (s16)((float)midpointY - position.y);
-        anchorY = (s16)(midpointY + (s16)(offsetY * 2));
         offsetY = (s16)((midpointY - anchorY) >> 1);
 
         points[0].x += offsetX;
@@ -102,30 +146,28 @@ void fn_8019C7A8(u8* object)
         anchorX += offsetX;
         anchorY += offsetY;
         point = pointBase;
-        for (inner = 0; inner < entry[0x20] - 1; inner++) {
-            *(s16*)(vertex + 0) = (s16)point->x;
-            *(s16*)(vertex + 2) = (s16)point->y;
-            *(s16*)(vertex + 4) = (s16)point->z;
+        for (inner = 0; inner < entry->count - 1; inner++) {
+            vertex->x = (s16)point->x;
+            vertex->y = (s16)point->y;
+            vertex->z = (s16)point->z;
             point++;
-            vertex += 6;
-            color[3] = entry[0x2B];
-            color += 4;
+            vertex++;
+            color->a = entry->alpha;
+            color++;
         }
-        *(s16*)(vertex + 0) = anchorX;
-        *(s16*)(vertex + 2) = anchorY;
-        *(s16*)(vertex + 4) = midpointZ;
-        color[3] = entry[0x2B];
-        color += 4;
-        entry += 0x38;
+        vertex->x = anchorX;
+        vertex->y = anchorY;
+        vertex->z = midpointZ;
+        color->a = entry->alpha;
+        color++;
+        entry++;
     }
 
-    DCFlushRange(buffers.vertices, *(u16*)((u8*)setup + 0xA));
-    DCFlushRange(buffers.indices, *(u16*)((u8*)setup + 0xE));
-    DCFlushRange(buffers.colors, *(u16*)((u8*)setup + 0xC));
-    {
-        int saved = fn_801ED57C(0);
-        fn_8018D0D0(object, object + 0x5C, *(s16*)(object + 0xE));
-        fn_801889D8(buffers.vertices, buffers.indices, buffers.colors);
-        fn_801ED57C(saved);
-    }
+    DCFlushRange(buffers.vertices, setup.vertexSize);
+    DCFlushRange(buffers.indices, setup.indexSize);
+    DCFlushRange(buffers.colors, setup.colorSize);
+    saved = fn_801ED57C(0);
+    fn_8018D0D0(object, &object->source, object->id);
+    fn_801889D8(buffers.vertices, buffers.indices, buffers.colors);
+    fn_801ED57C(saved);
 }

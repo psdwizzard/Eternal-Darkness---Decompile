@@ -2,102 +2,109 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-typedef struct VoiceRecord {
-    u8 pad00[8];
-    u8 active;
-    u8 pad09;
-    u8 value0A;
-    u8 handle;
-    u32 value0C;
-    u8 pad10[8];
-    u16 voice;
-    u16 generation;
-    u8 pad1C[8];
-} VoiceRecord;
+typedef struct SampleInfo {
+    u16 smpID;
+    u16 instID;
+    u32 data[4];
+} SampleInfo;
 
-typedef union VoiceState {
-    VoiceRecord records[64];
-    u8 raw[0x950];
-    struct {
-        u8 count;
-        u8 pad01[3];
-        void* value04;
-        u8 pad08[0x900];
-        u8 handle_to_record[64];
-        u16 next_generation;
-        void (*callback)(int, u16*);
-    } state;
-} VoiceState;
+typedef struct StreamBuffer {
+    u8 state;
+    u8 hwId;
+    u8 smpType;
+    u8 voice;
+    u32 last;
+    u32 finalGoodSamples;
+    u32 finalLast;
+    SampleInfo info;
+} StreamBuffer;
 
-extern VoiceState lbl_80627D60;
-extern void* fn_801CDD00(u8, int);
-extern void fn_801CCAC4(u8, void*, void*);
-extern u16 fn_801CCB0C(u8);
-extern u8 fn_801CCAF8(u8);
+typedef struct VirtualSamples {
+    u8 numBuffers;
+    u8 pad01[3];
+    u32 bufferLength;
+    StreamBuffer streamBuffer[64];
+    u8 voices[64];
+    u16 nextInstID;
+    u16 pad94A;
+    u32 (*callback)(int kind, SampleInfo* info);
+} VirtualSamples;
 
-int fn_801C3278(int handle)
+static VirtualSamples vs;
+extern u32 fn_801CDD00(u8, u32*);
+extern void fn_801CCAC4(u32, u32, u32);
+extern u16 fn_801CCB0C(u32);
+extern u8 fn_801CCAF8(u32);
+
+static inline void vsFreeBuffer(u8 entryIndex)
 {
-    VoiceState* state = &lbl_80627D60;
-    u8 clean_handle;
+    vs.streamBuffer[entryIndex].state = 0;
+    vs.voices[vs.streamBuffer[entryIndex].voice] = 0xFF;
+}
+
+static inline u8 vsAllocateBuffer(void)
+{
     u8 i;
-    u8 j;
-    u8 slot;
-    void* data;
-    u8* handle_slot;
-    VoiceRecord* record;
-    u32 record_offset;
-    u16 generation;
-    u16* generation_ptr;
 
-    for (i = 0; i < state->state.count; i++) {
-        record = &state->records[i];
-        if (record->active && record->handle == (u8)handle) {
-            record->active = 0;
-            state->state.handle_to_record[record->handle] = 0xFF;
+    for (i = 0; i < vs.numBuffers; ++i) {
+        if (vs.streamBuffer[i].state != 0) {
+            continue;
         }
+        vs.streamBuffer[i].state = 1;
+        vs.streamBuffer[i].last = 0;
+        return i;
     }
 
-    slot = 0;
-    while (slot < state->state.count) {
-        if (!state->records[slot].active) {
-            record = &state->records[slot];
-            record->active = 1;
-            record->value0C = 0;
-            goto found;
-        }
-        slot++;
-    }
-    slot = 0xFF;
+    return 0xFF;
+}
 
-found:
-    clean_handle = handle;
-    handle_slot = &state->raw[clean_handle + 0x908];
-    *handle_slot = slot;
-    if (slot != 0xFF) {
-        data = fn_801CDD00(*handle_slot, 0);
-        fn_801CCAC4(clean_handle, data, state->state.value04);
-        state->records[slot].voice = fn_801CCB0C(clean_handle);
-        record_offset = slot * sizeof(VoiceRecord);
+static inline u16 vsNewInstanceID(void)
+{
+    u8 i;
+    u16 instID;
 
-        do {
-            generation = state->state.next_generation++;
-            for (record = state->records, j = 0; j < state->state.count; record++, j++) {
-                if (record->active && record->generation == generation)
-                    break;
+    do {
+        instID = vs.nextInstID++;
+        for (i = 0; i < vs.numBuffers; ++i) {
+            if (vs.streamBuffer[i].state != 0 &&
+                vs.streamBuffer[i].info.instID == instID) {
+                break;
             }
-        } while (j != state->state.count);
-
-        generation_ptr = (u16*)&state->raw[record_offset + 0x1A];
-        *generation_ptr = generation;
-        state->raw[record_offset + 0x0A] = fn_801CCAF8(clean_handle);
-        state->raw[record_offset + 0x0B] = handle;
-        if (state->state.callback != 0) {
-            state->state.callback(0, (u16*)&state->raw[record_offset + 0x18]);
-            return ((u32)*generation_ptr << 8) | (u8)handle;
         }
-        fn_801CCAC4(clean_handle, 0, 0);
-    } else {
-        fn_801CCAC4(clean_handle, 0, 0);
+    } while (i != vs.numBuffers);
+
+    return instID;
+}
+
+u32 fn_801C3278(u8 voiceID)
+{
+    u8 sb;
+    u8 i;
+    u32 addr;
+
+    for (i = 0; i < vs.numBuffers; ++i) {
+        if (vs.streamBuffer[i].state != 0 &&
+            vs.streamBuffer[i].voice == voiceID) {
+            vsFreeBuffer(i);
+        }
     }
-    return -1;
+
+    sb = vs.voices[voiceID] = vsAllocateBuffer();
+    if (sb != 0xFF) {
+        addr = fn_801CDD00(vs.voices[voiceID], 0);
+        fn_801CCAC4(voiceID, addr, vs.bufferLength);
+        vs.streamBuffer[sb].info.smpID = fn_801CCB0C(voiceID);
+        vs.streamBuffer[sb].info.instID = vsNewInstanceID();
+        vs.streamBuffer[sb].smpType = fn_801CCAF8(voiceID);
+        vs.streamBuffer[sb].voice = voiceID;
+        if (vs.callback != 0) {
+            vs.callback(0, &vs.streamBuffer[sb].info);
+            return (vs.streamBuffer[sb].info.instID << 8) | voiceID;
+        }
+        fn_801CCAC4(voiceID, 0, 0);
+    } else {
+        fn_801CCAC4(voiceID, 0, 0);
+    }
+
+    return 0xFFFFFFFF;
 }

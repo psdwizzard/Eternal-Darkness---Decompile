@@ -42,10 +42,10 @@ typedef struct Header {
     u32 data48;
     u16 count4C;
     u8 pad4E[2];
-    u32 data50;
+    u32* data50;
     u16 count54;
     u8 pad56[2];
-    u32 data58;
+    void** data58;
     u32 data5C;
     u8 pad60[4];
     u32 data64;
@@ -64,8 +64,11 @@ extern char lbl_80265B2C[];
 u32 fn_801E915C(const u8* source, Header* header)
 {
     u32 offset = 0;
-    u32 byte_offset;
+    u32 size;
     int i;
+    int j;
+    int k;
+    int n;
 
     *header = *(const Header*)source;
     offset += sizeof(Header);
@@ -76,61 +79,58 @@ u32 fn_801E915C(const u8* source, Header* header)
     }
 
     if (header->data0C != 0) {
-        u32 size = header->data0C;
+        size = header->data0C;
         header->data0C = (u32)(source + offset);
         offset += size;
     }
     if (header->data14 != 0) {
-        u32 size = header->data14;
+        size = header->data14;
         header->data14 = (u32)(source + offset);
         offset += size;
     }
     if (header->data1C != 0) {
-        u32 size = header->data1C;
+        size = header->data1C;
         header->data1C = (u32)(source + offset);
         offset += size;
     }
     if (header->data28 != 0) {
-        u32 size = header->data28;
+        size = header->data28;
         header->data28 = (u32)(source + offset);
         offset += size;
     }
     if (header->data30 != 0) {
-        u32 size = (u32)header->data30;
+        size = (u32)header->data30;
         header->data30 = (Entry20A*)(source + offset);
         offset += size;
     }
 
-    for (i = 0, byte_offset = 0; i < header->count2C; i++, byte_offset += 0x14) {
-        if (header->data30[i].data04 != 0) {
-            u32 size = header->data30[i].data04;
+    for (i = 0; i < header->count2C; i++) {
+        if ((size = header->data30[i].data04) != 0) {
             header->data30[i].data04 = (u32)(source + offset);
             offset += size;
         }
     }
 
     if (header->data38 != 0) {
-        u32 size = (u32)header->data38;
+        size = (u32)header->data38;
         header->data38 = (Entry20B*)(source + offset);
         offset += size;
     }
-    for (i = 0, byte_offset = 0; i < header->count34; i++, byte_offset += 0x14) {
-        if (header->data38[i].data10 != 0) {
-            u32 size = header->data38[i].data10;
-            header->data38[i].data10 = (u32)(source + offset);
+    for (j = 0; j < header->count34; j++) {
+        if ((size = header->data38[j].data10) != 0) {
+            header->data38[j].data10 = (u32)(source + offset);
             offset += size;
         }
     }
 
     if (header->data40 != 0) {
-        u32 size = (u32)header->data40;
+        size = (u32)header->data40;
         header->data40 = (Entry12*)(source + offset);
         offset += size;
     }
-    for (i = 0, byte_offset = 0; i < header->count3C; i++, byte_offset += 0xC) {
-        if (header->data40[i].data04 != 0) {
-            u32 size = header->data40[i].data04;
-            header->data40[i].data04 = (u32)(source + offset);
+    for (j = 0; j < header->count3C; j++) {
+        if ((size = header->data40[j].data04) != 0) {
+            header->data40[j].data04 = (u32)(source + offset);
             offset += size;
         }
     }
@@ -138,22 +138,22 @@ u32 fn_801E915C(const u8* source, Header* header)
     offset += fn_801EA900(source + offset, &header->data48, header->count44);
 
     if (header->data50 != 0) {
-        header->data50 = (u32)(source + offset);
-        for (byte_offset = 0, i = 0; i < header->count4C; i++, byte_offset += 4) {
-            *(u32*)(header->data50 + byte_offset) = (u32)(source + offset);
+        header->data50 = (u32*)(source + offset);
+        for (k = 0; k < header->count4C; k++) {
+            header->data50[k] = (u32)(source + offset);
             offset += 4;
         }
-        for (byte_offset = 0, i = 0; i < header->count4C; i++, byte_offset += 4) {
-            offset += fn_801EA600(source + offset, (void*)(header->data50 + byte_offset));
+        for (k = 0; k < header->count4C; k++) {
+            offset += fn_801EA600(source + offset, &header->data50[k]);
         }
     }
 
     if (header->data58 != 0) {
-        header->data58 = (u32)(source + offset);
+        header->data58 = (void**)(source + offset);
         offset += header->count54 * 4;
-        for (byte_offset = 0, i = 0; i < header->count54; i++, byte_offset += 4) {
-            *(u32*)(header->data58 + byte_offset) = (u32)(source + offset);
-            offset += fn_801EA6FC(source + offset, *(void**)(header->data58 + byte_offset));
+        for (n = 0; n < header->count54; n++) {
+            header->data58[n] = (void*)(source + offset);
+            offset += fn_801EA6FC(source + offset, header->data58[n]);
         }
     }
 
@@ -161,7 +161,7 @@ u32 fn_801E915C(const u8* source, Header* header)
         offset += fn_801EA774(source + offset, &header->data5C);
     }
     if (header->data64 != 0) {
-        u32 size = header->data64;
+        size = header->data64;
         header->data64 = (u32)(source + offset);
         offset += size;
     }

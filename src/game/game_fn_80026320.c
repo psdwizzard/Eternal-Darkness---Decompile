@@ -14,8 +14,22 @@ typedef struct Vec3f {
 
 typedef f32 Mtx[3][4];
 
+typedef struct Sprite {
+    u8 pad00[4];
+    f32 x;
+    f32 y;
+    s32 extent;
+    u32 mode;
+    u8 pad14[4];
+    f32 angle;
+    u8 pad1C[4];
+    u8 color[4];
+} Sprite;
+
 typedef struct BatchEntry {
-    u8 data[0x1B8];
+    u8 pad00[0x28];
+    Sprite sprites[11];
+    u8 pad1B4[4];
 } BatchEntry;
 
 typedef struct Quad {
@@ -40,65 +54,51 @@ extern void fn_80026754(s32, s32, s32);
 extern void fn_80026744(f32, f32);
 extern void fn_80026740(void);
 
-/* NonMatching: the eight signed corner assignments and conversion stack
- * slots agree with retail. Remaining differences are GPR allocation, quad
- * addressing, cursor setup order, and the compiler-generated bias symbol. */
+static inline void set_corner(Vec3f* out, Vec3f corner, f32 x, f32 y)
+{
+    corner.x = x;
+    corner.y = y;
+    *out = corner;
+}
+
 void fn_80026320(BatchEntry* batch)
 {
     s32 i;
-    u8* entry;
+    Sprite* entry;
     const Quad* initial = &lbl_80238BF8;
 
     fn_80225F4C(13, lbl_802515D0, 4);
 
     for (i = 0; i < 11; i++) {
-        entry = batch->data + i * 0x24;
-        if (entry[0x4B] != 0) {
-            s32 extent = *(s32*)(entry + 0x34);
-            u32 value;
-            Quad points;
-            Vec3f source0;
-            Vec3f source1;
-            Vec3f source2;
-            Vec3f source3;
-            Mtx matrix;
+        entry = &batch->sprites[i];
+        if (entry->color[3] != 0) {
             f32 center_x;
+            Quad points;
+            Mtx matrix;
             f32 center_y;
+            s32 k;
+            s32 extent = entry->extent;
+            u32 value;
 
-            source0 = initial->points[0];
-            source1 = initial->points[1];
-            source2 = initial->points[2];
-            source3 = initial->points[3];
+            center_x = entry->x;
+            center_y = entry->y;
+            set_corner(&points.points[0], initial->points[0], -extent, -extent);
+            set_corner(&points.points[1], initial->points[1], extent, -extent);
+            set_corner(&points.points[2], initial->points[2], extent, extent);
+            set_corner(&points.points[3], initial->points[3], -extent, extent);
 
-            center_x = *(f32*)(entry + 0x2C);
-            center_y = *(f32*)(entry + 0x30);
-
-            source0.x = -extent;
-            source0.y = -extent;
-            source1.x = extent;
-            source1.y = -extent;
-            source2.x = extent;
-            source2.y = extent;
-            points.points[0] = source0;
-            points.points[1] = source1;
-            points.points[2] = source2;
-            source3.x = -extent;
-            source3.y = extent;
-            points.points[3] = source3;
-
-            value = *(u32*)(entry + 0x48);
-            fn_801A852C(&value, 0, *(u32*)(entry + 0x38), 0x80000000);
-            fn_80211268(matrix, 'z', *(f32*)(entry + 0x40));
+            value = *(u32*)entry->color;
+            fn_801A852C(&value, 0, entry->mode, 0x80000000);
+            fn_80211268(matrix, 'z', entry->angle);
             fn_80211710(matrix, &points.points[0], &points.points[0]);
             fn_80211710(matrix, &points.points[1], &points.points[1]);
             fn_80211710(matrix, &points.points[2], &points.points[2]);
             fn_80211710(matrix, &points.points[3], &points.points[3]);
 
             if (lbl_8064CBA4 == 1) {
-                points.points[0].x /= lbl_8064DF74;
-                points.points[1].x /= lbl_8064DF74;
-                points.points[2].x /= lbl_8064DF74;
-                points.points[3].x /= lbl_8064DF74;
+                for (k = 0; k < 4; k++) {
+                    points.points[k].x /= lbl_8064DF74;
+                }
             }
 
             points.points[0].x = lbl_8064DF78 * (points.points[0].x + center_x);

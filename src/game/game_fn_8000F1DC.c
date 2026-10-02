@@ -16,6 +16,8 @@ typedef struct Object {
     ObjectData* data;
 } Object;
 
+typedef struct Script Script;
+
 extern int fn_8016A598(void*);
 extern double fn_8016A694(void*, int);
 extern void *fn_80201814();
@@ -25,41 +27,40 @@ extern void fn_800CAC5C(s32, s32, s32*, s32*, s32*);
 extern unsigned int fn_80036D5C(void*);
 extern void fn_80036DA4(void*, u32);
 
-s32 fn_8000F1DC(void* script)
+s32 fn_8000F1DC(Script* script)
 {
-    void* script_reg;
-    s32 arg2;
-    s32 arg1;
-    s32 arg4;
-    s32 arg3;
-    s32 arg_count;
-    void* entity;
-    Object* object;
     ObjectData* data;
+    s32 arg2;
+    void* entity;
+    s32 arg4;
+    s32 arg1;
+    s32 arg3;
+    u32 current;
+    u32 flags;
+    Object* object;
+    s32 arg_count;
     s32 unused;
     s32 x;
     s32 y;
-    u32 flags;
 
-    script_reg = script;
     arg4 = 0;
-    arg_count = fn_8016A598(script_reg);
+    arg_count = fn_8016A598(script);
     arg3 = 0;
     switch (arg_count) {
     case 2:
-        arg1 = (s32)fn_8016A694(script_reg, 1);
-        arg2 = (s32)fn_8016A694(script_reg, 2);
+        arg1 = (s32)fn_8016A694(script, 1);
+        arg2 = (s32)fn_8016A694(script, 2);
         break;
     case 3:
-        arg1 = (s32)fn_8016A694(script_reg, 1);
-        arg2 = (s32)fn_8016A694(script_reg, 2);
-        arg3 = (s32)fn_8016A694(script_reg, 3);
+        arg1 = (s32)fn_8016A694(script, 1);
+        arg2 = (s32)fn_8016A694(script, 2);
+        arg3 = (s32)fn_8016A694(script, 3);
         break;
     case 4:
-        arg1 = (s32)fn_8016A694(script_reg, 1);
-        arg2 = (s32)fn_8016A694(script_reg, 2);
-        arg3 = (s32)fn_8016A694(script_reg, 3);
-        arg4 = (s32)fn_8016A694(script_reg, 4);
+        arg1 = (s32)fn_8016A694(script, 1);
+        arg2 = (s32)fn_8016A694(script, 2);
+        arg3 = (s32)fn_8016A694(script, 3);
+        arg4 = (s32)fn_8016A694(script, 4);
         break;
     }
 
@@ -72,11 +73,13 @@ s32 fn_8000F1DC(void* script)
         data->x = x;
         data->y = y;
         data->value = arg4;
-        flags = fn_80036D5C(entity);
-        if (arg3 == 0) {
-            flags = (flags | 0x80) & ~0x8000;
+        current = fn_80036D5C(entity);
+        if (arg3 != 0) {
+            flags = current | 0x8000;
+            flags &= ~0x80U;
         } else {
-            flags = (flags | 0x8000) & ~0x80;
+            flags = current | 0x80;
+            flags &= ~0x8000U;
         }
         fn_80036DA4(entity, flags);
     }

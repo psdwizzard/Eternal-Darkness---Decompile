@@ -59,38 +59,41 @@ extern void fn_80201BC8(void);
 extern s32 fn_8011FB4C(void);
 extern void fn_801F10BC(u32, u32, s32);
 
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+
 #pragma use_lmw_stmw on
 
 s32 fn_801F1A38(Vec3* point, Vec3* target, Input* input, s32 group,
                  s32 requested, s32 flags, float scale)
 {
-    s32 max_count;
-    Candidate** candidates;
+    s32 effect_count = 0;
     EffectRec effects[8];
-    Candidate candidate;
     Vec3 clamped;
     Vec3 fixed_color;
-    s32 effect_count = 0;
-    s32 selected;
-    s32 active_mask = 0;
-    s32 candidate_index = 0;
-    s32 ordinary_mask = 0x10;
-    s32 enabled_mask = 0;
-    s32 seen_mask = 0;
-    s32 special_mask = 0;
-    s32 special_seen = 0;
-    s32 cap;
+    Candidate candidate;
     s32 i;
     s32 extra_count;
-    s32 special_count;
     s32 scaled_count;
+    Candidate** candidates;
+    s32 active_mask = 0;
+    s32 candidate_index = 0;
+    s32 selected;
+    s32 ordinary_mask = 0x10;
+    s32 seen_mask = 0;
+    s32 enabled_mask = 0;
+    s32 cap;
+    s32 special_mask = 0;
+    s32 max_count;
+    s32 special_seen = 0;
+    s32 special_count;
 
     max_count = fn_801FD258();
     candidates = fn_801FD240();
     clamped = *point;
-    clamped.x = input->minimum.x > clamped.x ? input->minimum.x : clamped.x;
-    clamped.y = input->minimum.y > clamped.y ? input->minimum.y : clamped.y;
-    clamped.z = input->minimum.z > clamped.z ? input->minimum.z : clamped.z;
+    clamped.x = MAX(input->minimum.x, clamped.x);
+    clamped.y = MAX(input->minimum.y, clamped.y);
+    clamped.z = MAX(input->minimum.z, clamped.z);
     selected = fn_801F15D0(&clamped, group, input, &effect_count, effects);
     if (selected == -1) {
         fn_801F3FD8(point, 3000);
@@ -98,18 +101,19 @@ s32 fn_801F1A38(Vec3* point, Vec3* target, Input* input, s32 group,
     }
     if (effect_count > 4) effect_count = 4;
 
-    cap = max_count > lbl_8064C388 ? lbl_8064C388 : max_count;
-    cap = cap < 3 ? cap : 3;
+    cap = max_count;
+    if (cap > lbl_8064C388) cap = lbl_8064C388;
+    cap = MIN(cap, 3);
 
     for (i = 0; i < effect_count; i++) {
         active_mask |= 1 << i;
         if (flags & 1) {
             s32 minimum = fn_801F1A24(i);
             if (flags & 2) minimum *= 5;
-            effects[i].intensity = minimum > effects[i].intensity ? minimum : effects[i].intensity;
+            effects[i].intensity = MAX(minimum, effects[i].intensity);
             fn_801F0CB0(&effects[i], point, target, i, 0, 0, 0);
         } else {
-            effects[i].intensity = (s32)(scale * (float)effects[i].intensity);
+            effects[i].intensity *= scale;
             fn_801F0CB0(&effects[i], point, target, i, 0, 0, 0);
         }
         if (lbl_8064CB48) {
@@ -120,22 +124,19 @@ s32 fn_801F1A38(Vec3* point, Vec3* target, Input* input, s32 group,
     }
 
     scaled_count = (s32)((float)effects[0].intensity * scale);
-    special_count = (3 - cap) < input->entries[selected].count
-        ? (3 - cap) : input->entries[selected].count;
+    special_count = MIN(3 - cap, input->entries[selected].count);
     if (requested == 1) special_count = 0;
-    extra_count = 4 - cap - special_count;
-    if (requested < extra_count) extra_count = requested;
-    if (effect_count < extra_count) extra_count = effect_count;
+    extra_count = MIN(requested, 4 - cap - special_count);
+    extra_count = MIN(effect_count, extra_count);
     if (special_count > 0) special_mask = 0x10 << (cap + extra_count);
     if (cap > 0) {
-        enabled_mask = 0x10 << extra_count;
-        seen_mask |= enabled_mask;
+        enabled_mask = seen_mask = 0x10 << extra_count;
     }
 
     for (i = 0; i < extra_count; i++) {
         ordinary_mask |= 0x10 << i;
         active_mask |= ordinary_mask;
-        effects[i].intensity = (s32)(scale * (float)effects[i].intensity);
+        effects[i].intensity *= scale;
         fn_801F0CB0(&effects[i], point, target, i + 4, 1, 0, 0);
         if (lbl_8064CB48) {
             s32 color = effects[i].value;
@@ -145,8 +146,8 @@ s32 fn_801F1A38(Vec3* point, Vec3* target, Input* input, s32 group,
     }
 
     /* The cap counts accepted candidates. */
-    for (; candidate_index < cap; candidates++) {
-        candidate = **candidates;
+    for (i = 0; candidate_index < cap; i++) {
+        candidate = *candidates[i];
         if (candidate.id == lbl_8064D18C &&
             (!fn_8015E4E8() || candidate.subtype == 7)) {
             s32 valid = 1;

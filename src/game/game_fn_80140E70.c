@@ -23,14 +23,11 @@ typedef struct DebugMesh {
 } DebugMesh;
 
 extern u32 lbl_802FC5BC[];
-extern const float lbl_80650400;
-extern const float lbl_80650404;
 extern void fn_801ECD74(const u32*);
 extern void fn_80226AB4(int, int, u16);
 extern void fn_801409AC(float, float, float);
 extern void fn_801409A8(void);
 
-/* Keep the caller's packed color separate from the callee's argument copy. */
 static inline void set_color(u32 rgba)
 {
     fn_801ECD74(&rgba);
@@ -44,28 +41,37 @@ static inline void emit_point(const s16* points, u16 index, const DebugMesh* mes
                 mesh->offset[2] + p[2]);
 }
 
-/* Draw a debug mesh as its outline, face normals, and optional sub-parts. */
+static inline float offset_coord(float base, s16 value)
+{
+    return base + value;
+}
+
 void fn_80140E70(const s16* points, DebugMesh* mesh, u8 color, int part_color, u8 alpha)
 {
     u32 rgba;
     u16 i;
     u16 first;
     s8 part;
-    float x, y, z;
+    float z;
+    float y;
+    float x;
+    float start_x;
+    float start_y;
+    float start_z;
     const s16* first_point;
+    DebugMeshPart* p = 0;
     u16* indices = mesh->indices;
-    DebugMeshPart* selected_part = 0;
+
     first = indices[(u16)(mesh->count - 1)];
+    start_x = offset_coord(mesh->offset[0], points[first * 3]);
+    start_y = offset_coord(mesh->offset[1], points[first * 3 + 1]);
+    start_z = offset_coord(mesh->offset[2], points[first * 3 + 2]);
     rgba = lbl_802FC5BC[color];
-    x = mesh->offset[0] + points[first * 3];
-    first_point = points + first * 3;
-    y = mesh->offset[1] + first_point[1];
-    z = mesh->offset[2] + first_point[2];
     ((u8*)&rgba)[3] = alpha;
     set_color(rgba);
 
     fn_80226AB4(0xB0, 3, mesh->count + 1);
-    fn_801409AC(x, y, z);
+    fn_801409AC(start_x, start_y, start_z);
     for (i = 0; i < mesh->count; i++)
         emit_point(points, indices[i], mesh);
     fn_801409A8();
@@ -74,17 +80,15 @@ void fn_80140E70(const s16* points, DebugMesh* mesh, u8 color, int part_color, u
     ((u8*)&rgba)[3] = 0xFF;
     set_color(rgba);
     fn_80226AB4(0xA8, 3, (u16)(mesh->count * 2));
-    {
-        for (i = 0; i < mesh->count; i++) {
-            const s16* p = points + indices[i] * 3;
-            x = p[0];
-            y = p[1];
-            z = p[2];
-            fn_801409AC(x, y, z);
-            fn_801409AC(x + lbl_80650400 * mesh->offset[0],
-                        y + lbl_80650400 * mesh->offset[1],
-                        z + lbl_80650400 * mesh->offset[2]);
-        }
+    for (i = 0; i < mesh->count; i++) {
+        const s16* point = points + indices[i] * 3;
+        x = point[0];
+        y = point[1];
+        z = point[2];
+        fn_801409AC(x, y, z);
+        fn_801409AC(x + 50.0f * mesh->offset[0],
+                    y + 50.0f * mesh->offset[1],
+                    z + 50.0f * mesh->offset[2]);
     }
     fn_801409A8();
 
@@ -94,8 +98,7 @@ void fn_80140E70(const s16* points, DebugMesh* mesh, u8 color, int part_color, u
     ((u8*)&rgba)[3] = alpha;
     set_color(rgba);
     for (part = 0; part < mesh->part_count; part++) {
-        DebugMeshPart* p = &mesh->parts[part];
-        selected_part = p;
+        p = &mesh->parts[part];
         indices = p->indices;
         first = indices[(u16)(p->count - 1)];
         first_point = points + first * 3;
@@ -113,27 +116,23 @@ void fn_80140E70(const s16* points, DebugMesh* mesh, u8 color, int part_color, u
     ((u8*)&rgba)[3] = alpha;
     set_color(rgba);
     {
-        /* Retail retains the last selected part here: it repeats that count
-         * for every part rather than summing the individual part counts. */
         u16 total = 0;
         for (part = 0; part < mesh->part_count; part++)
-            total += selected_part->count;
+            total += p->count;
         fn_80226AB4(0xA8, 3, (u16)(total * 2));
     }
-    {
-        for (part = 0; part < mesh->part_count; part++) {
-            DebugMeshPart* p = &mesh->parts[part];
-            indices = p->indices;
-            for (i = 0; i < p->count; i++) {
-                const s16* v = points + indices[i] * 3;
-                x = v[0];
-                y = v[1];
-                z = v[2];
-                fn_801409AC(x, y, z);
-                fn_801409AC(x + lbl_80650404 * mesh->offset[0],
-                            y + lbl_80650404 * mesh->offset[1],
-                            z + lbl_80650404 * mesh->offset[2]);
-            }
+    for (part = 0; part < mesh->part_count; part++) {
+        p = &mesh->parts[part];
+        indices = p->indices;
+        for (i = 0; i < p->count; i++) {
+            const s16* point = points + indices[i] * 3;
+            x = point[0];
+            y = point[1];
+            z = point[2];
+            fn_801409AC(x, y, z);
+            fn_801409AC(x + 30.0f * mesh->offset[0],
+                        y + 30.0f * mesh->offset[1],
+                        z + 30.0f * mesh->offset[2]);
         }
     }
     fn_801409A8();

@@ -99,12 +99,13 @@ extern const u32 lbl_80651144;
 extern const u32 lbl_80651148;
 extern const u32 lbl_8065114C;
 
-void fn_801D8E40(Object* object)
+void fn_801D8E40(void* arg)
 {
+    Object* object = arg;
+    EffectBlock* data = (EffectBlock*)(object->bytes + 0xBC);
     u32 flags;
     void* subject;
     void** effect;
-    EffectBlock* data = (EffectBlock*)(object->bytes + 0xBC);
     s16 count;
     int i;
     u16 timer;
@@ -238,12 +239,8 @@ void fn_801D8E40(Object* object)
                 fn_80182440(*effect, 3);
             }
         }
-        {
-            s16 a = fn_801D3A34(flags, 74);
-            s16 b = fn_801D3A34(flags, 70);
-            fn_80153A24((float*)(object->bytes + 0x38), count, 250, b, a,
-                        data->positions, data->velocities, 4);
-        }
+        fn_80153A24((float*)(object->bytes + 0x38), count, 250, fn_801D3A34(flags, 70),
+                    fn_801D3A34(flags, 74), data->positions, data->velocities, 4);
         break;
     case 36:
         count = fn_801CEB2C(flags);
@@ -292,16 +289,17 @@ void fn_801D8E40(Object* object)
         break;
     /* Transfer the effects to attachments on the current subject. */
     case 110: {
-        subject = fn_80201814(*(u32*)(object->bytes + 0xC));
-        if (subject != 0) {
+        void* target = fn_80201814(*(u32*)(object->bytes + 0xC));
+        if (target != 0) {
             count = fn_801CEB2C(flags);
             for (i = 0; i < count; i++) {
                 if (data->effects[i] != 0) {
-                    void* resource = fn_80149E04();
-                    if ((data->attachments[i].resource = resource) != 0) {
+                    void* resource;
+                    if ((resource = data->attachments[i].resource = fn_80149E04()) != 0) {
                         Attachment* attachment = &data->attachments[i];
                         void* particle;
                         void* owner;
+                        Attachment* slot;
                         void* attached;
                         fn_80147E88(attachment);
                         fn_801495FC(attachment, resource);
@@ -325,20 +323,21 @@ void fn_801D8E40(Object* object)
                         fn_801570F8(data->children[i], owner);
                         fn_8015690C(owner, 0);
                         fn_80156FF4(owner);
-                        owner = fn_80155DB4(subject);
+                        slot = &data->attachments[i];
+                        owner = fn_80155DB4(target);
                         if (owner == 0) {
                             fn_800073D8(-1);
                             fn_80157438(9, 0);
-                            fn_80149EB8(attachment->resource);
-                            attachment->resource = 0;
+                            fn_80149EB8(slot->resource);
+                            slot->resource = 0;
                         } else {
-                            attached = fn_80148300(owner, attachment, attachment->resource);
+                            attached = fn_80148300(owner, slot, slot->resource);
                             if (attached != 0) {
                                 fn_80156904(data->children[i], fn_80148E04);
                                 fn_80156F80(data->children[i], attached);
                             } else {
-                                fn_80149EB8(attachment->resource);
-                                attachment->resource = 0;
+                                fn_80149EB8(slot->resource);
+                                slot->resource = 0;
                             }
                         }
                     }
@@ -351,9 +350,10 @@ void fn_801D8E40(Object* object)
         fn_801FDF74(*(u32*)(object->bytes + 0x44), 0x7A120);
         break;
     case 150: {
-        void* actor = fn_80201814(*(u32*)(object->bytes + 0xC));
-        if (actor != 0) {
-            actor = fn_80201BC8(actor);
+        void* actor;
+        subject = fn_80201814(*(u32*)(object->bytes + 0xC));
+        if (subject != 0) {
+            actor = fn_80201BC8(subject);
             if (actor != 0 && (fn_8012F674(actor, 15, 0) & 8) == 0) {
                 switch (flags & 0xF) {
                 case 1: {

@@ -30,54 +30,46 @@ typedef struct Work {
     u32 field0C;
     u32 field10;
     u16* values;
+    u8 pad18[0x10];
 } Work;
 
-typedef struct GlobalState {
-    u8 pad00[0x1C];
-    Info info;
-    u8 object60[0x38];
-    Work work;
-    u8 padB0[0x10];
-    u16 values[0x100];
-    u8 clear[0x100];
-} GlobalState;
-
-extern u8 lbl_80302400[];
 extern DataState lbl_8023D660;
 
-typedef struct TypeA TypeA;
-typedef struct TypeB TypeB;
-extern void fn_8020EFBC(TypeA*);
-extern void fn_8020F0F8(TypeB*);
+extern void fn_8020EFBC(void*);
+extern void fn_8020F0F8(void*);
 extern void fn_80228B50(void*, void*, s32, u32);
+
+static u8 head[0x1C] = {0};
+static Info info = {0};
+static u8 object[0x38] = {0};
+static Work work = {0};
+static u16 values[0x100] = {0};
+static u8 clear[0x100] = {0};
 
 void fn_8001DE84(u8 mode, u32 value)
 {
-    register u8* state = lbl_80302400;
-    register Info* info = (Info*)(state + 0x1C);
-    register Work* work = (Work*)(state + 0x98);
     s32 i;
 
-    info->flags &= ~2U;
-    fn_8020EFBC((TypeA*)(state + 0x60));
-    fn_8020F0F8((TypeB*)((u8*)info + 0x44));
+    info.flags &= ~2U;
+    fn_8020EFBC(object);
+    fn_8020F0F8(object);
 
-    info->previous_mode = info->mode;
-    info->mode = mode;
-    info->previous_value = info->value;
-    info->value = value;
-    info->field14 = 0;
+    info.previous_mode = info.mode;
+    info.mode = mode;
+    info.previous_value = info.value;
+    info.value = value;
+    info.field14 = 0;
 
-    work->field00 = 0;
-    work->field04 = 0;
-    work->field08 = 0;
-    work->field0C = 0;
-    work->field10 = 0;
-    work->values = (u16*)(state + 0xC0);
-    fn_80228B50(state + 0x2C0, state + 0xC0, 0, 0x100);
+    work.field00 = 0;
+    work.field04 = 0;
+    work.field08 = 0;
+    work.field0C = 0;
+    work.field10 = 0;
+    work.values = values;
+    fn_80228B50(clear, values, 0, sizeof(clear));
 
     for (i = 0; i < 0x100; i++) {
-        ((u16*)(state + 0xC0))[i] = 0xFF;
+        values[i] = 0xFF;
     }
 
     lbl_8023D660.field2C = 0xFF;
