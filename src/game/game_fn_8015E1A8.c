@@ -24,7 +24,7 @@ typedef struct StreamState {
     void* manager;
 } StreamState;
 
-extern StreamState lbl_805BB1E0;
+extern volatile StreamState lbl_805BB1E0;
 __declspec(section ".sdata") extern u32 lbl_8064D160[];
 extern char lbl_8024F1D8[];
 extern char lbl_8024F200[];
@@ -44,28 +44,25 @@ u32 fn_8015E1A8(int id)
 {
     volatile StreamState* state = &lbl_805BB1E0;
     u32 return_value = 0;
-    u32 size;
     u32 old_staging;
     u32 buffer;
     int interrupts;
-    int requested_id = id;
+    u32 size;
+    u32 previous_active;
 
-    if (state->requested_id > requested_id) {
-        fn_80155BB0(lbl_8024F1D8, lbl_8024F200, requested_id,
+    if (state->requested_id > id) {
+        fn_80155BB0(lbl_8024F1D8, lbl_8024F200, id,
                     state->requested_id);
         goto done;
     }
-    if (state->requested_id == requested_id) {
+    if (state->requested_id == id) {
         return_value = state->result;
         goto done;
     }
 
-    state->requested_id;
-    {
-        u32 bank = state->bank;
-        state->bank = bank ^ 1;
-    }
-    size = fn_801332F0(state->manager, requested_id);
+    (void)state->requested_id;
+    state->bank = state->bank ^ 1;
+    size = fn_801332F0(state->manager, id);
     old_staging = state->staging;
     buffer = lbl_8064D160[state->bank];
     fn_8015E0A0(size);
@@ -73,20 +70,18 @@ u32 fn_8015E1A8(int id)
                 0x400, lbl_805E28FC, 1);
 
     interrupts = OSDisableInterrupts();
-    state->requested_id = requested_id;
+    state->requested_id = id;
     state->result = buffer;
     return_value = state->result;
-    requested_id = state->active;
+    previous_active = state->active;
     state->active = state->staging;
     state->staging += size;
     state->source += size;
     state->cursor = (state->cursor + 31) & ~31;
     state->staging = (state->staging + 31) & ~31;
     if (state->staging >= state->ring_end) {
-        u32 end = state->ring_end;
-        u32 staging = state->staging;
-        u32 start = state->ring_start;
-        state->staging = start + (staging - end);
+        u32 overflow = state->staging - state->ring_end;
+        state->staging = state->ring_start + overflow;
         state->previous += state->ring_end - state->ring_start;
     }
     state->staging = (state->staging + 31) & ~31;
@@ -95,26 +90,21 @@ u32 fn_8015E1A8(int id)
     if (lbl_805BB1E0.produced - lbl_805BB1E0.cursor > 0x5B160) {
         state->read_state = 3;
         state->state = 3;
-    } else if (((volatile StreamState*)&lbl_805BB1E0)->produced !=
-               ((volatile StreamState*)&lbl_805BB1E0)->cursor) {
+    } else if (lbl_805BB1E0.produced != lbl_805BB1E0.cursor) {
         state->read_state = 2;
         state->state = 3;
     } else if (state->state != 5) {
         state->read_state = 1;
         state->state = 4;
     }
-    if ((u32)requested_id != 0 && state->produced < state->limit) {
-        if (state->request > (u32)requested_id) {
-            u32 produced = state->produced;
-            u32 request = state->request;
-            u32 end = state->ring_end;
-            u32 start = state->ring_start;
-            state->produced = (end - request) +
-                              ((u32)requested_id - start + produced);
-            state->request = requested_id;
+    if (previous_active != 0 && state->produced < state->limit) {
+        if (state->request > previous_active) {
+            state->produced += (state->ring_end - state->request) +
+                               (previous_active - state->ring_start);
+            state->request = previous_active;
         } else {
-            state->produced += (u32)requested_id - state->request;
-            state->request = requested_id;
+            state->produced += previous_active - state->request;
+            state->request = previous_active;
         }
         if (state->produced > state->limit) {
             u32 excess = state->produced - state->limit;

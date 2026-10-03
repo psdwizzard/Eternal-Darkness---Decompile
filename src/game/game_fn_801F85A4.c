@@ -1,62 +1,55 @@
-typedef struct SavedState {
+typedef unsigned char u8;
+
+typedef struct Vec3 {
+    float x;
+    float y;
+    float z;
+} Vec3;
+
+typedef struct MotionState {
+    Vec3 position;
+    u8 pad0C[0x24];
+    float value;
+    float field_34;
+    u8 pad38[8];
+    int field_40;
+    u8 pad44[4];
+    Vec3 vector;
+    u8 pad54[0x18];
+    void (*callback)(struct MotionState*);
+    struct MotionState* source;
+    u8 pad74[0x14];
+} MotionState;
+
+typedef struct Entry {
     float first_value;
     float second_value;
-    unsigned int first_handle;
-    unsigned int second_handle;
-    unsigned int token;
-} SavedState;
+    MotionState* first_source;
+    MotionState* second_source;
+    int index;
+} Entry;
 
-typedef struct LiveState {
-    unsigned char pad0[0x30];
-    float value;
-    unsigned char pad34[0x3C];
-    unsigned int handle;
-    unsigned char pad74[0x14];
-} LiveState;
-
-typedef struct Globals {
-    unsigned char pad0[0xCC0];
-    LiveState first;
-    LiveState second;
-    SavedState saved[1];
-} Globals;
-
-extern Globals lbl_8063C6B8;
 extern int lbl_8064D7BC;
-extern void fn_801FA410(unsigned int);
+extern int fn_801FA410(int index);
+
+static MotionState first[12] = {0};
+static MotionState second[12] = {0};
+static MotionState current_first = {0};
+static MotionState current_second = {0};
+static Entry entries[5] = {0};
 
 int fn_801F85A4(void)
 {
-    Globals* globals = &lbl_8063C6B8;
+    Entry* entry;
     int result = 0;
-    int count = lbl_8064D7BC;
 
-    if (count > 0) {
-        volatile SavedState* saved;
-        LiveState* first;
-        LiveState* second;
-        float first_value;
-        float second_value;
-        unsigned int first_handle;
-        unsigned int second_handle;
-        unsigned int token;
-
-        count--;
-        saved = globals->saved;
-        saved += count;
-        first = &globals->first;
-        second = &globals->second;
-        lbl_8064D7BC = count;
-        first_value = saved->first_value;
-        second_value = saved->second_value;
-        first_handle = saved->first_handle;
-        second_handle = saved->second_handle;
-        token = saved->token;
-        first->value = first_value;
-        second->value = second_value;
-        first->handle = first_handle;
-        second->handle = second_handle;
-        fn_801FA410(token);
+    if (lbl_8064D7BC > 0) {
+        entry = &entries[--lbl_8064D7BC];
+        current_first.value = entry->first_value;
+        current_second.value = entry->second_value;
+        current_first.source = entry->first_source;
+        current_second.source = entry->second_source;
+        fn_801FA410(entry->index);
         result = 1;
     }
     return result;

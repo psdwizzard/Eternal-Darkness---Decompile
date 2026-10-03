@@ -6,9 +6,16 @@ typedef struct Vec3 {
     float z;
 } Vec3;
 
+typedef struct Color {
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
+    unsigned char a;
+} Color;
+
 typedef struct DrawTail {
     u32 flags;
-    u32 value;
+    Color color;
 } DrawTail;
 
 typedef struct DrawState {
@@ -25,19 +32,14 @@ extern void fn_80226AB4(int, int, int);
 extern void fn_801E7BDC(float, float, float);
 extern void fn_801E7BD8(void);
 
-/* NonMatching: an explicit two-word tail aggregate reproduces retail's early
- * value load and argument schedule, but GC/1.3 retains the aggregate as an
- * eight-byte temporary and emits two extra stores when copying it into state. */
-void fn_801E7CBC(Vec3* a, Vec3* b, Vec3* c, Vec3* d, u32* value)
+void fn_801E7CBC(Vec3* a, Vec3* b, Vec3* c, Vec3* d, Color color)
 {
     DrawState state = lbl_8023B6A8;
-    DrawTail tail;
 
     fn_801ECC4C();
     fn_801ED468(0x1B);
-    tail.flags = 0x80000000;
-    tail.value = *value;
-    state.tail = tail;
+    state.tail.flags = 0x80000000U;
+    state.tail.color = color;
     fn_801EDA7C(&state, 0, 0x2BF, 0);
     fn_801ECF50(4);
     fn_80226AB4(0x80, 3, 4);

@@ -3,6 +3,72 @@ typedef unsigned short u16;
 typedef unsigned char u8;
 typedef int s32;
 typedef unsigned int u32;
+typedef signed char s8;
+
+typedef struct Vec3 {
+    float x;
+    float y;
+    float z;
+} Vec3;
+
+typedef struct Color {
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 a;
+} Color;
+
+typedef struct Effect {
+    u8 pad00;
+    u8 value01;
+    u8 pad02;
+    s8 value03;
+    u16 value04;
+    u16 value06;
+    u16 value08;
+    u8 pad0A[0xA];
+    u8 value14;
+    u8 pad15[3];
+    u8 value18;
+    u8 value19;
+    u8 pad1A[2];
+    u16 value1C;
+    u8 pad1E[0x5A];
+    u32 value78;
+    u8 pad7C[0x14];
+    void (*callback90)(void);
+    void* object94;
+    Vec3 position98;
+    u8 descriptorA4[6];
+    u8 valueAA;
+} Effect;
+
+typedef struct Work {
+    u8 emitter[0xB0];
+    Effect effect;
+} Work;
+
+typedef struct GameObject GameObject;
+
+struct GameObject {
+    u8 pad00[4];
+    u32 owner;
+    s32 type;
+    s32 id;
+    s32 handle;
+    u8 pad14[0x14];
+    void (*callback)(GameObject*, u32);
+    u32 callback_arg;
+    u8 pad30[8];
+    Vec3 position;
+    void* resource;
+    u8 pad48[0x74];
+    Work work;
+    u8 pad218[0xDD8];
+    u8 flags;
+    u8 padFF1[3];
+    u16 state;
+};
 
 typedef struct LookupRow {
     s16 values[5];
@@ -23,20 +89,16 @@ extern u32 lbl_8064C4E0;
 extern u32* lbl_8064C5A8;
 extern u32 lbl_80651F38;
 extern u16 lbl_80651F3C;
-extern float lbl_80651220;
-extern float lbl_80651224;
-extern float lbl_80651228;
-extern float lbl_8065122C;
-extern u8 lbl_802FC5BC[];
+extern Color lbl_802FC5BC[];
 extern LookupRow lbl_8023BA30[];
 
-extern void fn_801E237C(void*);
+extern void fn_801E237C(GameObject*);
 extern void fn_801FE22C(void*);
 extern void fn_801B05B0(s32, s32);
 extern void fn_801FE934(void*, s32);
 extern s32 fn_801D3A34(u32, s32);
 extern s32 fn_801CEB2C(u32);
-extern void fn_8014E9B0(void*, void*, u8, s32, void*, s32, s32, s32);
+extern void fn_8014E9B0(void*, Vec3*, u8, s32, Color*, s32, s32, s32);
 extern u32 fn_80201814(s32);
 extern Context* fn_80201B8C(void);
 extern void fn_8020123C(s32, s32, s32, s32);
@@ -50,45 +112,41 @@ extern void fn_801E7974(u32, s32);
 extern u32 fn_80201AE4(void);
 extern s32 fn_802066E0(u32, u32);
 extern void fn_8011DD8C(s32, s32);
-extern void fn_8018F76C(void*);
+extern void fn_8018F76C(Effect*);
 extern u32 fn_801D3944(u32);
-extern void fn_8018F808(void*, u32*, u32*);
+extern void fn_8018F808(Effect*, u32*, u32*);
 extern void fn_8018F864(void);
 extern void* memcpy(void*, const void*, u32);
-extern void fn_801E8328(s32, void*);
+extern void fn_801E8328(s32, Effect*);
 
-static s32 is_allowed(u32 object)
+static inline s32 is_allowed(u32 object)
 {
     return lbl_8023BA30[fn_801D38E8(object)].values[*lbl_8064C5A8] == 1;
 }
 
-#define SUBJECT (*(u32*)(object + 4))
-
-void fn_801E2408(u8* object)
+void fn_801E2408(void* arg)
 {
-    s32 id;
-    u32 subject;
-    u8* work = object + 0xBC;
-    u8 kind;
+    GameObject* object = arg;
+    Work* work = &object->work;
+    u32 owner;
 
-    if (*(s32*)(object + 8) != lbl_8064D18C || (object[0xFF0] & 1) != 0) {
-        fn_801FE22C(*(void**)(object + 0x44));
-        if (*(s32*)(object + 0x10) != -1) {
-            fn_801B05B0(*(s32*)(object + 0x10), 10);
+    if (object->type != lbl_8064D18C || (object->flags & 1) != 0) {
+        fn_801FE22C(object->resource);
+        if (object->handle != -1) {
+            fn_801B05B0(object->handle, 10);
         }
         fn_801E237C(object);
         return;
     }
 
-    subject = SUBJECT;
+    owner = object->owner;
 
-    switch (*(u16*)(object + 0xFF4)) {
+    switch (object->state) {
     case 0:
-        fn_801FE934(*(void**)(object + 0x44), 6);
-        id = fn_801D3A34(subject, 0x35);
-        kind = (u8)fn_801CEB2C(subject);
-        fn_8014E9B0(work, object + 0x38, kind, id, lbl_802FC5BC + 0xC, 2, 4, 1);
-        if (fn_80201814(*(s32*)(object + 0xC)) != 0) {
+        fn_801FE934(object->resource, 6);
+        fn_8014E9B0(work->emitter, &object->position, (u8)fn_801CEB2C(owner),
+                    fn_801D3A34(owner, 0x35), &lbl_802FC5BC[3], 2, 4, 1);
+        if (fn_80201814(object->id) != 0) {
             s32 current = fn_80201B8C()->current->value;
             if (current != 0) {
                 fn_8020123C(0x39, current, current, 0);
@@ -96,32 +154,27 @@ void fn_801E2408(u8* object)
         }
         break;
     case 10:
-        id = fn_801D3A34(subject, 0x35);
-        kind = (u8)fn_801CEB2C(subject);
-        fn_8014E9B0(work, object + 0x38, kind, id, lbl_802FC5BC + 0xC, 2, 4, 1);
+        fn_8014E9B0(work->emitter, &object->position, (u8)fn_801CEB2C(owner),
+                    fn_801D3A34(owner, 0x35), &lbl_802FC5BC[3], 2, 4, 1);
         break;
     case 20:
-        id = fn_801D3A34(subject, 0x35);
-        kind = (u8)fn_801CEB2C(subject);
-        fn_8014E9B0(work, object + 0x38, kind, id, lbl_802FC5BC + 0xC, 2, 4, 1);
+        fn_8014E9B0(work->emitter, &object->position, (u8)fn_801CEB2C(owner),
+                    fn_801D3A34(owner, 0x35), &lbl_802FC5BC[3], 2, 4, 1);
         break;
     case 30:
-        id = fn_801D3A34(subject, 0x35);
-        kind = (u8)fn_801CEB2C(subject);
-        fn_8014E9B0(work, object + 0x38, kind, id, lbl_802FC5BC + 0xC, 2, 4, 1);
+        fn_8014E9B0(work->emitter, &object->position, (u8)fn_801CEB2C(owner),
+                    fn_801D3A34(owner, 0x35), &lbl_802FC5BC[3], 2, 4, 1);
         break;
     case 40:
-        id = fn_801D3A34(subject, 0x35);
-        kind = (u8)fn_801CEB2C(subject);
-        fn_8014E9B0(work, object + 0x38, kind, id, lbl_802FC5BC + 0xC, 2, 4, 1);
+        fn_8014E9B0(work->emitter, &object->position, (u8)fn_801CEB2C(owner),
+                    fn_801D3A34(owner, 0x35), &lbl_802FC5BC[3], 2, 4, 1);
         break;
     case 50:
-        id = fn_801D3A34(subject, 0x35);
-        kind = (u8)fn_801CEB2C(subject);
-        fn_8014E9B0(work, object + 0x38, kind, id, lbl_802FC5BC + 0xC, 2, 4, 1);
+        fn_8014E9B0(work->emitter, &object->position, (u8)fn_801CEB2C(owner),
+                    fn_801D3A34(owner, 0x35), &lbl_802FC5BC[3], 2, 4, 1);
         break;
     case 80: {
-        u8* effect = work + 0xB0;
+        Effect* effect = &work->effect;
         struct {
             u32 word;
             u16 half;
@@ -132,68 +185,66 @@ void fn_801E2408(u8* object)
         config.word = lbl_80651F38;
         config.half = lbl_80651F3C;
         fn_8018F76C(effect);
-        *(u16*)(effect + 6) = 10;
-        first = fn_801D3944(subject);
+        effect->value06 = 10;
+        first = fn_801D3944(owner);
         second = first;
-        ((u8*)&first)[3] -= 80;
-        ((u8*)&second)[3] -= 50;
+        ((Color*)&second)->a -= 50;
+        ((Color*)&first)->a -= 80;
         fn_8018F808(effect, &second, &first);
-        *(void (**)(void))(effect + 0x90) = fn_8018F864;
-        *(float*)(effect + 0x98) = lbl_80651220;
-        *(float*)(effect + 0x9C) = lbl_80651224;
-        *(float*)(effect + 0xA0) = lbl_80651228;
-        memcpy(effect + 0xA4, &config, 6);
-        *(u32*)(effect + 0x94) = 0;
-        effect[0xAA] = 4;
+        effect->callback90 = fn_8018F864;
+        effect->position98.x = 320.0f;
+        effect->position98.y = 240.0f;
+        effect->position98.z = -1.0f;
+        memcpy(effect->descriptorA4, &config, 6);
+        effect->object94 = 0;
+        effect->valueAA = 4;
         fn_801E8328(0x10, effect);
         break;
     }
     case 90:
-        if (fn_80201814(*(s32*)(object + 0xC)) != 0 && fn_80201B64() != 8) {
-            fn_800CDAD8(SUBJECT, *(s32*)(object + 0xC), 1, lbl_8065122C);
+        if (fn_80201814(object->id) != 0 && fn_80201B64() != 8) {
+            fn_800CDAD8(object->owner, object->id, 1, 0.0f);
             switch (lbl_8064D18C) {
             case 27:
             case 345:
-                if ((SUBJECT & 0x70000) == 0x40000 && is_allowed(SUBJECT))
+                if ((object->owner & 0x70000) == 0x40000 && is_allowed(object->owner))
                     fn_8016B400(1598, 0, 0);
                 break;
             case 32:
-                if ((SUBJECT & 0x70000) == 0x40000 && is_allowed(SUBJECT))
+                if ((object->owner & 0x70000) == 0x40000 && is_allowed(object->owner))
                     fn_8016B400(1878, 0, 0);
                 break;
             case 67:
-                if (is_allowed(SUBJECT))
+                if (is_allowed(object->owner))
                     fn_8016B400(1569, 0, 0);
                 break;
             case 99:
-                if (fn_801E79FC(lbl_8064C4E0, 690) == 0 && is_allowed(SUBJECT)) {
+                if (fn_801E79FC(lbl_8064C4E0, 690) == 0 && is_allowed(object->owner)) {
                     fn_800CCE78(0, 99);
                     fn_801E7974(lbl_8064C4E0, 690);
                 }
                 break;
             case 196:
                 if (fn_802066E0(fn_80201AE4(), 0xE98A39BB) != 0) {
-                    if (is_allowed(SUBJECT))
+                    if (is_allowed(object->owner))
                         fn_8016B400(2783, 0, 0);
                     else
                         fn_8011DD8C(4, 0);
                 }
                 break;
             case 255:
-                if (is_allowed(SUBJECT))
+                if (is_allowed(object->owner))
                     fn_8016B400(1861, 0, 0);
                 break;
             }
         }
         break;
     case 128: {
-        void (*callback)(u8*, u32) = *(void (**)(u8*, u32))(object + 0x28);
+        void (*callback)(GameObject*, u32) = object->callback;
         if (callback != 0)
-            callback(object, *(u32*)(object + 0x2C));
+            callback(object, object->callback_arg);
         fn_801E237C(object);
         break;
     }
     }
 }
-
-#undef SUBJECT

@@ -1,5 +1,4 @@
 typedef unsigned char u8;
-typedef unsigned int u32;
 
 typedef struct Vec3 {
     float x;
@@ -7,49 +6,46 @@ typedef struct Vec3 {
     float z;
 } Vec3;
 
-typedef struct ObjectState {
-    Vec3 origin;
-    u8 pad0C[0x3C];
+typedef struct MotionState {
     Vec3 position;
-    u8 pad54[0x34];
-} ObjectState;
-
-typedef struct Globals {
-    ObjectState first[12];
-    ObjectState second[12];
-    ObjectState third;
-} Globals;
+    u8 pad0C[0x24];
+    float value;
+    float field_34;
+    u8 pad38[8];
+    int field_40;
+    u8 pad44[4];
+    Vec3 vector;
+    u8 pad54[0x18];
+    void (*callback)(struct MotionState*);
+    struct MotionState* source;
+    u8 pad74[0x14];
+} MotionState;
 
 typedef float Matrix34[3][4];
 
-extern Globals lbl_8063C6B8;
-extern const u32 lbl_8023B814[3];
+extern const Vec3 lbl_8023B814;
 extern const float lbl_806514C4;
 
-extern void fn_801795A4(Vec3*, Vec3*, Vec3*);
-extern void fn_80211380(Matrix34, Vec3*, float);
-extern void fn_80211710(Matrix34, Vec3*, Vec3*);
+extern void fn_801795A4(Vec3* from, Vec3* to, Vec3* difference);
+extern void fn_80211380(Matrix34 transform, Vec3* axis, float angle);
+extern void fn_80211710(Matrix34 transform, Vec3* in, Vec3* out);
+
+static MotionState first[12] = {0};
+static MotionState second[12] = {0};
+static MotionState current_first = {0};
 
 void fn_801FA66C(int index, int save, float amount)
 {
     Vec3 difference;
-    Vec3 axis;
+    Vec3 axis = lbl_8023B814;
     Matrix34 transform;
-    Globals* data = &lbl_8063C6B8;
-    int offset = index * sizeof(ObjectState);
-    ObjectState* target = data->second;
-    target = (ObjectState*)((u8*)target + offset);
+    MotionState* target = &second[index];
 
-    *(u32*)&axis.x = lbl_8023B814[0];
-    *(u32*)&axis.y = lbl_8023B814[1];
-    *(u32*)&axis.z = lbl_8023B814[2];
-
-    fn_801795A4((Vec3*)((u8*)data->first + offset), &target->origin, &difference);
+    fn_801795A4(&first[index].position, &target->position, &difference);
     fn_80211380(transform, &difference, lbl_806514C4 * amount);
-    fn_80211710(transform, &axis, &target->position);
+    fn_80211710(transform, &axis, &target->vector);
 
     if (save != 0) {
-        ObjectState* saved = &data->third;
-        saved->position = target->position;
+        current_first.vector = target->vector;
     }
 }

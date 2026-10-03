@@ -4,6 +4,18 @@ typedef struct Vec3 {
     float z;
 } Vec3;
 
+typedef struct AiState {
+    unsigned char pad00[0x3C];
+    unsigned short flags;
+    unsigned char pad3E[3];
+    signed char value41;
+} AiState;
+
+typedef struct AiInfo {
+    unsigned char pad00[0xC];
+    AiState *state;
+} AiInfo;
+
 extern unsigned int lbl_8064D5A8;
 extern const float lbl_8064E920;
 extern const float lbl_8064E93C;
@@ -12,28 +24,26 @@ extern const float lbl_8064E944;
 extern const float lbl_8064E948;
 extern const float lbl_8064E94C;
 
-extern void* fn_80201B94();
-extern void *fn_80201B8C();
-extern void *fn_80201BC8();
+extern void *fn_80201B94(void *object);
+extern AiInfo *fn_80201B8C(void *object);
+extern void *fn_80201BC8(void *object);
 extern void *fn_80201C48(void *object);
-extern void *fn_80201814();
+extern void *fn_80201814(void *handle);
 extern void fn_80201D2C(void *, int);
 extern void fn_80201D14(void *, int);
 extern int fn_80079008(void *object, void *target);
 extern int fn_8007930C(void *object, void *target, void *extra);
 extern void fn_800359A0(void *object, int value);
-extern void fn_8011F114();
+extern void fn_8011F114(Vec3 *position, void *object);
 extern unsigned int fn_80178E94(Vec3 *first, Vec3 *second);
 extern int fn_800CA7D4(void *owner, void *object, void *argument,
                       void *target, int type, int enabled);
-extern unsigned long long fn_8020123C();
+extern unsigned long long fn_8020123C(int event, void *first, void *second, int value);
 extern int fn_8003E0E4(void *object, Vec3 *position, float first,
                       float second, int enabled);
-extern int fn_80204434(void *object, Vec3 *position, float *result,
+extern unsigned char fn_80204434(void *object, Vec3 *position, float *result,
                       float value);
-#define FN_80128E30_RETURN void*
-#define FN_80128E30_PARAMETERS void*
-extern FN_80128E30_RETURN fn_80128E30(FN_80128E30_PARAMETERS);
+extern void *fn_80128E30(void *object);
 extern void fn_80128C3C(void *object, float value);
 extern int fn_8012AFC4(void *object);
 extern void fn_8012B344(void*);
@@ -53,10 +63,10 @@ int fn_80079D24(void *object, void *target, void *owner, void *argument,
     Vec3 target_position;
     Vec3 alternate_position;
     Vec3 object_position;
+    AiState *state;
     int result = 0;
     void *handle = fn_80201B94(object);
-    void *info = fn_80201B8C(object);
-    void *state;
+    AiInfo *info = fn_80201B8C(object);
     int target_state;
     void *linked;
     void *linked_position;
@@ -68,7 +78,7 @@ int fn_80079D24(void *object, void *target, void *owner, void *argument,
     float side;
 
     fn_8011F114(&object_position, target);
-    state = *(void **)((char *)info + 0xC);
+    state = info->state;
     target_state = fn_80079008(object, target);
     if ((lbl_8064D5A8 & 0xF) == 0)
         fn_800359A0(object, 0);
@@ -78,7 +88,7 @@ int fn_80079D24(void *object, void *target, void *owner, void *argument,
 
     if (fn_800CA7D4(owner, object, argument, target, 0x19, 1)) {
         if (target_state != 0) {
-            *(unsigned short *)((char *)state + 0x3C) |= 2;
+            state->flags |= 2;
             fn_8020123C(0xE1, owner, owner, 0);
             result = 1;
             goto done;
@@ -88,17 +98,16 @@ int fn_80079D24(void *object, void *target, void *owner, void *argument,
     }
 
     if (linked != 0 && linked_position != 0) {
-
         fn_8011F114(&target_position, linked_position);
         distance = fn_80178E94(&object_position, &target_position);
         valid = fn_8003E0E4(object, &target_position, lbl_8064E93C,
                            lbl_8064E93C, 1);
-        visible = (unsigned char)fn_80204434(target, &target_position, &side, lbl_8064E940);
+        visible = fn_80204434(target, &target_position, &side, lbl_8064E940);
         vertical = object_position.z - target_position.z;
         if (vertical < lbl_8064E920)
             vertical = -vertical;
 
-        if (*(signed char *)((char *)state + 0x41) != 0)
+        if (state->value41 != 0)
             speed = lbl_8064E944;
         else if (target_state != 0)
             speed = lbl_8064E948;
@@ -131,7 +140,7 @@ int fn_80079D24(void *object, void *target, void *owner, void *argument,
                 } else {
                     fn_8012976C(target, 0x7A, 0x31, &target_position, speed);
                 }
-            } else if ((unsigned char)fn_80204434(target, &target_position, 0, lbl_8064E940)) {
+            } else if (fn_80204434(target, &target_position, 0, lbl_8064E940)) {
                 fn_8020123C(0xE1, owner, owner, 0);
                 result = 1;
                 goto done;

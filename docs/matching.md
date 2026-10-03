@@ -1182,3 +1182,148 @@ the other cases by one register (38 lines in every declaration order), and
 block-scoped vectors change the stack layout (47 lines or more).
 
 `fn_801941EC` needed only GC/1.3.2 (GC/1.3 is 16 lines off).
+
+## Every object in a file-local pool is its own zero-initialized static
+
+Five more units use the zero-initialized static form described under
+"Static-pool order, parameter copies, and call-site types", with GC/1.3.2 and
+`externalize_game_static_data_pool`. `fn_801F85A4`, `fn_801FA66C` and
+`fn_801F7234` declare the motion tables at `lbl_8063C6B8` as `fn_801FA410` and
+`fn_801FABA4` do, `fn_801FD318` declares `pointers[12]`, `entries[12][124]`
+and `tail` (`lbl_8063EA00`), and `fn_801E5BD8` declares `fonts[10]`,
+`indices[10]` and `descriptors[10]` (`lbl_806333C8`). Under GC/1.3,
+`fn_801F85A4`, `fn_801FA66C`, `fn_801FD318` and `fn_801E5BD8` reach
+69.80645%, 74.6%, 67.98077% and 92.13158%, and `fn_801F7234` without
+`-use_lmw_stmw on` reaches 74.13846%.
+
+The form also applies where the data looks like an array. `fn_80130720` reads
+ten 12-byte points from `lbl_805AADC8`, and retail forms each point's address
+with `addi rX, base, offset` and loads only the first coordinate from the
+base. Ten zero-initialized `Vec3` statics, `point0` to `point9`, give that
+code under GC/1.3.2, and the same rule renames them to `lbl_805AADC8`. One
+`points[10]` array reaches about 82.1%.
+
+## A pool with non-zero data needs a checked rename
+
+`externalize_game_static_data_pool` accepts only all-zero data. `fn_80052670`
+addresses the unit's whole `.data` block from one base, and that block holds
+values: 65 `TypeDescriptor` entries, 173 40-byte `TransitionRecord` entries,
+three `Template32` entries that hold `fn_800537CC`, and two format strings.
+The unit declares them as statics in address order with the retail values,
+the strings as literals, under GC/1.3.2; under GC/1.3 it reaches 74.560974%.
+A new rule, `externalize_game_80052670_data`, checks each object against the
+DOL with `tools/externalize_elf_symbol.py --require-relocation-match`, renames
+`types` to `lbl_802417D0` and removes the unit's `.data`.
+
+## `-O2` keeps a store that retail never reads
+
+Retail `fn_80130720` stores colour 7 to a stack slot it never reads. The
+source assigns `second_color = second_source = lbl_802FC5BC[7];` with
+`second_source` declared last, and the unit uses GC/1.3.2 with `-O2`, which
+keeps the store. Without `second_source`, or at `-O4,p`, which removes the
+store, it reaches 99.177635%; GC/1.3 at `-O4,p` reaches 89.802635%.
+
+## A call result moved through `r0` comes from its own local
+
+Where retail moves a call result through `r0` before passing it on
+(`mr r0, r3; mr r3, x; mr r4, r0`), the source stores the result in its own
+local first; with the call nested in the argument list, the result is passed
+directly. `fn_801D2440` keeps `model`, `link`, `other_data`, `own_model` and
+`runtime` for this, and nesting the first of these calls reaches 99.855965%.
+Where retail passes the result directly, the call stays nested: the six
+identical cases of `fn_801E2408` pass `(u8)fn_801CEB2C(owner)` and
+`fn_801D3A34(owner, 0x35)` straight to `fn_8014E9B0`, and holding the results
+in named locals reaches 94.925%.
+
+## Values retail keeps apart need separate locals
+
+Case 100 of `fn_801D2440` keeps the tested `fn_80157888` result in `flag` and
+the 1 or 0 passed to `fn_80027948` in `owned`; one variable for both reaches
+99.54047%.
+
+## A caller can need `int` for a callee's `s16` parameter
+
+`fn_801A7BA0` computes the row as `s16 draw_y = y + i * 15;` and passes
+`x + 230` and `x + 330` directly to `fn_801E5448`. It declares `fn_801E5448`
+with `int y`. With `s16 y`, as the definition has it, `x` sits in `r23`
+instead of retail's `r31` and the function reaches 97.5%.
+
+## Declared parameter and return types set the conversions
+
+`fn_801A3DF8` declares its callees as their other callers do. With `int` for
+the last three parameters of `fn_8017D700` it reaches 98.10403%, with `int`
+for the index of `fn_80180430` 99.32886%, and with `int` for the last
+parameter of `fn_8018E230` 99.95973%. `fn_8006749C` returns `u16`, and the
+flags are built in two steps as in `fn_8008CAD4`; in one step it reaches
+99.32886%.
+
+`fn_801DC778` declares `fn_801CEB2C` to return `s16`, as `fn_801D324C` does,
+and keeps the count in an `s16`; an `int` return and count with a `(short)`
+cast reaches 98.93007%. In `fn_801D2440`, `fn_80157B3C` and `fn_80157B60`
+take `int`, with `(u8)` casts at the calls; with `u8` parameters it reaches
+99.41701%. `fn_801E7CBC` takes its fifth parameter as a by-value `Color`; a
+`u32 *` parameter reaches 92.80597%.
+
+## A local structure's size shows in the frame
+
+The query in `fn_801D2440` is the 0x38-byte `EventRecord` that `fn_801D1C34`
+fills. With 0x40 bytes the frame grows from 160 to 176 bytes (99.99177%).
+
+## A typed copy of the parameter keeps the count in `r31`
+
+`fn_801DC778` copies its `void *` parameter into `GameObject *object`, as
+`fn_801D324C` does. With `GameObject *` as the parameter, the count moves from
+`r31` to `r30` (98.95979%).
+
+## Small helpers are static inlines
+
+`fn_801BA2A4` and `fn_801BEC38` are MusyX `sndStreamAllocEx` and
+`mcmdSendMessage`, written with the MusyX names and helpers:
+`GeneratePublicID`, `CheckOutputMode` and `SetupVolumeAndPan` in the first,
+`varGet32`, `macPostMessage` and `ExecuteTrap` in the second, all static
+inlines. `varGet32` returns a local set in `if`/`else`; with `?:` the frame
+grows from 48 to 56 bytes (99.96454%). `is_allowed` in `fn_801E2408` is a
+`static inline`; as a plain `static` the function still matches, but the
+object also contains a separate `is_allowed`.
+
+## Index the array at each use, not through a slot pointer
+
+`fn_801BA2A4` keeps `streamInfo[64]` as a file static, renamed to
+`lbl_8061AE48` by the rule `fn_801BB1A0` uses, and writes every access as
+`streamInfo[i]`. With a `slot = &streamInfo[i]` pointer for the accesses after
+the search loop it reaches about 30.4%.
+
+## Code that looks redundant stays
+
+`fn_8015E1A8` reads the stream state through `extern volatile StreamState`,
+as `fn_8015DF60`, `fn_8015DD94` and `fn_8015B628` do; without `volatile` it
+reaches 67.82199%. Retail reads `requested_id` once without using the value,
+written as `(void)state->requested_id;` (99.44502% without it), and the two
+state tests read `produced` and `cursor` directly from `lbl_805BB1E0`
+(98.47644% through `state`). The bank toggle is
+`state->bank = state->bank ^ 1;`, and `^=` reaches 98.82199%. `fn_80079D24`
+keeps its repeated `speed` branch (98.644066% merged), and `fn_800680C0`
+writes its two stripped assertions as `if (...) { asm { nop } }`, as
+`fn_8006845C` does (79.16071% without the `nop`).
+
+## `goto done` exits, not early returns
+
+`fn_8015E1A8` and `fn_80079D24` leave through `goto done`. With early returns
+they reach 98.874344% and 96.34915%.
+
+## Colour words are `Color` initializers
+
+`fn_80196578` initializes two local colours, `{255, 0, 0, 180}` and
+`{255, 0, 0, 40}`, and copies them into the object; with `u32` colour fields
+and the words as constants it reaches 68.16327%. It stores `type` before
+`mode` (99.61224% the other way).
+
+## Five more units need `-use_lmw_stmw on`
+
+`fn_801F7234`, `fn_801A7BA0`, `fn_801A3DF8`, `fn_80079D24` and `fn_8015E1A8`
+use `-use_lmw_stmw on`; without it they reach 97.53846%, 94.583336%,
+98.92618%, 98.91525% and 96.15183%.
+
+The nineteen functions above report 100% under both the default and
+`function_reloc_diffs=name_address` objdiff settings, and the whole-DOL SHA-1
+remains `ea24b6af954876ce072562ff39cdb4c81d32be1f`.

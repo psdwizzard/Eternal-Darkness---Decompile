@@ -1,53 +1,43 @@
 typedef unsigned char u8;
+typedef signed char s8;
 typedef unsigned int u32;
 
-typedef struct TextSlots {
-    void* fonts[10];
-    u32 indices[10];
-    u8* strings[10];
-} TextSlots;
+typedef struct FontDescriptor {
+    u8 reserved[4];
+    s8 height;
+    u8 widths[256];
+} FontDescriptor;
 
-extern TextSlots lbl_806333C8;
 extern void* lbl_8064D568;
 extern u32 lbl_8064D584;
 
-int fn_801E5BD8(u8* string)
+static void* fonts[10] = {0};
+static u32 indices[10] = {0};
+static FontDescriptor* descriptors[10] = {0};
+
+int fn_801E5BD8(FontDescriptor* descriptor)
 {
     u32 index = lbl_8064D584;
-    TextSlots* slots = &lbl_806333C8;
 
     if (index < 10) {
-        if (string != 0) {
-            slots->strings[index] = string;
-            slots->indices[index] = index;
-            slots->fonts[index] = lbl_8064D568;
+        if (descriptor != 0) {
+            descriptors[index] = descriptor;
+            indices[index] = index;
+            fonts[index] = lbl_8064D568;
             if (index == 2) {
-                u8* p = slots->strings[2];
-                p[0x46] -= 5;
-                p = slots->strings[2];
-                p[0x48] -= 2;
-                p = slots->strings[2];
-                p[0x4A] -= 3;
-                p = slots->strings[2];
-                p[0x4D] -= 6;
-                p = slots->strings[2];
-                p[0x50] -= 6;
-                p = slots->strings[2];
-                p[0x51] -= 8;
-                p = slots->strings[2];
-                p[0x52] -= 6;
-                p = slots->strings[2];
-                p[0x55] -= 7;
-                p = slots->strings[2];
-                p[0x56] -= 5;
-                p = slots->strings[2];
-                p[0x57] -= 6;
-                p = slots->strings[2];
-                p[0x59] -= 7;
-                p = slots->strings[2];
-                p[0x5C] -= 4;
-                p = slots->strings[2];
-                p[0x5E] -= 8;
+                descriptors[2]->widths['A'] -= 5;
+                descriptors[2]->widths['C'] -= 2;
+                descriptors[2]->widths['E'] -= 3;
+                descriptors[2]->widths['H'] -= 6;
+                descriptors[2]->widths['K'] -= 6;
+                descriptors[2]->widths['L'] -= 8;
+                descriptors[2]->widths['M'] -= 6;
+                descriptors[2]->widths['P'] -= 7;
+                descriptors[2]->widths['Q'] -= 5;
+                descriptors[2]->widths['R'] -= 6;
+                descriptors[2]->widths['T'] -= 7;
+                descriptors[2]->widths['W'] -= 4;
+                descriptors[2]->widths['Y'] -= 8;
             }
         }
         lbl_8064D584++;

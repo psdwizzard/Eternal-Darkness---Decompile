@@ -1,29 +1,29 @@
+typedef unsigned char u8;
+
 typedef struct Vec3 {
     float x;
     float y;
     float z;
 } Vec3;
 
-typedef struct State {
+typedef struct MotionState {
     Vec3 position;
-    unsigned char pad0c[0x28];
+    u8 pad0C[0x24];
+    float value;
     float field_34;
-    unsigned char pad38[8];
+    u8 pad38[8];
     int field_40;
-    unsigned char pad44[4];
+    u8 pad44[4];
     Vec3 vector;
-    float field_54;
-    unsigned char pad58[0x10];
-    void* field_68;
-    void (*callback)(struct State*);
-    void* field_70;
-    unsigned char pad74[0x14];
-} State;
+    u8 pad54[0x18];
+    void (*callback)(struct MotionState*);
+    struct MotionState* source;
+    u8 pad74[0x14];
+} MotionState;
 
-extern unsigned char lbl_8063C6B8[];
-extern float lbl_80651478;
+extern const float lbl_80651478;
 
-extern void fn_801FA354(State*);
+extern void fn_801FA354(MotionState*);
 extern void fn_801F692C(Vec3);
 extern void fn_801F6998(Vec3);
 extern void fn_801F69E0(float);
@@ -31,87 +31,59 @@ extern void fn_801F6950(Vec3);
 extern void fn_801F69BC(Vec3);
 extern void fn_80211AAC(Vec3*, Vec3*);
 
-/* Form the special-state addresses in the 32-bit address domain. */
-#define SPECIAL_STATE(base, index) \
-    ((State*)((unsigned int)(base) + (index) * sizeof(State)))
+static MotionState first[12] = {0};
+static MotionState second[12] = {0};
+static MotionState current_first = {0};
+static MotionState current_second = {0};
 
-#pragma use_lmw_stmw on
 void fn_801F7234(int flags)
 {
-    State* base = (State*)lbl_8063C6B8;
-    State* first;
-    State* second;
+    MotionState* a;
+    MotionState* b;
     int enabled = flags & 1;
     int i;
+    Vec3 delta;
 
     if (enabled) {
-        {
-            State* state = SPECIAL_STATE(base, 24);
-            if (state->callback != 0) {
-                state->callback(state);
-            }
+        if (current_first.callback != 0) {
+            current_first.callback(&current_first);
         }
-        {
-            State* state = SPECIAL_STATE(base, 25);
-            if (state->callback != 0) {
-                state->callback(state);
-            }
+        if (current_second.callback != 0) {
+            current_second.callback(&current_second);
         }
     }
-
     if (flags & 2) {
-        first = &base[0];
-        second = &base[12];
-
-        for (i = 0; i < 12; i++, first++, second++) {
-            if (first->callback != 0) {
-                first->callback(first);
+        a = first;
+        b = second;
+        for (i = 0; i < 12; i++, a++, b++) {
+            if (a->callback != 0) {
+                a->callback(a);
             }
-            if (second->callback != 0) {
-                second->callback(second);
+            if (b->callback != 0) {
+                b->callback(b);
             }
         }
     }
-
     if (enabled) {
-        {
-            State* state = SPECIAL_STATE(base, 24);
-            if (state->field_40 != 0) {
-                fn_801FA354(state);
-            }
+        if (current_first.field_40 != 0) {
+            fn_801FA354(&current_first);
         }
-        {
-            State* state = SPECIAL_STATE(base, 25);
-            if (state->field_40 != 0) {
-                fn_801FA354(state);
-            }
+        if (current_second.field_40 != 0) {
+            fn_801FA354(&current_second);
         }
     }
-
-    {
-        State* first_special = SPECIAL_STATE(base, 24);
-        State* second_special = SPECIAL_STATE(base, 25);
-        if (first_special->position.x == second_special->position.x &&
-            first_special->position.y == second_special->position.y &&
-            first_special->position.z == second_special->position.z) {
-            second_special->position.x += lbl_80651478;
-        }
+    if (current_first.position.x == current_second.position.x &&
+        current_first.position.y == current_second.position.y &&
+        current_first.position.z == current_second.position.z) {
+        current_second.position.x += lbl_80651478;
     }
-
-    fn_801F692C(SPECIAL_STATE(base, 24)->position);
-    fn_801F6998(SPECIAL_STATE(base, 25)->position);
-    fn_801F69E0(SPECIAL_STATE(base, 24)->field_34);
-    fn_801F6950(SPECIAL_STATE(base, 24)->vector);
-
-    {
-        Vec3 delta;
-        delta.x = SPECIAL_STATE(base, 25)->position.x - SPECIAL_STATE(base, 24)->position.x;
-        delta.y = SPECIAL_STATE(base, 25)->position.y - SPECIAL_STATE(base, 24)->position.y;
-        delta.z = SPECIAL_STATE(base, 25)->position.z - SPECIAL_STATE(base, 24)->position.z;
-        fn_80211AAC(&delta, &delta);
-        fn_801F69BC(delta);
-    }
+    fn_801F692C(current_first.position);
+    fn_801F6998(current_second.position);
+    fn_801F69E0(current_first.field_34);
+    fn_801F6950(current_first.vector);
+    delta.x = current_second.position.x - current_first.position.x;
+    delta.y = current_second.position.y - current_first.position.y;
+    delta.z = current_second.position.z - current_first.position.z;
+    fn_80211AAC(&delta, &delta);
+    fn_801F69BC(delta);
 }
-#pragma use_lmw_stmw reset
-
-#undef SPECIAL_STATE
