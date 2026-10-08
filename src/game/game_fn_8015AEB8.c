@@ -1,42 +1,101 @@
 typedef unsigned char u8;
+typedef unsigned short u16;
 typedef unsigned int u32;
+typedef void* OSMessage;
+typedef struct OSMessageQueue { u8 data[0x20]; } OSMessageQueue;
+typedef struct OSThread { double data[0x310 / 8]; } OSThread;
+typedef struct TaskState { u8 pad0[0x2060]; OSMessageQueue* volatile queues[4]; u8 pad2070[0x30]; } TaskState;
 
-extern u8 lbl_805B6E00[];
-extern u32 lbl_8064BA28[2];
-extern int lbl_8064D120, lbl_8064D14C, lbl_8064D150, lbl_8064D154;
-extern int lbl_8064D158, lbl_8064D15C, lbl_8064D180, lbl_8064D184;
-extern int lbl_8064D18C, lbl_8064D190, lbl_8064D198;
+extern volatile u32 lbl_8064BA28[2];
+extern int lbl_8064D120, lbl_8064D150, lbl_8064D154;
+extern void (*lbl_8064D14C)(int, int);
+extern u32* lbl_8064D158;
+extern int lbl_8064D15C, lbl_8064D180, lbl_8064D184;
+extern int lbl_8064D18C, lbl_8064D198;
+extern u32 lbl_8064D190;
 
-extern void fn_8015AC74(int);
-extern void fn_8015AC84(int);
+extern int fn_8015AC74(int);
+extern int fn_8015AC84(int);
 extern void fn_80158794(void);
 extern int fn_800460FC(void);
-extern int fn_801E78DC(int);
-extern void fn_8021AAA0(void*, int);
+extern void* fn_801E78DC(u32);
+extern u32 fn_8021AAA0(u32*, u32);
 extern void fn_8021B6C8(void);
-extern void fn_8020D1F0(void*, void*, int);
-extern void fn_8020F84C(void*, void*, void*, void*, int, int, int);
-extern void fn_8015D1C8(void);
+extern void fn_8020D1F0(OSMessageQueue*, OSMessage*, int);
+extern int fn_8020F84C(void*, void*, void*, void*, u32, int, u16);
+extern void fn_8015D1C8(void*);
 extern void fn_8015A340(void);
 extern void fn_8015B800(void);
 extern void fn_800BD94C(void);
-extern void fn_801E7944(int);
+extern void fn_801E7944(u32*);
 extern void fn_801599BC(int, int);
 extern void fn_8015DD48(void);
 extern void fn_8015C918(void);
 extern void fn_8013816C(void);
 extern void fn_8015E794(void);
-extern void fn_8020FC0C(void*);
+extern int fn_8020FC0C(void*);
 
-void fn_8015AEB8(int value, int allocation, int flags)
+static u8 unknown_00000[0x1FC] = {0};
+static OSMessageQueue queue3 = {0};
+static u8 unknown_0021C[0x2C] = {0};
+static OSMessageQueue queue4 = {0};
+static OSMessageQueue queue1 = {0};
+static u8 unknown_00288[0x18] = {0};
+static TaskState states[2] = {0};
+static u8 unknown_043E0[0x20060] = {0};
+static OSMessageQueue queue9 = {0};
+static OSMessageQueue queue0 = {0};
+static u8 unknown_24480[0x7380] = {0};
+static OSMessageQueue queue5 = {0};
+static u8 unknown_2B820[0x13C] = {0};
+static OSMessage messages0[16] = {0};
+static OSMessage messages1[16] = {0};
+static OSMessageQueue queue2 = {0};
+static OSMessage messages2[16] = {0};
+static OSMessage messages3[16] = {0};
+static OSMessage messages4[16] = {0};
+static OSMessage messages5[16] = {0};
+static OSMessageQueue queue6 = {0};
+static OSMessage messages6[16] = {0};
+static OSMessageQueue queue7 = {0};
+static OSMessage messages7[16] = {0};
+static OSMessageQueue queue8 = {0};
+static OSMessage messages8[16] = {0};
+static OSMessage messages9[16] = {0};
+static OSMessageQueue queue10 = {0};
+static OSMessage messages10[16] = {0};
+static OSMessageQueue queue11 = {0};
+static OSMessage messages11[16] = {0};
+static OSMessageQueue queue12 = {0};
+static OSMessage messages12[16] = {0};
+static OSMessageQueue queue13 = {0};
+static OSMessage messages13[16] = {0};
+static OSMessageQueue queue14 = {0};
+static OSMessage messages14[16] = {0};
+static OSMessage task_messages_a[2][16] = {0};
+static OSMessageQueue task_queues_a[2] = {0};
+static OSMessage task_messages_b[2][16] = {0};
+static OSMessageQueue task_queues_b[2] = {0};
+static OSMessage task_messages_c[2][16] = {0};
+static OSMessageQueue task_queues_c[2] = {0};
+static OSMessage task_messages_d[2][16] = {0};
+static OSMessageQueue task_queues_d[2] = {0};
+static u8 task_stacks[2][0x2000] = {0};
+static OSThread task_threads[2] = {0};
+static OSThread thread0 = {0};
+static u8 stack0[0x2000] = {0};
+static OSThread thread1 = {0};
+static u8 stack1[0x2000] = {0};
+static OSThread thread2 = {0};
+static u8 stack2[0x2000] = {0};
+
+void fn_8015AEB8(void (*callback)(int, int), int allocation, int flags)
 {
     int count;
     int i;
-    u8* base = lbl_805B6E00;
-    u8* base2 = base + 0x20000;
-    u8* base3 = base + 0x30000;
+    int j;
 
-    lbl_8064D14C = value;
+    lbl_8064D14C = callback;
     lbl_8064D150 = 0;
     lbl_8064D154 = 0;
     lbl_8064D15C = 0;
@@ -56,56 +115,37 @@ void fn_8015AEB8(int value, int allocation, int flags)
         for (i = 0; i < count; i++) {
         }
 
-        fn_8020D1F0(base2 + 0x4460, base3 - 0x46A4, 0x10);
-        fn_8020D1F0(base + 0x268, base3 - 0x4664, 0x10);
-        fn_8020D1F0(base3 - 0x4624, base3 - 0x4604, 0x10);
-        fn_8020D1F0(base + 0x1FC, base3 - 0x45C4, 0x10);
-        fn_8020D1F0(base + 0x248, base3 - 0x4584, 0x10);
-        fn_8020D1F0(base3 - 0x4800, base3 - 0x4544, 0x10);
-        fn_8020D1F0(base3 - 0x4504, base3 - 0x44E4, 0x10);
-        fn_8020D1F0(base3 - 0x44A4, base3 - 0x4484, 0x10);
-        fn_8020D1F0(base3 - 0x4444, base3 - 0x4424, 0x10);
-        fn_8020D1F0(base2 + 0x4440, base3 - 0x43E4, 0x10);
-        fn_8020D1F0(base3 - 0x43A4, base3 - 0x4384, 0x10);
-        fn_8020D1F0(base3 - 0x4344, base3 - 0x4324, 0x10);
-        fn_8020D1F0(base3 - 0x42E4, base3 - 0x42C4, 0x10);
-        fn_8020D1F0(base3 - 0x4284, base3 - 0x4264, 0x10);
-        fn_8020D1F0(base3 - 0x4224, base3 - 0x4204, 0x10);
+        fn_8020D1F0(&queue0, messages0, 0x10);
+        fn_8020D1F0(&queue1, messages1, 0x10);
+        fn_8020D1F0(&queue2, messages2, 0x10);
+        fn_8020D1F0(&queue3, messages3, 0x10);
+        fn_8020D1F0(&queue4, messages4, 0x10);
+        fn_8020D1F0(&queue5, messages5, 0x10);
+        fn_8020D1F0(&queue6, messages6, 0x10);
+        fn_8020D1F0(&queue7, messages7, 0x10);
+        fn_8020D1F0(&queue8, messages8, 0x10);
+        fn_8020D1F0(&queue9, messages9, 0x10);
+        fn_8020D1F0(&queue10, messages10, 0x10);
+        fn_8020D1F0(&queue11, messages11, 0x10);
+        fn_8020D1F0(&queue12, messages12, 0x10);
+        fn_8020D1F0(&queue13, messages13, 0x10);
+        fn_8020D1F0(&queue14, messages14, 0x10);
 
-        {
-            u8* src0 = base3 - 0x41C4;
-            u8* dst0 = base3 - 0x4144;
-            u8* src1 = base3 - 0x4104;
-            u8* dst1 = base3 - 0x4084;
-            u8* src2 = base3 - 0x4044;
-            u8* dst2 = base3 - 0x3FC4;
-            u8* src3 = base3 - 0x3F84;
-            u8* dst3 = base3 - 0x3F04;
-            u8* state = base + 0x2A0;
-            u32* priority = lbl_8064BA28;
-            u8* buffer = base3 - 0x3EC4;
-            u8* object = base3 + 0x140;
-            for (i = 0; i < 2; i++) {
-                fn_8020D1F0(dst0, src0, 0x10);
-                fn_8020D1F0(dst1, src1, 0x10);
-                fn_8020D1F0(dst2, src2, 0x10);
-                fn_8020D1F0(dst3, src3, 0x10);
-                *(void**)(state + 0x2060) = dst0;
-                *(void**)(state + 0x2064) = dst1;
-                *(void**)(state + 0x2068) = dst2;
-                *(void**)(state + 0x206C) = dst3;
-                fn_8020F84C(object, fn_8015D1C8, state, buffer + 0x2000,
-                            0x2000, *priority, 1);
-                src0 += 0x40; dst0 += 0x20;
-                src1 += 0x40; dst1 += 0x20;
-                src2 += 0x40; dst2 += 0x20;
-                src3 += 0x40; dst3 += 0x20;
-                state += 0x20A0; priority++; buffer += 0x2000; object += 0x310;
-            }
+        for (i = 0; i < 2; i++) {
+            fn_8020D1F0(&task_queues_a[i], task_messages_a[i], 0x10);
+            fn_8020D1F0(&task_queues_b[i], task_messages_b[i], 0x10);
+            fn_8020D1F0(&task_queues_c[i], task_messages_c[i], 0x10);
+            fn_8020D1F0(&task_queues_d[i], task_messages_d[i], 0x10);
+            states[i].queues[0] = &task_queues_a[i];
+            states[i].queues[1] = &task_queues_b[i];
+            states[i].queues[2] = &task_queues_c[i];
+            states[i].queues[3] = &task_queues_d[i];
+            fn_8020F84C(&task_threads[i], fn_8015D1C8, &states[i],
+                        task_stacks[i] + 0x2000, 0x2000, lbl_8064BA28[i], 1);
         }
-        fn_8020F84C(base3 + 0x760, fn_8015A340, 0, base3 + 0x2A70, 0x2000, 0x1D, 1);
-        fn_8020F84C(base3 + 0x2A70, fn_8015B800, 0, base3 + 0x4D80, 0x2000, 0xA, 1);
-        fn_8020F84C(base3 + 0x4D80, fn_800BD94C, 0, base3 + 0x7090, 0x2000, 0x1F, 1);
+        fn_8020F84C(&thread0, fn_8015A340, 0, stack0 + 0x2000, 0x2000, 0x1D, 1);
+        fn_8020F84C(&thread1, fn_8015B800, 0, stack1 + 0x2000, 0x2000, 0xA, 1);
+        fn_8020F84C(&thread2, fn_800BD94C, 0, stack2 + 0x2000, 0x2000, 0x1F, 1);
     } else if ((flags & 2) == 0) {
         fn_801E7944(lbl_8064D158);
     }
@@ -116,16 +156,12 @@ void fn_8015AEB8(int value, int allocation, int flags)
     if (lbl_8064D120 == 0) {
         fn_8013816C();
         fn_8015E794();
-        fn_8020FC0C(base3 + 0x760);
-        fn_8020FC0C(base3 + 0x2A70);
-        {
-            u8* object = base3 + 0x140;
-            for (i = 0; i < 2; i++) {
-                fn_8020FC0C(object);
-                object += 0x310;
-            }
+        fn_8020FC0C(&thread0);
+        fn_8020FC0C(&thread1);
+        for (j = 0; j < 2; j++) {
+            fn_8020FC0C(&task_threads[j]);
         }
-        fn_8020FC0C(base3 + 0x4D80);
+        fn_8020FC0C(&thread2);
         lbl_8064D120 = 1;
     }
 }

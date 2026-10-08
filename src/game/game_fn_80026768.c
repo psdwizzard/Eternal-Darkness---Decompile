@@ -4,7 +4,6 @@ typedef short s16;
 typedef unsigned short u16;
 typedef int s32;
 typedef unsigned int u32;
-typedef u32* Color;
 typedef float f32;
 
 #pragma use_lmw_stmw on
@@ -24,6 +23,13 @@ typedef struct EffectState {
     u8 alpha;
 } EffectState;
 
+typedef struct GXColor {
+    u8 r;
+    u8 g;
+    u8 b;
+    u8 a;
+} GXColor;
+
 typedef struct ParticlePoint {
     s16 x;
     s16 y;
@@ -38,78 +44,80 @@ typedef union EdgeValues {
     s16 half[6];
 } EdgeValues;
 
-typedef struct EffectData {
-    char resource[0x50];
-    /* Three groups of five; flat arrays permit base + variant * 5 traversal. */
-    ParticlePoint point[15];
-    s16 delay[15];
-    u8 pad_AA[2];
-    s16 age[15];
-    u8 pad_CA[2];
-    u32 color[3];
-} EffectData;
+static u16 effect_resource[40] = {
+    0x0000, 0x0200, 0x01F0, 0x0200, 0x01F0, 0x0108, 0x0000, 0x0108,
+    0x0000, 0x0100, 0x01F0, 0x0100, 0x01F0, 0x0008, 0x0000, 0x0008,
+    0x0000, 0x016A, 0x0000, 0x016A, 0x0000, 0x016A, 0x0000, 0x016A,
+    0x0000, 0x016A, 0x0200, 0x016A, 0x0200, 0x00C0, 0x0000, 0x00C0,
+    0x0000, 0x016A, 0x0400, 0x016A, 0x0400, 0x0015, 0x0000, 0x0015,
+};
+static ParticlePoint particle_points[3][5] = {0};
+static s16 particle_delays[3][5] = {0};
+static s16 particle_ages[3][5] = {
+    {12, 12, 12, 12, 12},
+    {12, 12, 12, 12, 12},
+    {12, 12, 12, 12, 12},
+};
+static GXColor particle_colors[3] = {
+    {0xFF, 0x64, 0x64, 0xFF},
+    {0xC8, 0xFF, 0x80, 0xFF},
+    {0xAF, 0xAF, 0xFF, 0xFF},
+};
 
 extern const ColorValues lbl_80238C28;
 extern const EdgeValues lbl_80238C40;
-extern EffectData lbl_8023DEB0;
-extern u32 lbl_8064C2A8;
-extern void* lbl_8064CD7C;
+extern GXColor lbl_8064C2A8;
+extern u32 lbl_8064CD7C;
 extern s32 lbl_8064D5A8;
 extern u8 lbl_8064C6E8;
-extern const u32 lbl_8064DF88;
-extern const u32 lbl_8064DF8C;
-extern const f32 lbl_8064DF90;
-extern const f32 lbl_8064DF94;
-extern const f32 lbl_8064DF98;
-extern const f32 lbl_8064DF9C;
+extern const GXColor lbl_8064DF88;
+extern const GXColor lbl_8064DF8C;
 
 extern void fn_801F1034(void);
-extern void fn_801A852C(Color, int, int, u32);
-extern void fn_801A85D4(u32*, s32, s32, u32);
-extern void fn_801ECF50(s32);
-extern void fn_801A8D38(int);
-extern void fn_80226AB4(s32, s32, s32);
-extern void fn_80225F4C(s32, void*, s32);
+extern void fn_801A852C(GXColor*, int, u16, u32);
+extern void fn_801A85D4(GXColor*, u16, u16, u32);
+extern void fn_801ECF50(u32);
+extern void fn_80226AB4(s32, s32, u16);
+extern void fn_80225F4C(s32, void*, u8);
 extern void fn_80026740(void);
 extern void fn_80026754(s32, s32, s32);
-extern void fn_80026DAC(s32, s32);
+extern void fn_80026DAC(u16, u16);
 extern void fn_80026DBC(u32);
 extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
-extern s32 fn_801ED3F4(void*);
-extern void fn_801A8F08(s32, s32, s32, s32, s32, s32, void*);
+extern u32 fn_801ED3F4(u32);
+extern void fn_801A8F08(s16, s16, s16, s16, s16, u16, s32);
+
+static const s16 depth_near = -1;
+static const s16 depth_far = -30360;
 
 void fn_80026768(EffectState* state)
 {
-    EffectData* data = &lbl_8023DEB0;
     ColorValues colors;
     EdgeValues edge;
     u32 packed[6];
     u8 alpha;
     u8 depth_alpha;
     u32 packed_alpha;
-    s32 left;
     s16 quad_left;
     s16 quad_right;
+    s32 limit;
+    s32 i;
     s16 quad_depth;
     s32 x0;
     s32 x1;
-    s32 y0;
-    s32 y1;
     s32 bottom;
+    s32 y1;
+    s32 y0;
     s32 particle_origin;
     s32 particle_y_origin;
-    s32 texture;
+    s32 left;
+    s16 texture;
     s32 depth;
     s32 variant;
-    s32 i;
     ParticlePoint* point;
-    s16* age;
     s16* delay;
-    s32 limit;
-    u32 draw_color;
-    u32 particle_color;
-    u32* particle_colors;
+    GXColor draw_color;
+    GXColor particle_color;
 
     if (state == 0) {
         return;
@@ -119,51 +127,50 @@ void fn_80026768(EffectState* state)
     }
 
     if (state->mode != 0) {
-        alpha = (u8)(lbl_8064DF90 * alpha);
+        alpha = (u8)(0.85f * alpha);
     }
 
-    /* Narrow once before copying the color and edge tables. */
+
     packed_alpha = alpha;
     colors = lbl_80238C28;
     edge = lbl_80238C40;
 
     depth_alpha = state->mode != 0 ? state->alpha >> 2 : state->alpha;
-    texture = state->mode != 0 ? -1 : -30360;
+    texture = state->mode != 0 ? depth_near : depth_far;
     depth = depth_alpha | 0xFFFF0A00;
     variant = state->variant;
+
+    left = state->left + 6;
+    particle_origin =
+        (s32)(61.0f * state->scale + 29.0f + state->top);
+    x0 = (s32)(61.0f * state->y);
+    x1 = (s32)(61.0f * state->x);
     packed[0] = packed_alpha | 0x0A0A0A00;
     packed[1] = packed_alpha | 0x0A0A0A00;
     packed[2] = depth;
     packed[3] = depth;
     packed[4] = colors.words[variant * 2] | packed_alpha;
     packed[5] = colors.words[variant * 2 + 1] | packed_alpha;
-
-    x0 = (s32)(lbl_8064DF98 * state->y);
-    x1 = (s32)(lbl_8064DF98 * state->x);
-    left = state->left + 6;
-    /* Keep both fused operations: sharing a rounded product changes the edges. */
-    particle_origin =
-        (s32)(__fmadds(lbl_8064DF98, state->scale, lbl_8064DF94) + state->top);
     if (x0 < x1) {
         s32 swap = x0;
         x0 = x1;
         x1 = swap;
     }
-    y0 = (s32)(lbl_8064DF9C + (61 - x0) * state->scale);
-    y1 = (s32)(lbl_8064DF9C + (61 - x1) * state->scale);
-    bottom = (s32)__fmadds(lbl_8064DF98, state->scale, lbl_8064DF9C);
+    y0 = (s32)(30.0f + (61 - x0) * state->scale);
+    y1 = (s32)(30.0f + (61 - x1) * state->scale);
+    bottom = (s32)(61.0f * state->scale + 30.0f);
     edge.half[1] = y0;
     edge.half[2] = y0;
     edge.half[3] = y1;
     edge.half[4] = y1;
     edge.half[5] = bottom;
 
+    quad_left = left;
     fn_801F1034();
     draw_color = lbl_8064C2A8;
     fn_801A852C(&draw_color, -1, 0, 0);
-    fn_801ECF50(9);
 
-    quad_left = left;
+    fn_801ECF50(9);
     quad_right = quad_left + 19;
     quad_depth = texture;
     for (i = 0; i < 6; i += 2) {
@@ -172,86 +179,86 @@ void fn_80026768(EffectState* state)
         u32 top_color = packed[i];
         u32 bottom_color = packed[i + 1];
         fn_80226AB4(0x80, 5, 4);
-        fn_80026754(quad_left, top, quad_depth);
+        fn_80026754((s16)quad_left, top, quad_depth);
         fn_80026DBC(top_color);
         fn_80026DAC(0, 0);
-        fn_80026754(quad_right, top, quad_depth);
+        fn_80026754((s16)quad_right, top, quad_depth);
         fn_80026DBC(top_color);
         fn_80026DAC(0, 0);
-        fn_80026754(quad_right, bot, quad_depth);
+        fn_80026754((s16)quad_right, bot, quad_depth);
         fn_80026DBC(bottom_color);
         fn_80026DAC(0, 0);
-        fn_80026754(quad_left, bot, quad_depth);
+        fn_80026754((s16)quad_left, bot, quad_depth);
         fn_80026DBC(bottom_color);
         fn_80026DAC(0, 0);
         fn_80026740();
     }
 
-    fn_80225F4C(13, data->resource, 4);
-    particle_colors = data->color;
-    ((u8*)&particle_colors[variant])[3] = state->alpha;
-    particle_color = particle_colors[variant];
-    /* Retail snapshots this origin before setting the particle color. */
-    particle_y_origin = (s16)(state->top + edge.half[4]);
-    age = data->age;
-    age += variant * 5;
-    fn_801A852C(&particle_color, 0, 9, 0x80000000);
-    point = data->point;
-    delay = data->delay;
-    point += variant * 5;
-    delay += variant * 5;
-    limit = particle_origin - particle_y_origin;
-    for (i = 0; i < 5; i++, point++, delay++, age++) {
-        if (*age == 1) {
-            lbl_8064C6E8++;
-            if (lbl_8064C6E8 >= 20) {
-                lbl_8064C6E8 = 0;
+    fn_80225F4C(13, effect_resource, 4);
+    {
+        s32 j;
+        s16* age;
+        age = particle_ages[variant];
+        particle_y_origin = (s16)(edge.half[4] + state->top);
+        particle_colors[variant].a = state->alpha;
+        particle_color = particle_colors[variant];
+        fn_801A852C(&particle_color, 0, 9, 0x80000000);
+        point = particle_points[variant];
+        delay = particle_delays[variant];
+        for (j = 0; j < 5; j++) {
+            limit = particle_origin - particle_y_origin;
+            if (age[j] == 1) {
+                lbl_8064C6E8++;
+                if (lbl_8064C6E8 >= 20) {
+                    lbl_8064C6E8 = 0;
+                }
             }
-        }
-        if (*age >= 24) {
-            point->y = limit + (fn_800FBFB0() & 0x1F);
-            point->x = (fn_800FBFB0() & 7) + 2;
-            *delay = (fn_800FBFB0() & 3) + 5;
-            *age = 0;
-        }
-        if (point->y <= limit) {
-            fn_801A8F08((s16)(point->x + left),
-                        (s16)(point->y + particle_y_origin),
-                        (s16)(point->x + (*delay + left)),
-                        (s16)(point->y + (*delay + particle_y_origin)),
-                        texture, (u16)((*age >> 3) * 4), (void*)5);
-        }
-        if (point->y <= -3) {
-            (*age)++;
-        } else if (lbl_8064D5A8 % (10 - *delay) == 0) {
-            point->y--;
+            if (age[j] >= 24) {
+                point[j].y = limit + (fn_800FBFB0() & 0x1F);
+                point[j].x = (fn_800FBFB0() & 7) + 2;
+                delay[j] = (fn_800FBFB0() & 3) + 5;
+                age[j] = 0;
+            }
+            if (point[j].y <= limit) {
+                ParticlePoint* p = &point[j];
+                fn_801A8F08(p->x + left,
+                            p->y + particle_y_origin,
+                            p->x + delay[j] + left,
+                            p->y + delay[j] + particle_y_origin,
+                            texture, (age[j] >> 3) * 4, 5);
+            }
+            if (point[j].y <= -3) {
+                age[j]++;
+            } else if (lbl_8064D5A8 % (10 - delay[j]) == 0) {
+                point[j].y--;
+            }
         }
     }
 
-    fn_80225F4C(13, data->resource, 4);
+    fn_80225F4C(13, effect_resource, 4);
     if (state->mode != 0) {
-        u32 color = lbl_8064DF88;
-        u32 copy;
-        ((u8*)&color)[3] = state->alpha;
+        GXColor copy;
+        GXColor color = lbl_8064DF88;
+        color.a = state->alpha;
         copy = color;
         fn_801A852C(&copy, 0, 0, 0x80000000);
-        fn_801A8F08(state->left, state->top, (s16)(state->left + 31),
-                    (s16)(state->top + 30), -1, 0, (void*)5);
-        fn_801A8F08(state->left, (s16)(state->top + edge.half[5]),
-                    (s16)(state->left + 31),
-                    (s16)(state->top + edge.half[5] + 30), -1, 4, (void*)5);
+        fn_801A8F08(state->left, state->top, state->left + 31,
+                    state->top + 30, depth_near, 0, 5);
+        fn_801A8F08(state->left, state->top + edge.half[5],
+                    state->left + 31,
+                    state->top + edge.half[5] + 30, depth_near, 4, 5);
     } else {
-        u32 color;
-        u32 copy;
+        GXColor copy;
+        GXColor color;
         fn_801ED3F4(lbl_8064CD7C);
         color = lbl_8064DF8C;
-        ((u8*)&color)[3] = state->alpha;
+        color.a = state->alpha;
         copy = color;
         fn_801A85D4(&copy, 14, 15, 0x80000000);
-        fn_801A8F08(state->left, state->top, (s16)(state->left + 31),
-                    (s16)(state->top + 30), -30360, 0, (void*)5);
-        fn_801A8F08(state->left, (s16)(state->top + edge.half[5]),
-                    (s16)(state->left + 31),
-                    (s16)(state->top + edge.half[5] + 30), -30360, 4, (void*)5);
+        fn_801A8F08(state->left, state->top, state->left + 31,
+                    state->top + 30, depth_far, 0, 5);
+        fn_801A8F08(state->left, state->top + edge.half[5],
+                    state->left + 31,
+                    state->top + edge.half[5] + 30, depth_far, 4, 5);
     }
 }

@@ -60,7 +60,6 @@ typedef struct Object {
     RuntimeState* runtime;
 } Object;
 
-extern Vec3 lbl_805AADC8[];
 extern int lbl_8064CF30;
 extern int lbl_8064CF34;
 extern const float lbl_80650210;
@@ -76,6 +75,17 @@ extern void fn_8017A7D4(const Vec4*, const Vec4*, float, Vec4*);
 extern void fn_8012CDF0(u8*, int, FourWords, int);
 extern void fn_8012F474(void*, int, int, int, const Vec3*, Vec3*, Vec3*);
 
+static Vec3 point0 = {0};
+static Vec3 point1 = {0};
+static Vec3 point2 = {0};
+static Vec3 point3 = {0};
+static Vec3 point4 = {0};
+static Vec3 point5 = {0};
+static Vec3 point6 = {0};
+static Vec3 point7 = {0};
+static Vec3 point8 = {0};
+static Vec3 point9 = {0};
+
 int fn_8012F2DC(Object* object, const Vec3* target, int index,
                 void* query_object, int query_key)
 {
@@ -85,7 +95,6 @@ int fn_8012F2DC(Object* object, const Vec3* target, int index,
     Vec4 current;
     RotationValue blended;
     Entry* entry;
-    Vec3* debug_vectors = lbl_805AADC8;
 
     fn_80125ECC(object);
     entry = object->entries[index];
@@ -94,7 +103,7 @@ int fn_8012F2DC(Object* object, const Vec3* target, int index,
         fn_8011F6A4(query_object, query_key, 15, -1, &first, 1);
         fn_8011F6A4(query_object, query_key, 15, -1, &second, 4);
 
-        debug_vectors[9] = first.position;
+        point9 = first.position;
         lbl_8064CF34 = 1;
         if (fn_8012EF98(object, index, &first, &second, target, &desired,
                         lbl_80650210)) {
@@ -106,8 +115,7 @@ int fn_8012F2DC(Object* object, const Vec3* target, int index,
             fn_8012CDF0((u8*)object, index, blended.words, 0);
 
             if (lbl_8064CF30 != 0 && object->runtime->state > 0) {
-                fn_8012F474(object, 0, 15, query_key, &debug_vectors[0],
-                             &debug_vectors[1], &debug_vectors[2]);
+                fn_8012F474(object, 0, 15, query_key, &point0, &point1, &point2);
             }
         }
     }

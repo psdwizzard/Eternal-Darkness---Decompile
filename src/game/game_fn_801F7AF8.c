@@ -1,7 +1,4 @@
-extern unsigned char lbl_8023B7D8[];
-extern float lbl_80651460;
-extern float lbl_80651464;
-extern float lbl_8064D7A0;
+typedef unsigned char u8;
 
 typedef struct Vec3 {
     float x;
@@ -9,59 +6,54 @@ typedef struct Vec3 {
     float z;
 } Vec3;
 
-typedef struct ObjectState {
-    unsigned char prefix[0x550];
-    unsigned char fields[0x30];
-    float scalar;
-    unsigned char padding584[0x14];
+typedef struct MotionState {
+    Vec3 position;
+    u8 pad0C[0x24];
+    float value;
+    float field_34;
+    u8 pad38[0x10];
     Vec3 vector;
-    unsigned char padding5A4[0x20];
-    void* link;
-    unsigned char padding5C8[0x98];
-} ObjectState;
-extern ObjectState lbl_8063C6B8[];
+    u8 pad54[0x1C];
+    struct MotionState* source;
+    struct MotionState* next;
+    u8 pad78[0x10];
+} MotionState;
 
-extern void fn_801F7034(void*, int);
-extern void fn_801F8994(void*, const Vec3*, float);
+typedef struct Entry {
+    u8 data[0x14];
+} Entry;
+
+extern Vec3 lbl_8023B7D8;
+extern float lbl_80651460;
+extern float lbl_80651464;
+extern float lbl_8064D7A0;
+
+extern void fn_801F7034(MotionState*, int);
+extern void fn_801F8994(MotionState*, const Vec3*, float);
 extern void fn_801F8620(void);
-extern void fn_801FA410(int);
+extern int fn_801FA410(int);
 
-/* Preserve the group address as a distinct expression before field access. */
-static inline ObjectState* state_at(ObjectState* base, int index)
+static MotionState first[12] = {0};
+static MotionState second[12] = {0};
+static MotionState current_first = {0};
+static MotionState current_second = {0};
+static Entry entries[5] = {0};
+
+MotionState* fn_801F7AF8(void)
 {
-    return &base[index];
-}
+    Vec3 values = lbl_8023B7D8;
 
-/* NonMatching: 268 bytes and the retail 0x30 frame/four saved registers.
- * GC/1.3 still folds group/field offsets, rematerializes the global base,
- * and assigns the second/third pointers to r28/r30 instead of r30/r28. */
-void* fn_801F7AF8(void)
-{
-    ObjectState* base = lbl_8063C6B8;
-    unsigned char* first;
-    unsigned char* second;
-    unsigned char* third;
-    Vec3 values = *(Vec3*)lbl_8023B7D8;
-
-    first = state_at(base, 1)->fields;
-    fn_801F7034(first, 1);
-
-    second = state_at(base, 0)->fields;
-    fn_801F7034(second, 1);
-
-    state_at(base, 1)->link = second;
-    third = (unsigned char*)state_at(base, 2);
-    state_at(base, 0)->vector = values;
-    state_at(base, 1)->vector = values;
-
-    fn_801F8994(first, (Vec3*)third, *(float*)(third + 0x34));
-    fn_801F8994(second, (Vec3*)((unsigned char*)state_at(base, 2) + 0x88),
-                *(float*)(third + 0x34));
+    fn_801F7034(&second[10], 1);
+    fn_801F7034(&first[10], 1);
+    second[10].next = &first[10];
+    first[10].vector = values;
+    second[10].vector = values;
+    fn_801F8994(&second[10], &current_first.position, current_first.field_34);
+    fn_801F8994(&first[10], &current_second.position, current_first.field_34);
     fn_801F8620();
     fn_801FA410(10);
-
     lbl_8064D7A0 = lbl_80651464;
-    state_at(base, 1)->scalar = lbl_80651460;
-    state_at(base, 0)->scalar = lbl_80651460;
-    return first;
+    second[10].value = lbl_80651460;
+    first[10].value = lbl_80651460;
+    return &second[10];
 }

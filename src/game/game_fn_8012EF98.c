@@ -15,12 +15,22 @@ typedef struct Vec4 {
     float w;
 } Vec4;
 
+typedef struct TranslationDistance {
+    Vec3 translation;
+    float distance;
+} TranslationDistance;
+
 typedef struct QueryResult {
     u8 pad_0[8];
     Vec3 position;
     Vec3 direction;
     u8 pad_20[8];
 } QueryResult;
+
+typedef struct QueryVectors {
+    Vec3 position;
+    Vec3 direction;
+} QueryVectors;
 
 typedef struct EntryRecord {
     u8 pad_0[0xE];
@@ -32,7 +42,7 @@ typedef struct Entry {
     EntryRecord* record;
 } Entry;
 
-/* Internal view only; callers continue to pass their established object type. */
+
 typedef struct ObjectLayout {
     u8 pad_0[0x240];
     Entry** entries;
@@ -45,17 +55,7 @@ typedef struct Matrix34 {
     float m[3][4];
 } Matrix34;
 
-typedef union MatrixStorage {
-    MatrixArray array;
-    Matrix34 matrix;
-} MatrixStorage;
-
-typedef struct Sphere {
-    Vec3 center;
-    float radius;
-} Sphere;
-
-extern float lbl_805AADC8[][3];
+extern Vec3 lbl_805AADC8[10];
 extern int lbl_8064CF30;
 extern int lbl_8064CF34;
 
@@ -71,7 +71,7 @@ extern void fn_80211A48(const Vec3*, const Vec3*, Vec3*);
 extern void fn_80211B64(const Vec3*, const Vec3*, Vec3*);
 extern float fn_80211B44(const Vec3*, const Vec3*);
 extern float fn_800490E8(float, float);
-extern void fn_802110A8(void*, void*);
+extern u32 fn_802110A8(void*, void*);
 extern void fn_8017AD00(const Matrix34*, const Vec3*, Vec3*);
 extern void fn_8017A244(const Vec3*, Vec4*, float);
 
@@ -80,19 +80,19 @@ int fn_8012EF98(void* object_ptr, int index, QueryResult* first,
                 float limit)
 {
     ObjectLayout* object = (ObjectLayout*)object_ptr;
-    MatrixStorage matrix;
-    MatrixStorage inverse;
-    Vec3 point[2]; /* only [0] is used; retail reserves the full 24 bytes */
+    MatrixArray matrix;
+    Matrix34 inverse;
+    QueryVectors hit;
     Vec3 target_delta;
     Vec3 cross;
     Vec3 local_axis;
     Vec3 axis;
     Vec3 local_point;
     Vec3 direction;
-    Sphere sphere;
+    TranslationDistance frame;
     Vec3 debug_direction;
+    Vec3* debug_vectors = lbl_805AADC8;
     float intersection;
-    Vec3* debug_vectors = (Vec3*)lbl_805AADC8;
     float cross_length;
     float axis_dot;
     float angle;
@@ -103,27 +103,29 @@ int fn_8012EF98(void* object_ptr, int index, QueryResult* first,
     fn_80125ECC(object_ptr);
     entry = object->entries[index];
     if (entry != 0) {
-        fn_80127FD8(object_ptr, entry->record->transform_index, matrix.array);
-        sphere.center.x = matrix.array[0][3];
-        sphere.center.y = matrix.array[1][3];
-        sphere.center.z = matrix.array[2][3];
+        fn_80127FD8(object_ptr, entry->record->transform_index, matrix);
+        frame.translation.x = matrix[0][3];
+        frame.translation.y = matrix[1][3];
+        frame.translation.z = matrix[2][3];
 
-        fn_80211A6C(target, &sphere.center, &target_delta);
-        sphere.radius = fn_80211B08(&target_delta);
+        fn_80211A6C(target, &frame.translation, &target_delta);
+        frame.distance = fn_80211B08(&target_delta);
         fn_80211AAC(&target_delta, &target_delta);
         fn_80211AAC(&first->direction, &direction);
 
-        if (fn_8013DE44(&first->position, &direction, &sphere.center, sphere.radius,
+        if (fn_8013DE44(&first->position, &direction, &frame.translation, frame.distance,
                         &intersection, 0)) {
             result = 1;
             fn_80211A90(&direction, &direction, intersection);
-            fn_80211A48(&first->position, &direction, &point[0]);
-            fn_80211A6C(&point[0],&sphere.center, &local_point);
+            fn_80211A48(&first->position, &direction, &hit.position);
+            fn_80211A6C(&hit.position, &frame.translation, &local_point);
             fn_80211B64(&local_point, &target_delta, &cross);
             cross_length = fn_80211B08(&cross);
             fn_80211AAC(&cross, &cross);
-            axis_dot = fn_80211B44(&local_point, &target_delta);
-            angle = fn_800490E8(cross_length, axis_dot);
+            {
+                float local_dot = fn_80211B44(&local_point, &target_delta);
+                angle = fn_800490E8(cross_length, local_dot);
+            }
 
             if ((object->flags & 0x80000000U) != 0) {
                 fn_80211B64(&first->direction, &target_delta, &axis);
@@ -137,8 +139,8 @@ int fn_8012EF98(void* object_ptr, int index, QueryResult* first,
                 angle = limit + (angle - axis_angle);
             }
 
-            fn_802110A8(&matrix.matrix, &inverse.matrix);
-            fn_8017AD00(&inverse.matrix, &cross, &local_axis);
+            fn_802110A8(matrix, &inverse);
+            fn_8017AD00(&inverse, &cross, &local_axis);
             fn_8017A244(&local_axis, output, angle);
 
             if (lbl_8064CF30 != 0 && index == lbl_8064CF34) {
@@ -146,18 +148,18 @@ int fn_8012EF98(void* object_ptr, int index, QueryResult* first,
                 debug_vectors[3] = first->position;
                 debug_direction = first->direction;
                 fn_80211AAC(&debug_direction, &debug_direction);
-                fn_80211A90(&debug_direction, &debug_direction, sphere.radius);
+                fn_80211A90(&debug_direction, &debug_direction, frame.distance);
                 fn_80211A48(&debug_vectors[3], &debug_direction,
                              &debug_vectors[4]);
 
                 debug_vectors[5] = second->position;
                 debug_direction = second->direction;
                 fn_80211AAC(&debug_direction, &debug_direction);
-                fn_80211A90(&debug_direction, &debug_direction, sphere.radius);
+                fn_80211A90(&debug_direction, &debug_direction, frame.distance);
                 fn_80211A48(&debug_vectors[5], &debug_direction,
                              &debug_vectors[6]);
 
-                debug_vectors[7] = sphere.center;
+                debug_vectors[7] = frame.translation;
                 fn_80211A48(&debug_vectors[7], &local_point,
                              &debug_vectors[8]);
             }

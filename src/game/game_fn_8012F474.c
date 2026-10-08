@@ -28,7 +28,6 @@ extern void fn_80211AAC(const Vec3*, Vec3*);
 extern void fn_80211A90(const Vec3*, Vec3*, float);
 extern void fn_80211A48(const Vec3*, const Vec3*, Vec3*);
 
-/* The queried key pair is required to produce a valid result. */
 void fn_8012F474(void* object, int transform_index, int second, int first,
                  const Vec3* target, Vec3* start, Vec3* end)
 {
