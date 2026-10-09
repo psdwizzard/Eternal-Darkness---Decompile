@@ -1,48 +1,63 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
-typedef struct Link Link;
-struct Link { Link* next; Link* prev; void* object; };
-
-typedef struct Node Node;
-struct Node {
-    Node* next;
-    Node* prev;
-    u8 state;
-    u8 type;
-    u8 pad0A[2];
-    u32 key;
+typedef struct NOTE Note;
+struct NOTE {
+    Note* next;
+    Note* prev;
+    u32 voiceId;
+    int endTime;
+    u8 section;
+    u8 pad11[3];
 };
 
-typedef struct Entry Entry;
-struct Entry { u8 data[0x1868]; };
-/* The third link head is addressed relative to the entry base. */
-struct EntryLinks { u8 data[0x226C]; Link* link; };
+typedef struct SEQ_INSTANCE Sequence;
+struct SEQ_INSTANCE {
+    Sequence* next;
+    Sequence* prev;
+    u8 state;
+    u8 index;
+    u8 pad0A[2];
+    u32 publicId;
+    u8 pad010[0xE64 - 0x10];
+    Note* noteUsed[2];
+    Note* noteKeyOff;
+    u8 padE70[0xEDA - 0xE70];
+    u8 syncCrossFlags;
+    u8 padEDB;
+    u32* syncSeqIdPtr;
+    u8 padEE0[0x1868 - 0xEE0];
+};
 
-extern Entry lbl_8060C020[];
-extern Node* volatile lbl_8064D394;
-extern Node* volatile lbl_8064D398;
-extern Node* volatile lbl_8064D39C;
-extern void fn_801B244C(void*);
-extern void fn_801C21E8(void*);
+typedef struct SequenceStorage {
+    u8 pad[0x1400];
+    Sequence instances[8];
+} SequenceStorage;
 
-/* TU-local C helper; the canonical compiler inlines both searches. */
+extern SequenceStorage lbl_8060C020;
+extern Sequence* lbl_8064D394;
+extern Sequence* lbl_8064D398;
+extern Sequence* lbl_8064D39C;
+extern void fn_801B244C(Sequence*);
+extern int fn_801C21E8(u32);
+
+/* Preserve the public handle's high bit when converting to a sequence index. */
 static inline u32 resolve_handle(u32 handle)
 {
     u32 key = handle & 0x7FFFFFFF;
     u32 id;
-    Node* search = lbl_8064D39C;
+    Sequence* search = lbl_8064D39C;
     while (search != 0) {
-        if (search->key == key) {
-            id = search->type | (handle & 0x80000000U);
+        if (search->publicId == key) {
+            id = __rlwimi(search->index, handle, 0, 0, 0);
             return id;
         }
         search = search->next;
     }
     search = lbl_8064D398;
     while (search != 0) {
-        if (search->key == key) {
-            id = search->type | (handle & 0x80000000U);
+        if (search->publicId == key) {
+            id = __rlwimi(search->index, handle, 0, 0, 0);
             return id;
         }
         search = search->next;
@@ -51,59 +66,92 @@ static inline u32 resolve_handle(u32 handle)
     return id;
 }
 
-void fn_801B3770(u32 handle)
+void fn_801B3770(register u32 handle)
 {
-    Entry* entries = lbl_8060C020;
-    u32 id = resolve_handle(handle);
-    Node* node;
+    register SequenceStorage* entries = &lbl_8060C020;
     u32 i;
-    if (id == 0xFFFFFFFFU) return;
-    if ((int)id >= 0) {
-        u32 offset = id * sizeof(Entry);
-        u8* entry = (u8*)entries + offset;
-        u8 state = entry[0x1408];
-        node = (Node*)(entry + 0x1400);
+    Note* note;
+    register u8* cursor;
+    register Sequence* node;
+    register u32 offset;
+    register u32 flag;
+    handle = resolve_handle(handle);
+    if (handle == 0xFFFFFFFFU) {
+        return;
+    }
+    /* ASM: rlwinm. and bne test the handle flag without the separate comparison emitted by C. */
+    asm {
+        rlwinm. flag, handle, 0, 0, 0
+        bne deferred_path
+    }
+    {
+        u8 state;
+        offset = handle * sizeof(Sequence);
+        /* ASM: add retains the base-plus-index address in the sequence pointer; C splits its live range before the state load. */
+        asm { add node, entries, offset }
+        state = *((u8*)node + 0x1408);
+        node = (Sequence*)((u8*)node + 0x1400);
         switch (state) {
         case 1:
-            if (node->prev) node->prev->next = node->next;
-            else lbl_8064D39C = node->next;
+            if (node->prev != 0) {
+                node->prev->next = node->next;
+            } else {
+                lbl_8064D39C = node->next;
+            }
             i = 0;
+            /* ASM: addi preserves the zero-displacement address operation; C emits mr for this cursor initialization. */
+            asm { addi cursor, node, 0 }
             do {
-                Link* link = *(Link**)((u8*)node + 0xE64 + i * 4);
-                while (link) {
-                    fn_801C21E8(link->object);
-                    link = link->next;
+                note = ((Sequence*)cursor)->noteUsed[0];
+                while (note) {
+                    fn_801C21E8(note->voiceId);
+                    note = note->next;
                 }
+                cursor += sizeof(Note*);
             } while (++i < 2);
             {
-                Link* link = ((struct EntryLinks*)((u8*)entries + offset))->link;
+                register SequenceStorage* links;
+                Note* link;
+                /* ASM: add preserves base-plus-index addressing; C selects an indexed load after folding the field displacement. */
+                asm { add links, entries, offset }
+                link = links->instances[0].noteKeyOff;
                 while (link) {
-                    fn_801C21E8(link->object);
+                    fn_801C21E8(link->voiceId);
                     link = link->next;
                 }
             }
             fn_801B244C(node);
             break;
         case 2:
-            if (node->prev) node->prev->next = node->next;
-            else lbl_8064D398 = node->next;
+            if (node->prev != 0) {
+                node->prev->next = node->next;
+            } else {
+                lbl_8064D398 = node->next;
+            }
             break;
         }
-        if (node->next) node->next->prev = node->prev;
+        if (node->next != 0) {
+            node->next->prev = node->prev;
+        }
         node->state = 0;
         {
-            Node* free = lbl_8064D394;
-            if (free) free->prev = node;
+            Sequence* free = lbl_8064D394;
+            if (free != 0) {
+                free->prev = node;
+            }
         }
         node->next = lbl_8064D394;
         node->prev = 0;
         lbl_8064D394 = node;
-    } else {
-        {
-            u8* entry = (u8*)entries + (id & 0x7FFFFFFF) * sizeof(Entry);
-            u8 state = entry[0x1408];
-            node = (Node*)(entry + 0x1400);
-            if (state != 0) *(u32*)((u8*)node + 0xEDC) = 0;
+    }
+    return;
+deferred_path:
+    {
+        u8* entry = (u8*)entries + (handle & 0x7FFFFFFF) * sizeof(Sequence);
+        u8 state = entry[0x1408];
+        Sequence* deferred = (Sequence*)(entry + 0x1400);
+        if (state != 0) {
+            deferred->syncSeqIdPtr = 0;
         }
     }
 }
