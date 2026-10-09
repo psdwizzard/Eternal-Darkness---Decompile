@@ -1,6 +1,25 @@
-/* fn_80045918 (0x80045918, 104 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct Vec3 {
+    float x;
+    float y;
+    float z;
+} Vec3;
 
-void fn_80045918(void) {
+typedef struct Vec4 {
+    float x;
+    float y;
+    float z;
+    float w;
+} Vec4;
+
+extern Vec4 *fn_8011FE34(void *object);
+extern void fn_8017A244(const Vec3 *axis, Vec4 *rotation, float angle);
+
+void fn_80045918(void *object, const Vec3 *axis, float angle)
+{
+    Vec3 inverse;
+
+    inverse.x = -axis->x;
+    inverse.y = -axis->y;
+    inverse.z = -axis->z;
+    fn_8017A244(&inverse, fn_8011FE34(object), angle);
 }
