@@ -28,10 +28,9 @@ void fn_801F50EC(u8* source, u8* destination)
         block = destination_base + (row >> 2) * 5120;
         pixel = source_base;
         for (column = 0; column < 640; column += 2, pixel += 4) {
-            /* Keep the tiled byte offset in the eventual store-address accumulator. */
-            output = row_offset + (column & 3) * 2;
-            output += (column >> 2) * 32;
-            output = block + output;
+            /* Locate the pixel pair in the 4-by-4 tiled destination. */
+            output = ((column >> 2) * 32 + block) +
+                     (row_offset + (column & 3) * 2);
 
             sample[0] = pixel[0];
             sample[1] = pixel[1];
