@@ -1,6 +1,23 @@
-/* fn_80047304 (0x80047304, 96 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+extern int lbl_8064C80C;
+extern int lbl_8064C810;
 
-void fn_80047304(void) {
+extern int fn_801EBC1C(void);
+
+int fn_80047304(void)
+{
+    int unavailable;
+
+    if (lbl_8064C80C > 0) {
+        unavailable = fn_801EBC1C() == 0;
+        if (unavailable) {
+            goto done;
+        }
+        if (lbl_8064C810 == 0) {
+            lbl_8064C80C--;
+        }
+    } else {
+        lbl_8064C80C = 0;
+    }
+done:
+    return lbl_8064C80C;
 }
