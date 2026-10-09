@@ -1,18 +1,20 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef signed short s16;
+typedef unsigned int u32;
+typedef void (*Callback)(void*, float, float, float, float, float);
 
 extern u8 lbl_80607120[];
 extern int lbl_8064D738;
 
-extern int fn_80180430(void*, u8);
-extern u8 fn_801911B0(void*, int);
-extern void fn_8018D020(void);
-extern void fn_80188A7C(void*, void*, void*);
-extern void fn_8018E0D8(void*, void*, void*);
+extern u32 fn_80180430(u32*, u8);
+extern u8 fn_801911B0(u8*, int);
+extern void fn_8018D020(s16*, float, float, float, float, float);
+extern void fn_80188A7C(u8*, void*, Callback);
+extern void fn_8018E0D8(u8*, void*, Callback);
 extern void DCFlushRange(void*, unsigned int);
 extern int fn_801ED57C(int);
-extern void fn_8018D0D0(void*, void*, s16);
+extern void fn_8018D0D0(u8*, u32*, int);
 extern void fn_80188868(void*, void*, void*, float);
 
 void fn_80191034(u8* data)
@@ -29,9 +31,9 @@ void fn_80191034(u8* data)
     u8* buffer_b = *(u8**)(data + 0x54);
     u8* buffer_c = *(u8**)(data + 0x58);
     u8* output;
-    int buffer_offset;
-    int j;
     int token;
+    int j;
+    int vertex_index;
 
     if (lbl_8064D738 != 0) {
         buffer_b += index_count * 4;
@@ -42,12 +44,13 @@ void fn_80191034(u8* data)
     element = *(u8**)(data + 0x4C);
     output = buffer_c;
     i = 0;
-    buffer_offset = 0;
+    vertex_index = 0;
     while (i < count) {
-        if (!fn_80180430(data + 0x24, (u8)i) || fn_801911B0(data, i)) {
-            fn_80188A7C(element, buffer_a + buffer_offset, fn_8018D020);
+        int enabled = fn_80180430((u32*)(data + 0x24), (u8)i);
+        if (!enabled || fn_801911B0(data, i)) {
+            fn_80188A7C(element, buffer_a + (u32)vertex_index * 6, (Callback)fn_8018D020);
         } else {
-            fn_8018E0D8(element, buffer_a + buffer_offset, fn_8018D020);
+            fn_8018E0D8(element, buffer_a + (u32)vertex_index * 6, (Callback)fn_8018D020);
         }
 
         j = 0;
@@ -57,7 +60,7 @@ void fn_80191034(u8* data)
             output += 4;
         }
         element += 0x38;
-        buffer_offset += 0x18;
+        vertex_index += 4;
         i++;
     }
 
@@ -65,7 +68,7 @@ void fn_80191034(u8* data)
     DCFlushRange(buffer_b, size_c);
     DCFlushRange(buffer_c, size_b);
     token = fn_801ED57C(0);
-    fn_8018D0D0(data, data + 0x5C, *(s16*)(data + 0xE));
+    fn_8018D0D0(data, (u32*)(data + 0x5C), *(s16*)(data + 0xE));
     fn_80188868(buffer_a, buffer_b, buffer_c, *(float*)(data + 0x3C));
     *(float*)(data + 0x3C) += *(float*)(data + 0x40);
     fn_801ED57C(token);

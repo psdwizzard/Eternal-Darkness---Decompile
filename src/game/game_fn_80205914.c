@@ -1,39 +1,46 @@
+typedef unsigned char u8;
 typedef unsigned int u32;
+typedef unsigned long long u64;
+typedef struct Color { u8 r, g, b, a; } Color;
+typedef struct Node Node;
+typedef struct Object Object;
+typedef struct Object80201D2C Object80201D2C;
+typedef struct Object80201D14 Object80201D14;
 
-extern u32 lbl_806515D0;
-extern u32 lbl_806515D4;
-extern u32 lbl_806515D8;
+extern Color lbl_806515D0;
+extern Color lbl_806515D4;
+extern Color lbl_806515D8;
 extern float lbl_806515DC;
 extern float lbl_806515E0;
 extern float lbl_806515E4;
-extern u32 lbl_80651F70;
+extern Color lbl_80651F70;
 
-extern int fn_80200C10(void *data);
-extern int fn_80200C38(void *data);
-extern void *fn_80155DB4(void *object);
+extern int fn_80200C10(int *data);
+extern void *fn_80200C38(void **data);
+extern Node *fn_80155DB4(u32 id);
 extern void *fn_80201BC8(void *object);
-extern void *fn_80201B54(void *object);
+extern int fn_80201B54(int *object);
 extern u32 fn_8011FAEC(void *object);
-extern int fn_8011EB1C(void *object);
-extern void *fn_80126880(void *object);
-extern void fn_8020104C(int type, void *a, void *b, int value, float amount);
-extern void fn_8020123C(int type, void *a, void *b, int value);
-extern void fn_80201D2C(void *object, int value);
-extern void fn_80201D14(void *object, int value);
-extern void fn_801E8328(int value, void *object);
-extern void fn_801568C0(void *object, void (*callback)(void));
-extern void fn_8012C198(void *object);
-extern void fn_8011FABC(void *object, int value, int other);
-extern void fn_8012C774(void *object, u32 *a, u32 *b, u32 *c, int value);
-extern void fn_8011FA8C(void *object, int value, int flags);
-extern void fn_80205DB8(void);
+extern int fn_8011EB1C(Object *object);
+extern void fn_80126880(void *object);
+extern void fn_8020104C(int type, int a, int b, int value, float amount);
+extern u64 fn_8020123C(int type, int a, int b, int value);
+extern void fn_80201D2C(Object80201D2C *object, int value);
+extern void fn_80201D14(Object80201D14 *object, u8 value);
+extern int fn_801E8328(u32 value, u32 object);
+extern void fn_801568C0(Object *object, void *callback);
+extern void fn_8012C198(u8 *object);
+extern u32 fn_8011FABC(void *object, u32 value, u32 other);
+extern void fn_8012C774(u8 *object, void *a, void *b, void *c, int value);
+extern u32 fn_8011FA8C(void *object, u32 value, u32 flags);
+extern int fn_80205DB8(void);
 
 int fn_80205914(void *object, int event, void *data)
 {
     int data_type = fn_80200C10(data);
-    void *handle = fn_80155DB4(object);
+    void *handle = fn_80155DB4((u32)object);
     void *target = fn_80201BC8(object);
-    void *effect = fn_80201B54(object);
+    int effect = fn_80201B54(object);
 
     if (event == 0) {
         if (data_type == 1) {
@@ -48,7 +55,7 @@ int fn_80205914(void *object, int event, void *data)
             return 1;
         }
         if (data_type == 0x39) {
-            fn_801E8328(2, object);
+            fn_801E8328(2, (u32)object);
             fn_80201D2C(object, 0);
             fn_80201D14(object, 1);
             return 1;
@@ -64,7 +71,7 @@ int fn_80205914(void *object, int event, void *data)
             return 1;
         }
         if (data_type == 0x1C) {
-            if (fn_80200C38(data) != 0 && fn_8011EB1C(target) == 6) {
+            if ((int)fn_80200C38(data) != 0 && fn_8011EB1C(target) == 6) {
                 fn_80126880(target);
                 fn_8020123C(0x39, effect, effect, 0);
             }
@@ -90,7 +97,7 @@ int fn_80205914(void *object, int event, void *data)
         }
     } else if (event == 0x23) {
         if (data_type == 1) {
-            fn_801568C0(handle, fn_80205DB8);
+            fn_801568C0(handle, (void *)fn_80205DB8);
             fn_8012C198(target);
             fn_8011FABC(target, 8, 0);
             return 1;
@@ -103,29 +110,21 @@ int fn_80205914(void *object, int event, void *data)
         }
     } else if (event == 0xB) {
         if (data_type == 0x11) {
-            struct {
-                u32 output[3];
-                u32 input[4];
-            } local;
+            Color a, b, alternate, c;
+            Color output_a, output_b, output_c;
 
-            local.input[3] = lbl_806515D0;
-            local.input[2] = lbl_806515D4;
-            local.input[1] = lbl_806515D8;
-            local.input[0] = lbl_80651F70;
+            a = lbl_806515D0;
+            b = lbl_806515D4;
+            alternate = lbl_806515D8;
+            c = lbl_80651F70;
 
             if (!(fn_8011FAEC(target) & 0x2000)) {
-                local.input[2] = local.input[1];
+                b = alternate;
             }
-            {
-                u32 c = local.input[0];
-                u32 b = local.input[2];
-                u32 a = local.input[3];
-
-                local.output[1] = b;
-                local.output[0] = c;
-                local.output[2] = a;
-            }
-            fn_8012C774(target, &local.output[2], &local.output[1], &local.output[0], 4);
+            output_c = c;
+            output_b = b;
+            output_a = a;
+            fn_8012C774(target, &output_a, &output_b, &output_c, 4);
             fn_8011FA8C(target, 0, 0x2000);
             fn_8020104C(0x39, effect, effect, 0, lbl_806515E4);
             return 1;
