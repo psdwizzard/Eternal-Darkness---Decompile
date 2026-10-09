@@ -17,7 +17,7 @@ typedef struct RuntimeRecord {
     char pad_26[2];
 } RuntimeRecord;
 typedef struct Runtime { char pad_0[7]; u8 flags; char pad_8[8]; RuntimeRecord* records; } Runtime;
-typedef struct Pair { void* object; float value; } Pair;
+typedef struct Pair { int index; float value; } Pair;
 typedef struct SmallRecord { s16 value; u8 color; u8 pad_3; } SmallRecord;
 typedef struct BatchEntry {
     Vec3 position; s8 pair_count; s8 small_count; s8 flags; char pad_F;
@@ -40,9 +40,9 @@ extern void fn_8012811C(VertexData*, VertexAttribute*);
 extern void fn_8017974C(ShortVec*, ShortVec*, Vec3*, float);
 extern int fn_8017A750(VertexAttribute*, VertexAttribute*);
 extern void fn_8017A71C(VertexAttribute*);
-extern void fn_8017A7D4(VertexAttribute*, VertexAttribute*, VertexAttribute*, float);
-extern void fn_80124664(MeshRecord*, void*, float, int);
-extern void fn_8012C62C(MeshRecord*, s16, Color*, Color*, Color*, int);
+extern void fn_8017A7D4(const VertexAttribute*, const VertexAttribute*, float, VertexAttribute*);
+extern void fn_80124664(MeshRecord*, int, u32, float);
+extern void* fn_8012C62C(MeshRecord*, int, Color*, Color*, Color*, int);
 extern void fn_8012C478(MeshRecord*, int, int);
 extern void fn_8011F0E8(MeshRecord*, Vec3*);
 extern void fn_8011F114(Vec3*, MeshRecord*);
@@ -50,9 +50,8 @@ extern void fn_80120B4C(MeshRecord*);
 extern void fn_80120AD0(MeshRecord*, int, int, int, float, float);
 extern void fn_8012D0D0(MeshRecord*);
 
-/* NonMatching: only the color-constant/index-table register allocation
- * remains different. Indexed owner lookups intentionally remain expressions:
- * caching them across calls changes both alias behavior and retail codegen.
+/* Indexed owner lookups intentionally remain expressions: caching them
+ * across calls changes both alias behavior and retail codegen.
  * The masked loop snapshots its count and advances the source only on selected
  * entries; the unmasked loop reloads its runtime-record count each iteration. */
 Batch* fn_80131E8C(Runtime* runtime, Batch* batch)
@@ -107,7 +106,7 @@ Batch* fn_80131E8C(Runtime* runtime, Batch* batch)
                         position.y = (s16)result.y;
                         position.z = (s16)result.z;
                         if (fn_8017A750(&temporary, &attribute)) fn_8017A71C(&attribute);
-                        fn_8017A7D4(&temporary, &attribute, &output, lbl_80650244);
+                        fn_8017A7D4(&temporary, &attribute, lbl_80650244, &output);
                     } else {
                         position = *(ShortVec*)(SOURCE->data + 8);
                         output = attribute;
@@ -134,24 +133,21 @@ Batch* fn_80131E8C(Runtime* runtime, Batch* batch)
 #define PAIR (&ENTRY->pairs[pair_index])
                     if (PAIR->value < low) PAIR->value = low;
                     if (PAIR->value > high) PAIR->value = high;
-                    fn_80124664(MESH, PAIR->object, PAIR->value, 0);
+                    fn_80124664(MESH, PAIR->index, 0, PAIR->value);
                 }
 #undef PAIR
             }
             {
                 for (small_index = 0; small_index < ENTRY->small_count; small_index++) {
-                    SmallRecord* small = &ENTRY->small[small_index];
+                    SmallRecord* small;
                     MeshRecord* color_mesh;
-                    Color first, first_temp, middle, third;
-                    {
-                        Color third_temp = lbl_8065023C;
-                        {
-                            int color_record_index = batch->record_indices[outer];
-                            color_mesh = runtime->records[color_record_index].mesh;
-                        }
-                        third_temp.a = small->color;
-                        third = third_temp;
-                    }
+                    Color first, first_temp, middle, third, third_temp;
+                    /* Resolve the mesh before the color record to preserve retail allocation. */
+                    color_mesh = MESH;
+                    small = &ENTRY->small[small_index];
+                    third_temp = lbl_8065023C;
+                    third_temp.a = small->color;
+                    third = third_temp;
                     middle = lbl_80651BA4;
                     first_temp = lbl_80650238;
                     first_temp.a = small->color;
