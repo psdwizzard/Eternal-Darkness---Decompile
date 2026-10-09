@@ -1,6 +1,12 @@
-/* fn_8010D36C (0x8010D36C, 168 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+extern int fn_8015784C(void*);
+extern int fn_80157858(void*);
+extern double lbl_8064FE78;
+extern const float lbl_8064FE90;
 
-void fn_8010D36C(void) {
+int fn_8010D36C(void* object)
+{
+    float lower = (float)fn_80157858(object);
+    int upper = fn_8015784C(object);
+
+    return (int)(lower + lbl_8064FE90 * (float)(upper - fn_80157858(object)));
 }
