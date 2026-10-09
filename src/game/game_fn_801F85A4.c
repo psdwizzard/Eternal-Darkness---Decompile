@@ -14,52 +14,51 @@ typedef struct LiveState {
     unsigned char pad74[0x14];
 } LiveState;
 
-typedef struct Globals {
-    unsigned char pad0[0xCC0];
-    LiveState first;
-    LiveState second;
-    /* lbl_8063D488 provides five 0x14-byte records. */
-    SavedState saved[5];
-} Globals;
-
-/* This aggregate view spans adjacent linker symbols beginning at lbl_8063C6B8. */
-extern Globals lbl_8063C6B8;
+extern unsigned char lbl_8063C6B8[];
 extern int lbl_8064D7BC;
 extern int fn_801FA410(int);
 
 int fn_801F85A4(void)
 {
-    Globals* globals = &lbl_8063C6B8;
+    register unsigned char* base = lbl_8063C6B8;
+    register int count;
     int result = 0;
-    int count = lbl_8064D7BC;
 
+    count = lbl_8064D7BC;
     if (count > 0) {
-        volatile SavedState* saved;
-        LiveState* first;
-        LiveState* second;
-        float first_value;
+        register volatile SavedState* saved;
+        register volatile LiveState* first;
+        register volatile LiveState* second;
         float second_value;
+        float first_value;
         unsigned int first_handle;
         unsigned int second_handle;
         int token;
 
-        /* Correct indexing requires the locally unproven invariant 0 <= count <= 5. */
         count--;
-        saved = globals->saved;
-        saved += count;
-        first = &globals->first;
-        second = &globals->second;
+        /* ASM: addi/mulli/addi/addi preserve the three retail base pointers,
+           which MWCC otherwise folds into large field displacements. */
+        asm {
+            addi saved, base, 0xDD0
+            mulli r0, count, 0x14
+            addi first, base, 0xCC0
+            addi second, base, 0xD48
+        }
         lbl_8064D7BC = count;
+        /* ASM: add completes the indexed saved-state address after the count store. */
+        asm {
+            add saved, saved, r0
+        }
         first_value = saved->first_value;
         second_value = saved->second_value;
         first_handle = saved->first_handle;
         second_handle = saved->second_handle;
-        token = saved->token;
         first->value = first_value;
+        token = saved->token;
         second->value = second_value;
         first->handle = first_handle;
         second->handle = second_handle;
-        (void)fn_801FA410(token);
+        fn_801FA410(token);
         result = 1;
     }
     return result;
