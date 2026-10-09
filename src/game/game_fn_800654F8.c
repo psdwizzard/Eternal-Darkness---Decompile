@@ -8,7 +8,6 @@ typedef signed long long s64;
 typedef unsigned long long u64;
 typedef float f32;
 typedef struct { f32 x, y, z; } Vec3;
-typedef struct { s32 x, y, z; } Int3;
 typedef struct { Vec3 first, second; } VecPair;
 typedef struct { s32 first, second; Vec3 position, direction; f32 value; } HitResult;
 
@@ -16,92 +15,116 @@ typedef struct { s32 first, second; Vec3 position, direction; f32 value; } HitRe
 #define NULL ((void *)0)
 #endif
 
-typedef s32 M2C_UNK;
-#define M2C_FIELD(expr, type_ptr, offset) (*(type_ptr)((u8 *)(expr) + (offset)))
+typedef struct DamageStatus {
+    s32 flags;
+    u8 pad04[0x20];
+    s32 linkedId;
+    u8 pad28[0x48];
+    f32 scales[17];
+    s32 attachedLimbs;
+    s32 detachableLimbs;
+    s32 callbackId;
+    u8 padC0[0x2A];
+    s16 health[15];
+    s16 restoredHealth[15];
+    s16 damage[15];
+} DamageStatus;
 
-/* Partial event/damage dispatcher reconstruction; registered NonMatching.
- * Address-escaped vectors must remain contiguous objects. fn_801A76F4
- * copies six words; fn_8011F598 and its helpers fill HitResult through +0x20.
- * The pool pointer models the persistent retail constant-pool base.
- */
-int fn_800FBFB0(void);                               /* extern */
-int fn_8011EB04(void *);                               /* extern */
-#define fn_8011EB04(a) fn_8011EB04((void *)(a))
-M2C_UNK fn_8011F114();                    /* extern */
-s32 fn_8011F6A4(); /* extern */
-s32 fn_801207F0();                               /* extern */
-M2C_UNK fn_80120AD0(); /* extern */
-M2C_UNK fn_8012B690();         /* extern */
-M2C_UNK fn_8012C478();        /* extern */
-M2C_UNK fn_8012C62C(); /* extern */
-M2C_UNK fn_8012CBE8(); /* extern */
-M2C_UNK fn_8012F604();    /* extern */
-M2C_UNK fn_8014CBE8();     /* extern */
-M2C_UNK fn_8014D478(); /* extern */
-u8 fn_80157918();                            /* extern */
-s32 fn_801579FC();                                  /* extern */
-u8 fn_80157AB8();                            /* extern */
-s32 fn_801A7468();                                /* extern */
-void fn_801A7470(s32, u32);                       /* extern */
-s32 fn_801A7490();                         /* extern */
-s32 fn_801A7498();                                /* extern */
-u32 fn_801A74C0();                                /* extern */
-M2C_UNK fn_801A74D8();                   /* extern */
-M2C_UNK fn_801A74E8();                   /* extern */
-s16 fn_801A74F8();                      /* extern */
-void fn_801A7518(s32, s16);                       /* extern */
-u32 fn_801A7530();                                /* extern */
-M2C_UNK fn_801A7538();                       /* extern */
-s32 fn_801A7570();                                /* extern */
-s32 fn_801A7590();                                /* extern */
-u32 fn_801A76B0();                                 /* extern */
-M2C_UNK fn_801A76DC();                            /* extern */
-M2C_UNK fn_801A76F4();                 /* extern */
-M2C_UNK fn_801A7744();                     /* extern */
-s32 fn_801A7760();                                /* extern */
-u8 fn_801A7768();                                 /* extern */
-M2C_UNK fn_801A977C();                  /* extern */
-s16 fn_801D1B10();                  /* extern */
-s32 fn_801DD188();                       /* extern */
-M2C_UNK fn_8020104C();    /* extern */
-u64 fn_8020123C();             /* extern */
-u32 fn_80201814();                               /* extern */
-s32 fn_80201B44();                                  /* extern */
-s32 fn_80201B54();                               /* extern */
-void *fn_80201B8C();                             /* extern */
-M2C_UNK fn_80201B9C();                              /* extern */
-u32 fn_80201BC8();                 /* extern */
-void **fn_80201C24();                            /* extern */
-int fn_80201EB8();                                  /* extern */
-u8 fn_80204578();                         /* extern */
-s32 fn_80204844();                           /* extern */
-M2C_UNK fn_80205868();      /* extern */
-M2C_UNK fn_80211A90(void *, const void *, f32);   /* extern */
-M2C_UNK fn_80211AAC(void *, const void *); /* extern */
-f32 fn_80211B08();                             /* extern */
-M2C_UNK fn_800337C8(); /* static */
-s32 fn_80035628();                               /* static */
-M2C_UNK fn_800359A0();                      /* static */
-u32 fn_8004910C();                                /* static */
-s16 fn_8006534C(u32, u32, s16);                     /* static */
-s32 fn_80065428(s32, s16, s32);                     /* static */
-s32 fn_80065454();             /* static */
-s32 fn_80066BB8();                      /* static */
-s32 fn_80066D80();                          /* static */
-s32 fn_80066E78(u32, s16, u8, u32, s32 *, s32 *, s32 *, u8 *); /* static */
-M2C_UNK fn_80067180();                           /* static */
-s32 fn_8006749C();                               /* static */
-s32 fn_80067728();                                /* static */
-s32 fn_8006D344();                  /* static */
-M2C_UNK fn_8006D444();                              /* static */
-s32 fn_80071D5C();                                  /* static */
-s32 fn_80071DD8();                                  /* static */
-void *fn_80072354();                             /* static */
-s32 fn_800ACFE8();                                  /* static */
-s32 fn_800C1AB8();                               /* static */
-M2C_UNK fn_800CEA1C(); /* static */
-M2C_UNK fn_800EA428();              /* static */
-extern u8 lbl_80239008[];
+typedef struct ActorInfo {
+    void *first;
+    void *modelData;
+    u8 pad08[0x84];
+    DamageStatus *status;
+    s32 definitionIndex;
+    s32 state;
+    u8 pad98[6];
+    u8 category;
+    u8 kind;
+} ActorInfo;
+
+#define FIELD_AT(expr, type_ptr, offset) (*(type_ptr)((u8 *)(expr) + (offset)))
+
+/* Damage and hit-reaction dispatcher. The contact query fills all of
+ * HitResult, and the motion query copies both vectors of VecPair. */
+u32 fn_800FBFB0(void);
+int fn_8011EB04(void *);
+void fn_8011F114(Vec3 *, Vec3 *);
+s32 fn_8011F6A4(void *, s32, s32, s32, void *, s32);
+s32 fn_801207F0(void *);
+void fn_80120AD0(void *, const void *, u16, u32, f32, f32);
+void fn_8012B690(void *, const void *, void *);
+void fn_8012C478(void *, s32, s32);
+void *fn_8012C62C(void *, s32, void *, s8 *, void *, s32);
+void fn_8012CBE8(void *, s32, Vec3 *, Vec3 *, Vec3 *, s32);
+void fn_8012F604(void *, u32, u32, u16);
+void fn_8014CBE8(void *, s32, s32, s32 *);
+void fn_8014D478(void *, Vec3 *, f32 *, s32, s32, s32 *, s32);
+u8 fn_80157918(void *);
+u8 fn_801579FC(void *);
+u8 fn_80157AB8(void *);
+u32 fn_801A7468(void *);
+void fn_801A7470(void *, u32);
+u32 fn_801A7490(void *);
+u32 fn_801A7498(void *);
+u32 fn_801A74C0(void *);
+void fn_801A74D8(void *, u32);
+void fn_801A74E8(void *, u32);
+s16 fn_801A74F8(void *);
+void fn_801A7518(void *, s16);
+u16 fn_801A7530(void *);
+void fn_801A7538(void *, u16);
+u32 fn_801A7570(void *);
+u32 fn_801A7590(void *);
+u32 fn_801A76B0(void *);
+f32 fn_801A76DC(void *);
+void fn_801A76F4(VecPair *, const void *);
+void fn_801A7744(Vec3 *, const void *);
+void *fn_801A7760(void *);
+u8 fn_801A7768(void *);
+void fn_801A977C(void *, s32);
+s32 fn_801D1B10(s32, s32, s32, s32);
+s32 fn_801DD188(void *, s32, u8);
+void fn_8020104C(s32, s32, s32, s32, f32);
+u64 fn_8020123C(s32, s32, s32, s32);
+void *fn_80201814(s32);
+s32 fn_80201B44(void);
+s32 fn_80201B54(void *);
+void *fn_80201B8C(void *);
+void *fn_80201B9C(void);
+void *fn_80201BC8(void *);
+void *fn_80201C24(void *);
+s32 fn_80201EB8(void *);
+u8 fn_80204578(void *, const Vec3 *);
+void *fn_80204844(void *, s32);
+void *fn_80205868(void *, s32, void *, u32);
+void fn_80211A90(void *, const void *, f32);
+void fn_80211AAC(void *, const void *);
+f32 fn_80211B08(const Vec3 *);
+void fn_800337C8(Vec3 *, const Vec3 *, s32, void *, s32, s32);
+s32 fn_80035628(void *);
+s32 fn_800359A0(void *, void *);
+/* The retail wrapper forwards its incoming r3 to fn_801A7778. */
+void *fn_8004910C();
+s16 fn_8006534C(void *, void *, s16);
+s32 fn_80065428(s32, s16, s32);
+s32 fn_80065454();
+s32 fn_80066BB8(s32, s32);
+s32 fn_80066D80(s32, s32);
+s32 fn_80066E78(u32, s16, u8, s32, s32 *, s32 *, s32 *, s8 *);
+void fn_80067180(s32);
+s32 fn_8006749C(s32);
+s32 fn_80067728(u8);
+s32 fn_8006D344(void *, s32, s32);
+void *fn_8006D444(void *);
+void fn_80071D5C(void);
+void fn_80071DD8(void);
+void *fn_80072354(s32);
+s32 fn_800ACFE8(void);
+s32 fn_800C1AB8(s32);
+void fn_800CEA1C(s32, s32, void *, void *, s32, u8, void *, f32, f32, f32);
+void fn_800EA428(void *, void *, s32);
+typedef struct { Vec3 origin, direction, scale, position, rotation; } DamageDefaults;
+extern DamageDefaults lbl_80239008;
 extern u8 lbl_802FC5BC[];
 extern s32 lbl_8064D18C;
 extern f32 lbl_8064E698;
@@ -122,566 +145,584 @@ extern f32 lbl_8064E6D4;
 extern f32 lbl_8064E6D8;
 extern f32 lbl_8064E6DC;
 
-s32 fn_800654F8(s32 arg0) {
-    u8 *pool = lbl_80239008;
-    s32 sp168;
-    s32 sp164;
-    s32 sp160;
-    u32 sp15C;
-    s32 sp158;
-    s32 sp154;
-    u32 sp150;
-    s32 sp14C;
-    u32 sp148;
-    u32 sp144;
-    void *sp140;
-    s32 sp13C;
-    u32 sp138;
-    s32 sp134;
-    s16 sp132;
-    u8 sp130;
-    s32 sp12C;
-    s32 sp128;
-    s32 sp124;
-    s16 sp120;
-    s32 sp11C;
-    s32 sp118;
-    s32 sp114;
-    s32 sp110;
-    s32 sp10C;
-    s32 sp108;
-    u32 sp104;
-    s32 sp100;
-    s32 spFC;
-    s32 spF8;
-    s32 spF4;
-    s32 spF0;
-    HitResult local_spC0;
-    VecPair local_spA8;
-    Vec3 local_sp9C;
-    Vec3 local_sp90;
-    Vec3 local_sp84;
-    Vec3 local_sp78;
-    Int3 local_sp6C;
-    Vec3 local_sp60;
-    Vec3 local_sp54;
-    Int3 local_sp48;
-    Int3 local_sp3C;
-    Vec3 local_sp30;
-    s32 sp2C;
-    s32 sp28;
-    s32 sp24;
-    s32 sp20;
-    s32 sp1C;
-    s32 sp18;
-    s32 sp14;
-    s32 sp10;
-    s32 spC;
-    u8 sp8;
-    void *var_r14_3;
-    void *var_r26;
-    M2C_UNK var_r0;
-    f32 temp_f1;
-    f32 temp_f1_2;
-    f32 temp_f2;
-    f32 var_f31;
-    s16 temp_r9;
-    s16 var_r25;
-    s32 temp_cr0_eq;
-    s32 temp_r10;
-    s32 temp_r14;
-    s32 temp_r26;
-    s32 temp_r27;
-    s32 temp_r28;
-    s32 temp_r3_3;
-    s32 temp_r3_5;
-    s32 temp_r3_6;
-    s32 temp_r3_7;
-    s32 temp_r3_8;
-    s32 temp_r3_9;
-    s32 temp_r4;
-    s32 var_r0_2;
-    s32 var_r0_3;
-    s32 var_r14_2;
-    s32 var_r17;
-    s32 var_r17_2;
-    s32 var_r18;
-    s32 var_r23;
-    s32 var_r31;
-    s32 var_r3;
-    s32 var_r3_2;
-    s32 var_r3_3;
-    s32 var_r3_4;
-    s32 var_r3_5;
-    s32 var_r4;
-    s32 var_r4_2;
-    s32 var_r5;
-    u32 temp_r14_2;
-    u32 temp_r14_3;
-    u32 temp_r22;
-    u32 temp_r24;
-    u32 temp_r3_2;
-    u32 var_r14;
-    u32 var_r16;
-    u32 var_r27_2;
-    u8 temp_r0;
-    u32 temp_r3;
-    u8 temp_r3_4;
-    u32 var_r16_2;
-    u8 var_r27;
-    void **temp_r26_2;
-    void **temp_r3_10;
-    void *temp_r19;
-    void *temp_r21;
-    void *temp_r28_2;
-    void *temp_r30;
-    void *temp_r4_2;
-    void *temp_r9_2;
-    void *var_r20;
+s32 fn_800654F8(void *event) {
+    DamageDefaults *defaults = &lbl_80239008;
+    u32 eventFlags;
+    s32 damageFlags;
+    s32 hitMask;
+    u32 weapon;
+    u32 linkedObject;
+    s32 weaponModelType;
+    s32 targetType;
+    u32 elementalFlags;
+    u32 preventSevering;
+    void *defaultEffectResource;
+    s32 targetId;
+    u32 source;
+    s32 weaponFlags;
+    s16 originalDamage;
+    u8 reaction;
+    s32 sourceId;
+    s32 directPlayerHit;
+    s32 spawnedEffect;
+    s16 totalDamage;
+    s32 limbReaction;
+    s32 specialHit;
+    s32 applyDamage;
+    s32 hit;
+    s32 weaponEvent;
+    s32 linkedId;
+    s32 suppressParticles;
+    s32 impactFlags;
+    HitResult contact;
+    VecPair motion;
+    Vec3 eventPosition;
+    Vec3 modelPosition;
+    Vec3 impactDirection;
+    Vec3 fallbackPosition;
+    Vec3 localOrigin;
+    Vec3 detachDirection;
+    Vec3 partScale;
+    Vec3 partPosition;
+    Vec3 partRotation;
+    Vec3 partScaleCopy;
+    s32 effectResource;
+    s32 effectAmount;
+    s32 effectLevel;
+    s32 severParam1;
+    s32 severParam2;
+    s32 severParam3;
+    s32 regularParam1;
+    s32 regularParam2;
+    s32 regularParam3;
+    s8 effectVariant;
+    u8 facing;
+    register u32 returnedWord;
+    /* Hit flags initially; weapon sever permission during the limb loop. */
+    register u32 workingFlags;
+    f32 particleStrength;
+    void *targetDefinition;
+    void *limbStatus;
+    s32 playerId;
+    s32 limbMask;
+    u32 particleModel;
+    s32 randomY;
+    void *limbHitPosition;
+    u32 weaponModel;
+    void *playerObject;
+    register s16 damage;
+    u32 target;
+    s32 result;
+    u32 model;
+    ActorInfo *targetInfo;
+    ActorInfo *sourceInfo;
+    DamageStatus *targetStatus;
+    s32 limbIndex;
+    s32 scaleIndex;
+    s32 reactionId;
+    u32 elementType;
+    void **weaponInfo;
+    u64 damageResult;
+    register s32 limbByteOffset;
+    register s32 healthOffset;
+    s32 forceFullBodyHit;
+    u32 reactionBits;
+    s32 targetGroup;
+    s32 inverseLimbMask;
+    void *modelData;
+    s16 limbHealth;
+    s32 hitGroup;
+    s32 eventReaction;
+    s32 forcedReaction;
+    DamageStatus *scaleStatus;
+    void *hitPosition;
+    void **eventWeaponInfo;
+    s32 headReaction;
+    s32 failedSeverReaction;
+    s32 severReaction;
+    s32 defaultReaction;
+    register s32 contactOrHealthIndex;
+    register s32 doubledDamage;
+    register u32 effectKind;
+    s32 randomX;
+    s32 characterState;
+    u8 targetKind;
+    s32 eventKind;
+    u32 weaponHandle;
+    s32 modelType;
+    f32 directionX;
+    f32 scaleValue;
+    f32 directionY;
+    s32 specialReaction;
+    u8 kind;
+    s32 fallbackReaction;
+    s32 particleDuration;
 
-    var_r23 = 0;
-    sp13C = fn_801A7490(arg0);
-    temp_r24 = fn_80201814();
-    temp_r14 = fn_80201EB8((void *)temp_r24);
-    sp150 = fn_801A74C0(arg0);
-    if (((s32) lbl_8064D18C == temp_r14) || (temp_r14 == -1)) {
-        sp134 = 0;
-        local_sp6C = *(Int3 *)pool;
-        var_r25 = fn_801A74F8(arg0);
-        sp128 = 0;
-        sp124 = 0;
-        sp12C = fn_801A7498(arg0);
-        sp154 = fn_801A7570(arg0);
-        sp138 = fn_80201814(sp12C);
-        temp_r3 = fn_801A76B0(arg0);
-        temp_cr0_eq = (temp_r3 & 1) == 0;
-        sp132 = var_r25;
-        sp130 = temp_r3;
-        if (temp_cr0_eq == 0) {
-            var_r25 *= 2;
+    result = 0;
+    targetId = fn_801A7490(event);
+    target = (u32)fn_80201814(targetId);
+    targetGroup = fn_80201EB8((void *)target);
+    eventFlags = fn_801A74C0(event);
+    if (((s32) lbl_8064D18C == targetGroup) || (targetGroup == -1)) {
+        weaponFlags = 0;
+        localOrigin = defaults->origin;
+        fn_801A74F8(event);
+        /* ASM: mr retains the getter's sign-extended result without the
+         * compiler's redundant intermediate register for a short local. */
+        asm { mr damage, r3 }
+        directPlayerHit = 0;
+        spawnedEffect = 0;
+        sourceId = fn_801A7498(event);
+        damageFlags = fn_801A7570(event);
+        source = (u32)fn_80201814(sourceId);
+        reactionBits = fn_801A76B0(event);
+        originalDamage = damage;
+        reaction = reactionBits & 0xFF;
+        if (reactionBits & 1) {
+            damage *= 2;
         }
-        if (temp_r24 != 0U) {
-            temp_r21 = fn_80201B8C(temp_r24);
-            var_r20 = NULL;
-            var_r14 = fn_801A7530(arg0);
-            sp120 = 0;
-            sp11C = 0;
-            sp118 = (fn_801A74C0(arg0) >> 0x10U) & 1;
-            if (sp138 != 0U) {
-                var_r20 = fn_80201B8C(sp138);
+        if (target != 0U) {
+            targetInfo = fn_80201B8C((void *)target);
+            sourceInfo = NULL;
+            fn_801A7530(event);
+            /* ASM: mr retains the getter's zero-extended halfword result;
+             * C promotion emits an unnecessary clrlwi. */
+            asm { mr returnedWord, r3; mr workingFlags, returnedWord }
+            totalDamage = 0;
+            limbReaction = 0;
+            specialHit = (fn_801A74C0(event) >> 0x10U) & 1;
+            if (source != 0U) {
+                sourceInfo = fn_80201B8C((void *)source);
             }
-            temp_r19 = M2C_FIELD(temp_r21, void **, 0x8C);
-            temp_r30 = fn_80072354(M2C_FIELD(temp_r21, s32 *, 0x90));
-            sp114 = 0;
-            var_r18 = 0;
-            sp110 = 0;
-            var_r31 = 0;
-            sp10C = 0;
-            sp158 = fn_801A7590(arg0);
-            sp108 = M2C_FIELD(temp_r19, s32 *, 0x24);
-            temp_r28 = fn_80201B44();
-            temp_r3_2 = fn_8004910C(arg0);
-            sp104 = temp_r3_2;
-            if (temp_r3_2 != 0U) {
-                var_r16 = fn_80201BC8();
+            targetStatus = targetInfo->status;
+            targetDefinition = fn_80072354(targetInfo->definitionIndex);
+            applyDamage = 0;
+            limbIndex = 0;
+            limbByteOffset = limbIndex;
+            hit = 0;
+            weaponEvent = 0;
+            hitMask = fn_801A7590(event);
+            linkedId = targetStatus->linkedId;
+            playerId = fn_80201B44();
+            weaponHandle = (u32)fn_8004910C(event);
+            weapon = weaponHandle;
+            if (weaponHandle != 0U) {
+                weaponModel = (u32)fn_80201BC8((void *)weapon);
             } else {
-                var_r16 = 0U;
+                weaponModel = 0U;
             }
-            sp15C = fn_80201814(sp108);
-            var_r17 = -1;
-            if (var_r16 != 0U) {
-                var_r3 = fn_8011EB04(var_r16);
+            linkedObject = (u32)fn_80201814(linkedId);
+            reactionId = -1;
+            if (weaponModel != 0U) {
+                modelType = fn_8011EB04((void *)weaponModel);
             } else {
-                var_r3 = -1;
+                modelType = -1;
             }
-            sp14C = var_r3;
-            var_r16_2 = 0;
-            sp140 = (u8 *)&lbl_802FC5BC + 0x18;
-            sp28 = 0;
-            var_r27 = 0;
-            sp24 = 0;
-            spFC = 0;
-            sp2C = M2C_FIELD(&lbl_802FC5BC, s32 *, 0x18);
-            sp8 = 0;
-            temp_r22 = fn_80201BC8(temp_r24, 0, M2C_FIELD(&lbl_802FC5BC, s32 *, 0x18));
-            fn_801A7744(&local_sp9C.x, arg0);
-            fn_8011F114(&local_sp90.x, temp_r22);
-            if (sp12C == temp_r28) {
-                fn_80201B9C();
-                temp_r26 = fn_80204844(0x20);
-                fn_8006D444();
-                if (fn_8006D344(0x80000, 0) != 0) {
-                    fn_80067180(temp_r24);
-                    fn_8020123C(0x56, sp13C, fn_80201B54(temp_r26), 0U);
-                    fn_801A7518(arg0, sp132);
+            weaponModelType = modelType;
+            elementType = 0;
+            defaultEffectResource = (void *)((u32)lbl_802FC5BC + 0x18);
+            effectAmount = 0;
+            effectKind = 0;
+            effectLevel = 0;
+            suppressParticles = 0;
+            effectResource = *(s32 *)defaultEffectResource;
+            effectVariant = 0;
+            model = (u32)fn_80201BC8((void *)target);
+            fn_801A7744(&eventPosition, event);
+            fn_8011F114(&modelPosition, (Vec3 *)model);
+            if (sourceId == playerId) {
+                playerObject = fn_80204844(fn_80201B9C(), 0x20);
+                if (fn_8006D344(fn_8006D444(playerObject), 0x80000, 0) != 0) {
+                    fn_80067180(target);
+                    fn_8020123C(0x56, targetId, fn_80201B54(playerObject), 0U);
+                    fn_801A7518(event, originalDamage);
                     return 1;
                 }
             }
-            if ((var_r20 != NULL) && ((u8) M2C_FIELD(var_r20, u8 *, 0x9E) == 2) && ((u8) M2C_FIELD(var_r20, u8 *, 0x9F) == 3) && ((s32) M2C_FIELD(var_r20, s32 *, 0x94) == 3)) {
-                temp_r3_3 = fn_801A7468(arg0);
-                if ((temp_r3_3 == 4) && (M2C_FIELD(M2C_FIELD(var_r20, void **, 4), u8 *, 0xA) & 8)) {
-                    fn_801A7538(arg0, 2U);
-                } else if ((temp_r3_3 == 5) && (M2C_FIELD(M2C_FIELD(var_r20, void **, 4), u8 *, 0xA) & 4)) {
-                    fn_801A7538(arg0, 2U);
+            if ((sourceInfo != NULL) && (sourceInfo->category == 2) && (sourceInfo->kind == 3) && (sourceInfo->state == 3)) {
+                eventKind = fn_801A7468(event);
+                if ((eventKind == 4) && (FIELD_AT(sourceInfo->modelData, u8 *, 0xA) & 8)) {
+                    fn_801A7538(event, 2U);
+                } else if ((eventKind == 5) && (FIELD_AT(sourceInfo->modelData, u8 *, 0xA) & 4)) {
+                    fn_801A7538(event, 2U);
                 }
             }
-            fn_800359A0(temp_r24, sp138);
-            if (sp104 != 0U) {
-                temp_r26_2 = fn_80201C24(sp104);
-                spF8 = fn_80035628(temp_r24);
-                var_r16_2 = fn_80157AB8(temp_r26_2);
-                var_r27 = fn_80157918(temp_r26_2);
-                var_r25 = fn_801D1B10(var_r25, spF8, var_r16_2, var_r27);
-                if ((sp13C != fn_80201B44()) && (fn_80071DD8() != 0) && (var_r25 > sp132)) {
-                    var_r25 = sp132;
+            fn_800359A0((void *)target, (void *)source);
+            if (weapon != 0U) {
+                weaponInfo = fn_80201C24((void *)weapon);
+                targetType = fn_80035628((void *)target);
+                elementType = fn_80157AB8(weaponInfo);
+                effectKind = fn_80157918(weaponInfo);
+                fn_801D1B10((s16)damage, targetType, elementType, effectKind & 0xFF);
+                /* ASM: mr retains the returned word in the short working value;
+                 * C assignment eagerly sign-extends it before the guarded test. */
+                asm { mr damage, r3 }
+                if (targetId != fn_80201B44()) {
+                    fn_80071DD8();
+                    /* ASM: cmpwi and beq test the result forwarded in r3 by
+                     * this void wrapper; C cannot access its register result. */
+                    asm { cmpwi r3, 0; beq skipDamageCap }
+                    if (damage > originalDamage) {
+                        damage = originalDamage;
+                    }
                 }
-                fn_801A7518(arg0, var_r25);
-                spFC = fn_801DD188(temp_r24, var_r16_2, var_r27);
-                sp134 = M2C_FIELD(M2C_FIELD(temp_r26_2, void **, 4), s32 *, 8);
-            } else if ((sp12C == temp_r28) && (sp104 == 0U) && (sp118 == 0)) {
-                sp128 = 1;
+            skipDamageCap:
+                fn_801A7518(event, damage);
+                suppressParticles = fn_801DD188((void *)target, elementType, effectKind);
+                weaponFlags = FIELD_AT(FIELD_AT(weaponInfo, void **, 4), s32 *, 8);
+            } else if ((sourceId == playerId) && (weapon == 0U) && (specialHit == 0)) {
+                directPlayerHit = 1;
             }
-            if ((sp15C != 0U) && ((sp13C != temp_r28) || (fn_80071D5C() == 0))) {
-                fn_801A74D8(arg0, 0x400000);
-                var_r14 = (u32) fn_8020123C(0xB, sp13C, sp108, arg0);
-                fn_801A74E8(arg0, 0x400000);
-                if ((u16) var_r14 == 0) {
-                    fn_801A7518(arg0, sp132);
+            if (linkedObject != 0U) {
+                if (targetId == playerId) {
+                    fn_80071D5C();
+                    /* ASM: cmpwi and bne test the result forwarded in r3 by
+                     * this void wrapper; C cannot access its register result. */
+                    asm { cmpwi r3, 0; bne skipLinkedHandler }
+                }
+                fn_801A74D8(event, 0x400000);
+                workingFlags = (u32) fn_8020123C(0xB, targetId, linkedId, (s32)event);
+                fn_801A74E8(event, 0x400000);
+                if ((u16) workingFlags == 0) {
+                    fn_801A7518(event, originalDamage);
                     return 1;
                 }
-                fn_801A7538(arg0, var_r14);
-                goto block_42;
+                fn_801A7538(event, workingFlags);
             }
-block_42:
-            if (sp150 & 0x800) {
-                var_r16_2 = fn_801A7760(arg0);
-                var_r27 = fn_801A7768(arg0);
+skipLinkedHandler:
+            if (eventFlags & 0x800) {
+                elementType = (u32)fn_801A7760(event);
+                fn_801A7768(event);
+                /* ASM: mr preserves the getter's already zero-extended byte;
+                 * C promotion inserts an unnecessary clrlwi here. */
+                asm { mr effectKind, r3 }
             }
-            if ((var_r27 > 1U) && (spFC == 0)) {
-                var_r27_2 = temp_r22;
-                if (var_r27 == 5) {
-                    var_f31 = lbl_8064E6B8;
+            if (((u8)effectKind > 1U) && (suppressParticles == 0)) {
+                particleModel = model;
+                if ((u8)effectKind == 5) {
+                    particleStrength = lbl_8064E6B8;
                 } else {
-                    var_f31 = -((lbl_8064E6B8 * (f32) (var_r27 - 2)) - lbl_8064E6BC);
+                    particleStrength = -((lbl_8064E6B8 * (f32) ((s32)(u8)effectKind - 2)) - lbl_8064E6BC);
                 }
-                temp_r3_4 = M2C_FIELD(temp_r21, u8 *, 0x9F);
-                var_r0 = 0x64;
-                if (temp_r3_4 == 0xD) {
-                    var_r0 = 0x3E8;
+                targetKind = targetInfo->kind;
+                particleDuration = (targetKind == 0xD) ? 0x3E8 : 0x64;
+                if ((targetKind == 0x16) && ((characterState = fn_800ACFE8(), (characterState == 1)) || (characterState == 2))) {
+                    particleModel = 0U;
                 }
-                if ((temp_r3_4 == 0x16) && ((temp_r3_5 = fn_800ACFE8(), ((temp_r3_5 == 1) != 0)) || (temp_r3_5 == 2))) {
-                    var_r27_2 = 0U;
-                }
-                if (var_r27_2 != 0U) {
-                    fn_80120AD0(var_r27_2, 0, var_r0, (u16) (fn_8006749C((s32) var_r16_2) | 2), lbl_8064E698, var_f31);
+                if (particleModel != 0U) {
+                    fn_80120AD0((void *)particleModel, 0, particleDuration, (u16) (fn_8006749C((s32) elementType) | 2), lbl_8064E698, particleStrength);
                 }
             }
-            fn_8012B690(temp_r22, &local_sp6C.x, &local_sp78.x);
-            if (sp104 != 0U) {
-                fn_80201C24(sp104);
-                sp100 = fn_80066E78(var_r14, var_r25, fn_801579FC(), temp_r24, &sp28, &sp24, &sp2C, &sp8);
-            } else if (sp128 != 0) {
-                sp100 = 0;
-                sp8 = 0;
+            fn_8012B690((void *)model, &localOrigin, &fallbackPosition);
+            if (weapon != 0U) {
+                impactFlags = fn_80066E78(workingFlags, damage, fn_801579FC(fn_80201C24((void *)weapon)), target, &effectAmount, &effectLevel, &effectResource, &effectVariant);
+            } else if (directPlayerHit != 0) {
+                impactFlags = 0;
+                effectVariant = 0;
             } else {
-                sp100 = fn_80066E78(var_r14, var_r25, 2, temp_r24, &sp28, &sp24, &sp2C, &sp8);
+                impactFlags = fn_80066E78(workingFlags, damage, 2, target, &effectAmount, &effectLevel, &effectResource, &effectVariant);
             }
-            fn_801A76F4(&local_spA8.first.x, arg0);
-            if (fn_80211B08(&local_spA8.second.x) > lbl_8064E6C0) {
-                local_sp84 = local_spA8.second;
-                fn_80211A90(&local_sp84.x, &local_sp84.x, lbl_8064E6C4);
+            fn_801A76F4(&motion, event);
+            if (fn_80211B08(&motion.second) > lbl_8064E6C0) {
+                impactDirection = motion.second;
+                fn_80211A90(&impactDirection, &impactDirection, lbl_8064E6C4);
             } else {
-                temp_r3_6 = 8 - (fn_800FBFB0() & 0xF);
-                local_sp84.x = (f32) temp_r3_6;
-                temp_r3_7 = 8 - (fn_800FBFB0() & 0xF);
-                temp_r3_8 = temp_r3_7 ^ 0x80000000;
-                spF0 = 0x43300000;
-                spF4 = temp_r3_8;
-                local_sp84.z = lbl_8064E6C8;
-                local_sp84.y = (f32) temp_r3_7;
+                randomX = 8 - (fn_800FBFB0() & 0xF);
+                impactDirection.x = (f32) randomX;
+                randomY = 8 - (fn_800FBFB0() & 0xF);
+                impactDirection.y = (f32) randomY;
+                impactDirection.z = lbl_8064E6C8;
             }
-            if (sp158 & 0x8000) {
-                sp114 = 1;
-                var_r14_2 = 0;
-                sp120 = var_r25;
-                sp110 = 1;
-                if (((u8) M2C_FIELD(temp_r21, u8 *, 0x9F) == 3) && ((s32) M2C_FIELD(temp_r21, s32 *, 0x94) == 3) && !(M2C_FIELD(temp_r19, s32 *, 0xB4) & 2)) {
-                    var_r14_2 = 1;
+            if (hitMask & 0x8000) {
+                applyDamage = 1;
+                forceFullBodyHit = 0;
+                totalDamage = damage;
+                hit = 1;
+                if ((targetInfo->kind == 3) && (targetInfo->state == 3) && !(targetStatus->attachedLimbs & 2)) {
+                    forceFullBodyHit = 1;
                 }
-                if ((fn_80066BB8(temp_r22, 1) == 0) || (var_r14_2 != 0)) {
-                    var_r5 = 0xF;
+                if ((fn_80066BB8(model, 1) == 0) || (forceFullBodyHit != 0)) {
+                    hitGroup = 0xF;
                 } else {
-                    var_r5 = 1;
+                    hitGroup = 1;
                 }
-                var_r14_3 = &local_spC0.position.x;
-                if (fn_8011F6A4(temp_r22, 0, var_r5, -1, &local_spC0.first, 1) == -1) {
-                    var_r14_3 = &local_sp78.x;
+                contactOrHealthIndex = fn_8011F6A4((void *)model, 0, hitGroup, -1, &contact.first, 1);
+                hitPosition = &contact.position.x;
+                if (contactOrHealthIndex == -1) {
+                    hitPosition = &fallbackPosition.x;
                 }
-                fn_8014D478(temp_r22, var_r14_3, &local_sp84.x, (u8) sp28, (u8) sp24, &sp2C, sp100);
-                if (fn_801207F0(temp_r22) != 0) {
-                    fn_800CEA1C(0x17, 3, var_r14_3, &local_sp84.x, 2, sp8, sp140, lbl_8064E6CC, lbl_8064E6D0, lbl_8064E6D4);
+                fn_8014D478((void *)model, hitPosition, &impactDirection.x, effectAmount & 0xFF, effectLevel & 0xFF, &effectResource, impactFlags);
+                if (fn_801207F0((void *)model) != 0) {
+                    fn_800CEA1C(0x17, 3, hitPosition, &impactDirection.x, 2, (u8)effectVariant, defaultEffectResource, lbl_8064E6CC, lbl_8064E6D0, lbl_8064E6D4);
                 }
-                if (((s32) var_r16_2 != 0) && (sp154 & 0x10018)) {
-                    fn_800337C8(var_r14_3, 0, (s32) var_r16_2, 0, 0x50, 1);
-                    sp124 = 1;
+                if (((s32) elementType != 0) && (damageFlags & 0x10018)) {
+                    fn_800337C8(hitPosition, 0, (s32) elementType, 0, 0x50, 1);
+                    spawnedEffect = 1;
                 }
-                var_r23 = 1;
+                result |= 1;
             }
-            sp148 = sp154 & 0x10018;
-            temp_r14_2 = sp134 & 2;
-            sp144 = sp154 & 0x20000;
+            /* Apply damage to each affected limb and collect sever reactions. */
+            elementalFlags = damageFlags & 0x10018;
+            workingFlags = weaponFlags & 2;
+            preventSevering = damageFlags & 0x20000;
             do {
-                temp_r27 = 1 << var_r18;
-                if ((sp158 & temp_r27) && (fn_80066D80(temp_r22, var_r18) != 0) && (M2C_FIELD(temp_r19, s32 *, 0xB4) & temp_r27)) {
-                    if (((u8) M2C_FIELD(temp_r21, u8 *, 0x9F) == 4) && (var_r20 != NULL) && ((u8) M2C_FIELD(var_r20, u8 *, 0x9E) == 1) && (fn_80204578(temp_r24, &local_sp9C.x) == 0)) {
-                        temp_r3_9 = var_r31 + 0xEA;
-                        *(s16 *)((u8 *)temp_r19 + temp_r3_9) -= (s16)(var_r25 * 2);
+                limbMask = 1 << limbIndex;
+                if ((hitMask & limbMask) && (fn_80066D80(model, limbIndex) != 0) && (targetStatus->attachedLimbs & limbMask)) {
+                    if ((targetInfo->kind == 4) && (sourceInfo != NULL) && (sourceInfo->category == 1) && (fn_80204578((void *)target, &eventPosition) == 0)) {
+                        /* ASM: extsh keeps this signed-halfword conversion in the
+                         * affected-limb path; MWCC otherwise hoists it and spills
+                         * the doubled value for the entire loop. */
+                        asm { extsh doubledDamage, damage }
+                        /* ASM: addi preserves the byte index for lhax/sthx.
+                         * C folds this addition into the base pointer, or masks
+                         * off the low bit when expressed as a halfword index. */
+                        asm { addi contactOrHealthIndex, limbByteOffset, 0xEA }
+                        doubledDamage *= 2;
+                        *(s16 *)((u8 *)targetStatus + contactOrHealthIndex) -= (s16)doubledDamage;
                     } else {
-                        temp_r4 = var_r31 + 0xEA;
-                        *(s16 *)((u8 *)temp_r19 + temp_r4) -= fn_8006534C(temp_r24, sp138, var_r25);
+                        limbHealth = fn_8006534C((void *)target, (void *)source, damage);
+                        /* ASM: addi preserves the byte index for lhax/sthx;
+                         * C otherwise reassociates the address calculation. */
+                        asm { addi healthOffset, limbByteOffset, 0xEA }
+                        *(s16 *)((u8 *)targetStatus + healthOffset) -= limbHealth;
                     }
-                    temp_r28_2 = (u8 *)temp_r19 + var_r31;
-                    temp_r9 = M2C_FIELD(temp_r28_2, s16 *, 0xEA);
-                    var_r23 |= 1;
-                    M2C_FIELD(temp_r28_2, s16 *, 0xEA) = (s16) (temp_r9 & ((s32) (-temp_r9 & ~temp_r9) >> 0x1F));
-                    if (fn_8011F6A4(temp_r22, 0x14, var_r18, -1, &local_spC0, 1) == -1) {
-                        var_r26 = &local_sp78.x;
+                    limbStatus = (void *)((u32)targetStatus + limbByteOffset);
+                    limbHealth = FIELD_AT(limbStatus, s16 *, 0xEA);
+                    result |= 1;
+                    FIELD_AT(limbStatus, s16 *, 0xEA) = limbHealth > 0 ? limbHealth : 0;
+                    if (fn_8011F6A4((void *)model, 0x14, limbIndex, -1, &contact, 1) == -1) {
+                        limbHitPosition = &fallbackPosition.x;
                     } else {
-                        var_r26 = &local_spC0.position.x;
+                        limbHitPosition = &contact.position.x;
                     }
-                    fn_8014D478(temp_r22, var_r26, &local_sp84.x, (u8) sp28, (u8) sp24, &sp2C, sp100);
-                    if (fn_801207F0(temp_r22) != 0) {
-                        fn_800CEA1C(0x17, 3, var_r26, &local_sp84.x, 2, sp8, sp140, lbl_8064E6D8, lbl_8064E6D0, lbl_8064E6D4);
+                    fn_8014D478((void *)model, limbHitPosition, &impactDirection.x, effectAmount & 0xFF, effectLevel & 0xFF, &effectResource, impactFlags);
+                    if (fn_801207F0((void *)model) != 0) {
+                        fn_800CEA1C(0x17, 3, limbHitPosition, &impactDirection.x, 2, (u8)effectVariant, defaultEffectResource, lbl_8064E6D8, lbl_8064E6D0, lbl_8064E6D4);
                     }
-                    sp110 = 1;
-                    if (((s32) var_r16_2 != 0) && (sp148 != 0) && (sp124 == 0)) {
-                        fn_800337C8(var_r26, 0, (s32) var_r16_2, 0, 0x50, 1);
-                        sp124 = 1;
+                    hit = 1;
+                    if (((s32) elementType != 0) && (elementalFlags != 0) && (spawnedEffect == 0)) {
+                        fn_800337C8(limbHitPosition, 0, (s32) elementType, 0, 0x50, 1);
+                        spawnedEffect = 1;
                     }
-                    if ((s16) M2C_FIELD(temp_r28_2, s16 *, 0xEA) == 0) {
-                        sp114 = 1;
-                        sp120 += M2C_FIELD(temp_r28_2, s16 *, 0x126);
-                        if (((M2C_FIELD(temp_r19, s32 *, 0xB8) & temp_r27) || (fn_80065454(temp_r24, temp_r22, temp_r21, var_r18) != 0)) && (temp_r14_2 != 0) && (sp144 == 0) && (fn_80065428(sp14C, var_r25, var_r18) != 0) && (fn_80067728(M2C_FIELD(temp_r21, u8 *, 0x9F)) != 0)) {
-                            temp_f2 = local_sp90.x - local_sp9C.x;
-                            local_sp60 = *(Vec3 *)(pool + 0xC);
-                            temp_f1 = local_sp90.y - local_sp9C.y;
-                            local_sp60.x = temp_f2;
-                            local_sp60.y = temp_f1;
-                            local_sp60.z = lbl_8064E698;
-                            fn_80211AAC(&local_sp60.x, &local_sp60.x);
-                            fn_80211A90(&local_sp60.x, &local_sp60.x, lbl_8064E6C8);
-                            fn_80205868(temp_r22, var_r18, &local_sp60.x, 0x2000);
-                            fn_8014CBE8(temp_r24, 0x14, var_r18, sp140);
-                            fn_800EA428(temp_r24, temp_r19, var_r18);
-                            var_r23 |= 2;
-                            fn_801A74D8(arg0, 0x200);
-                            if (M2C_FIELD(temp_r30, u8 *, 0xC8) & 2) {
-                                var_r17_2 = -1;
-                                local_sp54 = *(Vec3 *)(pool + 0x18);
-                                fn_8012C478(temp_r22, var_r18, 1);
-                                M2C_FIELD(temp_r28_2, s16 *, 0xEA) = (s16) *(s16 *)((u8 *)M2C_FIELD(temp_r21, void **, 0x8C) + var_r31 + 0x108);
-                                if ((var_r18 == 0) || (var_r18 == 2) || (var_r18 == 3)) {
-                                    var_r17_2 = fn_800C1AB8(var_r18);
+                    if (FIELD_AT(limbStatus, s16 *, 0xEA) == 0) {
+                        applyDamage = 1;
+                        totalDamage += FIELD_AT(limbStatus, s16 *, 0x126);
+                        if (((targetStatus->detachableLimbs & limbMask) || (fn_80065454(target, model, (u8 *)targetInfo, limbIndex) != 0)) && (workingFlags != 0) && (preventSevering == 0) && (fn_80065428(weaponModelType, damage, limbIndex) != 0) && (fn_80067728(targetInfo->kind) != 0)) {
+                            directionX = modelPosition.x - eventPosition.x;
+                            detachDirection = defaults->direction;
+                            directionY = modelPosition.y - eventPosition.y;
+                            detachDirection.x = directionX;
+                            detachDirection.y = directionY;
+                            detachDirection.z = lbl_8064E698;
+                            fn_80211AAC(&detachDirection, &detachDirection);
+                            fn_80211A90(&detachDirection, &detachDirection, lbl_8064E6C8);
+                            fn_80205868((void *)model, limbIndex, &detachDirection.x, 0x2000);
+                            fn_8014CBE8((void *)target, 0x14, limbIndex, defaultEffectResource);
+                            fn_800EA428((void *)target, targetStatus, limbIndex);
+                            result |= 2;
+                            fn_801A74D8(event, 0x200);
+                            if (FIELD_AT(targetDefinition, u8 *, 0xC8) & 2) {
+                                scaleIndex = -1;
+                                partScale = defaults->scale;
+                                fn_8012C478((void *)model, limbIndex, 1);
+                                FIELD_AT(limbStatus, s16 *, 0xEA) = (s16) *(s16 *)((u8 *)targetInfo->status + limbByteOffset + 0x108);
+                                if ((limbIndex == 0) || (limbIndex == 2) || (limbIndex == 3)) {
+                                    scaleIndex = fn_800C1AB8(limbIndex);
                                 }
-                                if (temp_r21 != NULL) {
-                                    temp_r4_2 = M2C_FIELD(temp_r21, void **, 0x8C);
-                                    if ((temp_r4_2 != NULL) && (var_r17_2 != -1)) {
-                                        temp_f1_2 = *(f32 *)((u8 *)temp_r4_2 + (var_r17_2 * 4) + 0x70);
-                                        if ((lbl_8064E6DC != temp_f1_2) && (lbl_8064E698 != temp_f1_2)) {
-                                            local_sp54.z = temp_f1_2;
-                                            local_sp54.y = temp_f1_2;
-                                            local_sp54.x = temp_f1_2;
+                                if (targetInfo != NULL) {
+                                    scaleStatus = targetInfo->status;
+                                    if ((scaleStatus != NULL) && (scaleIndex != -1)) {
+                                        scaleValue = scaleStatus->scales[scaleIndex];
+                                        if ((lbl_8064E6DC != scaleValue) && (lbl_8064E698 != scaleValue)) {
+                                            partScale.z = scaleValue;
+                                            partScale.y = scaleValue;
+                                            partScale.x = scaleValue;
                                         }
                                     }
                                 }
-                                sp168 = M2C_FIELD(pool, s32 *, 0x24);
-                                local_sp3C.y = M2C_FIELD(pool, s32 *, 0x34);
-                                sp160 = M2C_FIELD(pool, s32 *, 0x28);
-                                local_sp48.x = sp168;
-                                local_sp48.y = sp160;
-                                sp164 = M2C_FIELD(pool, s32 *, 0x2C);
-                                local_sp30 = local_sp54;
-                                local_sp3C.x = M2C_FIELD(pool, s32 *, 0x30);
-                                local_sp3C.z = M2C_FIELD(pool, s32 *, 0x38);
-                                local_sp48.z = M2C_FIELD(pool, s32 *, 0x2C);
-                                fn_8012CBE8(temp_r22, var_r18, &local_sp48, &local_sp3C, &local_sp30, 1);
-                                fn_8012F604(temp_r22, var_r18, 1, 0x3E8);
+                                partScaleCopy = partScale;
+                                partRotation = defaults->rotation;
+                                partPosition = defaults->position;
+                                fn_8012CBE8((void *)model, limbIndex, &partPosition, &partRotation, &partScaleCopy, 1);
+                                fn_8012F604((void *)model, limbIndex, 1, 0x3E8);
                             }
-                            if (M2C_FIELD(temp_r30, u8 *, 0xC8) & 1) {
-                                fn_8012C478(temp_r22, var_r18, 1);
-                                M2C_FIELD(temp_r28_2, s16 *, 0xEA) = (s16) *(s16 *)((u8 *)M2C_FIELD(temp_r21, void **, 0x8C) + var_r31 + 0x108);
-                                if (((u8) M2C_FIELD(temp_r21, u8 *, 0x9F) == 3) && ((s32) M2C_FIELD(temp_r21, s32 *, 0x94) == 3)) {
-                                    temp_r9_2 = M2C_FIELD(temp_r21, void **, 4);
-                                    temp_r10 = ~(temp_r27 | temp_r27);
-                                    M2C_FIELD(temp_r9_2, u8 *, 0xA) = (u8) (M2C_FIELD(temp_r9_2, u8 *, 0xA) | temp_r27);
-                                    M2C_FIELD(temp_r19, s32 *, 0xB8) = (s32) (M2C_FIELD(temp_r19, s32 *, 0xB8) & temp_r10);
-                                    M2C_FIELD(temp_r19, s32 *, 0xB4) = (s32) (M2C_FIELD(temp_r19, s32 *, 0xB4) & temp_r10);
-                                    sp18 = lbl_8064E6A8;
-                                    sp1C = lbl_8064E6A4;
-                                    sp20 = lbl_8064E6A0;
-                                    fn_8012C62C(temp_r22, var_r18, &sp20, &sp1C, &sp18, 0x136);
+                            if (FIELD_AT(targetDefinition, u8 *, 0xC8) & 1) {
+                                fn_8012C478((void *)model, limbIndex, 1);
+                                FIELD_AT(limbStatus, s16 *, 0xEA) = (s16) *(s16 *)((u8 *)targetInfo->status + limbByteOffset + 0x108);
+                                if ((targetInfo->kind == 3) && (targetInfo->state == 3)) {
+                                    modelData = targetInfo->modelData;
+                                    inverseLimbMask = ~limbMask;
+                                    FIELD_AT(modelData, u8 *, 0xA) = (u8) (FIELD_AT(modelData, u8 *, 0xA) | limbMask);
+                                    targetStatus->detachableLimbs = targetStatus->detachableLimbs & inverseLimbMask;
+                                    targetStatus->attachedLimbs = targetStatus->attachedLimbs & inverseLimbMask;
+                                    severParam3 = lbl_8064E6A8;
+                                    severParam2 = lbl_8064E6A4;
+                                    severParam1 = lbl_8064E6A0;
+                                    fn_8012C62C((void *)model, limbIndex, &severParam1, (s8 *)&severParam2, &severParam3, 0x136);
                                 } else {
-                                    spC = lbl_8064E6B4;
-                                    sp10 = lbl_8064E6B0;
-                                    sp14 = lbl_8064E6AC;
-                                    fn_8012C62C(temp_r22, var_r18, &sp14, &sp10, &spC, 4);
+                                    regularParam3 = lbl_8064E6B4;
+                                    regularParam2 = lbl_8064E6B0;
+                                    regularParam1 = lbl_8064E6AC;
+                                    fn_8012C62C((void *)model, limbIndex, &regularParam1, (s8 *)&regularParam2, &regularParam3, 4);
                                 }
-                                fn_8012F604(temp_r22, var_r18, 0, 0xA);
+                                fn_8012F604((void *)model, limbIndex, 0, 0xA);
                             }
-                            switch (var_r18) {      /* switch 1; irregular */
-                            case 0:                 /* switch 1 */
-                                sp11C = 1;
-                                fn_801A977C(temp_r22, 0x19);
-                                if (fn_8011EB04(temp_r22) == 1) {
-                                    var_r3_2 = 0xC;
-                                    if (fn_80204578(temp_r24, &local_sp9C.x) != 0) {
-                                        var_r3_2 = 0xB;
+                            switch (limbIndex) {
+                            case 0:
+                                limbReaction = 1;
+                                fn_801A977C((void *)model, 0x19);
+                                if (fn_8011EB04((void *)model) == 1) {
+                                    facing = fn_80204578((void *)target, &eventPosition);
+                                    headReaction = 0xC;
+                                    if (facing != 0) {
+                                        headReaction = 0xB;
                                     }
                                 } else {
-                                    var_r3_2 = 0x45;
+                                    headReaction = 0x45;
                                 }
-                                var_r17 = var_r3_2;
+                                reactionId = headReaction;
                                 break;
-                            case 2:                 /* switch 1 */
-                                sp11C = 1;
-                                fn_801A977C(temp_r22, 0x18);
-                                var_r17 = 0x46;
+                            case 2:
+                                limbReaction = 1;
+                                fn_801A977C((void *)model, 0x18);
+                                reactionId = 0x46;
                                 break;
-                            case 3:                 /* switch 1 */
-                                sp11C = 1;
-                                fn_801A977C(temp_r22, 0x18);
-                                var_r17 = 0x47;
+                            case 3:
+                                limbReaction = 1;
+                                fn_801A977C((void *)model, 0x18);
+                                reactionId = 0x47;
                                 break;
-                            default:                /* switch 1 */
-                                var_r3_3 = 0xC;
-                                if (fn_80204578(temp_r24, &local_sp9C.x) != 0) {
-                                    var_r3_3 = 0xB;
+                            default:
+                                facing = fn_80204578((void *)target, &eventPosition);
+                                severReaction = 0xC;
+                                if (facing != 0) {
+                                    severReaction = 0xB;
                                 }
-                                var_r17 = var_r3_3;
+                                reactionId = severReaction;
                                 break;
                             }
                         } else {
-                            if (M2C_FIELD(temp_r30, u8 *, 0xC8) & 0x10) {
-                                M2C_FIELD(temp_r28_2, s16 *, 0xEA) = 0;
-                            } else if (temp_r14_2 != 0) {
-                                M2C_FIELD(temp_r28_2, s16 *, 0xEA) = 1;
+                            if (FIELD_AT(targetDefinition, u8 *, 0xC8) & 0x10) {
+                                FIELD_AT(limbStatus, s16 *, 0xEA) = 0;
+                            } else if (workingFlags != 0) {
+                                FIELD_AT(limbStatus, s16 *, 0xEA) = 1;
                             } else {
-                                M2C_FIELD(temp_r28_2, s16 *, 0xEA) = (s16) *(s16 *)((u8 *)M2C_FIELD(temp_r21, void **, 0x8C) + var_r31 + 0x108);
+                                FIELD_AT(limbStatus, s16 *, 0xEA) = (s16) *(s16 *)((u8 *)targetInfo->status + limbByteOffset + 0x108);
                             }
-                            var_r3_4 = 0xC;
-                            if (fn_80204578(temp_r24, &local_sp9C.x) != 0) {
-                                var_r3_4 = 0xB;
+                            facing = fn_80204578((void *)target, &eventPosition);
+                            failedSeverReaction = 0xC;
+                            if (facing != 0) {
+                                failedSeverReaction = 0xB;
                             }
-                            var_r17 = var_r3_4;
+                            reactionId = failedSeverReaction;
                         }
                     }
                 }
-                var_r18 += 1;
-                var_r31 += 2;
-            } while (var_r18 < 0xF);
-            if ((sp11C == 0) && (sp110 != 0)) {
-                fn_801A977C(temp_r22, 0x13);
+                limbIndex += 1;
+                limbByteOffset += 2;
+            } while (limbIndex < 0xF);
+            if ((limbReaction == 0) && (hit != 0)) {
+                fn_801A977C((void *)model, 0x13);
             }
-            if (!((u32) fn_8020123C(0x82, sp12C, sp13C, sp130) & ~0)) {
-                sp130 = 0;
-                if ((M2C_FIELD(temp_r19, s32 *, 0) & 1) && (sp128 == 0)) {
-                    var_r4 = 0xC;
-                    if (fn_80204578(temp_r24, &local_sp9C.x) != 0) {
-                        var_r4 = 0xB;
+            /* Resolve the reaction after limb-specific processing. */
+            if (!(u32)(fn_8020123C(0x82, sourceId, targetId, reaction) & 0xFFFFFFFFU)) {
+                reaction = 0;
+                if ((targetStatus->flags & 1) && (directPlayerHit == 0)) {
+                    facing = fn_80204578((void *)target, &eventPosition);
+                    forcedReaction = 0xC;
+                    if (facing != 0) {
+                        forcedReaction = 0xB;
                     }
-                    var_r17 = var_r4;
-                    fn_801A7470(arg0, var_r17);
+                    reactionId = forcedReaction;
+                    fn_801A7470(event, reactionId);
                 }
             }
-            switch ((s32) sp130) {                  /* switch 2; irregular */
-            case 8:                                 /* switch 2 */
-                var_r0_2 = var_r17;
-                if (var_r17 == -1) {
-                    var_r0_2 = 0xB;
+            switch ((s32) reaction) {
+            case 8:
+                fallbackReaction = reactionId;
+                if (reactionId == -1) {
+                    fallbackReaction = 0xB;
                 }
-                var_r17 = var_r0_2;
+                reactionId = fallbackReaction;
                 break;
-            case 16:                                /* switch 2 */
-                if (fn_80204578(temp_r24, &local_sp9C.x) != 0) {
-                    if ((u8) M2C_FIELD(temp_r21, u8 *, 0x9F) == 4) {
-                        fn_8020123C(0xE6, sp12C, sp13C, arg0);
+            case 16:
+                if (fn_80204578((void *)target, &eventPosition) != 0) {
+                    if (targetInfo->kind == 4) {
+                        fn_8020123C(0xE6, sourceId, targetId, (s32)event);
                     } else {
-                        fn_801A76DC(arg0);
-                        fn_8020104C(0x37, sp12C, sp13C, 0);
+                        fn_8020104C(0x37, sourceId, targetId, 0, fn_801A76DC(event));
                     }
-                    var_r23 |= 1;
+                    result |= 1;
                 } else {
-                    var_r17 = 0xC;
+                    reactionId = 0xC;
                 }
                 break;
-            case 32:                                /* switch 2 */
-                fn_8020123C(0x32, sp12C, sp13C, arg0);
-                var_r23 |= 1;
+            case 32:
+                fn_8020123C(0x32, sourceId, targetId, (s32)event);
+                result |= 1;
                 break;
-            case 2:                                 /* switch 2 */
-                fn_801A7470(arg0, -1);
-                sp130 = 0;
-                fn_8020123C(0xCB, sp12C, sp13C, arg0);
-                var_r23 |= 1;
-                var_r4_2 = 0xC;
-                if (fn_80204578(temp_r24, &local_sp9C.x) != 0) {
-                    var_r4_2 = 0xB;
+            case 2:
+                fn_801A7470(event, -1);
+                reaction = 0;
+                fn_8020123C(0xCB, sourceId, targetId, (s32)event);
+                result |= 1;
+                facing = fn_80204578((void *)target, &eventPosition);
+                eventReaction = 0xC;
+                if (facing != 0) {
+                    eventReaction = 0xB;
                 }
-                var_r17 = var_r4_2;
-                fn_801A7470(arg0, var_r17);
+                reactionId = eventReaction;
+                fn_801A7470(event, reactionId);
                 break;
             }
-            if ((sp110 != 0) && (sp130 == 0) && (M2C_FIELD(temp_r19, s32 *, 0) & 1) && (var_r17 == -1) && (sp128 == 0)) {
-                var_r3_5 = 0xC;
-                if (fn_80204578(temp_r24, &local_sp9C.x) != 0) {
-                    var_r3_5 = 0xB;
+            if ((hit != 0) && (reaction == 0) && (targetStatus->flags & 1) && (reactionId == -1) && (directPlayerHit == 0)) {
+                facing = fn_80204578((void *)target, &eventPosition);
+                defaultReaction = 0xC;
+                if (facing != 0) {
+                    defaultReaction = 0xB;
                 }
-                var_r17 = var_r3_5;
+                reactionId = defaultReaction;
             }
-            fn_801A7470(arg0, var_r17);
-            if ((var_r17 != -1) || (sp128 != 0)) {
-                var_r23 |= 1;
-                if ((temp_r21 != NULL) && (sp150 & 0x1000) && ((temp_r0 = M2C_FIELD(temp_r21, u8 *, 0x9F), ((temp_r0 == 0x27) != 0)) || (temp_r0 == 3))) {
-                    var_r0_3 = 1;
+            fn_801A7470(event, reactionId);
+            if ((reactionId != -1) || (directPlayerHit != 0)) {
+                result |= 1;
+                if ((targetInfo != NULL) && (eventFlags & 0x1000) && ((kind = targetInfo->kind, (kind == 0x27)) || (kind == 3))) {
+                    specialReaction = 1;
                 } else {
-                    var_r0_3 = 0;
+                    specialReaction = 0;
                 }
-                if ((var_r0_3 != 0) || (var_r23 & 2) || (((u8) M2C_FIELD(temp_r21, u8 *, 0x9E) == 1) && ((u8) M2C_FIELD(temp_r21, u8 *, 0x9F) == 1))) {
-                    fn_8020123C(0x35, sp12C, sp13C, arg0);
+                if ((specialReaction != 0) || (result & 2) || ((targetInfo->category == 1) && (targetInfo->kind == 1))) {
+                    fn_8020123C(0x35, sourceId, targetId, (s32)event);
                 } else {
-                    fn_8020123C(0xE6, sp12C, sp13C, arg0);
+                    fn_8020123C(0xE6, sourceId, targetId, (s32)event);
                 }
             }
-            if (sp104 != 0U) {
-                temp_r3_10 = fn_80201C24(sp104);
-                if ((temp_r3_10 != NULL) && (M2C_FIELD(*temp_r3_10, s32 *, 0x10) & 0x10)) {
-                    sp10C = 1;
+            if (weapon != 0U) {
+                eventWeaponInfo = fn_80201C24((void *)weapon);
+                if ((eventWeaponInfo != NULL) && (FIELD_AT(*eventWeaponInfo, s32 *, 0x10) & 0x10)) {
+                    weaponEvent = 1;
                 }
             }
-            if (sp110 != 0) {
-                if (sp10C != 0) {
-                    fn_8020123C(0x1E, sp12C, sp13C, arg0);
+            if (hit != 0) {
+                if (weaponEvent != 0) {
+                    fn_8020123C(0x1E, sourceId, targetId, (s32)event);
                 }
-                if ((s32) M2C_FIELD(temp_r19, s32 *, 0xBC) != 0) {
-                    fn_8020123C(0xF6, sp13C, M2C_FIELD(temp_r19, s32 *, 0xBC), arg0);
-                }
-            }
-            if (sp114 != 0) {
-                fn_801A7470(arg0, -1);
-                fn_801A7518(arg0, fn_8006534C(temp_r24, sp138, sp120));
-                fn_801A74D8(arg0, 0x800000);
-                temp_r14_3 = (u32) fn_8020123C(0x27, sp12C, sp13C, arg0);
-                fn_801A74E8(arg0, 0x800000);
-                if (temp_r14_3 & ~0 & 2) {
-                    var_r23 |= 4;
+                if (targetStatus->callbackId != 0) {
+                    fn_8020123C(0xF6, targetId, targetStatus->callbackId, (s32)event);
                 }
             }
-            goto block_215;
+            if (applyDamage != 0) {
+                fn_801A7470(event, -1);
+                fn_801A7518(event, fn_8006534C((void *)target, (void *)source, totalDamage));
+                fn_801A74D8(event, 0x800000);
+                damageResult = fn_8020123C(0x27, sourceId, targetId, (s32)event);
+                fn_801A74E8(event, 0x800000);
+                if ((u32)(damageResult & 0xFFFFFFFFU) & 2) {
+                    result |= 4;
+                }
+            }
         }
-block_215:
-        fn_801A7518(arg0, sp132);
-        goto block_216;
+        fn_801A7518(event, originalDamage);
     }
-block_216:
-    return var_r23;
+    return result;
 }

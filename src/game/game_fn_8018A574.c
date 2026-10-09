@@ -43,17 +43,15 @@ void fn_8018A574(u8* transform, u8* object, void* context, s16* out)
     u8 radius_value = entry[0x21];
     for (i = 0; i < count; i++) {
         int z;
-        int radius;
-        int y1;
         int x;
+        int y0;
+        int y1;
+        int x1;
         int x0;
         int y;
-        int x1;
-        int y0;
-        int raw_radius;
+        int radius;
 
-        raw_radius = fn_8018D1F0(radius_value, dims[2]);
-        radius = raw_radius >> 1;
+        radius = fn_8018D1F0(radius_value, dims[2]) >> 1;
 
         if (radius == 0) {
             radius = 1;
@@ -62,8 +60,8 @@ void fn_8018A574(u8* transform, u8* object, void* context, s16* out)
         y = dims[1];
         z = dims[2];
         x0 = x - radius;
-        y1 = radius + y;
         x1 = x + radius;
+        y1 = y + radius;
         y0 = y - radius;
         output[0] = x0;
         output[1] = y1;
