@@ -6,17 +6,18 @@ extern u8 lbl_80607120[];
 extern int lbl_8064D738;
 extern s16 lbl_80607900[];
 
-extern void fn_8018A3D8(void*, void*, void*, int);
-extern void fn_80188B44(void*, void*,
+extern void fn_8018A3D8(u8*, void*, s16*, int);
+extern void fn_80188B44(u8*, void*,
                         void (*)(void*, float, float, float, float, float));
-extern void fn_8018D020(void*, float, float, float, float, float);
+extern void fn_8018D020(s16*, float, float, float, float, float);
 extern void DCFlushRange(void*, unsigned int);
 extern int fn_801ED57C(int);
-extern void fn_8018D0D0(void*, void*, s16);
+extern void fn_8018D0D0(u8*, unsigned int*, int);
 extern void fn_8018865C(void*, void*, void*);
 
 void fn_8018AA30(u8* object)
 {
+    int i;
     u8 count;
     u16 vertex_size;
     u16 index_size;
@@ -45,7 +46,6 @@ void fn_8018AA30(u8* object)
     object_data = *(u8**)(object + 0x4C);
     color = color_data;
     if (count > 3) {
-        int i;
         int j;
 
         for (i = 0; i < count; i++) {
@@ -57,14 +57,13 @@ void fn_8018AA30(u8* object)
             }
             object_data += 0x38;
         }
-        fn_8018A3D8(*(void**)(object + 0x4C), lbl_80607900, vertex_data, count);
+        fn_8018A3D8(*(u8**)(object + 0x4C), lbl_80607900, (s16*)vertex_data, count);
     } else {
-        int i;
-
         i = 0;
         for (; i < count; i++) {
-            fn_80188B44(object_data, vertex_data + i * 0x18,
-                        fn_8018D020);
+            /* Four vertices, each with three 16-bit coordinates. */
+            fn_80188B44(object_data, vertex_data + (i << 3) * 3,
+                        (void (*)(void*, float, float, float, float, float))fn_8018D020);
             {
                 int j;
                 for (j = 0; j < object_data[0x20]; j++) {
@@ -81,7 +80,7 @@ void fn_8018AA30(u8* object)
     DCFlushRange(color_data, color_size);
     {
         int saved = fn_801ED57C(0);
-        fn_8018D0D0(object, object + 0x5C, *(s16*)(object + 0xE));
+        fn_8018D0D0(object, (unsigned int*)(object + 0x5C), *(s16*)(object + 0xE));
         fn_8018865C(vertex_data, index_data, color_data);
         fn_801ED57C(saved);
     }
