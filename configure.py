@@ -9758,7 +9758,7 @@ config.libs = [
             Object(Matching, "game/game_fn_800EFC9C.c"),
             Object(Matching, "game/game_TRKGetBuffer.c"),
             Object(Matching, "game/game_TRKInitializeMessageBuffers.c", extra_cflags=["-sdata 0"]),
-            Object(NonMatching, "game/game_fn_800EFCDC.c"),
+            Object(Matching, "game/game_fn_800EFCDC.c"),
             Object(NonMatching, "game/game_fn_800EFD6C.c"),
             Object(Matching, "game/game_fn_800EFEA8.c"),
             Object(Matching, "game/game_TRKInitializeSerialHandler.c", extra_cflags=["-sdata 0"]),
