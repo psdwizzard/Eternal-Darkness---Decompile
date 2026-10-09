@@ -1,6 +1,32 @@
-/* fn_800B5B4C (0x800B5B4C, 132 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
 
-void fn_800B5B4C(void) {
+typedef struct EventRequest {
+    u8 pad_00[8];
+    int status;
+    u8 value;
+} EventRequest;
+
+extern int lbl_8064C6BC[2];
+extern int lbl_8064CA60;
+
+extern void fn_800B25AC(void);
+extern int fn_800B1944(void);
+extern void fn_800B6840(int);
+extern void fn_800B669C(int, int);
+extern void fn_800B61B8(int, int);
+
+void fn_800B5B4C(EventRequest *request)
+{
+    fn_800B25AC();
+    if (request->status == 0) {
+        if (fn_800B1944() != 2) {
+            fn_800B6840(request->value);
+        } else {
+            lbl_8064C6BC[request->value] = 2;
+            fn_800B669C(request->value, 0);
+        }
+    } else {
+        fn_800B61B8(request->value, request->status);
+    }
+    lbl_8064CA60 = 20;
 }
