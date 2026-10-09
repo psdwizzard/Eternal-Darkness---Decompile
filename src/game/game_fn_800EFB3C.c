@@ -1,6 +1,32 @@
-/* fn_800EFB3C (0x800EFB3C, 140 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned int u32;
 
-void fn_800EFB3C(void) {
+typedef struct TRKBuffer {
+    u32 unk0;
+    u32 unk4;
+    u32 length;
+    u32 position;
+    u8 data[0x880];
+} TRKBuffer;
+
+extern void fn_80003130(void *, const void *, u32);
+
+int fn_800EFB3C(TRKBuffer *buffer, void *data, u32 length)
+{
+    int error = 0;
+    u32 bytesLeft;
+
+    if (length == 0) {
+        return 0;
+    }
+
+    bytesLeft = buffer->length - buffer->position;
+    if (length > bytesLeft) {
+        error = 0x302;
+        length = bytesLeft;
+    }
+
+    fn_80003130(data, buffer->data + buffer->position, length);
+    buffer->position += length;
+    return error;
 }
