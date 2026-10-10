@@ -51,18 +51,18 @@ extern void fn_80161FA0(Object*);
 
 void fn_80160B18(Object* object, Entry* entry, int amount)
 {
+    Callback callback_source;
     Entry* first_result;
     Holder holder;
-    Callback callback_source;
     Closure* closure;
 
     if (entry->fields.type != 5) {
-        closure = object->table[fn_80167D2C(entry)].saved;
-        if (closure == 0) {
+        Closure* tag_method = object->table[fn_80167D2C(entry)].saved;
+        if (tag_method == 0) {
             fn_801603AC(object, entry, &lbl_8064BA68);
         }
         fn_80160748(object, entry);
-        entry->fields.value = closure;
+        entry->fields.value = tag_method;
         entry->fields.type = 5;
     }
 
@@ -70,15 +70,13 @@ void fn_80160B18(Object* object, Entry* entry, int amount)
     holder.value = closure;
     entry->fields.value = &holder;
     entry->fields.type = 6;
-    if ((callback_source = object->source) != 0) {
+    callback_source = object->source;
+    if (callback_source != 0) {
         fn_8016088C(object, entry, callback_source, &lbl_8064BA68);
     }
 
-    if (closure->count != 0) {
-        first_result = fn_801608D0(object, closure, entry + 1);
-    } else {
-        first_result = fn_801697AC(object, closure, entry + 1);
-    }
+    first_result = closure->count != 0 ? fn_801608D0(object, closure, entry + 1)
+                                       : fn_801697AC(object, closure, entry + 1);
 
     if (callback_source != 0) {
         fn_8016088C(object, entry, callback_source, &lbl_8064BA70);
