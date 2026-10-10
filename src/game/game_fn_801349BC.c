@@ -37,9 +37,9 @@ typedef struct Action {
     u8 pad1E[0x32];
     float value50;
     u8 pad54[0x24];
-    u32 value78;
+    u32 color;
     u8 pad7C[0x14];
-    void (*callback)(void);
+    void* (*callback)(void*, void*, u8*);
     void* handle;
     Vec3 position;
     u8 params[6];
@@ -61,37 +61,44 @@ typedef struct Params {
     u16 half;
 } Params;
 
+typedef struct GameState {
+    u8 pad00[0x1C8];
+    int selected;
+    u8 pad1CC[0x14];
+    s8 kind;
+} GameState;
+
 extern u32 lbl_80651BA8;
 extern u16 lbl_80651BAC;
 extern Vec3 lbl_8023A70C;
-extern u8 lbl_8030F540[];
+extern GameState lbl_8030F540;
 extern Action lbl_805AD564;
 extern const float lbl_80650270;
 
-extern Manager* fn_8015E4A4(void);
-extern void fn_801857B4(Action*);
+extern void* fn_8015E4A4(void);
+extern void fn_801857B4(u8*);
 extern void fn_801D38BC(int, u32*, s16*);
-extern void fn_80185A44(void);
+extern void* fn_80185A44(void*, void*, u8*);
 extern void* memcpy(void*, const void*, unsigned int);
-extern int fn_801E8328();
-extern void fn_801869DC(void*);
-extern ShortCoord3* fn_8017FDE4(void*);
-extern void fn_801869E4(void*, u16, u16, int);
+extern int fn_801E8328(u32, u32);
+extern u16 fn_801869DC(u8*);
+extern void* fn_8017FDE4(void*);
+extern void fn_801869E4(u8*, u16, u16, u8);
 
 void fn_801349BC(Emitter* emitter, EmitterSlot* slot)
 {
-    u32 positionWord;
+    u32 color;
     Params params;
     Vec3 position;
     Manager* manager;
     Action* action;
-    s8 kind;
+    int kind;
     u16 value;
     u16 scale;
     ShortCoord3* dest;
     Action* effect;
 
-    kind = lbl_8030F540[0x1E0];
+    kind = lbl_8030F540.kind;
     params.word = lbl_80651BA8;
     params.half = lbl_80651BAC;
     position = lbl_8023A70C;
@@ -103,25 +110,26 @@ void fn_801349BC(Emitter* emitter, EmitterSlot* slot)
         position.y = emitter->position.y;
         position.z = emitter->position.z;
         effect = &lbl_805AD564;
-        fn_801857B4(effect);
-        fn_801D38BC(kind, &positionWord, &effect->value04);
-        value = (manager->value34 - (*(int*)(lbl_8030F540 + 0x1C8) >> 1)) * 2;
+        fn_801857B4((u8*)effect);
+        fn_801D38BC(kind, &color, &effect->value04);
+        value = manager->value34 - (lbl_8030F540.selected >> 1);
         effect->value01 = 100;
         effect->value03 = -10;
-        effect->value08 = value;
-        effect->value06 = value;
         effect->value19 = 16;
-        effect->value14 = 0;
+        value = (value * 2) & 0xFFFF;
+        effect->value06 = value;
+        effect->value08 = effect->value06;
         effect->value1C = emitter->scale * 4;
+        effect->value14 = 0;
         effect->value50 = lbl_80650270;
         effect->flags18 |= 2;
-        effect->value78 = positionWord;
+        effect->color = color;
         effect->callback = fn_80185A44;
         effect->position = position;
         memcpy(effect->params, &params, 6);
         effect->handle = 0;
         effect->typeAA = 0x80;
-        fn_801E8328(0x10, effect);
+        fn_801E8328(0x10, (u32)effect);
         slot->action = &lbl_805AD564;
     } else {
         scale = emitter->scale * 4;
