@@ -22,7 +22,8 @@ extern int lbl_8064D6A0;
 
 void fn_801EBDDC(Source* source)
 {
-    int offset;
+    int index;
+    int value;
 
     if (lbl_8064D604 == 0)
         return;
@@ -34,24 +35,20 @@ void fn_801EBDDC(Source* source)
     *lbl_8064D604 = source->lower;
     lbl_8064D6A0 = 0;
 
-    for (offset = 0x1FC; offset >= 0; offset -= 2) {
+    for (index = 254; index >= 0; index--) {
         if (lbl_8064D660 == 0) {
             if (lbl_8064D664 == 0) {
-                u16* image;
-                int value;
+                value = *lbl_8064D604;
 
-                image = lbl_8064D604;
-                value = (u8)*image;
-
-                if (value <= source->lower) {
+                if ((u8)value <= source->lower) {
                     lbl_8064D65C = source->step;
                     lbl_8064D664 = source->forward_count;
-                } else if (value >= source->upper) {
+                } else if ((u8)value >= source->upper) {
                     lbl_8064D65C = -source->step;
                     lbl_8064D664 = source->reverse_count;
                 }
 
-                *image = (u8)(lbl_8064D65C + *image);
+                *lbl_8064D604 = (u8)(lbl_8064D65C + *lbl_8064D604);
                 lbl_8064D6A0 += source->step;
             } else {
                 lbl_8064D664--;
@@ -59,6 +56,6 @@ void fn_801EBDDC(Source* source)
             lbl_8064D660 = source->delay;
         }
         lbl_8064D660--;
-        *(u16*)((char*)lbl_8064D604 + offset) = *lbl_8064D604;
+        lbl_8064D604[index] = *lbl_8064D604;
     }
 }
