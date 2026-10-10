@@ -1,6 +1,21 @@
-/* fn_80042FE8 (0x80042FE8, 76 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned short u16;
+typedef unsigned int u32;
 
-void fn_80042FE8(void) {
+typedef struct Msg {
+    u16 kind;
+    u16 value;
+    u32 pad;
+    u32 extra;
+} Msg;
+
+extern char lbl_8030408C[];
+extern Msg lbl_80304110;
+extern void fn_8020D250(void *, void *, int);
+
+void fn_80042FE8(u32 a, u32 b) {
+    Msg *m = &lbl_80304110;
+    m->kind = 9;
+    m->value = a | (b << 15);
+    m->extra = 0;
+    fn_8020D250(lbl_8030408C, m, 1);
 }
