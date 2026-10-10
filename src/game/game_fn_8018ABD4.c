@@ -16,7 +16,6 @@ extern void fn_80188868(void*, void*, void*, float);
 void fn_8018ABD4(u8* object)
 {
     u16 offset;
-    int byte_offset;
     int i;
     u8 count;
     u16 vertex_size;
@@ -44,11 +43,10 @@ void fn_8018ABD4(u8* object)
 
     object_data = *(u8**)(object + 0x4C);
     color = color_data;
-    for (i = 0, byte_offset = 0; i < count;
-         byte_offset += 0x18, i++) {
+    for (i = 0; i < count; i++) {
         int j;
 
-        fn_80188A7C(object_data, vertex_data + byte_offset, fn_8018D020);
+        fn_80188A7C(object_data, vertex_data + (i << 3) * 3, fn_8018D020);
         for (j = 0; j < object_data[0x20]; j++) {
             color[3] = object_data[0x2B];
             color += 4;
