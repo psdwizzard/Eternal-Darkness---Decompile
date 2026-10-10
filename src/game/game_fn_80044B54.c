@@ -1,6 +1,15 @@
-/* fn_80044B54 (0x80044B54, 88 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct ListHdr {
+    int unk0;
+    int count;
+} ListHdr;
 
-void fn_80044B54(void) {
+extern ListHdr *lbl_8064D0BC;
+extern void fn_800449EC(int index, void *arg);
+
+void fn_80044B54(void *arg) {
+    int i;
+
+    for (i = 0; i < lbl_8064D0BC->count; i++) {
+        fn_800449EC(i, arg);
+    }
 }

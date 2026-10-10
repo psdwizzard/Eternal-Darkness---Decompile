@@ -1,6 +1,10 @@
-/* fn_80045230 (0x80045230, 16 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct GameState {
+    unsigned char pad[0x1918];
+    unsigned char flag;
+} GameState;
 
-void fn_80045230(void) {
+extern GameState lbl_803003C8;
+
+unsigned char fn_80045230(void) {
+    return lbl_803003C8.flag;
 }
