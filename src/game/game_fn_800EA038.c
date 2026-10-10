@@ -1,6 +1,12 @@
-/* fn_800EA038 (0x800EA038, 84 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned short u16;
+typedef unsigned int u32;
 
-void fn_800EA038(void) {
+extern char lbl_8024A278[];
+extern void *lbl_8064CB10;
+extern void *fn_801FEA8C(u32 size, int report, const char *source, int line);
+extern void *fn_8017CCD8(void *storage, u32 size, u32 count);
+
+void fn_800EA038(u32 count) {
+    void *storage = fn_801FEA8C((u16)count * 0x28, 1, lbl_8024A278, 0x475);
+    lbl_8064CB10 = fn_8017CCD8(storage, 0x28, count);
 }
