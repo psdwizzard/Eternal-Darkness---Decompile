@@ -22,57 +22,152 @@ extern u8 fn_800FBFB0(void); extern void fn_801850FC(void*,void*);
 extern void fn_80185108(void*); extern void fn_801851A0(void*,void*);
 extern void fn_801D0E78(void*);
 
-static inline void alter(Object* o, void* state, void* actor, u8* table, int index, int count)
+void fn_801DB140(void* self)
 {
-    s16* source; s16* dest; float angle;
-    if (fn_801911B0(state,index)) return;
-    source=fn_8017FDA8(state,index); dest=fn_8017FDA8(state,index);
-    angle=360.0f*(float)index/(float)count;
-    dest[0]=(s16)((float)source[0]+127.0f*fn_80048C2C(angle));
-    dest[1]=(s16)((float)source[1]+127.0f*fn_80048C50(angle));
-    dest[2]=(s16)(source[2]+127-(u8)fn_800FBFB0());
-}
+    void* actor;
+    Object* o;
+    void* state;
+    s16* dest;
+    int special;
+    int changed;
+    u8* table;
+    u8 n;
+    int count;
+    u8* mask;
+    s16* source;
+    float angle;
+    u8 f;
+    void* child;
+    int i;
 
-void fn_801DB140(Object* o)
-{
-    void* state=0; void* actor; int special; int changed=0; int i;
-    u8* table; u8 flags=o->b[0xC4];
-    if (*(void**)(o->b+0x18C)) state=*(void**)(*(u8**)(o->b+0x18C)+0x88);
-    actor=fn_80201814(*(u32*)(o->b+0xC));
-    if (!actor || (fn_80201B64(actor)==8 && !fn_800A1060()))
-        fn_8020123C(0x39,*(u32*)(o->b+0xBC),*(u32*)(o->b+0xBC),0);
-    if (!(flags&1)) {
-        if (state) { u8 f=fn_801911D0(state); if (*(void**)(o->b+0xC8)) { f|=4; fn_801911D8(state,state); } else f&=~1; fn_801911F4(state,f); }
-        fn_801D0E78(o); return;
+    o = self;
+    child = *(void**)(o->b + 0x18C);
+    state = 0;
+    if (child) {
+        state = *(void**)((u8*)child + 0x88);
     }
-    special=fn_80201EB8(actor)==lbl_8064D18C;
-    if (state && actor && o->b[0xC6]) {
-        u8* info=fn_80201B8C(actor);
-        if (info && *(void**)(info+0x8C)) {
-            void* child=fn_80201814(*(u32*)(*(u8**)(info+0x8C)+0x24));
+    actor = fn_80201814(*(u32*)(o->b + 0xC));
+    if (!actor || (fn_80201B64(actor) == 8 && !fn_800A1060())) {
+        fn_8020123C(0x39, *(u32*)(o->b + 0xBC), *(u32*)(o->b + 0xBC), 0);
+    }
+
+    if (!(o->b[0xC4] & 1)) {
+        if (state) {
+            f = fn_801911D0(state);
+            child = *(void**)(o->b + 0xC8);
             if (child) {
-                info=fn_80201B8C(child);
-                if (info && *(void**)(info+0x24)) fn_801911D8(state,*(u8**)(info+0x24)+0xC8);
+                f |= 4;
+                fn_801911D8(state, child);
+            } else {
+                f &= ~1;
+            }
+            fn_801911F4(state, f);
+        }
+        fn_801D0E78(o);
+        return;
+    }
+
+    special = fn_80201EB8(actor) == lbl_8064D18C;
+    changed = 0;
+    if (state && actor && o->b[0xC6]) {
+        u8* info = fn_80201B8C(actor);
+        if (info && *(void**)(info + 0x8C)) {
+            child = fn_80201814(*(u32*)(*(u8**)(info + 0x8C) + 0x24));
+            if (child) {
+                info = fn_80201B8C(child);
+                if (info && *(void**)(info + 0x24)) {
+                    fn_801911D8(state, *(u8**)(info + 0x24) + 0xC8);
+                }
             }
         }
-        table=fn_801911C8(state);
-        for(i=(u8)fn_80180130(state)-1;i>=0 && changed<o->b[0xC6];i--)
-            if(fn_80180138(state,(u8)i) && !fn_801911B0(state,i)) { fn_8019120C(state,i); *table|=1<<i; changed++; }
-        o->b[0xC6]=0;
-    }
-    if (flags&4) {
-        if(o->b[0xC5]) { o->b[0xC5]--; changed=1; }
-        else if(state) {
-            fn_801911F4(state,fn_801911D0(state)|0x40); table=*(u8**)(o->b+0x250);
-            if(flags&0x30) { s16* v=fn_8017FDE4(state); fn_80149B60(actor,v,0,0,0); for(i=0;i<table[0];i++) alter(o,state,actor,table,i,table[0]); }
-            for(i=0;i<table[0];i++) if(!fn_801911B0(state,i)) { void* x=*(void**)(table+0x88+i*4); fn_801850FC(x,&lbl_8064C270); fn_80185108(x); fn_801851A0(x,fn_8017FDA8(state,i)); }
+        mask = fn_801911C8(state);
+        for (i = (u8)fn_80180130(state) - 1, count = 0; i >= 0 && count < o->b[0xC6]; i--) {
+            if (fn_80180138(state, i) && !fn_801911B0(state, i)) {
+                fn_8019120C(state, i);
+                *mask |= 1 << i;
+                count++;
+            }
         }
-        if(!(flags&0x10)) { o->b[0xC4]&=~6; o->b[0xC5]=40; }
-    } else if(flags&2) { if(state) fn_801911F4(state,fn_801911D0(state)|0x20); o->b[0xC4]&=~2; }
-    if(!special || *(u32*)(o->b+0xC0)!=lbl_8064D18C || (o->b[0xFF0]&2)) {
-        if(state && !(o->b[0xC4]&0x30)) { table=*(u8**)(o->b+0x250); fn_80149B60(actor,fn_8017FDE4(state),0,0,0); for(i=0;i<table[0];i++) alter(o,state,actor,table,i,table[0]); }
-        *(u32*)(o->b+0xC0)=lbl_8064D18C; o->b[0xFF0]&=~2;
+        o->b[0xC6] = 0;
     }
-    if(o->b[0xC4]&0x10) o->b[0xC4]|=0x20; else o->b[0xC4]&=~0x30;
-    o->b[0xC4]&=~0x18;
+
+    if (o->b[0xC4] & 4) {
+        if (o->b[0xC5]) {
+            o->b[0xC5]--;
+            changed = 1;
+        } else {
+            if (state) {
+                f = fn_801911D0(state);
+                fn_801911F4(state, f | 0x40);
+                table = *(u8**)(o->b + 0x250);
+                if (o->b[0xC4] & 0x30) {
+                    fn_80149B60(actor, source = fn_8017FDE4(state), 0, 0, 0);
+                    n = table[0];
+                    for (i = 0; i < n; i++) {
+                        if (!fn_801911B0(state, i)) {
+                            dest = fn_8017FDA8(state, i);
+                            angle = 360.0f * (float)i / (float)n;
+                            dest[0] = (float)source[0] + 127.0f * fn_80048C2C(angle);
+                            dest[1] = (float)source[1] + 127.0f * fn_80048C50(angle);
+                            dest[2] = source[2] + 127 - fn_800FBFB0();
+                        }
+                    }
+                }
+                n = table[0];
+                for (i = 0; i < n; i++) {
+                    if (!fn_801911B0(state, i)) {
+                        fn_801850FC(((void**)(table + 0x88))[i], &lbl_8064C270);
+                        fn_80185108(((void**)(table + 0x88))[i]);
+                        fn_801851A0(((void**)(table + 0x88))[i], fn_8017FDA8(state, i));
+                    }
+                }
+            }
+            if (!(o->b[0xC4] & 0x10)) {
+                o->b[0xC4] &= ~4;
+                o->b[0xC5] = 40;
+            }
+        }
+    } else if (o->b[0xC4] & 2) {
+        if (state) {
+            f = fn_801911D0(state);
+            fn_801911F4(state, f | 0x20);
+        }
+        o->b[0xC4] &= ~2;
+    }
+
+    if ((special && *(int*)(o->b + 0xC0) != lbl_8064D18C) || (o->b[0xFF0] & 2)) {
+        if (state && !(o->b[0xC4] & 0x30)) {
+            table = *(u8**)(o->b + 0x250);
+            fn_80149B60(actor, source = fn_8017FDE4(state), 0, 0, 0);
+            n = table[0];
+            for (i = 0; i < n; i++) {
+                if (!fn_801911B0(state, i)) {
+                    dest = fn_8017FDA8(state, i);
+                    angle = 360.0f * (float)i / (float)n;
+                    dest[0] = (float)source[0] + 127.0f * fn_80048C2C(angle);
+                    dest[1] = (float)source[1] + 127.0f * fn_80048C50(angle);
+                    dest[2] = source[2] + 127 - fn_800FBFB0();
+                }
+            }
+            if (!changed && fn_8017FDFC(state)) {
+                for (i = 0; i < n; i++) {
+                    if (!fn_801911B0(state, i)) {
+                        dest = fn_8017FDA8(state, i);
+                        fn_801850FC(((void**)(table + 0x88))[i], &lbl_8064C270);
+                        fn_80185108(((void**)(table + 0x88))[i]);
+                        fn_801851A0(((void**)(table + 0x88))[i], dest);
+                    }
+                }
+            }
+        }
+        *(int*)(o->b + 0xC0) = lbl_8064D18C;
+        o->b[0xFF0] &= ~2;
+    }
+
+    if (o->b[0xC4] & 0x10) {
+        o->b[0xC4] |= 0x20;
+    } else {
+        o->b[0xC4] &= ~0x20;
+    }
+    o->b[0xC4] &= ~0x10;
 }
