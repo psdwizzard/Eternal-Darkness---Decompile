@@ -33,7 +33,6 @@ void fn_801EBC6C(Source* source, State* state, u16* image)
     u16 value;
     int compare;
     int step;
-    int packed;
     int i;
 
     memset(work, 0, 0x18);
@@ -62,10 +61,10 @@ void fn_801EBC6C(Source* source, State* state, u16* image)
                         step = 0;
 
                     step += compare;
+                    compare = (0xFF - (unsigned char)step) << 8;
+                    compare = (compare & ~0xFF) | (step & 0xFF);
                     work->accumulator += input->step;
-                    packed = (0xFF - (unsigned char)step) << 8;
-                    packed = (packed & ~0xFF) | (step & 0xFF);
-                    value = packed;
+                    value = compare;
                 } else {
                     work->count--;
                 }
