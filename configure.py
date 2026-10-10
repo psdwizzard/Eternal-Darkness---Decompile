@@ -9848,7 +9848,7 @@ config.libs = [
             Object(Matching, "game/game_fn_800F1F80.c"),
             Object(Matching, "game/game_fn_800F0FBC.c"),
             Object(Matching, "game/game_fn_800F1384.c"),
-            Object(NonMatching, "game/game_fn_800F2318.c"),
+            Object(Matching, "game/game_fn_800F2318.c"),
             Object(Matching, "game/game_fn_800F2548.c"),
             Object(Matching, "game/game_fn_800F2820.c"),
             Object(Matching, "game/game_fn_800F28D8.c", extra_cflags=["-sdata 0"]),
