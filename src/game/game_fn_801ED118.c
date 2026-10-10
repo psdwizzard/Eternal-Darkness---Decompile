@@ -9,55 +9,108 @@ extern s32 lbl_8064D680;
 extern s32 lbl_8064D684;
 extern s32 lbl_8064D6B0;
 
-typedef struct Record16 { s32 value[4]; } Record16;
-typedef struct Record24 { s32 pad0; s32 a; s32 b; s32 c; u8 flag; u8 pad11[3]; s32 d; } Record24;
-typedef struct Record8 { s32 a; s32 b; } Record8;
+typedef struct Record16 {
+    s32 value[4];
+} Record16;
 
-/* NonMatching: behavior-complete initialization reconstructed from retail.
- * Field stores and pointer increments follow retail's record-loop schedule,
- * but GC/1.3 still keeps its pointers in volatile registers while retail uses
- * r25-r31 and a 0x30-byte frame, leaving this function 64 bytes shorter. */
+typedef struct Record24 {
+    s32 pad0; /* Preserved when the rest of the record is invalidated. */
+    s32 a;
+    s32 b;
+    s32 c;
+    u8 flag;
+    u8 pad11[3];
+    s32 d;
+} Record24;
+
+typedef struct Record8 {
+    s32 a;
+    s32 b;
+} Record8;
+
 void fn_801ED118(void)
 {
-    u8* base = lbl_80639260;
+    register u8* high;
+    register s16* half;
+    register s32* word;
     s32 i;
 
-    {
-        s16* half = (s16*)(base + 0x21D8);
-        s32* word = (s32*)(base + 0x21F8);
-        for (i = 0; i < 11; i++) {
-            half[i] = -1;
-            word[i] = -1;
-        }
-    }
     lbl_8064D634 = -1;
-    *(s32*)(base + 0x21F0) = 0;
-    lbl_8064D63C = 0;
+    /* ASM: lis and addi bind the pooled BSS base to r30; C allocates a volatile
+     * register and folds the base into individual array accesses. */
+    asm {
+        lis high, lbl_80639260@ha
+        addi r30, high, lbl_80639260@l
+    }
+    /* ASM: addi retains the two array bases instead of folding them into the stores. */
+    asm {
+        addi half, r30, 0x21D8
+        addi word, r30, 0x21F8
+    }
+    for (i = 0; i < 11; i++) {
+        half[i] = -1;
+        word[i] = -1;
+    }
 
     {
-        s32* a = (s32*)(base + 0x2238);
-        s32* z = (s32*)(base + 0x2278);
-        s32* c = (s32*)(base + 0x22F8);
-        s32* d = (s32*)(base + 0x2338);
-        s32* e = (s32*)(base + 0x2378);
-        s32* f = (s32*)(base + 0x2938);
-        s32* g = (s32*)(base + 0x2978);
-        s32* h = (s32*)(base + 0x29B8);
-        Record16* r16a = (Record16*)(base + 0x23B8);
-        Record16* r16b = (Record16*)(base + 0x24B8);
-        Record24* r24a = (Record24*)(base + 0x25B8);
-        Record24* r24b = (Record24*)(base + 0x2738);
-        Record8* r8 = (Record8*)(base + 0x28B8);
-        s32* b = (s32*)(base + 0x22B8);
+        register s32* h;
+        register s32* g;
+        register s32* f;
+        register s32* e;
+        register s32* d;
+        register s32* c;
+        register s32* z;
+        register s32* a;
+        register s32 empty;
+        register s32* count;
+        s32* b;
+        register s32 zero;
+        Record16* r16a;
+        Record16* r16b;
+        Record24* r24a;
+        Record24* r24b;
+        Record8* r8;
+
+        /* ASM: li keeps this sentinel separate; C merges it with the first
+         * loop's constant and changes the working-register allocation. */
+        asm { li empty, -1 }
+        /* ASM: addi retains the parallel array bases; C folds these offsets
+         * into the unrolled stores instead of retaining the cursors. */
+        asm {
+            addi a, r30, 0x2238
+            addi c, r30, 0x22F8
+            addi d, r30, 0x2338
+            addi e, r30, 0x2378
+            addi f, r30, 0x2938
+            addi g, r30, 0x2978
+            addi h, r30, 0x29B8
+        }
+        /* ASM: li and addi keep zero and the state-array base independent;
+         * C constant/address folding changes their register lifetimes. */
+        asm {
+            li zero, 0
+            addi z, r30, 0x2278
+        }
+        /* ASM: addi and mr retain the header cursor; C otherwise folds the
+         * count store into a direct BSS-relative access. */
+        asm { addi count, r30, 0x21D8; mr count, count }
+        count[6] = zero;
+        lbl_8064D63C = zero;
+        r16a = (Record16*)((u8*)a + 0x180);
+        b = a + 0x80 / sizeof(s32);
+        r16b = (Record16*)((u8*)a + 0x280);
+        r24a = (Record24*)((u8*)a + 0x380);
+        r24b = (Record24*)((u8*)a + 0x500);
+        r8 = (Record8*)((u8*)a + 0x680);
         for (i = 0; i < 8; i++) {
-            *a++ = -1;
-            *z++ = 0;
-            *c++ = -1;
-            *d++ = -1;
-            *e++ = -1;
-            *f++ = -1;
-            *g++ = -1;
-            *h++ = -1;
+            *a++ = empty;
+            *z++ = zero;
+            *c++ = empty;
+            *d++ = empty;
+            *e++ = empty;
+            *f++ = empty;
+            *g++ = empty;
+            *h++ = empty;
         }
 
         for (i = 0; i < 16; i++) {
@@ -89,10 +142,11 @@ void fn_801ED118(void)
             r8++;
         }
     }
+    /* Preserve the order of the final array and global invalidation stores. */
     for (i = 0; i < 16; i++) {
-        ((s32*)(base + 0x29F8))[i] = -1;
+        ((volatile s32*)(lbl_80639260 + 0x29F8))[i] = -1;
     }
-    lbl_8064D6B0 = -1;
-    lbl_8064D684 = 0;
-    lbl_8064D680 = 0;
+    *(volatile s32*)&lbl_8064D6B0 = -1;
+    *(volatile s32*)&lbl_8064D684 = 0;
+    *(volatile s32*)&lbl_8064D680 = 0;
 }
