@@ -1,6 +1,7 @@
-/* fn_80047248 (0x80047248, 16 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+extern int lbl_8064C80C;
+extern int lbl_8064C810;
 
 void fn_80047248(void) {
+    lbl_8064C80C = 0;
+    lbl_8064C810 = 0;
 }

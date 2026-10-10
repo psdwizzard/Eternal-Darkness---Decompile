@@ -1,6 +1,10 @@
-/* fn_80047CBC (0x80047CBC, 88 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+extern void **fn_800C96C4(void);
+extern void **fn_800C96CC(void);
 
-void fn_80047CBC(void) {
+void fn_80047CBC(void **arg0, void **arg1)
+{
+    void **a = fn_800C96C4();
+    void **b = fn_800C96CC();
+    *a = *arg0;
+    *b = *arg1;
 }
