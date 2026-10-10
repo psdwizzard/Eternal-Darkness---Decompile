@@ -1,6 +1,5 @@
-/* fn_800451C4 (0x800451C4, 16 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+extern unsigned char lbl_803003C8[];
 
-void fn_800451C4(void) {
+void fn_800451C4(unsigned char value) {
+    lbl_803003C8[0x1919] = value;
 }
