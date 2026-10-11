@@ -1,6 +1,8 @@
-/* fn_80047D6C (0x80047D6C, 12 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
 
-void fn_80047D6C(void) {
+extern u8 lbl_80303D18[0x78];
+
+u8 *fn_80047D6C(void)
+{
+    return lbl_80303D18;
 }

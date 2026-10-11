@@ -1,6 +1,13 @@
-/* fn_80047C2C (0x80047C2C, 68 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct Object Object;
 
-void fn_80047C2C(void) {
+extern int fn_8011EB1C(Object *object);
+
+int fn_80047C2C(Object *object)
+{
+    int result = 0;
+
+    if (object != 0 && fn_8011EB1C(object) == 4) {
+        result = 1;
+    }
+    return result;
 }
