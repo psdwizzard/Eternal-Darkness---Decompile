@@ -1,6 +1,19 @@
-/* fn_8004279C (0x8004279C, 68 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct Object Object;
+typedef struct Table Table;
+typedef struct Header Header;
 
-void fn_8004279C(void) {
+extern int fn_8011EB04(Object *object);
+extern void *fn_801E86A0(Table *table, unsigned int index);
+extern void *fn_8013898C(Header *header);
+extern Table *lbl_8064C530;
+
+void *fn_8004279C(Object *object)
+{
+    int index = fn_8011EB04(object);
+    Header *header = fn_801E86A0(lbl_8064C530, index);
+
+    if (header != 0) {
+        return fn_8013898C(header);
+    }
+    return 0;
 }

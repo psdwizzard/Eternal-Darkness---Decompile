@@ -1,6 +1,13 @@
-/* fn_800471F8 (0x800471F8, 72 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+extern int fn_80071258(void);
+extern int fn_801A98F4(int index, void *object);
 
-void fn_800471F8(void) {
+int fn_800471F8(void)
+{
+    int result = 1;
+
+    if (fn_80071258() != 0) {
+        result = 0;
+        fn_801A98F4(0x67, (void *)0x64);
+    }
+    return result;
 }
