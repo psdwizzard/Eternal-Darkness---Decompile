@@ -1,6 +1,13 @@
-/* fn_800459E0 (0x800459E0, 68 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct ObjectData {
+    unsigned char pad00[0x9F];
+    unsigned char kind;
+} ObjectData;
 
-void fn_800459E0(void) {
+extern void *fn_80201B8C(unsigned char *object);
+
+int fn_800459E0(unsigned char *object)
+{
+    ObjectData *data = object != 0 ? fn_80201B8C(object) : 0;
+
+    return data != 0 ? data->kind : -1;
 }

@@ -1,6 +1,21 @@
-/* fn_800449A4 (0x800449A4, 72 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct ListHdr {
+    int unk0;
+    int count;
+} ListHdr;
+
+typedef struct ListState {
+    ListHdr header;
+    int unk8;
+    int pendingCount;
+} ListState;
+
+extern ListHdr *lbl_8064D0BC;
+extern void fn_80044888(int index);
 
 void fn_800449A4(void) {
+    int i;
+
+    for (i = 0; i < ((ListState *)lbl_8064D0BC)->pendingCount; i++) {
+        fn_80044888(i);
+    }
 }
