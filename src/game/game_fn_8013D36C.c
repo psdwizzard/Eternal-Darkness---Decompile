@@ -1,6 +1,62 @@
-/* fn_8013D36C (0x8013D36C, 500 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef signed char s8;
 
-void fn_8013D36C(void) {
+typedef struct Coord2 {
+    float x;
+    float y;
+} Coord2;
+
+typedef struct Coord3 {
+    float x;
+    float y;
+    float z;
+} Coord3;
+
+typedef struct ShortCoord2 {
+    short x;
+    short y;
+} ShortCoord2;
+
+typedef struct ShortCoord3 {
+    short x;
+    short y;
+    short z;
+} ShortCoord3;
+
+extern void fn_80179CD4(Coord2*, const Coord3*, float, float, float, s8);
+extern void fn_80179D78(ShortCoord2*, const ShortCoord3*, s8);
+
+u8 fn_8013D36C(const Coord3* point, u16 count, const u16* indices,
+               const ShortCoord3* vertices, float unused_first, float unused_second,
+               float unused_third, int axis)
+{
+    Coord2 projected;
+    ShortCoord2 current;
+    ShortCoord2 previous;
+    u8 inside = 0;
+    u16 i;
+    s8 selected_axis = axis;
+
+    /* The projection helper ignores these three forwarded float arguments. */
+    fn_80179CD4(&projected, point, unused_first, unused_second,
+                  unused_third, selected_axis);
+    fn_80179D78(&previous, &vertices[indices[count - 1]], selected_axis);
+
+    for (i = 0; i < count; i++) {
+        fn_80179D78(&current, &vertices[indices[i]], selected_axis);
+        if (((float)current.y <= projected.y && projected.y < (float)previous.y) ||
+            ((float)previous.y <= projected.y && projected.y < (float)current.y)) {
+            float intersection = (float)current.x +
+                (float)(previous.x - current.x) *
+                (projected.y - (float)current.y) /
+                (float)(previous.y - current.y);
+            if (projected.x < intersection) {
+                inside = !inside;
+            }
+        }
+        previous.x = current.x;
+        previous.y = current.y;
+    }
+    return inside;
 }
