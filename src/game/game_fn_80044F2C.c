@@ -1,6 +1,16 @@
-/* fn_80044F2C (0x80044F2C, 88 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct SpawnList {
+    unsigned char pad[0x1C];
+    int count;
+} SpawnList;
 
-void fn_80044F2C(void) {
+extern SpawnList *lbl_8064D0BC;
+extern void fn_80044D50(int index, int mask);
+
+void fn_80044F2C(int mask)
+{
+    int index;
+
+    for (index = 0; index < lbl_8064D0BC->count; index++) {
+        fn_80044D50(index, mask);
+    }
 }

@@ -1,6 +1,5 @@
-/* fn_80048650 (0x80048650, 16 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+extern char lbl_80301CE8[];
 
-void fn_80048650(void) {
+char *fn_80048650(void) {
+    return lbl_80301CE8 + 0x10;
 }

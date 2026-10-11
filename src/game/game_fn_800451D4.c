@@ -1,6 +1,13 @@
-/* fn_800451D4 (0x800451D4, 16 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
 
-void fn_800451D4(void) {
+typedef struct GameState {
+    u8 pad[0x1919];
+    u8 flags;
+} GameState;
+
+extern GameState lbl_803003C8;
+
+u8 fn_800451D4(void)
+{
+    return lbl_803003C8.flags;
 }

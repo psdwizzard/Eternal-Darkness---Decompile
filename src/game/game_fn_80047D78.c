@@ -1,6 +1,7 @@
-/* fn_80047D78 (0x80047D78, 12 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned int u32;
 
-void fn_80047D78(void) {
+extern u32 lbl_8030F4C0[];
+
+u32* fn_80047D78(void) {
+    return lbl_8030F4C0;
 }
