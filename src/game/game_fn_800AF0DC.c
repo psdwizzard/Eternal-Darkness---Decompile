@@ -1,6 +1,18 @@
-/* fn_800AF0DC (0x800AF0DC, 64 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
-
-void fn_800AF0DC(void) {
+int fn_800AF0DC(int kind)
+{
+    switch ((unsigned int)kind) {
+    case 3:
+    case 7:
+    case 10:
+        return 23;
+    case 0:
+    case 5:
+    case 9:
+        return 22;
+    case 2:
+    case 6:
+        return 27;
+    default:
+        return 22;
+    }
 }
