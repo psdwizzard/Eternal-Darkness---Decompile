@@ -10129,7 +10129,7 @@ config.libs = [
             Object(Matching, "game/game_fn_801021D0.c"),
             Object(NonMatching, "game/game_fn_80101A5C.c"),
             Object(Matching, "game/game_fn_80101BA4.c"),
-            Object(NonMatching, "game/game_fn_80101C30.c"),
+            Object(Matching, "game/game_fn_80101C30.c"),
             Object(Matching, "game/game_fn_80101DF4.c"),
             Object(Matching, "game/game_fn_801022A8.c"),
             Object(Matching, "game/game_fn_80102320.c", extra_cflags=["-sdata 0"]),
