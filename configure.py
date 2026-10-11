@@ -10048,7 +10048,7 @@ config.libs = [
             Object(Matching, "game/game_fn_80100420.c"),
             Object(NonMatching, "game/game_fn_80100514.c"),
             Object(Matching, "game/game_fn_80101368.c"),
-            Object(NonMatching, "game/game_fn_8010161C.c"),
+            Object(Matching, "game/game_fn_8010161C.c"),
             Object(NonMatching, "game/game_fn_80101408.c"),
             Object(Matching, "game/game_fn_80101960.c", extra_cflags=["-sdata 0"]),
             Object(Matching, "game/game_fn_80101988.c"),
