@@ -1,6 +1,282 @@
-/* fn_800B9578 (0x800B9578, 1808 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+#include "src/game/types.h"
 
-void fn_800B9578(void) {
+#ifndef NULL
+#define NULL ((void *)0)
+#endif
+
+typedef struct ObjectState {
+    u8 pad0[0x24];
+    int unk24;
+    int unk28;
+    int unk2C;
+    u8 pad30[0x38 - 0x30];
+    int unk38;
+    int unk3C;
+    u8 pad40[0x146 - 0x40];
+    s16 unk146;
+    s16 unk148;
+    u8 pad14A[0x14E - 0x14A];
+    s16 unk14E;
+    u8 pad150[0x152 - 0x150];
+    s16 unk152;
+    s16 unk154;
+} ObjectState;
+
+typedef struct ObjectInfo {
+    u8 pad0[0x68];
+    void *unk68;
+    u8 pad6C[0x8C - 0x6C];
+    ObjectState *state;
+    u8 pad90[0x98 - 0x90];
+    s16 unk98;
+} ObjectInfo;
+
+typedef struct ObjectLink {
+    u8 pad0[0x2C];
+    u32 flags;
+} ObjectLink;
+
+typedef struct ObjectPacket {
+    u8 unk0;
+    u8 unk1;
+    s16 rot[3];
+    u8 pos[8];
+    s16 unk10;
+    u16 type;
+    s32 flags;
+    s16 unk18;
+    s16 subtype;
+    s16 unk1C;
+    s16 unk1E;
+    s16 unk20;
+} ObjectPacket;
+
+typedef struct PacketPair {
+    s16 a;
+    s16 b;
+} PacketPair;
+
+extern int fn_800A4F98(int);
+extern int fn_80201B44(void);
+extern void *fn_80201814(int);
+extern int fn_80201B54(void *);
+extern u8 fn_80201B5C(void *);
+extern u8 fn_80201B64(void *);
+extern ObjectInfo *fn_80201B8C(void *);
+extern void *fn_80201B94(void *);
+extern void *fn_80201BC8(void *);
+extern void *fn_80201C2C(void *);
+extern s16 fn_80201C50(void *);
+extern u32 fn_80201CDC(void *);
+extern int fn_80205110(void *);
+extern int fn_8011F130(void *);
+extern void *fn_8011FE34(void *);
+extern void fn_80128108(void *, void *);
+extern int fn_8011EB04(void *);
+extern s16 fn_8011FB4C(void *);
+extern void fn_80179E60(s16 *, int);
+extern int fn_80038308(void *, int, s16 *);
+extern u32 fn_80036D5C(void *);
+extern u16 fn_800B9FE8(void *);
+extern int fn_8012FB2C(void *);
+extern int fn_8012F700(void *);
+extern int fn_8012FA54(void *, int);
+extern int fn_8012FAB4(void *, int);
+extern int fn_800B9C88(u8 *, void *);
+extern int fn_8012F7D4(u8 *, void *);
+extern int fn_800BB450(u8 *, void *);
+extern int fn_800BB5C4(u8 *, void *);
+extern int fn_800BB7A8(u8 *, void *);
+extern int fn_800BB9A4(u8 *, void *);
+extern int fn_800BBAF0(u8 *, void *);
+extern u8 fn_8012DC80(void *);
+extern void fn_8012DBE8(void *, int, u8 *);
+extern int fn_80066D04(void *, int);
+extern int fn_800BA068(u8 *, int, void *, int *);
+extern void *memcpy(void *, const void *, u32);
+extern void *memset(void *, int, u32);
+
+int fn_800B9578(u8 *buf, void *object, int *count, int extra) {
+    PacketPair pair;
+    u8 status[4];
+    u8 bits[4];
+    PacketPair misc;
+    ObjectPacket pkt;
+    void *parent;
+    int slot;
+    void *player;
+    ObjectLink *link;
+    void *target;
+    int localId;
+    void *model;
+    int ownerId;
+    ObjectInfo *info;
+    int size;
+
+    localId = fn_800A4F98(2);
+    player = fn_80201814(fn_80201B44());
+    ownerId = fn_80201B54(object);
+    info = fn_80201B8C(object);
+    link = (info != NULL) ? info->unk68 : NULL;
+    parent = fn_80201B94(object);
+    model = fn_80201BC8(object);
+    target = fn_80201C2C(object);
+    slot = fn_80205110(object);
+    fn_80179E60(pkt.rot, fn_8011F130(model));
+    fn_80128108(fn_8011FE34(model), pkt.pos);
+    pkt.type = fn_8011EB04(model);
+    pkt.unk10 = fn_80201C50(parent);
+    pkt.unk18 = fn_8011FB4C(model);
+    pkt.subtype = info->unk98;
+    pkt.unk0 = fn_80201B5C(object);
+    pkt.unk1 = fn_80201B64(object);
+    fn_80038308(object, 0, &pkt.unk1C);
+    pkt.unk20 = info->state->unk148;
+    pkt.unk1E = info->state->unk146;
+    pkt.flags = 0;
+    if (slot != -1) {
+        pkt.flags |= fn_800B9FE8(target) << 24;
+    } else {
+        pkt.flags |= 0x40000;
+    }
+    if (object == player) {
+        pkt.flags |= 4;
+        if (info->state->unk2C != 0) {
+            pkt.flags |= 0x10;
+        }
+        if (info->state->unk3C != 0) {
+            pkt.flags |= 0x20;
+        }
+    }
+    if (fn_80201CDC(object) & 0x01000000) {
+        pkt.flags |= 0x10000;
+    }
+    if (fn_80201CDC(object) & 4) {
+        pkt.flags |= 1;
+        if (fn_8012FB2C(model) != 0 && fn_8012F700(model) > 0) {
+            if (fn_8012FA54(model, 15) == 0) {
+                pkt.flags |= 0x400;
+            }
+            if (fn_8012FAB4(model, 15) != 0) {
+                pkt.flags |= 0x800;
+            }
+        }
+        if (fn_80201CDC(object) & 0x100000) {
+            pkt.flags |= 0x400;
+        }
+        if (fn_80201CDC(object) & 0x200000) {
+            pkt.flags |= 0x800;
+        }
+    }
+    if (info->state->unk24 != 0) {
+        pkt.flags |= 8;
+    }
+    if (info->state->unk28 != 0) {
+        pkt.flags |= 0x20000;
+    }
+    if (info->state->unk38 != 0) {
+        pkt.flags |= 0x40;
+    }
+    if (fn_80036D5C(object) & 8) {
+        pkt.flags |= 0x80;
+    }
+    if (fn_80036D5C(object) & 0x20000) {
+        pkt.flags |= 0x80000;
+    }
+    if (fn_80036D5C(object) & 0x80) {
+        pkt.flags |= 0x100;
+    }
+    if (fn_80036D5C(object) & 0x8000) {
+        pkt.flags |= 0x200;
+    }
+    if (fn_80036D5C(object) & 0x800000) {
+        pkt.flags |= 0x400000;
+    }
+    if (ownerId == localId && ownerId != 0) {
+        pkt.flags |= 0x800000;
+    }
+    if (extra != 0 && fn_8012F700(model) > 0) {
+        pkt.flags |= 2;
+    }
+    if (link != NULL) {
+        if (link->flags & 0x20) {
+            pkt.flags |= 0x1000;
+        }
+        if (link->flags & 0x40) {
+            pkt.flags |= 0x2000;
+        }
+        if (link->flags & 0x80) {
+            pkt.flags |= 0x4000;
+        }
+        if (link->flags & 0x100) {
+            pkt.flags |= 0x8000;
+        }
+        if (link->flags & 0x400) {
+            pkt.flags |= 0x100000;
+        }
+        if (link->flags & 0x80) {
+            pkt.flags |= 0x200000;
+        }
+    }
+
+    memcpy(buf, &pkt, sizeof(ObjectPacket));
+    size = sizeof(ObjectPacket);
+    *count += 1;
+    if (pkt.flags & 4) {
+        size = fn_800B9C88(buf + sizeof(ObjectPacket), player) + sizeof(ObjectPacket);
+        size &= 0xFFFF;
+    }
+    if (pkt.flags & 2) {
+        size = (u16)size + fn_8012F7D4(buf + (u16)size, model);
+        size &= 0xFFFF;
+    }
+    if (pkt.flags & 8) {
+        size += fn_800BB450(buf + (u16)size, fn_80201814(info->state->unk24));
+    }
+    if (pkt.flags & 0x20000) {
+        size += fn_800BB5C4(buf + (u16)size, fn_80201814(info->state->unk28));
+    }
+    if (pkt.flags & 0x10) {
+        size += fn_800BB7A8(buf + (u16)size, fn_80201814(info->state->unk2C));
+    }
+    if (pkt.flags & 0x20) {
+        size += fn_800BBAF0(buf + (u16)size, fn_80201814(info->state->unk3C));
+    }
+    if (pkt.flags & 0x40) {
+        size += fn_800BB9A4(buf + (u16)size, fn_80201814(info->state->unk38));
+    }
+    if ((pkt.flags & 0x100) || (pkt.flags & 0x200)) {
+        pair.a = info->state->unk152;
+        pair.b = info->state->unk154;
+        memcpy(buf + (u16)size, &pair, sizeof(PacketPair));
+        size += sizeof(PacketPair);
+    }
+    if (pkt.type == 5 && pkt.subtype == 12) {
+        memset(status, 0, sizeof(status));
+        if (fn_8012DC80(model)) {
+            if (fn_80066D04(object, 3) == 0) {
+                status[0] |= 1;
+            }
+            if (fn_80066D04(object, 2) == 0) {
+                status[0] |= 2;
+            }
+            if (fn_80066D04(object, 0) == 0) {
+                status[0] |= 4;
+            }
+            fn_8012DBE8(model, 15, bits);
+            if (bits[3] <= 20) {
+                status[0] |= 8;
+            }
+        }
+        memcpy(buf + (u16)size, status, sizeof(status));
+        size += sizeof(status);
+    }
+    if (pkt.type == 0x89 && pkt.subtype == 0x84) {
+        memset(&misc, 0, sizeof(misc));
+        misc.a = info->state->unk14E;
+        memcpy(buf + (u16)size, &misc, sizeof(misc));
+        size += sizeof(misc);
+    }
+    size += fn_800BA068(buf + (u16)size, ownerId, target, count);
+    return size;
 }
