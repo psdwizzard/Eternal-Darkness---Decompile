@@ -42,15 +42,15 @@ extern void fn_80104524(u8 *ctx, u8 *dst, s32 stride, u8 dc, u8 mode, s32 index)
 void fn_80106088(register Decoder *input_decoder, register FrameContext *context)
 {
     register MotionPlane *source;
-    register s32 *offset;
+    s32 *offset;
     register PlaneCursor *cursor;
     register BlockInfo *base;
     register u16 width;
-    register s32 block;
+    s32 block;
     register u16 block_width;
     register s32 plane;
     register s32 count;
-    register u16 *block_id;
+    u16 *block_id;
     register Decoder *decoder;
     /* ASM: addi preserves zero-offset register copies; MWCC emits mr for
      * the equivalent C assignments. */
@@ -61,58 +61,58 @@ void fn_80106088(register Decoder *input_decoder, register FrameContext *context
     }
     plane = 0;
     do {
-        base = cursor->block_info;
+        /* ASM: lwz keeps this plane field load in retail order;
+         * MWCC schedules the equivalent C expression across other loads. */
+        asm { lwz base, 8(cursor) }
         block_id = source->blocks;
-        width = source->width;
+        /* ASM: lhz keeps this plane field load in retail order;
+         * MWCC schedules the equivalent C expression across other loads. */
+        asm { lhz width, 40(source) }
         offset = source->offsets;
-        block_width = source->block_width;
-        count = source->count;
+        /* ASM: lhz keeps this plane field load in retail order;
+         * MWCC schedules the equivalent C expression across other loads. */
+        asm { lhz block_width, 12(source) }
+        /* ASM: lbz keeps this plane field load in retail order;
+         * MWCC schedules the equivalent C expression across other loads. */
+        asm { lbz count, 52(source) }
         block = 0;
         while (block < count) {
-            register s32 id;
+            s32 id;
             s32 displacement;
             BlockInfo *current;
             u8 mode;
             register u8 dc;
             register u8 *dst;
-            /* ASM: lhz avoids the redundant 16-bit mask MWCC emits for
-             * an equivalent C block-index load and address calculation. */
-            asm {
-                lhz id, 0(block_id)
-            }
+            id = *block_id;
             block_id++;
             displacement = *offset++;
-            current = (BlockInfo *)((u8 *)base + id * 2);
+            current = base + id;
             mode = current->flags & 0xF;
             dc = current->value;
             dst = cursor->destination + displacement;
             if (mode == 0) {
                 BlockInfo *above = base + (id - block_width);
                 register u8 *call_dst;
-                register u8 left;
+                u8 left_dc;
                 register u8 call_dc;
-                register u8 d;
+                u8 right_value;
                 BlockInfo *below;
-                register u8 right;
-                register u8 c;
+                u8 right_dc;
+                s32 left_value;
                 register s32 call_width;
-                register u8 b;
-                register u8 a;
-                if (above->flags & 0x77) a = dc;
-                else a = above->value;
-                if (current[-1].flags & 0x77) c = dc;
-                else c = current[-1].value;
-                /* ASM: addi retains the retail coefficient copy; MWCC
-                 * merges the C assignment into the call argument register. */
-                asm { addi left, c, 0 }
-                if (current[1].flags & 0x77) d = dc;
-                else d = current[1].value;
-                /* ASM: addi retains the right coefficient copy, which the
-                 * compiler eliminates for an equivalent C assignment. */
-                asm { addi right, d, 0 }
+                u8 below_dc;
+                u8 above_dc;
+                if (above->flags & 0x77) above_dc = dc;
+                else above_dc = above->value;
+                if (current[-1].flags & 0x77) left_value = dc;
+                else left_value = current[-1].value;
+                left_dc = left_value;
+                if (current[1].flags & 0x77) right_value = dc;
+                else right_value = current[1].value;
+                right_dc = right_value;
                 below = base + (id + block_width);
-                if (below->flags & 0x77) b = dc;
-                else b = below->value;
+                if (below->flags & 0x77) below_dc = dc;
+                else below_dc = below->value;
                 /* ASM: addi preserves the retail argument-copy encodings;
                  * MWCC emits mr for equivalent C assignments. */
                 asm {
@@ -120,7 +120,7 @@ void fn_80106088(register Decoder *input_decoder, register FrameContext *context
                     addi call_width, width, 0
                     addi call_dc, dc, 0
                 }
-                fn_80103510(call_dst, call_width, call_dc, a, b, left, right);
+                fn_80103510(call_dst, call_width, call_dc, above_dc, below_dc, left_dc, right_dc);
             } else {
                 register u8 *call_ctx;
                 register s32 call_width;
