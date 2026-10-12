@@ -9900,7 +9900,7 @@ config.libs = [
             Object(Matching, "game/game_fn_800EB74C.c"),
             Object(NonMatching, "game/game_fn_800EB750.c"),
             Object(NonMatching, "game/game_fn_800EB8B8.c"),
-            Object(NonMatching, "game/game_fn_800EBA80.c"),
+            Object(Matching, "game/game_fn_800EBA80.c"),
             Object(Matching, "game/game_fn_800EBBF4.c"),
             Object(Matching, "game/game_fn_800EBF88.c"),
             Object(NonMatching, "game/game_fn_800EC234.c"),
