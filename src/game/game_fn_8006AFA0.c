@@ -1,6 +1,19 @@
-/* fn_8006AFA0 (0x8006AFA0, 256 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct Vec3 {
+    float x;
+    float y;
+    float z;
+} Vec3;
 
-void fn_8006AFA0(void) {
+extern unsigned int fn_800FBFB0(void);
+extern const float lbl_8064E79C;
+extern const float lbl_8064E7C8;
+
+void fn_8006AFA0(Vec3 *out, const Vec3 *position)
+{
+    Vec3 adjusted = *position;
+
+    adjusted.z += lbl_8064E79C + (float)(int)(fn_800FBFB0() & 0x1F);
+    adjusted.x += lbl_8064E7C8 - (float)(int)(fn_800FBFB0() & 0xF);
+    adjusted.y += lbl_8064E7C8 - (float)(int)(fn_800FBFB0() & 0xF);
+    *out = adjusted;
 }
