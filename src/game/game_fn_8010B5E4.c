@@ -1,6 +1,60 @@
-/* fn_8010B5E4 (0x8010B5E4, 288 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct Vec3 {
+    float x, y, z;
+} Vec3;
 
-void fn_8010B5E4(void) {
+typedef struct Record {
+    char pad[0x32];
+    short value;
+} Record;
+
+typedef struct Object {
+    void *primary;
+    Record *secondary;
+} Object;
+
+typedef struct Int3 {
+    int x, y, z;
+} Int3;
+
+typedef struct Slot {
+    int depth;
+    Vec3 *model;
+    char pad8[0x1C];
+    Object *actor;
+    void *owner;
+} Slot;
+
+extern int lbl_8064CCB4;
+extern double lbl_8064FE78;
+extern short fn_8015784C(Object *);
+extern void fn_801F69F0(const Int3 *, Vec3 *, int);
+extern void fn_8011F0E8(Vec3 *, Vec3 *);
+
+int fn_8010B5E4(Slot *slot, int x, int y, float scale)
+{
+    Vec3 world;
+    Int3 pos;
+    int screenX;
+    int screenY;
+    short target;
+
+    target = fn_8015784C(slot->actor);
+    screenX = x + 320;
+    screenY = y + 165;
+    slot->depth = target - (int)(scale * (float)(target - lbl_8064CCB4));
+    pos.x = screenX;
+    pos.y = screenY;
+    pos.z = slot->depth;
+    fn_801F69F0(&pos, &world, 0);
+    fn_8011F0E8(slot->model, &world);
+    if (slot->depth >= target) {
+        slot->depth = target;
+        pos.x = screenX;
+        pos.y = screenY;
+        pos.z = slot->depth;
+        fn_801F69F0(&pos, &world, 0);
+        fn_8011F0E8(slot->model, &world);
+        return 1;
+    }
+    return 0;
 }
