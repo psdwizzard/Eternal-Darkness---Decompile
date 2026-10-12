@@ -23,17 +23,40 @@ extern u32 lbl_8064CEDC[2];
 extern int lbl_8064D738;
 extern void fn_80121AE4(DisplayList* src, DisplayList* dst);
 
-DisplayList* fn_801222A0(void* object, int kind, int mode, int value)
+DisplayList* fn_801222A0(register void* object, register int kind, register int mode, register int value)
 {
-    int index = lbl_8064D738;
-    int other_index = index ^ 1;
-    int count = lbl_8064CEDC[index];
-    int other_count = lbl_8064CEDC[other_index];
-    DisplayList* current = lbl_804ED5CC[index];
-    DisplayList* other = lbl_804ED5CC[other_index];
-    DisplayList* result = 0;
-    DisplayList* list = current;
+    int index;
+    int other_index;
+    int count;
+    int other_count;
+    register DisplayList* current;
+    DisplayList* other;
+    DisplayList* result;
+    DisplayList* list;
     int i;
+
+    /* ASM: mr preserves argument copies before the cache loads; C moves
+     * the copies into the lookup setup. */
+    asm {
+        mr object, object
+        mr kind, kind
+        mr mode, mode
+        mr value, value
+    }
+
+    index = lbl_8064D738;
+    other_index = index ^ 1;
+    other = lbl_804ED5CC[other_index];
+    count = lbl_8064CEDC[index];
+    current = lbl_804ED5CC[index];
+    other_count = lbl_8064CEDC[other_index];
+    /* ASM: mr fixes the current cache pointer before allocating the result;
+     * C otherwise overlaps pointer setup and result initialization. */
+    asm {
+        mr current, current
+    }
+    result = 0;
+    list = current;
 
     /* Prefer a live display list already cached in this frame. */
     for (i = count; i > 0; --i, ++list) {
