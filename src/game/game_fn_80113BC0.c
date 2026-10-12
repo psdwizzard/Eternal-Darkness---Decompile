@@ -1,6 +1,23 @@
-/* fn_80113BC0 (0x80113BC0, 312 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+extern unsigned int lbl_8064CD48;
+extern unsigned int lbl_8064CD4C;
 
-void fn_80113BC0(void) {
+int fn_80113BC0(unsigned int flags)
+{
+    int i;
+    unsigned int bit;
+
+    for (i = 0; i < 14; i++) {
+        bit = 1U << i;
+        if ((flags & bit) && !(lbl_8064CD4C & bit)) {
+            return 0;
+        }
+    }
+    /* The retail code retains this empty-range check of the upper flags. */
+    for (i = 16; i < 16; i++) {
+        bit = 1U << i;
+        if ((flags & bit) && !(lbl_8064CD48 & bit)) {
+            return 0;
+        }
+    }
+    return 1;
 }
