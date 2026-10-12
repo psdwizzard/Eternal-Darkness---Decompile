@@ -10083,7 +10083,7 @@ config.libs = [
             Object(Matching, "game/game_TRKInitializeDispatcher.c", extra_cflags=["-sdata 0"]),
             Object(Matching, "game/game_fn_800F039C.c"),
             Object(Matching, "game/game_fn_800F0540.c"),
-            Object(NonMatching, "game/game_fn_800F0640.c"),
+            Object(Matching, "game/game_fn_800F0640.c"),
             Object(Matching, "game/game_fn_800F0B70.c"),
             # Honest C is size-exact; only the range compare's temporary registers differ.
             Object(Matching, "game/game_fn_800F0CC4.c"),
