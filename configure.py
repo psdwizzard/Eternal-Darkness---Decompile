@@ -9891,7 +9891,7 @@ config.libs = [
             Object(NonMatching, "game/game_fn_800E3618.c"),
             Object(NonMatching, "game/game_fn_800E39A8.c"),
             Object(NonMatching, "game/game_fn_800E3C4C.c"),
-            Object(NonMatching, "game/game_fn_800E3F10.c"),
+            Object(Matching, "game/game_fn_800E3F10.c"),
             Object(Matching, "game/game_fn_800E4010.c"),
             Object(Matching, "game/game_fn_800E406C.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_800E41FC.c"),
@@ -10170,7 +10170,7 @@ config.libs = [
             # MWCC's mask/or spelling versus retail's rlwimi mode update.
             Object(Matching, "game/game___close_all.c"),
             Object(NonMatching, "game/game_fn_800F6F40.c"),
-            Object(NonMatching, "game/game_fn_800F7C74.c"),
+            Object(Matching, "game/game_fn_800F7C74.c"),
             Object(NonMatching, "game/game_fn_800F8374.c"),
             Object(Matching, "game/game_fn_800F8B3C.c"),
             Object(Matching, "game/game_fn_800F8BAC.c", extra_cflags=["-sdata 0"]),
