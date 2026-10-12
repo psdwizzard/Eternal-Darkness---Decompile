@@ -1,6 +1,8 @@
-/* fn_800473A4 (0x800473A4, 8 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef signed int s32;
 
-void fn_800473A4(void) {
+extern s32 lbl_8064C814;
+
+s32 fn_800473A4(void)
+{
+    return lbl_8064C814;
 }
