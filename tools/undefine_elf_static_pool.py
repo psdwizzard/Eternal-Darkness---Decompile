@@ -145,7 +145,9 @@ def externalize(data, target, symbols):
     if local_objects:
         cursor = 0
         for start, end in sorted(local_objects):
-            require(start == cursor, 'local aggregate owners overlap or leave a gap')
+            require(start == cursor or (cursor < start < cursor + 8 and start % 8 == 0
+                    and not any(data[section[4] + cursor:section[4] + start])),
+                    'local aggregate owners overlap or leave a gap')
             cursor = end
         require(cursor == section[5], 'local aggregate owners do not cover full pool')
     for reloc in sections:

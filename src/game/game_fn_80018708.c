@@ -2,6 +2,7 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef short s16;
 typedef int s32;
+typedef unsigned int u32;
 typedef float f32;
 
 typedef struct {
@@ -19,8 +20,7 @@ typedef union {
 } SpawnDescriptor;
 
 typedef struct {
-    u8 bytes[172];
-    u8 stack_padding[2];
+    u8 bytes[176];
 } SpawnInfo;
 
 typedef struct {
@@ -39,30 +39,31 @@ extern void fn_80163BB4(void*, const char*, ...);
 extern unsigned int fn_800F5C54(double);
 extern void fn_80196578(void*);
 extern void fn_8018F81C(void*, u8);
-extern int fn_801D3974(s32);
-extern int fn_8015C4A4(int, int);
+extern void* fn_801D3974(int);
+extern int fn_8015C4A4(void*, int);
 extern Vec3s* fn_80158ABC(int, int, void*);
 extern void* fn_80147EC4(void*);
 extern void fn_801964E8(void*, s32, s32);
-extern s32 fn_80142A70(s32, Vec3s*, s32, s32, s32, s32, s32, s32);
-extern s32 fn_8014B8D0(void*, s32);
+extern void* fn_80142A70(u8, Vec3s*, s16, u32, void*, void*, void*, int);
+extern int fn_8014B8D0(void*, void*);
 extern void* fn_801966E0(void*, int, int);
 
-/* NonMatching: count is assumed to be at most six, as in retail and the
- * matching sibling; that caller invariant has not yet been proven here. */
 s32 fn_80018708(void* script)
 {
     SpawnDescriptor descriptor;
+    void* object;
     SpawnInfo info;
     Vec3s endpoints[2];
     u8* body;
+    u8* out;
     s32 arg1;
     s32 arg2;
     s32 count;
     s32 kind;
     s32 flags;
     s32 i;
-    s32 handle;
+    void* handle;
+    s32 width;
     f32 dx;
     f32 dy;
     f32 dz;
@@ -91,7 +92,7 @@ s32 fn_80018708(void* script)
     body[1] = 8;
     body[2] = (u8)count;
 
-    values.second = values.first = fn_801D3974(kind);
+    values.second = values.first = (s32)fn_801D3974(kind);
     ((u8*)&values.second)[3] = (u8)arg1;
     ((u8*)&values.first)[3] = (u8)arg2;
 
@@ -122,9 +123,9 @@ s32 fn_80018708(void* script)
     descriptor.bytes[43] = 0;
 
     endpoints[0] = *fn_80158ABC(
-        fn_8015C4A4(fn_800F5C54(fn_8016A694(script, 5)), 2), 2, 0);
+        fn_8015C4A4((void*)fn_800F5C54(fn_8016A694(script, 5)), 2), 2, 0);
     endpoints[1] = *fn_80158ABC(
-        fn_8015C4A4(fn_800F5C54(fn_8016A694(script, 7)), 2), 2, 0);
+        fn_8015C4A4((void*)fn_800F5C54(fn_8016A694(script, 7)), 2), 2, 0);
     dx = (f32)(endpoints[1].x - endpoints[0].x);
     dy = (f32)(endpoints[1].y - endpoints[0].y);
     dz = (f32)(endpoints[1].z - endpoints[0].z);
@@ -133,12 +134,13 @@ s32 fn_80018708(void* script)
     best_low = lbl_8064DE78;
     best_high = lbl_8064DCF4;
 
+    out = body;
     for (i = 0; i < count; i++) {
         Vec3s* point;
         f32 distance;
 
         point = fn_80158ABC(
-            fn_8015C4A4(fn_800F5C54(fn_8016A694(script, i + 5)), 2),
+            fn_8015C4A4((void*)fn_800F5C54(fn_8016A694(script, i + 5)), 2),
             2, 0);
         distance = dx * point->x + dy * point->y + dz * point->z;
         if ((f32)point->z < min_z) {
@@ -155,8 +157,8 @@ s32 fn_80018708(void* script)
             best_low = distance;
             endpoints[0] = *point;
         }
-        *(Vec3s*)&body[64] = *point;
-        body += 6;
+        *(Vec3s*)&out[64] = *point;
+        out += 6;
     }
 
     *(SpawnDescriptor*)&info = descriptor;
@@ -166,11 +168,11 @@ s32 fn_80018708(void* script)
     if (*(void**)&info.bytes[148] != 0) {
         fn_801964E8(*(void**)&info.bytes[148], 1, 0);
     }
-    script = *(void**)&info.bytes[148];
+    object = *(void**)&info.bytes[148];
     endpoints[0].z = (s16)min_z;
     endpoints[1].z = (s16)min_z;
-    handle = fn_80142A70(2, endpoints, (s16)(max_z - min_z),
-                         lbl_8064D18C, 0, 0, 0, 0);
-    fn_8014B8D0(script, handle);
+    width = (s16)(max_z - min_z);
+    handle = fn_80142A70(2, endpoints, width, lbl_8064D18C, 0, 0, 0, 0);
+    fn_8014B8D0(object, handle);
     return 0;
 }

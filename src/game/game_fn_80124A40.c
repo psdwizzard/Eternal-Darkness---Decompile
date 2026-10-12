@@ -42,10 +42,15 @@ typedef struct Weight {
     u32 flags;
 } Weight;
 
+typedef struct OwnerSlot {
+    u16 flags;
+    u8 pad2[6];
+} OwnerSlot;
+
 typedef struct Owner {
     u8 pad0[0x180];
-    u16 flags;
-    u8 pad182[0x11A];
+    OwnerSlot slots[35];
+    u8 pad298[4];
     Weight* weights;
     u8 pad2A0[0x24];
     s32 enabled;
@@ -58,18 +63,27 @@ typedef struct Vertex {
 extern u32 lbl_804FA6D0[];
 extern Vertex lbl_804FA740[];
 
+#pragma opt_dead_assignments off
 void fn_80124A40(Owner* owner, Table* table, u32* first_output,
                  u32* second_output)
 {
-    u32 vertex_index;
-    s32 entry_index;
+    u32 begin;
     u32 delta_index;
+    s32 entry_index;
+    u32 delta_end;
     s32 weight_index;
-    s32 count = table->count;
-    Vertex* source_vertices = (Vertex*)table->first_output;
-    Delta* deltas = table->deltas;
+    u32 vertex_index;
+    Vertex* source_vertices;
+    s32 count;
+    Pair* pairs;
+    Delta* deltas;
+    u32 end;
     Weight* weight;
     Entry* entry;
+
+    source_vertices = (Vertex*)table->first_output;
+    deltas = table->deltas;
+    count = table->count;
 
     *first_output = table->first_output;
     *second_output = table->second_output;
@@ -79,50 +93,37 @@ void fn_80124A40(Owner* owner, Table* table, u32* first_output,
     }
 
     for (entry_index = 0; entry_index < count; entry_index++) {
-        u32 begin;
-        u32 end;
-        Pair* pairs;
-
         entry = &table->entries[entry_index];
         begin = entry->start;
         end = begin + entry->count;
         pairs = entry->pairs;
 
         if (owner->enabled != 0 &&
-            (*(u16*)((u8*)owner + 0x180 + entry_index * 8) & 1)) {
-            Pair* pair;
-            s32 weight_offset;
+            (owner->slots[entry_index].flags & 1)) {
             for (vertex_index = begin; vertex_index < end; vertex_index++) {
                 lbl_804FA740[vertex_index] =
                     source_vertices[vertex_index];
             }
 
-            pair = pairs;
-            weight_index = 0;
-            weight_offset = 0;
-            do {
-                u32 delta_end;
-                weight = (Weight*)((u8*)owner->weights + weight_offset);
+            for (weight_index = 0; weight_index < 32; weight_index++) {
+                weight = &owner->weights[weight_index];
 
                 if ((weight->flags & 1) != 0 &&
-                    (delta_index = pair->start) != 0xFFFFFFFF) {
-                    /* Cache the wrapped bound before publishing the status. */
-                    delta_end = delta_index + pair->count;
+                    (delta_index = pairs[weight_index].start) != 0xFFFFFFFF) {
+
+                    Delta* delta = 0;
+                    delta_end = delta_index + pairs[weight_index].count;
                     lbl_804FA6D0[entry_index] = 1;
-                    for (; delta_index < delta_end;) {
-                        Delta* delta = &deltas[delta_index];
-                        Vertex* vertex =
-                            &lbl_804FA740[entry->start + delta->index];
-                        vertex->x += (s32)(weight->value * delta->x);
-                        vertex->y += (s32)(weight->value * delta->y);
-                        vertex->z += (s32)(weight->value * delta->z);
-                        delta_index++;
+                    for (; delta_index < delta_end; delta_index++) {
+                        delta = &deltas[delta_index];
+                        vertex_index = entry->start + delta->index;
+                        lbl_804FA740[vertex_index].x += (s32)(weight->value * delta->x);
+                        lbl_804FA740[vertex_index].y += (s32)(weight->value * delta->y);
+                        lbl_804FA740[vertex_index].z += (s32)(weight->value * delta->z);
                     }
                 }
-                weight_offset += sizeof(Weight);
-                weight_index++;
-                pair++;
-            } while (weight_index < 32);
+            }
         }
     }
 }
+#pragma opt_dead_assignments reset

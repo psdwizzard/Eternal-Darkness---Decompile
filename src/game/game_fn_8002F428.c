@@ -18,8 +18,6 @@ typedef struct State {
     float velocity;
 } State;
 
-extern const double lbl_8064E038;
-extern const float lbl_8064E048;
 extern const float lbl_8064E064;
 extern const float lbl_8064E128;
 extern const float lbl_8064E12C;
@@ -28,33 +26,31 @@ extern const float lbl_8064E134;
 extern const float lbl_8064E138;
 extern s32 lbl_8064D18C;
 
-extern void *fn_80156938();
-extern void *fn_80201B8C();
+extern void* fn_80156938(void*);
+extern void* fn_80201B8C(void*);
 extern int fn_80201B5C(void*);
-#define fn_80201B5C(a) fn_80201B5C((void*)(a))
-extern int fn_80201B54();
-extern unsigned long long fn_8020123C();
-extern void *fn_80201814();
-extern void *fn_80201BC8();
-extern void fn_80121104(float);
-extern s32 fn_8011FB4C(void*);
+extern int fn_80201B54(void*);
+extern unsigned long long fn_8020123C(int, int, int, int);
+extern void* fn_80201814(int);
+extern void* fn_80201BC8(void*);
+extern void fn_80121104(void*, float);
+extern void* fn_8011FB4C(void*);
 extern int fn_80201AE4(void);
 extern s32 fn_80047178(void);
 extern s32 fn_8012FA54(void*, s32);
 extern void fn_8012C478(void*, s32, s32);
-extern void fn_801499C4(void*, s16*, s32, s32, s32);
-extern void fn_8011F114();
+extern void fn_801499C4(void*, s16*, void*, void*, s32);
+extern void fn_8011F114(Vec3*, Vec3*);
 extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
-extern void fn_8011FB54(void*, s32);
+extern void fn_8011FB54(void*, void*);
 extern void fn_8011F0E8(void*, Vec3*);
 
 void fn_8002F428(void* first_arg, void* second_arg)
 {
     void* first;
     void* second;
-    register State* state;
-    register void* target_actor;
+    State* state;
+    void* target_actor;
     void* second_actor;
     s32 actor_state;
     s32 axis_flags;
@@ -62,8 +58,8 @@ void fn_8002F428(void* first_arg, void* second_arg)
     s16 position[4];
     Vec3 next;
     Vec3 current;
-    register float current_z;
-    register float direction_delta;
+    float current_z;
+    float direction_delta;
 
     state = first_arg;
     if (state == 0)
@@ -94,7 +90,7 @@ void fn_8002F428(void* first_arg, void* second_arg)
                 state->velocity = lbl_8064E128;
                 state->rate = lbl_8064E064;
             }
-            fn_80121104(state->rate);
+            fn_80121104(second_actor, state->rate);
         }
     }
 
@@ -109,21 +105,19 @@ void fn_8002F428(void* first_arg, void* second_arg)
     second_actor = fn_80201BC8(second);
     if (second_actor == 0)
         return;
-    actor_state = fn_8011FB4C(second_actor);
-    if (state->owner_id != fn_80201AE4() ||
-        (fn_80047178() && fn_8012FA54(second_actor, 0xF))) {
-        if (actor_state == lbl_8064D18C)
-            goto active;
+    actor_state = (s32)fn_8011FB4C(second_actor);
+    if (!(state->owner_id != fn_80201AE4() ||
+          (fn_80047178() && fn_8012FA54(second_actor, 0xF))) ||
+        actor_state != lbl_8064D18C) {
+        fn_8012C478(target_actor, 0xF, 0);
+        return;
     }
-    fn_8012C478(target_actor, 0xF, 0);
-    return;
 
-active:
     fn_8012C478(target_actor, 0xF, 1);
     fn_801499C4(second, position, 0, 0, 0);
 
     if (state->previous_state == actor_state &&
-        actor_state == fn_8011FB4C(target_actor) && state->reset == 0) {
+        actor_state == (s32)fn_8011FB4C(target_actor) && state->reset == 0) {
         axis_flags = 1;
         blocked = 0;
         fn_8011F114(&current, target_actor);
@@ -196,9 +190,9 @@ active:
             if (!(state->counter & (u8)axis_flags)) {
                 direction_delta = (float)state->direction;
                 next.z = current_z + direction_delta;
-                if (next.z > lbl_8064E048 + (float)position[2])
+                if (next.z > 10.0f + (float)position[2])
                     state->direction = -1;
-                else if (next.z < (float)position[2] - lbl_8064E048)
+                else if (next.z < (float)position[2] - 10.0f)
                     state->direction = 1;
             } else {
                 next.z = current_z;
@@ -210,7 +204,7 @@ active:
         next.z = (float)position[2];
         state->counter = 0;
         state->previous_state = actor_state;
-        fn_8011FB54(target_actor, actor_state);
+        fn_8011FB54(target_actor, (void*)actor_state);
         state->reset = 0;
     }
     state->counter++;

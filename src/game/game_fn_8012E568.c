@@ -49,29 +49,21 @@ typedef struct Object {
     u8* states;
 } Object;
 
-extern const float lbl_806501F8;
-extern const float lbl_806501FC;
 
 extern void* fn_8012E504(void*, float, float, float);
 extern int fn_801261F4(void*);
-extern void fn_8011FB44(void*, void*);
-extern void fn_80127F90(void*, int, float*);
+extern void fn_8011FB44(void *, void *);
+extern void fn_80127F90(void*, int, Vec3*);
 extern void fn_80211A6C(const Vec3*, const Vec3*, Vec3*);
 extern float fn_8011F788(void*, float);
 extern void fn_8011F7A0(void*, const Vec3*);
 
-/* Keep the cross-TU surface opaque; fn_80205730 forwards this pointer without
- * inspecting it. This function alone gives the two opaque pointers types.
- * The caller owns both objects. resource_index must select a non-null resource
- * and resource object; points, records, and states each contain 137 entries.
- * data is either null or points to a readable Vec3. */
-void* fn_8012E568(void* object, int resource_index, void* data)
+
+void* fn_8012E568(Object* source, int resource_index, void* data)
 {
-    Object* source = object;
     const Vec3* optional_position = data;
     Object* created;
     ResourceObject* resource_object;
-    float joint_position[3];
     Vec3 relative;
     Vec3 final_position;
     float radius;
@@ -97,26 +89,23 @@ void* fn_8012E568(void* object, int resource_index, void* data)
         created->states[i] = source->states[i];
     }
 
-    fn_80127F90(source, resource_object->joint_index, joint_position);
-    relative.x = joint_position[0];
-    relative.y = joint_position[1];
-    relative.z = joint_position[2];
+    fn_80127F90(source, resource_object->joint_index, &relative);
     fn_80211A6C(&relative, &source->position, &relative);
 
-    radius = lbl_806501F8;
+    radius = 24.0f;
     switch (resource_index) {
     case 0:
         relative.z += radius;
         break;
     case 2:
-        radius = lbl_806501FC;
+        radius = 20.0f;
         break;
     case 3:
-        radius = lbl_806501FC;
+        radius = 20.0f;
         break;
     case 1:
-        radius = lbl_806501FC;
-        relative.z += radius;
+        relative.z += 20.0f;
+        radius = 20.0f;
         break;
     }
 
