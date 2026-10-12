@@ -1,6 +1,62 @@
-/* fn_800CF6AC (0x800CF6AC, 284 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef signed short s16;
+typedef signed int s32;
 
-void fn_800CF6AC(void) {
+typedef struct ValueTable ValueTable;
+typedef struct Object {
+    u8 pad0[0x8C];
+    ValueTable *table;
+    u8 pad90[4];
+    s32 kind;
+} Object;
+
+typedef struct Entry {
+    u8 pad0[2];
+    u8 amount;
+    u8 flags;
+    u8 pad4[4];
+} Entry;
+
+typedef struct EntryTable {
+    u8 pad0[0x28];
+    Entry entries[1];
+} EntryTable;
+
+typedef struct Effect Effect;
+extern s32 fn_8003CC48(s32 unused, Object *object, s32 kind, s16 amount);
+extern void fn_801A7518(Effect *effect, s16 value);
+extern void fn_801A7520(Effect *effect, s16 value);
+extern void fn_801A7528(Effect *effect, s16 value);
+extern void fn_801A7538(Effect *effect, u16 value);
+extern float lbl_8064F33C;
+
+void fn_800CF6AC(void *unused, EntryTable *table, register Object *object,
+                  Effect *effect, s32 index, s32 mode)
+{
+    u8 input = table->entries[index].amount;
+    s32 kind = 2;
+    s32 amount;
+    register Object *call_object;
+
+    /* ASM: mr sets up the object argument before the mode branch; equivalent C delays it until after the branch. */
+    asm { mr call_object, object }
+
+    if (mode == 4) {
+        kind = 3;
+    }
+    amount = fn_8003CC48((s32)unused, call_object, kind, input);
+    if (table->entries[index].flags & 1) {
+        fn_801A7518(effect, amount);
+        fn_801A7538(effect, 1);
+    }
+    if (object->kind == 1) {
+        fn_801A7518(effect, (s16)(lbl_8064F33C * (float)(s16)amount));
+    }
+    if (object->kind == 3) {
+        fn_801A7520(effect, amount);
+    }
+    if (object->kind == 2) {
+        fn_801A7528(effect, (s16)((s16)amount * 2));
+    }
 }
