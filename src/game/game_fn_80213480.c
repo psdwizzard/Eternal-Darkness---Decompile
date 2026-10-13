@@ -1,6 +1,41 @@
-/* fn_80213480 (0x80213480, 352 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned int u32;
 
-void fn_80213480(void) {
+typedef struct FSTEntry {
+    u32 isDirAndStringOff;
+    u32 parentOrPosition;
+    u32 nextEntryOrLength;
+} FSTEntry;
+
+extern FSTEntry *FstStart_8064D9E4;
+extern char *FstStringStart_8064D9E8;
+
+/* Copy a path component, without adding a terminator. */
+static inline u32 copyComponent(char *dest, const char *src, u32 length)
+{
+    u32 remaining = length;
+    while (remaining != 0 && *src != '\0') {
+        *dest++ = *src++;
+        remaining--;
+    }
+    return length - remaining;
+}
+
+u32 fn_80213480(u32 entry, char *path, u32 maxLength)
+{
+    char *name;
+    u32 length;
+
+    if (entry == 0) {
+        return 0;
+    }
+    name = FstStringStart_8064D9E8 +
+           (FstStart_8064D9E4[entry].isDirAndStringOff & 0x00FFFFFF);
+    length = fn_80213480(FstStart_8064D9E4[entry].parentOrPosition,
+                         path, maxLength);
+    if (length == maxLength) {
+        return length;
+    }
+    path[length++] = '/';
+    length += copyComponent(path + length, name, maxLength - length);
+    return length;
 }
