@@ -1,6 +1,69 @@
-/* fn_80218720 (0x80218720, 196 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* PAD origin callback: update the origin, enable polling, and reset the next channel. */
+#include "src/game/types.h"
 
-void fn_80218720(void) {
+typedef struct PadStatus {
+    u16 button;
+    s8 stickX;
+    s8 stickY;
+    s8 substickX;
+    s8 substickY;
+    u8 triggerL;
+    u8 triggerR;
+    u8 analogA;
+    u8 analogB;
+    s8 err;
+} PadStatus;
+
+typedef void (*SITypeCallback)(s32 chan, u32 type);
+
+extern s32 fn_80209140(s32 chan, void *data);          /* SIGetResponse */
+extern void fn_80208ED4(s32 chan, u32 command);       /* SISetCommand */
+extern u32 fn_80208F64(u32 poll);                    /* SIEnablePolling */
+extern u32 fn_80209858(s32 chan, SITypeCallback callback);
+extern void fn_8021897C(s32 chan, u32 type);
+extern void *memset(void *dst, int value, unsigned long size);
+
+extern PadStatus lbl_80641C20[4]; /* Origin */
+extern s32 lbl_8064C428;          /* ResettingChan */
+extern u32 lbl_8064C430;          /* AnalogMode */
+extern u32 lbl_8064DAB4;          /* EnabledBits */
+extern u32 lbl_8064DAB8;          /* ResettingBits */
+extern void fn_8021857C(s32 chan); /* PAD UpdateOrigin */
+
+static void PADEnable(s32 chan)
+{
+    u32 cmd;
+    u32 analogMode;
+    u32 chanBit;
+    u32 data[2];
+
+    chanBit = 0x80000000U >> chan;
+    lbl_8064DAB4 |= chanBit;
+    fn_80209140(chan, data);
+    analogMode = lbl_8064C430;
+    cmd = analogMode | 0x400000;
+    fn_80208ED4(chan, cmd);
+    fn_80208F64(lbl_8064DAB4);
+}
+
+void fn_80218720(s32 unused, u32 type, void *context)
+{
+    if (!(type & 0xF)) {
+        fn_8021857C(lbl_8064C428);
+        PADEnable(lbl_8064C428);
+    }
+    {
+        u32 chanBit;
+        s32 chan;
+        u32 bits = lbl_8064DAB8;
+
+        lbl_8064C428 = __cntlzw(bits);
+        chan = lbl_8064C428;
+        if (chan != 32) {
+            chanBit = 0x80000000U >> chan;
+            lbl_8064DAB8 = bits & ~chanBit;
+            memset(&lbl_80641C20[chan], 0, sizeof(PadStatus));
+            fn_80209858(lbl_8064C428, fn_8021897C);
+        }
+    }
 }
