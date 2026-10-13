@@ -1,6 +1,66 @@
-/* fn_80214350 (0x80214350, 228 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned int u32;
+typedef int s32;
+typedef unsigned short u16;
+typedef unsigned char u8;
 
-void fn_80214350(void) {
+typedef struct DVDDiskID {
+    char gameName[4];
+    char company[2];
+    u8 diskNumber;
+    u8 gameVersion;
+    u8 streaming;
+    u8 streamingBufSize;
+    u8 padding[22];
+} DVDDiskID;
+
+typedef struct DVDCommandBlock DVDCommandBlock;
+struct DVDCommandBlock {
+    u8 pad[0x0C];
+    s32 state;
+    s32 currTransferSize;
+    u8 pad14[0x10];
+    DVDDiskID *id;
+    void (*callback)(s32, DVDCommandBlock *);
+};
+
+extern DVDCommandBlock *executing_8064DA00;
+extern DVDDiskID *currID_8064DA04;
+extern s32 CurrCommand_8064DA1C;
+extern void (*lbl_8064DA48)(DVDCommandBlock *);
+extern DVDDiskID tmpBuffer_80641960;
+
+extern int fn_800F98EC(const void *, const void *, unsigned long); /* memcmp */
+extern void *memcpy(void *, const void *, unsigned long);
+extern void DCInvalidateRange(void *, u32);
+extern void DVDLowStopMotor(void (*)(s32));
+extern void fn_802144A0(s32);
+extern void fn_80214468(DVDCommandBlock *);
+extern void fn_80214434(DVDCommandBlock *);
+
+/* stateCheckID */
+void fn_80214350(void)
+{
+    DVDDiskID *buf = &tmpBuffer_80641960;
+
+    switch (CurrCommand_8064DA1C) {
+    case 3:
+        if (fn_800F98EC(buf, executing_8064DA00->id, 0x1C) != 0) {
+            DVDLowStopMotor(fn_802144A0);
+            break;
+        }
+        memcpy(currID_8064DA04, buf, sizeof(DVDDiskID));
+        executing_8064DA00->state = 1;
+        DCInvalidateRange(buf, sizeof(DVDDiskID));
+        lbl_8064DA48 = fn_80214468;
+        fn_80214468(executing_8064DA00);
+        break;
+    default:
+        if (fn_800F98EC(buf, currID_8064DA04, sizeof(DVDDiskID)) != 0) {
+            DVDLowStopMotor(fn_802144A0);
+            break;
+        }
+        lbl_8064DA48 = fn_80214434;
+        fn_80214434(executing_8064DA00);
+        break;
+    }
 }
