@@ -1,6 +1,69 @@
-/* fn_8022B374 (0x8022B374, 212 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* GXEndDisplayList: close the display-list FIFO, restore the CPU FIFO and
+ * the GX state saved by GXBeginDisplayList, and return the list size. */
+typedef unsigned char u8;
+typedef unsigned long u32;
+typedef long s32;
+typedef int BOOL;
 
-void fn_8022B374(void) {
+typedef struct {
+    void *base;
+    void *top;
+    u32 size;
+    u32 hiWatermark;
+    u32 loWatermark;
+    void *rdPtr;
+    void *wrPtr;
+    s32 count;
+    u8 bind_cpu;
+    u8 bind_gp;
+    u8 wrap;
+} GXFifoObj;
+
+typedef struct {
+    GXFifoObj fifo;         /* DisplayListFifo */
+    u8 savedGXData[0x4F8];  /* __savedGXdata */
+} GXDisplayListState;
+
+extern u8 *gx;
+extern volatile u32 *__piReg;
+extern GXDisplayListState lbl_806426A0;
+extern GXFifoObj *lbl_8064DBC8; /* OldCPUFifo */
+
+#define GX32(o) (*(u32 *)(gx + (o)))
+#define GX8(o) (*(u8 *)(gx + (o)))
+
+BOOL OSDisableInterrupts(void);
+BOOL OSRestoreInterrupts(BOOL level);
+void *memcpy(void *dst, const void *src, u32 n);
+void fn_80226A28(void);              /* __GXSetDirtyState */
+void fn_80224048(GXFifoObj *fifo);   /* __GXSaveCPUFifoAux */
+void GXSetCPUFifo(GXFifoObj *fifo);
+
+u32 fn_8022B374(void) {
+    GXDisplayListState *dl = &lbl_806426A0;
+    u32 ov;
+    BOOL enabled;
+    u32 bpMask;
+    u32 reg;
+    u32 pad[2]; /* unused; reproduces the original 0x20-byte frame */
+
+    if (GX32(0x4F4) != 0) {
+        fn_80226A28();
+    }
+    reg = __piReg[5];
+    ov = (reg >> 26) & 1;
+    fn_80224048(&dl->fifo);
+    GXSetCPUFifo(lbl_8064DBC8);
+    if (GX8(0x4F1) != 0) {
+        enabled = OSDisableInterrupts();
+        bpMask = GX32(0x8);
+        memcpy(gx, dl->savedGXData, 0x4F8);
+        GX32(0x8) = bpMask;
+        OSRestoreInterrupts(enabled);
+    }
+    GX8(0x4F0) = 0;
+    if (!ov) {
+        return dl->fifo.count;
+    }
+    return 0;
 }
