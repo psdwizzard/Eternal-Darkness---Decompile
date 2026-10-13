@@ -24,13 +24,29 @@ extern void fn_800F36B0(void *destination, const void *source, unsigned int leng
                         unsigned int read_msr, unsigned int write_msr);
 extern void fn_800F35AC(void *address, unsigned int length);
 
-DSError fn_800F4CC0(void *data, u32 start, u32 *length, int accessOptions, BOOL read)
+DSError fn_800F4CC0(register void *dataArg, register u32 startArg,
+                    register u32 *lengthArg, int accessOptions,
+                    register BOOL readArg)
 {
     DSError error;
+    register BOOL read;
+    register u32 *length;
+    register u32 start;
+    register void *data;
     u32 target_msr;
     u32 trans_msr;
     void *addr;
-    TRKExceptionStatus tempExceptionStatus = gTRKExceptionStatus_8024A864;
+    TRKExceptionStatus tempExceptionStatus;
+
+    /* ASM: mr preserves the incoming arguments in retail order; C assignments
+     * are coalesced and rescheduled among the exception-state loads. */
+    asm {
+        mr start, startArg
+        mr length, lengthArg
+        mr data, dataArg
+        mr read, readArg
+    }
+    tempExceptionStatus = gTRKExceptionStatus_8024A864;
 
     gTRKExceptionStatus_8024A864.exceptionDetected = 0;
 

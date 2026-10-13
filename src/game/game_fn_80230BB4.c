@@ -50,21 +50,33 @@ float *fn_80230BB4(VorbisBlock *vb, Floor0Look *look) {
 
     s32 ampraw = fn_8022E868(vb->opb, info->ampbits);
     if (ampraw > 0) {
-        s32 maxval = (1 << info->ampbits) - 1;
-        float amp = (float)ampraw / maxval * info->ampdB;
+        float raw = (float)ampraw;
+        float maxval = (float)((1 << info->ampbits) - 1);
+        float db = (float)info->ampdB;
+        float amp = raw / maxval * db;
         s32 booknum = fn_8022E868(vb->opb, fn_80236144(info->numbooks));
 
         if (booknum != -1 && booknum < info->numbooks) {
             CodecSetup *ci = vb->vd->codec_setup;
             Codebook *b = ci->fullbooks + info->books[booknum];
-            float last = lbl_806517B8;
-            float *lsp = fn_8022F8C4(sizeof(*lsp) * (look->m + 1));
+            double last = lbl_806517B8;
+            s32 size = sizeof(float) * (look->m + 1);
+            float *lsp = fn_8022F8C4(size);
 
-            for (j = 0; j < look->m; j += b->dim)
-                if (fn_80230204(b, lsp + j, vb->opb, b->dim) == -1) goto eop;
-            for (j = 0; j < look->m;) {
-                for (k = 0; k < b->dim; k++, j++) lsp[j] += last;
-                last = lsp[j - 1];
+            for (j = 0; j < look->m; j += b->dim) {
+                if (fn_80230204(b, lsp + j, vb->opb, b->dim) == -1)
+                    goto eop;
+            }
+
+            /* Restore each vector relative to the preceding vector's last value. */
+            {
+                float *cursor = lsp;
+                for (j = 0; j < look->m;) {
+                    for (k = 0; k < b->dim; k++, j++, cursor++) {
+                        *cursor += (float)last;
+                    }
+                    last = cursor[-1];
+                }
             }
 
             lsp[look->m] = amp;
