@@ -1,6 +1,79 @@
-/* fn_802145B4 (0x802145B4, 164 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned int u32;
+typedef int s32;
+typedef unsigned char u8;
+typedef int BOOL;
 
-void fn_802145B4(void) {
+typedef struct DVDDiskID {
+    char gameName[4];
+    char company[2];
+    u8 diskNumber;
+    u8 gameVersion;
+    u8 streaming;
+    u8 streamingBufSize;
+    u8 padding[22];
+} DVDDiskID;
+
+typedef struct OSBootInfo {
+    DVDDiskID DVDDiskID;
+    u32 magic;
+    u32 version;
+    u32 memorySize;
+    u32 consoleType;
+    void *arenaLo;
+    void *arenaHi;
+    void *FSTLocation;
+    u32 FSTMaxLength;
+} OSBootInfo;
+
+typedef struct DVDCommandBlock DVDCommandBlock;
+struct DVDCommandBlock {
+    u8 pad[0x0C];
+    s32 state;
+    s32 currTransferSize;
+    u8 pad14[0x10];
+    DVDDiskID *id;
+    void (*callback)(s32, DVDCommandBlock *);
+};
+
+typedef struct DVDBootBlock {
+    u32 bootFilePosition;
+    u32 FSTPosition;
+    u32 FSTLength;
+    u32 FSTMaxLength;
+} DVDBootBlock;
+
+extern DVDCommandBlock *executing_8064DA00;
+extern OSBootInfo *bootInfo_8064DA08;
+extern DVDDiskID tmpBuffer_80641960;
+extern s32 lbl_8064DA34;
+extern void (*lbl_8064DA48)(DVDCommandBlock *);
+
+extern void __DVDStoreErrorCode(u32);
+extern void DVDReset(void);
+extern void cbForStateError_80213C1C(s32);
+extern void fn_80213B48(DVDCommandBlock *);
+extern void fn_80213B9C(u32);
+extern void fn_80213E3C(u32);
+extern BOOL fn_80212758(void *, u32, u32, void (*)(u32));
+extern void fn_80212BE0(void (*)(u32));
+
+void fn_802145B4(u32 intType)
+{
+    if (intType == 0x10) {
+        executing_8064DA00->state = -1;
+        __DVDStoreErrorCode(0x01234568);
+        DVDReset();
+        cbForStateError_80213C1C(0);
+        return;
+    }
+
+    if (intType & 1) {
+        lbl_8064DA34 = 0;
+        lbl_8064DA48 = fn_80213B48;
+        fn_80212758(bootInfo_8064DA08->FSTLocation,
+                     (((DVDBootBlock *)&tmpBuffer_80641960)->FSTLength + 31) & ~31U,
+                     ((DVDBootBlock *)&tmpBuffer_80641960)->FSTPosition, fn_80213B9C);
+    } else {
+        fn_80212BE0(fn_80213E3C);
+    }
 }

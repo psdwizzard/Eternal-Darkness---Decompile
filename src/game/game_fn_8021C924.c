@@ -1,6 +1,45 @@
-/* fn_8021C924 (0x8021C924, 164 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* fn_8021C924: TimeoutHandler (Dolphin SDK CARDBios.c). */
 
-void fn_8021C924(void) {
+typedef unsigned char u8;
+typedef signed int s32;
+
+typedef void (*CardCallback)(s32 channel, s32 result);
+typedef void (*EXICallback)(s32 chan, void *context);
+
+/* Memory card control block; one per EXI channel (0x110 bytes). */
+typedef struct CardControl {
+    s32 attached;
+    u8 pad04[0xCC - 0x04];
+    CardCallback exiCallback;
+    u8 padD0[0xE0 - 0xD0];
+    u8 alarm[0x30];
+} CardControl;
+
+extern CardControl lbl_80641C60[];
+
+extern EXICallback fn_80206ED4(s32 chan, EXICallback exiCallback);
+
+void fn_8021C924(void *alarm, void *context)
+{
+    s32 chan;
+    CardControl *card;
+    CardCallback callback;
+
+    for (chan = 0; chan < 2; ++chan) {
+        card = &lbl_80641C60[chan];
+        if (alarm == &card->alarm) {
+            break;
+        }
+    }
+
+    if (!card->attached) {
+        return;
+    }
+
+    fn_80206ED4(chan, 0);
+    callback = card->exiCallback;
+    if (callback) {
+        card->exiCallback = 0;
+        callback(chan, -5);
+    }
 }

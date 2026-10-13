@@ -1,6 +1,37 @@
-/* fn_80212AB0 (0x80212AB0, 164 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef signed int s32;
+typedef unsigned int u32;
+typedef signed long long OSTime;
+typedef void (*DVDLowCallback)(u32 intType);
 
-void fn_80212AB0(void) {
+typedef struct OSAlarm {
+    char data[0x28];
+} OSAlarm;
+typedef void (*OSAlarmHandler)(OSAlarm *alarm, void *context);
+
+extern DVDLowCallback Callback_8064D9A0;
+extern volatile s32 StopAtNextInt_8064D998;
+extern OSAlarm AlarmForTimeout_806418E8;
+extern void OSCreateAlarm(OSAlarm *alarm);
+extern void OSSetAlarm(OSAlarm *alarm, OSTime tick, OSAlarmHandler handler);
+extern void AlarmHandlerForTimeout_80212558(OSAlarm *alarm, void *context);
+
+volatile u32 __DIRegs[16] : 0xCC006000;
+
+static inline void SetTimeoutAlarm(OSTime timeout) {
+    OSCreateAlarm(&AlarmForTimeout_806418E8);
+    OSSetAlarm(&AlarmForTimeout_806418E8, timeout, AlarmHandlerForTimeout_80212558);
+}
+
+/* Read the 32-byte disc ID into the DMA destination. */
+s32 fn_80212AB0(void *addr, DVDLowCallback callback) {
+    Callback_8064D9A0 = callback;
+    StopAtNextInt_8064D998 = 0;
+    __DIRegs[2] = 0xA8000040;
+    __DIRegs[3] = 0;
+    __DIRegs[4] = 0x20;
+    __DIRegs[5] = (u32)addr;
+    __DIRegs[6] = 0x20;
+    __DIRegs[7] = 3;
+    SetTimeoutAlarm((*(u32 *)0x800000F8 / 4) * 10);
+    return 1;
 }
