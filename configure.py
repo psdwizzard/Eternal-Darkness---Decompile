@@ -10194,7 +10194,7 @@ config.libs = [
             Object(NonMatching, "game/game___fwrite.c"),
             Object(Matching, "game/game_fwrite.c", extra_cflags=["-sdata 0"]),
             Object(Matching, "game/game_fseek.c", extra_cflags=["-sdata 0"]),
-            Object(NonMatching, "game/game_fn_800F92D0.c"),
+            Object(Matching, "game/game_fn_800F92D0.c"),
             Object(Matching, "game/game_fn_800F96C0.c", extra_cflags=["-sdata 0"]),
             Object(Matching, "game/game___memrchr.c", extra_cflags=["-sdata 0"]),
             Object(Matching, "game/game_memchr.c", extra_cflags=["-sdata 0"]),
