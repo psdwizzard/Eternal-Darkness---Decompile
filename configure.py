@@ -10170,7 +10170,7 @@ config.libs = [
             Object(Matching, "game/game_fn_800F66DC.c"),
             Object(Matching, "game/game_exit.c"),
             Object(Matching, "game/game_fn_800F6848.c"),
-            Object(NonMatching, "game/game_fn_800F6A04.c"),
+            Object(Matching, "game/game_fn_800F6A04.c"),
             Object(Matching, "game/game_fn_800F6E38.c"),
             # Honest C; remaining differences are loop register allocation and
             # MWCC's mask/or spelling versus retail's rlwimi mode update.
@@ -15154,7 +15154,7 @@ config.libs = [
             Object(NonMatching, "game/game_fn_80220D3C.c", mw_version=SDK_MW_VERSION),
             Object(Matching, "game/game_fn_802219B4.c", mw_version=SDK_MW_VERSION),
             Object(NonMatching, "game/game_fn_80221BD4.c", mw_version=SDK_MW_VERSION),
-            Object(NonMatching, "game/game_fn_802224EC.c", mw_version=SDK_MW_VERSION),
+            Object(Matching, "game/game_fn_802224EC.c", mw_version=SDK_MW_VERSION),
             Object(NonMatching, "game/game_GXInit.c", mw_version=SDK_MW_VERSION),
             Object(NonMatching, "game/game___GXInitGX.c", mw_version=SDK_MW_VERSION),
             Object(NonMatching, "game/game_fn_80224754.c", mw_version=SDK_MW_VERSION),
@@ -15172,7 +15172,7 @@ config.libs = [
             Object(Matching, "game/game___GXSetTmemConfig.c", mw_version=SDK_MW_VERSION),
             Object(NonMatching, "game/game_fn_80229490.c", mw_version=SDK_MW_VERSION),
             Object(NonMatching, "game/game_fn_80229964.c", mw_version=SDK_MW_VERSION),
-            Object(NonMatching, "game/game_fn_8022A118.c", mw_version=SDK_MW_VERSION),
+            Object(Matching, "game/game_fn_8022A118.c", mw_version=SDK_MW_VERSION),
             Object(NonMatching, "game/game_fn_8022A328.c", mw_version=SDK_MW_VERSION),
             Object(NonMatching, "game/game_fn_8022AA70.c", mw_version=SDK_MW_VERSION),
             Object(NonMatching, "game/game_fn_8022AE24.c", mw_version=SDK_MW_VERSION),
