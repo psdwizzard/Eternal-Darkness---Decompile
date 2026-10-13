@@ -1,6 +1,80 @@
-/* fn_80224544 (0x80224544, 252 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* fn_80224544 (__GXCleanGPFifo, Dolphin SDK GXFifo.c).
+ * Resets the GP FIFO's read and write pointers back to its base: first a
+ * scratch copy of the FIFO is bound so the hardware drains nothing stale,
+ * then the real FIFO is reset and rebound. */
+
+typedef unsigned char u8;
+typedef unsigned long u32;
+typedef long s32;
+typedef int BOOL;
+
+/* Matches the definition used by GXSetGPFifo (game_GXSetGPFifo.c). */
+typedef struct {
+    u8 *base;
+    u8 *top;
+    u32 size;
+    u32 hiWatermark;
+    u32 loWatermark;
+    void *rdPtr;
+    void *wrPtr;
+    s32 count;
+    u8 bind_cpu;
+    u8 bind_gp;
+    u8 wrap;
+} __GXFifoObj;
+
+/* The public GXFifoObj is 0x80 bytes of storage backing the private fields. */
+typedef struct {
+    u8 data[0x80];
+} GXFifoStorage;
+
+typedef union {
+    __GXFifoObj fifo;
+    GXFifoStorage storage;
+} GXFifoBuffer;
+
+BOOL OSDisableInterrupts(void);
+BOOL OSRestoreInterrupts(BOOL level);
+void GXSetGPFifo(__GXFifoObj *fifo);
+void GXSetCPUFifo(__GXFifoObj *fifo);
+GXFifoBuffer *fn_80224648(void); /* GXGetGPFifo */
+GXFifoBuffer *fn_80224640(void); /* GXGetCPUFifo */
+
+static inline void *GXGetFifoBase(GXFifoBuffer *fifo) {
+    __GXFifoObj *realFifo = &fifo->fifo;
+
+    return realFifo->base;
+}
+
+static inline void GXInitFifoPtrs(GXFifoBuffer *fifo, void *readPtr, void *writePtr) {
+    __GXFifoObj *realFifo = &fifo->fifo;
+    BOOL enabled = OSDisableInterrupts();
+
+    realFifo->rdPtr = readPtr;
+    realFifo->wrPtr = writePtr;
+    realFifo->count = (u8 *)writePtr - (u8 *)readPtr;
+    if (realFifo->count < 0) {
+        realFifo->count += realFifo->size;
+    }
+    OSRestoreInterrupts(enabled);
+}
 
 void fn_80224544(void) {
+    GXFifoBuffer *gpFifo = fn_80224648();
+    GXFifoBuffer *cpuFifo = fn_80224640();
+    void *base = GXGetFifoBase(gpFifo);
+    GXFifoBuffer dummyFifo;
+
+    dummyFifo = *gpFifo;
+    GXInitFifoPtrs(&dummyFifo, base, base);
+    GXSetGPFifo(&dummyFifo.fifo);
+    if (cpuFifo == gpFifo) {
+        GXSetCPUFifo(&dummyFifo.fifo);
+    }
+
+    GXInitFifoPtrs(gpFifo, base, base);
+    GXSetGPFifo(&gpFifo->fifo);
+    if (cpuFifo == gpFifo) {
+        GXSetCPUFifo(&cpuFifo->fifo);
+    }
 }

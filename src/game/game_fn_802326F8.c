@@ -30,7 +30,7 @@ struct Handler {
     void *read;
     void *method8;
     void *methodC;
-    void (*free)(void *, Handler *);
+    void (*free)(void *);
 };
 
 typedef struct Source {
@@ -44,45 +44,63 @@ extern Handler *lbl_80300160[];
 extern Handler *lbl_8064C4D4[];
 
 void fn_802326F8(Source *source) {
-    Data *data = source->data;
-    Handler **handlers;
+    register Data *data;
+    register Handler **handlers;
     Handler *handler;
+    register Data *cursor;
     s32 i;
-    Data *cursor;
 
-    if (data == 0) {
+    if (source->data == 0) {
         return;
     }
 
-    cursor = data;
-    handlers = lbl_8064C4D4;
+    data = source->data;
+    /* ASM: lis/or/addi preserve the table-address and cursor-copy order;
+     * C folds the cursor copy into its induction variable's initial addi. */
+    asm {
+        lis r3, lbl_8064C4D4@ha
+        or cursor, data, data
+        addi handlers, r3, lbl_8064C4D4@l
+    }
     for (i = 0; i < data->dCount; i++) {
         handler = handlers[cursor->dTypes[0]];
-        handler->free(cursor->dObjects[0], handler);
+        handler->free(cursor->dObjects[0]);
         cursor = (Data *)((char *)cursor + 4);
     }
 
-    cursor = data;
-    handlers = lbl_8064C4CC;
+    /* ASM: lis/or/addi preserve the table-address and cursor-copy order;
+     * C folds the cursor copy into its induction variable's initial addi. */
+    asm {
+        lis r3, lbl_8064C4CC@ha
+        or cursor, data, data
+        addi handlers, r3, lbl_8064C4CC@l
+    }
     for (i = 0; i < data->bCount; i++) {
         handler = handlers[cursor->bTypes[0]];
-        handler->free(cursor->bObjects[0], handler);
+        handler->free(cursor->bObjects[0]);
         cursor = (Data *)((char *)cursor + 4);
     }
 
-    cursor = data;
-    handlers = lbl_80300160;
+    /* ASM: lis/or/addi preserve the table-address and cursor-copy order;
+     * C folds the cursor copy into its induction variable's initial addi. */
+    asm {
+        lis r3, lbl_80300160@ha
+        or cursor, data, data
+        addi handlers, r3, lbl_80300160@l
+    }
     for (i = 0; i < data->cCount; i++) {
         handler = handlers[cursor->cTypes[0]];
-        handler->free(cursor->cObjects[0], handler);
+        handler->free(cursor->cObjects[0]);
         cursor = (Data *)((char *)cursor + 4);
     }
 
     {
         s32 j;
-        Data *book;
+        register Data *book;
 
-        book = data;
+        /* ASM: or (mr) copies the codebook cursor; C induction optimization
+         * emits addi with zero instead of the retail register move. */
+        asm { or book, data, data }
         for (j = 0; j < data->objectCount; j++) {
             if (book->objects[0] != 0) {
                 fn_802357B4(book->objects[0]);
