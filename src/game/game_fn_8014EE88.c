@@ -1,6 +1,178 @@
-/* fn_8014EE88 (0x8014EE88, 1176 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef signed short s16;
 
-void fn_8014EE88(void) {
+typedef struct Vec3 {
+    float x, y, z;
+} Vec3;
+
+typedef struct EffectDescriptor {
+    u8 data[0x94];
+    void* instance;
+    u8 tail[0x18];
+} EffectDescriptor;
+
+typedef struct Ring {
+    u8 count;
+    u8 pad1[3];
+    int active;
+    int spawned;
+    u8 pad2[0x1C];
+    u16 radius;
+    s16 kind;
+    s16 first_kind;
+    s16 second_kind;
+    u8 pad3[4];
+    Vec3 origin;
+    u8 pad4[0xC];
+    EffectDescriptor glow[7];
+    EffectDescriptor first[7];
+    EffectDescriptor second[7];
+} Ring;
+
+typedef struct RingEvent {
+    void* links[2];
+    Ring ring;
+    u8 pad[0x1324 - 8 - sizeof(Ring)];
+    int owner;
+    u8 variant;
+    u8 pad2[3];
+    u16 state;
+} RingEvent;
+
+extern int lbl_8064D18C;
+extern const float lbl_80650550;
+extern const float lbl_80650554;
+
+extern int fn_80180C4C(void);
+extern void fn_80153A24(Vec3* origin, int count, u16 radius, s16 first_kind,
+                        s16 second_kind, EffectDescriptor* first,
+                        EffectDescriptor* second, u8 variant);
+extern void fn_80182380(EffectDescriptor*);
+extern void fn_80182448(void);
+extern float fn_80048C2C(float);
+extern float fn_80048C50(float);
+extern int fn_801E8328();
+extern void fn_80182430(void*, int);
+extern void fn_80182440(void*, int);
+extern void fn_8014ECD8(Ring* object, int index, u8 variant);
+extern void fn_8014EB38(Ring* object, int index);
+extern void fn_80149E28(RingEvent* node);
+
+void fn_8014EE88(RingEvent* event)
+{
+    Ring* ring = &event->ring;
+    EffectDescriptor* effect;
+    EffectDescriptor template;
+    Vec3 position;
+    void* instance;
+    float angle;
+    int i;
+    int count;
+
+    switch (event->state) {
+    case 0x0:
+        if (event->owner == lbl_8064D18C && fn_80180C4C() < 0x30) {
+            fn_80153A24(&ring->origin, ring->count, ring->radius,
+                        ring->first_kind, ring->second_kind, ring->first,
+                        ring->second, event->variant);
+            ring->spawned = 1;
+        }
+        break;
+    case 0x10:
+        if (event->owner == lbl_8064D18C) {
+            fn_80182380(&template);
+            template.data[0] = 8;
+            template.data[1] = 2;
+            *(s16*)(template.data + 4) = ring->kind;
+            *(u16*)(template.data + 6) = 60;
+            *(u16*)(template.data + 8) = 6;
+            template.data[2] = 250;
+            *(signed char*)(template.data + 3) = -25;
+            *(u16*)(template.data + 0x1A) = 3;
+            *(u16*)(template.data + 0x18) = 0;
+            template.data[0x1F] = 2;
+            template.data[0x20] = 1;
+            *(float*)(template.data + 0x28) = lbl_80650550;
+            template.data[0x21] = 125;
+            template.data[0x22] = 250;
+            *(void (**)(void))(template.data + 0x90) = fn_80182448;
+            *(u16*)(template.data + 0xA4) = 0;
+            *(u16*)(template.data + 0xA6) = 0;
+            *(u16*)(template.data + 0xA8) = 1;
+            template.data[0xAA] = event->variant;
+
+            count = ring->count;
+            for (i = 0; i < count; i++) {
+                angle = lbl_80650554 * (float)i / (float)count;
+                position.x = ring->origin.x + (float)ring->radius * fn_80048C2C(angle);
+                position.y = ring->origin.y + (float)ring->radius * fn_80048C50(angle);
+                position.z = ring->origin.z;
+                effect = &ring->glow[i];
+                *effect = template;
+                *(Vec3*)(effect->data + 0x98) = position;
+                fn_801E8328(16, effect);
+                if (ring->spawned != 0 && ring->first[i].instance != 0) {
+                    fn_80182430(ring->first[i].instance, 2);
+                }
+            }
+        }
+        break;
+    case 0x20:
+        if (event->owner == lbl_8064D18C) {
+            if (ring->spawned != 0) {
+                count = ring->count;
+                for (i = 0; i < count; i++) {
+                    instance = ring->first[i].instance;
+                    if (instance != 0) {
+                        fn_80182430(instance, 3);
+                        fn_80182440(instance, 7);
+                    }
+                    if (ring->second[i].instance != 0) {
+                        fn_80182430(ring->second[i].instance, 2);
+                    }
+                }
+            }
+            fn_8014ECD8(ring, 0, event->variant);
+        }
+        break;
+    case 0x30:
+        if (event->owner == lbl_8064D18C) {
+            count = ring->count;
+            for (i = 0; i < count; i++) {
+                if (ring->glow[i].instance != 0) {
+                    fn_80182430(ring->glow[i].instance, 3);
+                }
+            }
+        }
+        break;
+    case 0x3C:
+        if (event->owner == lbl_8064D18C) {
+            fn_8014ECD8(ring, 1, event->variant);
+        }
+        break;
+    case 0x48:
+        if (event->owner == lbl_8064D18C && ring->active != 0) {
+            fn_8014EB38(ring, 0);
+        }
+        break;
+    case 0x58:
+        if (event->owner == lbl_8064D18C) {
+            fn_8014ECD8(ring, 2, event->variant);
+        }
+        break;
+    case 0x64:
+        if (event->owner == lbl_8064D18C && ring->active != 0) {
+            fn_8014EB38(ring, 1);
+        }
+        break;
+    case 0x80:
+        if (event->owner == lbl_8064D18C && ring->active != 0) {
+            fn_8014EB38(ring, 2);
+        }
+        break;
+    case 0x14C:
+        fn_80149E28(event);
+        break;
+    }
 }
