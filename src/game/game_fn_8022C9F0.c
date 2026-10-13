@@ -1,6 +1,28 @@
-/* fn_8022C9F0 (0x8022C9F0, 168 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned short u16;
 
-void fn_8022C9F0(void) {
+extern volatile u16 *__memReg;
+
+void fn_8022C9F0(void)
+{
+    /* Clear the memory performance counter register pairs in hardware order. */
+    __memReg[25] = 0;
+    __memReg[26] = 0;
+    __memReg[27] = 0;
+    __memReg[28] = 0;
+    __memReg[30] = 0;
+    __memReg[29] = 0;
+    __memReg[32] = 0;
+    __memReg[31] = 0;
+    __memReg[34] = 0;
+    __memReg[33] = 0;
+    __memReg[36] = 0;
+    __memReg[35] = 0;
+    __memReg[38] = 0;
+    __memReg[37] = 0;
+    __memReg[40] = 0;
+    __memReg[39] = 0;
+    __memReg[42] = 0;
+    __memReg[41] = 0;
+    __memReg[44] = 0;
+    __memReg[43] = 0;
 }
