@@ -1,6 +1,35 @@
-/* fn_80212D08 (0x80212D08, 152 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef signed int s32;
+typedef unsigned int u32;
+typedef signed long long OSTime;
+typedef void (*DVDLowCallback)(u32 intType);
 
-void fn_80212D08(void) {
+typedef struct OSAlarm {
+    char data[0x28];
+} OSAlarm;
+typedef void (*OSAlarmHandler)(OSAlarm *alarm, void *context);
+
+extern DVDLowCallback Callback_8064D9A0;
+extern volatile s32 StopAtNextInt_8064D998;
+extern OSAlarm AlarmForTimeout_806418E8;
+extern void OSCreateAlarm(OSAlarm *alarm);
+extern void OSSetAlarm(OSAlarm *alarm, OSTime tick, OSAlarmHandler handler);
+extern void AlarmHandlerForTimeout_80212558(OSAlarm *alarm, void *context);
+
+volatile u32 __DIRegs[16] : 0xCC006000;
+
+static inline void SetTimeoutAlarm(OSTime timeout) {
+    OSCreateAlarm(&AlarmForTimeout_806418E8);
+    OSSetAlarm(&AlarmForTimeout_806418E8, timeout, AlarmHandlerForTimeout_80212558);
+}
+
+/* Issue a DVD audio-stream command (0xE1) for the given subcommand. */
+s32 fn_80212D08(u32 subcmd, u32 length, u32 offset, DVDLowCallback callback) {
+    Callback_8064D9A0 = callback;
+    StopAtNextInt_8064D998 = 0;
+    __DIRegs[2] = subcmd | 0xE1000000;
+    __DIRegs[3] = offset >> 2;
+    __DIRegs[4] = length;
+    __DIRegs[7] = 1;
+    SetTimeoutAlarm((*(u32 *)0x800000F8 / 4) * 10);
+    return 1;
 }
