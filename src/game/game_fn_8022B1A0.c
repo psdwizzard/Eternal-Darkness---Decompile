@@ -1,6 +1,107 @@
-/* fn_8022B1A0 (0x8022B1A0, 264 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
 
-void fn_8022B1A0(void) {
+typedef struct GXVtxDescList {
+    int attr;
+    int type;
+} GXVtxDescList;
+
+typedef struct GXVtxAttrFmtList {
+    int attr;
+    int count;
+    int type;
+    u8 frac;
+} GXVtxAttrFmtList;
+
+typedef struct Vec {
+    float x, y, z;
+} Vec;
+
+/* GX descriptor and format save areas share the original BSS pool. */
+static GXVtxDescList lbl_80642418[27];
+static GXVtxAttrFmtList lbl_806424F0[27];
+/* These preceding dodecahedron tables preserve the shared data-pool offsets. */
+static int lbl_802FF318[12][5] = {
+    {0, 12, 10, 11, 16},
+    {1, 17, 8, 9, 13},
+    {2, 14, 9, 8, 18},
+    {3, 19, 11, 10, 15},
+    {4, 14, 2, 3, 15},
+    {5, 12, 0, 1, 13},
+    {6, 17, 1, 0, 16},
+    {7, 19, 3, 2, 18},
+    {8, 17, 6, 7, 18},
+    {9, 14, 4, 5, 13},
+    {10, 12, 5, 4, 15},
+    {11, 19, 7, 6, 16},
+};
+static Vec lbl_802FF408[20] = {
+    {-0.809015f, 0.0f, 0.309015f},
+    {-0.809015f, 0.0f, -0.309015f},
+    {0.809015f, 0.0f, -0.309015f},
+    {0.809015f, 0.0f, 0.309015f},
+    {0.309015f, -0.809015f, 0.0f},
+    {-0.309015f, -0.809015f, 0.0f},
+    {-0.309015f, 0.809015f, 0.0f},
+    {0.309015f, 0.809015f, 0.0f},
+    {0.0f, 0.309015f, -0.809015f},
+    {0.0f, -0.309015f, -0.809015f},
+    {0.0f, -0.309015f, 0.809015f},
+    {0.0f, 0.309015f, 0.809015f},
+    {-0.5f, -0.5f, 0.5f},
+    {-0.5f, -0.5f, -0.5f},
+    {0.5f, -0.5f, -0.5f},
+    {0.5f, -0.5f, 0.5f},
+    {-0.5f, 0.5f, 0.5f},
+    {-0.5f, 0.5f, -0.5f},
+    {0.5f, 0.5f, -0.5f},
+    {0.5f, 0.5f, 0.5f},
+};
+/* Unit octahedron vertices and counterclockwise triangle indices. */
+static Vec lbl_802FF4F8[6] = {
+    {1.0f, 0.0f, 0.0f},
+    {-1.0f, 0.0f, 0.0f},
+    {0.0f, 1.0f, 0.0f},
+    {0.0f, -1.0f, 0.0f},
+    {0.0f, 0.0f, 1.0f},
+    {0.0f, 0.0f, -1.0f},
+};
+static u8 lbl_802FF540[8][3] = {
+    {0, 4, 2},
+    {1, 2, 4},
+    {0, 3, 4},
+    {1, 4, 3},
+    {0, 2, 5},
+    {1, 5, 2},
+    {0, 5, 3},
+    {1, 3, 5},
+};
+extern void fn_80225460(GXVtxDescList *list);
+extern void fn_80225ED8(int format, GXVtxAttrFmtList *list);
+extern void fn_802254D0(void);
+extern void fn_80224A60(int attribute, int type);
+extern void fn_8022551C(int format, int attribute, int count, int type, u8 fraction);
+extern void fn_8022AA70(u8 depth, const Vec *a, const Vec *b, const Vec *c);
+extern void fn_80224DC0(const GXVtxDescList *list);
+extern void fn_80225878(int format, const volatile GXVtxAttrFmtList *list);
+
+/* Draw an octahedron, preserving the caller's vertex descriptors and format. */
+void fn_8022B1A0(void)
+{
+    int face;
+
+    fn_80225460(lbl_80642418);
+    fn_80225ED8(3, lbl_806424F0);
+    fn_802254D0();
+    fn_80224A60(9, 1);
+    fn_80224A60(10, 1);
+    fn_8022551C(3, 9, 1, 4, 0);
+    fn_8022551C(3, 10, 0, 4, 0);
+    for (face = 7; face >= 0; face--) {
+        fn_8022AA70(0,
+            &lbl_802FF4F8[lbl_802FF540[(u8)face][0]],
+            &lbl_802FF4F8[lbl_802FF540[(u8)face][1]],
+            &lbl_802FF4F8[lbl_802FF540[(u8)face][2]]);
+    }
+    fn_80224DC0(lbl_80642418);
+    fn_80225878(3, lbl_806424F0);
 }
