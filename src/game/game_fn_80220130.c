@@ -1,6 +1,52 @@
-/* fn_80220130 (0x80220130, 204 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef signed int s32;
+typedef int BOOL;
 
-void fn_80220130(void) {
+#define TRUE 1
+#define FALSE 0
+
+/* __CARDVendorID */
+extern u16 lbl_8064C450;
+/* SectorSizeTable */
+extern s32 lbl_802FECE0[];
+
+/* IsCard */
+BOOL fn_80220130(u32 id)
+{
+    u32 size;
+    s32 sectorSize;
+
+    if ((id & 0xFFFF0000) && (id != 0x80000004 || lbl_8064C450 == 0xFFFF)) {
+        return FALSE;
+    }
+
+    if ((id & 0x00000003) != 0) {
+        return FALSE;
+    }
+
+    size = id & 0xFC;
+    switch (size) {
+    case 4:
+    case 8:
+    case 16:
+    case 32:
+    case 64:
+    case 128:
+        break;
+    default:
+        return FALSE;
+    }
+
+    sectorSize = lbl_802FECE0[(id & 0x00003800) >> 11];
+    if (sectorSize == 0) {
+        return FALSE;
+    }
+
+    /* card capacity in bytes (size is in megabits) divided into sectors */
+    if ((size * 1024 * 1024 / 8) / sectorSize < 8) {
+        return FALSE;
+    }
+
+    return TRUE;
 }
