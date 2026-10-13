@@ -1,6 +1,92 @@
-/* fn_802137F4 (0x802137F4, 280 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* fn_802137F4 (0x802137F4, 280 bytes): DVDReadPrio (SDK dvdfs.c) */
 
-void fn_802137F4(void) {
+typedef int s32;
+typedef unsigned int u32;
+typedef int BOOL;
+
+typedef struct OSThreadQueue {
+    void *head;
+    void *tail;
+} OSThreadQueue;
+
+typedef struct DVDCommandBlock DVDCommandBlock;
+typedef void (*DVDCBCallback)(s32 result, DVDCommandBlock *block);
+
+struct DVDCommandBlock {
+    DVDCommandBlock *next;
+    DVDCommandBlock *prev;
+    u32 command;
+    s32 state;
+    u32 offset;
+    u32 length;
+    void *addr;
+    u32 currTransferSize;
+    u32 transferredSize;
+    void *id;
+    DVDCBCallback callback;
+    void *userData;
+};
+
+typedef struct DVDFileInfo {
+    DVDCommandBlock cb;
+    u32 startAddr;
+    u32 length;
+    void *callback;
+} DVDFileInfo;
+
+extern BOOL OSDisableInterrupts(void);
+extern BOOL OSRestoreInterrupts(BOOL level);
+extern void fn_8020C5D0(const char *, int, const char *, ...); /* OSPanic */
+extern void fn_80210004(OSThreadQueue *queue); /* OSSleepThread */
+extern BOOL fn_802154EC(DVDCommandBlock *block, void *addr, s32 length, s32 offset,
+                        DVDCBCallback callback, s32 prio); /* DVDReadAbsAsyncPrio */
+extern void fn_8021390C(s32 result, DVDCommandBlock *block); /* cbForReadSync */
+
+extern OSThreadQueue __DVDThreadQueue;
+extern const char lbl_8064C400[8]; /* "dvdfs.c" */
+extern char lbl_802FE284[];
+
+s32 fn_802137F4(DVDFileInfo *fileInfo, void *addr, s32 length, s32 offset, s32 prio) {
+    BOOL result;
+    DVDCommandBlock *block;
+    s32 state;
+    BOOL enabled;
+    s32 retVal;
+
+    if (!((0 <= offset) && (offset < fileInfo->length))) {
+        fn_8020C5D0(lbl_8064C400, 0x329, lbl_802FE284);
+    }
+    if (!((0 <= offset + length) && (offset + length < fileInfo->length + 32))) {
+        fn_8020C5D0(lbl_8064C400, 0x32F, lbl_802FE284);
+    }
+
+    block = &fileInfo->cb;
+    result = fn_802154EC(block, addr, length, (s32)(fileInfo->startAddr + offset),
+                         fn_8021390C, prio);
+
+    if (result == 0) {
+        return -1;
+    }
+
+    enabled = OSDisableInterrupts();
+
+    while (1) {
+        state = ((volatile DVDCommandBlock *)block)->state;
+
+        if (state == 0) {
+            retVal = (s32)block->transferredSize;
+            break;
+        } else if (state == -1) {
+            retVal = -1;
+            break;
+        } else if (state == 10) {
+            retVal = -3;
+            break;
+        }
+
+        fn_80210004(&__DVDThreadQueue);
+    }
+
+    OSRestoreInterrupts(enabled);
+    return retVal;
 }
