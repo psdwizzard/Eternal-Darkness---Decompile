@@ -10225,7 +10225,7 @@ config.libs = [
             Object(Matching, "game/game_fn_800F9800.c"),
             Object(Matching, "game/game___memrchr.c", extra_cflags=["-sdata 0"]),
             Object(Matching, "game/game_memchr.c", extra_cflags=["-sdata 0"]),
-            Object(NonMatching, "game/game_fn_800F9990.c"),
+            Object(Matching, "game/game_fn_800F9990.c"),
             Object(NonMatching, "game/game_fn_800F9B0C.c"),
             Object(Matching, "game/game___stdio_atexit.c"),
             Object(Matching, "game/game_fn_800F9D4C.c", extra_cflags=["-sdata 0", "-use_lmw_stmw on"]),
