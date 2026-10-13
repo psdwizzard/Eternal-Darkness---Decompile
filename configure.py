@@ -10128,7 +10128,7 @@ config.libs = [
             Object(Matching, "game/game_fn_800F3EEC.c", extra_cflags=["-sdata 0"]),
             # Honest C; retail retains constant-controlled decrement branches.
             Object(Matching, "game/game_fn_800F3F68.c", extra_cflags=["-sdata 0"]),
-            Object(NonMatching, "game/game_fn_800F4080.c"),
+            Object(Matching, "game/game_fn_800F4080.c"),
             Object(Matching, "game/game_TRKTargetInterrupt.c"),
             Object(Matching, "game/game_fn_800F4420.c"),
             Object(Matching, "game/game_fn_800F44C4.c"),
@@ -15260,7 +15260,7 @@ config.libs = [
             Object(NonMatching, "game/game_fn_8022AE24.c", mw_version=SDK_MW_VERSION),
             Object(NonMatching, "game/game_fn_8022B830.c", mw_version=SDK_MW_VERSION),
             Object(NonMatching, "game/game_fn_8022BB10.c", mw_version=SDK_MW_VERSION),
-            Object(NonMatching, "game/game_fn_8022C53C.c", mw_version=SDK_MW_VERSION),
+            Object(Matching, "game/game_fn_8022C53C.c", mw_version=SDK_MW_VERSION),
             Object(NonMatching, "game/game_fn_8022CBA0.c", mw_version=SDK_MW_VERSION),
             Object(NonMatching, "game/game_fn_8022CED0.c", mw_version=SDK_MW_VERSION),
             Object(Matching, "game/game_fn_8022D180.c", mw_version=SDK_MW_VERSION),
