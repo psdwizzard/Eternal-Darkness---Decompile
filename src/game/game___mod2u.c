@@ -21,30 +21,36 @@ u64 __mod2u(u64 dividend, u64 divisor) {
     bl = (u32)divisor;
 
     za = __cntlzw(ah);
+    shift = __cntlzw(al);
     if ((s32)ah == 0) {
-        za = __cntlzw(al) + 32;
+        za = shift + 32;
     }
     zb = __cntlzw(bh);
+    shift = __cntlzw(bl);
     if ((s32)bh == 0) {
-        zb = __cntlzw(bl) + 32;
+        zb = shift + 32;
     }
+    count = 64 - za;
     if (za > zb) {
         return dividend;
     }
 
     shift = 64 - (zb + 1);
-    count = (64 - za) - shift;
-    shift = za + shift;
+    za = za + shift;
+    count = count - shift;
+    shift = za;
 
+    th = count - 32;
     if (count >= 32) {
-        rl = ah >> (count - 32);
+        rl = ah >> th;
         rh = 0;
     } else {
         rl = (al >> count) | (ah << (32 - count));
         rh = ah >> count;
     }
+    tl = shift - 32;
     if (shift >= 32) {
-        ah = al << (shift - 32);
+        ah = al << tl;
         al = 0;
     } else {
         ah = (ah << shift) | (al >> (32 - shift));
