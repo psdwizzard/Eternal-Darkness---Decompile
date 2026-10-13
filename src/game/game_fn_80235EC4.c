@@ -3,22 +3,19 @@ extern int lbl_80642C10[];
 
 int *fn_80235EC4(int *lengths, int count) {
     int next_code[33];
-    int *input;
-    int *output;
+    int *table = lbl_80642C10;
     int i;
 
-    memset(next_code, 0, 0x84);
+    memset(next_code, 0, sizeof(next_code));
 
-    input = lengths;
-    output = lbl_80642C10;
     for (i = 0; i < count; i++) {
-        int length = *input;
+        int length = lengths[i];
         if (length > 0) {
-            int code = next_code[length];
+            int code;
             int j = length;
 
-            *output = code;
-            while (j > 0) {
+            table[i] = code = next_code[length];
+            for (; j > 0; j--) {
                 int value = next_code[j];
                 if (value & 1) {
                     if (j == 1) {
@@ -27,37 +24,31 @@ int *fn_80235EC4(int *lengths, int count) {
                         next_code[j] = next_code[j - 1] * 2;
                     }
                     break;
-                } else {
-                    next_code[j] = value + 1;
-                    j--;
                 }
+                next_code[j] = value + 1;
             }
 
-            j = length + 1;
-            while (j < 33 && code == (next_code[j] >> 1)) {
-                code = next_code[j];
+            for (j = length + 1; j < 33; j++) {
+                int value = next_code[j];
+                if (code != (value >> 1)) {
+                    break;
+                }
+                code = value;
                 next_code[j] = next_code[j - 1] * 2;
-                j++;
             }
         }
-        input++;
-        output++;
     }
 
-    input = lengths;
-    output = lbl_80642C10;
     for (i = 0; i < count; i++) {
-        int length = *input;
-        int bit;
+        int length = lengths[i];
         int reversed = 0;
+        int bit = 0;
         if (length > 0) {
-            for (bit = 0; bit < length; bit++) {
-                reversed = (reversed << 1) | ((*output >> bit) & 1);
+            for (; bit < length; bit++) {
+                reversed = (reversed << 1) | ((table[i] >> bit) & 1);
             }
         }
-        *output = reversed;
-        input++;
-        output++;
+        table[i] = reversed;
     }
-    return lbl_80642C10;
+    return table;
 }
