@@ -1,6 +1,57 @@
-/* fn_80213394 (0x80213394, 200 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* fn_80213394 (0x80213394, 200 bytes): DVDOpen (SDK dvdfs.c) */
 
-void fn_80213394(void) {
+typedef int s32;
+typedef unsigned int u32;
+typedef int BOOL;
+#define TRUE 1
+#define FALSE 0
+
+typedef struct FSTEntry {
+    unsigned int isDirAndStringOff;
+    unsigned int parentOrPosition;
+    unsigned int nextEntryOrLength;
+} FSTEntry;
+
+typedef struct DVDFileInfo {
+    char unk0[0xC];
+    s32 state; /* cb.state */
+    char unk10[0x20];
+    u32 startAddr;
+    u32 length;
+    void *callback;
+} DVDFileInfo;
+
+extern s32 fn_8021302C(char *pathPtr); /* DVDConvertPathToEntrynum */
+extern BOOL fn_802135E0(char *path, u32 maxlen); /* DVDGetCurrentDir */
+extern void OSReport(const char *msg, ...);
+
+extern FSTEntry *FstStart_8064D9E4;
+extern char lbl_802FE218[]; /* "Warning: DVDOpen(): file '%s' was not found under %s.\n" */
+
+#define entryIsDir(i) (((FstStart_8064D9E4[i].isDirAndStringOff & 0xff000000) == 0) ? FALSE : TRUE)
+#define filePosition(i) (FstStart_8064D9E4[i].parentOrPosition)
+#define fileLength(i) (FstStart_8064D9E4[i].nextEntryOrLength)
+
+BOOL fn_80213394(char *fileName, DVDFileInfo *fileInfo) {
+    s32 entry;
+    char currentDir[128];
+
+    entry = fn_8021302C(fileName);
+
+    if (0 > entry) {
+        fn_802135E0(currentDir, 128);
+        OSReport(lbl_802FE218, fileName, currentDir);
+        return FALSE;
+    }
+
+    if (entryIsDir(entry)) {
+        return FALSE;
+    }
+
+    fileInfo->startAddr = filePosition(entry);
+    fileInfo->length = fileLength(entry);
+    fileInfo->callback = (void *)0;
+    fileInfo->state = 0;
+
+    return TRUE;
 }
