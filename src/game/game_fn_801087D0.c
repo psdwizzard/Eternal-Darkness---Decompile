@@ -15,6 +15,13 @@ typedef struct StreamState {
     StreamBlock blocks[3];
 } StreamState;
 
+typedef struct StreamStrings {
+    char file[0xC];
+    char openFailed[0x14];
+    char noBlock[0x10];
+    char badMessage[0x18];
+} StreamStrings;
+
 typedef struct DVDFileInfo {
     unsigned char commandBlock[0x30];
     unsigned long startAddr;
@@ -25,9 +32,9 @@ typedef struct DVDFileInfo {
 typedef struct OSMessageQueue OSMessageQueue;
 
 extern StreamState lbl_8032D648;
-extern const volatile char lbl_8023A220[72];
+extern StreamStrings lbl_8023A220;
 extern int lbl_8064B878;
-extern unsigned int lbl_8064CC74;
+extern unsigned long lbl_8064CC74;
 extern DVDFileInfo* lbl_8064CC78;
 extern int lbl_8064CC7C;
 extern unsigned char* lbl_8064CC84;
@@ -45,12 +52,15 @@ extern void fn_80108BD4(int, DVDFileInfo*);
 
 #define BLOCK_SIZE 0x80000
 
-static inline StreamBlock* findBlock(StreamState* stream, int state)
+static inline StreamBlock* findBlock(register StreamState* stream, int state)
 {
-    StreamBlock* block = stream->blocks;
+    register StreamBlock* block;
     int i;
 
-    for (i = 0; i < 3; i++, block++) {
+    /* ASM: addi block, stream, 0x13E8. The blocks are a separate pooled .bss
+       object in retail; C folds the offset into each lwz instead. */
+    asm { addi block, stream, 0x13E8 }
+    for (i = 3; i != 0; i--, block++) {
         if (block->state == state) {
             return block;
         }
@@ -58,10 +68,92 @@ static inline StreamBlock* findBlock(StreamState* stream, int state)
     return 0;
 }
 
+static inline void lockStream(register StreamState* stream)
+{
+    register void* mutex;
+
+    /* ASM: addi mutex, stream, 0. Retail addresses the pooled mutex object
+       with addi +0; C only emits mr. */
+    asm { addi mutex, stream, 0 }
+    fn_8020D7E0(mutex);
+}
+
+static inline void unlockStream(register StreamState* stream)
+{
+    register void* mutex;
+
+    /* ASM: addi mutex, stream, 0. Same pooled-base addi +0 as lockStream. */
+    asm { addi mutex, stream, 0 }
+    fn_8020D8BC(mutex);
+}
+
+/* ASM (both below): li value, N; addi mutex, stream, 0. Pooled-base addi +0
+   for the mutex; retail loads the state constant before it, which C
+   schedules after the asm barrier. */
+static inline void lockStreamRestart(register StreamState* stream)
+{
+    register void* mutex;
+    register int value;
+
+    /* ASM: li value, 1; addi mutex, stream, 0 (see above). */
+    asm {
+        li value, 1
+        addi mutex, stream, 0
+    }
+    lbl_8064B878 = value;
+    fn_8020D7E0(mutex);
+}
+
+static inline void lockStreamCancel(register StreamState* stream)
+{
+    register void* mutex;
+    register int value;
+
+    /* ASM: li value, 2; addi mutex, stream, 0 (see above). */
+    asm {
+        li value, 2
+        addi mutex, stream, 0
+    }
+    lbl_8064B878 = value;
+    fn_8020D7E0(mutex);
+}
+
+static inline void streamPanic(register StreamStrings* strings, int line, const char* msg)
+{
+    register const char* file;
+
+    /* ASM: addi file, strings, 0. The file name string is pooled with the
+       other messages and addressed with addi +0; C only emits mr. */
+    asm { addi file, strings, 0 }
+    fn_8020C5D0(file, line, msg);
+}
+
+static inline void initBlocks(register StreamState* stream, unsigned char* buffer)
+{
+    register StreamBlock* block;
+    register void* mutex;
+    int offset;
+    int i;
+
+    /* ASM: addi block, stream, 0x13E8. Retail keeps a pointer to the pooled
+       block array; C folds the offset into each store instead. */
+    asm { addi block, stream, 0x13E8 }
+    offset = 0;
+    /* ASM: addi mutex, stream, 0. Pooled-base addi +0, after the offset reset. */
+    asm { addi mutex, stream, 0 }
+    for (i = 0; i < 3; i++, block++) {
+        block->data = buffer + offset;
+        block->size = BLOCK_SIZE;
+        block->state = 0;
+        offset += BLOCK_SIZE;
+    }
+    fn_8020D8BC(mutex);
+}
+
 void* fn_801087D0(const char* path)
 {
-    StreamState* stream;
-    const char* strings;
+    register StreamState* stream;
+    StreamStrings* strings;
     int remaining;
     int aligned;
     int offset;
@@ -69,33 +161,35 @@ void* fn_801087D0(const char* path)
     int flags;
     StreamBlock* block;
     int length;
-    int size;
-    unsigned char* buffer;
-    int i;
     void* message;
     DVDFileInfo fileInfo;
 
-    strings = (const char*)lbl_8023A220;
+    strings = &lbl_8023A220;
     stream = &lbl_8032D648;
     if (fn_80213394(path, &fileInfo) == 0) {
-        fn_8020C5D0(strings, 0xCC, strings + 0xC);
+        streamPanic(strings, 0xCC, strings->openFailed);
     }
     lbl_8064CC78 = &fileInfo;
     lbl_8064CC7C = fileInfo.length;
     lbl_8064CC74 = 0;
 
 restart:
-    lbl_8064B878 = 0;
-    flags = 0;
-    fn_8020D7E0(stream->mutex);
-    buffer = lbl_8064CC84;
-    block = stream->blocks;
-    for (i = 0, size = 0; i < 3; i++, size += BLOCK_SIZE, block++) {
-        block->data = buffer + size;
-        block->size = BLOCK_SIZE;
-        block->state = 0;
+    {
+        register void* mutex;
+        register int value;
+
+        /* ASM: li value, 0; addi mutex, stream, 0. Pooled-base addi +0 with
+           the state constant loaded first (C sinks it past the barrier); the
+           flags reset sits between the state store and the lock call. */
+        asm {
+            li value, 0
+            addi mutex, stream, 0
+        }
+        lbl_8064B878 = value;
+        flags = 0;
+        fn_8020D7E0(mutex);
     }
-    fn_8020D8BC(stream->mutex);
+    initBlocks(stream, lbl_8064CC84);
 
 rewind:
     remaining = lbl_8064CC7C;
@@ -109,7 +203,7 @@ rewind:
         case 3:
             break;
         case 0:
-            fn_8020D7E0(stream->mutex);
+            lockStream(stream);
             block = findBlock(stream, 0);
             if (block != 0) {
                 chunk = length = (aligned < BLOCK_SIZE) ? aligned : BLOCK_SIZE;
@@ -120,20 +214,20 @@ rewind:
             } else {
                 fn_8020D250((OSMessageQueue*)stream->commandQueue, (void*)2, 0);
             }
-            fn_8020D8BC(stream->mutex);
+            unlockStream(stream);
             break;
         case 1:
-            fn_8020D7E0(stream->mutex);
+            lockStream(stream);
             block = findBlock(stream, 1);
             if (block == 0) {
-                fn_8020C5D0(strings, 0x108, strings + 0x20);
+                streamPanic(strings, 0x108, strings->noBlock);
             }
             offset += chunk;
             aligned -= chunk;
             block->end = block->start + chunk;
             remaining -= chunk;
             block->state = 2;
-            fn_8020D8BC(stream->mutex);
+            unlockStream(stream);
             if (flags & 1) {
                 goto done;
             }
@@ -153,20 +247,18 @@ rewind:
             fn_8020D250((OSMessageQueue*)stream->commandQueue, message, 0);
             break;
         case 4:
-            lbl_8064B878 = 1;
-            fn_8020D7E0(stream->mutex);
+            lockStreamRestart(stream);
             block = findBlock(stream, 1);
-            fn_8020D8BC(stream->mutex);
+            unlockStream(stream);
             if (block == 0) {
                 goto restart;
             }
             flags |= 2;
             break;
         case 5:
-            lbl_8064B878 = 2;
-            fn_8020D7E0(stream->mutex);
+            lockStreamCancel(stream);
             block = findBlock(stream, 1);
-            fn_8020D8BC(stream->mutex);
+            unlockStream(stream);
             if (block == 0) {
                 goto done;
             }
@@ -182,7 +274,7 @@ rewind:
             lbl_8064CC74 = 1;
             break;
         default:
-            fn_8020C5D0(strings, 0x152, strings + 0x30);
+            streamPanic(strings, 0x152, strings->badMessage);
             break;
         }
     }
