@@ -1,6 +1,7 @@
-/* fn_80225FD8 (0x80225FD8, 16 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* GXInvalidateVtxCache: send the vertex cache invalidation command. */
+typedef unsigned char u8;
 
-void fn_80225FD8(void) {
+void fn_80225FD8(void)
+{
+    *(volatile u8 *)0xCC008000 = 0x48;
 }

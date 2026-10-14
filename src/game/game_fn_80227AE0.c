@@ -1,6 +1,17 @@
-/* fn_80227AE0 (0x80227AE0, 16 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* GXInitLightPos: store the light position. */
 
-void fn_80227AE0(void) {
+typedef unsigned char u8;
+typedef float f32;
+
+typedef struct {
+    u8 pad[0x28];
+    f32 lpos[3];
+    f32 ldir[3];
+} GXLightObjInt;
+
+void fn_80227AE0(GXLightObjInt *lt_obj, f32 x, f32 y, f32 z)
+{
+    lt_obj->lpos[0] = x;
+    lt_obj->lpos[1] = y;
+    lt_obj->lpos[2] = z;
 }

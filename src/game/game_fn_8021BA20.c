@@ -1,6 +1,10 @@
-/* fn_8021BA20 (0x8021BA20, 16 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned short u16;
+typedef unsigned int u32;
 
-void fn_8021BA20(void) {
+volatile u16 DSPRegisters[] : 0xCC005000;
+
+/* Return the DSP DMA status bit. */
+u32 fn_8021BA20(void)
+{
+    return DSPRegisters[5] & 0x200;
 }
