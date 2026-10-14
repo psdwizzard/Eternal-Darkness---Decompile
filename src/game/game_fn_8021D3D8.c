@@ -1,6 +1,22 @@
-/* fn_8021D3D8 (0x8021D3D8, 48 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* fn_8021D3D8: CARDGetResultCode. */
+typedef unsigned char u8;
+typedef signed int s32;
 
-void fn_8021D3D8(void) {
+typedef struct CARDControl {
+    s32 attached;
+    s32 result;
+    u8 reserved08[0x110 - 0x08];
+} CARDControl;
+
+extern CARDControl lbl_80641C60[];
+
+s32 fn_8021D3D8(s32 channel)
+{
+    CARDControl *card;
+
+    if (channel < 0 || channel >= 2) {
+        return -128;
+    }
+    card = &lbl_80641C60[channel];
+    return card->result;
 }
