@@ -1,6 +1,21 @@
-/* fn_80228AFC (0x80228AFC, 84 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* GXLoadTexObj: select a texture region and load the texture object. */
+typedef unsigned char u8;
+typedef unsigned long u32;
 
-void fn_80228AFC(void) {
+typedef struct GXTexObjInt GXTexObjInt;
+typedef struct GXTexRegionInt GXTexRegionInt;
+typedef GXTexRegionInt *(*GXTexRegionCallback)(GXTexObjInt *obj, u32 id);
+
+typedef struct GXData {
+    u8 pad0[0x410];
+    GXTexRegionCallback texRegionCallback;
+} GXData;
+
+extern GXData *gx;
+extern void fn_80228954(GXTexObjInt *t, GXTexRegionInt *r, u32 id);
+
+void fn_80228AFC(GXTexObjInt *obj, u32 id)
+{
+    GXTexRegionInt *region = gx->texRegionCallback(obj, id);
+    fn_80228954(obj, region, id);
 }
