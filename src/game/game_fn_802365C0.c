@@ -1,6 +1,7 @@
-/* fn_802365C0 (0x802365C0, 20 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef int s32;
 
-void fn_802365C0(void) {
+extern volatile s32 lbl_8064DC38;
+
+s32 fn_802365C0(void) {
+    return lbl_8064DC38 == 1;
 }

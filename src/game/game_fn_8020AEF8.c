@@ -1,6 +1,8 @@
-/* fn_8020AEF8 (0x8020AEF8, 16 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Set the current heap and return the previous heap handle. */
+extern int lbl_8064C3C8;
 
-void fn_8020AEF8(void) {
+int fn_8020AEF8(int heap) {
+    int previousHeap = lbl_8064C3C8;
+    lbl_8064C3C8 = heap;
+    return previousHeap;
 }
