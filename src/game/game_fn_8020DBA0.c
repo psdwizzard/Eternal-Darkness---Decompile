@@ -1,6 +1,23 @@
-/* fn_8020DBA0 (0x8020DBA0, 44 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef void (*EntryPoint)(void);
 
-void fn_8020DBA0(void) {
+extern int OSDisableInterrupts(void);
+extern void ICFlashInvalidate(void);
+
+/* Start execution at entry with interrupts disabled and the cache invalidated. */
+void fn_8020DBA0(register EntryPoint entry)
+{
+    OSDisableInterrupts();
+    ICFlashInvalidate();
+    __sync();
+    __isync();
+
+    /* ASM: mtlr installs the entry address in the link register. A C function
+     * pointer call uses a linking branch and restores this frame on return. */
+    asm { mtlr entry }
+
+    for (;;) {
+        /* ASM: blr jumps to the entry without unwinding this stack frame;
+         * C cannot express this transfer with the current frame preserved. */
+        asm { blr }
+    }
 }

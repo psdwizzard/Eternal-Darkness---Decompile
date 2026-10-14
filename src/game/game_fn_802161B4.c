@@ -1,6 +1,18 @@
-/* fn_802161B4 (0x802161B4, 44 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Completion callback for DVDCancelAll: notify the waiting thread. */
+typedef int s32;
+typedef int BOOL;
+typedef struct DVDCommandBlock DVDCommandBlock;
+typedef struct OSThread OSThread;
+typedef struct OSThreadQueue {
+    OSThread *head;
+    OSThread *tail;
+} OSThreadQueue;
 
-void fn_802161B4(void) {
+extern BOOL lbl_8064DA3C;
+extern OSThreadQueue __DVDThreadQueue;
+extern void fn_802100F0(OSThreadQueue *queue);
+
+void fn_802161B4(s32 result, DVDCommandBlock *block) {
+    lbl_8064DA3C = 1;
+    fn_802100F0(&__DVDThreadQueue);
 }

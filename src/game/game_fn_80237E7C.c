@@ -1,6 +1,9 @@
-/* fn_80237E7C (0x80237E7C, 48 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct OSMessageQueue OSMessageQueue;
 
-void fn_80237E7C(void) {
+extern OSMessageQueue lbl_80648178;
+extern int fn_8020D250(OSMessageQueue *queue, void *message, int flags);
+
+void fn_80237E7C(int result)
+{
+    fn_8020D250(&lbl_80648178, (void *)result, 1);
 }
