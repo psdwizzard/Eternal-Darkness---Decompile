@@ -1,6 +1,14 @@
-/* OSDisableScheduler (0x8020F2E8, 64 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef int s32;
 
-void OSDisableScheduler(void) {
+extern s32 OSDisableInterrupts(void);
+extern s32 OSRestoreInterrupts(s32 enabled);
+extern s32 Reschedule_8064D990;
+
+s32 OSDisableScheduler(void)
+{
+    s32 enabled = OSDisableInterrupts();
+    s32 previous = Reschedule_8064D990++;
+
+    OSRestoreInterrupts(enabled);
+    return previous;
 }
