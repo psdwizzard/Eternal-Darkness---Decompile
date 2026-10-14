@@ -1,6 +1,12 @@
-/* fn_802263D4 (0x802263D4, 52 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned long u32;
 
-void fn_802263D4(void) {
+u32 fn_80209B48(void); /* PPCMfwpar */
+void PPCMtwpar(u32 newWPAR);
+
+/* Wait for the write-gather pipe to empty, then reset its address. */
+void fn_802263D4(void)
+{
+    while (fn_80209B48() & 1) {
+    }
+    PPCMtwpar(0x0C008000);
 }

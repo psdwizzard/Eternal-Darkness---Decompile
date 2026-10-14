@@ -29,7 +29,8 @@ void fn_8022BA20(s32 x_off, s32 y_off)
     u32 hy;
 
     hx = (u32)(x_off + 342) >> 1;
-    hy = (u32)(y_off + 342) >> 1;
+    /* The field shift below discards any sign-extension bits. */
+    hy = (y_off + 342) >> 1;
 
     SET_REG_FIELD(reg, 10, 0, hx);
     SET_REG_FIELD(reg, 10, 10, hy);
