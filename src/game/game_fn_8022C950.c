@@ -1,6 +1,9 @@
-/* fn_8022C950 (0x8022C950, 28 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
-
-void fn_8022C950(void) {
+/* Copy characters until the next source character is the terminator. */
+void fn_8022C950(char *destination, const char *source)
+{
+    do {
+        *destination = *source;
+        ++destination;
+        ++source;
+    } while ((signed char)*source != 0);
 }

@@ -1,6 +1,17 @@
-/* fn_80227AF0 (0x80227AF0, 28 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* GXInitLightDir: store the negated light direction. */
 
-void fn_80227AF0(void) {
+typedef unsigned char u8;
+typedef float f32;
+
+typedef struct {
+    u8 pad[0x28];
+    f32 lpos[3];
+    f32 ldir[3];
+} GXLightObjInt;
+
+void fn_80227AF0(GXLightObjInt *lt_obj, f32 nx, f32 ny, f32 nz)
+{
+    lt_obj->ldir[0] = -nx;
+    lt_obj->ldir[1] = -ny;
+    lt_obj->ldir[2] = -nz;
 }

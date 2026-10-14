@@ -1,6 +1,15 @@
-/* fn_802267D0 (0x802267D0, 28 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
 
-void fn_802267D0(void) {
+extern volatile u16 *__peReg;
+
+void fn_802267D0(u8 enabled)
+{
+    volatile u16 *blendReg = &__peReg[1];
+    u32 value = *blendReg;
+
+    /* Update bit 2 of the PE blend register. */
+    value = (value & ~4U) | (enabled << 2);
+    *blendReg = (u16)value;
 }

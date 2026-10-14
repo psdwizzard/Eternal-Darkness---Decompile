@@ -1,6 +1,14 @@
-/* fn_802266FC (0x802266FC, 28 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
 
-void fn_802266FC(void) {
+extern volatile u16 *__peReg;
+
+void fn_802266FC(u8 enable)
+{
+    volatile u16 *blendReg = &__peReg[1];
+    u32 value = *blendReg;
+
+    value = (value & ~0x10U) | (enable << 4);
+    *blendReg = value;
 }

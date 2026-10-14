@@ -1,6 +1,15 @@
-/* fn_80227520 (0x80227520, 28 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned long u32;
 
-void fn_80227520(void) {
+typedef struct GXData {
+    u8 pad0[0x1EC];
+    u32 cpTex;
+} GXData;
+
+extern GXData *gx;
+
+/* GXSetCopyGamma: select the gamma correction for EFB copies. */
+void fn_80227520(int gamma)
+{
+    gx->cpTex = (gx->cpTex & ~0x180UL) | ((u32)gamma << 7);
 }
