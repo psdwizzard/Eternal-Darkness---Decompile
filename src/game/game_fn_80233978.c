@@ -1,69 +1,45 @@
-/* fn_80233978: FFT real-output post-processing (split butterfly). */
-
-typedef struct FFTState {
+/* Inverse MDCT bit reversal and final split butterflies. */
+typedef struct mdct_lookup {
     int n;
-    int unk4;
-    float *twiddle;
-    int *index;
-} FFTState;
+    int log2n;
+    float *trig;
+    int *bitrev;
+    float scale;
+} mdct_lookup;
 
-extern float lbl_80651838; /* 0.5 */
+extern float lbl_80651838; /* 0.5f */
 
-void fn_80233978(FFTState *fft, float *out) {
-    int n;
-    float *lo;
-    float *hi;
-    float *tw;
-    int *idx;
-    float *a;
-    float *b;
-    float ai, bi, ar, br, di, sr, s, t, x, y;
-
-    n = fft->n;
-    lo = out;
-    tw = fft->twiddle + n;
-    out += n >> 1;
-    idx = fft->index;
-    hi = out;
+void fn_80233978(mdct_lookup *init, float *x) {
+    float half = lbl_80651838;
+    int n = init->n;
+    int *bit = init->bitrev;
+    float *lo = x;
+    float *hi = x = x + (n >> 1);
+    float *twiddle = init->trig + n;
 
     do {
-        a = out + idx[0];
-        b = out + idx[1];
-        ai = a[1];
-        bi = b[1];
-        ar = a[0];
-        br = b[0];
-        di = ai - bi;
-        sr = ar + br;
-        s = lbl_80651838 *(ai + bi);
-        x = sr * tw[0] + di * tw[1];
-        y = sr * tw[1] - di * tw[0];
-        t = lbl_80651838 *(ar - br);
-        lo[0] = s + x;
-        hi[-2] = s - x;
-        lo[1] = t + y;
-        hi[-1] = y - t;
+        int i;
+        /* Process two bit-reversed pairs per outer iteration. */
+        for (i = 0; i < 2; i++) {
+            float real_sum, rot_imag, half_imag_sum, imag_diff, rot_real, half_real_diff;
+            float *a = x + bit[0];
+            float *b = x + bit[1];
+            imag_diff = a[1] - b[1];
+            real_sum = a[0] + b[0];
+            rot_real = real_sum * twiddle[0] + imag_diff * twiddle[1];
+            rot_imag = real_sum * twiddle[1] - imag_diff * twiddle[0];
 
-        a = out + idx[2];
-        b = out + idx[3];
-        ai = a[1];
-        bi = b[1];
-        ar = a[0];
-        br = b[0];
-        di = ai - bi;
-        sr = ar + br;
-        s = lbl_80651838 *(ai + bi);
-        x = sr * tw[2] + di * tw[3];
-        y = sr * tw[3] - di * tw[2];
-        t = lbl_80651838 *(ar - br);
-        lo[2] = s + x;
-        hi[-4] = s - x;
-        lo[3] = t + y;
-        hi[-3] = y - t;
+            half_imag_sum = half * (a[1] + b[1]);
+            half_real_diff = half * (a[0] - b[0]);
+            lo[0] = half_imag_sum + rot_real;
+            hi[-2] = half_imag_sum - rot_real;
+            lo[1] = half_real_diff + rot_imag;
+            hi[-1] = rot_imag - half_real_diff;
 
-        idx += 4;
-        tw += 4;
-        lo += 4;
-        hi -= 4;
+            twiddle += 2;
+            bit += 2;
+            lo += 2;
+            hi -= 2;
+        }
     } while (lo < hi);
 }
