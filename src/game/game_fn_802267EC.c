@@ -1,6 +1,15 @@
-/* fn_802267EC (0x802267EC, 40 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
 
-void fn_802267EC(void) {
+extern volatile u16 *__peReg;
+
+void fn_802267EC(u8 enable, u32 func, u8 update)
+{
+    u32 value = enable;
+
+    /* Build the PE Z mode register: enable, compare function, update. */
+    value = (value & ~0xEU) | (func << 1);
+    value = (value & ~0x10U) | (update << 4);
+    *__peReg = (u16)value;
 }
