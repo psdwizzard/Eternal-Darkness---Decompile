@@ -1,6 +1,12 @@
-/* __OSSetInterruptHandler (0x8020C9BC, 28 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct OSContext OSContext;
+typedef void (*OSInterruptHandler)(short interrupt, OSContext *context);
 
-void __OSSetInterruptHandler(void) {
+extern OSInterruptHandler *InterruptHandlerTable_8064D938;
+
+OSInterruptHandler __OSSetInterruptHandler(short interrupt, OSInterruptHandler handler) {
+    OSInterruptHandler previous;
+
+    previous = InterruptHandlerTable_8064D938[interrupt];
+    InterruptHandlerTable_8064D938[interrupt] = handler;
+    return previous;
 }

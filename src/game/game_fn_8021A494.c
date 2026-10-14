@@ -1,6 +1,10 @@
-/* fn_8021A494 (0x8021A494, 28 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Set the right audio stream volume. */
+typedef unsigned char u8;
+typedef unsigned int u32;
 
-void fn_8021A494(void) {
+volatile u32 __AIRegs[8] : 0xCC006C00;
+
+void fn_8021A494(u8 volume)
+{
+    __AIRegs[1] = (__AIRegs[1] & ~0xFF00) | (volume << 8);
 }
