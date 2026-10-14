@@ -1,6 +1,62 @@
-/* TRKInterruptHandlerEnableInterrupts (0x800F39E0, 84 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned int u32;
+typedef struct TRKState {
+    u32 gpr[32];
+    u32 lr;
+    u32 ctr;
+    u32 xer;
+    u32 msr;
+    u32 dar;
+    u32 dsisr;
+} TRKState;
 
-void TRKInterruptHandlerEnableInterrupts(void) {
+extern TRKState gTRKState;
+extern void TRKPostInterruptEvent(void);
+
+/* Partial context restore. The retail lwz r1,4(r2) remains unresolved:
+ * placing it in inline assembly makes MWCC emit a stack frame at entry. */
+void TRKInterruptHandlerEnableInterrupts(void)
+{
+    register TRKState *state;
+    register u32 value;
+
+    /* ASM: lis/ori/lwz establishes the fixed r2 context base and loads MSR
+     * into r0; C cannot select these architectural scratch registers. */
+    asm {
+        lis r2, gTRKState@h
+        ori r2, r2, gTRKState@l
+        lwz r0, 0x8c(r2)
+    }
+    __sync();
+    /* ASM: mtmsr restores the machine state, which C cannot write. */
+    asm { mtmsr r0 }
+    __sync();
+    /* ASM: lwz loads the saved LR into r0, which C cannot explicitly select. */
+    asm { lwz r0, 0x80(r2) }
+    /* ASM: mtlr restores the link register, which C cannot assign. */
+    asm { mtlr r0 }
+    /* ASM: lwz reads the saved CTR into r0, which C cannot explicitly select. */
+    asm { lwz r0, 0x84(r2) }
+    /* ASM: mtctr restores the count register, which C cannot assign. */
+    asm { mtctr r0 }
+    /* ASM: mr reads the fixed r2 context base, which is not C-visible. */
+    asm { mr state, r2 }
+    value = state->xer;
+    /* ASM: mtxer restores XER, which C cannot assign. */
+    asm { mtxer value }
+    value = state->dsisr;
+    /* ASM: mtdsisr restores DSISR, which C cannot assign. */
+    asm { mtdsisr value }
+    value = state->dar;
+    /* ASM: mtdar restores DAR, which C cannot assign. */
+    asm { mtdar value }
+    /* ASM: lmw/lwz restores r3-r31, r0 and the small-data base r2;
+     * these fixed architectural registers cannot be assigned in C. */
+    asm {
+        lmw r3, 0xc(r2)
+        lwz r0, 0(r2)
+        lwz r2, 8(r2)
+    }
+    /* ASM: b transfers control while preserving the restored link register;
+     * an ordinary C call would overwrite it and create a stack frame. */
+    asm { b TRKPostInterruptEvent }
 }
