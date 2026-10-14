@@ -1,6 +1,9 @@
-/* fn_80224330 (0x80224330, 8 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* GXGetFifoBase: return the base address stored in the FIFO object. */
+typedef struct {
+    unsigned char *base;
+} GXFifoHeader;
 
-void fn_80224330(void) {
+void *fn_80224330(void *fifo)
+{
+    return ((GXFifoHeader *)fifo)->base;
 }

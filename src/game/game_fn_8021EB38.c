@@ -1,6 +1,15 @@
-/* fn_8021EB38 (0x8021EB38, 8 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Return the current memory card file allocation table. */
 
-void fn_8021EB38(void) {
+typedef unsigned char u8;
+typedef unsigned short u16;
+
+typedef struct CARDControl {
+    u8 pad00[0x88];
+    u16 *currentFat;
+    u8 pad8C[0x110 - 0x8C];
+} CARDControl;
+
+u16 *fn_8021EB38(CARDControl *card)
+{
+    return card->currentFat;
 }
