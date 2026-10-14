@@ -1,6 +1,13 @@
-/* fn_802267BC (0x802267BC, 20 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
 
-void fn_802267BC(void) {
+extern volatile u16 *__peReg;
+
+void fn_802267BC(u8 enable, u8 alpha)
+{
+    u32 value = alpha;
+
+    value = (value & ~0x100U) | (enable << 8);
+    __peReg[2] = (u16)value;
 }

@@ -1,6 +1,21 @@
-/* fn_80228DE4 (0x80228DE4, 20 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned long u32;
 
-void fn_80228DE4(void) {
+typedef struct GXTexObj GXTexObj;
+typedef struct GXTexRegion GXTexRegion;
+typedef GXTexRegion *(*GXTexRegionCallback)(GXTexObj *obj, u32 id);
+
+typedef struct GXData {
+    u8 pad0[0x410];
+    GXTexRegionCallback texRegionCallback;
+} GXData;
+
+extern GXData *gx;
+
+/* Install the texture region callback and return the previous callback. */
+GXTexRegionCallback fn_80228DE4(GXTexRegionCallback callback)
+{
+    GXTexRegionCallback previous = gx->texRegionCallback;
+    gx->texRegionCallback = callback;
+    return previous;
 }
