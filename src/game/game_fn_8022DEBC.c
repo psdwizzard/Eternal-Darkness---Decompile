@@ -1,6 +1,15 @@
-/* fn_8022DEBC (0x8022DEBC, 64 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned long u32;
 
-void fn_8022DEBC(void) {
+volatile u32 __PIRegs[12] : 0xCC003000;
+volatile u32 __EXIRegs[15] : 0xCC006800;
+
+/* Acknowledge the requested PI and channel 2 EXI interrupts. */
+void fn_8022DEBC(int piInterrupt, int exiInterrupt)
+{
+    if (piInterrupt) {
+        __PIRegs[0] = (__PIRegs[0] & 0x1000) | 0x1000;
+    }
+    if (exiInterrupt) {
+        __EXIRegs[10] = (__EXIRegs[10] & 0x7F5) | 8;
+    }
 }
