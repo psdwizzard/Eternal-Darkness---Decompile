@@ -6,7 +6,6 @@ typedef unsigned int u32;
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
-
 typedef float Matrix[3][4];
 
 typedef struct Vec3 {
@@ -100,13 +99,11 @@ static inline void EmitVertex(u32 index)
 
 void fn_800EC6FC(int kind)
 {
+    int h;
     MarkerTable* table;
-    Marker* marker;
-    int i;
     int n;
     Marker* entry;
     int j;
-    int k;
     int tri;
     u32 dist;
     float size;
@@ -139,7 +136,10 @@ void fn_800EC6FC(int kind)
 
     if (table != 0) {
         if (table->count != 0) {
-            marker = table->markers;
+            Marker* marker = table->markers;
+            int k;
+            int i;
+
             fn_800EC640();
             for (i = 0; i < table->count; i++, marker++) {
                 dist = fn_801F6D90(marker->x, marker->y, marker->z);
@@ -158,7 +158,7 @@ void fn_800EC6FC(int kind)
                 fn_80211764(mtx, lbl_8032808C, lbl_80327F60, lbl_8064CBD0);
                 k = 0;
                 fn_80226AB4(0x90, 3, lbl_8064CBD0);
-                for (j = 0; j < lbl_8064CBD0 / 3; j++, k += 3) {
+                for (j = 0; j < lbl_8064CBD0 / 3; k += 3, j++) {
                     fn_800ED6F8(lbl_80327F60[k].x, lbl_80327F60[k].y, lbl_80327F60[k].z);
                     fn_800ED70C(lbl_8032808C[k].x, lbl_8032808C[k].y, lbl_8032808C[k].z);
                     EmitVertex(k + 1);
@@ -175,13 +175,17 @@ void fn_800EC6FC(int kind)
             oldFont = fn_801E5AD0(0x63);
             fn_801E5014();
             for (n = 0; n < table->count; n++, entry++) {
-                dist = fn_801F6D90(entry->x, entry->y, entry->z + (int)(entry->size + 20));
+                h = entry->size + 20;
+                h += entry->z;
+                dist = fn_801F6D90(entry->x, entry->y, h);
                 if (dist == 0 || dist >= 600) {
                     continue;
                 }
                 fn_800ED784(&entry->x, &world.x);
                 fn_800ED784(&entry->y, &world.y);
-                world.z = entry->z + (int)(entry->size + 20);
+                h = entry->size + 20;
+                h = entry->z + h;
+                world.z = h;
                 fn_801F6B6C(&world, &screen, 0, 0);
                 if (screen.visible == 0 || screen.x <= 0 || screen.x >= 640 ||
                     screen.y <= 0 || screen.y >= 480) {
