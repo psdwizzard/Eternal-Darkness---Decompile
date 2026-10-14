@@ -1,6 +1,28 @@
-/* fn_80230070 (0x80230070, 96 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+#include "src/game/types.h"
 
-void fn_80230070(void) {
+extern void *memset(void *, int, unsigned long);
+
+typedef struct AllocationChain {
+    void *allocation;
+    struct AllocationChain *next;
+} AllocationChain;
+
+typedef struct BlockStorage {
+    u8 pad00[0x40];
+    s32 total;
+    u8 pad44[8];
+    AllocationChain *chain;
+} BlockStorage;
+
+void fn_80230070(BlockStorage *block)
+{
+    AllocationChain *node = block->chain;
+
+    while (node != 0) {
+        AllocationChain *next = node->next;
+        memset(node, 0, sizeof(*node));
+        node = next;
+    }
+    block->total = 0;
+    block->chain = 0;
 }
