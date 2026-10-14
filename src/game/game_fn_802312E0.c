@@ -1,6 +1,8 @@
-/* fn_802312E0 (0x802312E0, 48 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Clear the Vorbis floor type 0 setup, if present. */
+extern void *memset(void *data, int value, unsigned long size);
 
-void fn_802312E0(void) {
+void fn_802312E0(void *info) {
+    if (info != 0) {
+        memset(info, 0, 0x60);
+    }
 }

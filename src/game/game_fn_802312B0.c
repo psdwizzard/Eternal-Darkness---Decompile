@@ -1,6 +1,9 @@
-/* fn_802312B0 (0x802312B0, 48 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* fn_802312B0 (0x802312B0, 48 bytes) */
 
-void fn_802312B0(void) {
+extern void* memset(void* dest, int value, unsigned long size);
+
+void fn_802312B0(void* data) {
+    if (data != 0) {
+        memset(data, 0, 0x20);
+    }
 }

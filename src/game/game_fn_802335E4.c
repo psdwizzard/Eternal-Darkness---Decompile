@@ -1,6 +1,9 @@
-/* fn_802335E4 (0x802335E4, 48 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+extern void *memset(void *dest, int value, unsigned long size);
 
-void fn_802335E4(void) {
+/* Clear the fixed-size configuration when one is supplied. */
+void fn_802335E4(void *buffer)
+{
+    if (buffer != 0) {
+        memset(buffer, 0, 0xCD0);
+    }
 }
