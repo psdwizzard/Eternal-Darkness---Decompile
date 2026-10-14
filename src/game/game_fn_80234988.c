@@ -1,6 +1,32 @@
-/* fn_80234988 (0x80234988, 124 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef int s32;
+typedef struct ResidueLook ResidueLook;
+typedef struct LevelTable LevelTable;
 
-void fn_80234988(void) {
+extern s32 **fn_80234D70(void *vb, ResidueLook *look, float **in, s32 ch,
+                       s32 (*classify)(float *, s32, ResidueLook *, s32, s32));
+extern s32 fn_80234E9C(float *in, s32 n, LevelTable **tablep, s32 count,
+                      s32 value);
+
+/* Residue type 1 classify: compact active channels, then classify. */
+s32 **fn_80234988(void *vb, ResidueLook *look, float **in, s32 *nonzero,
+                  s32 ch)
+{
+    float **channel = in;
+    s32 used = 0;
+
+    if (ch > 0) {
+        do {
+            if (*nonzero) {
+                in[used++] = *channel;
+            }
+            nonzero++;
+            channel++;
+        } while (--ch);
+    }
+
+    if (used) {
+        return fn_80234D70(vb, look, in, used,
+            (s32 (*)(float *, s32, ResidueLook *, s32, s32))fn_80234E9C);
+    }
+    return 0;
 }

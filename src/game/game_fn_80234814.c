@@ -1,6 +1,59 @@
-/* fn_80234814 (0x80234814, 124 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+#include "src/game/types.h"
 
-void fn_80234814(void) {
+/* Compact the active channels before decoding their residue. */
+typedef struct VorbisBlock VorbisBlock;
+typedef struct ResidueLook ResidueLook;
+typedef struct Codebook Codebook;
+typedef s32 (*ResidueDecode)(Codebook *, s32 *, void *, s32);
+
+s32 fn_802302B0(Codebook *book, float *samples, void *bits, s32 count);
+s32 fn_80234A04(VorbisBlock *vb, ResidueLook *look, s32 **in, s32 channels,
+               ResidueDecode decodepart);
+
+s32 fn_80234814(VorbisBlock *vb, ResidueLook *look, register s32 **in,
+               register s32 *nonzero, register s32 channels) {
+    register s32 **source;
+    register s32 used = 0;
+
+    /* ASM: mr preserves the retail register copy; C emits addi instead. */
+    asm { mr source, in }
+    /* ASM: li/mtctr keep the byte offset in r8 and set the loop count
+     * before the guard; C schedules the comparison first. */
+    asm {
+        li r8, 0
+        mtctr channels
+    }
+
+    if (channels > 0) {
+    channel_loop:
+        if (*nonzero) {
+            register s32 *value = *source;
+            used++;
+            /* ASM: stwx/addi preserve the indexed output cursor that C
+             * strength reduction replaces with a separate pointer. */
+            asm {
+                stwx value, in, r8
+                addi r8, r8, 4
+            }
+        }
+        nonzero++;
+        source++;
+        /* ASM: bdnz uses the count initialized above; a C loop adds
+         * another mtctr after the guard comparison. */
+        asm { bdnz channel_loop }
+    }
+    if (used) {
+        register s32 count;
+        register ResidueDecode decodepart;
+        /* ASM: lis/addi/mr set the decoder and active-channel count.
+         * C selects addi for the count copy instead of the retail mr. */
+        asm {
+            lis r6, fn_802302B0@ha
+            addi decodepart, r6, fn_802302B0@l
+            mr count, used
+        }
+        return fn_80234A04(vb, look, in, count, decodepart);
+    }
+    return 0;
 }
+
