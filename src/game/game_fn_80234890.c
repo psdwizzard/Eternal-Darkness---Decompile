@@ -8,18 +8,20 @@ extern s32 **fn_80234D70(void *vb, ResidueLook *look, float **in, s32 ch,
 extern int fn_80234E9C(float *in, s32 n, LevelTable **tablep, s32 count, s32 value);
 
 /* Compact active channels before classifying their residue partitions. */
-s32 **fn_80234890(void *vb, ResidueLook *look, register float **in, s32 *nonzero, s32 ch)
+s32 **fn_80234890(void *vb, ResidueLook *look, register float **in, s32 *nonzero, register s32 ch)
 {
-    s32 i;
     register float **channel;
     register s32 used = 0;
-    /* ASM: mr and li retain the source pointer and destination byte offset
-     * in registers; C strength reduction changes the indexed stores. */
+    /* ASM: mr, li and mtctr retain the source pointer and byte offset,
+     * and set the loop count before the guard. C uses addi for the copy
+     * and schedules mtctr after the guard. */
     asm {
         mr channel, in
         li r8, 0
+        mtctr ch
     }
-    for (i = 0; i < ch; i++) {
+    if (ch > 0) {
+    channel_loop:
         if (*nonzero) {
             register float *samples = *channel;
             used++;
@@ -32,6 +34,9 @@ s32 **fn_80234890(void *vb, ResidueLook *look, register float **in, s32 *nonzero
         }
         nonzero++;
         channel++;
+        /* ASM: bdnz consumes the loop count set before the guard;
+         * a C loop emits a second mtctr after the guard. */
+        asm { bdnz channel_loop }
     }
     if (used) {
         register s32 count;

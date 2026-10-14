@@ -1,6 +1,19 @@
-/* fn_8020F0F8 (0x8020F0F8, 40 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* OSResetStopwatch: clear the accumulated timing statistics. */
+typedef long long s64;
 
-void fn_8020F0F8(void) {
+typedef struct OSStopwatch {
+    char* name;
+    s64 total;
+    unsigned long hits;
+    s64 min;
+    s64 max;
+    s64 last;
+    int running;
+} OSStopwatch;
+
+void fn_8020F0F8(OSStopwatch* sw) {
+    sw->total = 0;
+    sw->hits = 0;
+    sw->min = 0xFFFFFFFFLL;
+    sw->max = 0;
 }

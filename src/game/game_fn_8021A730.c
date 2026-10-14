@@ -22,6 +22,11 @@ void fn_8021A730(register AIDMACallback callback)
 
     callback();
 
+    /* ASM: mr marks r31 as used so the interrupted stack frame preserves it.
+     * C cannot request preservation of a particular nonvolatile register.
+     * The compiler removes the self-move after constructing the frame. */
+    asm { mr r31, r31 }
+
     /* ASM: lis, addi, lwz restore r1 after the callback.
      * C cannot restore the active stack pointer. */
     asm {

@@ -1,6 +1,13 @@
-/* EXI2_EnableInterrupts (0x8022E21C, 44 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef long s32;
+typedef struct OSContext OSContext;
+typedef void (*EXICallback)(s32, OSContext *);
 
-void EXI2_EnableInterrupts(void) {
+extern EXICallback fn_8022DEFC(EXICallback callback);
+extern void fn_8022E0A0(void);
+extern void fn_8022E120(s32 channel, OSContext *context);
+
+void EXI2_EnableInterrupts(void)
+{
+    fn_8022DEFC(fn_8022E120);
+    fn_8022E0A0();
 }
