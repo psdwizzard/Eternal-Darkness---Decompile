@@ -1,6 +1,48 @@
-/* fn_8022C7C8 (0x8022C7C8, 132 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct ResourceEntry {
+    struct ResourceEntry *previous;
+    struct ResourceEntry *next;
+    void (*destroy)(void *);
+    char *text;
+    void *resource;
+    unsigned short references;
+} ResourceEntry;
 
-void fn_8022C7C8(void) {
+typedef struct ResourceList {
+    unsigned long linkOffset;
+    ResourceEntry *head;
+    ResourceEntry *tail;
+} ResourceList;
+
+typedef struct ResourceCache {
+    unsigned long unknown;
+    ResourceList entries;
+} ResourceCache;
+
+extern signed char fn_8022C96C(const char *left, const char *right);
+
+static inline ResourceEntry *findResource(ResourceCache *cache, const char *path)
+{
+    ResourceEntry *entry = cache->entries.head;
+
+    if (path != 0) {
+        while (entry != 0) {
+            if (fn_8022C96C(path, entry->text) == 0) {
+                return entry;
+            }
+            entry = entry->next;
+        }
+    }
+    return 0;
+}
+
+/* Acquire a cached resource and count the new reference. */
+void *fn_8022C7C8(ResourceCache *cache, const char *path)
+{
+    ResourceEntry *entry = findResource(cache, path);
+
+    if (entry != 0) {
+        ++entry->references;
+        return entry->resource;
+    }
+    return 0;
 }
