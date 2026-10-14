@@ -1,6 +1,37 @@
-/* fn_8020AE7C (0x8020AE7C, 124 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Return an allocated cell to its heap and coalesce adjacent free cells. */
+typedef struct Cell {
+    struct Cell *prev;
+    struct Cell *next;
+    unsigned long size;
+} Cell;
 
-void fn_8020AE7C(void) {
+typedef struct HeapDesc {
+    long size;
+    Cell *free;
+    Cell *allocated;
+} HeapDesc;
+
+extern HeapDesc *lbl_8064D920;
+extern Cell *fn_8020ACD4(Cell *list, Cell *cell);
+
+static Cell *DLExtract(Cell *list, Cell *cell) {
+    if (cell->next) {
+        cell->next->prev = cell->prev;
+    }
+    if (cell->prev == 0) {
+        return cell->next;
+    } else {
+        cell->prev->next = cell->next;
+        return list;
+    }
+}
+
+void fn_8020AE7C(int heap, void *ptr) {
+    HeapDesc *hd;
+    Cell *cell;
+
+    cell = (Cell *)((char *)ptr - 0x20);
+    hd = &lbl_8064D920[heap];
+    hd->allocated = DLExtract(hd->allocated, cell);
+    hd->free = fn_8020ACD4(hd->free, cell);
 }

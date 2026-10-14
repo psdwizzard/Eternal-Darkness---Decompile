@@ -1,6 +1,37 @@
-/* __DVDStoreErrorCode (0x802166FC, 124 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned int u32;
+typedef signed int s32;
 
-void __DVDStoreErrorCode(void) {
+typedef struct SramEx {
+    u8 reserved00[0x24];
+    u8 dvdErrorCode;
+} SramEx;
+
+extern u8 ErrorCode2Num_802165E0(u32 errorCode);
+extern SramEx *__OSLockSramEx(void);
+extern s32 __OSUnlockSramEx(s32 commit);
+
+void __DVDStoreErrorCode(u32 errorCode)
+{
+    u8 storedCode;
+    u32 status;
+    u8 errorNumber;
+    SramEx *sram;
+
+    if (errorCode == 0x01234567) {
+        storedCode = 0xFF;
+    } else if (errorCode == 0x01234568) {
+        storedCode = 0xFE;
+    } else {
+        status = errorCode >> 24;
+        errorNumber = ErrorCode2Num_802165E0(errorCode & 0x00FFFFFF);
+        if (status >= 6) {
+            status = 6;
+        }
+        storedCode = errorNumber + status * 30;
+    }
+
+    sram = __OSLockSramEx();
+    sram->dvdErrorCode = storedCode;
+    __OSUnlockSramEx(1);
 }
