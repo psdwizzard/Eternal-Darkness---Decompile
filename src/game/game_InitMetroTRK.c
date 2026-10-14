@@ -1,44 +1,52 @@
-/* InitMetroTRK: MetroTRK debugger entry. Snapshots the full CPU state into
- * gTRKCPUState, disables external interrupts, clears the hardware
- * breakpoints, switches to the debugger stack and enters the TRK main loop.
- * The original is a hand-written asm routine; only the register-level
- * pieces C cannot express are kept as inline asm. */
-
 typedef unsigned int u32;
 
-extern u32 gTRKCPUState[];
-extern unsigned char _db_stack_addr[];
+typedef struct TRKCPUStateHeader {
+    u32 gpr[32];
+    u32 pc;
+    u32 lr;
+    u32 cr;
+} TRKCPUStateHeader;
+
+extern unsigned char gTRKCPUState[];
 
 void TRKSaveExtended1Block(void);
-int InitMetroTRKCommTable(int hwId);
+int InitMetroTRKCommTable(int hardware);
 void TRK_main(void);
 
-void InitMetroTRK(int hwId) {
-    register u32 *state;
+/* MetroTRK entry: preserve the integer state, disable interrupts, save the
+ * extended state and select the communication hardware from the saved r5.
+ * The retail stack switch and final context-return sequence remain unmatched. */
+void InitMetroTRK(volatile int entryR3)
+{
+    register TRKCPUStateHeader *state;
     register u32 msr;
     register u32 lr;
     register u32 cr;
+    register u32 zero;
 
-    state = gTRKCPUState;
-    /* ASM: stmw - store all 32 GPRs (including r1/r2/r13) into the TRK
-     * CPU state block; C has no way to name every GPR. */
+    /* ASM: lis/ori/stmw snapshot all GPRs using r3 as the state base.
+     * C cannot read the complete register file; entryR3 is spilled so its
+     * incoming value survives the replacement of r3 with the state address. */
     asm {
-        stmw r0, 0(state)
-        stw r1, 4(state)
+        lis r3, gTRKCPUState@h
+        ori r3, r3, gTRKCPUState@l
+        stmw r0, 0(r3)
     }
-    state[3] = hwId;
-    /* ASM: mflr/mfcr - capture the caller's LR and CR as the resume PC and
-     * condition register; C cannot read these registers, and the stores
-     * must stay interleaved with the SPR reads. */
-    asm {
-        mflr lr
-        stw lr, 0x84(state)
-        stw lr, 0x80(state)
-        mfcr cr
-        stw cr, 0x88(state)
-    }
-    /* ASM: mfmsr/ori/xori/mtmsr/mtsrr1 - clear MSR[EE] and stash the old
-     * MSR in SRR1; supervisor register moves have no C equivalent. */
+    state = (TRKCPUStateHeader *)gTRKCPUState;
+    /* ASM: stw saves the stack pointer, which C cannot directly read. */
+    asm { stw r1, 4(r3) }
+    state->gpr[3] = entryR3;
+
+    /* ASM: mflr reads the link register; C cannot access the caller's LR. */
+    asm { mflr lr }
+    state->lr = lr;
+    state->pc = lr;
+    /* ASM: mfcr reads the hardware condition register, inaccessible in C. */
+    asm { mfcr cr }
+    state->cr = cr;
+
+    /* ASM: mfmsr/ori/xori/mtmsr/mtsrr1 clear EE and retain the old MSR in
+     * SRR1. C cannot access MSR/SRR1 and folds the ori/xori pair into rlwinm. */
     asm {
         mfmsr msr
         ori r3, msr, 0x8000
@@ -47,14 +55,22 @@ void InitMetroTRK(int hwId) {
         mtsrr1 msr
     }
     TRKSaveExtended1Block();
-    /* ASM: li/mtspr - clear the IABR/DABR hardware breakpoints; these
-     * supervisor SPRs are unreachable from C. */
+
+    /* ASM: lis/ori/lmw reload the complete saved GPR file through r3;
+     * C cannot restore the stack pointer and all general registers. */
     asm {
-        li r0, 0
-        mtspr IABR, r0
-        mtspr DABR, r0
+        lis r3, gTRKCPUState@h
+        ori r3, r3, gTRKCPUState@l
+        lmw r0, 0(r3)
     }
-    if (InitMetroTRKCommTable(hwId) != 1) {
+    zero = 0;
+    /* ASM: mtspr clears IABR/DABR, privileged breakpoint registers that
+     * cannot be written by a C assignment. */
+    asm {
+        mtspr IABR, zero
+        mtspr DABR, zero
+    }
+    if (InitMetroTRKCommTable(((TRKCPUStateHeader *)gTRKCPUState)->gpr[5]) != 1) {
         TRK_main();
     }
 }
