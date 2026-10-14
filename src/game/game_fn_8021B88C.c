@@ -1,6 +1,8 @@
-/* fn_8021B88C (0x8021B88C, 8 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned int u32;
 
-void fn_8021B88C(void) {
+extern u32 lbl_8064DB58;
+
+u32 fn_8021B88C(void)
+{
+    return lbl_8064DB58;
 }

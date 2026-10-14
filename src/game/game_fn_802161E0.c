@@ -1,6 +1,6 @@
-/* fn_802161E0 (0x802161E0, 8 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Return the current disc ID stored in the low-memory boot area. */
+typedef struct DVDDiskID DVDDiskID;
 
-void fn_802161E0(void) {
+DVDDiskID *fn_802161E0(void) {
+    return (DVDDiskID *)0x80000000;
 }

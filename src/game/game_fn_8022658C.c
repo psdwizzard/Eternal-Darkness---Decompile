@@ -1,6 +1,9 @@
-/* fn_8022658C (0x8022658C, 12 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned short u16;
 
-void fn_8022658C(void) {
+extern volatile u16 *__peReg;
+
+/* Read the pixel engine's draw-sync token. */
+u16 fn_8022658C(void)
+{
+    return __peReg[7];
 }
