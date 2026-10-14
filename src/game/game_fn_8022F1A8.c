@@ -1,6 +1,20 @@
-/* fn_8022F1A8 (0x8022F1A8, 40 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Record bytes written to the audio synchronization buffer. */
+typedef struct AudioSync {
+    unsigned char *data;
+    int storage;
+    int fill;
+    int returned;
+    int unsynced;
+    int headerBytes;
+    int bodyBytes;
+} AudioSync;
 
-void fn_8022F1A8(void) {
+int fn_8022F1A8(AudioSync *sync, int bytes) {
+    int newFill = sync->fill + bytes;
+
+    if (newFill > sync->storage) {
+        return -1;
+    }
+    sync->fill = newFill;
+    return 0;
 }

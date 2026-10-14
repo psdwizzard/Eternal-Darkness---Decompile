@@ -1,6 +1,16 @@
-/* fn_8023287C (0x8023287C, 40 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+#include "src/game/types.h"
 
-void fn_8023287C(void) {
+typedef struct AudioComment {
+    char **comments;
+    s32 *lengths;
+    s32 count;
+    char *vendor;
+} AudioComment;
+
+extern void *memset(void *dest, int value, unsigned long size);
+
+/* Initialize the vendor string and user comment list. */
+void fn_8023287C(AudioComment *comment)
+{
+    memset(comment, 0, sizeof(*comment));
 }

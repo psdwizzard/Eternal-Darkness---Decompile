@@ -1,6 +1,27 @@
-/* fn_802266B0 (0x802266B0, 36 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
 
-void fn_802266B0(void) {
+typedef struct GXData {
+    u16 reserved0;
+    u16 bpSentNot;
+    u8 pad4[0x1DC - 4];
+    u32 zControl;
+} GXData;
+
+extern GXData *gx;
+
+typedef union GXWGPipe {
+    u8 byte;
+    u32 word;
+} GXWGPipe;
+
+extern volatile GXWGPipe GXWGFifo : 0xCC008000;
+
+/* Send the cached depth-control register to the graphics FIFO. */
+void fn_802266B0(void)
+{
+    GXWGFifo.byte = 0x61;
+    GXWGFifo.word = gx->zControl;
+    gx->bpSentNot = 0;
 }

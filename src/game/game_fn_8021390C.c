@@ -1,6 +1,15 @@
-/* fn_8021390C (0x8021390C, 36 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* cbForReadSync: wake threads waiting for a synchronous DVD read. */
+typedef int s32;
+typedef struct DVDCommandBlock DVDCommandBlock;
+typedef struct OSThread OSThread;
+typedef struct OSThreadQueue {
+    OSThread *head;
+    OSThread *tail;
+} OSThreadQueue;
 
-void fn_8021390C(void) {
+extern OSThreadQueue __DVDThreadQueue;
+extern void fn_802100F0(OSThreadQueue *queue); /* OSWakeupThread */
+
+void fn_8021390C(s32 result, DVDCommandBlock *block) {
+    fn_802100F0(&__DVDThreadQueue);
 }

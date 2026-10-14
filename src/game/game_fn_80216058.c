@@ -1,6 +1,15 @@
-/* fn_80216058 (0x80216058, 36 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Completion callback for DVDCancel: wake threads waiting for cancellation. */
+typedef int s32;
+typedef struct DVDCommandBlock DVDCommandBlock;
+typedef struct OSThread OSThread;
+typedef struct OSThreadQueue {
+    OSThread *head;
+    OSThread *tail;
+} OSThreadQueue;
 
-void fn_80216058(void) {
+extern OSThreadQueue __DVDThreadQueue;
+extern void fn_802100F0(OSThreadQueue *queue);
+
+void fn_80216058(s32 result, DVDCommandBlock *block) {
+    fn_802100F0(&__DVDThreadQueue);
 }

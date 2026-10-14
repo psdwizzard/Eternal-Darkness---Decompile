@@ -1,6 +1,8 @@
-/* fn_8022C668 (0x8022C668, 40 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+extern int lbl_8064C3C8;
+extern void fn_8020AE7C(int heap, void *ptr);
 
-void fn_8022C668(void) {
+/* Release a cached resource from the resource heap. */
+void fn_8022C668(void *resource)
+{
+    fn_8020AE7C(lbl_8064C3C8, resource);
 }
