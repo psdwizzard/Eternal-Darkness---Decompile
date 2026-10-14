@@ -1,6 +1,9 @@
-/* fn_8020DDAC (0x8020DDAC, 12 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+extern void *lbl_8064D950; /* SaveStart */
+extern void *lbl_8064D954; /* SaveEnd */
 
-void fn_8020DDAC(void) {
+/* Set the memory region to preserve across a reboot. */
+void fn_8020DDAC(void *start, void *end)
+{
+    lbl_8064D950 = start;
+    lbl_8064D954 = end;
 }

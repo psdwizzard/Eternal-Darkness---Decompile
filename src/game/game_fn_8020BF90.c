@@ -1,6 +1,6 @@
-/* fn_8020BF90 (0x8020BF90, 12 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct OSContext OSContext;
 
-void fn_8020BF90(void) {
+/* Return the current OS context stored in low memory. */
+OSContext *fn_8020BF90(void) {
+    return *(OSContext *volatile *)0x800000D4;
 }

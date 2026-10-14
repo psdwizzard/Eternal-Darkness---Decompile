@@ -1,6 +1,9 @@
-/* fn_8021A19C (0x8021A19C, 12 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned int u32;
 
-void fn_8021A19C(void) {
+volatile u32 __AIRegs[8] : 0xCC006C00;
+
+/* AISetStreamTrigger: set the sample count that triggers a stream interrupt. */
+void fn_8021A19C(u32 sampleCount)
+{
+    __AIRegs[3] = sampleCount;
 }
