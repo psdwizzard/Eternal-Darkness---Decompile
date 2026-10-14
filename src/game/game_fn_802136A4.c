@@ -1,6 +1,29 @@
-/* fn_802136A4 (0x802136A4, 96 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* DVDChangeDir: select a directory by its filesystem path. */
 
-void fn_802136A4(void) {
+typedef int s32;
+typedef unsigned int u32;
+typedef int BOOL;
+
+typedef struct FSTEntry {
+    u32 isDirAndStringOff;
+    u32 parentOrPosition;
+    u32 nextEntryOrLength;
+} FSTEntry;
+
+extern s32 fn_8021302C(char *pathPtr); /* DVDConvertPathToEntrynum */
+extern FSTEntry *FstStart_8064D9E4;
+extern u32 lbl_8064D9F0; /* currentDirectory */
+
+#define entryIsDir(i) (((FstStart_8064D9E4[i].isDirAndStringOff & 0xff000000) == 0) ? 0 : 1)
+
+BOOL fn_802136A4(char *path)
+{
+    s32 entry = fn_8021302C(path);
+
+    if (entry < 0 || !entryIsDir(entry)) {
+        return 0;
+    }
+
+    lbl_8064D9F0 = entry;
+    return 1;
 }

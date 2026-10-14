@@ -1,6 +1,28 @@
-/* fn_80226CC4 (0x80226CC4, 100 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
 
-void fn_80226CC4(void) {
+typedef struct GXData {
+    u16 pad0;
+    u16 bpSent;
+    u8 pad4[0xB8 - 4];
+    u32 suSsize[8];
+} GXData;
+
+extern GXData *gx;
+
+typedef union {
+    u8 byte;
+    u32 word;
+} GXFifo;
+volatile GXFifo GXWGFifo : 0xCC008000;
+
+/* GXSetTexCoordCylWrap: set cylindrical wrapping for a texture coordinate. */
+void fn_80226CC4(int coord, u8 wrapS, u8 wrapT)
+{
+    gx->suSsize[coord] = (gx->suSsize[coord] & ~0x40000UL) | ((u32)wrapS << 18);
+    gx->suSsize[coord] = (gx->suSsize[coord] & ~0x80000UL) | ((u32)wrapT << 19);
+    GXWGFifo.byte = 0x61;
+    GXWGFifo.word = gx->suSsize[coord];
+    gx->bpSent = 0;
 }
