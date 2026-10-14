@@ -1,6 +1,27 @@
-/* fn_80224468 (0x80224468, 68 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
+typedef int BOOL;
 
-void fn_80224468(void) {
+typedef struct {
+    u8 pad0[8];
+    u32 cpEnable;
+    u32 cpStatus;
+} GXData;
+
+extern GXData *gx;
+extern volatile u16 *__cpReg;
+
+/* __GXFifoLink: link the CP FIFO to the CPU FIFO. */
+void fn_80224468(u8 enable)
+{
+    BOOL link;
+
+    if (enable) {
+        link = 1;
+    } else {
+        link = 0;
+    }
+    gx->cpEnable = (gx->cpEnable & ~0x10UL) | (link << 4);
+    __cpReg[1] = gx->cpEnable;
 }

@@ -1,6 +1,17 @@
-/* fn_8021A96C (0x8021A96C, 68 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef int BOOL;
+typedef void (*ARCallback)(void);
 
-void fn_8021A96C(void) {
+extern BOOL OSDisableInterrupts(void);
+extern BOOL OSRestoreInterrupts(BOOL level);
+extern ARCallback lbl_8064DB18;
+
+/* ARRegisterDMACallback */
+ARCallback fn_8021A96C(ARCallback callback)
+{
+    ARCallback previous = lbl_8064DB18;
+    BOOL enabled = OSDisableInterrupts();
+
+    lbl_8064DB18 = callback;
+    OSRestoreInterrupts(enabled);
+    return previous;
 }
