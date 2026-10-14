@@ -1,6 +1,13 @@
-/* fn_8021D5F0 (0x8021D5F0, 80 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef int BOOL;
+typedef signed int s32;
 
-void fn_8021D5F0(void) {
+extern s32 fn_80220B4C(s32 channel);
+
+/* Allow reset once both memory cards are no longer busy. */
+BOOL fn_8021D5F0(BOOL final)
+{
+    if (!final && (fn_80220B4C(0) == -1 || fn_80220B4C(1) == -1)) {
+        return 0;
+    }
+    return 1;
 }

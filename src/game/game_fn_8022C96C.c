@@ -1,6 +1,15 @@
-/* fn_8022C96C (0x8022C96C, 80 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
-
-void fn_8022C96C(void) {
+/* Compare signed characters, treating either string ending as equal. */
+signed char fn_8022C96C(const char *left, const char *right)
+{
+    do {
+        if ((signed char)*left < (signed char)*right) {
+            return 1;
+        }
+        if ((signed char)*left > (signed char)*right) {
+            return -1;
+        }
+        ++left;
+        ++right;
+    } while ((signed char)*left != 0 && (signed char)*right != 0);
+    return 0;
 }
