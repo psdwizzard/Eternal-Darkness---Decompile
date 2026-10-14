@@ -1,6 +1,57 @@
-/* fn_8020DB2C (0x8020DB2C, 116 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef int s32;
+typedef unsigned int u32;
+typedef unsigned short u16;
+typedef struct OSThread OSThread;
+typedef struct OSMutex OSMutex;
 
-void fn_8020DB2C(void) {
+typedef struct OSThreadQueue {
+    OSThread *head;
+    OSThread *tail;
+} OSThreadQueue;
+
+struct OSThread {
+    unsigned char context[0x2C8];
+    u16 state;
+    u16 attr;
+    s32 suspend;
+    s32 priority;
+    s32 basePriority;
+    void *value;
+    OSThreadQueue *queue;
+    OSThread *next;
+    OSThread *prev;
+    OSThreadQueue joinQueue;
+    OSMutex *mutex;
+    OSMutex *mutexHead;
+    OSMutex *mutexTail;
+    OSThread *activeNext;
+    OSThread *activePrev;
+    void *stackBase;
+    u32 *stackEnd;
+};
+
+struct OSMutex {
+    OSThreadQueue queue;
+    OSThread *owner;
+    s32 count;
+    OSMutex *next;
+    OSMutex *prev;
+};
+
+extern s32 fn_8020D9F4(OSMutex *mutex);
+
+/* Validate every mutex held by this thread. */
+s32 fn_8020DB2C(OSThread *thread)
+{
+    OSMutex *mutex;
+
+    for (mutex = thread->mutexHead; mutex; mutex = mutex->next) {
+        if (mutex->owner != thread) {
+            return 0;
+        }
+        if (fn_8020D9F4(mutex) == 0) {
+            return 0;
+        }
+    }
+    return 1;
 }

@@ -1,6 +1,61 @@
-/* fn_802357B4 (0x802357B4, 120 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+#include "src/game/types.h"
 
-void fn_802357B4(void) {
+typedef struct EncodeAuxNearestMatch {
+    s32 *ptr0;
+    s32 *ptr1;
+    s32 *p;
+    s32 *q;
+    s32 aux;
+    s32 alloc;
+} EncodeAuxNearestMatch;
+
+typedef struct EncodeAuxThreshMatch {
+    float *quantthresh;
+    s32 *quantmap;
+    s32 quantvals;
+    s32 threshvals;
+} EncodeAuxThreshMatch;
+
+typedef struct StaticCodebook {
+    s32 dim;
+    s32 entries;
+    s32 *lengthlist;
+    s32 maptype;
+    s32 q_min;
+    s32 q_delta;
+    s32 q_quant;
+    s32 q_sequencep;
+    s32 *quantlist;
+    EncodeAuxNearestMatch *nearest_tree;
+    EncodeAuxThreshMatch *thresh_tree;
+    void *pigeon_tree;
+    s32 allocedp;
+} StaticCodebook;
+
+extern void *memset(void *dest, int value, unsigned long size);
+
+/* vorbis_staticbook_destroy */
+void fn_802357B4(void *arg)
+{
+    register StaticCodebook *book = arg;
+    EncodeAuxThreshMatch *thresh;
+
+    if (book->allocedp) {
+        if (book->allocedp) {
+            if (book->nearest_tree) {
+                memset(book->nearest_tree, 0, sizeof(*book->nearest_tree));
+            }
+            thresh = book->thresh_tree;
+            if (thresh) {
+                memset(thresh, 0, sizeof(*thresh));
+            }
+            {
+                register StaticCodebook *clear;
+                /* ASM: or (mr) preserves the retail register copy for memset;
+                 * the C pointer assignment compiles to addi with zero. */
+                asm { or clear, book, book }
+                memset(clear, 0, sizeof(*clear));
+            }
+        }
+    }
 }
