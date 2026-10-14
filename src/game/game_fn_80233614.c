@@ -1,6 +1,8 @@
-/* fn_80233614 (0x80233614, 68 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+extern void *fn_8022F780(int size);
+extern void *memcpy(void *destination, const void *source, unsigned int size);
 
-void fn_80233614(void) {
+/* Allocate and copy the fixed-size configuration. */
+void *fn_80233614(const void *source) {
+    void *copy = fn_8022F780(0xCD0);
+    return memcpy(copy, source, 0xCD0);
 }
