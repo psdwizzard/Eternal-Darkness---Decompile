@@ -1,6 +1,11 @@
-/* fn_802141D0 (0x802141D0, 40 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned int u32;
+typedef signed int s32;
+typedef void (*DVDLowCallback)(u32 intType);
 
-void fn_802141D0(void) {
+extern s32 DVDLowStopMotor(DVDLowCallback callback);
+extern void fn_802141F8(u32 intType);
+
+void fn_802141D0(void)
+{
+    DVDLowStopMotor(fn_802141F8);
 }

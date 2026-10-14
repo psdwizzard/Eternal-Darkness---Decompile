@@ -1,6 +1,26 @@
-/* fn_802114B8 (0x802114B8, 40 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef float Mtx[3][4];
 
-void fn_802114B8(void) {
+extern const float lbl_8065160C;
+
+/* Construct a scale matrix. */
+void fn_802114B8(register Mtx m, float x, float y, float z)
+{
+    register float zero = lbl_8065160C;
+
+    m[0][0] = x;
+    /* ASM: psq_st clears two entries per store using both lanes of
+     * zero; scalar C produces separate stfs instructions. */
+    asm {
+        psq_st zero, 4(m), 0, 0
+        psq_st zero, 12(m), 0, 0
+    }
+    m[1][1] = y;
+    /* ASM: psq_st clears two entries per store using both lanes of
+     * zero; scalar C produces separate stfs instructions. */
+    asm {
+        psq_st zero, 24(m), 0, 0
+        psq_st zero, 32(m), 0, 0
+    }
+    m[2][2] = z;
+    m[2][3] = zero;
 }
