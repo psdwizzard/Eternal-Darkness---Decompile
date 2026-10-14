@@ -1,6 +1,9 @@
-/* fn_8021A370 (0x8021A370, 20 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* AIGetDSPSampleRate: the hardware rate bit uses the inverse of the API value. */
+typedef unsigned int u32;
 
-void fn_8021A370(void) {
+volatile u32 __AIRegs[8] : 0xCC006C00;
+
+u32 fn_8021A370(void)
+{
+    return ((__AIRegs[0] >> 6) & 1u) ^ 1u;
 }

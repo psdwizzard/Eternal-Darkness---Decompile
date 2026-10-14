@@ -1,6 +1,18 @@
-/* OSDisableInterrupts (0x8020C970, 20 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned long u32;
 
-void OSDisableInterrupts(void) {
+int OSDisableInterrupts(void)
+{
+    register u32 newState;
+    register u32 oldState;
+
+    /* ASM: mfmsr reads the machine state register, which C cannot access. */
+    asm { mfmsr oldState }
+
+    /* Clear external interrupt enable while preserving the other MSR bits. */
+    newState = oldState & ~0x8000;
+
+    /* ASM: mtmsr writes the machine state register, which C cannot access. */
+    asm { mtmsr newState }
+
+    return (oldState >> 15) & 1;
 }

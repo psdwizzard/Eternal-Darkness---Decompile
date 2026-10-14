@@ -1,6 +1,10 @@
-/* fn_80212F84 (0x80212F84, 20 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef signed int s32;
 
-void fn_80212F84(void) {
+extern volatile s32 StopAtNextInt_8064D998;
+extern s32 lbl_8064D9B8;
+
+s32 fn_80212F84(void) {
+    StopAtNextInt_8064D998 = 1;
+    lbl_8064D9B8 = 1;
+    return 1;
 }

@@ -1,6 +1,12 @@
-/* ICEnable (0x8020B850, 20 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Enable the instruction cache in the hardware implementation register. */
+void ICEnable(void)
+{
+    register unsigned int hid0;
 
-void ICEnable(void) {
+    __isync();
+    /* ASM: mfspr reads HID0, a hardware register inaccessible through C. */
+    asm { mfspr hid0, 1008 }
+    hid0 |= 0x8000;
+    /* ASM: mtspr writes HID0, a hardware register inaccessible through C. */
+    asm { mtspr 1008, hid0 }
 }
