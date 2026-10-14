@@ -1,6 +1,25 @@
-/* fn_8022E954 (0x8022E954, 52 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+#include "src/game/types.h"
 
-void fn_8022E954(void) {
+/* libogg oggpack_adv: advance the bit-packing buffer by the given bit count. */
+typedef struct oggpack_buffer {
+    s32 endbyte;
+    s32 endbit;
+    u8 *buffer;
+    u8 *ptr;
+    s32 storage;
+} oggpack_buffer;
+
+void fn_8022E954(oggpack_buffer *b, register s32 bits) {
+    register s32 bytes;
+    register s32 shifted;
+    bits += b->endbit;
+    /* ASM: srawi and addze implement signed division by eight; C's division
+     * expression changes the retail register allocation and scheduling. */
+    asm {
+        srawi shifted, bits, 3
+        addze bytes, shifted
+    }
+    b->ptr += bytes;
+    b->endbyte += bytes;
+    b->endbit = bits & 7;
 }

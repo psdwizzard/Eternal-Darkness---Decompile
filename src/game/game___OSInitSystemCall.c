@@ -26,8 +26,13 @@ void __OSInitSystemCall(void) {
     /* ASM: or (mr) copies the vector address; C emits addi with zero. */
     asm { or destination, vector, vector }
     memcpy(destination, start, end - start);
-    DCFlushRangeNoSync(vector, 0x100);
-    /* ASM: sync completes the cache flush; C has no hardware barrier operation. */
-    asm { sync }
-    ICInvalidateRange(vector, 0x100);
+    /* ASM: or. copies the vector while preventing repeated-copy folding;
+     * C emits addi and non-recording or copies are commoned by MWCC. */
+    asm { or. destination, vector, vector }
+    DCFlushRangeNoSync(destination, 0x100);
+    __sync();
+    /* ASM: or. copies the vector while preventing repeated-copy folding;
+     * C emits addi and non-recording or copies are commoned by MWCC. */
+    asm { or. destination, vector, vector }
+    ICInvalidateRange(destination, 0x100);
 }
