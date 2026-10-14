@@ -1,6 +1,20 @@
-/* fn_80226718 (0x80226718, 136 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned short u16;
+typedef unsigned long u32;
+typedef int s32;
 
-void fn_80226718(void) {
+extern volatile u16 *__peReg;
+
+void fn_80226718(s32 mode, u32 srcFactor, u32 dstFactor, u32 operation)
+{
+    volatile u16 *blendReg = &__peReg[1];
+    u32 value = *blendReg;
+
+    value = (value & ~1U) | (mode == 1 || mode == 3);
+    value = (value & ~0x800U) | ((mode == 3) << 11);
+    value = (value & ~2U) | ((mode == 2) << 1);
+    value = (value & ~0xF000U) | (operation << 12);
+    value = (value & ~0x700U) | (srcFactor << 8);
+    value = (value & ~0xE0U) | (dstFactor << 5);
+    value = (value & 0x00FFFFFF) | 0x41000000;
+    *blendReg = value;
 }
