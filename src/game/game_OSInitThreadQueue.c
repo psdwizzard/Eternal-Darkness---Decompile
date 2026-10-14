@@ -1,6 +1,11 @@
-/* OSInitThreadQueue (0x8020F2CC, 16 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct OSThread OSThread;
 
-void OSInitThreadQueue(void) {
+typedef struct OSThreadQueue {
+    OSThread *head;
+    OSThread *tail;
+} OSThreadQueue;
+
+void OSInitThreadQueue(OSThreadQueue *queue)
+{
+    queue->head = queue->tail = 0;
 }

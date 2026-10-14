@@ -1,6 +1,9 @@
-/* fn_8021A484 (0x8021A484, 16 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Get the left audio stream volume. */
+typedef unsigned int u32;
 
-void fn_8021A484(void) {
+volatile u32 __AIRegs[8] : 0xCC006C00;
+
+u32 fn_8021A484(void)
+{
+    return __AIRegs[1] & 0xFF;
 }
