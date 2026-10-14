@@ -1,6 +1,17 @@
-/* fn_8021A044 (0x8021A044, 68 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef int BOOL;
+typedef void (*AIDMACallback)(void);
 
-void fn_8021A044(void) {
+extern BOOL OSDisableInterrupts(void);
+extern BOOL OSRestoreInterrupts(BOOL level);
+extern AIDMACallback lbl_8064DADC;
+
+/* Replace the audio DMA callback and return the previous callback. */
+AIDMACallback fn_8021A044(AIDMACallback callback)
+{
+    AIDMACallback previous = lbl_8064DADC;
+    BOOL level = OSDisableInterrupts();
+
+    lbl_8064DADC = callback;
+    OSRestoreInterrupts(level);
+    return previous;
 }

@@ -1,6 +1,18 @@
-/* fn_80216BE0 (0x80216BE0, 68 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned int u32;
+typedef int BOOL;
+typedef void (*VIRetraceCallback)(u32 retraceCount);
 
-void fn_80216BE0(void) {
+extern BOOL OSDisableInterrupts(void);
+extern BOOL OSRestoreInterrupts(BOOL level);
+extern VIRetraceCallback lbl_8064DA74;
+
+/* Set the post-retrace callback and return the previous callback. */
+VIRetraceCallback fn_80216BE0(VIRetraceCallback callback)
+{
+    VIRetraceCallback previous = lbl_8064DA74;
+    BOOL level = OSDisableInterrupts();
+
+    lbl_8064DA74 = callback;
+    OSRestoreInterrupts(level);
+    return previous;
 }
