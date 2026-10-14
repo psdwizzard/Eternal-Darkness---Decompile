@@ -1,6 +1,29 @@
-/* fn_80215C34 (0x80215C34, 76 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Dolphin SDK dvd.c: DVDGetCommandBlockStatus */
+typedef int s32;
+typedef int BOOL;
+typedef unsigned char u8;
 
-void fn_80215C34(void) {
+typedef struct DVDCommandBlock {
+    u8 pad[0x08];
+    s32 command;
+    s32 state;
+} DVDCommandBlock;
+
+extern BOOL OSDisableInterrupts(void);
+extern BOOL OSRestoreInterrupts(BOOL level);
+
+s32 fn_80215C34(const DVDCommandBlock *block) {
+    BOOL level;
+    s32 state;
+    s32 result;
+
+    level = OSDisableInterrupts();
+    state = block->state;
+    if (state == 3) {
+        result = 1;
+    } else {
+        result = state;
+    }
+    OSRestoreInterrupts(level);
+    return result;
 }

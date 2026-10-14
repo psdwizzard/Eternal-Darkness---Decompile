@@ -1,6 +1,28 @@
-/* fn_8022E050 (0x8022E050, 80 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned long u32;
+typedef long s32;
+typedef struct OSContext OSContext;
+typedef void (*EXICallback)(s32, OSContext *);
 
-void fn_8022E050(void) {
+typedef struct EXIControl {
+    EXICallback exiCallback;
+    EXICallback transferCallback;
+    EXICallback extCallback;
+    volatile u32 state;
+    s32 length;
+    void *buffer;
+} EXIControl;
+
+extern EXIControl *lbl_8064C4B8;
+volatile u32 __PIRegs[12] : 0xCC003000;
+
+/* Acknowledge the PI debug interrupt and dispatch the channel 2 callback. */
+void fn_8022E050(short interrupt, OSContext *context)
+{
+    EXICallback callback;
+
+    __PIRegs[0] = (__PIRegs[0] & 0x1000) | 0x1000;
+    callback = lbl_8064C4B8->exiCallback;
+    if (callback != 0) {
+        callback(2, context);
+    }
 }

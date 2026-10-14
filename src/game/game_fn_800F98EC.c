@@ -1,6 +1,15 @@
-/* fn_800F98EC (0x800F98EC, 76 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* fn_800F98EC: MSL memcmp. */
 
-void fn_800F98EC(void) {
+typedef unsigned long size_t;
+
+int fn_800F98EC(const void *a, const void *b, size_t n) {
+    const unsigned char *p = (const unsigned char *)a - 1;
+    const unsigned char *q = (const unsigned char *)b - 1;
+
+    for (n++; --n;) {
+        if (*++p != *++q) {
+            return (*p < *q) ? -1 : 1;
+        }
+    }
+    return 0;
 }
