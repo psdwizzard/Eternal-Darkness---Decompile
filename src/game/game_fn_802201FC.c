@@ -1,6 +1,14 @@
-/* fn_802201FC (0x802201FC, 56 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef int s32;
+typedef int BOOL;
 
-void fn_802201FC(void) {
+extern BOOL fn_802070C4(s32 chan);
+
+/* CARDProbe */
+BOOL fn_802201FC(s32 chan)
+{
+    if (*(u8 *)0x800030E3 & 0x80) {
+        return 0;
+    }
+    return fn_802070C4(chan);
 }

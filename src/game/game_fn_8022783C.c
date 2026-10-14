@@ -1,6 +1,26 @@
-/* fn_8022783C (0x8022783C, 56 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Reset the bounding-box limits in the BP registers. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
 
-void fn_8022783C(void) {
+typedef struct GXData {
+    u16 pad0;
+    u16 bpSentNot;
+} GXData;
+
+extern GXData *gx;
+
+typedef union GXWGPipe {
+    u8 byte;
+    u32 word;
+} GXWGPipe;
+extern volatile GXWGPipe GXWGFifo : 0xCC008000;
+
+void fn_8022783C(void)
+{
+    GXWGFifo.byte = 0x61;
+    GXWGFifo.word = 0x550003FF;
+    GXWGFifo.byte = 0x61;
+    GXWGFifo.word = 0x560003FF;
+    gx->bpSentNot = 0;
 }

@@ -1,6 +1,23 @@
-/* fn_8022A9B8 (0x8022A9B8, 56 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* GXSetFieldMask: select field updates in the pixel engine. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
 
-void fn_8022A9B8(void) {
+typedef struct GXData {
+    u16 reserved0;
+    u16 bpSentNot;
+} GXData;
+extern GXData *gx;
+
+typedef union GXWGPipe { u8 byte; u32 word; } GXWGPipe;
+extern volatile GXWGPipe GXWGFifo : 0xCC008000;
+
+void fn_8022A9B8(u8 evenMask, u8 oddMask)
+{
+    u32 fieldMask = oddMask;
+    fieldMask = (fieldMask & ~(1UL << 1)) | ((u32)evenMask << 1);
+    fieldMask = (fieldMask & 0x00FFFFFFUL) | 0x44000000UL;
+    GXWGFifo.byte = 0x61;
+    GXWGFifo.word = fieldMask;
+    gx->bpSentNot = 0;
 }
