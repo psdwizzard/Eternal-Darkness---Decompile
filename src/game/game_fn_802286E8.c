@@ -1,6 +1,34 @@
-/* fn_802286E8 (0x802286E8, 72 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* GXInitTexObjCI: initialise a color-indexed texture and select its TLUT. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
 
-void fn_802286E8(void) {
+typedef struct GXTexObj {
+    u32 dummy[8];
+} GXTexObj;
+
+typedef struct __GXTexObjInt {
+    u32 mode0;
+    u32 mode1;
+    u32 image0;
+    u32 image3;
+    void *userData;
+    u32 fmt;
+    u32 tlutName;
+    u16 loadCnt;
+    u8 loadFmt;
+    u8 flags;
+} __GXTexObjInt;
+
+extern void fn_80228474(GXTexObj *obj, void *image_ptr, u16 width, u16 height,
+                        u32 format, u32 wrap_s, u32 wrap_t, u8 mipmap);
+
+void fn_802286E8(GXTexObj *obj, void *image_ptr, u16 width, u16 height,
+                 u32 format, u32 wrap_s, u32 wrap_t, u8 mipmap, u32 tlut_name)
+{
+    __GXTexObjInt *t = (__GXTexObjInt *)obj;
+
+    fn_80228474(obj, image_ptr, width, height, format, wrap_s, wrap_t, mipmap);
+    t->flags &= ~2;
+    t->tlutName = tlut_name;
 }
