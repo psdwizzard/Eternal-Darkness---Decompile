@@ -1,6 +1,6 @@
-/* fn_80235704 (0x80235704, 8 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+#include "src/game/types.h"
 
-void fn_80235704(void) {
+s32 fn_80235704(void)
+{
+    return 0;
 }

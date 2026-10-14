@@ -1,6 +1,5 @@
-/* fn_80231310 (0x80231310, 8 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* fn_80231310 (0x80231310, 8 bytes) */
 
-void fn_80231310(void) {
+int fn_80231310(void) {
+    return 0;
 }
