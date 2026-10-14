@@ -1,6 +1,13 @@
-/* fn_8021B8B4 (0x8021B8B4, 24 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned short u16;
+typedef unsigned int u32;
 
-void fn_8021B8B4(void) {
+volatile u16 DSPRegisters[] : 0xCC005000;
+
+/* Read the high and low halves of the DSP-to-CPU mailbox. */
+u32 fn_8021B8B4(void)
+{
+    u32 high = DSPRegisters[2];
+    u32 low = DSPRegisters[3];
+
+    return (high << 16) | low;
 }

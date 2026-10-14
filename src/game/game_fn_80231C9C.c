@@ -1,6 +1,7 @@
-/* fn_80231C9C (0x80231C9C, 24 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Compare pointers to Vorbis floor post positions for sorting. */
+#include "src/game/types.h"
 
-void fn_80231C9C(void) {
+int fn_80231C9C(const void *left, const void *right)
+{
+    return **(s32 *const *)left - **(s32 *const *)right;
 }

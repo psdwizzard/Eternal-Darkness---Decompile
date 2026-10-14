@@ -1,6 +1,12 @@
-/* DCEnable (0x8020B6FC, 20 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Enable the data cache after completing outstanding memory operations. */
+void DCEnable(void)
+{
+    register unsigned int hid0;
 
-void DCEnable(void) {
+    __sync();
+    /* ASM: mfspr reads HID0, a hardware register inaccessible to C. */
+    asm { mfspr hid0, 1008 }
+    hid0 |= 0x4000;
+    /* ASM: mtspr writes HID0, a hardware register inaccessible to C. */
+    asm { mtspr 1008, hid0 }
 }
