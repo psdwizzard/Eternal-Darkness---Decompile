@@ -3,45 +3,57 @@
 typedef struct VorbisBlock VorbisBlock;
 typedef struct ResidueLook ResidueLook;
 typedef struct Codebook Codebook;
+typedef s32 (*ResidueDecode)(Codebook *, s32 *, void *, s32);
 
-s32 fn_802304DC(Codebook *book, float *a, void *b, s32 n);
-s32 fn_80234A04(VorbisBlock *vb, ResidueLook *look, s32 **in, s32 ch,
-               s32 (*decodepart)(Codebook *, s32 *, void *, s32));
+s32 fn_802304DC(Codebook *book, float *samples, void *bits, s32 count);
+s32 fn_80234A04(VorbisBlock *vb, ResidueLook *look, s32 **in, s32 channels,
+               ResidueDecode decodepart);
 
-/* Decode residue 0 for the channels that contain nonzero data. */
+/* Compact the active channels before decoding their residue. */
 s32 fn_8023490C(VorbisBlock *vb, ResidueLook *look, register float **in,
-               s32 *nonzero, s32 ch) {
-    register s32 offset;
-    register float **channel;
+               register s32 *nonzero, register s32 channels) {
+    register float **source;
     register s32 used = 0;
-    s32 i;
 
-    offset = 0;
+    /* ASM: mr preserves the retail register copy; C emits addi instead. */
+    asm { mr source, in }
+    /* ASM: li/mtctr keep the byte offset in r8 and set the loop count
+     * before the guard; C schedules the comparison first. */
+    asm {
+        li r8, 0
+        mtctr channels
+    }
 
-    /* ASM: or (mr) preserves the channel pointer copy; C emits addi with zero. */
-    asm { or channel, in, in }
-
-    for (i = 0; i < ch; i++, nonzero++, channel++) {
+    if (channels > 0) {
+    channel_loop:
         if (*nonzero) {
-            register float *samples = *channel;
+            register float *value = *source;
             used++;
-            *(float **)((u8 *)in + offset) = samples;
-            /* ASM: addic preserves the byte offset that C folds into a pointer. */
-            asm { addic offset, offset, 4 }
+            /* ASM: stwx/addi preserve the indexed output cursor that C
+             * strength reduction replaces with a separate pointer. */
+            asm {
+                stwx value, in, r8
+                addi r8, r8, 4
+            }
         }
+        nonzero++;
+        source++;
+        /* ASM: bdnz uses the count initialized above; a C loop adds
+         * another mtctr after the guard comparison. */
+        asm { bdnz channel_loop }
     }
     if (used) {
-        register s32 active;
-        register s32 (*decode)(Codebook *, s32 *, void *, s32);
-        /* ASM: lis, addi, and or preserve the callback address construction
-         * before the count move; C reorders these and emits addi for the move. */
+        register s32 count;
+        register ResidueDecode decodepart;
+        /* ASM: lis/addi/mr set the decoder and active-channel count.
+         * C selects addi for the count copy instead of the retail mr. */
         asm {
-            lis active, fn_802304DC@ha
-            addi decode, active, fn_802304DC@l
-            or active, used, used
+            lis r6, fn_802304DC@ha
+            addi decodepart, r6, fn_802304DC@l
+            mr count, used
         }
-        /* The shared inverse currently declares its sample buffers as s32. */
-        return fn_80234A04(vb, look, (s32 **)in, active, decode);
+        /* The shared inverse declares its sample buffers as s32. */
+        return fn_80234A04(vb, look, (s32 **)in, count, decodepart);
     }
     return 0;
 }

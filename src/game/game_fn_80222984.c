@@ -1,6 +1,19 @@
-/* fn_80222984 (0x80222984, 72 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef signed int s32;
+typedef struct CARDStat CARDStat;
+typedef void (*CARDCallback)(s32 chan, s32 result);
 
-void fn_80222984(void) {
+extern s32 fn_80222810(s32 chan, s32 fileNo, CARDStat *stat,
+                     CARDCallback callback);
+extern void fn_8021C378(s32 chan, s32 result);
+extern signed long fn_8021D558(signed long chan);
+
+/* CARDSetStatus: update a file's status and wait for completion. */
+s32 fn_80222984(s32 chan, s32 fileNo, CARDStat *stat)
+{
+    s32 result = fn_80222810(chan, fileNo, stat, fn_8021C378);
+
+    if (result < 0) {
+        return result;
+    }
+    return fn_8021D558(chan);
 }
