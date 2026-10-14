@@ -1,6 +1,23 @@
-/* fn_80227140 (0x80227140, 124 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned long u32;
 
-void fn_80227140(void) {
+typedef struct GXData {
+    u8 pad0[0x1EC];
+    u32 cpDisp;
+    u8 pad1F0[0x1FC - 0x1F0];
+    u32 cpTex;
+} GXData;
+
+extern GXData *gx;
+
+/* GXSetCopyClamp: select which EFB edges clamp during display and texture copies. */
+void fn_80227140(int mode)
+{
+    u8 top = (mode & 1) == 1;
+    u8 bottom = (mode & 2) == 2;
+
+    gx->cpDisp = (gx->cpDisp & ~1) | (u32)top;
+    gx->cpDisp = (gx->cpDisp & ~2) | ((u32)bottom << 1);
+    gx->cpTex = (gx->cpTex & ~1) | (u32)top;
+    gx->cpTex = (gx->cpTex & ~2) | ((u32)bottom << 1);
 }

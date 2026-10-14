@@ -1,6 +1,46 @@
-/* fn_8021A624 (0x8021A624, 124 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef signed short s16;
+typedef unsigned short u16;
+typedef unsigned int u32;
 
-void fn_8021A624(void) {
+typedef struct OSContext {
+    u32 gpr[32];
+    u32 cr;
+    u32 lr;
+    u32 ctr;
+    u32 xer;
+    double fpr[32];
+    u32 fpscr_pad;
+    u32 fpscr;
+    u32 srr0;
+    u32 srr1;
+    u16 mode;
+    u16 state;
+    u32 gqr[8];
+    u32 psf_pad;
+    double psf[32];
+} OSContext;
+
+typedef void (*AIStreamCallback)(u32 sampleCount);
+
+extern void OSClearContext(OSContext *context);
+extern void OSSetCurrentContext(OSContext *context);
+extern AIStreamCallback lbl_8064DAD8;
+
+volatile u32 __AIRegs[8] : 0xCC006C00;
+
+/* Acknowledge the stream interrupt and invoke its callback in a clean context. */
+void fn_8021A624(s16 interrupt, OSContext *context)
+{
+    OSContext exceptionContext;
+
+    __AIRegs[0] |= 8;
+    OSClearContext(&exceptionContext);
+    OSSetCurrentContext(&exceptionContext);
+
+    if (lbl_8064DAD8 != 0) {
+        lbl_8064DAD8(__AIRegs[2]);
+    }
+
+    OSClearContext(&exceptionContext);
+    OSSetCurrentContext(context);
 }
