@@ -1,6 +1,19 @@
-/* fn_8022F2C4 (0x8022F2C4, 52 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Initialize an audio synchronization state. */
+typedef struct AudioSync {
+    unsigned char *data;
+    int storage;
+    int fill;
+    int returned;
+    int unsynced;
+    int headerBytes;
+    int bodyBytes;
+} AudioSync;
 
-void fn_8022F2C4(void) {
+extern void *memset(void *dest, int value, unsigned long size);
+
+int fn_8022F2C4(AudioSync *sync) {
+    if (sync != 0) {
+        memset(sync, 0, sizeof(*sync));
+    }
+    return 0;
 }
