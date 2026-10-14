@@ -1,6 +1,52 @@
-/* fn_8020D984 (0x8020D984, 112 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct OSThread OSThread;
+typedef struct OSMutex OSMutex;
 
-void fn_8020D984(void) {
+typedef struct OSThreadQueue {
+    OSThread* head;
+    OSThread* tail;
+} OSThreadQueue;
+
+struct OSMutex {
+    OSThreadQueue queue;
+    OSThread* thread;
+    int count;
+    OSMutex* next;
+    OSMutex* prev;
+};
+
+typedef struct OSMutexQueue {
+    OSMutex* head;
+    OSMutex* tail;
+} OSMutexQueue;
+
+struct OSThread {
+    unsigned char pad0[0x2D0];
+    int priority;
+    int base;
+    unsigned char pad2D8[0x18];
+    OSMutex* mutex;
+    OSMutexQueue queueMutex;
+};
+
+extern void fn_802100F0(OSThreadQueue* queue);
+
+/* Release every mutex owned by the thread and wake its waiters. */
+void fn_8020D984(OSThread* thread)
+{
+    OSMutex* mutex;
+    OSMutex* next;
+
+    while (thread->queueMutex.head != 0) {
+        mutex = thread->queueMutex.head;
+        next = mutex->next;
+        if (next == 0) {
+            thread->queueMutex.tail = 0;
+        } else {
+            next->prev = 0;
+        }
+        thread->queueMutex.head = next;
+        mutex->count = 0;
+        mutex->thread = 0;
+        fn_802100F0(&mutex->queue);
+    }
 }
