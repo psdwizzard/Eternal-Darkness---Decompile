@@ -1,6 +1,13 @@
-/* fn_80236144 (0x80236144, 32 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+#include "src/game/types.h"
 
-void fn_80236144(void) {
+/* Return the number of bits needed to represent value. */
+s32 fn_80236144(u32 value) {
+    s32 bits = 0;
+
+    while (value != 0) {
+        value >>= 1;
+        bits++;
+    }
+
+    return bits;
 }

@@ -1,6 +1,25 @@
-/* fn_80224028 (0x80224028, 32 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned long u32;
+typedef long s32;
 
-void fn_80224028(void) {
+typedef struct {
+    void *base;
+    void *top;
+    u32 size;
+    u32 hiWatermark;
+    u32 loWatermark;
+    void *rdPtr;
+    void *wrPtr;
+    s32 count;
+    u8 bind_cpu;
+    u8 bind_gp;
+    u8 wrap;
+} GXFifoObj;
+
+void fn_80224048(GXFifoObj *fifo);
+
+/* GXSaveCPUFifo */
+void fn_80224028(GXFifoObj *fifo)
+{
+    fn_80224048(fifo);
 }
