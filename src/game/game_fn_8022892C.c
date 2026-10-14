@@ -1,6 +1,22 @@
-/* fn_8022892C (0x8022892C, 16 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* GXGetTexObjWidth: retrieve the texture width stored as width minus one. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
 
-void fn_8022892C(void) {
+typedef struct GXTexObjInt {
+    u32 mode0;
+    u32 mode1;
+    u32 image0;
+    u32 image3;
+    void *userData;
+    u32 fmt;
+    u32 tlutName;
+    u16 loadCnt;
+    u8 loadFmt;
+    u8 flags;
+} GXTexObjInt;
+
+u16 fn_8022892C(const GXTexObjInt *obj)
+{
+    return (obj->image0 & 0x3FF) + 1;
 }
