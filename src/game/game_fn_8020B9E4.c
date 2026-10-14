@@ -1,6 +1,16 @@
-/* fn_8020B9E4 (0x8020B9E4, 24 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Wait until the locked-cache DMA queue has at most count entries. */
+void fn_8020B9E4(register int count)
+{
+    register unsigned int status;
 
-void fn_8020B9E4(void) {
+    count += 1;
+waitForQueue:
+    /* ASM: mfspr reads HID2, a hardware register inaccessible to C. */
+    asm { mfspr status, 920 }
+    status = (status >> 24) & 0xF;
+    /* ASM: cmpw and bge use CR2, which C cannot select for its comparison. */
+    asm {
+        cmpw cr2, status, count
+        bge cr2, waitForQueue
+    }
 }

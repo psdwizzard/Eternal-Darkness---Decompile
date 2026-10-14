@@ -1,6 +1,9 @@
-/* __OSUnlockSramEx (0x8020EBB8, 36 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef int BOOL;
+typedef unsigned int u32;
 
-void __OSUnlockSramEx(void) {
+extern BOOL fn_8020E88C(BOOL commit, u32 offset);
+
+BOOL __OSUnlockSramEx(BOOL commit)
+{
+    return fn_8020E88C(commit, 0x14);
 }

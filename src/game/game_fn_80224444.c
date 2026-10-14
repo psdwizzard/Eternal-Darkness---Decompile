@@ -1,6 +1,19 @@
-/* fn_80224444 (0x80224444, 36 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
 
-void fn_80224444(void) {
+typedef struct {
+    u8 pad0[8];
+    u32 cpEnable;
+    u32 cpStatus;
+} GXData;
+
+extern GXData *gx;
+extern volatile u16 *__cpReg;
+
+/* __GXFifoReadDisable: stop the command processor reading the FIFO. */
+void fn_80224444(void)
+{
+    gx->cpEnable = gx->cpEnable & ~1UL;
+    __cpReg[1] = gx->cpEnable;
 }

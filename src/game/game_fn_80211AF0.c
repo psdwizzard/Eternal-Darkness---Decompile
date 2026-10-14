@@ -1,6 +1,24 @@
-/* fn_80211AF0 (0x80211AF0, 24 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct Vec3 {
+    float x, y, z;
+} Vec3;
 
-void fn_80211AF0(void) {
+/* Return the squared length of a vector. */
+float fn_80211AF0(register const Vec3 *v)
+{
+    register float xySquared, lengthSquared;
+
+    /* ASM: psq_l and ps_mul square x and y in paired-single lanes;
+     * scalar C cannot express the two independent lanes. */
+    asm {
+        psq_l xySquared, 0(v), 0, 0
+        ps_mul xySquared, xySquared, xySquared
+    }
+    lengthSquared = v->z;
+    /* ASM: ps_madd and ps_sum0 add z*z and fold in the y*y lane;
+     * scalar C cannot access or preserve the paired-single upper lane. */
+    asm {
+        ps_madd lengthSquared, lengthSquared, lengthSquared, xySquared
+        ps_sum0 lengthSquared, lengthSquared, xySquared, xySquared
+    }
+    return lengthSquared;
 }

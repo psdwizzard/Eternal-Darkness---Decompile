@@ -1,6 +1,16 @@
-/* fn_80212F98 (0x80212F98, 24 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned int u32;
+typedef void (*DVDLowCallback)(u32 intType);
 
-void fn_80212F98(void) {
+extern DVDLowCallback Callback_8064D9A0;
+
+volatile u32 __DIRegs[16] : 0xCC006000;
+
+/* Disable cover interrupts and detach the current DVD callback. */
+DVDLowCallback fn_80212F98(void) {
+    DVDLowCallback callback;
+
+    __DIRegs[1] = 0;
+    callback = Callback_8064D9A0;
+    Callback_8064D9A0 = 0;
+    return callback;
 }
