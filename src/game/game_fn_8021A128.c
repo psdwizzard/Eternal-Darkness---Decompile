@@ -1,6 +1,9 @@
-/* fn_8021A128 (0x8021A128, 24 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned short u16;
 
-void fn_8021A128(void) {
+volatile u16 __DSPRegs[] : 0xCC005000;
+
+/* AIStopDMA: disable audio DMA. */
+void fn_8021A128(void)
+{
+    __DSPRegs[0x1B] &= ~0x8000;
 }

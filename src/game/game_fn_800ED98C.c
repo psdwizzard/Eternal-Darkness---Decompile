@@ -1,17 +1,22 @@
 typedef unsigned char u8;
-typedef struct Color { u8 r, g, b, a; } Color;
+typedef unsigned long u32;
 
-extern Color lbl_8064F908;
-extern float lbl_8064F90C;
-extern void fn_801F3960(Color*);
+typedef struct DrawCommand {
+    u32 color;
+} DrawCommand;
 
-void fn_800ED98C(float alpha) {
-    Color color;
-    Color out;
-    float scale = lbl_8064F90C;
-    u8 a = (u8)(scale * alpha);
+extern u32 lbl_8064F908;
+extern const float lbl_8064F90C;
+extern void fn_801F3960(DrawCommand* command);
+
+void fn_800ED98C(float alpha)
+{
+    u32 color;
+    DrawCommand command;
+
+    alpha = lbl_8064F90C * alpha;
     color = lbl_8064F908;
-    color.a = a;
-    out = color;
-    fn_801F3960(&out);
+    ((u8*)&color)[3] = (u8)alpha;
+    command.color = color;
+    fn_801F3960(&command);
 }

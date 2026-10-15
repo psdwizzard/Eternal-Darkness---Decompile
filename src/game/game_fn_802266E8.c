@@ -1,6 +1,8 @@
-/* fn_802266E8 (0x802266E8, 20 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned short u16;
 
-void fn_802266E8(void) {
+extern volatile u16 *__peReg;
+
+void fn_802266E8(int mode)
+{
+    __peReg[4] = (mode & ~4U) | 4U;
 }
