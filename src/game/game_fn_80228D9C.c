@@ -1,6 +1,21 @@
-/* fn_80228D9C (0x80228D9C, 72 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* Invalidate both texture cache banks. */
+typedef unsigned char u8;
+typedef unsigned long u32;
 
-void fn_80228D9C(void) {
+typedef union GXWGPipe {
+    u8 byte;
+    u32 word;
+} GXWGPipe;
+
+extern volatile GXWGPipe GXWGFifo : 0xCC008000;
+extern void __GXFlushTextureState(void);
+
+void fn_80228D9C(void)
+{
+    __GXFlushTextureState();
+    GXWGFifo.byte = 0x61;
+    GXWGFifo.word = 0x66001000;
+    GXWGFifo.byte = 0x61;
+    GXWGFifo.word = 0x66001100;
+    __GXFlushTextureState();
 }

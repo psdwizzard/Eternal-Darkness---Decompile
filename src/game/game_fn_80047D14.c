@@ -1,6 +1,11 @@
-/* fn_80047D14 (0x80047D14, 88 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+extern void **fn_800C96C4(void);
+extern void **fn_800C96CC(void);
 
-void fn_80047D14(void) {
+void fn_80047D14(void **arg0, void **arg1)
+{
+    void **first = fn_800C96C4();
+    void **second = fn_800C96CC();
+
+    *arg0 = *first;
+    *arg1 = *second;
 }
