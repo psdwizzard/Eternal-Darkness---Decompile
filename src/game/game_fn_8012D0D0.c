@@ -57,7 +57,7 @@ typedef struct Object {
     RuntimeState* runtime;
 } Object;
 
-extern float lbl_805AADC8[][3];
+extern Vec3 lbl_805AADC8[3];
 extern int lbl_8064CF30;
 extern int lbl_8064CF34;
 
@@ -90,7 +90,6 @@ extern void fn_8012D964();
 void fn_8012D0D0(Object* object)
 {
     int idle;
-    Vec3* debug_vectors = (Vec3*)lbl_805AADC8;
     Entry* entry;
     RuntimeState* runtime;
     int i;
@@ -99,6 +98,7 @@ void fn_8012D0D0(Object* object)
     u8 result;
     int start;
     int finish;
+    Vec3* debug_vectors = lbl_805AADC8;
 
     fn_80125ECC(object);
     for (i = 0; i < 18; i++) {
