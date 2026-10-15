@@ -38,14 +38,10 @@ DSError fn_800F4CC0(register void *dataArg, register u32 startArg,
     void *addr;
     TRKExceptionStatus tempExceptionStatus;
 
-    /* ASM: mr preserves the incoming arguments in retail order; C assignments
-     * are coalesced and rescheduled among the exception-state loads. */
-    asm {
-        mr start, startArg
-        mr length, lengthArg
-        mr data, dataArg
-        mr read, readArg
-    }
+    start = startArg;
+    length = lengthArg;
+    data = dataArg;
+    read = readArg;
     tempExceptionStatus = gTRKExceptionStatus_8024A864;
 
     gTRKExceptionStatus_8024A864.exceptionDetected = 0;
