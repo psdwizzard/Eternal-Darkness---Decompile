@@ -3,7 +3,7 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 
 typedef struct Entry {
-    u32 unknown0;
+    int unknown0;
     u32 unknown4;
     u32 unknown8;
 } Entry;
@@ -15,7 +15,7 @@ typedef struct RangeState {
     Entry* current;
 } RangeState;
 
-extern int fn_801285C0(Entry*);
+extern int fn_801285C0(const int*);
 
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 
@@ -55,18 +55,18 @@ int fn_80127714(Entry* entries, u16 count, RangeState* state, int step,
     }
 
     while (status == 0) {
-        if ((step >= 0 && value <= fn_801285C0(current)) ||
-            (step < 0 && fn_801285C0(current) <= value)) {
+        if ((step >= 0 && value <= fn_801285C0(&current->unknown0)) ||
+            (step < 0 && fn_801285C0(&current->unknown0) <= value)) {
             status = 1;
             if (update == 0) {
                 state->previous = previous;
             }
             state->current = current;
             if (update != 0) {
-                state->span += ABS(fn_801285C0(current) - value);
+                state->span += ABS(fn_801285C0(&current->unknown0) - value);
             } else {
-                state->span = ABS(fn_801285C0(current) - fn_801285C0(previous));
-                state->distance = ABS(value - fn_801285C0(previous));
+                state->span = ABS(fn_801285C0(&current->unknown0) - fn_801285C0(&previous->unknown0));
+                state->distance = ABS(value - fn_801285C0(&previous->unknown0));
             }
             found = 1;
         } else if (current == last) {
@@ -76,9 +76,9 @@ int fn_80127714(Entry* entries, u16 count, RangeState* state, int step,
             }
             state->current = last;
             if (update != 0) {
-                state->span += ABS(fn_801285C0(current) - value);
+                state->span += ABS(fn_801285C0(&current->unknown0) - value);
             } else {
-                state->span = ABS(fn_801285C0(current) - fn_801285C0(previous));
+                state->span = ABS(fn_801285C0(&current->unknown0) - fn_801285C0(&previous->unknown0));
             }
             found = 1;
         } else {
