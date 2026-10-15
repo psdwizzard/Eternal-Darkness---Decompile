@@ -11,7 +11,18 @@ typedef struct OSContext {
     u32 gpr[32];
     u32 cr;
     u32 lr;
-    unsigned char rest[0x2C8 - 0x88];
+    u32 ctr;
+    u32 xer;
+    double fpr[32];
+    u32 fpscr_pad;
+    u32 fpscr;
+    u32 srr0;
+    u32 srr1;
+    u16 mode;
+    u16 state;
+    u32 gqr[8];
+    u32 psf_pad;
+    double psf[32];
 } OSContext;
 typedef struct OSMutexQueue {
     OSMutex *head;
@@ -40,7 +51,7 @@ struct OSThread {
 extern s32 OSDisableInterrupts(void);
 extern s32 OSRestoreInterrupts(s32);
 extern void fn_8020C120(OSContext *context, u32 pc, u32 sp);
-extern void fn_8020F96C(void);
+extern void fn_8020F96C(void *val);
 
 #define OS_THREAD_STATE_READY 1
 #define OS_THREAD_ATTR_DETACH 1
@@ -84,7 +95,10 @@ s32 fn_8020F84C(OSThread *thread, void *(*func)(void *), void *param, void *stac
     sp[0] = 0;
     sp[1] = 0;
 
-    fn_8020C120(&thread->context, (u32)func, (u32)sp);
+    {
+        OSContext *context = &thread->context;
+        fn_8020C120(context, (u32)func, (u32)sp);
+    }
 
     thread->context.lr = (u32)fn_8020F96C;
     thread->context.gpr[3] = (u32)param;

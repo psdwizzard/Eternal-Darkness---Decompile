@@ -22,22 +22,23 @@ typedef struct Mover {
 
 extern int fn_801A7DFC(void);
 extern int fn_8011EB04(void*);
-extern void fn_8011F114(Vec3*, void*);
-extern Vec3* fn_8011F130(void*);
-extern void fn_8013B24C(void*, void*, int, void*, int, short*, int*, int, int);
-extern void fn_8016B400(int, int, int);
-extern int fn_80201BD0(void*);
+extern void fn_8011F114(Vec3*, Vec3*);
+extern void* fn_8011F130(void*);
+extern void fn_8013B24C(TriggerObject*, Mover*, int, void*, int, short*, int*, int, int);
+extern void fn_8016B400(int, void*, void*);
+typedef struct Node80201BD0 Node80201BD0;
+extern Node80201BD0* fn_80201BD0(void*);
 extern void* lbl_8064C4E4;
 extern int lbl_8064D18C;
-extern float lbl_80650304;
+extern const float lbl_80650304;
 
 void fn_8013B538(void* object, TriggerObject* item, unsigned short count, Mover* mover)
 {
     int different;
     int mode;
     int i;
-    int limit;
     int skip;
+    int limit;
     int kind;
     short value;
     Vec3 saved;
@@ -63,13 +64,14 @@ void fn_8013B538(void* object, TriggerObject* item, unsigned short count, Mover*
 
             fn_8011F114(&pos, object);
             saved = pos;
-            value = 0;
             kind = 0;
+            value = 0;
             fn_8013B24C(item, mover, mode, object, skip, &value, &kind, 1, 0);
             if (value > 0) {
+                void* context = fn_80201BD0(object);
                 int phase = lbl_8064D18C;
 
-                fn_8016B400(value, (int)item, fn_80201BD0(object));
+                fn_8016B400(value, item, context);
                 if (phase != lbl_8064D18C) {
                     return;
                 }
