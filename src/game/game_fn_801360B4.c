@@ -22,8 +22,10 @@ typedef struct MeshInfo {
     MeshIndex* indices;
 } MeshInfo;
 
-extern MeshInfo* fn_8011F950(void* object);
-extern short* fn_8011FA6C(void* object, int index);
+typedef struct Object Object;
+
+extern void* fn_8011F950(void* object);
+extern void* fn_8011FA6C(Object* object, int index);
 extern void fn_801380E0(short* value, float* out);
 extern u8 fn_8017ABA0(const Vec3* left, const Vec3* right);
 extern int fn_8013E028(const Vec3* a, const Vec3* b, const Vec3* c,
@@ -50,8 +52,8 @@ int fn_801360B4(const Vec3* origin, const Vec3* direction, void* object,
     u16 group_index;
     int index;
 
-    info = fn_8011F950(object);
-    vertices = fn_8011FA6C(object, lbl_8064D738);
+    info = (MeshInfo*)fn_8011F950(object);
+    vertices = (short*)fn_8011FA6C((Object*)object, lbl_8064D738);
     descriptor = info->descriptors + descriptor_index * 0x114;
     group = info->groups + (*(u16*)(descriptor + 2) * 4);
     group_count = *(u16*)descriptor;

@@ -1,6 +1,6 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
-typedef unsigned int u32;
+typedef unsigned long u32;
 typedef signed char s8;
 
 typedef struct StripGroup {
@@ -39,26 +39,26 @@ u32 fn_80130A14(StripMesh* mesh, StripGroup* groups, int groupCount, s8* enabled
     StripGroup* end;
     int prevKey;
     int count;
-    u32 offset1;
-    u32 offset2;
-    StripVertex* src;
+    u32 firstDelta;
+    u32 secondDelta;
     volatile u32* fifo;
     int n;
     u8 key;
-    u32 a;
-    u32 b;
-    u32 q;
-    u16 ua;
-    u16 ub;
-    int w1;
-    int w2;
+    u32 positionWord;
+    u32 pairPosition;
+    u32 packedWord;
+    u16 texcoordA;
+    u16 texcoordB;
+    int stride;
+    int doubleStride;
 
-    w1 = width - 1;
-    w2 = w1 + w1;
+    /* Pack the alternating offsets into two 16-bit index fields. */
+    stride = width - 1;
+    doubleStride = stride + stride;
     table = lbl_805AAE40;
     end = groups + groupCount;
-    offset1 = (w1 << 16) | w2;
-    offset2 = (w2 << 16) | w1;
+    firstDelta = (stride << 16) | doubleStride;
+    secondDelta = (doubleStride << 16) | stride;
     size = 0;
     prevKey = -1;
     count = *entryCount;
@@ -68,94 +68,126 @@ u32 fn_80130A14(StripMesh* mesh, StripGroup* groups, int groupCount, s8* enabled
         if (*enabled == 0) {
             continue;
         }
-        key = groups->key;
-        n = groups->count;
-        src = &mesh->vertices[groups->index];
-        if (key != prevKey) {
-            entries[count].key = key;
-            if (count != 0) {
-                u32 pad;
-                u32 i;
+        {
+            StripVertex* src;
+            key = groups->key;
+            n = groups->count;
+            src = &mesh->vertices[groups->index];
+            /* Start a new display list when the group key changes. */
+            if (key != prevKey) {
+                entries[count].key = key;
+                if (count != 0) {
+                    u32 pad;
+                    u32 padBytes;
+                    u32 i;
 
-                pad = 32 - (size & 31);
-                if (pad != 32) {
-                    size += pad;
-                    for (i = 0; i < (pad & 3); i++) {
-                        *(volatile u8*)fifo = 0;
+                    pad = 32 - (size & 31);
+                    if (pad != 32) {
+                        padBytes = pad & 3;
+                        size += pad;
+                        for (i = 0; i < padBytes; i++) {
+                            *(volatile u8*)fifo = 0;
+                        }
+                        for (i = 0; i < (pad >> 2); i++) {
+                            *fifo = 0;
+                        }
                     }
-                    for (i = 0; i < (pad >> 2); i++) {
-                        *fifo = 0;
-                    }
+                    entries[count - 1].size = size - entries[count - 1].offset;
                 }
-                entries[count - 1].size = size - entries[count - 1].offset;
+                entries[count].offset = size;
+                count++;
+                prevKey = groups->key;
             }
-            entries[count].offset = size;
-            count++;
-            prevKey = groups->key;
+            *(volatile u8*)fifo = 0x99;
+            *(volatile u16*)fifo = n;
+            size += 3;
+            size += n * 10;
+            if (n & 1) {
+                positionWord = table[src[0].position];
+                texcoordA = src[0].texcoord;
+                src++;
+                positionWord = (positionWord << 16) | (positionWord & 0xFFFF);
+                *fifo = positionWord;
+                *fifo = positionWord + firstDelta;
+                *(volatile u16*)fifo = texcoordA;
+            }
+            /* Emit a two-vertex remainder before the four-vertex loop. */
+            if (n & 2) {
+                u32 pairWord;
+                positionWord = table[src[0].position];
+                texcoordA = src[0].texcoord;
+                pairPosition = table[src[1].position];
+                texcoordB = src[1].texcoord;
+                src += 2;
+                pairWord = (pairPosition << 16) | (pairPosition & 0xFFFF);
+                packedWord = pairWord + secondDelta;
+                positionWord = (positionWord << 16) | (positionWord & 0xFFFF);
+                *fifo = positionWord;
+                *fifo = positionWord + firstDelta;
+                *fifo = (texcoordA << 16) | pairPosition;
+                *fifo = (pairPosition << 16) | (packedWord & 0xFFFF);
+                *fifo = (packedWord & 0xFFFF0000) | texcoordB;
+            }
+            n >>= 2;
+            /* Four vertices are packed into ten 32-bit FIFO writes. */
+            if (n != 0) do {
+                u32 mixed;
+                u32 secondPosition;
+                u32 secondOffsetWord;
+                u32 firstOffsetWord;
+                positionWord = table[src[0].position];
+                texcoordA = src[0].texcoord;
+                secondPosition = table[src[1].position];
+                texcoordB = src[1].texcoord;
+                positionWord = (positionWord << 16) | (positionWord & 0xFFFF);
+                firstOffsetWord = positionWord + firstDelta;
+                mixed = (texcoordA << 16) | secondPosition;
+                *fifo = positionWord;
+                *fifo = firstOffsetWord;
+                secondOffsetWord = (secondPosition << 16) | (secondPosition & 0xFFFF);
+                secondOffsetWord += secondDelta;
+                *fifo = mixed;
+                *fifo = (secondPosition << 16) | (secondOffsetWord & 0xFFFF);
+                *fifo = (secondOffsetWord & 0xFFFF0000) | texcoordB;
+                {
+                    u16 thirdPosition;
+                    u16 fourthPosition;
+                    u32 thirdOffsetWord;
+                    u32 fourthOffsetWord;
+                    u16 thirdTexcoord;
+                    u32 fourthTexcoordWord;
+                    thirdPosition = table[src[2].position];
+                    thirdTexcoord = src[2].texcoord;
+                    fourthPosition = table[src[3].position];
+                    fourthTexcoordWord = src[3].texcoord;
+                    packedWord = (thirdPosition << 16) | (thirdPosition & 0xFFFF);
+                    thirdOffsetWord = packedWord + firstDelta;
+                    *fifo = packedWord;
+                    /* Keep the halfword joins as rotate-and-insert operations. */
+                    packedWord = __rlwimi(fourthPosition, fourthPosition, 16, 0, 15);
+                    packedWord += secondDelta;
+                    src += 4;
+                    *fifo = thirdOffsetWord;
+                    fourthTexcoordWord = __rlwimi(fourthTexcoordWord, packedWord, 0, 0, 15);
+                    *fifo = __rlwimi(fourthPosition, thirdTexcoord, 16, 0, 15);
+                    fourthOffsetWord = __rlwimi(fourthPosition << 16, packedWord, 0, 16, 31);
+                    *fifo = fourthOffsetWord;
+                    *fifo = fourthTexcoordWord;
+                }
+            } while (--n != 0);
         }
-        *(volatile u8*)fifo = 0x99;
-        *(volatile u16*)fifo = n;
-        size += 3;
-        size += n * 10;
-        if (n & 1) {
-            a = table[src[0].position];
-            ua = src[0].texcoord;
-            src++;
-            a = (a << 16) | (a & 0xFFFF);
-            *fifo = a;
-            *fifo = a + offset1;
-            *(volatile u16*)fifo = ua;
-        }
-        if (n & 2) {
-            a = table[src[0].position];
-            ua = src[0].texcoord;
-            b = table[src[1].position];
-            ub = src[1].texcoord;
-            src += 2;
-            a = (a << 16) | (a & 0xFFFF);
-            *fifo = a;
-            *fifo = a + offset1;
-            q = ((b << 16) | (b & 0xFFFF)) + offset2;
-            *fifo = (ua << 16) | b;
-            *fifo = (b << 16) | (q & 0xFFFF);
-            *fifo = (q & 0xFFFF0000) | ub;
-        }
-        n >>= 2;
-        if (n != 0) do {
-            a = table[src[0].position];
-            ua = src[0].texcoord;
-            b = table[src[1].position];
-            ub = src[1].texcoord;
-            a = (a << 16) | (a & 0xFFFF);
-            *fifo = a;
-            *fifo = a + offset1;
-            q = ((b << 16) | (b & 0xFFFF)) + offset2;
-            *fifo = (ua << 16) | b;
-            *fifo = (b << 16) | (q & 0xFFFF);
-            *fifo = (q & 0xFFFF0000) | ub;
-            a = table[src[2].position];
-            ua = src[2].texcoord;
-            b = table[src[3].position];
-            ub = src[3].texcoord;
-            src += 4;
-            a = (a << 16) | (a & 0xFFFF);
-            *fifo = a;
-            *fifo = a + offset1;
-            q = ((b << 16) | (b & 0xFFFF)) + offset2;
-            *fifo = (ua << 16) | b;
-            *fifo = (b << 16) | (q & 0xFFFF);
-            *fifo = (q & 0xFFFF0000) | ub;
-        } while (--n != 0);
     }
 
     if (size != 0) {
         u32 rest;
+        u32 restBytes;
         u32 j;
 
         rest = 32 - (size & 31);
         if (rest != 32) {
+            restBytes = rest & 3;
             size += rest;
-            for (j = 0; j < (rest & 3); j++) {
+            for (j = 0; j < restBytes; j++) {
                 *(volatile u8*)fifo = 0;
             }
             rest >>= 2;
