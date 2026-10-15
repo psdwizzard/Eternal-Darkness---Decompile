@@ -104,7 +104,7 @@ extern void fn_8011DD8C(int, int);
 extern int fn_8011F6A4(void *, int, int, int, void *, int);
 extern void fn_80120AD0(void *, const Vec3 *, u16, u32, float, float);
 extern void fn_80128F74(void *, u32);
-extern u16 fn_801290D0(void *);
+extern int fn_801290D0(void *);
 extern void fn_8012CBE8(u8 *, int, Vec3 *, Vec3 *, Vec3 *, int);
 extern void fn_8012CDF0(u8 *, int, FourWords, int);
 extern int fn_80144608(void *);
@@ -394,7 +394,9 @@ void fn_8007D94C(int screen)
         fn_8011DD8C(4, 0);
         fn_8011F6A4(lbl_8031CD84.model, 2, 15, -1, &result, 1);
         if (lbl_8031CBA0.positionInitialized == 0) {
-            lbl_8031CBA0.target = lbl_8031CBA0.position = result.position;
+            Vec3 found = result.position;
+            lbl_8031CBA0.position = found;
+            lbl_8031CBA0.target = found;
             lbl_8031CBA0.target.y -= lbl_8064EA10;
             lbl_8031CBA0.direction = vectors[2];
             fn_80211AAC(&lbl_8031CBA0.direction, &lbl_8031CBA0.direction);
@@ -479,16 +481,10 @@ void fn_8007D94C(int screen)
         ModelGroup *groups;
         fn_801E79A0(lbl_8064C4E0, 0x112);
         lbl_8031CD84.selectedGroup = 1;
-        lbl_8031CD84.groups[0].primary = 0;
-        lbl_8031CD84.groups[0].secondary = 0;
-        lbl_8031CD84.groups[1].primary = 0;
-        lbl_8031CD84.groups[1].secondary = 0;
-        lbl_8031CD84.groups[2].primary = 0;
-        lbl_8031CD84.groups[2].secondary = 0;
-        lbl_8031CD84.groups[3].primary = 0;
-        lbl_8031CD84.groups[3].secondary = 0;
-        lbl_8031CD84.groups[4].primary = 0;
-        lbl_8031CD84.groups[4].secondary = 0;
+        for (i = 0; i < 5; i++) {
+            lbl_8031CD84.groups[i].primary = 0;
+            lbl_8031CD84.groups[i].secondary = 0;
+        }
         lbl_8031CD84.groups[1].primary = fn_80201BC8(fn_80201814(fn_802019EC(0x8d9, lbl_8064D18C)));
         lbl_8031CD84.groups[2].secondary = fn_80201BC8(fn_80201814(fn_802019EC(0x8da, lbl_8064D18C)));
         lbl_8031CD84.groups[3].secondary = fn_80201BC8(fn_80201814(fn_802019EC(0x8db, lbl_8064D18C)));

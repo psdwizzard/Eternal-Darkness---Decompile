@@ -226,6 +226,7 @@ extern s32 lbl_80651AB0;
 /* Return one when the event is handled by this behavior state. */
 int fn_800D4324(void *object, int state, void *event, int *result)
 {
+    void *senderContext;
     Vec3 position;
     Vec3 targetPosition;
     Vec3 soundPosition;
@@ -235,7 +236,6 @@ int fn_800D4324(void *object, int state, void *event, int *result)
     s32 effectStart;
     s16 channel;
     register s32 targetObjectId;
-    register void *senderContext;
     Context *objectContext;
     u8 *definition;
     s32 objectId;
@@ -246,7 +246,7 @@ int fn_800D4324(void *object, int state, void *event, int *result)
     void *target;
     register void *runtime;
     Context *context;
-    register u8 *strings = lbl_80248AF0;
+    u8 *strings = lbl_80248AF0;
 
     kind = fn_80200C10(event);
     target = fn_80201B3C();

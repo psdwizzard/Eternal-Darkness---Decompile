@@ -65,7 +65,7 @@ extern int fn_80201B44();
 extern void fn_80201C48();
 extern int fn_80047304();
 extern void fn_80047258();
-extern void fn_801F49EC(Vec3*, float, float);
+extern void fn_801F49EC(Vec3, float, float);
 extern int fn_80038308();
 extern void fn_8020104C(int, int, int, int, float);
 extern int fn_800389E0();
@@ -93,7 +93,7 @@ extern void fn_8012B324();
 extern void fn_80201D34();
 extern void fn_80201D1C();
 extern void fn_801E8328();
-extern void fn_8012C62C();
+extern void fn_8012C62C(void*, int, Color, Color, Color, int);
 extern void fn_802006D4();
 extern void fn_800BE894();
 extern int fn_800AA8A0();
@@ -118,7 +118,7 @@ extern void fn_800AAB90();
 extern void fn_80179DB0();
 extern void fn_80181F5C();
 extern void fn_80181FD8(void);
-extern void* fn_80148008();
+extern void* fn_80148008(Vec3, Descriptor*, EffectDescriptor*, void (*)(void));
 extern unsigned int lbl_80651A44;
 extern unsigned short lbl_80651A48;
 extern const float lbl_8064EF58;
@@ -218,6 +218,8 @@ extern const float lbl_8064EFD0;
 
 int fn_800AAE28(void* obj, int mode, void* evt, int* out)
 {
+    int hi;
+    int lo;
     int type;
     ObjExtra* extra;
     void* target;
@@ -228,7 +230,7 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
     int owner;
     Vec3* pos;
 
-    type = fn_80200C10(evt);
+    type =fn_80200C10(evt);
     pos = fn_8011F130(lbl_8064C4E4);
     target = fn_80201BC8(obj);
     info = fn_80201B8C(obj);
@@ -240,8 +242,7 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
     tpos = fn_8011F130(target);
     fn_80201C48(r18val);
     if (fn_80047304() != 0) {
-        Vec3 v = *pos;
-        fn_801F49EC(&v, lbl_8064EFA4, lbl_8064B674);
+        fn_801F49EC(*pos, lbl_8064EFA4, lbl_8064B674);
     } else {
         fn_80047258(1);
     }
@@ -470,6 +471,7 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
                         fn_80006954(0x7d);
                         fn_8020104C(0xf2, owner, player, bonus | 0x80000000, lbl_8064EFB8);
                         if (scale < lbl_8064EFBC) {
+                            scale = scale;
                         } else {
                             scale = lbl_8064EFBC;
                         }
@@ -481,10 +483,8 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
                     fn_8020123C(0x35, owner, lbl_8064C98C, handle);
                     fn_801A7228(handle);
                     if (lbl_8064EF18 != scale) {
-                        Vec3 vec;
                         fn_800472B0(1);
-                        vec = *pos;
-                        fn_801F49EC(&vec, lbl_8064EFA4, lbl_8064EFC0);
+                        fn_801F49EC(*pos, lbl_8064EFA4, lbl_8064EFC0);
                         lbl_8064B674 = lbl_8064EFC0;
                         fn_80006954(fn_800F5C54(scale) + 5);
                         fn_8020104C(0xf2, owner, owner, 5, scale);
@@ -525,8 +525,8 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
                 short ang;
                 int fx;
                 p = *tpos;
-                v = lbl_80239778;
                 p.z += lbl_8064EF5C;
+                v = lbl_80239778;
                 fn_801D38BC(*lbl_8064C5A8, &col, &ang);
                 fn_80152404(&p, ang, 0xfa, 4, col);
                 fn_80211A90(&v, &v, (float)lbl_8064C95C);
@@ -581,14 +581,8 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
             effect->timer = effect->unk9C;
             fn_8011FA8C(target, 0, 0xc0);
             if (!effect->active) {
-                Color a;
-                Color b;
-                Color c;
                 effect->active = 1;
-                c = lbl_8064EF88;
-                b = lbl_8064EF84;
-                a = lbl_8064EF80;
-                fn_8012C62C(target, 0xf, &a, &b, &c, 4);
+                fn_8012C62C(target, 0xf, lbl_8064EF80, lbl_8064EF84, lbl_8064EF88, 4);
                 if (effect->unkA8 != -1 && !effect->dispatched) {
                     fn_8020123C(0x92, owner, owner, effect->unkA8 << 16);
                 }
@@ -598,15 +592,9 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
         if (type == 0x11) {
             fn_8011FA8C(target, 0xc0, 0);
             if (effect->active == 1) {
-                Color a;
-                Color b;
-                Color c;
                 effect->active = 0;
                 fn_8020123C(0x92, owner, owner, 0x29a);
-                c = lbl_80651A3C;
-                b = lbl_8064EF90;
-                a = lbl_8064EF8C;
-                fn_8012C62C(target, 0xf, &a, &b, &c, 4);
+                fn_8012C62C(target, 0xf, lbl_8064EF8C, lbl_8064EF90, lbl_80651A3C, 4);
             }
             return 1;
         }
@@ -632,13 +620,7 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
                     fn_8014F65C(tpos, lbl_8064EFC8, 0x64, ang, 0, col);
                 }
                 if (flags & 5) {
-                    Color a;
-                    Color b;
-                    Color c;
-                    c = lbl_80651A40;
-                    b = lbl_8064EF98;
-                    a = lbl_8064EF94;
-                    fn_8012C62C(target, 0xf, &a, &b, &c, 4);
+                    fn_8012C62C(target, 0xf, lbl_8064EF94, lbl_8064EF98, lbl_80651A40, 4);
                     fn_8011FA8C(target, 0xc0, 0);
                 }
             }
@@ -655,7 +637,6 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
                 curPos = fn_8011F130(lbl_8064C4E4);
                 switch (sub) {
                 case 0: {
-                    Vec3 v;
                     effect->timer = 0;
                     lbl_8064C974 = 3;
                     fn_8015E9EC(0xDBCAA0, lbl_8064C968, fn_800AD230());
@@ -664,8 +645,7 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
                     fn_800472B0(1);
                     fn_801A98F4(0x218, 0x3c);
                     fn_801A98F4(0x2a6, 0x64);
-                    v = *curPos;
-                    fn_801F49EC(&v, lbl_8064EFA4, lbl_8064EFCC);
+                    fn_801F49EC(*curPos, lbl_8064EFA4, lbl_8064EFCC);
                     lbl_8064B674 = lbl_8064EFCC;
                     fn_80006954(0x14);
                     fn_8020104C(0xf2, owner, owner, 2, lbl_8064EFD0);
@@ -673,7 +653,6 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
                 }
                 case 1: {
                     int first;
-                    Vec3 v;
                     effect->timer = 0;
                     lbl_8064C974 = 4;
                     first = fn_800AD230();
@@ -683,8 +662,7 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
                     fn_800472B0(1);
                     fn_801A98F4(0x218, 0x64);
                     fn_801A98F4(0x2a6, 0x64);
-                    v = *curPos;
-                    fn_801F49EC(&v, lbl_8064EFA4, lbl_8064EFCC);
+                    fn_801F49EC(*curPos, lbl_8064EFA4, lbl_8064EFCC);
                     lbl_8064B674 = lbl_8064EFCC;
                     fn_80006954(0x23);
                     fn_8020104C(0xf2, owner, owner, 3, lbl_8064EF64);
@@ -724,8 +702,6 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
             int shifted;
             int packed;
             unsigned int arg;
-            int hi;
-            int lo;
 
             arg = fn_80200C38(evt);
             lo = arg & 0xFFFF;
@@ -873,7 +849,6 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
         }
         if (type == 0xF1) {
             Descriptor direction;
-            Vec3 submitPos;
             Vec3 position;
             EffectDescriptor params;
             int idx;
@@ -887,8 +862,7 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
             params.unk03 = -20;
             params.unk18 = 0;
             params.unk04 = fn_801D3A24(*lbl_8064C5A8, 0x31);
-            submitPos = position;
-            fn_80148008(&submitPos, &direction, &params, fn_80181FD8);
+            fn_80148008(position, &direction, &params, fn_80181FD8);
             return 1;
         }
     } else if (mode == 1) {
@@ -1007,13 +981,7 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
             return 1;
         }
         if (type == 0x11) {
-            Color colA;
-            Color colB;
-            Color colC;
-            colC = lbl_80651A4C;
-            colB = lbl_8064EFA0;
-            colA = lbl_8064EF9C;
-            fn_8012C62C(target, 0xF, &colA, &colB, &colC, 4);
+            fn_8012C62C(target, 0xF, lbl_8064EF9C, lbl_8064EFA0, lbl_80651A4C, 4);
             fn_80201D34(obj, 0x15);
             fn_80201D1C(obj, 1);
             return 1;

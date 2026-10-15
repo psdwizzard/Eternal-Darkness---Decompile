@@ -217,6 +217,7 @@ extern int fn_800A1A84();
 
 /* Dispatch actor events for the current behavior state. */
 int fn_800D6A3C(GameObject *object, int state, Event *event, int *result) {
+    s32 senderId;
     u16 failedAttempts;
     Vec3 position;
     Vec3 targetPosition;
@@ -230,7 +231,6 @@ int fn_800D6A3C(GameObject *object, int state, Event *event, int *result) {
     s32 eventId;
     s32 targetObjectId;
     u8 volume;
-    register s32 senderId;
     s32 menuState;
     Context *objectContext;
     void *queue;
@@ -240,7 +240,7 @@ int fn_800D6A3C(GameObject *object, int state, Event *event, int *result) {
     u16 interruptFlags;
     s32 objectId;
     Actor *actor;
-    register unsigned char *strings = lbl_80248B78;
+    unsigned char *strings = lbl_80248B78;
     void *relation;
     void *target;
     s32 kind;

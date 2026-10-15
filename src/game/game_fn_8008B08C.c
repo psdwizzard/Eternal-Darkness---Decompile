@@ -210,10 +210,11 @@ int fn_8008B08C(void* object, int state, void* event, int* resultOut)
     ObjectInfo* info;
     int flags;
     int eventType;
+    int randomDelay;
     int stateCode = state;
 
-    eventType = fn_80200C10(event);
     strings = &lbl_80245188;
+    eventType = fn_80200C10(event);
     resource = fn_80201BC8(object);
     info = fn_80201B8C(object);
     action = info->action;
@@ -314,15 +315,11 @@ int fn_8008B08C(void* object, int state, void* event, int* resultOut)
             fn_8008A6F8(object, event);
             return 1;
         } else if (eventType == 0xED) {
-            flags = (int)fn_80200C38(event);
-            stateCode = fn_80200C28(event);
-            fn_8020123C(0xB, fn_80200C20(event), stateCode, flags);
+            fn_8020123C(0xB, fn_80200C20(event), fn_80200C28(event), (int)fn_80200C38(event));
             fn_801A7228(fn_80200C38(event));
             return 1;
         } else if (eventType == 0x3A) {
-            flags = (int)fn_80200C38(event);
-            stateCode = fn_80200C28(event);
-            fn_8020123C(0x27, fn_80200C20(event), stateCode, flags);
+            fn_8020123C(0x27, fn_80200C20(event), fn_80200C28(event), (int)fn_80200C38(event));
             fn_801A7228(fn_80200C38(event));
             return 1;
         } else if (eventType == 0xB) {
@@ -547,8 +544,6 @@ int fn_8008B08C(void* object, int state, void* event, int* resultOut)
             }
             return 1;
         } else if (eventType == 0x2) {
-            int randomDelay;
-
             randomDelay = fn_800FBFB0() & 0x3C;
             randomDelay += fn_800FBFB0() & 0x3C;
             action->searchTimer = randomDelay + 0xB4;
@@ -647,14 +642,14 @@ int fn_8008B08C(void* object, int state, void* event, int* resultOut)
         goto unhandled;
     } else if (stateCode == 0x3) {
         if (eventType == 3) {
-            void* target;
+            struct { void* handle; } target;
             void* targetObject;
 
             if (!(flags & mask)) {
                 fn_800359A0(object, 0);
             }
-            target = fn_80201C48(tracking);
-            if ((target != 0) && ((targetObject = fn_80201814((int)target)) != 0)) {
+            target.handle = fn_80201C48(tracking);
+            if ((target.handle != 0) && ((targetObject = fn_80201814((int)target.handle)) != 0)) {
                 int distance;
 
                 fn_802045AC(object, &targetPosition);
@@ -666,7 +661,7 @@ int fn_8008B08C(void* object, int state, void* event, int* resultOut)
                     }
                 } else {
                     fn_800CCC78(object, 0x1F4);
-                    if (fn_8008ABCC(object, fn_80201814((int)target), event) == 0) {
+                    if (fn_8008ABCC(object, fn_80201814((int)target.handle), event) == 0) {
                         if (fn_8012AFC4(resource) != 0) {
                             fn_80129928(resource, &targetPosition);
                         } else {

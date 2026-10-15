@@ -7,12 +7,12 @@ typedef unsigned char u8;
 typedef float f32;
 typedef unsigned long long u64;
 
-#define NULL ((void *)0)
+#define NULL 0
 
 typedef struct Vec3 {
-    s32 x;
-    s32 y;
-    s32 z;
+    f32 x;
+    f32 y;
+    f32 z;
 } Vec3;
 
 typedef struct OwnerState {
@@ -78,8 +78,9 @@ typedef struct GameState {
     s32 mode;
 } GameState;
 
-typedef struct Color {
-    u8 r, g, b, a;
+typedef union Color {
+    u8 channels[4];
+    u32 rgba;
 } Color;
 
 s32 fn_80035FB8(s32, void *, void *, void *, void *, void *);
@@ -163,9 +164,9 @@ s32 fn_801290D0(u32);
 void *fn_801294DC(u32, s32, s32, s32);
 void fn_8012B324(u32);
 void fn_8012B344(u32);
-double fn_8012B750(u32);
+f32 fn_8012B750(u32);
 void fn_8012B7A0(u32, f32);
-void fn_8012C62C(u32, s32, Color *, Color *, Color *, s32);
+void *fn_8012C62C(u32, s32, Color *, Color *, Color *, s32);
 void fn_8012F58C(u32, s32, s32, s32, s32, s32);
 s32 fn_8013017C(u32);
 void fn_801301B0(u32, s32, s32);
@@ -197,14 +198,14 @@ s32 fn_80201814(s32);
 s32 fn_80201B44(void);
 s32 fn_80201B54(s32);
 ContextData *fn_80201B8C(s32);
-s32 fn_80201B94(s32);
+void *fn_80201B94(s32);
 u32 fn_80201BC8(u32);
-s32 fn_80201C48(s32);
+s32 fn_80201C48(void *);
 void fn_80201D14(s32, s32);
 void fn_80201D1C(s32, s32);
 void fn_80201D2C(s32, s32);
 void fn_80201D34(s32, s32);
-void fn_80201DD8(s32, s32);
+void fn_80201DD8(void *, s32);
 s32 fn_80201EB8(s32);
 void fn_80204FDC(s32);
 
@@ -236,60 +237,45 @@ extern const f32 lbl_8064ED0C;
 extern const f32 lbl_8064ED10;
 extern Color lbl_806519E0;
 
-static inline void UpdateStruggle(s32 context, u32 runtime, ActorState *actor, u32 ctrlFlags) {
-    if (actor->cooldown >= 1) {
-        actor->cooldown = actor->cooldown - 1;
-    } else {
-        actor->cooldown = 0;
-    }
-    fn_8003DED0(context, runtime, actor);
-    if (ctrlFlags & 0x10) {
-        fn_8011FA8C(runtime, 0x10, 0);
-        if (++actor->struggle > 0x46) {
-            actor->stun = 4;
-            actor->struggle = 0;
-        }
-    } else if (actor->struggle != 0) {
-        if (actor->struggle - 1 < 0) {
-            actor->struggle = 0;
-        } else {
-            actor->struggle = actor->struggle - 1;
-        }
-    }
-    if (actor->stun > 0) {
-        actor->stun = actor->stun - 1;
-    } else {
-        actor->stun = 0;
-    }
-    if ((fn_8013017C(runtime) & 0x40) && fn_801305D4(runtime) == 0) {
-        fn_801301B0(runtime, 0x40, 0);
-    }
+
+static inline void DebugBreakpoint(void) {
+    /* ASM: nop preserves a retail debug breakpoint that an empty C statement removes. */
+    asm { nop }
 }
 
-s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
-    u32 ctrlFlags;
+typedef struct ColorCopy {
+    Color source;
+    Color value;
+} ColorCopy;
+
+static inline Color *PrepareColor(ColorCopy *dest, const Color *source) {
+    dest->source = *source;
+    dest->value = dest->source;
+    return &dest->value;
+}
+
+s32 fn_800973E0(register s32 context, s32 state, register s32 event, register s32 *result) {
     NameTable *names = &lbl_80245238;
-    s32 eventType;
-    u32 runtime;
     ContextData *data;
     OwnerState *ownerState;
-    ActorState *actor;
-    s32 handle;
-    s32 owner;
-    Vec3 pos;
     s32 frame;
-    s32 facing;
+    u32 ctrlFlags;
     s32 flags;
-    EffectData *effect;
-    void *task;
-    s32 anim;
-    s32 animFlags;
-    s32 value;
-    s32 sender;
-    s32 recipient;
-    s32 queued;
-    s32 sound;
-    s32 ready;
+    u32 runtime;
+    s32 facing;
+    s32 eventType;
+    void *handle;
+    ActorState *actor;
+    s32 owner;
+    struct {
+        s16 count;
+        ColorCopy finalA, finalB, finalC;
+        ColorCopy initialA, initialB, initialC;
+        f32 delta3, angle3;
+        f32 delta2, angle2;
+        f32 delta1, angle1;
+        Vec3 pos;
+    } temps;
 
     eventType = fn_80200C10(event);
     runtime = fn_80201BC8(context);
@@ -298,14 +284,44 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
     actor = data->actor;
     handle = fn_80201B94(context);
     owner = fn_80201B54(context);
-    fn_8011F114(&pos, runtime);
+    fn_8011F114(&temps.pos, runtime);
     frame = lbl_8064D5A8 + data->phase;
     facing = data->actor->facing;
     ctrlFlags = fn_8011FAEC(runtime);
     flags = fn_80036D5C(context);
 
     if (eventType == 3) {
-        UpdateStruggle(context, runtime, actor, ctrlFlags);
+        s32 count;
+        if (actor->cooldown >= 1) {
+            count = actor->cooldown - 1;
+        } else {
+            count = 0;
+        }
+        actor->cooldown = count;
+        fn_8003DED0(context, runtime, actor);
+        if (ctrlFlags & 0x10) {
+            fn_8011FA8C(runtime, 0x10, 0);
+            if (++actor->struggle > 0x46) {
+                actor->stun = 4;
+                actor->struggle = 0;
+            }
+        } else if (actor->struggle != 0) {
+            if (actor->struggle - 1 < 0) {
+                count = 0;
+            } else {
+                count = actor->struggle - 1;
+            }
+            actor->struggle = count;
+        }
+        if (actor->stun > 0) {
+            count = actor->stun - 1;
+        } else {
+            count = 0;
+        }
+        actor->stun = count;
+        if ((fn_8013017C(runtime) & 0x40) && fn_801305D4(runtime) == 0) {
+            fn_801301B0(runtime, 0x40, 0);
+        }
     }
 
     if (state == 0) {
@@ -348,6 +364,7 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0x82) {
+            s32 ready;
             u8 mode = fn_80200C38(event);
             ready = 0;
             if (mode == 2) {
@@ -387,15 +404,13 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0x3E) {
+            s32 value;
             if (fn_80036D5C(context) & 0x20000) {
-                Color colorA;
-                Color colorB;
-                Color colorC;
                 fn_801261F4(runtime);
-                colorA = lbl_8064ECF4;
-                colorB = lbl_8064ECF0;
-                colorC = lbl_8064ECEC;
-                fn_8012C62C(runtime, 0xF, &colorC, &colorB, &colorA, 0x12);
+                fn_8012C62C(runtime, 0xF,
+                PrepareColor(&temps.initialC, &lbl_8064ECEC),
+                PrepareColor(&temps.initialB, &lbl_8064ECF0),
+                PrepareColor(&temps.initialA, &lbl_8064ECF4), 0x12);
                 fn_8012F58C(runtime, 0xF, 0, 1, 0x1E, 8);
             }
             fn_800BD194(context, actor);
@@ -432,6 +447,7 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0xE6) {
+            s32 value;
             value = fn_80200C38(event);
             if (fn_801A7488() == -1) {
                 fn_80066888(runtime, value, lbl_8064ECA8, lbl_8064ECAC);
@@ -441,21 +457,15 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0x35) {
+            s32 value;
+            s32 sound;
             value = fn_80200C38(event);
             sound = fn_801A7488();
             if (sound == -1) {
                 fn_80066888(runtime, value, lbl_8064ECA8, lbl_8064ED00);
             } else {
-                switch (sound) {
-                default:
-                    if (ownerState->flags & 4) {
-                        break;
-                    }
-                case 0x44:
-                case 0xF:
-                case 0x10:
+                if (sound == 0x44 || sound == 0xF || sound == 0x10 || !(ownerState->flags & 4)) {
                     fn_80066754(context, event, result);
-                    break;
                 }
             }
             return 1;
@@ -501,6 +511,7 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0xF3) {
+            s32 value;
             value = fn_80200C38(event);
             fn_800EA0FC(context, actor, value, event, result);
             return 1;
@@ -530,10 +541,13 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 2) {
+            s32 anim;
+            s32 animFlags;
             anim = fn_80128EAC(runtime);
             animFlags = fn_801290D0(runtime);
             if ((animFlags & 4) && (anim == 3 || anim == 2)) {
-                fn_80128F74(runtime, animFlags & ~4);
+                animFlags &= ~4;
+                fn_80128F74(runtime, animFlags);
             }
             return 1;
         }
@@ -618,6 +632,7 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 5) {
+            void *task;
             if ((task = fn_801294DC(runtime, 0x91, 0x24, 8)) != NULL) {
                 fn_80128C28(task, fn_80204810, (owner << 8) | 6);
             } else {
@@ -644,6 +659,8 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
         }
     } else if (state == 0x20) {
         if (eventType == 5) {
+            s32 anim;
+            s32 animFlags;
             anim = fn_80128EAC(runtime);
             animFlags = fn_801290D0(runtime);
             if (fn_80128E30(runtime) != NULL && anim == 0xF && (animFlags & 1)) {
@@ -711,31 +728,35 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
         }
     } else if (state == 0x4F) {
         if (eventType == 3) {
-            f32 angle;
-            f32 delta;
+            EffectData *effect;
             f32 target;
             f32 magnitude;
             effect = fn_800935CC(0, NULL, actor->effect, 4);
             target =fn_80179F20(fn_80179FE4(effect->values, 1, effect->amount));
-            angle = fn_8012B750(runtime);
-            fn_8017A12C(&delta, angle, target);
-            magnitude = delta;
+            temps.angle1 = fn_8012B750(runtime);
+            fn_8017A12C(&temps.delta1, (double)temps.angle1, target);
+            magnitude = temps.delta1;
             if (magnitude < lbl_8064EC7C) {
                 magnitude = -magnitude;
             }
             if (magnitude > lbl_8064ED04) {
-                fn_8017A010(&angle, 0, target, lbl_8064ED08, lbl_8064ED04);
-                fn_8012B7A0(runtime, angle);
+                fn_8017A010(&temps.angle1, 0, target, lbl_8064ED08, lbl_8064ED04);
+                fn_8012B7A0(runtime, temps.angle1);
             }
             fn_80094DD0(context, runtime, event);
             return 1;
         }
         if (eventType == 5) {
+            s32 anim;
+            s32 animFlags;
+            s32 currentOwner;
             anim = fn_80128EAC(runtime);
             animFlags = fn_801290D0(runtime);
-            if (fn_80201EB8(context) == lbl_8064D18C) {
+            currentOwner = fn_80201EB8(context);
+            if (currentOwner == lbl_8064D18C) {
                 if (fn_80128E30(runtime) != NULL && anim == 0x8E && (animFlags & 1)) {
-                    fn_80128F74(runtime, animFlags & ~1);
+                    animFlags &= ~1;
+                    fn_80128F74(runtime, animFlags);
                 }
                 fn_80201D2C(context, 1);
                 fn_80201D14(context, 1);
@@ -776,9 +797,10 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 2) {
+            s32 anim;
             anim = fn_80128EAC(runtime);
             if (anim == 0x2F || anim == 0x9D || anim == 0x2E) {
-                ;
+                DebugBreakpoint();
             }
             ownerState->flags &= ~8;
             return 1;
@@ -805,6 +827,7 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 6) {
+            s32 anim;
             anim = fn_80128EAC(runtime);
             if (anim == 0x2F || anim == 0x9D || anim == 0x2E) {
                 fn_80201D2C(context, 5);
@@ -903,6 +926,7 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
         }
     } else if (state == 7) {
         if (eventType == 3) {
+            s32 anim;
             anim = fn_80128EAC(runtime);
             if (anim == 0x10 || anim == 0xF) {
                 fn_80094DD0(context, runtime, event);
@@ -922,6 +946,7 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0xA7) {
+            s32 anim;
             anim = fn_80128EAC(runtime);
             if ((anim == 0x10 || anim == 0xF) && result != NULL) {
                 *result = fn_802011D4(event) & 0xFFFFFFFF;
@@ -929,6 +954,7 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0x93) {
+            s32 anim;
             anim = fn_80128EAC(runtime);
             if ((anim == 0x10 || anim == 0xF) && result != NULL) {
                 *result = fn_802011D4(event) & 0xFFFFFFFF;
@@ -951,6 +977,7 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0xDB) {
+            void *task;
             if ((task = fn_801294DC(runtime, 0xA9, 0x25, 6)) != NULL) {
                 fn_80128C44(task, fn_80204810, (owner << 8) | 7);
             }
@@ -964,23 +991,25 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 3) {
-            f32 angle;
-            f32 delta;
+            EffectData *effect;
+            void *task;
+            s32 anim;
+            s32 queued;
             f32 target;
             f32 magnitude;
             effect = fn_800935CC(0, NULL, actor->effect, 4);
             anim = fn_80128EAC(runtime);
             queued = 0;
             target = fn_80179F20(fn_80179FE4(effect->values, 1, effect->amount));
-            angle = fn_8012B750(runtime);
-            fn_8017A12C(&delta, angle, target);
-            magnitude = delta;
+            temps.angle2 = fn_8012B750(runtime);
+            fn_8017A12C(&temps.delta2, (double)temps.angle2, target);
+            magnitude = temps.delta2;
             if (magnitude < lbl_8064EC7C) {
                 magnitude = -magnitude;
             }
             if (magnitude > lbl_8064ED04) {
-                fn_8017A010(&angle, 0, target, lbl_8064ED08, lbl_8064ED04);
-                fn_8012B7A0(runtime, angle);
+                fn_8017A010(&temps.angle2, 0, target, lbl_8064ED08, lbl_8064ED04);
+                fn_8012B7A0(runtime, temps.angle2);
             }
             if (!(lbl_8064D5A8 & 0x3F) && fn_80092C30(context, ownerState) != 0) {
                 fn_8020123C(0xA7, owner, owner, 0);
@@ -1022,6 +1051,7 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0xDB) {
+            void *task;
             if ((task = fn_801294DC(runtime, 0x93, 0x25, 6)) != NULL) {
                 fn_80128C44(task, fn_80204810, (owner << 8) | 7);
             }
@@ -1035,23 +1065,25 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 3) {
-            f32 angle;
-            f32 delta;
+            EffectData *effect;
+            void *task;
+            s32 anim;
+            s32 queued;
             f32 target;
             f32 magnitude;
             effect = fn_800935CC(0, NULL, actor->effect, 4);
             anim = fn_80128EAC(runtime);
             queued = 0;
             target = fn_80179F20(fn_80179FE4(effect->values, 1, effect->amount));
-            angle = fn_8012B750(runtime);
-            fn_8017A12C(&delta, angle, target);
-            magnitude = delta;
+            temps.angle3 = fn_8012B750(runtime);
+            fn_8017A12C(&temps.delta3, (double)temps.angle3, target);
+            magnitude = temps.delta3;
             if (magnitude < lbl_8064EC7C) {
                 magnitude = -magnitude;
             }
             if (magnitude > lbl_8064ED04) {
-                fn_8017A010(&angle, 0, target, lbl_8064ED08, lbl_8064ED04);
-                fn_8012B7A0(runtime, angle);
+                fn_8017A010(&temps.angle3, 0, target, lbl_8064ED08, lbl_8064ED04);
+                fn_8012B7A0(runtime, temps.angle3);
             }
             if (!(lbl_8064D5A8 & 0x3F) && fn_80092C30(context, ownerState) != 0) {
                 fn_8020123C(0xA7, owner, owner, 0);
@@ -1090,6 +1122,7 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0xDB) {
+            void *task;
             if ((task = fn_801294DC(runtime, 0x94, 0x25, 6)) != NULL) {
                 fn_80128C44(task, fn_80204810, (owner << 8) | 7);
                 return 1;
@@ -1104,6 +1137,7 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 3) {
+            void *task;
             if (fn_80128EAC(runtime) == 0x94) {
                 data->owner->timer--;
                 if (fn_800931D0(context, owner, actor) != 0 || fn_80092C30(context, ownerState) != 0) {
@@ -1165,6 +1199,10 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0x80) {
+            s32 sound;
+            s32 sender;
+            s32 recipient;
+            void *task;
             sound = fn_801A717C();
             sender = fn_80201B54(context);
             recipient = fn_80201B44();
@@ -1222,7 +1260,8 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 6) {
-            fn_801AAE68(0xC1, 0x5A, 0, &pos, 2, 2, 0, lbl_8064D18C, lbl_8064ECC4, 0);
+            void *task;
+            fn_801AAE68(0xC1, 0x5A, 0, &temps.pos, 2, 2, 0, lbl_8064D18C, lbl_8064ECC4, 0);
             if ((task = fn_801294DC(runtime, 0x29, 0x20, 0xA)) != NULL) {
                 fn_80128C28(task, fn_80204810, (owner << 8) | 6);
                 fn_80128C44(task, fn_80204810, (owner << 8) | 7);
@@ -1305,11 +1344,10 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0x75) {
-            s16 count;
             fn_80036DA4(context, fn_80036D5C(context) | 0x100);
-            fn_80038308(fn_80201814(fn_80201B44()), 1, &count);
-            if (count > 5) {
-                fn_800CC650(context, 0x2000, -1, count - 5);
+            fn_80038308(fn_80201814(fn_80201B44()), 1, &temps.count);
+            if (temps.count > 5) {
+                fn_800CC650(context, 0x2000, -1, temps.count - 5);
             }
             return 1;
         }
@@ -1339,6 +1377,8 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0x6C) {
+            void *task;
+            s32 value;
             s32 escaped;
             value = fn_80036D5C(context);
             if (actor->hits >= 8 && !(value & 0x100)) {
@@ -1440,6 +1480,7 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 3) {
+            s32 value;
             value = fn_80036D5C(context);
             if (!(lbl_8064D5A8 & 7) && !(value & 0x80)) {
                 fn_80077F90(runtime);
@@ -1556,15 +1597,13 @@ s32 fn_800973E0(s32 context, s32 state, s32 event, s32 *result) {
             return 1;
         }
         if (eventType == 0x11) {
-            Color colorA;
-            Color colorB;
-            Color colorC;
+            s32 value;
             fn_800EA3A0(context, actor);
             fn_801294DC(runtime, 0x28, 0x25, 0xA);
-            colorA = lbl_806519E0;
-            colorB = lbl_8064ECFC;
-            colorC = lbl_8064ECF8;
-            fn_8012C62C(runtime, 0xF, &colorC, &colorB, &colorA, 4);
+            fn_8012C62C(runtime, 0xF,
+                PrepareColor(&temps.finalC, &lbl_8064ECF8),
+                PrepareColor(&temps.finalB, &lbl_8064ECFC),
+                PrepareColor(&temps.finalA, &lbl_806519E0), 4);
             fn_80201D34(context, 0x15);
             fn_80201D1C(context, 1);
             return 1;
