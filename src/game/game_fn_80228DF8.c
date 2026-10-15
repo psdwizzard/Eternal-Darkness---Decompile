@@ -1,6 +1,20 @@
-/* fn_80228DF8 (0x80228DF8, 20 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef unsigned char u8;
+typedef unsigned long u32;
 
-void fn_80228DF8(void) {
+typedef struct GXTlutRegion GXTlutRegion;
+typedef GXTlutRegion *(*GXTlutRegionCallback)(u32 name);
+
+typedef struct GXData {
+    u8 pad0[0x414];
+    GXTlutRegionCallback tlutRegionCallback;
+} GXData;
+
+extern GXData *gx;
+
+/* Install the TLUT region callback and return the previous callback. */
+GXTlutRegionCallback fn_80228DF8(GXTlutRegionCallback callback)
+{
+    GXTlutRegionCallback previous = gx->tlutRegionCallback;
+    gx->tlutRegionCallback = callback;
+    return previous;
 }
