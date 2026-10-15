@@ -1,5 +1,3 @@
-/* The function body matches retail. The current compiler settings emit
- * GPR save/restore helpers in place of the retail stmw/lmw pair. */
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef signed short s16;

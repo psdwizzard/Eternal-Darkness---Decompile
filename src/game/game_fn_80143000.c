@@ -1,5 +1,3 @@
-/* The body matches retail; compiler-generated GPR save/restore helpers
- * remain in place of the retail stmw/lmw instructions. */
 #include "src/game/types.h"
 
 typedef struct Vec3 { float x, y, z; } Vec3;
