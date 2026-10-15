@@ -1,5 +1,7 @@
-extern void *fn_80156938();
-extern int fn_80156FF4(void *);
+typedef struct Object Object;
+
+extern void *fn_80156938(Object *);
+extern int fn_80156FF4(Object *);
 extern int fn_801800F8(void *);
 extern int fn_80180114(void *);
 extern int fn_8018E934(unsigned char *);
@@ -13,12 +15,10 @@ typedef struct InstanceList {
     void *instances[1];
 } InstanceList;
 
-int fn_80148650(void *object, void *unused, int enabled)
+int fn_80148650(Object *object, void *unused, int enabled)
 {
-    unsigned char *current;
-    int count;
-    unsigned short current_bit;
-    int bit;
+    unsigned char count;
+    unsigned short bit;
     int result;
     int i;
     InstanceList *list;
@@ -31,18 +31,16 @@ int fn_80148650(void *object, void *unused, int enabled)
     count = list->count;
     bit = 1;
     i = 0;
-    current = (unsigned char *)list;
-    for (; i < count; current += 4, i++) {
-        current_bit = bit;
-        if ((list->mask & current_bit) != 0) {
-            if (fn_801800F8(*(void **)(current + 0x88))) {
-                fn_8018E934(*(unsigned char **)(current + 0x88));
+    for (; i < count; i++) {
+        if ((list->mask & bit) != 0) {
+            if (fn_801800F8(list->instances[i])) {
+                fn_8018E934(list->instances[i]);
                 result = 2;
             }
-            if (fn_80180114(*(void **)(current + 0x88)))
-                list->mask &= ~current_bit;
+            if (fn_80180114(list->instances[i]))
+                list->mask &= ~bit;
         }
-        bit = (current_bit & 0x7FFF) << 1;
+        bit = bit << 1;
     }
 
     if (list->state == 1 || list->mask == 0) {
