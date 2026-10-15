@@ -113,7 +113,7 @@ extern const Color lbl_80651900;
 extern void* fn_801E8494(void);
 extern void* fn_801E849C(void*);
 extern s32 fn_801E84A4(void*);
-extern u32 fn_801E84AC(void*);
+extern void* fn_801E84AC(void*);
 extern void fn_801E8430(void*);
 extern void* fn_80201BC8(void*);
 extern void fn_8011F114(EventDesc*, void*);
@@ -198,21 +198,21 @@ extern void fn_801ACC94(s32);
 extern void fn_801B2380(s32);
 extern void fn_801AB154(void*);
 
-extern s32 fn_8002A590();
-extern s32 fn_8002A508();
-extern s32 fn_8002A6CC();
-extern s32 fn_8002AC60();
-extern s32 fn_8002AA18();
-extern s32 fn_8002A4C8();
-extern s32 fn_8002AB08();
-extern s32 fn_8002B624();
-extern s32 fn_8002B650();
-extern s32 fn_8002F428();
-extern s32 fn_801487AC();
+extern s32 fn_8002A590(void*);
+extern s32 fn_8002A508(void*);
+extern s32 fn_8002A6CC(void*);
+extern void fn_8002AC60(void);
+extern s32 fn_8002AA18(void*, void*, s32);
+extern void fn_8002A4C8(void*);
+extern s32 fn_8002AB08(void*, void*, s32);
+extern void fn_8002B624(void*);
+extern void fn_8002B650(void*);
+extern void fn_8002F428(void*, void*);
+extern void fn_801487AC(void*);
 
 void fn_80029358(void)
 {
-    u32 data;
+    void* data;
     s32 type;
     s32 loaded;
     void* next;
@@ -455,7 +455,7 @@ void fn_80029358(void)
         }
 
         case 24:
-            fn_8016B400((s16)data, 0, 0);
+            fn_8016B400((s16)(u32)data, 0, 0);
             break;
 
         case 4: {

@@ -86,9 +86,9 @@ static inline int ReadByte(StreamContext* context)
 static inline int GetCount(void* opaque, u32 total)
 {
     StreamContext* context = opaque;
+    int value = context->coder.value;
     int low = context->coder.low;
     int high = context->coder.high;
-    int value = context->coder.value;
     return (int)(total * (value - low + 1) - 1) / (int)(high - low + 1);
 }
 
@@ -127,8 +127,8 @@ static inline void DecodeInterval(StreamContext* context, int lower, int upper, 
 {
     u32 high = context->coder.high;
     u32 bottom = context->coder.low;
-    u32 value = context->coder.value;
     u32 bits = context->bits;
+    u32 value = context->coder.value;
     int range = high - bottom + 1;
     high = range * upper / total + bottom;
     high--;
