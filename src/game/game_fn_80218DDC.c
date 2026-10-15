@@ -53,9 +53,10 @@ BOOL fn_80218DDC(u32 mask)
     }
     fn_80209000(disableBits);
     if (lbl_8064C428 == 32) {
-        lbl_8064C428 = __cntlzw(lbl_8064DAB8);
+        disableBits = lbl_8064DAB8;
+        lbl_8064C428 = __cntlzw(disableBits);
         if (lbl_8064C428 != 32) {
-            lbl_8064DAB8 &= ~(0x80000000U >> lbl_8064C428);
+            lbl_8064DAB8 = disableBits & ~(0x80000000U >> lbl_8064C428);
             memset(&lbl_80641C20[lbl_8064C428], 0, sizeof(PadStatus));
             fn_80209858(lbl_8064C428, fn_8021897C);
         }
