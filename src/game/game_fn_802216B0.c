@@ -77,7 +77,6 @@ static inline s32 __CARDGetFileNo(CARDControl *card, const char *fileName, s32 *
     CARDDir *dir;
     CARDDir *ent;
     s32 fileNo;
-    s32 result;
 
     if (!card->attached) {
         return -3;
@@ -86,8 +85,7 @@ static inline s32 __CARDGetFileNo(CARDControl *card, const char *fileName, s32 *
     dir = fn_8021EF3C(card);
     for (fileNo = 0; fileNo < CARD_MAX_FILE; fileNo++) {
         ent = &dir[fileNo];
-        result = __CARDAccess(card, ent);
-        if (result < 0) {
+        if (__CARDAccess(card, ent) < 0) {
             continue;
         }
         if (fn_80221430(ent, fileName)) {
@@ -101,11 +99,11 @@ static inline s32 __CARDGetFileNo(CARDControl *card, const char *fileName, s32 *
 
 s32 fn_802216B0(s32 chan, const char *fileName, CARDFileInfo *fileInfo)
 {
-    s32 fileNo;
     CARDControl *card;
     CARDDir *dir;
     CARDDir *ent;
     s32 result;
+    s32 fileNo;
 
     fileInfo->chan = -1;
     result = fn_8021D2BC(chan, &card);
