@@ -1,6 +1,37 @@
-/* fn_80229CCC (0x80229CCC, 192 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+/* GXSetTevAlphaOp: configure a TEV stage's alpha operation. */
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
 
-void fn_80229CCC(void) {
+typedef struct GXData {
+    u16 reserved0;
+    u16 bpSentNot;
+    u8 pad4[0x170 - 4];
+    u32 tevAlphaEnv[16];
+} GXData;
+extern GXData *gx;
+
+typedef union GXWGPipe { u8 byte; u32 word; } GXWGPipe;
+extern volatile GXWGPipe GXWGFifo : 0xCC008000;
+
+#define SET_FIELD(reg, width, shift, value) \
+    ((reg) = ((reg) & ~(((1UL << (width)) - 1) << (shift))) | ((u32)(value) << (shift)))
+
+void fn_80229CCC(int stage, int op, int bias, int scale, int clamp, int outReg)
+{
+    u32 *reg = &gx->tevAlphaEnv[stage];
+
+    SET_FIELD(*reg, 1, 18, op & 1);
+    if (op <= 1) {
+        SET_FIELD(*reg, 2, 20, scale);
+        SET_FIELD(*reg, 2, 16, bias);
+    } else {
+        SET_FIELD(*reg, 2, 20, (op >> 1) & 3);
+        SET_FIELD(*reg, 2, 16, 3);
+    }
+    SET_FIELD(*reg, 1, 19, (u8)clamp);
+    SET_FIELD(*reg, 2, 22, outReg);
+    GXWGFifo.byte = 0x61;
+    GXWGFifo.word = *reg;
+    gx->bpSentNot = 0;
 }
