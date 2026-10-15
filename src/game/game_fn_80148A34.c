@@ -1,6 +1,30 @@
-/* fn_80148A34 (0x80148A34, 100 bytes): not decompiled yet.
- * Scaffolded by decomp-foundry; the build links the original asm until this
- * unit is marked Matching. See build/GEDE01/asm for the target code. */
+typedef struct Descriptor {
+    unsigned char pad[0x90];
+    void* create;
+    void* destroy;
+    void* update;
+    void* unknown;
+    void* attach;
+    void* set_value;
+    unsigned char pad2[0x14];
+    unsigned char enabled;
+} Descriptor;
 
-void fn_80148A34(void) {
+typedef struct InstanceList {
+    unsigned char count;
+    unsigned char pad[0x87];
+    void* instances[16];
+} InstanceList;
+
+extern void fn_801489B4(Descriptor* descriptor, InstanceList* list);
+extern void fn_80148D08(void* object, void* other);
+extern void fn_80184818(unsigned char* descriptor);
+
+void fn_80148A34(Descriptor* descriptor, InstanceList* list)
+{
+    fn_801489B4(descriptor, list);
+    descriptor->update = fn_80148D08;
+    descriptor->destroy = fn_80184818;
+    descriptor->enabled |= 8;
+    list->count = 1;
 }
