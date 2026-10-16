@@ -69,36 +69,21 @@ extern void fn_801396A4(int);
 extern u32 fn_8011FA8C(void*, u32, u32);
 extern const float lbl_806501A8;
 
-void fn_80129DE0(register Owner* input_owner, register Runtime* input_runtime,
-                 register int input_update, register int input_process_items)
+void fn_80129DE0(Owner* owner, Runtime* runtime, int update, int process_items)
 {
-    /* Local ordering preserves MWCC register allocation. */
     int item_count;
-    int items;
-    register int direction;
+    Item* items;
     int i;
+    int direction = 1;
     int count;
     int context;
-    register Object* object;
+    Object* object;
     Owner* current;
-    register Channel* channels;
-    register int update;
+    Channel* channels;
     Pair* pair;
-    register Runtime* runtime;
-    register Owner* owner;
-    register Definition* definition;
-    register int process_items;
+    Definition* definition;
     Channel* channel;
 
-    /* ASM: mr/li preserves the incoming argument-save order and initialization;
-     * MWCC schedules the equivalent C assignments around the pointer loads. */
-    asm {
-        mr runtime, input_runtime
-        mr owner, input_owner
-        mr update, input_update
-        mr process_items, input_process_items
-        li direction, 1
-    }
     definition = owner->definition;
     object = runtime->animation->object;
     fn_80134FF8(owner, object);
@@ -107,9 +92,9 @@ void fn_80129DE0(register Owner* input_owner, register Runtime* input_runtime,
         direction = -1;
     }
     if (process_items) {
-        fn_801292E0(owner, &item_count, &items);
+        fn_801292E0(owner, &item_count, (int*)&items);
         if (item_count > 0) {
-            fn_80129D54(runtime, item_count, (Item*)items);
+            fn_80129D54(runtime, item_count, items);
         }
     }
     if (!(owner->flags & 0x400)) {
