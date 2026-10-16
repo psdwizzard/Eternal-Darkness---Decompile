@@ -2,6 +2,14 @@
 
 typedef float f32;
 
+typedef struct Object Object;
+typedef struct Vec3 {
+    f32 x, y, z;
+} Vec3;
+
+/* Position type currently used by fn_800CE24C in its own translation unit. */
+struct Vec8012B8A8;
+
 #define NULL ((void *)0)
 
 typedef struct LinkedTable {
@@ -14,16 +22,17 @@ typedef struct LinkedInfo {
     LinkedTable *table;
 } LinkedInfo;
 
+/* Retail returns the result of fn_8006D3E4(0x20800, 0x14). */
 extern s32 fn_80071D84(void);
 extern void *fn_80201BC8(void *);
 extern int fn_80201B54(void *);
 extern int fn_8003565C(void *, int *);
 extern void *fn_80201B9C();
 extern void *fn_80204844(void *, s32);
-extern int fn_8006D444();
+extern void *fn_8006D444(void *);
 extern int fn_80038308(void *, int, s16 *);
-extern int fn_80049220();
-extern void *fn_80049304(void *, int);
+extern s32 fn_80049220(void *, s32);
+extern s32 fn_80049304(void *, s32);
 extern int fn_8006D344(void *, int, int);
 extern int fn_800CE3BC(int);
 extern void fn_8011FB44(void *, void *);
@@ -34,8 +43,8 @@ extern void *fn_80201814(int);
 extern int fn_80201B64(void *);
 extern int fn_80126070(void *);
 extern int fn_80201B5C(void *);
-extern void fn_8012FE10(void *, int, f32 *);
-extern void fn_800CE24C(void *, f32 *, int, int, int);
+extern void fn_8012FE10(Object *, int, Vec3 *);
+extern int fn_800CE24C(Object *, const struct Vec8012B8A8 *, int, u32, int);
 
 extern s32 lbl_8064B818;
 extern s32 lbl_8064CAA8;
@@ -43,7 +52,7 @@ extern s32 lbl_8064CAAC;
 extern s32 lbl_8064D5A8;
 
 void fn_800CDFC8(void *object) {
-    f32 pos[3];
+    Vec3 pos;
     int linkedId;
     s16 health;
     s16 sanity;
@@ -70,11 +79,11 @@ void fn_800CDFC8(void *object) {
     state = fn_8003565C(object, &linkedId);
     health = 0;
     sanity = 0;
-    ctx = (void *)fn_8006D444(fn_80204844(fn_80201B9C(), 0x20));
+    ctx = fn_8006D444(fn_80204844(fn_80201B9C(), 0x20));
     fn_80038308(object, 0, &health);
     fn_80038308(object, 3, &sanity);
     kind = fn_80049220(object, 1);
-    link = fn_80049304(object, kind);
+    link = (void *)fn_80049304(object, kind);
 
     if (fn_8006D344(ctx, 0x40800, 0) != 0) {
         state = 1;
@@ -119,8 +128,8 @@ void fn_800CDFC8(void *object) {
                     match = 1;
                 }
                 lbl_8064CAAC = match != 0;
-                fn_8012FE10(otherRuntime,lbl_8064CAAC, pos);
-                fn_800CE24C(runtime, pos, 200, 20, 17);
+                fn_8012FE10(otherRuntime, lbl_8064CAAC, &pos);
+                fn_800CE24C(runtime, (const struct Vec8012B8A8 *)&pos, 200, 20, 17);
             }
         }
     }

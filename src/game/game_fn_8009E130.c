@@ -48,7 +48,7 @@ typedef struct ModeState {
 extern Context *fn_8006ED3C(State *, int, int *);
 extern void fn_8006DEF8(State *, u32, u32, u32, u16);
 extern void *fn_80201814(int);
-extern void *fn_80201B8C(void *);
+extern void *fn_80201B8C(u8 *);
 extern void *fn_80036D38(void *);
 extern void fn_802020B4(void *, int);
 extern void fn_801A5C30(int);
@@ -65,7 +65,6 @@ int fn_8009E130(State *state)
     Context *context;
     Work *work;
     u8 slot;
-    u8 *entry;
     void *object;
     ObjectInfo *info;
 
@@ -80,13 +79,12 @@ int fn_8009E130(State *state)
         }
         context->counter++;
         if (context->counter >= 3) {
-            u8 count = state->slots[index].count;
+            int count = state->slots[index].count;
             context->flags |= 0x100;
             /* Select the next timer slot, wrapping after slot three. */
-            slot = 4 > (u8)(count + 1) ? count + 1 : 0;
-            entry = (u8 *)state + index * 0x2C;
-            entry += slot * 2;
-            *(u16 *)(entry + 0x60) = 180;
+            count++;
+            slot = (u8)count < 4 ? count : 0;
+            state->slots[index].timers[slot] = 180;
         }
         if (context->counter >= 4 && !(work->flags & 8)) {
             work->flags |= 8;

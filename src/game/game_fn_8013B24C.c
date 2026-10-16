@@ -39,14 +39,18 @@ typedef struct Mover {
     float limit;            /* 0x24 */
 } Mover;
 
-extern int fn_801A7E04(Vec3*, void*);
-extern int fn_801A7EA8(void*, void*);
+struct Object801A7E04;
+struct Object801A7EA8;
+struct ResourceSet;
+
+extern int fn_801A7E04(const Vec3*, struct Object801A7E04*);
+extern int fn_801A7EA8(const Vec3*, struct Object801A7EA8*);
 extern int fn_8013D88C(const Vec3*, const Vec3*, const FaceRef*, float, float,
-                       const Vec3*, int, Vec3*);
-extern int fn_8013B178(void*, void*, int, int, int);
-extern void fn_8011DFE8(void*);
+                       const Vec3*, const void*, Vec3*);
+extern int fn_8013B178(void*, unsigned char*, int, int, int);
+extern void fn_8011DFE8(struct ResourceSet*);
 extern void fn_80047674(void*, void*);
-extern void fn_800475E8(void*, void*);
+extern void fn_800475E8(void*, unsigned int);
 extern float lbl_80650300;
 extern float lbl_80650304;
 
@@ -69,22 +73,22 @@ void fn_8013B24C(TriggerObject* obj, Mover* mover, int mode, void* actor, int sk
             pos = mover->pos;
             pos.z += lbl_80650300;
             if (exact != 0) {
-                hit = fn_801A7EA8(mover, obj);
+                hit = fn_801A7EA8(&mover->prev, (struct Object801A7EA8*)obj);
             } else {
-                hit = fn_801A7E04(&pos, obj);
+                hit = fn_801A7E04(&pos, (struct Object801A7E04*)obj);
             }
         } else if (type == 2) {
             if (mode != 1 && lbl_80650304 != mover->limit) {
                 start = mover->prev;
                 start.z += lbl_80650300;
                 hit = fn_8013D88C(&start, &mover->delta, &shape->face0, mover->limit,
-                                  shape->offset0, &shape->normal0, shape->context0, &hitPos);
+                                  shape->offset0, &shape->normal0, (const void*)shape->context0, &hitPos);
                 if (hit != 0) {
                     *outValue = shape->value0;
                     obj->flags |= 4;
                 } else {
                     hit = fn_8013D88C(&start, &mover->delta, &shape->face1, mover->limit,
-                                      shape->offset1, &shape->normal1, shape->context1, &hitPos);
+                                      shape->offset1, &shape->normal1, (const void*)shape->context1, &hitPos);
                     if (hit != 0) {
                         *outValue = shape->value1;
                         obj->flags |= 8;
@@ -122,12 +126,12 @@ void fn_8013B24C(TriggerObject* obj, Mover* mover, int mode, void* actor, int sk
         }
     }
 
-    switch (fn_8013B178(actor, obj, hit, mode, update)) {
+    switch (fn_8013B178(actor, (unsigned char*)obj, hit, mode, update)) {
     case 0:
         break;
     case 2:
         if (mode == 0 && update != 0) {
-            fn_8011DFE8(obj);
+            fn_8011DFE8((struct ResourceSet*)obj);
         }
         if (val1 > 0) {
             *outValue = val1;
@@ -143,7 +147,7 @@ void fn_8013B24C(TriggerObject* obj, Mover* mover, int mode, void* actor, int sk
             *outKind = 2;
         }
         if (update != 0) {
-            fn_800475E8(actor, obj->target);
+            fn_800475E8(actor, (unsigned int)obj->target);
         }
         break;
     case 3:
