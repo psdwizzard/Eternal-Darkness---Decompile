@@ -6,16 +6,24 @@ typedef unsigned long long u64;
 typedef int BOOL;
 
 extern u16 lbl_80641AC8[];
-/* 64-bit "changed" register mask (one bit per VI register, MSB = reg 0).
- * symbols.txt splits its low word out as lbl_8064DA8C. */
-extern volatile u64 lbl_8064DA88;
-
-#define VI_BITMASK(index) (1ull << (63 - (index)))
-#define MARK_CHANGED(index) (lbl_8064DA88 |= VI_BITMASK(index))
+extern volatile u32 lbl_8064DA88, lbl_8064DA8C;
+/* These registers occupy the high half of the 64-bit changed-register mask.
+ * Read and preserve the low half when updating the mask. */
+#define MARK_CHANGED(index) do { \
+    changedHigh = lbl_8064DA88; \
+    changedLow = lbl_8064DA8C; \
+    updatedHigh = changedHigh; \
+    updatedHigh |= (0x80000000u >> (index)); \
+    lbl_8064DA8C = changedLow; \
+    lbl_8064DA88 = (u32)updatedHigh; \
+} while (0)
 
 /* VI setVerticalRegs */
 void fn_8021764C(u16 dispPosY, u16 dispSizeY, u8 equ, u16 acv, u16 prbOdd, u16 prbEven,
                  u16 psbOdd, u16 psbEven, BOOL black) {
+    u32 changedLow;
+    u32 changedHigh;
+    u64 updatedHigh;
     u16 *regs = lbl_80641AC8;
     u16 actualPrbOdd, actualPrbEven, actualPsbOdd, actualPsbEven;
     u16 actualAcv;
