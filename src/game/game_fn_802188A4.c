@@ -16,9 +16,9 @@ typedef struct PadStatus {
 
 typedef void (*SITypeCallback)(s32 chan, u32 type);
 
-extern s32 fn_80209140(s32 chan, u32 *data);          /* SIGetResponse */
+extern s32 fn_80209140(s32 chan, void *data);          /* SIGetResponse */
 extern void fn_80208ED4(s32 chan, u32 command);       /* SISetCommand */
-extern void fn_80208F64(u32 poll);                    /* SIEnablePolling */
+extern u32 fn_80208F64(u32 poll);                    /* SIEnablePolling */
 extern u32 fn_80209858(s32 chan, SITypeCallback callback);
 extern void fn_8021897C(s32 chan, u32 type);
 extern void *memset(void *dst, int value, unsigned long size);
@@ -33,28 +33,17 @@ extern u32 lbl_8064DAC0;          /* WaitingBits */
 static void PADEnable(s32 chan)
 {
     u32 cmd;
+    u32 analogMode;
     u32 chanBit;
     u32 data[2];
 
     chanBit = 0x80000000U >> chan;
     lbl_8064DAB4 |= chanBit;
     fn_80209140(chan, data);
-    cmd = lbl_8064C430 | 0x400000;
+    analogMode = lbl_8064C430;
+    cmd = analogMode | 0x400000;
     fn_80208ED4(chan, cmd);
     fn_80208F64(lbl_8064DAB4);
-}
-
-static void DoReset(void)
-{
-    u32 chanBit;
-
-    lbl_8064C428 = __cntlzw(lbl_8064DAB8);
-    if (lbl_8064C428 != 32) {
-        chanBit = 0x80000000U >> lbl_8064C428;
-        lbl_8064DAB8 &= ~chanBit;
-        memset(lbl_80641C20 + lbl_8064C428, 0, sizeof(PadStatus));
-        fn_80209858(lbl_8064C428, fn_8021897C);
-    }
 }
 
 void fn_802188A4(s32 unused, u32 type, void *context)
@@ -63,5 +52,18 @@ void fn_802188A4(s32 unused, u32 type, void *context)
         PADEnable(lbl_8064C428);
         lbl_8064DAC0 |= (0x80000000U >> lbl_8064C428);
     }
-    DoReset();
+    {
+        u32 chanBit;
+        s32 chan;
+        u32 bits = lbl_8064DAB8;
+
+        lbl_8064C428 = __cntlzw(bits);
+        chan = lbl_8064C428;
+        if (chan != 32) {
+            chanBit = 0x80000000U >> chan;
+            lbl_8064DAB8 = bits & ~chanBit;
+            memset(lbl_80641C20 + chan, 0, sizeof(PadStatus));
+            fn_80209858(lbl_8064C428, fn_8021897C);
+        }
+    }
 }

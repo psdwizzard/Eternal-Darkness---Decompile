@@ -46,7 +46,7 @@ typedef struct Model {
 
 extern unsigned int fn_8011FAEC(void *object);
 extern void fn_80210FB0(Matrix m);
-extern void fn_802110A8(const Matrix src, Matrix dst);
+extern unsigned int fn_802110A8(const Matrix src, Matrix dst);
 extern void fn_802114E0(Matrix m, const Quat *q);
 extern void fn_8012E3AC(void *track, Matrix m);
 extern const float lbl_80650188;
