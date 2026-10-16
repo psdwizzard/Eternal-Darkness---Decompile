@@ -9,14 +9,14 @@ extern int fn_80109628(void *state);
 extern void fn_801A8D38(s32);
 extern void fn_801A99B4(void);
 extern void fn_801E3AA4(s32);
-extern void fn_801E5430(s32, s32);
+extern void fn_801E5430(s16, s16);
 extern void fn_801E56AC(float scale, const char *format, ...);
 extern void fn_801E5FE4(void);
 extern void fn_801EB194(s32);
 extern void fn_801F3158(s32);
 extern void fn_801F3240(void);
 extern void fn_801F35A8(void);
-extern void fn_801F55A0(void);
+extern int fn_801F55A0(void);
 extern void fn_80226D28(s32);
 extern s32 fn_8023657C(void);
 extern s32 fn_802365D4(void);
@@ -27,7 +27,7 @@ typedef struct GameState {
 } GameState;
 
 extern char lbl_8024A620[];
-extern char *lbl_8064B82C;
+extern s32 lbl_8064B82C;
 extern volatile s32 lbl_8064C600;
 extern s32 lbl_8064CB64;
 extern s32 lbl_8064CC08;
@@ -44,7 +44,6 @@ int fn_800EE8F8(void) {
     s32 total;
     s32 secs;
     s32 mins;
-    s32 hours;
     s32 emins;
     s32 ehours;
 

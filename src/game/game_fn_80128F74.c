@@ -47,9 +47,9 @@ typedef struct Owner {
 } Owner;
 
 extern Runtime *fn_80128E30(Owner *owner);
-extern s32 fn_80128F40(void *object);
+extern void *fn_80128F40(Owner *owner);
 extern u16 fn_8012927C(Owner *owner);
-extern void fn_80127658(Owner *owner, s32 index, s32 mode, s32 arg);
+extern void fn_80127658(Owner *owner, s32 index, void *value, s32 arg);
 extern const f32 lbl_806501A8;
 
 s32 fn_80128F74(Owner *owner, u32 flags) {
@@ -57,9 +57,10 @@ s32 fn_80128F74(Owner *owner, u32 flags) {
     s32 newBit1;
     s32 oldBit2;
     s32 newBit2;
+    void *value;
+    s32 result;
     s32 oldBit1;
     u32 old;
-    s32 result;
 
     result = 0;
     rt = fn_80128E30(owner);
@@ -80,12 +81,12 @@ s32 fn_80128F74(Owner *owner, u32 flags) {
             if (fn_8012927C(owner) != 0xFFFF) {
                 count++;
             }
-            result = fn_80128F40(owner);
+            value = fn_80128F40(owner);
             for (i = 0; i < count; i++) {
                 if (entries[i].a != 0 || entries[i].b != 0) {
                     SlotState *state = &owner->slots[i].state;
                     state->dir = newBit1 ? -1 : 1;
-                    fn_80127658(owner, i, result, 0);
+                    fn_80127658(owner, i, value, 0);
                 }
             }
         }
