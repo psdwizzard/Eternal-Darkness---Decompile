@@ -36,11 +36,11 @@ extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL);
 extern void OSRegisterResetFunction(OSResetFunctionInfo*);
 extern void SIRefreshSamplingRate(void);
-extern void fn_80209000(u32);
+extern u32 fn_80209000(u32);
 extern u32 fn_80209858(s32, SITypeCallback);
 extern void fn_80219640(u32);
 extern void fn_8021897C(s32, u32);
-extern void* memset(void*, int, unsigned int);
+extern void* memset(void*, int, unsigned long);
 
 extern PadWork lbl_80641C10;
 extern OSResetFunctionInfo lbl_802FE9D8;
@@ -56,23 +56,13 @@ extern u32 lbl_8064DAC0;
 extern u32 lbl_8064DAC4;
 extern u32 lbl_8064DAC8;
 
-#define __OSWirelessPadFixMode (*(u16*)0x800030E0)
+/* Fixed low-memory SDK configuration word. */
+extern u16 __OSWirelessPadFixMode : 0x800030E0;
 
-static void DoReset(PadWork* work)
-{
-    lbl_8064C428 = __cntlzw(lbl_8064DAB8);
-    if (lbl_8064C428 == 32) {
-        return;
-    }
-    lbl_8064DAB8 &= ~(0x80000000 >> lbl_8064C428);
-    memset(&work->Origin[lbl_8064C428], 0, sizeof(PadStatus));
-    fn_80209858(lbl_8064C428, fn_8021897C);
-}
-
-static BOOL PADReset(PadWork* work, u32 mask)
+static inline BOOL PADReset(PadStatus* origin, u32 mask)
 {
     BOOL enabled;
-    u32 diableBits;
+    u32 disableBits;
 
     enabled = OSDisableInterrupts();
 
@@ -80,16 +70,22 @@ static BOOL PADReset(PadWork* work, u32 mask)
     lbl_8064DAC8 = 0;
     mask &= ~(lbl_8064DAC0 | lbl_8064DAC4);
     lbl_8064DAB8 |= mask;
-    diableBits = lbl_8064DAB8 & lbl_8064DAB4;
+    disableBits = lbl_8064DAB8 & lbl_8064DAB4;
     lbl_8064DAB4 &= ~mask;
 
     if (lbl_8064C434 == 4) {
         lbl_8064DABC |= mask;
     }
 
-    fn_80209000(diableBits);
+    fn_80209000(disableBits);
     if (lbl_8064C428 == 32) {
-        DoReset(work);
+        disableBits = lbl_8064DAB8;
+        lbl_8064C428 = __cntlzw(disableBits);
+        if (lbl_8064C428 != 32) {
+            lbl_8064DAB8 = disableBits & ~(0x80000000U >> lbl_8064C428);
+            memset(&origin[lbl_8064C428], 0, sizeof(PadStatus));
+            fn_80209858(lbl_8064C428, fn_8021897C);
+        }
     }
     OSRestoreInterrupts(enabled);
     return 1;
@@ -112,10 +108,10 @@ BOOL fn_80218FE0(void)
 
     if (lbl_8064D8D8 != 0) {
         OSTime time = OSGetTime();
+        time = ((time & 0xffff) + ((time >> 16) & 0xffff) +
+               ((time >> 32) & 0xffff) + ((time >> 48) & 0xffff)) & 0x3fff;
         lbl_8064DABC = 0xF0000000;
-        __OSWirelessPadFixMode = (u16)((((time) & 0xffff) + ((time >> 16) & 0xffff) +
-                                        ((time >> 32) & 0xffff) + ((time >> 48) & 0xffff)) &
-                                       0x3fffu);
+        __OSWirelessPadFixMode = (u16)time;
     }
 
     for (chan = 0; chan < 4; ++chan) {
@@ -126,5 +122,5 @@ BOOL fn_80218FE0(void)
     SIRefreshSamplingRate();
     OSRegisterResetFunction(&lbl_802FE9D8);
 
-    return PADReset(work, 0xF0000000);
+    return PADReset(work->Origin, 0xF0000000);
 }
