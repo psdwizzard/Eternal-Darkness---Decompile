@@ -1,5 +1,6 @@
 typedef signed int s32;
 typedef unsigned int u32;
+typedef unsigned long long u64;
 typedef unsigned short u16;
 typedef unsigned char u8;
 typedef float f32;
@@ -26,13 +27,13 @@ extern void *fn_80201C48(void *);
 extern void *fn_80201B54(void *);
 extern void *fn_80201814(void *);
 extern void *fn_80201BC8(void *);
-extern Vec fn_8011F114(void *);
+extern void fn_8011F114(Vec *destination, Vec *source);
 extern s32 fn_80074440(void *, void *, ActorInfo *, Vec *);
 extern s32 fn_80074864(void *, s32, s32 *, u16 *, u8 *);
 extern void *fn_801294DC(void *, s32, s32, s32);
-extern unsigned long long fn_8020123C();
+extern u64 fn_8020123C(int kind, int arg1, int arg2, int arg3);
 extern void *fn_801A717C(void);
-extern f32 fn_8012B7D0(void *, Vec);
+extern f32 fn_8012B7D0(const void *a, const void *b);
 extern f32 fn_8012B750(void *);
 extern void fn_8017A12C(f32 *, f32, f32);
 extern void fn_80129BA4(void *, f32, f32);
@@ -67,6 +68,11 @@ extern f32 lbl_8064E870;
 extern f32 lbl_8064E874;
 extern f32 lbl_8064E878;
 
+static inline f32 GetPositionAngle(const void *actor, Vec position)
+{
+    return fn_8012B7D0(actor, &position);
+}
+
 static inline Vec GetDefaultPosition(void)
 {
     return lbl_80239188;
@@ -95,10 +101,12 @@ s32 fn_80073C64(void *object, void *actor)
     void *handle;
     void *event;
     s32 result;
+    u32 eventStatus;
     f32 angle;
     f32 diff;
     Vec position;
     Vec offset;
+    Vec sourcePosition;
     s32 anim;
     f32 delta;
     u16 flags;
@@ -109,16 +117,19 @@ s32 fn_80073C64(void *object, void *actor)
     owner = fn_80201B54(object);
     found = fn_80201814(target);
     source = found ? fn_80201BC8(found) : 0;
-    position = source ? fn_8011F114(source) : GetDefaultPosition();
+    position = source ? (fn_8011F114(&sourcePosition, source), sourcePosition)
+                      : GetDefaultPosition();
     result = 0;
     if (found != 0 && source != 0) {
         if (CanStartAnimation(object, actor, source, context->actor, &offset,
                               &anim, &flags, &mode) != 0) {
             handle = fn_801294DC(actor, anim, 0x100, 6);
             if (handle != 0) {
-                if ((u32)(fn_8020123C(0x6B, owner, target, 0) & 0xFFFFFFFF)) {
+                /* The low word of the event result reports whether it was accepted. */
+                eventStatus = fn_8020123C(0x6B, (s32)owner, (s32)target, 0) & 0xFFFFFFFFULL;
+                if (eventStatus != 0) {
                     event = fn_801A717C();
-                    angle = fn_8012B7D0(actor, position);
+                    angle = GetPositionAngle(actor, position);
                     fn_8017A12C(&delta, fn_8012B750(actor), angle);
                     diff = delta;
                     if (diff < lbl_8064E870) {
