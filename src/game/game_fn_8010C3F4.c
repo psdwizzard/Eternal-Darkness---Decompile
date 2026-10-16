@@ -73,7 +73,8 @@ extern void *lbl_8064CDB4;
 extern int lbl_8064CDC8;
 extern float lbl_8064FE74;
 
-extern void fn_80027730(u32, int);
+/* Retail supplies an unused third argument to this two-argument callee. */
+extern void fn_80027730();
 extern void *fn_8004914C(void);
 extern void *fn_8004918C(void);
 extern int fn_80070A6C(u32);
@@ -152,7 +153,8 @@ void fn_8010C3F4(int owner, int mode)
     int otherCursor;
 
     row = fn_801E8D24(lists[1]) * 2;
-    cursor = fn_801E8D24(((void **)(base + 0x9A0))[0]) + row;
+    cursor = fn_801E8D24(((void **)(base + 0x9A0))[0]);
+    cursor += row;
     fn_80144C40();
     if ((lbl_80332140.flags & 1) && lbl_8064CCC4 > 0) {
         register Slot *currentBank;
@@ -201,10 +203,7 @@ void fn_8010C3F4(int owner, int mode)
             }
         } else {
             void *message = fn_801E6CA0(lbl_8064C504, 0, 6, 0, 1);
-            /* ASM: li clears retail's unused third argument register;
-             * the actual C callee only accepts two arguments. */
-            asm { li r5, 0 }
-            fn_80027730((u32)message, 0);
+            fn_80027730((u32)message, 0, 0);
         }
         return;
     }
@@ -276,7 +275,8 @@ void fn_8010C3F4(int owner, int mode)
          * address into the offsets of the subsequent list loads. */
         asm { mr otherLists, otherLists }
         row = fn_801E8D24(otherLists[4]) * 2;
-        otherCursor = fn_801E8D24(otherLists[3]) + row;
+        otherCursor = fn_801E8D24(otherLists[3]);
+        otherCursor += row;
         currentOffset = fn_801E8D3C(lists[1]) * 2;
         otherOffset = fn_801E8D3C(otherLists[4]) * 2;
         fn_801E5FB0(lbl_8064CCC8);
@@ -297,7 +297,12 @@ void fn_8010C3F4(int owner, int mode)
         }
         break;
     }
-    case 1:
+    case 1: {
+        u32 value;
+        int script;
+        int context;
+        Actor *actor;
+        register Actor **currentActor;
         fn_801A98F4(0x222, (void *)100);
         shadowBank = (Slot *)(base + 0x318);
         shadowActor = (Actor **)&shadowBank[cursor];
@@ -314,124 +319,133 @@ void fn_8010C3F4(int owner, int mode)
         } else {
             register Slot *bank = (Slot *)(base + 0x108);
 
-            currentActor = &bank[cursor].actor;
-            context = bank[cursor].owner;
-            script = fn_801578E8(bank[cursor].actor);
+            bank = &bank[cursor];
+            currentActor = &bank->actor;
+            context = bank->owner;
+            script = fn_801578E8(bank->actor);
             fn_8015790C(*currentActor);
             /* ASM: stw saves the sign-extended short already in r3;
              * MWCC inserts a redundant extsh for the C assignment. */
             asm { stw r3, lbl_8064CCA8(r13) }
         }
-        switch (fn_801E8D24(((void **)(base + 0x9A0))[2])) {
-        case 0: {
-            register Slot *bank = (Slot *)(base + 0x108);
-            /* ASM: mr preserves the bank base before this indexed test;
-             * MWCC combines the bank and field offsets in C. */
-            asm { mr bank, bank }
-            if (bank[cursor].actor != 0) {
-                fn_80155D9C(0);
-                fn_8016B400(script, (void *)context, 0);
-                lbl_8064CCD0 = 2;
-                fn_80155D9C(1);
-                lbl_8064CCD4 = 0;
-            }
-            break;
-        }
-        case 1:
-            if (fn_80070A6C(0x1000) == 0) {
-                if (*shadowActor != 0) {
-                    value = (*shadowActor)->primary->values[0];
-                } else {
-                    register Slot *bank = (Slot *)(base + 0x108);
-                    /* ASM: mr preserves bank-plus-index addressing;
-                     * MWCC otherwise folds both offsets into the load. */
-                    asm { mr bank, bank }
-                    value = bank[cursor].actor->primary->values[0];
+        {
+            register void **menuLists = (void **)(base + 0x9A0);
+            /* ASM: mr retains the list base; C folds it into the field load. */
+            asm { mr menuLists, menuLists }
+            switch (fn_801E8D24(menuLists[2])) {
+            case 0: {
+                register Slot *bank = (Slot *)(base + 0x108);
+                /* ASM: mr preserves the bank base before this indexed test;
+                 * MWCC combines the bank and field offsets in C. */
+                asm { mr bank, bank }
+                if (bank[cursor].actor != 0) {
+                    fn_80155D9C(0);
+                    fn_8016B400(script, (void *)context, 0);
+                    lbl_8064CCD0 = 2;
+                    fn_80155D9C(1);
+                    lbl_8064CCD4 = 0;
                 }
-                fn_80155D9C(0);
-                fn_800CC140(fn_80201B44(), context, 0, value, 0);
-                lbl_8064CD70 = 1;
-                fn_80155D9C(1);
-                fn_80117EF0();
-                lbl_8064CCC4 = fn_8010A32C(fn_801E8D3C(lists[1]) * 2, 0, 6);
-            } else {
-                void *message = fn_801E6CA0(lbl_8064C504, 0, 0x33, 0, 1);
-                /* ASM: li clears retail's unused third argument register;
-                 * the actual C callee only accepts two arguments. */
-                asm { li r5, 0 }
-                fn_80027730((u32)message, 0);
+                break;
             }
-            lbl_8064CCD4 = 0;
-            break;
-        case 2: {
-            register Slot *bank = (Slot *)(base + 0x108);
-            /* ASM: mr requires the bank base to remain distinct from
-             * the field offset, which MWCC folds in C. */
-            asm { mr bank, bank }
-            actor = bank[cursor].actor;
-            lbl_8064CCD4 = 3;
-            lbl_8064CCB0 = 0;
-            lbl_8064CCB8 = lbl_8064FE74;
-            if (fn_8015821C(actor) == 0x1F && fn_801E79FC(lbl_8064C4E0, 0x10A) == 0) {
-                lbl_8064CCDC = fn_801B05E8(0xC, 100, 6, 1, 0, 5, 0, 0);
-            } else if (fn_8015821C(actor) == 0x3D) {
-                lbl_8064CCDC = fn_801B05E8(0x44, 100, 6, 1, 0, 5, 0, 0);
-            }
-            fn_801E5FB0(lbl_8064CCC8);
-            lbl_8064CCC8 = 0;
-            break;
-        }
-        case 3:
-            currentOffset = fn_801E8D3C(((void **)(base + 0x9A0))[0]);
-            fn_801E8B24(((void **)(base + 0x9A0))[3], fn_801E8D34(((void **)(base + 0x9A0))[0]), currentOffset);
-            currentOffset = fn_801E8D3C(lists[1]);
-            fn_801E8B24(((void **)(base + 0x9A0))[4], fn_801E8D34(lists[1]), currentOffset);
-            lbl_8064CCD4 = 2;
-            fn_801E5FB0(lbl_8064CCC8);
-            lbl_8064CCC8 = 0;
-            break;
-        case 4: {
-            register Slot *bank = (Slot *)(base + 0x108);
-            /* ASM: mr preserves the bank base while MWCC folds that
-             * address into the indexed load in an ordinary C expression. */
-            asm { mr bank, bank }
-            actor = bank[cursor].actor;
-            mask = fn_801578A0(actor);
-            selection = fn_801578AC(actor);
-            do {
-                selection <<= 1;
-                if (selection == 0) {
-                    selection = 1;
-                }
-                if (mask & selection) {
-                    if (lbl_8064C4E4 != 0) {
-                        fn_8012B324(lbl_8064C4E4);
-                    }
-                    fn_80157AC4(actor, selection);
-                    if (fn_80157994(actor) != 0) {
-                        fn_80157C98(actor, 0xA0, 0);
-                    } else if (fn_802053B0(fn_80201B3C(), actor) != 0) {
-                        fn_80157C98(actor, 0x80, 0x20);
+            case 1:
+                if (fn_80070A6C(0x1000) == 0) {
+                    if (*shadowActor != 0) {
+                        value = (*shadowActor)->primary->values[0];
                     } else {
-                        fn_80157C98(actor, 0x20, 0x80);
+                        register Slot *bank = (Slot *)(base + 0x108);
+                        /* ASM: mr preserves bank-plus-index addressing;
+                         * MWCC otherwise folds both offsets into the load. */
+                        asm { mr bank, bank }
+                        value = bank[cursor].actor->primary->values[0];
                     }
-                    fn_8004918C();
-                    object = fn_8004914C();
-                    if (object != 0) {
-                        if ((u8)fn_800CC2D8(object, 0) != 0) {
-                            fn_8012C478(object, 0x10, 0);
-                        }
-                        if ((u8)fn_800CC2D8(object, 1) != 0) {
-                            fn_8012C478(object, 0x11, 0);
-                        }
-                    }
-                    break;
+                    fn_80155D9C(0);
+                    fn_800CC140(fn_80201B44(), context, 0, value, 0);
+                    lbl_8064CD70 = 1;
+                    fn_80155D9C(1);
+                    fn_80117EF0();
+                    lbl_8064CCC4 = fn_8010A32C(fn_801E8D3C(lists[1]) * 2, 0, 6);
+                } else {
+                    void *message = fn_801E6CA0(lbl_8064C504, 0, 0x33, 0, 1);
+                    /* ASM: li clears retail's unused third argument register;
+                     * the actual C callee only accepts two arguments. */
+                    asm { li r5, 0 }
+                    fn_80027730((u32)message, 0);
                 }
-            } while (mask != 0);
+                lbl_8064CCD4 = 0;
+                break;
+            case 2: {
+                Actor *actor;
+                register Slot *bank = (Slot *)(base + 0x108);
+                /* ASM: mr requires the bank base to remain distinct from
+                 * the field offset, which MWCC folds in C. */
+                asm { mr bank, bank }
+                actor = bank[cursor].actor;
+                lbl_8064CCD4 = 3;
+                lbl_8064CCB0 = 0;
+                lbl_8064CCB8 = lbl_8064FE74;
+                if (fn_8015821C(actor) == 0x1F && fn_801E79FC(lbl_8064C4E0, 0x10A) == 0) {
+                    lbl_8064CCDC = fn_801B05E8(0xC, 100, 6, 1, 0, 5, 0, 0);
+                } else if (fn_8015821C(actor) == 0x3D) {
+                    lbl_8064CCDC = fn_801B05E8(0x44, 100, 6, 1, 0, 5, 0, 0);
+                }
+                fn_801E5FB0(lbl_8064CCC8);
+                lbl_8064CCC8 = 0;
+                break;
+            }
+            case 3:
+                currentOffset = fn_801E8D3C(((void **)(base + 0x9A0))[0]);
+                fn_801E8B24(((void **)(base + 0x9A0))[3], fn_801E8D34(((void **)(base + 0x9A0))[0]), currentOffset);
+                currentOffset = fn_801E8D3C(lists[1]);
+                fn_801E8B24(((void **)(base + 0x9A0))[4], fn_801E8D34(lists[1]), currentOffset);
+                lbl_8064CCD4 = 2;
+                fn_801E5FB0(lbl_8064CCC8);
+                lbl_8064CCC8 = 0;
+                break;
+            case 4: {
+                Actor *actor;
+                register Slot *bank = (Slot *)(base + 0x108);
+                /* ASM: mr preserves the bank base while MWCC folds that
+                 * address into the indexed load in an ordinary C expression. */
+                asm { mr bank, bank }
+                actor = bank[cursor].actor;
+                mask = fn_801578A0(actor);
+                selection = fn_801578AC(actor);
+                do {
+                    selection <<= 1;
+                    if (selection == 0) {
+                        selection = 1;
+                    }
+                    if (mask & selection) {
+                        if (lbl_8064C4E4 != 0) {
+                            fn_8012B324(lbl_8064C4E4);
+                        }
+                        fn_80157AC4(actor, selection);
+                        if (fn_80157994(actor) != 0) {
+                            fn_80157C98(actor, 0xA0, 0);
+                        } else if (fn_802053B0(fn_80201B3C(), actor) != 0) {
+                            fn_80157C98(actor, 0x80, 0x20);
+                        } else {
+                            fn_80157C98(actor, 0x20, 0x80);
+                        }
+                        fn_8004918C();
+                        object = fn_8004914C();
+                        if (object != 0) {
+                            if ((u8)fn_800CC2D8(object, 0) != 0) {
+                                fn_8012C478(object, 0x10, 0);
+                            }
+                            if ((u8)fn_800CC2D8(object, 1) != 0) {
+                                fn_8012C478(object, 0x11, 0);
+                            }
+                        }
+                        break;
+                    }
+                } while (mask != 0);
+                break;
+            }
+            }
             break;
         }
-        }
-        break;
+    }
     case 0:
         if (lbl_8064CCC4 > 0) {
             register void **otherLists;
