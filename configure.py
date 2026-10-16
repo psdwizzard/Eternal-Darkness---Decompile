@@ -8665,7 +8665,7 @@ config.libs = [
     Object(NonMatching, "game/game_fn_80073368.c"),
     Object(Matching, "game/game_fn_80073728.c"),
     Object(Matching, "game/game_fn_8007381C.c", extra_cflags=["-use_lmw_stmw on"]),
-    Object(NonMatching, "game/game_fn_80073AE8.c"),
+    Object(Matching, "game/game_fn_80073AE8.c", extra_cflags=["-use_lmw_stmw on"]),
     Object(NonMatching, "game/game_fn_80073C64.c"),
     Object(Matching, "game/game_fn_80074040.c"),
     Object(Matching, "game/game_fn_800740A0.c"),
@@ -9671,7 +9671,7 @@ config.libs = [
             Object(Matching, "game/game_fn_800CDD84.c"),
             Object(Matching, "game/game_fn_800CDE80.c"),
             Object(Matching, "game/game_fn_800CDFC8.c", extra_cflags=["-use_lmw_stmw on"]),
-            Object(NonMatching, "game/game_fn_800CE24C.c"),
+            Object(NonMatching, "game/game_fn_800CE24C.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_800CE3BC.c"),
             # 96.36364% size-exact honest-C reconstruction; remaining
             # differences are an equivalent r4/r5 data/index allocation pair.
@@ -9963,7 +9963,7 @@ config.libs = [
             Object(Matching, "game/game_fn_800E8720.c"),
             Object(NonMatching, "game/game_fn_800E9254.c"),
             Object(NonMatching, "game/game_fn_800E87E0.c"),
-            Object(NonMatching, "game/game_fn_800E9C5C.c"),
+            Object(Matching, "game/game_fn_800E9C5C.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_800E9DE0.c"),
             Object(NonMatching, "game/game_fn_800E9E44.c"),
             Object(Matching, "game/game_fn_800E9F10.c"),
