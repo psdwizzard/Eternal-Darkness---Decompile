@@ -41,9 +41,9 @@ int fn_8010B194(int action)
     register Slot* shadow;
     register RangeControl* column;
     int row;
-    int index;
-    int offset;
-    Slot* slot;
+    register u32 selection;
+    register int offset;
+    register Slot* slot;
     Object* object;
     int value;
 
@@ -52,12 +52,16 @@ int fn_8010B194(int action)
     row = 2 * fn_801E8D24(lists[1]);
     /* ASM: lwz uses the retained table base; C rematerializes the global address. */
     asm { lwz column, 0x9A0(base) }
-    index = fn_801E8D24(column) + row;
-    /* ASM: addi retains the shadow-bank base before indexing; C combines the offsets. */
+    selection = fn_801E8D24(column);
+    selection += row;
+    /* ASM: addi retains the shadow-bank base; C folds it into the member offset. */
     asm { addi shadow, base, 0x318 }
-    offset = index * sizeof(Slot);
-    slot = (Slot*)((char*)shadow + offset);
+    offset = selection * sizeof(Slot);
+    /* ASM: add reuses the slot ordinal register for its address.
+     * C instead coalesces the ordinal with the byte displacement. */
+    asm { add selection, shadow, offset }
 
+    slot = (Slot*)selection;
     if (slot->object != 0) {
         object = slot->object;
         value = slot->value;
@@ -66,8 +70,11 @@ int fn_8010B194(int action)
         /* ASM: addi retains the current-bank base before indexing; C combines the offsets. */
         asm { addi current, base, 0x108 }
         value = slot->value;
-        current = (Slot*)((char*)current + offset);
-        object = current->object;
+        /* ASM: add reuses the selected-slot register after reading its value;
+         * C folds this address into indexed member addressing. */
+        asm { add selection, current, offset }
+        slot = (Slot*)selection;
+        object = slot->object;
     }
     switch (action) {
     case 0: {
@@ -89,7 +96,12 @@ int fn_8010B194(int action)
         return 1;
     case 3:
         if (fn_801E79FC(lbl_8064C4E0, 0x25A)) {
-            return fn_8015790C(object);
+            register int result;
+            fn_8015790C(object);
+            /* ASM: mr forwards the lha-extended return register; a C
+             * short-to-int conversion emits a redundant extsh. */
+            asm { mr result, r3 }
+            return result;
         }
         return 0;
     case 4:

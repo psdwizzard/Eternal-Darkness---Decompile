@@ -9,17 +9,12 @@ float fn_800F6264(long long value)
     register u32 lo;
     register u32 sign;
     register int count, low_count, mask;
-    register u32 shifted;
 
     hi = (u32)((u64)value >> 32);
-    /* ASM: clrrwi./beq keep sign extraction after the stack prologue and
-     * branch on its CR result; C adds a separate comparison here. */
-    asm {
-        clrrwi. sign, hi, 31
-        beq nonnegative
+    sign = hi & 0x80000000;
+    if (sign) {
+        value = -(u64)value;
     }
-    value = -(u64)value;
-nonnegative:
     hi = (u32)((u64)value >> 32);
     lo = (u32)value;
     /* ASM: or./li/beq test both words and initialize the exponent in r6
@@ -32,6 +27,7 @@ nonnegative:
     {
         count = __cntlzw(hi);
         low_count = __cntlzw(lo);
+        /* Include the low word's leading zeros when the high word is zero. */
         mask = (int)(((u32)count << 26) & 0xF8000000) >> 31;
         mask &= low_count;
         count += mask;
@@ -42,21 +38,19 @@ nonnegative:
             subic r9, count, 32
         }
         hi <<= count;
-        /* ASM: srw keeps the cross-word shift after the high-word shift;
-         * C reschedules the shift-count calculation past subic. */
+        /* ASM: srw/or merge the cross-word bits using the runtime scratch
+         * register; C allocates this short-lived temporary to r0. */
         asm {
-            srw shifted, lo, low_count
+            srw r10, lo, low_count
+            or hi, hi, r10
         }
-        hi |= shifted;
-        /* ASM: slw reads the over-word count in r9 and uses PowerPC's
-         * zero result for out-of-range counts, unlike a portable C shift. */
+        /* ASM: slw/or merge the over-word bits using PowerPC's zero
+         * result for out-of-range counts, unlike a portable C shift. */
         asm {
-            slw shifted, lo, r9
+            slw r10, lo, r9
+            or hi, hi, r10
         }
-        hi |= shifted;
-        /* ASM: slw completes normalization after merging the high word;
-         * C schedules this shift before the final merge. */
-        asm { slw lo, lo, count }
+        lo <<= count;
         /* ASM: subf updates the exponent in r6; C folds zero minus the
          * count into neg and releases the accumulator register. */
         asm { subf r6, count, r6 }
