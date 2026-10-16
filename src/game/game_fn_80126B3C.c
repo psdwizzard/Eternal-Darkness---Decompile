@@ -131,13 +131,13 @@ s32 fn_80126B3C(Owner* owner, s32 time)
     Track* track;
     s32 i;
     s32 result;
-    Animation* anim;
+    Track* tracks;
     Vec pos;
     Vec root;
     s32 count;
     TrackState* state;
     Definition* definition;
-    Track* tracks;
+    Animation* anim;
     s32 updated;
 
     channelResult = 0;
@@ -154,12 +154,12 @@ s32 fn_80126B3C(Owner* owner, s32 time)
     }
 
     for (i = 0; i < 32; i++) {
-        if (anim->channels[i].count != 0) {
+        if (anim->channels[(u32)i].count != 0) {
             if (owner->searchStates == 0) {
                 break;
             }
-            channelResult |= fn_80126A00(&anim->channels[i], &owner->searchStates[i], time, &value);
-            if (channelResult == 0 && !(owner->channelStates[i].flags & 8)) {
+            channelResult |= fn_80126A00(&anim->channels[(u32)i], &owner->searchStates[(u32)i], time, &value);
+            if (channelResult == 0 && !(owner->channelStates[(u32)i].flags & 8)) {
                 fn_80124664(owner, i, 0, value);
             }
         }

@@ -53,7 +53,7 @@ extern OSThreadQueue __DVDThreadQueue;
 volatile u32 __DIRegs[16] : 0xCC006000;
 
 void DVDInit(void) {
-    u32 magic;
+    register u32 magic;
 
     if (DVDInitialized_8064DA44) {
         return;
@@ -66,7 +66,7 @@ void DVDInit(void) {
     __DVDInitWA();
 
     bootInfo_8064DA08 = (OSBootInfo *)0x80000000;
-    currID_8064DA04 = &bootInfo_8064DA08->DVDDiskID;
+    currID_8064DA04 = (DVDDiskID *)0x80000000;
 
     __OSSetInterruptHandler(21, __DVDInterruptHandler);
     __OSUnmaskInterrupts(0x400);
@@ -75,7 +75,13 @@ void DVDInit(void) {
     __DIRegs[0] = 0x2A;
     __DIRegs[1] = 0;
 
-    magic = bootInfo_8064DA08->magic;
+    magic = (u32)bootInfo_8064DA08;
+    /* ASM: addi and lwz preserve the separate boot-info magic address
+     * calculation; MWCC folds the equivalent C member access into lwz. */
+    asm {
+        addi magic, magic, 0x20
+        lwz magic, 0(magic)
+    }
     if (magic == 0xE5207C22) {
         OSReport("app booted via JTAG\n");
         OSReport("load fst\n");
