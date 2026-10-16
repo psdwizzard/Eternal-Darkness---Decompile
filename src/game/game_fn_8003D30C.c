@@ -1,37 +1,33 @@
 typedef unsigned int u32;
 
-extern u32 fn_80128EE4(void *);
-extern void *fn_801A7498(void *);
-extern void *fn_801A7490(void *);
-extern void *fn_80201814(void *);
-extern u32 fn_8003BD48(void *, void *);
+extern unsigned char fn_80128EE4(void *);
+extern u32 fn_801A7498(void *);
+extern u32 fn_801A7490(void *);
+extern void *fn_80201814(int);
+extern int fn_8003BD48(void *, void *);
 extern void *fn_801A717C(void);
 extern void fn_8012B344(void *);
-extern void fn_801A7470(void *, int);
-extern void fn_801A74A0(void *, void *);
-extern void fn_801A74A8(void *, void *);
-extern unsigned long long fn_8020123C();
+extern void fn_801A7470(void *, u32);
+extern void fn_801A74A0(void *, u32);
+extern void fn_801A74A8(void *, u32);
+extern unsigned long long fn_8020123C(int, int, int, int);
 extern void fn_801A7228(void *);
 
-u32 fn_8003D30C(void *object, void *argument)
+u32 fn_8003D30C(register unsigned char *object, register unsigned char *argument)
 {
-    register void *resolved;
+    register unsigned char *resolved;
     register void *saved_object;
-    register void *first;
-    register void *second;
+    register u32 first;
+    register u32 second;
     register void *event;
     register u32 result;
     register void *saved_argument;
-    register u32 object_flags;
+    register unsigned char object_flags;
 
-    /* ASM: the four setup operations preserve distinct long-lived copies of
-       both parameters; C copy propagation otherwise coalesces the argument. */
-    asm {
-        mr saved_argument, r4
-        mr resolved, saved_argument
-        mr saved_object, r3
-        li result, 0
-    }
+    saved_argument = argument;
+    resolved = saved_argument;
+    saved_object = object;
+    result = 0;
     first = fn_801A7498(resolved);
     second = fn_801A7490(resolved);
     resolved = fn_80201814(first);
@@ -45,7 +41,7 @@ u32 fn_8003D30C(void *object, void *argument)
             fn_801A7470(event, 0xB);
             fn_801A74A0(event, first);
             fn_801A74A8(event, first);
-            fn_8020123C(0x35, first, first, event);
+            fn_8020123C(0x35, first, first, (int)event);
             fn_801A7228(event);
         }
     }

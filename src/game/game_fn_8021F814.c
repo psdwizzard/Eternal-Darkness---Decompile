@@ -28,45 +28,52 @@ typedef struct SaveCtx {
     SaveBlock* current;
 } SaveCtx;
 
+/* Sum the allocation-table words and their bitwise complements. */
+static inline void __CARDCheckSum(void *ptr, int length, u16 *checksum, u16 *checksumInv)
+{
+    u16 *p;
+    int i;
+
+    length /= sizeof(u16);
+    *checksum = *checksumInv = 0;
+    for (i = 0, p = ptr; i < length; i++, p++) {
+        *checksum += *p;
+        *checksumInv += ~*p;
+    }
+    if (*checksum == 0xFFFF) {
+        *checksum = 0;
+    }
+    if (*checksumInv == 0xFFFF) {
+        *checksumInv = 0;
+    }
+}
+
 s32 fn_8021F814(SaveCtx* ctx, s32* outIndex) {
     SaveBlock* blocks[2];
+    SaveBlock* blk;
+    u16* q;
+    u16 limit;
+    u16 sum;
+    u16 inv;
+    u16 k;
+    SaveBlock** next = blocks;
     s32 i;
     s32 errors = 0;
     s32 index = 0;
 
-    for (i = 0; i < 2; i++) {
-        SaveBlock* blk;
-        u16* p;
-        u16 sum;
-        u16 inv;
-        s32 n;
-
-        n = 0x2000 - 4;
-        blk = (SaveBlock*)(ctx->buffer + (i + 3) * 0x2000);
-        blocks[i] = blk;
-        p = (u16*)&blk->serial;
-        inv = 0;
-        sum = 0;
-        for (n /= 2; n > 0; n--) {
-            sum += *p;
-            inv += ~*p;
-            p++;
-        }
-        if (sum == 0xFFFF) {
-            sum = 0;
-        }
-        if (inv == 0xFFFF) {
-            inv = 0;
-        }
+    for (i = 0; i < 2; i++, next++) {
+        blk = *next = (SaveBlock*)(ctx->buffer + (i + 3) * 0x2000);
+        __CARDCheckSum(&blk->serial, 0x1FFC, &sum, &inv);
         if (blk->sum != sum || blk->invSum != inv) {
             ctx->current = NULL;
             index = i;
             errors++;
         } else {
-            u16* q = &blk->data[0];
-            u16 count = 0;
-            u16 k;
-            for (k = 5; k < ctx->numEntries; k++) {
+            u16 count;
+            limit = ctx->numEntries;
+            q = &blk->data[0];
+            count = 0;
+            for (k = 5; k < limit; k++) {
                 if (*q == 0) {
                     count++;
                 }
