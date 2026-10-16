@@ -26,7 +26,7 @@ typedef struct {
 
 extern u8 *gx;
 extern volatile u32 *__piReg;
-extern GXDisplayListState lbl_806426A0;
+GXDisplayListState lbl_806426A0;
 extern GXFifoObj *lbl_8064DBC8; /* OldCPUFifo */
 
 #define GX32(o) (*(u32 *)(gx + (o)))
@@ -40,7 +40,6 @@ void fn_80224048(GXFifoObj *fifo);   /* __GXSaveCPUFifoAux */
 void GXSetCPUFifo(GXFifoObj *fifo);
 
 u32 fn_8022B374(void) {
-    GXDisplayListState *dl = &lbl_806426A0;
     u32 ov;
     BOOL enabled;
     u32 bpMask;
@@ -52,18 +51,18 @@ u32 fn_8022B374(void) {
     }
     reg = __piReg[5];
     ov = (reg >> 26) & 1;
-    fn_80224048(&dl->fifo);
+    fn_80224048(&lbl_806426A0.fifo);
     GXSetCPUFifo(lbl_8064DBC8);
     if (GX8(0x4F1) != 0) {
         enabled = OSDisableInterrupts();
         bpMask = GX32(0x8);
-        memcpy(gx, dl->savedGXData, 0x4F8);
+        memcpy(gx, lbl_806426A0.savedGXData, 0x4F8);
         GX32(0x8) = bpMask;
         OSRestoreInterrupts(enabled);
     }
     GX8(0x4F0) = 0;
     if (!ov) {
-        return dl->fifo.count;
+        return lbl_806426A0.fifo.count;
     }
     return 0;
 }

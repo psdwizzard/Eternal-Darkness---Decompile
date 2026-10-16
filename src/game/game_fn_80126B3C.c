@@ -10,6 +10,30 @@ typedef struct Vec {
     f32 z;
 } Vec;
 
+typedef struct ShortCoord3 {
+    short x, y, z;
+} ShortCoord3;
+
+typedef struct PositionKey {
+    u32 flags;
+    ShortCoord3 value;
+} PositionKey;
+
+typedef struct VertexData {
+    char data[0xE];
+    signed char active;
+    char pad_F;
+} VertexData;
+
+typedef struct RotationKey {
+    u32 flags;
+    VertexData value;
+} RotationKey;
+
+typedef struct Vec4 {
+    f32 x, y, z, w;
+} Vec4;
+
 typedef struct Definition {
     u8 pad0[8];
     u16 limit;
@@ -56,13 +80,13 @@ typedef struct TrackState {
     u8 pad0[0xC];
     s32 posTime;
     s32 posLength;
-    void* posFrom;
-    void* posTo;
+    PositionKey* posFrom;
+    PositionKey* posTo;
     u8 pad1C[0xC];
     s32 rotTime;
     s32 rotLength;
-    void* rotFrom;
-    void* rotTo;
+    RotationKey* rotFrom;
+    RotationKey* rotTo;
     u8 pad38[0x10];
 } TrackState;
 
@@ -71,7 +95,7 @@ typedef struct Owner {
     Definition* definition;
     u8 pad40[0x154 - 0x40];
     Vec* positions;
-    u8* rotations;
+    Vec4* rotations;
     SearchState* searchStates;
     u8* trackStates;
     u8 pad164[0x29C - 0x164];
@@ -85,14 +109,14 @@ typedef struct Runtime {
     u32 flags;
 } Runtime;
 
-extern Animation* fn_80128E6C(Owner* owner);
-extern void fn_80134FF8(Owner* owner, Animation* anim);
+extern void* fn_80128E6C(void* owner);
+extern s32 fn_80134FF8(void* owner, Animation* anim);
 extern u16 fn_8012927C(Owner* owner);
 extern s32 fn_80126A00(EntryList* list, SearchState* state, s32 amount, f32* output);
-extern void fn_80124664(Owner* owner, s32 index, s32 arg, f32 value);
+extern void fn_80124664(Owner* owner, s32 index, u32 arg, f32 value);
 extern s32 fn_80126E80(Track* track, TrackState* state, s32 time);
-extern void fn_80127CE4(void* from, void* to, void* out, f32 t);
-extern void fn_80127B90(void* from, void* to, void* out, f32 t);
+extern void fn_80127CE4(PositionKey* from, PositionKey* to, Vec* out, f32 t);
+extern void fn_80127B90(RotationKey* from, RotationKey* to, Vec4* out, f32 t);
 extern Vec fn_801231D8(Owner* owner, s32 time);
 extern Runtime* fn_80128E30(Owner* owner);
 
@@ -100,21 +124,21 @@ extern f32 lbl_80650188;
 
 s32 fn_80126B3C(Owner* owner, s32 time)
 {
-    s32 channelResult;
-    s32 result;
-    s32 updated;
-    Definition* definition;
-    Animation* anim;
-    Track* track;
-    TrackState* state;
-    s32 count;
     u16 rootTrack;
-    s32 i;
+    f32 zero;
     f32 value;
+    s32 channelResult;
+    Track* track;
+    s32 i;
+    s32 result;
+    Animation* anim;
     Vec pos;
     Vec root;
+    s32 count;
+    TrackState* state;
+    Definition* definition;
     Track* tracks;
-    f32 zero;
+    s32 updated;
 
     channelResult = 0;
     result = 0;
@@ -160,7 +184,7 @@ s32 fn_80126B3C(Owner* owner, s32 time)
             }
             if (track->rotKeys != 0) {
                 if (result == 0) {
-                    fn_80127B90(state->rotFrom, state->rotTo, owner->rotations + i * 0x10,
+                    fn_80127B90(state->rotFrom, state->rotTo, &owner->rotations[i],
                                 (f32)state->rotTime / (f32)state->rotLength);
                 }
                 owner->trackFlags[i] |= 1;
