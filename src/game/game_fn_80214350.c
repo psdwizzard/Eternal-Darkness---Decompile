@@ -1,6 +1,5 @@
 typedef unsigned int u32;
 typedef int s32;
-typedef unsigned short u16;
 typedef unsigned char u8;
 
 typedef struct DVDDiskID {
@@ -32,30 +31,35 @@ extern DVDDiskID tmpBuffer_80641960;
 extern int fn_800F98EC(const void *, const void *, unsigned long); /* memcmp */
 extern void *memcpy(void *, const void *, unsigned long);
 extern void DCInvalidateRange(void *, u32);
-extern void DVDLowStopMotor(void (*)(s32));
-extern void fn_802144A0(s32);
-extern void fn_80214468(DVDCommandBlock *);
-extern void fn_80214434(DVDCommandBlock *);
+extern s32 DVDLowStopMotor(void (*)(u32));
+extern void fn_802144A0(u32);
+/* These state handlers ignore the command block passed by the dispatcher. */
+extern void fn_80214468();
+extern void fn_80214434();
 
 /* stateCheckID */
 void fn_80214350(void)
 {
-    DVDDiskID *buf = &tmpBuffer_80641960;
+    struct {
+        DVDDiskID *id;
+    } buffer;
+
+    buffer.id = &tmpBuffer_80641960;
 
     switch (CurrCommand_8064DA1C) {
     case 3:
-        if (fn_800F98EC(buf, executing_8064DA00->id, 0x1C) != 0) {
+        if (fn_800F98EC(buffer.id, executing_8064DA00->id, 0x1C) != 0) {
             DVDLowStopMotor(fn_802144A0);
             break;
         }
-        memcpy(currID_8064DA04, buf, sizeof(DVDDiskID));
+        memcpy(currID_8064DA04, buffer.id, sizeof(DVDDiskID));
         executing_8064DA00->state = 1;
-        DCInvalidateRange(buf, sizeof(DVDDiskID));
+        DCInvalidateRange(buffer.id, sizeof(DVDDiskID));
         lbl_8064DA48 = fn_80214468;
         fn_80214468(executing_8064DA00);
         break;
     default:
-        if (fn_800F98EC(buf, currID_8064DA04, sizeof(DVDDiskID)) != 0) {
+        if (fn_800F98EC(buffer.id, currID_8064DA04, sizeof(DVDDiskID)) != 0) {
             DVDLowStopMotor(fn_802144A0);
             break;
         }

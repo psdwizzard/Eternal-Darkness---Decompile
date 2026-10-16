@@ -7,8 +7,6 @@ typedef float f32;
 
 extern f32 lbl_80651688; /* 0.0f */
 extern f32 lbl_806516A0; /* 1.0f */
-extern double lbl_806516C0; /* 0.5 */
-extern double lbl_806516C8; /* 3.0 */
 extern const f32 lbl_806516D0; /* large distance */
 extern double __frsqrte(double);
 
@@ -26,13 +24,13 @@ static inline f32 sqrtf(f32 x)
         double guess = __frsqrte((double)x);
         double t;
         t = x * (guess * guess);
-        guess = lbl_806516C0 * guess * (lbl_806516C8 - t);
+        guess = 0.5 * guess * (3.0 - t);
         t = x * (guess * guess);
-        guess = lbl_806516C0 * guess * (lbl_806516C8 - t);
+        guess = 0.5 * guess * (3.0 - t);
         t = x * (guess * guess);
-        guess = lbl_806516C0 * guess * (lbl_806516C8 - t);
+        guess = 0.5 * guess * (3.0 - t);
         y = (f32)(x * guess);
-        x = y;
+        return y;
     }
     return x;
 }

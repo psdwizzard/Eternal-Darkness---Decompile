@@ -8,7 +8,21 @@ typedef int BOOL;
 /* __VIRetraceHandler */
 
 typedef struct OSContext {
-    u8 data[0x2C8];
+    u32 gpr[32];
+    u32 cr;
+    u32 lr;
+    u32 ctr;
+    u32 xer;
+    double fpr[32];
+    u32 fpscr_pad;
+    u32 fpscr;
+    u32 srr0;
+    u32 srr1;
+    u16 mode;
+    u16 state;
+    u32 gqr[8];
+    u32 psf_pad;
+    double psf[32];
 } OSContext;
 
 typedef struct OSThreadQueue {
@@ -36,10 +50,10 @@ extern void OSSetCurrentContext(OSContext *context);
 extern void SIRefreshSamplingRate(void);
 extern void fn_802100F0(OSThreadQueue *queue);
 extern u32 fn_8021818C(void);
-/* runtime 64-bit shift helpers (__shr2u / __shl2i); the u64 occupies the
- * hi/lo argument register pair */
+/* Runtime shift helpers. __shr2u receives the 64-bit value in r3/r4
+ * and the shift in r5; __shl2i receives the same pair as explicit words. */
 extern u64 fn_800F6218(u64 value, u32 shift);
-extern u64 fn_800F61F4(u64 value, u32 shift);
+extern u64 fn_800F61F4(u32 hi, u32 lo, u32 shift);
 
 extern VIState lbl_80641AC8;
 extern u32 lbl_8064DA60;
@@ -67,14 +81,22 @@ static inline s32 cntlzd(u64 bit) {
     return 32 + __cntlzw(lo);
 }
 
+/* The shadow bank follows 59 registers and one padding halfword (0x78 bytes).
+ * Keep the indexed base separate from the bank displacement. */
+static inline u16 readShadowRegister(u16 *indexedRegs) {
+    return indexedRegs[60];
+}
+
 static inline BOOL VISetRegs(VIState *vi) {
     int regIndex;
+    register u16 *indexedRegs;
 
     if (!(lbl_8064DA90 == 1 && fn_8021818C() == 0)) {
         while (lbl_8064DA98) {
             regIndex = cntlzd(lbl_8064DA98);
-            __VIRegs[regIndex] = *(&vi->shadowRegs[0] + regIndex);
-            lbl_8064DA98 &= ~fn_800F61F4(1, 63 - regIndex);
+            indexedRegs = (u16 *)vi + regIndex;
+            __VIRegs[regIndex] = readShadowRegister(indexedRegs);
+            lbl_8064DA98 &= ~fn_800F61F4(0, 1, 63 - regIndex);
         }
         lbl_8064DA90 = 0;
         lbl_8064DAA0 = vi->timing;
