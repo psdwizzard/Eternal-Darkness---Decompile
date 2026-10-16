@@ -26,7 +26,7 @@ typedef struct NodeTable {
 extern s16 lbl_802FC53C[];
 extern Color lbl_802FC5BC[];
 
-extern NodeTable* fn_8015C390(int);
+extern void* fn_8015C390(int);
 extern void fn_801ED468(int);
 extern void fn_80226D28(int);
 extern void fn_801ED118(void);

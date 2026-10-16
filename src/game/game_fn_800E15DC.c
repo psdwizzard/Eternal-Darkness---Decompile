@@ -7,29 +7,34 @@ typedef struct ObjectInfo {
     int *state;
 } ObjectInfo;
 
-extern int fn_80200C10(void *);
-extern int fn_80200C20(void *);
-extern int fn_80201B54();
-extern int fn_80201BC8();
-extern void *fn_80201B94();
-extern void *fn_80201B8C();
-extern int fn_80201B44();
+typedef struct Object80201D34 Object80201D34;
+typedef struct Object80201D1C Object80201D1C;
+typedef struct Object80201D2C Object80201D2C;
+typedef struct Object80201D14 Object80201D14;
+
+extern int fn_80200C10(int *);
+extern int fn_80200C20(int *);
+extern int fn_80201B54(int *);
+extern void *fn_80201BC8(void *);
+extern void *fn_80201B94(unsigned char *);
+extern void *fn_80201B8C(unsigned char *);
+extern int fn_80201B44(void);
 extern void fn_8020104C(int, int, int, int, float);
-extern void fn_8020123C(int, int, int, int);
-extern void fn_801E7974(void *, int);
-extern int fn_802066E0(int, int);
-extern void fn_8016ADF0(int, int, int);
-extern void fn_8016B400(int, int, int);
-extern void fn_801E8328(int, void *);
-extern void fn_80201D34(void *, int);
-extern void fn_80201D1C(void *, int);
-extern void fn_80201D2C(void *, int);
-extern void fn_80201D14(void *, int);
+extern unsigned long long fn_8020123C(int, int, int, int);
+extern void fn_801E7974(unsigned char *, unsigned int);
+extern int fn_802066E0(void *, unsigned int);
+extern void fn_8016ADF0(short, short, short);
+extern void fn_8016B400(int, void *, void *);
+extern int fn_801E8328(unsigned int, unsigned int);
+extern void fn_80201D34(Object80201D34 *, int);
+extern void fn_80201D1C(Object80201D1C *, unsigned char);
+extern void fn_80201D2C(Object80201D2C *, int);
+extern void fn_80201D14(Object80201D14 *, unsigned char);
 extern void fn_80201E78(void *, void *);
-extern void fn_801AC9F4(int, int, float *, int);
+extern int fn_801AC9F4(unsigned short, unsigned char, Vec3 *, unsigned char);
 extern int fn_800E1C9C(void *);
 extern void fn_800E1AA8(void *);
-extern int fn_8011FB4C(int);
+extern void *fn_8011FB4C(void *);
 extern int fn_800E1B40(void *, void *);
 extern void fn_800E19CC(void *);
 extern void fn_800E1DB0(void *);
@@ -41,7 +46,7 @@ int fn_800E15DC(void *object, int state, void *event, int *value)
 {
     int kind = fn_80200C10(event);
     int object_id = fn_80201B54(object);
-    int resource = fn_80201BC8(object);
+    void *resource = fn_80201BC8(object);
     int *data;
 
     fn_80201B94(object);
@@ -55,11 +60,11 @@ int fn_800E15DC(void *object, int state, void *event, int *value)
         if (kind == 0x39) {
             fn_801E7974(lbl_8064C4E0, 0xE1);
             if (lbl_8064D18C == 0x99 &&
-                fn_802066E0(fn_80201B44(), 0x36793917) != 0) {
+                fn_802066E0((void *)fn_80201B44(), 0x36793917) != 0) {
                 fn_8016ADF0(0x31B, 0, -1);
                 fn_8016B400(0x31B, 0, 0);
             }
-            fn_801E8328(2, object);
+            fn_801E8328(2, (unsigned int)object);
             fn_80201D34(object, 0);
             fn_80201D1C(object, 1);
             return 1;
@@ -69,7 +74,7 @@ int fn_800E15DC(void *object, int state, void *event, int *value)
             Vec3 position;
             fn_80201E78(&position, object);
             sound_position = position;
-            fn_801AC9F4(0x64, 0x64, (float *)&sound_position, 2);
+            fn_801AC9F4(0x64, 0x64, &sound_position, 2);
             return 1;
         }
         if (kind == 0xD5) {
@@ -86,7 +91,7 @@ int fn_800E15DC(void *object, int state, void *event, int *value)
             return 1;
         }
         if (kind == 3) {
-            if (lbl_8064D18C == fn_8011FB4C(resource)) {
+            if (lbl_8064D18C == (int)fn_8011FB4C(resource)) {
                 fn_800E1AA8(object);
                 fn_80201D2C(object, 1);
                 fn_80201D14(object, 1);
