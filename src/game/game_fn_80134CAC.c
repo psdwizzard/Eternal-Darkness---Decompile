@@ -27,10 +27,14 @@ extern u32 lbl_8064CFAC;
 
 void fn_80134CAC(u32* values, int group_count)
 {
+    u32 bytes = 0;
     u32 total = 0;
     int i;
     u32 offset;
     u32 record;
+    u32 j;
+    Group* group;
+    Slot* slot;
 
     lbl_8064CFA0 = 0;
     lbl_8064CF9C = 0;
@@ -38,6 +42,7 @@ void fn_80134CAC(u32* values, int group_count)
     fn_801358B4(1);
 
     for (i = 0; i < group_count; i++) {
+        bytes += values[i * 2] * values[i * 2 + 1];
         total += values[i * 2];
     }
     lbl_8064CFAC = total;
@@ -50,15 +55,13 @@ void fn_80134CAC(u32* values, int group_count)
     record = 0;
     lbl_8064CF94 = 0;
     for (i = 0; i < group_count; i++) {
-        Group* group = (Group*)((char*)lbl_8064CF90 + i * 8);
-        u32 j;
-        Slot* slot = &lbl_8064CF88[record];
+        group = &lbl_8064CF90[i];
         if (lbl_8064CF94 < group->width)
             lbl_8064CF94 = group->width;
         for (j = 0; j < group->count; j++) {
-            fn_80134FD8(slot, group->width, (char*)lbl_8064CF80 + offset);
-            slot++;
+            slot = &lbl_8064CF88[record];
             record++;
+            fn_80134FD8(slot, group->width, (char*)lbl_8064CF80 + offset);
             offset += group->width;
         }
     }

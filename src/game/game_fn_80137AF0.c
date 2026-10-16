@@ -53,13 +53,13 @@ extern GXColor lbl_802FC5BC[];
 extern f32 lbl_806502B0;
 
 extern void fn_800EB750(Vec3 *quad, Vec3 *normal, GXColor *color, s32 alpha);
-extern void fn_800EBA80(s32 mode, Vec3 *position, GXColor *color, s32 alpha, f32 size);
+extern void fn_800EBA80(s32 mode, Vec3 *position, GXColor *color, u8 alpha, f32 size);
 extern s32 fn_8011EB1C(void *);
-extern Vec3 *fn_8011F130(void *);
+extern void *fn_8011F130(void *);
 extern s32 fn_8011F6A4(void *, s32, s32, s32, QueryResult *, s32);
 extern f32 fn_8011F6F0(void *);
 extern f32 fn_8011F6F8(void *);
-extern Vec3 *fn_8011F770(void *);
+extern void *fn_8011F770(void *);
 extern u32 fn_8011FAEC(void *);
 extern void *fn_8011FE34(void *);
 extern void fn_80179B08(void *, Vec3 *);

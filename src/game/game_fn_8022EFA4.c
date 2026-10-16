@@ -10,9 +10,9 @@ extern const char lbl_80651790[8]; /* "OggS" */
 
 typedef struct ogg_page {
     unsigned char *header;
-    long header_len;
+    int header_len;
     unsigned char *body;
-    long body_len;
+    int body_len;
 } ogg_page;
 
 typedef struct ogg_sync_state {
@@ -27,16 +27,22 @@ typedef struct ogg_sync_state {
 
 extern void fn_8022F2F8(ogg_page *og); /* ogg_page_checksum_set */
 
-long fn_8022EFA4(ogg_sync_state *oy, ogg_page *og) {
-    unsigned char *page = oy->data + oy->returned;
+int fn_8022EFA4(register ogg_sync_state *oy, ogg_page *og) {
+    register unsigned char *page = oy->data + oy->returned;
     unsigned char *next;
-    long bytes = oy->fill - oy->returned;
+    register int bytes = oy->fill - oy->returned;
 
     if (oy->headerbytes == 0) {
         int headerbytes, i;
         if (bytes < 27) return 0;
 
-        if (fn_800F98EC(page, lbl_80651790, 4)) goto sync_fail;
+        {
+            register unsigned char *capture;
+            /* ASM: or (mr) preserves the retail copy encoding, which MWCC
+             * otherwise replaces with an addi with a zero offset. */
+            asm { or capture, page, page }
+            if (fn_800F98EC(capture, lbl_80651790, 4)) goto sync_fail;
+        }
 
         headerbytes = page[26] + 27;
         if (bytes < headerbytes) return 0;
@@ -51,13 +57,15 @@ long fn_8022EFA4(ogg_sync_state *oy, ogg_page *og) {
     {
         ogg_page log;
         char chksum[4];
+        int headerbytes;
 
         memcpy(chksum, page + 22, 4);
         memset(page + 22, 0, 4);
 
         log.header = page;
-        log.header_len = oy->headerbytes;
-        log.body = page + oy->headerbytes;
+        headerbytes = oy->headerbytes;
+        log.body = page + headerbytes;
+        log.header_len = headerbytes;
         log.body_len = oy->bodybytes;
         fn_8022F2F8(&log);
 
@@ -69,7 +77,7 @@ long fn_8022EFA4(ogg_sync_state *oy, ogg_page *og) {
 
     {
         unsigned char *page = oy->data + oy->returned;
-        long bytes;
+        int bytes;
 
         if (og) {
             og->header = page;
@@ -86,10 +94,23 @@ long fn_8022EFA4(ogg_sync_state *oy, ogg_page *og) {
     }
 
 sync_fail:
-    oy->headerbytes = 0;
-    oy->bodybytes = 0;
-
-    next = memchr(page + 1, 'O', bytes - 1);
+    {
+        register int zero;
+        register unsigned char *search;
+        register unsigned long count;
+        register int marker;
+        /* ASM: li, addi and stw retain the retail ordering of state resets
+         * and memchr arguments; MWCC schedules these C assignments differently. */
+        asm {
+            li zero, 0
+            addi search, page, 1
+            stw zero, 20(oy)
+            addi count, bytes, -1
+            li marker, 79
+            stw zero, 24(oy)
+        }
+        next = memchr(search, marker, count);
+    }
     if (!next)
         next = oy->data + oy->fill;
 

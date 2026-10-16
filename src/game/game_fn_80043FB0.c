@@ -65,10 +65,13 @@ extern void *fn_80201B94(u8 *);
 extern void *fn_80201B8C(u8 *);
 extern void fn_8017A244(const Vec3 *, Vec4 *, float);
 extern void *fn_8011FB4C(void *);
-extern int fn_8011EB04(void *);
+typedef struct Object Object;
+extern int fn_8011EB04(Object *);
 extern int fn_80201B5C(int *);
-extern void *fn_80201C50(void *);
-extern unsigned int fn_80201CDC(void *);
+typedef struct Object80201C50 Object80201C50;
+extern void *fn_80201C50(Object80201C50 *);
+typedef struct Object80201CDC Object80201CDC;
+extern unsigned int fn_80201CDC(Object80201CDC *);
 
 int fn_80043FB0(void *object, int *category, int *index)
 {
@@ -82,7 +85,6 @@ int fn_80043FB0(void *object, int *category, int *index)
     Vec4 transformedSecondary;
     Vec4 transformedTertiary;
     int i;
-    int offset;
     PrimaryRecord *primary;
     SecondaryRecord *secondary;
     TertiaryRecord *tertiary;
@@ -95,115 +97,108 @@ int fn_80043FB0(void *object, int *category, int *index)
     model = fn_80201B94((u8 *)object);
     info = (ObjectInfo *)fn_80201B8C((u8 *)object);
 
-    offset = 0;
     for (i = 0; i < lbl_8064D0BC->primaryCount; i++) {
-        primary = (PrimaryRecord *)((u8 *)lbl_8064D0BC->primary + offset);
+        primary = lbl_8064D0BC->primary + i;
         axis.x = -primary->axis.x;
         axis.y = -primary->axis.y;
         axis.z = -primary->axis.z;
         fn_8017A244(&axis, &transformedPrimary, primary->angle);
-        if (!((float)primary->x >= position->x - 0.1f)) goto nextPrimary;
-        if (!((float)primary->x <= 0.1f + position->x)) goto nextPrimary;
-        if (!((float)primary->y >= position->y - 0.1f)) goto nextPrimary;
-        if (!((float)primary->y <= 0.1f + position->y)) goto nextPrimary;
-        if (!((float)primary->z >= position->z - 0.1f)) goto nextPrimary;
-        if (!((float)primary->z <= 0.1f + position->z)) goto nextPrimary;
-        if (primary->group != (int)fn_8011FB4C(runtime)) goto nextPrimary;
-        if (!(transformedPrimary.x >= rotation->x - lbl_8064E330)) goto nextPrimary;
+        if (!((float)primary->x >= position->x - 0.1f)) continue;
+        if (!((float)primary->x <= 0.1f + position->x)) continue;
+        if (!((float)primary->y >= position->y - 0.1f)) continue;
+        if (!((float)primary->y <= 0.1f + position->y)) continue;
+        if (!((float)primary->z >= position->z - 0.1f)) continue;
+        if (!((float)primary->z <= 0.1f + position->z)) continue;
+        if (primary->group != (int)fn_8011FB4C(runtime)) continue;
+        if (!(transformedPrimary.x >= rotation->x - lbl_8064E330)) continue;
         {
             float upper = lbl_8064E330;
             upper += rotation->x;
-            if (!(transformedPrimary.x <= upper)) goto nextPrimary;
+            if (!(transformedPrimary.x <= upper)) continue;
         }
-        if (!(transformedPrimary.y >= rotation->y - lbl_8064E330)) goto nextPrimary;
+        if (!(transformedPrimary.y >= rotation->y - lbl_8064E330)) continue;
         {
             float upper = lbl_8064E330;
             upper += rotation->y;
-            if (!(transformedPrimary.y <= upper)) goto nextPrimary;
+            if (!(transformedPrimary.y <= upper)) continue;
         }
-        if (!(transformedPrimary.z >= rotation->z - lbl_8064E330)) goto nextPrimary;
+        if (!(transformedPrimary.z >= rotation->z - lbl_8064E330)) continue;
         {
             float upper = lbl_8064E330;
             upper += rotation->z;
-            if (!(transformedPrimary.z <= upper)) goto nextPrimary;
+            if (!(transformedPrimary.z <= upper)) continue;
         }
-        if (!(transformedPrimary.w >= rotation->w - lbl_8064E330)) goto nextPrimary;
+        if (!(transformedPrimary.w >= rotation->w - lbl_8064E330)) continue;
         {
             float upper = lbl_8064E330;
             upper += rotation->w;
-            if (!(transformedPrimary.w <= upper)) goto nextPrimary;
+            if (!(transformedPrimary.w <= upper)) continue;
         }
-        if (primary->zone != info->zone) goto nextPrimary;
-        if (primary->type != fn_8011EB04(runtime)) goto nextPrimary;
-        if (primary->actor != fn_80201B5C((int *)object)) goto nextPrimary;
-        if (primary->stageA != *(s16 *)((u8 *)info->actor + 0x146)) goto nextPrimary;
-        if (primary->stageB != *(s16 *)((u8 *)info->actor + 0x148)) goto nextPrimary;
-        if (primary->model != (int)fn_80201C50(model)) goto nextPrimary;
-        if ((int)primary->flag != (int)((fn_80201CDC(object) >> 2) & 1)) goto nextPrimary;
+        if (primary->zone != info->zone) continue;
+        if (primary->type != fn_8011EB04((Object *)runtime)) continue;
+        if (primary->actor != fn_80201B5C((int *)object)) continue;
+        if (primary->stageA != *(s16 *)((u8 *)info->actor + 0x146)) continue;
+        if (primary->stageB != *(s16 *)((u8 *)info->actor + 0x148)) continue;
+        if (primary->model != (int)fn_80201C50((Object80201C50 *)model)) continue;
+        if ((int)primary->flag != (int)((fn_80201CDC((Object80201CDC *)object) >> 2) & 1)) continue;
         *category = 0;
         *index = i;
         return 0;
-    nextPrimary:
-        offset += 0x68;
     }
 
     i = 0;
-    offset = 0;
     for (; i < lbl_8064D0BC->secondaryCount; i++) {
-        secondary = (SecondaryRecord *)((u8 *)lbl_8064D0BC->secondary + offset);
+        secondary = lbl_8064D0BC->secondary + i;
         axis.x = -secondary->axis.x;
         axis.y = -secondary->axis.y;
         axis.z = -secondary->axis.z;
         fn_8017A244(&axis, &transformedSecondary, secondary->angle);
-        if (!((float)secondary->x >= position->x - 0.1f)) goto nextSecondary;
-        if (!((float)secondary->x <= 0.1f + position->x)) goto nextSecondary;
-        if (!((float)secondary->y >= position->y - 0.1f)) goto nextSecondary;
-        if (!((float)secondary->y <= 0.1f + position->y)) goto nextSecondary;
-        if (!((float)secondary->z >= position->z - 0.1f)) goto nextSecondary;
-        if (!((float)secondary->z <= 0.1f + position->z)) goto nextSecondary;
-        if (secondary->group != (int)fn_8011FB4C(runtime)) goto nextSecondary;
-        if (!(transformedSecondary.x >= rotation->x - lbl_8064E330)) goto nextSecondary;
+        if (!((float)secondary->x >= position->x - 0.1f)) continue;
+        if (!((float)secondary->x <= 0.1f + position->x)) continue;
+        if (!((float)secondary->y >= position->y - 0.1f)) continue;
+        if (!((float)secondary->y <= 0.1f + position->y)) continue;
+        if (!((float)secondary->z >= position->z - 0.1f)) continue;
+        if (!((float)secondary->z <= 0.1f + position->z)) continue;
+        if (secondary->group != (int)fn_8011FB4C(runtime)) continue;
+        if (!(transformedSecondary.x >= rotation->x - lbl_8064E330)) continue;
         {
             float upper = lbl_8064E330;
             upper += rotation->x;
-            if (!(transformedSecondary.x <= upper)) goto nextSecondary;
+            if (!(transformedSecondary.x <= upper)) continue;
         }
-        if (!(transformedSecondary.y >= rotation->y - lbl_8064E330)) goto nextSecondary;
+        if (!(transformedSecondary.y >= rotation->y - lbl_8064E330)) continue;
         {
             float upper = lbl_8064E330;
             upper += rotation->y;
-            if (!(transformedSecondary.y <= upper)) goto nextSecondary;
+            if (!(transformedSecondary.y <= upper)) continue;
         }
-        if (!(transformedSecondary.z >= rotation->z - lbl_8064E330)) goto nextSecondary;
+        if (!(transformedSecondary.z >= rotation->z - lbl_8064E330)) continue;
         {
             float upper = lbl_8064E330;
             upper += rotation->z;
-            if (!(transformedSecondary.z <= upper)) goto nextSecondary;
+            if (!(transformedSecondary.z <= upper)) continue;
         }
-        if (!(transformedSecondary.w >= rotation->w - lbl_8064E330)) goto nextSecondary;
+        if (!(transformedSecondary.w >= rotation->w - lbl_8064E330)) continue;
         {
             float upper = lbl_8064E330;
             upper += rotation->w;
-            if (!(transformedSecondary.w <= upper)) goto nextSecondary;
+            if (!(transformedSecondary.w <= upper)) continue;
         }
-        if (secondary->zone != info->zone) goto nextSecondary;
-        if (secondary->type != fn_8011EB04(runtime)) goto nextSecondary;
-        if (secondary->actor != fn_80201B5C((int *)object)) goto nextSecondary;
-        if (secondary->stageA != *(s16 *)((u8 *)info->actor + 0x146)) goto nextSecondary;
-        if (secondary->stageB != *(s16 *)((u8 *)info->actor + 0x148)) goto nextSecondary;
-        if (secondary->model != (int)fn_80201C50(model)) goto nextSecondary;
-        if ((int)secondary->flag != (int)((fn_80201CDC(object) >> 2) & 1)) goto nextSecondary;
+        if (secondary->zone != info->zone) continue;
+        if (secondary->type != fn_8011EB04((Object *)runtime)) continue;
+        if (secondary->actor != fn_80201B5C((int *)object)) continue;
+        if (secondary->stageA != *(s16 *)((u8 *)info->actor + 0x146)) continue;
+        if (secondary->stageB != *(s16 *)((u8 *)info->actor + 0x148)) continue;
+        if (secondary->model != (int)fn_80201C50((Object80201C50 *)model)) continue;
+        if ((int)secondary->flag != (int)((fn_80201CDC((Object80201CDC *)object) >> 2) & 1)) continue;
         *category = 1;
         *index = i;
         return 0;
-    nextSecondary:
-        offset += 0x28;
     }
 
     i = 0;
-    offset = 0;
     for (; i < lbl_8064D0BC->tertiaryCount; i++) {
-        tertiary = (TertiaryRecord *)((u8 *)lbl_8064D0BC->tertiary + offset);
+        tertiary = lbl_8064D0BC->tertiary + i;
         axis.x = -tertiary->axis.x;
         axis.y = -tertiary->axis.y;
         axis.z = -tertiary->axis.z;
@@ -225,49 +220,47 @@ int fn_80043FB0(void *object, int *category, int *index)
             actor = tertiary->actor3;
             break;
         }
-        if (!((float)tertiary->x >= position->x - 0.1f)) goto nextTertiary;
-        if (!((float)tertiary->x <= 0.1f + position->x)) goto nextTertiary;
-        if (!((float)tertiary->y >= position->y - 0.1f)) goto nextTertiary;
-        if (!((float)tertiary->y <= 0.1f + position->y)) goto nextTertiary;
-        if (!((float)tertiary->z >= position->z - 0.1f)) goto nextTertiary;
-        if (!((float)tertiary->z <= 0.1f + position->z)) goto nextTertiary;
-        if (tertiary->group != (int)fn_8011FB4C(runtime)) goto nextTertiary;
-        if (!(transformedTertiary.x >= rotation->x - lbl_8064E330)) goto nextTertiary;
+        if (!((float)tertiary->x >= position->x - 0.1f)) continue;
+        if (!((float)tertiary->x <= 0.1f + position->x)) continue;
+        if (!((float)tertiary->y >= position->y - 0.1f)) continue;
+        if (!((float)tertiary->y <= 0.1f + position->y)) continue;
+        if (!((float)tertiary->z >= position->z - 0.1f)) continue;
+        if (!((float)tertiary->z <= 0.1f + position->z)) continue;
+        if (tertiary->group != (int)fn_8011FB4C(runtime)) continue;
+        if (!(transformedTertiary.x >= rotation->x - lbl_8064E330)) continue;
         {
             float upper = lbl_8064E330;
             upper += rotation->x;
-            if (!(transformedTertiary.x <= upper)) goto nextTertiary;
+            if (!(transformedTertiary.x <= upper)) continue;
         }
-        if (!(transformedTertiary.y >= rotation->y - lbl_8064E330)) goto nextTertiary;
+        if (!(transformedTertiary.y >= rotation->y - lbl_8064E330)) continue;
         {
             float upper = lbl_8064E330;
             upper += rotation->y;
-            if (!(transformedTertiary.y <= upper)) goto nextTertiary;
+            if (!(transformedTertiary.y <= upper)) continue;
         }
-        if (!(transformedTertiary.z >= rotation->z - lbl_8064E330)) goto nextTertiary;
+        if (!(transformedTertiary.z >= rotation->z - lbl_8064E330)) continue;
         {
             float upper = lbl_8064E330;
             upper += rotation->z;
-            if (!(transformedTertiary.z <= upper)) goto nextTertiary;
+            if (!(transformedTertiary.z <= upper)) continue;
         }
-        if (!(transformedTertiary.w >= rotation->w - lbl_8064E330)) goto nextTertiary;
+        if (!(transformedTertiary.w >= rotation->w - lbl_8064E330)) continue;
         {
             float upper = lbl_8064E330;
             upper += rotation->w;
-            if (!(transformedTertiary.w <= upper)) goto nextTertiary;
+            if (!(transformedTertiary.w <= upper)) continue;
         }
-        if (zone != info->zone) goto nextTertiary;
-        if (type != fn_8011EB04(runtime)) goto nextTertiary;
-        if ((int)actor != fn_80201B5C((int *)object)) goto nextTertiary;
-        if (tertiary->stageA != *(s16 *)((u8 *)info->actor + 0x146)) goto nextTertiary;
-        if (tertiary->stageB != *(s16 *)((u8 *)info->actor + 0x148)) goto nextTertiary;
-        if (tertiary->model != (int)fn_80201C50(model)) goto nextTertiary;
-        if ((int)tertiary->flag != (int)((fn_80201CDC(object) >> 2) & 1)) goto nextTertiary;
+        if (zone != info->zone) continue;
+        if (type != fn_8011EB04((Object *)runtime)) continue;
+        if ((int)actor != fn_80201B5C((int *)object)) continue;
+        if (tertiary->stageA != *(s16 *)((u8 *)info->actor + 0x146)) continue;
+        if (tertiary->stageB != *(s16 *)((u8 *)info->actor + 0x148)) continue;
+        if (tertiary->model != (int)fn_80201C50((Object80201C50 *)model)) continue;
+        if ((int)tertiary->flag != (int)((fn_80201CDC((Object80201CDC *)object) >> 2) & 1)) continue;
         *category = 2;
         *index = i;
         return 0;
-    nextTertiary:
-        offset += 0x34;
     }
     return 1;
 }
