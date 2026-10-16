@@ -13,29 +13,39 @@ typedef struct TRKBuffer {
 extern void fn_80003130(void *, const void *, u32);
 extern int gTRKBigEndian[];
 
+static inline int TRKReadBuffer(TRKBuffer *buffer, void *data, unsigned long length)
+{
+    int error = 0;
+    u32 bytesLeft;
+
+    if (length == 0) {
+        return 0;
+    }
+
+    bytesLeft = buffer->length - buffer->position;
+    if (length > bytesLeft) {
+        error = 0x302;
+        length = bytesLeft;
+    }
+
+    fn_80003130(data, buffer->data + buffer->position, length);
+    buffer->position += length;
+    return error;
+}
+
 int fn_800EF604(TRKBuffer *buffer, u64 *out)
 {
     u8 *destination;
     u8 *byte_data;
     u8 swap_buffer[sizeof(out)];
     int read_err;
-    u32 amount;
-    u32 remaining;
 
     if (gTRKBigEndian[0] != 0) {
         destination = (u8 *)out;
     } else {
         destination = swap_buffer;
     }
-    amount = sizeof(*out);
-    read_err = 0;
-    remaining = buffer->length - buffer->position;
-    if (amount > remaining) {
-        read_err = 0x302;
-        amount = remaining;
-    }
-    fn_80003130(destination, buffer->data + buffer->position, amount);
-    buffer->position += amount;
+    read_err = TRKReadBuffer(buffer, destination, sizeof(*out));
     if (gTRKBigEndian[0] == 0 && read_err == 0) {
         byte_data = (u8 *)out;
         byte_data[0] = destination[7];

@@ -18,13 +18,37 @@ typedef struct {
     u8 wrap;
 } GXFifoObj;
 
+/* Public FIFO storage and the byte-pointer view used by GXGetCPUFifo. */
+typedef struct {
+    u8 *base;
+    u8 *top;
+    u32 size;
+    u32 hiWatermark;
+    u32 loWatermark;
+    void *rdPtr;
+    void *wrPtr;
+    s32 count;
+    u8 bind_cpu;
+    u8 bind_gp;
+    u8 wrap;
+} __GXFifoObj;
+
+typedef struct {
+    u8 data[0x80];
+} GXFifoStorage;
+
+typedef union {
+    __GXFifoObj fifo;
+    GXFifoStorage storage;
+} GXFifoBuffer;
+
 typedef struct {
     GXFifoObj fifo;         /* DisplayListFifo */
     u8 savedGXData[0x4F8];  /* __savedGXdata */
 } GXDisplayListState;
 
 extern u8 *gx;
-extern GXDisplayListState lbl_806426A0;
+GXDisplayListState lbl_806426A0;
 extern GXFifoObj *lbl_8064DBC8; /* OldCPUFifo */
 
 #define GX32(o) (*(u32 *)(gx + (o)))
@@ -32,28 +56,27 @@ extern GXFifoObj *lbl_8064DBC8; /* OldCPUFifo */
 
 void *memcpy(void *dst, const void *src, u32 n);
 void fn_80226A28(void);              /* __GXSetDirtyState */
-void fn_80224028(GXFifoObj *fifo);   /* __GXSaveCPUFifoAux */
-GXFifoObj *fn_80224640(void);        /* GXGetCPUFifo */
-void GXSetCPUFifo(GXFifoObj *fifo);
+void fn_80224028(GXFifoObj *fifo);   /* GXSaveCPUFifo */
+GXFifoBuffer *fn_80224640(void);        /* GXGetCPUFifo */
+void GXSetCPUFifo(__GXFifoObj *fifo);
 
 void fn_8022B2AC(void *list, u32 size) {
-    GXDisplayListState *dl = &lbl_806426A0;
-    GXFifoObj *cpuFifo = fn_80224640();
+    GXFifoObj *cpuFifo = (GXFifoObj *)fn_80224640();
 
     if (GX32(0x4F4) != 0) {
         fn_80226A28();
     }
     if (GX8(0x4F1) != 0) {
-        memcpy(dl->savedGXData, gx, 0x4F8);
+        memcpy(lbl_806426A0.savedGXData, gx, 0x4F8);
     }
-    dl->fifo.base = list;
-    dl->fifo.top = (u8 *)list + size - 4;
-    dl->fifo.size = size;
-    dl->fifo.count = 0;
-    dl->fifo.rdPtr = list;
-    dl->fifo.wrPtr = list;
+    lbl_806426A0.fifo.base = list;
+    lbl_806426A0.fifo.top = (u8 *)list + size - 4;
+    lbl_806426A0.fifo.size = size;
+    lbl_806426A0.fifo.count = 0;
+    lbl_806426A0.fifo.rdPtr = list;
+    lbl_806426A0.fifo.wrPtr = list;
     GX8(0x4F0) = 1;
     fn_80224028(cpuFifo);
     lbl_8064DBC8 = cpuFifo;
-    GXSetCPUFifo(&dl->fifo);
+    GXSetCPUFifo((__GXFifoObj *)&lbl_806426A0.fifo);
 }
