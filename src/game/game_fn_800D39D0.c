@@ -15,27 +15,44 @@ typedef struct ActorState {
     u8 above;
 } ActorState;
 
-extern int fn_80201B54(void *object);
+/* fn_801A764C.c defines Value as three words. The union makes the
+ * Vec3-to-Value representation transfer explicit without pointer aliasing. */
+typedef struct { u32 words[3]; } Value;
+typedef union { Vec3 vector; Value value; } Position;
+
+/* These anonymous structures reproduce the Data typedefs in the respective
+ * setter definitions, including member names, for compatible declarations.
+ * Those files currently have distinct partial types, not a shared event type.
+ * The allocated event itself remains opaque throughout this function. */
+typedef struct { u8 pad[0x7C]; u32 value; } FlagsData;
+typedef struct { u8 pad[0x9C]; u32 value; } SourceData;
+typedef struct { u8 pad[0xB6]; u16 value; } ValueData;
+typedef struct { u8 pad[0xB4]; s16 value; } TypeData;
+typedef struct { u8 pad[0x80]; u32 value; } OptionsData;
+typedef struct { u8 pad[0x54]; Value value; } PositionData;
+typedef struct { u8 pad[0x88]; u32 value; } KindData;
+
+extern int fn_80201B54(int *object);
 extern void fn_80201E78(void *destination, void *object);
 extern int fn_80204508(void *object, void *other);
 extern u64 fn_8020123C(int kind, int source, int target, int data);
 extern void *fn_801A717C(void);
 extern void fn_801A7228(void *event);
-extern void fn_801A74D8(void *event, u32 flags);
-extern void fn_801A74A0(void *event, u32 source);
-extern void fn_801A7538(void *event, u16 value);
-extern void fn_801A7518(void *event, s16 value);
-extern void fn_801A7588(void *event, u32 flags);
-extern void fn_801A764C(void *event, const Vec3 *position);
-extern void fn_801A7470(void *event, u32 kind);
+extern void fn_801A74D8(FlagsData *event, u32 flags);
+extern void fn_801A74A0(SourceData *event, u32 source);
+extern void fn_801A7538(ValueData *event, u16 value);
+extern void fn_801A7518(TypeData *event, s16 value);
+extern void fn_801A7588(OptionsData *event, u32 flags);
+extern void fn_801A764C(PositionData *event, const Value *position);
+extern void fn_801A7470(KindData *event, u32 kind);
 extern float lbl_8064F3B0;
 
 int fn_800D39D0(ActorState *state, void *source, void *target, int enabled)
 {
     Vec3 target_position;
     Vec3 source_position;
-    Vec3 position;
-    Vec3 temporary;
+    Value position;
+    Position temporary;
     register int result = 0;
     register int above;
     register int source_id;
@@ -43,8 +60,7 @@ int fn_800D39D0(ActorState *state, void *source, void *target, int enabled)
     register void *event;
     register u32 effect;
 
-    /* ASM: lwz keeps the state load after register initialization; C hoists it. */
-    asm { lwz effect, 0xC4(r3) }
+    effect = state->effect;
     if (effect != 0) {
         above = 0;
         source_id = fn_80201B54(source);
@@ -57,8 +73,8 @@ int fn_800D39D0(ActorState *state, void *source, void *target, int enabled)
             above = 1;
         }
         if (enabled && !above && state->above) {
-            fn_80201E78(&temporary, target);
-            position = temporary;
+            fn_80201E78(&temporary.vector, target);
+            position = temporary.value;
             event = fn_801A717C();
             fn_801A74D8(event, 0x100);
             fn_801A74A0(event, source_id);
