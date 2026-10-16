@@ -34,13 +34,13 @@ extern int lbl_8064CD1C;
 extern int lbl_8064CD80;
 
 extern s16 fn_80144A2C(u32, s16, s16, int);
-extern void fn_801A852C(Color, int, int, u32);
-extern void fn_801A85D4(Color, int, int, u32);
+extern void fn_801A852C(unsigned long *, int, u16, unsigned long);
+extern void fn_801A85D4(unsigned long *, u16, u16, unsigned long);
 extern void fn_801A8974(int, int, int, int, int, int);
 extern void fn_801A8D38(int);
 extern void fn_801A8F08(s16, s16, s16, s16, int, u16, int);
 extern void fn_801A90BC(void *, void *);
-extern void fn_801E3A34(Color);
+extern u32 fn_801E3A34(Color *);
 extern void fn_801E3AA4(int);
 extern void fn_801E5430(s16, s16);
 extern void fn_801E56AC(float, const char *, ...);
@@ -51,20 +51,37 @@ extern int fn_801E7B24(unsigned int *, int, int);
 extern int fn_801E8D34(int);
 extern int fn_801E8D44(int);
 extern void fn_801ED3F4(int);
-extern int fn_80201B44();
-extern void *fn_80201814();
-extern unsigned int fn_8020216C(void);
+extern int fn_80201B44(void);
+extern void *fn_80201814(int);
+extern unsigned int fn_8020216C(void *);
 extern void fn_8022B970(int, int, int, int);
 
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-void fn_801105D0(int active)
+static inline void setTile(Color color, int index, int tile, u32 flags)
+{
+    fn_801A852C((unsigned long *)&color, index, tile, flags);
+}
+
+static inline void setTilePair(Color color, int first, int second, u32 flags)
+{
+    fn_801A85D4((unsigned long *)&color, first, second, flags);
+}
+
+static inline void setTextColor(Color color)
+{
+    fn_801E3A34(&color);
+}
+
+void fn_801105D0(register int inputActive)
 {
     int scroll;
     int current;
     int speed;
-    ChapterData *data;
+    register ChapterData *data;
+    register ChapterData *dataHigh;
+    register int active;
     int i;
     int index;
     long outer;
@@ -78,7 +95,13 @@ void fn_801105D0(int active)
     Vec3f sizes;
     ChapterEntry *entry;
 
-    data = lbl_8024B6B0;
+    /* ASM: lis/mr/addi preserve the pooled-base initialization and input save;
+     * the C pointer initializer inserts an additional register move. */
+    asm {
+        lis dataHigh, lbl_8024B6B0@ha
+        mr active, inputActive
+        addi data, dataHigh, lbl_8024B6B0@l
+    }
     scroll = fn_80144A2C(0xC0000, 0x1FFF, 8, 0);
     current = fn_801E8D34(lbl_80331738[2]);
     scale = 1.0f;
@@ -97,7 +120,8 @@ void fn_801105D0(int active)
     if (lbl_8064CD04 > 0) {
         lbl_8064CD04 = 0 > (lbl_8064CD04 -= speed) ? 0 : lbl_8064CD04;
     } else if (lbl_8064CD04 < 0) {
-        lbl_8064CD04 = 0 < (lbl_8064CD04 += speed) ? 0 : lbl_8064CD04;
+        lbl_8064CD04 += speed;
+        lbl_8064CD04 = 0 < lbl_8064CD04 ? 0 : lbl_8064CD04;
     }
 
     fn_8022B970(0xA0, 0x2D, 0x1A2, 0x166);
@@ -106,7 +130,7 @@ void fn_801105D0(int active)
         Color glow = {0xFF, 0xFF, 0xFF, 0x00};
         y = i * 120 + 235;
         size = 1.0f;
-        if ((fn_80201B44(), fn_80201814(), fn_8020216C() & 0x80000)) {
+        if ((fn_8020216C(fn_80201814(fn_80201B44())) & 0x80000)) {
             index = current + i;
             if (lbl_8064CD04 > 0) {
                 next = index - 1;
@@ -161,49 +185,49 @@ void fn_801105D0(int active)
             if (next == -1) {
                 color.a = 255 - glow.a;
             }
-            fn_801A852C(color, 0, 6, 0x80000000);
+            setTile(color, 0, 6, 0x80000000);
             outer = 37.0f * size;
             fn_801A8F08(230 - outer, y - outer, outer + 230, y + outer, -0x7698, 0, 5);
-            fn_801A852C(lbl_8064C2A8, 0, 0x2D, 0x80000000);
+            setTile(lbl_8064C2A8, 0, 0x2D, 0x80000000);
             radius = 32.0f * size;
             fn_801A8F08(230 - radius, y - radius, radius + 230, y + radius, -0x7698, (index + 1) * 4, 5);
             if (next == -1 || next >= 54) {
-                fn_801A852C(glow, 0, 6, 0x80000000);
+                setTile(glow, 0, 6, 0x80000000);
                 radius = outer;
                 fn_801A8F08(230 - radius, y - radius, radius + 230, y + radius, -0x7698, 0, 5);
             }
             if (next >= 0 && next < 54) {
-                fn_801A852C(glow, 0, 0x2D, 0x80000000);
+                setTile(glow, 0, 0x2D, 0x80000000);
                 fn_801A8F08(230 - radius, y - radius, radius + 230, y + radius, -0x7698, (next + 1) * 4, 5);
             }
             if (i == 0 && active) {
                 unsigned int slot = index;
                 if (fn_801E7AD0(lbl_8024E388, 3, slot) > 1 ||
-                    (fn_80201B44(), fn_80201814(), fn_8020216C() & 0x80000)) {
+                    (fn_8020216C(fn_80201814(fn_80201B44())) & 0x80000)) {
                     if (fn_801E79FC(lbl_8024E388[0], slot) ||
-                        (fn_80201B44(), fn_80201814(), fn_8020216C() & 0x80000)) {
+                        (fn_8020216C(fn_80201814(fn_80201B44())) & 0x80000)) {
                         if (fn_801E8D34(lbl_8064CCF0) == 0) {
-                            fn_801A85D4(lbl_8064C2A8, 0x4C, 0x4D, 0x80000000);
+                            setTilePair(lbl_8064C2A8, 0x4C, 0x4D, 0x80000000);
                         } else {
-                            fn_801A85D4(lbl_8064C2A8, 0x4E, 0x4F, 0x80000000);
+                            setTilePair(lbl_8064C2A8, 0x4E, 0x4F, 0x80000000);
                         }
                         fn_801A8F08(0x1E4, 0x28, 0x201, 0x5B, -0x7698, 0, 5);
                     }
                     if (fn_801E79FC(lbl_8024E388[1], slot) ||
-                        (fn_80201B44(), fn_80201814(), fn_8020216C() & 0x80000)) {
+                        (fn_8020216C(fn_80201814(fn_80201B44())) & 0x80000)) {
                         if (fn_801E8D34(lbl_8064CCF0) == 1) {
-                            fn_801A85D4(lbl_8064C2A8, 0x50, 0x51, 0x80000000);
+                            setTilePair(lbl_8064C2A8, 0x50, 0x51, 0x80000000);
                         } else {
-                            fn_801A85D4(lbl_8064C2A8, 0x52, 0x53, 0x80000000);
+                            setTilePair(lbl_8064C2A8, 0x52, 0x53, 0x80000000);
                         }
                         fn_801A8F08(0x1FF, 0x29, 0x217, 0x58, -0x7698, 0, 5);
                     }
                     if (fn_801E79FC(lbl_8024E388[2], slot) ||
-                        (fn_80201B44(), fn_80201814(), fn_8020216C() & 0x80000)) {
+                        (fn_8020216C(fn_80201814(fn_80201B44())) & 0x80000)) {
                         if (fn_801E8D34(lbl_8064CCF0) == 2) {
-                            fn_801A85D4(lbl_8064C2A8, 0x54, 0x55, 0x80000000);
+                            setTilePair(lbl_8064C2A8, 0x54, 0x55, 0x80000000);
                         } else {
-                            fn_801A85D4(lbl_8064C2A8, 0x56, 0x57, 0x80000000);
+                            setTilePair(lbl_8064C2A8, 0x56, 0x57, 0x80000000);
                         }
                         fn_801A8F08(0x215, 0x29, 0x232, 0x5A, -0x7698, 0, 5);
                     }
@@ -255,9 +279,13 @@ void fn_801105D0(int active)
             if (1.6f < MAX(f, 1.0f)) {
                 f = 1.6f;
             } else if (f > 1.0f) {
+                /* ASM: b preserves the retail clamp's branch to the merge point;
+                 * MWCC folds this empty C arm into the conditional branch. */
+                asm { b clampDone }
             } else {
                 f = 1.0f;
             }
+clampDone:
             t = (f - 1.0f) / 0.6f;
             if (active) {
                 text.r = 216.0f * t + 39.0f;
@@ -265,21 +293,26 @@ void fn_801105D0(int active)
                 text.b = 12.0f - 12.0f * t;
             }
             index = fn_801E7B24(lbl_8024E388, 3, current + i);
-            if ((fn_80201B44(), fn_80201814(), fn_8020216C() & 0x80000)) {
+            if ((fn_8020216C(fn_80201814(fn_80201B44())) & 0x80000)) {
                 index = current + i;
             }
             if (index >= 0 && index < 54) {
                 fn_801E3AA4(1);
-                fn_801E3A34(text);
+                setTextColor(text);
                 fn_801E5AD0(0x63);
                 fn_801E5430(0x1A0, ty + 2 + lbl_8064CD04);
                 fn_8022B970(0xA0, 0x41, 0x1A2, 0x152);
-                entry = &data->entries[index];
+                entry = data->entries;
+                entry += index;
                 fn_801E56AC(1.1f, entry->name);
                 fn_801E5430(0x128, ty - 32 + lbl_8064CD04);
                 fn_8022B970(0xA0, 0x41, 0x1A2, 0x152);
                 fn_801E5AD0(0x6E);
-                fn_801E56AC(0.9f, data->places[entry->place]);
+                {
+                    char **places = data->places;
+                    places += entry->place;
+                    fn_801E56AC(0.9f, *places);
+                }
                 fn_801E5430(0x1C2, ty - 32 + lbl_8064CD04);
                 fn_8022B970(0xA0, 0x41, 0x1A2, 0x152);
                 if (entry->act != -1) {
@@ -294,7 +327,7 @@ void fn_801105D0(int active)
     fn_801E5AD0(0x63);
     {
         Color arrow = {0xC8, 0xC8, 0x00, 0xFF};
-        fn_801E3A34(arrow);
+        setTextColor(arrow);
     }
     if (active) {
         if (current != 0) {
