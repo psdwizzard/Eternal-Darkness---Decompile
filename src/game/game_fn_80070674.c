@@ -1,7 +1,13 @@
-/* The function body matches retail. Current compiler settings emit GPR
- * save/restore helper calls instead of the retail stmw/lmw pair. */
 typedef unsigned char u8;
 typedef unsigned int u32;
+
+/* Opaque views used by the corresponding callee definitions. */
+typedef struct Owner Owner;
+typedef struct Object80201D14 Object80201D14;
+typedef struct Object80201D1C Object80201D1C;
+typedef struct Object80201D2C Object80201D2C;
+typedef struct Object80201D34 Object80201D34;
+typedef struct Object80201EB8 Object80201EB8;
 
 typedef struct ObjectState {
     u8 padding[0x14E];
@@ -20,13 +26,13 @@ extern void *fn_80201B8C(u8 *);
 extern void *fn_80201BC8(void *);
 extern int fn_80201B54(int *);
 extern int fn_80072070(int);
-extern void fn_80201D2C(void *, int);
-extern void fn_80201D14(void *, int);
-extern void fn_80201D34(void *, int);
-extern void fn_80201D1C(void *, int);
+extern void fn_80201D2C(Object80201D2C *, int);
+extern void fn_80201D14(Object80201D14 *, unsigned char);
+extern void fn_80201D34(Object80201D34 *, int);
+extern void fn_80201D1C(Object80201D1C *, unsigned char);
 extern int fn_801E8328(u32, u32);
-extern int fn_80201EB8(void *);
-extern void fn_801261F4(void *);
+extern int fn_80201EB8(Object80201EB8 *);
+extern int fn_801261F4(Owner *);
 extern int fn_8006BE44(void);
 extern void *fn_8012C62C(u8 *, int, void *, signed char *, void *, int);
 extern int lbl_8064D18C;
@@ -48,17 +54,17 @@ int fn_80070674(u8 *object, int mode, int *event)
     if (mode == 0) {
         if (eventType == 1) {
             info->state->counter = fn_80072070(info->id);
-            fn_80201D2C(object, 1);
-            fn_80201D14(object, 1);
+            fn_80201D2C((Object80201D2C *)object, 1);
+            fn_80201D14((Object80201D14 *)object, 1);
             return 1;
         } else if (eventType == 0x39) {
-            fn_80201D34(object, 0);
-            fn_80201D1C(object, 1);
+            fn_80201D34((Object80201D34 *)object, 0);
+            fn_80201D1C((Object80201D1C *)object, 1);
             fn_801E8328(2, (u32)object);
             return 1;
         } else if (eventType == 0x3E) {
-            if (lbl_8064D18C == fn_80201EB8(object)) {
-                fn_801261F4(runtime);
+            if (lbl_8064D18C == fn_80201EB8((Object80201EB8 *)object)) {
+                fn_801261F4((Owner *)runtime);
                 if (fn_8006BE44() >= 2) {
                     info->state->counter++;
                     if (info->state->counter > 3) {

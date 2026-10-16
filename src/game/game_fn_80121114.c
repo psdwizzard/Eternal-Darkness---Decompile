@@ -5,6 +5,7 @@ typedef unsigned int u32;
 typedef signed int s32;
 
 typedef float Mtx[3][4];
+typedef struct InputStorage InputStorage;
 
 typedef struct Vec3 {
     float x, y, z;
@@ -60,7 +61,7 @@ typedef struct Material {
 } Material;
 
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
-#define CLAMP01(x) ((1.0f < MAX(x, 0.0f)) ? 1.0f : MAX(x, 0.0f))
+#define CLAMP01(x) ((1.0f < MAX(x, 0.0f)) ? lbl_806500A4 : MAX(x, 0.0f))
 
 extern Vec3 lbl_8063D378;
 extern Vec3 lbl_804ED5C0;
@@ -85,67 +86,67 @@ extern float lbl_806500E8;
 extern float lbl_806500EC;
 extern float lbl_806500F0;
 
-extern s32 fn_80048668(void);
+extern u32 fn_80048668(void);
 extern void fn_8011F114(Vec3*, Vec3*);
-extern s32 fn_8011FA6C(Owner*, s32);
-extern s32 fn_8011FA7C(Owner*, s32);
+extern void* fn_8011FA6C(Owner*, s32);
+extern void* fn_8011FA7C(Owner*, s32);
 extern u32 fn_8011FAEC(Owner*);
-extern u16 fn_8011FAF4(Owner*);
-extern s32 fn_8011FB4C(Owner*);
-extern void fn_8011FB6C(Owner*);
+extern u32 fn_8011FAF4(void*);
+extern void* fn_8011FB4C(void*);
+extern void* fn_8011FB6C(void*);
 extern Owner* fn_8011FE34(Owner*);
 extern s32 fn_8011FF38(void);
 extern void fn_80120098(Owner*);
 extern void fn_801208CC(Mtx, float*, float*);
-extern void fn_80122638(Owner*, s32, s32, s32, s32, Mtx, float, float);
+extern void fn_80122638(Owner*, s32, s32, s32, s32, s32, float, float);
 extern void fn_801227A0(Owner*, s32, s32);
 extern void fn_80122AD4(Owner*, s32, s32, float);
-extern void fn_801231C0(Model*);
+extern u16 fn_801231C0(const Model*);
 extern float fn_80123708(Owner*, s32);
 extern s32 fn_80126050(Owner*);
 extern u16 fn_8012DBE8(Owner*, s32, Color*);
 extern void fn_80130720(Owner*);
-extern s32 fn_80130998(u16, float);
-extern float fn_8017968C(Owner*, Vec3*);
+extern s32 fn_80130998(s32, float);
+extern float fn_8017968C(Vec3*, Vec3*);
 extern void fn_801ECD48(s32);
-extern void fn_801ECEC8(s32, s32, s32);
+extern void fn_801ECEC8(u8, s32, u8);
 extern void fn_801ED118(void);
-extern void fn_801ED3F4(void);
+extern u32 fn_801ED3F4(u32);
 extern void fn_801ED468(s32);
 extern s32 fn_801ED56C(s32);
 extern s32 fn_801ED59C(s32, s32);
 extern void fn_801ED5F4(s32, s32, s16, float*, Mtx, float);
-extern void fn_801EDA7C(void*, s32, s32, s32);
-extern void fn_801EFFE4(void);
+extern s32 fn_801EDA7C(s16*, s32, s32, void*);
+extern void fn_801EFFE4(s32);
 extern void fn_801F10BC(s32, s32, s32);
 extern void fn_801F1528(s32);
-extern s32 fn_801F1A38(Vec3*, Vec3*, u32, s32, s32, s32, float);
+extern s32 fn_801F1A38(Vec3*, Vec3*, InputStorage*, s32, s32, s32, float);
 extern void fn_801F3FD8(Vec3*, s32);
 extern void fn_801F4380(Vec3*);
 extern void fn_80210FB0(Mtx);
-extern void fn_80210FDC(Mtx, Mtx, Mtx);
-extern void fn_802110A8(Mtx, Mtx);
-extern void fn_802111A0(Mtx, Mtx);
+extern void fn_80210FDC(const Mtx, const Mtx, Mtx);
+extern u32 fn_802110A8(const Mtx, Mtx);
+extern u32 fn_802111A0(const Mtx, Mtx);
 extern void fn_80211484(Mtx, float, float, float);
 extern void fn_802114B8(Mtx, float, float, float);
 extern void fn_802114E0(Mtx, float*);
-extern void fn_80211710(Mtx, Vec3*, Vec3*);
-extern void fn_80225F4C(s32, s32, s32);
+extern void fn_80211710(const Mtx, const Vec3*, Vec3*);
+extern void fn_80225F4C(s32, const void*, u8);
 extern void fn_80226378(void);
 extern void fn_8022A5D8(s32, s32, s32, s32);
-extern void fn_8022A6DC(s32);
-extern void fn_8022A71C(s32);
+extern void fn_8022A6DC(u8);
+extern void fn_8022A71C(u8);
 extern void fn_8022B690(Mtx, s32);
 extern void fn_8022B6CC(Mtx, s32);
 extern void fn_8022B748(Mtx, s32, s32);
 extern void* memcpy(void*, const void*, u32);
 
-void fn_80121114(Owner* owner, u32 count, s32 mode, s32 draw, s32 outline, s32 fog)
+void fn_80121114(Owner* owner, InputStorage* input, s32 mode, s32 draw, s32 outline, s32 fog)
 {
     u32 flags;
-    u16 attr;
-    s32 color0;
-    s32 color1;
+    u32 attr;
+    void* color0;
+    void* color1;
     Model* model;
     float frame;
     Vec3* camera;
@@ -185,6 +186,7 @@ void fn_80121114(Owner* owner, u32 count, s32 mode, s32 draw, s32 outline, s32 f
     Mtx outline_mtx;
     Mtx offset;
     Color color;
+    register s32 format;
 
     flags = fn_8011FAEC(owner);
     attr = fn_8011FAF4(owner);
@@ -230,31 +232,40 @@ void fn_80121114(Owner* owner, u32 count, s32 mode, s32 draw, s32 outline, s32 f
     if (owner == lbl_8064C4E4) {
         layer = 4;
     }
-    fn_8011FB6C(owner);
-    fn_801ED3F4();
-    scale = fn_8017968C(owner, camera);
+    fn_801ED3F4((u32)fn_8011FB6C(owner));
+    scale = fn_8017968C(&owner->position, camera);
     fn_80225F4C(9, color0, 6);
     fn_80225F4C(10, color1, 6);
-    fn_80225F4C(13, (s32)model->palette, 4);
+    fn_80225F4C(13, model->palette, 4);
     fn_801231C0(model);
-    fn_801EFFE4();
+    /* ASM: mr consumes the callee's zero-extended result without C's
+     * redundant u16-to-int mask. */
+    asm { mr format, r3 }
+    fn_801EFFE4(format);
     fn_801F10BC(0, 0, 0);
 
     if (!hidden) {
-        if (count != 0) {
+        if (input != 0) {
             fn_8011F114(&got1, &owner->position);
             pos1 = got1;
             parent = fn_8011FE34(owner);
-            group = fn_8011FB4C(owner);
+            group = (s32)fn_8011FB4C(owner);
             alpha = owner->scale;
             rflags = 0;
-            if (fn_80048668()) {
-                if (attr & 0x800) {
-                    alpha *= lbl_806500CC;
-                } else if (attr & 0x400) {
-                    alpha *= lbl_806500D0;
-                }
+            fn_80048668();
+            /* ASM: cmpwi and beq retain the signed status comparison;
+             * MWCC discards a C signed cast and emits cmplwi. */
+            asm {
+                cmpwi r3, 0
+                beq expansion_done
             }
+            if ((u16)attr & 0x800) {
+                alpha *= lbl_806500CC;
+            } else if ((u16)attr & 0x400) {
+                alpha *= lbl_806500D0;
+            }
+            /* ASM: expansion_done is the target of the signed status test. */
+            asm { expansion_done: }
             if (flags & 0x10000) {
                 rflags |= 1;
             }
@@ -267,7 +278,7 @@ void fn_80121114(Owner* owner, u32 count, s32 mode, s32 draw, s32 outline, s32 f
             if (owner->fade != 0) {
                 alpha *= owner->fade * lbl_806500D4 + lbl_806500A4;
             }
-            drawn = fn_801F1A38(&pos1, &parent->position, count, group, layer, rflags, alpha);
+            drawn = fn_801F1A38(&pos1, &parent->position, input, group, layer, rflags, alpha);
         } else {
             fn_8011F114(&got2, &owner->position);
             pos2 = got2;
@@ -327,7 +338,7 @@ void fn_80121114(Owner* owner, u32 count, s32 mode, s32 draw, s32 outline, s32 f
         fn_8022A5D8(1, 4, 5, 0xF);
         fn_8022A71C(1);
     }
-    fn_80122638(owner, kind, layer, draw, 0, (float(*)[4])lit, scale, level);
+    fn_80122638(owner, kind, layer, draw, 0, (s32)lit, scale, level);
     if (fog) {
         fn_8022A71C(0);
     }
@@ -342,7 +353,7 @@ void fn_80121114(Owner* owner, u32 count, s32 mode, s32 draw, s32 outline, s32 f
         fn_80120098(owner);
         fn_80225F4C(9, color0, 6);
         fn_80225F4C(10, color1, 6);
-        fn_80225F4C(13, (s32)model->palette, 4);
+        fn_80225F4C(13, model->palette, 4);
     }
 
     if ((owner->flags & 0x100) && draw && !outline) {
@@ -386,7 +397,7 @@ void fn_80121114(Owner* owner, u32 count, s32 mode, s32 draw, s32 outline, s32 f
             fn_801ED118();
             fn_8012DBE8(owner, 0xF, &color);
             lbl_8024EDE8.alpha = 0xFF - ((0 > color.a - fade) ? 0 : color.a - fade);
-            fn_801EDA7C(&lbl_8024EDE8, 0, 0, 0);
+            fn_801EDA7C((s16*)&lbl_8024EDE8, 0, 0, 0);
             if (fog) {
                 fn_8022A71C(1);
                 fn_8022A6DC(0);
