@@ -13,28 +13,32 @@ typedef struct Entry8006D1DC {
     u32 flags;
 } Entry8006D1DC;
 
+typedef struct Entry Entry;
+typedef struct Entry80201814 Entry80201814;
+
 extern GlobalState lbl_803003C8;
 extern void *lbl_8064C4E0;
 extern int lbl_8064CBC0;
 extern int lbl_8064B820;
 extern int lbl_8064D18C;
 
-extern Entry8006D1DC *fn_8006D1DC(int id);
-extern void *fn_80201814(void *);
-extern int fn_801E79FC(void *, int);
+extern Entry *fn_8006D1DC(int id);
+extern Entry80201814 *fn_80201814(int);
+extern int fn_801E79FC(u32 *, u32);
 extern int fn_80071900(void *);
 extern int fn_8006B96C(int, int);
 extern int fn_800AF6D4(void);
 
-int fn_80071AD4(int id, u8 level, void *obj)
+int fn_80071AD4(int id, u8 level, int objectId)
 {
     Entry8006D1DC *entry;
     int result = 0;
     int bits = 0;
+    Entry80201814 *obj;
 
     if (id >= 0 && id <= 0x27) {
-        entry = fn_8006D1DC(id);
-        obj = fn_80201814(obj);
+        entry = (Entry8006D1DC *)fn_8006D1DC(id);
+        obj = fn_80201814(objectId);
         if (entry->minLevel <= level) {
             result = 1;
         }

@@ -22,12 +22,22 @@ typedef struct SaveEntry {
     u8 pad_30[8];
 } SaveEntry;
 
+typedef struct StateSnapshot {
+    int value0;
+    unsigned int value4;
+    int value8;
+    unsigned int valueC;
+    u8 value10;
+    u8 value11;
+    u8 value12;
+    u8 pad13;
+    int value14;
+    unsigned int value18;
+} StateSnapshot;
+
 typedef struct SaveSlot {
     u8 pad_00[4];
-    u8 header[0x10];
-    u8 flags;
-    u8 pad_15[7];
-    int unlocks;
+    StateSnapshot snapshot;
     int index;
     u8 pad_24[4];
     SaveEntry entries[7];
@@ -56,17 +66,17 @@ extern int lbl_8064CA64;
 extern int lbl_8064D18C;
 
 extern void fn_800B25AC(void);
-extern void fn_800B261C(int);
-extern void fn_800B2624(int, int, void *, int, void (*)(EventRequest *));
+extern void fn_800B261C(void *);
+extern void fn_800B2624(int, int, const char *, int, int);
 extern int fn_800B6A24(void);
 extern void fn_800B6548(int, int);
 extern void fn_800B933C(void);
-extern u8 fn_800BBF2C(SaveSlot *);
-extern void fn_800BBF6C(int, SaveSlot *);
+extern u8 fn_800BBF2C(unsigned char *);
+extern void fn_800BBF6C(void *, void *);
 extern u8 fn_800451D4(void);
 extern void fn_80045220(u8);
 extern u8 fn_80045230(void);
-extern void fn_800AFBA8(void *);
+extern void fn_800AFBA8(StateSnapshot *);
 extern u64 fn_801E8E2C(void);
 extern u64 OSGetTime(void);
 extern void fn_8017B864(int);
@@ -83,10 +93,10 @@ void fn_800B5438(EventRequest *request)
     fn_800B25AC();
     if (request->status == 0) {
         index = fn_800B6A24();
-        slot = fn_800BBF2C(&lbl_80320738);
+        slot = fn_800BBF2C((unsigned char *)&lbl_80320738);
         lbl_80320978 = lbl_80320738;
-        flags = lbl_80320978.flags;
-        unlocks = lbl_80320978.unlocks;
+        flags = lbl_80320978.snapshot.value10;
+        unlocks = lbl_80320978.snapshot.value18;
         lbl_80320978.entries[lbl_80320978.slots[index]].state = 2;
         lbl_80320978.slots[index] = slot;
         lbl_80320978.index = index;
@@ -103,19 +113,19 @@ void fn_800B5438(EventRequest *request)
         }
         lbl_80320978.entries[slot].saveCount = lbl_803003C8.saveCount;
         lbl_80320978.entries[slot].version = 0x6C;
-        fn_800AFBA8(lbl_80320978.header);
-        lbl_80320978.flags = flags | fn_80045230();
-        lbl_80320978.unlocks = lbl_803003C8.unlocks | unlocks;
-        fn_80045220(lbl_80320978.flags);
-        lbl_803003C8.unlocks = lbl_80320978.unlocks;
-        fn_800BBF6C(request->value, &lbl_80320978);
+        fn_800AFBA8(&lbl_80320978.snapshot);
+        lbl_80320978.snapshot.value10 = flags | fn_80045230();
+        lbl_80320978.snapshot.value18 = lbl_803003C8.unlocks | unlocks;
+        fn_80045220(lbl_80320978.snapshot.value10);
+        lbl_803003C8.unlocks = lbl_80320978.snapshot.value18;
+        fn_800BBF6C((void *)request->value, &lbl_80320978);
         fn_8017B864(0x2000);
         fn_8017B914(0);
         fn_800B261C(0);
         lbl_8064CA31++;
         lbl_8064CA64 = 1;
         lbl_8064CA60 = 0;
-        fn_800B2624(6, request->value, lbl_80247434, 0, fn_800B5738);
+        fn_800B2624(6, request->value, lbl_80247434, 0, (int)fn_800B5738);
         return;
     }
     fn_800B6548(request->value, request->status);

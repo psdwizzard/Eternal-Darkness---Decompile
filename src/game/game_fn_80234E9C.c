@@ -1,7 +1,7 @@
 #include "src/game/types.h"
 
-/* fn_80234E9C: pick the first table level whose sum/peak limits fit the
- * rounded absolute values of the input samples. */
+/* Pick the first level that accepts the sample peak, the sum of rounded
+ * magnitudes, and the partition position. */
 
 extern double fn_80102074(double x); /* rint */
 
@@ -20,7 +20,7 @@ int fn_80234E9C(float *in, s32 n, LevelTable **tablep, s32 count, s32 value)
     float buf[128];
     float *b;
     LevelTable *table;
-    float peak;
+    double peak;
     float sum;
     s32 i;
     float *p;
@@ -29,18 +29,65 @@ int fn_80234E9C(float *in, s32 n, LevelTable **tablep, s32 count, s32 value)
     b = buf;
     table = *tablep;
     sum = peak;
-    for (i = 0; i < n; i++) {
-        b[i] = __fabs(in[i]);
-    }
-    for (i = 0; i < n; i++) {
-        if (b[i] > peak) {
-            peak = b[i];
+    /* Convert eight magnitudes at a time, retaining the preceding result
+     * while computing the next one. */
+    if (n > 0) {
+        s32 blocks = (u32)n >> 3;
+        s32 left = n;
+        float *dest = b;
+        if (blocks) {
+            do {
+                float sample = in[0];
+                double magnitude = __fabs(sample);
+                double previous;
+                previous = magnitude;
+                sample = in[1];
+                magnitude = __fabs(sample);
+                dest[0] = previous;
+                previous = magnitude;
+                sample = in[2];
+                magnitude = __fabs(sample);
+                dest[1] = previous;
+                previous = magnitude;
+                sample = in[3];
+                magnitude = __fabs(sample);
+                dest[2] = previous;
+                previous = magnitude;
+                sample = in[4];
+                magnitude = __fabs(sample);
+                dest[3] = previous;
+                previous = magnitude;
+                sample = in[5];
+                magnitude = __fabs(sample);
+                dest[4] = previous;
+                previous = magnitude;
+                sample = in[6];
+                magnitude = __fabs(sample);
+                dest[5] = previous;
+                previous = magnitude;
+                sample = in[7];
+                magnitude = __fabs(sample);
+                dest[6] = previous;
+                dest[7] = magnitude;
+                in += 8;
+                dest += 8;
+            } while (--blocks > 0);
+            left &= 7;
+        }
+        if (left) {
+            do {
+                *dest++ = __fabs(*in++);
+            } while (--left > 0);
         }
     }
     p = b;
+    for (i = 0; i < n; i++, p++) {
+        if (*p > peak) {
+            peak = *p;
+        }
+    }
     for (i = 0; i < n; i++) {
-        *p = fn_80102074(*p);
-        p++;
+        b[i] = fn_80102074(b[i]);
     }
     for (i = 0; i < n; i++) {
         sum += b[i];

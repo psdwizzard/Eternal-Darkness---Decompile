@@ -1,6 +1,6 @@
 /* Update sanity levels and the events used by insanity effects.
- * Remaining code differences are the compiler's GPR save/restore helpers
- * and its pooled signed-integer conversion constant.
+ * Remaining code differences are two references to the compiler-pooled
+ * signed-integer conversion constant instead of the shared retail symbol.
  */
 typedef signed char s8;
 typedef unsigned char u8;
