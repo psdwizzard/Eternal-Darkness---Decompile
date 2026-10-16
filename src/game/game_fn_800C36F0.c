@@ -5,10 +5,6 @@ typedef struct Vec3 {
     float x, y, z;
 } Vec3;
 
-typedef struct SoundIds {
-    u16 ids[11];
-} SoundIds;
-
 typedef struct PositionResult {
     u32 unknown[2];
     Vec3 position;
@@ -16,7 +12,6 @@ typedef struct PositionResult {
     u32 reserved[2];
 } PositionResult;
 
-extern const volatile u16 lbl_8023983C[12];
 extern int lbl_8064CA90;
 extern float lbl_8064F1B8;
 extern float lbl_8064F1BC;
@@ -37,7 +32,7 @@ int fn_800C36F0(void *unused, void *context)
     Vec3 end;
     PositionResult location;
     int index;
-    const SoundIds sounds = *(const SoundIds *)lbl_8023983C;
+    u16 sounds[11] = {0x2E, 0x2F, 0x30, 0x31, 0x32, 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D};
     void *first;
     void *object;
     void *model;
@@ -64,7 +59,7 @@ odd:
 selected:
     end.z += offset;
     fn_80152838(&start, &end, 4);
-    fn_801AC9F4(sounds.ids[index], 100, &start, 2);
+    fn_801AC9F4(sounds[index], 100, &start, 2);
     fn_80204028(object, 10000, 0, 0);
     return 0;
 }
