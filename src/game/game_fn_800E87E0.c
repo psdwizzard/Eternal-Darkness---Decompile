@@ -45,7 +45,7 @@ typedef struct HitInfo {
 } HitInfo;
 
 typedef struct ThrowState {
-    int owner;
+    void *owner;
     int unk4;
     u8 pad8[0x14 - 0x8];
     Vec3 start;
@@ -90,9 +90,9 @@ extern void fn_8003B630(void *, Vec3 *, Vec3 *, HitInfo *, u16 **);
 extern void fn_80043F44(SpawnInfo *);
 extern float fn_800490E8(float, float);
 extern int fn_8006D344(void *, int, int);
-extern void *fn_8006D444(void);
+extern void *fn_8006D444(void *);
 extern int fn_80088528(void *, Vec3 *);
-extern void fn_800C44C0(void *, void *, int, Vec3 *, int *);
+extern int fn_800C44C0(void *, void *, void *, Vec3 *, int *);
 extern int fn_8011EB04(void *);
 extern Vec3 *fn_8011F130(void *);
 extern int fn_8011F598(void *, int, int, int, JointQuery *, int);
@@ -111,34 +111,34 @@ extern void fn_8012CCF0(void *, int, Vec3, Vec3, Vec3, int);
 extern void fn_8012CDF0(void *, int, Vec4, int);
 extern void fn_8012F604(void *, int, int, int);
 extern int fn_8012FDA0(void *, int);
-extern void fn_80157888(void *);
+extern u32 fn_80157888(void *);
 extern int fn_80157894(void *);
-extern int fn_80157918(void *);
+extern u8 fn_80157918(void *);
 extern u8 fn_80157AB8(void *);
-extern void fn_80157B3C(void *, int);
+extern void fn_80157B3C(void *, u8);
 extern void fn_80157B60(void *, u8);
 extern void fn_80157B80(void *, int);
 extern int fn_8015821C(void *);
 extern u32 fn_80178E94(Vec3 *, Vec3 *);
-extern u32 fn_80179004(Vec3 *, Vec3 *);
+extern int fn_80179004(const Vec3 *, const Vec3 *);
 extern void fn_8017A244(Vec3 *, Vec4 *, float);
 extern void fn_8017AD00(Matrix34 *, Vec3 *, Vec3 *);
-extern void *fn_801A7490(int);
-extern void *fn_801A7498(int);
-extern void fn_801A74D8(int, int);
-extern void fn_801A7610(int, Segment);
-extern void *fn_801A7778(int);
+extern u32 fn_801A7490(void *);
+extern u32 fn_801A7498(void *);
+extern void fn_801A74D8(void *, u32);
+extern void fn_801A7610(void *, Segment);
+extern void *fn_801A7778(void *);
 extern u32 fn_801D3974(int);
 extern void fn_801E8328(int, void *);
 extern void fn_802015A4(void *);
-extern void *fn_80201814(void *);
+extern void *fn_80201814(u32);
 extern int fn_80201B54(void *);
 extern ActorInfo *fn_80201B8C(void *);
 extern void *fn_80201B9C(void);
 extern void *fn_80201BC8(void *);
 extern void *fn_80201C24(void *);
 extern void fn_80201DD0(void *, void *);
-extern void fn_80204844(void *, int);
+extern void *fn_80204844(void *, int);
 extern void *fn_8020499C(void *);
 extern void fn_802110A8(Matrix34 *, Matrix34 *);
 extern void fn_802114E0(Matrix34 *, void *);
@@ -152,23 +152,24 @@ extern float fn_80211B44(Vec3 *, Vec3 *);
 extern void fn_80211B64(Vec3 *, Vec3 *, Vec3 *);
 extern void fn_80211EFC(Vec4 *, Matrix34 *);
 
-void *fn_800E87E0(int owner, int flagged, int fromHand, int arg3, int arg4, int arg5, float scale)
+void *fn_800E87E0(void *owner, int flagged, int fromHand, int arg3, int arg4, int arg5, float scale)
 {
-    void *link;
-    void *source;
-    int tint;
-    int value;
-    u32 hits;
+    Vec3 *handPosition;
+    Vec3 *position;
+    void *model;
     void *handle;
+    void *targetObject;
+    u32 hits;
+    void *targetModel;
     void *thrower;
     void *holder;
-    Vec3 *position;
-    void *target;
-    void *targetObject;
-    void *targetModel;
     const Vec3 *defaults;
-    void *model;
-    void *handModel;
+    void *target;
+    void *link;
+    int tint;
+    void *source;
+    int value;
+    void *object;
     ActorInfo *info;
     ThrowState *state;
     Matrix34 handMatrix;
@@ -207,7 +208,7 @@ void *fn_800E87E0(int owner, int flagged, int fromHand, int arg3, int arg4, int 
     u16 *surface;
     Color colorA;
     Color colorB;
-    void *object;
+    void *handModel;
     int found;
 
     defaults = lbl_80239B50;
@@ -220,7 +221,7 @@ void *fn_800E87E0(int owner, int flagged, int fromHand, int arg3, int arg4, int 
     holder = fn_8020499C(thrower);
     handModel = fn_80201BC8(holder);
     info = fn_80201B8C(holder);
-    position = fn_8011F130(handModel);
+    handPosition = fn_8011F130(handModel);
     fn_80043F44(&spawn);
     if (fromHand != 0) {
         spawn.field_10 = info->kind;
@@ -234,7 +235,7 @@ void *fn_800E87E0(int owner, int flagged, int fromHand, int arg3, int arg4, int 
         spawn.scale = lbl_8064F814;
     }
     spawn.field_28 = 0x53;
-    spawn.position = *position;
+    spawn.position = *handPosition;
     spawn.field_2C = fn_8011FB4C(handModel);
     spawn.field_34 = 0;
     object = fn_80034708(&spawn);
@@ -270,14 +271,14 @@ void *fn_800E87E0(int owner, int flagged, int fromHand, int arg3, int arg4, int 
         fn_8012C62C(model, 0xF, &c0, &c1, &c2, 0x16);
     }
     if (fromHand != 0) {
-        value = fn_8012FDA0(handModel, 0xF);
-        fn_80127DF8(handModel, value, &handMatrix);
+        int jointIndex = fn_8012FDA0(handModel, 0xF);
+        fn_80127DF8(handModel, jointIndex, &handMatrix);
         handPos.x = handMatrix.m[0][3];
         handPos.y = handMatrix.m[1][3];
         handPos.z = handMatrix.m[2][3];
         fn_80211EFC(&quat, &handMatrix);
         fn_8012B690(handModel, &handPos, &local);
-        fn_80211A6C(&local, position, &offset);
+        fn_80211A6C(&local, handPosition, &offset);
         position = fn_8011F130(model);
         fn_80211A48(position, &offset, position);
         fn_8012CDF0(model, 0xF, quat, 0);
@@ -355,8 +356,7 @@ void *fn_800E87E0(int owner, int flagged, int fromHand, int arg3, int arg4, int 
     fn_80211AAC(&spin, &spin);
     fn_80211A90(&spin, &spin, state->spinRate);
     state->spin = spin;
-    fn_80204844(fn_80201B9C(), 0x20);
-    handle = fn_8006D444();
+    handle = fn_8006D444(fn_80204844(fn_80201B9C(), 0x20));
     if (fn_8006D344(handle, 0x80, 0) != 0 && fn_80088528(handle, &step) != 0) {
         found = 1;
     }
