@@ -98,9 +98,9 @@ void fn_801237F0(int force)
     Vec3 dir;
     Vec3 pos;
     Vec3 tmp;
-    float scale;
     float fade_a;
     float fade_b;
+    float scale;
     float len;
     float dist;
     float near_scale;
@@ -109,10 +109,10 @@ void fn_801237F0(int force)
     float max_scale;
     float min_scale;
     float fade;
-    int key;
     int count;
     int enabled;
     int far_count;
+    int key;
     void* handle;
     Runtime* runtime;
     unsigned int status;
@@ -252,8 +252,7 @@ void fn_801237F0(int force)
                     }
                     seen++;
                 } else {
-                    falloff = lbl_804EF960[i].scale * (lbl_80650114 - (fade_b * (float)seen) / (float)far_count);
-                    lbl_804EF960[i].scale = MAX(scale, falloff);
+                    lbl_804EF960[i].scale = MAX(scale, lbl_804EF960[i].scale * (lbl_80650114 - (fade_b * (float)seen) / (float)far_count));
                     if (lbl_8064D18C != 0x27 && dist > lbl_80650158) {
                         lbl_804EF960[i].scale = scale;
                     }
