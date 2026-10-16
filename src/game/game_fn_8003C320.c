@@ -35,44 +35,52 @@ typedef struct Triple {
     s32 a, b, c;
 } Triple;
 
-extern void *fn_80201B8C(void *);
+extern void *fn_80201B8C(u8 *);
 extern void *fn_80201BC8(void *);
-extern void *fn_80201B54(void *);
-extern void fn_8011F114(Vec3 *, void *);
-extern int fn_80201EB8(void *);
-extern void *fn_80200C20(void *);
-extern void *fn_80201814(void *);
-extern u32 fn_80036D5C(void *);
-extern void fn_801E8328(int, void *);
-extern void fn_80201D34(void *, s32);
-extern void fn_80201D1C(void *, s32);
-extern void fn_80201D2C(void *, s32);
-extern void fn_80201D14(void *, s32);
-extern void fn_8003C6B8(void *, void *, void *);
-extern s32 fn_80066D04(void *, s32);
-extern int fn_8003D69C(void *);
-extern int fn_8006A4D4(void *);
-extern void *fn_80200C38(void *);
-extern u32 fn_801A74C0(void *);
-extern void fn_80205868(void *, int, Triple *, int);
-extern int fn_80201B5C(void *);
-extern void *fn_801294DC(void *, int, int, int);
-extern int fn_800389E0(void *, int, s32, int);
-extern void fn_80128C28(void *, void *, void *);
-extern int fn_801AC908(void *, Vec3 *, int);
-extern void *fn_801AAE68(u16, u8, u8, f32, Vec3 *, signed char, u8, u8, u16, u32);
+extern s32 fn_80201B54(s32 *);
+extern void fn_8011F114(Vec3 *, Vec3 *);
+typedef struct Object80201EB8 Object80201EB8;
+extern int fn_80201EB8(Object80201EB8 *);
+extern s32 fn_80200C20(s32 *);
+typedef struct Entry80201814 Entry80201814;
+extern Entry80201814 *fn_80201814(s32);
+extern void *fn_80036D5C(void *);
+extern int fn_801E8328(u32, u32);
+typedef struct Object80201D34 Object80201D34;
+extern void fn_80201D34(Object80201D34 *, s32);
+typedef struct Object80201D1C Object80201D1C;
+extern void fn_80201D1C(Object80201D1C *, u8);
+typedef struct Object80201D2C Object80201D2C;
+extern void fn_80201D2C(Object80201D2C *, s32);
+typedef struct Object80201D14 Object80201D14;
+extern void fn_80201D14(Object80201D14 *, u8);
+extern void fn_8003C6B8(void *, void *, s32);
+extern s32 fn_80066D04(s32, s32);
+extern s32 fn_8003D69C(s32);
+extern s32 fn_8006A4D4(s32);
+extern void *fn_80200C38(void **);
+typedef struct Data Data;
+extern u32 fn_801A74C0(Data *);
+extern void *fn_80205868(void *, int, void *, u32);
+extern int fn_80201B5C(int *);
+extern u8 *fn_801294DC(void *, int, int, int);
+extern int fn_800389E0(void *, int, s16, int);
+typedef struct Runtime Runtime;
+extern void fn_80128C28(Runtime *, u32, u32);
+extern int fn_801AC908(u32, void *, u8);
+extern int fn_801AAE68(u16, u8, u8, f32, Vec3 *, signed char, u8, u8, u16, u32);
 extern void fn_80067BAC(void *);
 extern void fn_80067C20(void *);
 extern void fn_80067EB8(void *);
-extern void fn_80068074(void *);
-extern void fn_800CA2C8(void *);
+extern void fn_80068074();
+extern int fn_800CA2C8(void *);
 extern void fn_80201138(int, void *, int, int, int, f32);
-extern void fn_800683E4();
-extern void fn_8003CB6C();
+extern s32 fn_800683E4(void *, s32);
+extern s32 fn_8003CB6C(void *, s32);
 
 extern Triple lbl_80238DD0;
 extern s32 lbl_8064C548;
-extern void *lbl_8064C5AC;
+extern s32 lbl_8064C5AC;
 extern s32 lbl_8064D18C;
 extern const f32 lbl_8064E284;
 extern const f32 lbl_8064E288;
@@ -84,7 +92,7 @@ void fn_8003C320(void *obj, void *arg1) {
     ObjInfo *info;
     void *other;
     void *res;
-    void *ctx;
+    s32 ctx;
     ObjInfo *otherInfo;
     void *task;
     int id;
@@ -99,13 +107,13 @@ void fn_8003C320(void *obj, void *arg1) {
     id = fn_80201EB8(obj);
     other = fn_80201814(fn_80200C20(arg1));
     if (other != NULL) {
-        otherInfo = fn_80201B8C(other);
+        otherInfo = fn_80201B8C((u8 *)other);
     } else {
         otherInfo = NULL;
     }
-    flags = fn_80036D5C(obj);
+    flags = (u32)fn_80036D5C(obj);
     if (id != lbl_8064D18C) {
-        fn_801E8328(2, obj);
+        fn_801E8328(2, (u32)obj);
         fn_80201D34(obj, 0);
         fn_80201D1C(obj, 1);
         return;
@@ -116,8 +124,8 @@ void fn_8003C320(void *obj, void *arg1) {
     }
     switch (info->state) {
     case 2:
-        if (fn_80066D04(obj, 0) != 0 && fn_80066D04(obj, 1) != 0 &&
-            fn_8003D69C(ctx) == 0 && fn_8006A4D4(obj) != 0) {
+        if (fn_80066D04((s32)obj, 0) != 0 && fn_80066D04((s32)obj, 1) != 0 &&
+            fn_8003D69C(ctx) == 0 && fn_8006A4D4((s32)obj) != 0) {
             ok = 1;
             if (lbl_8064D18C == 0xD0 && info->unk9E == 1) {
                 ok = 0;
@@ -137,7 +145,7 @@ void fn_8003C320(void *obj, void *arg1) {
                 task = fn_801294DC(res, 0x2B, 0x24, 0xA);
                 if (task != NULL) {
                     fn_800389E0(obj, 0, 1, 1);
-                    fn_80128C28(task, fn_800683E4, ctx);
+                    fn_80128C28(task, (u32)fn_800683E4, ctx);
                     if (fn_801AC908(lbl_8064C5AC, &pos, 100) == 0) {
                         lbl_8064C5AC = fn_801AAE68(0x4B, 100, 0, lbl_8064E284, &pos,
                                                    1, 2, 0, lbl_8064D18C, 0);
@@ -159,7 +167,7 @@ void fn_8003C320(void *obj, void *arg1) {
     }
     task = fn_801294DC(res, 0x18, 0x20, 0xA);
     if (task != NULL) {
-        fn_80128C28(task, fn_8003CB6C, ctx);
+        fn_80128C28(task, (u32)fn_8003CB6C, ctx);
         fn_800389E0(obj, 0, 0, 1);
         switch (lbl_8064D18C) {
         case 0x199:

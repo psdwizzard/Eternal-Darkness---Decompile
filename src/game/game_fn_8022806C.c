@@ -30,8 +30,14 @@ typedef enum { GX_AF_SPEC, GX_AF_SPOT, GX_AF_NONE } GXAttnFn;
 #define SET_REG_FIELD(reg, size, shift, val) \
     ((reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
 
-#define GX_WRITE_U8(v) (*(volatile u8 *)0xCC008000 = (u8)(v))
-#define GX_WRITE_U32(v) (*(volatile u32 *)0xCC008000 = (u32)(v))
+typedef union GXWGPipe {
+    u8 u8_data;
+    u32 u32_data;
+} GXWGPipe;
+extern volatile GXWGPipe GXWGFifo : 0xCC008000;
+
+#define GX_WRITE_U8(v) (GXWGFifo.u8_data = (u8)(v))
+#define GX_WRITE_U32(v) (GXWGFifo.u32_data = (u32)(v))
 
 #define GX_WRITE_XF_REG(addr, val) \
     do { \
@@ -43,7 +49,6 @@ typedef enum { GX_AF_SPEC, GX_AF_SPOT, GX_AF_NONE } GXAttnFn;
 void fn_8022806C(GXChannelID chan, u8 enable, GXColorSrc amb_src, GXColorSrc mat_src,
                  u32 light_mask, GXDiffuseFn diff_fn, GXAttnFn attn_fn)
 {
-    GXData *g;
     u32 reg;
     u32 idx;
 
@@ -70,10 +75,9 @@ void fn_8022806C(GXChannelID chan, u8 enable, GXColorSrc amb_src, GXColorSrc mat
     SET_REG_FIELD(reg, 2, 7, (attn_fn == GX_AF_SPEC) ? GX_DF_NONE : diff_fn);
     SET_REG_FIELD(reg, 1, 9, (attn_fn != GX_AF_NONE));
     SET_REG_FIELD(reg, 1, 10, (attn_fn != GX_AF_SPEC));
-    g = gx;
 
     GX_WRITE_XF_REG(idx + 14, reg);
-    g->bpSentNot = 1;
+    gx->bpSentNot = 1;
     if (chan == GX_COLOR0A0) {
         GX_WRITE_XF_REG(16, reg);
     } else if (chan == GX_COLOR1A1) {

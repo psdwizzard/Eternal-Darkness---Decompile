@@ -34,14 +34,22 @@ int fn_8010B5E4(Slot *slot, int x, int y, float scale)
 {
     Vec3 world;
     Int3 pos;
-    int screenX;
-    int screenY;
-    short target;
+    register int target;
+    register int screenX;
+    register int screenY;
+    register int base;
 
-    target = fn_8015784C(slot->actor);
+    fn_8015784C(slot->actor);
+    /* ASM: lwz and mr load the base while preserving the callee's
+     * sign-extended short result. C adds a redundant extsh; keeping the
+     * load here also preserves the retail instruction order. */
+    asm {
+        lwz base, lbl_8064CCB4
+        mr target, r3
+    }
     screenX = x + 320;
     screenY = y + 165;
-    slot->depth = target - (int)(scale * (float)(target - lbl_8064CCB4));
+    slot->depth = target - (int)(scale * (float)(target - base));
     pos.x = screenX;
     pos.y = screenY;
     pos.z = slot->depth;
