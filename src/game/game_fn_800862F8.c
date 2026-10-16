@@ -152,7 +152,6 @@ void fn_800862F8(void)
     float initial_radius;
     float final_radius;
     int reset_index;
-    Beam **target_controller;
     BeamSlot *target_slot;
     u32 mask;
     char *names = lbl_80244870;
@@ -160,7 +159,6 @@ void fn_800862F8(void)
     Vec3 *first_point[1];
     ShortVec3 *short_point;
     int point_index;
-    int link_index;
     Beam **source_controller;
     int endpoint_index;
     void *entry;
@@ -256,7 +254,10 @@ void fn_800862F8(void)
                      lbl_8064EB50, lbl_8064EB50);
         break;
 
-    case 89:
+    case 89: {
+        Beam **target_controller;
+        int link_index;
+
         if (lbl_803003C8.phase != 0) {
             break;
         }
@@ -294,5 +295,6 @@ void fn_800862F8(void)
             }
         }
         break;
+    }
     }
 }

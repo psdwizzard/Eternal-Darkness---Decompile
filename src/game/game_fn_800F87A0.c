@@ -2,76 +2,96 @@ typedef unsigned char u8;
 typedef unsigned int u32;
 typedef signed short s16;
 
-typedef struct Decimal {
+#define SIGDIGLEN 36
+
+/* MSL decimal (ansi_fp.h) */
+typedef struct decimal {
     u8 sign;
-    u8 pad0;
-    s16 exponent;
-    u8 length;
-    u8 digits[0x24];
-} Decimal;
+    u8 unk1;
+    s16 exp;
+    struct {
+        u8 length;
+        u8 text[SIGDIGLEN];
+    } sig;
+} decimal;
 
-void fn_800F87A0(Decimal *out, const Decimal *left, const Decimal *right)
+/* MSL __timesdec: result = x * y in decimal digits, rounded half-even */
+void fn_800F87A0(decimal *result, const decimal *x, const decimal *y)
 {
-    u8 work[0x48];
-    u8 *end;
-    u8 *limit;
-    u32 carry = 0;
-    int column;
-    int i;
+    u32 accumulator = 0;
+    u8 mantissa[SIGDIGLEN * 2];
+    int i = x->sig.length + y->sig.length - 1;
+    u8 *ip = mantissa + i + 1;
+    u8 *ep = ip;
 
-    out->sign = 0;
-    out->length = 0;
-    column = left->length + right->length - 1;
-    limit = &work[column + 1];
-    end = limit;
-    while (column > 0) {
-        int rightStart = right->length - 1;
-        int leftStart = (column - rightStart) - 1;
-        int count;
-        int j;
+    result->sign = 0;
 
-        if (leftStart < 0) {
-            leftStart = 0;
-            rightStart = column - 1;
+    for (; i > 0; i--) {
+        int k = y->sig.length - 1;
+        int j = i - k - 1;
+        int l;
+        int t;
+        const u8 *jp;
+        const u8 *kp;
+
+        if (j < 0) {
+            j = 0;
+            k = i - 1;
         }
-        count = rightStart + 1;
-        if (count > left->length - leftStart)
-            count = left->length - leftStart;
-        for (j = 0; j < count; j++)
-            carry += left->digits[leftStart + j] * right->digits[rightStart - j];
-        column--;
-        *--end = (u8)(carry % 10);
-        carry /= 10;
+
+        jp = x->sig.text + j;
+        kp = y->sig.text + k;
+        l = k + 1;
+        t = x->sig.length - j;
+
+        if (l > t)
+            l = t;
+
+        for (; l > 0; l--, jp++, kp--)
+            accumulator += *jp * *kp;
+
+        *--ip = (u8)(accumulator % 10);
+        accumulator /= 10;
     }
 
-    out->exponent = left->exponent + right->exponent;
-    if (carry != 0) {
-        *--end = (u8)carry;
-        out->exponent++;
+    result->exp = (s16)(x->exp + y->exp);
+
+    if (accumulator) {
+        *--ip = (u8)accumulator;
+        result->exp++;
     }
-    for (i = 0; i < 0x24 && end < limit; i++)
-        out->digits[i] = *end++;
-    out->length = (u8)i;
-    if (end < limit && *end >= 5) {
-        int round = *end++;
-        if (round == 5) {
-            while (end < limit && *end == 0)
-                end++;
-            if ((end[-1] & 1) == 0)
+
+    for (i = 0; i < SIGDIGLEN && ip < ep; i++, ip++)
+        result->sig.text[i] = *ip;
+    result->sig.length = (u8)i;
+
+    if (ip < ep && *ip >= 5) {
+        if (*ip == 5) {
+            u8 *jp = ip + 1;
+
+            for (; jp < ep; jp++) {
+                if (*jp != 0)
+                    goto round;
+            }
+            if ((*(ip - 1) & 1) == 0)
                 return;
         }
-        i = out->length - 1;
-        for (;;) {
-            if (out->digits[i] < 9) {
-                out->digits[i]++;
-                return;
+    round: {
+            u8 *text = result->sig.text;
+
+            ip = text + result->sig.length - 1;
+            for (;;) {
+                if (*ip < 9) {
+                    ++*ip;
+                    return;
+                }
+                if (ip == text) {
+                    *ip = 1;
+                    result->exp++;
+                    return;
+                }
+                *ip-- = 0;
             }
-            if (i == 0) {
-                out->digits[i] = 1;
-                out->exponent++;
-                return;
-            }
-            out->digits[i--] = 0;
         }
     }
 }

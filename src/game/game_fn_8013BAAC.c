@@ -1,5 +1,6 @@
-typedef float Matrix[3][4];
+typedef float Mtx[3][4];
 typedef struct Vec3 { float x, y, z; } Vec3;
+typedef struct Quaternion { float x, y, z, w; } Quaternion;
 typedef struct Shape {
     Vec3 first;
     Vec3 second;
@@ -23,16 +24,16 @@ extern void* fn_8011F130(void*);
 extern void* fn_8011FE34(void*);
 extern void* fn_8015C2FC(int);
 extern void fn_80179DB0(float*, short*);
-extern void fn_802114E0(Matrix, void*);
-extern void fn_80211710(Matrix, float*, float*);
-extern void fn_80211A48(void*, float*, float*);
+extern void fn_802114E0(Mtx, const Quaternion*);
+extern void fn_80211710(const Mtx, const Vec3*, Vec3*);
+extern void fn_80211A48(const Vec3*, const Vec3*, Vec3*);
 extern void fn_8013F3C0(Shape*, const Vec3*, const Vec3*, float);
 extern void* fn_8013FBE4(Owner*, const void*, Result*, void*, unsigned int);
 extern Vec3 lbl_8063D378;
 
 int fn_8013BAAC(void* target, void* object, float radius)
 {
-    Matrix rotation;
+    Mtx rotation;
     Shape shape;
     Result result;
     Vec3 start;
@@ -45,8 +46,8 @@ int fn_8013BAAC(void* target, void* object, float radius)
     second = fn_8011FA4C(object, 0);
     index = fn_8011F958(object, target);
     if (index != -1) {
-        void* translation;
-        void* angles;
+        Vec3* translation;
+        Quaternion* angles;
         Owner* owner;
 
         translation = fn_8011F130(object);
@@ -55,10 +56,10 @@ int fn_8013BAAC(void* target, void* object, float radius)
         fn_80179DB0(&start.x, first[index].position);
         fn_80179DB0(&end.x, second[index].position);
         fn_802114E0(rotation, angles);
-        fn_80211710(rotation, &start.x, &start.x);
-        fn_80211710(rotation, &end.x, &end.x);
-        fn_80211A48(translation, &start.x, &start.x);
-        fn_80211A48(translation, &end.x, &end.x);
+        fn_80211710(rotation, &start, &start);
+        fn_80211710(rotation, &end, &end);
+        fn_80211A48(translation, &start, &start);
+        fn_80211A48(translation, &end, &end);
         fn_8013F3C0(&shape, &end, &start, radius);
         if (fn_8013FBE4(owner, &shape, &result, object, 0) != 0)
             return 1;

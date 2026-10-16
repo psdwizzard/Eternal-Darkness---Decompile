@@ -24,34 +24,29 @@ typedef struct VIData {
 
 extern VIData lbl_802FE710;
 
+static inline VITiming *getTimings(void)
+{
+    VITiming *timings = lbl_802FE710.timings;
+    return timings;
+}
+
 /* Select the video-interface timing for the encoded TV mode. */
 VITiming *fn_80216C24(s32 mode)
 {
-    /* Values outside the supported mode range have no timing record. */
-    if ((u32)mode <= 21) {
-        register VITiming *timings;
-        register u32 addressHigh;
-        /* ASM: lis, addi load the timing table directly into its address register;
-         * the equivalent C initialization introduces an extra register move. */
-        asm {
-            lis addressHigh, lbl_802FE710@ha
-            addi timings, addressHigh, lbl_802FE710@l
-        }
-
-        switch (mode) {
-        case 0: return timings;
-        case 1: return timings + 1;
-        case 4: return timings + 2;
-        case 5: return timings + 3;
-        case 20: return timings;
-        case 21: return timings + 1;
-        case 8: return timings + 4;
-        case 9: return timings + 5;
-        case 2: return timings + 6;
-        case 3: return timings + 7;
-        case 16: return timings + 2;
-        case 17: return timings + 3;
-        }
+    VITiming *timings = getTimings();
+    switch (mode) {
+    case 0: return timings;
+    case 1: return timings + 1;
+    case 4: return timings + 2;
+    case 5: return timings + 3;
+    case 20: return timings;
+    case 21: return timings + 1;
+    case 8: return timings + 4;
+    case 9: return timings + 5;
+    case 2: return timings + 6;
+    case 3: return timings + 7;
+    case 16: return timings + 2;
+    case 17: return timings + 3;
     }
     return 0;
 }
