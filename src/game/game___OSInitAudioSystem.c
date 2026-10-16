@@ -64,11 +64,11 @@ void __OSInitAudioSystem(void) {
     reg16 = __DSPRegs[2];
     while (!(reg16 & 0x8000))
         reg16 = __DSPRegs[2];
+    __DSPRegs[5] |= 4;
     if (((reg16 << 16) | __DSPRegs[3]) != 0x4348) {
         errFlag = 1;
     }
 
-    __DSPRegs[5] |= 4;
     __DSPRegs[5] = 0x8ac;
     __DSPRegs[5] |= 1;
     while (__DSPRegs[5] & 1)
