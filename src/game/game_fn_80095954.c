@@ -67,6 +67,9 @@ s32 fn_80095954(void *object, void *actor, int id, Target *target, int arg4) {
     f32 angle;
     f32 absAngle;
     f32 turn;
+    Vec3 tmp;
+    Vec3 checkPos;
+    Vec3 pos;
 
     ctx = fn_80201B8C();
     info = ctx->info;
@@ -95,10 +98,6 @@ s32 fn_80095954(void *object, void *actor, int id, Target *target, int arg4) {
             } else {
                 fn_80094DD0(object, actor, arg4);
                 if (flag400 != 0 || flag800 != 0) {
-                    Vec3 pos;
-                    Vec3 checkPos;
-                    Vec3 tmp;
-
                     fn_8011F114(&tmp, lbl_8064C4E4);
                     checkPos = tmp;
                     pos = tmp;

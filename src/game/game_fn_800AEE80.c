@@ -32,12 +32,13 @@ extern void fn_800AEFF4(void);
 extern void (*lbl_8064C8C4)(void);
 extern int lbl_8064C9D4, lbl_8064C9D8, lbl_8064C9DC, lbl_8064C9E0;
 
-int fn_800AEE80(Owner *owner)
+int fn_800AEE80(void *arg)
 {
-    int index;
-    Event *event;
-    int ready;
+    Owner *owner = arg;
     int result = 0;
+    int ready;
+    Event *event;
+    int index;
     int i;
 
     event = fn_8006ED3C(owner, 0x1F, &index);
