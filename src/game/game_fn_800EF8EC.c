@@ -6,11 +6,11 @@ typedef struct TRKBuffer {
     u32 unk4;
     u32 length;
     u32 position;
-    u8 data[1];
+    u8 data[0x880];
 } TRKBuffer;
 
 extern int gTRKBigEndian[];
-extern int fn_800EFBC8(TRKBuffer *, const void *, u32);
+extern int fn_800EFBC8(TRKBuffer *, const u8 *, u32);
 
 void fn_800EF8EC(TRKBuffer *buffer, u32 *values, int count)
 {

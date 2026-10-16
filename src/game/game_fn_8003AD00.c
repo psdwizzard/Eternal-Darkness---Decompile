@@ -12,17 +12,17 @@ typedef struct Candidate {
 extern int fn_8003B794(void *, Candidate *, int, void *);
 extern int fn_8003B878(const void *, const void *);
 extern int fn_80066D80(void *, int);
-extern void fn_800FBE38(void *, int, int, int (*)(const void *, const void *));
+extern void fn_800FBE38(void *, unsigned long, unsigned long, int (*)(const void *, const void *));
 extern void *fn_8011F130(void *);
-extern int fn_80135D80(Vec3 *, Vec3 *, Vec3 *, Vec3 *, void *, void *, int, int, float);
+extern int fn_80135D80(Vec3 *, Vec3 *, Vec3 *, Vec3 *, void *, void *, unsigned char, unsigned char, float);
 extern unsigned int fn_80178E94(void *, void *);
 extern int fn_801A7490(void *);
-extern void *fn_801A7498(void *);
+extern unsigned int fn_801A7498(void *);
 extern int fn_801A7578(void *);
-extern void fn_801A7688(void *, int, Vec3 *);
+extern int fn_801A7688(void *, int, Vec3 *);
 extern int fn_801A7770(void *);
-extern unsigned long long fn_8020123C();
-extern void *fn_80201814(void *);
+extern unsigned long long fn_8020123C(int, int, int, int);
+extern void *fn_80201814(int);
 extern void *fn_80201890(int);
 extern int fn_80201B54(void *);
 extern void *fn_80201B9C(void);
@@ -31,7 +31,7 @@ extern void *fn_80201BC8(void *);
 extern int fn_80201EB8(void *);
 
 /* debug triangle ring buffer: 20 triangles of 3 vertices */
-extern Vec3 lbl_80301D3C[20][3];
+extern Vec3 lbl_80301D3C[][3];
 extern int lbl_8064C5E0;
 extern int lbl_8064CB58;
 extern float lbl_8064E240;
@@ -41,7 +41,7 @@ int fn_8003AD00(void *obj, void *target, void *area, int *outId, int *outBit) {
     int count;
     void *areaGroup;
     void *cur;
-    void *areaObj;
+    int areaObj;
     unsigned int maxDist;
     void *selfPos;
     int bit;

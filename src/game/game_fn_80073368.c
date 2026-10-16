@@ -9,15 +9,25 @@ typedef struct Vec3s {
 } Vec3s;
 
 typedef struct Shape {
-    char data[0x3C];
+    Vec3 first;
+    Vec3 second;
+    float radius;
+    Vec3 axis;
+    float length;
+    Vec3 center;
+    float bound_radius;
 } Shape;
 
 typedef struct Segment {
-    char data[0x28];
+    Vec3 first;
+    Vec3 second;
+    Vec3 axis;
+    float length;
 } Segment;
 
 typedef struct Result {
-    char data[0x18];
+    Vec3 normal;
+    Vec3 point;
 } Result;
 
 typedef struct Spot {
@@ -32,24 +42,25 @@ typedef struct Model {
     unsigned char type;
 } Model;
 
-extern void fn_8011F0E8(void *object, Vec3 *position);
-extern void fn_8011F114(Vec3 *, void *);
+extern void fn_8011F0E8(Vec3 *object, Vec3 *position);
+extern void fn_8011F114(Vec3 *, Vec3 *);
 extern float fn_8011F6F8(void *);
-extern Vec3 *fn_8011F770(void *object);
+extern void *fn_8011F770(void *object);
 extern unsigned int fn_8011FAEC(void *);
-extern void *fn_8012AB2C(void *);
+extern void *fn_8012AB2C(unsigned char *);
 extern void fn_8012B7A0(void *, float);
 extern float fn_8012B7D0(void *, Vec3 *);
-extern int fn_80137350(void *, Shape *, void *, Result *, int, short *);
+typedef struct CollisionWorld CollisionWorld;
+extern int fn_80137350(void *, const Shape *, const CollisionWorld *, Result *, unsigned int, unsigned short *);
 extern int fn_8013B9DC(void *object, char *item, unsigned short count, void *other);
 extern int fn_8013BAAC(void *context, void *object, float value);
-extern void fn_8013F3C0(Shape *, Vec3 *, Vec3 *, float);
-extern void fn_8013F4D0(Segment *, Vec3 *, Vec3 *);
+extern void fn_8013F3C0(Shape *, const Vec3 *, const Vec3 *, float);
+extern void fn_8013F4D0(Segment *, const Vec3 *, const Vec3 *);
 extern void *fn_80140258(void *owner, const Vec3 *value, Vec3 *out, int flags, void *filter);
 extern void *fn_8015C2FC(int);
-extern unsigned int fn_80179064(int, int, int, int);
+extern int fn_80179064(int, int, int, int);
 extern void fn_80179DB0(Vec3 *, Vec3s *);
-extern Model *fn_80201B8C(void);
+extern void *fn_80201B8C(unsigned char *);
 extern void *fn_80201B9C(void);
 extern void *fn_80201BC0(void *);
 extern void *fn_80201BC8(void *);
@@ -77,21 +88,18 @@ int fn_80073368(char *item, unsigned short itemCount, Spot *spots, unsigned shor
     Vec3 dir;
     Vec3 tmp;
     Vec3 targetPos;
-    short hitA;
-    short hitB;
-    int idx;
+    unsigned short hitA;
+    unsigned short hitB;
     Vec3 *targetRot;
     void *owner;
     int i;
     int numFound;
     int done;
     unsigned int dist;
-    Spot **cur;
     Model *model;
     float scale;
 
     numFound = 0;
-    idx = 0;
     done = 0;
     fn_80211A48(origin, fn_8011F770(self), &selfPos);
     targetRot = fn_8011F770(target);
@@ -131,30 +139,24 @@ int fn_80073368(char *item, unsigned short itemCount, Spot *spots, unsigned shor
             void *filter = fn_8015C2FC(2);
             fn_8013F3C0(&shapeA, &dir, &dir, fn_8011F6F8(target));
             if (fn_80137350(target, &shapeA, filter, &resultA, 1, &hitA) == 0) {
-                numFound++;
-                *(Spot **)((char *)found + idx) = spots;
-                idx += 4;
+                found[numFound++] = spots;
             }
         } else {
             fn_8013F4D0(&segment, &selfPos, &dir);
             if (fn_8013B9DC(self, item, itemCount, &segment) == 0 &&
-                fn_80140258(owner, (Vec3 *)&segment, &hitPos, 1, NULL) == NULL) {
+                fn_80140258(owner, &segment.first, &hitPos, 1, NULL) == NULL) {
                 void *filter = fn_8015C2FC(2);
                 fn_8013F3C0(&shapeB, &dir, &dir, fn_8011F6F8(target));
                 if (fn_80137350(target, &shapeB, filter, &resultB, 1, &hitB) == 0) {
-                    numFound++;
-                    *(Spot **)((char *)found + idx) = spots;
-                    idx += 4;
+                    found[numFound++] = spots;
                 }
             }
         }
     }
 
-    cur = found;
-    for (i = 0; i < numFound && done == 0; i++, cur++) {
-        fn_80201BD0(target);
-        model = fn_80201B8C();
-        fn_80179DB0(out, &(*cur)->pos);
+    for (i = 0; i < numFound && done == 0; i++) {
+        model = fn_80201B8C(fn_80201BD0(target));
+        fn_80179DB0(out, &found[i]->pos);
         fn_8011F0E8(target, out);
         targetPos = *out;
         fn_8012B7A0(target, fn_8012B7D0(self, &targetPos));

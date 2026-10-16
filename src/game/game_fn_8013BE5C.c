@@ -2,33 +2,38 @@ typedef struct Vec3 {
     float x, y, z;
 } Vec3;
 
-typedef struct Matrix34 {
-    float m[3][4];
-} Matrix34;
+typedef float Mtx[3][4];
+
+typedef struct Quaternion {
+    float x, y, z, w;
+} Quaternion;
+
+typedef struct Entry80201B3C Entry80201B3C;
+typedef struct Object80201EB8 Object80201EB8;
 
 typedef struct Geometry {
     short position[3];
     unsigned char unused[0x72];
 } Geometry;
 
-extern Geometry* fn_8011F9E4(void*, int);
-extern Geometry* fn_8011FA4C(void*, int);
+extern void* fn_8011F9E4(void*, int);
+extern void* fn_8011FA4C(void*, int);
 extern int fn_8011F958(void*, void*);
-extern Vec3* fn_8011F130(void*);
+extern void* fn_8011F130(void*);
 extern void* fn_8011FE34(void*);
-extern void fn_80179DB0(Vec3*, const short*);
-extern void fn_802114E0(Matrix34*, void*);
-extern void fn_80211710(Matrix34*, Vec3*, Vec3*);
-extern void fn_80211A48(Vec3*, Vec3*, Vec3*);
-extern void fn_80211A6C(Vec3*, Vec3*, Vec3*);
+extern void fn_80179DB0(float*, short*);
+extern void fn_802114E0(Mtx, const Quaternion*);
+extern void fn_80211710(const Mtx, const Vec3*, Vec3*);
+extern void fn_80211A48(const Vec3*, const Vec3*, Vec3*);
+extern void fn_80211A6C(const Vec3*, const Vec3*, Vec3*);
 extern void fn_80211AAC(Vec3*, Vec3*);
 extern float fn_80211B44(Vec3*, Vec3*);
 extern void* fn_80201B9C(void);
-extern void* fn_80201B3C(void);
+extern Entry80201B3C* fn_80201B3C(void);
 extern void* fn_80201BC0(void*);
 extern void* fn_80201BC8(void*);
-extern int fn_80201EB8(void*);
-extern int fn_80201B5C(void*);
+extern int fn_80201EB8(Object80201EB8*);
+extern int fn_80201B5C(int*);
 extern int lbl_8064D18C;
 extern float lbl_8065030C;
 extern float lbl_80650310;
@@ -36,7 +41,7 @@ extern float lbl_80650314;
 
 int fn_8013BE5C(void* target, void* object)
 {
-    Matrix34 transform;
+    Mtx transform;
     Vec3 start;
     Vec3 end;
     Vec3 direction;
@@ -44,9 +49,9 @@ int fn_8013BE5C(void* target, void* object)
     Geometry* second;
     int index;
     Vec3* translation;
-    void* rotation;
+    Quaternion* rotation;
     void* node;
-    void* current;
+    Entry80201B3C* current;
     float plane;
 
     first = fn_8011F9E4(object, 0);
@@ -57,11 +62,11 @@ int fn_8013BE5C(void* target, void* object)
         rotation = fn_8011FE34(object);
         node = fn_80201B9C();
         current = fn_80201B3C();
-        fn_80179DB0(&start, first[index].position);
-        fn_80179DB0(&end, second[index].position);
-        fn_802114E0(&transform, rotation);
-        fn_80211710(&transform, &start, &start);
-        fn_80211710(&transform, &end, &end);
+        fn_80179DB0(&start.x, first[index].position);
+        fn_80179DB0(&end.x, second[index].position);
+        fn_802114E0(transform, rotation);
+        fn_80211710(transform, &start, &start);
+        fn_80211710(transform, &end, &end);
         fn_80211A48(translation, &start, &start);
         fn_80211A48(translation, &end, &end);
         fn_80211A6C(&end, &start, &direction);
