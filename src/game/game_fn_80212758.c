@@ -53,17 +53,18 @@ extern DVDLowWork CommandList_80641880;
 extern volatile s32 NextCommandNumber_8064D9DC;
 extern volatile u32 WorkAroundType_8064D9BC;
 extern s32 lbl_8064C3F8; /* FirstTimeInBootrom */
-extern volatile OSTime lbl_8064D9C8; /* LastReadFinished */
+/* LastReadFinished; the symbol table splits its low word as lbl_8064D9CC. */
+extern volatile OSTime lbl_8064D9C8;
 
 extern OSTime __OSGetSystemTime(void);
 extern void OSCreateAlarm(OSAlarm *alarm);
 extern void OSSetAlarm(OSAlarm *alarm, OSTime tick, OSAlarmHandler handler);
 extern DVDDiskID *fn_802161E0(void); /* DVDGetCurrentDiskID */
-extern s32 fn_802125C8(void *addr, u32 length, u32 offset, DVDLowCallback callback);
+extern void fn_802125C8(void *addr, u32 length, u32 offset, DVDLowCallback callback);
 extern void fn_802126D8(void *addr, u32 length, u32 offset, DVDLowCallback callback);
 extern void fn_802124D4(OSAlarm *alarm, void *context);
 
-#define __DIRegs ((volatile u32 *)0xCC006000)
+volatile u32 __DIRegs[16] : 0xCC006000;
 
 #define OS_BUS_CLOCK (*(u32 *)0x800000F8)
 #define OS_TIMER_CLOCK (OS_BUS_CLOCK / 4)
@@ -90,6 +91,7 @@ BOOL fn_80212758(void *addr, u32 length, u32 offset, DVDLowCallback callback) {
     u32 wait;
     OSTime diff;
     OSTime tick;
+    OSTime last;
     DVDLowWork *w = &CommandList_80641880;
 
     __DIRegs[6] = length;
@@ -111,9 +113,12 @@ BOOL fn_80212758(void *addr, u32 length, u32 offset, DVDLowCallback callback) {
                 fn_802125C8(addr, length, offset, callback);
             } else {
                 blockNumOfPrevEnd = (CommandList_80641880.prev.offset + CommandList_80641880.prev.length - 1) >> 15;
-                blockNumOfCurrStart = CommandList_80641880.curr.offset >> 15;
-                if (blockNumOfCurrStart == blockNumOfPrevEnd || blockNumOfPrevEnd + 1 == blockNumOfCurrStart) {
-                    diff = __OSGetSystemTime() - lbl_8064D9C8;
+                if (blockNumOfPrevEnd ==
+                        (blockNumOfCurrStart = CommandList_80641880.curr.offset >> 15) ||
+                    blockNumOfPrevEnd + 1 == blockNumOfCurrStart) {
+                    diff = __OSGetSystemTime();
+                    last = lbl_8064D9C8;
+                    diff -= last;
                     wait = OSMillisecondsToTicks(5);
                     if (wait < diff) {
                         w->cmdList[0].cmd = -1;

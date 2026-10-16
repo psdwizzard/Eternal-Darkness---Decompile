@@ -29,53 +29,54 @@ extern void *fn_80072354(void *);
 extern void fn_801A7460(void *, int);
 extern void fn_801A74A0(void *, int);
 extern void fn_801A74A8(void *, int);
-extern void fn_801A74C8(void *, int);
-extern void fn_801A7560(void *, int);
-extern void fn_801A7538(void *, int);
-extern void fn_801A7518(void *, int);
+extern u32 fn_801A74C8(void *, u32);
+extern u32 fn_801A7560(void *, u32);
+extern void fn_801A7538(void *, unsigned short);
+extern void fn_801A7518(void *, short);
 extern void fn_801A7550(void *, int);
 extern void fn_801A7558(void *, int);
 extern void fn_801A764C(void *, void *);
 extern void fn_801292E0(void *, int *, int *);
 extern void fn_801287C4(void *, void *, void *, int);
 extern u32 fn_80201C2C(void *);
-extern u32 fn_80205288(void *);
-extern int fn_80201C24(void);
-extern void fn_801A7680(void *, int);
+extern void *fn_80205288(void *);
+extern void *fn_80201C24(void *);
+extern void fn_801A7680(void *, u32);
 extern void fn_80129334(void *, int, int *, int);
 extern void fn_801A7478(void *, void *);
-extern void fn_80128C28();
-extern void fn_80128C44(void *, void *, void *);
+extern void fn_80128C28(void *, u32, u32);
+extern void fn_80128C44(void *, u32, u32);
 extern void fn_80201D2C(void *, int);
-extern void fn_80201D14(void *, int);
-extern void fn_8003B8A0(void);
-extern void fn_8009376C(void);
-extern void fn_800C3ADC(void);
-extern void fn_80204230(void);
-extern void fn_802042A4(void);
+extern void fn_80201D14(void *, u8);
+extern int fn_8003B8A0(void *, void *);
+extern int fn_8009376C(void *, void *);
+extern int fn_800C3ADC(void *, void *);
+extern int fn_80204230(int, int);
+extern int fn_802042A4(int, int);
 extern char lbl_8031D588[];
 
 enum Kind800938E4 { KindInvalid = -1, KindFour = 4 };
 
 int fn_800938E4(void *object, void *resource)
 {
+    int callback;
+    void *created;
+    int dummy;
+    void *actor;
     Data800938E4 *data = fn_80201B8C(object);
-    void *related;
-    int offset;
     void *object2 = fn_80201B94(object);
     Vec800938E4 positionCopy;
-    Vec800938E4 position;
-    State800938E4 *state;
-    int owner;
-    int success;
-    int callback;
     enum Kind800938E4 selection;
-    void *actor;
-    void *created;
+    State800938E4 *state;
     u8 (*table)[0x34];
-    int dummy;
+    int offset;
     int count;
+    void *related;
+    int owner;
     int frames;
+    Vec800938E4 position;
+    int success;
+    void *linkedObject;
 
     fn_8011F114(&position, resource);
     positionCopy = position;
@@ -85,7 +86,6 @@ int fn_800938E4(void *object, void *resource)
     state = data->state;
     if (state->timer < 1) {
         Vec800938E4 temp;
-        /* Reusing 'created' for the lookup result keeps MWCC's allocation. */
         created = fn_80201814((int)related);
         state->timer = 0;
         if (created != 0) {
@@ -121,15 +121,15 @@ int fn_800938E4(void *object, void *resource)
                         fn_801287C4(created, fn_8009376C, actor, callback);
                         callback += 2;
                     } while (callback < 25);
-                    if (fn_80201C2C(object) != 0 && fn_80205288(object) != 0) {
-                        int link = fn_80201C24();
-                        fn_801A7680(actor, link);
+                    if (fn_80201C2C(object) != 0 && (linkedObject = fn_80205288(object)) != 0) {
+                        void *link = fn_80201C24(linkedObject);
+                        fn_801A7680(actor, (u32)link);
                         fn_80129334(resource, 1, &frames, -1);
                         fn_801A7478(actor, lbl_8031D588);
                         fn_801287C4(created, fn_800C3ADC, actor, frames - 1);
                     }
-                    fn_80128C28(created, fn_80204230, actor);
-                    fn_80128C44(created, fn_802042A4, actor);
+                    fn_80128C28(created, (u32)fn_80204230, (u32)actor);
+                    fn_80128C44(created, (u32)fn_802042A4, (u32)actor);
                     fn_80201D2C(object, 6);
                     fn_80201D14(object, 1);
                     success = 1;
