@@ -33,18 +33,22 @@ extern void fn_80104BBC(int destination, u16 width, int reference,
 
 void fn_8010528C(Decoder *decoder, FrameContext *context, int x, int y)
 {
-    MotionPlane *source;
     PlaneCursor *cursor;
+    MotionPlane *source;
+    int y_half;
+    int x_half;
+    int plane;
+    int block;
     int *offset;
+    int count;
     int reference;
     int offset_value;
     int reference_block;
     int destination_block;
-    int block;
-    int plane;
     u16 width;
-    u8 count;
 
+    y_half = y & 1;
+    x_half = x & 1;
     cursor = context->planes;
     source = decoder->planes;
     plane = 0;
@@ -63,7 +67,7 @@ void fn_8010528C(Decoder *decoder, FrameContext *context, int x, int y)
             destination_block = cursor->destination + offset_value;
             offset++;
             fn_80104BBC(destination_block, width, reference_block, width,
-                        x & 1, y & 1);
+                        x_half, y_half);
             block++;
         }
         plane++;
