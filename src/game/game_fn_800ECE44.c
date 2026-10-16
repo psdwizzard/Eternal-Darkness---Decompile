@@ -19,6 +19,12 @@ typedef struct Shape {
     float bound_radius;
 } Shape;
 
+typedef struct Color {
+    u8 r, g, b, a;
+} Color;
+
+typedef struct Owner Owner;
+
 typedef struct Hit {
     Vec3 normal;
     Vec3 point;
@@ -42,24 +48,24 @@ typedef struct DebugList {
     DebugEntry* entries;
 } DebugList;
 
-extern DebugList* fn_8015C390(int);
+extern void* fn_8015C390(int);
 extern void* fn_8015C2FC(int);
 extern int fn_80201B44(void);
 extern void* fn_80201814(int);
 extern void* fn_80201BC8(void*);
 extern void fn_8013F3C0(Shape*, const Vec3*, const Vec3*, float);
-extern void* fn_8013FBE4(void*, const Shape*, Hit*, int, int);
-extern int fn_800EC318(int, DebugEntry*, char*);
-extern void fn_800EBA80(int, Vec3*, u32*, int, float);
+extern void* fn_8013FBE4(Owner*, const void*, Hit*, void*, u32);
+extern int fn_800EC318(int, DebugEntry*, void*);
+extern void fn_800EBA80(int, Vec3*, Color*, u8, float);
 extern void fn_800ED4BC(Vec3*, int, const char*, ...);
-extern u32 lbl_802FC5BC[];
+extern Color lbl_802FC5BC[];
 extern float lbl_8064F8C8;
 extern float lbl_8064F8CC;
 extern float lbl_8064F8D0;
 
 void fn_800ECE44(int selector)
 {
-    void* collision;
+    Owner* collision;
     DebugEntry* entry;
     DebugList* list;
     int i;
@@ -68,7 +74,7 @@ void fn_800ECE44(int selector)
     Shape shape;
     Hit hit;
     char description[0x168];
-    u32 color;
+    Color color;
     int colorIndex;
 
     list = fn_8015C390(selector);

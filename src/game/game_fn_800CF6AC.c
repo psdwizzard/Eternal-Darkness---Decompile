@@ -24,28 +24,24 @@ typedef struct EntryTable {
 } EntryTable;
 
 typedef struct Effect Effect;
-extern s32 fn_8003CC48(s32 unused, Object *object, s32 kind, s16 amount);
+extern s16 fn_8003CC48(s32 unused, Object *object, s32 kind, s16 amount);
 extern void fn_801A7518(Effect *effect, s16 value);
 extern void fn_801A7520(Effect *effect, s16 value);
 extern void fn_801A7528(Effect *effect, s16 value);
-extern void fn_801A7538(Effect *effect, u16 value);
+extern void fn_801A7538(Effect *effect, s32 value);
 extern float lbl_8064F33C;
 
-void fn_800CF6AC(void *unused, EntryTable *table, register Object *object,
+void fn_800CF6AC(void *unused, EntryTable *table, Object *object,
                   Effect *effect, s32 index, s32 mode)
 {
-    u8 input = table->entries[index].amount;
     s32 kind = 2;
-    s32 amount;
-    register Object *call_object;
-
-    /* ASM: mr sets up the object argument before the mode branch; equivalent C delays it until after the branch. */
-    asm { mr call_object, object }
+    u8 input = table->entries[index].amount;
+    s16 amount;
 
     if (mode == 4) {
         kind = 3;
     }
-    amount = fn_8003CC48((s32)unused, call_object, kind, input);
+    amount = fn_8003CC48((s32)unused, object, kind, input);
     if (table->entries[index].flags & 1) {
         fn_801A7518(effect, amount);
         fn_801A7538(effect, 1);
