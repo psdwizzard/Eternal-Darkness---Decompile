@@ -1,4 +1,6 @@
 typedef signed char s8;
+typedef unsigned char u8;
+typedef unsigned long long u64;
 typedef unsigned short u16;
 typedef int s32;
 typedef unsigned int u32;
@@ -13,16 +15,16 @@ extern f32 lbl_8064E910;
 extern f32 lbl_8064E914;
 extern f32 lbl_8064E918;
 
-extern u32 fn_8003BD48(void);
-extern s32 fn_80078608(void *, s32 *, s32 *, s32 *, s32 *, s32 *, s32 *, s32 *);
-extern void fn_800CA3A0(void *, s32, s32, s32);
+extern s32 fn_8003BD48(void *, void *);
+extern s32 fn_80078608(void *, s32 *, void **, void **, void **, s32 *, s32 *, s32 *);
+extern void *fn_800CA3A0(void *, s32, void *, s32);
 extern int fn_800FBFB0(void);
 extern void *fn_8011F130(void *);
 extern void fn_80120AD0(void *, int, int, int, float, float);
-extern void fn_80128B10(void *, int);
+extern int fn_80128B10(void *, u32);
 extern int fn_80128EAC(void *);
-extern u32 fn_80128EE4(void *);
-extern void fn_80128F74(void *, u32);
+extern u8 fn_80128EE4(void *);
+extern s32 fn_80128F74(void *, u32);
 extern int fn_801290D0(void *);
 extern void *fn_801A7498(void *);
 extern void *fn_801A74B8(void *);
@@ -30,7 +32,7 @@ extern void fn_801A74D8(void *, u32);
 extern void fn_801A74E8(void *, u32);
 extern int fn_801AC9F4(int, int, void *, int);
 extern void fn_8020104C(int, void *, void *, int, float);
-extern void fn_8020123C(int, void *, void *, void *);
+extern u64 fn_8020123C(int, void *, void *, void *);
 extern void *fn_80201814(void *);
 extern void *fn_80201B8C(void *);
 extern void *fn_80201BC8(void *);
@@ -65,7 +67,6 @@ int fn_80078794(void *obj, void *arg) {
     s32 first;
     Owner *owner;
     s32 state;
-    s32 pass;
     u32 flags;
     s32 start;
     Ring *ring;
@@ -73,14 +74,14 @@ int fn_80078794(void *obj, void *arg) {
     s32 pending;
     s32 done;
     s32 found;
-    u32 objFlags;
+    u8 objFlags;
     void *pos;
     void *ctx;
     u32 bits;
     s32 sp20;
-    s32 have3;
-    s32 have4;
-    s32 have6;
+    void *have3;
+    void *have4;
+    void *have6;
     s32 count3;
     s32 count4;
     s32 count6;
@@ -96,7 +97,7 @@ int fn_80078794(void *obj, void *arg) {
     count3 = 0;
     count4 = 0;
     count6 = 0;
-    flags = fn_8003BD48();
+    flags = fn_8003BD48(obj, arg);
     state = fn_80128EAC(obj);
     a = fn_801A7498(arg);
     b = fn_801A74B8(arg);
@@ -107,6 +108,8 @@ int fn_80078794(void *obj, void *arg) {
     fn_801A74D8(arg, 0x200000);
 
     if ((flags & 3) && state == 4) {
+        s32 pass;
+
         fn_80128B10(obj, 3);
         bits = fn_801290D0(obj);
         fn_80128F74(obj, bits | 0x200);
@@ -124,28 +127,28 @@ int fn_80078794(void *obj, void *arg) {
             case 3:
                 if (count3 < ring->need3) {
                     found = 1;
-                } else if (count3 == ring->need3 && have3 != 0 && pass == 2) {
+                } else if (count3 == ring->need3 && (s32)have3 != 0 && pass == 2) {
                     found = 1;
                     pending = 0;
-                    fn_8020123C(8, a, (void *)have3, arg);
+                    fn_8020123C(8, a, have3, arg);
                 }
                 break;
             case 4:
                 if (count4 < ring->need4) {
                     found = 1;
-                } else if (count4 == ring->need4 && have4 != 0 && pass == 2) {
+                } else if (count4 == ring->need4 && (s32)have4 != 0 && pass == 2) {
                     found = 1;
                     pending = 0;
-                    fn_8020123C(8, a, (void *)have4, arg);
+                    fn_8020123C(8, a, have4, arg);
                 }
                 break;
             case 6:
                 if (count6 < ring->need6) {
                     found = 1;
-                } else if (count6 == ring->need6 && have6 != 0 && pass == 2) {
+                } else if (count6 == ring->need6 && (s32)have6 != 0 && pass == 2) {
                     found = 1;
                     pending = 0;
-                    fn_8020123C(8, a, (void *)have6, arg);
+                    fn_8020123C(8, a, have6, arg);
                 }
                 break;
             }
@@ -160,12 +163,12 @@ int fn_80078794(void *obj, void *arg) {
             }
         }
         if (pending) {
-            if (have3 != 0) {
-                fn_8020123C(8, a, (void *)have3, arg);
-            } else if (have6 != 0) {
-                fn_8020123C(8, a, (void *)have6, arg);
-            } else if (have4 != 0) {
-                fn_8020123C(8, a, (void *)have4, arg);
+            if ((s32)have3 != 0) {
+                fn_8020123C(8, a, have3, arg);
+            } else if ((s32)have6 != 0) {
+                fn_8020123C(8, a, have6, arg);
+            } else if ((s32)have4 != 0) {
+                fn_8020123C(8, a, have4, arg);
             }
         }
         if (type == 0) {

@@ -1,4 +1,5 @@
 typedef unsigned char u8;
+typedef unsigned int u32;
 
 typedef struct Vec3 {
     float x;
@@ -13,22 +14,26 @@ typedef struct Color {
     u8 a;
 } Color;
 
+typedef struct PackedColor {
+    u32 value;
+} PackedColor;
+
 typedef struct Node {
-    void *object;
+    const short *object;
 } Node;
 
 typedef struct Entry {
-    void *object;
+    const short *object;
     Node *links[12];
     unsigned char flags;
     unsigned char linkCount;
     unsigned char tail[2];
 } Entry;
 
-extern void fn_800BCCC4(void *, Vec3 *);
+extern void fn_800BCCC4(const short *, Vec3 *);
 extern void fn_800ED4BC(Vec3 *, int, const char *, ...);
-extern void fn_800EBA80(int, Vec3 *, Color *, int, float);
-extern void fn_801E7CBC(Vec3, Vec3, Vec3, Vec3, Color);
+extern void fn_800EBA80(int, Vec3 *, Color *, u8, float);
+extern void fn_801E7CBC(Vec3 *, Vec3 *, Vec3 *, Vec3 *, u32 *);
 
 extern Color lbl_802FC5BC[];
 extern Node *lbl_80320C60[];
@@ -36,9 +41,9 @@ extern char lbl_8064B6F0[8];
 extern char lbl_8064B6F8[4];
 extern Entry *lbl_8064CA74;
 extern float lbl_8064F0CC;
-extern Color lbl_8064F0D0;
-extern Color lbl_8064F0D4;
-extern Color lbl_8064F0D8;
+extern PackedColor lbl_8064F0D0;
+extern PackedColor lbl_8064F0D4;
+extern PackedColor lbl_8064F0D8;
 extern float lbl_8064F0DC;
 extern float lbl_8064F0E0;
 extern float lbl_8064F0E4;
@@ -46,6 +51,12 @@ extern float lbl_8064F0E4;
 static inline void drawMarker(Vec3 *pos, Color color)
 {
     fn_800EBA80(1, pos, &color, 0x7F, lbl_8064F0E4);
+}
+
+/* Draw from local copies so rendering cannot alter the path vertices. */
+static inline void drawQuad(Vec3 a, Vec3 b, Vec3 c, Vec3 d, PackedColor color)
+{
+    fn_801E7CBC(&a, &b, &c, &d, &color.value);
 }
 
 void fn_800BC888(int showLabels, int showLinks, int showPath, int showIndices)
@@ -82,7 +93,7 @@ void fn_800BC888(int showLabels, int showLinks, int showPath, int showIndices)
                         fn_800BCCC4(link->object, &linkPos);
                         linkTop = linkPos;
                         linkTop.z += lbl_8064F0CC;
-                        fn_801E7CBC(pos, top, linkTop, linkPos, lbl_8064F0D0);
+                        drawQuad(pos, top, linkTop, linkPos, lbl_8064F0D0);
                     }
                 }
             }
@@ -100,8 +111,8 @@ void fn_800BC888(int showLabels, int showLinks, int showPath, int showIndices)
                 curTop = cur;
                 curTop.z += lbl_8064F0CC;
                 drawMarker(&cur, lbl_802FC5BC[3]);
-                fn_801E7CBC(prev, prevTop, curTop, cur, lbl_8064F0D4);
-                fn_801E7CBC(cur, curTop, prevTop, prev, lbl_8064F0D8);
+                drawQuad(prev, prevTop, curTop, cur, lbl_8064F0D4);
+                drawQuad(cur, curTop, prevTop, prev, lbl_8064F0D8);
                 prev = cur;
             }
         }
