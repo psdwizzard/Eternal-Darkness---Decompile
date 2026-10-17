@@ -174,7 +174,9 @@ void fn_80216EAC(void)
     top = (*dispY) & 1;
     offsetV = lbl_8064DA7E;
     POS(u16, adjustedDispPosY) = MAX((s16)(*dispY) + offsetV, top);
-    bottom = (s16)acv * 2 - top;
+    shiftedBottom = (s16)acv;
+    shiftedBottom *= 2;
+    bottom = shiftedBottom - top;
     shiftedBottom = (s16)*dispY + (s16)POS(u16, dispSizeY) + offsetV;
     upperClip = MAX(shiftedBottom - bottom, 0);
     shiftedTop = (s16)*dispY + offsetV;

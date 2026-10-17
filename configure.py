@@ -9401,7 +9401,7 @@ config.libs = [
             Object(Matching, "game/game_fn_800B9454.c"),
             Object(Matching, "game/game_fn_800B9460.c"),
             Object(Matching, "game/game_fn_800B9474.c"),
-            Object(NonMatching, "game/game_fn_800B9578.c"),
+            Object(NonMatching, "game/game_fn_800B9578.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_800B9C88.c"),
             Object(NonMatching, "game/game_fn_800B9D20.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_800B9FE8.c"),
@@ -9591,7 +9591,7 @@ config.libs = [
             # 92.912%: behavior-complete peer scan and dispatch; remaining
             # differences are frame/register allocation and temporary scheduling.
             Object(NonMatching, "game/game_fn_800C8568.c"),
-            Object(NonMatching, "game/game_fn_800C875C.c"),
+            Object(NonMatching, "game/game_fn_800C875C.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_800C9164.c"),
             Object(Matching, "game/game_fn_800C91F8.c"),
             Object(Matching, "game/game_fn_800C9268.c"),
@@ -10737,7 +10737,7 @@ config.libs = [
                 "game/game_fn_8011FF40.c",
                 extra_cflags=["-use_lmw_stmw on"],
             ),
-            Object(NonMatching, "game/game_fn_80120098.c"),
+            Object(NonMatching, "game/game_fn_80120098.c", extra_cflags=["-use_lmw_stmw on"]),
             Object(Matching, "game/game_fn_801204E0.c"),
             Object(Matching, "game/game_fn_80120558.c"),
             Object(Matching, "game/game_fn_80120688.c"),

@@ -122,11 +122,6 @@ extern const float lbl_8064F280;
 extern const float lbl_8064F284;
 extern Color lbl_80651A70;
 
-static inline Color GetColor(Color *color)
-{
-    return *color;
-}
-
 int fn_800C875C(void *context, int phase, void *message, int *result)
 {
     int kind;
@@ -390,7 +385,10 @@ int fn_800C875C(void *context, int phase, void *message, int *result)
             return 1;
         }
         if (kind == 0x11) {
-            fn_8012C62C(object, 0xF, GetColor(&lbl_8064F260), GetColor(&lbl_8064F264), GetColor(&lbl_80651A70), 0x14);
+            Color c = lbl_80651A70;
+            Color b = lbl_8064F264;
+            Color a = lbl_8064F260;
+            fn_8012C62C(object, 0xF, a, b, c, 0x14);
             fn_80201D34(context, 0x15);
             fn_80201D1C(context, 1);
             return 1;

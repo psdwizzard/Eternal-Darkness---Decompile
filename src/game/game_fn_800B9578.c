@@ -40,7 +40,7 @@ typedef struct ObjectPacket {
     u8 unk0;
     u8 unk1;
     s16 rot[3];
-    u8 pos[8];
+    s16 pos[4];
     s16 unk10;
     u16 type;
     s32 flags;
@@ -60,21 +60,21 @@ extern int fn_800A4F98(int);
 extern int fn_80201B44(void);
 extern void *fn_80201814(int);
 extern int fn_80201B54(void *);
-extern u8 fn_80201B5C(void *);
-extern u8 fn_80201B64(void *);
+extern int fn_80201B5C(void *);
+extern int fn_80201B64(void *);
 extern ObjectInfo *fn_80201B8C(void *);
 extern void *fn_80201B94(void *);
 extern void *fn_80201BC8(void *);
 extern void *fn_80201C2C(void *);
-extern s16 fn_80201C50(void *);
+extern void *fn_80201C50(void *);
 extern u32 fn_80201CDC(void *);
 extern int fn_80205110(void *);
-extern int fn_8011F130(void *);
+extern void *fn_8011F130(void *);
 extern void *fn_8011FE34(void *);
-extern void fn_80128108(void *, void *);
+extern void fn_80128108(const float *, s16 *);
 extern int fn_8011EB04(void *);
-extern s16 fn_8011FB4C(void *);
-extern void fn_80179E60(s16 *, int);
+extern void *fn_8011FB4C(void *);
+extern void fn_80179E60(s16 *, float *);
 extern int fn_80038308(void *, int, s16 *);
 extern u32 fn_80036D5C(void *);
 extern u16 fn_800B9FE8(void *);
@@ -82,17 +82,17 @@ extern int fn_8012FB2C(void *);
 extern int fn_8012F700(void *);
 extern int fn_8012FA54(void *, int);
 extern int fn_8012FAB4(void *, int);
-extern int fn_800B9C88(u8 *, void *);
+extern u16 fn_800B9C88(void *, void *);
 extern int fn_8012F7D4(u8 *, void *);
-extern int fn_800BB450(u8 *, void *);
-extern int fn_800BB5C4(u8 *, void *);
-extern int fn_800BB7A8(u8 *, void *);
-extern int fn_800BB9A4(u8 *, void *);
-extern int fn_800BBAF0(u8 *, void *);
-extern u8 fn_8012DC80(void *);
-extern void fn_8012DBE8(void *, int, u8 *);
+extern u16 fn_800BB450(void *, void *);
+extern u16 fn_800BB5C4(void *, void *);
+extern u16 fn_800BB7A8(void *, void *);
+extern u16 fn_800BB9A4(void *, void *);
+extern u16 fn_800BBAF0(void *, void *);
+extern int fn_8012DC80(u8 *);
+extern u16 fn_8012DBE8(u8 *, u32, u8 *);
 extern int fn_80066D04(void *, int);
-extern int fn_800BA068(u8 *, int, void *, int *);
+extern u16 fn_800BA068(void *, void *, void *, int);
 extern void *memcpy(void *, const void *, u32);
 extern void *memset(void *, int, u32);
 
@@ -102,18 +102,21 @@ int fn_800B9578(u8 *buf, void *object, int *count, int extra) {
     u8 bits[4];
     PacketPair misc;
     ObjectPacket pkt;
-    void *parent;
-    int slot;
-    void *player;
-    ObjectLink *link;
-    void *target;
-    int localId;
-    void *model;
     int ownerId;
+    void *model;
+    void *parent;
+    register int localId;
+    register int size;
     ObjectInfo *info;
-    int size;
+    int slot;
+    void *target;
+    ObjectLink *link;
+    void *player;
 
-    localId = fn_800A4F98(2);
+    fn_800A4F98(2);
+    /* ASM: mr captures the owner ID in the retail allocation; a C assignment
+     * makes MWCC allocate a different register throughout the function. */
+    asm { mr localId, r3 }
     player = fn_80201814(fn_80201B44());
     ownerId = fn_80201B54(object);
     info = fn_80201B8C(object);
@@ -125,8 +128,8 @@ int fn_800B9578(u8 *buf, void *object, int *count, int extra) {
     fn_80179E60(pkt.rot, fn_8011F130(model));
     fn_80128108(fn_8011FE34(model), pkt.pos);
     pkt.type = fn_8011EB04(model);
-    pkt.unk10 = fn_80201C50(parent);
-    pkt.unk18 = fn_8011FB4C(model);
+    pkt.unk10 = (s16)(u32)fn_80201C50(parent);
+    pkt.unk18 = (s16)(u32)fn_8011FB4C(model);
     pkt.subtype = info->unk98;
     pkt.unk0 = fn_80201B5C(object);
     pkt.unk1 = fn_80201B64(object);
@@ -135,7 +138,8 @@ int fn_800B9578(u8 *buf, void *object, int *count, int extra) {
     pkt.unk1E = info->state->unk146;
     pkt.flags = 0;
     if (slot != -1) {
-        pkt.flags |= fn_800B9FE8(target) << 24;
+        int linkedCount = fn_800B9FE8(target);
+        pkt.flags |= linkedCount << 24;
     } else {
         pkt.flags |= 0x40000;
     }
@@ -223,27 +227,57 @@ int fn_800B9578(u8 *buf, void *object, int *count, int extra) {
     size = sizeof(ObjectPacket);
     *count += 1;
     if (pkt.flags & 4) {
-        size = fn_800B9C88(buf + sizeof(ObjectPacket), player) + sizeof(ObjectPacket);
-        size &= 0xFFFF;
+        register int combinedSize;
+        register u16 sectionSize = fn_800B9C88(buf + sizeof(ObjectPacket), player);
+        /* ASM: addi/clrlwi combine the u16 return with the header length; C adds
+         * a redundant return-value truncation before this final 16-bit mask. */
+        asm {
+            addi combinedSize, sectionSize, 0x24
+            clrlwi size, combinedSize, 16
+        }
     }
     if (pkt.flags & 2) {
-        size = (u16)size + fn_8012F7D4(buf + (u16)size, model);
-        size &= 0xFFFF;
+        size = ((u16)size + fn_8012F7D4(buf + (u16)size, model)) & 0xFFFF;
     }
     if (pkt.flags & 8) {
-        size += fn_800BB450(buf + (u16)size, fn_80201814(info->state->unk24));
+        {
+            register u16 sectionSize = fn_800BB450(buf + (u16)size, fn_80201814(info->state->unk24));
+            /* ASM: add uses the callee's zero-extended u16 length directly;
+             * MWCC otherwise inserts a redundant clrlwi before the addition. */
+            asm { add size, size, sectionSize }
+        }
     }
     if (pkt.flags & 0x20000) {
-        size += fn_800BB5C4(buf + (u16)size, fn_80201814(info->state->unk28));
+        {
+            register u16 sectionSize = fn_800BB5C4(buf + (u16)size, fn_80201814(info->state->unk28));
+            /* ASM: add uses the callee's zero-extended u16 length directly;
+             * MWCC otherwise inserts a redundant clrlwi before the addition. */
+            asm { add size, size, sectionSize }
+        }
     }
     if (pkt.flags & 0x10) {
-        size += fn_800BB7A8(buf + (u16)size, fn_80201814(info->state->unk2C));
+        {
+            register u16 sectionSize = fn_800BB7A8(buf + (u16)size, fn_80201814(info->state->unk2C));
+            /* ASM: add uses the callee's zero-extended u16 length directly;
+             * MWCC otherwise inserts a redundant clrlwi before the addition. */
+            asm { add size, size, sectionSize }
+        }
     }
     if (pkt.flags & 0x20) {
-        size += fn_800BBAF0(buf + (u16)size, fn_80201814(info->state->unk3C));
+        {
+            register u16 sectionSize = fn_800BBAF0(buf + (u16)size, fn_80201814(info->state->unk3C));
+            /* ASM: add uses the callee's zero-extended u16 length directly;
+             * MWCC otherwise inserts a redundant clrlwi before the addition. */
+            asm { add size, size, sectionSize }
+        }
     }
     if (pkt.flags & 0x40) {
-        size += fn_800BB9A4(buf + (u16)size, fn_80201814(info->state->unk38));
+        {
+            register u16 sectionSize = fn_800BB9A4(buf + (u16)size, fn_80201814(info->state->unk38));
+            /* ASM: add uses the callee's zero-extended u16 length directly;
+             * MWCC otherwise inserts a redundant clrlwi before the addition. */
+            asm { add size, size, sectionSize }
+        }
     }
     if ((pkt.flags & 0x100) || (pkt.flags & 0x200)) {
         pair.a = info->state->unk152;
@@ -253,7 +287,7 @@ int fn_800B9578(u8 *buf, void *object, int *count, int extra) {
     }
     if (pkt.type == 5 && pkt.subtype == 12) {
         memset(status, 0, sizeof(status));
-        if (fn_8012DC80(model)) {
+        if ((u8)fn_8012DC80(model)) {
             if (fn_80066D04(object, 3) == 0) {
                 status[0] |= 1;
             }
@@ -277,6 +311,11 @@ int fn_800B9578(u8 *buf, void *object, int *count, int extra) {
         memcpy(buf + (u16)size, &misc, sizeof(misc));
         size += sizeof(misc);
     }
-    size += fn_800BA068(buf + (u16)size, ownerId, target, count);
+    {
+        register u16 sectionSize = fn_800BA068(buf + (u16)size, (void *)ownerId, target, (int)count);
+        /* ASM: add consumes the already-zero-extended u16 result in r3; MWCC C
+         * otherwise inserts a second truncation at this call boundary. */
+        asm { add size, size, sectionSize }
+    }
     return size;
 }
