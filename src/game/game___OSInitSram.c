@@ -53,7 +53,8 @@ static BOOL ReadSram(void* buffer) {
 }
 
 void __OSInitSram(void) {
+    SramControlBlock* scb = &Scb_80640E40;
     Scb_80640E40.locked = Scb_80640E40.enabled = FALSE;
-    Scb_80640E40.sync = ReadSram(Scb_80640E40.sram);
-    Scb_80640E40.offset = RTC_SRAM_SIZE;
+    scb->sync = ReadSram(Scb_80640E40.sram);
+    scb->offset = RTC_SRAM_SIZE;
 }

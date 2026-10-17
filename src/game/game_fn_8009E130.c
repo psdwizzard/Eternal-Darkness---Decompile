@@ -58,8 +58,9 @@ extern ModeState lbl_803003C8;
 extern u8 *lbl_8064C4E0;
 extern float lbl_8064EDBC;
 
-int fn_8009E130(State *state)
+int fn_8009E130(void *owner)
 {
+    State *state = owner;
     int index;
     int i;
     Context *context;
@@ -67,6 +68,7 @@ int fn_8009E130(State *state)
     u8 slot;
     void *object;
     ObjectInfo *info;
+    int result = 0;
 
     context = fn_8006ED3C(state, 0xD, &index);
     if (context != 0) {
@@ -102,8 +104,8 @@ int fn_8009E130(State *state)
             fn_8020104C(0x51, 0, info->resources->object_id, 0, lbl_8064EDBC);
             fn_802020B4(fn_80201814(((Resources *)fn_80036D38(object))->object_id), 0);
             fn_801A5C30(0);
-            return 1;
+            result = 1;
         }
     }
-    return 0;
+    return result;
 }
