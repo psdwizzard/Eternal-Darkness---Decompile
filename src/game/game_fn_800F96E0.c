@@ -10,6 +10,7 @@ int fn_800F96E0(wchar_t *pwc, const char *s, size_t n) {
     int number_of_bytes;
     int check_byte_count;
     const char *source_char;
+    signed char byte;
 
     if (!s) {
         return 0;
@@ -26,10 +27,12 @@ int fn_800F96E0(wchar_t *pwc, const char *s, size_t n) {
     source_char = s;
     switch (number_of_bytes) {
     case 3:
-        result_chr |= (*source_char++ & 0x0F);
+        byte = *source_char++;
+        result_chr |= (byte & 0x0F);
         result_chr <<= 6;
     case 2:
-        result_chr |= (*source_char++ & 0x3F);
+        byte = *source_char++;
+        result_chr |= (byte & 0x3F);
         result_chr <<= 6;
     case 1:
         result_chr |= (*source_char++ & 0x7F);

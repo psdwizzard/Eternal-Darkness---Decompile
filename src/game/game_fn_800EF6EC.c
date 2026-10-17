@@ -12,7 +12,7 @@ typedef struct TRKBuffer {
 extern void fn_80003130(void *, const void *, u32);
 extern int gTRKBigEndian[];
 
-static inline int TRKReadBuffer(TRKBuffer *buffer, void *data, u32 length)
+static inline int TRKReadBuffer(TRKBuffer *buffer, void *data, unsigned long length)
 {
     int error = 0;
     u32 bytesLeft;
