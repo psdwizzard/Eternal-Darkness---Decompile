@@ -42,18 +42,18 @@ extern void *fn_801A7778(void *);
 extern void fn_8003B0BC(void *, Vec3 *, Vec3 *, void *, void *, int);
 extern void fn_8003B630(void *, Vec3 *, Vec3 *, HitInfo *, void *);
 extern int fn_8003B2A8(void *, void *, void *, HitInfo *, Candidate *);
-extern void fn_800FBE38(void *, int, int, int (*)(const void *, const void *));
+extern void fn_800FBE38(void *, unsigned long, unsigned long, int (*)(const void *, const void *));
 extern int fn_8003B878(const void *, const void *);
 extern int fn_8011F6A4(void *, int, int, int, QueryResult *, int);
 extern void fn_8011F114(Vec3 *, void *);
 extern void fn_801A764C(void *, Vec3 *);
-extern int fn_801A7498(void *);
+extern u32 fn_801A7498(void *);
 extern s16 fn_801A74F8(void *);
-extern void fn_801A75A8(void *, int);
+extern void fn_801A75A8(void *, u8);
 extern u32 fn_80178E94(Vec3 *, Vec3 *);
 extern Flags *fn_80036D38(void *);
 extern void fn_801A74A8(void *, int);
-extern void fn_80072354(int);
+extern void *fn_80072354(int);
 extern int fn_80066D04(void *, int);
 extern int fn_801E2004(int);
 extern void fn_801A7588(void *, u32);
@@ -63,7 +63,10 @@ extern void fn_8007B3C4(HitInfo *, int, void *, u32);
 extern void fn_8002B5B4(HitInfo *, Vec3 *, int, u32);
 extern const float lbl_8064E1FC;
 extern const float lbl_8064E258;
-#define ROUND(x) ((int)((x) >= lbl_8064E1FC ? lbl_8064E258 + (x) : (x) - lbl_8064E258))
+static inline int round_nearest(float x)
+{
+    return (int)(x >= lbl_8064E1FC ? lbl_8064E258 + x : x - lbl_8064E258);
+}
 
 extern Vec3 lbl_80238DC4;
 extern int lbl_8064CB60;
@@ -91,7 +94,7 @@ u32 fn_8003A6DC(void *object, void *target, void *area)
     int i;
     Vec3 *src;
     Flags *flags;
-    u32 mask;
+    register u32 mask;
     int n;
     u32 want;
     int id;
@@ -152,7 +155,9 @@ u32 fn_8003A6DC(void *object, void *target, void *area)
         fn_80072354(*(int *)((u8 *)fn_80201B8C(current) + 0x90));
         n = 0;
         if (bit == 15) {
-            mask |= 0x8000;
+            /* ASM: ori preserves the mask update; MWCC folds the C OR
+             * with the preceding zero into a two-instruction constant load. */
+            asm { ori mask, mask, 0x8000 }
             n = 1;
         } else {
             self = id == fn_80201AE4();
@@ -177,12 +182,12 @@ u32 fn_8003A6DC(void *object, void *target, void *area)
                 fn_801A7518(area, top);
                 result |= (u32)(fn_8020123C(0xB, style, id, area) & 0xFFFFFFFF);
                 fn_801A7588(area, mask & ~want);
-                fn_801A7518(area, ROUND((float)(height - top) / (float)(n - 1)));
+                fn_801A7518(area, round_nearest((float)(height - top) / (float)(n - 1)));
                 result |= (u32)(fn_8020123C(0xB, style, id, area) & 0xFFFFFFFF);
             }
         } else {
             fn_801A7588(area, mask);
-            fn_801A7518(area, ROUND((float)height / (float)n));
+            fn_801A7518(area, round_nearest((float)height / (float)n));
             result |= (u32)(fn_8020123C(0xB, style, id, area) & 0xFFFFFFFF);
         }
     }
