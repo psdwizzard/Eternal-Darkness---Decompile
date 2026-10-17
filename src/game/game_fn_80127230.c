@@ -21,6 +21,11 @@ typedef struct ChannelState {
     u8 pad44[8];
 } ChannelState;
 
+typedef struct ChannelStates {
+    u32 header;
+    ChannelState entries[1];
+} ChannelStates;
+
 typedef struct Channel {
     u16 translation_count;
     u16 pad2;
@@ -65,7 +70,7 @@ typedef struct Owner {
     float (*vectors)[3];
     VertexAttribute* packed_vectors;
     u8 pad15C[4];
-    void* states;
+    ChannelStates* states;
     u8 pad164[0xF0];
     u32 flags;
     u8 pad258[0x50];
@@ -89,19 +94,12 @@ void fn_80127230(register Owner* input_owner, register int input_index,
     register int value;
     register int index;
     register Owner* owner;
-    register int offset;
 
-    /* ASM: mr/mulli/addi preserve the input-save and address-calculation order.
-     * MWCC reorders the equivalent C assignments and folds the header offset. */
-    asm {
-        mr index, input_index
-        mulli offset, index, 0x4C
-        mr owner, input_owner
-        mr value, input_value
-        mr update, input_update
-        addi state, offset, 4
-    }
-    state = (ChannelState*)((u8*)input_owner->states + (int)state);
+    index = input_index;
+    owner = input_owner;
+    value = input_value;
+    update = input_update;
+    state = &owner->states->entries[index];
     runtime = fn_80128E30(owner);
     channel = &runtime->animation->table->channels[index];
 

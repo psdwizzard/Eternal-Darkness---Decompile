@@ -69,7 +69,9 @@ extern s32 fn_8003BF5C(void *);
 extern void fn_80042678(u16, const char *, s32, s32);
 extern s32 fn_80043FB0(void *, s32 *, s32 *);
 extern s32 fn_800B9578(u8 *, void *, s32 *, s32);
-extern u16 fn_800BA068(u8 *, s32, void *, s32 *);
+/* Defined as returning unsigned short (already zero-extended in r3); the
+ * original caller saw it through an int-returning declaration. */
+extern s32 fn_800BA068(u8 *, s32, void *, s32 *);
 extern s32 fn_800BA124(void *, u32, s32);
 extern s32 fn_80117E58(void);
 extern s32 fn_8011EB04(void *);

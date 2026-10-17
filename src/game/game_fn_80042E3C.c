@@ -1,29 +1,43 @@
-typedef short s16;
+typedef unsigned char u8;
+typedef unsigned short u16;
 
-typedef struct Msg {
-    s16 type;
-    s16 arg;
-    int pad;
-    void* next;
-} Msg;
+typedef struct OSMessageQueue {
+    void* sendHead;
+    void* sendTail;
+    void* receiveHead;
+    void* receiveTail;
+    void** messages;
+    int messageCount;
+    int firstIndex;
+    int usedCount;
+} OSMessageQueue;
+
+typedef struct Message {
+    u16 type;
+    u16 arg;
+    u8 immediate;
+    u8 pad[3];
+    void* responseQueue;
+} Message;
 
 typedef struct Block {
-    char pad0[0x2C];
-    char queue[0x20];
-    s16 type;
-    char pad2[0x58 - 0x4E];
-    char tail[4];
+    u8 pad[0x2C];
+    OSMessageQueue commandQueue;
+    Message message;
+    OSMessageQueue replyQueue;
 } Block;
 
 extern Block lbl_80304060;
 extern int lbl_8064C7D0;
-extern void fn_8020D250(void*, void*, int);
+extern int fn_8020D250(OSMessageQueue*, void*, int);
 
 void fn_80042E3C(void) {
-    Msg* m = (Msg*)&lbl_80304060.type;
-    lbl_80304060.type = 7;
-    m->arg = 0;
-    m->next = lbl_80304060.tail;
-    lbl_8064C7D0 = lbl_8064C7D0 + 1;
-    fn_8020D250(lbl_80304060.queue, m, 1);
+    Message* message = &lbl_80304060.message;
+
+    lbl_80304060.message.type = 7;
+    message->arg = 0;
+    /* The reply queue immediately follows this message in the BSS block. */
+    message->responseQueue = message + 1;
+    ++lbl_8064C7D0;
+    fn_8020D250(&lbl_80304060.commandQueue, message, 1);
 }
