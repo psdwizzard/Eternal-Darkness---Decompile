@@ -67,7 +67,6 @@ extern u32 fn_8020216C(Object8020216C *);
 void fn_801157B4(void)
 {
     register MenuData *menu;
-    register u32 poolHigh;
     register RangeControl *rowControl;
     register void *image;
     int row;
@@ -77,7 +76,8 @@ void fn_801157B4(void)
     const char **names;
     s16 x, y;
     int position;
-    int texture;
+    register int texture;
+    register int source;
     u32 available;
     int mode;
     Color upperBackground;
@@ -92,15 +92,8 @@ void fn_801157B4(void)
     Color unknownFrame;
     Color text;
 
-    /* ASM: lis, lis, addi, addi and lwz keep the control lookup and pooled
-     * address setup interleaved; C initializes the pointers separately. */
-    asm {
-        lis rowControl, lbl_80331A08@ha
-        lis poolHigh, lbl_8024CE40@ha
-        addi rowControl, rowControl, lbl_80331A08@l
-        addi menu, poolHigh, lbl_8024CE40@l
-        lwz rowControl, 0x20(rowControl)
-    }
+    menu = lbl_8024CE40;
+    rowControl = lbl_80331A08[8];
     row = fn_801E8D34(rowControl) * 5;
     selected = fn_801E8D34(lbl_80331A08[7]) + ((0 > row - 2) ? 0 : row - 2);
     if (selected > 7) {
@@ -111,13 +104,15 @@ void fn_801157B4(void)
     asm { addi image, menu, 0 }
     fn_801A90BC(image, menu->textureList);
 
-    for (i = 0, upperX = 0x114, names = menu->upperNames;
-         i < 3; i++, upperX += 0x37, names++) {
+    names = menu->upperNames;
+    for (i = 0;
+         i < 3; i++) {
         upperBackground = lbl_8064C2A8;
         fn_801A852C(&upperBackground.value, 0, 6, 0x80000000);
         fn_801A9118(0, ((i + 0x1E) * 4) & 0xFFFF, (void *)5);
         if (!(lbl_8064CD2C & 1)) {
             if (i == selected) {
+                upperX = i * 0x37 + 0x114;
                 fn_801A8974(upperX, 0x86, 0x2E, 0x2E, -0x7698, 2);
                 fn_801E3AA4(0);
                 upperText = lbl_8064C2B0;
@@ -129,7 +124,7 @@ void fn_801157B4(void)
                     fn_801E5430(upperX + 0x1A, 0x68);
                     fn_801E56AC(lbl_8064FF78, menu->upperTitle);
                     fn_801E5430(upperX + 0x1A, 0xB8);
-                    fn_801E56AC(lbl_8064FF78, *names);
+                    fn_801E56AC(lbl_8064FF78, names[i]);
                 }
                 fn_801ED3F4(lbl_8064CD80);
                 /* ASM: addi preserves the zero-offset pooled array address;
@@ -147,7 +142,8 @@ void fn_801157B4(void)
         }
     }
 
-    for (i = 0, names = (const char **)menu->slotNames; i < 14; i++, names += 2) {
+    names = (const char **)menu->slotNames;
+    for (i = 0; i < 14; i++) {
         position = i;
         if (i >= 4) {
             position = i + 1;
@@ -164,11 +160,22 @@ void fn_801157B4(void)
                         fn_80201814(fn_80201B44())) & 0x4000) ||
                 ((available = lbl_8064CD4C & (0x10000 << i)) &&
                  (lbl_8064CD4C & (1 << i)))) {
-                int source;
                 icon = lbl_8064B8D8;
                 fn_801A852C(&icon.value, 5, 0xE, 0x80000000);
-                source = (i + 1) * 4;
-                fn_801A9118(((i + 1) * 4) & 0xFFFC, (u16)texture, (void *)5);
+                {
+                    register int sourceIndex = i + 1;
+                    register int sourceCoordinate, destinationCoordinate;
+                    register void *palette;
+                    /* ASM: clrlwi, slwi, addi (li), rlwinm preserve the unmasked source
+                     * while forming the draw arguments; C reorders these shifts. */
+                    asm {
+                        clrlwi destinationCoordinate, texture, 16
+                        slwi source, sourceIndex, 2
+                        addi palette, r0, 5
+                        rlwinm sourceCoordinate, sourceIndex, 2, 16, 29
+                    }
+                    fn_801A9118(sourceCoordinate, destinationCoordinate, palette);
+                }
                 if (i < 4) {
                     mode = 0x40;
                     switch (i) {
@@ -192,11 +199,22 @@ void fn_801157B4(void)
                 fn_801ED5F4(0, 0x8000, 1, 0, 0, lbl_8064FF7C);
                 fn_801A8D38(5);
             } else if (lbl_8064CD4C & (1 << i)) {
-                int source;
                 knownIcon = lbl_8064B8D8;
                 fn_801A852C(&knownIcon.value, 5, 0xE, 0x80000000);
-                source = (i + 1) * 4;
-                fn_801A9118(((i + 1) * 4) & 0xFFFC, (u16)texture, (void *)5);
+                {
+                    register int sourceIndex = i + 1;
+                    register int sourceCoordinate, destinationCoordinate;
+                    register void *palette;
+                    /* ASM: clrlwi, slwi, addi (li), rlwinm preserve the unmasked source
+                     * while forming the draw arguments; C reorders these shifts. */
+                    asm {
+                        clrlwi destinationCoordinate, texture, 16
+                        slwi source, sourceIndex, 2
+                        addi palette, r0, 5
+                        rlwinm sourceCoordinate, sourceIndex, 2, 16, 29
+                    }
+                    fn_801A9118(sourceCoordinate, destinationCoordinate, palette);
+                }
                 knownFrame = lbl_8064B8DC;
                 fn_801A852C(&knownFrame.value, 0, 0xF, 0x80000000);
                 fn_801A9118(source & 0xFFFF, texture & 0xFFFF, (void *)5);
@@ -216,9 +234,9 @@ void fn_801157B4(void)
                 fn_801E5AD0(99);
                 fn_801E5430(x + 0x17, y + 0x32);
                 if (lbl_8064CD4C & (0x10000 << i)) {
-                    fn_801E56AC(lbl_8064FF78, names[1]);
+                    fn_801E56AC(lbl_8064FF78, names[i * 2 + 1]);
                     fn_801E5430(x + 0x17, y - 0x1E);
-                    fn_801E56AC(lbl_8064FF78, names[0]);
+                    fn_801E56AC(lbl_8064FF78, names[i * 2]);
                 } else if (lbl_8064CD4C & (1 << i)) {
                     if (i >= 4) {
                         fn_801E56AC(lbl_8064FF78, lbl_8064B95C);

@@ -1,10 +1,13 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 typedef signed short s16;
+typedef signed int s32;
+typedef unsigned long long u64;
+typedef struct EffectNode EffectNode;
 
 typedef struct Actor Actor;
 typedef struct Entry {
-    void *object;
+    int object_id;
     u8 pad04[4];
     s16 count;
     u8 pad0A[0x16];
@@ -56,7 +59,7 @@ extern void fn_80008BD8(void *, int, int, int);
 extern void fn_80008CA0(void);
 extern GlobalState *fn_80036D38(void *);
 extern int fn_8006BCE4(Actor *);
-extern int fn_8006BD40(Actor *);
+extern void fn_8006BD40(Actor *);
 extern u8 fn_8006BFB4(void *, Actor *);
 extern void fn_8006C89C(Actor *);
 extern void fn_8006C92C(Actor *);
@@ -75,32 +78,32 @@ extern void fn_8006E6EC(Actor *);
 extern void *fn_8006EC74(Entry *);
 extern void fn_8006F7E8(Actor *, int);
 extern int fn_80070884(Actor *, void *);
-extern int fn_80070CD8(void);
+extern int fn_80070CD8(int flags);
 extern int fn_80070F74(Actor *);
 extern void fn_80071550(int, int);
 extern int fn_80071950(void *);
 extern void fn_80071A58(void *);
 extern void fn_800878F4(Actor *);
 extern void fn_80088588(Actor *);
-extern void fn_800A079C(Actor *);
-extern void fn_800A1580(void *);
+extern s32 fn_800A079C(Actor *);
+extern int fn_800A1580(int value);
 extern void fn_800AE954(void);
 extern void fn_800AF11C(Actor *);
-extern int fn_8011E84C(void);
+extern void *fn_8011E84C(void);
 extern int fn_8011E86C(void);
-extern void *fn_80144710(int, int, int);
+extern unsigned int fn_80144710(unsigned int, int, int);
 extern void fn_801ACD8C(void);
 extern void fn_801AD404(int, int, int);
 extern void fn_801AD490(void);
-extern void fn_801AD4B4(int, int, int, int);
+extern EffectNode *fn_801AD4B4(int, int, int, unsigned short);
 extern void fn_801AD528(int, int);
 extern int fn_801AD5FC(int, int);
 extern void fn_801E8328(int, void *);
-extern void fn_801EFE84(int);
+extern void *fn_801EFE84(void *);
 extern int fn_80200C10(void *);
 extern void *fn_80200C38(void *);
 extern void fn_8020104C(int, int, int, int, float);
-extern void fn_8020123C(int, int, int, int);
+extern u64 fn_8020123C(int, int, int, int);
 extern void *fn_80201814(int);
 extern int fn_80201B54(void *);
 extern Context *fn_80201B8C(void *);
@@ -255,8 +258,7 @@ int fn_8006FE40(void *object, int mode, void *event, int *handled)
             if (actor->entry->callback != 0)
                 actor->entry->callback(actor);
             if (!((u32)fn_8006EC74(actor->entry) & 2)) {
-                fn_800A1580(actor->entry->object);
-                if (fn_80070CD8())
+                if (fn_80070CD8(fn_800A1580(actor->entry->object_id)))
                     fn_8020104C(0x54, id, id, 0, lbl_8064E7FC);
                 else
                     fn_8020123C(0x52, id, id, 0);
@@ -275,8 +277,7 @@ int fn_8006FE40(void *object, int mode, void *event, int *handled)
         }
         if (code == 0x54) {
             int result = 0;
-            fn_800A1580(actor->entry->object);
-            if (fn_80070CD8()) {
+            if (fn_80070CD8(fn_800A1580(actor->entry->object_id))) {
                 fn_80201D2C(object, 0x2a);
                 fn_80201D14(object, 1);
                 fn_8006C9E4(actor->base, 0);
@@ -293,8 +294,17 @@ int fn_8006FE40(void *object, int mode, void *event, int *handled)
             if (target != 0)
                 actor->type = fn_8006BFB4(target, actor);
             fn_8006C9C0(actor->base);
-            if (fn_8006CACC(actor->base, 0x1f40) || !fn_8006BD40(actor))
-                fn_8020123C(0x52, id, id, 0);
+            if (!fn_8006CACC(actor->base, 0x1f40)) {
+                fn_8006BD40(actor);
+                /* ASM: cmpwi/bne preserve retail's test of residual r3 after
+                 * this void call; C cannot read a void function's register state. */
+                asm {
+                    cmpwi r3, 0
+                    bne update_actor
+                }
+            }
+            fn_8020123C(0x52, id, id, 0);
+        update_actor:
             fn_8006D254(actor);
             return 1;
         }
@@ -328,7 +338,7 @@ int fn_8006FE40(void *object, int mode, void *event, int *handled)
             fn_80070884(actor, object);
             switch (fn_8006BCE4(actor)) {
             case 0x16:
-                if (actor->entry->count > 1 && fn_8011E84C() == 2 &&
+                if (actor->entry->count > 1 && (int)fn_8011E84C() == 2 &&
                     (fn_8011E86C() == 1 || fn_8011E86C() == 3 ||
                      fn_8011E86C() == 4) && fn_80144710(0x200, 0, 0) != 0)
                     fn_8020123C(0x51, id, id, 0);

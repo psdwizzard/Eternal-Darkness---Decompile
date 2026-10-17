@@ -1,5 +1,3 @@
-/* The body matches retail. Existing compiler settings emit GPR save/restore
- * helper calls instead of the retail stmw/lmw pair. */
 typedef unsigned char u8;
 typedef signed short s16;
 typedef unsigned int u32;
@@ -37,7 +35,7 @@ extern s32 fn_801ED59C(s32, s32);
 extern void fn_801ED5F4(s32, s32, s16, float*, Mtx, float);
 extern s32 fn_801EF384(void);
 extern void fn_801F47F8(void);
-extern void fn_8020B9D8(void);
+extern u32 fn_8020B9D8(void);
 extern void fn_8020B9E4(s32);
 extern void fn_80226378(void);
 extern void fn_80226D28(s32);

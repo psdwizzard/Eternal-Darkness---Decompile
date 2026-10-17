@@ -14,6 +14,12 @@ typedef struct PathNode {
     unsigned char pad[2];
 } PathNode;
 
+typedef struct Marker Marker;
+
+typedef struct PathEntry {
+    const short *position;
+} PathEntry;
+
 typedef struct RuntimeState {
     unsigned char pad[0xAC];
     int pool_index;
@@ -51,7 +57,7 @@ typedef struct Entry80201814 Entry80201814;
 typedef struct Object80201C48 Object80201C48;
 
 extern const Vec3 lbl_802397F0;
-extern PathNode *lbl_80320C60[100];
+extern PathEntry *lbl_80320C60[100];
 extern Slot lbl_80320DF0[];
 extern Pool lbl_80320FD0[];
 extern OSMessageQueue lbl_805E2B1C;
@@ -76,10 +82,10 @@ extern float fn_8011F6F8(void *transform);
 extern void fn_8011F114(Vec3 *dest, Vec3 *source);
 extern int fn_802045AC(void *object, Vec3 *position);
 extern void fn_800BC74C(int reset);
-extern PathNode *fn_800BC100(const short *key, Vec3 *origin, int *out_index,
+extern Marker *fn_800BC100(const short *key, Vec3 *origin, int *out_index,
                            unsigned int flags, int *min_dist, int *max_dist, Vec3 *other);
 extern int fn_800BD3C8(PathNode *start, PathNode *goal);
-extern void fn_800BCF08(Vec3 *position, PathNode **path, float radius);
+extern void fn_800BCF08(Vec3 *position, PathEntry **path, float radius);
 extern void fn_800BD23C(void);
 extern void *memcpy(void *dest, const void *source, unsigned long size);
 
@@ -160,11 +166,11 @@ void fn_800BD94C(void)
             origin.z += lbl_8064F104;
             goal.z += lbl_8064F104;
             if (lbl_8064B704 != 0) {
-                start = fn_800BC100(0, &origin, 0, 0xC2, &lbl_8064B700, 0, &goal);
+                start = (PathNode *)fn_800BC100(0, &origin, 0, 0xC2, &lbl_8064B700, 0, &goal);
             } else {
-                start = fn_800BC100(0, &origin, 0, 0x42, 0, 0, &goal);
+                start = (PathNode *)fn_800BC100(0, &origin, 0, 0x42, 0, 0, &goal);
             }
-            end = fn_800BC100(0, &goal, 0, 0x42, 0, 0, 0);
+            end = (PathNode *)fn_800BC100(0, &goal, 0, 0x42, 0, 0, 0);
             if (start != 0 && end != 0) {
                 /* Searching backwards gives a parent chain from origin to goal. */
                 path_found = fn_800BD3C8(end, start);

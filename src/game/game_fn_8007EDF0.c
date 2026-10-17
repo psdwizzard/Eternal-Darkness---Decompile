@@ -74,23 +74,23 @@ extern float lbl_8064D7A0;
 extern const float lbl_8064EA14, lbl_8064EA30, lbl_8064EA34, lbl_8064EA38;
 extern void fn_8007D848(int);
 extern void fn_8007EC28(void);
-extern void fn_80211AAC(const Vec3 *, Vec3 *);
+extern void fn_80211AAC(Vec3 *, Vec3 *);
 extern u32 fn_801E741C(const char *);
 extern u32 fn_800FBFB0(void);
 extern void *memset(void *, int, unsigned long);
 
-/* Initialize the menu's icon transforms, selection state and resource IDs.
- * The three scalar accesses through the byte layout preserve MWCC's original
- * address coalescing and register allocation. */
+/* Initialize the menu's icon transforms, selection state and resource IDs. */
 void fn_8007EDF0(void)
 {
     const MenuConstants *constants = &lbl_80239208;
+    float initialParameter;
     char *names = lbl_80244870;
 
     fn_8007D848(-1);
     memset(&lbl_8031CBA0, 0, sizeof(GameState));
     memset(&lbl_8031CD84, 0, sizeof(MenuState));
 
+    initialParameter = lbl_8064EA30;
     lbl_8031CBA0.screen = -1;
     {
         int i;
@@ -98,7 +98,7 @@ void fn_8007EDF0(void)
             lbl_8031CBA0.selections[i] = -1;
         }
     }
-    lbl_8031CBA0.parameters[0] = lbl_8064EA30;
+    lbl_8031CBA0.parameters[0] = initialParameter;
     lbl_8031CBA0.parameters[1] = lbl_8064EA34;
     lbl_8031CBA0.selected = -1;
     lbl_8031CBA0.runeFlags[0] = 6;
@@ -108,19 +108,16 @@ void fn_8007EDF0(void)
     lbl_8031CBA0.resources[0] = 0x58d;
     lbl_8031CBA0.resources[1] = 0x58c;
     lbl_8031CBA0.resources[2] = 0x636;
-    lbl_8031CD84.entries[0].state = &lbl_8031CBA0.icons[0];
-    lbl_8031CD84.entries[0].selected = -1;
-    lbl_8031CD84.entries[1].state = &lbl_8031CBA0.icons[1];
-    lbl_8031CD84.entries[1].selected = -1;
-    lbl_8031CD84.entries[2].state = &lbl_8031CBA0.icons[2];
-    lbl_8031CD84.entries[2].selected = -1;
-    lbl_8031CD84.entries[3].state = &lbl_8031CBA0.icons[3];
-    lbl_8031CD84.entries[3].selected = -1;
-    lbl_8031CD84.entries[4].state = &lbl_8031CBA0.icons[4];
+    {
+        int i;
+        for (i = 0; i < 5; i++) {
+            lbl_8031CD84.entries[i].state = &lbl_8031CBA0.icons[i];
+            lbl_8031CD84.entries[i].selected = -1;
+        }
+    }
     lbl_8031CD84.entries[0].type = 18;
     lbl_8031CD84.entries[1].type = 18;
     lbl_8031CD84.entries[2].type = 18;
-    *(s8 *)((u8 *)&lbl_8031CD84 + 0x401) = -1; /* entries[4].selected */
     lbl_8031CD84.entries[3].type = 10;
     lbl_8031CD84.entries[4].type = 10;
 
@@ -144,7 +141,7 @@ void fn_8007EDF0(void)
     lbl_8031CD84.entries[4].end[1] = 370;
     lbl_8031CD84.entries[4].start[0] = 520;
     lbl_8031CD84.entries[4].start[1] = 306;
-    *(float *)((u8 *)&lbl_8031CBA0 + 0x1c) = lbl_8064EA14; /* icons[0].angles[0] */
+    lbl_8031CBA0.icons[0].angles[0] = lbl_8064EA14;
     lbl_8031CBA0.icons[0].angles[1] = lbl_8064EA14;
 
     lbl_8031CD84.entries[1].size[0] = 0x3200;
@@ -160,7 +157,7 @@ void fn_8007EDF0(void)
     lbl_8031CD84.entries[3].position[0] = 0x9600;
     lbl_8031CD84.entries[3].position[1] = 0xc800;
     lbl_8031CD84.entries[1].angles[0] = lbl_8064EA14;
-    *(float *)((u8 *)&lbl_8031CD84 + 0x1b4) = lbl_8064EA38; /* entries[1].angles[1] */
+    lbl_8031CD84.entries[1].angles[1] = lbl_8064EA38;
     lbl_8031CD84.entries[2].angles[0] = lbl_8064EA38;
     lbl_8031CD84.entries[2].angles[1] = lbl_8064EA14;
     lbl_8031CD84.entries[3].angles[0] = lbl_8064EA38;
