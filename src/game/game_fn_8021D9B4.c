@@ -64,7 +64,7 @@ extern void fn_8021E57C(DspTask *);
 /* Complemented feedback bits for the two transfer directions. */
 #define RIGHT_BIT(x) (~((x) ^ ((x) >> 7) ^ ((x) >> 15) ^ ((x) >> 23)))
 #define LEFT_BIT(x) (~((x) ^ ((x) << 7) ^ ((x) << 15) ^ ((x) << 23)))
-#define RIGHT_STEP(x) ((x) = ((x) >> 1) | ((RIGHT_BIT(x) & 1) << 30))
+#define RIGHT_STEP(x) ((x) = ((x) >> 1) | ((RIGHT_BIT(x) << 30) & 0x40000000))
 #define LEFT_STEP(x) ((x) = ((x) << 1) | ((LEFT_BIT(x) >> 30) & 2))
 
 static inline void AdvanceLeft(Channel *ch, u32 count)
@@ -86,7 +86,9 @@ s32 fn_8021D9B4(s32 channel, Result *result)
     u32 *reply;
     TransferScratch scratch;
     u32 state;
-    u32 first, second, third, fourth, fifth;
+    u32 second, third, fourth, fifth;
+    s32 first;
+    u32 address;
     u32 tick;
     u32 length, read_length;
     u32 count, i;
@@ -99,27 +101,27 @@ s32 fn_8021D9B4(s32 channel, Result *result)
     reply = (u32 *)((u8 *)message + 0x20);
 
     lbl_8064C448 = OSGetTick();
-    first = 0x7fec8000;
+    address = 0x7fec8000;
     tick = lbl_8064C448;
     lbl_8064C448 = tick * 0x41c64e6d + 0x3039;
-    first |= (lbl_8064C448 >> 16) & 0x7fff;
-    first &= ~0xfff;
+    address |= (lbl_8064C448 >> 16) & 0x7fff;
+    address &= ~0xfff;
     length = fn_8021D8F0();
     {
         /* EXI takes a signed byte count; keep the bit counts unsigned. */
         s32 transfer_length = length;
-        if (fn_8021D7AC(channel, first,
+        if (fn_8021D7AC(channel, address,
                        (u32 *)((u8 *)&scratch + sizeof(scratch.reserved_before)),
                        transfer_length, 0) < 0)
             return -3;
     }
 
     /* Fold the transmitted address bits into the channel state. */
-    count = length * 8 + 1;
+    count = (i = length * 8) + 1;
     for (i = 0; i < count; ++i) {
-        RIGHT_STEP(first);
+        RIGHT_STEP(address);
     }
-    ch->state = first | (RIGHT_BIT(first) << 31);
+    ch->state = address | (RIGHT_BIT(address) << 31);
     ch->state = fn_8021D640(ch->state);
 
     read_length = fn_8021D8F0();
@@ -154,7 +156,7 @@ s32 fn_8021D9B4(s32 channel, Result *result)
 
     state = ch->state;
     fifth ^= state;
-    count = read_length * 8;
+    count = (i = read_length * 8);
     for (i = 0; i < count; ++i) {
         LEFT_STEP(state);
     }
@@ -186,8 +188,8 @@ s32 fn_8021D9B4(s32 channel, Result *result)
     task->done_callback = fn_8021E57C;
     task->request_callback = 0;
     fn_8021BA30(task);
-    result->third = third;
-    result->second = second;
     result->first = first;
+    result->second = second;
+    result->third = third;
     return 0;
 }
