@@ -48,28 +48,40 @@ typedef struct Actor {
     u8 kind;
 } Actor;
 
-extern void *fn_80156938(void);
-extern void *fn_80201BC8();
-extern void fn_80201ADC(void);
+extern void *fn_80156938(void *callback);
+extern void *fn_80201BC8(void *object);
+extern int fn_80201ADC(void);
 extern void fn_801EC9A8(void);
 extern Palette *fn_8015C28C(int id);
-extern void fn_8011FAEC(void *model);
-extern void fn_80120A30();
+extern u32 fn_8011FAEC(void *model);
+extern void fn_80120A30(void *model, void *entry, void *tag);
 extern void *fn_80201B8C(void *object);
-extern Vec3 fn_80201E78(void *object);
-extern int fn_8011F6A4(void *model, int a, int b, int c, QueryResult *out, int d);
-extern void fn_801E7CBC(Vec3 a, Vec3 b, Vec3 c, Vec3 d, Color color);
+extern void fn_80201E78(Vec3 *out, void *object);
+extern int fn_8011F6A4(void *model, int a, int b, int c, void *out, int d);
+extern void fn_801E7CBC(Vec3 *a, Vec3 *b, Vec3 *c, Vec3 *d, u32 *color);
+
+/* Keep separate copies for each face submitted to the renderer. */
+#define DRAW_FACE(a, b, c, d, color) do { \
+    Vec3 faceA, faceB, faceC, faceD; \
+    Color faceColor; \
+    faceColor = (color); \
+    faceD = (d); \
+    faceC = (c); \
+    faceB = (b); \
+    faceA = (a); \
+    fn_801E7CBC(&faceA, &faceB, &faceC, &faceD, (u32 *)&faceColor); \
+} while (0)
 extern void *fn_80205288(void *object);
-extern u32 fn_80178E94(Vec3 *a, Vec3 *b);
-extern void fn_80211A90(Vec3 *in, Vec3 *out, f32 scale);
-extern void fn_80211A48(Vec3 *a, Vec3 *b, Vec3 *out);
+extern u32 fn_80178E94(const f32 *a, const f32 *b);
+extern void fn_80211A90(const Vec3 *in, Vec3 *out, f32 scale);
+extern void fn_80211A48(const Vec3 *a, const Vec3 *b, Vec3 *out);
 extern void fn_80211C78(Vec3 *a, Vec3 *b, Vec3 *out);
 extern void fn_80211AAC(Vec3 *in, Vec3 *out);
-extern void fn_800EBA80(int a, Vec3 *pos, Color color, int b, f32 c);
+extern void fn_800EBA80(int a, Vec3 *pos, Color *color, u8 b, f32 c);
 
 extern DebugPath lbl_80303A18;
 extern const Vec3 lbl_80238CC4;
-extern u8 lbl_802FC5BC[];
+extern Color lbl_802FC5BC[19];
 extern void *lbl_8064C4E4;
 extern int lbl_8064C5C4;
 extern int lbl_8064C5C8;
@@ -88,7 +100,7 @@ extern const f32 lbl_8064E01C;
 extern const f32 lbl_8064E020;
 extern const f32 lbl_8064E024;
 
-void fn_8002AC60(void) {
+void fn_8002AC60(void *callback) {
     QueryResult result;
     QueryResult hit;
     Vec3 position;
@@ -113,8 +125,8 @@ void fn_8002AC60(void) {
     Vec3 *ends;
     u32 *active;
     void *object;
-    void *model;
-    void *current;
+    register void *model;
+    register void *current;
     Palette *palette;
     PaletteEntry **entries;
     void **info;
@@ -126,29 +138,35 @@ void fn_8002AC60(void) {
     DebugPath *path;
 
     path = &lbl_80303A18;
-    object = fn_80156938();
-    model = fn_80201BC8();
-    fn_80201ADC();
-    current = fn_80201BC8();
+    object = fn_80156938(callback);
+    model = fn_80201BC8(object);
+    current = fn_80201BC8((void *)fn_80201ADC());
     fn_801EC9A8();
     if (lbl_8064C5C4 == 0 && model == lbl_8064C4E4) {
         return;
     }
-    if (lbl_8064C5C8 == 0 && current == model) {
-        return;
+    if (lbl_8064C5C8 == 0) {
+        /* ASM: cmplw, bne and b preserve the original early-exit branch
+         * shape; MWCC merges the equivalent C test into a single beq. */
+        asm {
+            cmplw current, model
+            bne render
+            b done
+        }
     }
+render:
     if (model != 0) {
         palette = fn_8015C28C(2);
         fn_8011FAEC(model);
         entries = palette->entries;
         if (entries != 0) {
             if (entries[lbl_8064D5F8]->disabled != 0) {
-                fn_80120A30(model, entries[lbl_8064D5F8], 0xBB8);
+                fn_80120A30(model, entries[lbl_8064D5F8], (void *)0xBB8);
             } else {
-                fn_80120A30(model, entries[0], 0xBB8);
+                fn_80120A30(model, entries[0], (void *)0xBB8);
             }
         } else {
-            fn_80120A30(model, 0, 0xBB8);
+            fn_80120A30(model, 0, (void *)0xBB8);
         }
 
         if (lbl_8064CB5C != 0) {
@@ -157,7 +175,7 @@ void fn_8002AC60(void) {
                 Vec3 fetched;
                 Vec3 other;
 
-                fetched = fn_80201E78(object);
+                fn_80201E78(&fetched, object);
                 position = fetched;
                 other = lbl_80238CC4;
                 color = lbl_8064E004;
@@ -170,8 +188,8 @@ void fn_8002AC60(void) {
                 positionLow.z -= lbl_8064E018;
                 otherLow = other;
                 otherLow.z -= lbl_8064E018;
-                fn_801E7CBC(position, positionLow, other, otherLow, color);
-                fn_801E7CBC(otherLow, other, positionLow, position, color);
+                DRAW_FACE(position, positionLow, other, otherLow, color);
+                DRAW_FACE(otherLow, other, positionLow, position, color);
             }
         }
 
@@ -180,7 +198,7 @@ void fn_8002AC60(void) {
             if (info != 0 && *info != 0) {
                 partner = fn_80205288(object);
                 if (partner != 0) {
-                    partnerModel = fn_80201BC8();
+                    partnerModel = fn_80201BC8(partner);
                 } else {
                     partnerModel = 0;
                 }
@@ -193,17 +211,21 @@ void fn_8002AC60(void) {
                 if (kind == 0x12 && partnerModel != 0) {
                     Vec3 fetched;
                     Color lineColor;
+                    u32 length;
+                    Vec3 *direction;
 
-                    fetched = fn_80201E78(object);
+                    fn_80201E78(&fetched, object);
                     start = fetched;
                     lineColor = lbl_8064E008;
+                    target = ((TargetInfo *)*info)->position;
                     offColor = lbl_8064E00C;
                     onColor = lbl_8064E010;
-                    target = ((TargetInfo *)*info)->position;
                     if (fn_8011F6A4(partnerModel, 4, -1, -1, &hit, 1) != -1) {
                         start = hit.position;
                     }
-                    fn_80211A90(&hit.direction, &offset, (f32)fn_80178E94(&start, &target));
+                    length = fn_80178E94(&start.x, &target.x);
+                    direction = &hit.direction;
+                    fn_80211A90(direction, &offset, (f32)length);
                     fn_80211A48(&hit.position, &offset, &end);
                     startHigh = start;
                     startHigh.z += lbl_8064E01C;
@@ -211,43 +233,51 @@ void fn_8002AC60(void) {
                     endHigh.z += lbl_8064E01C;
                     lineStart = start;
                     lineEnd = end;
-                    fn_801E7CBC(start, startHigh, end, endHigh, lineColor);
-                    fn_801E7CBC(endHigh, end, startHigh, start, lineColor);
+                    DRAW_FACE(start, startHigh, end, endHigh, lineColor);
+                    DRAW_FACE(endHigh, end, startHigh, start, lineColor);
 
-                    fn_800EBA80(0, &target, *(Color *)(lbl_802FC5BC + 0x14), 100, lbl_8064E020);
+                    {
+                        Color markerColor = lbl_802FC5BC[5];
+                        fn_800EBA80(0, &target, &markerColor, 100, lbl_8064E020);
+                    }
 
                     if (lbl_8064C718 != 0) {
-                        fn_80211C78(&hit.direction, (Vec3 *)(lbl_8064C718 + 0x14), &side);
+                        fn_80211C78(direction, (Vec3 *)(lbl_8064C718 + 0x14), &side);
                         fn_80211AAC(&side, &side);
                         fn_80211A90(&side, &side, lbl_8064E024);
                         fn_80211A48(&end, &side, &tip);
                         tipHigh = tip;
                         tipHigh.z += lbl_8064E01C;
                         lineTip = tip;
-                        fn_801E7CBC(end, endHigh, tip, tipHigh, lineColor);
-                        fn_801E7CBC(tipHigh, tip, endHigh, end, lineColor);
+                        DRAW_FACE(end, endHigh, tip, tipHigh, lineColor);
+                        DRAW_FACE(tipHigh, tip, endHigh, end, lineColor);
                     }
 
                     starts = path->start;
                     ends = path->end;
                     active = path->active;
                     for (i = 0; i <= lbl_8064C710; i++) {
-                        start = starts[i];
+                        u32 enabled = active[i];
+                        start = *starts;
                         startHigh = start;
                         startHigh.z += lbl_8064E01C;
-                        end = ends[i];
+                        end = *ends;
                         endHigh = end;
                         endHigh.z += lbl_8064E01C;
-                        if (active[i] != 0) {
-                            fn_801E7CBC(start, startHigh, end, endHigh, onColor);
-                            fn_801E7CBC(endHigh, end, startHigh, start, onColor);
+                        if (enabled != 0) {
+                            DRAW_FACE(start, startHigh, end, endHigh, onColor);
+                            DRAW_FACE(endHigh, end, startHigh, start, onColor);
                         } else {
-                            fn_801E7CBC(start, startHigh, end, endHigh, offColor);
-                            fn_801E7CBC(endHigh, end, startHigh, start, offColor);
+                            DRAW_FACE(start, startHigh, end, endHigh, offColor);
+                            DRAW_FACE(endHigh, end, startHigh, start, offColor);
                         }
+                        starts++;
+                        ends++;
                     }
                 }
             }
         }
     }
+done:
+    return;
 }

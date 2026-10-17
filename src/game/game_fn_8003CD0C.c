@@ -64,7 +64,7 @@ extern u16 fn_801A7434(void *), fn_801A7578(void *);
 extern void fn_801A7460(void *, s32), fn_801A74A0(void *, s32), fn_801A74A8(void *, s32);
 extern void fn_801A74C8(void *, s32), fn_801A7550(void *, s32), fn_801A7558(void *, s32);
 extern u32 fn_801A7560(void *, u32);
-extern void fn_801A7598(void *, u16), fn_801A764C(void *, Vec3 *);
+extern void fn_801A7598(void *, s32), fn_801A764C(void *, Vec3 *);
 extern void *fn_80200C38(void *);
 extern u64 fn_8020123C(s32, s32, s32, s32);
 extern void *fn_80201814(s32);
@@ -88,7 +88,7 @@ s32 fn_8003CD0C(void *owner, void *object, void *event)
     Entry *entries;
     s32 count;
     f32 second_angle;
-    s32 is_normal, pending, kind, owner_id, target_id;
+    s32 pending, is_normal, kind, target_id, owner_id;
     s32 index, offset, amount_kind;
     u32 strength;
     s32 alternative;
@@ -130,7 +130,8 @@ s32 fn_8003CD0C(void *owner, void *object, void *event)
         angle = lbl_8064E2A0;
         if (nearby != 0) {
             direction_position = target_position;
-            fn_8017A12C(&angle, facing, fn_8012B7D0(object, &direction_position));
+            difference = fn_8012B7D0(object, &direction_position);
+            fn_8017A12C(&angle, facing, difference);
         }
         if (nearby != 0) {
             difference = angle;
@@ -173,12 +174,13 @@ s32 fn_8003CD0C(void *owner, void *object, void *event)
         second_position = target_position;
         facing = fn_8012B7D0(object, &second_position);
         fn_8017A12C(&second_angle, fn_8012B750(object), facing);
-        if (second_angle < lbl_8064E294) magnitude = -second_angle;
-        else magnitude = second_angle;
+        difference = second_angle;
+        if (difference < lbl_8064E294) magnitude = -difference;
+        else magnitude = difference;
         if (magnitude > lbl_8064E2A8) {
-            f32 narrow = second_angle;
-            if (narrow < lbl_8064E294) narrow = -narrow;
-            if (narrow < lbl_8064E2AC) fn_80129BA4(created, facing, lbl_8064E2B0);
+            f32 zero = lbl_8064E294;
+            if (difference < zero) difference = -difference;
+            if (difference < lbl_8064E2AC) fn_80129BA4(created, facing, lbl_8064E2B0);
         }
     }
 
@@ -191,13 +193,9 @@ s32 fn_8003CD0C(void *owner, void *object, void *event)
     fn_801A7560(effect, 0x100A84);
     {
         u8 input = settings->entries[is_normal].amount;
-        register OwnerData *source_owner_data = owner_data;
-        register OwnerData *call_owner_data;
         amount_kind = 2;
-        /* ASM: mr places the object argument before the mode branch; C delays this move until the call. */
-        asm { mr call_owner_data, source_owner_data }
         if (kind == 4) amount_kind = 3;
-        fn_8003CC48(owner, call_owner_data, amount_kind, input);
+        fn_8003CC48(owner, owner_data, amount_kind, input);
     }
     fn_801A7550(effect, 12);
     fn_801A7558(effect, 7);

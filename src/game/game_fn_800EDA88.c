@@ -30,7 +30,8 @@ typedef float Mtx44[4][4];
 extern GameState lbl_8030F540;
 extern int lbl_8064CC0C[2];
 extern Mtx44 lbl_8024A620[4];
-extern u8 lbl_803281C0[];
+typedef struct GXTexObjInt GXTexObjInt;
+extern GXTexObjInt lbl_803281C0;
 extern u8 lbl_803281E0[];
 extern MovieState *lbl_8064CC14;
 
@@ -62,7 +63,7 @@ extern ShortCoord3 lbl_80651B80;
 extern ShortCoord3 lbl_80651B88;
 extern ShortCoord3 lbl_80651B90;
 
-extern void fn_800ED98C(int, float);
+extern void fn_800ED98C(float);
 extern void fn_800EE3F4(void);
 extern void fn_800EE3F8(u8);
 extern void fn_800EE404(u8);
@@ -71,17 +72,17 @@ extern void fn_800EE41C(int, int, int, int);
 extern void fn_80179814(ShortCoord3 *, ShortCoord3 *, ShortCoord3 *,
                         ShortCoord3 *, Coord3 *, float);
 extern void fn_801ECC4C(void);
-extern void fn_801ECF50(int);
-extern void fn_801EFE84(int);
+extern void fn_801ECF50(u32);
+extern void *fn_801EFE84(void *);
 extern void fn_801F0044(void);
 extern void fn_80210FB0(Mtx);
 extern void fn_802119B0(Mtx44, float, float, float, float, float, float);
-extern void fn_80225F4C(int, void *, int);
-extern void fn_802262B8(int);
-extern void fn_80226AB4(int, int, int);
+extern void fn_80225F4C(int, const void *, u8);
+extern void fn_802262B8(u8);
+extern void fn_80226AB4(int, int, u16);
 extern void fn_80226D28(int);
-extern void fn_80228020(int);
-extern void fn_80228AFC(void *, int);
+extern void fn_80228020(u8);
+extern void fn_80228AFC(GXTexObjInt *, u32);
 extern void fn_80228D9C(void);
 extern void fn_80229B08(int, int, int, int, int);
 extern void fn_80229B88(int, int, int, int, int);
@@ -89,12 +90,12 @@ extern void fn_80229C0C(int, int, int, int, int, int);
 extern void fn_80229CCC(int, int, int, int, int, int);
 extern void fn_80229E74(int, int);
 extern void fn_8022A118(int, int, int, int);
-extern void fn_8022A2F4(int);
+extern void fn_8022A2F4(u8);
 extern void fn_8022B4B8(Mtx44, int);
 extern void fn_8022B690(Mtx, int);
-extern void fn_8022B70C(int);
+extern void fn_8022B70C(u32);
 extern void fn_8022B94C(float, float, float, float, float, float);
-extern void fn_8022B970(int, int, int, int);
+extern void fn_8022B970(u32, u32, u32, u32);
 extern void fn_80237D2C(int);
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -176,7 +177,7 @@ void fn_800EDA88(u32 frame)
     lbl_8064CBF0 = count;
     lbl_8064CBEC = lbl_8064CC14->frame;
 
-    fn_80228AFC(lbl_803281C0, 0);
+    fn_80228AFC(&lbl_803281C0, 0);
     fn_80229E74(0, 0x10);
     fn_80229B88(0, 7, 7, 7, 6);
     fn_80229CCC(0, 0, 0, 0, 1, 0);
@@ -201,7 +202,7 @@ void fn_800EDA88(u32 frame)
 
     if (lbl_8064CBD8 != 0) {
         lbl_8064CBE4 = (float)lbl_8064B82C / lbl_8064F91C;
-        fn_800ED98C(lbl_8064B82C, lbl_8064CBE4);
+        fn_800ED98C(lbl_8064CBE4);
         lbl_8064B828 = 0;
         lbl_8064CBDC = 0;
     }
@@ -265,8 +266,9 @@ void fn_800EDA88(u32 frame)
         }
         lbl_8064CBD8 = 0;
     } else if (lbl_8064B828 != 0) {
-        lbl_8064CBE4 = level = (float)lbl_8064B82C / lbl_8064F91C;
-        lbl_8064B830 = lbl_8064F90C * (lbl_8064F904 - level);
+        level = (float)lbl_8064B82C;
+        lbl_8064CBE4 = level = level / lbl_8064F91C;
+        lbl_8064B830 = (lbl_8064F904 - level) * lbl_8064F90C;
         half = lbl_8064F90C * level;
         if (lbl_8064B834 != lbl_8064B830) {
             for (i = 0; i < 0x100; i++) {
@@ -275,10 +277,10 @@ void fn_800EDA88(u32 frame)
             start = lbl_8064B830 - (half >> 1);
             dst = lbl_803281E0 + start;
             for (pos = start; pos < 0x100; pos++) {
-                ShortCoord3 p0 = { 0, 0, 0 };
-                ShortCoord3 p1 = { 0, 0, 0 };
-                ShortCoord3 p2 = { 0, 0, 0 };
-                ShortCoord3 p3 = { 0, 0, 0 };
+                ShortCoord3 p0 = lbl_80651B78;
+                ShortCoord3 p1 = lbl_80651B80;
+                ShortCoord3 p2 = lbl_80651B88;
+                ShortCoord3 p3 = lbl_80651B90;
                 p0.x = start;
                 p0.y = start;
                 p1.x = lbl_8064B830;
