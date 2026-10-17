@@ -135,8 +135,19 @@ void fn_801157B4(void)
             if ((fn_8020216C((Object8020216C *)
                         fn_80201814(fn_80201B44())) & 0x4000) ||
                 ((0x10000 << i) & lbl_8064CD48)) {
-                upperIcon = lbl_8064C2A8;
-                fn_801A852C(&upperIcon.value, 0, i + 0x58, 0x80000000);
+                {
+                    register u32 colorWord;
+                    /* ASM: lwz and la (addi) keep the color load and argument address
+                     * ahead of the texture-index addition, which C reschedules. */
+                    asm {
+                        lwz colorWord, lbl_8064C2A8
+                        la image, upperIcon
+                    }
+                    upperIcon.value = colorWord;
+                    /* The wide intermediate avoids MWCC's redundant u16 mask;
+                     * this loop's texture indices are only 0x58 through 0x5A. */
+                    fn_801A852C((u32 *)image, 0, (long long)(i + 0x58), 0x80000000);
+                }
                 fn_801A9118(0, ((i + 0x72) * 4) & 0xFFFF, (void *)5);
             }
         }

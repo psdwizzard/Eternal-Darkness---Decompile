@@ -3,6 +3,10 @@ typedef signed char s8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 typedef struct Vec3 { float x, y, z; } Vec3;
+typedef struct Position { u32 x, y, z; } Position;
+typedef struct Object Object;
+typedef struct Entry Entry;
+typedef struct RangeControl RangeControl;
 typedef struct GameState {
     u8 pad0[0x1CB];
     s8 screen; /* 0x1CB */
@@ -11,7 +15,7 @@ typedef struct GameState {
 } GameState;
 typedef struct MenuState {
     u8 pad0[0x610];
-    void *range; /* 0x610 */
+    RangeControl *range; /* 0x610 */
     void *models[5]; /* 0x614 */
     u32 mask; /* 0x628 */
     u32 firstBit; /* 0x62C */
@@ -23,7 +27,8 @@ extern GameState lbl_8031CBA0;
 extern MenuState lbl_8031CD84;
 extern unsigned char lbl_8064B59C[8];
 extern unsigned char lbl_8064B5A4[8];
-extern void *lbl_8064C8E8, *lbl_8064C8EC;
+extern Entry *lbl_8064C8E8;
+extern void *lbl_8064C8EC;
 extern int lbl_8064C904;
 extern int lbl_8064C908;
 extern int lbl_8064C90C;
@@ -32,22 +37,35 @@ extern float lbl_8064EABC;
 
 extern void fn_80008C14(unsigned char *, int, int, int);
 extern int fn_800835CC(int);
-extern void fn_8011F0E8(void *, Vec3 *);
-extern void fn_80120AD0(void *, int, int, u16, float, float);
-extern void fn_8012CBE8(void *, int, Vec3 *, Vec3 *, Vec3 *, int);
-extern void fn_80144680(void *);
+extern void fn_8011F0E8(Vec3 *, Vec3 *);
+extern void fn_80120AD0(Object *, const Position *, u16, u32, float, float);
+extern void fn_8012CBE8(u8 *, int, Vec3 *, Vec3 *, Vec3 *, int);
+extern void fn_80144680(Entry *);
 extern void fn_80144C40(void);
 extern void *fn_80158CC8(int, int, void *);
 extern int fn_8015C4A4(void *, int);
-extern void fn_8016B400(int, int, int);
-extern int fn_801B05E8(int, int, int, int, int, int, int, int);
+extern void fn_8016B400(int, void *, void *);
+extern int fn_801B05E8(int, u8, u8, u8, Vec3 *, u8, int, int);
 extern void fn_801E5FB0(void *);
 extern u32 fn_801E741C(const char *);
 extern int fn_801E75A4(u32, int);
 extern void fn_801E8AC4(void *);
-extern int fn_801E8D34(void *);
-extern void fn_801F6228(u32, int, int);
-extern void fn_801F63E4(u32, int);
+extern int fn_801E8D34(RangeControl *);
+extern int fn_801F6228(u32, u16, u16);
+extern void fn_801F63E4(u32, u16);
+
+static inline void applyTransition(void **model, register u32 flags)
+{
+    register float rate;
+    register u32 masked;
+    /* ASM: lfs and clrlwi preserve the load and flag truncation order;
+     * C removes the redundant truncation for the 32-bit callee. */
+    asm {
+        lfs rate, lbl_8064EA08
+        clrlwi masked, flags, 16
+    }
+    fn_80120AD0(*model, 0, 100, masked, rate, rate);
+}
 
 /* Rune selection screen update: once a rune has been picked, apply it to
  * the rune models; otherwise play the matching narration. */
@@ -61,7 +79,7 @@ void fn_800831B0(void)
     Vec3 zero;
     short *source;
     s8 chosen;
-    int level;
+    u16 level;
     u32 sound;
     u16 flags;
     u32 j;
@@ -117,7 +135,7 @@ void fn_800831B0(void)
                     fn_8011F0E8(lbl_8031CD84.models[j], &position);
                 }
                 fn_80120AD0(lbl_8031CD84.models[j], 0, 100, 0, lbl_8064EA08, lbl_8064EA08);
-                fn_80120AD0(lbl_8031CD84.models[j], 0, 100, flags | 0x202, lbl_8064EA08, lbl_8064EA08);
+                applyTransition(&lbl_8031CD84.models[j], flags | 0x202);
             }
         }
         fn_8016B400(0x89C, 0, 0);
