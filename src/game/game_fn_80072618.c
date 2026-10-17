@@ -64,7 +64,8 @@ extern float lbl_8064E85C;
 int fn_80072618(Vec3 *origin, Vec3 *out, int radius, int flags)
 {
     SpotTable *table;
-    u32 mask;
+    register u32 mask;
+    register u32 negative;
     Shape shape;
     Result hit;
     Vec3 candidatePos;
@@ -73,11 +74,11 @@ int fn_80072618(Vec3 *origin, Vec3 *out, int radius, int flags)
     Vec3 randomPos;
     u32 randomDistance;
     Vec3 nearbyPos;
-    u32 nearest;
+    register u32 nearest;
     Vec3 objectPos;
     const Spot *found = NULL;
     int i;
-    int success;
+    register int success;
     const Spot *spot;
     u32 bestDistance;
     u32 distance;
@@ -88,10 +89,16 @@ int fn_80072618(Vec3 *origin, Vec3 *out, int radius, int flags)
 
     table = fn_8015C390(2);
     nearest = flags & 1U;
-    success = 0;
     /* Nearest starts at the maximum distance; farthest starts at zero. */
-    mask = -1;
-    mask &= -nearest;
+    /* ASM: li, li, neg, and initialize success and the distance mask.
+       Equivalent C swaps the mask and negation registers; keeping the
+       initializers together also preserves the retail instruction order. */
+    asm {
+        li mask, -1
+        li success, 0
+        neg negative, nearest
+        and mask, mask, negative
+    }
     bestDistance = mask;
     if (table != NULL && table->count != 0) {
         spot = table->spots;

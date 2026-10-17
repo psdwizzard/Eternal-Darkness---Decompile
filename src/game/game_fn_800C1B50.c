@@ -2,18 +2,22 @@ typedef struct Vec3 {
     float x, y, z;
 } Vec3;
 
+typedef struct ObjectInfo ObjectInfo;
+typedef struct Entry80201814 Entry80201814;
+typedef struct Object80201EB8 Object80201EB8;
+
 extern int fn_800C1AB8(int);
-extern void fn_800C1B18(void *, unsigned int, float);
-extern void *fn_80201814(int);
-extern int fn_80201EB8(void *);
-extern void *fn_80201B8C(void *);
+extern void fn_800C1B18(ObjectInfo *, unsigned int, float);
+extern Entry80201814 *fn_80201814(int);
+extern int fn_80201EB8(Object80201EB8 *);
+extern void *fn_80201B8C(unsigned char *);
 extern void *fn_80201BC8(void *);
-extern int fn_8012E114(void *, int, Vec3 *);
-extern void fn_8012CBE8(void *, int, Vec3 *, Vec3 *, Vec3 *, int);
-extern void fn_8011F114(Vec3 *, void *);
+extern int fn_8012E114(unsigned char *, unsigned int, void *);
+extern void fn_8012CBE8(unsigned char *, int, Vec3 *, Vec3 *, Vec3 *, int);
+extern void fn_8011F114(Vec3 *, Vec3 *);
 extern float fn_80140E58(void);
 extern float fn_8011F700(void *);
-extern void fn_8011F788(void *, float);
+extern float fn_8011F788(void *, float);
 extern void fn_8011F798(void *, float);
 extern int lbl_8064D18C;
 extern const Vec3 lbl_80239830;
@@ -45,10 +49,8 @@ void fn_800C1B50(int objectId, int kind, int flags, float amount, float value)
             model = fn_80201BC8(object);
             position = lbl_80239830;
             fn_8012E114(model, kind, &position);
-            values.z = value;
-            values.y = value;
-            values.x = value;
-            offset.x = position.x > (float)(double)value ? -amount : amount;
+            values.x = values.y = values.z = value;
+            offset.x = position.x > values.x ? -amount : amount;
             offset.y = position.y > values.y ? -amount : amount;
             offset.z = position.z > values.z ? -amount : amount;
             copyValues = values;

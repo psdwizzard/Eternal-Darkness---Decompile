@@ -11,21 +11,21 @@ typedef struct Vec3 { float x, y, z; } Vec3;
 typedef struct Vec3s { s16 x, y, z; } Vec3s;
 typedef struct QueryResult { u8 pad00[0x10]; f32 height; u8 pad14[0x18]; } QueryResult;
 
-extern void* fn_80201B94();
+extern void* fn_80201B94(u8*);
 extern void* fn_8018095C(void*);
-extern Vec3s* fn_8017FDA8(void*, int);
-extern int fn_80201B44();
-extern void* fn_80201814();
-extern void* fn_80201BC8();
-extern void fn_800CE24C(void*, Vec3*, int, int, int);
-extern void fn_802045AC(void*, Vec3*);
-extern u32 fn_8019BBB4(void*);
+extern void* fn_8017FDA8(void*, int);
+extern int fn_80201B44(void);
+extern void* fn_80201814(int);
+extern void* fn_80201BC8(void*);
+extern int fn_800CE24C(void*, const Vec3*, int, u32, int);
+extern s32 fn_802045AC(void*, Vec3*);
+extern u32 fn_8019BBB4(u8*);
 extern int fn_800BE2CC(void*, void*, Vec3*);
-extern int fn_8011F598(void*, int, int, int, QueryResult*, int);
-extern Vec3* fn_8011F130(void*);
+extern int fn_8011F598(void*, int, int, int, QueryResult*, u8);
+extern void* fn_8011F130(void*);
 extern void fn_800BE390(void*, void*);
-extern void fn_8019BBCC(void*, u32, u32);
-extern void fn_8019BB78(void*, s16*);
+extern void fn_8019BBCC(u8*, u32, u32);
+extern void fn_8019BB78(u8*, s16*);
 extern const f32 lbl_8064ED4C;
 extern const f32 lbl_8064ED8C;
 
@@ -40,16 +40,17 @@ int fn_8009C9D4(void* object, void* room, void* target, void* actor)
     s16 goal[3];
     Vec3s* origin;
     f32 height;
+    int id;
     Vec3* floor;
 
-    fn_80201B94();
+    fn_80201B94(object);
     if ((node = fn_8018095C(target)) != 0) {
         origin = fn_8017FDA8(node, 0);
         pos.x = origin->x;
         pos.y = origin->y;
         pos.z = origin->z;
-        if (fn_80201B44() != -1) {
-            fn_800CE24C(fn_80201BC8(fn_80201814()), &pos, 0x14, 0, 0x19);
+        if ((id = fn_80201B44()) != -1) {
+            fn_800CE24C(fn_80201BC8(fn_80201814(id)), &pos, 0x14, 0, 0x19);
         }
         fn_802045AC(object, &object_pos);
         if (fn_8019BBB4(node) & 2) {

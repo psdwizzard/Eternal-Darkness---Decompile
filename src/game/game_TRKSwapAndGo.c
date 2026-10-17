@@ -1,4 +1,16 @@
-extern unsigned char gTRKState[];
+typedef unsigned int u32;
+typedef unsigned char u8;
+
+typedef struct TRKState {
+    u32 gpr[32];
+    u32 lr, ctr, xer, msr, dar, dsisr;
+    u32 reserved;
+    u8 inputActivated;
+    u8 padding[3];
+    u8 *inputPending;
+} TRKState;
+
+extern TRKState gTRKState;
 extern unsigned char gTRKExceptionStatus_8024A864[];
 
 extern void TRKInterruptHandlerEnableInterrupts(void);
@@ -7,10 +19,12 @@ extern void TRKRestoreExtended1Block(void);
 /* MetroTRK: hand control back to the target program. The retail routine is a
  * hand-written asm function: it saves the TRK's own GPRs and special registers
  * into gTRKState, masks MSR[EE,RI], and either re-enters the interrupt handler
- * (input pending) or restores the target CPU state and returns with rfi. Only
- * the register save and the pending-input decision are expressed here. */
+ * (input pending) or restores the target CPU state and returns with rfi.
+ * The final target-register restore and rfi remain unresolved here. */
 void TRKSwapAndGo(void)
 {
+    register int value;
+
     /* ASM: lis/ori/stmw r0/mfmsr/mflr/mfctr - stores all 32 GPRs (stmw from
      * r0) and reads MSR/LR/CTR; C has no access to these registers */
     asm {
@@ -23,7 +37,7 @@ void TRKSwapAndGo(void)
         stw r0, 0x80(r3)
         mfctr r0
     }
-    /* ASM: stw/mfxer/mfdsisr/mfdar - saves CTR/XER/DSISR/DAR special purpose
+    /* ASM: stw/mfxer/mfdsisr - saves CTR/XER/DSISR special purpose
      * registers, which C cannot read */
     asm {
         stw r0, 0x84(r3)
@@ -31,15 +45,24 @@ void TRKSwapAndGo(void)
         stw r0, 0x88(r3)
         mfdsisr r0
         stw r0, 0x94(r3)
-        mfdar r0
-        stw r0, 0x90(r3)
     }
 
-    if (**(unsigned char **)(gTRKState + 0xA0) != 0) {
-        gTRKState[0x9C] = 1;
-        TRKInterruptHandlerEnableInterrupts();
-    } else {
+    /* ASM: mfdar reads the data-access exception address register. */
+    asm { mfdar value }
+    gTRKState.dar = value;
+    /* ASM: mfmsr reads the machine state for interrupt masking. */
+    asm { mfmsr value }
+    /* Retail complements the sign-extended immediate 0x8002. */
+    value &= 0x7FFD;
+    /* ASM: mtmsr updates the privileged machine-state register. */
+    asm { mtmsr value }
+
+    if ((int)*gTRKState.inputPending == 0) {
         gTRKExceptionStatus_8024A864[0xC] = 0;
         TRKRestoreExtended1Block();
+    } else {
+        gTRKState.inputActivated = 1;
+        TRKInterruptHandlerEnableInterrupts();
     }
 }
+
