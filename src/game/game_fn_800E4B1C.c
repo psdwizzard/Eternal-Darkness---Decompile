@@ -71,7 +71,6 @@ void fn_800E4B1C(void)
     u16 minimum_delay;
     u16 maximum_delay;
     u8 sound_variant;
-    u16 *sequence;
     int enabled;
 
     owner = fn_8015C348(2);
@@ -94,13 +93,12 @@ void fn_800E4B1C(void)
                             (u16)lbl_8064D18C, 0);
             }
 
-            sequence = lbl_80325C40[lbl_8064CAF4];
-            if (lbl_8064CAF0 >= sequence[lbl_8064CAF2]) {
+            if (lbl_8064CAF0 >= lbl_80325C40[lbl_8064CAF4][lbl_8064CAF2]) {
                 lbl_8064CAF0 = 0;
                 lbl_8064CAF2++;
                 lbl_8064CADC ^= 1;
                 if (lbl_8064CAF2 >= lbl_8064CAE8 ||
-                    sequence[lbl_8064CAF2] == 0) {
+                    lbl_80325C40[lbl_8064CAF4][lbl_8064CAF2] == 0) {
                     lbl_8064CAF2 = 0;
                     lbl_8064CAF4 = fn_800E5000();
                     lbl_8064CAE8 = fn_800E4A50();

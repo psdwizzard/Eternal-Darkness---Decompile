@@ -47,7 +47,7 @@ extern int fn_8006BE44(void);
 extern void fn_801303F0(void *, int, int, float, float);
 extern void fn_80130434(void *, int);
 extern int fn_8011F6A4(void *, int, int, int, void *, int);
-extern int fn_8012FF34(void *, volatile Vec3 *, int, int);
+extern int fn_8012FF34(void *, Vec3 *, int, int);
 extern void fn_801302BC(void *, int);
 extern float fn_8012B7D0(const void *, const void *);
 extern float fn_8012B750(void *);
@@ -94,7 +94,7 @@ extern const float lbl_8064EB68;
 extern const float lbl_8064EB6C;
 extern const float lbl_8064EB70;
 
-int fn_80087070(void *object, int phase, void *event)
+int fn_80087070(void *object, int phase, void **event)
 {
     QueryResult playerQuery;
     QueryResult query;
@@ -123,7 +123,7 @@ int fn_80087070(void *object, int phase, void *event)
     u16 sound;
     int index;
 
-    kind = fn_80200C10(event);
+    kind = fn_80200C10((int *)event);
     runtime = fn_80201BC8(object);
     objectId = fn_80201B54(object);
     state = ((ObjectData *)fn_80201B8C(object))->state;
@@ -226,6 +226,7 @@ int fn_80087070(void *object, int phase, void *event)
             /* Facing the player controls the effect and sound timers. */
             if (state->flags & 2) {
                 fn_80201E78(&fetchedPlayerPosition, fn_80201B3C());
+                /* Keep a separate facing-query copy of the player position. */
                 facingPosition = playerPosition = fetchedPlayerPosition;
                 facing = fn_8012B7D0(runtime, &facingPosition);
                 fn_8017A12C(&angle, fn_8012B750(runtime), facing);
