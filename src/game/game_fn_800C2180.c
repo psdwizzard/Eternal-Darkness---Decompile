@@ -1,47 +1,51 @@
-typedef int (*Fn80130428Callback)(int);
+typedef struct Object Object;
+typedef struct Entry80201814 Entry80201814;
+
+typedef int (*Fn80130428Callback)(void *);
 
 extern int fn_800460EC(void);
-extern void fn_8004918C(void);
-extern void fn_80049194(void);
-extern int fn_800FBFB0(void);
-extern int fn_8011EB04(int);
-extern int fn_8011EB14(int);
-extern int fn_80128EAC(void);
-extern void fn_8012965C(int, int, int, int);
-extern Fn80130428Callback fn_80130428(int);
-extern void fn_80130434(int, int);
+extern void *fn_8004918C(void);
+extern void *fn_80049194(void);
+extern unsigned int fn_800FBFB0(void);
+extern int fn_8011EB04(Object *);
+extern int fn_8011EB14(Object *);
+extern int fn_80128EAC(void *);
+extern unsigned char *fn_8012965C(void *, int, int, int);
+extern void *fn_80130428(Object *);
+extern void fn_80130434(Object *, int);
 extern int fn_801A5CE0(void);
-extern int fn_801A6D94(void);
-extern int fn_801A77B0(void);
+extern int fn_801A6D94(void *);
+extern unsigned int fn_801A77B0(void *);
 extern int fn_801D10B8(void);
-extern void *fn_80201814(void);
-extern void fn_80201A84(int);
-extern int fn_80201B64(void *);
+extern Entry80201814 *fn_80201814(int);
+extern int fn_80201A84(void *);
+extern int fn_80201B64(int *);
 extern int lbl_8064D6EC;
 
-int fn_800C2180(int obj, int mode) {
-    Fn80130428Callback callback;
-    void *entry;
-    int level;
-    int isSpecial;
+int fn_800C2180(void *object, int mode) {
+    int sound;
+    Object *obj;
     int notExcluded;
-    int allowed;
-    int anim;
+    int result;
     int state;
     int kind;
     int blocked;
-    int result;
-    int sound;
+    int anim;
+    int isSpecial;
+    int level;
+    Entry80201814 *entry;
+    Fn80130428Callback callback;
+    int allowed;
 
+    obj = object;
     result = 1;
     if (mode != 0) {
-        if (fn_80128EAC() == 0xF) {
-            fn_80201A84(obj);
-            entry = fn_80201814();
-            level = (unsigned char)fn_800FBFB0();
-            isSpecial = fn_80201B64(entry) == 0x52;
+        if (fn_80128EAC(obj) == 0xF) {
+            entry = fn_80201814(fn_80201A84(obj));
+            level = fn_800FBFB0() & 0xFF;
+            isSpecial = fn_80201B64((int *)entry) == 0x52;
             notExcluded = 1;
-            if (fn_80201B64(entry) != 0x45 && fn_80201B64(entry) != 0x43) {
+            if (fn_80201B64((int *)entry) != 0x45 && fn_80201B64((int *)entry) != 0x43) {
                 notExcluded = 0;
             }
             if (level < 0xD && fn_800460EC() == 0 && lbl_8064D6EC == 0 &&
@@ -69,7 +73,7 @@ int fn_800C2180(int obj, int mode) {
                 if (allowed != 0) {
                     fn_8012965C(obj, anim, 0x20, 1);
                     result = 0;
-                    callback = fn_80130428(obj);
+                    callback = (Fn80130428Callback)fn_80130428(obj);
                     if (callback != 0 && callback(obj) != 0) {
                         fn_80130434(obj, 1);
                     }
@@ -77,10 +81,8 @@ int fn_800C2180(int obj, int mode) {
             }
         }
     } else {
-        fn_80049194();
-        if (fn_801A6D94() != 0) {
-            fn_8004918C();
-            sound = fn_801A77B0();
+        if (fn_801A6D94(fn_80049194()) != 0) {
+            sound = fn_801A77B0(fn_8004918C());
         } else {
             sound = 0xF;
         }
