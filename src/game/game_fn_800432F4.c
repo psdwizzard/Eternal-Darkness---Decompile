@@ -1,3 +1,5 @@
+typedef struct OSThread OSThread;
+
 typedef struct DataBlock {
     struct { unsigned char data[0x20]; } queue0;
     unsigned char pad20[0xC];
@@ -21,14 +23,15 @@ extern int lbl_8064C7C4;
 extern int lbl_8064C7C8;
 extern int lbl_8064C7CC;
 extern int lbl_8064C7D0;
-extern unsigned short lbl_8064C7E4;
-extern unsigned short lbl_8064C7EC;
+extern void* lbl_8064C7E4[2];
+extern void* lbl_8064C7EC[2];
 extern int lbl_8064C7F8;
 
 extern void fn_800433FC(void);
 extern void fn_8020D1F0(void*, void*, int);
-extern void fn_8020F84C(void*, void*, void*, void*, int, int, int);
-extern void fn_8020FC0C(void*);
+extern int fn_8020F84C(OSThread*, void* (*)(void*), void*, void*,
+                         unsigned int, int, unsigned short);
+extern int fn_8020FC0C(OSThread*);
 
 void fn_800432F4(void)
 {
@@ -40,10 +43,10 @@ void fn_800432F4(void)
     lbl_8064C7F8 = 0;
 
     if (lbl_8064C7C4 == 0) {
-        fn_8020D1F0((void*)((unsigned long)block + 0x2C),
-                    (void*)((unsigned long)block + 0xC8), 4);
-        fn_8020D1F0((void*)((unsigned long)block + 0x90),
-                    (void*)((unsigned long)block + 0xD8), 4);
+        fn_8020D1F0(&block->queue1,
+                    block->queue1Storage, 4);
+        fn_8020D1F0(&block->queue3,
+                    block->queue3Storage, 4);
         {
             register void* queue;
             /* ASM: addi preserves the retail zero-offset address operation;
@@ -51,17 +54,30 @@ void fn_800432F4(void)
             asm {
                 addi queue, block, 0
             }
-            fn_8020D1F0(queue, (void*)((unsigned long)block + 0xE8), 4);
+            fn_8020D1F0(queue, block->queue0Storage, 4);
         }
-        fn_8020D1F0((void*)((unsigned long)block + 0x58), &lbl_8064C7EC, 2);
-        fn_8020D1F0((void*)((unsigned long)block + 0xF8), &lbl_8064C7E4, 2);
-        fn_8020F84C(block->thread, fn_800433FC, 0,
-                    &block->stack + 1, 0x2000, 0x1D, 1);
+        fn_8020D1F0(&block->queue2, lbl_8064C7EC, 2);
+        fn_8020D1F0(&block->queue4, lbl_8064C7E4, 2);
+        {
+            register unsigned char* stackTop;
+            register void (*entry)(void);
+            register unsigned long entryHigh;
+            /* ASM: lis and addi preserve the callback-address split and its
+             * ordering around the stack address; C uses a different register
+             * and schedules the thread address between these operations. */
+            asm {
+                lis entryHigh, fn_800433FC@ha
+                addi stackTop, block, 0x2428
+                addi entry, entryHigh, fn_800433FC@l
+            }
+            fn_8020F84C((OSThread*)block->thread, (void* (*)(void*))entry, 0,
+                        stackTop, 0x2000, 0x1D, 1);
+        }
         /* ASM: an empty compiler barrier prevents reuse of the thread address
          * across calls; retail recomputes it for the resume operation. */
         asm {
         }
-        fn_8020FC0C((void*)((unsigned long)block + 0x118));
+        fn_8020FC0C((OSThread*)block->thread);
         lbl_8064C7C4 = 1;
     }
 }
