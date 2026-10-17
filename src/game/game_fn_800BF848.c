@@ -74,7 +74,7 @@ int fn_800BF848(void *object, void *source)
     int replace;
     u8 enabled;
     EventState **state;
-    void *event, *collection, *effect;
+    void *event, *collection;
     int action, kind;
     u32 related;
     u32 mode, flags;
@@ -82,6 +82,7 @@ int fn_800BF848(void *object, void *source)
     int subtype, result;
     s16 scale;
     u8 intensity;
+    void *effect;
 
     special = 0;
     mainIndex = 0;
@@ -125,7 +126,8 @@ int fn_800BF848(void *object, void *source)
             fn_801A764C(created, fn_8011F130(collection));
 
             if (mode != 0x40) {
-                /* ASM: nop preserves the retail scheduling slot, which C cannot express. */
+                /* ASM: nop retains the retail no-op for mode != 0x40.
+                 * MWCC removes equivalent empty C branches and self-assignments. */
                 asm { nop }
             }
             if ((mode == 0x40 || mode == 0x80) && fn_80157994(effect) >= 2)

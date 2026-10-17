@@ -50,13 +50,17 @@ extern s32 fn_8003B2A8(void *, void *, void *, TraceResult *, MergeEntry *);
 extern void fn_800FBE38(void *, int, int, int (*)(const void *, const void *));
 extern int fn_8003B878(const void *, const void *);
 extern s32 fn_8003B56C(MergeEntry *, s32, MergeEntry *, s32);
-extern int fn_801A74F8(void *);
-extern void fn_801A7518(void *, int);
+extern s16 fn_801A74F8(void *);
+extern void fn_801A7518(void *, s16);
 extern void *fn_8003B794(void *, MergeEntry *, s32, void *);
 extern void fn_8007B3C4(TraceResult *, int, void *, void *);
 
 extern const Vec3 lbl_80238DB8;
 extern const float lbl_8064E1FC;
+extern const float lbl_8064E24C;
+extern const float lbl_8064E250;
+extern const float lbl_8064E254;
+extern const float lbl_8064E258;
 
 void *fn_8003A280(void *object, void *target, void *anim)
 {
@@ -82,6 +86,7 @@ void *fn_8003A280(void *object, void *target, void *anim)
     s32 rays;
     s32 j;
     float ratio;
+    float rounded;
     u32 layers;
     void *query;
 
@@ -101,16 +106,16 @@ void *fn_8003A280(void *object, void *target, void *anim)
         layers = fn_801A76B8(anim);
         if (kind == 0x40 && layers > 1) {
             rays *= 2;
-            up.z *= 2.0f;
+            up.z *= lbl_8064E24C;
         }
     }
 
     trace = traces;
     for (i = 0; i < rays; i++) {
-        fn_8017A244(&position, &rotation, 6.2831855f * (float)(fn_800FBFB0() & 0x1F) / 31.0f);
+        fn_8017A244(&position, &rotation, lbl_8064E250 * (float)(fn_800FBFB0() & 0x1F) / lbl_8064E254);
         fn_802114E0(matrix, &rotation);
         fn_80211710(matrix, &up, &dir);
-        fn_80211A90(&dir, &dir, (float)(fn_800FBFB0() & 0x1F) / 31.0f);
+        fn_80211A90(&dir, &dir, (float)(fn_800FBFB0() & 0x1F) / lbl_8064E254);
         fn_80211A48(&position, &dir, &end);
         fn_8003B630(object, &end, &normal, trace, 0);
         if (i == 0 || total == 0) {
@@ -149,7 +154,13 @@ void *fn_8003A280(void *object, void *target, void *anim)
     }
 
     ratio = (float)(s16)fn_801A74F8(anim) / (float)rays;
-    fn_801A7518(anim, (s16)(ratio >= lbl_8064E1FC ? 0.5f + ratio : ratio - 0.5f));
+    rounded = ratio;
+    if (ratio >= lbl_8064E1FC) {
+        rounded = lbl_8064E258 + rounded;
+    } else {
+        rounded -= lbl_8064E258;
+    }
+    fn_801A7518(anim, (int)rounded);
     object = fn_8003B794(object, merged, total, anim);
     fn_8007B3C4(traces, rays, anim, object);
     return object;

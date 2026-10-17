@@ -88,7 +88,7 @@ s32 fn_8021D9B4(s32 channel, Result *result)
     u32 state;
     u32 first, second, third, fourth, fifth;
     u32 tick;
-    s32 length, read_length;
+    u32 length, read_length;
     u32 count, i;
 
     ch = &lbl_80641C60[channel];
@@ -105,8 +105,14 @@ s32 fn_8021D9B4(s32 channel, Result *result)
     first |= (lbl_8064C448 >> 16) & 0x7fff;
     first &= ~0xfff;
     length = fn_8021D8F0();
-    if (fn_8021D7AC(channel, first, (u32 *)((u8 *)&scratch + sizeof(scratch.reserved_before)), length, 0) < 0)
-        return -3;
+    {
+        /* EXI takes a signed byte count; keep the bit counts unsigned. */
+        s32 transfer_length = length;
+        if (fn_8021D7AC(channel, first,
+                       (u32 *)((u8 *)&scratch + sizeof(scratch.reserved_before)),
+                       transfer_length, 0) < 0)
+            return -3;
+    }
 
     /* Fold the transmitted address bits into the channel state. */
     count = length * 8 + 1;
@@ -117,8 +123,12 @@ s32 fn_8021D9B4(s32 channel, Result *result)
     ch->state = fn_8021D640(ch->state);
 
     read_length = fn_8021D8F0();
-    if (fn_8021D7AC(channel, 0, (u32 *)&scratch.response[0], read_length + 0x14, 1) < 0)
-        return -3;
+    {
+        s32 transfer_length = read_length + 0x14;
+        if (fn_8021D7AC(channel, 0, (u32 *)&scratch.response[0],
+                       transfer_length, 1) < 0)
+            return -3;
+    }
 
     /* Read the five response words before advancing the receive state. */
     first = scratch.response[0];
@@ -176,8 +186,8 @@ s32 fn_8021D9B4(s32 channel, Result *result)
     task->done_callback = fn_8021E57C;
     task->request_callback = 0;
     fn_8021BA30(task);
-    result->first = first;
-    result->second = second;
     result->third = third;
+    result->second = second;
+    result->first = first;
     return 0;
 }

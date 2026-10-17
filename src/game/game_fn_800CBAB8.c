@@ -45,15 +45,15 @@ extern u16 fn_8017FEA4(void *);
 extern u16 fn_8017FEFC(void *);
 extern int fn_8017FF14(void *, u16);
 extern int fn_80199120(void *);
-extern int fn_801E1ED4(void);
-extern int fn_801E2004(void);
+extern int fn_801E1ED4(int);
+extern void *fn_801E2004(int);
 extern void fn_801E7974(void *, int);
 extern int fn_801E79FC(void *, int);
 extern void fn_801E8328(int, void *);
 extern int fn_801E855C(int, void *, int);
 extern void fn_8020123C(int, int, int, int);
 extern Entry *fn_80201814(int);
-extern void fn_80201B44(void);
+extern int fn_80201B44(void);
 extern void fn_80201B8C(Entry *);
 extern Actor *fn_80201BC8(Entry *);
 extern Object *fn_80201C24(Entry *);
@@ -109,8 +109,7 @@ void fn_800CBAB8(int *source, int id)
     fn_8011FB54(actor, fn_8011FB4C(sourceActor));
     fn_801261F4(actor);
     fn_8012C478(actor, 15, 1);
-    fn_80201B44();
-    if (fn_801E1ED4() && (fn_80201B44(), fn_801E2004() == 4)) {
+    if (fn_801E1ED4(fn_80201B44()) != 0 && (int)fn_801E2004(fn_80201B44()) == 4) {
         firstA = lbl_8064F2F0;
         firstB = lbl_8064F2EC;
         firstC = lbl_8064F2E8;
