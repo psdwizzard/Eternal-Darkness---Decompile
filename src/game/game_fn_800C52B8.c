@@ -1,5 +1,8 @@
 typedef unsigned char u8;
+typedef signed short s16;
+typedef unsigned short u16;
 typedef signed int s32;
+typedef unsigned long long u64;
 typedef unsigned int u32;
 
 typedef struct Vec3 {
@@ -62,33 +65,33 @@ extern void *fn_801294DC(void *, int, int, int);
 extern void fn_80129BA4(void *, float, float);
 extern int fn_8012A1BC(void *, int);
 extern int fn_8012A1FC(void *, int);
-extern float fn_8012B7D0(void *, Vec3);
-extern s32 fn_8015793C(void *);
+extern float fn_8012B7D0(const void *, const void *);
+extern u8 fn_8015793C(void *);
 extern void fn_80157C0C(void *, Vec3 *);
 extern float fn_80179F20(float);
 extern void *fn_801A717C(void);
 extern void fn_801A7324(void *, void *);
-extern void fn_801A7460(void *, s32);
-extern void fn_801A74A8(void *, s32);
-extern void fn_801A74D8(void *, s32);
-extern void fn_801A7518(void *, s32);
-extern void fn_801A7538(void *, s32);
-extern void fn_801A7550(void *, s32);
-extern void fn_801A7558(void *, s32);
-extern void fn_801A7560(void *, s32);
+extern void fn_801A7460(void *, u32);
+extern void fn_801A74A8(void *, u32);
+extern void fn_801A74D8(void *, u32);
+extern void fn_801A7518(void *, s16);
+extern void fn_801A7538(void *, u16);
+extern void fn_801A7550(void *, u32);
+extern void fn_801A7558(void *, u32);
+extern u32 fn_801A7560(void *, u32);
 extern u32 fn_801A7570(void *);
-extern void fn_801A7588(void *, s32);
-extern void fn_801A7610(void *, Segment);
-extern void fn_801A7678(void *, s32);
+extern void fn_801A7588(void *, u32);
+extern void fn_801A7610(void *, const void *);
+extern void fn_801A7678(void *, u32);
 extern void *fn_801A7778(void *);
-extern s32 fn_801A7780(void *);
-extern s32 fn_801A77D4(void *);
-extern void fn_8020123C(int, int, int, void *);
+extern void *fn_801A7780(void *);
+extern u32 fn_801A77D4(void *);
+extern u64 fn_8020123C(int, int, int, int);
 extern void *fn_80201814(s32);
 extern int fn_80201B54(void *);
 extern OwnerData *fn_80201B8C(void *);
 extern void *fn_80201BC8(void *);
-extern void fn_80201D14(void *, int);
+extern void fn_80201D14(void *, u8);
 extern void fn_80201D2C(void *, int);
 extern void fn_80211A48(Vec3 *, Vec3 *, Vec3 *);
 extern void fn_80211A6C(Vec3 *, Vec3 *, Vec3 *);
@@ -105,24 +108,25 @@ static inline Vec3 get_position(void *resource)
 
 static inline float get_height(void *resource, Vec3 *pos)
 {
-    return fn_8012B7D0(resource, *pos);
+    Vec3 copy = *pos;
+    return fn_8012B7D0(resource, &copy);
 }
 
-extern void fn_80036104(void);
-extern void fn_80036198(void);
-extern void fn_800C5258(void);
-extern void fn_80204230(void);
-extern void fn_802042A4(void);
+extern s32 fn_80036104(void *, void *);
+extern s32 fn_80036198(void *, void *);
+extern int fn_800C5258(void *, void *);
+extern int fn_80204230(int, int);
+extern int fn_802042A4(int, int);
 
 void fn_800C52B8(void *object)
 {
-    OwnerState *state;
-    int start;
     int end;
-    OwnerData *owner;
-    void *resource;
     void *anim;
-    int id;
+    void *resource;
+    void *gfx;
+    s32 offset;
+    s32 layer;
+    void *model;
     Segment seg;
     Vec3 pos;
     Vec3 linked_pos;
@@ -134,24 +138,24 @@ void fn_800C52B8(void *object)
     Vec3 res_pos;
     Entry *entries;
     s32 count;
-    s32 offset;
-    void *gfx;
+    void *linked;
+    OwnerState *state;
+    s32 i;
     void *draw;
+    s32 span;
+    ObjectInfo *info;
+    void *linked_res;
     ObjectInfo *owner_info;
     s32 first;
-    ObjectInfo *info;
-    s32 layer;
-    s32 i;
-    void *linked;
-    void *model;
+    OwnerData *owner;
+    int start;
     s32 frame;
-    void *linked_res;
     float len;
     float dist;
     float neg_dist;
     float height;
     float angle;
-    s32 span;
+    int id;
 
     owner = fn_80201B8C(object);
     state = owner != 0 ? owner->state : 0;
@@ -169,13 +173,13 @@ void fn_800C52B8(void *object)
 
     fn_8004948C(object, gfx, 0);
     state->value = fn_80201B54(linked);
-    if (fn_80049694(gfx) != 0 || (fn_801A7780(gfx) & 0x20)) {
+    if (fn_80049694(gfx) != 0 || ((u32)fn_801A7780(gfx) & 0x20)) {
         fn_801A7460(gfx, fn_801A77D4(gfx));
         fn_801A74D8(gfx, 0x2420);
-        fn_801A7560(gfx, fn_801A7780(gfx));
+        fn_801A7560(gfx, (u32)fn_801A7780(gfx));
         fn_801A74A8(gfx, state->value);
         fn_801A7678(gfx, layer);
-        fn_8020123C(0x28, id, id, gfx);
+        fn_8020123C(0x28, id, id, (s32)gfx);
         return;
     }
 
@@ -211,7 +215,10 @@ void fn_800C52B8(void *object)
     seg.dir.y = lbl_8064F110;
     seg.dir.z = lbl_8064F164;
     seg.start = pos;
-    fn_801A7610(draw, seg);
+    {
+        Segment copy = seg;
+        fn_801A7610(draw, &copy);
+    }
 
     fn_801292E0(resource, &count, &entries);
     neg_dist = -dist;

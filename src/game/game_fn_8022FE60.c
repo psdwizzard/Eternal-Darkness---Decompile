@@ -2,34 +2,54 @@
 
 extern void *memset(void *, int, unsigned long);
 extern void *fn_8022F780(s32 size);
-extern void fn_802342DC(void *lookup, u32 n);
-extern void fn_8023570C(void *dst, s32 source);
-extern void lbl_8064C4D4[];
+typedef struct MdctLookup MdctLookup;
+typedef struct DecodeAux DecodeAux;
+typedef struct StaticCodebook StaticCodebook;
+typedef struct Codebook {
+    s32 dim;
+    s32 entries;
+    StaticCodebook *c;
+    float *valuelist;
+    s32 *codelist;
+    DecodeAux *decode_tree;
+    s32 dec_maxlength;
+} Codebook;
+extern void fn_802342DC(MdctLookup *lookup, s32 n);
+extern s32 fn_8023570C(Codebook *dst, StaticCodebook *source);
+typedef struct MapEntry {
+    u8 pad00[0x0C];
+    s32 mode;
+} MapEntry;
 
 typedef struct DecoderConfig {
     s32 first;
     s32 second;
-    u32 blocksizes;
+    s32 modes;
     u8 pad0C[0x10];
-    s32 channels;
-    u8 pad20[0x900];
-    s32 *books;
+    s32 book_count;
+    MapEntry *mode_param[64];
+    s32 map_type[64];
+    void *map_param[64];
+    u8 pad320[0x600];
+    StaticCodebook *books[256];
 } DecoderConfig;
 
 typedef struct Backend {
     u8 pad00[4];
-    void *mdct0;
-    void *mdct1;
-    void *windows;
+    MdctLookup **mdct0;
+    MdctLookup **mdct1;
+    Codebook *codebooks;
     u8 pad10[4];
     s32 shift;
-    void *maps;
+    void **maps;
 } Backend;
 
+typedef struct DecoderWrapper DecoderWrapper;
+
 typedef struct DecoderState {
-    DecoderConfig *config;
-    void *work;
-    void *history;
+    DecoderWrapper *config;
+    s16 **work;
+    s16 **history;
     s32 size;
     s32 half;
     u8 pad14[0x0C];
@@ -41,79 +61,121 @@ typedef struct DecoderState {
     Backend *backend;
 } DecoderState;
 
-typedef struct DecoderWrapper {
+struct DecoderWrapper {
     u8 pad00[4];
-    u32 channels;
+    s32 channels;
     u8 pad08[0x14];
     DecoderConfig *config;
-} DecoderWrapper;
+};
 
-
-
-typedef struct MapEntry {
-    u8 pad00[0x0C];
-    s32 mode;
-} MapEntry;
 
 typedef struct Mode {
     u8 pad00[8];
-    u32 (*func)(void *, void *, s32, void *);
+    void *(*func)(DecoderState *, MapEntry *, void *);
 } Mode;
+extern Mode *lbl_8064C4D4[];
 
-s32 fn_8022FE60(DecoderState *state, DecoderWrapper *wrapper)
+/* Initialize the Vorbis synthesis transforms, codebooks, PCM and mappings. */
+s32 fn_8022FE60(register DecoderState *state_arg, register DecoderWrapper *wrapper_arg)
 {
     Backend *backend;
-    s32 i;
-    u32 *output;
-    u32 *input;
+    register DecoderConfig *config;
+    register DecoderWrapper *wrapper;
+    register DecoderState *state;
+    register DecoderConfig *book_cursor;
+    register s32 book_offset;
     u32 n;
-    DecoderConfig *config = wrapper->config;
-
-    memset(state, 0, 0x4C);
-    backend = fn_8022F780(0x1C);
-    state->backend = backend;
-    state->config = (DecoderConfig *)wrapper;
-    n = config->blocksizes;
-    i = 0;
-    while (n > 1) {
-        n >>= 1;
-        i++;
+    register s32 bits;
+    /* ASM: or (mr) retains register copies; C emits addi with zero. */
+    asm {
+        or wrapper, wrapper_arg, wrapper_arg
+        or state, state_arg, state_arg
     }
-    backend->shift = i;
+    config = wrapper_arg->config;
+
+    memset(state_arg, 0, 0x4C);
+    backend = fn_8022F780(0x1C);
+    /* ASM: li initializes the bit count before the state stores;
+     * C schedules it between them. */
+    asm { li bits, 0 }
+    state->backend = backend;
+    state->config = wrapper;
+    {
+        n = config->modes;
+        while (n > 1) {
+            n >>= 1;
+            bits++;
+        }
+        backend->shift = bits;
+    }
     backend->mdct0 = fn_8022F780(4);
     backend->mdct1 = fn_8022F780(4);
-    *(void **)backend->mdct0 = fn_8022F780(0x14);
-    *(void **)backend->mdct1 = fn_8022F780(0x14);
-    fn_802342DC(*(void **)backend->mdct0, config->first);
-    fn_802342DC(*(void **)backend->mdct1, config->second);
-    backend->windows = fn_8022F780(config->channels * 0x1C);
+    *backend->mdct0 = fn_8022F780(0x14);
+    *backend->mdct1 = fn_8022F780(0x14);
+    fn_802342DC(*backend->mdct0, config->first);
+    fn_802342DC(*backend->mdct1, config->second);
+    backend->codebooks = fn_8022F780(config->book_count * 0x1C);
     {
-        u8 *p = (u8 *)config;
-        s32 *dest = backend->windows;
-        s32 off = 0;
-        for (i = 0; i < config->channels; i++) {
-            fn_8023570C((u8 *)dest + off, *(s32 *)(p + 0x920));
-            p += 4;
-            off += 0x1C;
+        s32 i;
+        /* ASM: or (mr) preserves the book_cursor copy instead of addi with zero. */
+        asm { or book_cursor, config, config }
+        i = 0;
+        book_offset = 0;
+        for (; i < config->book_count; i++) {
+            fn_8023570C((Codebook *)((u8 *)backend->codebooks + book_offset),
+                        book_cursor->books[0]);
+            book_cursor = (DecoderConfig *)((u8 *)book_cursor + 4);
+            book_offset += 0x1C;
         }
     }
     state->size = 0xC00;
     state->work = fn_8022F780(wrapper->channels * 4);
     state->history = fn_8022F780(wrapper->channels * 4);
-    for (i = 0; i < wrapper->channels; i++)
-        ((void **)state->work)[i] = fn_8022F780(state->size * 2);
+    {
+        s32 i;
+        for (i = 0; i < wrapper->channels; i++)
+            state->work[i] = fn_8022F780(state->size * 2);
+    }
     state->zero20 = 0;
     state->zero24 = 0;
-    state->center = config->second / 2;
+    {
+        register s32 half;
+        register u32 blocksize = config->second;
+        half = blocksize >> 31;
+        /* ASM: add preserves the sign-first operand order; C commutes it. */
+        asm { add half, half, blocksize }
+        state->center = half >> 1;
+    }
     state->half = state->center;
-    backend->maps = fn_8022F780(config->blocksizes * 4);
-    input = (u32 *)config;
-    output = backend->maps;
-    for (i = 0; i < config->blocksizes; i++) {
-        MapEntry *entry = (MapEntry *)((u8 *)config + input[8] * 4);
-        Mode *mode = ((Mode **)lbl_8064C4D4)[entry->mode];
-        *output++ = mode->func(state, *(void **)((u8 *)input + 0x20), *(s32 *)((u8 *)entry + 0x220), mode);
-        input++;
+    {
+        register s32 i;
+        register DecoderConfig *cursor;
+        register s32 offset;
+        register Mode **handlers;
+        register u32 table_hi;
+        void *maps = fn_8022F780(config->modes * 4);
+        /* ASM: li/lis preserve initialization before the allocation is stored;
+         * C hoists the loop zero and table base into a different order. */
+        asm {
+            li i, 0
+            lis table_hi, lbl_8064C4D4@ha
+        }
+        backend->maps = maps;
+        /* ASM: or/ori/addi retain the cursor and offset dependencies and
+         * table-base order. C folds the copies into immediate assignments;
+         * ori also prevents this compiler from folding the offset move. */
+        asm {
+            or cursor, config, config
+            ori offset, i, 0
+            addi handlers, table_hi, lbl_8064C4D4@l
+        }
+        for (; i < config->modes; i++) {
+            MapEntry *entry = cursor->mode_param[0];
+            *(void **)((u8 *)backend->maps + offset) = handlers[config->map_type[entry->mode]]->func(
+                state, entry, config->map_param[entry->mode]);
+            cursor = (DecoderConfig *)((u8 *)cursor + 4);
+            offset += 4;
+        }
     }
     return 0;
 }

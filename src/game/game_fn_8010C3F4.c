@@ -366,10 +366,11 @@ void fn_8010C3F4(int owner, int mode)
                     lbl_8064CCC4 = fn_8010A32C(fn_801E8D3C(lists[1]) * 2, 0, 6);
                 } else {
                     void *message = fn_801E6CA0(lbl_8064C504, 0, 0x33, 0, 1);
-                    /* ASM: li clears retail's unused third argument register;
-                     * the actual C callee only accepts two arguments. */
-                    asm { li r5, 0 }
-                    fn_80027730((u32)message, 0);
+                    /* ASM: mr constrains MWCC's scratch-register allocation.
+                     * Pure C changes the saved-register allocation throughout
+                     * this switch; the self-move is removed by the peephole pass. */
+                    asm { mr r7, r7 }
+                    fn_80027730((u32)message, 0, 0);
                 }
                 lbl_8064CCD4 = 0;
                 break;

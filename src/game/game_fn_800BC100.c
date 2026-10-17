@@ -33,12 +33,12 @@ typedef struct Candidate {
 } Candidate;
 
 extern void fn_800BCCC4(const short *source, Vec3 *result);
-extern int fn_800FBFB0(void);
+extern unsigned int fn_800FBFB0(void);
 extern void fn_8013F3C0(Shape *out, const Vec3 *first, const Vec3 *second, float radius);
 extern void *fn_8015C2FC(int selector);
 extern void *fn_8013FBE4(Owner *owner, const void *value, Result *out,
                         void *context, unsigned int flags);
-extern unsigned int fn_80178E94(Vec3 *a, Vec3 *b);
+extern unsigned int fn_80178E94(const float *a, const float *b);
 extern void *memset(void *dest, int value, unsigned long size);
 
 extern Marker *lbl_80320B98[50];
@@ -61,8 +61,8 @@ Marker *fn_800BC100(const short *key, Vec3 *origin, int *outIndex, unsigned int 
     int collect;
     int i;
 
-    collect = flags & 0x80;
     best = (flags & 2) ? 0xFFFFFFFF : 0;
+    collect = flags & 0x80;
     found = 0;
     if (collect) {
         memset(slots, 0, sizeof(slots));
@@ -79,14 +79,13 @@ Marker *fn_800BC100(const short *key, Vec3 *origin, int *outIndex, unsigned int 
         for (count = 0; marker->position != 0 && count < 500; count++) {
             marker++;
         }
-        count = fn_800FBFB0() % count;
+        count = (int)fn_800FBFB0() % count;
         if (outIndex != 0) {
             *outIndex = count;
         }
         return &lbl_8064CA74[count];
     }
     if ((flags & 8) && (maxDist != 0 || minDist != 0)) {
-        Marker **list;
         int lo;
         int hi;
         int n;
@@ -96,19 +95,18 @@ Marker *fn_800BC100(const short *key, Vec3 *origin, int *outIndex, unsigned int 
         hi = maxDist != 0 ? *maxDist : 128000;
         memset(lbl_80320B98, 0, sizeof(lbl_80320B98));
         n = 0;
-        list = lbl_80320B98;
         total = 0;
         for (; lbl_8064CA74[n].position != 0 && n < 500 && total < 50; n++) {
             int d;
             fn_800BCCC4(lbl_8064CA74[n].position, &pos);
-            d = fn_80178E94(origin, &pos);
+            d = fn_80178E94(&origin->x, &pos.x);
             if (d <= hi && d >= lo) {
+                lbl_80320B98[total] = &lbl_8064CA74[n];
                 total++;
-                *list++ = &lbl_8064CA74[n];
             }
         }
         if (total != 0) {
-            n = fn_800FBFB0() % total;
+            n = (int)fn_800FBFB0() % total;
             if (outIndex != 0) {
                 *outIndex = lbl_80320B98[n]->id;
             }
@@ -133,7 +131,7 @@ Marker *fn_800BC100(const short *key, Vec3 *origin, int *outIndex, unsigned int 
             }
         } else if (flags & 2) {
             fn_800BCCC4(lbl_8064CA74[i].position, &pos);
-            dist = fn_80178E94(&pos, origin);
+            dist = fn_80178E94(&pos.x, &origin->x);
             if (dist < best) {
                 visible = 1;
                 if (flags & 0x40) {
@@ -166,7 +164,7 @@ Marker *fn_800BC100(const short *key, Vec3 *origin, int *outIndex, unsigned int 
                         if (slot != -1) {
                             slots[slot].marker = &lbl_8064CA74[i];
                             slots[slot].distance = dist;
-                            slots[slot].other = fn_80178E94(other, &pos);
+                            slots[slot].other = fn_80178E94(&other->x, &pos.x);
                         }
                     } else {
                         if (outIndex != 0) {
@@ -179,7 +177,7 @@ Marker *fn_800BC100(const short *key, Vec3 *origin, int *outIndex, unsigned int 
             }
         } else if (flags & 4) {
             fn_800BCCC4(lbl_8064CA74[i].position, &pos);
-            dist = fn_80178E94(&pos, origin);
+            dist = fn_80178E94(&pos.x, &origin->x);
             if (dist > best) {
                 visible = 1;
                 if (flags & 0x40) {
