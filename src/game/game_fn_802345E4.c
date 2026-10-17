@@ -2,8 +2,14 @@
 
 typedef int s32;
 
+typedef struct DecodeAux DecodeAux;
 typedef struct Codebook {
     s32 dim;
+    s32 entries;
+    void *c;
+    void *valuelist;
+    void *quantlist;
+    DecodeAux *decode_tree;
 } Codebook;
 
 typedef struct ResidueInfo {
@@ -27,55 +33,115 @@ typedef struct ResidueLook {
     s32 **decodemap;
 } ResidueLook;
 
+typedef struct OggPackBuffer {
+    s32 endbyte;
+    s32 endbit;
+    unsigned char *buffer;
+    unsigned char *ptr;
+    s32 storage;
+} OggPackBuffer;
+
 typedef struct VorbisBlock {
-    s32 pad0;
-    s32 opb;
+    float **pcm;
+    OggPackBuffer opb;
 } VorbisBlock;
 
 void *fn_8022F8C4(s32 size);
-s32 fn_80230718(Codebook *book, void *b);
-s32 fn_80230128(Codebook *book, s32 **a, s32 offset, s32 ch, void *b, s32 n);
+s32 fn_80230718(Codebook *book, OggPackBuffer *b);
+s32 fn_80230128(Codebook *book, float **a, s32 offset, s32 ch, OggPackBuffer *b, s32 n);
 
-s32 fn_802345E4(VorbisBlock *vb, ResidueLook *look, s32 **in, s32 *nonzero, s32 ch) {
-    s32 i, j, k, l, s;
-    ResidueInfo *info = look->info;
-
-    s32 samples_per_partition = info->grouping;
-    s32 partitions_per_word = look->phrasebook->dim;
-    s32 n = info->end - info->begin;
-
-    s32 partvals = n / samples_per_partition;
-    s32 partwords = (partvals + partitions_per_word - 1) / partitions_per_word;
-    s32 **partword = (s32 **)fn_8022F8C4(partwords * sizeof(*partword));
-
-    for (j = 0; j < ch; j++) {
-        if (nonzero[j]) break;
+s32 fn_802345E4(register VorbisBlock *arg_vb, register ResidueLook *arg_look,
+                register float **arg_in, register s32 *arg_nonzero, register s32 arg_ch)
+{
+    register ResidueInfo *info;
+    register s32 samples_per_partition;
+    s32 partitions_per_word, partvals, partwords;
+    register s32 ch;
+    register float **in;
+    register ResidueLook *look;
+    register VorbisBlock *vb;
+    s32 j, column;
+    register s32 position;
+    register s32 **word;
+    register s32 offset, mask;
+    s32 stage_offset;
+    register s32 i;
+    s32 k;
+    register s32 s;
+    register s32 *nonzero;
+    register s32 **partword;
+    register s32 *nz;
+    register s32 **allocated;
+    /* ASM: mr keeps the saved arguments as copies rather than folded addi instructions. */
+    asm {
+        or vb, arg_vb, arg_vb
+        or look, arg_look, arg_look
+        or in, arg_in, arg_in
+        or nonzero, arg_nonzero, arg_nonzero
+        or ch, arg_ch, arg_ch
+    }
+    info = arg_look->info;
+    samples_per_partition = info->grouping;
+    partitions_per_word = arg_look->phrasebook->dim;
+    partvals = (info->end - info->begin) / samples_per_partition;
+    partwords = (partvals + partitions_per_word - 1) / partitions_per_word;
+    allocated = fn_8022F8C4(partwords * sizeof(*partword));
+    /* ASM: mr preserves the two pointer copies; C folds them to addi and extends the nonzero lifetime. */
+    asm {
+        or nz, nonzero, nonzero
+        or partword, allocated, allocated
+    }
+    for (j = 0; j < ch; nz++, j++) {
+        if (*nz) break;
     }
     if (j == ch) return 0;
-
-    for (s = 0; s < look->stages; s++) {
-        for (i = 0, l = 0; i < partvals; l++) {
+    for (s = 0, stage_offset = 0; s < look->stages; stage_offset += sizeof(Codebook *), s++) {
+        register s32 one;
+        /* ASM: li, mr and slw retain initialization order and copies that C folds or reschedules. */
+        asm {
+            li i, 0
+            li one, 1
+            or word, partword, partword
+            or offset, i, i
+            slw mask, one, s
+        }
+        while (i < partvals) {
             if (s == 0) {
                 s32 temp = fn_80230718(look->phrasebook, &vb->opb);
-                if (temp == -1) goto eopbreak;
-                partword[l] = look->decodemap[temp];
-                if (partword[l] == 0) goto errout;
+                if (temp == -1) goto done;
+                *word = look->decodemap[temp];
+                if (*word == 0) goto done;
             }
-
-            for (k = 0; k < partitions_per_word && i < partvals; k++, i++) {
-                if (info->secondstages[partword[l][k]] & (1 << s)) {
-                    Codebook *stagebook = look->partbooks[partword[l][k]][s];
+            /* ASM: mr prevents folding the position copy into addi. */
+            asm { or position, offset, offset }
+            k = 0;
+            column = 0;
+            while (k < partitions_per_word && i < partvals) {
+                s32 entry = *(s32 *)((unsigned char *)*word + column);
+                /* The stage masks follow the five scalar residue fields. */
+                s32 flags = ((s32 *)info)[entry + 5];
+                flags &= mask;
+                if (flags) {
+                    Codebook *stagebook = *(Codebook **)(stage_offset + (unsigned int)look->partbooks[entry]);
                     if (stagebook) {
-                        if (fn_80230128(stagebook, in, info->begin + i * samples_per_partition,
-                                        ch, &vb->opb, samples_per_partition) == -1)
-                            goto eopbreak;
+                        register float **channels;
+                        s32 begin = info->begin;
+                        /* ASM: mr keeps the channel pointer copy from folding to addi. */
+                        asm { or channels, in, in }
+                        if (fn_80230128(stagebook, channels, begin + position,
+                            ch, &vb->opb, samples_per_partition) == -1)
+                            goto done;
                     }
                 }
+                position += samples_per_partition;
+                offset += samples_per_partition;
+                i++;
+                column += sizeof(s32);
+                k++;
             }
+            word++;
         }
     }
-
-errout:
-eopbreak:
+done:
     return 0;
 }

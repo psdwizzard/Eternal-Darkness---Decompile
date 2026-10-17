@@ -25,17 +25,11 @@ int fn_800F3054(TRKBuffer *request, register int *reply_id, int minimum_length,
     u32 polls;
     int attempts;
     int invalid;
-    register int no_buffer;
 
     attempts = retries + 1;
     error = 0;
     invalid = 1;
-    no_buffer = -1;
-    /* ASM: stw prevents MWCC from moving this store ahead of the local
-     * register initializations, as it does for the equivalent C assignment. */
-    asm {
-        stw no_buffer, 0(reply_id)
-    }
+    *reply_id = -1;
     for (; attempts != 0 && *reply_id == -1 && error == 0; attempts--) {
         error = fn_800EF2A0(request);
         if (error == 0) {
