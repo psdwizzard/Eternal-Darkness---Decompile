@@ -12,9 +12,15 @@ typedef struct ClockState {
     s16 minute[2]; /* 0x124 */
 } ClockState;
 
+enum { CLOCK_MINUTE_INDEX = 0x124 / sizeof(s16) };
+
+typedef struct ClockCursor {
+    s16 *minute;
+} ClockCursor;
+
 typedef struct ClockObjects {
     u8 pad[0x41C];
-    void *hands[2][2]; /* 0x41C */
+    u8 *hands[2][2]; /* 0x41C */
 } ClockObjects;
 
 typedef struct ClockConstants {
@@ -33,19 +39,24 @@ extern const float lbl_8064EAA4;
 extern const float lbl_8064EAA8;
 extern const float lbl_8064EAAC;
 
-extern void fn_8011E310(int, int, int, int, int, int, int);
+extern int fn_8011E310(int, int, int, int, int, int, int);
 extern void fn_8017A244(const Vec3 *, Vec4 *, float);
-extern void fn_8012CDF0(void *, int, FourWords, int);
-extern int fn_801A98F4(int, int);
+extern void fn_8012CDF0(u8 *, int, FourWords, int);
+extern int fn_801A98F4(int, void *);
 extern void fn_80081FF8(int, int);
 extern void fn_8007D744(int);
 extern void fn_80144C40(void);
 
+static inline int clockIndex(void)
+{
+    return lbl_8064D18C != 0x4E;
+}
+
 void fn_8008210C(int delta, u32 silent)
 {
-    int alt = lbl_8064D18C != 0x4E;
-    s16 *minute = &lbl_8031CBA0.minute[alt];
     ClockConstants *constants = &lbl_80239208;
+    int alt = clockIndex();
+    ClockCursor cursor;
     s16 old;
     int crossed = 0;
     Rotation rotation;
@@ -55,20 +66,22 @@ void fn_8008210C(int delta, u32 silent)
     Rotation rotation3;
     Vec3 axis3;
 
-    old = *minute;
-    *minute = old + delta;
+    /* Begin at the selected clock column, then advance to its minute field. */
+    cursor.minute = (s16 *)((u8 *)&lbl_8031CBA0 + alt * 2);
+    old = cursor.minute[CLOCK_MINUTE_INDEX];
+    *(cursor.minute += CLOCK_MINUTE_INDEX) = old + delta;
     if (silent == 0) {
         fn_8011E310(6, 0x37, 0, 0, 0x32, 0, 0);
     }
 
-    if (*minute >= 600) {
-        *minute -= 600;
+    if (*cursor.minute >= 600) {
+        *cursor.minute -= 600;
         lbl_8031CBA0.hour[alt]++;
         if (lbl_8031CBA0.hour[alt] >= 12) {
             lbl_8031CBA0.hour[alt] = 0;
         }
-    } else if (*minute < 0) {
-        *minute += 600;
+    } else if (*cursor.minute < 0) {
+        *cursor.minute += 600;
         lbl_8031CBA0.hour[alt]--;
         if (lbl_8031CBA0.hour[alt] < 0) {
             lbl_8031CBA0.hour[alt] = 11;
@@ -77,12 +90,12 @@ void fn_8008210C(int delta, u32 silent)
 
     axis = constants->hourAxis;
     fn_8017A244(&axis, &rotation.vector,
-                lbl_8064EAA0 * (*minute / lbl_8064EAA4));
+                lbl_8064EAA0 * (*cursor.minute / lbl_8064EAA4));
     fn_8012CDF0(lbl_8031CD84.hands[alt][1], 15, rotation.words, 0);
 
     axis2 = constants->minuteAxis;
     fn_8017A244(&axis2, &rotation2.vector,
-                lbl_8064EAA0 * ((*minute + lbl_8031CBA0.hour[alt] * 600) / lbl_8064EAA8));
+                lbl_8064EAA0 * ((*cursor.minute + lbl_8031CBA0.hour[alt] * 600) / lbl_8064EAA8));
     fn_8012CDF0(lbl_8031CD84.hands[alt][0], 15, rotation2.words, 0);
 
     if ((s16)delta > 0) {
@@ -95,19 +108,19 @@ void fn_8008210C(int delta, u32 silent)
 
     if (((s16)delta < 0 ? -(s16)delta : (s16)delta) > 3) {
         if (crossed) {
-            fn_801A98F4(0x144, 0x32);
+            fn_801A98F4(0x144, (void *)0x32);
         }
-    } else if (lbl_8031CBA0.hour[alt] == 3 && *minute >= 340 &&
-               *minute <= 346) {
+    } else if (lbl_8031CBA0.hour[alt] == 3 && *cursor.minute >= 340 &&
+               *cursor.minute <= 346) {
         axis3 = constants->chimeAxis;
         fn_8017A244(&axis3, &rotation3.vector, lbl_8064EAAC);
         fn_8012CDF0(lbl_8031CD84.hands[alt][1], 15, rotation3.words, 0);
         if ((s16)delta != 0) {
-            fn_801A98F4(0x280, 0x64);
+            fn_801A98F4(0x280, (void *)0x64);
             fn_80081FF8(0, 0);
         }
     } else if (crossed) {
-        fn_801A98F4(0x144, 0x32);
+        fn_801A98F4(0x144, (void *)0x32);
     }
 
     fn_8007D744(8);

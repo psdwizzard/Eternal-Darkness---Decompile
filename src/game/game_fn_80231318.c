@@ -31,14 +31,14 @@ typedef struct InterpOwner {
 int fn_80231318(InterpOwner* owner, InterpKeys* keys, int* values, float* out) {
     InterpTable* table = keys->table;
     int size = (*owner->info)->sizes[owner->sizeIndex];
-    int n = (int)(size + ((unsigned int)size >> 31)) >> 1;
-    int value;
-    short* index;
-    int pos;
+    int n = (int)(((unsigned int)size >> 31) + size) >> 1;
     int i;
-    int prevPos;
+    int value;
     int prevValue;
+    int prevPos;
+    short* index;
     int raw;
+    int pos;
 
     if (values != 0) {
         index = &keys->index[1];
@@ -58,8 +58,26 @@ int fn_80231318(InterpOwner* owner, InterpKeys* keys, int* values, float* out) {
             index++;
         }
 
-        for (; pos < n; pos++) {
-            out[pos] *= (float)prevValue;
+        /* Extend the last valid post over the rest of the spectrum. */
+        {
+            float* tail = out + pos;
+            unsigned int remaining = n - pos;
+            if (pos < n) {
+                unsigned int groups = remaining >> 2;
+                for (; groups > 0; groups--) {
+                    int k;
+                    for (k = 0; k != 4; k++) {
+                        tail[k] *= (float)prevValue;
+                    }
+                    tail += 4;
+                }
+                remaining &= 3;
+                if (remaining) {
+                    do {
+                        *tail++ *= (float)prevValue;
+                    } while (--remaining);
+                }
+            }
         }
         return 1;
     }

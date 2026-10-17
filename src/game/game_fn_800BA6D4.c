@@ -3,7 +3,7 @@ typedef unsigned short u16;
 typedef signed short s16;
 typedef unsigned int u32;
 
-typedef struct Vec3f {
+typedef struct Vec3 {
     float x, y, z;
 } Vec3f;
 
@@ -76,45 +76,64 @@ typedef struct ByteFlags {
     u8 pad[3];
 } ByteFlags;
 
+/* Opaque types used by the separately compiled object interfaces. */
+typedef struct Entry Entry;
+typedef struct Entry80201814 Entry80201814;
+typedef struct SpawnRequest SpawnRequest;
+typedef struct VertexData VertexData;
+typedef struct VertexAttribute VertexAttribute;
+typedef struct Object Object;
+typedef struct Object802015A4 Object802015A4;
+typedef struct Object80201C2C Object80201C2C;
+typedef struct Object80201CCC Object80201CCC;
+typedef struct Object80201CE8 Object80201CE8;
+typedef struct Object80201D14 Object80201D14;
+typedef struct Object80201D2C Object80201D2C;
+typedef struct Object80201D44 Object80201D44;
+typedef struct Object80201D54 Object80201D54;
+typedef struct Object80201E50 Object80201E50;
+typedef struct Object80204C2C Object80204C2C;
+typedef struct ListNode80204C2C ListNode80204C2C;
+
 extern void *memcpy(void *, const void *, unsigned int);
 extern void fn_80029358(void);
-extern int fn_80034708(SpawnParams *);
-extern int fn_80036D5C(int);
-extern void fn_80036DA4(int, int);
-extern void fn_800389E0(int, int, int, int);
-extern void fn_80043F44(SpawnParams *);
-extern void fn_80072354(int);
-extern u16 fn_800BADEC(void *, int);
-extern u16 fn_800BB1EC(void *, int, void *, int);
-extern u16 fn_800BB4C4(void *, int);
-extern u16 fn_800BB6A0(void *, int);
-extern u16 fn_800BB8AC(void *, int);
-extern u16 fn_800BBA84(void *, int);
-extern u16 fn_800BBBC4(void *, int);
-extern void fn_800CCA44(int);
-extern void fn_8011F0E8(int, Vec3f *);
-extern int fn_8011FE34(int);
-extern void fn_8012811C(s16 *, int);
-extern int fn_8012F8CC(void *, int);
-extern void fn_80179DB0(Vec3f *, s16 *);
-extern void fn_801E8328(int, int);
+extern int fn_80034708(void *);
+extern void *fn_80036D5C(void *);
+extern void fn_80036DA4(void *, void *);
+extern int fn_800389E0(void *, int, s16, int);
+extern void fn_80043F44(SpawnRequest *);
+extern Entry *fn_80072354(int);
+extern u16 fn_800BADEC(void *, void *);
+extern u16 fn_800BB1EC(void *, int, void *, void *);
+extern u16 fn_800BB4C4(void *, void *);
+extern u16 fn_800BB6A0(void *, void *);
+extern u16 fn_800BB8AC(void *, void *);
+extern u16 fn_800BBA84(void *, void *);
+extern u16 fn_800BBBC4(void *, void *);
+extern int fn_800CCA44(void *);
+extern void fn_8011F0E8(Vec3f *, Vec3f *);
+extern void *fn_8011FE34(void *);
+extern void fn_8012811C(VertexData *, VertexAttribute *);
+extern int fn_8012F8CC(const u8 *, Object *);
+extern void fn_80179DB0(float *, s16 *);
+extern int fn_801E8328(u32, u32);
 extern unsigned long long fn_8020123C(int, int, int, int);
-extern void fn_802015A4(int);
-extern int fn_80201814(int);
+extern void fn_802015A4(Object802015A4 *);
+extern Entry80201814 *fn_80201814(int);
 extern int fn_80201B44(void);
-extern int fn_80201B54(int);
-extern ObjData *fn_80201B8C(int);
-extern int fn_80201B94(int);
-extern int fn_80201BC8(int);
-extern void *fn_80201C2C(int);
-extern int fn_80201CCC(int);
-extern void fn_80201CE8(int, int, int);
-extern void fn_80201D14(int, int);
-extern void fn_80201D2C(int, int);
-extern void fn_80201D44(int, int);
-extern void fn_80201D54(int, int);
-extern void fn_80201E50(int, int);
-extern void *fn_80204C2C(int);
+extern int fn_80201B54(int *);
+extern void *fn_80201B8C(u8 *);
+extern void *fn_80201B94(u8 *);
+extern void *fn_80201BC8(void *);
+extern void *fn_80201C2C(Object80201C2C *);
+extern u32 fn_80201CCC(Object80201CCC *);
+extern void fn_80201CE8(Object80201CE8 *, u32, u32);
+extern void fn_80201D14(Object80201D14 *, u8);
+extern void fn_80201D2C(Object80201D2C *, int);
+extern void fn_80201D44(Object80201D44 *, int);
+extern void fn_80201D54(Object80201D54 *, void *);
+extern u32 fn_80201E50(Object80201E50 *, u32);
+extern ListNode80204C2C *fn_80204C2C(Object80204C2C *);
 
 extern int lbl_8064C544;
 extern int lbl_8064D18C;
@@ -130,10 +149,10 @@ int fn_800BA6D4(char *data, int arg1, u16 *outSize, int readModel, int place)
     ObjExtra *extra;
     ObjData *objData;
     ObjData *info;
-    int other;
-    int obj;
+    void *other;
+    void *obj;
     int id;
-    int model;
+    void *model;
     OwnerInfo *owner;
     int mask;
     u16 offset;
@@ -146,12 +165,12 @@ int fn_800BA6D4(char *data, int arg1, u16 *outSize, int readModel, int place)
          * at all, so the nop (and its compare) can only come from asm. */
         asm { nop }
     }
-    fn_80043F44(&params);
+    fn_80043F44((SpawnRequest *)&params);
     params.unk2C = rec.unk18;
     params.unk10 = rec.unk1A;
     params.unk14 = rec.unk12;
     params.unk28 = rec.type;
-    fn_80179DB0(&params.pos, rec.pos);
+    fn_80179DB0(&params.pos.x, rec.pos);
     if (rec.flags & 1) {
         params.unk34 = 1;
     } else {
@@ -163,13 +182,13 @@ int fn_800BA6D4(char *data, int arg1, u16 *outSize, int readModel, int place)
         params.unk20 = rec.unk20;
         params.unk18 = arg1;
         params.unk24 = rec.unk10;
-        obj = fn_80034708(&params);
+        obj = (void *)fn_80034708(&params);
         objData = fn_80201B8C(obj);
         extra = objData->unk68;
         fn_80072354(objData->unk90);
         id = fn_80201B54(obj);
         model = fn_80201BC8(obj);
-        fn_801E8328(1, obj);
+        fn_801E8328(1, (u32)obj);
         fn_80029358();
         if (rec.type == 0x1D || rec.type == 0x33 || rec.type == 0x2E) {
             if (rec.type == 0x33 && (int)rec.subtype == 0xC) {
@@ -186,7 +205,7 @@ int fn_800BA6D4(char *data, int arg1, u16 *outSize, int readModel, int place)
             }
         }
         if (place) {
-            fn_80201D54(obj, rec.unk18);
+            fn_80201D54(obj, (void *)(u32)rec.unk18);
         }
         fn_80201D44(obj, rec.type);
         fn_802015A4(obj);
@@ -214,14 +233,14 @@ int fn_800BA6D4(char *data, int arg1, u16 *outSize, int readModel, int place)
     }
 
     if (place) {
-        fn_80179DB0(&pos, rec.pos);
+        fn_80179DB0(&pos.x, rec.pos);
         fn_8011F0E8(model, &pos);
-        fn_8012811C(rec.rot, fn_8011FE34(model));
-        fn_80201D54(obj, rec.unk18);
+        fn_8012811C((VertexData *)rec.rot, fn_8011FE34(model));
+        fn_80201D54(obj, (void *)(u32)rec.unk18);
     }
     fn_800389E0(obj, 0, rec.unk1C, 0);
     if (readModel && (rec.flags & 2)) {
-        offset += fn_8012F8CC(data + offset, model);
+        offset += fn_8012F8CC((const u8 *)data + offset, model);
     }
     if (rec.flags & 0x10000) {
         fn_80201CE8(obj, 0, 0x1000000);
@@ -242,19 +261,19 @@ int fn_800BA6D4(char *data, int arg1, u16 *outSize, int readModel, int place)
         offset = offset + fn_800BBA84(data + offset, obj);
     }
     if (rec.flags & 0x80) {
-        fn_80036DA4(obj, fn_80036D5C(obj) | 0x8);
+        fn_80036DA4(obj, (void *)((u32)fn_80036D5C(obj) | 0x8));
     }
     if (rec.flags & 0x80000) {
-        fn_80036DA4(obj, fn_80036D5C(obj) | 0x20000);
+        fn_80036DA4(obj, (void *)((u32)fn_80036D5C(obj) | 0x20000));
     }
     if (rec.flags & 0x100) {
-        fn_80036DA4(obj, fn_80036D5C(obj) | 0x80);
+        fn_80036DA4(obj, (void *)((u32)fn_80036D5C(obj) | 0x80));
     }
     if (rec.flags & 0x200) {
-        fn_80036DA4(obj, fn_80036D5C(obj) | 0x8000);
+        fn_80036DA4(obj, (void *)((u32)fn_80036D5C(obj) | 0x8000));
     }
     if (rec.flags & 0x400000) {
-        fn_80036DA4(obj, fn_80036D5C(obj) | 0x800000);
+        fn_80036DA4(obj, (void *)((u32)fn_80036D5C(obj) | 0x800000));
     }
     if (rec.flags & 0x800000) {
         lbl_8064C544 = id;
@@ -286,7 +305,7 @@ int fn_800BA6D4(char *data, int arg1, u16 *outSize, int readModel, int place)
         }
     }
     if (rec.unk12 == 5 && rec.unk1A == 0xC) {
-        owner = fn_80201B8C(obj)->unk8C;
+        owner = ((ObjData *)fn_80201B8C(obj))->unk8C;
         memcpy(&bits, data + offset, sizeof(bits));
         offset += 4;
         if (bits.bits != 0) {
@@ -326,8 +345,8 @@ int fn_800BA6D4(char *data, int arg1, u16 *outSize, int readModel, int place)
         if (target == 0) {
             target = fn_80204C2C(obj);
         }
-        offset += fn_800BB1EC(data + offset, count, target, id);
+        offset += fn_800BB1EC(data + offset, count, target, (void *)id);
     }
     *outSize = offset;
-    return obj;
+    return (int)obj;
 }
