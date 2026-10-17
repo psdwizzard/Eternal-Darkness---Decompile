@@ -10,12 +10,16 @@ typedef struct PathNode {
     unsigned char pad[2];
 } PathNode;
 
+typedef struct Entry {
+    unsigned char pad[48];
+    float value;
+    unsigned char flags;
+} Entry;
+
 typedef struct ListNode {
     struct ListNode *next;
     struct ListNode *prev;
-    PathNode *entry;
-    unsigned char flags;
-    unsigned char pad[3];
+    Entry *entry;
 } ListNode;
 
 typedef struct FreeEntry {
@@ -26,9 +30,7 @@ typedef struct FreeEntry {
 extern FreeEntry *fn_800BD5F4(void);
 extern void fn_800BD628(unsigned char *entry);
 extern void fn_800BD638(ListNode *node);
-extern ListNode *fn_800BD6F0(void);
 extern void *fn_800BD748(void);
-extern ListNode *fn_800BD750(unsigned char *entry);
 extern int fn_800BD7F0(unsigned char *entry);
 extern int fn_800BD7FC(unsigned char *entry);
 extern void fn_800BD808(unsigned char *entry);
@@ -41,8 +43,18 @@ extern const float lbl_8064F0E0;
 
 int fn_800BD3C8(PathNode *start, PathNode *goal)
 {
+    /* The removal routines use a byte-oriented ListNode definition.
+     * Keep its tag in this scope so each declaration matches its callee. */
+    struct ListNode {
+        struct ListNode *next;
+        struct ListNode *prev;
+        unsigned char *entry;
+    };
+    extern struct ListNode *fn_800BD6F0(void);
+    extern struct ListNode *fn_800BD750(unsigned char *entry);
+
     ListNode *list;
-    ListNode *popped;
+    struct ListNode *popped;
     ListNode *new_list;
     PathNode *current;
     int i;
@@ -57,11 +69,11 @@ int fn_800BD3C8(PathNode *start, PathNode *goal)
     start->parent = 0;
     start->cost = lbl_8064F0E0;
     start->total = fn_800BD590(&start->position, &goal->position);
-    list->entry = start;
+    list->entry = (Entry *)start;
     fn_800BD638(list);
     while (fn_800BD748() != 0) {
         popped = fn_800BD6F0();
-        current = popped->entry;
+        current = (PathNode *)popped->entry;
         fn_800BD628((unsigned char *)popped);
         if (current->position == goal->position) {
             path = current;
@@ -89,10 +101,10 @@ int fn_800BD3C8(PathNode *start, PathNode *goal)
                 fn_800BD808((unsigned char *)neighbor);
             }
             if (fn_800BD7FC((unsigned char *)neighbor)) {
-                fn_800BD638(fn_800BD750((unsigned char *)neighbor));
+                fn_800BD638((ListNode *)fn_800BD750((unsigned char *)neighbor));
             } else {
                 new_list = (ListNode *)fn_800BD5F4();
-                new_list->entry = neighbor;
+                new_list->entry = (Entry *)neighbor;
                 fn_800BD638(new_list);
             }
         }

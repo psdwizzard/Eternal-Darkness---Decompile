@@ -45,24 +45,25 @@ extern int fn_801EDA7C(s16* values, int context, int flags, void* state);
 extern void fn_801ECF50(int);
 extern void fn_80226C18(int, int);
 extern void fn_801ECD74(Color* color);
-extern void fn_80226AB4(int, int, int);
+extern void fn_80226AB4(int, int, u16);
 extern void fn_80144164(float x, float y, float z);
 extern void fn_80144160(void);
 
 void fn_80143DF0(void)
 {
+    register Color *colors;
+    register unsigned int scratch;
     Color base;
     Color faded;
     Color c1;
     Color c2;
-    PoolPart (*parts)[7];
-    PoolBox (*boxes)[7];
-    PoolSlot* slot;
+    struct { PoolPart (*parts)[7]; PoolBox (*boxes)[7]; } arrays;
+    register PoolSlot* slot;
     int i;
     PoolBox* box;
     PoolPart* part;
     int j;
-    Pool* pool;
+    register Pool* pool;
 
     pool = &lbl_805B1310;
     base = lbl_802FC5BC[11];
@@ -76,17 +77,22 @@ void fn_80143DF0(void)
     faded = base;
     fn_801ECD74(&faded);
 
-    for (i = 0; i < 12; i++) {
-        slot = &pool->slots[i];
+    /* ASM: lis/addi/addi preserves the zero-offset pool copy between the
+     * two color-address instructions. C reloads the pool symbol and cannot
+     * retain this interleaved address setup. */
+    asm { lis scratch, lbl_802FC5BC@ha
+          addi slot, pool, 0
+          addi colors, scratch, lbl_802FC5BC@l }
+    for (i = 0; i < 12; i++, slot++) {
         if (!(slot->flags & 1) || slot->id != lbl_8064D18C) {
             continue;
         }
-        boxes = pool->boxes;
-        parts = pool->parts;
+        arrays.boxes = pool->boxes;
+        arrays.parts = pool->parts;
         for (j = 0; j < slot->count; j++) {
+            box = &arrays.boxes[slot->index][j];
+            part = &arrays.parts[slot->index][j];
             c1 = base;
-            box = &boxes[slot->index][j];
-            part = &parts[slot->index][j];
             fn_801ECD74(&c1);
             fn_80226AB4(0x80, 3, 4);
             fn_80144164(box->v[0][0], box->v[0][1], box->v[0][2]);
@@ -94,7 +100,7 @@ void fn_80143DF0(void)
             fn_80144164(box->v[2][0], box->v[2][1], box->v[2][2]);
             fn_80144164(box->v[3][0], box->v[3][1], box->v[3][2]);
             fn_80144160();
-            c2 = lbl_802FC5BC[3];
+            c2 = colors[3];
             fn_801ECD74(&c2);
             fn_80226AB4(0xa8, 3, 2);
             fn_80144164(box->v[0][0], box->v[0][1], box->v[0][2]);
