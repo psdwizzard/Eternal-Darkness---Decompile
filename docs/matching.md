@@ -1262,3 +1262,147 @@ pointer variable (`u32 *slot = timer; fn_801F348C(slot, ...)`): the first
 array does not escape, so the selector load is not ordered after its store,
 and the copy into `r3` that the allocator merges makes MWCC reschedule the
 block after allocation, which gives retail's order and registers.
+
+## Static tables, literal constants, and late-deleted copies
+
+Twenty further functions match. Each builds with the whole-DOL SHA-1
+`ea24b6af954876ce072562ff39cdb4c81d32be1f` and reports 100% under both the
+default and `function_reloc_diffs=name_address` objdiff settings.
+
+Six functions address file-local data from one pooled base and use
+GC/1.3.2, as in `fn_801FA410` and `fn_801FABA4`. `fn_801F7AF8`,
+`fn_801F7C78` and `fn_801F8748` declare the motion tables at `lbl_8063C6B8`
+the same way (`first[12]`, `second[12]`, `current_first`, `current_second`,
+`entries[5]`, with an 0x88-byte `MotionState` whose plane is at `0x64`).
+`fn_8012F2DC` declares its ten debug points as `static Vec3 point0` to
+`point9` instead of indexing `lbl_805AADC8`, and passes `&point0` to
+`&point2` to `fn_8012F474`. All four use `externalize_game_static_data_pool`.
+`fn_80142A70` declares its block at `lbl_805B1310`. `fn_80026768` has
+initialized tables (`effect_resource`, the particle points, delays, ages and
+colors); its rule renames the `.data` pool to `lbl_8023DEB0` and checks every
+relocation against the DOL.
+
+`fn_8012E568` writes its radii as the literals `24.0f` and `20.0f`, and its
+`case 1` as `relative.z += 20.0f; radius = 20.0f;`. The shared literal gives
+retail's temporary and `fmr`; the extern constants coalesce the copy (4
+lines off). `fn_8002F428` writes the twice-used `lbl_8064E048` as `10.0f`,
+which loads it late like retail; making all seven constants literals is 33
+lines off. Both rules rename the compiler constants to the retail symbols.
+
+Several functions needed their callee's real prototype. `fn_8002DAE0` calls
+`fn_801D9FE4((u32)state->stats, state->value)` with `int fn_801D9FE4(u32, s16)`;
+retail keeps `state->value` from the earlier compare in `r4`. `fn_8002F428`
+passes the second actor to `fn_80121104(void *, float)`. `fn_80017FF8` uses
+`fn_8018F81C(void *, u8)`. `fn_80026768` uses
+`fn_801A8F08(s16, s16, s16, s16, s16, u16, s32)`; retail converts each
+coordinate with `extsh` and the index with `clrlwi` right before the call, as a
+narrow prototype does. In `fn_80026768` the two depths are
+`static const s16 depth_near = -1;` and `depth_far = -30360;`, so the selected
+depth is an `s16` and the hoisted conversion in the quad loop is a single
+`extsh`, and the position calls pass `(s16)quad_left` and `(s16)quad_right`,
+which gives the `extsh` and copy order of retail's loop setup.
+
+Eleven declarations in these files differ from the callee's current definition,
+because retail calls the function that way; the callees are not changed here.
+`fn_80026768` declares `fn_801A8F08` with `s16` coordinates and a `u16` index
+(133 lines off with the definition's `s32` parameters). `fn_8002DAE0` declares
+`fn_80120AD0` with its two floats before `value` and `state`, which it
+computes first (113 lines off in the definition's order), `fn_8004910C` with an
+argument (retail loads `r3` before the call, and `fn_8004910C` passes it on to
+`fn_801A7778`, which reads it), and `fn_80071DD8` returning the value it tests.
+`fn_800365C8` declares `fn_80204434` returning `unsigned char`; every retail
+caller truncates the result. `fn_8015A340` declares `fn_8015B274`'s fifth
+argument as a pointer (a `u32` with a cast is 31 lines off) and passes `2` to
+`fn_80158E84`. `fn_801E47B8` declares `fn_801E5AD0` with a `u8`,
+`fn_801E4314` with `s16` position and size, and `fn_801E4198` with `int`s (68,
+63 and 136 lines off with the definitions' types). `fn_8012EDB0` declares
+`fn_8011F3B4`'s angle as an `int`; retail passes it unnarrowed (`u16` adds a
+`clrlwi`). `fn_8015A340` passes
+`fn_8015A17C` to `ARQPostRequest` cast to the callback type.
+
+Declaration order picks the saved registers in `fn_801E47B8` (`glyph_height`
+declared before `drew_quad`), `fn_80026768` (`left` after
+`particle_y_origin`) and `fn_80017FF8` (`i` last). `fn_80142A70` needed four
+changes: `z_offset + current->z` in that order, a separate second-loop
+counter `j` with `int n = count;` set before the loops, `Point3s *next` at
+function scope, and the squared distance as one expression instead of named
+`dx`, `dy` and `dz`. `fn_80017FF8` creates the callback branch's ring through
+a `static inline` helper, `CreateTriggerRing`; the helper's return value gets
+its own register range, which restores retail's saved-register order.
+
+Two functions depend on a copy or dead value that the register allocator
+deletes, which makes MWCC schedule that block again after allocation, as
+retail did. `fn_80018708` walks its points with its own pointer, `out = body;`
+before the loop and `out += 6` inside it. `fn_80124A40` declares
+`Delta *delta = 0;` at the top of the delta block under
+`opt_dead_assignments off` (the form used by `fn_800C9508` and
+`fn_8015DF60`).
+
+`fn_80018708`'s `SpawnInfo` is 176 bytes. Retail places `info` at `0x1C` and
+the descriptor at `0xCC`, four bytes past a 172-byte object.
+`fn_8014C23C` passes a 0xB0-byte structure to the same `fn_80147EC4` and its
+frame shrinks from `0xF0` to `0xE0` with 172 bytes; `fn_80017FF8` and
+`fn_801D7998` match with either size.
+
+`fn_8012F474` already compiled exactly and is now registered `Matching`.
+`fn_8012EDB0` uses one `TransformOutput`, plain `Matrix34` values and a
+`void *` context. `fn_800365C8` uses full prototypes, no `register` hints,
+and a separate `ObjectInfo` for the linked object and for each candidate,
+with the candidate ID scoped to its loop. Both transform lookups go through a
+`static inline` helper, `GetTransformPosition`, and both positions start as
+`Vec3 position = {0.0f, 0.0f, 0.0f};`, which retail copies from `.rodata` on
+every pass; the rule renames the two tables to `lbl_80238DA0` and
+`lbl_80238DAC`.
+
+`fn_8012EF98` keeps the hit point as the position half of
+`QueryVectors { Vec3 position; Vec3 direction; }`, the type used by
+`fn_8012F474`; the unused direction half is the 12 bytes retail leaves
+untouched at `0x7C`. Both debug rays share `debug_direction`.
+
+`fn_80195AEC` takes the object as an `int` and keeps the pointer in its own
+register: `object = (Effect *)arg;`, and the parameter is then reused for the
+flags halfword, read through itself, `arg = ((Effect *)arg)->channel_flags[0];`.
+Reading through the parameter keeps it one variable, so the copy is not
+merged back into it; reading through `object` is 180 lines off. The flags
+word is read the same way before the copy, `flags = ((Effect *)arg)->flags;`
+(16 lines off after the copy through `object`). Its constant is renamed
+to `lbl_80650B58`.
+
+`fn_8015AEB8` and `fn_8015A340` use the static block at `lbl_805B6E00` and
+GC/1.3.2. `fn_8015AEB8`'s task records are not volatile: `fn_8015A1C0`,
+`fn_8015A2E0` and `fn_8015A314` hand out plain pointers into the same array.
+The queue pointers the task threads read are,
+`OSMessageQueue *volatile queues[4]`, and so is the priority table,
+`extern volatile u32 lbl_8064BA28[2]`, as matched units of this file declare
+`lbl_805B6FE0` and `lbl_805BB1E0` volatile; without it the table load moves
+above the queue stores (8 lines off).
+
+`fn_8015A340` writes its five strings as literals. They get their own pooled
+base, which gives retail's registers for the string, static and upper-half
+bases. `#pragma readonly_strings on` keeps the literals out of the `= {0}`
+static block, and `static const char file_name[] = "ld_loaddata.c";` fills
+the first 16 bytes of the pool, so each string sits at its retail offset.
+`externalize_game_8015A340_pools` runs `undefine_elf_static_pool.py` for
+`lbl_805B6E00` and then `externalize_string_pool.py` for `lbl_8024F038`,
+which checks the 0xAD pool bytes against the DOL.
+
+The calls use the SDK prototypes: `DVDChangeDir` (`fn_802136A4`, given the
+`.sdata` strings `lbl_8064BA30` and `lbl_8064BA38`), `DVDOpen`,
+`DVDReadPrio`, `DVDClose` and `ARQPostRequest` (`fn_8021B730`, with
+`fn_8015A17C` as its callback). `dmaBuffer` is the `u32` address
+`ARQPostRequest` takes, and `invalidateBuffer` is the pointer for
+`DCInvalidateRange`. Under `opt_dead_assignments off`, `state`, `dmaBuffer`
+and `amount` are declared with `= 0` and assigned later. The front end gives
+each later value a new compiler variable, numbered after the named locals in
+the order the variables first appear; that is retail's `r22`, `r21` and
+`r20`, and `dmaBuffer` takes the address directly. `amount` is `u32` and
+`DVDReadPrio` takes an `s32` length; the conversion puts the round-up before
+the shift in the loop's first block. The transfer case keeps the file offset
+in one `u32 offset`, declared after `opened`, which puts the buffer pointer
+`p` in `r31`. `streamQueue` and `streamFlag` are set from `state` before the
+loop and again from `stream` in the spool case before they are used, the way
+`fn_8015CA08` in the same file sets `state` again before each use; with
+function-scoped `opt_propagation off` this keeps both pointers in registers
+(225 lines off without the second assignment). `bank` is
+`(message & 0x100000) ? 1 : 0` (21 lines off as a shift). `bank`, `command`
+and `handled` are declared at function scope, `tag` and `slot` in the loop.

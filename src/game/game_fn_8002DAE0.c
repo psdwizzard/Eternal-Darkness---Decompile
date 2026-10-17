@@ -48,62 +48,58 @@ typedef struct InnerState {
     Vec3 last_position;
 } InnerState;
 
-extern const double lbl_8064E038;
 extern const float lbl_8064E064;
 extern const float lbl_8064E0AC;
 extern const float lbl_8064E0B0;
 
 extern int fn_80200C10(void *);
-extern int fn_80200C38();
+extern void* fn_80200C38(void*);
 extern s32 fn_80200C28(void*);
 extern s32 fn_80200C20(void*);
-extern void *fn_80201B8C();
-extern int fn_80201B54();
+extern void* fn_80201B8C(void*);
+extern int fn_80201B54(void*);
 extern void fn_802020B4(void*, int);
 extern void fn_80201D2C(void *, int);
-extern void fn_80201D14(void *, int);
-extern unsigned long long fn_8020123C();
-extern void *fn_80201814();
+extern void fn_80201D14(void *, u8);
+extern u64 fn_8020123C(int, int, int, int);
+extern void* fn_80201814(int);
 extern int fn_80201B5C(void*);
-#define fn_80201B5C(a) fn_80201B5C((void*)(a))
 
 extern int fn_80201B64(void*);
-extern void *fn_80201BC8();
-extern int fn_80201B44();
-extern int fn_801E8328();
+extern void* fn_80201BC8(void*);
+extern int fn_80201B44(void);
+extern int fn_801E8328(u32, u32);
 extern void fn_80201D34(void *, s32);
-extern void fn_80201D1C(void *, s32);
+extern void fn_80201D1C(void *, u8);
 extern void fn_801DABFC(InnerState*);
 extern void fn_801DACA4(s32, s32);
-extern void fn_801A7228(s32);
-extern u16 fn_801A7530(s32);
-extern void fn_801A7744(Vec3*, s32);
-extern s32 fn_801A7498(s32);
-extern s32 fn_801A7570(s32);
-extern s16 fn_801A74F8(s32);
-extern s32 fn_801A74C0(s32);
-extern s32 fn_801A717C(void);
-extern void fn_801A74A0(s32, s32);
-extern void fn_801A74A8(s32, s32);
-extern void fn_801A7538(s32, u16);
-extern void fn_801A7518(s32, s16);
-extern void fn_801A764C(s32, Vec3*);
-extern void fn_801A7470(s32, s32);
-extern void* fn_8004910C(s32);
-extern s32 fn_801D38E8(void*);
-extern void fn_801DA8CC(s32, Vec3*, s32, InnerState*);
+extern void fn_801A7228(void*);
+extern u16 fn_801A7530(void*);
+extern void fn_801A7744(Vec3*, const void*);
+extern u32 fn_801A7498(void*);
+extern u32 fn_801A7570(void*);
+extern s16 fn_801A74F8(void*);
+extern u32 fn_801A74C0(void*);
+extern void* fn_801A717C(void);
+extern void fn_801A74A0(void*, u32);
+extern void fn_801A74A8(void*, u32);
+extern void fn_801A7538(void*, u16);
+extern void fn_801A7518(void*, s16);
+extern void fn_801A764C(void*, const Vec3*);
+extern void fn_801A7470(void*, u32);
+extern void* fn_8004910C(void*);
+extern int fn_801D38E8(int);
+extern void fn_801DA8CC(u32, Vec3*, u32, InnerState*);
 extern s32 fn_80071DD8(void);
 extern s32 fn_8006749C(s32);
-extern s16 fn_801CEB2C(void*);
-extern void fn_80120AD0(void*, s32, s32, u16, float, float);
-extern s32 fn_801D9FE4();
+extern int fn_801CEB2C(u32);
+extern void fn_80120AD0(void*, const void*, float, float, u16, u16);
+extern int fn_801D9FE4(u32, s16);
 extern void fn_801D16E4(s32, s32);
 extern void fn_8002D8C8(s32, u16*, u16*, s32*);
 
-s32 fn_8002DAE0(void* callback, s32 phase_arg, void* event_arg, s32* output)
+s32 fn_8002DAE0(void* callback, s32 phase, void* event, s32* output)
 {
-    void* event = event_arg;
-    s32 phase = phase_arg;
     s32 event_id = fn_80200C10(event);
     InnerState* state = (InnerState*)((CallbackState*)fn_80201B8C(callback))->inner;
     s32 object_id = fn_80201B54(callback);
@@ -117,7 +113,7 @@ s32 fn_8002DAE0(void* callback, s32 phase_arg, void* event_arg, s32* output)
         }
         if (event_id == 0xC4) {
             if (state->result != 0) {
-                *state->result = fn_80200C38(event);
+                *state->result = (s32)fn_80200C38(event);
             }
             fn_8020123C(0x39, object_id, object_id, 0);
             return 1;
@@ -130,40 +126,43 @@ s32 fn_8002DAE0(void* callback, s32 phase_arg, void* event_arg, s32* output)
             }
             fn_801DABFC(state);
             fn_801DACA4(state->linked_id, 0);
-            fn_801E8328(2, callback);
+            fn_801E8328(2, (u32)callback);
             fn_80201D34(callback, 0);
             fn_80201D1C(callback, 1);
             return 1;
         }
         if (event_id == 0xED) {
             fn_8020123C(0xB, fn_80200C20(event),
-                        fn_80200C28(event), fn_80200C38(event));
+                        fn_80200C28(event), (int)fn_80200C38(event));
             fn_801A7228(fn_80200C38(event));
             return 1;
         }
         if (event_id == 0x3A) {
             fn_8020123C(0x27, fn_80200C20(event),
-                        fn_80200C28(event), fn_80200C38(event));
+                        fn_80200C28(event), (int)fn_80200C38(event));
             fn_801A7228(fn_80200C38(event));
             return 1;
         }
         if (event_id == 0xB) {
+            s32 target_id;
+            void* target;
+            s16 amount;
             s32 can_chain = 1;
-            s32 is_type_8 = 0;
             u16 transferred_flags;
             u16 item_flags;
             s32 transfer_count;
-            s32 source = fn_80200C20(event);
-            s32 item = fn_80200C38(event);
+            s32 source;
+            s32 is_type_8 = 0;
+            void* item;
             Vec3 position;
-            s32 target_id;
             s32 item_bits;
-            void* target;
             OtherState* target_state;
             s32 is_type_24;
+            void* effect;
             s32 mode;
-            s16 amount;
 
+            source = fn_80200C20(event);
+            item = fn_80200C38(event);
             item_flags = 0;
             transfer_count = 0;
             transferred_flags = fn_801A7530(item);
@@ -191,7 +190,7 @@ s32 fn_8002DAE0(void* callback, s32 phase_arg, void* event_arg, s32* output)
                 is_type_24 = 0;
             }
 
-            mode = fn_801D38E8(state->stats);
+            mode = fn_801D38E8((int)state->stats);
             fn_8002D8C8(mode, &transferred_flags, &item_flags,
                         &transfer_count);
             if (transfer_count <= 0) {
@@ -202,8 +201,8 @@ s32 fn_8002DAE0(void* callback, s32 phase_arg, void* event_arg, s32* output)
                 s32 ignore_item = 0;
                 amount = fn_801A74F8(item);
                 if (amount == 0) {
-                void* linked = fn_80201814(state->linked_id);
-                if (linked != 0 && fn_80201B5C(linked) == 0x1C) {
+                    void* linked = fn_80201814(state->linked_id);
+                    if (linked != 0 && fn_80201B5C(linked) == 0x1C) {
                         ignore_item = 1;
                     }
                 }
@@ -217,7 +216,7 @@ s32 fn_8002DAE0(void* callback, s32 phase_arg, void* event_arg, s32* output)
             }
 
             if (mode == 4 && !is_type_24 && target_id != 0) {
-                s32 created = fn_801A717C();
+                void* created = fn_801A717C();
                 fn_801A74A0(created, object_id);
                 fn_801A74A8(created, target_id);
                 fn_801A7538(created, item_flags);
@@ -236,24 +235,23 @@ s32 fn_8002DAE0(void* callback, s32 phase_arg, void* event_arg, s32* output)
                 }
                 {
                     u32 message_result = fn_8020123C(
-                        0xDC, object_id, target_id, created) & 0xFFFFFFFFULL;
-                if (message_result == 0) {
-                    fn_8020123C(0x27, object_id, target_id, created);
-                    if (target != 0 && fn_80201B64(target) != 8 &&
-                        fn_80201B5C(target) != 0x15) {
-                        void* effect = fn_80201BC8(target);
-                        if (effect != 0) {
-                            s32 mask = fn_8006749C(4);
-                            s32 rank = fn_801CEB2C(state->stats);
-                            u8 level = (u8)((rank >> 1) + 1);
-                            fn_80120AD0(effect, 0, 100,
-                                        (u16)(mask | 2),
-                                        lbl_8064E064,
-                                        lbl_8064E0B0 - lbl_8064E0AC *
-                                            (float)(level - 2));
+                        0xDC, object_id, target_id, (int)created) & 0xFFFFFFFFULL;
+                    if (message_result == 0) {
+                        fn_8020123C(0x27, object_id, target_id, (int)created);
+                        if (target != 0 && fn_80201B64(target) != 8 &&
+                            fn_80201B5C(target) != 0x15) {
+                            effect = fn_80201BC8(target);
+                            if (effect != 0) {
+                                s32 mask = fn_8006749C(4);
+                                s16 rank = fn_801CEB2C((u32)state->stats);
+                                u8 level = (u8)((rank >> 1) + 1);
+                                fn_80120AD0(effect, 0, lbl_8064E064,
+                                            lbl_8064E0B0 - lbl_8064E0AC *
+                                                (float)(level - 2),
+                                            100, mask | 2);
+                            }
                         }
                     }
-                }
                 }
                 fn_801A7228(created);
                 if (target_state != 0 && target_state->status != 0) {
@@ -262,16 +260,16 @@ s32 fn_8002DAE0(void* callback, s32 phase_arg, void* event_arg, s32* output)
             } else if ((item_flags & 1) != 0 && !is_type_24 &&
                        target_id != 0 && source != target_id && can_chain &&
                        (item_bits & 0x20) == 0) {
-                s32 created = fn_801A717C();
+                void* created = fn_801A717C();
                 fn_801A7470(created, 0xB);
                 fn_801A74A0(created, 0);
                 fn_801A74A8(created, target_id);
                 {
                     u32 message_result = fn_8020123C(
-                        0xDC, object_id, target_id, created) & 0xFFFFFFFFULL;
-                if (message_result == 0) {
-                    fn_8020123C(0x35, object_id, target_id, created);
-                }
+                        0xDC, object_id, target_id, (int)created) & 0xFFFFFFFFULL;
+                    if (message_result == 0) {
+                        fn_8020123C(0x35, object_id, target_id, (int)created);
+                    }
                 }
                 fn_801A7228(created);
                 if (target_state != 0 && target_state->status != 0) {
@@ -297,10 +295,10 @@ s32 fn_8002DAE0(void* callback, s32 phase_arg, void* event_arg, s32* output)
                         fn_8020123C(0x39, object_id, object_id, 0);
                     }
                 } else {
-                    s32 before = fn_801D9FE4(state->stats) & 0xFF;
+                    s32 before = fn_801D9FE4((u32)state->stats, state->value) & 0xFF;
                     state->value -= delta;
                     {
-                        s32 after = fn_801D9FE4(state->stats, state->value) & 0xFF;
+                        s32 after = fn_801D9FE4((u32)state->stats, state->value) & 0xFF;
                         if (after <= before) {
                             *state->counter += before - after;
                         }
@@ -319,10 +317,7 @@ item_done:
             fn_801D16E4(state->linked_id, 0);
             return 1;
         }
-        goto unhandled;
-    }
-
-    if (phase == 1) {
+    } else if (phase == 1) {
         if (event_id == 1) {
             return 1;
         }
@@ -332,10 +327,8 @@ item_done:
         if (event_id == 2) {
             return 1;
         }
-        goto unhandled;
+    } else {
+        return 0;
     }
-    return 0;
-
-unhandled:
     return 0;
 }
