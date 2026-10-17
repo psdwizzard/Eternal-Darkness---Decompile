@@ -6,9 +6,12 @@
 
 typedef float f32;
 
+typedef struct Owner Owner;
+typedef struct Object Object;
+
 typedef struct CamEntry {
     u32 id;
-    u32 anim;
+    Object *anim;
     u8 pad08[0x5];
     u8 flags0D;
 } CamEntry;
@@ -43,13 +46,13 @@ typedef struct CamOwner {
 } CamOwner;
 
 extern u32 fn_8011FAEC(void *);
-extern void fn_8011FB44(void *, u32);
+extern void fn_8011FB44(void *, void *);
 extern void fn_80124750(void *, s32, s32, s32, s32, f32, f32, f32, f32);
 extern void fn_80124DBC(void *);
-extern s32 fn_80126050(void);
+extern int fn_80126050(Owner *);
 extern s32 fn_80126B3C(void *, s32);
-extern void fn_801285F8(s32);
-extern void fn_80128610(void);
+extern void fn_801285F8(unsigned char);
+extern void fn_80128610(void *);
 extern void fn_80128754(void *, s32);
 extern CamState *fn_80128E30(void *);
 extern s32 fn_80128EAC(void *);
@@ -57,14 +60,14 @@ extern void fn_80129DE0(void *, void *, s32, s32);
 extern CamEntry *fn_8012A13C(void *, u32);
 extern s32 fn_8012A7C8(void *, CamState *);
 extern void fn_8012ABEC(void *, void *);
-extern void fn_8012AE78(void *);
+extern void fn_8012AE78(u32);
 extern s32 fn_8012AFE8(CamState *);
-extern s32 fn_8012B018(void *, s32);
-extern void fn_8012B070(void *);
+extern int fn_8012B018(u8 *, int *);
+extern int fn_8012B070(u8 *);
 extern void fn_8012B290(void *, CamState *);
 extern void fn_8012D0D0(void *);
-extern void fn_80134FF8(void *, u32);
-extern void fn_801E82B4(void *, s32, void *, s32);
+extern int fn_80134FF8(void *, Object *);
+extern int fn_801E82B4(u32, u32, u32, u16);
 
 extern f32 lbl_806501A8;
 extern f32 lbl_806501B0;
@@ -88,7 +91,7 @@ void fn_8012A254(CamOwner *owner) {
     active = 0;
     done = 0;
     moved = 0;
-    if (fn_80126050() == 0) {
+    if (fn_80126050((Owner *)owner) == 0) {
         return;
     }
     st = fn_80128E30(owner);
@@ -101,7 +104,7 @@ void fn_8012A254(CamOwner *owner) {
             fn_80129DE0(owner, st, 0, 0);
         }
         fn_80134FF8(owner, st->entry->anim);
-        if (st->unkFA < 4 && fn_8012B018(owner, 0) != 0) {
+        if (st->unkFA < 4 && fn_8012B018((u8 *)owner, NULL) != 0) {
             done = 1;
             st->unkFC = 8;
         } else {
@@ -114,10 +117,10 @@ void fn_8012A254(CamOwner *owner) {
                     fn_8012ABEC(owner, buf);
                 }
             }
-            fn_8012AE78(owner);
+            fn_8012AE78((u32)owner);
             if ((moved != 0 && done != 0) || (moved == 0 && active != 0)) {
                 if (st->unkB0 != NULL) {
-                    fn_801E82B4(owner, st->unkB4, st->unkB0, 0);
+                    fn_801E82B4((u32)owner, (u32)st->unkB4, (u32)st->unkB0, 0);
                 }
             }
             if (st->flagsF4 & 8) {
@@ -159,14 +162,13 @@ void fn_8012A254(CamOwner *owner) {
                     if (notHandled) {
                         if (fn_80128EAC(owner) == 1 || fn_80128EAC(owner) == 2 ||
                             fn_80128EAC(owner) == 3) {
-                            fn_80128EAC(owner);
-                            fn_80128610();
+                            fn_80128610((void *)fn_80128EAC(owner));
                             fn_801285F8(1);
                         }
                         done = 1;
                         st->unkFC = 8;
                     }
-                    fn_8011FB44(owner, 0x10000);
+                    fn_8011FB44(owner, (void *)0x10000);
                 } else if (stFlags & 1) {
                     ok = 1;
                     if (st->entry->flags0D == 0x10 && owner->callback != NULL) {
@@ -185,7 +187,7 @@ void fn_8012A254(CamOwner *owner) {
             }
         }
         if (done) {
-            fn_8012B070(owner);
+            fn_8012B070((u8 *)owner);
         }
         delay = owner->delay;
         if (delay > 0) {
