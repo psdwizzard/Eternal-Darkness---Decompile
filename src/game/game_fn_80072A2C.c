@@ -78,7 +78,7 @@ int fn_80072A2C(Vec3 *origin, Vec3 *out, u32 radius, u32 flags)
     table = fn_8015C390(2);
     nearest = flags & 1;
     success = 0;
-    bestDistance = mask & -nearest;
+    bestDistance = -nearest & mask;
     if (table != NULL && table->count != 0) {
         spot = table->spots;
         /* Sample a bounded number of random spots. */

@@ -26,11 +26,11 @@ extern s32 fn_8021F350(SaveState *);
 extern s32 fn_8021F5D4(SaveState *, s32 *);
 extern s32 fn_8021F814(SaveState *, s32 *);
 extern s32 fn_8021F0DC(s32, void (*)(s32, s32));
-extern s32 fn_8021EE90(s32, void *, void (*)(s32, s32));
+extern s32 fn_8021EE90(s32, u16 *, void (*)(s32, s32));
 extern void *memcpy(void *, const void *, u32);
 extern void *memset(void *, s32, u32);
-extern u32 OSDisableInterrupts(void);
-extern void OSRestoreInterrupts(u32);
+extern int OSDisableInterrupts(void);
+extern int OSRestoreInterrupts(int);
 
 s32 fn_8021FB24(s32 channel, u32 *size, void (*callback)(s32, s32))
 {
@@ -47,11 +47,12 @@ s32 fn_8021FB24(s32 channel, u32 *size, void (*callback)(s32, s32))
     u16 link;
     u16 depth;
     u16 limit; /* Retains the original scratch slot in CodeWarrior. */
-    u16 *count_cursor;
     u32 offset;
+    u16 *count_cursor;
+    u16 entry_limit;
     u16 i;
     u16 unused_count;
-    u32 saved_interrupts;
+    int saved_interrupts;
 
     link_changed = 0;
     entry_changed = 0;
@@ -114,7 +115,7 @@ s32 fn_8021FB24(s32 channel, u32 *size, void (*callback)(s32, s32))
     unused_count = 0;
     i = 5;
     offset = 0xa;
-    while (i < state->entry_count) {
+    while (i < (entry_limit = state->entry_count)) {
         u16 old_link = *(u16 *)((u8 *)state->links + offset);
         if (*count_cursor == 0) {
             if (old_link != 0) {
@@ -122,7 +123,7 @@ s32 fn_8021FB24(s32 channel, u32 *size, void (*callback)(s32, s32))
                 changes = 1;
             }
             ++unused_count;
-        } else if ((old_link < 5 || old_link >= state->entry_count) && old_link != 0xffff) {
+        } else if ((old_link < 5 || old_link >= entry_limit) && old_link != 0xffff) {
             return fn_8021D374(state, -6);
         }
         offset += 2;
