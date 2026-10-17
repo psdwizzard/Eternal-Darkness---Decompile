@@ -23,10 +23,6 @@ typedef struct PursuitState {
     s8 type;
 } PursuitState;
 
-typedef struct Thresholds {
-    int values[4];
-} Thresholds;
-
 typedef struct ActorInfo {
     u8 pad00[0x8C];
     void* actor;
@@ -55,12 +51,13 @@ extern void fn_8012B344(void*);
 /* Retail passes unused trailing arguments to these legacy callees. */
 extern int fn_800A7A68();
 extern void fn_800A7F8C();
-extern void fn_8016B400(int, void*, int);
+extern void fn_8016B400(int, void*, void*);
 extern int fn_80038308(void*, int, short*);
 extern int fn_801D1A7C();
 extern float fn_801790A4(float, float, float, float);
 extern void fn_80201D2C(void*, int);
-extern void fn_80201D14(void*, int);
+typedef struct Object80201D14 Object80201D14;
+extern void fn_80201D14(Object80201D14*, unsigned char);
 extern void* fn_80201B8C(void*);
 extern int fn_800CD84C(void*);
 extern void fn_800A821C();
@@ -70,14 +67,14 @@ extern void* lbl_8064C980;
 extern void* lbl_8064C988;
 extern void* lbl_8064C990;
 extern float lbl_8064EF38;
-extern const volatile Thresholds lbl_80239768;
+extern const volatile u32 lbl_80239768[4];
 
 int fn_800A857C(void* object, void* source, void* extra, int objectId,
                 PursuitState* state)
 {
     int ready;
     Vec3 targetPosition;
-    Thresholds thresholds;
+    int thresholds[4];
     int possibleEvents[2];
     short channel;
     Vec3* position;
@@ -124,8 +121,11 @@ int fn_800A857C(void* object, void* source, void* extra, int objectId,
 
         if (distance < (int)fn_800CB444(object, resolvedTarget) &&
             fn_80204578(object, &targetPosition) != 0) {
-            thresholds = lbl_80239768;
-            if ((u8)fn_800FBFB0() < thresholds.values[state->type]) {
+            thresholds[0] = lbl_80239768[0];
+            thresholds[1] = lbl_80239768[1];
+            thresholds[2] = lbl_80239768[2];
+            thresholds[3] = lbl_80239768[3];
+            if ((u8)fn_800FBFB0() < thresholds[state->type]) {
                 state->actionTimer = 0;
                 goto fallback;
             }

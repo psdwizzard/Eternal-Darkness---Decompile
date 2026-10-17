@@ -9183,7 +9183,7 @@ config.libs = [
     Object(Matching, "game/game_fn_800A82C8.c"),
     Object(Matching, "game/game_fn_800A831C.c"),
     Object(Matching, "game/game_fn_800A83DC.c", extra_cflags=["-use_lmw_stmw on"]),
-    Object(NonMatching, "game/game_fn_800A857C.c"),
+    Object(Matching, "game/game_fn_800A857C.c", extra_cflags=["-use_lmw_stmw on"]),
     Object(NonMatching, "game/game_fn_800A89D0.c"),
     Object(Matching, "game/game_fn_800AA6F4.c"),
     Object(NonMatching, "game/game_fn_800AA7F0.c", extra_cflags=["-use_lmw_stmw on"]),
