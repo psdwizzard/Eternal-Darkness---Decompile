@@ -205,12 +205,15 @@ int fn_800C28D8(void *object, void **node)
                     }
                     integral = lbl_8064F1A0 > fn_8010181C(scaled) ?
                         lbl_8064F1A0 : fn_8010181C(scaled);
-                    /* ASM: fctiwz, stfd, lwz use the opposite conversion
-                     * slot and preserve MWCC's float-to-short calling form.
-                     * C allocates another slot or adds sign extension. */
+                    /* ASM: fctiwz converts in the existing floating register;
+                     * a C cast allocates another slot or adds sign extension. */
                     asm {
                         fctiwz integral, integral
-                        stfd integral, second.value
+                    }
+                    second.value = integral;
+                    /* ASM: lwz reads the integer word produced by fctiwz;
+                     * a C short conversion adds an unwanted sign extension. */
+                    asm {
                         lwz amount, second.words.low
                     }
                 } else if (state->flags & 4) {
@@ -235,12 +238,15 @@ int fn_800C28D8(void *object, void **node)
                     }
                     integral = lbl_8064F1A0 > fn_8010181C(scaled) ?
                         lbl_8064F1A0 : fn_8010181C(scaled);
-                    /* ASM: fctiwz, stfd, lwz use the opposite conversion
-                     * slot and preserve MWCC's float-to-short calling form.
-                     * C allocates another slot or adds sign extension. */
+                    /* ASM: fctiwz converts in the existing floating register;
+                     * a C cast allocates another slot or adds sign extension. */
                     asm {
                         fctiwz integral, integral
-                        stfd integral, first.value
+                    }
+                    first.value = integral;
+                    /* ASM: lwz reads the integer word produced by fctiwz;
+                     * a C short conversion adds an unwanted sign extension. */
+                    asm {
                         lwz amount, first.words.low
                     }
                 }

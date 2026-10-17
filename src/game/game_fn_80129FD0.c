@@ -72,32 +72,17 @@ extern void fn_80127658(Owner*, int, void*, int);
 extern int fn_80126A00(EntryList*, SearchState*, int, float*);
 extern void fn_80124664(Owner*, int, u32, float);
 
-void fn_80129FD0(register Owner* input_owner, register int input_amount, register int input_flag)
+void fn_80129FD0(Owner* owner, int amount, int flag)
 {
     float value;
-    /* Declaration order preserves MWCC register allocation across both loops. */
-    register Object* object;
-    register int result;
-    register int amount;
-    register Owner* owner;
-    register int count;
-    register int i;
-    register TransformChannel* channel;
-    register int flag;
-    register Definition* definition;
-    register int j;
-    register int list_offset;
-    register int state_offset;
-    register int value_offset;
+    Object* object;
+    int result = 0;
+    int i;
+    int count;
+    TransformChannel* channel;
+    Definition* definition;
+    int j;
 
-    /* ASM: mr/li preserves entry register allocation and assignment order;
-     * MWCC reallocates the C locals and moves the definition load ahead of li. */
-    asm {
-        mr owner, input_owner
-        mr amount, input_amount
-        mr flag, input_flag
-        li result, 0
-    }
     definition = owner->definition;
     object = fn_80128E30(owner)->animation->object;
     count = definition->count;
@@ -106,25 +91,25 @@ void fn_80129FD0(register Owner* input_owner, register int input_amount, registe
     if (fn_8012927C(owner) != 0xFFFF) {
         count++;
     }
-    for (i = 0; i < count; channel++, i++) {
-        if (channel->translation_count || channel->rotation_count) {
+    for (i = 0; i < count; i++) {
+        if (channel[i].translation_count || channel[i].rotation_count) {
+            /* The updater currently declares its numeric value as void*. */
             fn_80127658(owner, i, (void*)amount, flag);
         }
     }
-    for (j = 0, value_offset = 0, state_offset = 0, list_offset = 0;
-         j < 32; j++, value_offset += 0x28, state_offset += 0x18, list_offset += 8) {
-        Object* current = (Object*)((u32)object + list_offset);
-        if (current->lists[0].count) {
+    j = 0;
+    do {
+        u32 index = j;
+        if (object->lists[index].count) {
             if (!owner->states) {
                 break;
             }
-            result |= fn_80126A00(&current->lists[0],
-                                 (SearchState*)((u8*)owner->states + state_offset),
+            result |= fn_80126A00(&object->lists[index], &owner->states[index],
                                  amount, &value);
-            if (result == 0 &&
-                !(((ValueChannel*)((u8*)owner->values + value_offset))->flags & 8)) {
+            if (result == 0 && !(owner->values[index].flags & 8)) {
                 fn_80124664(owner, j, 0, value);
             }
         }
-    }
+        j++;
+    } while (j < 32);
 }

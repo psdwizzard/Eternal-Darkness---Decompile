@@ -4,10 +4,6 @@ typedef long s32;
 typedef struct OSContext OSContext;
 typedef void (*EXICallback)(s32, OSContext *);
 
-typedef struct EXIRegisters {
-    u32 csr, address, length, control, data;
-} EXIRegisters;
-
 typedef struct EXIControl {
     EXICallback exiCallback;
     EXICallback transferCallback;
@@ -22,6 +18,9 @@ extern int OSDisableInterrupts(void);
 extern int OSRestoreInterrupts(int);
 extern u32 __OSUnmaskInterrupts(u32);
 extern void fn_8022DEBC(int, int);
+
+volatile u32 __EXIRegs[15] : 0xCC006800;
+#define REG(chan, index) (__EXIRegs[(chan) * 5 + (index)])
 
 /* Start an immediate EXI transfer on channel 2. */
 int fn_8022DAE0(void *buffer, s32 length, u32 type, EXICallback callback)
@@ -46,11 +45,11 @@ int fn_8022DAE0(void *buffer, s32 length, u32 type, EXICallback callback)
         for (i = 0, data = 0; i < length; i++) {
             data |= ((u8 *)buffer)[i] << ((3 - i) * 8);
         }
-        ((volatile EXIRegisters *)0xCC006800)[channel].data = data;
+        REG(channel, 4) = data;
     }
     lbl_8064C4B8->buffer = buffer;
     lbl_8064C4B8->length = type != 1 ? length : 0;
-    ((volatile EXIRegisters *)0xCC006800)[channel].control = ((type << 2) | 1) | ((length - 1) << 4);
+    REG(channel, 3) = ((type << 2) | 1) | ((length - 1) << 4);
     OSRestoreInterrupts(enabled);
     return 1;
 }

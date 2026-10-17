@@ -8,7 +8,8 @@ typedef struct Runtime {
 typedef struct Wrapper { void *object; } Wrapper;
 
 extern int lbl_8064C55C, lbl_8064C56C, lbl_8064D18C;
-extern float lbl_8064EC10, lbl_8064EC28, lbl_8064EC50, lbl_8064EC54;
+extern float lbl_8064EC10, lbl_8064EC50, lbl_8064EC54;
+extern const float lbl_8064EC28;
 
 extern int fn_80036E50(void *);
 extern int fn_800460EC(void);
@@ -67,6 +68,26 @@ extern void fn_80201D34(void *, int);
 extern void fn_80201E78(Vec3 *, void *);
 extern int fn_80201EB8(void *);
 
+static inline void get_source_position(Vec3 *destination)
+{
+    Vec3 position;
+    fn_80201E78(&position, fn_80201B3C());
+    *destination = position;
+}
+
+static inline void update_target_position(void *primary, const Vec3 *position, void *entity)
+{
+    fn_800DE648(primary, *position, entity);
+}
+
+static inline void dispatch_fallback(void *object, void *primary, void *owner,
+                                     const Vec3 *source, void *link, void *secondary,
+                                     void *event)
+{
+    Vec3 position = *source;
+    fn_8008F064(object, primary, owner, &position, link, secondary, event);
+}
+
 int fn_800907FC(void *object, int action, void *event, int *result)
 {
     Vec3 position;
@@ -74,9 +95,6 @@ int fn_800907FC(void *object, int action, void *event, int *result)
     Vec3 collision;
     Vec3 launch_position;
     Vec3 return_position;
-    Vec3 target_position;
-    Vec3 fallback;
-    Vec3 source;
     unsigned char state[4];
     unsigned char other_state[4];
     int id;
@@ -106,7 +124,7 @@ int fn_800907FC(void *object, int action, void *event, int *result)
             fn_8011FA8C(primary, 0x10, 0);
             ((unsigned char *)runtime->resource)[0x167]++;
         }
-            fn_8012DBE8((unsigned char *)primary, 15, state);
+        fn_8012DBE8((unsigned char *)primary, 15, state);
         if (state[3] < 20) {
             fn_800BE8D4(owner);
         }
@@ -239,9 +257,8 @@ int fn_800907FC(void *object, int action, void *event, int *result)
             if (lbl_8064D18C == 0xEC || lbl_8064D18C == 0x53) {
                 fn_80201138(0x17, object, 0x39, 0x49, 0, lbl_8064EC54);
             } else {
-                fn_80201E78(&source, fn_80201B3C());
+                get_source_position(&destination);
                 found = 0;
-                destination = source;
                 id = fn_800DD284();
                 if (id != -1) {
                     wrapper = fn_800BC100(0, 0, &id, 0x10, 0, 0, 0);
@@ -277,20 +294,19 @@ int fn_800907FC(void *object, int action, void *event, int *result)
             void *entity;
             entity = fn_80201814((int)fn_80201C48(secondary));
             if (entity && lbl_8064C55C && associated == lbl_8064D18C) {
-                target_position = position;
-                fn_800DE648(primary, target_position, entity);
+                update_target_position(primary, &position, entity);
             } else {
                 fn_800BE010(object, resource);
                 fn_800BDEE4(object, resource);
                 fn_800BCE94(object, 10);
-                fallback = position;
-                fn_8008F064(object, primary, (void *)owner, &fallback, link,
+                dispatch_fallback(object, primary, (void *)owner, &position, link,
                                 secondary, event);
             }
             return 1;
         }
-        return 0;
+        goto unhandled;
     }
+    return 0;
 unhandled:
     return 0;
 }

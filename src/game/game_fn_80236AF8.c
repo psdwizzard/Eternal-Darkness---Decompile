@@ -21,7 +21,7 @@ typedef struct StreamRequest {
     s32 side;     /* 0x08 */
     s32 handle;   /* 0x0C */
     u8* data;     /* 0x10 */
-    void (*callback)(void); /* 0x14 */
+    void (*callback)(u32, u32); /* 0x14 */
     s32 arg;      /* 0x18 */
 } StreamRequest;
 
@@ -41,21 +41,27 @@ extern void* memset(void*, int, unsigned long);
 extern void DCFlushRange(void*, u32);
 extern int OSDisableInterrupts(void);
 extern int OSRestoreInterrupts(int);
-extern s32 fn_801BA2A4(int, void*, int, int, int, int, int, int, int, int, int, void (*)(void), int, int);
-extern void fn_80236DC4(void);
-extern void fn_80237EAC(void);
+extern u32 fn_801BA2A4(u8, u32, u32, u32, u8, u8, u8, u8, u8, u8, u32, void (*)(void), u32, short*);
+extern s32 fn_80236DC4(s32, u32, s32, s32, u32);
+extern void fn_80237EAC(u32, u32);
 
 extern StreamWork lbl_80643C20;
 extern s32 lbl_8064D294;
 extern s32 lbl_8064DC78;
 
-u8* fn_80236AF8(u8* buffer, s32 arg) {
+u8* fn_80236AF8(register u8* buffer, register s32 arg) {
     StreamWork* work = &lbl_80643C20;
     StreamBuffer* buf;
+    StreamBuffer* stream;
     StreamRequest* req;
-    s32 i;
+    s32 i, j;
     int level;
 
+    /* ASM: or (mr) preserves the incoming argument copies; MWCC emits addi with zero for C copies. */
+    asm {
+        or buffer, buffer, buffer
+        or arg, arg, arg
+    }
     fn_801ADCF8();
     fn_80217324();
     while (fn_8020D318(work->queue, 0, 0) != 0) {
@@ -83,31 +89,57 @@ u8* fn_80236AF8(u8* buffer, s32 arg) {
         work->buffers[0].pan = 0;
         work->buffers[1].pan = 0x7F;
     }
-    work->buffers[0].handle = fn_801BA2A4(0xFF, work->buffers[0].data, 0x4000, 44100, 0,
-                                          work->buffers[0].pan, 0, 0, 0, 0, 0x30000,
-                                          fn_80236DC4, 0, 0);
-    work->buffers[1].handle = fn_801BA2A4(0xFF, work->buffers[1].data, 0x4000, 44100, 0,
-                                          work->buffers[1].pan, 0, 0, 0, 0, 0x30000,
-                                          fn_80236DC4, 1, 0);
+    {
+        register u32 zero, rateHigh, rate, flags, callbackAddress;
+        register void (*callback)(void);
+        zero = 0;
+        /* ASM: lis and addi rematerialize this call's constants; C hoists them across both calls into saved registers. */
+        asm {
+            lis callbackAddress, fn_80236DC4@ha
+            lis rateHigh, 1
+            addi rate, rateHigh, -21436
+            lis flags, 3
+            addi callback, callbackAddress, fn_80236DC4@l
+        }
+        work->buffers[0].handle = fn_801BA2A4(0xFF, (u32)work->buffers[0].data, 0x4000, rate, 0,
+                                          work->buffers[0].pan, 0, 0, zero, zero, flags,
+                                          callback, zero, (short*)zero);
+    }
+    {
+        register u32 zero, rateHigh, rate, flags, callbackAddress;
+        register void (*callback)(void);
+        zero = 0;
+        /* ASM: lis and addi rematerialize this call's constants; C hoists them across both calls into saved registers. */
+        asm {
+            lis callbackAddress, fn_80236DC4@ha
+            lis rateHigh, 1
+            addi rate, rateHigh, -21436
+            lis flags, 3
+            addi callback, callbackAddress, fn_80236DC4@l
+        }
+        work->buffers[1].handle = fn_801BA2A4(0xFF, (u32)work->buffers[1].data, 0x4000, rate, 0,
+                                          work->buffers[1].pan, 0, 0, zero, zero, flags,
+                                          callback, 1, (short*)zero);
+    }
     OSRestoreInterrupts(level);
     lbl_8064DC78 = 4000;
 
     req = work->requests;
-    buf = work->buffers;
-    for (i = 0; i < 2; i++) {
-        req->index = i;
+    stream = work->buffers;
+    for (j = 0; j < 2; j++) {
+        req->index = j;
         req->size = 0x2000;
-        req->data = buf->data;
-        req->side = buf->side;
-        req->handle = buf->handle;
-        req->callback = fn_80237EAC;
         req->arg = arg;
+        req->data = stream->data;
+        req->side = stream->side;
+        req->handle = stream->handle;
+        req->callback = fn_80237EAC;
         fn_8020D250(work->queue, req, 1);
         req++;
-        buf->side ^= 1;
-        buf->flag19 = 0;
-        buf->flag18 = 0;
-        buf++;
+        stream->side ^= 1;
+        stream->flag19 = 0;
+        stream->flag18 = 0;
+        stream++;
     }
     return buffer;
 }
