@@ -3,6 +3,7 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 
 typedef struct Table Table;
+typedef struct Model Model;
 typedef struct Path12 { char text[12]; } Path12;
 typedef struct Path13 { char text[13]; } Path13;
 typedef struct ResourceTable ResourceTable;
@@ -59,7 +60,7 @@ extern void fn_80043708(int);
 extern int fn_80047428(int);
 extern u8 fn_80052218(int);
 extern int fn_800F9D4C(char*, const char*, ...);
-extern void* fn_80125788(void*);
+extern Model* fn_80125788(Model*);
 extern void fn_8013816C(void);
 extern void fn_801383B4(int, int);
 extern void* fn_80138A6C(u32, int);
@@ -70,7 +71,7 @@ extern void fn_80142944(void);
 extern int fn_8015D9C8(void*, int);
 extern void fn_8015DAB0(ResourceTable*);
 extern void fn_8015E794(void);
-extern long fn_801A9480(void);
+extern int fn_801A9480(void);
 extern void fn_801E85A8(Table*);
 extern void* fn_801E86A0(Table*, u32);
 extern void fn_801E86D8(Table*, Table*);
@@ -78,25 +79,22 @@ extern u32 fn_801E88E4(Table*);
 extern u32 fn_801E9564(const u8*, LinkHeader*);
 extern u32 fn_801E971C(const u8*, DataHeader*);
 
-void fn_80043838(int requestedChapter, u8 immediate)
+void fn_80043838(int chapter, u8 immediate)
 {
     Path12 path;
     char name[16];
     Path13 scriptPath;
+    void* first;
+    void* second;
     char* strings;
-    int chapter;
     int archiveEntry;
-    void* entry;
     int currentAudioGroup;
     int archiveId;
     u32 i;
     u32 j;
-    void* second;
     int interrupts;
     int requestedAudioGroup;
-    void* first;
 
-    chapter = requestedChapter;
     strings = lbl_8023E9B8;
     path = lbl_80238E14;
     scriptPath = lbl_80238E20;
@@ -200,30 +198,37 @@ void fn_80043838(int requestedChapter, u8 immediate)
 
     /* Construct each distinct chapter resource only once. */
     fn_80139C1C(fn_801E88E4(lbl_8064C528));
-    for (i = 0; i < fn_801E88E4(lbl_8064C528); i++) {
-        entry = fn_801E86A0(lbl_8064C528, i);
-        if (entry != 0) {
-            for (j = 0; j < i; j++) {
-                if (fn_801E86A0(lbl_8064C528, j) == entry) {
-                    break;
+    {
+        Model* resource;
+        u32 previousIndex;
+        for (i = 0; i < fn_801E88E4(lbl_8064C528); i++) {
+            resource = fn_801E86A0(lbl_8064C528, i);
+            if (resource != 0) {
+                for (previousIndex = 0; previousIndex < i; previousIndex++) {
+                    if (fn_801E86A0(lbl_8064C528, previousIndex) == resource) {
+                        break;
+                    }
                 }
-            }
-            if (j == i) {
-                fn_80125788(entry);
+                if (previousIndex == i) {
+                    fn_80125788(resource);
+                }
             }
         }
     }
     /* Load common slots that are not already resident. */
-    for (i = 0; i < fn_801E88E4(lbl_8064C520); i++) {
-        entry = fn_801E86A0(lbl_8064C520, i);
-        if (entry != 0) {
-            for (j = 0; j < i; j++) {
-                if (fn_801E86A0(lbl_8064C520, j) == entry) {
-                    break;
+    {
+        void* entry;
+        for (i = 0; i < fn_801E88E4(lbl_8064C520); i++) {
+            entry = fn_801E86A0(lbl_8064C520, i);
+            if (entry != 0) {
+                for (j = 0; j < i; j++) {
+                    if (fn_801E86A0(lbl_8064C520, j) == entry) {
+                        break;
+                    }
                 }
-            }
-            if (j == i && entry != 0 && fn_80047428(i) == 0) {
-                fn_801383B4(i, 0);
+                if (j == i && entry != 0 && fn_80047428(i) == 0) {
+                    fn_801383B4(i, 0);
+                }
             }
         }
     }
@@ -237,16 +242,20 @@ void fn_80043838(int requestedChapter, u8 immediate)
     }
     fn_8015E794();
     /* Repeat for chapter slots before merging the common table. */
-    for (i = 0; i < fn_801E88E4(lbl_8064C528); i++) {
-        entry = fn_801E86A0(lbl_8064C528, i);
-        if (entry != 0) {
-            for (j = 0; j < i; j++) {
-                if (fn_801E86A0(lbl_8064C528, j) == entry) {
-                    break;
+    {
+        void* entry;
+        u32 previousIndex;
+        for (i = 0; i < fn_801E88E4(lbl_8064C528); i++) {
+            entry = fn_801E86A0(lbl_8064C528, i);
+            if (entry != 0) {
+                for (previousIndex = 0; previousIndex < i; previousIndex++) {
+                    if (fn_801E86A0(lbl_8064C528, previousIndex) == entry) {
+                        break;
+                    }
                 }
-            }
-            if (j == i && entry != 0 && fn_80047428(i) == 0) {
-                fn_801383B4(i, 0);
+                if (previousIndex == i && entry != 0 && fn_80047428(i) == 0) {
+                    fn_801383B4(i, 0);
+                }
             }
         }
     }
