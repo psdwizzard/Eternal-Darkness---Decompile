@@ -1,5 +1,5 @@
-/* Remaining differences: compiler-generated GPR save/restore helpers
- * and the local symbol for the signed-integer conversion bias. */
+/* Remaining difference: MWCC emits a local signed-integer conversion
+ * bias instead of referencing the shared retail symbol lbl_8064FE78. */
 typedef struct Vec3 {
     float x;
     float y;

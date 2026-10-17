@@ -5,6 +5,9 @@
 #endif
 
 typedef struct Vec3 { float x, y, z; } Vec3;
+typedef struct Ray { Vec3 origin; u8 pad[12]; Vec3 direction; float limit; } Ray;
+typedef struct Object Object;
+typedef struct Entry80201B3C Entry80201B3C;
 
 typedef struct Point6 {
     s16 v[3];
@@ -29,15 +32,15 @@ typedef struct Portal {
     void *userData;
 } Portal;
 
-extern int fn_8011EB1C(void *);
+extern int fn_8011EB1C(Object *);
 extern void *fn_8011F130(void *);
 extern int fn_8013C7BC(const Vec3 *, const Vec3 *, const Vec3 *, float, float);
-extern Plane *fn_80143000(void *, Portal *, Vec3 *, Point6 **, Point6 **);
-extern void *fn_80201ADC(void);
-extern void *fn_80201B3C(void);
-extern void *fn_80201BC8();
+extern Plane *fn_80143000(const Ray *, Portal *, Vec3 *, Point6 **, Point6 **);
+extern int fn_80201ADC(void);
+extern Entry80201B3C *fn_80201B3C(void);
+extern void *fn_80201BC8(void *);
 extern void fn_80211A6C(const Vec3 *, const Vec3 *, Vec3 *);
-extern float fn_80211B08(const Vec3 *);
+extern float fn_80211B08(Vec3 *);
 extern float fn_80211D4C(const Vec3 *, const Vec3 *);
 
 extern Portal lbl_805B1310[12];
@@ -48,20 +51,23 @@ extern float lbl_80650448;
 extern float lbl_8065044C;
 
 static inline void *get_current(void) {
-    if (fn_80201B3C() != NULL) {
-        return fn_80201BC8();
+    Entry80201B3C *entry = fn_80201B3C();
+    if (entry != NULL) {
+        return fn_80201BC8(entry);
     }
     return NULL;
 }
 
 static inline void *get_focus(void) {
-    if (fn_80201ADC() != NULL) {
-        return fn_80201BC8();
+    /* The accessor returns the entry address as a 32-bit integer. */
+    void *entry = (void *)fn_80201ADC();
+    if (entry != NULL) {
+        return fn_80201BC8(entry);
     }
     return NULL;
 }
 
-static inline int portal_mode(Vec3 *pos, Vec3 *outPos, void *object, int flags) {
+static inline int portal_mode(const Vec3 *pos, Vec3 *outPos, void *object, int flags) {
     int mode = (int)object;
     Vec3 delta;
 
@@ -84,7 +90,7 @@ static inline int portal_mode(Vec3 *pos, Vec3 *outPos, void *object, int flags) 
     return mode;
 }
 
-Plane *fn_8014317C(Vec3 *pos, Vec3 *outPos, void *object, Vec3 *target, int flags) {
+Plane *fn_8014317C(const Ray *ray, Vec3 *outPos, Object *object, Vec3 *target, int flags) {
     void *focus;
     void *current;
     Plane *result = NULL;
@@ -135,11 +141,11 @@ Plane *fn_8014317C(Vec3 *pos, Vec3 *outPos, void *object, Vec3 *target, int flag
                     continue;
                 }
             }
-            plane = fn_80143000(pos, portal, &hit, &edgeA, &edgeB);
+            plane = fn_80143000(ray, portal, &hit, &edgeA, &edgeB);
             if (plane == NULL) {
                 continue;
             }
-            dist = fn_80211D4C(pos, &hit);
+            dist = fn_80211D4C(&ray->origin, &hit);
             if (dist < bestDist) {
                 bestDist = dist;
                 best = portal;
@@ -160,7 +166,7 @@ Plane *fn_8014317C(Vec3 *pos, Vec3 *outPos, void *object, Vec3 *target, int flag
                 }
             }
             if (ok) {
-                mode = portal_mode(pos, outPos, object, flags);
+                mode = portal_mode(&ray->origin, outPos, object, flags);
                 b = *bestB;
                 a = *bestA;
                 best->callback(&a, &b, mode, best->userData);

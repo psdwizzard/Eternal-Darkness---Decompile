@@ -18,7 +18,7 @@ extern u16 fn_801291CC(void *);
 extern u16 fn_801A7434(void *);
 extern int fn_800C34A8(void *, void *, void *);
 extern u32 fn_801A74C0(void *);
-extern void fn_800C3C6C();
+extern void fn_800C3C6C(signed short);
 extern int fn_800C28D8(void *, void *);
 extern u64 fn_8020123C(int, int, int, int);
 extern int lbl_8064C864;
@@ -56,14 +56,14 @@ int fn_800C3514(void *context, void *event)
                     scene_or_proceed = 0;
                 } else {
                     state->flags = flags | 2;
-                    fn_800C3C6C((fn_801A74C0(value) & 4) ? 3000 : 2000);
+                    fn_800C3C6C((fn_801A74C0(value) & 4) ? (signed short)3000 : (signed short)2000);
                     state->flags |= 4;
                 }
             } else {
                 u8 flags = state->flags;
                 if (!(flags & 8)) {
                     state->flags = flags | 2;
-                    fn_800C3C6C((fn_801A74C0(value) & 4) ? 2000 : 1000);
+                    fn_800C3C6C((fn_801A74C0(value) & 4) ? (signed short)2000 : (signed short)1000);
                 }
             }
             if (scene_or_proceed) {

@@ -44,33 +44,55 @@ extern s32 fn_80230204(Codebook *book, float *vec, void *opb, s32 n);
 extern s32 fn_80236144(u32);
 extern const float lbl_806517B8; /* 0.0f */
 
-float *fn_80230BB4(VorbisBlock *vb, Floor0Look *look) {
-    Floor0Info *info = look->vi;
+float *fn_80230BB4(register VorbisBlock *input, register Floor0Look *lookInput) {
+    register Floor0Look *look;
+    register VorbisBlock *vb;
+    Floor0Info *info;
     s32 j, k;
-
-    s32 ampraw = fn_8022E868(vb->opb, info->ampbits);
+    s32 ampraw;
+    /* ASM: or (mr) preserves argument copies that this compiler changes to addi. */
+    asm {
+        or look, lookInput, lookInput
+        or vb, input, input
+    }
+    info = lookInput->vi;
+    ampraw = fn_8022E868(vb->opb, info->ampbits);
     if (ampraw > 0) {
         float raw = (float)ampraw;
-        float maxval = (float)((1 << info->ampbits) - 1);
         float db = (float)info->ampdB;
+        float maxval = (float)((1 << info->ampbits) - 1);
         float amp = raw / maxval * db;
-        s32 booknum = fn_8022E868(vb->opb, fn_80236144(info->numbooks));
+        register s32 bits = fn_80236144(info->numbooks);
+        s32 booknum;
+        /* ASM: or (mr) keeps the argument copy, which C changes to addi. */
+        asm { or bits, bits, bits }
+        booknum = fn_8022E868(vb->opb, bits);
 
         if (booknum != -1 && booknum < info->numbooks) {
             CodecSetup *ci = vb->vd->codec_setup;
-            Codebook *b = ci->fullbooks + info->books[booknum];
+            register Codebook *b = ci->fullbooks + info->books[booknum];
             double last = lbl_806517B8;
             s32 size = sizeof(float) * (look->m + 1);
-            float *lsp = fn_8022F8C4(size);
+            register float *lsp = fn_8022F8C4(size);
+            j = 0;
+            /* ASM: or (mr) preserves the pointer copy that C changes to addi. */
+            asm { or lsp, lsp, lsp }
 
-            for (j = 0; j < look->m; j += b->dim) {
-                if (fn_80230204(b, lsp + j, vb->opb, b->dim) == -1)
+            for (; j < look->m; j += b->dim) {
+                register Codebook *callBook;
+                s32 dim = b->dim;
+                float *vec = lsp + j;
+                /* ASM: or (mr) preserves the argument copy that C changes to addi. */
+                asm { or callBook, b, b }
+                if (fn_80230204(callBook, vec, vb->opb, dim) == -1)
                     goto eop;
             }
 
             /* Restore each vector relative to the preceding vector's last value. */
             {
-                float *cursor = lsp;
+                register float *cursor;
+                /* ASM: or (mr) keeps the cursor copy, which C changes to addi. */
+                asm { or cursor, lsp, lsp }
                 for (j = 0; j < look->m;) {
                     for (k = 0; k < b->dim; k++, j++, cursor++) {
                         *cursor += (float)last;
