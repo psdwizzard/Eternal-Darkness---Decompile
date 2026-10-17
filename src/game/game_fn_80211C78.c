@@ -58,4 +58,18 @@ void fn_80211C78(Vec3 *in, register Vec3 *normal, register Vec3 *out) {
     dot = scale * dot;
     result->z = dot - dir.z;
     fn_80211AAC(result, result);
+    /* The assembly returns directly; the loop prevents a second C epilogue. */
+    for (;;) {
+        /* ASM: lwz, mtlr, addi and blr restore the two saved pointer registers,
+         * link register and 0x38-byte frame. C puts addi before mtlr, and the
+         * approved scheduling flags do not produce the required order. */
+        asm {
+            lwz r0, 0x3c(r1)
+            lwz result, 0x34(r1)
+            lwz normalInput, 0x30(r1)
+            mtlr r0
+            addi r1, r1, 0x38
+            blr
+        }
+    }
 }
