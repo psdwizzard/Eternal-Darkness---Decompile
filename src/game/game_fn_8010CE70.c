@@ -107,7 +107,7 @@ void fn_8010CE70(int owner, int mode)
     Vec4 current;
     FourWords initial;
     register u8 *base = (u8 *)&lbl_80330D80;
-    register void **lists = (void **)(base + 0x9A0);
+    register void **lists;
     Slot *primary;
     Slot *secondary;
     int ready;
@@ -145,14 +145,32 @@ void fn_8010CE70(int owner, int mode)
             if (lbl_8064CCDC != -1 && fn_801AF85C(lbl_8064CCDC)) {
                 fn_801B05B0(lbl_8064CCDC, 10);
             }
-            lbl_8064CCDC = -1;
-            lbl_8024B3E4.color = 0x600C0000;
-            lbl_8024B3E4.active = 0;
-            lbl_8024B3E4.enable = -1;
-            lbl_8024B3E4.duration = 30;
-            lbl_8024B3E4.delay = 20;
-
-            row = fn_801E8D24(lists[1]) * 2;
+            {
+                register int delay, duration, active;
+                register FadeState *fade;
+                register int color, disabled;
+                void *selected;
+                /* ASM: lis/addi/li preserve the address calculations and their retail scheduling,
+                 * which C folds into a single list load and schedules differently. */
+                asm {
+                    lis duration, lbl_8024B3E4@ha
+                    addi lists, base, 0x9A0
+                    li disabled, -1
+                    lis color, 0x600C
+                    addi fade, duration, lbl_8024B3E4@l
+                    li active, 0
+                    li duration, 30
+                    li delay, 20
+                }
+                lbl_8064CCDC = disabled;
+                selected = lists[1];
+                fade->color = color;
+                fade->active = active;
+                fade->enable = disabled;
+                fade->duration = duration;
+                fade->delay = delay;
+                row = fn_801E8D24(selected) * 2;
+            }
             index = fn_801E8D24(*(void **)(base + 0x9A0));
             index += row;
             offset = index * sizeof(Slot);

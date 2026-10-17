@@ -61,14 +61,11 @@ int fn_8012DCBC(Owner* owner, u32 index, int channel, float* complement,
     Vec3 translation_end;
     Vec3 translation_alternate;
     float fraction;
-    register float zero;
     register Entry* entry;
-    int result = 0;
+    int result;
 
-    /* ASM: lfs makes the initial constant load explicit so the argument
-     * saves remain together; MWCC interleaves the equivalent C store. */
-    asm { lfs zero, lbl_806501D8 }
-    fraction = zero;
+    fraction = 0.0f;
+    result = 0;
     fn_80125ECC(owner);
     entry = ((OwnerLayout*)owner)->entries[index];
     if (entry != 0) {

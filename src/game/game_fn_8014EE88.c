@@ -1,5 +1,6 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
+typedef unsigned int u32;
 typedef signed short s16;
 
 typedef struct Vec3 {
@@ -9,7 +10,10 @@ typedef struct Vec3 {
 typedef struct EffectDescriptor {
     u8 data[0x94];
     void* instance;
-    u8 tail[0x18];
+    Vec3 position;
+    u16 rotation[3];
+    u8 variant;
+    u8 padding[5];
 } EffectDescriptor;
 
 typedef struct Ring {
@@ -52,12 +56,13 @@ extern void fn_80182380(EffectDescriptor*);
 extern void fn_80182448(void);
 extern float fn_80048C2C(float);
 extern float fn_80048C50(float);
-extern int fn_801E8328();
-extern void fn_80182430(void*, int);
-extern void fn_80182440(void*, int);
-extern void fn_8014ECD8(Ring* object, int index, u8 variant);
-extern void fn_8014EB38(Ring* object, int index);
-extern void fn_80149E28(RingEvent* node);
+extern int fn_801E8328(u32, u32);
+extern void fn_80182430(u8*, u8);
+extern void fn_80182440(u8*, u8);
+extern void fn_8014ECD8(u8* object, int index, u8 variant);
+extern void fn_8014EB38(u8* object, int index);
+typedef struct ListNode ListNode;
+extern void fn_80149E28(ListNode* node);
 
 void fn_8014EE88(RingEvent* event)
 {
@@ -97,10 +102,10 @@ void fn_8014EE88(RingEvent* event)
             template.data[0x21] = 125;
             template.data[0x22] = 250;
             *(void (**)(void))(template.data + 0x90) = fn_80182448;
-            *(u16*)(template.data + 0xA4) = 0;
-            *(u16*)(template.data + 0xA6) = 0;
-            *(u16*)(template.data + 0xA8) = 1;
-            template.data[0xAA] = event->variant;
+            template.rotation[0] = 0;
+            template.rotation[1] = 0;
+            template.rotation[2] = 1;
+            template.variant = event->variant;
 
             count = ring->count;
             for (i = 0; i < count; i++) {
@@ -110,8 +115,8 @@ void fn_8014EE88(RingEvent* event)
                 position.z = ring->origin.z;
                 effect = &ring->glow[i];
                 *effect = template;
-                *(Vec3*)(effect->data + 0x98) = position;
-                fn_801E8328(16, effect);
+                effect->position = position;
+                fn_801E8328(16, (u32)effect);
                 if (ring->spawned != 0 && ring->first[i].instance != 0) {
                     fn_80182430(ring->first[i].instance, 2);
                 }
@@ -133,7 +138,7 @@ void fn_8014EE88(RingEvent* event)
                     }
                 }
             }
-            fn_8014ECD8(ring, 0, event->variant);
+            fn_8014ECD8((u8*)ring, 0, event->variant);
         }
         break;
     case 0x30:
@@ -148,31 +153,31 @@ void fn_8014EE88(RingEvent* event)
         break;
     case 0x3C:
         if (event->owner == lbl_8064D18C) {
-            fn_8014ECD8(ring, 1, event->variant);
+            fn_8014ECD8((u8*)ring, 1, event->variant);
         }
         break;
     case 0x48:
         if (event->owner == lbl_8064D18C && ring->active != 0) {
-            fn_8014EB38(ring, 0);
+            fn_8014EB38((u8*)ring, 0);
         }
         break;
     case 0x58:
         if (event->owner == lbl_8064D18C) {
-            fn_8014ECD8(ring, 2, event->variant);
+            fn_8014ECD8((u8*)ring, 2, event->variant);
         }
         break;
     case 0x64:
         if (event->owner == lbl_8064D18C && ring->active != 0) {
-            fn_8014EB38(ring, 1);
+            fn_8014EB38((u8*)ring, 1);
         }
         break;
     case 0x80:
         if (event->owner == lbl_8064D18C && ring->active != 0) {
-            fn_8014EB38(ring, 2);
+            fn_8014EB38((u8*)ring, 2);
         }
         break;
     case 0x14C:
-        fn_80149E28(event);
+        fn_80149E28((ListNode*)event);
         break;
     }
 }

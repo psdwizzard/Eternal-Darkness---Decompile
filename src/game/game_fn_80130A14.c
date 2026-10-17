@@ -168,7 +168,7 @@ u32 fn_80130A14(StripMesh* mesh, StripGroup* groups, int groupCount, s8* enabled
                     packedWord += secondDelta;
                     src += 4;
                     *fifo = thirdOffsetWord;
-                    fourthTexcoordWord = __rlwimi(fourthTexcoordWord, packedWord, 0, 0, 15);
+                    fourthTexcoordWord = (packedWord & 0xFFFF0000) | fourthTexcoordWord;
                     *fifo = __rlwimi(fourthPosition, thirdTexcoord, 16, 0, 15);
                     fourthOffsetWord = __rlwimi(fourthPosition << 16, packedWord, 0, 16, 31);
                     *fifo = fourthOffsetWord;
