@@ -6,6 +6,32 @@ typedef struct Vec3Words {
     u32 x, y, z;
 } Vec3Words;
 
+typedef struct ConfigBlock {
+    u8 bytes[0x14];
+} ConfigBlock;
+
+typedef struct Vec3s {
+    short x, y, z;
+} Vec3s;
+
+typedef struct Vec3f {
+    float x, y, z;
+} Vec3f;
+
+typedef struct Entry Entry;
+struct Entry {
+    u8 unknown00[4];
+    short type;
+    u8 unknown06[0x8A];
+    void* (*create)(Vec3s*, Vec3s*, Entry*);
+    void* instance;
+    Vec3f position;
+    Vec3s rotation;
+    u8 flags;
+};
+
+typedef struct Item Item;
+
 typedef struct Effect {
     u8 type;
     u8 mode;
@@ -22,7 +48,7 @@ typedef struct Effect {
     u8 pad22[0x2E];
     float scale;
     u8 pad54[0x3C];
-    void (*update)(void);
+    void* (*update)(void*, void*, ConfigBlock*);
     u32 owner;
     Vec3Words position;
     u8 config[6];
@@ -40,8 +66,8 @@ extern const float lbl_80650538;
 
 extern void fn_80180D0C(Effect*);
 extern void fn_80180DDC(u8*, u8);
-extern void fn_80180E14(void);
-extern void* fn_80147EC4(void*);
+extern void* fn_80180E14(void*, void*, ConfigBlock*);
+extern Item* fn_80147EC4(Entry*);
 extern void* memcpy(void*, const void*, u32);
 
 void fn_8014E9B0(Effect* effect, Vec3Words* position, u8 type, u16 value,
@@ -68,5 +94,6 @@ void fn_8014E9B0(Effect* effect, Vec3Words* position, u8 type, u16 value,
     memcpy(effect->config, &config, 6);
     effect->owner = 0;
     effect->variant = variant;
-    fn_80147EC4(effect);
+    /* Effect and Entry share the placement fields at offsets 0x90 through 0xAA. */
+    fn_80147EC4((Entry*)effect);
 }
