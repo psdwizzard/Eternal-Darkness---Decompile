@@ -1,14 +1,19 @@
 /* __mod2u (0x800F6004, 228 bytes): MSL runtime unsigned 64-bit remainder.
  * The retail routine is hand-written assembly that threads the carry bit
  * through adde/subfe chains; this is a C restatement of the same
- * shift-subtract algorithm working on 32-bit halves. The four parameters
- * expose the runtime ABI: dividend in r3:r4 and divisor in r5:r6. */
+ * shift-subtract algorithm working on 32-bit halves. The runtime ABI passes
+ * the dividend in r3:r4 and divisor in r5:r6. */
 
 typedef unsigned long u32;
 typedef unsigned long long u64;
 
-u64 __mod2u(register u32 a_hi, register u32 a_lo,
-            register u32 b_hi, register u32 b_lo) {
+u64 __mod2u(u64 dividend, u64 divisor) {
+    register u32 a_hi = dividend >> 32;
+    register u32 a_lo = dividend;
+    register u32 b_hi = divisor >> 32;
+    register u32 b_lo = divisor;
+    register u32 trial_lo;
+    int low_b_lz;
     u64 difference;
     register u32 r_lo;
     register int a_lz;
@@ -22,13 +27,14 @@ u64 __mod2u(register u32 a_hi, register u32 a_lo,
         a_lz = count + 32;
     }
     count = __cntlzw(b_hi);
-    total = __cntlzw(b_lo);
+    low_b_lz = __cntlzw(b_lo);
     if ((int)b_hi == 0) {
-        count = total + 32;
+        count = low_b_lz + 32;
     }
     total = 64 - a_lz;
     if (a_lz <= count) {
-        count = 64 - (count + 1);
+        count += 1;
+        count = 64 - count;
         a_lz += count;
         count = total - count;
         /* ASM: mtctr initializes CTR; a C loop uses a subtraction that
@@ -90,14 +96,14 @@ u64 __mod2u(register u32 a_hi, register u32 a_lo,
             }
             difference = (((u64)r_hi << 32) | r_lo) -
                          (((u64)b_hi << 32) | b_lo);
-            /* The normalization temporaries now hold the trial remainder. */
-            a_lz = (u32)difference;
+            /* Split the trial remainder; its signed high word detects borrow. */
+            trial_lo = (u32)difference;
             count = difference >> 32;
             if (count >= 0) {
-                r_lo = a_lz;
+                r_lo = trial_lo;
                 r_hi = count;
                 /* ASM: addic sets XER carry to append a quotient bit. */
-                asm { addic a_lz, total, 1 }
+                asm { addic trial_lo, total, 1 }
             }
         }
         /* ASM: bdnz decrements CTR without overwriting the quotient carry. */

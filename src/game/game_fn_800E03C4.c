@@ -11,6 +11,8 @@ typedef struct TargetState {
     s16 status;
 } TargetState;
 
+typedef struct RuntimeState RuntimeState;
+
 typedef struct ActionState {
     u8 pad[0x94];
     Vec3 position;
@@ -23,32 +25,36 @@ typedef struct OwnerState {
     ActionState *action;
 } OwnerState;
 
-extern OwnerState *fn_80201B8C(void *);
-extern void *fn_80201B94(void *);
-extern int fn_80201B54(void *);
+extern void *fn_80201B8C(unsigned char *);
+extern void *fn_80201B94(unsigned char *);
+extern int fn_80201B54(int *);
 extern int fn_80201B44(void);
-extern void *fn_80201814(void);
-extern void *fn_8011F114(Vec3 *, void *);
-extern void *lbl_8064C4E4;
-extern void *fn_800DE3F8(void *);
+typedef struct Entry80201814 Entry80201814;
+extern Entry80201814 *fn_80201814(int);
+extern void fn_8011F114(Vec3 *, Vec3 *);
+extern Vec3 *lbl_8064C4E4;
+extern int fn_800DE3F8(void);
 extern int fn_80038308(void *, int, s16 *);
 extern int fn_80038464(void *, int, s16 *);
 extern int fn_80036E50(void *);
-extern void fn_80201DD8(void *, int);
-extern void fn_800BDEE4(void *, ActionState *);
-extern void fn_80201D2C(void *, int);
-extern void fn_80201D14(void *, int);
+typedef struct Object80201DD8 Object80201DD8;
+extern void fn_80201DD8(Object80201DD8 *, void *);
+extern int fn_800BDEE4(int, RuntimeState *);
+typedef struct Object80201D2C Object80201D2C;
+extern void fn_80201D2C(Object80201D2C *, int);
+typedef struct Object80201D14 Object80201D14;
+extern void fn_80201D14(Object80201D14 *, u8);
 extern u32 lbl_8064D5A8;
-extern float fn_8012B7D0(void *, Vec3);
+extern float fn_8012B7D0(const void *, const void *);
 extern float fn_8012B750(void *);
 extern void fn_8017A12C(float *, float, float);
 extern const float lbl_8064F588;
 extern const float lbl_8064F59C;
 extern void *fn_801A717C(void);
-extern void fn_801A74A0(void *, int);
-extern void fn_801A74A8(void *, int);
-extern void fn_801A7470(void *, int);
-extern unsigned long long fn_8020123C(int, int, int, void *);
+extern void fn_801A74A0(void *, u32);
+extern void fn_801A74A8(void *, u32);
+extern void fn_801A7470(void *, u32);
+extern unsigned long long fn_8020123C(int, int, int, int);
 extern void fn_801A7228(void *);
 
 int fn_800E03C4(void *owner, void *object)
@@ -72,23 +78,25 @@ int fn_800E03C4(void *owner, void *object)
     related = fn_80201B94(owner);
     object_id = fn_80201B54(owner);
     self_id = fn_80201B44();
-    current = fn_80201814();
+    current = fn_80201814(self_id);
     fn_8011F114(&object_position, object);
-    fn_800DE3F8(fn_8011F114(&reference_position, lbl_8064C4E4));
+    fn_8011F114(&reference_position, lbl_8064C4E4);
+    fn_800DE3F8();
     fn_80038308(owner, 0, &first);
     fn_80038464(owner, 0, &second);
 
     if (target->status == 0) {
         if (fn_80036E50(current) != 6) {
-            fn_80201DD8(related, self_id);
-            fn_800BDEE4(owner, action);
+            fn_80201DD8(related, (void *)self_id);
+            fn_800BDEE4((int)owner, (RuntimeState *)action);
             fn_80201D2C(owner, 3);
             fn_80201D14(owner, 1);
             result = 1;
         } else if ((u8)lbl_8064D5A8 == 0) {
             float angle;
             float magnitude;
-            angle = fn_8012B7D0(object, reference_position);
+            Vec3 angle_position = reference_position;
+            angle = fn_8012B7D0(object, &angle_position);
             fn_8017A12C(&magnitude, fn_8012B750(object), angle);
             {
                 float value = magnitude;
@@ -104,7 +112,7 @@ int fn_800E03C4(void *owner, void *object)
                     fn_801A74A0(event, object_id);
                     fn_801A74A8(event, object_id);
                     fn_801A7470(event, 0x10);
-                    fn_8020123C(0x35, object_id, object_id, event);
+                    fn_8020123C(0x35, object_id, object_id, (int)event);
                     fn_801A7228(event);
                 }
             }

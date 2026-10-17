@@ -1,14 +1,18 @@
 typedef unsigned int u32;
 typedef unsigned long long u64;
 
+typedef struct Object80201C48 Object80201C48;
+typedef struct Object80201EB8 Object80201EB8;
+typedef struct Object80204180 Object80204180;
+
 extern void *fn_80201B9C(void);
 extern int fn_80201B44(void);
-extern int fn_80201B54(void *object);
-extern void *fn_80201B94(void *object);
-extern void *fn_80201C48(void *object);
-extern int fn_80201EB8(void *object);
+extern int fn_80201B54(int *object);
+extern void *fn_80201B94(unsigned char *object);
+extern void *fn_80201C48(Object80201C48 *object);
+extern int fn_80201EB8(Object80201EB8 *object);
 extern void *fn_80201BC0(void *object);
-extern int fn_80204180(void *first, void *second);
+extern int fn_80204180(Object80204180 *first, Object80204180 *second);
 extern int fn_80204508(void *object, void *other);
 extern u64 fn_8020123C(int kind, int source, int target, int value);
 
