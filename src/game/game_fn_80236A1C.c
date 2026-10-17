@@ -15,7 +15,12 @@ typedef struct Stream {
     u8 pan;
 } Stream;
 
-extern Stream lbl_8064A548[2];
+typedef struct StreamPair {
+    Stream first;
+    Stream second;
+} StreamPair;
+
+extern StreamPair lbl_8064A548;
 extern u8 lbl_80648198[];
 extern volatile s32 lbl_8064DC34;
 extern volatile s32 lbl_8064DC38;
@@ -26,25 +31,71 @@ extern void fn_80217324(void);
 extern int fn_8020D318(void*, void*, int);
 extern u32 fn_801BB1A0(u32);
 
-void fn_80236A1C(void) {
+static inline void receiveStreamMessage(void)
+{
+    register void *queue;
+    register void *message;
+    /* ASM: lis/addi/addi keep the null message argument between the
+     * two queue-address instructions; C schedules it after both. */
+    asm {
+        lis queue, lbl_80648198@ha
+        addi message, 0, 0
+        addi queue, queue, lbl_80648198@l
+    }
+    fn_8020D318(queue, message, 1);
+}
+
+void fn_80236A1C(void)
+{
+    register u32 addressHigh;
+    register u32 flags;
+    register StreamPair *streams;
+    register s32 zero;
+    register StreamPair *secondStreams;
     while (lbl_8064DC34 == 2) {
         fn_80217324();
     }
     if (lbl_8064DC38 == 0 && lbl_8064DC34 == 1) {
-        fn_8020D318(lbl_80648198, 0, 1);
-        fn_8020D318(lbl_80648198, 0, 1);
+        receiveStreamMessage();
+        receiveStreamMessage();
         if (lbl_8064DC38 == 0) {
-            lbl_8064A548[0].volume = 0;
-            lbl_8064A548[1].volume = 0;
-            lbl_8064A548[0].curVolume = 0;
-            lbl_8064A548[1].curVolume = 0;
-            lbl_8064A548[0].flags |= 4;
-            lbl_8064A548[1].flags |= 4;
-            lbl_8064DC58 = 0;
-            lbl_8064DC5C = -4000;
-            fn_801BB1A0(lbl_8064A548[0].handle);
-            fn_801BB1A0(lbl_8064A548[1].handle);
-            lbl_8064DC38 = 1;
+            /* ASM: lis/addi/addi/li preserve address and constant ordering.
+             * The zero-base addi prevents MWCC from rematerializing zero
+             * for the byte stores; C also schedules the fade constant later. */
+            asm {
+                lis addressHigh, lbl_8064A548@ha
+                addi zero, 0, 0
+                addi streams, addressHigh, lbl_8064A548@l
+                li r0, -4000
+            }
+            streams->first.volume = zero;
+            streams->second.volume = zero;
+            streams->first.curVolume = zero;
+            streams->second.curVolume = zero;
+            flags = streams->first.flags;
+            flags |= 4;
+            streams->first.flags = flags;
+            flags = streams->second.flags;
+            flags |= 4;
+            streams->second.flags = flags;
+            lbl_8064DC58 = zero;
+            /* ASM: stw consumes the fade constant carried in r0; C cannot
+             * reference that register directly. */
+            asm { stw r0, lbl_8064DC5C }
+            fn_801BB1A0(streams->first.handle);
+            /* ASM: lis/addi reload the stream address after the call; C
+             * instead shares the earlier pointer in a saved register. */
+            asm {
+                lis secondStreams, lbl_8064A548@ha
+                addi secondStreams, secondStreams, lbl_8064A548@l
+            }
+            fn_801BB1A0(secondStreams->second.handle);
+            /* ASM: li/stw use r0 for the final state update; C avoids r0
+             * because the address-setup blocks explicitly reference it. */
+            asm {
+                li r0, 1
+                stw r0, lbl_8064DC38
+            }
         }
     }
 }

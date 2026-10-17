@@ -107,6 +107,7 @@ void fn_80216EAC(void)
     Sram *sram;
     s32 factor, top, bottom;
     u16 acv;
+    u16 *activeLines;
 
     /* Initialize the VI encoder and its pending register state. */
     lbl_8064DA78 = 1;
@@ -160,13 +161,14 @@ void fn_80216EAC(void)
     CurrTvMode_8064DAA4 = (*tvMode);
     POS(u16, dispSizeX) = 640;
     currentTiming = lbl_8064DAA0;
+    activeLines = &currentTiming->acv;
     POS(u16, dispSizeY) = (u16)(currentTiming->acv * 2);
     POS(u16, dispPosX) = (720 - POS(u16, dispSizeX)) / 2;
     POS(u16, dispPosY) = 0;
     dispY = &POS(u16, dispPosY);
 
     /* Clip the display window and its corresponding framebuffer pan. */
-    acv = currentTiming->acv;
+    acv = *activeLines;
     POS(u16, adjustedDispPosX) = ((s16)POS(u16, dispPosX) + lbl_8064DA7C > 720 - POS(u16, dispSizeX)
         ? 720 - POS(u16, dispSizeX) : MAX(0, (s16)POS(u16, dispPosX) + lbl_8064DA7C));
     xfbMode = &POS(s32, xfbMode);
@@ -206,11 +208,11 @@ void fn_80216EAC(void)
 
     /* Establish the default framebuffer and retrace interrupt state. */
     POS(u16, fbSizeX) = 640;
-    POS(u16, fbSizeY) = (u16)(currentTiming->acv * 2);
+    POS(u16, fbSizeY) = (u16)(*activeLines * 2);
     POS(u16, panPosX) = 0;
     (*panY) = 0;
     POS(u16, panSizeX) = 640;
-    POS(u16, panSizeY) = (u16)(currentTiming->acv * 2);
+    POS(u16, panSizeY) = (u16)(*activeLines * 2);
     (*xfbMode) = 0;
     POS(u8, wordPerLine) = 40;
     POS(u8, std) = 40;

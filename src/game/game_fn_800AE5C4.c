@@ -1,27 +1,36 @@
 typedef unsigned char u8;
 typedef unsigned short u16;
+typedef unsigned int u32;
+
+typedef struct Vec3 {
+    float x;
+    float y;
+    float z;
+} Vec3;
+
 #define NULL ((void*)0)
 
-extern u16 fn_8004A608(int, int, u8*, void*, void*, int);
-extern u16 fn_80050730(int, int, u8*, void*, void*, int*);
-extern int fn_8006D548();
+extern u16 fn_8004A608(u32, int, u8*, u8*, u16*, u32*);
+extern u16 fn_80050730(int, int, u8*, u8*, u16*, u32*);
+extern int fn_8006D548(int, u32, u32, Vec3*, u32*, u32*, int);
 extern int fn_800A3564(void);
 extern u16 fn_800AE864(unsigned int, u16*);
 extern int fn_800AE88C(unsigned int);
 extern void fn_800AF2D4(void);
 extern int fn_801AF824(int);
-extern int fn_801B05E8(int, int, int, int, void*, int, int, int);
+extern int fn_801B05E8(int, u8, u8, u8, Vec3*, u8, int, int);
 extern void fn_801B0CA4(int, int);
 extern int lbl_8064D18C;
+
 int fn_800AE5C4(int handle, int owner, int type, int stop, u16* soundId, u8* params, int flags) {
+    u16 duration;
+    u8 kind;
+    u32 out;
     u16 extra;
-    u16 a;
-    int out;
-    int b;
-    u8 info[0xC];
+    Vec3 info;
     int result;
-    int mode;
-    int loop;
+    u8 mode;
+    u8 loop;
     int allow;
 
     mode = 2;
@@ -32,17 +41,17 @@ int fn_800AE5C4(int handle, int owner, int type, int stop, u16* soundId, u8* par
         case 0x3C:
             loop = 1;
             mode = 6;
-            *soundId = fn_8004A608(owner, type, params, &a, &b, 0);
+            *soundId = fn_8004A608(owner, type, params, &kind, &duration, 0);
             fn_800AF2D4();
             break;
         case 0x55:
             out = 0;
             loop = 0;
             mode = 3;
-            *soundId = fn_80050730(type, 0, params, &a, &b, &out);
+            *soundId = fn_80050730(type, 0, params, &kind, &duration, &out);
             break;
         default:
-            *soundId = fn_8004A608(owner, type, params, &a, &b, 0);
+            *soundId = fn_8004A608(owner, type, params, &kind, &duration, 0);
             break;
         }
     }
@@ -62,8 +71,10 @@ int fn_800AE5C4(int handle, int owner, int type, int stop, u16* soundId, u8* par
                 if (fn_801AF824(result) == 0 && allow2 != 0) {
                     switch (*soundId) {
                     case 0x2D8:
-                        if (fn_8006D548(2, 4, 2, info, 0, 0, 0) >= 0) {
-                            result = fn_801B05E8(*soundId, *params, mode, loop, info, 2, 0, 0);
+                        if (fn_8006D548(2, 4, 2, &info, 0, 0, 0) >= 0) {
+                            u32 volume = *params;
+                            int id = *soundId;
+                            result = fn_801B05E8(id, volume, mode, loop, &info, 2, 0, 0);
                         }
                         break;
                     default:
@@ -90,7 +101,9 @@ int fn_800AE5C4(int handle, int owner, int type, int stop, u16* soundId, u8* par
                     allow = 0;
                 }
                 if (fn_801AF824(result) == 0 && allow != 0) {
-                    result = fn_801B05E8(*soundId, *params, mode, loop, NULL, 5, 0, 0);
+                    u32 volume = *params;
+                    int id = *soundId;
+                    result = fn_801B05E8(id, volume, mode, loop, NULL, 5, 0, 0);
                 }
                 break;
             }

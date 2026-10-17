@@ -15,58 +15,74 @@ typedef struct ObjectContext {
     void *unk8C;
 } ObjectContext;
 
-extern void **fn_800BC100(int, Vec3 *, int, int, int *, int *, int);
-extern void fn_800BCCC4(void *, Vec3 *);
-extern void fn_800BD194(void *, void *);
-extern void fn_800BD2DC(void *, void *);
-extern void fn_800BDEE4(void *, void *);
+typedef struct Marker {
+    const short *position;
+    u8 pad04[0x32];
+    u8 id;
+    u8 pad37;
+} Marker;
+
+extern Marker *fn_800BC100(const short *, Vec3 *, int *, u32, int *, int *, Vec3 *);
+extern void fn_800BCCC4(const short *, Vec3 *);
+extern int fn_800BD194(void *, void *);
+extern int fn_800BD2DC(void *, void *);
+extern int fn_800BDEE4(void *, void *);
 extern void fn_800BE010(void *, void *);
 extern int fn_800BE0F4(void *, void *);
-extern void fn_800BE158(void *, void *);
+extern int fn_800BE158(void *, void *);
 extern int fn_800BE1F4(void *, void *);
 extern int fn_800BE2CC(void *, void *, Vec3 *);
 extern void fn_800BE390(void *, void *);
 extern void fn_8011F114(Vec3 *, void *);
-extern void fn_8012976C(void *, int, int, Vec3 *, f32);
-extern void fn_80129928(void *, Vec3 *);
+extern u8 *fn_8012976C(void *, int, int, Vec3 *, f32);
+extern int fn_80129928(void *, Vec3 *);
 extern int fn_8012AFC4(void *);
 extern void fn_8012B324(void *);
-extern u32 fn_80178E94(Vec3 *, Vec3 *);
-extern int fn_801E8328();
+extern u32 fn_80178E94(const float *, const float *);
+extern int fn_801E8328(u32, u32);
 extern int fn_80200C10(void *);
 extern int fn_80201B54(void *);
 extern void *fn_80201B8C(void *);
 extern void *fn_80201B94(void *);
 extern void *fn_80201BC8(void *);
 extern u32 fn_80201CD4(void *);
-extern void fn_80201D14(void *, int);
-extern void fn_80201D1C(void *, int);
+extern void fn_80201D14(void *, u8);
+extern void fn_80201D1C(void *, u8);
 extern void fn_80201D2C(void *, int);
 extern void fn_80201D34(void *, int);
 extern void fn_80201E60(void *, u32);
-extern void fn_80201F44(void *, Vec3);
+extern void fn_80201F44(void *, Vec3 *);
 
 extern s32 lbl_8064CA84;
 extern f32 lbl_8064F108;
+
+static inline Vec3 *copy_position(Vec3 *dest, const Vec3 *source) {
+    *dest = *source;
+    return dest;
+}
 
 int fn_800BE408(void *object, int state, void *event) {
     Vec3 position;
     Vec3 fetched;
     Vec3 target;
+    Vec3 copied;
     int range;
     int lifetime;
     void *info;
     void *relation;
     int kind;
-    ObjectContext *context;
-    void **spawned;
+    register ObjectContext *context;
+    Marker *spawned;
     void *runtime;
 
     kind = fn_80200C10(event);
     runtime = fn_80201BC8(object);
     context = fn_80201B8C(object);
-    relation = fn_80201B94(object);
     info = context->unk8C;
+    relation = fn_80201B94(object);
+    /* ASM: mr -- extend the context register lifetime across the accessor;
+       the compiler otherwise folds away retail's saved context register. */
+    asm { mr context, context }
     fn_80201B54(object);
     fn_8011F114(&position, runtime);
 
@@ -80,7 +96,7 @@ int fn_800BE408(void *object, int state, void *event) {
             fn_8012B324(runtime);
             fn_80201D34(object, 0);
             fn_80201D1C(object, 1);
-            fn_801E8328(2, object);
+            fn_801E8328(2, (u32)object);
             return 1;
         } else if (kind == 0x3D) {
             fn_800BD2DC(object, info);
@@ -95,10 +111,10 @@ int fn_800BE408(void *object, int state, void *event) {
                 range = 500;
                 lifetime = 10000;
                 spawned = fn_800BC100(0, &position, 0, 8, &range, &lifetime, 0);
-                if (spawned != NULL && *spawned != 0) {
+                if (spawned != NULL && spawned->position != NULL) {
                     fn_80201E60(relation, fn_80201CD4(relation) | 0x20);
-                    fn_800BCCC4(*spawned, &fetched);
-                    fn_80201F44(object, fetched);
+                    fn_800BCCC4(spawned->position, &fetched);
+                    fn_80201F44(object, copy_position(&copied, &fetched));
                     fn_800BDEE4(object, info);
                 }
             } else {
@@ -118,7 +134,7 @@ int fn_800BE408(void *object, int state, void *event) {
     } else if (state == 0x3E) {
         if (kind == 3) {
             if (fn_800BE2CC(object, info, &target) != 0) {
-                if (fn_80178E94(&position, &target) < 0x50) {
+                if (fn_80178E94(&position.x, &target.x) < 0x50) {
                     fn_800BE390(object, info);
                 } else if (fn_8012AFC4(runtime) != 0) {
                     fn_80129928(runtime, &target);
