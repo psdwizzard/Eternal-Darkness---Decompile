@@ -19,6 +19,8 @@ typedef struct Context {
     /* 0x0C */ ObjData *data;
 } Context;
 
+typedef struct Owner Owner;
+
 extern void *fn_801A7498(void *);
 extern void *fn_801A7490(void *);
 extern void fn_801A7590(void *);
@@ -29,13 +31,13 @@ extern void *fn_80201814(void *);
 extern void *fn_80201BC8(void *);
 extern int fn_80201B5C(void *);
 extern Context *fn_80201B8C(void *);
-extern u8 fn_80204508(void *, void *);
+extern int fn_80204508(void *, void *);
 extern int fn_80079008(void *, void *);
-extern Vec3 fn_8011F114(void *);
+extern void fn_8011F114(Vec3 *destination, Vec3 *source);
 extern int fn_80128EAC(void *);
-extern int fn_80128F40(void *);
+extern void *fn_80128F40(Owner *owner);
 extern f32 fn_8012B750(void *);
-extern f32 fn_8012B7D0(void *, Vec3);
+extern f32 fn_8012B7D0(const void *, const void *);
 extern void fn_8017A12C(f32 *, f32, f32);
 extern void fn_8020104C(int, void *, void *, int, f32);
 
@@ -43,11 +45,6 @@ extern const Vec3 lbl_802391E8;
 extern f32 lbl_8064E91C;
 extern f32 lbl_8064E920;
 extern f32 lbl_8064E924;
-
-static inline Vec3 getZero(void) {
-    Vec3 v = lbl_802391E8;
-    return v;
-}
 
 int fn_80078D44(void *actor) {
     void *targetObj;
@@ -58,6 +55,9 @@ int fn_80078D44(void *actor) {
     void *ownerObj;
     void *ownerId;
     Vec3 pos;
+    Vec3 ownerPosition;
+    Vec3 zeroPosition;
+    Vec3 queryPosition;
     int blocked;
     int inRange;
     int kind;
@@ -78,10 +78,13 @@ int fn_80078D44(void *actor) {
 
     if ((ownerEvent != 0 ? fn_80201B5C(ownerEvent) : 0) != 0x19 && ownerEvent != 0 &&
         targetEvent != 0) {
-        pos = ownerObj != 0 ? fn_8011F114(ownerObj) : getZero();
+        /* Snapshot the owner position, or the constant zero vector if absent. */
+        pos = *(ownerObj != 0
+            ? (fn_8011F114(&ownerPosition, ownerObj), &ownerPosition)
+            : (zeroPosition = lbl_802391E8, &zeroPosition));
 
         if (ownerObj != 0) {
-            blocked = fn_80204508(targetEvent, ownerEvent) == 0;
+            blocked = (u8)fn_80204508(targetEvent, ownerEvent) == 0;
         } else {
             blocked = 0;
         }
@@ -90,7 +93,8 @@ int fn_80078D44(void *actor) {
         kind = fn_80128EAC(targetObj);
         if (blocked == 0) {
             handled = fn_80079008(targetEvent, targetObj);
-            dist = fn_80128F40(targetObj) >> 17;
+            /* Interpret the link value as signed fixed point with 17 fractional bits. */
+            dist = (s32)fn_80128F40(targetObj) >> 17;
             if (handled == 0) {
                 if (kind == 0x7C) {
                     inRange = dist > 10;
@@ -113,7 +117,8 @@ int fn_80078D44(void *actor) {
         }
 
         heading = fn_8012B750(targetObj);
-        turn = fn_8012B7D0(targetObj, pos);
+        queryPosition = pos;
+        turn = fn_8012B7D0(targetObj, &queryPosition);
         fn_8017A12C(&angle, heading, turn);
         absAngle = angle;
         if (absAngle < lbl_8064E920) {

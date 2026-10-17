@@ -25,7 +25,7 @@ typedef struct ShortCoord3 {
 } ShortCoord3;
 
 extern void fn_80179CD4(Coord2*, const Coord3*, float, float, float, s8);
-extern void fn_80179D78(ShortCoord2*, const ShortCoord3*, s8);
+extern void fn_80179D78(short*, const short*, s8);
 
 u8 fn_8013D36C(const Coord3* point, u16 count, const u16* indices,
                const ShortCoord3* vertices, float unused_first, float unused_second,
@@ -34,17 +34,17 @@ u8 fn_8013D36C(const Coord3* point, u16 count, const u16* indices,
     Coord2 projected;
     ShortCoord2 current;
     ShortCoord2 previous;
-    u8 inside = 0;
-    u16 i;
     s8 selected_axis = axis;
+    u16 i;
+    u8 inside = 0;
 
     /* The projection helper ignores these three forwarded float arguments. */
     fn_80179CD4(&projected, point, unused_first, unused_second,
                   unused_third, selected_axis);
-    fn_80179D78(&previous, &vertices[indices[count - 1]], selected_axis);
+    fn_80179D78(&previous.x, &vertices[indices[count - 1]].x, selected_axis);
 
     for (i = 0; i < count; i++) {
-        fn_80179D78(&current, &vertices[indices[i]], selected_axis);
+        fn_80179D78(&current.x, &vertices[indices[i]].x, selected_axis);
         if (((float)current.y <= projected.y && projected.y < (float)previous.y) ||
             ((float)previous.y <= projected.y && projected.y < (float)current.y)) {
             float intersection = (float)current.x +

@@ -10,13 +10,13 @@ typedef struct TRKBuffer {
 extern int fn_800EFD6C(int *, TRKBuffer **);
 extern int fn_800EFA84(TRKBuffer *, u32);
 extern int fn_800EFAE8(TRKBuffer *, u16);
-extern int fn_800EF994(TRKBuffer *, u8 *, u32);
+extern int fn_800EF994(TRKBuffer *, const void *, int);
 extern int fn_800F3054(TRKBuffer *, int *, int, int, int);
 extern TRKBuffer *TRKGetBuffer(int);
 extern int fn_800EFC6C(TRKBuffer *, u32);
 extern int fn_800EF86C(TRKBuffer *, u8 *);
 extern int fn_800EF7B4(TRKBuffer *, u16 *);
-extern int fn_800EF56C(TRKBuffer *, u8 *, u32);
+extern int fn_800EF56C(TRKBuffer *, u8 *, int);
 extern int fn_800EF2A0(TRKBuffer *);
 extern void fn_800EFCDC(int);
 
@@ -37,8 +37,8 @@ static inline int append(TRKBuffer *buffer, u8 value)
 /* TRKSuppAccessFile */
 int fn_800F31F8(u32 file_handle, u8 *data, u32 *count, u8 *io_result, int need_reply, int read)
 {
-    int exit;
     int result;
+    int exit;
     int reply_buffer_id;
     TRKBuffer *reply_buffer;
     int buffer_id;
@@ -67,7 +67,7 @@ int fn_800F31F8(u32 file_handle, u8 *data, u32 *count, u8 *io_result, int need_r
             result = append(buffer, read ? DSMSG_ReadFile : DSMSG_WriteFile);
 
         if (result == 0)
-            result = fn_800EFA84(buffer, file_handle);
+            result = fn_800EFA84(buffer, (unsigned long)file_handle);
 
         if (result == 0)
             result = fn_800EFAE8(buffer, length);
