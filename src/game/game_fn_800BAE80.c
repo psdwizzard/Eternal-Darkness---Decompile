@@ -31,7 +31,7 @@ typedef struct Model {
 
 extern void *memcpy(void *dst, const void *src, unsigned long n);
 extern void *fn_80047D6C(void);
-extern void *fn_800BA6D4(void *, int, u16 *, int, int);
+extern int fn_800BA6D4(char *, int, u16 *, int, int);
 extern void fn_800CBAB8();
 extern void fn_800CBF40();
 extern void fn_800CC140(void *, void *, int, s32, int);
@@ -62,10 +62,11 @@ extern void fn_801FE22C(void *);
 extern int fn_801FE25C(void *);
 extern void fn_801FE4FC(void *);
 extern void *fn_80201814(void *);
-extern void *fn_80201B54(void);
+extern int fn_80201B54(int *object);
 extern void fn_80201BC8(void *);
 extern void *fn_80201C24(void *);
-extern void fn_80204CE4(void *, void *, u16);
+typedef struct ListNode80204CE4 ListNode80204CE4;
+extern int fn_80204CE4(void *object, ListNode80204CE4 *node);
 
 extern f32 lbl_8064F010;
 
@@ -80,10 +81,10 @@ int fn_800BAE80(u8 *data, void *arg1, void *arg2, s32 *count, void **out) {
     void **effect;
 
     memcpy(&hdr, data, sizeof(NodeHeader));
-    node = fn_800BA6D4(data + 0x24, hdr.id, &size, 1, 1);
-    *out = fn_80201B54();
+    node = (void *)fn_800BA6D4((char *)data + 0x24, hdr.id, &size, 1, 1);
+    *out = (void *)fn_80201B54(node);
     total = size + 0x24;
-    fn_80204CE4(node, arg1, size);
+    fn_80204CE4(node, arg1);
     model = fn_80201C24(node);
     anim = fn_80155DB4(node);
     fn_80201BC8(node);
