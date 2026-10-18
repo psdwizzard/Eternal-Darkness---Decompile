@@ -31,7 +31,8 @@ int fn_800C3514(void *context, void *event)
     PuzzleState *state;
     int result;
     int scene_or_proceed;
-    scene_or_proceed = (int)fn_80201BC8(context);
+    value = fn_80201BC8(context);
+    scene_or_proceed = (int)value;
     object = fn_80201B54(context);
     value = fn_80200C38((void **)event);
     state = *owner;
