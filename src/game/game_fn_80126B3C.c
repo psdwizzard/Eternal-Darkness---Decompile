@@ -177,19 +177,23 @@ s32 fn_80126B3C(Owner* owner, s32 time)
             owner->trackFlags[i] = 0;
             if (track->posKeys != 0 && i != rootTrack) {
                 if (result == 0) {
-                    /* Read the interval length before the interpolation conversions. */
-                    s32 length = ((const volatile TrackState*)state)->posLength;
+                    /* Preserve the order of the interpolation operand reads. */
+                    const volatile TrackState* sample = state;
+                    f32 elapsed = (f32)sample->posTime;
+                    f32 length = (f32)sample->posLength;
                     fn_80127CE4(state->posFrom, state->posTo, &owner->positions[i],
-                                (f32)state->posTime / (f32)length);
+                                elapsed / length);
                 }
                 owner->trackFlags[i] |= 2;
             }
             if (track->rotKeys != 0) {
                 if (result == 0) {
-                    /* Read the interval length before the interpolation conversions. */
-                    s32 length = ((const volatile TrackState*)state)->rotLength;
+                    /* Preserve the order of the interpolation operand reads. */
+                    const volatile TrackState* sample = state;
+                    f32 elapsed = (f32)sample->rotTime;
+                    f32 length = (f32)sample->rotLength;
                     fn_80127B90(state->rotFrom, state->rotTo, &owner->rotations[i],
-                                (f32)state->rotTime / (f32)length);
+                                elapsed / length);
                 }
                 owner->trackFlags[i] |= 1;
             }

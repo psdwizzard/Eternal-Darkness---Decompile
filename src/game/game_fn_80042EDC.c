@@ -1,22 +1,44 @@
-typedef short s16;
-typedef struct Rec {
-    s16 kind;
-    s16 sub;
-    int pad;
-    void *ptr;
-} Rec;
+typedef unsigned char u8;
+typedef unsigned short u16;
 
-extern char lbl_80304060[];
+typedef struct OSMessageQueue {
+    void* sendHead;
+    void* sendTail;
+    void* receiveHead;
+    void* receiveTail;
+    void** messages;
+    int messageCount;
+    int firstIndex;
+    int usedCount;
+} OSMessageQueue;
+
+typedef struct Message {
+    u16 type;
+    u16 arg;
+    u8 immediate;
+    u8 pad[3];
+    OSMessageQueue* responseQueue;
+} Message;
+
+typedef struct Block {
+    u8 pad00[0x2C];
+    OSMessageQueue commandQueue;
+    Message previousMessage;
+    OSMessageQueue replyQueue;
+    Message message;
+} Block;
+
+extern Block lbl_80304060;
 extern int lbl_8064C7D0;
-extern void OSSendMessage(void *, void *, int, void *, int, void *);
+extern int OSSendMessage(OSMessageQueue*, void*, int);
 
 void fn_80042EDC(void) {
-    Rec *rec = (Rec *)(lbl_80304060 + 0x78);
-    void *buf = lbl_80304060 + 0x58;
-    s16 *kind = (s16 *)lbl_80304060 + 0x3C;
-    *kind = 5;
-    rec->sub = 0;
-    rec->ptr = buf;
-    lbl_8064C7D0 += 1;
-    OSSendMessage(lbl_80304060 + 0x2C, rec, 1, buf, 0, lbl_80304060);
+    register Message* message = &lbl_80304060.message;
+
+    lbl_80304060.message.type = 5;
+    message->arg = 0;
+    /* The reply queue occupies the 0x20 bytes immediately before this message. */
+    message->responseQueue = (OSMessageQueue*)((u8*)message - sizeof(OSMessageQueue));
+    ++lbl_8064C7D0;
+    OSSendMessage(&lbl_80304060.commandQueue, message, 1);
 }
