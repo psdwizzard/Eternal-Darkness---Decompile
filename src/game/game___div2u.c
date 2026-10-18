@@ -12,26 +12,28 @@ u64 __div2u(u64 dividend, u64 divisor) {
     register u32 b_hi = divisor >> 32;
     register u32 b_lo = divisor;
     u64 difference;
+    register u32 trial_lo;
     register u32 r_lo;
-    register int a_lz;
+    int dividend_lz;
+    register int shift;
     register int count;
     register int total;
     register u32 r_hi;
 
-    a_lz = __cntlzw(a_hi);
+    dividend_lz = __cntlzw(a_hi);
     count = __cntlzw(a_lo);
     if ((int)a_hi == 0) {
-        a_lz = count + 32;
+        dividend_lz = count + 32;
     }
     count = __cntlzw(b_hi);
     total = __cntlzw(b_lo);
     if ((int)b_hi == 0) {
         count = total + 32;
     }
-    total = 64 - a_lz;
-    if (a_lz <= count) {
+    total = 64 - dividend_lz;
+    if (dividend_lz <= count) {
         count = 64 - (count + 1);
-        a_lz += count;
+        shift = dividend_lz + count;
         count = total - count;
         /* ASM: mtctr initializes CTR; a C loop uses a subtraction that
          * overwrites the quotient bit carried in XER. */
@@ -51,12 +53,12 @@ u64 __div2u(u64 dividend, u64 divisor) {
             r_lo |= r_hi;
             r_hi = a_hi >> count;
         }
-        /* quotient bits = a << a_lz */
+        /* quotient bits = a << shift */
         /* ASM: cmpwi/subic/blt retain the carry-producing subtraction
          * and its comparison; C selects addi for the shift offset. */
         asm {
-            cmpwi a_lz, 32
-            subic count, a_lz, 32
+            cmpwi shift, 32
+            subic count, shift, 32
             blt small_shift
         }
         {
@@ -67,13 +69,13 @@ u64 __div2u(u64 dividend, u64 divisor) {
         small_shift: {
             /* ASM: slw preserves the high-half shift before the complement
              * calculation, which C otherwise schedules ahead of it. */
-            asm { slw a_hi, a_hi, a_lz }
-            count = 32 - a_lz;
+            asm { slw a_hi, a_hi, shift }
+            count = 32 - shift;
             count = a_lo >> count;
             a_hi |= count;
             /* ASM: slw completes the low half after the cross-word merge;
              * C schedules it before the merge because they are independent. */
-            asm { slw a_lo, a_lo, a_lz }
+            asm { slw a_lo, a_lo, shift }
         }
 
         shifted:
@@ -92,14 +94,14 @@ u64 __div2u(u64 dividend, u64 divisor) {
             }
             difference = (((u64)r_hi << 32) | r_lo) -
                          (((u64)b_hi << 32) | b_lo);
-            /* The normalization temporaries now hold the trial remainder. */
-            a_lz = (u32)difference;
+            /* Split the trial remainder; its signed high word detects borrow. */
+            trial_lo = (u32)difference;
             count = difference >> 32;
             if (count >= 0) {
-                r_lo = a_lz;
+                r_lo = trial_lo;
                 r_hi = count;
                 /* ASM: addic sets XER carry to append a quotient bit. */
-                asm { addic a_lz, total, 1 }
+                asm { addic trial_lo, total, 1 }
             }
         }
         /* ASM: bdnz decrements CTR without overwriting the quotient carry. */
