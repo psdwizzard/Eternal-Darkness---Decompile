@@ -11,15 +11,15 @@ struct DVDCommandBlock {
 extern DVDCommandBlock *executing_8064DA00;
 extern DVDCommandBlock DummyCommandBlock_806419E0;
 extern s32 FatalErrorFlag_8064DA18;
-extern u32 lbl_8064DA20;
-extern void (*lbl_8064DA24)(s32, DVDCommandBlock *);
+extern u32 Canceling;
+extern void (*CancelCallback)(s32, DVDCommandBlock *);
 
 extern void __DVDStoreErrorCode(u32);
 extern void DVDReset(void);
 extern void stateReady_80214A10(void);
 
 /* Report a fatal drive error and complete any pending cancellation. */
-void fn_80213CC4(void)
+void stateTimeout(void)
 {
     DVDCommandBlock *command;
 
@@ -31,10 +31,10 @@ void fn_80213CC4(void)
     if (command->callback != 0)
         command->callback(-1, command);
 
-    if (lbl_8064DA20 != 0) {
-        lbl_8064DA20 = 0;
-        if (lbl_8064DA24 != 0)
-            lbl_8064DA24(0, command);
+    if (Canceling != 0) {
+        Canceling = 0;
+        if (CancelCallback != 0)
+            CancelCallback(0, command);
     }
     stateReady_80214A10();
 }

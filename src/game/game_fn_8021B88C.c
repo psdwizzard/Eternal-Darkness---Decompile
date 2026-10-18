@@ -1,8 +1,8 @@
 typedef unsigned int u32;
 
-extern u32 lbl_8064DB58;
+extern u32 __ARQChunkSize;
 
-u32 fn_8021B88C(void)
+u32 ARQGetChunkSize(void)
 {
-    return lbl_8064DB58;
+    return __ARQChunkSize;
 }

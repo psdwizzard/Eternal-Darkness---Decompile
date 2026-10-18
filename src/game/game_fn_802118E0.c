@@ -1,6 +1,6 @@
-/* fn_802118E0 (0x802118E0, 208 bytes): not decompiled yet.
+/* C_MTXPerspective (0x802118E0, 208 bytes): not decompiled yet.
  * Scaffolded by decomp-foundry; the build links the original asm until this
  * unit is marked Matching. See build/GEDE01/asm for the target code. */
 
-void fn_802118E0(void) {
+void C_MTXPerspective(void) {
 }

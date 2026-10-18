@@ -37,7 +37,7 @@ extern float lbl_80651260;
 
 extern void fn_801E5AD0(u8);
 extern s8* fn_801E645C(s8*, int, int*, int*);
-extern void fn_80226AB4(int, int, int);
+extern void GXBegin(int, int, int);
 extern void fn_801E4198(int, int, int);
 extern void fn_801E418C(u16);
 extern void fn_801E4188(void);
@@ -113,7 +113,7 @@ void fn_801E504C(TextState* state)
             s16 yextent;
             int glyph;
             xextent = (int)size;
-            fn_80226AB4(0x80, 5, 4);
+            GXBegin(0x80, 5, 4);
             yextent = (s16)size;
             fn_801E4198(lbl_8064D574, (s16)(lbl_8064D578 + yextent), -1);
             glyph = (u16)(current * 4);

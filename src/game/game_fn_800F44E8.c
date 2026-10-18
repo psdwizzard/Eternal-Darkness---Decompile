@@ -1,4 +1,4 @@
-/* fn_800F44E8: MetroTRK TRKTargetAccessExtended2 (paired-single register
+/* TRKTargetAccessExtended2: MetroTRK TRKTargetAccessExtended2 (paired-single register
  * access). Reads/writes FPRs firstRegister..lastRegister as paired singles
  * via self-modifying psq_l / psq_st stubs. */
 
@@ -30,11 +30,11 @@ typedef struct AccessFunc {
 extern TRKExceptionStatus gTRKExceptionStatus_8024A864;
 extern const AccessFunc lbl_80239C10;
 extern const AccessFunc lbl_80239C38;
-extern u8 lbl_8032A554[];
+extern u8 TRKvalue128_temp[];
 
-extern void fn_800F35AC(void *, unsigned int);
-extern DSError fn_800EF604(void *buffer, u64 *data);
-extern DSError fn_800EF9FC(void *buffer, u64 data);
+extern void TRK_flush_cache(void *, unsigned int);
+extern DSError TRKReadBuffer1_ui64(void *buffer, u64 *data);
+extern DSError TRKAppendBuffer1_ui64(void *buffer, u64 data);
 
 #define INSTR_BLR 0x4E800020
 #define INSTR_MFSPR(reg, spr) \
@@ -57,8 +57,8 @@ static DSError TRKPPCAccessSpecialReg(void *value, u32 *access_func, BOOL read)
 
     asm_access = (asm_access_type)access_func;
     access_func[9] = INSTR_BLR;
-    fn_800F35AC((void *)(u32)access_func, sizeof(u32) * 10);
-    asm_access(value, lbl_8032A554);
+    TRK_flush_cache((void *)(u32)access_func, sizeof(u32) * 10);
+    asm_access(value, TRKvalue128_temp);
     return 0;
 }
 
@@ -88,7 +88,7 @@ static DSError TRKPPCAccessPairedSingleRegister(void *value, u32 psr, BOOL read)
     return TRKPPCAccessSpecialReg(value, access_func.instr, read);
 }
 
-DSError fn_800F44E8(u32 firstRegister, u32 lastRegister, void *b,
+DSError TRKTargetAccessExtended2(u32 firstRegister, u32 lastRegister, void *b,
                     u32 *registerStorageSize, BOOL read)
 {
     TRKExceptionStatus savedException;
@@ -117,9 +117,9 @@ DSError fn_800F44E8(u32 firstRegister, u32 lastRegister, void *b,
          current++, *registerStorageSize += 8) {
         if (read) {
             err = TRKPPCAccessPairedSingleRegister(value_buf, current, read);
-            err = fn_800EF9FC(b, *(u64 *)value_buf);
+            err = TRKAppendBuffer1_ui64(b, *(u64 *)value_buf);
         } else {
-            err = fn_800EF604(b, (u64 *)value_buf);
+            err = TRKReadBuffer1_ui64(b, (u64 *)value_buf);
             err = TRKPPCAccessPairedSingleRegister(value_buf, current, read);
         }
     }

@@ -10,16 +10,16 @@ struct Voice {
     u32 handle;
 };
 
-extern unsigned char lbl_8064D3A0;
-extern Voice* lbl_8064D4BC;
-extern void fn_801B80D8(u32);
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern unsigned char sndActive;
+extern Voice* s3dEmitterRoot;
+extern void synthSendKeyOff(u32);
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
-int fn_801C934C(Voice* voice)
+int sndRemoveEmitter(Voice* voice)
 {
-    if (lbl_8064D3A0 != 0) {
-        fn_801CE2B8();
+    if (sndActive != 0) {
+        hwDisableIrq();
         if ((voice->flags & 0x10000) != 0) {
             if (voice->previous != 0) {
                 voice->previous->next = voice->next;
@@ -27,14 +27,14 @@ int fn_801C934C(Voice* voice)
             if (voice->next != 0) {
                 voice->next->previous = voice->previous;
             } else {
-                lbl_8064D4BC = voice->previous;
+                s3dEmitterRoot = voice->previous;
             }
             voice->flags &= 0xFFFF;
             if (voice->handle != 0xFFFFFFFF) {
-                fn_801B80D8(voice->handle);
+                synthSendKeyOff(voice->handle);
             }
         }
-        fn_801CE280();
+        hwEnableIrq();
         return 1;
     }
     return 0;

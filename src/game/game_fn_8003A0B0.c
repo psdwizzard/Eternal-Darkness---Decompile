@@ -20,7 +20,7 @@ extern void fn_8003B0BC(void *, Vec3 *, Vec3 *, int, int, int);
 extern unsigned char fn_80157C00(void *);
 extern void fn_8003B630(void *, Vec3 *, Vec3 *, HitInfo *, unsigned short **);
 extern int fn_8003B2A8(void *, void *, void *, HitInfo *, Candidate *);
-extern void fn_800FBE38(void *, int, int, int (*)(const void *, const void *));
+extern void qsort(void *, int, int, int (*)(const void *, const void *));
 extern int fn_8003B878(const void *, const void *);
 extern int fn_8003B794(void *, Candidate *, int, void *);
 extern void fn_8007B3C4(Object *, void *, void *, int);
@@ -69,7 +69,7 @@ int fn_8003A0B0(void *object, void *target, void *area)
     }
     if (count > 0) {
         if (count > 1) {
-            fn_800FBE38(list, count, 0x10, fn_8003B878);
+            qsort(list, count, 0x10, fn_8003B878);
         }
         result = count;
         if (count > previous + 1) result = previous + 1;

@@ -1,8 +1,8 @@
-extern volatile unsigned int lbl_8032A578;
-extern unsigned char lbl_8032B694[];
+extern volatile unsigned int gWritePos;
+extern unsigned char gWriteBuf[];
 
-int fn_800F564C(unsigned char value)
+int WriteUART1(unsigned char value)
 {
-    lbl_8032B694[lbl_8032A578++] = value;
+    gWriteBuf[gWritePos++] = value;
     return 0;
 }

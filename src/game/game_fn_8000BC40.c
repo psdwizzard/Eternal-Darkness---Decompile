@@ -15,9 +15,9 @@ typedef struct Vec3f {
 
 extern const char lbl_8023BEF8[];
 extern const char lbl_8023C0F0[];
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern unsigned int fn_800F5C54(double);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
@@ -25,7 +25,7 @@ extern int fn_8015C4A4(int, int);
 extern Vec3s* fn_80158ABC(int, int, void*);
 extern void fn_8011F114();
 extern s32 fn_80178E94(Vec3f*, Vec3f*);
-extern void fn_8016A830(void*, double);
+extern void lua_pushnumber(void*, double);
 
 s32 fn_8000BC40(void* script)
 {
@@ -39,13 +39,13 @@ s32 fn_8000BC40(void* script)
     Vec3f base;
     Vec3f position;
 
-    if (fn_8016A598(script) != 2) {
-        fn_80163BB4(script, lbl_8023BEF8, 2, fn_8016A598(script));
+    if (lua_gettop(script) != 2) {
+        luaO_verror(script, lbl_8023BEF8, 2, lua_gettop(script));
         return 0;
     }
 
-    object_id = (s32)fn_8016A694(script, 1);
-    effect_id = fn_800F5C54(fn_8016A694(script, 2));
+    object_id = (s32)lua_tonumber(script, 1);
+    effect_id = fn_800F5C54(lua_tonumber(script, 2));
     handle = fn_80201814(object_id);
     object = handle != 0 ? fn_80201BC8(handle) : 0;
     if (handle != 0 && object != 0) {
@@ -58,9 +58,9 @@ s32 fn_8000BC40(void* script)
             delta.z = offset->z;
             result = fn_80178E94(&base, &delta);
         } else {
-            fn_80163BB4(script, lbl_8023C0F0, effect_id);
+            luaO_verror(script, lbl_8023C0F0, effect_id);
         }
     }
-    fn_8016A830(script, result);
+    lua_pushnumber(script, result);
     return 1;
 }

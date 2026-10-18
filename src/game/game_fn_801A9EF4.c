@@ -1,8 +1,8 @@
-extern int fn_800FBFB0(void);
+extern int rand(void);
 
 int fn_801A9EF4(int low, int high)
 {
-    int random = fn_800FBFB0();
+    int random = rand();
     int range = high - low + 1;
 
     return low + random % range;

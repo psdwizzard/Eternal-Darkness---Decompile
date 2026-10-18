@@ -4,15 +4,15 @@ typedef struct Object {
     int value;
 } Object;
 
-extern int fn_8015F9B0(Object*, int, int);
-extern void fn_8015F2B0(Object*, int*, int);
+extern int luaK_code1(Object*, int, int);
+extern void luaK_concat(Object*, int*, int);
 
-int fn_8015EAD0(Object* object)
+int luaK_jump(Object* object)
 {
-    int result = fn_8015F9B0(object, 42, -1);
+    int result = luaK_code1(object, 42, -1);
 
     if (result == object->current) {
-        fn_8015F2B0(object, &result, object->value);
+        luaK_concat(object, &result, object->value);
         object->value = -1;
     }
     return result;

@@ -77,8 +77,8 @@ extern void fn_8012B344(void*);
 extern void fn_80201D2C(void *, int);
 extern void fn_80201D14(void *, int);
 extern void fn_8012B690(void *object, char *name, Vec3 *output);
-extern void fn_80211AAC(Vec3 *input, Vec3 *output);
-extern void fn_80211A90(Vec3 *input, Vec3 *output, float scale);
+extern void PSVECNormalize(Vec3 *input, Vec3 *output);
+extern void PSVECScale(Vec3 *input, Vec3 *output, float scale);
 extern void fn_80205868(void *object, s32 value, Vec3 *position, s32 flags);
 extern void fn_8014CBE8(void *context, s32 kind, s32 value, void *data);
 extern s32 fn_8012FD1C(void *object, s32 index, Vec3 *output);
@@ -177,8 +177,8 @@ s32 fn_8005A108(void *context, void *event, u32 *result)
             fn_80201D14(context, 1);
         } else {
             fn_8012B690(object, lbl_80243BE4, &position);
-            fn_80211AAC(&position, &position);
-            fn_80211A90(&position, &position, lbl_8064E53C);
+            PSVECNormalize(&position, &position);
+            PSVECScale(&position, &position, lbl_8064E53C);
             fn_80205868(object, 0, &position, 0x2000);
             fn_8014CBE8(context, 20, 0, lbl_802FC5BC + 0x18);
             if (fn_8012FD1C(object, 1, &second) != 0) {

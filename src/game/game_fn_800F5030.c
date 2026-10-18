@@ -1,9 +1,9 @@
 extern unsigned char gTRKCPUState[];
-extern unsigned int lbl_8032A568;
+extern unsigned int lc_base;
 
-unsigned int fn_800F5030(unsigned int address)
+unsigned int TRKTargetTranslate(unsigned int address)
 {
-    unsigned int base = lbl_8032A568;
+    unsigned int base = lc_base;
 
     if (address >= base && address < base + 0x4000 &&
         (*(unsigned int *)(gTRKCPUState + 0x238) & 3) != 0) {

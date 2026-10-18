@@ -35,19 +35,19 @@ extern void fn_801A9758(void);
 extern void fn_801A9A40(s32, s32, s32);
 extern u8 fn_801A9B30(void);
 extern void fn_801AC350(s32, s32, s32);
-extern void fn_801B14B8(void);
+extern void DTKShutdown(void);
 extern void fn_801EFE84(int);
 extern void fn_801EF530(void);
 extern void fn_801EF580(void*);
-extern void fn_8020D250(void*, s32, s32);
-extern void fn_8021607C(void);
-extern s32 fn_802161E8(void);
-extern void fn_80217324(void);
-extern void fn_80217F88(void);
-extern void fn_80218EDC(void*);
-extern void fn_80226408(void);
-extern void fn_802264D4(s32);
-extern void fn_80226598(void);
+extern void OSSendMessage(void*, s32, s32);
+extern void DVDCancelAll(void);
+extern s32 DVDCheckDisk(void);
+extern void VIWaitForRetrace(void);
+extern void VIFlush(void);
+extern void PADRecalibrate(void*);
+extern void __GXAbortWaitPECopyDone(void);
+extern void GXSetDrawSync(s32);
+extern void GXSetDrawDone(void);
 extern void fn_80237D84(void);
 extern void OSResetSystem(s32, s32, s32);
 
@@ -56,8 +56,8 @@ void fn_80025D28(void)
     volatile s8* boot = (volatile s8*)0x81200000;
 
     if (lbl_8064C6D8 == 1 || lbl_8064C6D8 == 13 || lbl_8064C6D8 == 11) {
-        fn_80226408();
-        fn_80218EDC((void*)0x80000000);
+        __GXAbortWaitPECopyDone();
+        PADRecalibrate((void*)0x80000000);
 
         while (fn_8017BB60() == 5 || fn_8017BB60() == 6) {
             fn_8017AF44();
@@ -97,14 +97,14 @@ void fn_80025D28(void)
         boot[-1] = fn_80045230();
         *(volatile s32*)(boot - 0xC) = lbl_803003C8.field_191C;
         fn_801EFE84(1);
-        fn_80217324();
-        fn_80217F88();
+        VIWaitForRetrace();
+        VIFlush();
         fn_801A9758();
-        fn_80217324();
-        fn_8021607C();
-        fn_801B14B8();
+        VIWaitForRetrace();
+        DVDCancelAll();
+        DTKShutdown();
 
-        if (fn_802161E8() == 0) {
+        if (DVDCheckDisk() == 0) {
             OSResetSystem(1, 0, 0);
         } else {
             OSResetSystem(0, 0, 0);
@@ -112,9 +112,9 @@ void fn_80025D28(void)
     } else {
         fn_801EF530();
         fn_801EF580(lbl_8064D74C);
-        fn_80226598();
-        fn_802264D4(0xBEEF);
-        fn_8020D250(lbl_8063BEC0, 0, 1);
+        GXSetDrawDone();
+        GXSetDrawSync(0xBEEF);
+        OSSendMessage(lbl_8063BEC0, 0, 1);
     }
 
     fn_80024F28(lbl_8064C6D8);

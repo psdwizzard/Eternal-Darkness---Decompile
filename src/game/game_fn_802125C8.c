@@ -32,10 +32,10 @@ typedef void (*OSAlarmHandler)(OSAlarm *alarm, void *context);
 extern DVDLowWork CommandList_80641880;
 extern volatile s32 StopAtNextInt_8064D998;
 extern DVDLowCallback Callback_8064D9A0;
-extern volatile s32 lbl_8064D9D8; /* LastCommandWasRead */
+extern volatile s32 LastCommandWasRead; /* LastCommandWasRead */
 /* LastReadIssued; symbols.txt splits it into two 4-byte labels (D0/D4) */
-extern OSTime lbl_8064D9D0;
-extern volatile u32 lbl_8064D99C; /* LastLength */
+extern OSTime LastReadIssued;
+extern volatile u32 LastLength; /* LastLength */
 
 extern OSTime __OSGetSystemTime(void);
 extern void OSCreateAlarm(OSAlarm *alarm);
@@ -54,20 +54,20 @@ static inline void SetTimeoutAlarm(DVDLowWork *w, OSTime timeout) {
 }
 
 /* dvdlow.c Read */
-void fn_802125C8(void *addr, u32 length, u32 offset, DVDLowCallback callback) {
+void Read(void *addr, u32 length, u32 offset, DVDLowCallback callback) {
     DVDLowWork *w = &CommandList_80641880;
 
     StopAtNextInt_8064D998 = FALSE;
     Callback_8064D9A0 = callback;
-    lbl_8064D9D8 = TRUE;
-    lbl_8064D9D0 = __OSGetSystemTime();
+    LastCommandWasRead = TRUE;
+    LastReadIssued = __OSGetSystemTime();
 
     __DIRegs[2] = 0xA8000000;
     __DIRegs[3] = offset >> 2;
     __DIRegs[4] = length;
     __DIRegs[5] = (u32)addr;
     __DIRegs[6] = length;
-    lbl_8064D99C = length;
+    LastLength = length;
     __DIRegs[7] = 3;
 
     if (length > 0xA00000) {

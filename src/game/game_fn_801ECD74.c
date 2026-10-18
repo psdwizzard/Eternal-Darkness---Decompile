@@ -12,7 +12,7 @@ extern s32 lbl_8064D640;
 extern float lbl_8064D644;
 extern Color lbl_8064D674;
 extern const float lbl_8065131C;
-extern void fn_80229D8C(int channel, Color* color);
+extern void GXSetTevColor(int channel, Color* color);
 
 /* NonMatching: behavior-complete and size-exact. GC/1.3 hoists the local
  * address calculation across one independent color-byte load. */
@@ -33,6 +33,6 @@ void fn_801ECD74(Color* color)
         lbl_8064D674.b = color->b;
         lbl_8064D674.a = color->a;
         copy = lbl_8064D674;
-        fn_80229D8C(1, &copy);
+        GXSetTevColor(1, &copy);
     }
 }

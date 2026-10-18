@@ -22,14 +22,13 @@ typedef struct SynthDataTables {
 } SynthDataTables;
 
 extern u8 lbl_8061C748[];
-extern u16 lbl_8064D3FA;
-extern s32 fn_801BD1DC(void*, void*);
-extern void* fn_801CC370(void*, void*, int, u32, s32 (*)(void*, void*));
+extern u16 dataFXGroupNum;
+extern s32 fxcmp(void*, void*);
+extern void* sndBSearch(void*, void*, int, u32, s32 (*)(void*, void*));
 
 #define dataSmpSDirs lbl_8061C748
-#define dataFXGroupNum lbl_8064D3FA
 
-FX_TAB* fn_801BD1EC(u16 fid)
+FX_TAB* dataGetFX(u16 fid)
 {
     FX_TAB* ret;
     long i;
@@ -42,7 +41,7 @@ FX_TAB* fn_801BD1EC(u16 fid)
     g = t->fxGroup;
     for (i = (zero = 0); i < dataFXGroupNum; ++i) {
         tab = g[i].fxTab;
-        if ((ret = (FX_TAB*)fn_801CC370(&t->getFXKey, tab, g[i].fxNum, sizeof(FX_TAB), fn_801BD1DC))) {
+        if ((ret = (FX_TAB*)sndBSearch(&t->getFXKey, tab, g[i].fxNum, sizeof(FX_TAB), fxcmp))) {
             return ret;
         }
     }

@@ -20,7 +20,7 @@ static inline u32 copyComponent(char *dest, const char *src, u32 length)
     return length - remaining;
 }
 
-u32 fn_80213480(u32 entry, char *path, u32 maxLength)
+u32 entryToPath(u32 entry, char *path, u32 maxLength)
 {
     char *name;
     u32 length;
@@ -30,7 +30,7 @@ u32 fn_80213480(u32 entry, char *path, u32 maxLength)
     }
     name = FstStringStart_8064D9E8 +
            (FstStart_8064D9E4[entry].isDirAndStringOff & 0x00FFFFFF);
-    length = fn_80213480(FstStart_8064D9E4[entry].parentOrPosition,
+    length = entryToPath(FstStart_8064D9E4[entry].parentOrPosition,
                          path, maxLength);
     if (length == maxLength) {
         return length;

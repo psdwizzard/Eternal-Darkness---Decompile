@@ -8,15 +8,15 @@ typedef struct Collection {
     int count;
 } Collection;
 
-extern void fn_801616EC(void*, Entry*);
+extern void markobject(void*, Entry*);
 
-void fn_8016158C(Collection* collection, void* context)
+void marklock(Collection* collection, void* context)
 {
     int i;
 
     for (i = 0; i < collection->count; i++) {
         Entry* entry = &collection->entries[i];
         if (entry->fields[4] == -4)
-            fn_801616EC(context, entry);
+            markobject(context, entry);
     }
 }

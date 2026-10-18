@@ -24,10 +24,10 @@ typedef struct RampState {
 } RampState;
 
 extern u8 lbl_80619860[];
-extern u32 lbl_8064D3C8;
+extern u32 synthMasterFaderActiveFlags;
 extern const float lbl_80650EC8;
-extern void fn_801CC408(u32*);
-extern void fn_801B7A10(Ramp*);
+extern void sndConvertMs(u32*);
+extern void HandleFaderTermination(Ramp*);
 
 #define SET_RAMP(ramp_, voice_)                                               \
     do {                                                                      \
@@ -43,12 +43,12 @@ extern void fn_801B7A10(Ramp*);
             (ramp_)->target = target;                                         \
             (ramp_)->current = target;                                        \
             if ((ramp_)->voice != 0xFFFFFFFFU) {                              \
-                fn_801B7A10(ramp_);                                           \
+                HandleFaderTermination(ramp_);                                           \
             }                                                                 \
         }                                                                     \
     } while (0)
 
-void fn_801B8164(u8 amount, u16 duration_arg, u8 selector, u8 value,
+void synthVolume(u8 amount, u16 duration_arg, u8 selector, u8 value,
                  u32 voice)
 {
     u32 duration = duration_arg;
@@ -59,7 +59,7 @@ void fn_801B8164(u8 amount, u16 duration_arg, u8 selector, u8 value,
     float target;
 
     if (duration_arg != 0) {
-        fn_801CC408(&duration);
+        sndConvertMs(&duration);
     }
 
     switch (selector) {
@@ -69,7 +69,7 @@ void fn_801B8164(u8 amount, u16 duration_arg, u8 selector, u8 value,
              ++i, ++ramp) {
             if (ramp->type == 0 || ramp->type == 1) {
                 SET_RAMP(ramp, 0xFFFFFFFFU);
-                lbl_8064D3C8 |= 1U << i;
+                synthMasterFaderActiveFlags |= 1U << i;
             }
         }
         break;
@@ -80,7 +80,7 @@ void fn_801B8164(u8 amount, u16 duration_arg, u8 selector, u8 value,
              ++i, ++ramp) {
             if (ramp->type == 2 || ramp->type == 3) {
                 SET_RAMP(ramp, 0xFFFFFFFFU);
-                lbl_8064D3C8 |= 1U << i;
+                synthMasterFaderActiveFlags |= 1U << i;
             }
         }
         break;
@@ -102,7 +102,7 @@ update_type:
              ++i, ++ramp) {
             if (ramp->type == type) {
                 SET_RAMP(ramp, 0xFFFFFFFFU);
-                lbl_8064D3C8 |= 1U << i;
+                synthMasterFaderActiveFlags |= 1U << i;
             }
         }
         break;
@@ -124,10 +124,10 @@ update_type:
             state->ramps[0].target = target;
             state->ramps[0].current = target;
             if (*voice_field != 0xFFFFFFFFU) {
-                fn_801B7A10(ramp);
+                HandleFaderTermination(ramp);
             }
         }
-        lbl_8064D3C8 |= 1U << selector;
+        synthMasterFaderActiveFlags |= 1U << selector;
         break;
     }
     }

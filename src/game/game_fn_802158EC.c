@@ -1,4 +1,4 @@
-/* fn_802158EC: DVDCancelStreamAsync (Dolphin SDK dvd.c), issueCommand inlined */
+/* DVDStopStreamAtEndAsync: DVDCancelStreamAsync (Dolphin SDK dvd.c), issueCommand inlined */
 typedef unsigned int u32;
 typedef int s32;
 typedef int BOOL;
@@ -50,7 +50,7 @@ static inline BOOL issueCommand(s32 prio, DVDCommandBlock *block) {
     return result;
 }
 
-BOOL fn_802158EC(DVDCommandBlock *block, DVDCBCallback callback) {
+BOOL DVDStopStreamAtEndAsync(DVDCommandBlock *block, DVDCBCallback callback) {
     BOOL idle;
 
     block->command = 8;

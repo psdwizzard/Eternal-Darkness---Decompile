@@ -5,7 +5,7 @@ typedef struct SortEntry {
     u32 key;
 } SortEntry;
 
-void fn_801C4A60(SortEntry** entries, int first, int last)
+void SortVoices(SortEntry** entries, int first, int last)
 {
     int partition;
     int scan;
@@ -30,7 +30,7 @@ void fn_801C4A60(SortEntry** entries, int first, int last)
         entries[first] = entries[partition];
         entries[partition] = temp;
 
-        fn_801C4A60(entries, first, partition - 1);
-        fn_801C4A60(entries, partition + 1, last);
+        SortVoices(entries, first, partition - 1);
+        SortVoices(entries, partition + 1, last);
     }
 }

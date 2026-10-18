@@ -7,10 +7,10 @@ typedef struct CARDControl {
     void *workArea;
 } CARDControl;
 
-extern s32 fn_8021D2BC(s32 chan, CARDControl **card);
-extern s32 fn_8021D374(CARDControl *card, s32 result);
+extern s32 __CARDGetControlBlock(s32 chan, CARDControl **card);
+extern s32 __CARDPutControlBlock(CARDControl *card, s32 result);
 
-s32 fn_802229CC(s32 chan, u64 *serialNo)
+s32 CARDGetSerialNo(s32 chan, u64 *serialNo)
 {
     CARDControl *card;
     s32 result;
@@ -21,7 +21,7 @@ s32 fn_802229CC(s32 chan, u64 *serialNo)
     if (chan < 0 || chan >= 2) {
         return -128;
     }
-    result = fn_8021D2BC(chan, &card);
+    result = __CARDGetControlBlock(chan, &card);
     if (result < 0) {
         return result;
     }
@@ -32,5 +32,5 @@ s32 fn_802229CC(s32 chan, u64 *serialNo)
         value ^= *(u64 *)(serial + i);
     }
     *serialNo = value;
-    return fn_8021D374(card, 0);
+    return __CARDPutControlBlock(card, 0);
 }

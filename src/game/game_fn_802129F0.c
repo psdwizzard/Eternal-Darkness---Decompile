@@ -23,7 +23,7 @@ static inline void SetTimeoutAlarm(OSTime timeout) {
 }
 
 /* Seek to the requested byte offset on the disc. */
-s32 fn_802129F0(u32 offset, DVDLowCallback callback) {
+s32 DVDLowSeek(u32 offset, DVDLowCallback callback) {
     Callback_8064D9A0 = callback;
     StopAtNextInt_8064D998 = 0;
     __DIRegs[2] = 0xAB000000;

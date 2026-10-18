@@ -13,7 +13,7 @@ extern u8 lbl_80606328[];
 
 extern void* memset(void*, int, u32);
 extern void* memcpy(void*, const void*, u32);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_801804AC(void*, void*, void*, void*);
 extern void fn_80180554(void*, void*, void*, void*, u16, int);
 extern void fn_801805E0(void*, int, u8, u8, void*, float);
@@ -53,7 +53,7 @@ void fn_80182C68(u8* self, const void* position, void* arg2, u8* desc)
     memset(self + 0x24, 0, 0x10);
     color[3] = desc[2];
     if (alpha < 0xFF) {
-        alpha = (u8)(alpha + ((u8)(0xFF - alpha) & fn_800FBFB0()));
+        alpha = (u8)(alpha + ((u8)(0xFF - alpha) & rand()));
     } else {
         alpha = 0xFF;
     }
@@ -68,7 +68,7 @@ void fn_80182C68(u8* self, const void* position, void* arg2, u8* desc)
         }
         fn_80180554(item, copy, arg2, initial, *(u16*)(desc + 8), 0);
         alpha = desc[1];
-        fn_801805E0(item + 0x20, 4, (u8)(alpha - (fn_800FBFB0() & (alpha - 1)) + 2), i * 4, color, lbl_806509C8);
+        fn_801805E0(item + 0x20, 4, (u8)(alpha - (rand() & (alpha - 1)) + 2), i * 4, color, lbl_806509C8);
         fn_80180518(self + 0x24, i, 1);
         item += 0x38;
     }

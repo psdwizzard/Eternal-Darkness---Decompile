@@ -31,11 +31,11 @@ typedef struct Decoder {
     s16 lower;
 } Decoder;
 
-s16 fn_80102C6C(BitReader* reader);
+s16 decodeHuff(BitReader* reader);
 
 /* Decode the three image planes with escaped differences, zero runs,
  * and a predictor averaged from adjacent samples in the previous row. */
-void fn_80103058(register Decoder* arg)
+void IpicDcvDec(register Decoder* arg)
 {
     register ImagePlane* image;
     register int plane;
@@ -87,14 +87,14 @@ void fn_80103058(register Decoder* arg)
                     total = 0;
                     lower = decoder->lower;
                     do {
-                        value = fn_80102C6C(differences);
+                        value = decodeHuff(differences);
                         total += value;
                     } while (lower >= value || value >= difference);
                     /* ASM: extsh preserves the separate signed truncation before
                      * the short comparison; MWCC folds the two C conversions. */
                     asm { extsh difference, total }
                     if ((s16)difference == 0) {
-                        run = fn_80102C6C(runs);
+                        run = decodeHuff(runs);
                     }
                 } else {
                     difference = 0;

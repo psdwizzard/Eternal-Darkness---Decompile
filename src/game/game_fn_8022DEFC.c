@@ -19,7 +19,7 @@ extern u32 __OSMaskInterrupts(u32);
 extern u32 __OSUnmaskInterrupts(u32);
 
 /* Set the channel 2 EXI callback and return the previous callback. */
-EXICallback fn_8022DEFC(EXICallback callback)
+EXICallback AmcEXISetExiCallback(EXICallback callback)
 {
     EXICallback previous;
     int enabled;

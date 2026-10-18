@@ -1,10 +1,10 @@
-extern void* lbl_8064D348;
-extern int lbl_8064D33C;
+extern void* __DTKCurrentTrack;
+extern int __DTKState;
 
-extern void fn_801B10A4(void*, unsigned int);
+extern void __DTKCheckUserCallback(void*, unsigned int);
 
-void fn_801B1410(void)
+void __DTKCallbackForStop(void)
 {
-    fn_801B10A4(lbl_8064D348, 2);
-    lbl_8064D33C = 0;
+    __DTKCheckUserCallback(__DTKCurrentTrack, 2);
+    __DTKState = 0;
 }

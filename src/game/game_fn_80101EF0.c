@@ -7,7 +7,7 @@ typedef union DoubleBits {
 } DoubleBits;
 
 /* Advance value by one representable double toward direction. */
-double fn_80101EF0(double value, double direction)
+double nextafter(double value, double direction)
 {
     DoubleBits *x = (DoubleBits *)&value;
     DoubleBits *y = (DoubleBits *)&direction;

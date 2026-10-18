@@ -19,11 +19,11 @@ typedef struct {
 
 extern volatile u16 *__cpReg;
 extern volatile u32 *__piReg;
-extern GXFifoObj *lbl_8064DB90;
-extern GXFifoObj *lbl_8064DB94;
-void fn_80224048(GXFifoObj *fifo);
+extern GXFifoObj *CPUFifo;
+extern GXFifoObj *GPFifo;
+void __GXSaveCPUFifoAux(GXFifoObj *fifo);
 
-void fn_80224188(void *fifoArg, u8 *overflow, u8 *underflow,
+void GXGetFifoStatus(void *fifoArg, u8 *overflow, u8 *underflow,
                  u32 *count, u8 *cpu, u8 *gp, u8 *wrap)
 {
     GXFifoObj *fifo = (GXFifoObj *)fifoArg;
@@ -31,7 +31,7 @@ void fn_80224188(void *fifoArg, u8 *overflow, u8 *underflow,
     *overflow = 0;
     *count = 0;
     *wrap = 0;
-    if (fifo == lbl_8064DB94) {
+    if (fifo == GPFifo) {
         u32 temp = __cpReg[29] << 16;
         temp |= __cpReg[28];
         fifo->rdPtr = (void *)(temp + 0x80000000);
@@ -41,13 +41,13 @@ void fn_80224188(void *fifoArg, u8 *overflow, u8 *underflow,
             fifo->count = temp2;
         }
     }
-    if (fifo == lbl_8064DB90) {
-        fn_80224048(fifo);
+    if (fifo == CPUFifo) {
+        __GXSaveCPUFifoAux(fifo);
         *wrap = (__piReg[5] >> 26) & 1;
     }
     *overflow = fifo->count > fifo->hiWatermark;
     *underflow = fifo->count < fifo->loWatermark;
     *count = fifo->count;
-    *cpu = lbl_8064DB90 == fifo;
-    *gp = lbl_8064DB94 == fifo;
+    *cpu = CPUFifo == fifo;
+    *gp = GPFifo == fifo;
 }

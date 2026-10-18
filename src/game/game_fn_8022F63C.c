@@ -21,7 +21,7 @@ typedef struct OggStreamState {
 extern void *memset(void *dest, int value, unsigned long size);
 extern void *fn_8022F780(int size);
 
-int fn_8022F63C(OggStreamState *stream, int serialno) {
+int ogg_stream_init(OggStreamState *stream, int serialno) {
     if (stream != 0) {
         memset(stream, 0, sizeof(*stream));
         stream->body_storage = 0x2000;

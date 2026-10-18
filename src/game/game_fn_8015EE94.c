@@ -1,8 +1,8 @@
-extern unsigned int fn_8015EAA0(void*);
+extern unsigned int previous_instruction(void*);
 
-int fn_8015EE94(void* object)
+int luaK_lastisopen(void* object)
 {
-    unsigned int entry = fn_8015EAA0(object);
+    unsigned int entry = previous_instruction(object);
     if ((int)(entry & 0x3F) == 2 && (int)((entry >> 6) & 0x1FF) == 0xFF)
         return 1;
     return 0;

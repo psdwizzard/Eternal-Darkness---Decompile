@@ -1,4 +1,4 @@
-/* fn_8021D374: __CARDPutControlBlock. */
+/* __CARDPutControlBlock: __CARDPutControlBlock. */
 typedef signed int s32;
 typedef int BOOL;
 
@@ -10,7 +10,7 @@ typedef struct CARDControl {
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
 
-s32 fn_8021D374(CARDControl *card, s32 result)
+s32 __CARDPutControlBlock(CARDControl *card, s32 result)
 {
     BOOL enabled;
 

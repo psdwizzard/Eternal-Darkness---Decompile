@@ -16,7 +16,7 @@ typedef struct GXData {
 
 extern GXData *gx;
 
-GXTlutRegion *fn_80222B0C(u32 name)
+GXTlutRegion *__GXDefaultTlutRegionCallback(u32 name)
 {
     if (name >= 20) {
         return 0;

@@ -43,7 +43,7 @@ extern s64 __OSGetSystemTime(void);
 extern void OSSetAlarm(OSAlarm *alarm, s64 tick,
                        void (*handler)(OSAlarm *, void *));
 extern void fn_80209204(OSAlarm *alarm, void *context);
-extern s32 fn_80208C4C(s32 chan, void *output, u32 outputBytes, void *input,
+extern s32 __SITransfer(s32 chan, void *output, u32 outputBytes, void *input,
                        u32 inputBytes, SICallback callback);
 
 s32 SITransfer(s32 chan, void *output, u32 outputBytes, void *input,
@@ -74,7 +74,7 @@ s32 SITransfer(s32 chan, void *output, u32 outputBytes, void *input,
         delay = fire - now;
         alarm = (OSAlarm *)((u8 *)work + chan * sizeof(OSAlarm));
         OSSetAlarm((OSAlarm *)((u8 *)alarm + 0x80), delay, fn_80209204);
-    } else if (fn_80208C4C(chan, output, outputBytes, input, inputBytes,
+    } else if (__SITransfer(chan, output, outputBytes, input, inputBytes,
                            callback)) {
         OSRestoreInterrupts(enabled);
         return 1;

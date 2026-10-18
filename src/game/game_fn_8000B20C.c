@@ -2,9 +2,9 @@ typedef int s32;
 typedef unsigned int u32;
 
 extern const char lbl_8023BEF8[];
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
 extern u32 fn_8011FAEC(void*);
@@ -22,15 +22,15 @@ s32 fn_8000B20C(void* script)
     s32 third_flag;
     s32 object_id;
 
-    if (fn_8016A598(script) != 4) {
-        fn_80163BB4(script, lbl_8023BEF8, 4, fn_8016A598(script));
+    if (lua_gettop(script) != 4) {
+        luaO_verror(script, lbl_8023BEF8, 4, lua_gettop(script));
         return 0;
     }
 
-    object_id = (s32)fn_8016A694(script, 1);
-    first_flag = (s32)fn_8016A694(script, 2);
-    second_flag = (s32)fn_8016A694(script, 3);
-    third_flag = (s32)fn_8016A694(script, 4);
+    object_id = (s32)lua_tonumber(script, 1);
+    first_flag = (s32)lua_tonumber(script, 2);
+    second_flag = (s32)lua_tonumber(script, 3);
+    third_flag = (s32)lua_tonumber(script, 4);
     object = fn_80201814(object_id);
     info = object != 0 ? fn_80201BC8(object) : 0;
 

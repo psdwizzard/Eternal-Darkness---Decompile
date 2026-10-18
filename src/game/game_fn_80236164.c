@@ -1,4 +1,4 @@
-/* fn_80236164: Vorbis vorbis_synthesis. */
+/* vorbis_synthesis: Vorbis vorbis_synthesis. */
 
 #include "src/game/types.h"
 
@@ -63,15 +63,15 @@ typedef struct MappingFuncs {
     s32 (*inverse)(VorbisBlock *, void *); /* 0x1C */
 } MappingFuncs;
 
-extern MappingFuncs *lbl_8064C4D4[];
+extern MappingFuncs *_mapping_P[];
 
 extern void fn_8022F890(VorbisDspState *vd);
-extern void fn_80230070(VorbisBlock *vb);
-extern void fn_8022EA4C(void *opb, u8 *buf, s32 bytes);
-extern s32 fn_8022E868(void *opb, s32 bits);
+extern void _vorbis_block_ripcord(VorbisBlock *vb);
+extern void oggpack_readinit(void *opb, u8 *buf, s32 bytes);
+extern s32 oggpack_read(void *opb, s32 bits);
 extern void *fn_8022F8C4(s32 size);
 
-s32 fn_80236164(VorbisBlock *vb, OggPacket *op) {
+s32 vorbis_synthesis(VorbisBlock *vb, OggPacket *op) {
     VorbisDspState *vd = vb->vd;
     VorbisInfo *vi = vd->vi;
     BackendLookup *b = vd->backend_state;
@@ -80,14 +80,14 @@ s32 fn_80236164(VorbisBlock *vb, OggPacket *op) {
     s32 type, mode, i;
 
     fn_8022F890(vd);
-    fn_80230070(vb);
-    fn_8022EA4C(opb, op->packet, op->bytes);
+    _vorbis_block_ripcord(vb);
+    oggpack_readinit(opb, op->packet, op->bytes);
 
-    if (fn_8022E868(opb, 1) != 0) {
+    if (oggpack_read(opb, 1) != 0) {
         return -135;
     }
 
-    mode = fn_8022E868(opb, b->modebits);
+    mode = oggpack_read(opb, b->modebits);
     if (mode == -1) {
         return -136;
     }
@@ -95,8 +95,8 @@ s32 fn_80236164(VorbisBlock *vb, OggPacket *op) {
     vb->mode = mode;
     vb->W = ci->mode_param[mode]->blockflag;
     if (vb->W) {
-        vb->lW = fn_8022E868(opb, 1);
-        vb->nW = fn_8022E868(opb, 1);
+        vb->lW = oggpack_read(opb, 1);
+        vb->nW = oggpack_read(opb, 1);
         if (vb->nW == -1) {
             return -136;
         }
@@ -116,5 +116,5 @@ s32 fn_80236164(VorbisBlock *vb, OggPacket *op) {
     }
 
     type = ci->map_type[ci->mode_param[mode]->mapping];
-    return lbl_8064C4D4[type]->inverse(vb, b->mode[mode]);
+    return _mapping_P[type]->inverse(vb, b->mode[mode]);
 }

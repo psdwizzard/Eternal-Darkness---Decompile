@@ -47,18 +47,16 @@ static LAYER_TAB dataLayerTable[256];
 static MAC_MAINTAB dataMacroBucketTable[512];
 static MAC_SUBTAB dataMacroTable[2048];
 
-extern u16 lbl_8064D3F0;
-extern u16 lbl_8064D3F8;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern u16 dataSmpSDirNum;
+extern u16 dataMacTotal;
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
-#define dataMacTotal lbl_8064D3F8
-#define dataSmpSDirNum lbl_8064D3F0
-#define sndBegin fn_801CE2B8
-#define sndEnd fn_801CE280
+#define sndBegin hwDisableIrq
+#define sndEnd hwEnableIrq
 
 
-s32 fn_801BC240(SDIR_DATA* sdir)
+s32 dataRemoveSDir(SDIR_DATA* sdir)
 {
     long i;
     long j;

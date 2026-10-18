@@ -102,7 +102,7 @@ extern void fn_801ED3F4(int);
 extern void fn_801ED5F4(int, int, int, int, int, float);
 extern void fn_801F03F0(Block52 *, int);
 extern void fn_801F683C(Block52 *);
-extern void fn_80226AB4(int, int, int);
+extern void GXBegin(int, int, int);
 
 static inline Color FadeColor(Color color, u8 alpha)
 {
@@ -347,7 +347,7 @@ void fn_8010E448(u8 alpha)
                 fn_801A852C(lbl_8064FED8, 0, -1, 0x80000000);
                 fn_801ECF50(4);
                 fn_801ECEC8(1, 7, 1);
-                fn_80226AB4(0x80, 5, 4);
+                GXBegin(0x80, 5, 4);
                 fn_8010F148(-0x6A, 0, -0x7698);
                 fn_8010F148(0x2EA, 0, -0x7698);
                 fn_8010F148(0x2EA, 0x1E0, -0x7698);

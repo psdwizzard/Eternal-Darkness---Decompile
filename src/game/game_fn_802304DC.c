@@ -9,16 +9,16 @@ typedef struct Codebook {
 } Codebook;
 
 void *fn_8022F8C4(s32 size);
-s32 fn_80230718(Codebook *book, void *b);
+s32 vorbis_book_decode(Codebook *book, void *b);
 
-s32 fn_802304DC(Codebook *book, float *a, void *b, s32 n) {
+s32 vorbis_book_decodevs_add(Codebook *book, float *a, void *b, s32 n) {
     s32 step = n / book->dim;
     s32 *entry = (s32 *)fn_8022F8C4(sizeof(*entry) * step);
     float **t = (float **)fn_8022F8C4(sizeof(*t) * step);
     s32 i, j, o;
 
     for (i = 0; i < step; i++) {
-        entry[i] = fn_80230718(book, b);
+        entry[i] = vorbis_book_decode(book, b);
         if (entry[i] == -1) {
             return -1;
         }

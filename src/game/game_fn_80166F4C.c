@@ -23,13 +23,13 @@ typedef struct LuaState {
     int nblocks;
 } LuaState;
 
-extern void* fn_8016B5CC(LuaState*, void*, int, const char*, int);
-extern void fn_80166DD4(LuaState*, TableState*, HashNode*, unsigned int);
+extern void* luaM_realloc(LuaState*, void*, int, const char*, int);
+extern void newentry(LuaState*, TableState*, HashNode*, unsigned int);
 extern const char lbl_8024FA38[];
 
-HashNode* fn_80166F4C(LuaState* state, unsigned int size, void* key)
+HashNode* luaS_newudata(LuaState* state, unsigned int size, void* key)
 {
-    HashNode* node = fn_8016B5CC(state, 0, size + 24, lbl_8024FA38, 117);
+    HashNode* node = luaM_realloc(state, 0, size + 24, lbl_8024FA38, 117);
 
     node->type = 0;
     node->next = 0;
@@ -37,6 +37,6 @@ HashNode* fn_80166F4C(LuaState* state, unsigned int size, void* key)
     node->tag = 0;
     node->key = size != 0 ? node->data : key;
     state->nblocks += size + 21;
-    fn_80166DD4(state, &state->udt, node, ((unsigned int)node->key >> 3) & (state->udt.size - 1));
+    newentry(state, &state->udt, node, ((unsigned int)node->key >> 3) & (state->udt.size - 1));
     return node;
 }

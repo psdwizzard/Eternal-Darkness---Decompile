@@ -11,7 +11,7 @@ typedef struct ActorData {
     s32 index;
     s32 kind;
 } ActorData;
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void *fn_80201B8C(u8 *object);
 extern void *fn_80201B94(u8 *object);
 extern void *fn_80201BC8(void *object);
@@ -37,7 +37,7 @@ s32 fn_8003C934(void *object, s32 enabled)
     Entry80201814 *target;
     s8 first, second, third, limit;
 
-    roll = (s32)fn_800FBFB0() % 100;
+    roll = (s32)rand() % 100;
     data = fn_80201B8C(object);
     owner = fn_80201B94(object);
     transform = fn_80201BC8(object);

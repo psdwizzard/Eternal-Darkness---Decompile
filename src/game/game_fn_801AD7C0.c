@@ -5,7 +5,7 @@ typedef struct StreamState {
     u32 capacity;
 } StreamState;
 
-extern StreamState* fn_801B19BC(void);
+extern StreamState* DTKGetCurrentTrackFileInfo(void);
 extern void fn_801AD8E8(void);
 
 u32 fn_801AD7C0(u32 size, int discriminator)
@@ -13,7 +13,7 @@ u32 fn_801AD7C0(u32 size, int discriminator)
     StreamState* state;
 
     if (size != 0) {
-        state = fn_801B19BC();
+        state = DTKGetCurrentTrackFileInfo();
         if (state != 0) {
             if (size > state->capacity) {
                 fn_801AD8E8();

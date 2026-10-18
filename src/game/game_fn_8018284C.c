@@ -17,7 +17,7 @@ typedef struct Config {
 
 extern void* memcpy(void*, const void*, u32);
 extern void fn_8018EFB0(Vec3s*, u16, int);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_80180554(void*, void*, Vec3s*, void*, u16, int);
 extern void fn_8018E230(void*, void*, int, int, s8, u8);
 extern void fn_80185108(void*);
@@ -35,7 +35,7 @@ void fn_8018284C(u8* self, int index)
     fn_8018EFB0(&position, *(u16*)(config + 4), 0);
     fn_8018EFB0(&position, *(u16*)(config + 4), 1);
     position.z *= config[6];
-    position.z += config[7] & fn_800FBFB0();
+    position.z += config[7] & rand();
     fn_80180554(item, self + 0x10, &position, self + 0x1C,
                 *(u16*)(item + 8), 0);
 

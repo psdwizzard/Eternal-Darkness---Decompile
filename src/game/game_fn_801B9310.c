@@ -1,6 +1,6 @@
-extern void fn_801CD000(void);
+extern void hwAddInput(void);
 
-void fn_801B9310(void)
+void synthAddStudioInput(void)
 {
-    fn_801CD000();
+    hwAddInput();
 }

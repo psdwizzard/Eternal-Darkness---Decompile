@@ -9,8 +9,8 @@ typedef struct OwnerData {
     void* range;
 } OwnerData;
 
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void *fn_80201B8C();
 extern void* fn_80201B94();
 extern void *fn_80201BC8();
@@ -32,7 +32,7 @@ s32 fn_8008A808(void* object, s32 enabled)
     Vec3 position;
     void* selection;
 
-    random = fn_800FBFB0() % 100;
+    random = rand() % 100;
     result = -1;
     owner = ((OwnerData*)fn_80201B8C(object));
     secondary = fn_80201B94(object);

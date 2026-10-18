@@ -1,8 +1,8 @@
 typedef unsigned int u32;
 
-extern void* fn_801CDA24(void* value, u32 size);
+extern void* aramStoreData(void* value, u32 size);
 
-void fn_801CD2C8(void** link, void** value)
+void hwSaveSample(void** link, void** value)
 {
     u32 packed = *(u32*)((u32*)*link + 1);
     u32 kind = packed >> 24;
@@ -20,5 +20,5 @@ void fn_801CD2C8(void** link, void** value)
         break;
     }
 
-    *value = fn_801CDA24(*value, size);
+    *value = aramStoreData(*value, size);
 }

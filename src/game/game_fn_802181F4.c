@@ -17,7 +17,7 @@ typedef struct VITiming {
     u16 hbsCCIR656;
 } VITiming;
 
-extern VITiming *lbl_8064DAA0;
+extern VITiming *CurrTiming;
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
 
@@ -35,16 +35,16 @@ static inline u32 getCurrentHalfLine(void) {
         vcount = __VIRegs[22] & 0x7FF;
     } while (vcount0 != vcount);
 
-    return ((vcount - 1) << 1) + ((hcount - 1) / lbl_8064DAA0->hlw);
+    return ((vcount - 1) << 1) + ((hcount - 1) / CurrTiming->hlw);
 }
 
 /* VIGetCurrentLine */
-u32 fn_802181F4(void) {
+u32 VIGetCurrentLine(void) {
     u32 halfLine;
     VITiming *tm;
     BOOL enabled;
 
-    tm = lbl_8064DAA0;
+    tm = CurrTiming;
     enabled = OSDisableInterrupts();
     halfLine = getCurrentHalfLine();
     OSRestoreInterrupts(enabled);

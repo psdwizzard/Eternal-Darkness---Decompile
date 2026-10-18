@@ -12,8 +12,8 @@ extern unsigned char* lbl_8064CFC0;
 extern volatile u32 lbl_8064D00C;
 extern volatile u32 lbl_8064D010;
 
-extern void fn_80213394(void*, Status*);
-extern void fn_8021345C(Status*);
+extern void DVDOpen(void*, Status*);
+extern void DVDClose(Status*);
 extern int fn_8015D458(void*, void*, u32);
 extern int fn_8015E86C(void*, void*, u32);
 extern void fn_8013824C(void);
@@ -29,10 +29,10 @@ void* fn_80138B90(void* object, int mode, int alternate)
         available = lbl_8064CFFC - lbl_8064D000;
     } else if (mode == 3) {
         Status status;
-        fn_80213394(object, &status);
+        DVDOpen(object, &status);
         address = lbl_8064CFC0 + 0x3D3100 - ((status.size + 31) & ~31);
         available = 0x3D3100 - lbl_8064D010;
-        fn_8021345C(&status);
+        DVDClose(&status);
     } else {
         address = lbl_8064CFC0 + lbl_8064D010;
         available = 0x3D3100 - lbl_8064D010 - lbl_8064D00C;

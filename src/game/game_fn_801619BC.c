@@ -9,9 +9,9 @@ typedef struct Collection {
     Node* nodes;
 } Collection;
 
-extern void fn_80161284(Collection*, Node*);
+extern void luaF_freeproto(Collection*, Node*);
 
-void fn_801619BC(Collection* collection)
+void collectproto(Collection* collection)
 {
     int zero = 0;
     Node** link = &collection->nodes;
@@ -23,7 +23,7 @@ void fn_801619BC(Collection* collection)
             link = &node->next;
         } else {
             *link = node->next;
-            fn_80161284(collection, node);
+            luaF_freeproto(collection, node);
         }
     }
 }

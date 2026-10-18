@@ -1,7 +1,7 @@
 typedef unsigned int u32;
 
 /* Packed fractional coefficients used by the floating-point converter. */
-const volatile u32 lbl_80239F20[66] = {
+const volatile u32 two_over_pi[66] = {
     0x00A2F983, 0x006E4E44, 0x001529FC, 0x002757D1,
     0x00F534DD, 0x00C0DB62, 0x0095993C, 0x00439041,
     0x00FE5163, 0x00ABDEBB, 0x00C561B7, 0x00246E3A,

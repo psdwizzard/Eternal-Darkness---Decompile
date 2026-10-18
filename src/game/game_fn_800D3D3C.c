@@ -30,8 +30,8 @@ extern void fn_800A37CC(void *object, void *owner, void *event);
 extern void fn_8011F114(Vec3 *destination, Vec3 *source);
 extern int fn_8011F6A4(void *object, int first, int second, int previous,
                        void *result, int options);
-extern void fn_80211A6C(const Vec3 *a, const Vec3 *b, Vec3 *result);
-extern float fn_80211B08(Vec3 *vector);
+extern void PSVECSubtract(const Vec3 *a, const Vec3 *b, Vec3 *result);
+extern float PSVECMag(Vec3 *vector);
 
 int fn_800D3D3C(void *object_arg, void *event_arg)
 {
@@ -66,17 +66,17 @@ int fn_800D3D3C(void *object_arg, void *event_arg)
         }
 
         fn_8011F6A4(object, 2, selection, -1, &query, 1);
-        fn_80211A6C(&position, &query.position, &difference);
-        fn_80211B08(&difference);
+        PSVECSubtract(&position, &query.position, &difference);
+        PSVECMag(&difference);
         fn_8011F6A4(object, 3, selection, -1, &query, 1);
-        fn_80211A6C(&position, &query.position, &difference);
-        fn_80211B08(&difference);
+        PSVECSubtract(&position, &query.position, &difference);
+        PSVECMag(&difference);
         fn_8011F6A4(object, 28, selection, -1, &query, 1);
-        fn_80211A6C(&position, &query.position, &difference);
-        fn_80211B08(&difference);
+        PSVECSubtract(&position, &query.position, &difference);
+        PSVECMag(&difference);
         fn_8011F6A4(object, 29, selection, -1, &query, 1);
-        fn_80211A6C(&position, &query.position, &difference);
-        fn_80211B08(&difference);
+        PSVECSubtract(&position, &query.position, &difference);
+        PSVECMag(&difference);
     }
     return 1;
 }

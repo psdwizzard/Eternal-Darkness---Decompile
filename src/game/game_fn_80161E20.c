@@ -25,11 +25,11 @@ typedef struct Collection {
 } Collection;
 
 extern char lbl_8064BA88;
-extern void fn_80161D58(Collection*, Argument*);
-extern void* fn_8016B5CC(Collection*, Node*, unsigned int, char*, int);
+extern void callgcTM(Collection*, Argument*);
+extern void* luaM_realloc(Collection*, Node*, unsigned int, char*, int);
 
 #pragma opt_loop_invariants off
-void fn_80161E20(Collection* collection)
+void callgcTMudata(Collection* collection)
 {
     Argument argument;
     int index;
@@ -43,8 +43,8 @@ void fn_80161E20(Collection* collection)
         while ((node = collection->buckets[index].nodes) != 0) {
             collection->buckets[index].nodes = node->next;
             argument.value = node;
-            fn_80161D58(collection, &argument);
-            fn_8016B5CC(collection, node, 0, &lbl_8064BA88, 323);
+            callgcTM(collection, &argument);
+            luaM_realloc(collection, node, 0, &lbl_8064BA88, 323);
         }
         index--;
     }

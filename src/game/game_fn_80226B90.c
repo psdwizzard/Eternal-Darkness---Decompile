@@ -21,7 +21,7 @@ typedef union {
 
 volatile PPCWGPipe GXWGFifo : 0xCC008000;
 
-void fn_80226B90(void)
+void __GXSendFlushPrim(void)
 {
     u32 bytes = gx->vNum * gx->vLim;
     u32 i;

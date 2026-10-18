@@ -16,8 +16,8 @@ extern int fn_801A7770(void*);
 extern int fn_8011F6A4(void*, int, int, int, void*, int);
 extern void* fn_801A7778(void*);
 extern void fn_8003B0BC(void*, Vec800A40C4*, Vec800A40C4*, void*, int, int);
-extern void fn_80211A6C();
-extern void fn_80211A90(Vec800A40C4*, Vec800A40C4*, float);
+extern void PSVECSubtract();
+extern void PSVECScale(Vec800A40C4*, Vec800A40C4*, float);
 extern void fn_800A1C50(Vec800A40C4*, Vec800A40C4*, void*, void*);
 
 typedef struct HitResult800A40C4 {
@@ -45,9 +45,9 @@ void fn_800A40C4(void* object, Context800A40C4* context, void* value,
     kind = fn_801A7770(runtime);
     if (fn_8011F6A4(object, 0, kind, -1, &hit, 1) != -1) {
         fn_8003B0BC(fn_801A7778(runtime), &direction, &scaled, runtime, 0, 0);
-        fn_80211A6C(&hit.position, &direction, &delta);
-        fn_80211A90(&delta, &delta, lbl_8064EED0);
-        fn_80211A6C(&hit.position, &delta, &offset);
+        PSVECSubtract(&hit.position, &direction, &delta);
+        PSVECScale(&delta, &delta, lbl_8064EED0);
+        PSVECSubtract(&hit.position, &delta, &offset);
         fn_800A1C50(&position, &offset, value, &context->field19C);
     }
 }

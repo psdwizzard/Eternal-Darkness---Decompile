@@ -1,4 +1,4 @@
-/* fn_802137F4 (0x802137F4, 280 bytes): DVDReadPrio (SDK dvdfs.c) */
+/* DVDReadPrio (0x802137F4, 280 bytes): DVDReadPrio (SDK dvdfs.c) */
 
 typedef int s32;
 typedef unsigned int u32;
@@ -36,17 +36,17 @@ typedef struct DVDFileInfo {
 
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
-extern void fn_8020C5D0(const char *, int, const char *, ...); /* OSPanic */
-extern void fn_80210004(OSThreadQueue *queue); /* OSSleepThread */
-extern BOOL fn_802154EC(DVDCommandBlock *block, void *addr, s32 length, s32 offset,
+extern void OSPanic(const char *, int, const char *, ...); /* OSPanic */
+extern void OSSleepThread(OSThreadQueue *queue); /* OSSleepThread */
+extern BOOL DVDReadAbsAsyncPrio(DVDCommandBlock *block, void *addr, s32 length, s32 offset,
                         DVDCBCallback callback, s32 prio); /* DVDReadAbsAsyncPrio */
-extern void fn_8021390C(s32 result, DVDCommandBlock *block); /* cbForReadSync */
+extern void cbForReadSync(s32 result, DVDCommandBlock *block); /* cbForReadSync */
 
 extern OSThreadQueue __DVDThreadQueue;
 extern const char lbl_8064C400[8]; /* "dvdfs.c" */
 extern char lbl_802FE284[];
 
-s32 fn_802137F4(DVDFileInfo *fileInfo, void *addr, s32 length, s32 offset, s32 prio) {
+s32 DVDReadPrio(DVDFileInfo *fileInfo, void *addr, s32 length, s32 offset, s32 prio) {
     BOOL result;
     DVDCommandBlock *block;
     s32 state;
@@ -54,15 +54,15 @@ s32 fn_802137F4(DVDFileInfo *fileInfo, void *addr, s32 length, s32 offset, s32 p
     s32 retVal;
 
     if (!((0 <= offset) && (offset < fileInfo->length))) {
-        fn_8020C5D0(lbl_8064C400, 0x329, lbl_802FE284);
+        OSPanic(lbl_8064C400, 0x329, lbl_802FE284);
     }
     if (!((0 <= offset + length) && (offset + length < fileInfo->length + 32))) {
-        fn_8020C5D0(lbl_8064C400, 0x32F, lbl_802FE284);
+        OSPanic(lbl_8064C400, 0x32F, lbl_802FE284);
     }
 
     block = &fileInfo->cb;
-    result = fn_802154EC(block, addr, length, (s32)(fileInfo->startAddr + offset),
-                         fn_8021390C, prio);
+    result = DVDReadAbsAsyncPrio(block, addr, length, (s32)(fileInfo->startAddr + offset),
+                         cbForReadSync, prio);
 
     if (result == 0) {
         return -1;
@@ -84,7 +84,7 @@ s32 fn_802137F4(DVDFileInfo *fileInfo, void *addr, s32 length, s32 offset, s32 p
             break;
         }
 
-        fn_80210004(&__DVDThreadQueue);
+        OSSleepThread(&__DVDThreadQueue);
     }
 
     OSRestoreInterrupts(enabled);

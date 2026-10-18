@@ -1,6 +1,6 @@
-extern double fn_800FF578(double value);
+extern double __ieee754_log(double value);
 
-double fn_80102380(double value)
+double log(double value)
 {
-    return fn_800FF578(value);
+    return __ieee754_log(value);
 }

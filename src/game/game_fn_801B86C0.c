@@ -64,30 +64,29 @@ typedef struct SynthState {
 } SynthState;
 
 extern SynthState lbl_80619860;
-extern u64 lbl_8064D3E0;
-extern u32 lbl_8064D3CC;
-extern void* lbl_8064D3D4;
-extern u8* lbl_8064D3D0;
-extern u32 lbl_8064D3C8;
-extern u32 lbl_8064D3C4;
-extern u8 lbl_8064D3BC[8];
-extern u8 lbl_8064D3AC[8];
-extern u8 lbl_8064D3A1;
+extern u64 synthRealTime;
+extern u32 synthFlags;
+extern void* synthMessageCallback;
+extern u8* synthVoice;
+extern u32 synthMasterFaderActiveFlags;
+extern u32 synthMasterFaderPauseActiveFlags;
+extern u8 synthAuxAMIDI[8];
+extern u8 synthAuxBMIDI[8];
+extern u8 synthJobTableIndex;
 
 extern void* memset(void*, int, u32);
-extern void* fn_801CE330(u32);
-extern void fn_801CBE58(void*);
-extern void fn_801C0ED8(void);
-extern void fn_801C0F40(void);
-extern void fn_801C1CB0(void);
-extern void fn_801C27D0(void);
-extern void fn_801CC6FC(void*);
-extern int fn_801B85F0(int, u32);
+extern void* salMalloc(u32);
+extern void inpInit(void*);
+extern void macInit(void);
+extern void vidInit(void);
+extern void synthInitAllocationAids(void);
+extern void voiceInitLastStarted(void);
+extern void hwSetMesgCallback(void*);
+extern int synthHWMessageHandler(int, u32);
 
 #define SYNTH_VOICE_STRIDE 0x404
-#define synthVoice lbl_8064D3D0
 
-void fn_801B86C0(u32 sampleRate, u32 voiceCount)
+void synthInit(u32 sampleRate, u32 voiceCount)
 {
     u32 voiceIndex;
     u32 fadeIndex;
@@ -95,13 +94,13 @@ void fn_801B86C0(u32 sampleRate, u32 voiceCount)
     float unusedA[2];
     SynthState* synth = &lbl_80619860;
 
-    lbl_8064D3E0 = 0;
+    synthRealTime = 0;
     synth->sampleRate = sampleRate;
     synth->bpmTicks = 0x1800;
-    lbl_8064D3CC = 0;
-    lbl_8064D3D4 = 0;
+    synthFlags = 0;
+    synthMessageCallback = 0;
 
-    synthVoice = fn_801CE330(voiceCount * SYNTH_VOICE_STRIDE);
+    synthVoice = salMalloc(voiceCount * SYNTH_VOICE_STRIDE);
     memset(synthVoice, 0, voiceCount * SYNTH_VOICE_STRIDE);
 
     for (voiceIndex = 0; voiceIndex < voiceCount; voiceIndex++) {
@@ -200,8 +199,8 @@ void fn_801B86C0(u32 sampleRate, u32 voiceCount)
         }
     }
 
-    lbl_8064D3C8 = 0;
-    lbl_8064D3C4 = 0;
+    synthMasterFaderActiveFlags = 0;
+    synthMasterFaderPauseActiveFlags = 0;
     synth->masterFader[31].type = 1;
     for (fadeIndex = 0; fadeIndex < 8; fadeIndex++) {
         synth->masterFader[fadeIndex + 23].type = 0;
@@ -209,26 +208,26 @@ void fn_801B86C0(u32 sampleRate, u32 voiceCount)
     synth->masterFader[21].volume = 1.f;
     synth->masterFader[22].volume = 1.f;
 
-    fn_801CBE58(0);
+    inpInit(0);
 
     for (auxIndex = 0; auxIndex < 8; auxIndex++) {
         synth->auxACallback[auxIndex] = 0;
-        lbl_8064D3BC[auxIndex] = 0xFF;
+        synthAuxAMIDI[auxIndex] = 0xFF;
         synth->auxBCallback[auxIndex] = 0;
-        lbl_8064D3AC[auxIndex] = 0xFF;
+        synthAuxBMIDI[auxIndex] = 0xFF;
         synth->itdDefault[auxIndex].sfx = 0;
         synth->itdDefault[auxIndex].music = 0;
     }
 
-    fn_801C0ED8();
-    fn_801C0F40();
-    fn_801C1CB0();
+    macInit();
+    vidInit();
+    synthInitAllocationAids();
 
     for (auxIndex = 0; auxIndex < 16; auxIndex++) {
         synth->globalVariable[auxIndex] = 0;
     }
 
-    fn_801C27D0();
+    voiceInitLastStarted();
 
     {
         SynthJob* job = synth->jobs;
@@ -260,6 +259,6 @@ void fn_801B86C0(u32 sampleRate, u32 voiceCount)
             job++;
         }
     }
-    lbl_8064D3A1 = 0;
-    fn_801CC6FC(fn_801B85F0);
+    synthJobTableIndex = 0;
+    hwSetMesgCallback(synthHWMessageHandler);
 }

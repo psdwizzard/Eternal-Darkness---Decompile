@@ -1,18 +1,18 @@
-/* fn_800FE4EC: MSL __strtoull - scan an unsigned long long in a given base
+/* __strtoull: MSL __strtoull - scan an unsigned long long in a given base
  * through a character read callback. */
 
 /* __ctype_map, __upper_map */
-extern unsigned char lbl_8024AB90[];
-extern unsigned char lbl_8024AD90[];
+extern unsigned char __ctype_map[];
+extern unsigned char __upper_map[];
 
 #define EOF (-1)
 #define ULLONG_MAX 0xFFFFFFFFFFFFFFFFULL
 
-#define isspace(c) (lbl_8024AB90[(unsigned char)(c)] & 0x06)
-#define isdigit(c) (lbl_8024AB90[(unsigned char)(c)] & 0x10)
-#define isalpha(c) (lbl_8024AB90[(unsigned char)(c)] & 0xC0)
+#define isspace(c) (__ctype_map[(unsigned char)(c)] & 0x06)
+#define isdigit(c) (__ctype_map[(unsigned char)(c)] & 0x10)
+#define isalpha(c) (__ctype_map[(unsigned char)(c)] & 0xC0)
 static inline int toupper(int c) {
-    return (c == EOF) ? EOF : (int)lbl_8024AD90[(unsigned char)c];
+    return (c == EOF) ? EOF : (int)__upper_map[(unsigned char)c];
 }
 
 enum scan_states {
@@ -31,7 +31,7 @@ enum scan_states {
 #define fetch() (count++, (*ReadProc)(ReadProcArg, 0, 0))
 #define unfetch(c) (*ReadProc)(ReadProcArg, c, 1)
 
-unsigned long long fn_800FE4EC(int base, int max_width, int (*ReadProc)(void*, int, int),
+unsigned long long __strtoull(int base, int max_width, int (*ReadProc)(void*, int, int),
                                void* ReadProcArg, int* chars_scanned, int* negative, int* overflow)
 {
     int scan_state = start;

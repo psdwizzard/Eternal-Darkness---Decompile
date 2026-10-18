@@ -12,7 +12,7 @@ extern GXData *gx;
 #define GX_WRITE_U8(v) (*(volatile u8 *)0xCC008000 = (u8)(v))
 #define GX_WRITE_U32(v) (*(volatile u32 *)0xCC008000 = (u32)(v))
 
-void fn_80225F4C(int attr, const void *base, u8 stride)
+void GXSetArray(int attr, const void *base, u8 stride)
 {
     int array;
     long index;

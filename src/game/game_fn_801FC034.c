@@ -33,7 +33,7 @@ extern EntryTable* fn_8015C28C(int);
 extern void fn_80179DB0(Vec3*, Vec3*);
 extern void* fn_8011F130(void*);
 extern float fn_8013CBE4(Vec3*, Vec3*, void*, Vec3*, int);
-extern void fn_802118E0(Matrix*, float, float, float, float);
+extern void C_MTXPerspective(Matrix*, float, float, float, float);
 extern void fn_8011F114(Vec3*, void*);
 extern int fn_801FBD2C(Vec3*, Vec3*, Vec3*, Vec3*, float);
 
@@ -70,7 +70,7 @@ int fn_801FC034(void* object, int value, float threshold)
         return 0;
     }
     memcpy(&saved, &lbl_8063BF28, sizeof(Matrix));
-    fn_802118E0(&lbl_8063BF28, *(float*)(first_entry + 0x24), factor, lbl_80651478,
+    C_MTXPerspective(&lbl_8063BF28, *(float*)(first_entry + 0x24), factor, lbl_80651478,
                 lbl_806514E4);
     fn_8011F114(&object_position, object);
     position = object_position;

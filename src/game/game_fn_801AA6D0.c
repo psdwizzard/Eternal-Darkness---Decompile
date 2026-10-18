@@ -29,12 +29,12 @@ extern void fn_801AA618(void);
 extern u32 fn_8015D630(char*);
 extern void fn_8015E86C(char*, void*, u32);
 extern void* fn_801FEA8C(u32, int, char*, int);
-extern void fn_801C3E2C(void);
-extern void fn_801C3CBC(void*, int, int, void*, void*);
+extern void sndPopGroup(void);
+extern void sndPushGroup(void*, int, int, void*, void*);
 extern void fn_801CD504(void (*)(void));
-extern int fn_80213394(char*, char*);
-extern void fn_8021345C(char*);
-extern void fn_8021B88C(void);
+extern int DVDOpen(char*, char*);
+extern void DVDClose(char*);
+extern void ARQGetChunkSize(void);
 extern void* memset(void*, int, u32);
 
 void fn_801AA6D0(int mode, int arg, int allocate, int value)
@@ -78,7 +78,7 @@ void fn_801AA6D0(int mode, int arg, int allocate, int value)
         lbl_8064D2B0 = (size2 + 31) & ~31;
         lbl_8064D2BC = fn_801FEA8C(lbl_8064D2B0, 1, lbl_80251650, 0x125);
     } else {
-        fn_801C3E2C();
+        sndPopGroup();
     }
 
     memset(lbl_8064D2B4, 0xE0, lbl_8064D2A8);
@@ -106,12 +106,12 @@ void fn_801AA6D0(int mode, int arg, int allocate, int value)
     fn_8015E86C(src2, lbl_8064D2B8, lbl_8064D2AC);
     fn_8015E86C(src3, lbl_8064D2BC, lbl_8064D2B0);
 
-    if (fn_80213394(resource, lbl_80607CD0) != 0) {
-        fn_8021B88C();
+    if (DVDOpen(resource, lbl_80607CD0) != 0) {
+        ARQGetChunkSize();
         lbl_8064D2C8 = arg;
         fn_801AA550(value);
-        fn_801C3CBC(lbl_8064D2B8, 0, arg, lbl_8064D2BC, lbl_8064D2B4);
+        sndPushGroup(lbl_8064D2B8, 0, arg, lbl_8064D2BC, lbl_8064D2B4);
         fn_801AA618();
-        fn_8021345C(lbl_80607CD0);
+        DVDClose(lbl_80607CD0);
     }
 }

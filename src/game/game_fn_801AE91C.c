@@ -20,7 +20,7 @@ extern void fn_801ADC08(void);
 extern void fn_801ADBC0(void);
 extern u32 fn_801ADAF8(u32);
 extern u32 fn_801A9B94(u32, u32);
-extern void fn_801BA94C(void*, u32, u32, u32, u32, u32);
+extern void sndStreamMixParameterEx(void*, u32, u32, u32, u32, u32);
 
 void fn_801AE91C(u32 id, u8 type, int channels, int rate)
 {
@@ -53,19 +53,19 @@ void fn_801AE91C(u32 id, u8 type, int channels, int rate)
         entry->channels = selected_channels;
         entry->rate = selected_rate;
         format = fn_801A9B94(entry->type, 2);
-        fn_801BA94C(entry->stream, format, entry->channels, entry->rate, 0, 0);
+        sndStreamMixParameterEx(entry->stream, format, entry->channels, entry->rate, 0, 0);
 
         if (entry->first != 0) {
             entry->first->type = type;
             child = entry->first;
             format = fn_801A9B94(child->type, 2);
-            fn_801BA94C(entry->first->stream, format, child->channels,
+            sndStreamMixParameterEx(entry->first->stream, format, child->channels,
                         child->rate, 0, 0);
         } else if (entry->second != 0) {
             entry->second->type = type;
             child = entry->second;
             format = fn_801A9B94(child->type, 2);
-            fn_801BA94C(entry->second->stream, format, child->channels,
+            sndStreamMixParameterEx(entry->second->stream, format, child->channels,
                         child->rate, 0, 0);
         }
     }

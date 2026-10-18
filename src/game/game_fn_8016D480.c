@@ -1,6 +1,6 @@
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_8020104C(int, void*, void*, int, float);
 extern const char lbl_8024FF54[];
 
@@ -15,18 +15,18 @@ int fn_8016D480(void* state)
     float z;
 
     context = state;
-    count = fn_8016A598(context);
+    count = lua_gettop(context);
     flags = 0;
     switch (count) {
     case 4:
-        flags = (int)fn_8016A694(context, 4);
+        flags = (int)lua_tonumber(context, 4);
     case 3:
-        x = (int)fn_8016A694(context, 1);
-        y = (int)fn_8016A694(context, 2);
-        z = (float)fn_8016A694(context, 3);
+        x = (int)lua_tonumber(context, 1);
+        y = (int)lua_tonumber(context, 2);
+        z = (float)lua_tonumber(context, 3);
         break;
     default:
-        fn_80163BB4(context, lbl_8024FF54, count);
+        luaO_verror(context, lbl_8024FF54, count);
         return 0;
     }
     if (x != 0) {

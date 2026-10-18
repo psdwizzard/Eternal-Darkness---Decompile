@@ -4,21 +4,21 @@ typedef struct OSContext OSContext;
 typedef void (*PADSamplingCallback)(void);
 typedef void (*SIPollingHandler)(s32, u32);
 
-extern PADSamplingCallback lbl_8064DACC;
-extern void fn_80219F14(s16 interrupt, OSContext *context);
-extern s32 fn_802089E8(SIPollingHandler handler);
-extern s32 fn_80208AB4(SIPollingHandler handler);
+extern PADSamplingCallback SamplingCallback;
+extern void SamplingHandler(s16 interrupt, OSContext *context);
+extern s32 SIRegisterPollingHandler(SIPollingHandler handler);
+extern s32 SIUnregisterPollingHandler(SIPollingHandler handler);
 
 /* Replace the PAD callback and update its SI polling handler. */
-PADSamplingCallback fn_80219F74(PADSamplingCallback callback)
+PADSamplingCallback PADSetSamplingCallback(PADSamplingCallback callback)
 {
-    PADSamplingCallback previous = lbl_8064DACC;
+    PADSamplingCallback previous = SamplingCallback;
 
-    lbl_8064DACC = callback;
+    SamplingCallback = callback;
     if (callback != 0) {
-        fn_802089E8((SIPollingHandler)fn_80219F14);
+        SIRegisterPollingHandler((SIPollingHandler)SamplingHandler);
     } else {
-        fn_80208AB4((SIPollingHandler)fn_80219F14);
+        SIUnregisterPollingHandler((SIPollingHandler)SamplingHandler);
     }
     return previous;
 }

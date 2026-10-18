@@ -10,7 +10,7 @@ struct DVDCommandBlock {
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
 
-BOOL fn_80216580(DVDCommandBlock *block) {
+BOOL __DVDDequeueWaitingQueue(DVDCommandBlock *block) {
     BOOL level;
     DVDCommandBlock *prev;
     DVDCommandBlock *next;

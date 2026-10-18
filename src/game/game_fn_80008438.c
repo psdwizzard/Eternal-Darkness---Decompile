@@ -13,7 +13,7 @@ extern s32 lbl_8064D6E8;
 extern s32 lbl_8064D6C4;
 extern s32 lbl_8064CB68;
 extern u8 lbl_806391F0[];
-extern void* lbl_8064C3C8;
+extern void* __OSCurrHeap;
 extern u8 lbl_805E2B1C[];
 
 extern void fn_800243E8(void);
@@ -22,7 +22,7 @@ extern void fn_8015CA08(void);
 extern void fn_800B9474(s32);
 extern void fn_80156E50(s32);
 extern s32 fn_800BD944(void);
-extern void fn_8020D250(void*, s32, s32);
+extern void OSSendMessage(void*, s32, s32);
 extern void fn_801F7234(s32);
 extern s32 fn_801F3B80(void);
 extern void fn_801EF580(void*);
@@ -80,10 +80,10 @@ extern void fn_8004736C(void);
 extern void fn_8006FD90(void);
 extern void fn_8011B74C(void);
 extern void fn_800BC000(void);
-extern void fn_8020F088(void*);
-extern void fn_8020EFBC(void*);
-extern void fn_8020F0F8(void*);
-extern void fn_8020AFE4(void*);
+extern void OSCheckStopwatch(void*);
+extern void OSStopStopwatch(void*);
+extern void OSResetStopwatch(void*);
+extern void OSCheckHeap(void*);
 
 void fn_80008438(void)
 {
@@ -99,7 +99,7 @@ void fn_80008438(void)
     fn_800B9474(0x7F);
     fn_80156E50(1);
     if (fn_800BD944() == 0) {
-        fn_8020D250(lbl_805E2B1C, -0x1A0A, 0);
+        OSSendMessage(lbl_805E2B1C, -0x1A0A, 0);
     }
 
     fn_801F7234(3);
@@ -197,8 +197,8 @@ void fn_80008438(void)
     fn_8006FD90();
     fn_8011B74C();
     fn_800BC000();
-    fn_8020F088(lbl_806391F0);
-    fn_8020EFBC(lbl_806391F0);
-    fn_8020F0F8(lbl_806391F0);
-    fn_8020AFE4(lbl_8064C3C8);
+    OSCheckStopwatch(lbl_806391F0);
+    OSStopStopwatch(lbl_806391F0);
+    OSResetStopwatch(lbl_806391F0);
+    OSCheckHeap(__OSCurrHeap);
 }

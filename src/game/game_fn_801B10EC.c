@@ -1,12 +1,12 @@
 typedef unsigned char u8;
 
-extern int lbl_8064D324;
-extern int lbl_8064D334;
+extern int __DTKTrackEnded;
+extern int __DTKPosition;
 
-void fn_801B10EC(int value)
+void __DTKCallbackForStreamStatus(int value)
 {
     if ((value & 0xFF) == 0) {
-        lbl_8064D324 = 1;
-        lbl_8064D334 = 0;
+        __DTKTrackEnded = 1;
+        __DTKPosition = 0;
     }
 }

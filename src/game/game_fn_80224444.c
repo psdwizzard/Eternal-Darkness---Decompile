@@ -12,7 +12,7 @@ extern GXData *gx;
 extern volatile u16 *__cpReg;
 
 /* __GXFifoReadDisable: stop the command processor reading the FIFO. */
-void fn_80224444(void)
+void __GXFifoReadDisable(void)
 {
     gx->cpEnable = gx->cpEnable & ~1UL;
     __cpReg[1] = gx->cpEnable;

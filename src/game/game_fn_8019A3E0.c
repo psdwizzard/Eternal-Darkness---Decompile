@@ -26,7 +26,7 @@ extern u8 lbl_80606318[];
 extern u8 lbl_80606328[];
 
 extern void* memset(void*, int, u32);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_80180554(void*, void*, void*, void*, u16, int);
 extern void fn_801805E0(void*, int, u8, u32, void*, float);
 extern void fn_80180518(void*, u32, int);
@@ -70,13 +70,13 @@ void fn_8019A3E0(u8* object, void* first, void* second, u8* config)
     random_mask = config[1] - 1;
     entry = *(u8**)(object + 0x4C);
     for (i = 0; (u8)i < count; i++) {
-        random.x = 4 - (fn_800FBFB0() & 7);
-        random.y = 4 - (fn_800FBFB0() & 7);
-        random.z = 4 - (fn_800FBFB0() & 3);
+        random.x = 4 - (rand() & 7);
+        random.y = 4 - (rand() & 7);
+        random.z = 4 - (rand() & 3);
         fn_80180554(entry, first, &random, &setup,
-                    (fn_800FBFB0() & 7) + 7, 0);
+                    (rand() & 7) + 7, 0);
         fn_801805E0(entry + 0x20, 4,
-                    config[1] - (random_mask & fn_800FBFB0()),
+                    config[1] - (random_mask & rand()),
                     (i & 0x3F) * 4, &effect, lbl_80650BCC);
         fn_8018E230(entry, entry + 0x2B, 1, 0, 0x33, 0xFF);
         fn_80180518(object + 0x24, i, 1);

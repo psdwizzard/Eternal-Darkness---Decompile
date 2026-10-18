@@ -9,7 +9,7 @@ typedef struct RequestGlobals {
 extern RequestGlobals lbl_805B6FE0;
 extern int lbl_80651C98;
 extern int lbl_8064C4F4;
-extern int lbl_8064C3C8;
+extern int __OSCurrHeap;
 extern int lbl_8064D158;
 extern int lbl_8064D15C;
 extern int lbl_8064D180;
@@ -50,7 +50,7 @@ extern void fn_801F348C(int*, int);
 extern u32 fn_801E7998(int);
 extern void fn_801E7974(int, u32);
 extern void fn_801F0294(int, float);
-extern void fn_8020AFE4(int);
+extern void OSCheckHeap(int);
 
 void fn_80159184(u32 flags)
 {
@@ -120,5 +120,5 @@ void fn_80159184(u32 flags)
         fn_801E7974(lbl_8064D158, lbl_8064D184);
     }
     fn_801F0294(0, lbl_80650630);
-    fn_8020AFE4(lbl_8064C3C8);
+    OSCheckHeap(__OSCurrHeap);
 }

@@ -1,20 +1,20 @@
 extern unsigned int lbl_80331748[];
 
-extern double fn_8016A694(void*, int);
+extern double lua_tonumber(void*, int);
 extern unsigned int fn_800F5C54(double);
-extern void fn_8016A830(void*, double);
-extern void fn_8016A7D8(void*);
+extern void lua_pushnumber(void*, double);
+extern void lua_pushnil(void*);
 
 int fn_801126E0(void* object)
 {
-    unsigned int value = fn_800F5C54(fn_8016A694(object, 1));
+    unsigned int value = fn_800F5C54(lua_tonumber(object, 1));
 
     value &= lbl_80331748[0];
 
     if (value != 0) {
-        fn_8016A830(object, (double)value);
+        lua_pushnumber(object, (double)value);
     } else {
-        fn_8016A7D8(object);
+        lua_pushnil(object);
     }
     return 1;
 }

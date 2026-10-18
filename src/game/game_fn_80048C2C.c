@@ -1,6 +1,6 @@
-extern double fn_801021D0(double value);
+extern double sin(double value);
 
-float fn_80048C2C(float value)
+float sinf(float value)
 {
-    return fn_801021D0(value);
+    return sin(value);
 }

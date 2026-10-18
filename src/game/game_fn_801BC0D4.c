@@ -17,12 +17,11 @@ typedef struct SDIR_TAB {
 } SDIR_TAB;
 
 static SDIR_TAB dataSmpSDirsStatic[128];
-extern u16 lbl_8064D3F0;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern u16 dataSmpSDirNum;
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
 #define dataSmpSDirs dataSmpSDirsStatic
-#define dataSmpSDirNum lbl_8064D3F0
 
 static inline void dataFindSampleDir(SDIR_DATA* sample, s32* dirIndex, u16* k)
 {
@@ -34,7 +33,7 @@ static inline void dataFindSampleDir(SDIR_DATA* sample, s32* dirIndex, u16* k)
     }
 }
 
-u32 fn_801BC0D4(SDIR_DATA* sdir, void* smp_data)
+u32 dataInsertSDir(SDIR_DATA* sdir, void* smp_data)
 {
     s32 i;
     SDIR_DATA* s;
@@ -52,7 +51,7 @@ u32 fn_801BC0D4(SDIR_DATA* sdir, void* smp_data)
                 ++n;
             }
 
-            fn_801CE2B8();
+            hwDisableIrq();
             for (j = 0; j < n; ++j) {
                 dataFindSampleDir(&sdir[j], &i, &k);
                 if (i != dataSmpSDirNum) {
@@ -66,7 +65,7 @@ u32 fn_801BC0D4(SDIR_DATA* sdir, void* smp_data)
             dataSmpSDirs[dataSmpSDirNum].numSmp = n;
             dataSmpSDirs[dataSmpSDirNum].base = smp_data;
             ++dataSmpSDirNum;
-            fn_801CE280();
+            hwEnableIrq();
             return 1;
         } else {
             return 0;

@@ -16,14 +16,14 @@ typedef struct Parser {
 
 extern char lbl_8024F8CC[];
 extern void fn_80163DA4(Parser*);
-extern int fn_80164C7C(Parser*);
-extern void fn_80163F38(Parser*, int, int, int);
-extern void fn_8016536C(Parser*);
-extern void fn_80164088(Parser*, int);
-extern void fn_8015EA7C(Parser*, char*);
-extern void fn_8015F9D4(ParserState*, int, int, int);
+extern int explist1(Parser*);
+extern void check_match(Parser*, int, int, int);
+extern void constructor(Parser*);
+extern void code_string(Parser*, int);
+extern void luaK_error(Parser*, char*);
+extern void luaK_code2(ParserState*, int, int, int);
 
-void fn_80164D04(Parser* parser, int count)
+void funcargs(Parser* parser, int count)
 {
     ParserState* state = parser->state;
     int new_count = state->value_1C - count - 1;
@@ -34,22 +34,22 @@ void fn_80164D04(Parser* parser, int count)
         line = parser->line;
         fn_80163DA4(parser);
         if (parser->token != 0x29) {
-            fn_80164C7C(parser);
+            explist1(parser);
         }
-        fn_80163F38(parser, 0x29, 0x28, line);
+        check_match(parser, 0x29, 0x28, line);
         break;
     case 0x7B:
-        fn_8016536C(parser);
+        constructor(parser);
         break;
     case 0x11B:
-        fn_80164088(parser, parser->value_10);
+        code_string(parser, parser->value_10);
         fn_80163DA4(parser);
         break;
     default:
-        fn_8015EA7C(parser, lbl_8024F8CC);
+        luaK_error(parser, lbl_8024F8CC);
         break;
     }
 
     state->value_1C = new_count;
-    fn_8015F9D4(state, 2, new_count, 0xFF);
+    luaK_code2(state, 2, new_count, 0xFF);
 }

@@ -37,11 +37,11 @@ extern float fn_8012D01C(void*, s32);
 extern void fn_8012D074(void*, s32, float);
 extern s32 fn_8011F770(void*);
 extern s32 fn_8011F130(void*);
-extern void fn_80211A48(s32, s32, Vec3*);
+extern void PSVECAdd(s32, s32, Vec3*);
 extern s32 fn_8011F7D8(void*);
 extern float fn_8011F6F8(void*);
 extern s32 fn_8017E4E4(Vec3*, s32, float, float, float, float);
-extern void fn_80211A6C();
+extern void PSVECSubtract();
 extern void fn_800C8394(void*, s32);
 
 s32 fn_8002BC7C(void* callback, s32 phase, void* event)
@@ -104,12 +104,12 @@ s32 fn_8002BC7C(void* callback, s32 phase, void* event)
             fn_8012D074(state, 0xF, fn_8012D01C(state, 0xF) / lbl_8064E050);
             first = fn_8011F770(state);
             second = fn_8011F130(state);
-            fn_80211A48(second, first, &vector);
+            PSVECAdd(second, first, &vector);
             target = fn_8011F7D8(state);
             hit = fn_8017E4E4(&vector, target, lbl_8064E054,
                               fn_8011F6F8(state), lbl_8064E054,
                               lbl_8064E058);
-            fn_80211A6C(&vector, first, second);
+            PSVECSubtract(&vector, first, second);
             if (hit & 1) {
                 fn_80201D2C(callback, 0x26);
                 fn_80201D14(callback, 1);

@@ -2,7 +2,7 @@ typedef struct Vec3 {
     float x, y, z;
 } Vec3;
 
-/* fn_802114E0 writes all 12 entries; fn_80211710 transforms a Vec3. */
+/* PSMTXQuat writes all 12 entries; PSMTXMultVec transforms a Vec3. */
 typedef float Matrix34[3][4];
 
 typedef struct StatePart {
@@ -37,11 +37,11 @@ extern int fn_801FA198(void*, void*, int, int, void*, int, int, int, int);
 extern void fn_8011F114(Vec3*, void*);
 extern void* fn_8011FE34(void*);
 extern void fn_801F9AF8(void*, void*, Vec3*);
-extern void fn_802114E0(Matrix34, void*);
-extern void fn_80211710(Matrix34, Vec3*, Vec3*);
-extern void fn_80211A6C(Vec3*, Vec3*, Vec3*);
-extern float fn_80211B08(Vec3*);
-extern void fn_80211A90(Vec3*, Vec3*, float);
+extern void PSMTXQuat(Matrix34, void*);
+extern void PSMTXMultVec(Matrix34, Vec3*, Vec3*);
+extern void PSVECSubtract(Vec3*, Vec3*, Vec3*);
+extern float PSVECMag(Vec3*);
+extern void PSVECScale(Vec3*, Vec3*, float);
 extern void fn_801FA410(int);
 
 #pragma opt_lifetimes off
@@ -81,10 +81,10 @@ int fn_801F8748(void* arg0, void* arg1, void* arg2, void* arg3, int check)
     fn_801F9AF8(second_position, arg2, &first_offset);
     position = &g->first.position;
     fn_801F9AF8(position, arg2, &second_offset);
-    fn_802114E0(object_transform, arg3);
-    fn_80211710(object_transform, &first_offset, &first_offset);
-    fn_80211710(object_transform, &second_offset, &second_offset);
-    fn_80211A6C(&second_offset, &first_offset, &ray);
+    PSMTXQuat(object_transform, arg3);
+    PSMTXMultVec(object_transform, &first_offset, &first_offset);
+    PSMTXMultVec(object_transform, &second_offset, &second_offset);
+    PSVECSubtract(&second_offset, &first_offset, &ray);
 
     second_base = &g->second;
     base = &g->first;
@@ -96,10 +96,10 @@ int fn_801F8748(void* arg0, void* arg1, void* arg2, void* arg3, int check)
     base->position.z = second_offset.z + object_copy.z;
 
     ray.z = lbl_80651464;
-    fn_80211A90(&ray, &ray, lbl_80651478 / fn_80211B08(&ray));
-    fn_80211A6C(&g->ray_a, &g->ray_b, &normal);
+    PSVECScale(&ray, &ray, lbl_80651478 / PSVECMag(&ray));
+    PSVECSubtract(&g->ray_a, &g->ray_b, &normal);
     normal.z = lbl_80651464;
-    fn_80211A90(&normal, &normal, lbl_80651478 / fn_80211B08(&normal));
+    PSVECScale(&normal, &normal, lbl_80651478 / PSVECMag(&normal));
     plane = normal.x * ray.x + normal.y * ray.y;
     g->second.plane = -plane;
     g->first.plane = -plane;

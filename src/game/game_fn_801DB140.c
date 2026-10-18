@@ -17,8 +17,8 @@ extern u8 fn_80180130(void*); extern int fn_80180138(void*,u8);
 extern u8 fn_801911B0(void*,int); extern void fn_8019120C(void*,int);
 extern s16* fn_8017FDA8(void*,int); extern s16* fn_8017FDE4(void*);
 extern u8 fn_8017FDFC(void*); extern void fn_80149B60(void*,void*,int,int,int);
-extern float fn_80048C2C(float); extern float fn_80048C50(float);
-extern u8 fn_800FBFB0(void); extern void fn_801850FC(void*,void*);
+extern float sinf(float); extern float cosf(float);
+extern u8 rand(void); extern void fn_801850FC(void*,void*);
 extern void fn_80185108(void*); extern void fn_801851A0(void*,void*);
 extern void fn_801D0E78(void*);
 
@@ -107,9 +107,9 @@ void fn_801DB140(void* self)
                         if (!fn_801911B0(state, i)) {
                             dest = fn_8017FDA8(state, i);
                             angle = 360.0f * (float)i / (float)n;
-                            dest[0] = (float)source[0] + 127.0f * fn_80048C2C(angle);
-                            dest[1] = (float)source[1] + 127.0f * fn_80048C50(angle);
-                            dest[2] = source[2] + 127 - fn_800FBFB0();
+                            dest[0] = (float)source[0] + 127.0f * sinf(angle);
+                            dest[1] = (float)source[1] + 127.0f * cosf(angle);
+                            dest[2] = source[2] + 127 - rand();
                         }
                     }
                 }
@@ -144,9 +144,9 @@ void fn_801DB140(void* self)
                 if (!fn_801911B0(state, i)) {
                     dest = fn_8017FDA8(state, i);
                     angle = 360.0f * (float)i / (float)n;
-                    dest[0] = (float)source[0] + 127.0f * fn_80048C2C(angle);
-                    dest[1] = (float)source[1] + 127.0f * fn_80048C50(angle);
-                    dest[2] = source[2] + 127 - fn_800FBFB0();
+                    dest[0] = (float)source[0] + 127.0f * sinf(angle);
+                    dest[1] = (float)source[1] + 127.0f * cosf(angle);
+                    dest[2] = source[2] + 127 - rand();
                 }
             }
             if (!changed && fn_8017FDFC(state)) {

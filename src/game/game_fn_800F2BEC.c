@@ -1,6 +1,6 @@
-extern int lbl_80329FE0;
+extern int IsTRKConnected;
 
-int fn_800F2BEC(void)
+int GetTRKConnected(void)
 {
-    return lbl_80329FE0;
+    return IsTRKConnected;
 }

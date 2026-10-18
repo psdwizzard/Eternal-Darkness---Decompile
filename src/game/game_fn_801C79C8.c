@@ -1,8 +1,8 @@
 typedef unsigned char u8;
 typedef unsigned int u32;
 
-extern float lbl_80252F2C[];
-extern float lbl_80253148[];
+extern float dspDLSVolTab[];
+extern float musyx_vol_tab[];
 extern const float lbl_80650F8C;
 extern const float lbl_80650F88;
 extern const float lbl_80650F90;
@@ -70,19 +70,19 @@ static inline void calc_bus(float* fixed_table, float* volume_table,
          (float)(pi->pan_fm * (*upper_band)[pi->pan_im]));
 }
 
-void fn_801C79C8(u8 curve, float* output, u32 packed_pan, u32 packed_span,
+void salCalcVolume(u8 curve, float* output, u32 packed_pan, u32 packed_span,
                  float volume, float aux_a, float aux_b, u32 narrow_pan,
                  u32 surround_layout)
 {
     float* volume_table;
-    float* fixed_table = lbl_80253148;
+    float* fixed_table = musyx_vol_tab;
     float pan, span, reverse_pan, reverse_span;
     PanInfo pi;
     float rear_level, first, second;
     float scaled_volume, fraction_volume, sample_volume;
     u32 index_volume;
 
-    volume_table = curve == 0 ? lbl_80253148 : lbl_80252F2C;
+    volume_table = curve == 0 ? musyx_vol_tab : dspDLSVolTab;
     /* The packed sentinel selects the full surround range. */
     if (packed_pan == 0x00800000) {
         packed_pan = 0;

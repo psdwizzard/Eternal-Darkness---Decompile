@@ -23,19 +23,13 @@ typedef struct SynthInfo {
     u8 voiceNum;
 } SynthInfo;
 
-extern SynthInfo lbl_80619C20;
-extern McmdVoiceState* lbl_8064D3D0;
-extern void fn_801C106C(McmdVoiceState*);
-extern void fn_801C1BCC(McmdVoiceState*);
-extern void fn_801B9C98(u32);
-extern void fn_801CC8C4(u32);
+extern SynthInfo synthInfo;
+extern McmdVoiceState* synthVoice;
+extern void vidRemoveVoiceReferences(McmdVoiceState*);
+extern void voiceFree(McmdVoiceState*);
+extern void streamKill(u32);
+extern void hwBreak(u32);
 
-#define synthInfo lbl_80619C20
-#define synthVoice lbl_8064D3D0
-#define vidRemoveVoiceReferences fn_801C106C
-#define voiceFree fn_801C1BCC
-#define streamKill fn_801B9C98
-#define hwBreak fn_801CC8C4
 
 static inline void voiceKill(u32 voice)
 {
@@ -53,7 +47,7 @@ static inline void voiceKill(u32 voice)
     hwBreak(voice);
 }
 
-void fn_801C242C(u16* ref)
+void synthKillVoicesByMacroReferences(u16* ref)
 {
     u32 i;
     u16 id;

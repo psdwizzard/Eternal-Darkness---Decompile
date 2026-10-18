@@ -54,10 +54,10 @@ extern void fn_80122428(MeshInfo* runtime, EntryList* list, int kind, int mode, 
 extern void fn_801ED5F4(int, int, s16, float*, float (*)[4], float);
 extern int fn_801EDA7C(s16* values, int context, int flags, void* state);
 extern void fn_801ECEC8(int, int, int);
-extern void fn_8022A5D8(int, int, int, int);
-extern void fn_8022A6DC(int);
-extern void fn_8022A71C(int);
-extern void fn_8022B448(void* list, u32 size);
+extern void GXSetBlendMode(int, int, int, int);
+extern void GXSetColorUpdate(int);
+extern void GXSetAlphaUpdate(int);
+extern void GXCallDisplayList(void* list, u32 size);
 extern Material lbl_8024EDE8[];
 extern const float lbl_806500A0;
 
@@ -98,16 +98,16 @@ void fn_801227A0(Object* object, int kind, int inverted)
     fn_801EDA7C((s16*)&lbl_8024EDE8[1], 0, 0x2BF, 0);
 
     if (inverted) {
-        fn_8022A71C(1);
-        fn_8022A6DC(0);
+        GXSetAlphaUpdate(1);
+        GXSetColorUpdate(0);
         fn_801ECEC8(1, 3, 1);
-        fn_8022A5D8(2, 4, 5, 3);
+        GXSetBlendMode(2, 4, 5, 3);
         entry = list->entries;
         data = list->data;
         for (i = 0; i < list->count; entry++, i++) {
             if (entry->size != 0 &&
                 (object->object_state[entry->object_index].flags & 5) == 5) {
-                fn_8022B448(data, entry->size);
+                GXCallDisplayList(data, entry->size);
             }
             data += entry->size;
         }
@@ -116,20 +116,20 @@ void fn_801227A0(Object* object, int kind, int inverted)
             object->object_state[entry->object_index].flags &= ~2;
         }
         object->state_flags &= ~0x00040000u;
-        fn_8022A5D8(1, 4, 5, 15);
-        fn_8022A6DC(1);
-        fn_8022A71C(0);
+        GXSetBlendMode(1, 4, 5, 15);
+        GXSetColorUpdate(1);
+        GXSetAlphaUpdate(0);
     } else {
-        fn_8022A6DC(1);
-        fn_8022A71C(0);
+        GXSetColorUpdate(1);
+        GXSetAlphaUpdate(0);
         fn_801ECEC8(1, 3, 1);
-        fn_8022A5D8(1, 4, 5, 0);
+        GXSetBlendMode(1, 4, 5, 0);
         entry = list->entries;
         data = list->data;
         for (i = 0; i < list->count; entry++, i++) {
             if (entry->size != 0 &&
                 (object->object_state[entry->object_index].flags & 3) == 3) {
-                fn_8022B448(data, entry->size);
+                GXCallDisplayList(data, entry->size);
             }
             data += entry->size;
         }

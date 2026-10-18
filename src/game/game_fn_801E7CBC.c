@@ -21,7 +21,7 @@ extern void fn_801ECC4C(void);
 extern void fn_801ED468(int);
 extern void fn_801EDA7C(void*, int, int, int);
 extern void fn_801ECF50(int);
-extern void fn_80226AB4(int, int, int);
+extern void GXBegin(int, int, int);
 extern void fn_801E7BDC(float, float, float);
 extern void fn_801E7BD8(void);
 
@@ -40,7 +40,7 @@ void fn_801E7CBC(Vec3* a, Vec3* b, Vec3* c, Vec3* d, u32* value)
     state.tail = tail;
     fn_801EDA7C(&state, 0, 0x2BF, 0);
     fn_801ECF50(4);
-    fn_80226AB4(0x80, 3, 4);
+    GXBegin(0x80, 3, 4);
     fn_801E7BDC(a->x, a->y, a->z);
     fn_801E7BDC(b->x, b->y, b->z);
     fn_801E7BDC(c->x, c->y, c->z);

@@ -25,8 +25,8 @@ extern int fn_80201B44();
 extern void *fn_80201814();
 #define FN_80201E78_RETURN void
 #define FN_80201E78_PARAMETERS void*, void*
-extern FN_80201E78_RETURN fn_80201E78(FN_80201E78_PARAMETERS);extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
+extern FN_80201E78_RETURN fn_80201E78(FN_80201E78_PARAMETERS);extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
 extern unsigned long long fn_8020123C();
 extern void *fn_80201B8C();
 extern int fn_80201EB8();
@@ -36,8 +36,8 @@ extern int fn_80201B54();
 extern int fn_80201B64(void*);
 extern u32 fn_80178E94(Vec*, Vec*);
 extern void* fn_80201BC0(void*);
-extern void fn_8016A7D8(void*);
-extern void fn_8016A830(void*, double);
+extern void lua_pushnil(void*);
+extern void lua_pushnumber(void*, double);
 
 s32 fn_8000A0A0(void* script)
 {
@@ -56,8 +56,8 @@ s32 fn_8000A0A0(void* script)
     handle = fn_80201B44();
     object = fn_80201814(handle);
     fn_80201E78(&position, object);
-    if (fn_8016A598(script) != 0) {
-        fn_80163BB4(script, lbl_8023BEF8, 0, fn_8016A598(script));
+    if (lua_gettop(script) != 0) {
+        luaO_verror(script, lbl_8023BEF8, 0, lua_gettop(script));
         return 0;
     }
 
@@ -88,12 +88,12 @@ s32 fn_8000A0A0(void* script)
             iterator = fn_80201BC0(iterator);
         }
         if (count != 0) {
-            fn_8016A7D8(script);
+            lua_pushnil(script);
         } else {
-            fn_8016A830(script, lbl_8064DCF8);
+            lua_pushnumber(script, lbl_8064DCF8);
         }
     } else {
-        fn_8016A7D8(script);
+        lua_pushnil(script);
     }
     return 1;
 }

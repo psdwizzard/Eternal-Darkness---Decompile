@@ -16,13 +16,13 @@ typedef struct OSMessageQueue {
 
 extern OSMessageQueue lbl_80304060;
 extern int lbl_8064C7F8;
-extern int fn_8020D318(OSMessageQueue* mq, OSMessage* msg, int flags);
+extern int OSReceiveMessage(OSMessageQueue* mq, OSMessage* msg, int flags);
 
 void fn_80042DA8(void) {
     OSMessage message;
 
     if (lbl_8064C7F8 == 1) {
-        fn_8020D318(&lbl_80304060, &message, 1);
+        OSReceiveMessage(&lbl_80304060, &message, 1);
         lbl_8064C7F8 = 0;
     }
 }

@@ -4,14 +4,14 @@ typedef struct Object {
     int result;
 } Object;
 
-extern void fn_8015F2B0(Object*, int*, int);
-extern void fn_8015F12C(Object*, int, int, int, int);
+extern void luaK_concat(Object*, int*, int);
+extern void luaK_patchlistaux(Object*, int, int, int, int);
 
-void fn_8015F1F8(Object* object, int index, int value)
+void luaK_patchlist(Object* object, int index, int value)
 {
     if (value == object->value) {
-        fn_8015F2B0(object, &object->result, index);
+        luaK_concat(object, &object->result, index);
     } else {
-        fn_8015F12C(object, index, value, 0, 0);
+        luaK_patchlistaux(object, index, value, 0, 0);
     }
 }

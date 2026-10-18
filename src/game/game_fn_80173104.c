@@ -4,10 +4,10 @@ typedef struct ShortVector {
     short z;
 } ShortVector;
 
-extern int fn_8016A598(void*);
-extern void* fn_8016A784(void*, int);
-extern void fn_8016A970(void*, void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern void* lua_touserdata(void*, int);
+extern void lua_pushusertag(void*, void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern ShortVector lbl_8064D1EC;
 extern const char lbl_8024FF00[];
 extern const char lbl_8025047C[];
@@ -17,19 +17,19 @@ int fn_80173104(void* state)
     ShortVector* first;
     ShortVector* second;
 
-    if (fn_8016A598(state) != 2) {
-        fn_80163BB4(state, lbl_8024FF00, 2, fn_8016A598(state));
+    if (lua_gettop(state) != 2) {
+        luaO_verror(state, lbl_8024FF00, 2, lua_gettop(state));
         return 0;
     }
 
-    first = fn_8016A784(state, 1);
-    second = fn_8016A784(state, 2);
+    first = lua_touserdata(state, 1);
+    second = lua_touserdata(state, 2);
     if (first == 0 || second == 0) {
-        fn_80163BB4(state, lbl_8025047C, first, second);
+        luaO_verror(state, lbl_8025047C, first, second);
     }
     lbl_8064D1EC.x = first->x + second->x;
     lbl_8064D1EC.y = first->y + second->y;
     lbl_8064D1EC.z = first->z + second->z;
-    fn_8016A970(state, &lbl_8064D1EC, 0);
+    lua_pushusertag(state, &lbl_8064D1EC, 0);
     return 1;
 }

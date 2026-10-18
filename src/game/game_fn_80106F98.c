@@ -50,15 +50,15 @@ typedef struct Decoder {
     u8 mode;
 } Decoder;
 
-extern s16 fn_801028A8(DecodeTree *, BitReader *);
-extern void fn_80102D04(Decoder *);
-extern void fn_80103058(Decoder *);
+extern s16 _readTree(DecodeTree *, BitReader *);
+extern void Ipic_BasisNumDec(Decoder *);
+extern void IpicDcvDec(Decoder *);
 typedef struct ImageSrc ImageSrc;
-extern void fn_8010316C(ImageSrc *, int, int);
+extern void MakeNest(ImageSrc *, int, int);
 typedef struct Entry80104980 Entry80104980;
-extern void fn_80104A54(Entry80104980 *, int, int *);
-extern int lbl_8064CC68;
-extern int lbl_8064CC6C;
+extern void IpicPlaneDec(Entry80104980 *, int, int *);
+extern int readTree_signed;
+extern int readTree_scale;
 
 static inline u32 read_u32(const u8 *p)
 {
@@ -88,7 +88,7 @@ static inline void load_root(register BitReader *bits, DecodeTree *tree, int emp
      * that address into the conditional call setup. */
     asm { lwz count, 8(bits) }
     if (count != 0) {
-        tree->root = fn_801028A8(tree, bits);
+        tree->root = _readTree(tree, bits);
     } else {
         tree->root = empty;
     }
@@ -96,8 +96,8 @@ static inline void load_root(register BitReader *bits, DecodeTree *tree, int emp
 
 static inline void load_tree(register BitReader *bits, DecodeTree *tree, int sign, int shift, int empty)
 {
-    lbl_8064CC68 = sign;
-    lbl_8064CC6C = shift;
+    readTree_signed = sign;
+    readTree_scale = shift;
     tree->count = 0x100;
     load_root(bits, tree, empty);
 }
@@ -124,18 +124,18 @@ static inline void load_unsigned_tree(Decoder *decoder, int twoBitValues)
     }
     /* ASM: stw keeps the sign store before reader address setup;
      * MWCC schedules the equivalent C store later. */
-    asm { stw zero, lbl_8064CC68(r13) }
+    asm { stw zero, readTree_signed(r13) }
     if (twoBitValues) {
         treeSize = 0x100;
     }
     bits = twoBitValues ? &decoder->extra[0].bits :
                           &decoder->valueRuns[0].bits;
-    lbl_8064CC6C = shiftValue;
+    readTree_scale = shiftValue;
     tree->count = treeSize;
     load_root(bits, tree, zero);
 }
 
-void fn_80106F98(Decoder **handle, const u8 *header, register u8 *output)
+void HVQM4DecodeIpic(Decoder **handle, const u8 *header, register u8 *output)
 {
     register Decoder *decoder = *handle;
     const u8 *payload = header + 0x48;
@@ -196,9 +196,9 @@ void fn_80106F98(Decoder **handle, const u8 *header, register u8 *output)
     /* ASM: extsh retains the signed truncation that MWCC folds into sth. */
     asm { extsh limit, limit }
     decoder->lower = limit;
-    fn_80102D04(callDecoder);
-    fn_80103058(decoder);
-    fn_8010316C((ImageSrc *)decoder, (header[4] << 8) | header[5],
+    Ipic_BasisNumDec(callDecoder);
+    IpicDcvDec(decoder);
+    MakeNest((ImageSrc *)decoder, (header[4] << 8) | header[5],
                 (header[6] << 8) | header[7]);
     i = 0;
     /* ASM: addi preserves the retail copy encoding; C emits mr. */
@@ -213,7 +213,7 @@ void fn_80106F98(Decoder **handle, const u8 *header, register u8 *output)
             addi callIndex, i, 0
             addi callOutput, output, 0
         }
-        fn_80104A54(callDecoder, callIndex, callOutput);
+        IpicPlaneDec(callDecoder, callIndex, callOutput);
         i++;
         output += plane->outputSize;
         /* ASM: addi keeps the plane advance after the output-pointer update;

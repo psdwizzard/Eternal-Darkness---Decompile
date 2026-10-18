@@ -29,9 +29,9 @@ extern s32 fn_801AD898(void);
 extern s32 fn_8015E4B4(void);
 extern s32 fn_801AD72C(void);
 extern void fn_801B1A1C(s32, s32);
-extern u32 fn_801B192C(void);
+extern u32 DTKGetTrackPosition(void);
 extern void fn_801A98F4(s32, s32);
-extern s32 fn_800FBFB0(void);
+extern s32 rand(void);
 extern void fn_801B2348(s32);
 extern void fn_801B1B0C(s32, s32);
 extern s32 fn_801E79FC(s32, s32);
@@ -68,7 +68,7 @@ void fn_801B1BA0(void)
 
     if (current == lbl_8064D364) {
         if (current == 94) {
-            u32 elapsed = fn_801B192C();
+            u32 elapsed = DTKGetTrackPosition();
             if (elapsed > 0x348000 && elapsed <= 0x360000) {
                 if (lbl_8064D350 == 0) {
                     fn_801A98F4(0x266, 100);
@@ -105,7 +105,7 @@ void fn_801B1BA0(void)
         lbl_8064D370++;
         break;
     case 3: {
-        s32 count = (fn_800FBFB0() % entry->value) + 1;
+        s32 count = (rand() % entry->value) + 1;
         do {
             lbl_8064D370++;
         } while (--count != 0);

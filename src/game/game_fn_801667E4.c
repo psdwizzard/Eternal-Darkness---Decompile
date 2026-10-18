@@ -3,32 +3,32 @@ typedef struct Parser {
     void* value44;
 } Parser;
 
-extern void* fn_80167798(Parser*, int);
-extern void fn_801604F8(Parser*, int);
-extern void fn_80166AC4(Parser*);
-extern void fn_80161FD0(Parser*);
-extern void fn_80167CA0(Parser*);
-extern void fn_8016AAB4(Parser*);
-extern void fn_8016AB6C(Parser*, int);
-extern int fn_801667BC(void*);
-extern void fn_8016A950(Parser*, int (*)(void*), int);
-extern void fn_8016AB20(Parser*, const char*);
+extern void* luaH_new(Parser*, int);
+extern void luaD_init(Parser*, int);
+extern void luaS_init(Parser*);
+extern void luaX_init(Parser*);
+extern void luaT_init(Parser*);
+extern void lua_newtable(Parser*);
+extern void lua_ref(Parser*, int);
+extern int errormessage(void*);
+extern void lua_pushcclosure(Parser*, int (*)(void*), int);
+extern void lua_setglobal(Parser*, const char*);
 extern const char lbl_8024FA18[];
 
-void fn_801667E4(Parser* parser, int* configured_size)
+void f_luaopen(Parser* parser, int* configured_size)
 {
     int size = 0x400;
 
     if (*configured_size != 0) {
         size = *configured_size + 0x14;
     }
-    parser->value44 = fn_80167798(parser, 10);
-    fn_801604F8(parser, size);
-    fn_80166AC4(parser);
-    fn_80161FD0(parser);
-    fn_80167CA0(parser);
-    fn_8016AAB4(parser);
-    fn_8016AB6C(parser, 1);
-    fn_8016A950(parser, fn_801667BC, 0);
-    fn_8016AB20(parser, lbl_8024FA18);
+    parser->value44 = luaH_new(parser, 10);
+    luaD_init(parser, size);
+    luaS_init(parser);
+    luaX_init(parser);
+    luaT_init(parser);
+    lua_newtable(parser);
+    lua_ref(parser, 1);
+    lua_pushcclosure(parser, errormessage, 0);
+    lua_setglobal(parser, lbl_8024FA18);
 }

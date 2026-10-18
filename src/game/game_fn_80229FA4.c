@@ -17,7 +17,7 @@ extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 #define SET_FIELD(reg, width, shift, value) \
     ((reg) = ((reg) & ~(((1UL << (width)) - 1) << (shift))) | ((u32)(value) << (shift)))
 
-void fn_80229FA4(int table, int red, int green, int blue, int alpha)
+void GXSetTevSwapModeTable(int table, int red, int green, int blue, int alpha)
 {
     u32 *kreg;
     int index = table * 2;

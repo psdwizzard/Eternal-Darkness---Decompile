@@ -37,10 +37,10 @@ struct OSMutex {
 extern s32 OSDisableInterrupts(void);
 extern s32 OSRestoreInterrupts(s32);
 extern void OSReport(const char *, ...);
-extern void fn_8020C5D0(const char *, int, const char *, ...);
-extern s32 fn_802102B4(OSThreadQueue *);
-extern s32 fn_8020DAF4(OSThread *);
-extern s32 fn_8020DB2C(OSThread *);
+extern void OSPanic(const char *, int, const char *, ...);
+extern s32 CheckThreadQueue(OSThreadQueue *);
+extern s32 __OSCheckDeadLock(OSThread *);
+extern s32 __OSCheckMutexes(OSThread *);
 extern u32 RunQueueBits_8064D988;
 volatile OSThreadQueue ActiveThreadQueue : 0x800000DC;
 extern OSThreadQueue RunQueue_80640E98[32];
@@ -49,7 +49,7 @@ extern const char lbl_8064C3E8[8];
 #define ASSERT_THREAD(condition, offset, line) \
     do { if (!(condition)) { \
         OSReport(diagnostic.text + (offset), line); \
-        fn_8020C5D0(diagnostic.text + 0x60, line, lbl_8064C3E8); \
+        OSPanic(diagnostic.text + 0x60, line, lbl_8064C3E8); \
     } } while (0)
 
 static inline s32 Contains(OSThreadQueue *queue, OSThread *thread)
@@ -87,7 +87,7 @@ enum {
 };
 
 /* Check scheduler queues and active threads with interrupts disabled. */
-s32 fn_80210350(void)
+s32 OSCheckActiveThreads(void)
 {
     OSThreadQueue *runQueues = RunQueue_80640E98;
     /* Assertion messages and the source filename share this packed table. */
@@ -107,7 +107,7 @@ s32 fn_80210350(void)
         } else {
             ASSERT_THREAD(!queue->head && !queue->tail, 0x6C, 0x56B);
         }
-        ASSERT_THREAD(fn_802102B4(queue), 0xCC, 0x56D);
+        ASSERT_THREAD(CheckThreadQueue(queue), 0xCC, 0x56D);
         priority++;
         queue++;
     } while (priority <= 31);
@@ -130,7 +130,7 @@ s32 fn_80210350(void)
         ASSERT_THREAD(*thread->stackEnd == 0xDEADBABE, 0x30C, 0x581);
         ASSERT_THREAD(thread->priority >= 0 && thread->priority <= 32, 0x360, 0x584);
         ASSERT_THREAD(thread->suspend >= 0, 0x3D4, 0x585);
-        ASSERT_THREAD(fn_802102B4(&thread->joinQueue), 0x410, 0x586);
+        ASSERT_THREAD(CheckThreadQueue(&thread->joinQueue), 0x410, 0x586);
         switch (thread->state) {
         case THREAD_READY:
             if (thread->suspend <= 0) {
@@ -146,24 +146,24 @@ s32 fn_80210350(void)
             break;
         case THREAD_WAITING:
             ASSERT_THREAD(thread->queue, 0x5E0, 0x597);
-            ASSERT_THREAD(fn_802102B4(thread->queue), 0x61C, 0x598);
+            ASSERT_THREAD(CheckThreadQueue(thread->queue), 0x61C, 0x598);
             ASSERT_THREAD(Contains(thread->queue, thread), 0x660, 0x599);
             if (thread->suspend <= 0) {
                 ASSERT_THREAD(thread->priority == EffectivePriority(thread), 0x504, 0x59C);
             } else {
                 ASSERT_THREAD(thread->priority == 32, 0x6A4, 0x5A0);
             }
-            ASSERT_THREAD(!fn_8020DAF4(thread), 0x6E0, 0x5A2);
+            ASSERT_THREAD(!__OSCheckDeadLock(thread), 0x6E0, 0x5A2);
             break;
         case THREAD_MORIBUND:
             ASSERT_THREAD(!thread->mutexHead && !thread->mutexTail, 0x720, 0x5A6);
             break;
         default:
             OSReport(diagnostic.text + 0x788, thread->state, thread);
-            fn_8020C5D0(diagnostic.text + 0x60, 0x5AC, lbl_8064C3E8);
+            OSPanic(diagnostic.text + 0x60, 0x5AC, lbl_8064C3E8);
             break;
         }
-        ASSERT_THREAD(fn_8020DB2C(thread), 0x7D0, 0x5B1);
+        ASSERT_THREAD(__OSCheckMutexes(thread), 0x7D0, 0x5B1);
     }
     OSRestoreInterrupts(enabled);
     return count;

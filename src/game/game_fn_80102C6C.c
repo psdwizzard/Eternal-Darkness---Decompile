@@ -17,7 +17,7 @@ typedef struct BitReader {
     DecodeTree* tree;
 } BitReader;
 
-s16 fn_80102C6C(BitReader* reader)
+s16 decodeHuff(BitReader* reader)
 {
     DecodeTree* tree = reader->tree;
     s16 node = tree->root;

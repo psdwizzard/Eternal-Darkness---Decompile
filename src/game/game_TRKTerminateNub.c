@@ -1,7 +1,7 @@
-extern void fn_800EFEA8(void);
+extern void TRKTerminateSerialHandler(void);
 
 int TRKTerminateNub(void)
 {
-    fn_800EFEA8();
+    TRKTerminateSerialHandler();
     return 0;
 }

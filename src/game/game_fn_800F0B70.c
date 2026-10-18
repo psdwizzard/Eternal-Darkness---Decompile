@@ -8,8 +8,8 @@ typedef struct TRKBuffer {
 
 extern int TRKTargetStopped(void);
 extern void TRKTargetContinue(void);
-extern int fn_800EFC9C(TRKBuffer *, int);
-extern int fn_800EF2A0(TRKBuffer *);
+extern int TRKResetBuffer(TRKBuffer *, int);
+extern int TRKMessageSend(TRKBuffer *);
 
 static void append(TRKBuffer *buffer, u8 value)
 {
@@ -19,28 +19,28 @@ static void append(TRKBuffer *buffer, u8 value)
     }
 }
 
-void fn_800F0B70(TRKBuffer *buffer)
+void TRKDoContinue(TRKBuffer *buffer)
 {
     int retry;
     int result;
 
     if (!TRKTargetStopped()) {
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, 0x16);
         retry = 3;
         do {
-            result = fn_800EF2A0(buffer);
+            result = TRKMessageSend(buffer);
             retry--;
             if (result == 0) break;
         } while (retry > 0);
     } else {
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, 0);
         retry = 3;
         do {
-            result = fn_800EF2A0(buffer);
+            result = TRKMessageSend(buffer);
             retry--;
             if (result == 0) break;
         } while (retry > 0);

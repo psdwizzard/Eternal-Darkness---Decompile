@@ -34,8 +34,8 @@ typedef struct Codebook {
 
 extern void *memset(void *, int, unsigned long);
 extern void fn_8022F8FC(void);
-extern float *fn_802358A0(StaticCodebook *b);
-extern DecodeAux *fn_80235C64(Codebook *c);
+extern float *_book_unquantize(StaticCodebook *b);
+extern DecodeAux *_make_decode_tree(Codebook *c);
 
 static void clear_codebook(register Codebook *c)
 {
@@ -52,7 +52,7 @@ static void clear_codebook(register Codebook *c)
 }
 
 /* vorbis_book_init_decode */
-s32 fn_8023570C(register Codebook *book, register StaticCodebook *source)
+s32 vorbis_book_init_decode(register Codebook *book, register StaticCodebook *source)
 {
     register StaticCodebook *s;
     register Codebook *c;
@@ -67,8 +67,8 @@ s32 fn_8023570C(register Codebook *book, register StaticCodebook *source)
     c->c = s;
     c->entries = s->entries;
     c->dim = s->dim;
-    c->valuelist = fn_802358A0(s);
-    c->decode_tree = fn_80235C64(c);
+    c->valuelist = _book_unquantize(s);
+    c->decode_tree = _make_decode_tree(c);
     if (c->decode_tree) {
         return 0;
     }

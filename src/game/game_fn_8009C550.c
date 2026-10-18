@@ -48,7 +48,7 @@ extern void fn_801D0CF0(Object *);
 extern void *fn_80201890(s32);
 extern Entry80201814 *fn_80201814(s32);
 extern u16 fn_8012DBE8(u8 *, u32, u8 *);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void *fn_801D62D0(u32 first_id, void *first_a, void *first_b,
                         u32 second_id, void *second_a, void *second_b,
                         int type, int spawn_first, int spawn_third,
@@ -108,7 +108,7 @@ void fn_8009C550(void *object)
             fn_8012DBE8(runtime, 15, (u8 *)&color);
             if (color.a >= 0x20) {
                 fn_801D62D0(owner, 0, (void *)1, handle, 0, (void *)1, data->object_id, 0,
-                            0, fn_800FBFB0() & 4, 0x10, 8, 3, 5, 0, 1, 0x11, 8,
+                            0, rand() & 4, 0x10, 8, 3, 5, 0, 1, 0x11, 8,
                             4, 0x20, 0, 0, 0x3C, 0x42040, 0x2030, 4);
                 fn_801AAE68(0xBE, 100, 0, lbl_8064ED48, position, 2, 2, 0,
                             lbl_8064D18C, 0);

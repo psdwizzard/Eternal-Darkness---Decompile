@@ -22,9 +22,9 @@ typedef union {
     GXFifoStorage storage;
 } GXFifoBuffer;
 
-extern __GXFifoObj *lbl_8064DB90;
+extern __GXFifoObj *CPUFifo;
 
-GXFifoBuffer *fn_80224640(void)
+GXFifoBuffer *GXGetCPUFifo(void)
 {
-    return (GXFifoBuffer *)lbl_8064DB90;
+    return (GXFifoBuffer *)CPUFifo;
 }

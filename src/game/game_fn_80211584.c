@@ -6,11 +6,11 @@ typedef struct Matrix34 {
     float m[3][4];
 } Matrix34;
 
-extern void fn_80211AAC(Vec3* in, Vec3* out);
-extern void fn_80211B64(Vec3* a, Vec3* b, Vec3* out);
+extern void PSVECNormalize(Vec3* in, Vec3* out);
+extern void PSVECCrossProduct(Vec3* a, Vec3* b, Vec3* out);
 
 /* Build a look-at view matrix from eye, up and target. */
-void fn_80211584(Matrix34* mtx, Vec3* eye, Vec3* up, Vec3* target) {
+void C_MTXLookAt(Matrix34* mtx, Vec3* eye, Vec3* up, Vec3* target) {
     Vec3 look;
     Vec3 right;
     Vec3 camUp;
@@ -19,10 +19,10 @@ void fn_80211584(Matrix34* mtx, Vec3* eye, Vec3* up, Vec3* target) {
     look.x = eye->x - target->x;
     look.y = eye->y - target->y;
     look.z = eye->z - target->z;
-    fn_80211AAC(&look, &look);
-    fn_80211B64(up, &look, &right);
-    fn_80211AAC(&right, &right);
-    fn_80211B64(&look, &right, &camUp);
+    PSVECNormalize(&look, &look);
+    PSVECCrossProduct(up, &look, &right);
+    PSVECNormalize(&right, &right);
+    PSVECCrossProduct(&look, &right, &camUp);
 
     mtx->m[0][0] = right.x;
     mtx->m[0][1] = right.y;

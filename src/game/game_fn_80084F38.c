@@ -126,14 +126,14 @@ extern unsigned long long fn_8020123C(int, int, int, int);
 extern void* fn_80201B3C(void);
 extern int fn_80201B54(int*);
 extern void* fn_80201BC8(void*);
-extern void fn_80211268(Mtx, char, f32);
-extern void fn_80211380(Mtx, const Vec3*, f32);
-extern void fn_80211710(Mtx, const Vec3*, Vec3*);
-extern void fn_80211A48(const Vec3*, const Vec3*, Vec3*);
-extern void fn_80211A90(const Vec3*, Vec3*, f32);
-extern void fn_80211AAC(const Vec3*, Vec3*);
-extern void fn_80211B64(const Vec3*, const Vec3*, Vec3*);
-extern void fn_80226AB4(s32, void*, s32);
+extern void PSMTXRotRad(Mtx, char, f32);
+extern void PSMTXRotAxisRad(Mtx, const Vec3*, f32);
+extern void PSMTXMultVec(Mtx, const Vec3*, Vec3*);
+extern void PSVECAdd(const Vec3*, const Vec3*, Vec3*);
+extern void PSVECScale(const Vec3*, Vec3*, f32);
+extern void PSVECNormalize(const Vec3*, Vec3*);
+extern void PSVECCrossProduct(const Vec3*, const Vec3*, Vec3*);
+extern void GXBegin(s32, void*, s32);
 
 static inline void drawIconVertex(const Vec3* vertex, s16 x, s16 y, s16 inset)
 {
@@ -232,13 +232,13 @@ void fn_80084F38(void)
             for (iconIndex = 0; iconIndex < 2; iconIndex++) {
                 image = ((Resource*)fn_8015C2FC(2))->image;
                 quad = constants->quad;
-                fn_80211268(iconRotation, 'z',
+                PSMTXRotRad(iconRotation, 'z',
                     lbl_8031CBA0.icons[lbl_8031CD84.selected].angles[iconIndex] +
                     lbl_8031CD84.icons[lbl_8031CD84.selected].angles[iconIndex]);
-                fn_80211710(iconRotation, &quad.v[0], &quad.v[0]);
-                fn_80211710(iconRotation, &quad.v[1], &quad.v[1]);
-                fn_80211710(iconRotation, &quad.v[2], &quad.v[2]);
-                fn_80211710(iconRotation, &quad.v[3], &quad.v[3]);
+                PSMTXMultVec(iconRotation, &quad.v[0], &quad.v[0]);
+                PSMTXMultVec(iconRotation, &quad.v[1], &quad.v[1]);
+                PSMTXMultVec(iconRotation, &quad.v[2], &quad.v[2]);
+                PSMTXMultVec(iconRotation, &quad.v[3], &quad.v[3]);
                 iconX = lbl_8031CD84.icons[lbl_8031CD84.selected].positions[iconIndex].x;
                 iconY = lbl_8031CD84.icons[lbl_8031CD84.selected].positions[iconIndex].y;
                 fn_801ED3F4(image);
@@ -253,7 +253,7 @@ void fn_80084F38(void)
                 fn_801A852C(&shadowColor, 5, 1, 0x80000000);
                 if ((u32) lbl_8031CD84.icons[lbl_8031CD84.selected].enabled[iconIndex] != 0U) {
                     fn_801ECF50(6);
-                    fn_80226AB4(0x80, (void*)5, 4);
+                    GXBegin(0x80, (void*)5, 4);
                     drawIconVertex(&quad.v[0], iconX, iconY, 0x25);
                     fn_800861F8(0);
                     drawIconVertex(&quad.v[1], iconX, iconY, 0x25);
@@ -266,7 +266,7 @@ void fn_80084F38(void)
                     faceColor = lbl_8064C2A8;
                     fn_801A852C(&faceColor, 0, 2, 0x80000000);
                     fn_801ECF50(6);
-                    fn_80226AB4(0x80, (void*)5, 4);
+                    GXBegin(0x80, (void*)5, 4);
                     drawIconVertex(&quad.v[0], iconX, iconY, 0x20);
                     fn_800861F8(0);
                     drawIconVertex(&quad.v[1], iconX, iconY, 0x20);
@@ -381,27 +381,27 @@ void fn_80084F38(void)
             forward.x = forwardX;
             forward.y = forwardY;
             forward.z = target.z - camera.z;
-            fn_80211AAC(&forward, &forward);
-            fn_80211A90(&forward, &center, lbl_8064EB14);
-            fn_80211A48(&camera, &center, &center);
+            PSVECNormalize(&forward, &forward);
+            PSVECScale(&forward, &center, lbl_8064EB14);
+            PSVECAdd(&camera, &center, &center);
             radialX = -forward.x;
             radialY = -forward.y;
             radial.x = radialX;
             radial.y = radialY;
             radial.z = -forward.z;
-            fn_80211A90(&radial, &radial, lbl_8064EB18);
+            PSVECScale(&radial, &radial, lbl_8064EB18);
             horizontal.x = forward.x;
             horizontal.y = forward.y;
             horizontal.z = lbl_8064EA14;
-            fn_80211268(tilt, 0x7A, lbl_8064EB1C);
-            fn_80211710(tilt, &horizontal, &horizontal);
-            fn_80211B64(&horizontal, &forward, &axis);
-            fn_80211380(tilt, &horizontal, lbl_8064EB20);
-            fn_80211710(tilt, &axis, &axis);
-            fn_80211710(tilt, &radial, &radial);
-            fn_80211380(ringRotation, &axis, lbl_8031CBA0.ringAngle);
-            fn_80211380(ringStep, &axis, -angleStep);
-            fn_80211710(ringRotation, &radial, &radial);
+            PSMTXRotRad(tilt, 0x7A, lbl_8064EB1C);
+            PSMTXMultVec(tilt, &horizontal, &horizontal);
+            PSVECCrossProduct(&horizontal, &forward, &axis);
+            PSMTXRotAxisRad(tilt, &horizontal, lbl_8064EB20);
+            PSMTXMultVec(tilt, &axis, &axis);
+            PSMTXMultVec(tilt, &radial, &radial);
+            PSMTXRotAxisRad(ringRotation, &axis, lbl_8031CBA0.ringAngle);
+            PSMTXRotAxisRad(ringStep, &axis, -angleStep);
+            PSMTXMultVec(ringRotation, &radial, &radial);
             angle = lbl_8031CBA0.ringAngle;
             objectCursor = &lbl_8031CD84;
             objectIndex = 0;
@@ -413,7 +413,7 @@ void fn_80084F38(void)
                     } else if (angle < lbl_8064EA14) {
                         angle += fullTurn;
                     }
-                    fn_80211A48(&center, &radial, &position);
+                    PSVECAdd(&center, &radial, &position);
                     {
                         f32 alphaDistance, alphaScale, alphaBase, alphaProduct;
                         alphaDistance = angle - lbl_8064EB2C;
@@ -433,7 +433,7 @@ void fn_80084F38(void)
                                     &startColor, (s8*)&colorDelta, &endColor, 4);
                     }
                     fn_8011F0E8(objectCursor->objects[0], &position);
-                    fn_80211710(ringStep, &radial, &radial);
+                    PSMTXMultVec(ringStep, &radial, &radial);
                     angle -= angleStep;
                 }
                 objectIndex += 1;

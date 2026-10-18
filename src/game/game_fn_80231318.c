@@ -1,7 +1,7 @@
-/* fn_80231318 (0x80231318, 448 bytes) */
+/* floor1_inverse2 (0x80231318, 448 bytes) */
 
 extern void* memset(void*, int, unsigned int);
-extern void fn_802317A4(int prevPos, int pos, int prevValue, int value, float* out);
+extern void render_line(int prevPos, int pos, int prevValue, int value, float* out);
 
 typedef struct InterpTable {
     char pad0[0xD4];
@@ -28,7 +28,7 @@ typedef struct InterpOwner {
     SizeInfo** info;        /* 0x38 */
 } InterpOwner;
 
-int fn_80231318(InterpOwner* owner, InterpKeys* keys, int* values, float* out) {
+int floor1_inverse2(InterpOwner* owner, InterpKeys* keys, int* values, float* out) {
     InterpTable* table = keys->table;
     int size = (*owner->info)->sizes[owner->sizeIndex];
     int n = (int)(((unsigned int)size >> 31) + size) >> 1;
@@ -51,7 +51,7 @@ int fn_80231318(InterpOwner* owner, InterpKeys* keys, int* values, float* out) {
             if (value == raw) {
                 pos = table->pos[*index];
                 value *= table->scale;
-                fn_802317A4(prevPos, pos, prevValue, value, out);
+                render_line(prevPos, pos, prevValue, value, out);
                 prevPos = pos;
                 prevValue = value;
             }

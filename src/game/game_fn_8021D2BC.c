@@ -1,4 +1,4 @@
-/* fn_8021D2BC: __CARDGetControlBlock. */
+/* __CARDGetControlBlock: __CARDGetControlBlock. */
 typedef unsigned char u8;
 typedef signed int s32;
 typedef int BOOL;
@@ -13,17 +13,17 @@ typedef struct CARDControl {
     const void *diskID;
 } CARDControl;
 
-extern CARDControl lbl_80641C60[];
+extern CARDControl __CARDBlock[];
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
 
-s32 fn_8021D2BC(s32 chan, CARDControl **outCard)
+s32 __CARDGetControlBlock(s32 chan, CARDControl **outCard)
 {
     s32 result;
     CARDControl *card;
     BOOL enabled;
 
-    card = &lbl_80641C60[chan];
+    card = &__CARDBlock[chan];
     if (chan < 0 || chan >= 2 || card->diskID == 0) {
         return -128;
     }

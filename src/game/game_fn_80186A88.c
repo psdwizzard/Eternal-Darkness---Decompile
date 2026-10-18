@@ -31,7 +31,7 @@ extern void fn_8018E26C(void *, void *);
 extern void fn_801865EC(void *, SixBytes *, int);
 extern void fn_80186954(void *, void *, Vec3 *, int, SixBytes *);
 extern void fn_8018E230(void *, void *, int, u8, u8, int);
-extern void fn_80211A48(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECAdd(Vec3 *, Vec3 *, Vec3 *);
 extern void fn_80198154(void *, void *, int, int, Vec3 *);
 int fn_80186A88(u8 *self)
 {
@@ -78,7 +78,7 @@ int fn_80186A88(u8 *self)
         loop[0] += 0xC;
     }
 
-    fn_80211A48((Vec3 *) (state + 0x60), (Vec3 *) (state + 0x6C), (Vec3 *) (state + 0x60));
+    PSVECAdd((Vec3 *) (state + 0x60), (Vec3 *) (state + 0x6C), (Vec3 *) (state + 0x60));
     component = *((float *) (state + 0x60));
     if (component > lbl_80650A20) {
         component = *((float *) (state + 0x6C));

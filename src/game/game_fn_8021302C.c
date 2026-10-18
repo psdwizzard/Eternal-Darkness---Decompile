@@ -1,4 +1,4 @@
-/* fn_8021302C (0x8021302C, 756 bytes): DVDConvertPathToEntrynum (SDK dvdfs.c) */
+/* DVDConvertPathToEntrynum (0x8021302C, 756 bytes): DVDConvertPathToEntrynum (SDK dvdfs.c) */
 
 typedef int s32;
 typedef unsigned int u32;
@@ -12,12 +12,12 @@ typedef struct FSTEntry {
     unsigned int nextEntryOrLength;
 } FSTEntry;
 
-extern int fn_800F8CF0(int); /* tolower */
-extern void fn_8020C5D0(const char *, int, const char *, ...); /* OSPanic */
+extern int tolower(int); /* tolower */
+extern void OSPanic(const char *, int, const char *, ...); /* OSPanic */
 
 extern FSTEntry *FstStart_8064D9E4;
 extern char *FstStringStart_8064D9E8;
-extern u32 lbl_8064D9F0; /* currentDirectory */
+extern u32 currentDirectory; /* currentDirectory */
 extern u32 __DVDLongFileNameFlag;
 extern const char lbl_8064C400[8]; /* "dvdfs.c" */
 extern char lbl_802FE150[];
@@ -29,7 +29,7 @@ extern char lbl_802FE150[];
 
 static inline BOOL isSame(const char *path, const char *string) {
     while (*string != '\0') {
-        if (fn_800F8CF0(*path++) != fn_800F8CF0(*string++)) {
+        if (tolower(*path++) != tolower(*string++)) {
             return FALSE;
         }
     }
@@ -39,7 +39,7 @@ static inline BOOL isSame(const char *path, const char *string) {
     return FALSE;
 }
 
-s32 fn_8021302C(char *pathPtr) {
+s32 DVDConvertPathToEntrynum(char *pathPtr) {
     const char *ptr;
     char *stringPtr;
     BOOL isDir;
@@ -51,7 +51,7 @@ s32 fn_8021302C(char *pathPtr) {
     BOOL illegal;
     BOOL extention;
 
-    dirLookAt = lbl_8064D9F0;
+    dirLookAt = currentDirectory;
 
     while (1) {
         if (*pathPtr == '\0') {
@@ -99,7 +99,7 @@ s32 fn_8021302C(char *pathPtr) {
             }
 
             if (illegal) {
-                fn_8020C5D0(lbl_8064C400, 376, lbl_802FE150, origPathPtr);
+                OSPanic(lbl_8064C400, 376, lbl_802FE150, origPathPtr);
             }
         } else {
             for (ptr = pathPtr; (*ptr != '\0') && (*ptr != '/'); ptr++) {

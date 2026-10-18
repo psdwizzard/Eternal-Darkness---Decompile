@@ -4,7 +4,7 @@ extern int lbl_80331A08[];
 typedef signed short s16;
 typedef struct TextDescriptor TextDescriptor;
 
-extern double fn_8016A694(void*, int);
+extern double lua_tonumber(void*, int);
 extern unsigned int fn_800F5C54(double);
 extern void* fn_801E6CA0(void*, int, int, int, int);
 extern int fn_801E8D24(int);
@@ -21,8 +21,8 @@ int fn_80112754(void* object)
 
     mode = fn_801E8D24(lbl_80331A08[5]);
     item = fn_801E6CA0(lbl_8064C504,
-                      fn_800F5C54(fn_8016A694(object, 1)),
-                      fn_800F5C54(fn_8016A694(object, 2)), 0, 1);
+                      fn_800F5C54(lua_tonumber(object, 1)),
+                      fn_800F5C54(lua_tonumber(object, 2)), 0, 1);
 
     switch (mode) {
     case 0:
@@ -42,7 +42,7 @@ int fn_80112754(void* object)
         break;
     }
 
-    fn_80027730(item, (int)fn_8016A694(object, 3), 0);
+    fn_80027730(item, (int)lua_tonumber(object, 3), 0);
     return 0;
 }
 #pragma opt_lifetimes reset

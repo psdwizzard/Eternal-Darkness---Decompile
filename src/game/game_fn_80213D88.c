@@ -8,16 +8,16 @@ typedef struct DVDCommandBlock {
 } DVDCommandBlock;
 
 extern DVDCommandBlock *executing_8064DA00;
-extern u32 lbl_8064DA30;
-extern s32 lbl_8064DA34;
+extern u32 LastError;
+extern s32 NumInternalRetry;
 
 /* Categorize a drive error, tracking the previous error and retry count. */
-u32 fn_80213D88(u32 error)
+u32 CategorizeError(u32 error)
 {
     u32 errorCode;
 
     if (error == 0x00020400) {
-        lbl_8064DA30 = error;
+        LastError = error;
         return 1;
     }
 
@@ -28,17 +28,17 @@ u32 fn_80213D88(u32 error)
     }
 
     /* The retry counter is shared with the DVD interrupt callbacks. */
-    (*(volatile s32 *)&lbl_8064DA34)++;
-    if (*(volatile s32 *)&lbl_8064DA34 == 2) {
-        if (errorCode == lbl_8064DA30) {
-            lbl_8064DA30 = errorCode;
+    (*(volatile s32 *)&NumInternalRetry)++;
+    if (*(volatile s32 *)&NumInternalRetry == 2) {
+        if (errorCode == LastError) {
+            LastError = errorCode;
             return 1;
         }
-        lbl_8064DA30 = errorCode;
+        LastError = errorCode;
         return 2;
     }
 
-    lbl_8064DA30 = errorCode;
+    LastError = errorCode;
     if (errorCode == 0x00031100 || executing_8064DA00->command == 5) {
         return 2;
     }

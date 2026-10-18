@@ -21,14 +21,14 @@ typedef struct OSContext {
 } OSContext;
 
 typedef void (*ARCallback)(void);
-extern ARCallback lbl_8064DB18;
+extern ARCallback __AR_Callback;
 extern void OSClearContext(OSContext* context);
 extern void OSSetCurrentContext(OSContext* context);
 
 volatile u16 __DSPRegs[] : 0xCC005000;
 
 /* Acknowledge ARAM DMA completion and run its callback in a temporary context. */
-void fn_8021AB6C(s16 interrupt, OSContext* context)
+void __ARHandler(s16 interrupt, OSContext* context)
 {
     OSContext exceptionContext;
     u16 control;
@@ -38,8 +38,8 @@ void fn_8021AB6C(s16 interrupt, OSContext* context)
     __DSPRegs[5] = control;
     OSClearContext(&exceptionContext);
     OSSetCurrentContext(&exceptionContext);
-    if (lbl_8064DB18 != 0) {
-        lbl_8064DB18();
+    if (__AR_Callback != 0) {
+        __AR_Callback();
     }
     OSClearContext(&exceptionContext);
     OSSetCurrentContext(context);

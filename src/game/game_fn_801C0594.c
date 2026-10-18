@@ -22,9 +22,9 @@ struct Voice {
 };
 #pragma pack()
 
-extern void fn_801C09C4(Voice*);
+extern void macMakeActive(Voice*);
 
-void fn_801C0594(Voice* voice)
+void macSampleEndNotify(Voice* voice)
 {
     u32 changed;
 
@@ -33,14 +33,14 @@ void fn_801C0594(Voice* voice)
             voice->value_038 = voice->value_060;
             voice->value_034 = voice->value_054;
             voice->value_054 = 0;
-            fn_801C09C4(voice);
+            macMakeActive(voice);
             changed = 1;
         } else {
             changed = 0;
         }
 
         if (changed == 0 && (voice->flags_114 & 0x40000) != 0) {
-            fn_801C09C4(voice);
+            macMakeActive(voice);
         }
     }
 }

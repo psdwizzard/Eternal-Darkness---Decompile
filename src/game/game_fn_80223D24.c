@@ -1,4 +1,4 @@
-/* fn_80223D24 (GXInitFifoPtrs, Dolphin SDK GXFifo.c).
+/* GXInitFifoPtrs (GXInitFifoPtrs, Dolphin SDK GXFifo.c).
  * Sets a FIFO's read and write pointers and recomputes how many bytes lie
  * between them, wrapping around the FIFO size when the write pointer is
  * behind the read pointer. Interrupts are disabled while the FIFO is updated. */
@@ -26,7 +26,7 @@ typedef struct {
 BOOL OSDisableInterrupts(void);
 BOOL OSRestoreInterrupts(BOOL level);
 
-void fn_80223D24(__GXFifoObj *fifo, void *readPtr, void *writePtr) {
+void GXInitFifoPtrs(__GXFifoObj *fifo, void *readPtr, void *writePtr) {
     __GXFifoObj *realFifo = fifo;
     BOOL enabled = OSDisableInterrupts();
 

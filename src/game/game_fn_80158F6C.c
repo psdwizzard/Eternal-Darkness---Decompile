@@ -21,7 +21,7 @@ extern char lbl_805B6FFC[];
 extern int fn_80158E88(int);
 extern u32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(u32);
-extern void fn_8020D250(void*, u32, int);
+extern void OSSendMessage(void*, u32, int);
 
 void fn_80158F6C(int id, int slot)
 {
@@ -42,7 +42,7 @@ void fn_80158F6C(int id, int slot)
             lbl_805B6FE0.states[slot]->active = 1;
             OSRestoreInterrupts(interrupts);
             request = id | 0x40000000 | (index << 12);
-            fn_8020D250(lbl_805B6FFC,
+            OSSendMessage(lbl_805B6FFC,
                         (request | message), 1);
         } else {
             OSRestoreInterrupts(interrupts);

@@ -20,11 +20,11 @@ struct Voice {
 };
 #pragma pack()
 
-extern Voice* lbl_8064D43C;
-extern Voice* lbl_8064D440;
-extern u64 lbl_8064D448;
+extern Voice* macActiveMacroRoot;
+extern Voice* macTimeQueueRoot;
+extern u64 macRealTime;
 
-void fn_801C0ACC(Voice* voice, int active)
+void macMakeInactive(Voice* voice, int active)
 {
     if (voice->active_04C == active) {
         return;
@@ -32,7 +32,7 @@ void fn_801C0ACC(Voice* voice, int active)
 
     if (voice->active_04C == 0) {
         if (voice->active_next_040 == 0) {
-            lbl_8064D43C = voice->active_prev_03C;
+            macActiveMacroRoot = voice->active_prev_03C;
         } else {
             voice->active_next_040->active_prev_03C = voice->active_prev_03C;
         }
@@ -44,7 +44,7 @@ void fn_801C0ACC(Voice* voice, int active)
     if (active == 2 && voice->scheduled_time_098 != 0) {
         if (voice->scheduled_time_098 != ~0ULL) {
             if (voice->scheduled_prev_048 == 0) {
-                lbl_8064D440 = voice->scheduled_next_044;
+                macTimeQueueRoot = voice->scheduled_next_044;
             } else {
                 voice->scheduled_prev_048->scheduled_next_044 = voice->scheduled_next_044;
             }
@@ -53,7 +53,7 @@ void fn_801C0ACC(Voice* voice, int active)
             }
         }
         voice->scheduled_time_098 = 0;
-        voice->current_time_0A0 = lbl_8064D448;
+        voice->current_time_0A0 = macRealTime;
         voice->flags_114 &= ~0x40004ULL;
     }
 

@@ -31,8 +31,8 @@ extern const f32 lbl_8064DE90;
 extern const f32 lbl_8064DE94;
 extern s32 lbl_806518D8;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
 extern unsigned int fn_800F5C54(double);
 extern int fn_8015C4A4(int, int);
 extern Vec3s* fn_80158ABC(int, int, void*);
@@ -49,7 +49,7 @@ extern void* fn_8012C62C(void*, s32, void*, void*, void*, s32);
 extern unsigned int fn_8011FA8C(void*, int, int);
 extern void fn_8012CBE8(s32, s32, Vec3f*, Vec3f*, Vec3f*, s32);
 extern void fn_8012F58C(s32, s32, s32, s32, s32, s32);
-extern void fn_80163BB4(void*, const char*, ...);
+extern void luaO_verror(void*, const char*, ...);
 
 s32 fn_80019F98(void* script)
 {
@@ -71,15 +71,15 @@ s32 fn_80019F98(void* script)
 
     state = script;
 
-    switch (fn_8016A598(state)) {
+    switch (lua_gettop(state)) {
     case 5:
-        duration = (f32)fn_8016A694(state, 5);
+        duration = (f32)lua_tonumber(state, 5);
     case 4:
-        scale = lbl_8064DE90 * (f32)fn_8016A694(state, 4);
+        scale = lbl_8064DE90 * (f32)lua_tonumber(state, 4);
     case 3:
-        value = (f32)fn_8016A694(state, 3);
-        kind = (s32)fn_8016A694(state, 2);
-        handle = fn_800F5C54(fn_8016A694(state, 1));
+        value = (f32)lua_tonumber(state, 3);
+        kind = (s32)lua_tonumber(state, 2);
+        handle = fn_800F5C54(lua_tonumber(state, 1));
         break;
     }
 
@@ -118,7 +118,7 @@ s32 fn_80019F98(void* script)
                          (s32)(value - lbl_8064DE94), 0x100);
         }
     } else {
-        fn_80163BB4(state, strings + 0xD3C, handle);
+        luaO_verror(state, strings + 0xD3C, handle);
     }
     return 0;
 }

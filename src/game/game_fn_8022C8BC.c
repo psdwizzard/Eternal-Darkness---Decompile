@@ -10,7 +10,7 @@ typedef struct IntrusiveList {
 } IntrusiveList;
 
 /* Insert an entry before the given object; null appends to the list. */
-void fn_8022C8BC(IntrusiveList *list, void *before, void *entry)
+void DSInsertListObject(IntrusiveList *list, void *before, void *entry)
 {
     void *first = list->first;
     unsigned int offset = list->linkOffset;

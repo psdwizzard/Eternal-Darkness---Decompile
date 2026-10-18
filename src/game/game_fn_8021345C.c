@@ -5,11 +5,11 @@ typedef int BOOL;
 typedef struct DVDCommandBlock DVDCommandBlock;
 typedef struct DVDFileInfo DVDFileInfo;
 
-extern s32 fn_80215FAC(DVDCommandBlock *block);
+extern s32 DVDCancel(DVDCommandBlock *block);
 
-BOOL fn_8021345C(DVDFileInfo *fileInfo)
+BOOL DVDClose(DVDFileInfo *fileInfo)
 {
     /* The command block is the first member of DVDFileInfo. */
-    fn_80215FAC((DVDCommandBlock *)fileInfo);
+    DVDCancel((DVDCommandBlock *)fileInfo);
     return 1;
 }

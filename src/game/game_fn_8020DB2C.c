@@ -38,10 +38,10 @@ struct OSMutex {
     OSMutex *prev;
 };
 
-extern s32 fn_8020D9F4(OSMutex *mutex);
+extern s32 __OSCheckMutex(OSMutex *mutex);
 
 /* Validate every mutex held by this thread. */
-s32 fn_8020DB2C(OSThread *thread)
+s32 __OSCheckMutexes(OSThread *thread)
 {
     OSMutex *mutex;
 
@@ -49,7 +49,7 @@ s32 fn_8020DB2C(OSThread *thread)
         if (mutex->owner != thread) {
             return 0;
         }
-        if (fn_8020D9F4(mutex) == 0) {
+        if (__OSCheckMutex(mutex) == 0) {
             return 0;
         }
     }

@@ -39,10 +39,10 @@ extern int fn_800467E8(void);
 extern void* memset(void*, int, u32);
 extern void* fn_8015D424(int*, void*);
 extern void fn_8015D44C(void);
-extern int fn_800F9D4C(char*, const char*, ...);
+extern int sprintf(char*, const char*, ...);
 extern int fn_8015D6D0(void*, u8*, int);
-extern int fn_80213394(void*, FileInfo*);
-extern void fn_8021345C(FileInfo*);
+extern int DVDOpen(void*, FileInfo*);
+extern void DVDClose(FileInfo*);
 extern int fn_801382B4(int, ResourceHeader*, int*);
 extern void* fn_80138A6C(u32, int);
 extern ResourceObject* fn_80139B1C(u8*, int, u32*, void*, void*, int);
@@ -77,9 +77,9 @@ void fn_801383B4(int slot_index, int mode)
     parent = -1;
     header = fn_8015D424(&scratch_size, (void*)1);
     source_data = (int)((u8*)header + 0x8000);
-    fn_800F9D4C(slot->name, lbl_8024EF08, slot_index);
+    sprintf(slot->name, lbl_8024EF08, slot_index);
     read_size = fn_8015D6D0(slot->name, (u8*)header, 0x8000);
-    fn_80213394(slot->name, &file);
+    DVDOpen(slot->name, &file);
     if ((u32)read_size == 0x20) {
         parent = header->parent;
     } else if (read_size != 0) {
@@ -103,7 +103,7 @@ void fn_801383B4(int slot_index, int mode)
             fn_8012B408(dest->object, dest->data);
         }
     }
-    fn_8021345C(&file);
+    DVDClose(&file);
     fn_8015D44C();
     if (parent != -1) {
         fn_801383B4(parent, mode);

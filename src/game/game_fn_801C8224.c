@@ -41,24 +41,24 @@ struct Voice {
     int handle;
 };
 
-extern Voice* lbl_8064D4BC;
-extern Sample* lbl_8064D4C0;
-extern Target* lbl_8064D4C4;
-extern u32 lbl_8064D4CC;
-extern u8 lbl_8064D4D0;
-extern u8 lbl_8064D4D1;
+extern Voice* s3dEmitterRoot;
+extern Sample* s3dListenerRoot;
+extern Target* s3dRoomRoot;
+extern u32 snd_used_studios;
+extern u8 snd_base_studio;
+extern u8 snd_max_studios;
 extern float lbl_80650FB0;
 extern double lbl_80650FB8;
 extern float lbl_80650FC0;
 extern float lbl_80650FC4;
 extern double lbl_80650FC8;
 
-extern void fn_801C8160(void);
-extern void fn_801B80D8(int);
-extern void fn_801B9170(int, int, int);
-extern void fn_801B9220(u8);
+extern void UpdateRoomDistances(void);
+extern void synthSendKeyOff(int);
+extern void synthActivateStudio(int, int, int);
+extern void synthDeactivateStudio(u8);
 
-void fn_801C8224(void)
+void CheckRoomStatus(void)
 {
     Target* candidate;
     Target* target;
@@ -74,20 +74,20 @@ void fn_801C8224(void)
     float best_distance;
     float delta[3];
 
-    fn_801C8160();
+    UpdateRoomDistances();
 
     count = 0;
-    sample = lbl_8064D4C0;
+    sample = s3dListenerRoot;
     while (sample != 0) {
         sample = sample->next;
         count++;
     }
 
     if (count != 0) {
-        target = lbl_8064D4C4;
+        target = s3dRoomRoot;
         while (target != 0) {
             if (target->channel == 0xFF) {
-                sample = lbl_8064D4C0;
+                sample = s3dListenerRoot;
                 distance = lbl_80650FB0;
                 {
                     Sample* cursor = sample;
@@ -110,19 +110,19 @@ void fn_801C8224(void)
                     sample = sample->next;
                 }
 
-                channel_count = lbl_8064D4D1;
+                channel_count = snd_max_studios;
                 channel_mask = ~(-1 << channel_count);
-                if ((channel_mask & lbl_8064D4CC) != channel_mask) {
+                if ((channel_mask & snd_used_studios) != channel_mask) {
                     for (channel = 0; channel < channel_count; channel++) {
-                        if ((lbl_8064D4CC & (1 << channel)) == 0) {
+                        if ((snd_used_studios & (1 << channel)) == 0) {
                             break;
                         }
                     }
-                    lbl_8064D4CC |= 1 << channel;
-                    target->channel = channel + lbl_8064D4D0;
+                    snd_used_studios |= 1 << channel;
+                    target->channel = channel + snd_base_studio;
                 } else {
                     best_distance = lbl_80650FC0;
-                    stolen = lbl_8064D4C4;
+                    stolen = s3dRoomRoot;
                     while (stolen != 0) {
                         if (stolen->channel != 0xFF && best_distance < stolen->mean_square_distance) {
                             best_distance = stolen->mean_square_distance;
@@ -133,10 +133,10 @@ void fn_801C8224(void)
                     stolen = candidate;
 
                     if (found || best_distance > distance) {
-                        voice = lbl_8064D4BC;
+                        voice = s3dEmitterRoot;
                         while (voice != 0) {
                             if (voice->target == stolen) {
-                                fn_801B80D8(voice->handle);
+                                synthSendKeyOff(voice->handle);
                                 voice->flags |= 0x00080000;
                                 voice->handle = -1;
                             }
@@ -145,7 +145,7 @@ void fn_801C8224(void)
                         if (stolen->on_stolen != 0) {
                             stolen->on_stolen(stolen->channel);
                         }
-                        fn_801B9220(stolen->channel);
+                        synthDeactivateStudio(stolen->channel);
                         target->channel = stolen->channel;
                         stolen->channel = 0xFF;
                         stolen->owner = 0;
@@ -157,9 +157,9 @@ void fn_801C8224(void)
                 target->mean_square_distance = distance;
                 target->fade = found ? 0x007F0000 : 0;
                 if (target->fade * 1.2014794e-07f >= 0.5) {
-                    fn_801B9170(target->channel, 1, 0);
+                    synthActivateStudio(target->channel, 1, 0);
                 } else {
-                    fn_801B9170(target->channel, 0, 0);
+                    synthActivateStudio(target->channel, 0, 0);
                 }
                 if (target->on_start != 0) {
                     target->on_start(target->channel, target->callback_arg);
@@ -172,9 +172,9 @@ void fn_801C8224(void)
                         target->owner &= 0x7FFFFFFF;
                     }
                     if (target->fade * 1.2014794e-07f >= 0.5) {
-                        fn_801B9170(target->channel, 1, 0);
+                        synthActivateStudio(target->channel, 1, 0);
                     } else {
-                        fn_801B9170(target->channel, 0, 0);
+                        synthActivateStudio(target->channel, 0, 0);
                     }
                 }
                 if ((target->owner & 0x40000000) != 0) {
@@ -184,9 +184,9 @@ void fn_801C8224(void)
                         target->owner &= 0xBFFFFFFF;
                     }
                     if (target->fade * 1.2014794e-07f >= 0.5) {
-                        fn_801B9170(target->channel, 1, 0);
+                        synthActivateStudio(target->channel, 1, 0);
                     } else {
-                        fn_801B9170(target->channel, 0, 0);
+                        synthActivateStudio(target->channel, 0, 0);
                     }
                 }
             }

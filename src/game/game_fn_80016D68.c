@@ -7,9 +7,9 @@ char lbl_8023CB90[] =
 extern void* lbl_8064C4E0;
 extern void* lbl_8064C504;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_8016B400(int, int, int);
 extern void *fn_80201814();
 extern void* fn_80201C24();
@@ -32,18 +32,18 @@ s32 fn_80016D68(void* script_arg)
     void* script = script_arg;
     void* object;
 
-    if (fn_8016A598(script) > 0) {
-        object_id = (s32)fn_8016A694(script, 1);
+    if (lua_gettop(script) > 0) {
+        object_id = (s32)lua_tonumber(script, 1);
 
-        if (fn_8016A598(script) >= 2) {
-            value2 = (s32)fn_8016A694(script, 2);
+        if (lua_gettop(script) >= 2) {
+            value2 = (s32)lua_tonumber(script, 2);
         }
 
-        if (fn_8016A598(script) == 3) {
-            value3 = (s32)fn_8016A694(script, 3);
+        if (lua_gettop(script) == 3) {
+            value3 = (s32)lua_tonumber(script, 3);
         }
     } else {
-        fn_80163BB4(script, lbl_8023CB90, fn_8016A598(script));
+        luaO_verror(script, lbl_8023CB90, lua_gettop(script));
         return 0;
     }
 

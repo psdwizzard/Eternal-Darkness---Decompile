@@ -14,7 +14,7 @@ typedef struct Block {
     unsigned long size_;
 } Block;
 
-extern void fn_800F6C00(SubBlock* ths, SubBlock** start); /* SubBlock_merge_next */
+extern void SubBlock_merge_next(SubBlock* ths, SubBlock** start); /* SubBlock_merge_next */
 
 #define SubBlock_size(ths) ((ths)->size_ & ~7)
 #define Block_size(ths) ((ths)->size_ & ~7)
@@ -55,7 +55,7 @@ static inline SubBlock* SubBlock_merge_prev(SubBlock* ths, SubBlock** start)
     return ths;
 }
 
-void fn_800F6CBC(Block* ths, SubBlock* sb)
+void Block_link(Block* ths, SubBlock* sb)
 {
     SubBlock** st;
 
@@ -68,7 +68,7 @@ void fn_800F6CBC(Block* ths, SubBlock* sb)
         (*st)->prev_ = sb;
         *st = sb;
         *st = SubBlock_merge_prev(*st, st);
-        fn_800F6C00(*st, st);
+        SubBlock_merge_next(*st, st);
     } else {
         *st = sb;
         sb->prev_ = sb;

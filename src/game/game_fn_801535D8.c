@@ -19,7 +19,7 @@ extern int fn_80199108(void*);
 extern int fn_8017FEA4(void*);
 extern u8 fn_80199118(void*);
 extern int fn_80199100(void*);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void* fn_8017FDA8(void*, int);
 extern void fn_801534D8(void*, float, short*);
 extern void fn_8019916C(void*, int);
@@ -76,7 +76,7 @@ void fn_801535D8(void* object, void* other)
                     goto done;
                 }
                 count = fn_80199100(runtime);
-                fraction = (float)((int)fn_800FBFB0() & 15) / 15.0f;
+                fraction = (float)((int)rand() & 15) / 15.0f;
                 fn_801534D8(other_state, fraction,
                             (short*)fn_8017FDA8(runtime, (u8)count));
                 fn_8019916C(runtime, 1);

@@ -1,4 +1,4 @@
-/* fn_8020AD80 (0x8020AD80, 252 bytes): OSAllocFromHeap (Dolphin OS alloc.c).
+/* OSAllocFromHeap (0x8020AD80, 252 bytes): OSAllocFromHeap (Dolphin OS alloc.c).
  * First-fit allocation from a heap's free list; splits the chosen cell when
  * enough is left over and moves it to the front of the allocated list. */
 
@@ -14,7 +14,7 @@ typedef struct HeapDesc {
     Cell *allocated;
 } HeapDesc;
 
-extern HeapDesc *lbl_8064D920; /* HeapArray */
+extern HeapDesc *HeapArray; /* HeapArray */
 
 static Cell *DLAddFront(Cell *list, Cell *cell) {
     cell->next = list;
@@ -37,13 +37,13 @@ static Cell *DLExtract(Cell *list, Cell *cell) {
     }
 }
 
-void *fn_8020AD80(int heap, unsigned long size) {
+void *OSAllocFromHeap(int heap, unsigned long size) {
     HeapDesc *hd;
     Cell *cell;
     Cell *newCell;
     unsigned long leftoverSize;
 
-    hd = &lbl_8064D920[heap];
+    hd = &HeapArray[heap];
     size = (size + 0x20 + 0x1F) & ~0x1F;
 
     for (cell = hd->free; cell != 0; cell = cell->next) {

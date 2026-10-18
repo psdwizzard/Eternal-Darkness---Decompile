@@ -17,7 +17,7 @@ typedef struct EXIControl {
 
 extern EXIControl Ecb_80640AA8[3];
 
-u32 fn_80207C88(s32 chan)
+u32 EXIGetState(s32 chan)
 {
     u32 offset = chan << 6;
     return *(volatile u32 *)((char *)Ecb_80640AA8 + offset + 0xC);

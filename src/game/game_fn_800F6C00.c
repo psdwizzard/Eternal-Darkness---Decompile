@@ -7,7 +7,7 @@ typedef struct SubBlock {
     struct SubBlock* next_;
 } SubBlock;
 
-void fn_800F6C00(SubBlock* ths, SubBlock** start)
+void SubBlock_merge_next(SubBlock* ths, SubBlock** start)
 {
     unsigned long size = ths->size_ & ~7;
     SubBlock* next = (SubBlock*)((char*)ths + size);

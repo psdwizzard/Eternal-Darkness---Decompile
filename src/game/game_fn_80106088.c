@@ -35,11 +35,11 @@ typedef struct FrameContext {
     PlaneCursor planes[3];
 } FrameContext;
 
-extern void fn_80103510(u8 *dst, s32 stride, u8 dc, u8 a, u8 b, u8 c, u8 d);
-extern void fn_80104524(u8 *ctx, u8 *dst, s32 stride, u8 dc, u8 mode, s32 index);
+extern void WeightImBlock(u8 *dst, s32 stride, u8 dc, u8 a, u8 b, u8 c, u8 d);
+extern void IntraAotBlock(u8 *ctx, u8 *dst, s32 stride, u8 dc, u8 mode, s32 index);
 
 /* Decode each plane's intra blocks, using adjacent DC values for mode zero. */
-void fn_80106088(register Decoder *input_decoder, register FrameContext *context)
+void MCBlockDecDCNest(register Decoder *input_decoder, register FrameContext *context)
 {
     register MotionPlane *source;
     s32 *offset;
@@ -120,7 +120,7 @@ void fn_80106088(register Decoder *input_decoder, register FrameContext *context
                     addi call_width, width, 0
                     addi call_dc, dc, 0
                 }
-                fn_80103510(call_dst, call_width, call_dc, above_dc, below_dc, left_dc, right_dc);
+                WeightImBlock(call_dst, call_width, call_dc, above_dc, below_dc, left_dc, right_dc);
             } else {
                 register u8 *call_ctx;
                 register s32 call_width;
@@ -134,7 +134,7 @@ void fn_80106088(register Decoder *input_decoder, register FrameContext *context
                     addi call_dc, dc, 0
                     addi call_plane, plane, 0
                 }
-                fn_80104524(call_ctx, dst, call_width, call_dc, mode, call_plane);
+                IntraAotBlock(call_ctx, dst, call_width, call_dc, mode, call_plane);
             }
             block++;
         }

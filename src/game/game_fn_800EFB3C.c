@@ -9,9 +9,9 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-extern void fn_80003130(void *, const void *, u32);
+extern void TRK_memcpy(void *, const void *, u32);
 
-int fn_800EFB3C(TRKBuffer *buffer, void *data, u32 length)
+int TRKReadBuffer(TRKBuffer *buffer, void *data, u32 length)
 {
     int error = 0;
     u32 bytesLeft;
@@ -26,7 +26,7 @@ int fn_800EFB3C(TRKBuffer *buffer, void *data, u32 length)
         length = bytesLeft;
     }
 
-    fn_80003130(data, buffer->data + buffer->position, length);
+    TRK_memcpy(data, buffer->data + buffer->position, length);
     buffer->position += length;
     return error;
 }

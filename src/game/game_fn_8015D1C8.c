@@ -34,17 +34,17 @@ typedef struct WorkerState {
 
 #pragma use_lmw_stmw on
 
-extern int fn_8020D318(void*, Message**, int);
-extern void fn_8020D250(void*, void*, int);
-extern int fn_80213394(u32, WorkerState*);
+extern int OSReceiveMessage(void*, Message**, int);
+extern void OSSendMessage(void*, void*, int);
+extern int DVDOpen(u32, WorkerState*);
 extern void* fn_80145E3C(int);
-extern int fn_80213704(WorkerState*, void*, u32, u32, void (*)(int, WorkerState*), int);
+extern int DVDReadAsyncPrio(WorkerState*, void*, u32, u32, void (*)(int, WorkerState*), int);
 extern void fn_8015CDC0(int, WorkerState*);
 extern int fn_80147DD4(void*, int (*)(void*, int, WorkerState*),
                       int (*)(void*, int, WorkerState*), WorkerState*, void*);
 extern int fn_8015CE48(void*, int, WorkerState*);
 extern int fn_8015CFFC(void*, int, WorkerState*);
-extern void fn_8021345C(WorkerState*);
+extern void DVDClose(WorkerState*);
 extern void fn_80155BB0(const char*, const char*, ...);
 extern char lbl_8024F198[];
 extern char lbl_8024F1B4[];
@@ -58,9 +58,9 @@ void fn_8015D1C8(WorkerState* state)
 
     state->active = 0;
     for (;;) {
-        fn_8020D318(state->input_queue, (Message**)&received, 1);
+        OSReceiveMessage(state->input_queue, (Message**)&received, 1);
         message = received;
-        if (fn_80213394(message->type, state)) {
+        if (DVDOpen(message->type, state)) {
             owner = state->owner;
             fn_80145E3C(0);
             context = state->context;
@@ -73,16 +73,16 @@ void fn_8015D1C8(WorkerState* state)
             state->pad2058 = 0;
             state->progress = 0;
             message->owner = owner;
-            fn_8020D250(message->reply_queue, message, 1);
+            OSSendMessage(message->reply_queue, message, 1);
             state->transfer_size = 0x20;
-            while (!fn_80213704(state, state->buffer, 0x20, 0,
+            while (!DVDReadAsyncPrio(state, state->buffer, 0x20, 0,
                                  fn_8015CDC0, 2)) {
             }
             fn_80147DD4(owner, fn_8015CE48, fn_8015CFFC, state, context);
             if (state->remaining == 1) {
-                fn_8020D250(state->notify_queue, (void*)0x2A, 1);
+                OSSendMessage(state->notify_queue, (void*)0x2A, 1);
             }
-            fn_8021345C(state);
+            DVDClose(state);
         } else {
             fn_80155BB0(lbl_8024F198, lbl_8024F1B4, message->type);
         }

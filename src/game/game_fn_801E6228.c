@@ -28,7 +28,7 @@ typedef struct TextDescriptor {
 } TextDescriptor;
 
 extern void* memset(void*, int, unsigned long);
-extern int fn_800F9E2C(char*, const char*, void*);
+extern int vsprintf(char*, const char*, void*);
 extern void fn_801E5920(char*);
 extern void fn_801E6A8C(TextDescriptor*);
 
@@ -38,7 +38,7 @@ void fn_801E6228(TextDescriptor* text, const char* format, ...)
 
     memset(text->text, 0, sizeof(text->text));
     va_start(args, format);
-    fn_800F9E2C(text->text, format, args);
+    vsprintf(text->text, format, args);
     fn_801E5920(text->text);
     if (text->flags & 2)
         text->x += text->width >> 1;

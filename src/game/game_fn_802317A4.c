@@ -1,15 +1,15 @@
 #include "src/game/types.h"
 
-extern const float lbl_802FFD18[256];
+extern const float FLOOR_fromdB_LOOKUP[256];
 
 /* Apply a linearly interpolated Vorbis floor curve to the spectrum. */
-void fn_802317A4(s32 x, s32 end, s32 y, s32 end_y, float *spectrum)
+void render_line(s32 x, s32 end, s32 y, s32 end_y, float *spectrum)
 {
     s32 dy, dx, base, remainder, step, error;
     const float *table;
 
     dy = end_y - y;
-    table = lbl_802FFD18;
+    table = FLOOR_fromdB_LOOKUP;
     dx = end - x;
     remainder = __abs(dy);
     base = dy / dx;

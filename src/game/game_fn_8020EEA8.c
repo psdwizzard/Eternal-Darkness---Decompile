@@ -24,7 +24,7 @@ typedef struct OSSramEx {
 extern SramControlBlock Scb_80640E40;
 extern BOOL OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(BOOL enabled);
-extern BOOL fn_8020E88C(BOOL commit, u32 offset);
+extern BOOL UnlockSram(BOOL commit, u32 offset);
 
 static inline OSSramEx *LockSramEx(void)
 {
@@ -41,14 +41,14 @@ static inline OSSramEx *LockSramEx(void)
     return (OSSramEx *)(scb->sram + 0x14);
 }
 
-void fn_8020EEA8(s32 chan, u16 id)
+void OSSetWirelessID(s32 chan, u16 id)
 {
     OSSramEx *sram = LockSramEx();
 
     if (sram->wirelessPadID[chan] != id) {
         sram->wirelessPadID[chan] = id;
-        fn_8020E88C(1, 0x14);
+        UnlockSram(1, 0x14);
     } else {
-        fn_8020E88C(0, 0x14);
+        UnlockSram(0, 0x14);
     }
 }

@@ -8,11 +8,11 @@ typedef struct StreamResource {
 } StreamResource;
 
 extern unsigned char lbl_8061C748[];
-extern u16 lbl_8064D3F4;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern u16 dataKeymapNum;
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
-int fn_801BB5D0(u16 id, void* value)
+int dataInsertKeymap(u16 id, void* value)
 {
     unsigned char* base = lbl_8061C748;
     int count;
@@ -20,8 +20,8 @@ int fn_801BB5D0(u16 id, void* value)
     int cursor;
     unsigned char* selected;
 
-    fn_801CE2B8();
-    count = lbl_8064D3F4;
+    hwDisableIrq();
+    count = dataKeymapNum;
     index = 0;
     while (index < count && ((StreamResource*)(base + 0x4600))[index].id < id) {
         index++;
@@ -43,30 +43,30 @@ int fn_801BB5D0(u16 id, void* value)
             ((StreamResource*)(base + 0x4600))[cursor + 1] =
                 ((StreamResource*)(base + 0x4600))[cursor];
         }
-        lbl_8064D3F4++;
+        dataKeymapNum++;
     goto write;
 
 insert_full:
-    fn_801CE280();
+    hwEnableIrq();
     return 0;
 
 existing:
     ((StreamResource*)(selected + 0x4600))->references++;
-    fn_801CE280();
+    hwEnableIrq();
     return 0;
 
 append:
     if ((u32)count < 0x100) {
-        lbl_8064D3F4++;
+        dataKeymapNum++;
         goto write;
     }
-    fn_801CE280();
+    hwEnableIrq();
     return 0;
 
 write:
     ((StreamResource*)(base + 0x4600))[index].id = id;
     ((StreamResource*)(base + 0x4600))[index].value = value;
     ((StreamResource*)(base + 0x4600))[index].references = 1;
-    fn_801CE280();
+    hwEnableIrq();
     return 1;
 }

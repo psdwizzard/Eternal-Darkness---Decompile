@@ -13,8 +13,8 @@ extern void* fn_8011F7D8(void*);
 extern unsigned int fn_8011F134(void*);
 extern void fn_80127F90(void*, unsigned int, Vec3*);
 extern void fn_8012B690(void*, Vec3*, Vec3*);
-extern void fn_80211A90(void*, Vec3*, float);
-extern void fn_80211A48(Vec3*, Vec3*, Vec3*);
+extern void PSVECScale(void*, Vec3*, float);
+extern void PSVECAdd(Vec3*, Vec3*, Vec3*);
 
 void fn_801F7E40(Vec3* output, void* input, float amount)
 {
@@ -49,6 +49,6 @@ void fn_801F7E40(Vec3* output, void* input, float amount)
         lbl_802FC6FC.z = d.z;
     }
 
-    fn_80211A90(value, &c, amount);
-    fn_80211A48(&lbl_802FC6FC, &c, output);
+    PSVECScale(value, &c, amount);
+    PSVECAdd(&lbl_802FC6FC, &c, output);
 }

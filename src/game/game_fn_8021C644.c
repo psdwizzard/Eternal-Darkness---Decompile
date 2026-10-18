@@ -11,16 +11,16 @@ typedef struct CardControl {
     u8 padE0[0x110 - 0xE0];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
-extern BOOL fn_802070C4(s32 chan);
+extern CardControl __CARDBlock[];
+extern BOOL EXIProbe(s32 chan);
 
-void fn_8021C644(s32 chan)
+void __CARDUnlockedHandler(s32 chan)
 {
-    CardControl *card = &lbl_80641C60[chan];
+    CardControl *card = &__CARDBlock[chan];
     CardCallback callback = card->callback;
 
     if (callback) {
         card->callback = 0;
-        callback(chan, fn_802070C4(chan) ? 1 : -3);
+        callback(chan, EXIProbe(chan) ? 1 : -3);
     }
 }

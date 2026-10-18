@@ -11,29 +11,29 @@ typedef struct HeapDesc {
     Cell *allocated;
 } HeapDesc;
 
-extern HeapDesc *lbl_8064D920;
-extern int lbl_8064D924;
-extern void *lbl_8064D928;
-extern void *lbl_8064D92C;
-extern int lbl_8064C3C8;
+extern HeapDesc *HeapArray;
+extern int NumHeaps;
+extern void *ArenaStart;
+extern void *ArenaEnd;
+extern int __OSCurrHeap;
 
-void *fn_8020AF08(void *arenaStart, void *arenaEnd, int maxHeaps) {
+void *OSInitAlloc(void *arenaStart, void *arenaEnd, int maxHeaps) {
     unsigned long descriptorBytes;
     int i;
     HeapDesc *hd;
 
-    lbl_8064D920 = arenaStart;
-    lbl_8064D924 = maxHeaps;
+    HeapArray = arenaStart;
+    NumHeaps = maxHeaps;
     descriptorBytes = maxHeaps * sizeof(HeapDesc);
-    for (i = 0; i < lbl_8064D924; i++) {
-        hd = &lbl_8064D920[i];
+    for (i = 0; i < NumHeaps; i++) {
+        hd = &HeapArray[i];
         hd->size = -1;
         hd->free = hd->allocated = 0;
     }
-    lbl_8064C3C8 = -1;
-    arenaStart = (char *)lbl_8064D920 + descriptorBytes;
+    __OSCurrHeap = -1;
+    arenaStart = (char *)HeapArray + descriptorBytes;
     arenaStart = (void *)(((unsigned long)arenaStart + 31) & ~31UL);
-    lbl_8064D928 = arenaStart;
-    lbl_8064D92C = (void *)((unsigned long)arenaEnd & ~31UL);
+    ArenaStart = arenaStart;
+    ArenaEnd = (void *)((unsigned long)arenaEnd & ~31UL);
     return arenaStart;
 }

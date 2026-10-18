@@ -28,13 +28,11 @@ typedef struct SEQ_INSTANCE {
     SECTION section[15];
 } SEQ_INSTANCE;
 
-extern SEQ_INSTANCE* lbl_8064D380;
-extern void fn_801B80D8(u32);
+extern SEQ_INSTANCE* cseq;
+extern void synthSendKeyOff(u32);
 
-#define cseq lbl_8064D380
-#define synthSendKeyOff fn_801B80D8
 
-u32 fn_801B261C(void)
+u32 HandleNotes(void)
 {
     NOTE* note;
     u32 i;

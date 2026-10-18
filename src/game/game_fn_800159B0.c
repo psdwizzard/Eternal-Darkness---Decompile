@@ -50,9 +50,9 @@ extern GameState lbl_803020E4;
 extern PairSource lbl_802FC5BC;
 extern void* lbl_8064C618;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_80187A34(void*, s32);
 extern void fn_801878E0(void*);
 extern CreatedObject* fn_80149E04(void);
@@ -71,16 +71,16 @@ s32 fn_800159B0(void* script)
     CreatedObject* object;
     void* current;
 
-    if (fn_8016A598(script) != 5) {
-        fn_80163BB4(script, lbl_8023BEF8, 5, fn_8016A598(script));
+    if (lua_gettop(script) != 5) {
+        luaO_verror(script, lbl_8023BEF8, 5, lua_gettop(script));
         return 0;
     }
 
-    mode = (s32)fn_8016A694(script, 1);
-    fn_8016A694(script, 2);
-    third = (s32)fn_8016A694(script, 3);
-    fourth = (float)fn_8016A694(script, 4);
-    fifth = (s32)fn_8016A694(script, 5);
+    mode = (s32)lua_tonumber(script, 1);
+    lua_tonumber(script, 2);
+    third = (s32)lua_tonumber(script, 3);
+    fourth = (float)lua_tonumber(script, 4);
+    fifth = (s32)lua_tonumber(script, 5);
 
     switch (mode) {
     case 0:

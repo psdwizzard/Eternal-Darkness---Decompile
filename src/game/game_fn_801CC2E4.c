@@ -1,9 +1,9 @@
 typedef unsigned int u32;
 
-extern u32 lbl_8064C2E0;
+extern u32 last_rnd;
 
-u32 fn_801CC2E4(void)
+u32 sndRand(void)
 {
-    lbl_8064C2E0 *= 0xA8351D63;
-    return (lbl_8064C2E0 >> 6) & 0xFFFF;
+    last_rnd *= 0xA8351D63;
+    return (last_rnd >> 6) & 0xFFFF;
 }

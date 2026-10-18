@@ -24,7 +24,7 @@ typedef struct GlobalState {
 extern GlobalState lbl_8064A580;
 extern u64 OSGetTime(void);
 extern int fn_8017B47C(int, int*, int*);
-extern int fn_802200DC(int);
+extern int CARDCheck(int);
 extern int fn_8017BD78(Request*);
 extern void fn_8017C810(Request*);
 
@@ -45,7 +45,7 @@ int fn_8017B0C8(int value)
     do {
         if (fn_8017B47C(request.value, &primary_value, &primary_level) == 0) {
             if (lbl_8064A580.states[request.value] != 0) {
-                request.result = fn_802200DC(request.value);
+                request.result = CARDCheck(request.value);
             } else {
                 request.result = -3;
             }

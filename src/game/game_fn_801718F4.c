@@ -1,9 +1,9 @@
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void* fn_8016A784(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void* lua_touserdata(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern unsigned int fn_80052310(int, void*);
-extern void fn_8016A830(void*, double);
+extern void lua_pushnumber(void*, double);
 extern const char lbl_8024FF00[];
 
 int fn_801718F4(void* state)
@@ -12,14 +12,14 @@ int fn_801718F4(void* state)
     unsigned int result;
     void* text;
 
-    if (fn_8016A598(state) != 2) {
-        fn_80163BB4(state, lbl_8024FF00, 2, fn_8016A598(state));
+    if (lua_gettop(state) != 2) {
+        luaO_verror(state, lbl_8024FF00, 2, lua_gettop(state));
         return 0;
     }
 
-    value = (int)fn_8016A694(state, 1);
-    text = fn_8016A784(state, 2);
+    value = (int)lua_tonumber(state, 1);
+    text = lua_touserdata(state, 2);
     result = fn_80052310(value, text);
-    fn_8016A830(state, result);
+    lua_pushnumber(state, result);
     return 1;
 }

@@ -12,18 +12,18 @@ typedef struct Parser {
 } Parser;
 
 extern void fn_80163DA4(Parser*);
-extern int fn_80165894(void*);
-extern int fn_80164C7C(Parser*);
-extern void fn_8015F9B0(State*, int, int);
+extern int block_follow(void*);
+extern int explist1(Parser*);
+extern void luaK_code1(State*, int, int);
 
-void fn_80166334(Parser* parser)
+void retstat(Parser* parser)
 {
     State* state = parser->state;
 
     fn_80163DA4(parser);
-    if (!fn_80165894(parser->token)) {
-        fn_80164C7C(parser);
+    if (!block_follow(parser->token)) {
+        explist1(parser);
     }
-    fn_8015F9B0(state, 1, parser->state->current);
+    luaK_code1(state, 1, parser->state->current);
     state->previous = state->current;
 }

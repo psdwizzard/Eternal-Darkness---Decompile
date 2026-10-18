@@ -19,7 +19,7 @@ extern void fn_801A852C(ulong *, int, u16, ulong);
 extern void fn_801A8D38(int);
 /* Match game_fn_801A9118.c: the third argument is void *, despite
  * integer declarations in some callers. Selector 5 is forwarded to
- * fn_80226AB4 without being dereferenced. */
+ * GXBegin without being dereferenced. */
 extern void fn_801A9118(long, long, void *);
 extern int fn_801E75A4(u32, int);
 extern void fn_801ED5F4(int, int, short, float *, Matrix34, float);

@@ -30,7 +30,7 @@ extern int lbl_8064D5A8;
 
 extern void fn_80117EF0(void);
 extern void fn_80144680(Entry *);
-/* This wrapper forwards the sound token in r3 to fn_801B8E48. Its
+/* This wrapper forwards the sound token in r3 to sndFXKeyOff. Its
  * existing C definition omits the parameter, so leave it unprototyped. */
 extern void fn_801A9964();
 extern int fn_801AF85C(int);

@@ -13,8 +13,8 @@ typedef struct TransferState {
     int pending_size;
 } TransferState;
 
-extern int fn_8020D318(void*, u32*, int);
-extern int fn_80213704(TransferState*, void*, u32, u32, void (*)(int, TransferState*), int);
+extern int OSReceiveMessage(void*, u32*, int);
+extern int DVDReadAsyncPrio(TransferState*, void*, u32, u32, void (*)(int, TransferState*), int);
 extern void DCInvalidateRange(void*, u32);
 extern void* memcpy(void*, const void*, u32);
 extern int fn_8015A2E0(TransferState*);
@@ -28,12 +28,12 @@ int fn_8015CE48(void* destination, int length, TransferState* state)
 
     if (state->remaining > 0) {
         do {
-            if (!fn_8020D318(state->completion_queue, (u32*)&message, 0)) {
-                fn_8020D318(state->completion_queue, (u32*)&message, 1);
+            if (!OSReceiveMessage(state->completion_queue, (u32*)&message, 0)) {
+                OSReceiveMessage(state->completion_queue, (u32*)&message, 1);
             }
 
             if (message != state->pending_size) {
-                while (!fn_80213704(state, state->buffers[state->buffer_index],
+                while (!DVDReadAsyncPrio(state, state->buffers[state->buffer_index],
                                      state->pending_size, state->offset,
                                      fn_8015CDC0, 2)) {
                 }
@@ -59,7 +59,7 @@ int fn_8015CE48(void* destination, int length, TransferState* state)
     state->pending_size = 0;
     if (state->remaining > 0) {
         state->pending_size = aligned;
-        while (!fn_80213704(state, state->buffers[state->buffer_index], aligned,
+        while (!DVDReadAsyncPrio(state, state->buffers[state->buffer_index], aligned,
                              state->offset, fn_8015CDC0, 2)) {
         }
     }

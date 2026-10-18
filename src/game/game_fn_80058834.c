@@ -31,16 +31,16 @@ extern void fn_80036B7C(void *, u32, Vec3 *);
 extern void fn_8011E174(s32, s32);
 extern float fn_8012B7D0(void *, Vec3 *), fn_8012B750(void *);
 extern void fn_8017A12C(float *, float, float);
-extern void fn_80211A6C();
-extern float fn_80211B08(Vec3 *);
+extern void PSVECSubtract();
+extern float PSVECMag(Vec3 *);
 extern u8 fn_80204434(void *, Vec3 *, s32, float);
 extern void fn_8012B6FC(void *, Vec3 *, Vec3 *);
 extern void *fn_8004914C(void *);
 extern int fn_8011EB04(void *);
 #define fn_8011EB04(a) fn_8011EB04((void *)(a))
-extern void fn_80211AAC(Vec3 *, Vec3 *);
-extern void fn_80211A90(Vec3 *, Vec3 *, float);
-extern void fn_80211A48(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECNormalize(Vec3 *, Vec3 *);
+extern void PSVECScale(Vec3 *, Vec3 *, float);
+extern void PSVECAdd(Vec3 *, Vec3 *, Vec3 *);
 extern s32 fn_801A77B0(void *);
 extern void *fn_8012976C(void *, s32, u32, Vec3 *, float);
 extern void fn_80128B8C(void *, Vec3 *), fn_80129BA4(void *, float, float);
@@ -121,8 +121,8 @@ s32 fn_80058834(void *context, void *event, u32 *result)
             if ((fn_801A74C0((void *)linked) & 0x20) != 0) {
                 float separation;
                 float threshold;
-                fn_80211A6C(&original, &position, &direction);
-                separation = fn_80211B08(&direction);
+                PSVECSubtract(&original, &position, &direction);
+                separation = PSVECMag(&direction);
                 blocked = !fn_80204434(object, &position, 0, lbl_8064E508);
                 if (separation <= lbl_8064E50C || blocked != 0) {
                     basis = lbl_80238FDC;
@@ -136,10 +136,10 @@ s32 fn_80058834(void *context, void *event, u32 *result)
                 if (fn_8011EB04(fn_8004914C((void *)linked)) == 120 &&
                     fn_8011EB04(object) == 73) threshold = lbl_8064E514;
                 if (separation < threshold) {
-                    fn_80211AAC(&direction, &direction);
-                    fn_80211A90(&direction, &scaled, lbl_8064E518);
-                    fn_80211A90(&direction, &direction, threshold - separation);
-                    fn_80211A48(&original, &direction, &offset);
+                    PSVECNormalize(&direction, &direction);
+                    PSVECScale(&direction, &scaled, lbl_8064E518);
+                    PSVECScale(&direction, &direction, threshold - separation);
+                    PSVECAdd(&original, &direction, &offset);
                     adjusted = 1;
                 }
             }

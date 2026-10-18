@@ -29,12 +29,12 @@ extern s8* fn_801E3B08(s8*);
 extern void fn_801A8D38(int), fn_801ECF50(int), fn_801A8EDC(void*);
 extern void fn_801ECD74(u32*), fn_801E39A8(int);
 extern s16 fn_80144A2C(u32, int, int, int);
-extern void fn_8022B970(s16, u16, s16, u16);
+extern void GXSetScissor(s16, u16, s16, u16);
 extern void fn_801E4314(s16, s16, s16, s16, float, u32);
 extern void fn_801E4198(int, int, int), fn_801E418C(u16), fn_801E4188(void);
 extern void fn_801E5430(s16, s16), fn_801E4704(TextState*);
 extern void fn_801E5FB0(TextState*), fn_801E7004(void);
-extern void fn_80226AB4(int, int, int);
+extern void GXBegin(int, int, int);
 
 #define MAX(a, b) ((a) < (b) ? (b) : (a))
 #define ABS(a) ((a) >= 0 ? (a) : -(a))
@@ -98,7 +98,7 @@ void fn_801E47B8(TextState* state)
             }
         }
         line_step -= 2;
-        fn_8022B970(state->x, state->y + 6, state->width, state->height);
+        GXSetScissor(state->x, state->y + 6, state->width, state->height);
     }
 
     while (cursor[0] != 0 || cursor[1] != 0) {
@@ -140,7 +140,7 @@ void fn_801E47B8(TextState* state)
             int xextent = (int)size;
             s16 yextent;
             int glyph;
-            fn_80226AB4(0x80, 5, 4);
+            GXBegin(0x80, 5, 4);
             yextent = (s16)size;
             fn_801E4198(lbl_8064D574, (s16)(lbl_8064D578 + yextent), -1);
             glyph = (u16)(current * 4);
@@ -175,7 +175,7 @@ void fn_801E47B8(TextState* state)
         } else if (scroll_step == 0) {
             state->flags &= ~0x1400;
         }
-        fn_8022B970(0, 0, 640, 480);
+        GXSetScissor(0, 0, 640, 480);
         lbl_8064D594 = lbl_8064C2A8;
         ((u8*)&lbl_8064D594)[3] = lbl_8064D56C;
         if (state->phase && !(state->flags & 0x100)) {

@@ -1,4 +1,4 @@
-/* fn_8021607C: DVDCancelAll (Dolphin SDK dvd.c), with DVDCancelAllAsync,
+/* DVDCancelAll: DVDCancelAll (Dolphin SDK dvd.c), with DVDCancelAllAsync,
  * DVDPause and DVDResume inlined. */
 typedef unsigned int u32;
 typedef int s32;
@@ -16,15 +16,15 @@ typedef struct OSThreadQueue {
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
 extern DVDCommandBlock *__DVDPopWaitingQueue(void);
-extern BOOL fn_80215D3C(DVDCommandBlock *block, DVDCBCallback callback);
-extern void fn_80210004(OSThreadQueue *queue);
+extern BOOL DVDCancelAsync(DVDCommandBlock *block, DVDCBCallback callback);
+extern void OSSleepThread(OSThreadQueue *queue);
 extern void stateReady_80214A10(void);
-extern void fn_802161B4(s32 result, DVDCommandBlock *block);
+extern void cbForCancelAllSync(s32 result, DVDCommandBlock *block);
 
 extern DVDCommandBlock *executing_8064DA00;
 extern volatile s32 PauseFlag_8064DA0C;
 extern volatile s32 PausingFlag_8064DA10;
-extern BOOL lbl_8064DA3C;
+extern BOOL CancelAllSyncComplete;
 extern OSThreadQueue __DVDThreadQueue;
 
 static inline void DVDPause(void) {
@@ -53,10 +53,10 @@ static inline BOOL DVDCancelAllAsync(DVDCBCallback callback) {
     enabled = OSDisableInterrupts();
     DVDPause();
     while ((p = __DVDPopWaitingQueue()) != 0)
-        fn_80215D3C(p, 0);
+        DVDCancelAsync(p, 0);
 
     if (executing_8064DA00) {
-        retVal = fn_80215D3C(executing_8064DA00, callback);
+        retVal = DVDCancelAsync(executing_8064DA00, callback);
     } else {
         retVal = 1;
         if (callback)
@@ -67,23 +67,23 @@ static inline BOOL DVDCancelAllAsync(DVDCBCallback callback) {
     return retVal;
 }
 
-s32 fn_8021607C(void) {
+s32 DVDCancelAll(void) {
     BOOL result;
     BOOL enabled;
 
     enabled = OSDisableInterrupts();
-    lbl_8064DA3C = 0;
+    CancelAllSyncComplete = 0;
 
-    result = DVDCancelAllAsync(fn_802161B4);
+    result = DVDCancelAllAsync(cbForCancelAllSync);
     if (result == 0) {
         OSRestoreInterrupts(enabled);
         return -1;
     }
 
     for (;;) {
-        if (lbl_8064DA3C)
+        if (CancelAllSyncComplete)
             break;
-        fn_80210004(&__DVDThreadQueue);
+        OSSleepThread(&__DVDThreadQueue);
     }
 
     OSRestoreInterrupts(enabled);

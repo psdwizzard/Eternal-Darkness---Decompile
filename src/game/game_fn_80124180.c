@@ -42,9 +42,9 @@ extern int fn_80124128(Owner*, u32);
 extern void fn_801279E8(void*, int, Matrix, u32);
 extern void fn_80127DF8(void*, int, Matrix);
 extern void fn_8012E3AC(void*, void*);
-extern void fn_80210FB0(Matrix);
-extern void fn_80210FDC(const Matrix, const Matrix, Matrix);
-extern u32 fn_802110A8(const Matrix, Matrix);
+extern void PSMTXIdentity(Matrix);
+extern void PSMTXConcat(const Matrix, const Matrix, Matrix);
+extern u32 PSMTXInverse(const Matrix, Matrix);
 
 void fn_80124180(Owner* owner, int independent)
 {
@@ -83,13 +83,13 @@ void fn_80124180(Owner* owner, int independent)
                 if (joint->parent != 0 && independent == 0) {
                     Matrix* parent = &lbl_804F1CA0[joint->parent - table->joints];
                     fn_801279E8(owner, i, local, attached);
-                    fn_80210FDC(*parent, local, *world);
+                    PSMTXConcat(*parent, local, *world);
                 } else {
                     fn_801279E8(owner, i, *world, attached);
                 }
             } else {
                 void* transform = owner->runtime->transform;
-                fn_80210FB0(*world);
+                PSMTXIdentity(*world);
                 if (transform != 0) {
                     fn_8012E3AC(transform, *world);
                 }
@@ -102,10 +102,10 @@ void fn_80124180(Owner* owner, int independent)
                 scale[0][0] = joint->scale[0];
                 scale[1][1] = joint->scale[1];
                 scale[2][2] = joint->scale[2];
-                fn_80210FDC(scale, joint->transform, scaled);
-                fn_802110A8(scaled, inverse);
-                fn_80210FDC(joint->parent->transform, inverse, relative);
-                fn_80210FDC(local, relative, *world);
+                PSMTXConcat(scale, joint->transform, scaled);
+                PSMTXInverse(scaled, inverse);
+                PSMTXConcat(joint->parent->transform, inverse, relative);
+                PSMTXConcat(local, relative, *world);
             } else {
                 fn_80127DF8(owner->attached, index, *world);
             }
@@ -113,7 +113,7 @@ void fn_80124180(Owner* owner, int independent)
         scale[0][0] = joint->scale[0];
         scale[1][1] = joint->scale[1];
         scale[2][2] = joint->scale[2];
-        fn_80210FDC(scale, joint->transform, inverse);
-        fn_80210FDC(*world, inverse, *output);
+        PSMTXConcat(scale, joint->transform, inverse);
+        PSMTXConcat(*world, inverse, *output);
     }
 }

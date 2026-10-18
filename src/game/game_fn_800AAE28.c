@@ -80,8 +80,8 @@ extern void fn_801A7228();
 
 extern void fn_801D38BC();
 extern void fn_80152404(Vec3*, short, int, int, Color);
-extern void fn_80211A90(Vec3*, Vec3*, float);
-extern void fn_80211A48(Vec3*, Vec3*, Vec3*);
+extern void PSVECScale(Vec3*, Vec3*, float);
+extern void PSVECAdd(Vec3*, Vec3*, Vec3*);
 extern int fn_801D3A24();
 extern void fn_80152A88();
 extern int fn_800AD1D0();
@@ -529,8 +529,8 @@ int fn_800AAE28(void* obj, int mode, void* evt, int* out)
                 v = lbl_80239778;
                 fn_801D38BC(*lbl_8064C5A8, &col, &ang);
                 fn_80152404(&p, ang, 0xfa, 4, col);
-                fn_80211A90(&v, &v, (float)lbl_8064C95C);
-                fn_80211A48(&v, &p, &v);
+                PSVECScale(&v, &v, (float)lbl_8064C95C);
+                PSVECAdd(&v, &p, &v);
                 lbl_8064C95C++;
                 fx = fn_801D3A24(*lbl_8064C5A8, 0x31);
                 fn_80152A88(&p, &v, fx, 4);

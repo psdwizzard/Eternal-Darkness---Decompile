@@ -40,7 +40,7 @@ extern PortalBounds lbl_805B38C0[12][7];
 extern int lbl_8064D18C;
 extern float lbl_80650444;
 extern int fn_8013E284(const Shape *, const Obstacle *, const void *, Result *);
-extern float fn_80211D4C(const Vec3 *, const Vec3 *);
+extern float PSVECSquareDistance(const Vec3 *, const Vec3 *);
 
 Obstacle *fn_80143430(const Shape *shape, Portal *portal, Result *out,
                     Point6 **edgeA, Point6 **edgeB)
@@ -61,7 +61,7 @@ Obstacle *fn_80143430(const Shape *shape, Portal *portal, Result *out,
             bounds = &lbl_805B38C0[portal->index][i];
             back = &lbl_805B1400[portal->index][i][1].surface;
             if (fn_8013E284(shape, front, bounds, &result)) {
-                dist = fn_80211D4C(&result.normal, &shape->point);
+                dist = PSVECSquareDistance(&result.normal, &shape->point);
                 if (dist < bestDist) {
                     *edgeA = &bounds->corners[0];
                     bestDist = dist;
@@ -70,7 +70,7 @@ Obstacle *fn_80143430(const Shape *shape, Portal *portal, Result *out,
                     *out = result;
                 }
             } else if (fn_8013E284(shape, back, bounds, &result)) {
-                dist = fn_80211D4C(&result.normal, &shape->point);
+                dist = PSVECSquareDistance(&result.normal, &shape->point);
                 if (dist < bestDist) {
                     *edgeA = &bounds->corners[0];
                     bestDist = dist;

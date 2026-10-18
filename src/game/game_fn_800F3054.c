@@ -6,16 +6,16 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-extern int fn_800EF2A0(TRKBuffer *);
-extern int fn_800EFFBC(void);
+extern int TRKMessageSend(TRKBuffer *);
+extern int TRKTestForPacket(void);
 extern TRKBuffer *TRKGetBuffer(int);
-extern int fn_800EFC6C(TRKBuffer *, u32);
-extern int fn_800EF86C(TRKBuffer *, u8 *);
-extern void fn_800EFED4(int);
-extern void fn_800EFCDC(int);
+extern int TRKSetBufferPosition(TRKBuffer *, u32);
+extern int TRKReadBuffer1_ui8(TRKBuffer *, u8 *);
+extern void TRKProcessInput(int);
+extern void TRKReleaseBuffer(int);
 
 /* Send a request, dispatch incoming commands, and validate the reply. */
-int fn_800F3054(TRKBuffer *request, register int *reply_id, int minimum_length,
+int TRKRequestSend(TRKBuffer *request, register int *reply_id, int minimum_length,
                 int retries, int use_timeout)
 {
     u8 command;
@@ -31,22 +31,22 @@ int fn_800F3054(TRKBuffer *request, register int *reply_id, int minimum_length,
     invalid = 1;
     *reply_id = -1;
     for (; attempts != 0 && *reply_id == -1 && error == 0; attempts--) {
-        error = fn_800EF2A0(request);
+        error = TRKMessageSend(request);
         if (error == 0) {
             if (use_timeout)
                 polls = 0;
             for (;;) {
                 do {
-                    *reply_id = fn_800EFFBC();
+                    *reply_id = TRKTestForPacket();
                 } while (*reply_id == -1 &&
                          (!use_timeout || ++polls < 0x04C4B3ECU));
                 if (*reply_id != -1) {
                     invalid = 0;
                     reply = TRKGetBuffer(*reply_id);
-                    fn_800EFC6C(reply, 0);
-                    error = fn_800EF86C(reply, &command);
+                    TRKSetBufferPosition(reply, 0);
+                    error = TRKReadBuffer1_ui8(reply, &command);
                     if (error == 0 && command < 0x80) {
-                        fn_800EFED4(*reply_id);
+                        TRKProcessInput(*reply_id);
                         *reply_id = -1;
                         continue;
                     }
@@ -57,12 +57,12 @@ int fn_800F3054(TRKBuffer *request, register int *reply_id, int minimum_length,
                 if (reply->length < (u32)minimum_length)
                     invalid = 1;
                 if (error == 0 && invalid == 0)
-                    error = fn_800EF86C(reply, &status);
+                    error = TRKReadBuffer1_ui8(reply, &status);
                 if (error == 0 && invalid == 0 &&
                     (command != 0x80 || status != 0))
                     invalid = 1;
                 if (error != 0 || invalid != 0) {
-                    fn_800EFCDC(*reply_id);
+                    TRKReleaseBuffer(*reply_id);
                     *reply_id = -1;
                 }
             }

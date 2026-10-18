@@ -1,6 +1,6 @@
-extern void fn_8015F334(void*, void*, int, int);
+extern void luaK_testgo(void*, void*, int, int);
 
-void fn_8015F414(void* object, void* command, int alternate)
+void luaK_goiftrue(void* object, void* command, int alternate)
 {
-    fn_8015F334(object, command, 1, alternate ? 41 : 39);
+    luaK_testgo(object, command, 1, alternate ? 41 : 39);
 }

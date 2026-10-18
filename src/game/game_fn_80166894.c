@@ -31,15 +31,15 @@ typedef struct LuaState {
     int allowhooks;
 } LuaState;
 
-extern void* fn_8016B5CC(void*, void*, int, const char*, int);
-extern int fn_80161044(LuaState*, void (*)(LuaState*, int*), int*);
-extern void fn_801667E4(LuaState*, int*);
-extern void fn_80166994(LuaState*);
+extern void* luaM_realloc(void*, void*, int, const char*, int);
+extern int luaD_runprotected(LuaState*, void (*)(LuaState*, int*), int*);
+extern void f_luaopen(LuaState*, int*);
+extern void lua_close(LuaState*);
 extern const char lbl_8024FA28[];
 
-LuaState* fn_80166894(int stacksize)
+LuaState* lua_open(int stacksize)
 {
-    LuaState* state = fn_8016B5CC(0, 0, sizeof(LuaState), lbl_8024FA28, 68);
+    LuaState* state = luaM_realloc(0, 0, sizeof(LuaState), lbl_8024FA28, 68);
 
     if (state == 0) {
         return 0;
@@ -65,8 +65,8 @@ LuaState* fn_80166894(int stacksize)
     state->linehook = 0;
     state->allowhooks = 1;
     state->errorJmp = 0;
-    if (fn_80161044(state, fn_801667E4, &stacksize) != 0) {
-        fn_80166994(state);
+    if (luaD_runprotected(state, f_luaopen, &stacksize) != 0) {
+        lua_close(state);
         return 0;
     }
     state->GCthreshold = 2 * state->nblocks;

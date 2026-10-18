@@ -1,8 +1,8 @@
-extern void fn_8016A830(void*, double);
-extern void fn_8016AB20(void*, const char*);
-extern void fn_8016AA34(void*, const char*);
-extern double fn_8016A694(void*, int);
-extern void fn_8016A5B0(void*, int);
+extern void lua_pushnumber(void*, double);
+extern void lua_setglobal(void*, const char*);
+extern void lua_getglobal(void*, const char*);
+extern double lua_tonumber(void*, int);
+extern void lua_settop(void*, int);
 
 extern const double lbl_80650710;
 extern const double lbl_80650718;
@@ -50,12 +50,12 @@ extern const double lbl_80650858;
 #define REGISTER_CONSTANT(value, name)                 \
     do {                                               \
         if (flag == 0) {                               \
-            fn_8016A830(context, value);               \
-            fn_8016AB20(context, name);                \
+            lua_pushnumber(context, value);               \
+            lua_setglobal(context, name);                \
         } else {                                       \
-            fn_8016AA34(context, name);                \
-            fn_8016A694(context, 1);                   \
-            fn_8016A5B0(context, -2);                  \
+            lua_getglobal(context, name);                \
+            lua_tonumber(context, 1);                   \
+            lua_settop(context, -2);                  \
         }                                              \
     } while (0)
 

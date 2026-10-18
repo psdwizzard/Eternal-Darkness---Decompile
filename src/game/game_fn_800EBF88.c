@@ -11,13 +11,13 @@ typedef struct Color {
 extern short lbl_802FC53C[];
 extern Color lbl_802FC5BC[];
 
-extern void fn_80226C18(int, int);
-extern void fn_80226D28(int);
+extern void GXSetLineWidth(int, int);
+extern void GXSetCullMode(int);
 extern void fn_801ED118(void);
 extern int fn_801EDA7C(short*, int, int, void*);
 extern void fn_801ECF50(unsigned int);
 extern void fn_801ECD74(Color*);
-extern void fn_80226AB4(int, int, int);
+extern void GXBegin(int, int, int);
 extern void fn_800ED6F8(float, float, float);
 extern void fn_800ED6F4(void);
 
@@ -27,17 +27,17 @@ void fn_800EBF88(Vec3* min, Vec3* max, Color* color, u8 alpha)
     Color line;
     Color reset;
 
-    fn_80226C18(0x18, 0);
+    GXSetLineWidth(0x18, 0);
     fn_801ED118();
     fn_801ECF50(4);
     fn_801EDA7C(lbl_802FC53C, 0, 0x2BF, 0);
-    fn_80226D28(0);
+    GXSetCullMode(0);
     fn_801ECF50(4);
     color->a = alpha;
     line = *color;
     fn_801ECD74(&line);
 
-    fn_80226AB4(0xB0, 3, 30);
+    GXBegin(0xB0, 3, 30);
     fn_800ED6F8(max->x, max->y, max->z);
     fn_800ED6F8(min->x, max->y, max->z);
     fn_800ED6F8(min->x, min->y, max->z);

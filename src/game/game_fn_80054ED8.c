@@ -32,8 +32,8 @@ extern s32 fn_8003D69C(void *object);
 extern s32 fn_80036E50(void *object);
 extern unsigned int fn_80178E94(Vec3 *a, Vec3 *b);
 extern void *fn_801E741C(char *name);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_80145490(void);
 extern void fn_801F86F4(s32 value);
 extern s32 fn_80054BCC(s32 value);
@@ -118,7 +118,7 @@ s32 fn_80054ED8(void *context, void *event)
                         break;
                     }
                     if (fn_80054D14(resource, context, object, 1) == 0) {
-                        s32 random = fn_800FBFB0();
+                        s32 random = rand();
                         lbl_8064B4DC = random % 3 + 4;
                         lbl_8064C86C = -1;
                         created = 1;

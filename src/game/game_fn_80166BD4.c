@@ -1,4 +1,4 @@
-unsigned long fn_80166BD4(const char* string, unsigned long length)
+unsigned long hash_s(const char* string, unsigned long length)
 {
     unsigned long hash = length;
     unsigned long step = (length >> 5) | 1;

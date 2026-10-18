@@ -2,7 +2,7 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-u32 fn_800FBFB0(void);
+u32 rand(void);
 void fn_801952E8(void* output, int value);
 void* memcpy(void* destination, const void* source, unsigned long count);
 void* memset(void* destination, int value, unsigned long count);
@@ -11,7 +11,7 @@ void fn_801947F4(u8* output, const u8* input)
 {
     int count = (u8)(input[0x17] - 4);
 
-    output[0x8C] = input[0x17] + 1 + (fn_800FBFB0() & 7);
+    output[0x8C] = input[0x17] + 1 + (rand() & 7);
     output[0x8D] = 0;
     output[0x8E] = 0;
     output[0x8F] = input[0x18];
@@ -33,7 +33,7 @@ void fn_801947F4(u8* output, const u8* input)
     output[0x99] = input[0x1A];
     output[0x9A] = input[0x1B];
 
-    *(u16*)(output + 0xB2) = input[0x17] + ((int)fn_800FBFB0() % count);
+    *(u16*)(output + 0xB2) = input[0x17] + ((int)rand() % count);
     *(u16*)(output + 0xAE) = 0;
     *(u16*)(output + 0xB0) = 0;
     *(u32*)(output + 0x118) = *(const u32*)(input + 0x28);

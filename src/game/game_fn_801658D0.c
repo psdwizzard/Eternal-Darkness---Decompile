@@ -8,16 +8,16 @@ typedef struct Parser {
     Buffer* buffer;
 } Parser;
 
-extern void fn_80166750(Parser*);
-extern void fn_8015EE54(Buffer*, int);
-extern void fn_8016437C(Parser*, int);
+extern void chunk(Parser*);
+extern void luaK_adjuststack(Buffer*, int);
+extern void removelocalvars(Parser*, int);
 
-void fn_801658D0(Parser* parser)
+void block(Parser* parser)
 {
     Buffer* buffer = parser->buffer;
     short start = buffer->position;
 
-    fn_80166750(parser);
-    fn_8015EE54(buffer, buffer->position - start);
-    fn_8016437C(parser, buffer->position - start);
+    chunk(parser);
+    luaK_adjuststack(buffer, buffer->position - start);
+    removelocalvars(parser, buffer->position - start);
 }

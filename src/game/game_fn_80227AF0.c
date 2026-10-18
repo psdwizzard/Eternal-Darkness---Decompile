@@ -9,7 +9,7 @@ typedef struct {
     f32 ldir[3];
 } GXLightObjInt;
 
-void fn_80227AF0(GXLightObjInt *lt_obj, f32 nx, f32 ny, f32 nz)
+void GXInitLightDir(GXLightObjInt *lt_obj, f32 nx, f32 ny, f32 nz)
 {
     lt_obj->ldir[0] = -nx;
     lt_obj->ldir[1] = -ny;

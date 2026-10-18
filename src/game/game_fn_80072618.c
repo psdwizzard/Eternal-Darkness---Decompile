@@ -44,7 +44,7 @@ typedef struct Result {
 typedef struct Owner Owner;
 typedef struct Object80201EB8 Object80201EB8;
 
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_8011F114(Vec3 *, Vec3 *);
 extern int fn_80201B4C(int *);
 extern void fn_8013F3C0(Shape *, const Vec3 *, const Vec3 *, float);
@@ -105,7 +105,7 @@ int fn_80072618(Vec3 *origin, Vec3 *out, int radius, int flags)
         /* Sample a bounded number of random spots. */
         if (flags & 4U) {
             for (tries = 0; tries < table->count * 2 && found == NULL; tries++) {
-                sampled = &spot[(int)fn_800FBFB0() % table->count];
+                sampled = &spot[(int)rand() % table->count];
                 randomPos.x = (float)sampled->pos.x;
                 randomPos.y = (float)sampled->pos.y;
                 randomPos.z = (float)sampled->pos.z;

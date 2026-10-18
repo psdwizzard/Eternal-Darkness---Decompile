@@ -4,11 +4,11 @@ typedef struct Record {
     unsigned short flag;
 } Record;
 
-extern Record* fn_80168BAC(void*, int);
+extern Record* luaV_closure(void*, int);
 
-void fn_80168CB0(void* state, void* payload, int count)
+void luaV_Lclosure(void* state, void* payload, int count)
 {
-    Record* record = fn_80168BAC(state, count);
+    Record* record = luaV_closure(state, count);
     record->payload = payload;
     record->flag = 0;
 }

@@ -11,10 +11,10 @@ typedef struct Vec4 {
     float w;
 } Vec4;
 
-extern void fn_80211B64(const Vec3*, const Vec3*, Vec3*);
-extern float fn_80211B08(const Vec3*);
-extern float fn_80211B44(const Vec3*, const Vec3*);
-extern void fn_80211AAC(const Vec3*, Vec3*);
+extern void PSVECCrossProduct(const Vec3*, const Vec3*, Vec3*);
+extern float PSVECMag(const Vec3*);
+extern float PSVECDotProduct(const Vec3*, const Vec3*);
+extern void PSVECNormalize(const Vec3*, Vec3*);
 extern float fn_800490E8(float, float);
 extern void fn_8017A244(const Vec3*, Vec4*, float);
 extern void fn_8017A630(Vec4*);
@@ -29,9 +29,9 @@ void fn_8017A470(const Vec3* first, const Vec3* second,
     float dot;
     int valid = 1;
 
-    fn_80211B64(first, second, &axis);
-    length = fn_80211B08(&axis);
-    dot = fn_80211B44(first, second);
+    PSVECCrossProduct(first, second, &axis);
+    length = PSVECMag(&axis);
+    dot = PSVECDotProduct(first, second);
 
     if (length < lbl_806508D8) {
         if (dot >= lbl_80650860) {
@@ -46,7 +46,7 @@ void fn_8017A470(const Vec3* first, const Vec3* second,
     }
 
     if (valid != 0) {
-        fn_80211AAC(&axis, &axis);
+        PSVECNormalize(&axis, &axis);
         fn_8017A244(&axis, output, fn_800490E8(length, dot));
     }
 }

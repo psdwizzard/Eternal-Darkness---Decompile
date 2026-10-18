@@ -49,7 +49,7 @@ static inline u32 GetNumXfbLines(u32 efbHeight, u32 iScale)
 }
 
 /* GXSetDispCopyYScale */
-u32 fn_802271BC(f32 vscale)
+u32 GXSetDispCopyYScale(f32 vscale)
 {
     u8 enable;
     u32 iScale;

@@ -11,10 +11,10 @@ extern const float lbl_8064F1CC;
 extern void *fn_801A7778(void *object);
 extern int fn_800C44C0(void *object, void *target, void *actor, Vec3 *position, int *found);
 extern void fn_8003B0BC(void *object, Vec3 *normal_out, Vec3 *position_out, int context, int transform, int use_transform);
-extern void fn_80211A6C(const Vec3 *a, const Vec3 *b, Vec3 *out);
-extern float fn_80211B08(const Vec3 *v);
-extern float fn_80211B44(const Vec3 *a, const Vec3 *b);
-extern void fn_80211B64(const Vec3 *a, const Vec3 *b, Vec3 *out);
+extern void PSVECSubtract(const Vec3 *a, const Vec3 *b, Vec3 *out);
+extern float PSVECMag(const Vec3 *v);
+extern float PSVECDotProduct(const Vec3 *a, const Vec3 *b);
+extern void PSVECCrossProduct(const Vec3 *a, const Vec3 *b, Vec3 *out);
 extern void fn_8012B6FC(void *object, Vec3 *in, Vec3 *out);
 extern float fn_800490E8(float y, float x);
 
@@ -38,14 +38,14 @@ int fn_800C4238(void *object, void *target, void *actor, void *runtime) {
     model = fn_801A7778(runtime);
     if (fn_800C44C0(object, actor, runtime, &position, &found) != 0) {
         fn_8003B0BC(model, &surface, &normal, (int)runtime, (int)target, 0);
-        fn_80211A6C(&position, &surface, &offset);
-        if (fn_80211B44(&normal, &offset) > lbl_8064F110) {
-            fn_80211B64(&normal, &offset, &side);
+        PSVECSubtract(&position, &surface, &offset);
+        if (PSVECDotProduct(&normal, &offset) > lbl_8064F110) {
+            PSVECCrossProduct(&normal, &offset, &side);
             fn_8012B6FC(target, &down, &up);
-            fn_80211B64(&normal, &up, &axis);
-            fn_80211B64(&side, &axis, &cross);
-            length = fn_80211B08(&cross);
-            dot = fn_80211B44(&side, &axis);
+            PSVECCrossProduct(&normal, &up, &axis);
+            PSVECCrossProduct(&side, &axis, &cross);
+            length = PSVECMag(&cross);
+            dot = PSVECDotProduct(&side, &axis);
             if (fn_800490E8(length, dot) > lbl_8064F1CC) {
                 result = 1;
             }

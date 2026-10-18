@@ -2,7 +2,7 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-extern u32 fn_80106AC0(void*);
+extern u32 HVQM4BuffSize(void*);
 
 #define U8(p, o) (*(u8*)((u8*)(p) + (o)))
 #define U16(p, o) (*(u16*)((u8*)(p) + (o)))
@@ -23,6 +23,6 @@ u32 fn_80109574(void* state)
     result += ALIGN32(((u32)U16(state, 0xA4) * U16(state, 0xA6) *
                       (U8(state, 0xA8) * U8(state, 0xA9) + 2)) /
                      (U8(state, 0xA8) * U8(state, 0xA9))) * 6;
-    result += ALIGN32(fn_80106AC0((u8*)state + 0xA0));
+    result += ALIGN32(HVQM4BuffSize((u8*)state + 0xA0));
     return result;
 }

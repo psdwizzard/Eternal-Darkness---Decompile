@@ -21,8 +21,8 @@ typedef struct WorkerState {
 } WorkerState;
 
 extern Request* fn_801587C4(void);
-extern void fn_8020D250(void*, void*, int);
-extern int fn_8020D318(void*, void**, int);
+extern void OSSendMessage(void*, void*, int);
+extern int OSReceiveMessage(void*, void**, int);
 extern void fn_80158850(void*);
 
 void fn_8015D4EC(void* destination, int value, WorkerState* state)
@@ -36,10 +36,10 @@ void fn_8015D4EC(void* destination, int value, WorkerState* state)
         request->value = value;
         request->destination = destination;
         request->reply_queue = state->reply_queue;
-        fn_8020D250(state->input_queue, request, 1);
-        fn_8020D318(request->reply_queue, (void**)&message, 1);
+        OSSendMessage(state->input_queue, request, 1);
+        OSReceiveMessage(request->reply_queue, (void**)&message, 1);
         if (message == 0x2A) {
-            fn_8020D250(request->reply_queue, (void*)0x2A, 1);
+            OSSendMessage(request->reply_queue, (void*)0x2A, 1);
         } else {
             fn_80158850((void*)message);
         }

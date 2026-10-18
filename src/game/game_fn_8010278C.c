@@ -33,7 +33,7 @@ typedef struct ImageInfo {
     u16 height;
 } ImageInfo;
 
-void fn_8010278C(ImageInfo* image, int component_index, u8 horizontal,
+void setHVQPlaneDesc(ImageInfo* image, int component_index, u8 horizontal,
                  u8 vertical)
 {
     ComponentInfo* component = &image->components[component_index];

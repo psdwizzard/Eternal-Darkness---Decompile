@@ -24,7 +24,7 @@ extern unsigned char lbl_805E2ABC[];
 
 extern int OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(int);
-extern int fn_8020D318(void*, int, int);
+extern int OSReceiveMessage(void*, int, int);
 
 void* fn_801397F8(u32* out_size, int kind, int owner, int wait)
 {
@@ -50,7 +50,7 @@ void* fn_801397F8(u32* out_size, int kind, int owner, int wait)
     OSRestoreInterrupts(enabled);
 
     if (blocked != 0) {
-        fn_8020D318(lbl_805E2ABC, 0, 1);
+        OSReceiveMessage(lbl_805E2ABC, 0, 1);
         enabled = OSDisableInterrupts();
         lbl_8064CFE8++;
         lbl_8064CFE4 = owner;

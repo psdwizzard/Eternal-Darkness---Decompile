@@ -1,4 +1,4 @@
-/* fn_8020D7A8 (0x8020D7A8, 56 bytes): OSInitMutex. */
+/* OSInitMutex (0x8020D7A8, 56 bytes): OSInitMutex. */
 
 typedef struct OSThread OSThread;
 typedef struct OSMutex OSMutex;
@@ -18,7 +18,7 @@ struct OSMutex {
 
 extern void OSInitThreadQueue(OSThreadQueue* queue);
 
-void fn_8020D7A8(OSMutex* mutex) {
+void OSInitMutex(OSMutex* mutex) {
     OSInitThreadQueue(&mutex->queue);
     mutex->thread = 0;
     mutex->count = 0;

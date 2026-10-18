@@ -20,14 +20,13 @@ typedef struct SynthDataTables {
 } SynthDataTables;
 
 extern u8 lbl_8061C748[];
-extern u16 lbl_8064D3FA;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern u16 dataFXGroupNum;
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
 #define dataSmpSDirs lbl_8061C748
-#define dataFXGroupNum lbl_8064D3FA
 
-u32 fn_801BC670(u16 gid, FX_TAB* fx, u16 fxNum)
+u32 dataInsertFX(u16 gid, FX_TAB* fx, u16 fxNum)
 {
     long i;
     FX_GROUP* g;
@@ -38,7 +37,7 @@ u32 fn_801BC670(u16 gid, FX_TAB* fx, u16 fxNum)
     }
 
     if (i == dataFXGroupNum && dataFXGroupNum < 128) {
-        fn_801CE2B8();
+        hwDisableIrq();
         i = dataFXGroupNum;
         t->fxGroup[i].gid = gid;
         t->fxGroup[i].fxNum = fxNum;
@@ -49,7 +48,7 @@ u32 fn_801BC670(u16 gid, FX_TAB* fx, u16 fxNum)
         }
 
         dataFXGroupNum++;
-        fn_801CE280();
+        hwEnableIrq();
         return 1;
     }
     return 0;

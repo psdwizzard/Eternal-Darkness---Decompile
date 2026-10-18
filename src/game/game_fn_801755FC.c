@@ -9,9 +9,9 @@ typedef struct ColorStep {
     s8 r, g, b, a;
 } ColorStep;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
 extern void* fn_8012C62C(void*, int, void*, void*, void*, int);
@@ -30,24 +30,24 @@ int fn_801755FC(void* state)
     void* runtime;
     void* object;
 
-    if (fn_8016A598(state) != 10) {
-        fn_80163BB4(state, lbl_8024FF00, 10, fn_8016A598(state));
+    if (lua_gettop(state) != 10) {
+        luaO_verror(state, lbl_8024FF00, 10, lua_gettop(state));
         return 0;
     }
 
-    runtime = fn_80201814((int)fn_8016A694(state, 1));
+    runtime = fn_80201814((int)lua_tonumber(state, 1));
     if (runtime != 0) {
         object = fn_80201BC8();
         if (object != 0) {
-            index = fn_8016A694(state, 2);
-            first.r = fn_8016A694(state, 3);
-            first.g = fn_8016A694(state, 4);
-            first.b = fn_8016A694(state, 5);
-            first.a = fn_8016A694(state, 6);
-            second.r = fn_8016A694(state, 7);
-            second.g = fn_8016A694(state, 8);
-            second.b = fn_8016A694(state, 9);
-            second.a = fn_8016A694(state, 10);
+            index = lua_tonumber(state, 2);
+            first.r = lua_tonumber(state, 3);
+            first.g = lua_tonumber(state, 4);
+            first.b = lua_tonumber(state, 5);
+            first.a = lua_tonumber(state, 6);
+            second.r = lua_tonumber(state, 7);
+            second.g = lua_tonumber(state, 8);
+            second.b = lua_tonumber(state, 9);
+            second.a = lua_tonumber(state, 10);
 
             delta = -5;
             if (second.r >= first.r) delta = 5;

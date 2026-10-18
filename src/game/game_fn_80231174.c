@@ -23,21 +23,21 @@ typedef struct Floor0Info {
     u8 pad[0x60 - 0x58];
 } Floor0Info;
 
-extern s32 fn_8022E868(void *opb, s32 bits);  /* oggpack_read */
+extern s32 oggpack_read(void *opb, s32 bits);  /* oggpack_read */
 extern void *fn_8022F780(s32 size);           /* _ogg_malloc */
 extern void *memset(void *data, int value, unsigned long size);
 
-Floor0Info *fn_80231174(VorbisInfo *vi, void *opb) {
+Floor0Info *floor0_unpack(VorbisInfo *vi, void *opb) {
     CodecSetupInfo *ci = vi->codec_setup;
     s32 j;
     Floor0Info *info = fn_8022F780(sizeof(Floor0Info));
 
-    info->order = fn_8022E868(opb, 8);
-    info->rate = fn_8022E868(opb, 16);
-    info->barkmap = fn_8022E868(opb, 16);
-    info->ampbits = fn_8022E868(opb, 6);
-    info->ampdB = fn_8022E868(opb, 8);
-    info->numbooks = fn_8022E868(opb, 4) + 1;
+    info->order = oggpack_read(opb, 8);
+    info->rate = oggpack_read(opb, 16);
+    info->barkmap = oggpack_read(opb, 16);
+    info->ampbits = oggpack_read(opb, 6);
+    info->ampdB = oggpack_read(opb, 8);
+    info->numbooks = oggpack_read(opb, 4) + 1;
 
     if (info->order < 1) goto err_out;
     if (info->rate < 1) goto err_out;
@@ -45,7 +45,7 @@ Floor0Info *fn_80231174(VorbisInfo *vi, void *opb) {
     if (info->numbooks < 1) goto err_out;
 
     for (j = 0; j < info->numbooks; j++) {
-        info->books[j] = fn_8022E868(opb, 8);
+        info->books[j] = oggpack_read(opb, 8);
         if (info->books[j] < 0 || info->books[j] >= ci->books) goto err_out;
     }
     return info;

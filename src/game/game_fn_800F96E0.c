@@ -1,11 +1,11 @@
-/* fn_800F96E0: MSL mbtowc (UTF-8 -> wchar_t) */
+/* utf8_to_unicode: MSL mbtowc (UTF-8 -> wchar_t) */
 
 typedef unsigned short wchar_t;
 typedef unsigned long size_t;
 
-int fn_800F9800(const char *s, size_t n);
+int is_utf8_complete(const char *s, size_t n);
 
-int fn_800F96E0(wchar_t *pwc, const char *s, size_t n) {
+int utf8_to_unicode(wchar_t *pwc, const char *s, size_t n) {
     wchar_t result_chr = 0;
     int number_of_bytes;
     int check_byte_count;
@@ -19,7 +19,7 @@ int fn_800F96E0(wchar_t *pwc, const char *s, size_t n) {
         return -1;
     }
 
-    number_of_bytes = fn_800F9800(s, n);
+    number_of_bytes = is_utf8_complete(s, n);
     if (number_of_bytes < 0) {
         return -1;
     }

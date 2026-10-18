@@ -12,13 +12,13 @@ typedef struct QueryResult {
 extern int fn_8011F6A4(void*, int, int, int, void*, int);
 extern void fn_8011F114(Vec3*, Vec3*);
 extern void* fn_8011FE34(void*);
-extern void fn_802114E0(Mtx, const Quaternion*);
-extern unsigned int fn_802110A8(const Mtx, Mtx);
-extern void fn_80211A6C(const Vec3*, const Vec3*, Vec3*);
-extern void fn_80211710(const Mtx, const Vec3*, Vec3*);
-extern void fn_80211A48(const Vec3*, const Vec3*, Vec3*);
+extern void PSMTXQuat(Mtx, const Quaternion*);
+extern unsigned int PSMTXInverse(const Mtx, Mtx);
+extern void PSVECSubtract(const Vec3*, const Vec3*, Vec3*);
+extern void PSMTXMultVec(const Mtx, const Vec3*, Vec3*);
+extern void PSVECAdd(const Vec3*, const Vec3*, Vec3*);
 extern int fn_80136840(const Vec3*, void*, Result*, float);
-extern float fn_80211D4C(const Vec3*, const Vec3*);
+extern float PSVECSquareDistance(const Vec3*, const Vec3*);
 extern float lbl_806502A0;
 
 int fn_80136A30(const Vec3* point, void* object, Result* out, float radius)
@@ -48,14 +48,14 @@ int fn_80136A30(const Vec3* point, void* object, Result* out, float radius)
     } else {
         position = query.position;
     }
-    fn_802114E0(matrix, fn_8011FE34(object));
-    fn_802110A8(matrix, inverse);
-    fn_80211A6C(point, &position, &center);
-    fn_80211710(inverse, &center, &center);
+    PSMTXQuat(matrix, fn_8011FE34(object));
+    PSMTXInverse(matrix, inverse);
+    PSVECSubtract(point, &position, &center);
+    PSMTXMultVec(inverse, &center, &center);
 
     for (i = 0; i < count; i++, entry = (char*)entry + 0xD8) {
         if (fn_80136840(&center, entry, &candidate, radius)) {
-            float distance = fn_80211D4C(&center, &candidate.point);
+            float distance = PSVECSquareDistance(&center, &candidate.point);
             if (distance < best) {
                 best = distance;
                 found = 1;
@@ -64,10 +64,10 @@ int fn_80136A30(const Vec3* point, void* object, Result* out, float radius)
         }
     }
     if (found) {
-        fn_80211710(matrix, &out->point, &out->point);
-        fn_80211A48(&out->point, &position, &out->point);
-        fn_80211710(matrix, &out->normal, &out->normal);
-        fn_80211A48(&out->normal, &position, &out->normal);
+        PSMTXMultVec(matrix, &out->point, &out->point);
+        PSVECAdd(&out->point, &position, &out->point);
+        PSMTXMultVec(matrix, &out->normal, &out->normal);
+        PSVECAdd(&out->normal, &position, &out->normal);
     }
     return found;
 }

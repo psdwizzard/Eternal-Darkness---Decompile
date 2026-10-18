@@ -7,7 +7,7 @@ typedef struct UTF8Prefixes {
 
 extern const UTF8Prefixes lbl_8064F960;
 
-int fn_800F961C(char *output, wchar_t character)
+int unicode_to_UTF8(char *output, wchar_t character)
 {
     const UTF8Prefixes prefixes = lbl_8064F960;
     int count;

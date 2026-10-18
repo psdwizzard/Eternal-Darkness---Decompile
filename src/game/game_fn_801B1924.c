@@ -1,8 +1,8 @@
 typedef unsigned int u32;
 
-extern u32 lbl_8064D334;
+extern u32 __DTKPosition;
 
-u32 fn_801B1924(void)
+u32 DTKGetPosition(void)
 {
-    return lbl_8064D334;
+    return __DTKPosition;
 }

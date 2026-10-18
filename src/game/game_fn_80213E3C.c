@@ -13,25 +13,25 @@ struct DVDCommandBlock {
 };
 
 extern DVDCommandBlock *executing_8064DA00;
-extern u32 lbl_8064DA20;
-extern void (*lbl_8064DA24)(s32, DVDCommandBlock *);
+extern u32 Canceling;
+extern void (*CancelCallback)(s32, DVDCommandBlock *);
 extern void (*lbl_8064DA48)(DVDCommandBlock *);
 extern s32 ResumeFromHere_8064DA28;
 extern DVDCommandBlock DummyCommandBlock_806419E0;
 
-extern u32 fn_80213D88(u32);
+extern u32 CategorizeError(u32);
 extern void __DVDStoreErrorCode(u32);
 extern void DVDReset(void);
 extern void cbForStateError_80213C1C(s32);
 extern s32 DVDLowStopMotor(DVDLowCallback);
 extern void stateReady_80214A10(void);
-extern void fn_802141D0(void);
-extern void fn_80214904(void);
-extern void fn_80214798(void);
-extern s32 fn_802129F0(u32, DVDLowCallback);
-extern void fn_802140D0(u32);
+extern void stateGoToRetry(void);
+extern void stateMotorStopped(void);
+extern void stateCoverClosed(void);
+extern s32 DVDLowSeek(u32, DVDLowCallback);
+extern void cbForUnrecoveredError(u32);
 
-void fn_80213E3C(u32 error)
+void cbForStateGettingError(u32 error)
 {
     DVDCommandBlock *command;
     u32 status;
@@ -56,7 +56,7 @@ void fn_80213E3C(u32 error)
 
     errorWord = *(volatile u32 *)0xCC006020;
     errorClass = errorWord & 0xFF000000;
-    status = fn_80213D88(errorWord);
+    status = CategorizeError(errorWord);
     if (status == 1) {
         executing_8064DA00->state = -1;
         __DVDStoreErrorCode(errorWord);
@@ -76,16 +76,16 @@ void fn_80213E3C(u32 error)
         resumeState = 5;
 
     /* Cancellation flags are volatile in the SDK; preserve their access order. */
-    if (*(volatile u32 *)&lbl_8064DA20 != 0) {
+    if (*(volatile u32 *)&Canceling != 0) {
         *(volatile s32 *)&ResumeFromHere_8064DA28 = resumeState;
-        *(volatile u32 *)&lbl_8064DA20 = 0;
+        *(volatile u32 *)&Canceling = 0;
         command = executing_8064DA00;
         executing_8064DA00 = &DummyCommandBlock_806419E0;
         command->state = 10;
         if (command->callback != 0)
             command->callback(-3, command);
-        if (lbl_8064DA24 != 0)
-            lbl_8064DA24(0, command);
+        if (CancelCallback != 0)
+            CancelCallback(0, command);
         stateReady_80214A10();
         handled = 1;
     } else {
@@ -95,13 +95,13 @@ void fn_80213E3C(u32 error)
     if (handled == 0) {
         if (status == 2) {
             __DVDStoreErrorCode(errorWord);
-            fn_802141D0();
+            stateGoToRetry();
             return;
         }
         if (status == 3) {
             if ((errorWord & 0x00FFFFFF) == 0x00031100) {
-                fn_802129F0(executing_8064DA00->offset,
-                            fn_802140D0);
+                DVDLowSeek(executing_8064DA00->offset,
+                            cbForUnrecoveredError);
                 return;
             }
             lbl_8064DA48(executing_8064DA00);
@@ -109,17 +109,17 @@ void fn_80213E3C(u32 error)
         }
         if (errorClass == 0x01000000) {
             executing_8064DA00->state = 5;
-            fn_80214904();
+            stateMotorStopped();
             return;
         }
         if (errorClass == 0x02000000) {
             executing_8064DA00->state = 3;
-            fn_80214798();
+            stateCoverClosed();
             return;
         }
         if (errorClass == 0x03000000) {
             executing_8064DA00->state = 4;
-            fn_80214904();
+            stateMotorStopped();
             return;
         }
         executing_8064DA00->state = -1;

@@ -16,7 +16,7 @@ extern EXIControl *lbl_8064C4B8;
 volatile u32 __PIRegs[12] : 0xCC003000;
 
 /* Acknowledge the PI debug interrupt and dispatch the channel 2 callback. */
-void fn_8022E050(short interrupt, OSContext *context)
+void AmcDebugIntHandler(short interrupt, OSContext *context)
 {
     EXICallback callback;
 

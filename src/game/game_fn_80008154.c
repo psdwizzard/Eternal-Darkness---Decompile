@@ -19,7 +19,7 @@ extern s32 fn_8015E4E8(void);
 extern void fn_800862F8(void);
 extern void fn_801F3DE4(void);
 extern void fn_80120BFC(s32);
-extern void fn_802264D4(s32);
+extern void GXSetDrawSync(s32);
 extern s32 fn_800473A4(void);
 extern void fn_801FCF04(void);
 extern void fn_801882C4(void);
@@ -64,7 +64,7 @@ void fn_80008154(void)
     }
     fn_801F3DE4();
     fn_80120BFC(1);
-    fn_802264D4(0xB00B);
+    GXSetDrawSync(0xB00B);
     if (fn_800473A4() == 0) {
         fn_801FCF04();
     }

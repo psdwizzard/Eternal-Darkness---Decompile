@@ -29,8 +29,8 @@ extern s32 lbl_8064DC44;
 extern s32 lbl_8064DC70;
 
 extern char *fn_800FD40C(char *, const char *);
-extern void fn_8020D1F0(void *, void *, s32);
-extern s32 fn_8020D250(void *, void *, s32);
+extern void OSInitMessageQueue(void *, void *, s32);
+extern s32 OSSendMessage(void *, void *, s32);
 extern void fn_8022F700(void *, s32);
 extern void fn_8022F75C(void);
 extern void *fn_8022F780(s32);
@@ -48,7 +48,7 @@ void fn_802367B0(const char *name, void *arena)
     lbl_8064DC44 = 0;
     lbl_8064DC40 = lbl_8064C64C;
     if (lbl_8064DC38 == 0 && lbl_8064DC34 == 0) {
-        fn_8020D1F0(work->initQueue, work->messages, 8);
+        OSInitMessageQueue(work->initQueue, work->messages, 8);
         fn_8022F700(arena, 0x3C000);
         fn_8022F75C();
         buffer = fn_8022F780(0x10000);
@@ -62,7 +62,7 @@ void fn_802367B0(const char *name, void *arena)
         asm { addi request, work, 0x443C }
         request->replyQueue = work->replyQueue;
         request->buffer = buffer;
-        fn_8020D250(work->requestQueue, request, 1);
+        OSSendMessage(work->requestQueue, request, 1);
         {
             register s32 zero;
             register s32 status;

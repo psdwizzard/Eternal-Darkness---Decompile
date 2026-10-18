@@ -50,12 +50,12 @@ typedef struct State {
     u8 flag_193;
 } State;
 
-extern ChannelSlot* lbl_8064D3D0;
-extern u32 fn_801C0BC8(u16, u8, u8, u16, u8, u8, u8, u8,
+extern ChannelSlot* synthVoice;
+extern u32 macStart(u16, u8, u8, u16, u8, u8, u8, u8,
                       u8, u8, u16, u8, int, u8, u8, int);
-extern void fn_801B8054(ChannelSlot*, State*);
+extern void synthFXCloneMidiSetup(ChannelSlot*, State*);
 
-void fn_801BD7F8(State* state, Command* command)
+void mcmdPlayMacro(State* state, Command* command)
 {
     int level;
     int adjusted;
@@ -74,7 +74,7 @@ void fn_801BD7F8(State* state, Command* command)
     }
 
     state->active = 1;
-    channel = fn_801C0BC8(command->flags >> 16,
+    channel = macStart(command->flags >> 16,
                           (command->value >> 16) & 0xFF,
                           command->value >> 24,
                           state->value_100,
@@ -93,17 +93,17 @@ void fn_801BD7F8(State* state, Command* command)
     state->active = 0;
 
     if (channel != -1) {
-        state->channel_value = lbl_8064D3D0[(u8)channel].channel->value_008;
-        lbl_8064D3D0[(u8)channel].owner = state->kind;
+        state->channel_value = synthVoice[(u8)channel].channel->value_008;
+        synthVoice[(u8)channel].owner = state->kind;
 
         if (state->channel != -1) {
-            lbl_8064D3D0[(u8)channel].previous = state->channel;
-            lbl_8064D3D0[(u8)state->channel].owner = channel;
+            synthVoice[(u8)channel].previous = state->channel;
+            synthVoice[(u8)state->channel].owner = channel;
         }
         state->channel = channel;
 
         if (state->special != 0) {
-            fn_801B8054(&lbl_8064D3D0[(u8)channel], state);
+            synthFXCloneMidiSetup(&synthVoice[(u8)channel], state);
         }
     } else {
         state->channel_value = -1;

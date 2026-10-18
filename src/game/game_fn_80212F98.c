@@ -6,7 +6,7 @@ extern DVDLowCallback Callback_8064D9A0;
 volatile u32 __DIRegs[16] : 0xCC006000;
 
 /* Disable cover interrupts and detach the current DVD callback. */
-DVDLowCallback fn_80212F98(void) {
+DVDLowCallback DVDLowClearCallback(void) {
     DVDLowCallback callback;
 
     __DIRegs[1] = 0;

@@ -15,10 +15,10 @@ typedef struct ObjectInfo {
 } ObjectInfo;
 
 extern const char lbl_8023BEF8[];
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
-extern void fn_8016A830(void*, double);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
+extern void lua_pushnumber(void*, double);
 extern void *fn_80201814();
 extern void *fn_80201B8C();
 
@@ -28,17 +28,17 @@ s32 fn_8000B7FC(void* script)
     void* object;
     ObjectInfo* info;
 
-    if (fn_8016A598(script) != 1) {
-        fn_80163BB4(script, lbl_8023BEF8, 1, fn_8016A598(script));
+    if (lua_gettop(script) != 1) {
+        luaO_verror(script, lbl_8023BEF8, 1, lua_gettop(script));
         return 0;
     }
 
-    object = fn_80201814((s32)fn_8016A694(script, 1));
+    object = fn_80201814((s32)lua_tonumber(script, 1));
     info = object != 0 ? fn_80201B8C(object) : 0;
     if (object != 0 && info != 0 && info->type == 10 && info->state != 0 &&
         (info->state->flags & 0x80) != 0) {
         result = 1;
     }
-    fn_8016A830(script, result);
+    lua_pushnumber(script, result);
     return 1;
 }

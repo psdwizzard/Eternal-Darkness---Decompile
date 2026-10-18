@@ -17,7 +17,7 @@ extern int lbl_8064C354;
 extern char lbl_80264AB0[16][255];
 
 extern void* memset(void*, int, u32);
-extern int fn_800F9E2C(char*, const char*, void*);
+extern int vsprintf(char*, const char*, void*);
 extern int fn_800FD228(const char*, const char*);
 extern char* fn_800FD40C(char*, const char*);
 
@@ -30,7 +30,7 @@ void fn_801E7DCC(const char* format, ...)
     if (lbl_8064CB6C != 0) {
         memset(buffer, 0, sizeof(buffer));
         va_start(args, format);
-        fn_800F9E2C(buffer, format, args);
+        vsprintf(buffer, format, args);
         buffer[255] = 0;
 
         for (i = 0; i < 16; i++) {

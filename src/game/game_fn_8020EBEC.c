@@ -29,7 +29,7 @@ typedef struct SramControlBlock {
 extern SramControlBlock Scb_80640E40;
 extern BOOL OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(BOOL enabled);
-extern BOOL fn_8020E88C(BOOL commit, u32 offset);
+extern BOOL UnlockSram(BOOL commit, u32 offset);
 
 static inline void *LockSram(u32 offset)
 {
@@ -53,10 +53,10 @@ static inline OSSram *LockBaseSram(void)
 
 static inline BOOL UnlockBaseSram(BOOL commit)
 {
-    return fn_8020E88C(commit, 0);
+    return UnlockSram(commit, 0);
 }
 
-u32 fn_8020EBEC(void)
+u32 OSGetSoundMode(void)
 {
     OSSram *sram = LockBaseSram();
     u32 mode;

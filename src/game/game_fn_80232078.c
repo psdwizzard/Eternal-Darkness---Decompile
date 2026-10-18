@@ -38,19 +38,19 @@ typedef struct Source {
     Data *data;
 } Source;
 
-extern s32 fn_8022E868(void *, s32);
+extern s32 oggpack_read(void *, s32);
 extern void *fn_8022F780(s32);
-extern s32 fn_802307F8(void *, void *);
-extern void fn_802326F8(Source *);
-extern void fn_800F8BAC(const char *, const char *, s32);
-extern Handler *lbl_8064C4C8[];
-extern Handler *lbl_8064C4CC[];
-extern Handler *lbl_80300160[];
-extern Handler *lbl_8064C4D4[];
+extern s32 vorbis_staticbook_unpack(void *, void *);
+extern void vorbis_info_clear(Source *);
+extern void __assertion_failed(const char *, const char *, s32);
+extern Handler *_time_P[];
+extern Handler *_floor_P[];
+extern Handler *_residue_P[];
+extern Handler *_mapping_P[];
 extern const char lbl_806517EC;
 extern const char lbl_806517F0;
 
-s32 fn_80232078(Source *source, void *stream) {
+s32 _vorbis_unpack_books(Source *source, void *stream) {
     Data *data;
 
     if (source->data == 0) {
@@ -61,11 +61,11 @@ s32 fn_80232078(Source *source, void *stream) {
     {
         Data *objectCursor;
         s32 i;
-        data->objectCount = fn_8022E868(stream, 8) + 1;
+        data->objectCount = oggpack_read(stream, 8) + 1;
         objectCursor = data;
         for (i = 0; i < data->objectCount; i++) {
             objectCursor->objects[0] = fn_8022F780(0x34);
-            if (fn_802307F8(stream, objectCursor->objects[0]) != 0) goto error;
+            if (vorbis_staticbook_unpack(stream, objectCursor->objects[0]) != 0) goto error;
             objectCursor = (Data *)((char *)objectCursor + 4);
         }
     }
@@ -76,11 +76,11 @@ s32 fn_80232078(Source *source, void *stream) {
         s32 type;
         Data *cursor;
         s32 i;
-        data->aCount = fn_8022E868(stream, 6) + 1;
+        data->aCount = oggpack_read(stream, 6) + 1;
         cursor = data;
-        handlers = lbl_8064C4C8;
+        handlers = _time_P;
         for (i = 0; i < data->aCount; i++) {
-            cursor->aTypes[0] = fn_8022E868(stream, 0x10);
+            cursor->aTypes[0] = oggpack_read(stream, 0x10);
             type = cursor->aTypes[0];
             if (type < 0 || type >= 1) goto error;
             handler = handlers[type];
@@ -96,11 +96,11 @@ s32 fn_80232078(Source *source, void *stream) {
         Data *cursor;
         Handler **handlers;
         Handler *handler;
-        data->bCount = fn_8022E868(stream, 6) + 1;
+        data->bCount = oggpack_read(stream, 6) + 1;
         cursor = data;
-        handlers = lbl_8064C4CC;
+        handlers = _floor_P;
         for (i = 0; i < data->bCount; i++) {
-            cursor->bTypes[0] = fn_8022E868(stream, 0x10);
+            cursor->bTypes[0] = oggpack_read(stream, 0x10);
             type = cursor->bTypes[0];
             if (type < 0 || type >= 2) goto error;
             handler = handlers[type];
@@ -116,11 +116,11 @@ s32 fn_80232078(Source *source, void *stream) {
         Data *cursor;
         Handler **handlers;
         Handler *handler;
-        data->cCount = fn_8022E868(stream, 6) + 1;
+        data->cCount = oggpack_read(stream, 6) + 1;
         cursor = data;
-        handlers = lbl_80300160;
+        handlers = _residue_P;
         for (i = 0; i < data->cCount; i++) {
-            cursor->cTypes[0] = fn_8022E868(stream, 0x10);
+            cursor->cTypes[0] = oggpack_read(stream, 0x10);
             type = cursor->cTypes[0];
             if (type < 0 || type >= 3) goto error;
             handler = handlers[type];
@@ -136,11 +136,11 @@ s32 fn_80232078(Source *source, void *stream) {
         Data *cursor;
         Handler **handlers;
         Handler *handler;
-        data->dCount = fn_8022E868(stream, 6) + 1;
+        data->dCount = oggpack_read(stream, 6) + 1;
         cursor = data;
-        handlers = lbl_8064C4D4;
+        handlers = _mapping_P;
         for (i = 0; i < data->dCount; i++) {
-            cursor->dTypes[0] = fn_8022E868(stream, 0x10);
+            cursor->dTypes[0] = oggpack_read(stream, 0x10);
             type = cursor->dTypes[0];
             if (type < 0 || type >= 1) goto error;
             handler = handlers[type];
@@ -153,14 +153,14 @@ s32 fn_80232078(Source *source, void *stream) {
     {
         s32 i;
         Data *cursor;
-        data->entryCount = fn_8022E868(stream, 6) + 1;
+        data->entryCount = oggpack_read(stream, 6) + 1;
         cursor = data;
         for (i = 0; i < data->entryCount; i++) {
             cursor->entries[0] = fn_8022F780(0x10);
-            cursor->entries[0]->flags = fn_8022E868(stream, 1);
-            cursor->entries[0]->kind = fn_8022E868(stream, 0x10);
-            cursor->entries[0]->index = fn_8022E868(stream, 0x10);
-            cursor->entries[0]->target = fn_8022E868(stream, 8);
+            cursor->entries[0]->flags = oggpack_read(stream, 1);
+            cursor->entries[0]->kind = oggpack_read(stream, 0x10);
+            cursor->entries[0]->index = oggpack_read(stream, 0x10);
+            cursor->entries[0]->target = oggpack_read(stream, 8);
             if (cursor->entries[0]->kind >= 1) goto error;
             if (cursor->entries[0]->index >= 1) goto error;
             if (cursor->entries[0]->target >= data->dCount) goto error;
@@ -168,11 +168,11 @@ s32 fn_80232078(Source *source, void *stream) {
         }
     }
 
-    if (fn_8022E868(stream, 1) != 1) goto error;
+    if (oggpack_read(stream, 1) != 1) goto error;
     return 0;
 
 error:
-    fn_800F8BAC(&lbl_806517EC, &lbl_806517F0, 0x12d);
-    fn_802326F8(source);
+    __assertion_failed(&lbl_806517EC, &lbl_806517F0, 0x12d);
+    vorbis_info_clear(source);
     return -0x85;
 }

@@ -6,9 +6,9 @@ extern const char lbl_8023BEF8[];
 extern void* lbl_8064C504;
 
 extern s32 fn_8011804C(s32);
-extern int fn_8016A598(void*);
-extern void fn_8016A830(void*, double);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern void lua_pushnumber(void*, double);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void* fn_80201B3C();
 extern int fn_80201B44();
@@ -35,8 +35,8 @@ s32 fn_8001B294(void* script)
     fn_80201B44();
     value = -1;
 
-    if (fn_8016A598(parser) != 0) {
-        fn_80163BB4(parser, lbl_8023BEF8, 0, fn_8016A598(parser));
+    if (lua_gettop(parser) != 0) {
+        luaO_verror(parser, lbl_8023BEF8, 0, lua_gettop(parser));
         return 0;
     }
 
@@ -51,6 +51,6 @@ s32 fn_8001B294(void* script)
         }
     }
 
-    fn_8016A830(parser, value);
+    lua_pushnumber(parser, value);
     return 1;
 }

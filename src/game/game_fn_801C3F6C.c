@@ -28,13 +28,13 @@ typedef struct SynthMidiSetup {
     u8 payload[0x52];
 } SynthMidiSetup;
 
-extern s16 lbl_8064D470;
-extern GSTACK lbl_806286B0[];
-extern u32 fn_801B2980(void*, void*, SynthMidiSetup*, void*, void*, void*, u16);
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern s16 sp;
+extern GSTACK gs[];
+extern u32 seqStartPlay(void*, void*, SynthMidiSetup*, void*, void*, void*, u16);
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
-u32 fn_801C3F6C(u16 sgid, u16 sid, void* arrfile, void* para, u8 irq_call, void* studio)
+u32 seqPlaySong(u16 sgid, u16 sid, void* arrfile, void* para, u8 irq_call, void* studio)
 {
     int i;
     GROUP_DATA* g;
@@ -43,9 +43,9 @@ u32 fn_801C3F6C(u16 sgid, u16 sid, void* arrfile, void* para, u8 irq_call, void*
     SynthMidiSetup* midiSetup;
     u32 seqId;
     void* prj;
-    GSTACK* gsTab = lbl_806286B0;
+    GSTACK* gsTab = gs;
 
-    for (i = 0; i < lbl_8064D470; ++i) {
+    for (i = 0; i < sp; ++i) {
         if (gsTab[i].gAddr->id != sgid) {
             continue;
         }
@@ -59,11 +59,11 @@ u32 fn_801C3F6C(u16 sgid, u16 sid, void* arrfile, void* para, u8 irq_call, void*
             while (midiSetup->songId != 0xFFFF) {
                 if (midiSetup->songId == sid) {
                     if (irq_call != 0) {
-                        seqId = fn_801B2980(norm, drum, midiSetup, arrfile, para, studio, sgid);
+                        seqId = seqStartPlay(norm, drum, midiSetup, arrfile, para, studio, sgid);
                     } else {
-                        fn_801CE2B8();
-                        seqId = fn_801B2980(norm, drum, midiSetup, arrfile, para, studio, sgid);
-                        fn_801CE280();
+                        hwDisableIrq();
+                        seqId = seqStartPlay(norm, drum, midiSetup, arrfile, para, studio, sgid);
+                        hwEnableIrq();
                     }
                     return seqId;
                 }

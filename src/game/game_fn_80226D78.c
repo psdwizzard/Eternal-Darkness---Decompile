@@ -15,7 +15,7 @@ typedef union {
 volatile GXFifo GXWGFifo : 0xCC008000;
 
 /* GXSetCoPlanar: update coplanar mode using a masked BP register write. */
-void fn_80226D78(u8 enable)
+void GXSetCoPlanar(u8 enable)
 {
     gx->genMode = (gx->genMode & ~0x80000UL) | ((u32)enable << 19);
     GXWGFifo.byte = 0x61;

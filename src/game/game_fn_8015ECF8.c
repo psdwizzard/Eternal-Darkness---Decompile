@@ -10,9 +10,9 @@ typedef struct Object {
 } Object;
 
 extern char lbl_8024F280[];
-extern void* fn_8016393C(void*, void*, int, unsigned int, int, void*, unsigned int);
+extern void* luaM_growaux(void*, void*, int, unsigned int, int, void*, unsigned int);
 
-int fn_8015ECF8(Object* object, double value)
+int number_constant(Object* object, double value)
 {
     DoubleTable* table = object->table;
     int last_index = table->last_index;
@@ -25,7 +25,7 @@ int fn_8015ECF8(Object* object, double value)
             return index;
     }
 
-    table->values = fn_8016393C(object->allocator, table->values,
+    table->values = luaM_growaux(object->allocator, table->values,
                                 table->last_index, 1, 8,
                                 lbl_8024F280, 0x3FFFFFF);
     index = table->last_index++;

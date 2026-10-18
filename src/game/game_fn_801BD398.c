@@ -33,15 +33,15 @@ typedef struct StreamCommand {
     CommandWord value;
 } StreamCommand;
 
-extern u64 lbl_8064D448;
-extern unsigned int fn_801CC6DC(unsigned int);
-extern unsigned int fn_801CC2E4(void);
-extern void fn_801CC408(unsigned int*);
-extern void fn_801CC418(unsigned int*, StreamState*);
-extern void fn_801C0844(StreamState*);
-extern void fn_801C0ACC(StreamState*, int);
+extern u64 macRealTime;
+extern unsigned int hwIsActive(unsigned int);
+extern unsigned int sndRand(void);
+extern void sndConvertMs(unsigned int*);
+extern void sndConvertTicks(unsigned int*, StreamState*);
+extern void TimeQueueAdd(StreamState*);
+extern void macMakeInactive(StreamState*, int);
 
-int fn_801BD398(StreamState* state, StreamCommand* command)
+int mcmdWait(StreamState* state, StreamCommand* command)
 {
     unsigned int amount;
     unsigned int relative;
@@ -61,7 +61,7 @@ int fn_801BD398(StreamState* state, StreamCommand* command)
     }
 
     if ((command->flags.raw >> 24) & 1) {
-        if (!(state->flags & 0x20) && !fn_801CC6DC(state->kind & 0xFF)) {
+        if (!(state->flags & 0x20) && !hwIsActive(state->kind & 0xFF)) {
             return 0;
         }
         state->flags |= 0x40000;
@@ -70,21 +70,21 @@ int fn_801BD398(StreamState* state, StreamCommand* command)
     }
 
     if ((command->flags.raw >> 16) & 1) {
-        amount = (unsigned short)fn_801CC2E4() % amount;
+        amount = (unsigned short)sndRand() % amount;
     }
 
     if (amount != 0xFFFF) {
         if (relative = (((command->value.raw >> 8) & 1) != 0)) {
-            fn_801CC408(&amount);
+            sndConvertMs(&amount);
         } else {
-            fn_801CC418(&amount, state);
+            sndConvertTicks(&amount, state);
         }
 
         if (relative) {
             if (command->value.raw & 1) {
                 state->current_time = state->base_time + amount;
             } else {
-                state->current_time = lbl_8064D448 + amount;
+                state->current_time = macRealTime + amount;
             }
         } else if (command->value.raw & 1) {
             state->current_time = amount;
@@ -92,7 +92,7 @@ int fn_801BD398(StreamState* state, StreamCommand* command)
             state->current_time = state->previous_time + amount;
         }
 
-        if (state->current_time <= lbl_8064D448) {
+        if (state->current_time <= macRealTime) {
             state->previous_time = state->current_time;
             state->current_time = 0;
         }
@@ -102,9 +102,9 @@ int fn_801BD398(StreamState* state, StreamCommand* command)
 
     if (state->current_time != 0) {
         if (state->current_time != ~0ULL) {
-            fn_801C0844(state);
+            TimeQueueAdd(state);
         }
-        fn_801C0ACC(state, 1);
+        macMakeInactive(state, 1);
         return 1;
     }
     }

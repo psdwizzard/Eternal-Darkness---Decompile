@@ -23,8 +23,8 @@ extern void *fn_801E741C(char *name);
 extern s32 fn_80054D14(void *resource, void *context, void *object, s32 force);
 extern void fn_80054DF4(void *resource, void *context, void *object, s32 force);
 extern void fn_800C4F48(void *context, void *object, void *event, s32 *result);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_801B05E8(s32, s32, s32, s32, s32, s32, s32, s32);
 extern s32 fn_80035FB8(void *context, char *first, char *second, char *third,
                       char *value, char *fourth);
@@ -69,7 +69,7 @@ s32 fn_80057E3C(void *context, void *event, s32 *result)
             0x2CB, 0x2CC, 0x2CD, 0x2CE,
             0x2CF, 0x2D0, 0x2D1, 0x2D1
         };
-        s32 sound = sounds[fn_800FBFB0() & 7];
+        s32 sound = sounds[rand() & 7];
         fn_801B05E8(sound, 100, 2, 1, 0, 5, 0, 0);
         return 1;
     }

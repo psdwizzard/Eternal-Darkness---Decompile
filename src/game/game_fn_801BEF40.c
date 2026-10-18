@@ -163,118 +163,75 @@ typedef struct SynthInfo {
 } SynthInfo;
 
 extern u8 lbl_80252160[];
-extern u8 lbl_8064D438;
-extern u64 lbl_8064D448;
+extern u8 DebugMacroSteps;
+extern u64 macRealTime;
 extern MSTEP lbl_8064D450;
 extern f32 lbl_80650F40;
 extern f32 lbl_80650F44;
-extern INPUT_SLOT lbl_8061A9C4[8][4];
-extern INPUT_SLOT lbl_8061A544[8][4];
-extern SynthInfo lbl_80619C20;
-extern u32 lbl_8061A504[];
-extern f32 lbl_80252F2C[];
-extern u8 lbl_80252B2C[];
-extern SYNTH_VOICE* lbl_8064D3D0;
+extern INPUT_SLOT inpAuxA[8][4];
+extern INPUT_SLOT inpAuxB[8][4];
+extern SynthInfo synthInfo;
+extern u32 synthGlobalVariable[];
+extern f32 dspDLSVolTab[];
+extern u8 dspScale2IndexTab[];
+extern SYNTH_VOICE* synthVoice;
 
-extern void fn_801CC8C4(u8);
-extern void fn_801CBE58(SYNTH_VOICE*);
-extern u8 fn_801CB4B4(u8, u8);
-extern void fn_801CB470(u8, u8, u8);
-extern void fn_801C26F8(SYNTH_VOICE*);
-extern u16 fn_801CAFAC(int, int, int);
-extern u8* fn_801CB238(u8, u8);
+extern void hwBreak(u8);
+extern void inpInit(SYNTH_VOICE*);
+extern u8 inpGetMidiLastNote(u8, u8);
+extern void inpSetMidiLastNote(u8, u8, u8);
+extern void voiceSetLastStarted(SYNTH_VOICE*);
+extern u16 inpGetMidiCtrl(int, int, int);
+extern u8* inpGetChannelDefaults(u8, u8);
 extern void* memset(void*, int, u32);
-extern void fn_801B78AC(SYNTH_VOICE*);
-extern void fn_801C106C(SYNTH_VOICE*);
-extern void fn_801C1BCC(SYNTH_VOICE*);
-extern u8* fn_801BCEB0(u16);
-extern u32 fn_801BD398(SYNTH_VOICE*, MSTEP*);
-extern void fn_801BD6A0(SYNTH_VOICE*, MSTEP*);
-extern void fn_801BD7F8(SYNTH_VOICE*, MSTEP*);
-extern void fn_801C0644(SYNTH_VOICE*);
-extern u16 fn_801CBAE8(SYNTH_VOICE*);
-extern void fn_801BDE7C(SYNTH_VOICE*, MSTEP*);
-extern u32 fn_801BE3F4(u32, u16);
-extern void fn_801BE354(SYNTH_VOICE*, MSTEP*, u8);
-extern void fn_801BE474(SYNTH_VOICE*, MSTEP*, u32);
-extern void fn_801BD990(SYNTH_VOICE*, MSTEP*);
-extern void fn_801B7954(SYNTH_VOICE*);
-extern u32 fn_801CC2E4(void);
+extern void synthStartSynthJobHandling(SYNTH_VOICE*);
+extern void vidRemoveVoiceReferences(SYNTH_VOICE*);
+extern void voiceFree(SYNTH_VOICE*);
+extern u8* dataGetMacro(u16);
+extern u32 mcmdWait(SYNTH_VOICE*, MSTEP*);
+extern void mcmdLoop(SYNTH_VOICE*, MSTEP*);
+extern void mcmdPlayMacro(SYNTH_VOICE*, MSTEP*);
+extern void macSetExternalKeyoff(SYNTH_VOICE*);
+extern u16 inpGetModulation(SYNTH_VOICE*);
+extern void mcmdSetADSR(SYNTH_VOICE*, MSTEP*);
+extern u32 TranslateVolume(u32, u16);
+extern void DoPanningSetup(SYNTH_VOICE*, MSTEP*, u8);
+extern void DoEnvelopeCalculation(SYNTH_VOICE*, MSTEP*, u32);
+extern void mcmdStartSample(SYNTH_VOICE*, MSTEP*);
+extern void synthKeyStateUpdate(SYNTH_VOICE*);
+extern u32 sndRand(void);
 extern u32 fn_800F5C54(f32);
-extern void fn_801CC914(u8, ADSR_INFO*, u32);
-extern void fn_801BE5A0(SYNTH_VOICE*, MSTEP*);
-extern u32 fn_801C267C(SYNTH_VOICE*);
-extern void fn_801BE874(SYNTH_VOICE*, MSTEP*);
-extern void fn_801BDB6C(SYNTH_VOICE*, MSTEP*);
-extern u32 fn_801CD228(u32);
-extern void fn_801BDCEC(SYNTH_VOICE*);
-extern void fn_801BE0D4(SYNTH_VOICE*, MSTEP*);
-extern void fn_801BEC38(SYNTH_VOICE*, MSTEP*);
-extern void fn_801BEAA4(SYNTH_VOICE*, u32, u8, s32);
-extern void fn_801CC704(u32, u32);
-extern void fn_801C1600(SYNTH_VOICE*, u8);
-extern void fn_801BE740(SYNTH_VOICE*, INPUT_SLOT*, MSTEP*, u64, u32);
-extern void fn_801CC408(u32*);
-extern void fn_801BEE6C(SYNTH_VOICE*, MSTEP*);
-extern void fn_801CCC10(u8, u8);
-extern void fn_801CCC3C(u8, u8);
-extern void fn_801BEB08(SYNTH_VOICE*, MSTEP*, u8);
-extern u32 fn_801CC1AC(SYNTH_VOICE*, u8);
+extern void hwSetADSR(u8, ADSR_INFO*, u32);
+extern void mcmdRandomKey(SYNTH_VOICE*, MSTEP*);
+extern u32 voiceIsLastStarted(SYNTH_VOICE*);
+extern void mcmdPortamento(SYNTH_VOICE*, MSTEP*);
+extern void mcmdVibrato(SYNTH_VOICE*, MSTEP*);
+extern u32 hwFrq2Pitch(u32);
+extern void DoSetPitch(SYNTH_VOICE*);
+extern void mcmdSetPitchADSR(SYNTH_VOICE*, MSTEP*);
+extern void mcmdSendMessage(SYNTH_VOICE*, MSTEP*);
+extern void varSet32(SYNTH_VOICE*, u32, u8, s32);
+extern void hwSetPriority(u32, u32);
+extern void voiceSetPriority(SYNTH_VOICE*, u8);
+extern void SelectSource(SYNTH_VOICE*, INPUT_SLOT*, MSTEP*, u64, u32);
+extern void sndConvertMs(u32*);
+extern void mcmdSetKeyGroup(SYNTH_VOICE*, MSTEP*);
+extern void hwSetSRCType(u8, u8);
+extern void hwSetPolyPhaseFilter(u8, u8);
+extern void mcmdVarCalculation(SYNTH_VOICE*, MSTEP*, u8);
+extern u32 inpGetExCtrl(SYNTH_VOICE*, u8);
 
 #define MAC_CFLAGS(sv) (*(u64*)&(sv)->cFlagsHi)
 #define MAC_FLAG64(hi, lo) (((u64)(hi) << 32) | (lo))
-#define SYNTH_GLOBAL_REG(index) (lbl_8061A504[(index) - 0x10])
+#define SYNTH_GLOBAL_REG(index) (synthGlobalVariable[(index) - 0x10])
 #define macCurrentCmd lbl_8064D450
-#define macStepsThisFrame lbl_8064D438
-#define macRealTime lbl_8064D448
-#define synthVoice lbl_8064D3D0
-#define SYNTH_CONFIGURATION (&lbl_80619C20)
-#define voiceAdsrSustainTable lbl_80252F2C
-#define voiceAdsrDecayTable lbl_80252B2C
-#define inpAuxA lbl_8061A9C4
-#define inpAuxB lbl_8061A544
-#define hwBreak fn_801CC8C4
-#define inpInit fn_801CBE58
-#define inpGetMidiLastNote fn_801CB4B4
-#define inpSetMidiLastNote fn_801CB470
-#define voiceSetLastStarted fn_801C26F8
-#define inpGetMidiCtrl fn_801CAFAC
-#define inpGetChannelDefaults fn_801CB238
-#define synthStartSynthJobHandling fn_801B78AC
-#define vidRemoveVoiceReferences fn_801C106C
-#define voiceFree fn_801C1BCC
-#define dataGetMacro fn_801BCEB0
-#define mcmdWait fn_801BD398
-#define mcmdLoop fn_801BD6A0
-#define mcmdPlayMacro fn_801BD7F8
-#define macSetExternalKeyoff fn_801C0644
-#define inpGetModulation fn_801CBAE8
-#define mcmdSetADSR fn_801BDE7C
-#define TranslateVolume fn_801BE3F4
-#define voiceConfigureParamRamp fn_801BE354
-#define mcmdScaleVolume fn_801BE474
-#define mcmdStartSample fn_801BD990
-#define synthKeyStateUpdate fn_801B7954
-#define sndRand fn_801CC2E4
-#define hwSetADSR fn_801CC914
-#define mcmdRandomKey fn_801BE5A0
-#define voiceIsLastStarted fn_801C267C
-#define mcmdPortamento fn_801BE874
-#define mcmdVibrato fn_801BDB6C
-#define hwExitStream fn_801CD228
-#define DoSetPitch fn_801BDCEC
-#define mcmdSetPitchADSR fn_801BE0D4
-#define mcmdSendMessage fn_801BEC38
-#define varSet32 fn_801BEAA4
-#define hwSetPriority fn_801CC704
-#define voiceSetPriority fn_801C1600
-#define SelectSource fn_801BE740
-#define sndConvertMs fn_801CC408
-#define mcmdSetKeyGroup fn_801BEE6C
-#define hwSetSRCType fn_801CCC10
-#define hwSetPolyPhaseFilter fn_801CCC3C
-#define mcmdVarCalculation fn_801BEB08
-#define inpGetExCtrl fn_801CC1AC
+#define macStepsThisFrame DebugMacroSteps
+#define SYNTH_CONFIGURATION (&synthInfo)
+#define voiceAdsrSustainTable dspDLSVolTab
+#define voiceAdsrDecayTable dspScale2IndexTab
+#define voiceConfigureParamRamp DoPanningSetup
+#define mcmdScaleVolume DoEnvelopeCalculation
+#define hwExitStream hwFrq2Pitch
 
 static inline s32 varGetReg(SYNTH_VOICE* state, u32 useExCtrl, u8 index)
 {
@@ -843,7 +800,7 @@ void fn_801BEF40(SYNTH_VOICE* sv)
             hwSetPriority(sv->id & 0xff, ((u32)sv->prio << 0x18) | (sv->age >> 0xf));
             break;
         case 0x32:
-            lbl_8061A504[(cmd >> 8) & 0xff] = (cmd >> 0x10) & 0xff;
+            synthGlobalVariable[(cmd >> 8) & 0xff] = (cmd >> 0x10) & 0xff;
             break;
         case 0x33:
             sv->pbLowerKeyRange = (cmd >> 0x10) & 0xff;

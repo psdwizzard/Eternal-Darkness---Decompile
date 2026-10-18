@@ -1,4 +1,4 @@
-int fn_8016563C(int token)
+int getbinopr(int token)
 {
     switch (token) {
     case 0x2B:

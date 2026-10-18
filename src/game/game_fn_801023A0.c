@@ -1,6 +1,6 @@
-extern double fn_800FF7F4(double value);
+extern double __ieee754_pow(double value);
 
-double fn_801023A0(double value)
+double pow(double value)
 {
-    return fn_800FF7F4(value);
+    return __ieee754_pow(value);
 }

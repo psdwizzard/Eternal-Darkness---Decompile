@@ -21,26 +21,26 @@ typedef struct Codebook {
 
 typedef struct OggPackBuffer OggPackBuffer;
 
-extern s32 fn_8022E7FC(OggPackBuffer *b);            /* oggpack_read1 */
-extern void fn_8022E954(OggPackBuffer *b, s32 bits); /* oggpack_adv */
-extern s32 fn_8022E988(OggPackBuffer *b, s32 bits);  /* oggpack_look */
+extern s32 oggpack_read1(OggPackBuffer *b);            /* oggpack_read1 */
+extern void oggpack_adv(OggPackBuffer *b, s32 bits); /* oggpack_adv */
+extern s32 oggpack_look(OggPackBuffer *b, s32 bits);  /* oggpack_look */
 
 /* decode_packed_entry_number */
-s32 fn_80230718(Codebook *book, OggPackBuffer *b)
+s32 vorbis_book_decode(Codebook *book, OggPackBuffer *b)
 {
     s32 ptr = 0;
     DecodeAux *t = book->decode_tree;
-    s32 lok = fn_8022E988(b, t->tabn);
+    s32 lok = oggpack_look(b, t->tabn);
 
     if (lok >= 0) {
         ptr = t->tab[lok];
-        fn_8022E954(b, t->tabl[lok]);
+        oggpack_adv(b, t->tabl[lok]);
         if (ptr <= 0)
             return -ptr;
     }
 
     do {
-        switch (fn_8022E7FC(b)) {
+        switch (oggpack_read1(b)) {
         case 0:
             ptr = t->ptr0[ptr];
             break;

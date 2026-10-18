@@ -57,8 +57,8 @@ extern Vec1s lbl_80651BF4;
 
 extern int fn_8011F6A4(void*, int, int, int, SearchResult*, int);
 extern void fn_8012B690(void*, Vec3*, Vec3*);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_8017EA58(u8*);
 extern void fn_80183DD4(u8*);
 extern int fn_801E79FC(void*, int);
@@ -103,8 +103,8 @@ void fn_8014D100(void* context, int* source, int first_kind, int second_kind)
         range.z = (short)(lbl_80650504 * search.offset.z);
     } else {
         fn_8012B690(context, &basis, &position);
-        range.x = 1 - (fn_800FBFB0() & 3);
-        range.y = 1 - (fn_800FBFB0() & 3);
+        range.x = 1 - (rand() & 3);
+        range.y = 1 - (rand() & 3);
         range.z = -3;
     }
 
@@ -131,7 +131,7 @@ void fn_8014D100(void* context, int* source, int first_kind, int second_kind)
     if (object != 0)
         fn_8017FF1C(fn_80156938(object), 4);
 
-    if ((fn_800FBFB0() & 1) != 0) {
+    if ((rand() & 1) != 0) {
         sound = 50;
         owner = fn_80201B8C(fn_80201814(fn_80201A84(context)));
         range.y = 0;

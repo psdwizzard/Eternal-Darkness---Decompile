@@ -79,13 +79,13 @@ extern void fn_80156F80(void *, void *);
 extern int fn_801261F4(void *);
 extern void fn_80045CE0(void *);
 extern int fn_8011F6A4(void *, int, int, int, QueryResult *, int);
-extern void fn_80211A48(Vec3 *, Vec3 *, Vec3 *);
-extern void fn_80211A6C(Vec3 *, Vec3 *, Vec3 *);
-extern void fn_80211A90(Vec3 *, Vec3 *, float);
-extern void fn_80211AAC(Vec3 *, Vec3 *);
-extern float fn_80211B08(Vec3 *);
-extern float fn_80211B44(Vec3 *, Vec3 *);
-extern void fn_80211B64(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECAdd(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECSubtract(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECScale(Vec3 *, Vec3 *, float);
+extern void PSVECNormalize(Vec3 *, Vec3 *);
+extern float PSVECMag(Vec3 *);
+extern float PSVECDotProduct(Vec3 *, Vec3 *);
+extern void PSVECCrossProduct(Vec3 *, Vec3 *, Vec3 *);
 extern void fn_801AAE68(int, int, int, Vec3 *, int, int, int, u16, float, int);
 extern int fn_801D3A24(int, int);
 extern void fn_8015295C(Vec3 *, Vec3 *, int, int, int);
@@ -248,10 +248,10 @@ int fn_800E0814(void *context, int phase, void *message, int *result)
                     Vec3 pos;
                     Vec3 dir;
                     pos = from.position;
-                    fn_80211A6C(&to.position, &from.position, &dir);
-                    fn_80211AAC(&dir, &dir);
-                    fn_80211A90(&dir, &dir, lbl_8064F5A8);
-                    fn_80211A48(&to.position, &dir, &pos);
+                    PSVECSubtract(&to.position, &from.position, &dir);
+                    PSVECNormalize(&dir, &dir);
+                    PSVECScale(&dir, &dir, lbl_8064F5A8);
+                    PSVECAdd(&to.position, &dir, &pos);
                     fn_801AAE68(0x289, 90, 0, &from.position, 2, 2, 0, lbl_8064D18C, lbl_8064F5AC, 0);
                     fn_8015295C(&to.position, &pos, fn_801D3A24(otherData->unk94, 0x31), 4, 2);
                 }
@@ -285,10 +285,10 @@ int fn_800E0814(void *context, int phase, void *message, int *result)
                     float dot;
                     float tiltAngle;
                     up = lbl_802399C8;
-                    fn_80211B64(&up, &query.direction, &axis);
-                    length = fn_80211B08(&axis);
-                    fn_80211AAC(&axis, &axis);
-                    dot = fn_80211B44(&up, &query.direction);
+                    PSVECCrossProduct(&up, &query.direction, &axis);
+                    length = PSVECMag(&axis);
+                    PSVECNormalize(&axis, &axis);
+                    dot = PSVECDotProduct(&up, &query.direction);
                     tiltAngle = fn_800490E8(length, dot);
                     grab->angle = grab->angle + lbl_8064F5B0;
                     if (grab->angle > 6.2831855f)
@@ -316,7 +316,7 @@ int fn_800E0814(void *context, int phase, void *message, int *result)
         if (kind == 3) {
             Vec3 next = GetObjectPosition(object);
             float angle = fn_8012B750(object);
-            fn_80211A48(&next, &grab->step, &next);
+            PSVECAdd(&next, &grab->step, &next);
             fn_8011F0E8(object, &next);
             angle += lbl_8064F5C4;
             fn_8012B7A0(object, angle > 6.2831855f ? angle - 6.2831855f : angle);

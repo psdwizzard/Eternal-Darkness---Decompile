@@ -17,13 +17,13 @@ extern EXIControl *lbl_8064C4B8;
 extern int OSDisableInterrupts(void);
 extern int OSRestoreInterrupts(int);
 extern u32 __OSUnmaskInterrupts(u32);
-extern void fn_8022DEBC(int, int);
+extern void AmcEXIClearInterrupts(int, int);
 
 volatile u32 __EXIRegs[15] : 0xCC006800;
 #define REG(chan, index) (__EXIRegs[(chan) * 5 + (index)])
 
 /* Start an immediate EXI transfer on channel 2. */
-int fn_8022DAE0(void *buffer, s32 length, u32 type, EXICallback callback)
+int AmcEXIImm(void *buffer, s32 length, u32 type, EXICallback callback)
 {
     s32 channel = 2;
     int enabled;
@@ -37,7 +37,7 @@ int fn_8022DAE0(void *buffer, s32 length, u32 type, EXICallback callback)
     }
     lbl_8064C4B8->transferCallback = callback;
     if (lbl_8064C4B8->transferCallback != 0) {
-        fn_8022DEBC(0, 1);
+        AmcEXIClearInterrupts(0, 1);
         __OSUnmaskInterrupts(0x200000U >> (channel * 3));
     }
     lbl_8064C4B8->state |= 2;

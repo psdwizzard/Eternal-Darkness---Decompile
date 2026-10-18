@@ -5,7 +5,7 @@ typedef void (*DVDLowCallback)(u32 intType);
 extern s32 DVDLowWaitCoverClose(DVDLowCallback callback);
 extern void cbForStateMotorStopped_8021492C(u32 intType);
 
-void fn_80214904(void)
+void stateMotorStopped(void)
 {
     DVDLowWaitCoverClose(cbForStateMotorStopped_8021492C);
 }

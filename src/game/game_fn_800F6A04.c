@@ -37,10 +37,10 @@ typedef struct __mem_pool_obj {
 } __mem_pool_obj;
 
 /* fix_pool_sizes */
-extern const volatile unsigned int lbl_80239CE8[6];
+extern const volatile unsigned int fix_pool_sizes[6];
 
-extern void fn_800F6CBC(Block* bp, SubBlock* sb); /* Block_link */
-extern void fn_800F66DC(void* p);                 /* __sys_free */
+extern void Block_link(Block* bp, SubBlock* sb); /* Block_link */
+extern void __sys_free(void* p);                 /* __sys_free */
 
 static inline int Block_empty(Block* bp)
 {
@@ -71,21 +71,21 @@ static inline void deallocate_from_var_pools(__mem_pool_obj* pool_obj, void* ptr
     SubBlock* sb = (SubBlock*)((char*)ptr - sizeof(SubBlock));
     Block* bp = (Block*)((unsigned long)sb->bp_ & ~1);
 
-    fn_800F6CBC(bp, sb);
+    Block_link(bp, sb);
     if (Block_empty(bp)) {
         unlink(pool_obj, bp);
-        fn_800F66DC(bp);
+        __sys_free(bp);
     }
 }
 
-void fn_800F6A04(__mem_pool_obj* pool_obj, void* ptr, unsigned long size)
+void deallocate_from_fixed_pools(__mem_pool_obj* pool_obj, void* ptr, unsigned long size)
 {
     unsigned long i = 0;
     FixSubBlock* p;
     FixBlock* b;
     FixStart* fs;
 
-    while (size > lbl_80239CE8[i]) {
+    while (size > fix_pool_sizes[i]) {
         ++i;
     }
     p = (FixSubBlock*)((char*)ptr - sizeof(FixBlock*));

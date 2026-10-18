@@ -10,7 +10,7 @@ extern const double lbl_8064FDF0; /* huge */
 extern const double lbl_8064FDF8; /* zero */
 
 /* Round upward to an integral value, retaining the sign of zero. */
-double fn_8010181C(double value)
+double ceil(double value)
 {
     DoubleBits bits;
     int high;

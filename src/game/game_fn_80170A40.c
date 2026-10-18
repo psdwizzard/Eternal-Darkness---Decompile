@@ -8,10 +8,10 @@ typedef struct Entry {
     u16 value6;
 } Entry;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
-extern void fn_8016A830(void*, double);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
+extern void lua_pushnumber(void*, double);
 extern int lbl_8064D1BC;
 extern Entry lbl_805FAA60[10];
 extern const char lbl_80250198[];
@@ -22,13 +22,13 @@ int fn_80170A40(void* state)
     s16 id = lbl_8064D1BC;
     int i = 0;
 
-    if (fn_8016A598(state) > 1) {
-        fn_80163BB4(state, lbl_80250198, fn_8016A598(state));
+    if (lua_gettop(state) > 1) {
+        luaO_verror(state, lbl_80250198, lua_gettop(state));
         return 0;
     }
 
-    if (fn_8016A598(state) > 0) {
-        id = fn_8016A694(state, 2);
+    if (lua_gettop(state) > 0) {
+        id = lua_tonumber(state, 2);
     }
 
     while (lbl_805FAA60[i].id != id && i < 10) {
@@ -36,9 +36,9 @@ int fn_80170A40(void* state)
     }
 
     if (i >= 10) {
-        fn_8016A830(state, lbl_806506D0);
+        lua_pushnumber(state, lbl_806506D0);
     } else {
-        fn_8016A830(state, (double)lbl_805FAA60[i].value2);
+        lua_pushnumber(state, (double)lbl_805FAA60[i].value2);
     }
     return 1;
 }

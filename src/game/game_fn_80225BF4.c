@@ -16,7 +16,7 @@ extern GXData *gx;
 typedef union GXWGPipe { u8 byte; u32 word; } GXWGPipe;
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
-void fn_80225BF4(void)
+void __GXSetVAT(void)
 {
     u8 i;
 

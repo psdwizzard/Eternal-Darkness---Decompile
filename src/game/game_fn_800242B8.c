@@ -21,11 +21,11 @@ extern void fn_80024434(void);
 extern void fn_801EC9E4(void);
 extern void fn_801EFE84(int);
 extern void fn_80027F10(void);
-extern void fn_80228B98(void*, u32);
+extern void GXLoadTlut(void*, u32);
 extern void fn_801EC7F4(void*, void*);
 extern void fn_801F3960(u32*);
 extern void fn_801A8D38(int);
-extern void fn_80225F4C(u32, void*, u32);
+extern void GXSetArray(u32, void*, u32);
 extern void fn_801ED3F4(u32);
 extern void fn_801A852C(Color, int, int, u32);
 extern void fn_801A8F08(u32, u32, u32, u32, u32, u32, u32);
@@ -34,9 +34,9 @@ extern void fn_80180AD0(void);
 extern void fn_80024468(void);
 extern void fn_801EA9F8(void);
 extern void fn_801EB194(u32);
-extern void fn_8020F088(void*);
-extern void fn_8020EFBC(void*);
-extern void fn_8020F0F8(void*);
+extern void OSCheckStopwatch(void*);
+extern void OSStopStopwatch(void*);
+extern void OSResetStopwatch(void*);
 
 void fn_800242B8(u32 value)
 {
@@ -50,13 +50,13 @@ void fn_800242B8(u32 value)
     fn_801EC9E4();
     fn_801EFE84(0);
     fn_80027F10();
-    fn_80228B98(lbl_8063B2AC, 2);
+    GXLoadTlut(lbl_8063B2AC, 2);
     fn_801EC7F4(lbl_80265DA0, lbl_8063B374);
     fn_801EC7F4(lbl_80265EBC, lbl_8063B38C);
     first = lbl_8064DF34;
     fn_801F3960(&first);
     fn_801A8D38(5);
-    fn_80225F4C(13, lbl_802515D0, 4);
+    GXSetArray(13, lbl_802515D0, 4);
     fn_801ED3F4(value);
     second = lbl_8064C2A8;
     fn_801A852C(&second, 0, 0, 0x80000000);
@@ -66,7 +66,7 @@ void fn_800242B8(u32 value)
     fn_80024468();
     fn_801EA9F8();
     fn_801EB194(1);
-    fn_8020F088(lbl_806391F0);
-    fn_8020EFBC(lbl_806391F0);
-    fn_8020F0F8(lbl_806391F0);
+    OSCheckStopwatch(lbl_806391F0);
+    OSStopStopwatch(lbl_806391F0);
+    OSResetStopwatch(lbl_806391F0);
 }

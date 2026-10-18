@@ -11,10 +11,10 @@ typedef struct ParseResult {
 } ParseResult;
 
 extern void fn_80163E08(Parser*);
-extern int fn_801650A8(Parser*);
-extern int fn_80165198(Parser*);
+extern int recfields(Parser*);
+extern int listfields(Parser*);
 
-void fn_801652B4(Parser* parser, ParseResult* result)
+void constructor_part(Parser* parser, ParseResult* result)
 {
     switch (parser->token) {
     case 0x3B:
@@ -28,12 +28,12 @@ void fn_801652B4(Parser* parser, ParseResult* result)
             goto parse_general;
         }
     case 0x5B:
-        result->value = fn_801650A8(parser);
+        result->value = recfields(parser);
         result->kind = 1;
         break;
     default:
     parse_general:
-        result->value = fn_80165198(parser);
+        result->value = listfields(parser);
         result->kind = 0;
         break;
     }

@@ -101,7 +101,7 @@ extern void fn_800CCC78(void*, int);
 extern void fn_800CF598(void*);
 extern void fn_800EA0FC(void*, void*, int, void*, int*);
 extern void fn_800EA3A0(void*, void*);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_8011F0E8(void*, Vec3*);
 extern void fn_8011F104(void*, float, float, float);
 extern void fn_8011F114(Vec3*, void*);
@@ -544,8 +544,8 @@ int fn_8008B08C(void* object, int state, void* event, int* resultOut)
             }
             return 1;
         } else if (eventType == 0x2) {
-            randomDelay = fn_800FBFB0() & 0x3C;
-            randomDelay += fn_800FBFB0() & 0x3C;
+            randomDelay = rand() & 0x3C;
+            randomDelay += rand() & 0x3C;
             action->searchTimer = randomDelay + 0xB4;
             return 1;
         }

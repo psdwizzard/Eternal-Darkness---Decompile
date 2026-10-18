@@ -5,9 +5,9 @@ typedef struct Allocator {
     void (*free)(void*);
 } Allocator;
 
-extern Allocator lbl_8064D4DC;
+extern Allocator salHooks;
 
-void fn_801CE358(void* allocation)
+void salFree(void* allocation)
 {
-    lbl_8064D4DC.free(allocation);
+    salHooks.free(allocation);
 }

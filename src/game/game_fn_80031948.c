@@ -25,8 +25,8 @@ typedef struct EffectDescriptor {
 } EffectDescriptor;
 
 extern void fn_80181F5C(EffectDescriptor*);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern s32 fn_801D3A24(s32, s32);
 extern void fn_80182014(void);
 extern void fn_80147EC4(EffectDescriptor*);
@@ -37,14 +37,14 @@ void fn_80031948(Vec3* position, s32 object_id)
 
     fn_80181F5C(&effect);
     effect.mode = 4;
-    effect.variant = (fn_800FBFB0() & 0xF) + 0x11;
+    effect.variant = (rand() & 0xF) + 0x11;
     effect.type = fn_801D3A24(object_id, 0x42);
     effect.value18 = 0;
     effect.callback = fn_80182014;
     effect.position = *position;
     effect.valueA4 = 0;
     effect.valueA6 = 0;
-    effect.lifetime = (fn_800FBFB0() & 7) + 7;
+    effect.lifetime = (rand() & 7) + 7;
     effect.size = 4;
     fn_80147EC4(&effect);
 }

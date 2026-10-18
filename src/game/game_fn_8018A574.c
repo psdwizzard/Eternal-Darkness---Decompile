@@ -3,7 +3,7 @@ typedef signed short s16;
 
 extern u8 lbl_80607840[];
 extern u8 lbl_8063C0C8[];
-extern void fn_80212154(void*, void*);
+extern void PSMTXReorder(void*, void*);
 extern void fn_801A2AB4(void*, void*, void*, int);
 extern int fn_8018D1F0(u8, int);
 
@@ -25,7 +25,7 @@ void fn_8018A574(u8* transform, u8* object, void* context, s16* out)
     entry = *(u8**)(obj + 0x4C);
     count = obj[1];
     current = entry;
-    fn_80212154(transform + 0x78, matrix);
+    PSMTXReorder(transform + 0x78, matrix);
     fn_801A2AB4(matrix, ctx, lbl_80607840, count);
     dims = (s16*)lbl_80607840;
 

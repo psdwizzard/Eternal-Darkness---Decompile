@@ -18,20 +18,20 @@ extern const float lbl_80651538;
 extern int fn_801EF384(void);
 extern int fn_801ED57C(int);
 extern void fn_801ECEC8(int, int, int);
-extern void fn_8022A5D8(int, int, int, int);
-extern void fn_802119B0(void*, float, float, float, float, float, float);
-extern void fn_8022B4B8(void*, int);
-extern void fn_80210FB0(void*);
-extern void fn_80211484(void*, float, float, float);
-extern void fn_8022B690(void*, int);
+extern void GXSetBlendMode(int, int, int, int);
+extern void C_MTXOrtho(void*, float, float, float, float, float, float);
+extern void GXSetProjection(void*, int);
+extern void PSMTXIdentity(void*);
+extern void PSMTXTrans(void*, float, float, float);
+extern void GXLoadPosMtxImm(void*, int);
 extern void fn_801ED468(int);
-extern void fn_80226D28(int);
-extern void fn_8022A6DC(int);
+extern void GXSetCullMode(int);
+extern void GXSetColorUpdate(int);
 extern void fn_801ECC4C(void);
 extern void fn_801ECF50(int);
 extern void fn_801EDA7C(void*, int, int, int);
 extern void fn_801ECD74(void*);
-extern void fn_80226AB4(int, int, int);
+extern void GXBegin(int, int, int);
 extern void fn_801FD22C(int, int, int);
 extern void fn_801FD21C(float, float);
 extern void fn_801FD218(void);
@@ -55,26 +55,26 @@ void fn_801FCF04(void)
     ((u8*)&marker)[3] = 0x69;
     if (mode != 0) ((u8*)&marker)[1] = 0xff;
     fn_801ECEC8(0, 3, 0);
-    fn_8022A5D8(1, 4, 5, 0);
-    fn_802119B0(&a, lbl_80651520, lbl_80651528, lbl_80651520,
+    GXSetBlendMode(1, 4, 5, 0);
+    C_MTXOrtho(&a, lbl_80651520, lbl_80651528, lbl_80651520,
                lbl_8065152C, lbl_80651520, lbl_80651530);
-    fn_8022B4B8(&a, 1);
-    fn_80210FB0(&b);
-    fn_80211484(&b, lbl_80651534, lbl_80651538, lbl_80651520);
-    fn_8022B690(&b, 0);
+    GXSetProjection(&a, 1);
+    PSMTXIdentity(&b);
+    PSMTXTrans(&b, lbl_80651534, lbl_80651538, lbl_80651520);
+    GXLoadPosMtxImm(&b, 0);
     fn_801ED468(0);
-    fn_80226D28(0);
-    fn_8022A6DC(1);
+    GXSetCullMode(0);
+    GXSetColorUpdate(1);
     fn_801ECC4C();
     fn_801ECF50(8);
-    fn_80226D28(0);
-    fn_8022A5D8(1, 7, 6, 0);
+    GXSetCullMode(0);
+    GXSetBlendMode(1, 7, 6, 0);
     fn_801EDA7C(lbl_802FC808, 0, 0xabf, 0);
     argument = marker;
     fn_801ECD74(&argument);
 
     if (mode == 0) {
-        fn_80226AB4(0x80, 2, 4);
+        GXBegin(0x80, 2, 4);
         fn_801FD22C(-0x2800, -0x1e00, 0);
         fn_801FD21C(lbl_80651520, lbl_80651520);
         fn_801FD22C(0x2800, -0x1e00, 0);
@@ -85,7 +85,7 @@ void fn_801FCF04(void)
         fn_801FD21C(lbl_80651520, lbl_80651524);
         fn_801FD218();
     } else {
-        fn_80226AB4(0x80, 2, 4);
+        GXBegin(0x80, 2, 4);
         fn_801FD22C(-0x2800, -0x1e00, 0);
         fn_801FD21C(lbl_80651520, lbl_80651520);
         fn_801FD22C(0x2800, -0x1e00, 0);
@@ -96,9 +96,9 @@ void fn_801FCF04(void)
         fn_801FD21C(lbl_80651520, lbl_80651524);
         fn_801FD218();
     }
-    fn_80226D28(1);
+    GXSetCullMode(1);
     fn_801ED57C(old);
-    fn_8022A5D8(1, 4, 5, 0);
+    GXSetBlendMode(1, 4, 5, 0);
     fn_801F683C(&source);
     copy = source;
     fn_801F03F0(&copy, 0);

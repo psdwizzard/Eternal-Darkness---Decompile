@@ -31,7 +31,7 @@ static inline VITiming *getTimings(void)
 }
 
 /* Select the video-interface timing for the encoded TV mode. */
-VITiming *fn_80216C24(s32 mode)
+VITiming *getTiming(s32 mode)
 {
     VITiming *timings = getTimings();
     switch (mode) {

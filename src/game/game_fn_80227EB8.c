@@ -29,7 +29,7 @@ typedef union GXWGPipe {
 } GXWGPipe;
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
-void fn_80227EB8(GXChannelID chan, GXColor color)
+void GXSetChanMatColor(GXChannelID chan, GXColor color)
 {
     u32 reg;
     u32 index;

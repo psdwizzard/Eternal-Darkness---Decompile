@@ -17,7 +17,7 @@ extern void *memset(void *dest, int value, unsigned long size);
 extern void *fn_8022F780(int size);
 
 /* Initialize the stream information and allocate its codec setup. */
-void fn_8023283C(CodecInfo *info)
+void vorbis_info_init(CodecInfo *info)
 {
     memset(info, 0, sizeof(*info));
     info->setup = fn_8022F780(0xDD4);

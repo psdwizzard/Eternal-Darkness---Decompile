@@ -3,7 +3,7 @@ typedef struct Vec3 {
 } Vec3;
 
 /* Compute the cross product, including when out aliases an input. */
-void fn_80211B64(register const Vec3 *a, register const Vec3 *b,
+void PSVECCrossProduct(register const Vec3 *a, register const Vec3 *b,
                  register Vec3 *out)
 {
     register float axy, bxy, az, bz;

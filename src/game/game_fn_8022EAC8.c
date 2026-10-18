@@ -26,7 +26,7 @@ typedef struct OggPacket {
     int packetno;
 } OggPacket;
 
-int fn_8022EAC8(OggStreamState *os, OggPacket *op, int advance) {
+int _packetout(OggStreamState *os, OggPacket *op, int advance) {
     int ptr = os->lacing_returned;
     int *lacing;
     int val;

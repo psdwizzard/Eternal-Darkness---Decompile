@@ -13,9 +13,8 @@ typedef struct DSPvoice {
     u8 padED[7];
 } DSPvoice;
 
-extern DSPvoice* lbl_8064D4AC;
+extern DSPvoice* dspVoice;
 
-#define dspVoice lbl_8064D4AC
 
 u32 fn_801CD094(u32 slot)
 {

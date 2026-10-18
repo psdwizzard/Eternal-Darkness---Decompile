@@ -33,10 +33,10 @@ typedef struct CloseFileRecord {
     int (*close)(int);
 } CloseFileRecord;
 
-int fn_800F90B8(struct FileRecord *file);
-void fn_800F68D0(void *ptr);
+int fflush(struct FileRecord *file);
+void free(void *ptr);
 
-int fn_800F91F0(CloseFileRecord *file)
+int fclose(CloseFileRecord *file)
 {
     int flush_result;
     int close_result;
@@ -47,12 +47,12 @@ int fn_800F91F0(CloseFileRecord *file)
     if (file->mode.file_kind == 0) {
         return 0;
     }
-    flush_result = fn_800F90B8((struct FileRecord *)file);
+    flush_result = fflush((struct FileRecord *)file);
     close_result = file->close(file->handle);
     file->mode.file_kind = 0;
     file->handle = 0;
     if (file->state.free_buffer) {
-        fn_800F68D0(file->buffer);
+        free(file->buffer);
     }
     return (flush_result || close_result) ? -1 : 0;
 }

@@ -6,7 +6,7 @@ extern unsigned char lbl_805E2ABC[];
 extern void fn_80138F78(int);
 extern int OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(int);
-extern void fn_8020D250(void*, int, int);
+extern void OSSendMessage(void*, int, int);
 
 void fn_80139940(int cleanup)
 {
@@ -27,6 +27,6 @@ void fn_80139940(int cleanup)
     }
     OSRestoreInterrupts(enabled);
     if (wake != 0) {
-        fn_8020D250(lbl_805E2ABC, 0, 1);
+        OSSendMessage(lbl_805E2ABC, 0, 1);
     }
 }

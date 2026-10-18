@@ -13,40 +13,40 @@ struct ARQRequest {
     ARQCallback callback;
 };
 
-extern void fn_8021A9B0(u32 type, u32 mainMemory, u32 aram, u32 length);
-extern ARQRequest* lbl_8064DB40;
-extern ARQRequest* lbl_8064DB4C;
-extern ARQCallback lbl_8064DB54;
-extern u32 lbl_8064DB58;
+extern void ARStartDMA(u32 type, u32 mainMemory, u32 aram, u32 length);
+extern ARQRequest* __ARQRequestQueueLo;
+extern ARQRequest* __ARQRequestPendingLo;
+extern ARQCallback __ARQCallbackLo;
+extern u32 __ARQChunkSize;
 
 /* Start the next chunk of the pending low-priority ARAM request. */
-void fn_8021B4F8(void)
+void __ARQServiceQueueLo(void)
 {
-    if (lbl_8064DB4C == 0 && lbl_8064DB40 != 0) {
-        lbl_8064DB4C = lbl_8064DB40;
-        lbl_8064DB40 = lbl_8064DB40->next;
+    if (__ARQRequestPendingLo == 0 && __ARQRequestQueueLo != 0) {
+        __ARQRequestPendingLo = __ARQRequestQueueLo;
+        __ARQRequestQueueLo = __ARQRequestQueueLo->next;
     }
-    if (lbl_8064DB4C != 0) {
-        if (lbl_8064DB4C->length <= lbl_8064DB58) {
-            if (lbl_8064DB4C->type == 0) {
-                fn_8021A9B0(lbl_8064DB4C->type, lbl_8064DB4C->source,
-                            lbl_8064DB4C->destination, lbl_8064DB4C->length);
+    if (__ARQRequestPendingLo != 0) {
+        if (__ARQRequestPendingLo->length <= __ARQChunkSize) {
+            if (__ARQRequestPendingLo->type == 0) {
+                ARStartDMA(__ARQRequestPendingLo->type, __ARQRequestPendingLo->source,
+                            __ARQRequestPendingLo->destination, __ARQRequestPendingLo->length);
             } else {
-                fn_8021A9B0(lbl_8064DB4C->type, lbl_8064DB4C->destination,
-                            lbl_8064DB4C->source, lbl_8064DB4C->length);
+                ARStartDMA(__ARQRequestPendingLo->type, __ARQRequestPendingLo->destination,
+                            __ARQRequestPendingLo->source, __ARQRequestPendingLo->length);
             }
-            lbl_8064DB54 = lbl_8064DB4C->callback;
+            __ARQCallbackLo = __ARQRequestPendingLo->callback;
         } else {
-            if (lbl_8064DB4C->type == 0) {
-                fn_8021A9B0(lbl_8064DB4C->type, lbl_8064DB4C->source,
-                            lbl_8064DB4C->destination, lbl_8064DB58);
+            if (__ARQRequestPendingLo->type == 0) {
+                ARStartDMA(__ARQRequestPendingLo->type, __ARQRequestPendingLo->source,
+                            __ARQRequestPendingLo->destination, __ARQChunkSize);
             } else {
-                fn_8021A9B0(lbl_8064DB4C->type, lbl_8064DB4C->destination,
-                            lbl_8064DB4C->source, lbl_8064DB58);
+                ARStartDMA(__ARQRequestPendingLo->type, __ARQRequestPendingLo->destination,
+                            __ARQRequestPendingLo->source, __ARQChunkSize);
             }
         }
-        lbl_8064DB4C->length -= lbl_8064DB58;
-        lbl_8064DB4C->source += lbl_8064DB58;
-        lbl_8064DB4C->destination += lbl_8064DB58;
+        __ARQRequestPendingLo->length -= __ARQChunkSize;
+        __ARQRequestPendingLo->source += __ARQChunkSize;
+        __ARQRequestPendingLo->destination += __ARQChunkSize;
     }
 }

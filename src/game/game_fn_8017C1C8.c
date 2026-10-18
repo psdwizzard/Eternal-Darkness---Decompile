@@ -19,7 +19,7 @@ typedef struct Request {
 extern GlobalState lbl_8064A580;
 extern char lbl_80250FC4[];
 extern int fn_8017B294(u8);
-extern int fn_80220B4C(u8);
+extern int CARDUnmount(u8);
 extern void fn_8017BA60(char*, int);
 extern void fn_8017B344(u8, int);
 extern void fn_8017AF78(void);
@@ -33,7 +33,7 @@ void fn_8017C1C8(Request* request)
         fn_8017B294(request->value);
     }
     if (lbl_8064A580.states[request->value] != 0) {
-        request->result = fn_80220B4C(request->value);
+        request->result = CARDUnmount(request->value);
         if (request->result != -1) {
             fn_8017BA60(lbl_80250FC4, request->result);
             request->state = 2;

@@ -59,7 +59,7 @@ extern void fn_8020104C(int, int, int, int, float);
 extern void fn_8020123C(int, int, int, int);
 extern void fn_802045AC(void *, Vec3 *);
 extern void fn_80204FDC(void *);
-extern void fn_80211A6C(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECSubtract(Vec3 *, Vec3 *, Vec3 *);
 extern void fn_8011F114(Vec3 *, void *);
 extern Vec3 *fn_8011F130(void *);
 extern void fn_8011F778(void *, float);
@@ -357,7 +357,7 @@ int fn_800E644C(void *context, int phase, void *message, int *result)
                     fn_8012B6FC(object, &lower, &lowerWorld);
                     fn_8012B6FC(object, &upper, &upper);
                     origin2 = fn_8011F130(object);
-                    fn_80211A6C(&targetPos, origin2, &offset);
+                    PSVECSubtract(&targetPos, origin2, &offset);
                     fn_8017A470(&lowerWorld, &offset, &upper, &rotation);
                     orientation = fn_8011FE34(object);
                     fn_8017A34C(&rotation, orientation, &combined);

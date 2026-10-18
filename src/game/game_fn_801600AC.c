@@ -12,10 +12,10 @@ typedef struct TokenInfo {
     unsigned char back;
 } TokenInfo;
 
-extern const TokenInfo lbl_8024F3AC[];
-extern int fn_80160024(int*, int, int, int);
+extern const TokenInfo luaK_opproperties[];
+extern int pushpc(int*, int, int, int);
 
-unsigned int fn_801600AC(TokenStream* stream, int limit, int selected)
+unsigned int luaG_symbexec(TokenStream* stream, int limit, int selected)
 {
     int positions[250];
     unsigned int* tokens = stream->tokens;
@@ -41,10 +41,10 @@ unsigned int fn_801600AC(TokenStream* stream, int limit, int selected)
             amount = (token >> 6) & 0x1ff;
             if (amount == 255)
                 amount = 1;
-            depth = fn_80160024(positions, cursor, token >> 15, amount);
+            depth = pushpc(positions, cursor, token >> 15, amount);
             break;
         case 4:
-            depth = fn_80160024(positions, cursor, depth, token >> 6);
+            depth = pushpc(positions, cursor, depth, token >> 6);
             break;
         case 5:
             depth -= token >> 6;
@@ -76,9 +76,9 @@ unsigned int fn_801600AC(TokenStream* stream, int limit, int selected)
             break;
         }
         default:
-            depth -= lbl_8024F3AC[type].back;
-            depth = fn_80160024(positions, cursor, depth,
-                               lbl_8024F3AC[type].run);
+            depth -= luaK_opproperties[type].back;
+            depth = pushpc(positions, cursor, depth,
+                               luaK_opproperties[type].run);
             break;
         }
     }

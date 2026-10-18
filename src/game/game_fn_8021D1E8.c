@@ -1,4 +1,4 @@
-/* fn_8021D1E8: CARDInit. */
+/* CARDInit: CARDInit. */
 typedef unsigned char u8;
 typedef unsigned int u32;
 typedef signed int s32;
@@ -37,29 +37,29 @@ typedef struct CardControl {
     const DVDDiskID *diskID;
 } CardControl;
 
-extern CardControl lbl_80641C60[2];
+extern CardControl __CARDBlock[2];
 extern OSResetFunctionInfo lbl_802FEB60;
-extern void fn_8021B8E0(void);
+extern void DSPInit(void);
 extern void OSInitAlarm(void);
 extern void OSInitThreadQueue(OSThreadQueue *queue);
 extern void OSCreateAlarm(OSAlarm *alarm);
-extern void fn_8021D284(const DVDDiskID *diskID);
+extern void __CARDSetDiskID(const DVDDiskID *diskID);
 extern void OSRegisterResetFunction(OSResetFunctionInfo *info);
 
-void fn_8021D1E8(void)
+void CARDInit(void)
 {
-    CardControl *card = lbl_80641C60;
+    CardControl *card = __CARDBlock;
     s32 channel;
 
     if (card[0].diskID == 0 || card[1].diskID == 0) {
-        fn_8021B8E0();
+        DSPInit();
         OSInitAlarm();
         for (channel = 0; channel < 2; ++channel, ++card) {
             card->result = -3;
             OSInitThreadQueue(&card->threadQueue);
             OSCreateAlarm(&card->alarm);
         }
-        fn_8021D284((const DVDDiskID *)0x80000000);
+        __CARDSetDiskID((const DVDDiskID *)0x80000000);
         OSRegisterResetFunction(&lbl_802FEB60);
     }
 }

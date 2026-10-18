@@ -29,17 +29,17 @@ typedef struct SND_DOOR {
     SND_STUDIO_INPUT input;
 } SND_DOOR;
 
-extern SND_DOOR* lbl_8064D4C8;
-extern void fn_801B9310(u8, SND_STUDIO_INPUT*);
-extern void fn_801B9330(u8, SND_STUDIO_INPUT*);
+extern SND_DOOR* s3dDoorRoot;
+extern void synthAddStudioInput(u8, SND_STUDIO_INPUT*);
+extern void synthRemoveStudioInput(u8, SND_STUDIO_INPUT*);
 
-void fn_801C8600(void)
+void CheckDoorStatus(void)
 {
     SND_DOOR* link;
     float f;
     float v;
 
-    for (link = lbl_8064D4C8; link != 0; link = link->next) {
+    for (link = s3dDoorRoot; link != 0; link = link->next) {
         if ((link->flags & 0x80000000) == 0) {
             if (link->a->studio != 0xff) {
                 if (link->b->studio != 0xff) {
@@ -50,10 +50,10 @@ void fn_801C8600(void)
                     link->input.vol = (s32)(127.0f * v);
                     if ((link->flags & 1) != 0) {
                         link->input.srcStudio = link->b->studio;
-                        fn_801B9310(link->a->studio, &link->input);
+                        synthAddStudioInput(link->a->studio, &link->input);
                     } else {
                         link->input.srcStudio = link->a->studio;
-                        fn_801B9310(link->b->studio, &link->input);
+                        synthAddStudioInput(link->b->studio, &link->input);
                     }
                     link->flags |= 0x80000000;
                 }
@@ -64,7 +64,7 @@ void fn_801C8600(void)
             if (sourceVoice == 0xff || link->b->studio == 0xff) {
                 if ((sourceVoice != 0xff && sourceVoice == link->destStudio) ||
                     (link->b->studio != 0xff && link->b->studio == link->destStudio)) {
-                    fn_801B9330(link->destStudio, &link->input);
+                    synthRemoveStudioInput(link->destStudio, &link->input);
                 }
                 link->flags &= 0x7fffffff;
             } else {

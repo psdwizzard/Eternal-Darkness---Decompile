@@ -3,7 +3,7 @@ typedef struct StringReadState {
     int null_seen;
 } StringReadState;
 
-int fn_800FC094(StringReadState* state, int ch, int mode)
+int __StringRead(StringReadState* state, int ch, int mode)
 {
     const char* cursor;
     int result;

@@ -16,14 +16,14 @@ typedef struct CardControl {
     u8 padD8[0x110 - 0xD8];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
-extern void fn_8021E9E0(s32 channel, s32 result);
-extern s32 fn_8021CFEC(s32 channel, CardCallback callback);
+extern CardControl __CARDBlock[];
+extern void BlockWriteCallback(s32 channel, s32 result);
+extern s32 __CARDWritePage(s32 channel, CardCallback callback);
 
-s32 fn_8021EABC(s32 channel, u32 address, u32 length, void *buffer,
+s32 __CARDWrite(s32 channel, u32 address, u32 length, void *buffer,
                 CardCallback callback)
 {
-    CardControl *card = &lbl_80641C60[channel];
+    CardControl *card = &__CARDBlock[channel];
 
     if (!card->attached) {
         return -3;
@@ -32,5 +32,5 @@ s32 fn_8021EABC(s32 channel, u32 address, u32 length, void *buffer,
     card->repeat = length >> 7;
     card->addr = address;
     card->buffer = buffer;
-    return fn_8021CFEC(channel, fn_8021E9E0);
+    return __CARDWritePage(channel, BlockWriteCallback);
 }

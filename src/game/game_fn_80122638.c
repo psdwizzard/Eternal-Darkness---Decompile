@@ -36,7 +36,7 @@ extern void fn_80122428(Runtime* runtime, EntryList* list, int kind, int mode, i
 extern int fn_80122538(Object* object, void* item, int object_index);
 extern int fn_80122C00(Object* object, void* item, u32 object_index, int arg,
                        int force, int extra, float first, float second);
-extern void fn_8022B448(u32 offset, u32 size);
+extern void GXCallDisplayList(u32 offset, u32 size);
 
 void fn_80122638(Object* object, int kind, int arg, int wanted, int force,
                  int extra, float first, float second)
@@ -75,7 +75,7 @@ void fn_80122638(Object* object, int kind, int arg, int wanted, int force,
                 }
                 if (fn_80122C00(object, item, entry->object_index, arg, force,
                                 extra, first, second)) {
-                    fn_8022B448(offset, entry->size);
+                    GXCallDisplayList(offset, entry->size);
                 }
             }
         }

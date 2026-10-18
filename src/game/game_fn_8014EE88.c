@@ -54,8 +54,8 @@ extern void fn_80153A24(Vec3* origin, int count, u16 radius, s16 first_kind,
                         EffectDescriptor* second, u8 variant);
 extern void fn_80182380(EffectDescriptor*);
 extern void fn_80182448(void);
-extern float fn_80048C2C(float);
-extern float fn_80048C50(float);
+extern float sinf(float);
+extern float cosf(float);
 extern int fn_801E8328(u32, u32);
 extern void fn_80182430(u8*, u8);
 extern void fn_80182440(u8*, u8);
@@ -110,8 +110,8 @@ void fn_8014EE88(RingEvent* event)
             count = ring->count;
             for (i = 0; i < count; i++) {
                 angle = lbl_80650554 * (float)i / (float)count;
-                position.x = ring->origin.x + (float)ring->radius * fn_80048C2C(angle);
-                position.y = ring->origin.y + (float)ring->radius * fn_80048C50(angle);
+                position.x = ring->origin.x + (float)ring->radius * sinf(angle);
+                position.y = ring->origin.y + (float)ring->radius * cosf(angle);
                 position.z = ring->origin.z;
                 effect = &ring->glow[i];
                 *effect = template;

@@ -33,20 +33,20 @@ typedef struct SYNTH_VOICE {
 } SYNTH_VOICE;
 
 extern VidListTables lbl_80626DA0;
-extern u16 lbl_8064D464;
+extern u16 voicePrioSortRootListRoot;
 
 #define vidList (&lbl_80626DA0)
-#define voicePrioSortedRoot lbl_8064D464
+#define voicePrioSortedRoot voicePrioSortRootListRoot
 #define offsetof(type, member) ((u32)&((type*)0)->member)
-extern void fn_801C1520(SYNTH_VOICE* s);
-extern void fn_801CC704(u32, u32);
+extern void voiceRemovePriority(SYNTH_VOICE* s);
+extern void hwSetPriority(u32, u32);
 
 #define VB_PRIO_HEAD(vb, p) (*(u8*)((u8*)&(vb)->priorityGroupHeads[0] + (p)))
 #define VB_PRIO_LINK(vb, i) ((SynthVoiceListNode*)((u8*)&(vb)->priorityLinks[0] + (i) * sizeof(SynthVoiceListNode)))
 #define VB_PRIO_SORT_NEXT(vb, p) (((SynthRootListNode*)&(vb)->prioritySortLinks[0])[p].next)
 #define VB_PRIO_SORT_PREV(vb, p) (((SynthRootListNode*)((u8*)&(vb)->prioritySortLinks[0] + offsetof(SynthRootListNode, prev)))[p].next)
 
-void fn_801C1600(SYNTH_VOICE* svoice, u8 prio)
+void voiceSetPriority(SYNTH_VOICE* svoice, u8 prio)
 {
     u32 voiceIdx;
     VidListTables* vb;
@@ -65,7 +65,7 @@ void fn_801C1600(SYNTH_VOICE* svoice, u8 prio)
             return;
         }
 
-        fn_801C1520(svoice);
+        voiceRemovePriority(svoice);
     }
 
     vps->user = 1;
@@ -103,5 +103,5 @@ void fn_801C1600(SYNTH_VOICE* svoice, u8 prio)
 
     *head = voiceIdx;
     svoice->prio = prio;
-    fn_801CC704(svoice->id & 0xFF, ((u32)prio << 24) | (svoice->age >> 15));
+    hwSetPriority(svoice->id & 0xFF, ((u32)prio << 24) | (svoice->age >> 15));
 }

@@ -41,13 +41,13 @@ typedef struct GXData {
 } GXData;
 extern GXData *gx;
 
-extern u8 lbl_8064C470[8];
-extern u8 lbl_8064C478[8];
-extern u8 lbl_8064C480[8];
-extern u8 lbl_8064C488[8];
-extern u8 lbl_8064C490[8];
-extern u8 lbl_8064C498[8];
-extern u8 lbl_8064C4A0[8];
+extern u8 GXTexMode0Ids[8];
+extern u8 GXTexMode1Ids[8];
+extern u8 GXTexImage0Ids[8];
+extern u8 GXTexImage1Ids[8];
+extern u8 GXTexImage2Ids[8];
+extern u8 GXTexImage3Ids[8];
+extern u8 GXTexTlutIds[8];
 
 #define SET_REG_FIELD(reg, size, shift, val) \
     ((reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
@@ -61,16 +61,16 @@ extern u8 lbl_8064C4A0[8];
         GX_WRITE_U32(val); \
     } while (0)
 
-void fn_80228954(GXTexObjInt *t, GXTexRegionInt *r, u32 id)
+void GXLoadTexObjPreLoaded(GXTexObjInt *t, GXTexRegionInt *r, u32 id)
 {
     GXTlutRegionInt *tlr;
 
-    SET_REG_FIELD(t->mode0, 8, 24, lbl_8064C470[id]);
-    SET_REG_FIELD(t->mode1, 8, 24, lbl_8064C478[id]);
-    SET_REG_FIELD(t->image0, 8, 24, lbl_8064C480[id]);
-    SET_REG_FIELD(r->image1, 8, 24, lbl_8064C488[id]);
-    SET_REG_FIELD(r->image2, 8, 24, lbl_8064C490[id]);
-    SET_REG_FIELD(t->image3, 8, 24, lbl_8064C498[id]);
+    SET_REG_FIELD(t->mode0, 8, 24, GXTexMode0Ids[id]);
+    SET_REG_FIELD(t->mode1, 8, 24, GXTexMode1Ids[id]);
+    SET_REG_FIELD(t->image0, 8, 24, GXTexImage0Ids[id]);
+    SET_REG_FIELD(r->image1, 8, 24, GXTexImage1Ids[id]);
+    SET_REG_FIELD(r->image2, 8, 24, GXTexImage2Ids[id]);
+    SET_REG_FIELD(t->image3, 8, 24, GXTexImage3Ids[id]);
 
     GX_WRITE_RAS_REG(t->mode0);
     GX_WRITE_RAS_REG(t->mode1);
@@ -81,7 +81,7 @@ void fn_80228954(GXTexObjInt *t, GXTexRegionInt *r, u32 id)
 
     if (!(t->flags & 2)) {
         tlr = gx->tlutRegionCallback(t->tlutName);
-        SET_REG_FIELD(tlr->tlut, 8, 24, lbl_8064C4A0[id]);
+        SET_REG_FIELD(tlr->tlut, 8, 24, GXTexTlutIds[id]);
         GX_WRITE_RAS_REG(tlr->tlut);
     }
 

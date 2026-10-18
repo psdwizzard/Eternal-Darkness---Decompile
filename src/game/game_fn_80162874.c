@@ -22,13 +22,13 @@ typedef struct Parser {
     Input* input;
 } Parser;
 
-extern void fn_80162114(Parser*, char*, int);
-extern void fn_80162228(Parser*);
-extern void fn_80163A9C(Buffer*, unsigned int);
-extern char* fn_80166E3C(Buffer*, char*, unsigned int);
+extern void luaX_error(Parser*, char*, int);
+extern void inclinenumber(Parser*);
+extern void luaO_openspace(Buffer*, unsigned int);
+extern char* luaS_newlstr(Buffer*, char*, unsigned int);
 extern char lbl_8024F6B8[];
 
-void fn_80162874(Parser* parser, char** result)
+void read_long_string(Parser* parser, char** result)
 {
     int depth = 0;
     Buffer* buffer = parser->buffer;
@@ -36,7 +36,7 @@ void fn_80162874(Parser* parser, char** result)
     int token;
 
     if (buffer->capacity < 10) {
-        fn_80163A9C(buffer, 0x8A);
+        luaO_openspace(buffer, 0x8A);
     }
 
     buffer->data[0] = '[';
@@ -51,13 +51,13 @@ void fn_80162874(Parser* parser, char** result)
 
     for (;;) {
         if (index + 10 > buffer->capacity) {
-            fn_80163A9C(buffer, index + 0x8A);
+            luaO_openspace(buffer, index + 0x8A);
         }
 
         switch (parser->current_token) {
         case -1:
             buffer->data[index++] = 0;
-            fn_80162114(parser, lbl_8024F6B8, 0x11B);
+            luaX_error(parser, lbl_8024F6B8, 0x11B);
             break;
 
         case '[':
@@ -107,7 +107,7 @@ void fn_80162874(Parser* parser, char** result)
 
         case '\n':
             buffer->data[index++] = '\n';
-            fn_80162228(parser);
+            inclinenumber(parser);
             break;
 
         default:
@@ -131,5 +131,5 @@ finished:
     }
     parser->current_token = token;
     buffer->data[index] = 0;
-    *result = fn_80166E3C(buffer, buffer->data + 2, index - 4);
+    *result = luaS_newlstr(buffer, buffer->data + 2, index - 4);
 }

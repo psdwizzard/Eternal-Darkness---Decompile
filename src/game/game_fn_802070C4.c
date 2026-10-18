@@ -12,9 +12,9 @@ typedef struct EXIControl {
 
 extern EXIControl Ecb_80640AA8[3];
 extern BOOL __EXIProbe_80206F50(s32 chan);
-extern BOOL fn_80207CC8(s32 chan, u32 dev, u32 *id);
+extern BOOL EXIGetID(s32 chan, u32 dev, u32 *id);
 
-BOOL fn_802070C4(s32 chan)
+BOOL EXIProbe(s32 chan)
 {
     EXIControl *exi = &Ecb_80640AA8[chan];
     u32 id;
@@ -22,7 +22,7 @@ BOOL fn_802070C4(s32 chan)
 
     result = __EXIProbe_80206F50(chan);
     if (result && !exi->idTime) {
-        if (fn_80207CC8(chan, 0, &id)) {
+        if (EXIGetID(chan, 0, &id)) {
             result = 1;
         } else {
             result = 0;

@@ -66,7 +66,7 @@ extern double lbl_80650168; /* 12.0 */
 extern float lbl_80650170; /* 0.1f */
 
 extern int fn_8012356C(const Item* first, const Item* second);
-extern void fn_800FBE38(void* base, int count, int size, int (*compare)(const Item*, const Item*));
+extern void qsort(void* base, int count, int size, int (*compare)(const Item*, const Item*));
 extern int fn_8011EB04(Runtime* runtime);
 extern void fn_8011F114(Vec3* out, Runtime* runtime);
 extern unsigned int fn_8011FAEC(Runtime* runtime);
@@ -85,9 +85,9 @@ extern int fn_80201B54(void* handle);
 extern void* fn_80201B9C(void);
 extern void* fn_80201BC0(void* handle);
 extern Runtime* fn_80201BC8(void* handle);
-extern void fn_80211A6C(const Vec3* a, const Vec3* b, Vec3* out);
-extern float fn_80211B08(const Vec3* v);
-extern float fn_80211B44(const Vec3* a, const Vec3* b);
+extern void PSVECSubtract(const Vec3* a, const Vec3* b, Vec3* out);
+extern float PSVECMag(const Vec3* v);
+extern float PSVECDotProduct(const Vec3* a, const Vec3* b);
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
@@ -133,8 +133,8 @@ void fn_801237F0(int force)
     far_count = 0;
     tries = 8;
 
-    fn_80211A6C(&lbl_8063D400, &lbl_8063D378, &dir);
-    len = fn_80211B08(&dir);
+    PSVECSubtract(&lbl_8063D400, &lbl_8063D378, &dir);
+    len = PSVECMag(&dir);
     if (fn_8015E4E8() != 0) {
         fade_b = fade_a = lbl_80650130;
     }
@@ -145,7 +145,7 @@ void fn_801237F0(int force)
     dir.x /= len;
     dir.y /= len;
     dir.z /= len;
-    len = -fn_80211B44(&dir, &lbl_8063D378);
+    len = -PSVECDotProduct(&dir, &lbl_8063D378);
 
     while (handle != 0) {
         runtime = fn_80201BC8(handle);
@@ -160,16 +160,16 @@ void fn_801237F0(int force)
                 scale = lbl_8064B9D8;
                 if (runtime->sizing != 0) {
                     near_scale = fn_80123708(runtime, 0);
-                    dist = -fn_80211B44(&pos, &dir) - lbl_80650134;
+                    dist = -PSVECDotProduct(&pos, &dir) - lbl_80650134;
                     if (dist > len && (status & 0x8000) == 0 && runtime->mode <= 2) {
                         scale = near_scale;
                     } else {
                         far_count++;
                     }
-                    fn_80211A6C(&pos, &lbl_8063D378, &pos);
+                    PSVECSubtract(&pos, &lbl_8063D378, &pos);
                     lbl_804EF960[count].key = key;
                     lbl_804EF960[count].kind = runtime->sizing->kind;
-                    lbl_804EF960[count].value = fn_80211B08(&pos);
+                    lbl_804EF960[count].value = PSVECMag(&pos);
                     lbl_804EF960[count].depth = dist - len;
                     lbl_804EF960[count].runtime = runtime;
                     lbl_804EF960[count].scale = scale;
@@ -193,7 +193,7 @@ void fn_801237F0(int force)
         handle = fn_80201BC0(handle);
     }
 
-    fn_800FBE38(lbl_804EF960, count, sizeof(Item), fn_8012356C);
+    qsort(lbl_804EF960, count, sizeof(Item), fn_8012356C);
     fn_801235E4(lbl_804EF960, count, &total_offsets, &total_sizes);
 
     /* Literal constants here: retail reloads 15.0f for the divide instead of

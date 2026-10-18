@@ -17,10 +17,10 @@ typedef struct Collection {
 #pragma use_lmw_stmw on
 
 extern char lbl_8064BA88;
-extern void fn_80161B0C(Collection*, int*);
-extern void* fn_8016B5CC(Collection*, Node*, unsigned int, char*, int);
+extern void checktab(Collection*, int*);
+extern void* luaM_realloc(Collection*, Node*, unsigned int, char*, int);
 
-void fn_80161B58(Collection* collection, int preserve)
+void collectstrings(Collection* collection, int preserve)
 {
     int offset;
     int index;
@@ -37,9 +37,9 @@ void fn_80161B58(Collection* collection, int preserve)
                 *link = node->next;
                 collection->active_count--;
                 collection->total_size -= node->size + 21;
-                fn_8016B5CC(collection, node, 0, &lbl_8064BA88, 252);
+                luaM_realloc(collection, node, 0, &lbl_8064BA88, 252);
             }
         }
     }
-    fn_80161B0C(collection, &collection->count);
+    checktab(collection, &collection->count);
 }

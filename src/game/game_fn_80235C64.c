@@ -26,11 +26,11 @@ typedef struct DecodeAux {
 
 extern void *fn_8022F780(s32 size);           /* _ogg_malloc */
 extern void fn_8022F8FC(void);
-extern int *fn_80235EC4(int *lengths, int count); /* _make_words */
+extern int *_make_words(int *lengths, int count); /* _make_words */
 extern void *memset(void *, int, unsigned long);
 
 /* _make_decode_tree */
-DecodeAux *fn_80235C64(Codebook *c)
+DecodeAux *_make_decode_tree(Codebook *c)
 {
     StaticCodebook *s = c->c;
     s32 top = 0;
@@ -38,7 +38,7 @@ DecodeAux *fn_80235C64(Codebook *c)
     DecodeAux *t = fn_8022F780(sizeof(DecodeAux));
     s16 *ptr0 = t->ptr0 = fn_8022F780(c->entries * 2 * sizeof(s16));
     s16 *ptr1 = t->ptr1 = fn_8022F780(c->entries * 2 * sizeof(s16));
-    int *codelist = fn_80235EC4(s->lengthlist, s->entries);
+    int *codelist = _make_words(s->lengthlist, s->entries);
 
     memset(ptr0, 0, c->entries * 2 * sizeof(s16));
     memset(ptr1, 0, c->entries * 2 * sizeof(s16));

@@ -1,7 +1,7 @@
 typedef signed char s8;
 
 extern s8* fn_800FD40C(s8*, const s8*);
-extern s8* fn_800FD39C(s8*, const s8*);
+extern s8* strcat(s8*, const s8*);
 extern s8 lbl_8064BA20[2];
 
 void fn_80155C88(const s8* path, s8* output, const s8* extension)
@@ -26,6 +26,6 @@ void fn_80155C88(const s8* path, s8* output, const s8* extension)
     if (dot != 0)
         *dot = 0;
     if (*extension != '.')
-        fn_800FD39C(output, lbl_8064BA20);
-    fn_800FD39C(output, extension);
+        strcat(output, lbl_8064BA20);
+    strcat(output, extension);
 }

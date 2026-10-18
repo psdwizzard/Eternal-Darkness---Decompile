@@ -22,12 +22,12 @@ typedef struct Entry {
 } Entry;
 
 extern volatile u16 *__memReg;
-extern void fn_8022C3B8(u32 *, u32 *, u32 *, u32 *);
+extern void GXReadXfRasMetric(u32 *, u32 *, u32 *, u32 *);
 
-void fn_8022CA98(Entry *entry, s32 sample)
+void PERFGetAllMemMetrics(Entry *entry, s32 sample)
 {
 
-    fn_8022C3B8(&entry->graphicsCounters[0][sample],
+    GXReadXfRasMetric(&entry->graphicsCounters[0][sample],
                 &entry->graphicsCounters[1][sample],
                 &entry->graphicsCounters[2][sample],
                 &entry->graphicsCounters[3][sample]);

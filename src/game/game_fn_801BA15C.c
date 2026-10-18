@@ -19,35 +19,35 @@ typedef struct StreamSlot {
 } StreamSlot;
 
 extern StreamSlot lbl_8061AE48[];
-extern u8 lbl_80619C20[];
-extern u32 lbl_8064D3CC;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
-extern void fn_801CCCC4(u32, u32, u32, u32, float, float, float);
+extern u8 synthInfo[];
+extern u32 synthFlags;
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
+extern void hwSetVolume(u32, u32, u32, u32, float, float, float);
 
-void fn_801BA15C(void)
+void streamOutputModeChanged(void)
 {
     u32 i;
     float volumeScale;
 
-    fn_801CE2B8();
+    hwDisableIrq();
     volumeScale = 1 / 127.0f;
-    for (i = 0; i < lbl_80619C20[0x210]; i++) {
+    for (i = 0; i < synthInfo[0x210]; i++) {
         if (lbl_8061AE48[i].state != 0) {
             lbl_8061AE48[i].left = lbl_8061AE48[i].saved_left;
             lbl_8061AE48[i].right = lbl_8061AE48[i].saved_right;
-            if ((lbl_8064D3CC & 1) != 0) {
+            if ((synthFlags & 1) != 0) {
                 lbl_8061AE48[i].left = 0x40;
                 lbl_8061AE48[i].right = 0;
-            } else if ((lbl_8064D3CC & 2) == 0) {
+            } else if ((synthFlags & 2) == 0) {
                 lbl_8061AE48[i].right = 0;
             }
             if (lbl_8061AE48[i].state != 3) {
-                fn_801CCCC4(lbl_8061AE48[i].voice, 0, lbl_8061AE48[i].left << 0x10, lbl_8061AE48[i].right << 0x10,
+                hwSetVolume(lbl_8061AE48[i].voice, 0, lbl_8061AE48[i].left << 0x10, lbl_8061AE48[i].right << 0x10,
                             volumeScale * lbl_8061AE48[i].volume, volumeScale * lbl_8061AE48[i].aux_left,
                             volumeScale * lbl_8061AE48[i].aux_right);
             }
         }
     }
-    fn_801CE280();
+    hwEnableIrq();
 }

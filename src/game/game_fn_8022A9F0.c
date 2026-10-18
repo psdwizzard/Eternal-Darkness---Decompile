@@ -15,7 +15,7 @@ typedef union GXWGPipe {
 } GXWGPipe;
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
-void fn_8022A9F0(u8 fieldMode, u8 halfAspectRatio)
+void GXSetFieldMode(u8 fieldMode, u8 halfAspectRatio)
 {
     gx->linePointWidth = (gx->linePointWidth & ~(1UL << 22)) |
                          ((u32)halfAspectRatio << 22);

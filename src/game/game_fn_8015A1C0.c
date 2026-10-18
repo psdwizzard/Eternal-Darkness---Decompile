@@ -12,7 +12,7 @@ typedef struct Record {
 extern Record lbl_805B70A0[];
 extern u32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(u32);
-extern void fn_80217324(void);
+extern void VIWaitForRetrace(void);
 
 Record* fn_8015A1C0(int direction, int callback, int value)
 {
@@ -45,7 +45,7 @@ Record* fn_8015A1C0(int direction, int callback, int value)
         }
         OSRestoreInterrupts(interrupts);
         if (result == 0) {
-            fn_80217324();
+            VIWaitForRetrace();
         }
     }
 

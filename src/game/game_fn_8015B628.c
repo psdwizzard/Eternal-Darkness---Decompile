@@ -22,7 +22,7 @@ typedef struct ArchiveState {
 extern volatile ArchiveState lbl_805BB1E0;
 extern void DCInvalidateRange(void*, u32);
 extern void fn_8015B7CC(void);
-extern void fn_8021B730(void*, Stream*, int, int, u32, void*, u32, void (*)(void));
+extern void ARQPostRequest(void*, Stream*, int, int, u32, void*, u32, void (*)(void));
 
 void fn_8015B628(Stream* stream)
 {
@@ -42,7 +42,7 @@ void fn_8015B628(Stream* stream)
         }
 
         DCInvalidateRange(buffer, (stream->length + 31) & ~31);
-        fn_8021B730(stream->command, stream, 1, 0, stream->offset, buffer,
+        ARQPostRequest(stream->command, stream, 1, 0, stream->offset, buffer,
                     (stream->length + 31) & ~31, fn_8015B7CC);
     }
 }

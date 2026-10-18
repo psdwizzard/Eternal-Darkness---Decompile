@@ -3,7 +3,7 @@ typedef struct Vec3 {
 } Vec3;
 
 /* Add two vectors; the result may alias either input. */
-void fn_80211A48(register const Vec3 *a, register const Vec3 *b,
+void PSVECAdd(register const Vec3 *a, register const Vec3 *b,
                  register Vec3 *result)
 {
     register float az, bz, sumZ;

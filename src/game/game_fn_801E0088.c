@@ -32,12 +32,12 @@ extern void* fn_80201BC8(void*);
 extern int fn_801D38E8(int);
 extern void fn_801D62D0();
 extern Matrix34* fn_8011FE34(void*);
-extern void fn_802114E0(Matrix34, void*);
+extern void PSMTXQuat(Matrix34, void*);
 extern void fn_8011F114(Vec3*, void*);
-extern void fn_80211710(Matrix34, Vec3*, Vec3*);
-extern void fn_80211A6C(Vec3*, Vec3*, Vec3*);
-extern void fn_80211A48(Vec3*, Vec3*, Vec3*);
-extern float fn_80211B44(Vec3*, Vec3*);
+extern void PSMTXMultVec(Matrix34, Vec3*, Vec3*);
+extern void PSVECSubtract(Vec3*, Vec3*, Vec3*);
+extern void PSVECAdd(Vec3*, Vec3*, Vec3*);
+extern float PSVECDotProduct(Vec3*, Vec3*);
 extern u32 fn_8006749C(int);
 extern void fn_80120AD0(void*, Vec3*, int, u16, float, float);
 extern int fn_8012A100(void*, int);
@@ -290,13 +290,13 @@ void fn_801E0088(void* object)
                 to = *(Vec3*)(constants + 0xc0);
                 target = fn_80201BC8(fn_80201814(*(int*)(info + 0xe0)));
                 matrix = fn_8011FE34(target);
-                fn_802114E0(transform, matrix);
+                PSMTXQuat(transform, matrix);
                 fn_8011F114(&position, target);
-                fn_80211710(transform, &from, &from);
-                fn_80211710(transform, &to, &to);
-                fn_80211A6C(&to, &from, &to);
-                fn_80211A48(&position, &from, &from);
-                distance = fn_80211B44(&to, &from);
+                PSMTXMultVec(transform, &from, &from);
+                PSMTXMultVec(transform, &to, &to);
+                PSVECSubtract(&to, &from, &to);
+                PSVECAdd(&position, &from, &from);
+                distance = PSVECDotProduct(&to, &from);
                 flags = fn_8006749C(fn_801D38E8(*(int*)(info + 4))) | 0x4000;
                 fn_80120AD0(target, &to, 100, flags, distance, lbl_806511CC);
                 if (fn_8012A100(target, 0x8a)) {
@@ -313,7 +313,7 @@ void fn_801E0088(void* object)
                 to5 = *(Vec3*)(constants + 0xd8);
                 target = fn_80201BC8(fn_80201814(*(int*)(info + 0xe0)));
                 from5.z = lbl_806511B8 + *(float*)(info + 0x110);
-                distance = fn_80211B44(&to5, &from5);
+                distance = PSVECDotProduct(&to5, &from5);
                 flags = fn_8006749C(fn_801D38E8(*(int*)(info + 4))) | 0x4000;
                 fn_80120AD0(target, &to5, 100, flags, distance, lbl_806511CC);
                 if (fn_8012A100(target, 0x8a)) {

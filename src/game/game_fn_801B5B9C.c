@@ -2,7 +2,7 @@ typedef unsigned char u8;
 typedef unsigned int u32;
 typedef unsigned long long u64;
 
-void fn_801B5B9C(u8* state)
+void synthInitPortamento(u8* state)
 {
     u64 flags = *(u64*)(state + 0x114);
 

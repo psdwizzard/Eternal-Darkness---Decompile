@@ -1,4 +1,4 @@
-/* fn_8021E9E0: WriteCallback (Dolphin SDK CARDWrite.c). */
+/* BlockWriteCallback: WriteCallback (Dolphin SDK CARDWrite.c). */
 
 typedef unsigned char u8;
 typedef unsigned int u32;
@@ -19,17 +19,17 @@ typedef struct CardControl {
     u8 padD8[0x110 - 0xD8];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
+extern CardControl __CARDBlock[];
 
-extern s32 fn_8021CFEC(s32 chan, CardCallback callback); /* __CARDWritePage */
-extern s32 fn_8021D374(CardControl *card, s32 result);   /* __CARDPutControlBlock */
+extern s32 __CARDWritePage(s32 chan, CardCallback callback); /* __CARDWritePage */
+extern s32 __CARDPutControlBlock(CardControl *card, s32 result);   /* __CARDPutControlBlock */
 
-void fn_8021E9E0(s32 chan, s32 result)
+void BlockWriteCallback(s32 chan, s32 result)
 {
     CardControl *card;
     CardCallback callback;
 
-    card = &lbl_80641C60[chan];
+    card = &__CARDBlock[chan];
     if (result < 0) {
         goto error;
     }
@@ -41,14 +41,14 @@ void fn_8021E9E0(s32 chan, s32 result)
         goto error;
     }
 
-    result = fn_8021CFEC(chan, fn_8021E9E0);
+    result = __CARDWritePage(chan, BlockWriteCallback);
     if (result >= 0) {
         return;
     }
 
 error:
     if (card->apiCallback == 0) {
-        fn_8021D374(card, result);
+        __CARDPutControlBlock(card, result);
     }
 
     callback = card->xferCallback;

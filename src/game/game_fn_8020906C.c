@@ -16,7 +16,7 @@ extern volatile u32 __SIStatus : 0xCC006438;
 extern u32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(u32 enabled);
 
-s32 fn_8020906C(s32 chan)
+s32 SIGetResponseRaw(s32 chan)
 {
     register SIWork *work = &Packet_80640B68;
     register s32 channel = chan;

@@ -9,7 +9,7 @@ typedef struct ImageHeader {
     u8 vertical_sampling;
 } ImageHeader;
 
-void fn_80106A8C(ImageHeader* header, const u8* input)
+void HVQM4InitSeqObj(ImageHeader* header, const u8* input)
 {
     header->width = (input[0] << 8) | input[1];
     header->height = (input[2] << 8) | input[3];

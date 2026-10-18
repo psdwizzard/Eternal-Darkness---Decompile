@@ -9,15 +9,15 @@ extern int lbl_8064D738;
 extern void fn_801A5620(u8*, u8*);
 extern void DCFlushRange(void*, u32);
 extern u32 fn_801ED57C(u32);
-extern void fn_80226D28(u32);
+extern void GXSetCullMode(u32);
 extern void fn_8018D0D0(void*, void*, s16);
 extern void fn_801ED468(u32);
 extern void fn_801ECEC8(u32, u32, u32);
 extern int fn_8017FFB8(void);
 extern int fn_8017FFB0(void);
 extern int fn_8017FF98(void);
-extern void fn_80225F4C(u32, void*, u8);
-extern void fn_80226AB4(u32, u32, u16);
+extern void GXSetArray(u32, void*, u8);
+extern void GXBegin(u32, u32, u16);
 extern void fn_801A5838(void);
 extern void fn_801A583C(u16);
 extern void fn_801A5848(u16);
@@ -69,14 +69,14 @@ void fn_801A5684(u8* object)
         DCFlushRange(buffer1, size1);
         DCFlushRange(buffer2, size2);
         token = fn_801ED57C(0);
-        fn_80226D28(0);
+        GXSetCullMode(0);
         fn_8018D0D0(object, object + 0x5c, *(s16*)(object + 0xe));
         fn_801ED468(0x1b);
         fn_801ECEC8(1, 3, 0);
-        fn_80225F4C(9, buffer0, fn_8017FFB8());
-        fn_80225F4C(0xd, buffer1, fn_8017FFB0());
-        fn_80225F4C(0xb, buffer2, fn_8017FF98());
-        fn_80226AB4(0x80, 5, count);
+        GXSetArray(9, buffer0, fn_8017FFB8());
+        GXSetArray(0xd, buffer1, fn_8017FFB0());
+        GXSetArray(0xb, buffer2, fn_8017FF98());
+        GXBegin(0x80, 5, count);
 
         for (buffer0 = 0; (u16)buffer0 < count; buffer0++) {
             object = (u8*)(u16)buffer0;

@@ -36,24 +36,24 @@ typedef struct LuaState {
     int allowhooks;
 } LuaState;
 
-extern void fn_80161ED8(LuaState*, int);
-extern void fn_80166B5C(LuaState*);
-extern void* fn_8016B5CC(LuaState*, void*, int, const char*, int);
+extern void luaC_collect(LuaState*, int);
+extern void luaS_freeall(LuaState*);
+extern void* luaM_realloc(LuaState*, void*, int, const char*, int);
 extern const char lbl_8024FA28[];
 
-void fn_80166994(LuaState* state)
+void lua_close(LuaState* state)
 {
-    fn_80161ED8(state, 1);
-    fn_80166B5C(state);
+    luaC_collect(state, 1);
+    luaS_freeall(state);
     if (state->stack) {
         state->nblocks -= (state->stack_last - state->stack + 1) * sizeof(TObject);
     }
-    fn_8016B5CC(state, state->stack, 0, lbl_8024FA28, 110);
+    luaM_realloc(state, state->stack, 0, lbl_8024FA28, 110);
     state->nblocks -= (state->last_tag + 1) * 64;
-    fn_8016B5CC(state, state->TMtable, 0, lbl_8024FA28, 112);
+    luaM_realloc(state, state->TMtable, 0, lbl_8024FA28, 112);
     state->nblocks -= state->refSize * 24;
-    fn_8016B5CC(state, state->refArray, 0, lbl_8024FA28, 114);
+    luaM_realloc(state, state->refArray, 0, lbl_8024FA28, 114);
     state->nblocks -= state->Mbuffsize;
-    fn_8016B5CC(state, state->Mbuffer, 0, lbl_8024FA28, 116);
-    fn_8016B5CC(state, state, 0, lbl_8024FA28, 118);
+    luaM_realloc(state, state->Mbuffer, 0, lbl_8024FA28, 116);
+    luaM_realloc(state, state, 0, lbl_8024FA28, 118);
 }

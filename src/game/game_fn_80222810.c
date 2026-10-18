@@ -42,16 +42,16 @@ typedef struct CARDDir {
 } CARDDir;
 typedef struct CARDControl CARDControl;
 
-extern s32 fn_8021D2BC(s32 channel, CARDControl **outCard);
-extern s32 fn_8021D374(CARDControl *card, s32 result);
-extern CARDDir *fn_8021EF3C(CARDControl *card);
-extern s32 fn_80221498(CARDControl *card, CARDDir *entry);
-extern void fn_802224EC(Desc *desc, Layout *out);
-extern s32 fn_8021F0DC(s32 channel, CardCallback callback);
+extern s32 __CARDGetControlBlock(s32 channel, CARDControl **outCard);
+extern s32 __CARDPutControlBlock(CARDControl *card, s32 result);
+extern CARDDir *__CARDGetDirBlock(CARDControl *card);
+extern s32 __CARDAccess(CARDControl *card, CARDDir *entry);
+extern void UpdateIconOffsets(Desc *desc, Layout *out);
+extern s32 __CARDUpdateDir(s32 channel, CardCallback callback);
 extern OSTime OSGetTime(void);
 extern long long fn_800F5ECC(long long numerator, long long denominator);
 
-s32 fn_80222810(s32 channel, s32 fileNo, Layout *status, CardCallback callback)
+s32 CARDSetStatusAsync(s32 channel, s32 fileNo, Layout *status, CardCallback callback)
 {
     CARDControl *card;
     CARDDir *entry;
@@ -65,14 +65,14 @@ s32 fn_80222810(s32 channel, s32 fileNo, Layout *status, CardCallback callback)
         ((*(u32 *)status->pad38) != 0xFFFFFFFF && ((*(u32 *)status->pad38) & 0x1FFF) > 0x1FC0)) {
         return -128;
     }
-    result = fn_8021D2BC(channel, &card);
+    result = __CARDGetControlBlock(channel, &card);
     if (result < 0) {
         return result;
     }
-    entry = fn_8021EF3C(card) + fileNo;
-    result = fn_80221498(card, entry);
+    entry = __CARDGetDirBlock(card) + fileNo;
+    result = __CARDAccess(card, entry);
     if (result < 0) {
-        return fn_8021D374(card, result);
+        return __CARDPutControlBlock(card, result);
     }
     /* Directory fields: banner format at 0x07, icon address at 0x2C,
      * icon format at 0x30, animation speed at 0x32, comment at 0x3C. */
@@ -81,16 +81,16 @@ s32 fn_80222810(s32 channel, s32 fileNo, Layout *status, CardCallback callback)
     *(u16 *)&entry->reserved28[8] = status->unk34;
     *(u16 *)&entry->reserved28[10] = status->unk36;
     *(u32 *)&entry->reserved3A[2] = *(u32 *)status->pad38;
-    fn_802224EC((Desc *)entry, status);
+    UpdateIconOffsets((Desc *)entry, status);
     if (*(u32 *)&entry->reserved28[4] == 0xFFFFFFFF) {
         *(u16 *)&entry->reserved28[10] = (*(u16 *)&entry->reserved28[10] & ~3) | 1;
     }
     /* OS time is unsigned; the SDK uses signed 64-bit division here. */
     ticksPerSecond = *(volatile u32 *)0x800000F8 >> 2;
     *(u32 *)entry->reserved28 = (u32)fn_800F5ECC((long long)OSGetTime(), (long long)ticksPerSecond);
-    result = fn_8021F0DC(channel, callback);
+    result = __CARDUpdateDir(channel, callback);
     if (result < 0) {
-        fn_8021D374(card, result);
+        __CARDPutControlBlock(card, result);
     }
     return result;
 }

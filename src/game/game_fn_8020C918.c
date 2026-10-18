@@ -4,7 +4,7 @@ typedef unsigned int u32;
 extern u16 lbl_8064C3E0;
 
 /* Return the cached font encoding, initializing it from the video settings. */
-u16 fn_8020C918(void)
+u16 OSGetFontEncode(void)
 {
     if (lbl_8064C3E0 <= 1U) {
         return lbl_8064C3E0;

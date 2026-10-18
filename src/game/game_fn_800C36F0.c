@@ -16,7 +16,7 @@ extern int lbl_8064CA90;
 extern float lbl_8064F1B8;
 extern float lbl_8064F1BC;
 
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void *fn_8004910C(void *);
 extern void *fn_801A7498(void *);
 extern void *fn_80201814(void *);
@@ -39,7 +39,7 @@ int fn_800C36F0(void *unused, void *context)
     int sequence;
     float offset;
 
-    index = fn_800FBFB0() % 11;
+    index = rand() % 11;
     first = fn_8004910C(context);
     object = fn_80201814(fn_801A7498(context));
     model = fn_80201BC8(first);

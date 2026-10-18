@@ -75,27 +75,27 @@ extern void fn_801ECC4C(void);
 extern void fn_801ECF50(u32);
 extern void *fn_801EFE84(void *);
 extern void fn_801F0044(void);
-extern void fn_80210FB0(Mtx);
-extern void fn_802119B0(Mtx44, float, float, float, float, float, float);
-extern void fn_80225F4C(int, const void *, u8);
-extern void fn_802262B8(u8);
-extern void fn_80226AB4(int, int, u16);
-extern void fn_80226D28(int);
-extern void fn_80228020(u8);
-extern void fn_80228AFC(GXTexObjInt *, u32);
-extern void fn_80228D9C(void);
-extern void fn_80229B08(int, int, int, int, int);
-extern void fn_80229B88(int, int, int, int, int);
-extern void fn_80229C0C(int, int, int, int, int, int);
-extern void fn_80229CCC(int, int, int, int, int, int);
-extern void fn_80229E74(int, int);
-extern void fn_8022A118(int, int, int, int);
-extern void fn_8022A2F4(u8);
-extern void fn_8022B4B8(Mtx44, int);
-extern void fn_8022B690(Mtx, int);
-extern void fn_8022B70C(u32);
-extern void fn_8022B94C(float, float, float, float, float, float);
-extern void fn_8022B970(u32, u32, u32, u32);
+extern void PSMTXIdentity(Mtx);
+extern void C_MTXOrtho(Mtx44, float, float, float, float, float, float);
+extern void GXSetArray(int, const void *, u8);
+extern void GXSetNumTexGens(u8);
+extern void GXBegin(int, int, u16);
+extern void GXSetCullMode(int);
+extern void GXSetNumChans(u8);
+extern void GXLoadTexObj(GXTexObjInt *, u32);
+extern void GXInvalidateTexAll(void);
+extern void GXSetTevColorIn(int, int, int, int, int);
+extern void GXSetTevAlphaIn(int, int, int, int, int);
+extern void GXSetTevColorOp(int, int, int, int, int, int);
+extern void GXSetTevAlphaOp(int, int, int, int, int, int);
+extern void GXSetTevKColorSel(int, int);
+extern void GXSetTevOrder(int, int, int, int);
+extern void GXSetNumTevStages(u8);
+extern void GXSetProjection(Mtx44, int);
+extern void GXLoadPosMtxImm(Mtx, int);
+extern void GXSetCurrentMtx(u32);
+extern void GXSetViewport(float, float, float, float, float, float);
+extern void GXSetScissor(u32, u32, u32, u32);
 extern void fn_80237D2C(int);
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -147,26 +147,26 @@ void fn_800EDA88(u32 frame)
         fn_801EFE84(0);
     }
 
-    fn_8022B94C(lbl_8064F8F8, lbl_8064F8F8, lbl_8064F8FC, lbl_8064F900,
+    GXSetViewport(lbl_8064F8F8, lbl_8064F8F8, lbl_8064F8FC, lbl_8064F900,
                 lbl_8064F8F8, lbl_8064F904);
-    fn_8022B970(0, 0, 0x280, 0x1E0);
-    fn_80225F4C(9, mtx[1], 6);
+    GXSetScissor(0, 0, 0x280, 0x1E0);
+    GXSetArray(9, mtx[1], 6);
     if (lbl_8064CBA4 == 1) {
-        fn_802119B0(proj, lbl_8064F8F8, lbl_8064F900, lbl_8064F910,
+        C_MTXOrtho(proj, lbl_8064F8F8, lbl_8064F900, lbl_8064F910,
                     lbl_8064F914, lbl_8064F8F8, lbl_8064F918);
-        fn_8022B4B8(proj, 1);
+        GXSetProjection(proj, 1);
     } else {
-        fn_802119B0(proj, lbl_8064F8F8, lbl_8064F900, lbl_8064F8F8,
+        C_MTXOrtho(proj, lbl_8064F8F8, lbl_8064F900, lbl_8064F8F8,
                     lbl_8064F8FC, lbl_8064F8F8, lbl_8064F918);
-        fn_8022B4B8(proj, 1);
+        GXSetProjection(proj, 1);
     }
-    fn_80210FB0(view);
-    fn_8022B690(view, 0);
-    fn_8022B70C(0);
-    fn_80225F4C(0xB, mtx[2], 4);
-    fn_80225F4C(0xD, mtx[3], 8);
-    fn_80226D28(0);
-    fn_80228D9C();
+    PSMTXIdentity(view);
+    GXLoadPosMtxImm(view, 0);
+    GXSetCurrentMtx(0);
+    GXSetArray(0xB, mtx[2], 4);
+    GXSetArray(0xD, mtx[3], 8);
+    GXSetCullMode(0);
+    GXInvalidateTexAll();
 
     count = 1;
     /* retail reads the volatile frame counter twice before comparing */
@@ -177,18 +177,18 @@ void fn_800EDA88(u32 frame)
     lbl_8064CBF0 = count;
     lbl_8064CBEC = lbl_8064CC14->frame;
 
-    fn_80228AFC(&lbl_803281C0, 0);
-    fn_80229E74(0, 0x10);
-    fn_80229B88(0, 7, 7, 7, 6);
-    fn_80229CCC(0, 0, 0, 0, 1, 0);
-    fn_80229B08(0, 0xF, 0xC, 8, 0xE);
-    fn_80229C0C(0, 0, 0, 0, 1, 0);
+    GXLoadTexObj(&lbl_803281C0, 0);
+    GXSetTevKColorSel(0, 0x10);
+    GXSetTevAlphaIn(0, 7, 7, 7, 6);
+    GXSetTevAlphaOp(0, 0, 0, 0, 1, 0);
+    GXSetTevColorIn(0, 0xF, 0xC, 8, 0xE);
+    GXSetTevColorOp(0, 0, 0, 0, 1, 0);
     fn_800EE41C(0, 1, 4, 0x3C);
-    fn_8022A118(0, 0, 0, 0xFF);
-    fn_8022A2F4(1);
-    fn_802262B8(1);
-    fn_80228020(1);
-    fn_80226AB4(0x90, 0, 6);
+    GXSetTevOrder(0, 0, 0, 0xFF);
+    GXSetNumTevStages(1);
+    GXSetNumTexGens(1);
+    GXSetNumChans(1);
+    GXBegin(0x90, 0, 6);
     for (i = 0; i < 6; i++) {
         fn_800EE410(i);
         fn_800EE404(i);

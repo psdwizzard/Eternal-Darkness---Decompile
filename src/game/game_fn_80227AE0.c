@@ -9,7 +9,7 @@ typedef struct {
     f32 ldir[3];
 } GXLightObjInt;
 
-void fn_80227AE0(GXLightObjInt *lt_obj, f32 x, f32 y, f32 z)
+void GXInitLightPos(GXLightObjInt *lt_obj, f32 x, f32 y, f32 z)
 {
     lt_obj->lpos[0] = x;
     lt_obj->lpos[1] = y;

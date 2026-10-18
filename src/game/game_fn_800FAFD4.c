@@ -8,7 +8,7 @@ typedef struct decimal {
     } sig;
 } decimal;
 
-void fn_800FAFD4(decimal* dec, int new_length)
+void round_decimal(decimal* dec, int new_length)
 {
     signed char c;
     signed char* p;

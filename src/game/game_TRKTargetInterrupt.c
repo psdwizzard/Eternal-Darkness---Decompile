@@ -20,9 +20,8 @@ typedef struct TRKStepStatus {
 
 extern u8 gTRKCPUState[];
 extern u8 gTRKState[];
-extern TRKStepStatus lbl_8024A874;
-extern DSError fn_800F34D4(u8 command);
-#define gTRKStepStatus lbl_8024A874
+extern TRKStepStatus gTRKStepStatus;
+extern DSError TRKDoNotifyStopped(u8 command);
 
 static inline void TRKTargetEnableTrace(BOOL enable)
 {
@@ -89,7 +88,7 @@ DSError TRKTargetInterrupt(TRKEvent *event)
         }
         if (!gTRKStepStatus.active) {
             TRKTargetSetStopped(1);
-            error = fn_800F34D4(0x90);
+            error = TRKDoNotifyStopped(0x90);
         }
         break;
     }

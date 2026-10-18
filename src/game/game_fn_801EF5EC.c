@@ -24,51 +24,51 @@ extern DisplayState lbl_8064D71C;
 extern u32 lbl_8064D718;
 extern void* lbl_8064D74C;
 
-extern void* fn_80218308(void);
+extern void* VIGetDTVStatus(void);
 extern void fn_801EFE84(int);
-extern void fn_802177EC(DisplayConfig*);
-extern void fn_802180A4(void*);
-extern void fn_8022B94C(float, float, float, float, float, float);
-extern void fn_8022B970(int, int, u16, u16);
-extern void fn_80226DE0(int, int, u16, u16);
-extern void fn_80226F60(u16, u16);
-extern void fn_802271BC(float);
-extern void fn_802272F8(u8, void*, int, void*);
-extern void fn_8022A814(int, int);
-extern void fn_8022A924(int);
-extern void fn_8022753C(void*, int);
-extern void fn_80217F88(void);
-extern void fn_80217324(void);
+extern void VIConfigure(DisplayConfig*);
+extern void VISetNextFrameBuffer(void*);
+extern void GXSetViewport(float, float, float, float, float, float);
+extern void GXSetScissor(int, int, u16, u16);
+extern void GXSetDispCopySrc(int, int, u16, u16);
+extern void GXSetDispCopyDst(u16, u16);
+extern void GXSetDispCopyYScale(float);
+extern void GXSetCopyFilter(u8, void*, int, void*);
+extern void GXSetPixelFmt(int, int);
+extern void GXSetDither(int);
+extern void GXCopyDisp(void*, int);
+extern void VIFlush(void);
+extern void VIWaitForRetrace(void);
 
 void fn_801EF5EC(void)
 {
-    if (!fn_80218308()) {
+    if (!VIGetDTVStatus()) {
         return;
     }
 
     fn_801EFE84(1);
     lbl_8064C38C = (DisplayConfig*)lbl_802FC500;
-    fn_802177EC(lbl_8064C38C);
-    fn_802180A4(lbl_8064D71C.field_0);
+    VIConfigure(lbl_8064C38C);
+    VISetNextFrameBuffer(lbl_8064D71C.field_0);
     lbl_8064D718 = (u32)lbl_8064D71C.field_4;
 
-    fn_8022B94C(0.0f, 0.0f, (float)lbl_8064C38C->width,
+    GXSetViewport(0.0f, 0.0f, (float)lbl_8064C38C->width,
                 (float)lbl_8064C38C->height, 0.0f, 1.0f);
-    fn_8022B970(0, 0, lbl_8064C38C->width, lbl_8064C38C->field_6);
-    fn_80226DE0(0, 0, lbl_8064C38C->width, lbl_8064C38C->field_6);
-    fn_80226F60(lbl_8064C38C->width, lbl_8064C38C->height);
-    fn_802271BC((float)lbl_8064C38C->height / (float)lbl_8064C38C->field_6);
-    fn_802272F8(lbl_8064C38C->field_19, lbl_8064C38C->field_1A, 1,
+    GXSetScissor(0, 0, lbl_8064C38C->width, lbl_8064C38C->field_6);
+    GXSetDispCopySrc(0, 0, lbl_8064C38C->width, lbl_8064C38C->field_6);
+    GXSetDispCopyDst(lbl_8064C38C->width, lbl_8064C38C->height);
+    GXSetDispCopyYScale((float)lbl_8064C38C->height / (float)lbl_8064C38C->field_6);
+    GXSetCopyFilter(lbl_8064C38C->field_19, lbl_8064C38C->field_1A, 1,
                 lbl_8064C38C->field_32);
-    fn_8022A814(1, 0);
-    fn_8022A924(1);
-    fn_8022753C(lbl_8064D71C.field_0, 1);
-    fn_8022753C(lbl_8064D71C.field_0, 1);
-    fn_8022753C(lbl_8064D71C.field_4, 1);
-    fn_80217F88();
-    fn_80217324();
+    GXSetPixelFmt(1, 0);
+    GXSetDither(1);
+    GXCopyDisp(lbl_8064D71C.field_0, 1);
+    GXCopyDisp(lbl_8064D71C.field_0, 1);
+    GXCopyDisp(lbl_8064D71C.field_4, 1);
+    VIFlush();
+    VIWaitForRetrace();
     if (lbl_8064C38C->flags & 1) {
-        fn_80217324();
+        VIWaitForRetrace();
     }
     fn_801EFE84(0);
     lbl_8064D74C = lbl_8064C38C;

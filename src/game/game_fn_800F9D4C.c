@@ -13,10 +13,10 @@ typedef struct StringWriteState {
     unsigned long used;
 } StringWriteState;
 
-int fn_800FA0B0(StringWriteState*, const char*, unsigned long);
+int __StringWrite(StringWriteState*, const char*, unsigned long);
 int __pformatter_800FA174(void*, void*, const char*, va_list);
 
-int fn_800F9D4C(char* buffer, const char* format, ...)
+int sprintf(char* buffer, const char* format, ...)
 {
     int result;
     va_list args;
@@ -26,7 +26,7 @@ int fn_800F9D4C(char* buffer, const char* format, ...)
     state.buffer = buffer;
     state.limit = (unsigned long)-1;
     state.used = 0;
-    result = __pformatter_800FA174(fn_800FA0B0, &state, format, args);
+    result = __pformatter_800FA174(__StringWrite, &state, format, args);
     if (buffer != 0) {
         buffer[result < (unsigned long)-1 ? result : (unsigned long)-2] = 0;
     }

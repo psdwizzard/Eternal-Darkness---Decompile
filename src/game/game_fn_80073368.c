@@ -66,7 +66,7 @@ extern void *fn_80201BC0(void *);
 extern void *fn_80201BC8(void *);
 extern void *fn_80201BD0(void *object);
 extern int fn_80201EB8(void *);
-extern void fn_80211A48(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECAdd(Vec3 *, Vec3 *, Vec3 *);
 
 extern void *lbl_8064C4E4;
 extern int lbl_8064D18C;
@@ -101,7 +101,7 @@ int fn_80073368(char *item, unsigned short itemCount, Spot *spots, unsigned shor
 
     numFound = 0;
     done = 0;
-    fn_80211A48(origin, fn_8011F770(self), &selfPos);
+    PSVECAdd(origin, fn_8011F770(self), &selfPos);
     targetRot = fn_8011F770(target);
     owner = fn_8012AB2C(self);
 
@@ -134,7 +134,7 @@ int fn_80073368(char *item, unsigned short itemCount, Spot *spots, unsigned shor
         }
 
         fn_80179DB0(out, &spots->pos);
-        fn_80211A48(out, targetRot, &dir);
+        PSVECAdd(out, targetRot, &dir);
         if (lbl_8064C4E4 != self) {
             void *filter = fn_8015C2FC(2);
             fn_8013F3C0(&shapeA, &dir, &dir, fn_8011F6F8(target));

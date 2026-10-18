@@ -35,7 +35,7 @@ typedef struct StaticCodebook {
 extern void *memset(void *dest, int value, unsigned long size);
 
 /* vorbis_staticbook_destroy */
-void fn_802357B4(void *arg)
+void vorbis_staticbook_destroy(void *arg)
 {
     register StaticCodebook *book = arg;
     EncodeAuxThreshMatch *thresh;

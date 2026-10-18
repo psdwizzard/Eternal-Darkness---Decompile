@@ -1,5 +1,5 @@
 #pragma force_active on
-void fn_800F4F48(void)
+void TRKPositionFile(void)
 {
     __asm { twi 31, r0, 0 }
 }

@@ -1,4 +1,4 @@
-int fn_8015FF18(int* values, int target, int position, int* cursor)
+int luaG_getline(int* values, int target, int position, int* cursor)
 {
     int offset;
     int index;

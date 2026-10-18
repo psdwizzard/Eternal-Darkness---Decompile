@@ -1,4 +1,4 @@
-/* fn_80213394 (0x80213394, 200 bytes): DVDOpen (SDK dvdfs.c) */
+/* DVDOpen (0x80213394, 200 bytes): DVDOpen (SDK dvdfs.c) */
 
 typedef int s32;
 typedef unsigned int u32;
@@ -21,8 +21,8 @@ typedef struct DVDFileInfo {
     void *callback;
 } DVDFileInfo;
 
-extern s32 fn_8021302C(char *pathPtr); /* DVDConvertPathToEntrynum */
-extern BOOL fn_802135E0(char *path, u32 maxlen); /* DVDGetCurrentDir */
+extern s32 DVDConvertPathToEntrynum(char *pathPtr); /* DVDConvertPathToEntrynum */
+extern BOOL DVDGetCurrentDir(char *path, u32 maxlen); /* DVDGetCurrentDir */
 extern void OSReport(const char *msg, ...);
 
 extern FSTEntry *FstStart_8064D9E4;
@@ -32,14 +32,14 @@ extern char lbl_802FE218[]; /* "Warning: DVDOpen(): file '%s' was not found unde
 #define filePosition(i) (FstStart_8064D9E4[i].parentOrPosition)
 #define fileLength(i) (FstStart_8064D9E4[i].nextEntryOrLength)
 
-BOOL fn_80213394(char *fileName, DVDFileInfo *fileInfo) {
+BOOL DVDOpen(char *fileName, DVDFileInfo *fileInfo) {
     s32 entry;
     char currentDir[128];
 
-    entry = fn_8021302C(fileName);
+    entry = DVDConvertPathToEntrynum(fileName);
 
     if (0 > entry) {
-        fn_802135E0(currentDir, 128);
+        DVDGetCurrentDir(currentDir, 128);
         OSReport(lbl_802FE218, fileName, currentDir);
         return FALSE;
     }

@@ -31,9 +31,9 @@ extern void* lbl_8064CF4C;
 extern const float lbl_80650228;
 extern const float lbl_8065026C;
 
-extern void fn_802114E0(Matrix output, void* angles);
-extern void fn_80211710(Matrix m, Vec3* in, Vec3* out);
-extern void fn_80211AAC(Vec3* in, Vec3* out);
+extern void PSMTXQuat(Matrix output, void* angles);
+extern void PSMTXMultVec(Matrix m, Vec3* in, Vec3* out);
+extern void PSVECNormalize(Vec3* in, Vec3* out);
 extern void fn_80179E60(short* destination, float* source);
 extern void fn_80179BC0(Vec3* source, ShortCoord3* destination);
 extern void fn_801A1A04(void* descriptor);
@@ -66,9 +66,9 @@ void fn_80134770(Emitter* emitter, EmitterSlot* slot)
             0.0f == emitter->rotation[3]) {
             emitter->rotation[3] = lbl_80650228;
         }
-        fn_802114E0(matrix, emitter->rotation);
-        fn_80211710(matrix, &up, &dir);
-        fn_80211AAC(&dir, &dir);
+        PSMTXQuat(matrix, emitter->rotation);
+        PSMTXMultVec(matrix, &up, &dir);
+        PSVECNormalize(&dir, &dir);
         fn_80179E60(rotation, &dir.x);
         fn_801A1A04(&desc);
         slot->effect = fn_80154CB4(&position, rotation, &desc,
@@ -92,9 +92,9 @@ void fn_80134770(Emitter* emitter, EmitterSlot* slot)
             0.0f == emitter->rotation[3]) {
             emitter->rotation[3] = lbl_80650228;
         }
-        fn_802114E0(matrix, emitter->rotation);
-        fn_80211710(matrix, &up, &dir);
-        fn_80211AAC(&dir, &dir);
+        PSMTXQuat(matrix, emitter->rotation);
+        PSMTXMultVec(matrix, &up, &dir);
+        PSVECNormalize(&dir, &dir);
         fn_80179BC0(&dir, angles);
     }
 }

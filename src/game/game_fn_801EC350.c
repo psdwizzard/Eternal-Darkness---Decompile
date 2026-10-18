@@ -3,7 +3,7 @@ typedef signed char s8;
 
 extern u8 fn_801EC304(u8*, int, int);
 extern void fn_801EC318(u8*, int, int, u8);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 
 /* Keep derived coordinates and clamp sums as expressions: MWCC
  * allocates their common subexpressions differently from named locals. */
@@ -20,7 +20,7 @@ void fn_801EC350(u8* data, int x, int y, int width, int height)
     int span;
 
     average = (top_left + bottom_left) >> 1;
-    value = fn_800FBFB0() % height;
+    value = rand() % height;
     offset = value - (height >> 1);
     if (fn_801EC304(data, x, (y + (height >> 1))) == 0) {
         fn_801EC318(data, x, (y + (height >> 1)),
@@ -30,7 +30,7 @@ void fn_801EC350(u8* data, int x, int y, int width, int height)
 
     average = (top_left + top_right) >> 1;
     if (fn_801EC304(data, (x + (width >> 1)), y) == 0) {
-        offset = fn_800FBFB0() % width - (width >> 1);
+        offset = rand() % width - (width >> 1);
         fn_801EC318(data, (x + (width >> 1)), y,
                     (average + offset) > 255 ? 255
                         : ((average + offset) < 0 ? 0 : (average + offset)));
@@ -38,7 +38,7 @@ void fn_801EC350(u8* data, int x, int y, int width, int height)
 
     average = (bottom_left + bottom_right) >> 1;
     if (fn_801EC304(data, (x + (width >> 1)), y + height) == 0) {
-        offset = fn_800FBFB0() % width - (width >> 1);
+        offset = rand() % width - (width >> 1);
         fn_801EC318(data, (x + (width >> 1)), y + height,
                     (average + offset) > 255 ? 255
                         : ((average + offset) < 0 ? 0 : (average + offset)));
@@ -46,7 +46,7 @@ void fn_801EC350(u8* data, int x, int y, int width, int height)
 
     right_average = (top_right + bottom_right) >> 1;
     if (fn_801EC304(data, x + width, (y + (height >> 1))) == 0) {
-        offset = fn_800FBFB0() % height - (height >> 1);
+        offset = rand() % height - (height >> 1);
         fn_801EC318(data, x + width, (y + (height >> 1)),
                     (right_average + offset) > 255 ? 255
                         : ((right_average + offset) < 0 ? 0 : (right_average + offset)));
@@ -55,7 +55,7 @@ void fn_801EC350(u8* data, int x, int y, int width, int height)
     average = (top_left + bottom_left + bottom_right + top_right) >> 2;
     span = (height + width) >> 1;
     if (fn_801EC304(data, (x + (width >> 1)), (y + (height >> 1))) == 0) {
-        offset = fn_800FBFB0() % span - (span >> 1);
+        offset = rand() % span - (span >> 1);
         fn_801EC318(data, (x + (width >> 1)), (y + (height >> 1)),
                     (average + offset) > 255 ? 255
                         : ((average + offset) < 0 ? 0 : (average + offset)));

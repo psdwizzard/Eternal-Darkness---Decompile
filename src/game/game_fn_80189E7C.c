@@ -10,10 +10,10 @@ extern void fn_80188A7C(void*, void*, void*), DCFlushRange(void*, unsigned long)
 extern int fn_801ED57C(int);
 extern void fn_8018D0D0(void*, void*, s16), fn_801ED468(int);
 extern int fn_8017FFB8(void), fn_8017FFB0(void), fn_8017FF98(void);
-extern void fn_80225F4C(int, void*, u8), fn_801ECEC8(int, int, int);
-extern void fn_8018D2E0(float), fn_80226AB4(int, int, u16);
+extern void GXSetArray(int, void*, u8), fn_801ECEC8(int, int, int);
+extern void fn_8018D2E0(float), GXBegin(int, int, u16);
 extern void fn_80188578(u16), fn_8018856C(u16), fn_80188560(u16);
-extern void fn_8018855C(void), fn_80226D78(int);
+extern void fn_8018855C(void), GXSetCoPlanar(int);
 
 void fn_80189E7C(u8* self)
 {
@@ -64,15 +64,15 @@ void fn_80189E7C(u8* self)
     saved = fn_801ED57C(0);
     fn_8018D0D0(object, object + 0x5C, *(s16*)(object + 0xE));
     fn_801ED468(0x3C);
-    fn_80225F4C(9, buffer0, (u8)fn_8017FFB8());
-    fn_80225F4C(0xD, buffer1, (u8)fn_8017FFB0());
-    fn_80225F4C(0xB, buffer2, (u8)fn_8017FF98());
+    GXSetArray(9, buffer0, (u8)fn_8017FFB8());
+    GXSetArray(0xD, buffer1, (u8)fn_8017FFB0());
+    GXSetArray(0xB, buffer2, (u8)fn_8017FF98());
     fn_801ECEC8(1, 3, 0);
     if (*(float*)(object + 0x40) != lbl_80650A68) {
         *(float*)(object + 0x3C) += *(float*)(object + 0x40);
         fn_8018D2E0(*(float*)(object + 0x3C));
     }
-    fn_80226AB4(0x80, 5, count);
+    GXBegin(0x80, 5, count);
     for (j = 0; (u16)j < count; j++) {
         int index = (u16)j;
         fn_80188578(index);
@@ -80,6 +80,6 @@ void fn_80189E7C(u8* self)
         fn_80188560(index);
     }
     fn_8018855C();
-    fn_80226D78(0);
+    GXSetCoPlanar(0);
     fn_801ED57C(saved);
 }

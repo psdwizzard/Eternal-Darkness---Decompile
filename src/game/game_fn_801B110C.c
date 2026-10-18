@@ -1,14 +1,14 @@
-extern void fn_801B1028(void);
-extern void fn_802158EC(void*, int);
-extern void fn_801B10A4(void*, unsigned int);
-extern char lbl_8060BF00[];
-extern int lbl_8064D33C;
-extern void* lbl_8064D348;
+extern void __DTKStartAi(void);
+extern void DVDStopStreamAtEndAsync(void*, int);
+extern void __DTKCheckUserCallback(void*, unsigned int);
+extern char __block_for_run_callback[];
+extern int __DTKState;
+extern void* __DTKCurrentTrack;
 
-void fn_801B110C(void)
+void __DTKCallbackForRun(void)
 {
-    fn_801B1028();
-    fn_802158EC(lbl_8060BF00, 0);
-    lbl_8064D33C = 1;
-    fn_801B10A4(lbl_8064D348, 1);
+    __DTKStartAi();
+    DVDStopStreamAtEndAsync(__block_for_run_callback, 0);
+    __DTKState = 1;
+    __DTKCheckUserCallback(__DTKCurrentTrack, 1);
 }

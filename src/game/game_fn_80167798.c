@@ -17,14 +17,14 @@ struct HashTable {
     HashTable* self;
 };
 
-extern void* fn_8016B5CC(LuaState*, void*, unsigned int, const char*, int);
-extern int fn_801639CC(int);
-extern void fn_80167558(LuaState*, HashTable*, int);
+extern void* luaM_realloc(LuaState*, void*, unsigned int, const char*, int);
+extern int luaO_power2(int);
+extern void setnodevector(LuaState*, HashTable*, int);
 extern const char lbl_8024FA84[];
 
-HashTable* fn_80167798(LuaState* state, int requested)
+HashTable* luaH_new(LuaState* state, int requested)
 {
-    HashTable* table = fn_8016B5CC(state, 0, 24, lbl_8024FA84, 178);
+    HashTable* table = luaM_realloc(state, 0, 24, lbl_8024FA84, 178);
 
     table->marked = 4;
     table->next = state->tables;
@@ -33,6 +33,6 @@ HashTable* fn_80167798(LuaState* state, int requested)
     table->size = 0;
     state->nblocks += 24;
     table->nodes = 0;
-    fn_80167558(state, table, fn_801639CC(requested));
+    setnodevector(state, table, luaO_power2(requested));
     return table;
 }

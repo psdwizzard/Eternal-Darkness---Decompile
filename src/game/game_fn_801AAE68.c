@@ -37,9 +37,9 @@ extern int fn_801AAD58(unsigned short, unsigned short, const Vec3*);
 extern int fn_80236D30(void);
 extern unsigned char fn_801ABF34(Vec3*, float, unsigned char, unsigned char,
                                  unsigned char);
-extern int fn_801C92F4(Record*, Vec3*, Vec3*, float, float, int,
+extern int sndAddEmitter(Record*, Vec3*, Vec3*, float, float, int,
                        unsigned short, unsigned char, unsigned char, int);
-extern void fn_801B8DE8(int, int, int);
+extern void sndFXCtrl14(int, int, int);
 
 int fn_801AAE68(unsigned short id, unsigned char arg4, unsigned char arg5,
                 float magnitude, Vec3* position, signed char active,
@@ -100,11 +100,11 @@ int fn_801AAE68(unsigned short id, unsigned char arg4, unsigned char arg5,
         mode = 31;
         owner = record;
     }
-    call_result = fn_801C92F4(owner, &record->position, &record->velocity,
+    call_result = sndAddEmitter(owner, &record->position, &record->velocity,
                               lbl_80650E74, lbl_80650E78, mode, record->id,
                               record->result, record->arg5, 0);
     if (flags & 0x40)
-        fn_801B8DE8(call_result, 0x80, 0x3FFF);
+        sndFXCtrl14(call_result, 0x80, 0x3FFF);
     if (active == 2)
         record->active = 0;
 done:

@@ -20,12 +20,12 @@ struct Voice {
 };
 #pragma pack()
 
-extern Voice* lbl_8064D43C;
-extern Voice* lbl_8064D440;
-extern u64 lbl_8064D448;
-extern void fn_801B7910(Voice*);
+extern Voice* macActiveMacroRoot;
+extern Voice* macTimeQueueRoot;
+extern u64 macRealTime;
+extern void synthForceLowPrecisionUpdate(Voice*);
 
-void fn_801C09C4(Voice* voice)
+void macMakeActive(Voice* voice)
 {
     if (voice->active_04C == 0) {
         return;
@@ -34,7 +34,7 @@ void fn_801C09C4(Voice* voice)
     if (voice->scheduled_time_098 != 0) {
         if (voice->scheduled_time_098 != ~0ULL) {
             if (voice->scheduled_prev_048 == 0) {
-                lbl_8064D440 = voice->scheduled_next_044;
+                macTimeQueueRoot = voice->scheduled_next_044;
             } else {
                 voice->scheduled_prev_048->scheduled_next_044 = voice->scheduled_next_044;
             }
@@ -42,16 +42,16 @@ void fn_801C09C4(Voice* voice)
                 voice->scheduled_next_044->scheduled_prev_048 = voice->scheduled_prev_048;
             }
         }
-        fn_801B7910(voice);
+        synthForceLowPrecisionUpdate(voice);
         voice->scheduled_time_098 = 0;
-        voice->current_time_0A0 = lbl_8064D448;
+        voice->current_time_0A0 = macRealTime;
         voice->flags_114 &= ~0x40004ULL;
     }
 
-    if ((voice->active_prev_03C = lbl_8064D43C) != 0) {
-        lbl_8064D43C->active_next_040 = voice;
+    if ((voice->active_prev_03C = macActiveMacroRoot) != 0) {
+        macActiveMacroRoot->active_next_040 = voice;
     }
     voice->active_next_040 = 0;
-    lbl_8064D43C = voice;
+    macActiveMacroRoot = voice;
     voice->active_04C = 0;
 }

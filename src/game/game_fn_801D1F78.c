@@ -34,8 +34,8 @@ typedef struct RingOutput {
     s32 rank[32];
 } RingOutput;
 
-extern f32 fn_80048C2C(f32);
-extern f32 fn_80048C50(f32);
+extern f32 sinf(f32);
+extern f32 cosf(f32);
 extern void fn_801F6B6C(Vec3*, ScreenPosition*, s32, s32);
 extern void* fn_80201814(s32);
 extern void* fn_80201BC8(void*);
@@ -65,8 +65,8 @@ void fn_801D1F78(RingOutput* output, RingDefinition* ring, s32 object)
 
     for (i = 0; i < count; i++) {
         angle = 6.2831855f * (f32)i / (f32)count;
-        point.x = ring->center.x + (f32)ring->radius * fn_80048C2C(angle);
-        point.y = ring->center.y + (f32)ring->radius * fn_80048C50(angle);
+        point.x = ring->center.x + (f32)ring->radius * sinf(angle);
+        point.y = ring->center.y + (f32)ring->radius * cosf(angle);
         point.z = ring->center.z;
         fn_801F6B6C(&point, &screen, 0, 0);
         projected[i] = screen.x;

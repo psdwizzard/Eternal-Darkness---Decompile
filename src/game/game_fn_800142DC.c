@@ -9,10 +9,10 @@ typedef struct Vec3f {
 
 extern const char lbl_8023BEF8[];
 extern const double lbl_8064DCE8;
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void* fn_8016A784(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void* lua_touserdata(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern s32 fn_801D3A24(s32, s32);
 extern void fn_8014EAC4(Vec3f*, Vec3f*, s32, s32, s32, s32, s32, s32, s32);
 
@@ -30,16 +30,16 @@ s32 fn_800142DC(void* script)
     s32 value_4A;
     s32 value_4E;
 
-    if (fn_8016A598(script) != 5) {
-        fn_80163BB4(script, lbl_8023BEF8, 5, fn_8016A598(script));
+    if (lua_gettop(script) != 5) {
+        luaO_verror(script, lbl_8023BEF8, 5, lua_gettop(script));
         return 0;
     }
 
-    first = fn_8016A784(script, 1);
-    second = fn_8016A784(script, 2);
-    third = (s32)fn_8016A694(script, 3);
-    fourth = (s32)fn_8016A694(script, 4);
-    fifth = (s32)fn_8016A694(script, 5);
+    first = lua_touserdata(script, 1);
+    second = lua_touserdata(script, 2);
+    third = (s32)lua_tonumber(script, 3);
+    fourth = (s32)lua_tonumber(script, 4);
+    fifth = (s32)lua_tonumber(script, 5);
     first_position.x = first[0];
     first_position.y = first[1];
     first_position.z = first[2];

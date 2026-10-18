@@ -15,7 +15,7 @@ typedef struct FloorInfo {
 extern void *fn_8022F780(int size);
 extern void *memcpy(void *, const void *, unsigned long);
 
-FloorInfo *fn_80231ECC(const FloorInfo *source)
+FloorInfo *floor1_copy_info(const FloorInfo *source)
 {
     FloorInfo *copy = fn_8022F780(sizeof(FloorInfo));
     return memcpy(copy, source, sizeof(FloorInfo));

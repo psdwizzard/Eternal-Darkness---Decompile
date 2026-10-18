@@ -32,14 +32,14 @@ typedef struct SynthVoiceRuntime {
 } SynthVoiceRuntime;
 
 extern SynthVoiceRuntime lbl_8060C020;
-extern Node* lbl_8064D398;
-extern Node* lbl_8064D39C;
-extern void fn_801B8164(u8, u16, u8, u8, u32);
+extern Node* seqPausedRoot;
+extern Node* seqActiveRoot;
+extern void synthVolume(u8, u16, u8, u8, u32);
 
 static inline int resolve_handle(u32 value)
 {
     u32 key = value & 0x7FFFFFFF;
-    Node* node = lbl_8064D39C;
+    Node* node = seqActiveRoot;
 
     while (node != 0) {
         if (node->key == key) {
@@ -48,7 +48,7 @@ static inline int resolve_handle(u32 value)
         }
         node = node->next;
     }
-    node = lbl_8064D398;
+    node = seqPausedRoot;
     while (node != 0) {
         if (node->key == key) {
             key = node->type;
@@ -62,7 +62,7 @@ static inline int resolve_handle(u32 value)
 #define SYNTH_VOICE_TRACK_VOLUME_GROUP_OFFSET ((u32) & (((SynthVoice*)0)->trackVolumeGroup))
 #define SYNTH_RUNTIME_VOICES_OFFSET ((u32) & (((SynthVoiceRuntime*)0)->voices))
 
-void fn_801B3CC8(u8 volume, u16 time, u32 seqId, u8 mode)
+void seqVolume(u8 volume, u16 time, u32 seqId, u8 mode)
 {
     SynthVoiceRuntime* runtime;
     u8* voiceBase;
@@ -80,14 +80,14 @@ void fn_801B3CC8(u8 volume, u16 time, u32 seqId, u8 mode)
     if (studioIndex != 0xFFFFFFFF) {
         if ((studioIndex & 0x80000000) == 0) {
             voiceBase = (u8*)runtime + studioIndex * sizeof(SynthVoice);
-            fn_801B8164(volume, time, ((SynthVoice*)(voiceBase + SYNTH_RUNTIME_VOICES_OFFSET))->defaultVolumeGroup, mode, pub_id);
+            synthVolume(volume, time, ((SynthVoice*)(voiceBase + SYNTH_RUNTIME_VOICES_OFFSET))->defaultVolumeGroup, mode, pub_id);
             voice = (SynthVoice*)(voiceBase + SYNTH_RUNTIME_VOICES_OFFSET);
             voiceBytes = (u8*)voice;
             voiceCursor = (u8*)voice;
             voiceIndex = 0;
             do {
                 if (voiceBytes[SYNTH_VOICE_TRACK_VOLUME_GROUP_OFFSET] != voice->defaultVolumeGroup) {
-                    fn_801B8164(volume, time, voiceCursor[SYNTH_VOICE_TRACK_VOLUME_GROUP_OFFSET], 0, 0xFFFFFFFF);
+                    synthVolume(volume, time, voiceCursor[SYNTH_VOICE_TRACK_VOLUME_GROUP_OFFSET], 0, 0xFFFFFFFF);
                 }
                 voiceBytes++;
                 voiceCursor++;

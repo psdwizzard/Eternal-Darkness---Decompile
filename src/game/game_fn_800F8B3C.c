@@ -1,4 +1,4 @@
-unsigned int fn_800F8B3C(unsigned int value)
+unsigned int __count_trailing_zerol(unsigned int value)
 {
     unsigned int result = 0;
     int remaining = 32;

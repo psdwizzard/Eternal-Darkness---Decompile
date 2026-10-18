@@ -21,31 +21,31 @@ typedef struct TRKExceptionStatus {
 } TRKExceptionStatus;
 
 extern TRKExceptionStatus gTRKExceptionStatus_8024A864;
-extern int fn_800EFA84(TRKBuffer *buffer, u32 value);
-extern int fn_800EFAE8(TRKBuffer *buffer, u16 value);
-extern DSError fn_800F4CC0(void *data, u32 start, u32 *length,
+extern int TRKAppendBuffer1_ui32(TRKBuffer *buffer, u32 value);
+extern int TRKAppendBuffer1_ui16(TRKBuffer *buffer, u16 value);
+extern DSError TRKTargetAccessMemory(void *data, u32 start, u32 *length,
                          int accessOptions, int read);
 
 /* MetroTRK: append the exception address, instruction, and exception ID. */
-void fn_800F3FD4(TRKBuffer *buffer)
+void TRKTargetAddExceptionInfo(TRKBuffer *buffer)
 {
     DSError error;
     u32 instruction;
     u32 length;
 
-    error = fn_800EFA84(buffer, gTRKExceptionStatus_8024A864.PC);
+    error = TRKAppendBuffer1_ui32(buffer, gTRKExceptionStatus_8024A864.PC);
     if (error == 0) {
         length = sizeof(instruction);
-        error = fn_800F4CC0(&instruction, gTRKExceptionStatus_8024A864.PC,
+        error = TRKTargetAccessMemory(&instruction, gTRKExceptionStatus_8024A864.PC,
                           &length, 0, 1);
         if (error == 0 && length != sizeof(instruction)) {
             error = 0x700;
         }
     }
     if (error == 0) {
-        error = fn_800EFA84(buffer, instruction);
+        error = TRKAppendBuffer1_ui32(buffer, instruction);
     }
     if (error == 0) {
-        fn_800EFAE8(buffer, gTRKExceptionStatus_8024A864.exceptionID);
+        TRKAppendBuffer1_ui16(buffer, gTRKExceptionStatus_8024A864.exceptionID);
     }
 }

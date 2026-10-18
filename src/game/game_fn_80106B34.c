@@ -77,11 +77,11 @@ typedef struct ImageDecoder {
     u8 workspace[0x3CD0 - 0x3261];
 } ImageDecoder;
 
-extern void fn_8010278C(ImageInfo* image, int component_index,
+extern void setHVQPlaneDesc(ImageInfo* image, int component_index,
                        u8 horizontal, u8 vertical);
 
 /* Set up component geometry, decoding trees, and padded block buffers. */
-void fn_80106B34(register ImageHeader* image, register ImageDecoder* workspace)
+void HVQM4SetBuffer(register ImageHeader* image, register ImageDecoder* workspace)
 {
     register ImageDecoder* decoder;
     register DecoderComponent* component;
@@ -106,9 +106,9 @@ void fn_80106B34(register ImageHeader* image, register ImageDecoder* workspace)
         addi decoder, workspace, 0
     }
     image->info.components = (ComponentInfo*)decoder->components;
-    fn_8010278C(&image->info, 0, 1, 1);
-    fn_8010278C(&image->info, 1, image->horizontal_sampling, image->vertical_sampling);
-    fn_8010278C(&image->info, 2, image->horizontal_sampling, image->vertical_sampling);
+    setHVQPlaneDesc(&image->info, 0, 1, 1);
+    setHVQPlaneDesc(&image->info, 1, image->horizontal_sampling, image->vertical_sampling);
+    setHVQPlaneDesc(&image->info, 2, image->horizontal_sampling, image->vertical_sampling);
 
     transposed = -1;
     width = image->info.width;

@@ -26,11 +26,11 @@ typedef struct OSAlarm {
 } OSAlarm;
 
 extern u32 Type_802FCA34[4];
-extern u32 lbl_8064D8D8;
+extern u32 __PADFixBits;
 
 extern OSTime __OSGetSystemTime(void);
-extern u16 fn_8020EE24(s32 chan);
-extern void fn_8020EEA8(s32 chan, u16 id);
+extern u16 OSGetWirelessID(s32 chan);
+extern void OSSetWirelessID(s32 chan, u16 id);
 extern s32 SITransfer(s32 chan, void* output, u32 outputBytes, void* input,
                       u32 inputBytes, SICallback callback, OSTime delay);
 
@@ -73,17 +73,17 @@ void GetTypeCallback_802093FC(s32 chan, u32 error, OSContext* context)
     type = Type_802FCA34[chan];
 
     chanBit = 0x80000000 >> chan;
-    fix = (s32)(lbl_8064D8D8 & chanBit);
-    lbl_8064D8D8 &= ~chanBit;
+    fix = (s32)(__PADFixBits & chanBit);
+    __PADFixBits &= ~chanBit;
 
     if ((error & 0xF) || (type & 0x18000000) != 0x08000000 || !(type & 0x80000000) ||
         (type & 0x04000000)) {
-        fn_8020EEA8(chan, 0);
+        OSSetWirelessID(chan, 0);
         CallTypeAndStatusCallback(chan, Type_802FCA34[chan]);
         return;
     }
 
-    id = (u32)(fn_8020EE24(chan) << 8);
+    id = (u32)(OSGetWirelessID(chan) << 8);
 
     if (fix && (id & 0x100000)) {
         cmdFixDevice[chan] = 0x4Eu << 24 | (id & 0xCFFF00) | 0x100000;
@@ -97,7 +97,7 @@ void GetTypeCallback_802093FC(s32 chan, u32 error, OSContext* context)
             if (!(id & 0x100000)) {
                 id = type & 0xCFFF00;
                 id |= 0x100000;
-                fn_8020EEA8(chan, (u16)((id >> 8) & 0xFFFF));
+                OSSetWirelessID(chan, (u16)((id >> 8) & 0xFFFF));
             }
             cmdFixDevice[chan] = 0x4E << 24 | id;
             Type_802FCA34[chan] = 0x80;
@@ -107,13 +107,13 @@ void GetTypeCallback_802093FC(s32 chan, u32 error, OSContext* context)
     } else if (type & 0x40000000) {
         id = type & 0xCFFF00;
         id |= 0x100000;
-        fn_8020EEA8(chan, (u16)((id >> 8) & 0xFFFF));
+        OSSetWirelessID(chan, (u16)((id >> 8) & 0xFFFF));
         cmdFixDevice[chan] = 0x4E << 24 | id;
         Type_802FCA34[chan] = 0x80;
         SITransfer(chan, &cmdFixDevice[chan], 3, &Type_802FCA34[chan], 3, GetTypeCallback_802093FC, 0);
         return;
     } else {
-        fn_8020EEA8(chan, 0);
+        OSSetWirelessID(chan, 0);
     }
 
     CallTypeAndStatusCallback(chan, Type_802FCA34[chan]);

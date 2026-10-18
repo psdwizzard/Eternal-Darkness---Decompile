@@ -20,23 +20,23 @@ typedef struct ResourceCache {
     ResourceList entries;
 } ResourceCache;
 
-extern int fn_8022C720(ResourceEntry **entry, const char *text);
-extern void fn_8022C950(char *destination, const char *source);
-extern void fn_8022C8BC(ResourceList *list, ResourceEntry *before,
+extern int AllocCacheNode(ResourceEntry **entry, const char *text);
+extern void Strcpy(char *destination, const char *source);
+extern void DSInsertListObject(ResourceList *list, ResourceEntry *before,
                       ResourceEntry *entry);
 
-ResourceEntry *fn_8022C690(ResourceCache *cache, const char *path,
+ResourceEntry *DSAddCacheNode(ResourceCache *cache, const char *path,
                          void *resource, ResourceDestructor destroy)
 {
     ResourceEntry *entry = 0;
 
-    if ((unsigned char)fn_8022C720(&entry, path) == 0) {
+    if ((unsigned char)AllocCacheNode(&entry, path) == 0) {
         return 0;
     }
-    fn_8022C950(entry->text, path);
+    Strcpy(entry->text, path);
     entry->resource = resource;
     entry->destroy = destroy;
     entry->references = 0;
-    fn_8022C8BC(&cache->entries, 0, entry);
+    DSInsertListObject(&cache->entries, 0, entry);
     return entry;
 }

@@ -32,13 +32,13 @@ extern int fn_800F98EC(const void *, const void *, unsigned long); /* memcmp */
 extern void *memcpy(void *, const void *, unsigned long);
 extern void DCInvalidateRange(void *, u32);
 extern s32 DVDLowStopMotor(void (*)(u32));
-extern void fn_802144A0(u32);
+extern void cbForStateCheckID1(u32);
 /* These state handlers ignore the command block passed by the dispatcher. */
-extern void fn_80214468();
-extern void fn_80214434();
+extern void stateCheckID2();
+extern void stateCheckID3();
 
 /* stateCheckID */
-void fn_80214350(void)
+void stateCheckID(void)
 {
     struct {
         DVDDiskID *id;
@@ -49,22 +49,22 @@ void fn_80214350(void)
     switch (CurrCommand_8064DA1C) {
     case 3:
         if (fn_800F98EC(buffer.id, executing_8064DA00->id, 0x1C) != 0) {
-            DVDLowStopMotor(fn_802144A0);
+            DVDLowStopMotor(cbForStateCheckID1);
             break;
         }
         memcpy(currID_8064DA04, buffer.id, sizeof(DVDDiskID));
         executing_8064DA00->state = 1;
         DCInvalidateRange(buffer.id, sizeof(DVDDiskID));
-        lbl_8064DA48 = fn_80214468;
-        fn_80214468(executing_8064DA00);
+        lbl_8064DA48 = stateCheckID2;
+        stateCheckID2(executing_8064DA00);
         break;
     default:
         if (fn_800F98EC(buffer.id, currID_8064DA04, sizeof(DVDDiskID)) != 0) {
-            DVDLowStopMotor(fn_802144A0);
+            DVDLowStopMotor(cbForStateCheckID1);
             break;
         }
-        lbl_8064DA48 = fn_80214434;
-        fn_80214434(executing_8064DA00);
+        lbl_8064DA48 = stateCheckID3;
+        stateCheckID3(executing_8064DA00);
         break;
     }
 }

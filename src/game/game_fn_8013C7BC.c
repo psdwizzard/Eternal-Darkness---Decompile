@@ -1,6 +1,6 @@
 typedef struct Vec3 { float x, y, z; } Vec3;
 
-extern float fn_80211B44(const Vec3*, const Vec3*);
+extern float PSVECDotProduct(const Vec3*, const Vec3*);
 extern float lbl_80650324;
 
 int fn_8013C7BC(const Vec3* first, const Vec3* second,
@@ -12,8 +12,8 @@ int fn_8013C7BC(const Vec3* first, const Vec3* second,
     int second_side;
     int result;
 
-    first_value = -fn_80211B44(first, direction);
-    second_value = -fn_80211B44(second, direction);
+    first_value = -PSVECDotProduct(first, direction);
+    second_value = -PSVECDotProduct(second, direction);
     first_side = first_value - offset - lbl_80650324 > limit;
     second_side = second_value + offset + lbl_80650324 > limit;
     if (first_side != second_side) {

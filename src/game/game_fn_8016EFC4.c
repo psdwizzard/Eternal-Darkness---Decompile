@@ -1,7 +1,7 @@
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void* fn_8016A784(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void* lua_touserdata(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_801287C4(void*, void*, unsigned int, unsigned int);
 extern void fn_8016FFA8(void);
 extern const char lbl_8024FF00[];
@@ -12,14 +12,14 @@ int fn_8016EFC4(void* state)
     int first;
     int second;
 
-    if (fn_8016A598(state) != 3) {
-        fn_80163BB4(state, lbl_8024FF00, 3, fn_8016A598(state));
+    if (lua_gettop(state) != 3) {
+        luaO_verror(state, lbl_8024FF00, 3, lua_gettop(state));
         return 0;
     }
 
-    queue = fn_8016A784(state, 1);
-    first = (int)fn_8016A694(state, 2);
-    second = (int)fn_8016A694(state, 3);
+    queue = lua_touserdata(state, 1);
+    first = (int)lua_tonumber(state, 2);
+    second = (int)lua_tonumber(state, 3);
     fn_801287C4(queue, fn_8016FFA8, first, second);
     return 0;
 }

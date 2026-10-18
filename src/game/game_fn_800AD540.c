@@ -4,7 +4,7 @@ typedef unsigned short u16;
 extern u8 lbl_8031D858[];
 extern u16* lbl_8064D71C[2];
 extern void fn_8015CBB0(void*, int, u8*);
-extern void fn_8020B774(void*, int);
+extern void DCStoreRange(void*, int);
 
 static inline int clamp_index(int value, int limit)
 {
@@ -100,6 +100,6 @@ void fn_800AD540(void* source, int width, int height, int source_stride)
             }
             output += 640;
         }
-        fn_8020B774(buffer, 0x96000);
+        DCStoreRange(buffer, 0x96000);
     }
 }

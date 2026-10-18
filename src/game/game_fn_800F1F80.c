@@ -17,9 +17,9 @@ typedef struct CPUType {
     u8 extended2TypeSize;
 } CPUType;
 
-extern void fn_800EFC9C(TRKBuffer *, u8);
-extern int fn_800EF2A0(TRKBuffer *);
-extern int fn_800F43C0(CPUType *);
+extern void TRKResetBuffer(TRKBuffer *, u8);
+extern int TRKMessageSend(TRKBuffer *);
+extern int TRKTargetCPUType(CPUType *);
 
 static inline void append(TRKBuffer *buffer, u8 value)
 {
@@ -38,30 +38,30 @@ static inline int appendChecked(TRKBuffer *buffer, u8 value)
     return 0;
 }
 
-void fn_800F1F80(TRKBuffer *buffer)
+void TRKDoCPUType(TRKBuffer *buffer)
 {
     CPUType cpuType;
     int result;
     int retry;
 
     if (buffer->length != 1) {
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, 2);
         retry = 3;
         do {
-            result = fn_800EF2A0(buffer);
+            result = TRKMessageSend(buffer);
             retry--;
             if (result == 0) break;
         } while (retry > 0);
         return;
     }
 
-    fn_800EFC9C(buffer, 1);
+    TRKResetBuffer(buffer, 1);
     append(buffer, 0x80);
     append(buffer, 0);
 
-    result = fn_800F43C0(&cpuType);
+    result = TRKTargetCPUType(&cpuType);
     if (result == 0) result = appendChecked(buffer, cpuType.cpuMajor);
     if (result == 0) result = appendChecked(buffer, cpuType.cpuMinor);
     if (result == 0) result = appendChecked(buffer, cpuType.bigEndian);
@@ -71,19 +71,19 @@ void fn_800F1F80(TRKBuffer *buffer)
     if (result == 0) result = appendChecked(buffer, cpuType.extended2TypeSize);
 
     if (result != 0) {
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, 3);
         retry = 3;
         do {
-            result = fn_800EF2A0(buffer);
+            result = TRKMessageSend(buffer);
             retry--;
             if (result == 0) break;
         } while (retry > 0);
     } else {
         retry = 3;
         do {
-            result = fn_800EF2A0(buffer);
+            result = TRKMessageSend(buffer);
             retry--;
             if (result == 0) break;
         } while (retry > 0);

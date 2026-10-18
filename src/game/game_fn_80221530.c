@@ -22,7 +22,7 @@ typedef struct CARDDir {
     u32 commentAddr;
 } CARDDir;
 
-s32 fn_80221530(CARDDir *ent)
+s32 __CARDIsPublic(CARDDir *ent)
 {
     if (ent->gameName[0] == 0xFF) {
         return -4;

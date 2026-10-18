@@ -13,16 +13,16 @@ typedef struct HeapDesc {
 
 extern void OSReport(const char *fmt, ...);
 extern char lbl_802FCD60[];
-extern HeapDesc *lbl_8064D920;
+extern HeapDesc *HeapArray;
 
-void fn_8020B344(int heap) {
+void OSDumpHeap(int heap) {
     HeapDesc *hd;
     Cell *cell;
     struct { char *text; } diagnostic;
 
     diagnostic.text = lbl_802FCD60;
     OSReport(diagnostic.text + 0x31C, heap);
-    hd = &lbl_8064D920[heap];
+    hd = &HeapArray[heap];
     if (hd->size < 0) {
         OSReport(diagnostic.text + 0x330);
         return;

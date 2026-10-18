@@ -2,7 +2,7 @@ typedef float Mtx[3][4];
 
 /* Invert an affine matrix. The cofactor pairs hold rows zero and one;
  * scalar arithmetic computes row two and the inverse translation. */
-unsigned int fn_802110A8(register const Mtx source, Mtx inverse)
+unsigned int PSMTXInverse(register const Mtx source, Mtx inverse)
 {
     register float bc;
     register float hi;

@@ -14,7 +14,7 @@ extern void fn_801ECF50(int);
 extern void fn_8018D0D0(void*, void*, s16);
 extern int fn_801EF384(void);
 extern void fn_801ED494(int, int, int, int, int);
-extern void fn_80229C0C(int, int, int, int, int, int);
+extern void GXSetTevColorOp(int, int, int, int, int, int);
 extern void fn_801ED510(int, int, int);
 extern u32 fn_801F6D90(s16, s16, s16);
 extern void fn_8018865C(void*, void*, void*);
@@ -76,7 +76,7 @@ void fn_801A2D64(u8* object)
     fn_8018D0D0(object, object + 0x5C, *(s16*)(object + 0xE));
     if (fn_801EF384()) {
         fn_801ED494(3, 0, 0, 0, 3);
-        fn_80229C0C(0, 0, 1, 2, 1, 0);
+        GXSetTevColorOp(0, 0, 1, 2, 1, 0);
         fn_801ED510(0, 3, 3);
     }
     if (object[0xBD] == 0) {
@@ -89,9 +89,9 @@ void fn_801A2D64(u8* object)
         }
     }
     if (fn_801EF384()) {
-        fn_80229C0C(0, 0, 0, 0, 1, 0);
+        GXSetTevColorOp(0, 0, 0, 0, 1, 0);
         fn_801ED510(0, 0, 0);
-        fn_80229C0C(0, 0, 1, 2, 1, 0);
+        GXSetTevColorOp(0, 0, 1, 2, 1, 0);
     }
     fn_801ED57C(old);
 }

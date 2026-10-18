@@ -2,7 +2,7 @@
 #define __HI(x) (*(int *)&(x))
 #define __LO(x) (*((int *)&(x) + 1))
 
-extern const volatile double lbl_80239EC0[6];
+extern const volatile double halF[6];
 extern const double lbl_8064FA70; /* zero */
 extern const double lbl_8064FA78; /* overflow threshold */
 extern const double lbl_8064FA80; /* overflow result */
@@ -22,8 +22,8 @@ extern const double lbl_8064FAD8; /* 2^-1000 */
 #define ln2HI (constants + 2)
 #define ln2LO (constants + 4)
 
-double fn_800FF35C(double x) {
-    const double *constants = (const double *)lbl_80239EC0;
+double __ieee754_exp(double x) {
+    const double *constants = (const double *)halF;
     double y, hi, lo, c, t;
     unsigned int hx;
     int k;

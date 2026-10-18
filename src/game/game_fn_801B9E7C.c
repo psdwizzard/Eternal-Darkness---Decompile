@@ -40,16 +40,13 @@ typedef struct STREAM_INFO {
 
 static STREAM_INFO streamInfo[64];
 
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
-#define hwDisableIrq fn_801CE2B8
-#define hwEnableIrq fn_801CE280
 
 extern void fn_801CD138(void*, u32, u32, u8, u32, u32);
-extern void fn_801CCB20(u32, u8);
+extern void hwSetStreamLoopPS(u32, u8);
 #define hwFlushStream fn_801CD138
-#define hwSetStreamLoopPS fn_801CCB20
 
 static inline u32 GetPrivateIndex(u32 publicID)
 {
@@ -62,7 +59,7 @@ static inline u32 GetPrivateIndex(u32 publicID)
     return -1;
 }
 
-void fn_801B9E7C(u32 stid, u32 off1, u32 len1, u32 off2, u32 len2)
+void sndStreamARAMUpdate(u32 stid, u32 off1, u32 len1, u32 off2, u32 len2)
 {
     u32 i;
 

@@ -4,19 +4,19 @@ typedef struct Collection {
     int total_size;
 } Collection;
 
-extern const volatile unsigned int lbl_8023A868[4];
-extern void fn_80161798(Collection*);
-extern void fn_80161948(Collection*);
-extern void fn_80161ED8(Collection*, int);
-extern void fn_80161CF8(Collection*);
-extern void fn_80161D58(Collection*, char*);
+extern const volatile unsigned int luaO_nilobject[4];
+extern void markall(Collection*);
+extern void invalidaterefs(Collection*);
+extern void luaC_collect(Collection*, int);
+extern void checkMbuffer(Collection*);
+extern void callgcTM(Collection*, char*);
 
-void fn_80161F3C(Collection* collection)
+void luaC_collectgarbage(Collection* collection)
 {
-    fn_80161798(collection);
-    fn_80161948(collection);
-    fn_80161ED8(collection, 0);
-    fn_80161CF8(collection);
+    markall(collection);
+    invalidaterefs(collection);
+    luaC_collect(collection, 0);
+    checkMbuffer(collection);
     collection->threshold = collection->total_size << 1;
-    fn_80161D58(collection, (char*)lbl_8023A868);
+    callgcTM(collection, (char*)luaO_nilobject);
 }

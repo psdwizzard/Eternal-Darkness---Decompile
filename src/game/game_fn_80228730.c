@@ -26,9 +26,9 @@ typedef struct GXTexObj {
     ((reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
 
 /* GX2HWFiltConv: GXTexFilter -> hardware min filter encoding */
-extern u8 lbl_8064C4A8[8];
+extern u8 GX2HWFiltConv[8];
 
-void fn_80228730(GXTexObj *obj, int min_filt, int mag_filt, f32 min_lod, f32 max_lod,
+void GXInitTexObjLOD(GXTexObj *obj, int min_filt, int mag_filt, f32 min_lod, f32 max_lod,
                  f32 lod_bias, u8 bias_clamp, u8 do_edge_lod, u32 max_aniso)
 {
     u8 lbias;
@@ -45,7 +45,7 @@ void fn_80228730(GXTexObj *obj, int min_filt, int mag_filt, f32 min_lod, f32 max
     lbias = (u8)(32.0f * lod_bias);
     SET_REG_FIELD(t->mode0, 8, 9, lbias);
     SET_REG_FIELD(t->mode0, 1, 4, (mag_filt == 1) ? 1 : 0);
-    SET_REG_FIELD(t->mode0, 3, 5, lbl_8064C4A8[min_filt]);
+    SET_REG_FIELD(t->mode0, 3, 5, GX2HWFiltConv[min_filt]);
     SET_REG_FIELD(t->mode0, 1, 8, do_edge_lod ? 0 : 1);
     SET_REG_FIELD(t->mode0, 1, 17, 0);
     SET_REG_FIELD(t->mode0, 1, 18, 0);

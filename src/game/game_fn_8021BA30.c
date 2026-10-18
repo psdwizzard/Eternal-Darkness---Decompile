@@ -27,21 +27,21 @@ typedef struct DSPTaskInfo DSPTaskInfo;
 
 extern s32 OSDisableInterrupts(void);
 extern s32 OSRestoreInterrupts(s32 enable);
-extern void fn_8021C240(DSPTask *task);
+extern void __DSP_insert_task(DSPTask *task);
 extern void fn_8021C0B4(DSPTaskInfo *task);
-extern DSPTask *lbl_8064DB78;
+extern DSPTask *__DSP_first_task;
 
 /* Queue a DSP task and boot it if it is the first task. */
-DSPTask *fn_8021BA30(DSPTask *task)
+DSPTask *DSPAddTask(DSPTask *task)
 {
     s32 enabled;
 
     enabled = OSDisableInterrupts();
-    fn_8021C240(task);
+    __DSP_insert_task(task);
     task->state = 0;
     task->flags = 1;
     OSRestoreInterrupts(enabled);
-    if (task == lbl_8064DB78) {
+    if (task == __DSP_first_task) {
         fn_8021C0B4((DSPTaskInfo *)task);
     }
     return task;

@@ -27,8 +27,8 @@ extern void fn_801AAE68(float intensity, s32 effect_type, s32 value, s32 arg3,
                         const Vec3 *position, s32 arg5, s32 arg6, s32 arg7,
                         u16 owner, s32 arg9);
 extern void fn_8018358C(EffectParams *params);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void* fn_80148008(Vec3 *position, void *descriptor,
                        EffectParams *params, void (*callback)(void));
 extern void fn_801834F0(void);
@@ -46,13 +46,13 @@ void fn_8007B540(const Vec3 *source, void *object)
     fn_8018358C(&params);
     params.value2 = 100;
     params.value3 = -10;
-    params.value6 = (fn_800FBFB0() + 1) & 0x1F;
+    params.value6 = (rand() + 1) & 0x1F;
     params.value17 = 5;
     params.value18 = 1;
     params.value14 = 100;
     params.value15 = 100;
-    params.value19 = (fn_800FBFB0() & 7) + 1;
-    params.value16 = (fn_800FBFB0() & 0xF) + 10;
+    params.value19 = (rand() & 7) + 1;
+    params.value16 = (rand() & 0xF) + 10;
     position = *source;
     fn_80148008(&position, descriptor, &params, fn_801834F0);
 }

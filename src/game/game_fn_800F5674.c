@@ -11,24 +11,24 @@ typedef struct CommBuffer {
 /* The communication backends have different parameter lists. */
 typedef int (*CommFunction)();
 extern CommFunction gDBCommTable[7];
-extern CommBuffer lbl_8032A578;
-extern u8 lbl_8032B694[];
+extern CommBuffer gWritePos;
+extern u8 gWriteBuf[];
 
-int fn_800F5674(void)
+int WriteUARTFlush(void)
 {
     int result = 0;
-    long count = lbl_8032A578.outputCount;
-    u8 *next = lbl_8032B694 + count;
+    long count = gWritePos.outputCount;
+    u8 *next = gWriteBuf + count;
 
     for (; count < 0x800; ++count) {
         *next++ = 0;
     }
-    lbl_8032A578.outputCount = count;
+    gWritePos.outputCount = count;
     if (count != 0) {
-        int status = gDBCommTable[4]((unsigned int *)lbl_8032B694,
+        int status = gDBCommTable[4]((unsigned int *)gWriteBuf,
                                      (unsigned int)count);
         result = status ? -1 : 0;
-        lbl_8032A578.outputCount = 0;
+        gWritePos.outputCount = 0;
     }
     return result;
 }

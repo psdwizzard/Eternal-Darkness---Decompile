@@ -9,16 +9,16 @@ typedef struct AudioSync {
     int bodyBytes;
 } AudioSync;
 
-extern void *fn_800F9990(void *dst, const void *src, unsigned long size);
+extern void *memmove(void *dst, const void *src, unsigned long size);
 extern void *fn_8022F780(int size);
 
-void *fn_8022F1D0(AudioSync *sync, int size) {
+void *ogg_sync_buffer(AudioSync *sync, int size) {
     int newStorage;
 
     if (sync->returned != 0) {
         sync->fill -= sync->returned;
         if (sync->fill > 0) {
-            fn_800F9990(sync->data, sync->data + sync->returned, sync->fill);
+            memmove(sync->data, sync->data + sync->returned, sync->fill);
         }
         sync->returned = 0;
     }

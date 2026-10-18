@@ -1,6 +1,6 @@
-extern double fn_8010181C(double value);
+extern double ceil(double value);
 
-float fn_801023E4(float value)
+float ceilf(float value)
 {
-    return (float)fn_8010181C(value);
+    return (float)ceil(value);
 }

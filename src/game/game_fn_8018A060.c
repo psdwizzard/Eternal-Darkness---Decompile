@@ -16,8 +16,8 @@ extern void DCFlushRange(void*, unsigned long);
 extern int fn_801ED57C(int);
 extern void fn_8018D0D0(u8*, u32*, int);
 extern int fn_8017FFB8(void), fn_8017FFB0(void), fn_8017FF98(void);
-extern void fn_80225F4C(int, void*, u8);
-extern void fn_8022B448(void*, void*);
+extern void GXSetArray(int, void*, u8);
+extern void GXCallDisplayList(void*, void*);
 
 void fn_8018A060(u8* object)
 {
@@ -67,10 +67,10 @@ void fn_8018A060(u8* object)
     {
         int saved = fn_801ED57C(0);
         fn_8018D0D0(object, (u32*)(object + 0x5C), *(s16*)(object + 0xE));
-        fn_80225F4C(9, buffer0, (u8)fn_8017FFB8());
-        fn_80225F4C(0xB, buffer2, (u8)fn_8017FF98());
-        fn_80225F4C(0xD, buffer1, (u8)fn_8017FFB0());
-        fn_8022B448(lbl_80606AE0, lbl_8064D24C);
+        GXSetArray(9, buffer0, (u8)fn_8017FFB8());
+        GXSetArray(0xB, buffer2, (u8)fn_8017FF98());
+        GXSetArray(0xD, buffer1, (u8)fn_8017FFB0());
+        GXCallDisplayList(lbl_80606AE0, lbl_8064D24C);
         fn_801ED57C(saved);
     }
 }

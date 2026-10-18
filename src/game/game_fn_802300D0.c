@@ -13,7 +13,7 @@ typedef struct VorbisBlock {
     u8 pad48[0x1C];
 } VorbisBlock;
 
-s32 fn_802300D0(register VorbisDspState *state, register VorbisBlock *block)
+s32 vorbis_block_init(register VorbisDspState *state, register VorbisBlock *block)
 {
     register VorbisBlock *destination;
 

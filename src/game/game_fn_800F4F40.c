@@ -1,5 +1,5 @@
 #pragma force_active on
-void fn_800F4F40(void)
+void TRKCloseFile(void)
 {
     __asm { twi 31, r0, 0 }
 }

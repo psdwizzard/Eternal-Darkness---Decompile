@@ -16,7 +16,7 @@ typedef struct Block {
 
 extern Block lbl_80304060;
 extern int lbl_8064C7F8;
-extern void fn_8020D250(void*, void*, int);
+extern void OSSendMessage(void*, void*, int);
 
 void fn_80042DEC(s16 arg) {
     Msg* m;
@@ -25,5 +25,5 @@ void fn_80042DEC(s16 arg) {
     m->arg = arg;
     m->next = &lbl_80304060;
     lbl_8064C7F8 = 1;
-    fn_8020D250(lbl_80304060.queue, m, 1);
+    OSSendMessage(lbl_80304060.queue, m, 1);
 }

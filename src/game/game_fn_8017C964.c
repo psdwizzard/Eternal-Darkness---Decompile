@@ -26,14 +26,14 @@ extern GlobalState lbl_8064A580;
 extern SlotInfo lbl_8064A6C8[];
 extern SlotData lbl_8064A6F0[];
 extern char lbl_8025104C[];
-extern int fn_802226E4(u8, int, SlotData*);
+extern int CARDGetStatus(u8, int, SlotData*);
 extern void fn_8017BA60(char*, int);
 
 void fn_8017C964(Request* request)
 {
     if (request->result != -1) {
         if (request->result == 0) {
-            request->result = fn_802226E4(request->value,
+            request->result = CARDGetStatus(request->value,
                                          lbl_8064A6C8[request->value].field_04,
                                          &lbl_8064A6F0[request->value]);
             if (request->result == 0) {

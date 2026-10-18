@@ -15,12 +15,12 @@ typedef struct Matrix {
 } Matrix;
 
 extern const float lbl_806514D8;
-extern void fn_80211584(Matrix*, Vec3*, Vec3*, Vec3*);
-extern void fn_80211A6C(Vec3*, Vec3*, Vec3*);
-extern void fn_80211A48(Vec3*, Vec3*, Vec3*);
-extern void fn_80211AAC(Vec3*, Vec3*);
-extern void fn_80211B64(Vec3*, Vec3*, Vec3*);
-extern void fn_80211764(Matrix*, Vec3*, Vec3*, int);
+extern void C_MTXLookAt(Matrix*, Vec3*, Vec3*, Vec3*);
+extern void PSVECSubtract(Vec3*, Vec3*, Vec3*);
+extern void PSVECAdd(Vec3*, Vec3*, Vec3*);
+extern void PSVECNormalize(Vec3*, Vec3*);
+extern void PSVECCrossProduct(Vec3*, Vec3*, Vec3*);
+extern void PSMTXMultVecArray(Matrix*, Vec3*, Vec3*, int);
 extern void fn_801F6BD8(Vec3*, Pair*, int, int);
 
 int fn_801FBD2C(Vec3* first, Vec3* second, Vec3* third, Vec3* fourth,
@@ -38,20 +38,20 @@ int fn_801FBD2C(Vec3* first, Vec3* second, Vec3* third, Vec3* fourth,
     int min_y;
     int max_y;
 
-    fn_80211584(&matrix, first, third, second);
-    fn_80211A6C(first, second, &axis);
-    fn_80211B64(&axis, third, &scaled);
-    fn_80211AAC(&scaled, &scaled);
+    C_MTXLookAt(&matrix, first, third, second);
+    PSVECSubtract(first, second, &axis);
+    PSVECCrossProduct(&axis, third, &scaled);
+    PSVECNormalize(&scaled, &scaled);
     scaled.x *= lbl_806514D8;
     scaled.y *= lbl_806514D8;
     scaled.z *= lbl_806514D8;
-    fn_80211A6C(fourth, &scaled, &source[0]);
-    fn_80211A48(fourth, &scaled, &source[1]);
+    PSVECSubtract(fourth, &scaled, &source[0]);
+    PSVECAdd(fourth, &scaled, &source[1]);
     source[2] = source[1];
     source[3] = source[0];
     source[2].z += margin;
     source[3].z += margin;
-    fn_80211764(&matrix, source, corners, 4);
+    PSMTXMultVecArray(&matrix, source, corners, 4);
     fn_801F6BD8(corners, &projected, 1, 0);
     min_x = projected.x;
     max_x = projected.x;

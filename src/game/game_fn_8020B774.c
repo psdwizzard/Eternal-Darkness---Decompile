@@ -1,6 +1,6 @@
 /* DCStoreRange: store (write back) all data-cache lines touched by the range
  * and synchronize through the system-call handler. Cache lines are 32 bytes. */
-void fn_8020B774(register void *address, register unsigned int length)
+void DCStoreRange(register void *address, register unsigned int length)
 {
     register unsigned char *line = (unsigned char *)address;
 

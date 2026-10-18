@@ -5,21 +5,21 @@ typedef struct CardControl CardControl;
 typedef struct CARDControl CARDControl;
 typedef struct SaveCtx SaveCtx;
 
-extern s32 fn_8021F350(CardControl *control);
-extern s32 fn_8021F5D4(CARDControl *control, int *outCurrent);
-extern s32 fn_8021F814(SaveCtx *control, s32 *outIndex);
+extern s32 VerifyID(CardControl *control);
+extern s32 VerifyDir(CARDControl *control, int *outCurrent);
+extern s32 VerifyFAT(SaveCtx *control, s32 *outIndex);
 
-s32 fn_8021FA98(CardControl *control)
+s32 __CARDVerify(CardControl *control)
 {
     s32 result;
     s32 errors;
 
-    result = fn_8021F350(control);
+    result = VerifyID(control);
     if (result < 0)
         return result;
 
-    errors = fn_8021F5D4((CARDControl *)control, 0);
-    errors += fn_8021F814((SaveCtx *)control, 0);
+    errors = VerifyDir((CARDControl *)control, 0);
+    errors += VerifyFAT((SaveCtx *)control, 0);
     switch (errors) {
     case 0:
         return 0;

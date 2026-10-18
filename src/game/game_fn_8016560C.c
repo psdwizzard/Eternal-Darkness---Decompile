@@ -1,4 +1,4 @@
-int fn_8016560C(int token)
+int getunopr(int token)
 {
     switch (token) {
     case 0x10C:

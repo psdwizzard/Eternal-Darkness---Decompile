@@ -13,15 +13,15 @@ extern volatile u32 __SIRegs[64] : 0xCC006400;
 
 extern u32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(u32 enabled);
-extern u32 fn_80208E58(s32 chan);
+extern u32 SIGetStatus(s32 chan);
 
-s32 fn_80209140(s32 chan, void *data)
+s32 SIGetResponse(s32 chan, void *data)
 {
     register SIWork *work = &Packet_80640B68;
     u32 enabled = OSDisableInterrupts();
     s32 valid;
 
-    if (fn_80208E58(chan) & 0x20) {
+    if (SIGetStatus(chan) & 0x20) {
         work->inputBuffer[chan][0] = __SIRegs[chan * 3 + 1];
         work->inputBuffer[chan][1] = __SIRegs[chan * 3 + 2];
         work->inputBufferValid[chan] = 1;

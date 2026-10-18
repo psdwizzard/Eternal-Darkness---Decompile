@@ -1,4 +1,4 @@
 /* DSP debug output is disabled in the retail build. */
-void fn_8021BAA0(char *format, ...)
+void __DSP_debug_printf(char *format, ...)
 {
 }

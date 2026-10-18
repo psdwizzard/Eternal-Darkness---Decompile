@@ -39,8 +39,8 @@ extern void fn_80128C28();
 extern void fn_80128C44(void*, void*, void*);
 extern void fn_80201D2C(void *, int);
 extern void fn_80201D14(void *, int);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_8008AE40(void);
 extern void fn_8008C7A0(void);
 extern void fn_802042A4(void);
@@ -106,7 +106,7 @@ int fn_8008ABD4(void* object, void* other, int unused, int forced)
     fn_80128C44(effect, fn_802042A4, config);
     fn_80201D2C(object, 6);
     fn_80201D14(object, 1);
-    ((Data8C*)info->field8C)->timer = (fn_800FBFB0() & 0x7F) + 600;
+    ((Data8C*)info->field8C)->timer = (rand() & 0x7F) + 600;
     *((u8*)info->field48 + 4) = 1;
     return 1;
 fail:

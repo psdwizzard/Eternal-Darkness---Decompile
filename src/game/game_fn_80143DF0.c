@@ -39,13 +39,13 @@ extern Pool lbl_805B1310;
 extern int lbl_8064D18C;
 
 extern void fn_801ED468(int);
-extern void fn_80226D28(int);
+extern void GXSetCullMode(int);
 extern void fn_801ED118(void);
 extern int fn_801EDA7C(s16* values, int context, int flags, void* state);
 extern void fn_801ECF50(int);
-extern void fn_80226C18(int, int);
+extern void GXSetLineWidth(int, int);
 extern void fn_801ECD74(Color* color);
-extern void fn_80226AB4(int, int, u16);
+extern void GXBegin(int, int, u16);
 extern void fn_80144164(float x, float y, float z);
 extern void fn_80144160(void);
 
@@ -68,11 +68,11 @@ void fn_80143DF0(void)
     pool = &lbl_805B1310;
     base = lbl_802FC5BC[11];
     fn_801ED468(0x1b);
-    fn_80226D28(0);
+    GXSetCullMode(0);
     fn_801ED118();
     fn_801EDA7C(lbl_802FC53C, 0, 0x2bf, 0);
     fn_801ECF50(4);
-    fn_80226C18(0x12, 0);
+    GXSetLineWidth(0x12, 0);
     base.a = 0x40;
     faded = base;
     fn_801ECD74(&faded);
@@ -94,7 +94,7 @@ void fn_80143DF0(void)
             part = &arrays.parts[((volatile PoolSlot*)slot)->index][j];
             c1 = base;
             fn_801ECD74(&c1);
-            fn_80226AB4(0x80, 3, 4);
+            GXBegin(0x80, 3, 4);
             fn_80144164(box->v[0][0], box->v[0][1], box->v[0][2]);
             fn_80144164(box->v[1][0], box->v[1][1], box->v[1][2]);
             fn_80144164(box->v[2][0], box->v[2][1], box->v[2][2]);
@@ -102,7 +102,7 @@ void fn_80143DF0(void)
             fn_80144160();
             c2 = colors[3];
             fn_801ECD74(&c2);
-            fn_80226AB4(0xa8, 3, 2);
+            GXBegin(0xa8, 3, 2);
             fn_80144164(box->v[0][0], box->v[0][1], box->v[0][2]);
             fn_80144164(box->v[0][0] + 100.0f * part->dir[0],
                         box->v[0][1] + 100.0f * part->dir[1],

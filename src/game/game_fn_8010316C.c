@@ -1,4 +1,4 @@
-/* fn_8010316C: expand a 16-bit source image region into a 4-bit-per-pixel
+/* MakeNest: expand a 16-bit source image region into a 4-bit-per-pixel
  * byte buffer, mirroring the edges and zero-padding the remainder. */
 
 typedef struct ImageSrc {
@@ -14,7 +14,7 @@ typedef struct ImageSrc {
     unsigned char dst[1];     /* 0x3261 */
 } ImageSrc;
 
-void fn_8010316C(ImageSrc *img, int x, int y)
+void MakeNest(ImageSrc *img, int x, int y)
 {
     unsigned char *row;
     unsigned char *src;

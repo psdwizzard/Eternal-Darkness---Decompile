@@ -88,7 +88,7 @@ extern void fn_800A3570(); extern void fn_800AFC30(); extern void fn_800B0704();
 extern void fn_800B7C6C(); extern void fn_800B84A8(); extern void fn_800B8F6C(); extern void fn_800B92A0();
 extern void fn_800B9454(); extern void fn_800BC6D8(); extern void fn_800BD384(); extern void fn_800C94FC();
 extern void fn_800C96B4(); extern void fn_800DE8C8(); extern void fn_800E463C(); extern void fn_800E790C();
-extern void fn_800E9F10(); extern void fn_800EB438(); extern void fn_800FBFA8(); extern void fn_8010F404();
+extern void fn_800E9F10(); extern void fn_800EB438(); extern void srand(); extern void fn_8010F404();
 extern void fn_80113AB8(); extern void fn_80117E60(); extern void fn_8011B734(); extern void fn_8011E19C();
 extern void fn_8011E234(); extern void fn_8011E87C(); extern void fn_8011FF30(); extern void fn_80125D88();
 extern void fn_80125DC8(); extern void fn_80125FE4(); extern void fn_801285F8(); extern void fn_80128610();
@@ -111,7 +111,7 @@ extern void fn_801EF36C(); extern void fn_801EF38C(); extern void fn_801F0044();
 extern void fn_801F3F88(); extern void fn_801F455C(); extern void fn_801F58F8(); extern void fn_801F5980();
 extern void fn_801F7C78(); extern void fn_801FA198(); extern void fn_801FCCEC(); extern void fn_80200338();
 extern void fn_802012A0(); extern void fn_802012F8(); extern void fn_802014F0(); extern void fn_80204A14();
-extern void fn_8020EF54();
+extern void OSInitStopwatch();
 
 void fn_80024F28(int mode)
 {
@@ -195,7 +195,7 @@ void fn_80024F28(int mode)
         lbl_8064C51C = 0; lbl_8064C5A4 = 0;
         fn_800EB438(); lbl_8064C4E0 = fn_801E78DC(0x4A0); fn_80024B78(); fn_801F0044(); fn_801F3444(); fn_8017AE20(0xC000);
         fn_80042810(-1); fn_80155B5C(0x113); fn_80140E60(lbl_8064DF4C); fn_801EBEDC(); fn_8015AA28(0);
-        fn_8020EF54(lbl_806391F0, &lbl_8064B2E0); fn_8020EF54(lbl_80639228, &lbl_8064B2E8); fn_800248C0();
+        OSInitStopwatch(lbl_806391F0, &lbl_8064B2E0); OSInitStopwatch(lbl_80639228, &lbl_8064B2E8); fn_800248C0();
         lbl_8064C544 = 0; fn_80157504(strings + 0x70, strings + 0x7C, strings + 0x88); fn_800C96B4();
         lbl_8064C4F8 = fn_80157760(7, 0x62); fn_8011E234(lbl_8064C508, fn_80028098, fn_800280FC); fn_800E463C(); fn_801569A0(0); fn_800BC6D8(); fn_801F7C78();
         lbl_8064D180 = 0; lbl_8064C5DC = 0; lbl_8064C5E0 = 0; memset(lbl_80301D3C, 0, 0x2D0);

@@ -6,7 +6,7 @@ typedef unsigned int u32;
 extern BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void *callback);
 extern BOOL EXISync(s32 chan);
 
-BOOL fn_80206AC8(s32 chan, void *buf, s32 len, u32 type)
+BOOL EXIImmEx(s32 chan, void *buf, s32 len, u32 type)
 {
     s32 xLen;
 

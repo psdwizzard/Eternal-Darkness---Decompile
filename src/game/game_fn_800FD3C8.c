@@ -1,4 +1,4 @@
-char* fn_800FD3C8(char* destination, const char* source, unsigned long count)
+char* strncpy(char* destination, const char* source, unsigned long count)
 {
     const char* s = source - 1;
     char* d = destination - 1;

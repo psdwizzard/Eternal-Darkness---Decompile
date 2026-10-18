@@ -14,7 +14,7 @@ extern volatile u32 lbl_80651290;
 extern u8 lbl_8064C31A;
 extern u8 lbl_80633418[];
 
-extern void fn_8022C40C(void**, void*);
+extern void TEXGetPalette(void**, void*);
 extern void* memset(void*, int, unsigned long);
 extern void fn_801E5AE0(void);
 
@@ -26,10 +26,10 @@ void fn_801E5B10(void* first, void* second, u32 value, void* callback)
     lbl_8064D588 = 0;
 
     if (first != 0 && lbl_8064D568 == 0) {
-        fn_8022C40C(&lbl_8064D568, first);
+        TEXGetPalette(&lbl_8064D568, first);
     }
     if (second != 0 && lbl_8064D570 == 0) {
-        fn_8022C40C(&lbl_8064D570, second);
+        TEXGetPalette(&lbl_8064D570, second);
     }
 
     lbl_8064D59C = value;

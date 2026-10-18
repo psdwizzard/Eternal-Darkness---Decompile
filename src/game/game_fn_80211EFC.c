@@ -37,7 +37,7 @@ static inline f32 sqrtf(f32 x)
 }
 
 /* Converts a rotation matrix to a quaternion (C_QUATMtx). */
-void fn_80211EFC(Quaternion* r, Mtx m)
+void C_QUATMtx(Quaternion* r, Mtx m)
 {
     f32 tr, s, inv;
     s32 i, j, k;

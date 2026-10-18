@@ -12,15 +12,15 @@ typedef struct Entry {
 } Entry;
 
 extern void fn_80163DA4(Parser*);
-extern void fn_8015F4D0(Parser*, Entry*, int);
-extern int fn_80164120(Parser*);
-extern void fn_8015ECCC(Parser*, int);
-extern void fn_801655CC(Parser*);
-extern void fn_80163E94(Parser*, int);
-extern void fn_8015F9B0(void*, int, int);
-extern void fn_80164D04(Parser*, int);
+extern void luaK_tostack(Parser*, Entry*, int);
+extern int checkname(Parser*);
+extern void luaK_kstr(Parser*, int);
+extern void exp1(Parser*);
+extern void check(Parser*, int);
+extern void luaK_code1(void*, int, int);
+extern void funcargs(Parser*, int);
 
-void fn_80164DF4(Parser* parser, Entry* entry)
+void var_or_func_tail(Parser* parser, Entry* entry)
 {
     int value;
 
@@ -28,23 +28,23 @@ void fn_80164DF4(Parser* parser, Entry* entry)
         switch (parser->token) {
         case 0x2E:
             fn_80163DA4(parser);
-            fn_8015F4D0(parser, entry, 1);
-            fn_8015ECCC(parser, fn_80164120(parser));
+            luaK_tostack(parser, entry, 1);
+            luaK_kstr(parser, checkname(parser));
             entry->type = 2;
             break;
         case 0x5B:
             fn_80163DA4(parser);
-            fn_8015F4D0(parser, entry, 1);
+            luaK_tostack(parser, entry, 1);
             entry->type = 2;
-            fn_801655CC(parser);
-            fn_80163E94(parser, 0x5D);
+            exp1(parser);
+            check(parser, 0x5D);
             break;
         case 0x3A:
             fn_80163DA4(parser);
-            value = fn_80164120(parser);
-            fn_8015F4D0(parser, entry, 1);
-            fn_8015F9B0(parser->state, 0x10, value);
-            fn_80164D04(parser, 1);
+            value = checkname(parser);
+            luaK_tostack(parser, entry, 1);
+            luaK_code1(parser->state, 0x10, value);
+            funcargs(parser, 1);
             entry->type = 3;
             entry->value_08 = -1;
             entry->value_04 = -1;
@@ -52,8 +52,8 @@ void fn_80164DF4(Parser* parser, Entry* entry)
         case 0x28:
         case 0x7B:
         case 0x11B:
-            fn_8015F4D0(parser, entry, 1);
-            fn_80164D04(parser, 0);
+            luaK_tostack(parser, entry, 1);
+            funcargs(parser, 0);
             entry->type = 3;
             entry->value_08 = -1;
             entry->value_04 = -1;

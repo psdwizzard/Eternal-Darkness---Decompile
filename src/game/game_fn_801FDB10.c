@@ -21,7 +21,7 @@ extern s32 lbl_8064D5A8;
 
 extern Entry* fn_801FD6F4(u32);
 extern u32 fn_8015C910(void);
-extern s32 fn_800FBFB0(void);
+extern s32 rand(void);
 extern void fn_801FDF74(u32, s32);
 extern int fn_801FD9C0(u32);
 
@@ -46,9 +46,9 @@ int fn_801FDB10(u32 id)
             }
         } else {
             if (lbl_8064D5A8 % entry->period == 0) {
-                s32 value = (fn_800FBFB0() << 2) + 1;
+                s32 value = (rand() << 2) + 1;
                 fn_801FDF74(id, value % entry->range);
-                entry->period = (fn_800FBFB0() & 7) + 1;
+                entry->period = (rand() & 7) + 1;
             }
             fn_801FD9C0(id);
         }

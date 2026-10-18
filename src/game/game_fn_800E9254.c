@@ -72,8 +72,8 @@ extern void fn_80201D1C(void *, u8);
 extern int fn_801E8328(u32, u32);
 extern u64 fn_8020123C(int, int, int, int);
 extern u32 fn_801A74C0(void *);
-extern void fn_80211A48(Vec3 *, Vec3 *, Vec3 *);
-extern void fn_80211A6C(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECAdd(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECSubtract(Vec3 *, Vec3 *, Vec3 *);
 extern Vec3 fn_801A75C0(void *, int, Vec3 *);
 extern void fn_8017A244(const Vec3 *, Vec4 *, float);
 extern void fn_8017A34C(const Vec4 *, const Vec4 *, Vec4 *);
@@ -88,8 +88,8 @@ extern void fn_800337C8(Vec3 *, const Vec3 *, int, ImpactEffect *, int, int);
 extern void fn_800E9C5C(void *, ThrowState *, Vec3 *);
 extern int fn_8012FDA0(void *, int);
 extern void fn_80127FD8(void *, int, Matrix34 *);
-extern void fn_802110A8(Matrix34 *, Matrix34 *);
-extern void fn_80210FDC(Matrix34 *, Matrix34 *, Matrix34 *);
+extern void PSMTXInverse(Matrix34 *, Matrix34 *);
+extern void PSMTXConcat(Matrix34 *, Matrix34 *, Matrix34 *);
 extern void *fn_80155DB4(u32);
 extern int fn_80156F80(void *, void *);
 extern void fn_80039FF0(void *, Vec3 *);
@@ -98,7 +98,7 @@ extern void fn_800890F4(Vec3 *);
 extern void fn_8020104C(int, int, int, int, float);
 extern void fn_800E9E44(void *, void *, int);
 extern void fn_80127DF8(void *, int, Matrix34 *);
-extern void fn_80211EFC(Vec4 *, Matrix34 *);
+extern void C_QUATMtx(Vec4 *, Matrix34 *);
 extern void fn_8012CCF0(void *, int, Vec3 *, Vec3 *, Vec3 *, int);
 extern Vec4 *fn_8011FE34(void *);
 
@@ -202,9 +202,9 @@ int fn_800E9254(void *object, int stateId, void *event)
             reached = state->travelled + state->step >= state->distance;
             expired = state->travelled + state->step >= lbl_8064F830;
             if (!(state->flags & 1) && !(state->flags & 0x20)) {
-                fn_80211A48(position, &state->spin, &end);
+                PSVECAdd(position, &state->spin, &end);
                 fn_801A75C0(owner, 0, &end);
-                fn_80211A6C(position, &state->spin, &beginning);
+                PSVECSubtract(position, &state->spin, &beginning);
                 fn_801A75C0(owner, 1, &beginning);
                 state->flags |= 1;
             }
@@ -214,7 +214,7 @@ int fn_800E9254(void *object, int stateId, void *event)
                 fn_8017A34C(&spinRotation, &state->rotation, &rotation);
                 fn_8012CDF0(model, 15, rotation, 0);
             }
-            fn_80211A48(position, &state->velocity, position);
+            PSVECAdd(position, &state->velocity, position);
             state->travelled += state->step;
             if (state->flags & 2) {
                 state->soundTimer++;
@@ -224,9 +224,9 @@ int fn_800E9254(void *object, int stateId, void *event)
                     state->soundTimer = 0;
                 }
             }
-            fn_80211A48(position, &state->spin, &end);
+            PSVECAdd(position, &state->spin, &end);
             fn_801A75C0(owner, 2, &end);
-            fn_80211A6C(position, &state->spin, &beginning);
+            PSVECSubtract(position, &state->spin, &beginning);
             fn_801A75C0(owner, 3, &beginning);
             if (!(state->flags & 0x20)) {
                 void *source = fn_80201814(fn_801A7490(owner));
@@ -256,8 +256,8 @@ int fn_800E9254(void *object, int stateId, void *event)
                     int joint = fn_8012FDA0(hitModel, hitJoint);
                     fn_80127FD8(hitModel, joint, &hitMatrix);
                 }
-                fn_802110A8(&hitMatrix, &inverse);
-                fn_80210FDC(&inverse, &ownMatrix, &state->attachment);
+                PSMTXInverse(&hitMatrix, &inverse);
+                PSMTXConcat(&inverse, &ownMatrix, &state->attachment);
                 fn_80156F80(fn_80155DB4((u32)object),
                             fn_80155DB4((u32)fn_80201814(state->hitHandle)));
                 fn_800E9DE0(state);
@@ -326,11 +326,11 @@ int fn_800E9254(void *object, int stateId, void *event)
                 int joint = fn_8012FDA0(state->hitModel, state->hitJoint);
                 fn_80127DF8(state->hitModel, joint, &attachedMatrix);
             }
-            fn_80210FDC(&attachedMatrix, &state->attachment, &worldMatrix);
+            PSMTXConcat(&attachedMatrix, &state->attachment, &worldMatrix);
             translation.x = worldMatrix.m[0][3];
             translation.y = worldMatrix.m[1][3];
             translation.z = worldMatrix.m[2][3];
-            fn_80211EFC(&attachedRotation, &worldMatrix);
+            C_QUATMtx(&attachedRotation, &worldMatrix);
             fn_8012CDF0(model, 15, attachedRotation, 0);
             setJointVectors(model, 15, translation, zero, zero, 1);
             {

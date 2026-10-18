@@ -1,4 +1,4 @@
-asm void fn_800F35AC(void *address, unsigned int length)
+asm void TRK_flush_cache(void *address, unsigned int length)
 {
     nofralloc
     lis r5, 0xFFFF

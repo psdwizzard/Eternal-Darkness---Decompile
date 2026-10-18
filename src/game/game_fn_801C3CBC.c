@@ -21,24 +21,24 @@ typedef struct ResourceLoad {
     ResourceNode* base;
 } ResourceLoad;
 
-extern u8 lbl_8064D3A0;
-extern s16 lbl_8064D470;
-extern ResourceLoad lbl_806286B0[];
-extern u32 fn_801CD224(u32);
-extern u32 fn_801BC0D4(void*, u32);
-extern void fn_801C3B30(u16*, void*, u8, void*);
-extern u32 fn_801BC670(u16, void*, u16);
-extern void fn_801CD3E0(void);
+extern u8 sndActive;
+extern s16 sp;
+extern ResourceLoad gs[];
+extern u32 hwTransAddr(u32);
+extern u32 dataInsertSDir(void*, u32);
+extern void ScanIDList(u16*, void*, u8, void*);
+extern u32 dataInsertFX(u16, void*, u16);
+extern void hwSyncSampleMem(void);
 
-int fn_801C3CBC(ResourceNode* prj_data, u16 gid, u32 kind, void* sdir, void* pool)
+int sndPushGroup(ResourceNode* prj_data, u16 gid, u32 kind, void* sdir, void* pool)
 {
     ResourceNode* g;
     u16* sampleRef;
-    ResourceLoad* gsTab = lbl_806286B0;
+    ResourceLoad* gsTab = gs;
     s16 curSp;
     void* poolPtr;
 
-    if (lbl_8064D3A0 && (curSp = lbl_8064D470) < 128) {
+    if (sndActive && (curSp = sp) < 128) {
         g = prj_data;
 
         while (g->next != 0xFFFFFFFF) {
@@ -48,19 +48,19 @@ int fn_801C3CBC(ResourceNode* prj_data, u16 gid, u32 kind, void* sdir, void* poo
                 poolPtr = pool;
                 gsTab[curSp].archive = sdir;
                 sampleRef = (u16*)((u8*)prj_data + g->list1);
-                if (fn_801BC0D4(sdir, fn_801CD224(kind))) {
-                    fn_801C3B30(sampleRef, sdir, 1, 0);
+                if (dataInsertSDir(sdir, hwTransAddr(kind))) {
+                    ScanIDList(sampleRef, sdir, 1, 0);
                 }
-                fn_801C3B30((u16*)((u8*)prj_data + g->list0), poolPtr, 0, 0);
-                fn_801C3B30((u16*)((u8*)prj_data + g->list4), poolPtr, 4, 0);
-                fn_801C3B30((u16*)((u8*)prj_data + g->list2), pool, 2, 0);
-                fn_801C3B30((u16*)((u8*)prj_data + g->list3), pool, 3, 0);
+                ScanIDList((u16*)((u8*)prj_data + g->list0), poolPtr, 0, 0);
+                ScanIDList((u16*)((u8*)prj_data + g->list4), poolPtr, 4, 0);
+                ScanIDList((u16*)((u8*)prj_data + g->list2), pool, 2, 0);
+                ScanIDList((u16*)((u8*)prj_data + g->list3), pool, 3, 0);
                 if (g->flags == 1) {
                     u8* fd = (u8*)prj_data + g->extra;
-                    fn_801BC670(gid, fd + 4, *(u16*)fd);
+                    dataInsertFX(gid, fd + 4, *(u16*)fd);
                 }
-                fn_801CD3E0();
-                ++lbl_8064D470;
+                hwSyncSampleMem();
+                ++sp;
                 return 1;
             }
 

@@ -14,9 +14,9 @@ typedef struct CommandList {
     u8 count;
 } CommandList;
 
-extern u32 fn_801CC13C(u32);
+extern u32 inpTranslateExCtrl(u32);
 
-void fn_801CB2B8(CommandList* list, u32 value, u32 data, u8 flags, u32 direct)
+void inpAddCtrl(CommandList* list, u32 value, u32 data, u8 flags, u32 direct)
 {
     u32 index;
 
@@ -27,7 +27,7 @@ void fn_801CB2B8(CommandList* list, u32 value, u32 data, u8 flags, u32 direct)
     if (index < 4) {
         list->count = index + 1;
         if (direct == 0) {
-            value = fn_801CC13C(value);
+            value = inpTranslateExCtrl(value);
         } else {
             flags |= 0x10;
         }

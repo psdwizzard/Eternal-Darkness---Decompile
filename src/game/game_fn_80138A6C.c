@@ -9,8 +9,8 @@ extern volatile u32 lbl_8064D010;
 extern char lbl_805AE000[];
 extern char lbl_805ADFE0[];
 
-extern void fn_8020D250(void*, int, int);
-extern int fn_8020D318(void*, int, int);
+extern void OSSendMessage(void*, int, int);
+extern int OSReceiveMessage(void*, int, int);
 
 void* fn_80138A6C(u32 size, int mode)
 {
@@ -40,8 +40,8 @@ void* fn_80138A6C(u32 size, int mode)
                 } else {
                     lbl_8064D010 -= aligned;
                     retry = 0;
-                    fn_8020D250(lbl_805AE000, 0, 1);
-                    fn_8020D318(lbl_805ADFE0, 0, 1);
+                    OSSendMessage(lbl_805AE000, 0, 1);
+                    OSReceiveMessage(lbl_805ADFE0, 0, 1);
                 }
             } else {
                 retry = 1;

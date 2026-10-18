@@ -19,10 +19,10 @@ extern void *memset(void *, int, unsigned long);
 extern int fn_801391AC(void);
 extern int fn_80042808(void);
 extern void fn_8015E9EC(unsigned int, void *, unsigned int);
-extern void fn_802136A4(void *);
-extern int fn_80213394(const char *, FileHandle *);
-extern int fn_802137F4(FileHandle *, void *, unsigned int, unsigned int, int);
-extern void fn_8021345C(FileHandle *);
+extern void DVDChangeDir(void *);
+extern int DVDOpen(const char *, FileHandle *);
+extern int DVDReadPrio(FileHandle *, void *, unsigned int, unsigned int, int);
+extern void DVDClose(FileHandle *);
 
 void fn_800721B0(void)
 {
@@ -40,17 +40,17 @@ void fn_800721B0(void)
         fn_8015E9EC(0xFB63D0, lbl_80244680, sizeof(lbl_80244680));
         fn_8015E9EC(0xFB63F0, &lbl_80313120, 0x9920);
     } else {
-        fn_802136A4(&lbl_8064B540);
-        result = fn_80213394(lbl_802446A0, &file);
-        fn_802136A4(&lbl_8064B544);
+        DVDChangeDir(&lbl_8064B540);
+        result = DVDOpen(lbl_802446A0, &file);
+        DVDChangeDir(&lbl_8064B544);
         if (result != 0) {
             length = file.length;
-            while (fn_802137F4(&file, lbl_80244680, 0x20, 0, 2) < 0) {
+            while (DVDReadPrio(&file, lbl_80244680, 0x20, 0, 2) < 0) {
             }
             length -= 0x20;
-            while (fn_802137F4(&file, &lbl_80313120, length, 0x20, 2) < 0) {
+            while (DVDReadPrio(&file, &lbl_80313120, length, 0x20, 2) < 0) {
             }
-            fn_8021345C(&file);
+            DVDClose(&file);
         }
     }
 }

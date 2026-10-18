@@ -22,21 +22,21 @@ typedef struct Parser {
     Input* input;
 } Parser;
 
-extern int fn_800F8D2C(int);
-extern void fn_80162114(Parser*, char*, int);
-extern void fn_80163A9C(Buffer*, unsigned int);
-extern int fn_80163B14(char*, void*);
+extern int isdigit(int);
+extern void luaX_error(Parser*, char*, int);
+extern void luaO_openspace(Buffer*, unsigned int);
+extern int luaO_str2d(char*, void*);
 extern char lbl_8024F66C[];
 extern char lbl_8024F6A4[];
 
-void fn_801624A8(Parser* parser, int leading_point, void* result)
+void read_number(Parser* parser, int leading_point, void* result)
 {
     unsigned int index = 0;
     Buffer* buffer = parser->buffer;
     int token;
 
     if (buffer->capacity < 10) {
-        fn_80163A9C(buffer, 0x8A);
+        luaO_openspace(buffer, 0x8A);
     }
 
     if (leading_point != 0) {
@@ -44,9 +44,9 @@ void fn_801624A8(Parser* parser, int leading_point, void* result)
         index = 1;
     }
 
-    while (fn_800F8D2C(parser->current_token)) {
+    while (isdigit(parser->current_token)) {
         if (index + 10 > buffer->capacity) {
-            fn_80163A9C(buffer, index + 0x8A);
+            luaO_openspace(buffer, index + 0x8A);
         }
         buffer->data[index++] = parser->current_token;
         if (parser->input->remaining-- != 0) {
@@ -75,13 +75,13 @@ void fn_801624A8(Parser* parser, int leading_point, void* result)
             }
             parser->current_token = token;
             buffer->data[index++] = 0;
-            fn_80162114(parser, lbl_8024F66C, 0x11A);
+            luaX_error(parser, lbl_8024F66C, 0x11A);
         }
     }
 
-    while (fn_800F8D2C(parser->current_token)) {
+    while (isdigit(parser->current_token)) {
         if (index + 10 > buffer->capacity) {
-            fn_80163A9C(buffer, index + 0x8A);
+            luaO_openspace(buffer, index + 0x8A);
         }
         buffer->data[index++] = parser->current_token;
         if (parser->input->remaining-- != 0) {
@@ -111,9 +111,9 @@ void fn_801624A8(Parser* parser, int leading_point, void* result)
             parser->current_token = token;
         }
 
-        while (fn_800F8D2C(parser->current_token)) {
+        while (isdigit(parser->current_token)) {
             if (index + 10 > buffer->capacity) {
-                fn_80163A9C(buffer, index + 0x8A);
+                luaO_openspace(buffer, index + 0x8A);
             }
             buffer->data[index++] = parser->current_token;
             if (parser->input->remaining-- != 0) {
@@ -126,7 +126,7 @@ void fn_801624A8(Parser* parser, int leading_point, void* result)
     }
 
     buffer->data[index] = 0;
-    if (fn_80163B14(buffer->data, result) == 0) {
-        fn_80162114(parser, lbl_8024F6A4, 0x11A);
+    if (luaO_str2d(buffer->data, result) == 0) {
+        luaX_error(parser, lbl_8024F6A4, 0x11A);
     }
 }

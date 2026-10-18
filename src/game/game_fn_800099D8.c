@@ -6,11 +6,11 @@ typedef int s32;
 
 extern const char lbl_8023BEF8[];
 extern s32 fn_800DE3F8(void);
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
 extern int fn_80201B44();
 extern unsigned long long fn_8020123C();
-extern void fn_8016A830(void*, double);
+extern void lua_pushnumber(void*, double);
 
 s32 fn_800099D8(void* script)
 {
@@ -20,8 +20,8 @@ s32 fn_800099D8(void* script)
 
     handle = fn_800DE3F8();
     result = 0;
-    if (fn_8016A598(script) != 0) {
-        fn_80163BB4(script, lbl_8023BEF8, 0, fn_8016A598(script));
+    if (lua_gettop(script) != 0) {
+        luaO_verror(script, lbl_8023BEF8, 0, lua_gettop(script));
         return 0;
     }
 
@@ -33,6 +33,6 @@ s32 fn_800099D8(void* script)
         }
     }
 
-    fn_8016A830(script, (double)result);
+    lua_pushnumber(script, (double)result);
     return 1;
 }

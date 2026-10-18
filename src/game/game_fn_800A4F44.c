@@ -1,9 +1,9 @@
-extern float fn_80211AF0(void);
+extern float PSVECSquareMag(void);
 
 int fn_800A4F44(float value)
 {
     float square = value * value;
-    float sample = fn_80211AF0();
+    float sample = PSVECSquareMag();
     int result;
 
     if (sample < square) {

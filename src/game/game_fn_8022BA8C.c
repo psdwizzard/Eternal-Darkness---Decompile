@@ -20,7 +20,7 @@ typedef union {
 
 volatile PPCWGPipe GXWGFifo : 0xCC008000;
 
-void fn_8022BA8C(int attr)
+void __GXSetMatrixIndex(int attr)
 {
     u32 matrixIndex;
 

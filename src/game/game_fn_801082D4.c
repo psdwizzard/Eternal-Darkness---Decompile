@@ -14,11 +14,11 @@ extern void* lbl_8064CC78;
 extern int lbl_8064CC80;
 
 extern void fn_801087D0(void);
-extern void fn_8020D1F0(void*, void*, int);
-extern int fn_8020D318(void*, void**, int);
-extern void fn_8020D7A8(void*);
-extern void fn_8020F84C(void*, void*, void*, void*, int, int, int);
-extern void fn_8020FC0C(void*);
+extern void OSInitMessageQueue(void*, void*, int);
+extern int OSReceiveMessage(void*, void**, int);
+extern void OSInitMutex(void*);
+extern void OSCreateThread(void*, void*, void*, void*, int, int, int);
+extern void OSResumeThread(void*);
 
 void fn_801082D4(register void* arg0)
 {
@@ -27,20 +27,20 @@ void fn_801082D4(register void* arg0)
     void* message;
 
     if (lbl_8064CC70 == 0) {
-        fn_8020D1F0((void*)(base + 0x13C8), (void*)(base + 0x1388), 0x10);
-        fn_8020D1F0((void*)(base + 0x1368), (void*)(base + 0x1328), 0x10);
+        OSInitMessageQueue((void*)(base + 0x13C8), (void*)(base + 0x1388), 0x10);
+        OSInitMessageQueue((void*)(base + 0x1368), (void*)(base + 0x1328), 0x10);
         /* ASM: addi/bl retain the relocated zero-offset address calculation;
          * C canonicalizes it to an mr before the initialization call. */
         asm {
             addi r3, base, 0
-            bl fn_8020D7A8
+            bl OSInitMutex
         }
         lbl_8064CC70 = 1;
     }
 
-    while (fn_8020D318((void*)(base + 0x13C8), &message, 0) != 0) {
+    while (OSReceiveMessage((void*)(base + 0x13C8), &message, 0) != 0) {
     }
-    while (fn_8020D318((void*)(base + 0x1368), &message, 0) != 0) {
+    while (OSReceiveMessage((void*)(base + 0x1368), &message, 0) != 0) {
     }
 
     /* ASM: li/lis/addi/stw/mr preserve the retail interleaving of global
@@ -62,7 +62,7 @@ void fn_801082D4(register void* arg0)
         li r8, 8
         li r9, 1
         addi r6, r6, 0x1000
-        bl fn_8020F84C
+        bl OSCreateThread
     }
-    fn_8020FC0C((void*)(base + 0x1018));
+    OSResumeThread((void*)(base + 0x1018));
 }

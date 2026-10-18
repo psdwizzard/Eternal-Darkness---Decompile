@@ -5,10 +5,10 @@ extern void fn_801ED468(int);
 extern void fn_801A852C(void*, int, int, u32);
 extern void fn_801ECF50(int);
 extern void fn_801ECEC8(int, int, int);
-extern void fn_80226AB4(int, int, int);
+extern void GXBegin(int, int, int);
 extern void fn_80188648(float, float, float);
 extern void fn_8018855C(void);
-extern void fn_80226D78(int);
+extern void GXSetCoPlanar(int);
 
 void fn_80188584(float* input)
 {
@@ -24,10 +24,10 @@ void fn_80188584(float* input)
     fn_801A852C(&copy, -1, -1, 0x80000000);
     fn_801ECF50(4);
     fn_801ECEC8(1, 3, 0);
-    fn_80226AB4(0x90, 3, 3);
+    GXBegin(0x90, 3, 3);
     fn_80188648(input[0], input[1], input[2]);
     fn_80188648(input[3], input[4], input[5]);
     fn_80188648(input[6], input[7], input[8]);
     fn_8018855C();
-    fn_80226D78(1);
+    GXSetCoPlanar(1);
 }

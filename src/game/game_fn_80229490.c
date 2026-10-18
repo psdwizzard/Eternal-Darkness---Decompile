@@ -19,7 +19,7 @@ extern GXData *gx;
 #define SET_FIELD(reg, width, shift, value) \
     ((reg) = ((reg) & ~(((1UL << (width)) - 1) << (shift))) | ((u32)(value) << (shift)))
 
-void fn_80229490(int indStage, int scaleS, int scaleT)
+void GXSetIndTexCoordScale(int indStage, int scaleS, int scaleT)
 {
     switch (indStage) {
     case 0:

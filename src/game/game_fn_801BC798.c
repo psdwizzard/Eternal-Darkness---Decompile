@@ -6,29 +6,29 @@ typedef struct ResourceEntry8 {
     void* value;
 } ResourceEntry8;
 
-extern ResourceEntry8 lbl_80626948[];
-extern u16 lbl_8064D3FA;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern ResourceEntry8 dataFXGroups[];
+extern u16 dataFXGroupNum;
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
-int fn_801BC798(u16 id)
+int dataRemoveFX(u16 id)
 {
     int index;
 
     index = 0;
-    while (index < lbl_8064D3FA && lbl_80626948[index].id != id) {
+    while (index < dataFXGroupNum && dataFXGroups[index].id != id) {
         index++;
     }
 
-    if (index != lbl_8064D3FA) {
+    if (index != dataFXGroupNum) {
         int move_index;
 
-        fn_801CE2B8();
-        for (move_index = index + 1; move_index < lbl_8064D3FA; move_index++) {
-            lbl_80626948[move_index - 1] = lbl_80626948[move_index];
+        hwDisableIrq();
+        for (move_index = index + 1; move_index < dataFXGroupNum; move_index++) {
+            dataFXGroups[move_index - 1] = dataFXGroups[move_index];
         }
-        lbl_8064D3FA--;
-        fn_801CE280();
+        dataFXGroupNum--;
+        hwEnableIrq();
         return 1;
     }
     return 0;

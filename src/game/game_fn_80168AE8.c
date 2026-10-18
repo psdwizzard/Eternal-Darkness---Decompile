@@ -19,10 +19,10 @@ typedef struct Input {
     char* current;
 } Input;
 
-extern int fn_8015FF18(void*, int, int, int*);
-extern void fn_80160848(void*, void*, int, int);
+extern int luaG_getline(void*, int, int, int*);
+extern void luaD_lineHook(void*, void*, int, int);
 
-void fn_80168AE8(void* output, char* input, int value, int extra)
+void traceexec(void* output, char* input, int value, int extra)
 {
     Owner* owner = *(Owner**)(input - 8);
     Inner* inner = *(Inner**)owner->first;
@@ -37,12 +37,12 @@ void fn_80168AE8(void* output, char* input, int value, int extra)
         owner->cursor = 0;
         owner->index = index + 1;
     }
-    result = fn_8015FF18(context, index, owner->state, &owner->cursor);
+    result = luaG_getline(context, index, owner->state, &owner->cursor);
     if (result == owner->state && index > owner->index)
         goto done;
     owner->state = result;
     *(int*)output = value;
-    fn_80160848(output, input - 32, result, extra);
+    luaD_lineHook(output, input - 32, result, extra);
 done:
     owner->index = index;
 }

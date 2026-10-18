@@ -17,16 +17,16 @@ typedef struct Floor0Look {
 
 typedef struct VorbisBlock VorbisBlock;
 
-extern void fn_802328A4(float *curve, int *map, int count, int bins,
+extern void vorbis_lsp_to_curve(float *curve, int *map, int count, int bins,
                        float *lsp, int order, float amplitude, float offset);
 extern void *memset(void *dest, int value, unsigned long size);
 
-s32 fn_80230B24(VorbisBlock *vb, volatile Floor0Look *look, void *memo, float *out) {
+s32 floor0_inverse2(VorbisBlock *vb, volatile Floor0Look *look, void *memo, float *out) {
     Floor0Info *info = look->vi;
 
     if (memo != 0) {
         float *lsp = memo;
-        fn_802328A4(out, look->linearmap, look->n, look->ln,
+        vorbis_lsp_to_curve(out, look->linearmap, look->n, look->ln,
                     lsp, look->m, ((float *)memo)[look->m], (float)info->ampdB);
         return 1;
     }

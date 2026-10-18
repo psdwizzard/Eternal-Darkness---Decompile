@@ -28,7 +28,7 @@ typedef struct PlanePair {
 typedef struct Quad { Point6 point[4]; } Quad;
 
 extern int fn_8013D998(const Ray *, const Plane *, const void *, Vec3 *);
-extern float fn_80211D4C(const Vec3 *, const Vec3 *);
+extern float PSVECSquareDistance(const Vec3 *, const Vec3 *);
 extern PlanePair lbl_805B1400[][7];
 extern Quad lbl_805B38C0[][7];
 extern s32 lbl_8064D18C;
@@ -53,7 +53,7 @@ Plane *fn_80143000(const Ray *ray, Portal *portal, Vec3 *out,
             points = lbl_805B38C0[portal->index][i].point;
             second = &lbl_805B1400[portal->index][i].second;
             if (fn_8013D998(ray, first, points, &hit)) {
-                distance = fn_80211D4C(&hit, &ray->origin);
+                distance = PSVECSquareDistance(&hit, &ray->origin);
                 if (distance < bestDistance) {
                     *edgeA = points;
                     bestDistance = distance;
@@ -62,7 +62,7 @@ Plane *fn_80143000(const Ray *ray, Portal *portal, Vec3 *out,
                     *out = hit;
                 }
             } else if (fn_8013D998(ray, second, points, &hit)) {
-                distance = fn_80211D4C(&hit, &ray->origin);
+                distance = PSVECSquareDistance(&hit, &ray->origin);
                 if (distance < bestDistance) {
                     *edgeA = points;
                     bestDistance = distance;

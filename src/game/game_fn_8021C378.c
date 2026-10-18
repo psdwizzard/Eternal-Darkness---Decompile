@@ -10,12 +10,12 @@ typedef struct CardControl {
     unsigned char reserved94[0x7C];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
-extern void fn_802100F0(OSThreadQueue *queue);
+extern CardControl __CARDBlock[];
+extern void OSWakeupThread(OSThreadQueue *queue);
 
 /* Wake the threads waiting on this memory card channel. */
-void fn_8021C378(int channel)
+void __CARDSyncCallback(int channel)
 {
-    CardControl *card = &lbl_80641C60[channel];
-    fn_802100F0(&card->threadQueue);
+    CardControl *card = &__CARDBlock[channel];
+    OSWakeupThread(&card->threadQueue);
 }

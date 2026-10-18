@@ -9,7 +9,7 @@ typedef struct GlobalState {
 extern GlobalState lbl_8064A580;
 extern char lbl_80250F24[];
 
-extern int fn_802229CC(int, u64*);
+extern int CARDGetSerialNo(int, u64*);
 extern void fn_8017BA60(char*, int);
 
 u64 fn_8017B35C(int index)
@@ -18,7 +18,7 @@ u64 fn_8017B35C(int index)
     int value;
 
     if (lbl_8064A580.states[index] != 0) {
-        value = fn_802229CC(index, &result);
+        value = CARDGetSerialNo(index, &result);
         if (value != 0) {
             fn_8017BA60(lbl_80250F24, value);
         }

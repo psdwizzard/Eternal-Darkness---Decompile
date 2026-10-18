@@ -1,6 +1,6 @@
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
 extern void fn_801296F8(void*, int);
@@ -21,22 +21,22 @@ int fn_80171560(void* state)
     void* object;
     void* component;
 
-    if (fn_8016A598(state) != 2) {
-        fn_80163BB4(state, &errors->pad_001[-1], 2, fn_8016A598(state));
+    if (lua_gettop(state) != 2) {
+        luaO_verror(state, &errors->pad_001[-1], 2, lua_gettop(state));
         return 0;
     }
 
-    object_id = (int)fn_8016A694(state, 1);
-    value = (int)fn_8016A694(state, 2);
+    object_id = (int)lua_tonumber(state, 1);
+    value = (int)lua_tonumber(state, 2);
     object = fn_80201814(object_id);
     if (object == 0) {
-        fn_80163BB4(state, errors->object_not_found, object_id);
+        luaO_verror(state, errors->object_not_found, object_id);
         return 0;
     }
 
     component = fn_80201BC8(object);
     if (component == 0) {
-        fn_80163BB4(state, errors->component_not_found, object_id, object);
+        luaO_verror(state, errors->component_not_found, object_id, object);
         return 0;
     }
 

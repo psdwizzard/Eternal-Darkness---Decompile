@@ -22,12 +22,12 @@ typedef struct DSPstudioinfo {
 } DSPstudioinfo;
 
 extern DSPstudioinfo lbl_80628CB0[];
-void fn_801C7624(DSPvoice* voice);
+void salDeactivateVoice(DSPvoice* voice);
 
-void fn_801C7580(DSPvoice* voice, u8 studio)
+void salActivateVoice(DSPvoice* voice, u8 studio)
 {
     if (voice->state != 0) {
-        fn_801C7624(voice);
+        salDeactivateVoice(voice);
         voice->changed |= 0x20;
     }
     voice->postBreak = 0;

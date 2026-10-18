@@ -17,23 +17,23 @@ typedef struct AudioConfig {
     u8 voice_count_210;
 } AudioConfig;
 
-extern AudioConfig lbl_80619C20;
-extern Voice* lbl_8064D3D0;
-extern Voice* lbl_8064D43C;
-extern Voice* lbl_8064D440;
-extern unsigned long long lbl_8064D448;
+extern AudioConfig synthInfo;
+extern Voice* synthVoice;
+extern Voice* macActiveMacroRoot;
+extern Voice* macTimeQueueRoot;
+extern unsigned long long macRealTime;
 
-void fn_801C0ED8(void)
+void macInit(void)
 {
     u32 i;
 
-    lbl_8064D43C = 0;
-    lbl_8064D440 = 0;
-    lbl_8064D448 = 0;
+    macActiveMacroRoot = 0;
+    macTimeQueueRoot = 0;
+    macRealTime = 0;
 
-    for (i = 0; i < lbl_80619C20.voice_count_210; i++) {
-        lbl_8064D3D0[i].value_034 = 0;
-        lbl_8064D3D0[i].active_04C = 2;
-        lbl_8064D3D0[i].value_0AA = 0;
+    for (i = 0; i < synthInfo.voice_count_210; i++) {
+        synthVoice[i].value_034 = 0;
+        synthVoice[i].active_04C = 2;
+        synthVoice[i].value_0AA = 0;
     }
 }

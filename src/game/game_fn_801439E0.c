@@ -59,7 +59,7 @@ extern int fn_80201ADC(void);
 extern Entry80201B3C *fn_80201B3C(void);
 extern void *fn_80201BC8(void *object);
 extern Node80201BD0 *fn_80201BD0(void *object);
-extern float fn_80211D4C(const Vec3 *, const Vec3 *);
+extern float PSVECSquareDistance(const Vec3 *, const Vec3 *);
 
 extern Portal lbl_805B1310[12];
 extern s8 lbl_8064D038;
@@ -136,7 +136,7 @@ Obstacle *fn_801439E0(const Shape *self, Result *out, void *other, u32 mode) {
             if (hit == 0) {
                 continue;
             }
-            dist = fn_80211D4C(&self->point, &seg.normal);
+            dist = PSVECSquareDistance(&self->point, &seg.normal);
             if (dist < bestDist) {
                 bestDist = dist;
                 best = portal;

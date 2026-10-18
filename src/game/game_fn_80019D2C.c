@@ -35,9 +35,9 @@ extern const double lbl_8064DCE8;
 extern const f32 lbl_8064DE5C;
 extern u32 lbl_8064DE88;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern unsigned int fn_800F5C54(double);
 extern int fn_8015C4A4(int, int);
 extern EffectRecordTable* fn_8015C390(s32);
@@ -57,15 +57,15 @@ s32 fn_80019D2C(void* script)
 
     direction = lbl_8064DE88;
 
-    if (fn_8016A598(script) != 4) {
-        fn_80163BB4(script, lbl_8023BEF8, 4, fn_8016A598(script));
+    if (lua_gettop(script) != 4) {
+        luaO_verror(script, lbl_8023BEF8, 4, lua_gettop(script));
         return 0;
     }
 
-    object_id = fn_800F5C54(fn_8016A694(script, 1));
-    second = (s32)fn_8016A694(script, 2);
-    third = (s32)fn_8016A694(script, 3);
-    fourth = (s32)fn_8016A694(script, 4);
+    object_id = fn_800F5C54(lua_tonumber(script, 1));
+    second = (s32)lua_tonumber(script, 2);
+    third = (s32)lua_tonumber(script, 3);
+    fourth = (s32)lua_tonumber(script, 4);
 
     record_id = fn_8015C4A4(object_id, 2);
     if (record_id != -1) {

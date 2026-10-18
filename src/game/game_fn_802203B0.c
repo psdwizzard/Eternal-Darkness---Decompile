@@ -30,31 +30,31 @@ typedef struct SramEx {
     u8 flashIDChecksum[2];
 } SramEx;
 
-extern CardControl lbl_80641C60[];
-extern s32 lbl_802FECE0[];
-extern s32 lbl_802FED00[];
-extern u16 lbl_8064C450;
-extern s32 fn_80207CC8(s32 channel, u32 device, u32 *id);
-extern s32 fn_80220130(u32 id);
-extern s32 fn_8021C878(s32 channel);
-extern s32 fn_8021C788(s32 channel, u8 *status);
-extern s32 fn_802070C4(s32 channel);
-extern s32 fn_8021D9B4(s32 channel, Result *result);
+extern CardControl __CARDBlock[];
+extern s32 SectorSizeTable[];
+extern s32 LatencyTable[];
+extern u16 __CARDVendorID;
+extern s32 EXIGetID(s32 channel, u32 device, u32 *id);
+extern s32 IsCard(u32 id);
+extern s32 __CARDClearStatus(s32 channel);
+extern s32 __CARDReadStatus(s32 channel, u8 *status);
+extern s32 EXIProbe(s32 channel);
+extern s32 __CARDUnlock(s32 channel, Result *result);
 extern SramEx *__OSLockSramEx(void);
 extern s32 __OSUnlockSramEx(s32 commit);
-extern s32 fn_8021C6C8(s32 channel, s32 enable);
-extern void fn_8021C484(s32 channel, void *context);
-extern EXICallback fn_80206ED4(s32 channel, EXICallback callback);
+extern s32 __CARDEnableInterrupt(s32 channel, s32 enable);
+extern void __CARDExiHandler(s32 channel, void *context);
+extern EXICallback EXISetExiCallback(s32 channel, EXICallback callback);
 extern s32 EXIUnlock(s32 channel);
 extern void DCInvalidateRange(void *data, u32 size);
-extern void fn_802207C0(s32 channel, s32 result);
-extern s32 fn_8021E97C(s32 channel, u32 address, s32 length, void *data, CardCallback callback);
-extern s32 fn_8021D374(CardControl *control, s32 result);
-extern void fn_80220AB0(s32 channel, s32 result);
+extern void __CARDMountCallback(s32 channel, s32 result);
+extern s32 __CARDRead(s32 channel, u32 address, s32 length, void *data, CardCallback callback);
+extern s32 __CARDPutControlBlock(CardControl *control, s32 result);
+extern void DoUnmount(s32 channel, s32 result);
 
-s32 fn_802203B0(s32 channel)
+s32 DoMount(s32 channel)
 {
-    CardControl *control = &lbl_80641C60[channel];
+    CardControl *control = &__CARDBlock[channel];
     u32 deviceID;
     u8 status;
     s32 result;
@@ -64,9 +64,9 @@ s32 fn_802203B0(s32 channel)
     u16 encoding;
 
     if (control->mountStep == 0) {
-        if (!fn_80207CC8(channel, 0, &deviceID))
+        if (!EXIGetID(channel, 0, &deviceID))
             result = -3;
-        else if (fn_80220130(deviceID))
+        else if (IsCard(deviceID))
             result = 0;
         else
             result = -2;
@@ -74,21 +74,21 @@ s32 fn_802203B0(s32 channel)
             goto error;
         control->deviceID = deviceID;
         control->size = deviceID & 0xFC;
-        control->sectorSize = lbl_802FECE0[(deviceID >> 11) & 7];
+        control->sectorSize = SectorSizeTable[(deviceID >> 11) & 7];
         control->blockCount = ((s32)(control->size << 20) / 8) / control->sectorSize;
-        control->latency = lbl_802FED00[(deviceID >> 8) & 7];
-        result = fn_8021C878(channel);
+        control->latency = LatencyTable[(deviceID >> 8) & 7];
+        result = __CARDClearStatus(channel);
         if (result < 0)
             goto error;
-        result = fn_8021C788(channel, &status);
+        result = __CARDReadStatus(channel, &status);
         if (result < 0)
             goto error;
-        if (!fn_802070C4(channel)) {
+        if (!EXIProbe(channel)) {
             result = -3;
             goto error;
         }
         if (!(status & 0x40)) {
-            result = fn_8021D9B4(channel, &control->id.result);
+            result = __CARDUnlock(channel, &control->id.result);
             if (result < 0)
                 goto error;
             sram = __OSLockSramEx();
@@ -117,27 +117,27 @@ s32 fn_802203B0(s32 channel)
             sram = __OSLockSramEx();
             encoding = *(u16 *)sram->flashID[channel];
             __OSUnlockSramEx(0);
-            if (lbl_8064C450 == 0xFFFF || encoding != lbl_8064C450) {
+            if (__CARDVendorID == 0xFFFF || encoding != __CARDVendorID) {
                 result = -2;
                 goto error;
             }
         }
         control->mountStep = 2;
-        result = fn_8021C6C8(channel, 1);
+        result = __CARDEnableInterrupt(channel, 1);
         if (result < 0)
             goto error;
-        fn_80206ED4(channel, fn_8021C484);
+        EXISetExiCallback(channel, __CARDExiHandler);
         EXIUnlock(channel);
         DCInvalidateRange(control->workArea, 0xA000);
     }
-    result = fn_8021E97C(channel, control->sectorSize * (control->mountStep - 2),
+    result = __CARDRead(channel, control->sectorSize * (control->mountStep - 2),
                          0x2000, control->workArea + ((control->mountStep - 2) << 13),
-                         fn_802207C0);
+                         __CARDMountCallback);
     if (result < 0)
-        fn_8021D374(control, result);
+        __CARDPutControlBlock(control, result);
     return result;
 error:
     EXIUnlock(channel);
-    fn_80220AB0(channel, result);
+    DoUnmount(channel, result);
     return result;
 }

@@ -35,7 +35,7 @@ extern void fn_80122428(void* object, ResourceList* list, void* name, int mode,
 extern void fn_801EDA7C(void* destination, void* manager, int type, int value);
 extern int fn_8011FAF4(void* object);
 extern void fn_801ECD74(Color4 color);
-extern void fn_8022B448(void* data, void* part);
+extern void GXCallDisplayList(void* data, void* part);
 extern void* lbl_8064D790;
 extern volatile u8 lbl_8064CEB4[3];
 extern volatile u8 lbl_8064CEB8[3];
@@ -76,7 +76,7 @@ void fn_8011FF40(void* object, unsigned flags, void* name, int alpha,
                 color.alpha = alpha;
                 fn_801ECD74(color);
             }
-            fn_8022B448(data, (void*)part->size);
+            GXCallDisplayList(data, (void*)part->size);
         }
         data += part->size;
     }

@@ -31,8 +31,8 @@ typedef struct SramEx {
     u8 flashID[2][12];
 } SramEx;
 
-extern CardControl lbl_80641C60[];
-extern u16 fn_8020C918(void);
+extern CardControl __CARDBlock[];
+extern u16 OSGetFontEncode(void);
 extern SramEx *__OSLockSramEx(void);
 extern s32 __OSUnlockSramEx(s32 commit);
 
@@ -51,7 +51,7 @@ static inline void CardChecksum(u16 *p, s32 length, u16 *checksum, u16 *inverse)
         *inverse = 0;
 }
 
-s32 fn_8021F350(CardControl *control)
+s32 VerifyID(CardControl *control)
 {
     CardHeader *header = (CardHeader *)control->workArea;
     u16 checksum, inverse;
@@ -64,14 +64,14 @@ s32 fn_8021F350(CardControl *control)
     CardChecksum((u16 *)header, 0x1FC, &checksum, &inverse);
     if (header->checksum != checksum || header->inverse != inverse)
         return -6;
-    if (header->format != fn_8020C918())
+    if (header->format != OSGetFontEncode())
         return -13;
     /* Regenerate the serial from its format timestamp and the SRAM flash ID. */
     random = *(s64 *)header->formatTime;
     sram = __OSLockSramEx();
     for (i = 0; i < 12; ++i) {
         random = (random * 0x41C64E6D + 0x3039) >> 16;
-        if (header->serial[i] != (u8)(sram->flashID[control - lbl_80641C60][i] + random)) {
+        if (header->serial[i] != (u8)(sram->flashID[control - __CARDBlock][i] + random)) {
             __OSUnlockSramEx(0);
             return -6;
         }

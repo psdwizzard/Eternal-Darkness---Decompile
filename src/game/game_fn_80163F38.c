@@ -6,13 +6,13 @@ typedef struct Lexer {
 } Lexer;
 
 extern char lbl_8024F7AC[];
-extern void fn_80163E3C(Lexer*, int);
-extern void fn_80162188(int, char*);
-extern int fn_800F9D4C(char*, const char*, ...);
-extern void fn_8015EA7C(Lexer*, char*);
+extern void error_expected(Lexer*, int);
+extern void luaX_token2str(int, char*);
+extern int sprintf(char*, const char*, ...);
+extern void luaK_error(Lexer*, char*);
 extern void fn_80163DA4(Lexer*);
 
-void fn_80163F38(Lexer* lexer, int expected, int opener, int line)
+void check_match(Lexer* lexer, int expected, int opener, int line)
 {
     char expected_name[16];
     char opener_name[16];
@@ -20,12 +20,12 @@ void fn_80163F38(Lexer* lexer, int expected, int opener, int line)
 
     if (lexer->current_kind != expected) {
         if (line == lexer->line) {
-            fn_80163E3C(lexer, expected);
+            error_expected(lexer, expected);
         } else {
-            fn_80162188(expected, expected_name);
-            fn_80162188(opener, opener_name);
-            fn_800F9D4C(message, lbl_8024F7AC, expected_name, opener_name, line);
-            fn_8015EA7C(lexer, message);
+            luaX_token2str(expected, expected_name);
+            luaX_token2str(opener, opener_name);
+            sprintf(message, lbl_8024F7AC, expected_name, opener_name, line);
+            luaK_error(lexer, message);
         }
     }
     fn_80163DA4(lexer);

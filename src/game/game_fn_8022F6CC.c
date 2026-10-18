@@ -1,6 +1,6 @@
-/* fn_8022F6CC (0x8022F6CC, 36 bytes): not decompiled yet.
+/* ogg_page_serialno (0x8022F6CC, 36 bytes): not decompiled yet.
  * Scaffolded by decomp-foundry; the build links the original asm until this
  * unit is marked Matching. See build/GEDE01/asm for the target code. */
 
-void fn_8022F6CC(void) {
+void ogg_page_serialno(void) {
 }

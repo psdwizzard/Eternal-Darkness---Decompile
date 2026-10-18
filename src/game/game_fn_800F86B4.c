@@ -1,4 +1,4 @@
-/* fn_800F86B4 (0x800F86B4, 236 bytes): build a decimal record from a digit
+/* __str2dec (0x800F86B4, 236 bytes): build a decimal record from a digit
  * string, rounding half-to-even on the first truncated digit. */
 
 typedef struct Decimal {
@@ -29,7 +29,7 @@ static void round_decimal_up(Decimal *d, int length) {
     }
 }
 
-void fn_800F86B4(Decimal *d, const signed char *s, short exp) {
+void __str2dec(Decimal *d, const signed char *s, short exp) {
     int i;
     const signed char *p;
 

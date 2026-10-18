@@ -9,7 +9,7 @@ extern const double lbl_8064FD78;
 extern const double lbl_8064FD80;
 extern const double lbl_8064FD88;
 
-double fn_80101368(double x, double y, int tail)
+double __kernel_sin(double x, double y, int tail)
 {
     double z;
     double r;

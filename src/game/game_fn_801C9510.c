@@ -31,19 +31,19 @@ struct Voice {
     float level;
 };
 
-extern u8 lbl_8064D3A0;
-extern Voice* lbl_8064D4C0;
+extern u8 sndActive;
+extern Voice* s3dListenerRoot;
 extern double lbl_80650FB8;
 extern float lbl_80650FD0;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
-extern void fn_801CA538(Vec3*, Vec3*, Vec3*);
-extern void fn_801CA59C(float*, float*);
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
+extern void salCrossProduct(Vec3*, Vec3*, Vec3*);
+extern void salInvertMatrix(float*, float*);
 
 static inline void ReleaseTarget(Target* target)
 {
     u32 count = 0;
-    Voice* cursor = lbl_8064D4C0;
+    Voice* cursor = s3dListenerRoot;
     while (cursor != 0) {
         if (cursor->target == target) {
             count++;
@@ -56,18 +56,18 @@ static inline void ReleaseTarget(Target* target)
     }
 }
 
-int fn_801C9510(Voice* voice, Vec3* position, Vec3* velocity, Vec3* direction,
+int sndUpdateListener(Voice* voice, Vec3* position, Vec3* velocity, Vec3* direction,
                 Vec3* up, u8 level, Target* target)
 {
     float transform[12];
 
-    if (lbl_8064D3A0 != 0) {
-        fn_801CE2B8();
+    if (sndActive != 0) {
+        hwDisableIrq();
         voice->position = *position;
         voice->velocity = *velocity;
         voice->direction = *direction;
         voice->right = *up;
-        fn_801CA538(&voice->up, &voice->direction, &voice->right);
+        salCrossProduct(&voice->up, &voice->direction, &voice->right);
 
         transform[0] = voice->up.x;
         transform[3] = voice->up.y;
@@ -81,7 +81,7 @@ int fn_801C9510(Voice* voice, Vec3* position, Vec3* velocity, Vec3* direction,
         transform[9] = voice->position.x;
         transform[10] = voice->position.y;
         transform[11] = voice->position.z;
-        fn_801CA59C(voice->matrix, transform);
+        salInvertMatrix(voice->matrix, transform);
         voice->level = (float)level / lbl_80650FD0;
 
         if (target != voice->target) {
@@ -96,7 +96,7 @@ int fn_801C9510(Voice* voice, Vec3* position, Vec3* velocity, Vec3* direction,
                 }
             }
         }
-        fn_801CE280();
+        hwEnableIrq();
         return 1;
     }
     return 0;

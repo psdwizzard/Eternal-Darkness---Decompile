@@ -9,17 +9,17 @@ struct HeapEntry {
     u32 allocation_size;
 };
 
-extern HeapEntry lbl_80630F38[];
-extern HeapEntry* lbl_8064D500;
-extern HeapEntry* lbl_8064D504;
-extern HeapEntry* lbl_8064D508;
-extern u32 lbl_8064D4E8;
-extern u32 lbl_8064D4F0;
+extern HeapEntry aramStreamBuffers[];
+extern HeapEntry* aramUsedStreamBuffers;
+extern HeapEntry* aramFreeStreamBuffers;
+extern HeapEntry* aramIdleStreamBuffers;
+extern u32 aramTop;
+extern u32 aramStream;
 
-void fn_801CDD38(u8 index)
+void aramFreeStreamBuffer(u8 index)
 {
-    HeapEntry* target = &lbl_80630F38[index];
-    HeapEntry* entry = lbl_8064D500;
+    HeapEntry* target = &aramStreamBuffers[index];
+    HeapEntry* entry = aramUsedStreamBuffers;
     HeapEntry* previous = 0;
 
     while (entry != 0) {
@@ -27,7 +27,7 @@ void fn_801CDD38(u8 index)
             if (previous != 0) {
                 previous->next = target->next;
             } else {
-                lbl_8064D500 = target->next;
+                aramUsedStreamBuffers = target->next;
             }
             break;
         }
@@ -35,13 +35,13 @@ void fn_801CDD38(u8 index)
         entry = entry->next;
     }
 
-    if (target->value == lbl_8064D4F0) {
+    if (target->value == aramStream) {
         u32 lowest = -1;
 
-        target->next = lbl_8064D508;
-        lbl_8064D508 = target;
+        target->next = aramIdleStreamBuffers;
+        aramIdleStreamBuffers = target;
 
-        entry = lbl_8064D500;
+        entry = aramUsedStreamBuffers;
         while (entry != 0) {
             if (entry->value <= lowest) {
                 lowest = entry->value;
@@ -51,21 +51,21 @@ void fn_801CDD38(u8 index)
 
         {
             HeapEntry* next;
-            HeapEntry* current = lbl_8064D504;
+            HeapEntry* current = aramFreeStreamBuffers;
             while (current != 0) {
                 next = current->next;
                 if (current->value < lowest) {
-                    lbl_8064D504 = next;
-                    current->next = lbl_8064D508;
-                    lbl_8064D508 = current;
+                    aramFreeStreamBuffers = next;
+                    current->next = aramIdleStreamBuffers;
+                    aramIdleStreamBuffers = current;
                 }
                 current = next;
             }
         }
 
-        lbl_8064D4F0 = lowest != -1 ? lowest : lbl_8064D4E8;
+        aramStream = lowest != -1 ? lowest : aramTop;
     } else {
-        target->next = lbl_8064D504;
-        lbl_8064D504 = target;
+        target->next = aramFreeStreamBuffers;
+        aramFreeStreamBuffers = target;
     }
 }

@@ -16,8 +16,8 @@ typedef struct SearchResult {
 extern void fn_8012C198(u8 *owner);
 extern int fn_8011F598(void *object, int first, int second, int previous,
                       SearchResult *result, u8 options);
-extern float fn_80211B08(const Vec3 *vector);
-extern void fn_80211A90(const Vec3 *input, Vec3 *output, float scale);
+extern float PSVECMag(const Vec3 *vector);
+extern void PSVECScale(const Vec3 *input, Vec3 *output, float scale);
 extern void fn_8012CCF0(u8 *state, int index, Vec3 *first, Vec3 *second,
                       Vec3 *third, int alternate);
 extern Vec3 lbl_8023A6C8;
@@ -42,8 +42,8 @@ void fn_801284B0(u8 *owner, int first, int second)
             direction.x = -result.position.x;
             direction.y = -result.position.y;
             direction.z = -result.position.z;
-            if (fn_80211B08(&direction) > lbl_806501A4) {
-                fn_80211A90(&direction, &scaled, lbl_806501A4);
+            if (PSVECMag(&direction) > lbl_806501A4) {
+                PSVECScale(&direction, &scaled, lbl_806501A4);
                 setJointVectors(owner, 15, lbl_8023A6C8, scaled, direction, 0);
             }
         }

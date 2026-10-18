@@ -37,8 +37,8 @@ extern void* fn_80201814(void*);
 extern void fn_8020123C(int, void*, void*, int);
 extern void fn_80142FCC(void*);
 extern int fn_801CEB2C(u32);
-extern float fn_80048C2C(float);
-extern float fn_80048C50(float);
+extern float sinf(float);
+extern float cosf(float);
 extern void fn_8017FD6C(void*);
 extern void fn_8019B134(void*, int);
 extern void fn_801D7998(Point3s*, Point3s*, Object*);
@@ -76,9 +76,9 @@ void fn_801D84F4(void* arg)
         float angle = state->angle +
             lbl_806510E4 * (float)i / (float)count;
         points[i].x = (s16)(object->x +
-                            lbl_806510E8 * fn_80048C2C(angle));
+                            lbl_806510E8 * sinf(angle));
         points[i].y = (s16)(object->y +
-                            lbl_806510E8 * fn_80048C50(angle));
+                            lbl_806510E8 * cosf(angle));
         points[i].z = (s16)object->z;
 
         if (state->entries[i] != 0) {

@@ -1,4 +1,4 @@
-/* fn_8021EF3C: __CARDGetDirBlock (Dolphin SDK CARDDir.c). */
+/* __CARDGetDirBlock: __CARDGetDirBlock (Dolphin SDK CARDDir.c). */
 
 typedef struct CARDDir CARDDir;
 
@@ -8,7 +8,7 @@ typedef struct CARDControl {
     CARDDir *currentDir;
 } CARDControl;
 
-CARDDir *fn_8021EF3C(CARDControl *card)
+CARDDir *__CARDGetDirBlock(CARDControl *card)
 {
     return card->currentDir;
 }

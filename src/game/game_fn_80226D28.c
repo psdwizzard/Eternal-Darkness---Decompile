@@ -11,7 +11,7 @@ typedef struct GXData {
 extern GXData *gx;
 
 /* GXSetCullMode: translate the cull mode to the hardware encoding. */
-void fn_80226D28(int mode)
+void GXSetCullMode(int mode)
 {
     switch (mode) {
     case 1:

@@ -7,15 +7,15 @@ typedef struct Entry {
     u8 padEC[8];
 } Entry;
 
-extern Entry* lbl_8064D4AC;
-extern u8 lbl_8064D4D8;
+extern Entry* dspVoice;
+extern u8 salTimeOffset;
 
-void fn_801CC8C4(u32 index)
+void hwBreak(u32 index)
 {
-    Entry* entry = &lbl_8064D4AC[index];
+    Entry* entry = &dspVoice[index];
 
-    if (((u8*)entry)[0xEC] == 1 && lbl_8064D4D8 == 0) {
+    if (((u8*)entry)[0xEC] == 1 && salTimeOffset == 0) {
         ((u8*)entry)[0xEE] = 1;
     }
-    lbl_8064D4AC[index].flags[lbl_8064D4D8] |= 0x20;
+    dspVoice[index].flags[salTimeOffset] |= 0x20;
 }

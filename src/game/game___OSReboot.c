@@ -35,27 +35,27 @@ extern u32 __OSMaskInterrupts(u32 mask);
 extern u32 __OSUnmaskInterrupts(u32 mask);
 extern void ICInvalidateRange(void *addr, u32 nBytes);
 extern void DVDInit(void);
-extern BOOL fn_80215D2C(BOOL autoInval);                     /* DVDSetAutoInvalidation */
-extern BOOL fn_802162CC(DVDCBCallback callback);              /* __DVDPrepareResetAsync */
-extern BOOL fn_802161E8(void);                                /* DVDCheckDisk */
-extern void fn_8020DEAC(u32 resetCode);                       /* __OSDoHotReset */
-extern BOOL fn_802155C8(DVDCommandBlock *block, void *addr, s32 length,
+extern BOOL DVDSetAutoInvalidation(BOOL autoInval);                     /* DVDSetAutoInvalidation */
+extern BOOL __DVDPrepareResetAsync(DVDCBCallback callback);              /* __DVDPrepareResetAsync */
+extern BOOL DVDCheckDisk(void);                                /* DVDCheckDisk */
+extern void __OSDoHotReset(u32 resetCode);                       /* __OSDoHotReset */
+extern BOOL DVDReadAbsAsyncForBS(DVDCommandBlock *block, void *addr, s32 length,
                         s32 offset, DVDCBCallback callback);  /* DVDReadAbsAsyncForBS */
-extern void fn_8020DBA0(void *addr);                          /* Run */
+extern void Run(void *addr);                          /* Run */
 extern void fn_8020DBE0(s32 result, DVDCommandBlock *block);  /* Callback */
 
-extern ApploaderHeader lbl_80640E20;  /* Header */
-extern void *lbl_8064D950;            /* SaveStart */
-extern void *lbl_8064D954;            /* SaveEnd */
-extern volatile BOOL lbl_8064D958;    /* Prepared */
+extern ApploaderHeader Header;  /* Header */
+extern void *SaveStart;            /* SaveStart */
+extern void *SaveEnd;            /* SaveEnd */
+extern volatile BOOL Prepared;    /* Prepared */
 
 #define OS_RESET_CODE (*(u32 *)0x817FFFFC)
 #define OS_APPLOADER_ADDR ((void *)0x81300000)
 
 static inline void ReadApploader(DVDCommandBlock *dvdCmd, void *addr, u32 offset, u32 numBytes) {
-    while (!lbl_8064D958) {
+    while (!Prepared) {
     }
-    fn_802155C8(dvdCmd, addr, numBytes, offset + 0x2440, 0);
+    DVDReadAbsAsyncForBS(dvdCmd, addr, numBytes, offset + 0x2440, 0);
     while (1) {
         switch (dvdCmd->state) {
         case 1:
@@ -73,7 +73,7 @@ static inline void ReadApploader(DVDCommandBlock *dvdCmd, void *addr, u32 offset
         case 9:
         case 10:
         case 11:
-            fn_8020DEAC(OS_RESET_CODE);
+            __OSDoHotReset(OS_RESET_CODE);
             break;
         default:
             break;
@@ -93,29 +93,29 @@ void __OSReboot(void) {
     *(u32 *)0x817FFFFC = 0;
     *(u32 *)0x817FFFF8 = 0;
     *(u8 *)0x800030E2 = 1;
-    *(void **)0x812FDFF0 = lbl_8064D950;
-    *(void **)0x812FDFEC = lbl_8064D954;
+    *(void **)0x812FDFF0 = SaveStart;
+    *(void **)0x812FDFEC = SaveEnd;
 
     OSClearContext(&exceptionContext);
     OSSetCurrentContext(&exceptionContext);
     DVDInit();
-    fn_80215D2C(1);
-    fn_802162CC(fn_8020DBE0);
+    DVDSetAutoInvalidation(1);
+    __DVDPrepareResetAsync(fn_8020DBE0);
 
-    if (!fn_802161E8()) {
-        fn_8020DEAC(OS_RESET_CODE);
+    if (!DVDCheckDisk()) {
+        __OSDoHotReset(OS_RESET_CODE);
     }
 
     __OSMaskInterrupts(0xFFFFFFE0);
     __OSUnmaskInterrupts(0x400);
     OSEnableInterrupts();
 
-    ReadApploader(&dvdCmd, &lbl_80640E20, 0, 0x20);
+    ReadApploader(&dvdCmd, &Header, 0, 0x20);
 
-    offset = lbl_80640E20.size + 0x20;
-    numBytes = (lbl_80640E20.rebootSize + 0x1F) & ~0x1F;
+    offset = Header.size + 0x20;
+    numBytes = (Header.rebootSize + 0x1F) & ~0x1F;
     ReadApploader(&dvdCmd2, OS_APPLOADER_ADDR, offset, numBytes);
 
     ICInvalidateRange(OS_APPLOADER_ADDR, numBytes);
-    fn_8020DBA0(OS_APPLOADER_ADDR);
+    Run(OS_APPLOADER_ADDR);
 }

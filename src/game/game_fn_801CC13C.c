@@ -1,6 +1,6 @@
 typedef unsigned char u8;
 
-u8 fn_801CC13C(u8 value)
+u8 inpTranslateExCtrl(u8 value)
 {
     switch ((u8)value) {
     case 0x80:

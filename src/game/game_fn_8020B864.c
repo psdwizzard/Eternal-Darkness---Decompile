@@ -1,7 +1,7 @@
 typedef unsigned int u32;
 
 /* Enable the locked cache and initialize its 16 KiB backing store. */
-void fn_8020B864(void)
+void __LCEnable(void)
 {
     register unsigned char *line;
     register u32 count;

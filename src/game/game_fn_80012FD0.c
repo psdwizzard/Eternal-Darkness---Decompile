@@ -7,12 +7,12 @@ typedef struct ObjectInfo {
 
 extern const char lbl_8023BEF8[];
 extern const double lbl_8064DCE8;
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201B8C();
-extern void fn_8016A830(void*, double);
+extern void lua_pushnumber(void*, double);
 
 s32 fn_80012FD0(void* script)
 {
@@ -21,12 +21,12 @@ s32 fn_80012FD0(void* script)
     void* object;
     ObjectInfo* info;
 
-    if (fn_8016A598(parser) != 1) {
-        fn_80163BB4(parser, lbl_8023BEF8, 1, fn_8016A598(parser));
+    if (lua_gettop(parser) != 1) {
+        luaO_verror(parser, lbl_8023BEF8, 1, lua_gettop(parser));
         return 0;
     }
 
-    object = fn_80201814((s32)fn_8016A694(parser, 1));
+    object = fn_80201814((s32)lua_tonumber(parser, 1));
     if (object != 0) {
         info = fn_80201B8C(object);
         if (info != 0) {
@@ -34,6 +34,6 @@ s32 fn_80012FD0(void* script)
         }
     }
 
-    fn_8016A830(parser, (double)value);
+    lua_pushnumber(parser, (double)value);
     return 1;
 }

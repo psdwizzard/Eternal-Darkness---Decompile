@@ -45,7 +45,7 @@ extern int fn_802045AC(void*, Vec3*);
 extern u8 fn_80204578(void*, const Vec3*);
 extern int fn_80179064(int, int, int, int);
 extern float fn_800CB444(void*, void*);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern int fn_8012AFC4(void*);
 extern void fn_8012B344(void*);
 /* Retail passes unused trailing arguments to these legacy callees. */
@@ -125,7 +125,7 @@ int fn_800A857C(void* object, void* source, void* extra, int objectId,
             thresholds[1] = lbl_80239768[1];
             thresholds[2] = lbl_80239768[2];
             thresholds[3] = lbl_80239768[3];
-            if ((u8)fn_800FBFB0() < thresholds[state->type]) {
+            if ((u8)rand() < thresholds[state->type]) {
                 state->actionTimer = 0;
                 goto fallback;
             }
@@ -154,7 +154,7 @@ int fn_800A857C(void* object, void* source, void* extra, int objectId,
             fn_800A821C(0x300, lbl_8064C988, object, source, state, extra);
             goto fallback;
         }
-        if (state->idleTimer == 0 && (fn_800FBFB0() & 1) &&
+        if (state->idleTimer == 0 && (rand() & 1) &&
             fn_801790A4(position->x, position->y, otherPosition->x,
                           otherPosition->y) > lbl_8064EF38) {
             fn_800A821C(0x500, 0, object, source, state, extra);
@@ -181,7 +181,7 @@ fallback:
                 possibleEvents[count++] = 0x410;
             }
             if (count != 0) {
-                fn_800A821C(possibleEvents[(count - 1) & fn_800FBFB0()],
+                fn_800A821C(possibleEvents[(count - 1) & rand()],
                               0, object, source, state, extra);
             } else {
                 state->idleTimer = 0x3C;

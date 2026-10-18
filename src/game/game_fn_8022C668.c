@@ -1,8 +1,8 @@
-extern int lbl_8064C3C8;
-extern void fn_8020AE7C(int heap, void *ptr);
+extern int __OSCurrHeap;
+extern void OSFreeToHeap(int heap, void *ptr);
 
 /* Release a cached resource from the resource heap. */
-void fn_8022C668(void *resource)
+void TexFreeFunc(void *resource)
 {
-    fn_8020AE7C(lbl_8064C3C8, resource);
+    OSFreeToHeap(__OSCurrHeap, resource);
 }

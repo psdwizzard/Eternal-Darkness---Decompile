@@ -46,9 +46,9 @@ extern Vec3 lbl_8023A6E8;
 extern void* lbl_8064CF54;
 extern const float lbl_80650228;
 
-extern void fn_802114E0(Matrix output, void* angles);
-extern void fn_80211710(Matrix m, Vec3* in, Vec3* out);
-extern void fn_80211AAC(Vec3* in, Vec3* out);
+extern void PSMTXQuat(Matrix output, void* angles);
+extern void PSMTXMultVec(Matrix m, Vec3* in, Vec3* out);
+extern void PSVECNormalize(Vec3* in, Vec3* out);
 extern void fn_80179E60(short* destination, float* source);
 extern void fn_80179BC0(Vec3* source, ShortCoord3* destination);
 extern void fn_8019D560(void* config);
@@ -80,9 +80,9 @@ void fn_8013430C(Emitter* emitter, EmitterSlot* slot)
             0.0f == emitter->rotation[3]) {
             emitter->rotation[3] = lbl_80650228;
         }
-        fn_802114E0(matrix, emitter->rotation);
-        fn_80211710(matrix, &up, &dir);
-        fn_80211AAC(&dir, &dir);
+        PSMTXQuat(matrix, emitter->rotation);
+        PSMTXMultVec(matrix, &up, &dir);
+        PSVECNormalize(&dir, &dir);
         fn_80179E60(rotation, &dir.x);
         fn_8019D560(&config);
         config.kind = 0x10;
@@ -112,9 +112,9 @@ void fn_8013430C(Emitter* emitter, EmitterSlot* slot)
         dest->x = emitter->position.x;
         dest->y = emitter->position.y;
         dest->z = emitter->position.z;
-        fn_802114E0(matrix, emitter->rotation);
-        fn_80211710(matrix, &up, &dir);
-        fn_80211AAC(&dir, &dir);
+        PSMTXQuat(matrix, emitter->rotation);
+        PSMTXMultVec(matrix, &up, &dir);
+        PSVECNormalize(&dir, &dir);
         fn_80179BC0(&dir, angles);
     }
 }

@@ -59,7 +59,7 @@ extern void fn_80043628(void);
 extern void fn_80043708(int);
 extern int fn_80047428(int);
 extern u8 fn_80052218(int);
-extern int fn_800F9D4C(char*, const char*, ...);
+extern int sprintf(char*, const char*, ...);
 extern Model* fn_80125788(Model*);
 extern void fn_8013816C(void);
 extern void fn_801383B4(int, int);
@@ -271,7 +271,7 @@ void fn_80043838(int chapter, u8 immediate)
     scriptPath.text[6] = chapter / 10 + '0';
     scriptPath.text[7] = chapter % 10 + '0';
     fn_8015D9C8(scriptPath.text, 0xF69340);
-    fn_800F9D4C(name, strings + 0x1A8, chapter);
+    sprintf(name, strings + 0x1A8, chapter);
     fn_8015D9C8(name, 0xFA63D0);
     fn_8015D9C8(strings + 0x1B4, 0xFB63D0);
     lbl_8064C7F4 = 0;

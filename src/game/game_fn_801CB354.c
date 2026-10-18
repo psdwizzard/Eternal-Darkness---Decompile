@@ -6,12 +6,12 @@ typedef struct SYNTH_VOICE {
     u32 id;
 } SYNTH_VOICE;
 
-extern u8 lbl_8062A230[];
+extern u8 midi_lastNote[];
 
 #define INP_MIDI_CTRL_GLOBAL_OFFSET 0x43C0
 #define INP_MIDI_CTRL_BANK_SIZE 0x86
 
-void fn_801CB354(u8 controller, SYNTH_VOICE* dstState, SYNTH_VOICE* srcState)
+void inpFXCopyCtrl(u8 controller, SYNTH_VOICE* dstState, SYNTH_VOICE* srcState)
 {
     u32 ctrl;
     u32 dstVoice;
@@ -20,7 +20,7 @@ void fn_801CB354(u8 controller, SYNTH_VOICE* dstState, SYNTH_VOICE* srcState)
     u8* bank;
 
     ctrl = controller & 0xff;
-    stateBase = lbl_8062A230;
+    stateBase = midi_lastNote;
     dstVoice = dstState->id & 0xff;
     srcVoice = srcState->id & 0xff;
 

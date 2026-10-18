@@ -10,16 +10,16 @@ typedef struct Object {
     int count;
 } Object;
 
-extern void fn_8016057C(Object*, int);
+extern void luaD_checkstack(Object*, int);
 
-void fn_80160628(Object* object, Entry* allocation, int count)
+void luaD_adjusttop(Object* object, Entry* allocation, int count)
 {
     int missing = count - (object->current - allocation);
 
     if (missing <= 0) {
         object->current = allocation + count;
     } else {
-        fn_8016057C(object, missing);
+        luaD_checkstack(object, missing);
         while (missing != 0) {
             (object->current++)->value = 1;
             missing--;

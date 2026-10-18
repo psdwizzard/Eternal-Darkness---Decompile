@@ -7,13 +7,13 @@ struct Node {
     unsigned int value;
 };
 
-extern Node* lbl_8064D398;
-extern Node* lbl_8064D39C;
+extern Node* seqPausedRoot;
+extern Node* seqActiveRoot;
 
-int fn_801B2914(unsigned int value)
+int seqGetPrivateId(unsigned int value)
 {
     unsigned int key = __rlwinm(value, 0, 1, 31);
-    Node* first = lbl_8064D39C;
+    Node* first = seqActiveRoot;
     Node* second;
 
     while (first != 0) {
@@ -24,7 +24,7 @@ int fn_801B2914(unsigned int value)
         first = first->next;
     }
 
-    second = lbl_8064D398;
+    second = seqPausedRoot;
     while (second != 0) {
         if (second->value == key) {
             key = second->type;

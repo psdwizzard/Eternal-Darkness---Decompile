@@ -33,11 +33,11 @@ typedef struct Parser {
     int value_3C;
 } Parser;
 
-extern void* fn_80161164(void*);
+extern void* luaF_newproto(void*);
 
-void fn_801649CC(Parser* parser, ParserState* state)
+void open_func(Parser* parser, ParserState* state)
 {
-    RuntimeObject* object = fn_80161164(parser->allocator);
+    RuntimeObject* object = luaF_newproto(parser->allocator);
 
     state->parent = parser->state;
     state->parser = parser;

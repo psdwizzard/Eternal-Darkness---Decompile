@@ -44,9 +44,9 @@ typedef struct FrameContext {
     PlaneCursor planes[3];
 } FrameContext;
 
-extern void fn_80104BBC(u8 *destination, int width, u8 *reference,
+extern void _MotionComp(u8 *destination, int width, u8 *reference,
                         int reference_width, int x_half, int y_half);
-extern void fn_80105804(Decoder *decoder, u8 *destination, u8 *reference,
+extern void PrediAotBlock(Decoder *decoder, u8 *destination, u8 *reference,
                         u16 width, u32 mode, u8 *base, u16 base_width,
                         int plane, int x_half, int y_half);
 
@@ -64,7 +64,7 @@ static inline void copy_raw_block(u8 **stream, u8 *dst, u16 width)
     }
 }
 
-void fn_80105DE0(register Decoder *input_decoder, register FrameContext *context,
+void MCBlockDecMCNest(register Decoder *input_decoder, register FrameContext *context,
                  register int input_x, register int input_y)
 {
     register Decoder *decoder;
@@ -164,10 +164,10 @@ void fn_80105DE0(register Decoder *input_decoder, register FrameContext *context
                         addi copy_stride, width, 0
                         addi copy_y, y_half, 0
                     }
-                    fn_80104BBC(copy_destination, width, reference_block,
+                    _MotionComp(copy_destination, width, reference_block,
                                 copy_stride, copy_x, copy_y);
                 } else {
-                    fn_80105804(decoder, destination, reference_block,
+                    PrediAotBlock(decoder, destination, reference_block,
                                 source->width, mode, base,
                                 decoder->planes[0].width, plane,
                                 x_half, y_half);

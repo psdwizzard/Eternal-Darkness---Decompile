@@ -24,7 +24,7 @@ volatile PPCWGPipe GXWGFifo : 0xCC008000;
 #define SET_REG_FIELD(reg, size, shift, val) \
     ((reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
 
-void fn_8022A71C(GXBool dither)
+void GXSetAlphaUpdate(GXBool dither)
 {
     SET_REG_FIELD(gx->cmode0, 1, 4, dither);
     GXWGFifo.u8 = 0x61;

@@ -10,7 +10,7 @@ extern void fn_8017E1B0(void*, void*);
 extern void fn_8018E26C(void*, void*);
 extern void fn_8018E230(void*, void*, s32, s32, u8, u8);
 extern void* fn_8017FDA8(void*, s32);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void* memcpy(void*, const void*, u32);
 
 s32 fn_8019A5DC(u8* object)
@@ -41,11 +41,11 @@ s32 fn_8019A5DC(u8* object)
             } else if (entry[0x2B] == 0) {
                 void* source = fn_8017FDA8(*(void**)(object + 0x9C), 0);
                 memcpy(entry + 0xA, source, 6);
-                *(u16*)(entry + 0x10) = 4 - (fn_800FBFB0() & 7);
-                *(u16*)(entry + 0x12) = 4 - (fn_800FBFB0() & 7);
-                *(u16*)(entry + 0x14) = 4 - (fn_800FBFB0() & 3);
+                *(u16*)(entry + 0x10) = 4 - (rand() & 7);
+                *(u16*)(entry + 0x12) = 4 - (rand() & 7);
+                *(u16*)(entry + 0x14) = 4 - (rand() & 3);
                 *(u16*)(entry + 8) = *(u16*)(object + 0xA) +
-                                     7 + (fn_800FBFB0() & 7);
+                                     7 + (rand() & 7);
                 fn_8018E230(entry, entry + 0x2B, 1, 0, 0x33, 0xFF);
             }
         }

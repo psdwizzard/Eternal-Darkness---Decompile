@@ -34,7 +34,7 @@ extern float lbl_80650D10;
 extern u32 lbl_80607440[];
 extern int lbl_8064D18C;
 extern void fn_801EF384(void*);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void fn_801A29E0(void*);
 
 int fn_801A1F8C(u8* object)
@@ -78,7 +78,7 @@ int fn_801A1F8C(u8* object)
             }
         }
 
-        value = state->values[i] + (fn_800FBFB0() % 3);
+        value = state->values[i] + (rand() % 3);
         value++;
         clamped = value > 255 ? 255 : value;
         state->values[i] = clamped;
@@ -103,15 +103,15 @@ int fn_801A1F8C(u8* object)
             int index = i;
             if (state->values[index] == 255) {
                 int random;
-                random = fn_800FBFB0();
+                random = rand();
                 particle->x = *(s16*)(object + 0x10) + scale * (10 - random % 20);
-                random = fn_800FBFB0();
+                random = rand();
                 particle->y = *(s16*)(object + 0x12) + scale * (10 - random % 20);
                 particle->z = *(s16*)(object + 0x14);
                 state->values[index] = 0;
-                particle->dx = 1 - (fn_800FBFB0() & 1);
-                particle->dy = 1 - (fn_800FBFB0() & 1);
-                particle->dz = (fn_800FBFB0() & 1) + 1;
+                particle->dx = 1 - (rand() & 1);
+                particle->dy = 1 - (rand() & 1);
+                particle->dz = (rand() & 1) + 1;
                 spawned++;
                 particle->colour0 = lbl_80607440[state->values[index]];
                 particle->colour1 = lbl_80607440[state->values[index]];

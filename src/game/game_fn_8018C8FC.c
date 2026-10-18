@@ -3,7 +3,7 @@ typedef unsigned short u16;
 typedef signed char s8;
 
 extern u16 lbl_80607120[];
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void* memcpy(void*, const void*, unsigned int);
 
 void fn_8018C8FC(u8* dest, const u8* color, u8 repeats, int run_length,
@@ -14,7 +14,7 @@ void fn_8018C8FC(u8* dest, const u8* color, u8 repeats, int run_length,
     u8* cursor = dest;
 
     for (i = 0; i < repeats; i++) {
-        s8 delta = (1 << (bits - 1)) - (fn_800FBFB0() & ((1 << bits) - 1));
+        s8 delta = (1 << (bits - 1)) - (rand() & ((1 << bits) - 1));
         for (j = 0; j < run_length; j++) {
             cursor[0] = color[0] + delta;
             cursor[1] = color[1] + delta;

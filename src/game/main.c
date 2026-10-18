@@ -52,8 +52,8 @@ extern void fn_8017CF0C(void);
 extern void fn_801E7DC8(s32);
 extern void fn_801E81C8(void);
 extern void fn_801EFA68(char*, s32);
-extern void fn_8020DDAC(void*, void*);
-extern u32 fn_8020ED10(void);
+extern void OSSetSaveRegion(void*, void*);
+extern u32 OSGetProgressiveMode(void);
 
 int main(s32 argc, char** argv)
 {
@@ -72,7 +72,7 @@ int main(s32 argc, char** argv)
     lbl_8064D740 = 0;
     fn_8001E134(0);
     fn_8001D510();
-    fn_8020DDAC((void*)0x80700000, (void*)0x81200000);
+    OSSetSaveRegion((void*)0x80700000, (void*)0x81200000);
     fn_80125284();
     fn_80045220(0);
     lbl_8064C62C = 0;
@@ -119,7 +119,7 @@ int main(s32 argc, char** argv)
             break;
         }
 
-        if (lbl_8064C644 != 0 && fn_8020ED10() == 1) {
+        if (lbl_8064C644 != 0 && OSGetProgressiveMode() == 1) {
             executable = lbl_802FC500;
         }
         lbl_8064CBA0 = lbl_8064C634;

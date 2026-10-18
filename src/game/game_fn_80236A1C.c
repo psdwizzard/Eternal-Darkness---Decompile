@@ -27,9 +27,9 @@ extern volatile s32 lbl_8064DC38;
 extern s32 lbl_8064DC58;
 extern s32 lbl_8064DC5C;
 
-extern void fn_80217324(void);
-extern int fn_8020D318(void*, void*, int);
-extern u32 fn_801BB1A0(u32);
+extern void VIWaitForRetrace(void);
+extern int OSReceiveMessage(void*, void*, int);
+extern u32 sndStreamActivate(u32);
 
 static inline void receiveStreamMessage(void)
 {
@@ -42,7 +42,7 @@ static inline void receiveStreamMessage(void)
         addi message, 0, 0
         addi queue, queue, lbl_80648198@l
     }
-    fn_8020D318(queue, message, 1);
+    OSReceiveMessage(queue, message, 1);
 }
 
 void fn_80236A1C(void)
@@ -53,7 +53,7 @@ void fn_80236A1C(void)
     register s32 zero;
     register StreamPair *secondStreams;
     while (lbl_8064DC34 == 2) {
-        fn_80217324();
+        VIWaitForRetrace();
     }
     if (lbl_8064DC38 == 0 && lbl_8064DC34 == 1) {
         receiveStreamMessage();
@@ -82,14 +82,14 @@ void fn_80236A1C(void)
             /* ASM: stw consumes the fade constant carried in r0; C cannot
              * reference that register directly. */
             asm { stw r0, lbl_8064DC5C }
-            fn_801BB1A0(streams->first.handle);
+            sndStreamActivate(streams->first.handle);
             /* ASM: lis/addi reload the stream address after the call; C
              * instead shares the earlier pointer in a saved register. */
             asm {
                 lis secondStreams, lbl_8064A548@ha
                 addi secondStreams, secondStreams, lbl_8064A548@l
             }
-            fn_801BB1A0(secondStreams->second.handle);
+            sndStreamActivate(secondStreams->second.handle);
             /* ASM: li/stw use r0 for the final state update; C avoids r0
              * because the address-setup blocks explicitly reference it. */
             asm {

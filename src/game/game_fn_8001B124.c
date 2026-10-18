@@ -7,9 +7,9 @@ extern void* lbl_8064C504;
 extern double lbl_8064DE60;
 
 extern s32 fn_8011804C(s32);
-extern int fn_8016A598(void*);
-extern void fn_8016A830(void*, double);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern void lua_pushnumber(void*, double);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void* fn_80201B3C();
 extern void* fn_80201C24();
@@ -33,8 +33,8 @@ s32 fn_8001B124(void* script)
     id = fn_8011804C(0);
     manager = fn_80201B3C();
 
-    if (fn_8016A598(script) != 0) {
-        fn_80163BB4(script, lbl_8023BEF8, 0, fn_8016A598(script));
+    if (lua_gettop(script) != 0) {
+        luaO_verror(script, lbl_8023BEF8, 0, lua_gettop(script));
         return 0;
     }
 
@@ -50,6 +50,6 @@ s32 fn_8001B124(void* script)
         }
     }
 
-    fn_8016A830(script, (u16)fn_80157994(context));
+    lua_pushnumber(script, (u16)fn_80157994(context));
     return 1;
 }

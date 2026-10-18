@@ -34,7 +34,7 @@ extern void fn_8013F3C0(Contact*, const Vec3*, const Vec3*, float);
 extern int fn_80137350(void*, Contact*, void*, CollisionResult*, void*, void*);
 extern int fn_8013A3C8(void*, Contact*, CollisionResult*, void*);
 extern int fn_80137FF4(void*, Contact*, CollisionResult*);
-extern float fn_80211D4C(const void*, const void*);
+extern float PSVECSquareDistance(const void*, const void*);
 extern void* fn_8011F8FC(void*);
 extern int fn_8011EB1C(void*);
 extern unsigned int fn_8011FA8C(void*, int, unsigned int);
@@ -46,9 +46,9 @@ extern void fn_8013F600(CollisionResult*, Vec3*, float*);
 extern void fn_80140408(Vec3*, CollisionResult*, void*);
 extern void fn_8013C460(Vec3*, const Vec3*, float, float);
 extern void fn_8013C518(Vec3*, const Vec3*, float, float);
-extern void fn_80211A6C(const Vec3*, const Vec3*, Vec3*);
-extern void fn_80211AAC(Vec3*, const Vec3*);
-extern float fn_80211B44(const Vec3*, const Vec3*);
+extern void PSVECSubtract(const Vec3*, const Vec3*, Vec3*);
+extern void PSVECNormalize(Vec3*, const Vec3*);
+extern float PSVECDotProduct(const Vec3*, const Vec3*);
 
 /* Each backend corrects its local sweep before rebuilding the caller's
  * contact. A no-hit probe updates support state; exhausted retries restore
@@ -102,7 +102,7 @@ int fn_8013A538(void* object, void* value, Contact* contact, int mode,
 
         for (i = 0; i < 3; i++) {
             if (count[i] != 0) {
-                float distance = fn_80211D4C(contact, &result[i]);
+                float distance = PSVECSquareDistance(contact, &result[i]);
                 if (distance < nearest) {
                     nearest = distance;
                     selected = i;
@@ -123,7 +123,7 @@ int fn_8013A538(void* object, void* value, Contact* contact, int mode,
                 fn_80140408(&normal, output, body);
                 if (mode != 0) {
                     float threshold = lbl_806502D8;
-                    float dot = fn_80211B44((Vec3*)body, &normal);
+                    float dot = PSVECDotProduct((Vec3*)body, &normal);
                     if (lbl_8064D18C == 0x32)
                         threshold = lbl_806502DC;
                     if (dot <= threshold) {
@@ -190,8 +190,8 @@ int fn_8013A538(void* object, void* value, Contact* contact, int mode,
             }
             }
 
-            if (fn_80211D4C(&previous_start, &contact->start) == lbl_806502B8 &&
-                fn_80211D4C(&previous_end, &contact->end) == lbl_806502B8) {
+            if (PSVECSquareDistance(&previous_start, &contact->start) == lbl_806502B8 &&
+                PSVECSquareDistance(&previous_end, &contact->end) == lbl_806502B8) {
                 if (zero_kind)
                     repeated = 1;
                 zero_kind = 1;
@@ -206,10 +206,10 @@ int fn_8013A538(void* object, void* value, Contact* contact, int mode,
                     Vec3 direction;
                     void* body = fn_8011F8FC(object);
                     float dot;
-                    fn_80211A6C(&output->end,
+                    PSVECSubtract(&output->end,
                                 &output->start, &direction);
-                    fn_80211AAC(&direction, &direction);
-                    dot = fn_80211B44((Vec3*)body, &direction);
+                    PSVECNormalize(&direction, &direction);
+                    dot = PSVECDotProduct((Vec3*)body, &direction);
                     if (dot <= lbl_806502E8) {
                         if (contact->height < lbl_806502EC * height) {
                             if (contact->height > lbl_806502F0)

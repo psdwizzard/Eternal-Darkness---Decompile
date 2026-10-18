@@ -18,7 +18,7 @@ extern void fn_8018CB70(void*, u8, u16);
 extern u32 fn_80048630(void);
 extern u32 fn_80048640(void);
 extern u32 fn_80048650(void);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_801F5A04(void*, s16, u32, u32);
 extern void* memset(void*, int, u32);
 
@@ -54,7 +54,7 @@ void fn_801A329C(u8* object, void* arg0, void* arg1, u8* descriptor)
         fn_80180554(entry, arg0, arg1, local, *(u16*)(descriptor + 8), 0);
         random_base = descriptor[1];
         fn_801805E0(entry + 0x20, 4,
-                    (u8)(random_base - ((random_base - 1) & fn_800FBFB0()) + 4),
+                    (u8)(random_base - ((random_base - 1) & rand()) + 4),
                     (i & 0x3F) * 4, lbl_80607440, lbl_80650D10);
         fn_80180518(object + 0x24, i, 1);
         entry += 0x38;

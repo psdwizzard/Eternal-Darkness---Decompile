@@ -1,5 +1,5 @@
 /* Wait until the locked-cache DMA queue has at most count entries. */
-void fn_8020B9E4(register int count)
+void LCQueueWait(register int count)
 {
     register unsigned int status;
 

@@ -1,7 +1,7 @@
 #include "src/game/types.h"
 
 /* PADClamp ClampStick: clamp a stick to an octagonal range with dead zone. */
-void fn_80218344(s8 *px, s8 *py, s8 max, s8 xy, s8 min) {
+void ClampStick(s8 *px, s8 *py, s8 max, s8 xy, s8 min) {
     int x = *px;
     int y = *py;
     int signX;

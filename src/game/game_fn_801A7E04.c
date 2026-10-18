@@ -23,7 +23,7 @@ typedef struct Object801A7E04 {
 } Object801A7E04;
 
 extern void fn_80179DB0(Vec3*, Vec3s*);
-extern float fn_80211D4C(const Vec3*, const Vec3*);
+extern float PSVECSquareDistance(const Vec3*, const Vec3*);
 extern int fn_8013D6A4(const Vec3*, const Vec3s*, const Vec3s*);
 
 int fn_801A7E04(const Vec3* point, Object801A7E04* object)
@@ -34,7 +34,7 @@ int fn_801A7E04(const Vec3* point, Object801A7E04* object)
     if (type == 0) {
         Vec3 center;
         fn_80179DB0(&center, &shape->center);
-        return fn_80211D4C(&center, point) < shape->radius * shape->radius;
+        return PSVECSquareDistance(&center, point) < shape->radius * shape->radius;
     }
     if (type == 1) {
         return fn_8013D6A4(point, (Vec3s*)shape, (Vec3s*)((unsigned char*)shape + 6));

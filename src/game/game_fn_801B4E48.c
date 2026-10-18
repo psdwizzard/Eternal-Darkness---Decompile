@@ -6,28 +6,28 @@ typedef struct List {
     Event* head;
 } List;
 
-extern u8* lbl_8064D380;
-extern Event* fn_801B443C(u8);
-extern void fn_801B4654(List*, Event*);
+extern u8* cseq;
+extern Event* GenerateNextTrackEvent(u8);
+extern void InsertGlobalEvent(List*, Event*);
 
-void fn_801B4E48(void)
+void InitTrackEvents(void)
 {
     unsigned int i;
     Event* event;
-    u8* state = lbl_8064D380;
+    u8* state = cseq;
 
     if (*(u8**)(state + 0x14E4) == 0) {
         for (i = 0; i < 0x40; i++) {
-            event = fn_801B443C((u8)i);
+            event = GenerateNextTrackEvent((u8)i);
             if (event != 0)
-                fn_801B4654((List*)(lbl_8064D380 + 0x14E8), event);
+                InsertGlobalEvent((List*)(cseq + 0x14E8), event);
         }
     } else {
         for (i = 0; i < 0x40; i++) {
-            event = fn_801B443C((u8)i);
+            event = GenerateNextTrackEvent((u8)i);
             if (event != 0) {
-                state = lbl_8064D380;
-                fn_801B4654((List*)(state + 0x14E8 +
+                state = cseq;
+                InsertGlobalEvent((List*)(state + 0x14E8 +
                                     (*(u8**)(state + 0x14E4))[i] * 0x38),
                             event);
             }

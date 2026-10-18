@@ -13,7 +13,7 @@ extern u32 __SIRegs[64] : 0xCC006400;
 extern s32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(s32 enabled);
 
-s32 fn_80208950(s32 enable)
+s32 SIEnablePollingInterrupt(s32 enable)
 {
     s32 interrupts;
     u32 csr;

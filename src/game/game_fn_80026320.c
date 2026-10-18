@@ -44,12 +44,12 @@ extern const f32 lbl_8064DF64;
 extern const f32 lbl_8064DF74;
 extern const f32 lbl_8064DF78;
 
-extern void fn_80225F4C(s32, void*, s32);
+extern void GXSetArray(s32, void*, s32);
 extern void fn_801A852C(Color, int, int, u32);
-extern void fn_80211268(Mtx, u8, f32);
-extern void fn_80211710(Mtx, Vec3f*, Vec3f*);
+extern void PSMTXRotRad(Mtx, u8, f32);
+extern void PSMTXMultVec(Mtx, Vec3f*, Vec3f*);
 extern void fn_801ECF50(s32);
-extern void fn_80226AB4(s32, s32, s32);
+extern void GXBegin(s32, s32, s32);
 extern void fn_80026754(s32, s32, s32);
 extern void fn_80026744(f32, f32);
 extern void fn_80026740(void);
@@ -67,7 +67,7 @@ void fn_80026320(BatchEntry* batch)
     Sprite* entry;
     const Quad* initial = &lbl_80238BF8;
 
-    fn_80225F4C(13, lbl_802515D0, 4);
+    GXSetArray(13, lbl_802515D0, 4);
 
     for (i = 0; i < 11; i++) {
         entry = &batch->sprites[i];
@@ -89,11 +89,11 @@ void fn_80026320(BatchEntry* batch)
 
             value = *(u32*)entry->color;
             fn_801A852C(&value, 0, entry->mode, 0x80000000);
-            fn_80211268(matrix, 'z', entry->angle);
-            fn_80211710(matrix, &points.points[0], &points.points[0]);
-            fn_80211710(matrix, &points.points[1], &points.points[1]);
-            fn_80211710(matrix, &points.points[2], &points.points[2]);
-            fn_80211710(matrix, &points.points[3], &points.points[3]);
+            PSMTXRotRad(matrix, 'z', entry->angle);
+            PSMTXMultVec(matrix, &points.points[0], &points.points[0]);
+            PSMTXMultVec(matrix, &points.points[1], &points.points[1]);
+            PSMTXMultVec(matrix, &points.points[2], &points.points[2]);
+            PSMTXMultVec(matrix, &points.points[3], &points.points[3]);
 
             if (lbl_8064CBA4 == 1) {
                 for (k = 0; k < 4; k++) {
@@ -111,7 +111,7 @@ void fn_80026320(BatchEntry* batch)
             points.points[3].y = lbl_8064DF78 * (points.points[3].y + center_y);
 
             fn_801ECF50(8);
-            fn_80226AB4(0x80, 2, 4);
+            GXBegin(0x80, 2, 4);
             fn_80026754((s32)points.points[0].x, (s32)points.points[0].y, -0x20);
             fn_80026744(lbl_8064DF58, lbl_8064DF58);
             fn_80026754((s32)points.points[1].x, (s32)points.points[1].y, -0x20);

@@ -39,16 +39,16 @@ extern OSBootInfo *bootInfo_8064DA08;
 extern DVDDiskID tmpBuffer_80641960;
 extern void (*lbl_8064DA48)(DVDCommandBlock *);
 
-extern void fn_80213B9C(u32 intType);
-extern BOOL fn_80212758(void *addr, u32 length, u32 offset,
+extern void cbForStateReadingFST(u32 intType);
+extern BOOL DVDLowRead(void *addr, u32 length, u32 offset,
                         DVDLowCallback callback);
 
 /* Read the file system table, retaining this state for drive-error retries. */
-void fn_80213B48(DVDCommandBlock *block)
+void stateReadingFST(DVDCommandBlock *block)
 {
-    lbl_8064DA48 = fn_80213B48;
-    fn_80212758(bootInfo_8064DA08->FSTLocation,
+    lbl_8064DA48 = stateReadingFST;
+    DVDLowRead(bootInfo_8064DA08->FSTLocation,
                  (((DVDBootBlock *)&tmpBuffer_80641960)->FSTLength + 31) & ~31U,
                  ((DVDBootBlock *)&tmpBuffer_80641960)->FSTPosition,
-                 fn_80213B9C);
+                 cbForStateReadingFST);
 }

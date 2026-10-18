@@ -1,4 +1,4 @@
-/* fn_80234C38: residue 2 classification (Vorbis _2class variant). */
+/* _2class: residue 2 classification (Vorbis _2class variant). */
 
 typedef int s32;
 
@@ -18,7 +18,7 @@ typedef struct ResidueLook {
 void *fn_8022F8C4(s32 size);
 void *memset(void *dest, int value, unsigned long size);
 
-s32 **fn_80234C38(void *vb, ResidueLook *look, float **in, s32 ch,
+s32 **_2class(void *vb, ResidueLook *look, float **in, s32 ch,
                   s32 (*classify)(float *, s32, ResidueLook *, s32, s32)) {
     s32 i, j, k, l;
     ResidueInfo *info = look->info;

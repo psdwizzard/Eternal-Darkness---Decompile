@@ -1,5 +1,5 @@
 /* Split half-pi expansion used during angle reduction. */
-const volatile double lbl_8023A0B8[8] = {
+const volatile double PIo2[8] = {
     1.570796251296997,
     7.549789415861596e-08,
     5.390302529957765e-15,

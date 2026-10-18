@@ -10,7 +10,7 @@ typedef struct AudioComment {
 extern void *memset(void *dest, int value, unsigned long size);
 
 /* Initialize the vendor string and user comment list. */
-void fn_8023287C(AudioComment *comment)
+void vorbis_comment_init(AudioComment *comment)
 {
     memset(comment, 0, sizeof(*comment));
 }

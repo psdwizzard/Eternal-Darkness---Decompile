@@ -17,7 +17,7 @@ typedef struct HashTable {
     int size;
 } HashTable;
 
-int fn_801678BC(HashTable* table)
+int numuse(HashTable* table)
 {
     int i;
     int count = 0;

@@ -1,4 +1,4 @@
-/* fn_80223B7C: GXCPInterruptHandler (Dolphin SDK GXFifo.c).
+/* GXCPInterruptHandler: GXCPInterruptHandler (Dolphin SDK GXFifo.c).
  * Latches the CP status register, then services the FIFO high/low
  * watermark interrupts (suspending/resuming the GX thread) and the
  * breakpoint interrupt (invoking the user breakpoint callback inside a
@@ -25,49 +25,49 @@ typedef void (*GXBreakPtCallback)(void);
 
 extern GXData *gx;
 extern volatile u16 *__cpReg;
-extern OSThread *lbl_8064DB98;          /* __GXCurrentThread */
-extern u32 lbl_8064DBA0;                /* GXOverflowSuspendInProgress */
-extern GXBreakPtCallback lbl_8064DBA4;  /* BreakPointCB */
-extern u32 lbl_8064DBA8;                /* __GXOverflowCount */
+extern OSThread *__GXCurrentThread;          /* __GXCurrentThread */
+extern u32 GXOverflowSuspendInProgress;                /* GXOverflowSuspendInProgress */
+extern GXBreakPtCallback BreakPointCB;  /* BreakPointCB */
+extern u32 __GXOverflowCount;                /* __GXOverflowCount */
 
 extern void OSClearContext(OSContext *context);
 extern void OSSetCurrentContext(OSContext *context);
-int fn_8020FC0C(OSThread *thread);  /* OSResumeThread */
-int fn_8020FE94(OSThread *thread);  /* OSSuspendThread */
-void fn_802244AC(u8 hiWatermarkEn, u8 loWatermarkEn); /* __GXWriteFifoIntEnable */
-void fn_802244F8(u8 hiWatermarkClr, u8 loWatermarkClr); /* __GXWriteFifoIntReset */
+int OSResumeThread(OSThread *thread);  /* OSResumeThread */
+int OSSuspendThread(OSThread *thread);  /* OSSuspendThread */
+void __GXWriteFifoIntEnable(u8 hiWatermarkEn, u8 loWatermarkEn); /* __GXWriteFifoIntEnable */
+void __GXWriteFifoIntReset(u8 hiWatermarkClr, u8 loWatermarkClr); /* __GXWriteFifoIntReset */
 
 #define GET_REG_FIELD(reg, size, shift) (((reg) >> (shift)) & ((1 << (size)) - 1))
 #define SET_REG_FIELD(reg, size, shift, val) \
     ((reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
 
-void fn_80223B7C(s16 interrupt, OSContext *context) {
+void GXCPInterruptHandler(s16 interrupt, OSContext *context) {
     OSContext exceptionContext;
 
     gx->cpStatus = __cpReg[0];
 
     if (GET_REG_FIELD(gx->cpEnable, 1, 3) && GET_REG_FIELD(gx->cpStatus, 1, 1)) {
-        fn_8020FC0C(lbl_8064DB98);
-        lbl_8064DBA0 = 0;
-        fn_802244F8(1, 1);
-        fn_802244AC(1, 0);
+        OSResumeThread(__GXCurrentThread);
+        GXOverflowSuspendInProgress = 0;
+        __GXWriteFifoIntReset(1, 1);
+        __GXWriteFifoIntEnable(1, 0);
     }
 
     if (GET_REG_FIELD(gx->cpEnable, 1, 2) && GET_REG_FIELD(gx->cpStatus, 1, 0)) {
-        lbl_8064DBA8++;
-        fn_802244AC(0, 1);
-        fn_802244F8(1, 0);
-        lbl_8064DBA0 = 1;
-        fn_8020FE94(lbl_8064DB98);
+        __GXOverflowCount++;
+        __GXWriteFifoIntEnable(0, 1);
+        __GXWriteFifoIntReset(1, 0);
+        GXOverflowSuspendInProgress = 1;
+        OSSuspendThread(__GXCurrentThread);
     }
 
     if (GET_REG_FIELD(gx->cpEnable, 1, 5) && GET_REG_FIELD(gx->cpStatus, 1, 4)) {
         SET_REG_FIELD(gx->cpEnable, 1, 5, 0);
         __cpReg[1] = gx->cpEnable;
-        if (lbl_8064DBA4 != 0) {
+        if (BreakPointCB != 0) {
             OSClearContext(&exceptionContext);
             OSSetCurrentContext(&exceptionContext);
-            lbl_8064DBA4();
+            BreakPointCB();
             OSClearContext(&exceptionContext);
             OSSetCurrentContext(context);
         }

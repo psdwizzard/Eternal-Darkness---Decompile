@@ -73,9 +73,9 @@ extern void fn_801D31E0(GameObject*);
 extern void fn_80181F5C(EffectInfo*);
 extern s16 fn_801D3A34(u32, int);
 extern s16 fn_801CEB2C(u32);
-extern float fn_80048C2C(float);
-extern float fn_80048C50(float);
-extern u32 fn_800FBFB0(void);
+extern float sinf(float);
+extern float cosf(float);
+extern u32 rand(void);
 extern void* fn_80148008(Vec3*, s16*, EffectInfo*, void (*)(void));
 extern void* fn_80156938(void*);
 extern void fn_8017FF1C(void*, int);
@@ -133,8 +133,8 @@ void fn_801D324C(void* arg)
             count = fn_801CEB2C(owner);
             for (i = 0; i < count; i++) {
                 float angle = 6.2831855f * i / count;
-                work0.x = object->position.x + 250.0f * fn_80048C2C(angle);
-                work0.y = object->position.y + 250.0f * fn_80048C50(angle);
+                work0.x = object->position.x + 250.0f * sinf(angle);
+                work0.y = object->position.y + 250.0f * cosf(angle);
                 work0.z = object->position.z;
                 position0 = work0;
                 {
@@ -179,13 +179,13 @@ void fn_801D324C(void* arg)
             count = fn_801CEB2C(owner);
             for (i = 0; i < count; i++) {
                 float angle = 6.2831855f * i / count;
-                work2E.x = object->position.x + 250.0f * fn_80048C2C(angle);
-                work2E.y = object->position.y + 250.0f * fn_80048C50(angle);
+                work2E.x = object->position.x + 250.0f * sinf(angle);
+                work2E.y = object->position.y + 250.0f * cosf(angle);
                 work2E.z = object->position.z;
-                info.type = (fn_800FBFB0() & 7) + 10;
+                info.type = (rand() & 7) + 10;
                 range2E[1] = 0;
                 range2E[0] = 0;
-                range2E[2] = (fn_800FBFB0() & 3) + 10;
+                range2E[2] = (rand() & 3) + 10;
                 position2E = work2E;
                 {
                     void* effect = fn_80148008(&position2E, range2E, &info, fn_80182014);
@@ -206,13 +206,13 @@ void fn_801D324C(void* arg)
             count = fn_801CEB2C(owner);
             for (i = 0; i < count; i++) {
                 float angle = 6.2831855f * i / count;
-                work42.x = object->position.x + 250.0f * fn_80048C2C(angle);
-                work42.y = object->position.y + 250.0f * fn_80048C50(angle);
+                work42.x = object->position.x + 250.0f * sinf(angle);
+                work42.y = object->position.y + 250.0f * cosf(angle);
                 work42.z = object->position.z;
-                info.type = (fn_800FBFB0() & 7) + 5;
+                info.type = (rand() & 7) + 5;
                 range42[1] = 0;
                 range42[0] = 0;
-                range42[2] = (fn_800FBFB0() & 3) + 8;
+                range42[2] = (rand() & 3) + 8;
                 position42 = work42;
                 {
                     void* effect = fn_80148008(&position42, range42, &info, fn_80182014);
@@ -231,10 +231,10 @@ void fn_801D324C(void* arg)
             count = fn_801CEB2C(owner);
             for (i = 0; i < count; i++) {
                 float angle = 6.2831855f * i / count;
-                work56.x = object->position.x + 250.0f * fn_80048C2C(angle);
-                work56.y = object->position.y + 250.0f * fn_80048C50(angle);
+                work56.x = object->position.x + 250.0f * sinf(angle);
+                work56.y = object->position.y + 250.0f * cosf(angle);
                 work56.z = object->position.z;
-                info.type = (fn_800FBFB0() & 3) + 4;
+                info.type = (rand() & 3) + 4;
                 position56 = work56;
                 {
                     void* effect = fn_80148008(&position56, range,

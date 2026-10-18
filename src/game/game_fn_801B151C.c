@@ -10,24 +10,24 @@ typedef struct Entry {
     unsigned char callback[1];
 } Entry;
 
-extern Entry* lbl_8064D344;
-extern Entry* lbl_8064D340;
-extern Entry* lbl_8064D348;
-extern u32 lbl_8064D33C;
+extern Entry* __DTKPlayListHead;
+extern Entry* __DTKPlayListTail;
+extern Entry* __DTKCurrentTrack;
+extern u32 __DTKState;
 
 extern u32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(u32);
-extern int fn_80213394(void*, void*);
-extern void fn_801B10A4(Entry*, u32);
-extern void fn_801B1194(void);
+extern int DVDOpen(void*, void*);
+extern void __DTKCheckUserCallback(Entry*, u32);
+extern void __DTKPrepareCurrentTrack(void);
 
-int fn_801B151C(void* value, Entry* entry, void* data, void* parameter,
+int DTKQueueTrack(void* value, Entry* entry, void* data, void* parameter,
                 void* callback_arg)
 {
     u32 resume = 0;
     u32 interrupts;
 
-    if (fn_80213394(value, entry->callback) == 0) {
+    if (DVDOpen(value, entry->callback) == 0) {
         return 1;
     }
 
@@ -35,29 +35,29 @@ int fn_801B151C(void* value, Entry* entry, void* data, void* parameter,
     entry->value = value;
     entry->data = data;
     entry->callback_arg = callback_arg;
-    if (lbl_8064D344 == 0) {
-        lbl_8064D344 = entry;
-        lbl_8064D340 = entry;
+    if (__DTKPlayListHead == 0) {
+        __DTKPlayListHead = entry;
+        __DTKPlayListTail = entry;
         entry->previous = 0;
         entry->next = 0;
-        if (lbl_8064D33C == 1) {
+        if (__DTKState == 1) {
             resume = 1;
         }
     } else {
-        lbl_8064D340->next = entry;
-        entry->previous = lbl_8064D340;
-        lbl_8064D340 = entry;
+        __DTKPlayListTail->next = entry;
+        entry->previous = __DTKPlayListTail;
+        __DTKPlayListTail = entry;
         entry->next = 0;
     }
-    if (lbl_8064D348 == 0) {
-        lbl_8064D348 = entry;
+    if (__DTKCurrentTrack == 0) {
+        __DTKCurrentTrack = entry;
     }
-    lbl_8064D348->parameter = parameter;
+    __DTKCurrentTrack->parameter = parameter;
     OSRestoreInterrupts(interrupts);
-    fn_801B10A4(entry, 8);
+    __DTKCheckUserCallback(entry, 8);
     if (resume != 0) {
-        lbl_8064D33C = 3;
-        fn_801B1194();
+        __DTKState = 3;
+        __DTKPrepareCurrentTrack();
     }
     return 0;
 }

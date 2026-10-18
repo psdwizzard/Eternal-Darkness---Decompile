@@ -14,10 +14,9 @@ typedef struct SEQ_INSTANCE {
     NOTE* noteKeyOff;
 } SEQ_INSTANCE;
 
-extern NOTE* lbl_8064D384;
-#define noteFree lbl_8064D384
+extern NOTE* noteFree;
 
-void fn_801B244C(SEQ_INSTANCE* seq)
+void ResetNotes(SEQ_INSTANCE* seq)
 {
     NOTE* n;
     u32 i;

@@ -19,11 +19,11 @@ extern StreamState lbl_8032D648;
 extern const volatile char lbl_8023A220[72];
 extern const char lbl_8064FE58[8];
 typedef struct OSMessageQueue OSMessageQueue;
-extern int fn_8020D318(OSMessageQueue*, void**, int);
-extern int fn_8020D250(OSMessageQueue*, void*, int);
-extern void fn_8020D7E0(void*);
-extern void fn_8020D8BC(void*);
-extern void fn_8020C5D0(const char*, int, const char*, ...);
+extern int OSReceiveMessage(OSMessageQueue*, void**, int);
+extern int OSSendMessage(OSMessageQueue*, void*, int);
+extern void OSLockMutex(void*);
+extern void OSUnlockMutex(void*);
+extern void OSPanic(const char*, int, const char*, ...);
 extern void* memcpy(void*, const void*, unsigned long);
 
 static inline StreamBlock* findPrevious(register unsigned long base)
@@ -53,17 +53,17 @@ int fn_80108558(register void* destination, register int size, register int offs
     int i;
 
     for (;;) {
-        if (fn_8020D318((OSMessageQueue*)(base + 0x1368), &message, 0) != 0) {
+        if (OSReceiveMessage((OSMessageQueue*)(base + 0x1368), &message, 0) != 0) {
             break;
         }
         /* ASM: addi keeps the mutex's zero-offset address calculation;
          * the optimizer otherwise reduces it to mr. */
         asm { addi mutex, base, 0 }
-        fn_8020D7E0(mutex);
+        OSLockMutex(mutex);
         for (i = 0, block = (StreamBlock*)(base + 0x13E8); i < 3; i++, block++) {
             if (block->state == 2 && block->start <= offset && offset < block->end) {
                 if (offset + size > block->end) {
-                    fn_8020C5D0((const char*)lbl_8023A220, 0x1AC, lbl_8064FE58);
+                    OSPanic((const char*)lbl_8023A220, 0x1AC, lbl_8064FE58);
                 }
                 if (destination != 0) {
                     memcpy(destination, block->data + offset - block->start, size);
@@ -80,16 +80,16 @@ int fn_80108558(register void* destination, register int size, register int offs
                     addi mutex, base, 0
                 }
                 block->state = nextState;
-                fn_8020D8BC(mutex);
+                OSUnlockMutex(mutex);
                 if (previous != 0) {
-                    fn_8020D250((OSMessageQueue*)(base + 0x13C8), (void*)3, 0);
+                    OSSendMessage((OSMessageQueue*)(base + 0x13C8), (void*)3, 0);
                 }
                 return size;
             }
         }
         /* ASM: addi keeps the mutex's zero-offset address calculation. */
         asm { addi mutex, base, 0 }
-        fn_8020D8BC(mutex);
+        OSUnlockMutex(mutex);
     }
     return -1;
 }

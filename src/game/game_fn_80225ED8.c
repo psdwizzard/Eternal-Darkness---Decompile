@@ -21,16 +21,16 @@ typedef struct GXVtxAttrFmtList {
     u8 frac;
 } GXVtxAttrFmtList;
 
-extern void fn_80225C90(GXVtxFmt fmt, GXAttr attr, GXCompCnt *cnt,
+extern void GXGetVtxAttrFmt(GXVtxFmt fmt, GXAttr attr, GXCompCnt *cnt,
                        GXCompType *type, u8 *frac);
 
-void fn_80225ED8(GXVtxFmt fmt, GXVtxAttrFmtList *list)
+void GXGetVtxAttrFmtv(GXVtxFmt fmt, GXVtxAttrFmtList *list)
 {
     int attr;
 
     for (attr = GX_VA_POS; attr < GX_VA_NBT + 1; ++attr, ++list) {
         list->attr = (GXAttr)attr;
-        fn_80225C90(fmt, (GXAttr)attr, &list->cnt, &list->type, &list->frac);
+        GXGetVtxAttrFmt(fmt, (GXAttr)attr, &list->cnt, &list->type, &list->frac);
     }
     list->attr = (GXAttr)0xFF;
 }

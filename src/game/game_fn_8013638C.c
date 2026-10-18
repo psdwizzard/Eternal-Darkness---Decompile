@@ -29,12 +29,12 @@ extern void fn_8013133C(void* object, int limit);
 extern int fn_801360B4(const Vec3* origin, const Vec3* direction, void* object,
                        u16 descriptor_index, HitTriangle* triangle,
                        float* distance, float max_distance);
-extern void fn_802110A8(Matrix in, Matrix out);
-extern void fn_802114E0(Matrix output, void* angles);
-extern void fn_80211710(Matrix m, Vec3* in, Vec3* out);
-extern void fn_80211A6C(const Vec3* a, const Vec3* b, Vec3* out);
-extern void fn_80211A90(Vec3* in, Vec3* out, float scale);
-extern float fn_80211B08(const Vec3* value);
+extern void PSMTXInverse(Matrix in, Matrix out);
+extern void PSMTXQuat(Matrix output, void* angles);
+extern void PSMTXMultVec(Matrix m, Vec3* in, Vec3* out);
+extern void PSVECSubtract(const Vec3* a, const Vec3* b, Vec3* out);
+extern void PSVECScale(Vec3* in, Vec3* out, float scale);
+extern float PSVECMag(const Vec3* value);
 
 extern float lbl_80650288;
 extern float lbl_8065028C;
@@ -64,22 +64,22 @@ int fn_8013638C(Vec3* start, Vec3* end, void* object, HitTriangle* out_triangle,
     mask = 0;
     scale = (int)(1 << info->scale_shift);
 
-    fn_802114E0(matrix, fn_8011FE34(object));
-    fn_802110A8(matrix, matrix);
+    PSMTXQuat(matrix, fn_8011FE34(object));
+    PSMTXInverse(matrix, matrix);
 
-    fn_80211A6C(start, origin, &v0);
-    fn_80211710(matrix, &v0, &v0);
-    fn_80211A90(&v0, &v0, scale);
-    fn_80211A6C(end, origin, &v1);
-    fn_80211710(matrix, &v1, &v1);
-    fn_80211A90(&v1, &v1, scale);
+    PSVECSubtract(start, origin, &v0);
+    PSMTXMultVec(matrix, &v0, &v0);
+    PSVECScale(&v0, &v0, scale);
+    PSVECSubtract(end, origin, &v1);
+    PSMTXMultVec(matrix, &v1, &v1);
+    PSVECScale(&v1, &v1, scale);
 
-    fn_80211A6C(&v1, &v0, &dir);
-    length = fn_80211B08(&dir);
+    PSVECSubtract(&v1, &v0, &dir);
+    length = PSVECMag(&dir);
     if (lbl_80650288 == length) {
         return 0;
     }
-    fn_80211A90(&dir, &dir, lbl_8065028C / length);
+    PSVECScale(&dir, &dir, lbl_8065028C / length);
 
     if (max_distance > *(float*)((u8*)object + 0x2AC)) {
         max_distance = *(float*)((u8*)object + 0x2AC);

@@ -6,7 +6,7 @@ typedef struct ResourceEntry8 {
     u16 references;
 } ResourceEntry8;
 
-int fn_801BCEA0(ResourceEntry8* left, ResourceEntry8* right)
+int maccmp(ResourceEntry8* left, ResourceEntry8* right)
 {
     return left->id - right->id;
 }

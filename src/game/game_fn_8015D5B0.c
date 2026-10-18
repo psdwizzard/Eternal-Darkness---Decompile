@@ -19,7 +19,7 @@ typedef struct WorkerState {
 } WorkerState;
 
 extern Request* fn_801587C4(void);
-extern void fn_8020D250(void*, void*, int);
+extern void OSSendMessage(void*, void*, int);
 extern void fn_8015A1AC(WorkerState*);
 
 void fn_8015D5B0(WorkerState* state)
@@ -31,7 +31,7 @@ void fn_8015D5B0(WorkerState* state)
             request = fn_801587C4();
             state->pending = 1;
             request->active = 2;
-            fn_8020D250(state->input_queue, request, 1);
+            OSSendMessage(state->input_queue, request, 1);
         }
         state->active = 0;
         fn_8015A1AC(state);

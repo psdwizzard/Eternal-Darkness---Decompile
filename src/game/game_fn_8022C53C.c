@@ -1,4 +1,4 @@
-/* fn_8022C53C (0x8022C53C, 300 bytes): TPLBind (Dolphin SDK texPalette.c). */
+/* UnpackTexPalette (0x8022C53C, 300 bytes): TPLBind (Dolphin SDK texPalette.c). */
 
 typedef unsigned char u8;
 typedef unsigned short u16;
@@ -40,15 +40,15 @@ typedef struct TPLPalette {
     TPLDescriptor *descriptorArray;
 } TPLPalette;
 
-extern void fn_8020C5D0(const char *, int, const char *, ...); /* OSPanic */
+extern void OSPanic(const char *, int, const char *, ...); /* OSPanic */
 extern char lbl_802FF718[]; /* "texPalette.c" */
 extern char lbl_802FF728[];
 
-void fn_8022C53C(TPLPalette *pal) {
+void UnpackTexPalette(TPLPalette *pal) {
     u16 i;
 
     if (pal->versionNumber != 2142000) {
-        fn_8020C5D0(lbl_802FF718, 0x53, lbl_802FF728);
+        OSPanic(lbl_802FF718, 0x53, lbl_802FF728);
     }
 
     pal->descriptorArray = (TPLDescriptor *)((u32)pal->descriptorArray + (u32)pal);

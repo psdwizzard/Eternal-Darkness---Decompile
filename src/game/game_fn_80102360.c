@@ -1,6 +1,6 @@
-extern double fn_800FF35C(double value);
+extern double __ieee754_exp(double value);
 
-double fn_80102360(double value)
+double exp(double value)
 {
-    return fn_800FF35C(value);
+    return __ieee754_exp(value);
 }

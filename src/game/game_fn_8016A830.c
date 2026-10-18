@@ -10,14 +10,14 @@ typedef struct Value {
     double value;
 } Value;
 
-extern void fn_8016057C(Context*, int);
+extern void luaD_checkstack(Context*, int);
 
-void fn_8016A830(Context* context, double value)
+void lua_pushnumber(Context* context, double value)
 {
     ((Value*)context->current)->value = value;
     ((Value*)context->current)->type = 2;
     if (context->current == context->end) {
-        fn_8016057C(context, 1);
+        luaD_checkstack(context, 1);
     }
     context->current = (char*)context->current + 16;
 }

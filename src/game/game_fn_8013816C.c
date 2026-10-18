@@ -2,8 +2,8 @@ extern int fn_800467E8(void);
 extern void* memset(void*, int, unsigned int);
 extern void* fn_8015E7A8(void);
 extern void fn_80139298(void);
-extern int fn_8020D318(void*, void*, int);
-extern void fn_8020D1F0(void*, void*, int);
+extern int OSReceiveMessage(void*, void*, int);
+extern void OSInitMessageQueue(void*, void*, int);
 
 extern void* lbl_8064CFC0;
 extern void* lbl_8064CFF8;
@@ -30,8 +30,8 @@ void fn_8013816C(void)
     lbl_8064D010 = (size + 0x1F) & ~0x1F;
     fn_8015E7A8();
     fn_80139298();
-    fn_8020D318(lbl_805ADFE0, 0, 0);
-    fn_8020D318(lbl_805AE000, 0, 0);
-    fn_8020D1F0(lbl_805ADFE0, &lbl_8064CFC8, 2);
-    fn_8020D1F0(lbl_805AE000, &lbl_8064CFD0, 2);
+    OSReceiveMessage(lbl_805ADFE0, 0, 0);
+    OSReceiveMessage(lbl_805AE000, 0, 0);
+    OSInitMessageQueue(lbl_805ADFE0, &lbl_8064CFC8, 2);
+    OSInitMessageQueue(lbl_805AE000, &lbl_8064CFD0, 2);
 }

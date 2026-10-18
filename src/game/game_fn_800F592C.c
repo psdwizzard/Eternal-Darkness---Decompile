@@ -1,6 +1,6 @@
-extern unsigned char lbl_8032C7A0;
+extern unsigned char bUseSerialIO;
 
-unsigned char fn_800F592C(void)
+unsigned char GetUseSerialIO(void)
 {
-    return lbl_8032C7A0;
+    return bUseSerialIO;
 }

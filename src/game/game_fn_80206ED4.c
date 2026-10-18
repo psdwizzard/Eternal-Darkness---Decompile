@@ -13,9 +13,9 @@ extern EXIControl Ecb_80640AA8[3];
 
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL);
-extern void fn_80206778(s32, EXIControl *);
+extern void SetExiInterruptMask(s32, EXIControl *);
 
-EXICallback fn_80206ED4(s32 chan, EXICallback exiCallback)
+EXICallback EXISetExiCallback(s32 chan, EXICallback exiCallback)
 {
     EXIControl *exi = &Ecb_80640AA8[chan];
     EXICallback previous;
@@ -25,9 +25,9 @@ EXICallback fn_80206ED4(s32 chan, EXICallback exiCallback)
     previous = exi->exiCallback;
     exi->exiCallback = exiCallback;
     if (chan != 2) {
-        fn_80206778(chan, exi);
+        SetExiInterruptMask(chan, exi);
     } else {
-        fn_80206778(0, Ecb_80640AA8);
+        SetExiInterruptMask(0, Ecb_80640AA8);
     }
     OSRestoreInterrupts(enabled);
     return previous;

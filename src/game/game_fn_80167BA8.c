@@ -10,16 +10,16 @@ typedef struct Value {
     } data;
 } Value;
 
-extern Value* fn_801679F8(LuaState*, HashTable*, Value*);
+extern Value* luaH_set(LuaState*, HashTable*, Value*);
 
-void fn_80167BA8(LuaState* state, HashTable* table, void* key, double number)
+void luaH_setstrnum(LuaState* state, HashTable* table, void* key, double number)
 {
     Value value;
     Value* result;
 
     value.type = 3;
     value.data.pointer = key;
-    result = fn_801679F8(state, table, &value);
+    result = luaH_set(state, table, &value);
     result->type = 2;
     result->data.number = number;
 }

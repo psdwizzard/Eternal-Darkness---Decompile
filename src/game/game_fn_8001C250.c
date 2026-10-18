@@ -12,9 +12,9 @@ typedef struct Object {
     State* state;
 } Object;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern int fn_80201B44();
 extern void *fn_80201814();
 extern void *fn_80201B8C();
@@ -25,12 +25,12 @@ s32 fn_8001C250(void* arg)
     Ref* ref = fn_80201814(fn_80201B44());
     s32 value;
 
-    if (fn_8016A598(arg) != 1) {
-        fn_80163BB4(arg, lbl_8023BEF8, 1, fn_8016A598(arg));
+    if (lua_gettop(arg) != 1) {
+        luaO_verror(arg, lbl_8023BEF8, 1, lua_gettop(arg));
         return 0;
     }
 
-    value = (s32)fn_8016A694(arg, 1);
+    value = (s32)lua_tonumber(arg, 1);
     if (ref != 0) {
         Object* object = fn_80201B8C(ref);
         State* state = object != 0 ? object->state : 0;

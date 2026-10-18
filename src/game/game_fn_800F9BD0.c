@@ -5,7 +5,7 @@
 #define lps ((const unsigned long*)src)
 #define lpd ((unsigned long*)dst)
 
-void fn_800F9BD0(void* dst, const void* src, unsigned long n)
+void __copy_longs_rev_aligned(void* dst, const void* src, unsigned long n)
 {
     unsigned long i;
 

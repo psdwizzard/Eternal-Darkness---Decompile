@@ -13,11 +13,11 @@ typedef struct SequenceInfo {
     u8 arg11;
 } SequenceInfo;
 
-extern SequenceInfo* fn_801BD1EC(u32);
+extern SequenceInfo* dataGetFX(u32);
 
-u8 fn_801B7D94(u32 sequence)
+u8 synthFXGetMaxVoices(u32 sequence)
 {
-    SequenceInfo* info = fn_801BD1EC(sequence);
+    SequenceInfo* info = dataGetFX(sequence);
 
     if (info != 0) {
         return info->arg2;

@@ -11,7 +11,7 @@ int fwide(void*, int);
 int __FileWrite(void*, const char*, unsigned long);
 int __pformatter_800FA174(void*, void*, const char*, va_list);
 
-int fn_800F9F20(void* stream, const char* format, ...)
+int fprintf(void* stream, const char* format, ...)
 {
     va_list args;
 

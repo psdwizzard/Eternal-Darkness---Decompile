@@ -1,4 +1,4 @@
-int fn_800F34CC(void)
+int TRKInitializeMutex(void)
 {
     return 0;
 }

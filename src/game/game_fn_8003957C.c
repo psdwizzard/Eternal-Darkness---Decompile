@@ -62,7 +62,7 @@ extern void *fn_80201BC8(void *);
 extern void fn_80201E78(Vec3 *, void *);
 extern s32 fn_80201EB8(void *);
 extern s32 fn_80204180(void *, void *);
-extern void fn_80211A6C(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECSubtract(Vec3 *, Vec3 *, Vec3 *);
 
 s32 fn_8003957C(void *self, void *target, void *area) {
     void *query;
@@ -141,7 +141,7 @@ s32 fn_8003957C(void *self, void *target, void *area) {
                 fn_801A75C0(area, 3, &hit.position);
                 seg.start = hit.position;
                 fn_801A7688(area, 1, &dir);
-                fn_80211A6C(&seg.start, &dir, &seg.end);
+                PSVECSubtract(&seg.start, &dir, &seg.end);
                 fn_801A7610(area, seg);
             }
         } else if (flags & 0x200000) {
@@ -156,7 +156,7 @@ s32 fn_8003957C(void *self, void *target, void *area) {
                 fn_801A75C0(area, 3, &hit.position);
                 seg.start = hit.position;
                 fn_801A7688(area, 1, &dir);
-                fn_80211A6C(&seg.start, &dir, &seg.end);
+                PSVECSubtract(&seg.start, &dir, &seg.end);
                 fn_801A7610(area, seg);
             }
         } else if (flags & 0x40) {

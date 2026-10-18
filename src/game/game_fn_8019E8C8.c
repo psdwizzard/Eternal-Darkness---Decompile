@@ -14,7 +14,7 @@ extern float fn_801790F0(float, float);
 extern void fn_8017A12C(float*, float, float);
 extern int fn_8017A010(float*, int, float, float, float);
 extern void fn_80179904(void*, s16);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern int fn_8019E5E4(u8*);
 
 int fn_8019E8C8(u8* obj)
@@ -76,7 +76,7 @@ int fn_8019E8C8(u8* obj)
                 fn_801F5F98(sound, 0, 2, *(u16*)(data + 2), *(unsigned int*)(data + 4));
                 sound = fn_801E741C(lbl_80251130);
                 fn_801F5F98(sound, 0, 2, *(u16*)(data + 2), *(unsigned int*)(data + 4));
-                *(s16*)(obj + 0x92) = (fn_800FBFB0() & 0x3F) + 50;
+                *(s16*)(obj + 0x92) = (rand() & 0x3F) + 50;
             }
         }
         fn_8017A12C(&difference, *(float*)(obj + 0xBC), *(float*)(obj + 0xDC));
@@ -88,8 +88,8 @@ int fn_8019E8C8(u8* obj)
         *(s16*)(item + 0x12) = *(s16*)(obj + 0xAC) - *(s16*)(item + 0x0C);
         *(s16*)(item + 0x14) = 0;
         fn_80179904(item + 0x10, 2);
-        *(s16*)(item + 0x0A) += *(s16*)(item + 0x10) + (1 - (fn_800FBFB0() & 1));
-        *(s16*)(item + 0x0C) += *(s16*)(item + 0x12) + (1 - (fn_800FBFB0() & 1));
+        *(s16*)(item + 0x0A) += *(s16*)(item + 0x10) + (1 - (rand() & 1));
+        *(s16*)(item + 0x0C) += *(s16*)(item + 0x12) + (1 - (rand() & 1));
         *(s16*)(item + 0x0E) += *(s16*)(item + 0x14);
     }
 
@@ -111,7 +111,7 @@ int fn_8019E8C8(u8* obj)
             int i;
         *(void**)(obj + 0x14C) = fn_8019E5E4;
         for (i = 0; i < count; i++, entry += 0x38)
-            *(u16*)(entry + 8) = *(u16*)(obj + 0x0A) + (fn_800FBFB0() & 0x7F) + 360;
+            *(u16*)(entry + 8) = *(u16*)(obj + 0x0A) + (rand() & 0x7F) + 360;
         }
     }
     return 0;

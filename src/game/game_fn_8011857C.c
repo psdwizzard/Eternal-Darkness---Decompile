@@ -16,8 +16,8 @@ extern unsigned char lbl_80332358[];
 
 extern void fn_80118528(void);
 extern int fn_801391AC(void);
-extern void fn_80213394(void *, void *);
-extern int fn_80213704(void *, void *, unsigned int, int, void *, int);
+extern void DVDOpen(void *, void *);
+extern int DVDReadAsyncPrio(void *, void *, unsigned int, int, void *, int);
 extern void DCInvalidateRange(void *, unsigned int);
 extern void fn_8015E9EC(unsigned int, void *, unsigned int);
 extern void fn_80118370(int, int);
@@ -37,8 +37,8 @@ void fn_8011857C(void)
     lbl_8064CD90 = lbl_8064CD7C + lbl_8064CD78;
 
     if (fn_801391AC() != 0) {
-        fn_80213394(lbl_8024E3B4, lbl_80332358);
-        while (fn_80213704(lbl_80332358, (void *)lbl_8064CD90,
+        DVDOpen(lbl_8024E3B4, lbl_80332358);
+        while (DVDReadAsyncPrio(lbl_80332358, (void *)lbl_8064CD90,
                            (*(unsigned int *)(lbl_80332358 + 0x34) + 31) & ~31,
                            0, fn_80118370, 2) == 0) {
         }

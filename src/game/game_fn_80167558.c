@@ -25,20 +25,20 @@ typedef struct HashTable {
 
 #pragma use_lmw_stmw on
 
-extern void* fn_8016B5CC(LuaState*, void*, unsigned int, const char*, int);
-extern void fn_80160FAC(LuaState*, const char*);
+extern void* luaM_realloc(LuaState*, void*, unsigned int, const char*, int);
+extern void lua_error(LuaState*, const char*);
 extern const char lbl_8024FA74[];
 extern const char lbl_8024FA84[];
 
-void fn_80167558(LuaState* state, HashTable* table, int size)
+void setnodevector(LuaState* state, HashTable* table, int size)
 {
     int i;
 
     if ((unsigned int)size > 0x7FFFFFFD) {
-        fn_80160FAC(state, lbl_8024FA74);
+        lua_error(state, lbl_8024FA74);
     }
 
-    table->nodes = fn_8016B5CC(state, 0, size * sizeof(HashNode),
+    table->nodes = luaM_realloc(state, 0, size * sizeof(HashNode),
                                lbl_8024FA84, 166);
     for (i = 0; i < size; i++) {
         table->nodes[i].key.type = 1;

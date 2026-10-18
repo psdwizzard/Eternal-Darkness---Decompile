@@ -15,10 +15,10 @@ typedef struct StringReadState {
 
 typedef int (*ReadProcType)(void*, int, int);
 
-int fn_800FC094(StringReadState*, int, int);
-int fn_800FC124(ReadProcType, void*, const char*, va_list);
+int __StringRead(StringReadState*, int, int);
+int __sformatter(ReadProcType, void*, const char*, va_list);
 
-int fn_800FBFD0(const char* str, const char* format, ...)
+int sscanf(const char* str, const char* format, ...)
 {
     va_list args;
     StringReadState state;
@@ -29,5 +29,5 @@ int fn_800FBFD0(const char* str, const char* format, ...)
         return -1;
     }
     state.null_seen = 0;
-    return fn_800FC124((ReadProcType)fn_800FC094, &state, format, args);
+    return __sformatter((ReadProcType)__StringRead, &state, format, args);
 }

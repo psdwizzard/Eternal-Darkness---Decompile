@@ -41,7 +41,7 @@ extern void* fn_80201BC8(void*);
 extern void fn_8012C62C(void*, u32, u32*, u32*, u32*, u32);
 extern void fn_8020104C(u32, u32, u32, u32, float);
 extern void fn_80181F5C(EffectInfo*);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_8011F114(Vec3*, void*);
 extern void* fn_80148008(Vec3*, Descriptor*, EffectInfo*, void (*)(void));
 extern void fn_80182014(void);
@@ -69,7 +69,7 @@ void fn_801DB8A0(u32 object_id, s16 value)
         fn_8012C62C(object, 15, &first, &second, &third, 4);
         fn_8020104C(0x39, 0, object_id, 0, lbl_80651198);
         fn_80181F5C(&info);
-        info.variant = (fn_800FBFB0() & 3) + 1;
+        info.variant = (rand() & 3) + 1;
         info.type = 0x10;
         info.count = 4;
         info.value = value;

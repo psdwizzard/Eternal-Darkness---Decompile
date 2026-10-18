@@ -16,7 +16,7 @@ typedef struct GXTexObjInt {
     u8 flags;
 } GXTexObjInt;
 
-u16 fn_8022892C(const GXTexObjInt *obj)
+u16 GXGetTexObjWidth(const GXTexObjInt *obj)
 {
     return (obj->image0 & 0x3FF) + 1;
 }

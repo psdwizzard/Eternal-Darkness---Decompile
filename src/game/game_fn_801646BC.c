@@ -16,25 +16,25 @@ typedef struct Parser {
 
 extern char lbl_8024F848[];
 extern char lbl_8024F868[];
-extern int fn_801644FC(Parser*, void*, SearchResult*);
-extern void fn_8016209C(Parser*, char*, char*);
-extern int fn_80163FE4(void*, void*);
-extern int fn_801645F8(Parser*, SearchResult*);
-extern void fn_8015F9B0(ParserState*, int, int);
+extern int search_local(Parser*, void*, SearchResult*);
+extern void luaX_syntaxerror(Parser*, char*, char*);
+extern int string_constant(void*, void*);
+extern int indexupvalue(Parser*, SearchResult*);
+extern void luaK_code1(ParserState*, int, int);
 
-void fn_801646BC(Parser* parser, void* value)
+void pushupvalue(Parser* parser, void* value)
 {
     SearchResult result;
     ParserState* state = parser->state;
-    int level = fn_801644FC(parser, value, &result);
+    int level = search_local(parser, value, &result);
 
     if (level == -1) {
         if (state->parent == 0) {
-            fn_8016209C(parser, lbl_8024F848, (char*)value + 0x14);
+            luaX_syntaxerror(parser, lbl_8024F848, (char*)value + 0x14);
         }
-        result.depth = fn_80163FE4(state->parent, value);
+        result.depth = string_constant(state->parent, value);
     } else if (level != 1) {
-        fn_8016209C(parser, lbl_8024F868, (char*)value + 0x14);
+        luaX_syntaxerror(parser, lbl_8024F868, (char*)value + 0x14);
     }
-    fn_8015F9B0(state, 10, fn_801645F8(parser, &result));
+    luaK_code1(state, 10, indexupvalue(parser, &result));
 }

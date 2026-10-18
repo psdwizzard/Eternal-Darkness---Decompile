@@ -22,12 +22,12 @@ typedef struct Path {
 } Path;
 
 extern void fn_801ED468(int);
-extern void fn_80226D28(int);
+extern void GXSetCullMode(int);
 extern void fn_801ED118(void);
 extern void fn_801EDA7C(void*, int, int, int);
 extern void fn_801ECF50(int);
 extern void fn_801ECD74(Color);
-extern void fn_80226AB4(int, int, u16);
+extern void GXBegin(int, int, u16);
 extern void fn_800ED6F8(float, float, float);
 extern void fn_800ED6F4(void);
 
@@ -42,12 +42,12 @@ void fn_800EB8B8(Path* path, Color* color)
     }
 
     fn_801ED468(0x1B);
-    fn_80226D28(0);
+    GXSetCullMode(0);
     fn_801ED118();
     fn_801EDA7C(lbl_802FC53C, 0, 0x2BF, 0);
     fn_801ECF50(4);
     fn_801ECD74(*color);
-    fn_80226AB4(0xA8, 3, (path->count - 1) * 2);
+    GXBegin(0xA8, 3, (path->count - 1) * 2);
 
     for (i = 0; i < path->count - 1; i++) {
         PathPoint* p = &path->points[i];

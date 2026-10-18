@@ -15,16 +15,16 @@ typedef struct Command {
     int second;
 } Command;
 
-extern void fn_8015EFEC(Object*, Command*);
-extern int fn_8015F9B0(Object*, int, int);
-extern int fn_8015F0C0(int);
-extern void fn_8015F2B0(Object*, int*, int);
-extern int fn_8015EC10(Object*);
-extern void fn_8015F1F8(Object*, int, int);
+extern void discharge1(Object*, Command*);
+extern int luaK_code1(Object*, int, int);
+extern int invertjump(int);
+extern void luaK_concat(Object*, int*, int);
+extern int luaK_getlabel(Object*);
+extern void luaK_patchlist(Object*, int, int);
 
 #pragma use_lmw_stmw on
 
-void fn_8015F334(Object* object, Command* command, int use_second, int type)
+void luaK_testgo(Object* object, Command* command, int use_second, int type)
 {
     int index;
     int* output;
@@ -41,18 +41,18 @@ void fn_8015F334(Object* object, Command* command, int use_second, int type)
         input = &command->second;
     }
 
-    fn_8015EFEC(object, command);
+    discharge1(object, command);
     index = object->count - 1;
     entries = object->data->entries;
     offset = (unsigned int)index * 4;
     entry_type = entries[index] & 0x3F;
     if (entry_type < 32 || entry_type > 42) {
-        index = fn_8015F9B0(object, type, -1);
+        index = luaK_code1(object, type, -1);
     } else if (use_second != 0) {
-        entries[index] = (entries[index] & ~0x3F) | fn_8015F0C0(entry_type);
+        entries[index] = (entries[index] & ~0x3F) | invertjump(entry_type);
     }
 
-    fn_8015F2B0(object, input, index);
-    fn_8015F1F8(object, *output, fn_8015EC10(object));
+    luaK_concat(object, input, index);
+    luaK_patchlist(object, *output, luaK_getlabel(object));
     *output = -1;
 }

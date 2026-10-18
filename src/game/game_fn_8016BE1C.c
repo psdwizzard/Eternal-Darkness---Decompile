@@ -1,21 +1,21 @@
-extern void* fn_8016A784(void*, int);
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
+extern void* lua_touserdata(void*, int);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
 extern int fn_80201B54();
-extern void fn_8016A830(void*, double);
+extern void lua_pushnumber(void*, double);
 extern const char lbl_8024FF00[];
 
 int fn_8016BE1C(void* state)
 {
-    void* object = fn_8016A784(state, 1);
+    void* object = lua_touserdata(state, 1);
     int result;
 
-    if (fn_8016A598(state) != 1) {
-        fn_80163BB4(state, lbl_8024FF00, 1, fn_8016A598(state));
+    if (lua_gettop(state) != 1) {
+        luaO_verror(state, lbl_8024FF00, 1, lua_gettop(state));
         return 0;
     }
 
     result = fn_80201B54(object);
-    fn_8016A830(state, result);
+    lua_pushnumber(state, result);
     return 1;
 }

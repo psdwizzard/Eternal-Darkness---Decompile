@@ -4,7 +4,7 @@ typedef unsigned long u32;
 
 extern volatile u16 *__peReg;
 
-void fn_802266FC(u8 enable)
+void GXPokeAlphaUpdate(u8 enable)
 {
     volatile u16 *blendReg = &__peReg[1];
     u32 value = *blendReg;

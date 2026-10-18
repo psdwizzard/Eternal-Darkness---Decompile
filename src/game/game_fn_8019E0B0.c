@@ -29,7 +29,7 @@ extern u8 lbl_80606328[];
 
 extern void* memset(void*, int, unsigned long);
 extern void fn_801804AC(void*, void*, void*, void*);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_801805E0(void*, int, u8, u32, void*, float);
 extern void fn_80180554(void*, void*, void*, void*, u16, u16);
 extern float fn_801790F0(float, float);
@@ -101,7 +101,7 @@ void fn_8019E0B0(u8* obj, s16* pos, void* arg2, u8* config)
     /* Keep the seed's third component: fn_80180554 copies all three shorts. */
     *(u32*)delta = lbl_80651E30;
     *(u16*)(delta + 2) = lbl_80651E34;
-    selectedCorner = fn_800FBFB0() & 3;
+    selectedCorner = rand() & 3;
     {
         int opposite = selectedCorner + 2;
         s16 y, x;
@@ -116,8 +116,8 @@ void fn_8019E0B0(u8* obj, s16* pos, void* arg2, u8* config)
         delta[0] = fields->x[0] - x;
         delta[1] = fields->y[0] - y;
     }
-    fn_801805E0(item + 0x20, 4, (u8)(config[1] - (fn_800FBFB0() & 0xF)), 0, lbl_802FC5BC + 0xC, lbl_80650C58);
-    fn_80180554(item, &start, delta, seedB, (u16)(1000 + *(u16*)(config + 8) + (fn_800FBFB0() & 0x7F)), 0);
+    fn_801805E0(item + 0x20, 4, (u8)(config[1] - (rand() & 0xF)), 0, lbl_802FC5BC + 0xC, lbl_80650C58);
+    fn_80180554(item, &start, delta, seedB, (u16)(1000 + *(u16*)(config + 8) + (rand() & 0x7F)), 0);
     fields->previousAngle[0] = fields->angle[0] = fn_801790F0((float)delta[1], (float)delta[0]) - lbl_80650C5C;
     fn_80180518(obj + 0x24, 0, 1);
     fn_8018E230(item, item + 0x2B, 1, 0, 5, 250);
@@ -130,7 +130,7 @@ void fn_8019E0B0(u8* obj, s16* pos, void* arg2, u8* config)
             s16* corner;
             *(u32*)seedA = lbl_80651E38;
             *(u16*)(seedA + 4) = lbl_80651E3C;
-            corner = corners + (fn_800FBFB0() & 3) * 2;
+            corner = corners + (rand() & 3) * 2;
             start.x = corner[0];
             start.y = corner[1];
             start.z = pos[2];
@@ -138,8 +138,8 @@ void fn_8019E0B0(u8* obj, s16* pos, void* arg2, u8* config)
             fn_8018EFB0(seedA, 2, 1);
             if (*(s16*)seedA == 0) *(s16*)seedA = 1;
             if (*(s16*)(seedA + 2) == 0) *(s16*)(seedA + 2) = 1;
-            fn_80180554(item, &start, seedA, seedB, (u16)(1000 + *(u16*)(config + 8) + (fn_800FBFB0() & 0x7F)), 0);
-            fn_801805E0(item + 0x20, 4, (u8)(config[1] - (fn_800FBFB0() & 0xF)), (i & 0x3F) << 2, lbl_802FC5BC + 0xC, lbl_80650C58);
+            fn_80180554(item, &start, seedA, seedB, (u16)(1000 + *(u16*)(config + 8) + (rand() & 0x7F)), 0);
+            fn_801805E0(item + 0x20, 4, (u8)(config[1] - (rand() & 0xF)), (i & 0x3F) << 2, lbl_802FC5BC + 0xC, lbl_80650C58);
             fields->x[i] = start.x + (*(s16*)seedA * 16);
             fields->y[i] = start.y + (*(s16*)(seedA + 2) * 16);
             fields->previousAngle[i] = fields->angle[i] =

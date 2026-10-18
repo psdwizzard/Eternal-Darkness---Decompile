@@ -17,43 +17,43 @@ typedef struct CARDControl {
     CARDCallback apiCallback;
 } CARDControl;
 
-extern s32 fn_8021D2BC(s32 channel, CARDControl **card);
-extern s32 fn_8021D374(CARDControl *card, s32 result);
-extern CARDDir *fn_8021EF3C(CARDControl *card);
-extern s32 fn_8021F0DC(s32 channel, CARDCallback callback);
-extern s32 fn_80221560(CARDControl *card, const char *fileName, s32 *fileNo);
-extern s32 fn_8022187C(CARDControl *card, s32 fileNo);
+extern s32 __CARDGetControlBlock(s32 channel, CARDControl **card);
+extern s32 __CARDPutControlBlock(CARDControl *card, s32 result);
+extern CARDDir *__CARDGetDirBlock(CARDControl *card);
+extern s32 __CARDUpdateDir(s32 channel, CARDCallback callback);
+extern s32 __CARDGetFileNo(CARDControl *card, const char *fileName, s32 *fileNo);
+extern s32 __CARDIsOpened(CARDControl *card, s32 fileNo);
 extern void *memset(void *dst, s32 value, u32 size);
-extern void fn_8021C374(s32 channel, s32 result);
-extern void fn_80222338(s32 channel, s32 result);
+extern void __CARDDefaultApiCallback(s32 channel, s32 result);
+extern void DeleteCallback(s32 channel, s32 result);
 
-s32 fn_802223DC(s32 channel, const char *fileName, CARDCallback callback)
+s32 CARDDeleteAsync(s32 channel, const char *fileName, CARDCallback callback)
 {
     CARDControl *card;
     s32 fileNo;
     s32 result;
     CARDDir *dir;
 
-    result = fn_8021D2BC(channel, &card);
+    result = __CARDGetControlBlock(channel, &card);
     if (result < 0) {
         return result;
     }
 
-    result = fn_80221560(card, fileName, &fileNo);
+    result = __CARDGetFileNo(card, fileName, &fileNo);
     if (result < 0) {
-        return fn_8021D374(card, result);
+        return __CARDPutControlBlock(card, result);
     }
-    if (fn_8022187C(card, fileNo) != 0) {
-        return fn_8021D374(card, -1);
+    if (__CARDIsOpened(card, fileNo) != 0) {
+        return __CARDPutControlBlock(card, -1);
     }
 
-    dir = fn_8021EF3C(card) + fileNo;
+    dir = __CARDGetDirBlock(card) + fileNo;
     card->freeNo = dir->startBlock;
     memset(dir, 0xFF, 0x40);
-    card->apiCallback = callback ? callback : fn_8021C374;
-    result = fn_8021F0DC(channel, fn_80222338);
+    card->apiCallback = callback ? callback : __CARDDefaultApiCallback;
+    result = __CARDUpdateDir(channel, DeleteCallback);
     if (result < 0) {
-        fn_8021D374(card, result);
+        __CARDPutControlBlock(card, result);
     }
     return result;
 }

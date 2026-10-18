@@ -29,14 +29,14 @@ typedef struct ScreenPosition {
 
 extern void fn_801F6B6C(Vector*, ScreenPosition*, int, int);
 extern u32 fn_801F6D90(int, int, int);
-extern int fn_800F9E2C(char*, const char*, void*);
+extern int vsprintf(char*, const char*, void*);
 extern void fn_801E3AA4(int);
 extern u32 fn_801E3A34(Color);
 extern int fn_801E5AD0(int);
 extern void fn_801E5430(s16, s16);
 extern void fn_801E56AC(float, const char*, ...);
 extern void fn_801ED3F4(int);
-extern void fn_8022B4B8(void*, int);
+extern void GXSetProjection(void*, int);
 extern void fn_801ECC4C(void);
 
 extern Color lbl_802FC5BC[];
@@ -76,7 +76,7 @@ void fn_800ED4BC(Vector* position, int colorIndex, const char* format, ...)
     if (distance != 0 && screen.z != 0 && screen.x > 0 && screen.x < 640 &&
         screen.y > 0 && screen.y < 480) {
         va_start(args, format);
-        fn_800F9E2C(buffer, format, args);
+        vsprintf(buffer, format, args);
         scale = clamp_scale(1000.0f / (float)distance);
         savedState = lbl_8064D5FC;
         fn_801E3AA4(0);
@@ -87,7 +87,7 @@ void fn_800ED4BC(Vector* position, int colorIndex, const char* format, ...)
         fn_801E3A34(oldColor);
         fn_801E5AD0(savedFont);
         fn_801ED3F4(savedState);
-        fn_8022B4B8(lbl_8063BF28, 0);
+        GXSetProjection(lbl_8063BF28, 0);
         fn_801ECC4C();
     }
 }

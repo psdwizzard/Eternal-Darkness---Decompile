@@ -35,7 +35,7 @@ extern void *fn_80201B9C(void);
 extern void *fn_80201BC0(void *);
 extern void *fn_80201BC8(void *);
 extern int fn_80201EB8(void *);
-extern void fn_80211A48(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECAdd(Vec3 *, Vec3 *, Vec3 *);
 
 extern void *lbl_8064C4E4;
 extern int lbl_8064D18C;
@@ -59,7 +59,7 @@ int fn_80072F88(char *item, unsigned short itemCount, Spot *spots, unsigned shor
 
     done = 0;
     selfRot = fn_8011F770(self);
-    fn_80211A48(origin, selfRot, &selfPos);
+    PSVECAdd(origin, selfRot, &selfPos);
     targetRot = fn_8011F770(target);
     owner = fn_8012AB2C(self);
 
@@ -92,7 +92,7 @@ int fn_80072F88(char *item, unsigned short itemCount, Spot *spots, unsigned shor
         }
 
         fn_80179DB0(out, &spots->pos);
-        fn_80211A48(out, targetRot, &dir);
+        PSVECAdd(out, targetRot, &dir);
         fn_8013F4D0(&segment, &selfPos, &dir);
         if (lbl_8064C4E4 == self) {
             if (fn_8013B9DC(self, item, itemCount, &segment) != 0) {

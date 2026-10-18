@@ -3,9 +3,9 @@ typedef struct Object {
     void* value;
 } Object;
 
-extern int fn_8015F9B0(void*, int, int);
+extern int luaK_code1(void*, int, int);
 
-int fn_8015ECCC(Object* object, int value)
+int luaK_kstr(Object* object, int value)
 {
-    return fn_8015F9B0(object->value, 7, value);
+    return luaK_code1(object->value, 7, value);
 }

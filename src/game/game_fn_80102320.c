@@ -1,6 +1,6 @@
-extern double fn_800FEDBC(double value);
+extern double __ieee754_acos(double value);
 
-double fn_80102320(double value)
+double acos(double value)
 {
-    return fn_800FEDBC(value);
+    return __ieee754_acos(value);
 }

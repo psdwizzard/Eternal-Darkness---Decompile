@@ -14,11 +14,11 @@ typedef struct SYNTH_VOICE {
     VID_LIST* vidMasterList;
 } SYNTH_VOICE;
 
-extern u32 lbl_8064D458;
-extern VID_LIST* lbl_8064D45C;
-extern VID_LIST* lbl_8064D460;
+extern u32 vidCurrentId;
+extern VID_LIST* vidRoot;
+extern VID_LIST* vidFree;
 
-u32 fn_801C13D4(SYNTH_VOICE* s, u32 returnNewId)
+u32 vidMakeNew(SYNTH_VOICE* s, u32 returnNewId)
 {
     u32 nextId;
     VID_LIST* cursor;
@@ -27,11 +27,11 @@ u32 fn_801C13D4(SYNTH_VOICE* s, u32 returnNewId)
     VID_LIST* freeNode;
 
     do {
-        nextId = lbl_8064D458;
-        lbl_8064D458 = nextId + 1;
+        nextId = vidCurrentId;
+        vidCurrentId = nextId + 1;
     } while (nextId == 0xffffffffU);
 
-    cursor = lbl_8064D45C;
+    cursor = vidRoot;
     prev = 0;
     while ((node = cursor) != 0) {
         if (node->vid > nextId) {
@@ -39,22 +39,22 @@ u32 fn_801C13D4(SYNTH_VOICE* s, u32 returnNewId)
         }
         if (node->vid == nextId) {
             do {
-                nextId = lbl_8064D458;
-                lbl_8064D458 = nextId + 1;
+                nextId = vidCurrentId;
+                vidCurrentId = nextId + 1;
             } while (nextId == 0xffffffffU);
         }
         prev = node;
         cursor = node->next;
     }
 
-    if ((freeNode = lbl_8064D460) == 0) {
+    if ((freeNode = vidFree) == 0) {
         return 0xffffffffU;
     }
-    if ((lbl_8064D460 = lbl_8064D460->next) != 0) {
-        lbl_8064D460->prev = 0;
+    if ((vidFree = vidFree->next) != 0) {
+        vidFree->prev = 0;
     }
     if (prev == 0) {
-        lbl_8064D45C = freeNode;
+        vidRoot = freeNode;
     } else {
         prev->next = freeNode;
     }

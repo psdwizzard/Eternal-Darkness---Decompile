@@ -13,7 +13,7 @@ struct Entry {
 };
 
 extern Entry lbl_8060B5E0[4];
-extern void fn_8021345C(void*);
+extern void DVDClose(void*);
 
 void fn_801AF0E4(u32 type, void* object)
 {
@@ -37,5 +37,5 @@ void fn_801AF0E4(u32 type, void* object)
             break;
         }
     }
-    fn_8021345C(object);
+    DVDClose(object);
 }

@@ -54,7 +54,7 @@ extern void fn_801ED3F4(int);
 extern int fn_80201B44(void);
 extern void *fn_80201814(int);
 extern unsigned int fn_8020216C(void *);
-extern void fn_8022B970(int, int, int, int);
+extern void GXSetScissor(int, int, int, int);
 
 #define ABS(x) ((x) < 0 ? -(x) : (x))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
@@ -124,7 +124,7 @@ void fn_801105D0(register int inputActive)
         lbl_8064CD04 = 0 < lbl_8064CD04 ? 0 : lbl_8064CD04;
     }
 
-    fn_8022B970(0xA0, 0x2D, 0x1A2, 0x166);
+    GXSetScissor(0xA0, 0x2D, 0x1A2, 0x166);
     step = 0.01f * speed;
     for (i = -1; i < 2; i++) {
         Color glow = {0xFF, 0xFF, 0xFF, 0x00};
@@ -301,12 +301,12 @@ clampDone:
                 setTextColor(text);
                 fn_801E5AD0(0x63);
                 fn_801E5430(0x1A0, ty + 2 + lbl_8064CD04);
-                fn_8022B970(0xA0, 0x41, 0x1A2, 0x152);
+                GXSetScissor(0xA0, 0x41, 0x1A2, 0x152);
                 entry = data->entries;
                 entry += index;
                 fn_801E56AC(1.1f, entry->name);
                 fn_801E5430(0x128, ty - 32 + lbl_8064CD04);
-                fn_8022B970(0xA0, 0x41, 0x1A2, 0x152);
+                GXSetScissor(0xA0, 0x41, 0x1A2, 0x152);
                 fn_801E5AD0(0x6E);
                 {
                     char **places = data->places;
@@ -314,7 +314,7 @@ clampDone:
                     fn_801E56AC(0.9f, *places);
                 }
                 fn_801E5430(0x1C2, ty - 32 + lbl_8064CD04);
-                fn_8022B970(0xA0, 0x41, 0x1A2, 0x152);
+                GXSetScissor(0xA0, 0x41, 0x1A2, 0x152);
                 if (entry->act != -1) {
                     fn_801E56AC(0.9f, lbl_8064B8C0, entry->act);
                 }
@@ -322,7 +322,7 @@ clampDone:
         }
     }
 
-    fn_8022B970(0, 0, 0x280, 0x1E0);
+    GXSetScissor(0, 0, 0x280, 0x1E0);
     fn_801E3AA4(0);
     fn_801E5AD0(0x63);
     {

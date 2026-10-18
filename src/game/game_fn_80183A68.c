@@ -19,7 +19,7 @@ extern u8 lbl_80607120[];
 extern u8 lbl_80606318[];
 extern u8 lbl_80606328[];
 
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_801804AC(void*, void*, void*, void*);
 extern void fn_80180554(void*, void*, void*, void*, u16, int);
 extern void fn_801805E0(void*, int, u8, u8, void*, float);
@@ -59,8 +59,8 @@ void fn_80183A68(u8* self, void* arg1, s16* arg2, u8* desc)
     x = arg2[0] * 2;
     y = arg2[1] * 2;
     for (i = 0; i < count; entry += 0x38, i++) {
-        s16 rx = x + (fn_800FBFB0() & 3);
-        s16 ry = y + (fn_800FBFB0() & 3);
+        s16 rx = x + (rand() & 3);
+        s16 ry = y + (rand() & 3);
         if (desc[0x14] == 0) {
             position[1] = rx;
             position[0] = -ry;
@@ -69,7 +69,7 @@ void fn_80183A68(u8* self, void* arg1, s16* arg2, u8* desc)
             position[1] = -rx;
         }
         fn_80180554(entry, arg1, position, &setup, *(u16*)(desc + 8), 0);
-        random_count = desc[1] - ((desc[1] - 1) & fn_800FBFB0());
+        random_count = desc[1] - ((desc[1] - 1) & rand());
         fn_801805E0(entry + 0x20, 4, random_count, i * 4,
                     &color, lbl_806509D4);
         fn_80180518(self + 0x24, i, 1);

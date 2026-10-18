@@ -17,16 +17,16 @@ typedef struct RegistryEntry {
 } RegistryEntry;
 
 extern RegistryEntry lbl_8061C748[];
-extern u16 lbl_8064D3F0;
-extern void fn_801CD2C8(void*, void*);
+extern u16 dataSmpSDirNum;
+extern void hwSaveSample(void*, void*);
 
-int fn_801BC500(u16 id)
+int dataAddSampleReference(u16 id)
 {
     int registry_index = 0;
     GroupEntry* found = 0;
     GroupEntry* entry;
 
-    while ((unsigned)registry_index < lbl_8064D3F0) {
+    while ((unsigned)registry_index < dataSmpSDirNum) {
         entry = lbl_8061C748[registry_index].entries;
         while (entry->id != 0xFFFF) {
             if (entry->id == id && entry->state != 0xFFFF) {
@@ -43,7 +43,7 @@ found_entry:
         void* link;
         found->resolved = found->base + lbl_8061C748[registry_index].value;
         link = (unsigned char*)found + 0xC;
-        fn_801CD2C8(&link, &found->resolved);
+        hwSaveSample(&link, &found->resolved);
     }
     found->state++;
     return 1;

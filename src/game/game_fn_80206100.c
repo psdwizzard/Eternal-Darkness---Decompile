@@ -25,20 +25,20 @@ extern float lbl_80651604;
 
 extern void fn_801F68B0(Vec3 *);
 extern void fn_801F68F8(Vec3 *);
-extern void fn_80211A6C(const Vec3 *, const Vec3 *, Vec3 *);
-extern void fn_80211B64(const Vec3 *, const Vec3 *, Vec3 *);
-extern void fn_80211AAC(const Vec3 *, Vec3 *);
-extern float fn_80211B08(const Vec3 *);
-extern float fn_80211B44(const Vec3 *, const Vec3 *);
-extern void fn_80211A90(const Vec3 *, Vec3 *, float);
+extern void PSVECSubtract(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECCrossProduct(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECNormalize(const Vec3 *, Vec3 *);
+extern float PSVECMag(const Vec3 *);
+extern float PSVECDotProduct(const Vec3 *, const Vec3 *);
+extern void PSVECScale(const Vec3 *, Vec3 *, float);
 extern void *fn_8011FE34(void *);
 extern void fn_8012B7A0(void *, float);
 extern void fn_8012CDF0(void *, int, Vec4, int);
 extern int fn_8011F598(void *, int, int, int, QueryResult *, int);
 extern float fn_800490E8(float, float);
 extern void fn_8017A244(const Vec3 *, Vec4 *, float);
-extern void fn_802114E0(Matrix34, const Vec4 *);
-extern void fn_80211710(Matrix34, const Vec3 *, Vec3 *);
+extern void PSMTXQuat(Matrix34, const Vec4 *);
+extern void PSMTXMultVec(Matrix34, const Vec3 *, Vec3 *);
 extern void fn_8017A34C(const Vec4 *, const Vec4 *, Vec4 *);
 extern void fn_8012CF08(void *, int, Vec4, Vec4, int, int, float);
 extern void fn_8011FABC(void *, int, int);
@@ -72,10 +72,10 @@ void fn_80206100(void *object)
     fn_801F68F8(&random_temp_b);
     random_b = random_temp_b;
     up = lbl_8023B8AC;
-    fn_80211A6C(&random_b, &random_a, &direction);
-    fn_80211B64(&direction, &up, &side);
-    fn_80211B64(&side, &direction, &up);
-    fn_80211AAC(&up, &up);
+    PSVECSubtract(&random_b, &random_a, &direction);
+    PSVECCrossProduct(&direction, &up, &side);
+    PSVECCrossProduct(&side, &direction, &up);
+    PSVECNormalize(&up, &up);
 
     object_rotation = *(Vec4 *)fn_8011FE34(object);
     fn_8012B7A0(object, lbl_806515F8);
@@ -86,27 +86,27 @@ void fn_80206100(void *object)
     }
 
     query_axis = lbl_8023B8B8;
-    fn_80211B64(&query.position, &query_axis, &side);
-    fn_80211B64(&side, &query.position, &query_axis);
-    fn_80211AAC(&query_axis, &query_axis);
-    fn_80211B64(&query_axis, &up, &cross);
-    angle = fn_80211B08(&cross);
+    PSVECCrossProduct(&query.position, &query_axis, &side);
+    PSVECCrossProduct(&side, &query.position, &query_axis);
+    PSVECNormalize(&query_axis, &query_axis);
+    PSVECCrossProduct(&query_axis, &up, &cross);
+    angle = PSVECMag(&cross);
     if ((angle < lbl_806515F8 ? -angle : angle) > lbl_806515EC) {
-        fn_80211AAC(&cross, &cross);
-        dot = fn_80211B44(&query_axis, &up);
+        PSVECNormalize(&cross, &cross);
+        dot = PSVECDotProduct(&query_axis, &up);
         fn_8017A244(&cross, &first_rotation, fn_800490E8(angle, dot));
-        fn_802114E0(rotation_matrix, &first_rotation);
-        fn_80211AAC(&query.position, &query.position);
-        fn_80211710(rotation_matrix, &query.position, &transformed);
-        fn_80211AAC(&transformed, &transformed);
-        fn_80211A90(&direction, &direction, lbl_80651600);
-        fn_80211B64(&transformed, &direction, &second_cross);
-        angle = fn_80211B08(&second_cross);
+        PSMTXQuat(rotation_matrix, &first_rotation);
+        PSVECNormalize(&query.position, &query.position);
+        PSMTXMultVec(rotation_matrix, &query.position, &transformed);
+        PSVECNormalize(&transformed, &transformed);
+        PSVECScale(&direction, &direction, lbl_80651600);
+        PSVECCrossProduct(&transformed, &direction, &second_cross);
+        angle = PSVECMag(&second_cross);
 
         if ((angle < lbl_806515F8 ? -angle : angle) > lbl_806515EC) {
-            fn_80211AAC(&second_cross, &second_cross);
+            PSVECNormalize(&second_cross, &second_cross);
             fn_8017A244(&second_cross, &second_rotation,
-                        fn_800490E8(angle, fn_80211B44(&transformed, &direction)));
+                        fn_800490E8(angle, PSVECDotProduct(&transformed, &direction)));
             fn_8017A34C(&second_rotation, &first_rotation, &combined_rotation);
             fn_8017A34C(&combined_rotation, &object_rotation, &final_rotation_a);
             fn_8012CF08(object, 0xF, object_rotation, final_rotation_a,

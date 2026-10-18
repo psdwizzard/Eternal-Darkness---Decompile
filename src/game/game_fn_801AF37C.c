@@ -50,10 +50,10 @@ extern Work* lbl_8064D310;
 extern u32 lbl_8064D318;
 extern char lbl_8064C2D8;
 extern int fn_801AE2F4(void);
-extern int fn_800F9D4C(char*, char*, char*, u32, char*, ...);
-extern int fn_80213394(char*, char*);
-extern int fn_80213704(char*, void*, int, int, int (*)(int), int);
-extern void fn_8021345C(char*);
+extern int sprintf(char*, char*, char*, u32, char*, ...);
+extern int DVDOpen(char*, char*);
+extern int DVDReadAsyncPrio(char*, void*, int, int, int (*)(int), int);
+extern void DVDClose(char*);
 extern int fn_801AF0E4(int);
 extern int fn_801ADEEC(WorkDesc*, u8, int, int, u8, u8);
 extern int fn_801ADFC4(WorkDesc*, char**, u8, u8, u8);
@@ -72,11 +72,11 @@ int fn_801AF37C(Work* work)
                 done = 0;
                 if (work->count == 1) {
                     if (work->style == 1) {
-                        fn_800F9D4C(work->name0, "%s%04dL%s", "audio/stream/",
+                        sprintf(work->name0, "%s%04dL%s", "audio/stream/",
                                     work->id, &lbl_8064C2D8);
                         work->name1[0] = 0;
                     } else {
-                        fn_800F9D4C(work->name0, "%s%04d%s",
+                        sprintf(work->name0, "%s%04d%s",
                                     "audio/stream/", work->id, &lbl_8064C2D8);
                         work->name1[0] = 0;
                     }
@@ -84,29 +84,29 @@ int fn_801AF37C(Work* work)
                     work->state1 = 0;
                     work->mode0 = 1;
                     work->mode1 = 0;
-                    if (fn_80213394(work->name0, work->buffer0)) {
-                        while (!fn_80213704(work->buffer0, work->source[0], 0x60,
+                    if (DVDOpen(work->name0, work->buffer0)) {
+                        while (!DVDReadAsyncPrio(work->buffer0, work->source[0], 0x60,
                                            0, fn_801AF0E4, 2)) {}
                     } else {
                         done = 1;
                     }
                 } else if (work->count == 2) {
-                    fn_800F9D4C(work->name0, "%s%04dL%s", "audio/stream/",
+                    sprintf(work->name0, "%s%04dL%s", "audio/stream/",
                                 work->id, &lbl_8064C2D8);
-                    fn_800F9D4C(work->name1, "%s%04dR%s",
+                    sprintf(work->name1, "%s%04dR%s",
                                 "audio/stream/", work->id, &lbl_8064C2D8);
                     work->state0 = 1;
                     work->state1 = 1;
                     work->mode0 = 2;
                     work->mode1 = 2;
-                    if (fn_80213394(work->name0, work->buffer0)) {
-                        if (fn_80213394(work->name1, work->buffer1)) {
-                            while (!fn_80213704(work->buffer0, work->source[0], 0x60,
+                    if (DVDOpen(work->name0, work->buffer0)) {
+                        if (DVDOpen(work->name1, work->buffer1)) {
+                            while (!DVDReadAsyncPrio(work->buffer0, work->source[0], 0x60,
                                                0, fn_801AF0E4, 2)) {}
-                            while (!fn_80213704(work->buffer1, work->source[1], 0x60,
+                            while (!DVDReadAsyncPrio(work->buffer1, work->source[1], 0x60,
                                                0, fn_801AF0E4, 2)) {}
                         } else {
-                            fn_8021345C(work->buffer0);
+                            DVDClose(work->buffer0);
                             done = 1;
                         }
                     } else {
@@ -124,11 +124,11 @@ int fn_801AF37C(Work* work)
             }
         } else if (work->state0 == 3) {
             work->state0 = 1;
-            while (!fn_80213704(work->buffer0, work->source[0], 0x60,
+            while (!DVDReadAsyncPrio(work->buffer0, work->source[0], 0x60,
                                0, fn_801AF0E4, 2)) {}
         } else if (work->state1 == 3) {
             work->state1 = 1;
-            while (!fn_80213704(work->buffer1, work->source[1], 0x60,
+            while (!DVDReadAsyncPrio(work->buffer1, work->source[1], 0x60,
                                0, fn_801AF0E4, 2)) {}
         } else if (work->state0 == 0 && work->state1 == 0) {
             int i;

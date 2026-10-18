@@ -30,7 +30,7 @@ extern int fn_800460EC(void);
 extern void fn_80045A24(int, int);
 extern void fn_801F3528(u32*);
 extern void fn_8015DD48(void);
-extern int fn_8020D318(void*, void**, int);
+extern int OSReceiveMessage(void*, void**, int);
 extern void fn_8015C020(int);
 extern void fn_801333CC(void);
 extern void fn_801358B4(int);
@@ -64,11 +64,11 @@ void fn_8015DD94(s16 value)
     lbl_805BB1E0.field1C = 0;
     lbl_805BB1E0.field2 = 2;
 
-    while (fn_8020D318(lbl_805E2600, &message, 0) != 0) {
+    while (OSReceiveMessage(lbl_805E2600, &message, 0) != 0) {
     }
     lbl_805BB1E0.field3 = 1;
     fn_8015C020(0);
-    fn_8020D318(lbl_805E2600, &message, 1);
+    OSReceiveMessage(lbl_805E2600, &message, 1);
     fn_801333CC();
     fn_801358B4(0);
 }

@@ -24,7 +24,7 @@ extern int fn_80201B54();
 extern int fn_80201B64(void* object);
 extern void* fn_80201C48(void* object);
 extern void fn_80201DD8(void* object, u32 value);
-extern void fn_80211A6C();
+extern void PSVECSubtract();
 extern unsigned long long fn_8020123C();
 
 extern void fn_801A6E90(void);
@@ -85,7 +85,7 @@ void fn_80048C74(void* view)
     actor = fn_80201BC8(view);
     object = (void*)fn_80201B54(view);
     fn_801A6E90();
-    fn_80211A6C(&target.words[3], &target.words[0], &direction);
+    PSVECSubtract(&target.words[3], &target.words[0], &direction);
     fn_800490E8(direction.y, direction.x);
 
     fn_801A6DEC(lbl_8064C824);

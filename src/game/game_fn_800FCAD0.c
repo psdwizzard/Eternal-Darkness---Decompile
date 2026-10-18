@@ -1,7 +1,7 @@
 /* fn_800FCAD0: MSL scanf parse_format. */
 
-extern unsigned char lbl_8024AB90[]; /* __ctype_map */
-#define isdigit(c) (lbl_8024AB90[(unsigned char)(c)] & 0x10)
+extern unsigned char __ctype_map[]; /* __ctype_map */
+#define isdigit(c) (__ctype_map[(unsigned char)(c)] & 0x10)
 
 #define INT_MAX 2147483647
 

@@ -21,9 +21,9 @@ typedef struct ObjectInfo {
 } ObjectInfo;
 
 extern const char lbl_8023BEF8[];
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201B8C();
 
@@ -36,13 +36,13 @@ s32 fn_80011C10(void* script)
     ObjectInfo* object;
 
     parser = script;
-    if (fn_8016A598(parser) != 2) {
-        fn_80163BB4(parser, lbl_8023BEF8, 2, fn_8016A598(parser));
+    if (lua_gettop(parser) != 2) {
+        luaO_verror(parser, lbl_8023BEF8, 2, lua_gettop(parser));
         return 0;
     }
 
-    handle = (s32)fn_8016A694(parser, 1);
-    value = (s32)fn_8016A694(parser, 2);
+    handle = (s32)lua_tonumber(parser, 1);
+    value = (s32)lua_tonumber(parser, 2);
     entry = fn_80201814(handle);
     if (entry != 0) {
         object = fn_80201B8C(entry);

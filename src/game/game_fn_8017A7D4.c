@@ -6,7 +6,7 @@ typedef struct Vec4 {
 } Vec4;
 
 extern float fn_8003315C(float);
-extern float fn_80048C2C(float);
+extern float sinf(float);
 extern const float lbl_80650870;
 extern const float lbl_80650878;
 
@@ -23,10 +23,10 @@ void fn_8017A7D4(const Vec4* left, const Vec4* right, float amount,
     if (1.0 + dot > 0.01f) {
         if (1.0 - dot > 0.01f) {
             float angle = fn_8003315C(dot);
-            float sine = fn_80048C2C(angle);
+            float sine = sinf(angle);
             float offset = amount * angle;
-            left_scale = fn_80048C2C(angle - offset) / sine;
-            right_scale = fn_80048C2C(offset) / sine;
+            left_scale = sinf(angle - offset) / sine;
+            right_scale = sinf(offset) / sine;
         } else {
             right_scale = amount;
             left_scale = lbl_80650878 - amount;
@@ -44,8 +44,8 @@ void fn_8017A7D4(const Vec4* left, const Vec4* right, float amount,
         right_scale = lbl_80650870 - left_scale;
         output->w = right->z;
 
-        right_scale = fn_80048C2C(right_scale);
-        left_scale = fn_80048C2C(left_scale);
+        right_scale = sinf(right_scale);
+        left_scale = sinf(left_scale);
         output->x = right_scale * left->x + left_scale * output->x;
         output->y = right_scale * left->y + left_scale * output->y;
         output->z = right_scale * left->z + left_scale * output->z;

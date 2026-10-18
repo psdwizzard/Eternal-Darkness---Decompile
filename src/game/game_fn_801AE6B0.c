@@ -25,11 +25,11 @@ struct Entry {
 };
 
 extern Entry lbl_8060B430[4];
-extern void fn_8021345C(void*);
-extern int fn_80215C34(void*);
+extern void DVDClose(void*);
+extern int DVDGetCommandBlockStatus(void*);
 extern int fn_801AE5DC(Entry*);
-extern void fn_801B9E7C(void*, u32, u32, u32, u32);
-extern void fn_801BB3A0(void*);
+extern void sndStreamARAMUpdate(void*, u32, u32, u32, u32);
+extern void sndStreamDeactivate(void*);
 
 void fn_801AE6B0(u32 unused, void* lock)
 {
@@ -47,12 +47,12 @@ void fn_801AE6B0(u32 unused, void* lock)
     entry->active = 0;
     if (entry->pending != 0) {
         entry->pending = 0;
-        fn_8021345C(entry->lock);
+        DVDClose(entry->lock);
         entry->state = 0;
         return;
     }
 
-    if (fn_80215C34(lock) == 0) {
+    if (DVDGetCommandBlockStatus(lock) == 0) {
         switch (entry->state) {
         case 2:
             if (entry->first != 0) {
@@ -100,7 +100,7 @@ void fn_801AE6B0(u32 unused, void* lock)
             }
             break;
         case 4:
-            fn_801B9E7C(entry->stream,
+            sndStreamARAMUpdate(entry->stream,
                         entry->alternate_half != 0 ? 0 : entry->buffer_size >> 1,
                         entry->buffer_size >> 1, 0, 0);
             break;
@@ -109,9 +109,9 @@ void fn_801AE6B0(u32 unused, void* lock)
         }
     } else {
         if (entry->state == 4) {
-            fn_801BB3A0(entry->stream);
+            sndStreamDeactivate(entry->stream);
         }
-        fn_8021345C(entry->lock);
+        DVDClose(entry->lock);
         entry->state = 0;
         if (entry->first != 0) {
             entry->first->second = 0;

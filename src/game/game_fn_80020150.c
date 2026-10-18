@@ -68,7 +68,7 @@ extern s32 fn_800B194C(void);
 extern void fn_800B177C(int, void (*)(void));
 extern void fn_800B689C(s32, s32);
 extern void fn_800B65E4(s32);
-extern s32 fn_802201FC(s32);
+extern s32 CARDProbe(s32);
 extern void fn_80020D70(void);
 extern void fn_801E5FB0(void*);
 
@@ -85,18 +85,18 @@ extern void fn_801A99B4(void);
 extern int fn_801A98F4(int, void*);
 /* This wrapper forwards the incoming sound handle to the audio backend. */
 extern void fn_801A9964();
-extern void fn_8020F0F8(void*);
-extern void fn_8020EF80(void*);
-extern void fn_8020EFBC(void*);
-extern s64 fn_8020F088(void*);
-extern s32 fn_8020ED10(void);
-extern void fn_8020ED80(s32);
-extern void* fn_80218308(void);
+extern void OSResetStopwatch(void*);
+extern void OSStartStopwatch(void*);
+extern void OSStopStopwatch(void*);
+extern s64 OSCheckStopwatch(void*);
+extern s32 OSGetProgressiveMode(void);
+extern void OSSetProgressiveMode(s32);
+extern void* VIGetDTVStatus(void);
 extern s64 fn_800F5ECC(s64, s64);
 extern float fn_800F6264(s64);
 
 /* Convert time-base ticks using the bus clock, as in the retail call sequence. */
-#define TIMER_MS() fn_800F6264(fn_800F5ECC(fn_8020F088(base + 0x60), \
+#define TIMER_MS() fn_800F6264(fn_800F5ECC(OSCheckStopwatch(base + 0x60), \
     (*(volatile u32*)0x800000F8 / 4) / 1000))
 extern u32 fn_80144710(u32, int, int);
 extern void fn_80052580(s32, s32, s32, s32, s32);
@@ -183,8 +183,8 @@ previous_ready:
         asm { addi view, base, 0x1C }
         if (!(view->flags & 2)) {
             view->flags |= 2;
-            fn_8020F0F8(base + 0x60);
-            fn_8020EF80(base + 0x60);
+            OSResetStopwatch(base + 0x60);
+            OSStartStopwatch(base + 0x60);
             break;
         }
         limit = 1000;
@@ -217,8 +217,8 @@ previous_ready:
         asm { addi view, base, 0x1C }
         if (!(view->flags & 2)) {
             view->flags |= 2;
-            fn_8020F0F8(base + 0x60);
-            fn_8020EF80(base + 0x60);
+            OSResetStopwatch(base + 0x60);
+            OSStartStopwatch(base + 0x60);
             break;
         }
         limit = 500;
@@ -252,8 +252,8 @@ previous_ready:
         if (previous->previous_value != 255) break;
         if (!(runtime->flags & 2)) {
             runtime->flags |= 2;
-            fn_8020F0F8(base + 0x60);
-            fn_8020EF80(base + 0x60);
+            OSResetStopwatch(base + 0x60);
+            OSStartStopwatch(base + 0x60);
             fn_8001DA18();
             if (!(runtime->flags & 1)) {
                 fn_801AD404(100, 100, 1);
@@ -304,7 +304,7 @@ previous_ready:
             prior = lbl_8064C6B4;
             latch = lbl_8064C6BC;
             for (; i <= 1; ++i, ++prior, ++latch) {
-                s32 current = fn_802201FC(i);
+                s32 current = CARDProbe(i);
                 s32 old = *prior;
                 *prior = current;
                 if (current && !old) {
@@ -326,13 +326,13 @@ previous_ready:
         s32 ready;
         if (!(runtime->flags & 2)) {
             runtime->flags |= 2;
-            fn_8020F0F8(base + 0x60);
-            fn_8020EF80(base + 0x60);
+            OSResetStopwatch(base + 0x60);
+            OSStartStopwatch(base + 0x60);
         }
         ready = 0;
         if (runtime->counter <= 120)
-            ready = lbl_8064C6D0 | (fn_8020ED10() == 1);
-        if (lbl_8064C654 == 0 && fn_80218308() && ready && !lbl_8064C644) {
+            ready = lbl_8064C6D0 | (OSGetProgressiveMode() == 1);
+        if (lbl_8064C654 == 0 && VIGetDTVStatus() && ready && !lbl_8064C644) {
             TextDescriptor* second;
             ((MenuState*)base)->runtime.first_handle = fn_801E6CA0(lbl_8064C504, 0, 32, 0, 1);
             second = fn_801E6CA0(lbl_8064C504, 0, 33, 0, 1);
@@ -354,7 +354,7 @@ previous_ready:
             view->selection = 1;
             break;
         }
-        if (!fn_80218308()) fn_8020ED80(0);
+        if (!VIGetDTVStatus()) OSSetProgressiveMode(0);
         if (fn_801AD72C() == -1) {
             if (TIMER_MS() > lbl_8064DED8) {
                 fn_801AD404(0, 0, 10);
@@ -425,11 +425,11 @@ previous_ready:
         if (previous->previous_value == 255) {
             fn_8001DE84(7, 0);
             fn_8001DA18();
-            fn_8020F0F8(base + 0x60);
-            fn_8020EF80(base + 0x60);
+            OSResetStopwatch(base + 0x60);
+            OSStartStopwatch(base + 0x60);
             fn_80042F34();
             fn_80042E94();
-            fn_8020F088(base + 0x60);
+            OSCheckStopwatch(base + 0x60);
             if (!(runtime->flags & 1)) fn_80052580(0, 1, 0, 0, 0);
             else runtime->sound_handle = fn_801A98F4(0x275, (void*)100);
             runtime->counter = 0;
@@ -441,8 +441,8 @@ previous_ready:
     case 4:
         if (previous->previous_value == 255 && !(runtime->flags & 2)) {
             runtime->flags |= 2;
-            fn_8020F0F8(base + 0x60);
-            fn_8020EF80(base + 0x60);
+            OSResetStopwatch(base + 0x60);
+            OSStartStopwatch(base + 0x60);
         }
         break;
 
@@ -468,18 +468,18 @@ previous_ready:
         float now;
         if (!(runtime->flags & 2)) {
             runtime->flags |= 2;
-            fn_8020EF80(base + 0x60);
-            fn_8020F0F8(base + 0x60);
+            OSStartStopwatch(base + 0x60);
+            OSResetStopwatch(base + 0x60);
         }
         now = TIMER_MS();
         if (fn_80144710(-1, 0, 0)) {
-            fn_8020EFBC(base + 0x60);
-            fn_8020F0F8(base + 0x60);
-            fn_8020EF80(base + 0x60);
+            OSStopStopwatch(base + 0x60);
+            OSResetStopwatch(base + 0x60);
+            OSStartStopwatch(base + 0x60);
         }
         if (now >= lbl_8064DEDC) {
             runtime->flags = 40;
-            fn_8020EFBC(base + 0x60);
+            OSStopStopwatch(base + 0x60);
             runtime->counter = 0;
             *fade = 200;
             fn_8001DFEC(23, 0);

@@ -7,7 +7,7 @@ extern BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void *callback);
 extern BOOL EXISync(s32 chan);
 extern BOOL EXIDeselect(s32 chan);
 
-s32 fn_8021C788(s32 chan, void *buf)
+s32 __CARDReadStatus(s32 chan, void *buf)
 {
     BOOL err;
     u32 cmd;

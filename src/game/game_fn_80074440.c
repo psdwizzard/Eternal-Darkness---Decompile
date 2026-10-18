@@ -14,7 +14,7 @@ extern float fn_8011F6F0(void *);
 extern void *fn_8012AB2C(void *);
 extern void fn_8013F3C0(Matrix, const Vec3 *, const Vec3 *, float);
 extern int fn_8013FDB4(void *, Matrix, Vec3 *, void *, int, void *);
-extern float fn_80211D74(const Vec3 *, Vec3 *);
+extern float PSVECDistance(const Vec3 *, Vec3 *);
 extern const float lbl_8064E890;
 
 int fn_80074440(void *object, void *other, Vec3 *position, Vec3 *target)
@@ -42,7 +42,7 @@ int fn_80074440(void *object, void *other, Vec3 *position, Vec3 *target)
         if (fn_8013FDB4(world, (float (*)[4])(&matrix.reserved + 1), &hit,
                         object, 11, &detail) != 0) {
             normal = hit;
-            if (fn_80211D74(target, &normal) > lbl_8064E890) {
+            if (PSVECDistance(target, &normal) > lbl_8064E890) {
                 result = 0;
             }
         }

@@ -28,7 +28,7 @@ typedef struct Instance {
 } Instance;
 
 /* Release each submap's three lookup objects through their handlers. */
-void fn_80233530(Instance *inst) {
+void mapping0_free_look(Instance *inst) {
     s32 offset;
     s32 i;
 

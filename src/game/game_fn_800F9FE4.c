@@ -12,7 +12,7 @@ int fwide(void*, int);
 int __FileWrite(void*, const char*, unsigned long);
 int __pformatter_800FA174(void*, void*, const char*, va_list);
 
-int fn_800F9FE4(const char* format, ...)
+int printf(const char* format, ...)
 {
     void* stream = __files + 0x50;
     va_list args;

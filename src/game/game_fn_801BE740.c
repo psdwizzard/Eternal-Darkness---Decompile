@@ -23,10 +23,10 @@ typedef struct SYNTH_VOICE {
 } SYNTH_VOICE;
 #pragma pack()
 
-extern void fn_801CB2B8(void*, u8, s32, u8, u32);
-extern void fn_801CA798(u8, u8, u32);
+extern void inpAddCtrl(void*, u8, s32, u8, u32);
+extern void inpSetGlobalMIDIDirtyFlag(u8, u8, u32);
 
-void fn_801BE740(SYNTH_VOICE* svoice, void* dest, MSTEP* cstep, u64 tstflag, u32 dirtyFlag)
+void SelectSource(SYNTH_VOICE* svoice, void* dest, MSTEP* cstep, u64 tstflag, u32 dirtyFlag)
 {
     s32 scale;
     u8 combineMode;
@@ -46,10 +46,10 @@ void fn_801BE740(SYNTH_VOICE* svoice, void* dest, MSTEP* cstep, u64 tstflag, u32
         scale += ((s8)(cstep->para2 >> 0x10) << 8) / 100;
     }
 
-    fn_801CB2B8(dest, (u8)(cstep->para1 >> 8), scale, combineMode, (u8)(cstep->para2 >> 8) != 0);
+    inpAddCtrl(dest, (u8)(cstep->para1 >> 8), scale, combineMode, (u8)(cstep->para2 >> 8) != 0);
 
     if ((dirtyFlag & 0x80000000) != 0) {
-        fn_801CA798(svoice->midi, svoice->midiSet, dirtyFlag);
+        inpSetGlobalMIDIDirtyFlag(svoice->midi, svoice->midiSet, dirtyFlag);
     } else {
         svoice->midiDirtyFlags |= dirtyFlag;
     }

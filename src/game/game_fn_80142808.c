@@ -14,7 +14,7 @@ extern float lbl_8065042C;
 extern int fn_8013FDB4(void*, QueryObject*, Contact*, int, int, void*);
 extern void fn_8013F600(Contact*, Vec3*, float*);
 extern void fn_8013C5F4(QueryObject*, Contact*, Vec3*, float, float);
-extern float fn_80211D4C(Vec3*, Vec3*);
+extern float PSVECSquareDistance(Vec3*, Vec3*);
 
 int fn_80142808(void* world, QueryObject* query, Contact* output,
                 float distance, float threshold)
@@ -36,5 +36,5 @@ int fn_80142808(void* world, QueryObject* query, Contact* output,
     }
     if (clear)
         return 1;
-    return fn_80211D4C(&query->direction, &original) < lbl_8065042C ? 3 : 2;
+    return PSVECSquareDistance(&query->direction, &original) < lbl_8065042C ? 3 : 2;
 }

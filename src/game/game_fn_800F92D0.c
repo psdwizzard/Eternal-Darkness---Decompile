@@ -38,7 +38,7 @@ enum { NEUTRAL = 0, WRITING = 1, READING = 2, REREADING = 3 };
 enum { SEEK_CUR = 1, SEEK_END = 2 };
 #define EFPOS 40
 
-extern int lbl_8064CC50; /* errno */
+extern int errno; /* errno */
 
 int __flush_buffer(FileRecord *, unsigned int *);
 
@@ -50,7 +50,7 @@ static inline unsigned int file_tell(FileRecord *file)
 
     if ((file->mode.file_kind != DISK_FILE &&
          file->mode.file_kind != CONSOLE_FILE) || file->error) {
-        lbl_8064CC50 = EFPOS;
+        errno = EFPOS;
         return -1;
     }
     state = file->state.io_state;
@@ -64,13 +64,13 @@ static inline unsigned int file_tell(FileRecord *file)
     return pos;
 }
 
-int fn_800F92D0(void *stream, long offset, int origin)
+int _fseek(void *stream, long offset, int origin)
 {
     FileRecord *file = stream;
     int (*position_fn)(int, long *, int, void *);
 
     if (file->mode.file_kind != DISK_FILE || file->error) {
-        lbl_8064CC50 = EFPOS;
+        errno = EFPOS;
         return -1;
     }
 
@@ -78,7 +78,7 @@ int fn_800F92D0(void *stream, long offset, int origin)
         if (__flush_buffer(file, 0)) {
             file->error = 1;
             file->buffer_space = 0;
-            lbl_8064CC50 = EFPOS;
+            errno = EFPOS;
             return -1;
         }
     }
@@ -110,7 +110,7 @@ int fn_800F92D0(void *stream, long offset, int origin)
             position_fn(file->handle, &offset, origin, file->ref)) {
             file->error = 1;
             file->buffer_space = 0;
-            lbl_8064CC50 = EFPOS;
+            errno = EFPOS;
             return -1;
         }
         file->eof = 0;

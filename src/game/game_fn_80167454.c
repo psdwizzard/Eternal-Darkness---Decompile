@@ -20,11 +20,11 @@ typedef struct HashTable {
 #pragma use_lmw_stmw on
 #pragma opt_propagation off
 
-extern HashNode* fn_80167128(HashTable*, Value*);
-extern Value* fn_80167264(HashTable*, double);
-extern Value lbl_8023A868;
+extern HashNode* luaH_mainposition(HashTable*, Value*);
+extern Value* luaH_getnum(HashTable*, double);
+extern Value luaO_nilobject;
 
-void fn_80167454(HashTable* table, Value* value)
+void luaH_remove(HashTable* table, Value* value)
 {
     HashNode* node;
     int index;
@@ -34,10 +34,10 @@ void fn_80167454(HashTable* table, Value* value)
         return;
     }
 
-    node = fn_80167128(table, value);
+    node = luaH_mainposition(table, value);
     index = ((char*)node - (char*)table->nodes) / 40;
 
-    while (fn_80167264(table, (double)index) != &lbl_8023A868) {
+    while (luaH_getnum(table, (double)index) != &luaO_nilobject) {
         if (index >= 0x7FFFFFFD - table->size) {
             return;
         }

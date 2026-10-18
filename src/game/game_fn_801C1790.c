@@ -47,31 +47,27 @@ typedef struct SynthInfo {
 } SynthInfo;
 
 extern VidListTables lbl_80626DA0;
-extern SynthInfo lbl_80619C20;
-extern SYNTH_VOICE* lbl_8064D3D0;
-extern u8 lbl_8064D3D8;
-extern u16 lbl_8064D464;
-extern u8 lbl_8064D466;
-extern u8 lbl_8064D467;
-extern u8 lbl_8064D468;
-extern u8 lbl_8064D469;
+extern SynthInfo synthInfo;
+extern SYNTH_VOICE* synthVoice;
+extern u8 synthIdleWaitActive;
+extern u16 voicePrioSortRootListRoot;
+extern u8 voiceMusicRunning;
+extern u8 voiceFxRunning;
+extern u8 voiceListInsert;
+extern u8 voiceListRoot;
 
 #define vidList (&lbl_80626DA0)
-#define SYNTH_CONFIGURATION (&lbl_80619C20)
-#define synthVoice lbl_8064D3D0
-#define synthIdleWaitActive lbl_8064D3D8
-#define voicePrioSortedRoot lbl_8064D464
-#define voiceMusicRunning lbl_8064D466
-#define voiceFxRunning lbl_8064D467
-#define voiceFreeListTail lbl_8064D468
-#define voiceFreeListRoot lbl_8064D469
+#define SYNTH_CONFIGURATION (&synthInfo)
+#define voicePrioSortedRoot voicePrioSortRootListRoot
+#define voiceFreeListTail voiceListInsert
+#define voiceFreeListRoot voiceListRoot
 #define offsetof(type, member) ((u32)&((type*)0)->member)
 #define VB_PRIO_HEAD(vb, p) (*(u8*)((u8*)&(vb)->priorityGroupHeads[0] + (p)))
 #define VB_PRIO_LINK_NEXT(vb, i) (((SynthVoiceListNode*)((u8*)&(vb)->priorityLinks[0] + (i) * 4))->next)
 #define VB_PRIO_SORT_NEXT(vb, p) (((SynthRootListNode*)&(vb)->prioritySortLinks[0])[p].next)
 #define VOICE_CFLAGS(i) (*(u64*)&synthVoice[i].cFlagsHi)
 
-u32 fn_801C1790(u8 priority, u8 maxInstances, u16 allocId, u8 fxFlag)
+u32 voiceAllocate(u8 priority, u8 maxInstances, u16 allocId, u8 fxFlag)
 {
     s32 i;
     s32 allocationCount;

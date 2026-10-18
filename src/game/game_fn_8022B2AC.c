@@ -48,35 +48,35 @@ typedef struct {
 } GXDisplayListState;
 
 extern u8 *gx;
-GXDisplayListState lbl_806426A0;
-extern GXFifoObj *lbl_8064DBC8; /* OldCPUFifo */
+GXDisplayListState DisplayListFifo;
+extern GXFifoObj *OldCPUFifo; /* OldCPUFifo */
 
 #define GX32(o) (*(u32 *)(gx + (o)))
 #define GX8(o) (*(u8 *)(gx + (o)))
 
 void *memcpy(void *dst, const void *src, u32 n);
-void fn_80226A28(void);              /* __GXSetDirtyState */
-void fn_80224028(GXFifoObj *fifo);   /* GXSaveCPUFifo */
-GXFifoBuffer *fn_80224640(void);        /* GXGetCPUFifo */
+void __GXSetDirtyState(void);              /* __GXSetDirtyState */
+void GXSaveCPUFifo(GXFifoObj *fifo);   /* GXSaveCPUFifo */
+GXFifoBuffer *GXGetCPUFifo(void);        /* GXGetCPUFifo */
 void GXSetCPUFifo(__GXFifoObj *fifo);
 
-void fn_8022B2AC(void *list, u32 size) {
-    GXFifoObj *cpuFifo = (GXFifoObj *)fn_80224640();
+void GXBeginDisplayList(void *list, u32 size) {
+    GXFifoObj *cpuFifo = (GXFifoObj *)GXGetCPUFifo();
 
     if (GX32(0x4F4) != 0) {
-        fn_80226A28();
+        __GXSetDirtyState();
     }
     if (GX8(0x4F1) != 0) {
-        memcpy(lbl_806426A0.savedGXData, gx, 0x4F8);
+        memcpy(DisplayListFifo.savedGXData, gx, 0x4F8);
     }
-    lbl_806426A0.fifo.base = list;
-    lbl_806426A0.fifo.top = (u8 *)list + size - 4;
-    lbl_806426A0.fifo.size = size;
-    lbl_806426A0.fifo.count = 0;
-    lbl_806426A0.fifo.rdPtr = list;
-    lbl_806426A0.fifo.wrPtr = list;
+    DisplayListFifo.fifo.base = list;
+    DisplayListFifo.fifo.top = (u8 *)list + size - 4;
+    DisplayListFifo.fifo.size = size;
+    DisplayListFifo.fifo.count = 0;
+    DisplayListFifo.fifo.rdPtr = list;
+    DisplayListFifo.fifo.wrPtr = list;
     GX8(0x4F0) = 1;
-    fn_80224028(cpuFifo);
-    lbl_8064DBC8 = cpuFifo;
-    GXSetCPUFifo((__GXFifoObj *)&lbl_806426A0.fifo);
+    GXSaveCPUFifo(cpuFifo);
+    OldCPUFifo = cpuFifo;
+    GXSetCPUFifo((__GXFifoObj *)&DisplayListFifo.fifo);
 }

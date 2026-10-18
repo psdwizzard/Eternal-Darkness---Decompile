@@ -3,7 +3,7 @@ typedef struct Vec3 {
 } Vec3;
 
 /* Scale a vector; source and destination may be the same vector. */
-void fn_80211A90(register const Vec3 *source, register Vec3 *destination,
+void PSVECScale(register const Vec3 *source, register Vec3 *destination,
                  register float scale)
 {
     register float xy, z;

@@ -19,7 +19,7 @@ typedef struct {
     u8 wrap;
 } __GXFifoObj;
 
-void fn_80223D94(__GXFifoObj *fifo, u32 hiWatermark, u32 loWatermark) {
+void GXInitFifoLimits(__GXFifoObj *fifo, u32 hiWatermark, u32 loWatermark) {
     fifo->hiWatermark = hiWatermark;
     fifo->loWatermark = loWatermark;
 }

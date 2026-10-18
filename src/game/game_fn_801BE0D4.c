@@ -71,14 +71,14 @@ typedef struct MSTEP {
     u32 para2;
 } MSTEP;
 
-extern ADSR_INFO* fn_801BD08C(u16);
-extern u32 fn_801C2AAC(u32);
-extern void fn_801C2D74(ADSR_VARS*);
-extern u8 lbl_80252B2C[];
+extern ADSR_INFO* dataGetCurve(u16);
+extern u32 adsrConvertTimeCents(u32);
+extern void adsrSetup(ADSR_VARS*);
+extern u8 dspScale2IndexTab[];
 
-#define voiceAdsrDecayTable lbl_80252B2C
+#define voiceAdsrDecayTable dspScale2IndexTab
 
-void fn_801BE0D4(SYNTH_VOICE* svoice, MSTEP* cstep)
+void mcmdSetPitchADSR(SYNTH_VOICE* svoice, MSTEP* cstep)
 {
     McmdAdsrData adsr;
     ADSR_INFO* adsr_ptr;
@@ -86,7 +86,7 @@ void fn_801BE0D4(SYNTH_VOICE* svoice, MSTEP* cstep)
     s32 ascale;
     s32 dscale;
 
-    if ((adsr_ptr = fn_801BD08C(cstep->para1 >> 8)) == 0) {
+    if ((adsr_ptr = dataGetCurve(cstep->para1 >> 8)) == 0) {
         return;
     }
 
@@ -120,13 +120,13 @@ void fn_801BE0D4(SYNTH_VOICE* svoice, MSTEP* cstep)
 
     svoice->pitchADSR.mode = 1;
     svoice->pitchADSR.aMode = 0;
-    svoice->pitchADSR.aTime = fn_801C2AAC(adsr.dls.atime);
-    svoice->pitchADSR.dTime = fn_801C2AAC(adsr.dls.dtime);
+    svoice->pitchADSR.aTime = adsrConvertTimeCents(adsr.dls.atime);
+    svoice->pitchADSR.dTime = adsrConvertTimeCents(adsr.dls.dtime);
     if ((sl = adsr.dls.slevel >> 2) > 0x3ff) {
         sl = 0x3ff;
     }
     svoice->pitchADSR.sLevel = 0xc1 - voiceAdsrDecayTable[sl];
     svoice->pitchADSR.rTime = adsr.dls.rtime;
-    fn_801C2D74(&svoice->pitchADSR);
+    adsrSetup(&svoice->pitchADSR);
     svoice->cflags |= 0x20000000000ULL;
 }

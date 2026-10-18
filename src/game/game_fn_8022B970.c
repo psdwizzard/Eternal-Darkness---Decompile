@@ -28,7 +28,7 @@ volatile PPCWGPipe GXWGFifo : 0xCC008000;
                    ((val) << (shift)); \
     } while (0)
 
-void fn_8022B970(u32 left, u32 top, u32 width, u32 height)
+void GXSetScissor(u32 left, u32 top, u32 width, u32 height)
 {
     u32 right, bottom;
 

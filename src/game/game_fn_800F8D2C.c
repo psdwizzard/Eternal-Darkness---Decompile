@@ -1,6 +1,6 @@
-extern unsigned char lbl_8024AB90[];
+extern unsigned char __ctype_map[];
 
-int fn_800F8D2C(int c)
+int isdigit(int c)
 {
-    return lbl_8024AB90[(unsigned char)c] & 0x10;
+    return __ctype_map[(unsigned char)c] & 0x10;
 }

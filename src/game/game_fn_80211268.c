@@ -1,11 +1,11 @@
 typedef float Mtx[3][4];
 
-extern float fn_80048C2C(float angle);
-extern float fn_80048C50(float angle);
-extern void fn_802112D8(Mtx m, unsigned int axis, float sine, float cosine);
+extern float sinf(float angle);
+extern float cosf(float angle);
+extern void PSMTXRotTrig(Mtx m, unsigned int axis, float sine, float cosine);
 
 /* Build an affine rotation about the selected axis from an angle in radians. */
-void fn_80211268(register Mtx m, register unsigned int axis, register float angle)
+void PSMTXRotRad(register Mtx m, register unsigned int axis, register float angle)
 {
     register unsigned int selectedAxis;
     register float (*matrix)[4];
@@ -22,9 +22,9 @@ void fn_80211268(register Mtx m, register unsigned int axis, register float angl
         mr selectedAxis, axis
         fmr argument, radians
     }
-    sine = fn_80048C2C(argument);
-    cosine = fn_80048C50(radians);
-    fn_802112D8(matrix, selectedAxis, sine, cosine);
+    sine = sinf(argument);
+    cosine = cosf(radians);
+    PSMTXRotTrig(matrix, selectedAxis, sine, cosine);
     /* The return block leaves the function; the loop suppresses a second
      * compiler-generated epilogue. */
     for (;;) {

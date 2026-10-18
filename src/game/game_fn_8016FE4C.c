@@ -1,6 +1,6 @@
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern int fn_801290D0(void*);
 extern void fn_80128F74(void*, int);
 extern void fn_801A5C30(int);
@@ -12,12 +12,12 @@ int fn_8016FE4C(void* state)
     int value;
     int flags;
 
-    if (fn_8016A598(state) != 1) {
-        fn_80163BB4(state, lbl_8024FF00, 1, fn_8016A598(state));
+    if (lua_gettop(state) != 1) {
+        luaO_verror(state, lbl_8024FF00, 1, lua_gettop(state));
         return 0;
     }
 
-    value = (int)fn_8016A694(state, 1);
+    value = (int)lua_tonumber(state, 1);
     if (value == 0) {
         if (lbl_8064C4E4 != 0) {
             flags = fn_801290D0(lbl_8064C4E4);

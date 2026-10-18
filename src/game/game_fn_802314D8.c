@@ -44,9 +44,9 @@ typedef struct Floor1Look {
     Floor1Info *vi;
 } Floor1Look;
 
-extern s32 fn_8022E868(void *, s32);
+extern s32 oggpack_read(void *, s32);
 extern void *fn_8022F8C4(s32 size);
-extern s32 fn_80230718(Codebook *book, void *opb);
+extern s32 vorbis_book_decode(Codebook *book, void *opb);
 
 static s32 ilog(u32 v) {
     s32 ret = 0;
@@ -74,16 +74,16 @@ static s32 render_point(s32 x0, s32 x1, s32 y0, s32 y1, s32 x) {
     }
 }
 
-s32 *fn_802314D8(VorbisBlock *vb, Floor1Look *look) {
+s32 *floor1_inverse1(VorbisBlock *vb, Floor1Look *look) {
     Floor1Info *info = look->vi;
     Codebook *books = vb->vd->codecSetup->fullbooks;
     s32 i, j, k;
 
-    if (fn_8022E868(vb->opb, 1) == 1) {
+    if (oggpack_read(vb->opb, 1) == 1) {
         s32 *fit_value = (s32 *)fn_8022F8C4(look->posts * sizeof(s32));
 
-        fit_value[0] = fn_8022E868(vb->opb, ilog(look->quant_q - 1));
-        fit_value[1] = fn_8022E868(vb->opb, ilog(look->quant_q - 1));
+        fit_value[0] = oggpack_read(vb->opb, ilog(look->quant_q - 1));
+        fit_value[1] = oggpack_read(vb->opb, ilog(look->quant_q - 1));
 
         for (i = 0, j = 2; i < info->partitions; i++) {
             s32 classv = info->partitionclass[i];
@@ -93,7 +93,7 @@ s32 *fn_802314D8(VorbisBlock *vb, Floor1Look *look) {
             s32 cval = 0;
 
             if (csubbits) {
-                cval = fn_80230718(books + info->class_book[classv], vb->opb);
+                cval = vorbis_book_decode(books + info->class_book[classv], vb->opb);
                 if (cval == -1) goto eop;
             }
 
@@ -101,7 +101,7 @@ s32 *fn_802314D8(VorbisBlock *vb, Floor1Look *look) {
                 s32 book = info->class_subbook[classv][cval & (csub - 1)];
                 cval >>= csubbits;
                 if (book >= 0) {
-                    if ((fit_value[j + k] = fn_80230718(books + book, vb->opb)) == -1) goto eop;
+                    if ((fit_value[j + k] = vorbis_book_decode(books + book, vb->opb)) == -1) goto eop;
                 } else {
                     fit_value[j + k] = 0;
                 }

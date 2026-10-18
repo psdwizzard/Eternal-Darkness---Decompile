@@ -6,11 +6,11 @@ typedef struct Voice {
     u32 flags;
 } Voice;
 
-extern u8 lbl_8064D3A0;
+extern u8 sndActive;
 
-int fn_801C9078(Voice* voice)
+int sndCheckEmitter(Voice* voice)
 {
-    if (lbl_8064D3A0 != 0) {
+    if (sndActive != 0) {
         return (voice->flags & 0x10000) != 0;
     }
     return 0;

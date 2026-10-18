@@ -19,18 +19,18 @@ typedef struct OSAlarm {
 } OSAlarm;
 
 extern SIPacket Packet_80640B68[4];
-extern OSAlarm lbl_80640BE8[4];
+extern OSAlarm Alarm[4];
 
-extern s32 fn_80208C4C(s32 chan, void *output, u32 outputBytes, void *input,
+extern s32 __SITransfer(s32 chan, void *output, u32 outputBytes, void *input,
                        u32 inputBytes, SICallback callback);
 
 void fn_80209204(OSAlarm *alarm, void *context)
 {
     volatile u8 stack[8];
-    SIPacket *packet = &Packet_80640B68[alarm - lbl_80640BE8];
+    SIPacket *packet = &Packet_80640B68[alarm - Alarm];
 
     if (packet->chan != -1 &&
-        fn_80208C4C(packet->chan, packet->output, packet->outputBytes,
+        __SITransfer(packet->chan, packet->output, packet->outputBytes,
                     packet->input, packet->inputBytes, packet->callback)) {
         packet->chan = -1;
     }

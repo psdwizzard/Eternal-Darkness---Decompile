@@ -10,12 +10,12 @@ typedef struct Entry {
     u8 padCE[0x26];
 } Entry;
 
-extern Entry* lbl_8064D4AC;
+extern Entry* dspVoice;
 extern u16 lbl_8064C2E8[4];
 
-void fn_801CCC10(u32 index, u8 value)
+void hwSetSRCType(u32 index, u8 value)
 {
-    Entry* entry = &lbl_8064D4AC[index];
+    Entry* entry = &dspVoice[index];
     entry->fieldCC = lbl_8064C2E8[value];
     entry->flags |= 0x100;
 }

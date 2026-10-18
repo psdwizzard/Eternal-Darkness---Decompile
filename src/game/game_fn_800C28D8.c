@@ -43,7 +43,7 @@ extern void *fn_8004914C();
 extern void *fn_800C1D54(void);
 extern int fn_800C34A8(void *, void *, void *);
 extern u32 fn_800C3958(void *, u32);
-extern double fn_8010181C(double);
+extern double ceil(double);
 extern int fn_8011EB04(void *);
 extern void *fn_8011F130(void *);
 extern int fn_8011FCE4(void *);
@@ -203,8 +203,8 @@ int fn_800C28D8(void *object, void **node)
                         fsubs converted, biased, bias
                         fmuls scaled, converted, factor
                     }
-                    integral = lbl_8064F1A0 > fn_8010181C(scaled) ?
-                        lbl_8064F1A0 : fn_8010181C(scaled);
+                    integral = lbl_8064F1A0 > ceil(scaled) ?
+                        lbl_8064F1A0 : ceil(scaled);
                     /* ASM: fctiwz converts in the existing floating register;
                      * a C cast allocates another slot or adds sign extension. */
                     asm {
@@ -236,8 +236,8 @@ int fn_800C28D8(void *object, void **node)
                         fsubs converted, biased, bias
                         fmuls scaled, converted, factor
                     }
-                    integral = lbl_8064F1A0 > fn_8010181C(scaled) ?
-                        lbl_8064F1A0 : fn_8010181C(scaled);
+                    integral = lbl_8064F1A0 > ceil(scaled) ?
+                        lbl_8064F1A0 : ceil(scaled);
                     /* ASM: fctiwz converts in the existing floating register;
                      * a C cast allocates another slot or adds sign extension. */
                     asm {

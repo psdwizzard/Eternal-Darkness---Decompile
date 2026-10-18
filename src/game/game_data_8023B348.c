@@ -1,7 +1,7 @@
 typedef unsigned int u32;
 
 /* Packed runtime descriptor constants. */
-const volatile u32 lbl_8023B348[34] = {
+const volatile u32 inpColdMIDIDefaults[34] = {
     0x00000000, 0x0000007F, 0x0000407F, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,

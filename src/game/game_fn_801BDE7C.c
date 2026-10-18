@@ -47,16 +47,14 @@ typedef struct ADSR_INFO {
     McmdAdsrData data;
 } ADSR_INFO;
 
-extern void* fn_801BD08C(u16);
-extern void fn_801CC914(u8, McmdAdsrData*, int);
-extern f32 lbl_80252F2C[];
+extern void* dataGetCurve(u16);
+extern void hwSetADSR(u8, McmdAdsrData*, int);
+extern f32 dspDLSVolTab[];
 
-#define dataGetCurve fn_801BD08C
-#define hwSetADSR fn_801CC914
-#define voiceAdsrSustainTable lbl_80252F2C
+#define voiceAdsrSustainTable dspDLSVolTab
 #define MAC_CFLAGS(v) (*(u64*)&(v)->cFlagsHi)
 
-void fn_801BDE7C(McmdVoiceState* svoice, McmdCommandArgs* cstep)
+void mcmdSetADSR(McmdVoiceState* svoice, McmdCommandArgs* cstep)
 {
     s32 ascale;
     s32 dscale;

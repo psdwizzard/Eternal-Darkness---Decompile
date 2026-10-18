@@ -27,14 +27,14 @@ typedef struct ArchiveState {
 } ArchiveState;
 
 extern ArchiveState lbl_805BB1E0;
-extern int fn_8020D318(void*, u32*, int);
+extern int OSReceiveMessage(void*, u32*, int);
 extern void fn_8015B628(Stream*);
 
 void* fn_8015B708(Stream* stream)
 {
     u32 result[4];
 
-    fn_8020D318(stream->source, result, 1);
+    OSReceiveMessage(stream->source, result, 1);
     stream->refill_size = stream->length;
     stream->remaining -= stream->length;
     stream->offset += stream->length;

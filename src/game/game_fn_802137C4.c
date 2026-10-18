@@ -29,7 +29,7 @@ struct DVDFileInfo {
     DVDCallback callback;
 };
 
-void fn_802137C4(s32 result, DVDCommandBlock *block)
+void cbForReadAsync(s32 result, DVDCommandBlock *block)
 {
     DVDFileInfo *fileInfo = (DVDFileInfo *)block;
 

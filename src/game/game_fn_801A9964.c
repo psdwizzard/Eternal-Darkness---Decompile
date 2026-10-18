@@ -1,6 +1,6 @@
-extern void fn_801B8E48(void);
+extern void sndFXKeyOff(void);
 
 void fn_801A9964(void)
 {
-    fn_801B8E48();
+    sndFXKeyOff();
 }

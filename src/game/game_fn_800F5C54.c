@@ -1,10 +1,10 @@
-extern const volatile double lbl_80239CD0[3];
+extern const volatile double __constants[3];
 
 unsigned int fn_800F5C54(double value)
 {
-    double zero = lbl_80239CD0[0];
-    double limit = lbl_80239CD0[1];
-    double bias = lbl_80239CD0[2];
+    double zero = __constants[0];
+    double limit = __constants[1];
+    double bias = __constants[2];
     double converted;
     unsigned int result = 0;
 

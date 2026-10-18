@@ -12,14 +12,14 @@ typedef struct Object {
 } Object;
 
 extern char lbl_8024F25C[];
-extern void fn_8015EA7C(void*, void*);
+extern void luaK_error(void*, void*);
 
-void fn_8015EC60(Object* object, int amount)
+void luaK_deltastack(Object* object, int amount)
 {
     object->count += amount;
     if (object->count > object->owner->limit) {
         if (object->count > 250)
-            fn_8015EA7C(object->value, lbl_8024F25C);
+            luaK_error(object->value, lbl_8024F25C);
         object->owner->limit = object->count;
     }
 }

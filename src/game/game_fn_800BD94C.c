@@ -69,8 +69,8 @@ extern const float lbl_8064F100;
 extern const float lbl_8064F104;
 
 extern void fn_801EF788(void);
-extern int fn_8020D318(OSMessageQueue *queue, void **message, int flags);
-extern int fn_8020D250(OSMessageQueue *queue, void *message, int flags);
+extern int OSReceiveMessage(OSMessageQueue *queue, void **message, int flags);
+extern int OSSendMessage(OSMessageQueue *queue, void *message, int flags);
 extern int OSDisableInterrupts(void);
 extern int OSRestoreInterrupts(int enabled);
 extern Entry80201814 *fn_80201814(int id);
@@ -120,12 +120,12 @@ void fn_800BD94C(void)
     fn_801EF788();
 
     for (;;) {
-        fn_8020D318(&lbl_805E2B1C, &message, 1);
+        OSReceiveMessage(&lbl_805E2B1C, &message, 1);
         if ((int)message == -0x6B5) {
             lbl_8064CA80 = 0;
-            while (fn_8020D318(&lbl_805E2B1C, &message, 0) != 0) {
+            while (OSReceiveMessage(&lbl_805E2B1C, &message, 0) != 0) {
             }
-            fn_8020D250(&lbl_805E2B7C, 0, 1);
+            OSSendMessage(&lbl_805E2B7C, 0, 1);
             continue;
         }
         if ((int)message == -0x1A0A) {

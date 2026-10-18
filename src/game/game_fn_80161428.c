@@ -24,7 +24,7 @@ typedef struct Object {
     Item* primary;
 } Object;
 
-void fn_80161428(Object* object)
+void protomark(Object* object)
 {
     int i;
 
@@ -39,7 +39,7 @@ void fn_80161428(Object* object)
         }
 
         for (i = 0; i < object->child_count; i++)
-            fn_80161428(object->children[i]);
+            protomark(object->children[i]);
 
         for (i = 0; i < object->entry_count; i++) {
             if (object->entries[i].item->active == 0)

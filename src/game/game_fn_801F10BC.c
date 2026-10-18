@@ -19,14 +19,14 @@ extern s32 lbl_8064D18C;
 extern u8 lbl_802FC5BC[];
 extern Entry801F10BC lbl_8063C4F8[];
 extern Mtx lbl_8063C068;
-extern void fn_8022806C(s32, s32, s32, s32, s32, s32, s32);
-extern void fn_80227EB8(s32, s32*);
-extern void fn_80227D50(s32, s32*);
-extern void fn_80210FB0(Mtx);
-extern void fn_802114E0(Mtx, void*);
-extern void fn_80210FDC(Mtx, Mtx, Mtx);
-extern void fn_802111A0(Mtx, Mtx);
-extern void fn_8022B748(Mtx, s32, s32);
+extern void GXSetChanCtrl(s32, s32, s32, s32, s32, s32, s32);
+extern void GXSetChanMatColor(s32, s32*);
+extern void GXSetChanAmbColor(s32, s32*);
+extern void PSMTXIdentity(Mtx);
+extern void PSMTXQuat(Mtx, void*);
+extern void PSMTXConcat(Mtx, Mtx, Mtx);
+extern void PSMTXInvXpose(Mtx, Mtx);
+extern void GXLoadTexMtxImm(Mtx, s32, s32);
 extern void fn_801ED434(s32);
 
 void fn_801F10BC(s32 first, s32 mask, s32 unused)
@@ -47,35 +47,35 @@ void fn_801F10BC(s32 first, s32 mask, s32 unused)
     (void)unused;
     lbl_8064D6F4 = 0;
     lbl_8064D754 = first;
-    fn_8022806C(0, 1, 0, 0, first, 2, 1);
-    fn_8022806C(2, 0, 0, 0, 0, 0, 2);
+    GXSetChanCtrl(0, 1, 0, 0, first, 2, 1);
+    GXSetChanCtrl(2, 0, 0, 0, 0, 0, 2);
 
     if (first == 0) {
-        fn_8022806C(0, 0, 0, 0, 0, 0, 2);
+        GXSetChanCtrl(0, 0, 0, 0, 0, 0, 2);
         color0 = *(s32*)(lbl_802FC5BC + 0x0);
-        fn_80227EB8(0, &color0);
+        GXSetChanMatColor(0, &color0);
         if ((lbl_8064C378 | 2) == 0) {
             color1 = *(s32*)(lbl_802FC5BC + 0xC);
-            fn_80227EB8(0, &color1);
+            GXSetChanMatColor(0, &color1);
         }
     } else {
         color2 = *(s32*)(lbl_802FC5BC + 0xC);
-        fn_80227EB8(0, &color2);
+        GXSetChanMatColor(0, &color2);
     }
 
     color3 = *(s32*)(lbl_802FC5BC + 0x38);
-    fn_80227D50(0, &color3);
+    GXSetChanAmbColor(0, &color3);
     lbl_8064D750 = mask;
-    fn_8022806C(1, 1, 0, 0, mask, 0, 0);
-    fn_8022806C(3, 0, 0, 0, 0, 0, 2);
+    GXSetChanCtrl(1, 1, 0, 0, mask, 0, 0);
+    GXSetChanCtrl(3, 0, 0, 0, 0, 0, 2);
 
     if (mask == 0) {
-        fn_8022806C(1, 0, 0, 0, 0, 0, 2);
+        GXSetChanCtrl(1, 0, 0, 0, 0, 0, 2);
         color4 = *(s32*)(lbl_802FC5BC + 0x0);
-        fn_80227EB8(1, &color4);
+        GXSetChanMatColor(1, &color4);
         if ((lbl_8064C378 | 2) == 0) {
             color5 = *(s32*)(lbl_802FC5BC + 0xC);
-            fn_80227EB8(1, &color5);
+            GXSetChanMatColor(1, &color5);
         }
         lbl_8064D6F0 = 0;
     } else {
@@ -88,32 +88,32 @@ void fn_801F10BC(s32 first, s32 mask, s32 unused)
             }
         }
         if (best != -1) {
-            fn_80210FB0(position);
+            PSMTXIdentity(position);
             position[0][0] = 256.0f * lbl_8063C4F8[best].position.x;
             position[0][1] = 256.0f * lbl_8063C4F8[best].position.y;
             position[0][2] = 256.0f * lbl_8063C4F8[best].position.z;
-            fn_802114E0(matrix, lbl_8063C4F8[best].object);
-            fn_80210FDC(lbl_8063C068, matrix, matrix);
-            fn_802111A0(matrix, matrix);
-            fn_80210FDC(position, matrix, matrix);
-            fn_8022B748(matrix, 0x2D, 1);
+            PSMTXQuat(matrix, lbl_8063C4F8[best].object);
+            PSMTXConcat(lbl_8063C068, matrix, matrix);
+            PSMTXInvXpose(matrix, matrix);
+            PSMTXConcat(position, matrix, matrix);
+            GXLoadTexMtxImm(matrix, 0x2D, 1);
         }
         color6 = *(s32*)(lbl_802FC5BC + 0xC);
-        fn_80227EB8(1, &color6);
+        GXSetChanMatColor(1, &color6);
         lbl_8064D6F0 = 1;
     }
 
     color7 = *(s32*)(lbl_802FC5BC + 0x38);
-    fn_80227D50(1, &color7);
+    GXSetChanAmbColor(1, &color7);
 
     if (lbl_8064D18C == 0x32) {
         fn_801ED434(2);
-        fn_8022806C(1, 1, 0, 0, lbl_8064D750, 0, 0);
+        GXSetChanCtrl(1, 1, 0, 0, lbl_8064D750, 0, 0);
     } else if (lbl_8064D6F0 != 0) {
         fn_801ED434(2);
-        fn_8022806C(1, 1, 0, 0, lbl_8064D750, 0, 0);
+        GXSetChanCtrl(1, 1, 0, 0, lbl_8064D750, 0, 0);
     } else {
         fn_801ED434(1);
-        fn_8022806C(1, 0, 0, 0, 0, 0, 2);
+        GXSetChanCtrl(1, 0, 0, 0, 0, 0, 2);
     }
 }

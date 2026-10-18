@@ -1,6 +1,6 @@
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
-extern double fn_8016A694(void*, int);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
+extern double lua_tonumber(void*, int);
 extern void fn_801F7208(void*, float);
 extern const char lbl_8024FF00[];
 extern unsigned char lbl_8063CD18[];
@@ -18,12 +18,12 @@ int fn_80170090(void* state)
 
     target = &((TargetOwner*)lbl_8063CD18)->target;
 
-    if (fn_8016A598(state) != 1) {
-        fn_80163BB4(state, lbl_8024FF00, 1, fn_8016A598(state));
+    if (lua_gettop(state) != 1) {
+        luaO_verror(state, lbl_8024FF00, 1, lua_gettop(state));
         return 0;
     }
 
-    value = (float)fn_8016A694(state, 1);
+    value = (float)lua_tonumber(state, 1);
     fn_801F7208(target, value);
     fn_801F7208(lbl_8063D400, value);
     return 0;

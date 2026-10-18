@@ -11,7 +11,7 @@ typedef struct AudioSync {
 
 extern void *memset(void *dest, int value, unsigned long size);
 
-int fn_8022F28C(AudioSync *sync) {
+int ogg_sync_clear(AudioSync *sync) {
     if (sync != 0) {
         /* The original clear path retains a second null check. */
         if (sync != 0) {

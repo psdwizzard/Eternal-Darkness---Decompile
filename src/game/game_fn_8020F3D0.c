@@ -14,7 +14,7 @@ typedef struct Node {
     struct Node* next; /* 0x10 */
 } Node;
 
-s32 fn_8020F3D0(Item* self)
+s32 __OSGetEffectivePriority(Item* self)
 {
     s32 min = self->limit;
     Node* node;

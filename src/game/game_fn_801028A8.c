@@ -16,8 +16,8 @@ typedef struct BitReader {
     u8 mask;
 } BitReader;
 
-__declspec(section ".sdata") extern s32 lbl_8064CC68;
-__declspec(section ".sdata") extern s32 lbl_8064CC6C;
+__declspec(section ".sdata") extern s32 readTree_signed;
+__declspec(section ".sdata") extern s32 readTree_scale;
 
 static inline s16 read_bit(BitReader* reader)
 {
@@ -38,7 +38,7 @@ static inline s16 read_bit(BitReader* reader)
  * difference is MWCC's epilogue scheduling of mtlr after the final restores.
  * Attempt 5: shared-return control flow, register/lifetime variants, and
  * equivalent type spellings did not move mtlr under the canonical settings. */
-s16 fn_801028A8(DecodeTree* tree, BitReader* reader)
+s16 _readTree(DecodeTree* tree, BitReader* reader)
 {
     s16 value;
     int node;
@@ -46,8 +46,8 @@ s16 fn_801028A8(DecodeTree* tree, BitReader* reader)
 
     if (read_bit(reader)) {
         node = tree->count++;
-        tree->left[node] = fn_801028A8(tree, reader);
-        tree->right[node] = fn_801028A8(tree, reader);
+        tree->left[node] = _readTree(tree, reader);
+        tree->right[node] = _readTree(tree, reader);
         return (s16)node;
     }
 
@@ -61,10 +61,10 @@ s16 fn_801028A8(DecodeTree* tree, BitReader* reader)
     value |= read_bit(reader) ? 1 : 0;
 
     stored = value;
-    if (lbl_8064CC68 != 0 && (s16)value > 127) {
+    if (readTree_signed != 0 && (s16)value > 127) {
         stored -= 256;
     }
-    stored = (s16)stored << lbl_8064CC6C;
+    stored = (s16)stored << readTree_scale;
     tree->left[(s16)value] = (s16)stored;
     return value;
 }

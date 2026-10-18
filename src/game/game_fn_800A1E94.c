@@ -6,11 +6,11 @@ typedef struct Object800A1E94 {
     s8 value;
 } Object800A1E94;
 
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 
 int fn_800A1E94(Object800A1E94* object)
 {
-    object->value = fn_800FBFB0() % 3 + 3;
+    object->value = rand() % 3 + 3;
     return object->value;
 }

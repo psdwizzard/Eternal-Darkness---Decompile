@@ -22,7 +22,7 @@ extern void* memcpy(void*, const void*, unsigned int);
 extern void fn_801804AC(void*, ShortCoord3*, ShortCoord3*, ShortCoord3*);
 extern void fn_80179904(ShortCoord3*, s16);
 extern void fn_8018F014(ShortCoord3*, int);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_80180554(void*, ShortCoord3*, ShortCoord3*, ShortCoord3*, u16,
                         int);
 extern void fn_801805E0(void*, int, u8, u32, u8*, float);
@@ -69,10 +69,10 @@ void fn_8017EB4C(u8* object, ShortCoord3* first, ShortCoord3* second,
         memcpy(&work, &base, sizeof(work));
         fn_8018F014(&work, 4);
         fn_80180554(entry, &current, &work, &zero,
-                    *(u16*)(config + 8) + (fn_800FBFB0() & 0xF), 1);
+                    *(u16*)(config + 8) + (rand() & 0xF), 1);
 
         random_value = config[1];
-        random_value = random_value - ((random_value - 1) & fn_800FBFB0());
+        random_value = random_value - ((random_value - 1) & rand());
         fn_801805E0(entry + 0x20, 4, random_value, (i & 0x3F) * 4,
                     config + 0x1D, lbl_80650938);
 

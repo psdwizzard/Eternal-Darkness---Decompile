@@ -9,16 +9,16 @@ typedef struct MdctLookup {
 } MdctLookup;
 
 extern void *fn_8022F780(s32 size);
-extern double fn_80101988(double x); /* cos */
-extern double fn_801021D0(double x); /* sin */
-extern double fn_80102380(double x); /* log */
-extern double fn_80102074(double x); /* rint */
+extern double cos(double x); /* cos */
+extern double sin(double x); /* sin */
+extern double log(double x); /* log */
+extern double rint(double x); /* rint */
 extern double lbl_80651848;
 extern float lbl_80651850;
 extern float lbl_80651854;
 
 /* Prepare the trigonometric and bit-reversal tables for an MDCT. */
-void fn_802342DC(MdctLookup *lookup, s32 n)
+void mdct_init(MdctLookup *lookup, s32 n)
 {
     s32 log2n;
     s32 n4 = n / 4;
@@ -26,8 +26,8 @@ void fn_802342DC(MdctLookup *lookup, s32 n)
     float *trig = fn_8022F780((n + n4) * sizeof(*trig));
     float pi;
     s32 i;
-    pi = (float)fn_80102380(lbl_80651848);
-    log2n = (s32)fn_80102074((float)fn_80102380((float)n) / pi);
+    pi = (float)log(lbl_80651848);
+    log2n = (s32)rint((float)log((float)n) / pi);
     pi = lbl_80651850;
     lookup->log2n = log2n;
     lookup->n = n;
@@ -36,17 +36,17 @@ void fn_802342DC(MdctLookup *lookup, s32 n)
 
     for (i = 0; i < n4; i++) {
         float angle = (pi / (float)n) * (float)(4 * i);
-        trig[i * 2] = (float)fn_80101988(angle);
-        trig[i * 2 + 1] = -(float)fn_801021D0(angle);
+        trig[i * 2] = (float)cos(angle);
+        trig[i * 2 + 1] = -(float)sin(angle);
         angle = (pi / (float)(2 * n)) * (float)(2 * i + 1);
-        trig[(n >> 1) + i * 2] = (float)fn_80101988(angle);
-        trig[(n >> 1) + i * 2 + 1] = (float)fn_801021D0(angle);
+        trig[(n >> 1) + i * 2] = (float)cos(angle);
+        trig[(n >> 1) + i * 2 + 1] = (float)sin(angle);
     }
     pi = lbl_80651850;
     for (i = 0; i < n / 8; i++) {
         float angle = (pi / (float)n) * (float)(4 * i + 2);
-        trig[n + i * 2] = 0.5f * (float)fn_80101988(angle);
-        trig[n + i * 2 + 1] = 0.5f * -(float)fn_801021D0(angle);
+        trig[n + i * 2] = 0.5f * (float)cos(angle);
+        trig[n + i * 2 + 1] = 0.5f * -(float)sin(angle);
     }
     {
         u32 bitIndex;

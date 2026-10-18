@@ -1,4 +1,4 @@
-/* fn_800F9B0C (0x800F9B0C, 196 bytes): MSL __copy_longs_unaligned.
+/* __copy_longs_unaligned (0x800F9B0C, 196 bytes): MSL __copy_longs_unaligned.
  * Copies n bytes from src to dst when the two pointers have different
  * word alignment: align dst, then merge shifted source words.
  * As in MSL, src/dst themselves are walked through byte and word views
@@ -10,7 +10,7 @@
 #define lpd ((unsigned long*)dst)
 #define deref_auto_inc(p) *++(p)
 
-void fn_800F9B0C(void* dst, const void* src, unsigned long n) {
+void __copy_longs_unaligned(void* dst, const void* src, unsigned long n) {
     unsigned long i, v1, v2;
     unsigned int src_offset, left_shift, right_shift;
 

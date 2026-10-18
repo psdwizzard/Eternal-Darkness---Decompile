@@ -14,7 +14,7 @@ extern GXData *gx;
 typedef union GXWGPipe { u8 byte; u32 word; } GXWGPipe;
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
-void fn_8022A964(u8 enable, u8 alpha)
+void GXSetDstAlpha(u8 enable, u8 alpha)
 {
     gx->dstAlpha = (gx->dstAlpha & ~0xFFUL) | (u32)alpha;
     gx->dstAlpha = (gx->dstAlpha & ~(1UL << 8)) | ((u32)enable << 8);

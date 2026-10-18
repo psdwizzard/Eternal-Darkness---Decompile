@@ -8,7 +8,7 @@ extern char lbl_80264684[];
 extern char lbl_802647EC[];
 extern char lbl_8026480C[];
 
-extern int fn_800FBFD0(char*, char*, ...);
+extern int sscanf(char*, char*, ...);
 extern void fn_801E5AD0(signed char);
 extern void fn_801E7DCC(char*, ...);
 
@@ -47,7 +47,7 @@ int fn_801E41AC(signed char* text)
     }
     case 's':
         consumed = 0;
-        if (fn_800FBFD0((char*)text + 1, &lbl_8064C324, &scale, &consumed) > 0) {
+        if (sscanf((char*)text + 1, &lbl_8064C324, &scale, &consumed) > 0) {
             if (scale < lbl_80651264) {
                 lbl_8064C314 = scale;
                 return consumed;

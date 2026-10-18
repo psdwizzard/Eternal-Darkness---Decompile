@@ -2,8 +2,8 @@
 typedef unsigned short wchar_t;
 typedef unsigned long size_t;
 
-extern int fn_800F961C(char *output, wchar_t character);
-extern char *fn_800FD3C8(char *destination, const char *source, size_t count);
+extern int unicode_to_UTF8(char *output, wchar_t character);
+extern char *strncpy(char *destination, const char *source, size_t count);
 
 size_t wcstombs(char *destination, const wchar_t *source, size_t limit)
 {
@@ -22,11 +22,11 @@ size_t wcstombs(char *destination, const wchar_t *source, size_t limit)
             destination[total] = 0;
             break;
         }
-        count = fn_800F961C(encoded, *current++);
+        count = unicode_to_UTF8(encoded, *current++);
         if (total + count > limit) {
             break;
         }
-        fn_800FD3C8(destination + total, encoded, count);
+        strncpy(destination + total, encoded, count);
         total += count;
     }
     return total;

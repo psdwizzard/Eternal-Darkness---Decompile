@@ -38,16 +38,16 @@ extern void fn_8003B0BC(void *object, Vec3 *normal_out, Vec3 *position_out,
 extern u8 fn_80157C00(void *);
 extern u32 fn_801578AC(void *);
 extern u8 fn_801A76B8(void *);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void fn_8017A244(const Vec3 *, Vec4 *, float);
-extern void fn_802114E0(Matrix34, void *);
-extern void fn_80211710(Matrix34, Vec3 *, Vec3 *);
-extern void fn_80211A90(const Vec3 *, Vec3 *, float);
-extern void fn_80211A48(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSMTXQuat(Matrix34, void *);
+extern void PSMTXMultVec(Matrix34, Vec3 *, Vec3 *);
+extern void PSVECScale(const Vec3 *, Vec3 *, float);
+extern void PSVECAdd(const Vec3 *, const Vec3 *, Vec3 *);
 extern void fn_8003B630(void *object, Vec3 *direction, Vec3 *start,
                         TraceResult *result, void **hit_out);
 extern s32 fn_8003B2A8(void *, void *, void *, TraceResult *, MergeEntry *);
-extern void fn_800FBE38(void *, int, int, int (*)(const void *, const void *));
+extern void qsort(void *, int, int, int (*)(const void *, const void *));
 extern int fn_8003B878(const void *, const void *);
 extern s32 fn_8003B56C(MergeEntry *, s32, MergeEntry *, s32);
 extern s16 fn_801A74F8(void *);
@@ -112,11 +112,11 @@ void *fn_8003A280(void *object, void *target, void *anim)
 
     trace = traces;
     for (i = 0; i < rays; i++) {
-        fn_8017A244(&position, &rotation, lbl_8064E250 * (float)(fn_800FBFB0() & 0x1F) / lbl_8064E254);
-        fn_802114E0(matrix, &rotation);
-        fn_80211710(matrix, &up, &dir);
-        fn_80211A90(&dir, &dir, (float)(fn_800FBFB0() & 0x1F) / lbl_8064E254);
-        fn_80211A48(&position, &dir, &end);
+        fn_8017A244(&position, &rotation, lbl_8064E250 * (float)(rand() & 0x1F) / lbl_8064E254);
+        PSMTXQuat(matrix, &rotation);
+        PSMTXMultVec(matrix, &up, &dir);
+        PSVECScale(&dir, &dir, (float)(rand() & 0x1F) / lbl_8064E254);
+        PSVECAdd(&position, &dir, &end);
         fn_8003B630(object, &end, &normal, trace, 0);
         if (i == 0 || total == 0) {
             source = target;
@@ -134,7 +134,7 @@ void *fn_8003A280(void *object, void *target, void *anim)
         }
         if (count > 0) {
             if (count > 1) {
-                fn_800FBE38(list, count, 0x10, fn_8003B878);
+                qsort(list, count, 0x10, fn_8003B878);
             }
             if (i == 0) {
                 total = count;

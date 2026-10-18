@@ -1,4 +1,4 @@
-int fn_801689EC(void)
+int luaU_endianess(void)
 {
     union {
         int word;

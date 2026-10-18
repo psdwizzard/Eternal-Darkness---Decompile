@@ -1,4 +1,4 @@
-/* fn_8020E588: WriteSram (OSRtc). */
+/* WriteSram: WriteSram (OSRtc). */
 
 typedef int BOOL;
 typedef int s32;
@@ -12,15 +12,15 @@ extern BOOL EXISelect(s32 chan, u32 dev, u32 freq);
 extern BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void *callback);
 extern BOOL EXISync(s32 chan);
 extern BOOL EXIDeselect(s32 chan);
-extern BOOL fn_80206AC8(s32 chan, void *buf, s32 len, u32 type);
-extern void fn_8020E528(s32 chan, void *context);
+extern BOOL EXIImmEx(s32 chan, void *buf, s32 len, u32 type);
+extern void WriteSramCallback(s32 chan, void *context);
 
-BOOL fn_8020E588(void *buffer, u32 offset, u32 size)
+BOOL WriteSram(void *buffer, u32 offset, u32 size)
 {
     BOOL err;
     u32 cmd;
 
-    if (!EXILock(0, 1, fn_8020E528)) {
+    if (!EXILock(0, 1, WriteSramCallback)) {
         return 0;
     }
     if (!EXISelect(0, 1, 3)) {
@@ -33,7 +33,7 @@ BOOL fn_8020E588(void *buffer, u32 offset, u32 size)
     err = 0;
     err |= !EXIImm(0, &cmd, 4, 1, 0);
     err |= !EXISync(0);
-    err |= !fn_80206AC8(0, buffer, (s32)size, 1);
+    err |= !EXIImmEx(0, buffer, (s32)size, 1);
     err |= !EXIDeselect(0);
     EXIUnlock(0);
 

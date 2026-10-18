@@ -2,7 +2,7 @@ typedef unsigned char u8;
 typedef signed short s16;
 typedef unsigned short u16;
 
-u8* fn_801B4398(u8* input, u16* first, s16* second)
+u8* GetStreamValue(u8* input, u16* first, s16* second)
 {
     u8 high = input[0];
     u8 low = input[1];

@@ -27,7 +27,7 @@ extern void fn_80045A24(s32, s32);
 extern void fn_80052CC0(s32, s32);
 extern void fn_80144C4C(void*);
 extern s32 fn_800EE8F8(void);
-extern u32 fn_8022658C(void);
+extern u32 GXReadDrawSync(void);
 extern void fn_8005251C(s32, s32);
 extern void fn_800B9474(s32);
 
@@ -52,7 +52,7 @@ void fn_80052BBC(void)
     if (lbl_8030F540.countdown != -1) {
         if (lbl_8030F540.countdown == 0) {
             lbl_8030F540.countdown = -1;
-            while ((fn_8022658C() & 0xFFFF) != 0xBEEF) {}
+            while ((GXReadDrawSync() & 0xFFFF) != 0xBEEF) {}
             fn_8005251C(0, 0);
         } else {
             lbl_8030F540.countdown--;

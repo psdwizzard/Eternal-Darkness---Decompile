@@ -10,27 +10,27 @@ typedef struct GXData {
 
 extern GXData *gx;
 
-void fn_80228ED8(void); /* __GXSetSUTexSize */
-void fn_80229874(void); /* __GXUpdateBPMask */
-void fn_80226DBC(void); /* __GXSetGenMode */
-void fn_80225144(void); /* __GXSetVCD */
-void fn_80225BF4(void); /* __GXSetVAT */
+void __GXSetSUTexRegs(void); /* __GXSetSUTexSize */
+void __GXUpdateBPMask(void); /* __GXUpdateBPMask */
+void __GXSetGenMode(void); /* __GXSetGenMode */
+void __GXSetVCD(void); /* __GXSetVCD */
+void __GXSetVAT(void); /* __GXSetVAT */
 
-void fn_80226A28(void) {
+void __GXSetDirtyState(void) {
     if (gx->dirtyState & 1) {
-        fn_80228ED8();
+        __GXSetSUTexRegs();
     }
     if (gx->dirtyState & 2) {
-        fn_80229874();
+        __GXUpdateBPMask();
     }
     if (gx->dirtyState & 4) {
-        fn_80226DBC();
+        __GXSetGenMode();
     }
     if (gx->dirtyState & 8) {
-        fn_80225144();
+        __GXSetVCD();
     }
     if (gx->dirtyState & 0x10) {
-        fn_80225BF4();
+        __GXSetVAT();
     }
     gx->dirtyState = 0;
 }

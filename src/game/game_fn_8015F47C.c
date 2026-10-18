@@ -1,8 +1,8 @@
-extern int fn_8015EC10(void*);
-extern int fn_8015F9B0(void*, int, int);
+extern int luaK_getlabel(void*);
+extern int luaK_code1(void*, int, int);
 
-int fn_8015F47C(void* object, int type, int value)
+int code_label(void* object, int type, int value)
 {
-    fn_8015EC10(object);
-    return fn_8015F9B0(object, type, value);
+    luaK_getlabel(object);
+    return luaK_code1(object, type, value);
 }

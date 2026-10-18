@@ -12,27 +12,27 @@ struct DVDCommandBlock {
 
 extern DVDCommandBlock *executing_8064DA00;
 extern DVDCommandBlock DummyCommandBlock_806419E0;
-extern s32 lbl_8064DA34;
-extern void fn_80213CC4(void);
+extern s32 NumInternalRetry;
+extern void stateTimeout(void);
 extern void stateReady_80214A10(void);
-extern void fn_80213D60(void);
+extern void stateGettingError(void);
 
-void fn_80213B9C(u32 intType)
+void cbForStateReadingFST(u32 intType)
 {
     DVDCommandBlock *finished;
 
     if (intType == 0x10) {
         executing_8064DA00->state = -1;
-        fn_80213CC4();
+        stateTimeout();
     } else if (intType & 1) {
         finished = executing_8064DA00;
-        lbl_8064DA34 = 0;
+        NumInternalRetry = 0;
         executing_8064DA00 = &DummyCommandBlock_806419E0;
         finished->state = 0;
         if (finished->callback != 0)
             finished->callback(0, finished);
         stateReady_80214A10();
     } else {
-        fn_80213D60();
+        stateGettingError();
     }
 }

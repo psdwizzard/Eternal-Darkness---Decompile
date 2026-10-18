@@ -23,7 +23,7 @@ extern void* fn_80201C24();
 extern int fn_8012FDA0(void *, int);
 extern void fn_8011F114();
 extern void fn_80127FD8(void *, int, Matrix34 *);
-extern void fn_80211EFC(Quat *, Matrix34 *);
+extern void C_QUATMtx(Quat *, Matrix34 *);
 extern void fn_80127DF8(void *, int, Matrix34 *);
 extern void fn_8012B690(void *, Vec3 *, Vec3 *);
 extern void fn_800CC140(void *, int, int, int, int);
@@ -76,7 +76,7 @@ void fn_800E2150(void *context, void *source, EventData *data, void *transform)
     fn_8011F114(&transform_position, transform_copy);
     source_callback = fn_80155DB4(source);
     fn_80127FD8(owner, slot, &matrix);
-    fn_80211EFC(&rotation, &matrix);
+    C_QUATMtx(&rotation, &matrix);
     fn_80127DF8(owner, slot, &matrix);
     scale.x = matrix.m[0][3];
     scale.y = matrix.m[1][3];

@@ -9,12 +9,12 @@ typedef struct Object {
     int current;
 } Object;
 
-extern int fn_8015EE94(Object*);
-extern void fn_8015EC60(Object*, int);
+extern int luaK_lastisopen(Object*);
+extern void luaK_deltastack(Object*, int);
 
-void fn_8015EED8(Object* object, int value)
+void luaK_setcallreturns(Object* object, int value)
 {
-    if (fn_8015EE94(object)) {
+    if (luaK_lastisopen(object)) {
         Owner* owner;
         int index;
         unsigned int shifted;
@@ -25,6 +25,6 @@ void fn_8015EED8(Object* object, int value)
         index = object->current;
         entry = &owner->entries[index];
         entry[-1] = shifted | (entry[-1] & ~0x7FC0U);
-        fn_8015EC60(object, value);
+        luaK_deltastack(object, value);
     }
 }

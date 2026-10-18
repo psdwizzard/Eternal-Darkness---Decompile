@@ -21,9 +21,9 @@ extern const char lbl_8023BEF8[];
 extern void* lbl_8064C4E4;
 extern GameState lbl_80301D08;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern int fn_80201B44();
 extern void *fn_80201814();
 extern void fn_8011F114();
@@ -38,8 +38,8 @@ s32 fn_80013F88(void* script)
     u32 count;
 
     object = fn_80201814(fn_80201B44());
-    if (fn_8016A598(script) != 1) {
-        fn_80163BB4(script, lbl_8023BEF8, 1, fn_8016A598(script));
+    if (lua_gettop(script) != 1) {
+        luaO_verror(script, lbl_8023BEF8, 1, lua_gettop(script));
         return 0;
     }
 
@@ -49,7 +49,7 @@ s32 fn_80013F88(void* script)
     fn_80038308(object, 2, &lbl_80301D08.values[2]);
     fn_80038308(object, 1, &lbl_80301D08.values[1]);
     fn_80038308(object, 3, &lbl_80301D08.values[3]);
-    count = fn_800F5C54(fn_8016A694(script, 1));
+    count = fn_800F5C54(lua_tonumber(script, 1));
     lbl_80301D08.count = count;
     lbl_80301D08.count = count > 1 ? count : 1;
     fn_80144E78(lbl_80301D08.data, lbl_80301D08.count);

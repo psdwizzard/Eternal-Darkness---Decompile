@@ -9,39 +9,39 @@ typedef struct Entry {
     int value_08;
 } Entry;
 
-extern signed char lbl_8023A890[];
-extern void fn_8015F694(Parser*, int, Entry*);
-extern void fn_8015F768(Parser*, int, Entry*);
-extern void fn_8015F7D4(Parser*, int, Entry*, Entry*);
+extern signed char priority[];
+extern void luaK_prefix(Parser*, int, Entry*);
+extern void luaK_infix(Parser*, int, Entry*);
+extern void luaK_posfix(Parser*, int, Entry*, Entry*);
 extern void fn_80163DA4(Parser*);
-extern void fn_80165464(Parser*, Entry*);
-extern int fn_8016560C(int);
-extern int fn_8016563C(int);
+extern void simpleexp(Parser*, Entry*);
+extern int getunopr(int);
+extern int getbinopr(int);
 
-int fn_8016576C(Parser* parser, Entry* entry, int precedence)
+int subexpr(Parser* parser, Entry* entry, int precedence)
 {
     int operator_kind;
     signed char* operator_info;
-    int value_kind = fn_8016560C(parser->token);
+    int value_kind = getunopr(parser->token);
 
     if (value_kind != 2) {
         fn_80163DA4(parser);
-        fn_8016576C(parser, entry, 7);
-        fn_8015F694(parser, value_kind, entry);
+        subexpr(parser, entry, 7);
+        luaK_prefix(parser, value_kind, entry);
     } else {
-        fn_80165464(parser, entry);
+        simpleexp(parser, entry);
     }
 
-    operator_kind = fn_8016563C(parser->token);
+    operator_kind = getbinopr(parser->token);
     while (operator_kind != 14 &&
-           lbl_8023A890[operator_kind * 2] > precedence) {
+           priority[operator_kind * 2] > precedence) {
         fn_80163DA4(parser);
-        fn_8015F768(parser, operator_kind, entry);
-        operator_info = &lbl_8023A890[operator_kind * 2];
+        luaK_infix(parser, operator_kind, entry);
+        operator_info = &priority[operator_kind * 2];
         {
             Entry right;
-            int next_kind = fn_8016576C(parser, &right, operator_info[1]);
-            fn_8015F7D4(parser, operator_kind, entry, &right);
+            int next_kind = subexpr(parser, &right, operator_info[1]);
+            luaK_posfix(parser, operator_kind, entry, &right);
             operator_kind = next_kind;
         }
     }

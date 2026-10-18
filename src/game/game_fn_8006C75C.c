@@ -21,7 +21,7 @@ extern Entry *lbl_8064C8D4;
 extern s32 lbl_8064CBC0;
 extern s32 lbl_8064B528;
 extern const float lbl_8064E7F8;
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern s32 fn_80070AD0(void);
 extern void *fn_80201B9C(void);
 extern Object *fn_80204844(Object *, s32);
@@ -44,7 +44,7 @@ Entry *fn_8006C75C(u8 count, u8 level)
         }
     }
     if (candidateCount > 0) {
-        s32 choice = (s32)fn_800FBFB0() % candidateCount;
+        s32 choice = (s32)rand() % candidateCount;
         selected = &lbl_8064C8D4[candidates[choice]];
         if (lbl_8064CBC0 != 0) {
             s32 index = fn_80070AD0();

@@ -18,11 +18,11 @@ typedef struct BlockCursor {
     u8 left;
 } BlockCursor;
 
-extern void fn_80103510(u8 *dst, s32 stride, u8 dc, u8 a, u8 b, u8 c, u8 d);
-extern void fn_80104524(u8 *ctx, u8 *dst, s32 stride, u8 dc, u8 mode, s32 index);
+extern void WeightImBlock(u8 *dst, s32 stride, u8 dc, u8 a, u8 b, u8 c, u8 d);
+extern void IntraAotBlock(u8 *ctx, u8 *dst, s32 stride, u8 dc, u8 mode, s32 index);
 
 /* Decode a 4x4 block and advance the adjacent-block cursors. */
-void fn_8010483C(u8 *ctx, register u8 *dst, register s32 stride,
+void IpicBlockDec(u8 *ctx, register u8 *dst, register s32 stride,
                  register BlockCursor *cursor, u16 *current)
 {
     u8 mode = cursor->mode;
@@ -62,7 +62,7 @@ void fn_8010483C(u8 *ctx, register u8 *dst, register s32 stride,
             mr d, right_value
             addi call_dc, dc, 0
         }
-        fn_80103510(call_dst, call_stride, call_dc, a, b, left, d);
+        WeightImBlock(call_dst, call_stride, call_dc, a, b, left, d);
         cursor->left = dc;
     } else if (mode == 8) {
         register u8 dc = cursor->dc;
@@ -75,7 +75,7 @@ void fn_8010483C(u8 *ctx, register u8 *dst, register s32 stride,
         row[0] = row[1] = row[2] = row[3] = dc;
         cursor->left = dc;
     } else {
-        fn_80104524(ctx, dst, stride, cursor->dc, mode, cursor->plane);
+        IntraAotBlock(ctx, dst, stride, cursor->dc, mode, cursor->plane);
         cursor->left = cursor->right.value;
     }
     cursor->above++;

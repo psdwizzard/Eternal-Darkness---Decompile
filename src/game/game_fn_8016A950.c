@@ -1,6 +1,6 @@
-extern void fn_80168C74(void*);
+extern void luaV_Cclosure(void*);
 
-void fn_8016A950(void* context)
+void lua_pushcclosure(void* context)
 {
-    fn_80168C74(context);
+    luaV_Cclosure(context);
 }

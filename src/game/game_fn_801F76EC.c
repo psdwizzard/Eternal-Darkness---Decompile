@@ -10,7 +10,7 @@ extern int lbl_8064D7B0;
 extern unsigned int lbl_8064D5A8;
 extern const Vec3 lbl_8023B7CC;
 
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_801441C0(unsigned short, unsigned short, unsigned short);
 extern void fn_801FA66C(int, int, float);
 extern void fn_801FA748(int, Vec3*);
@@ -24,7 +24,7 @@ void fn_801F76EC(void* state)
     int bits;
 
     if ((lbl_8064D5A8 & ((1 << lbl_8064D7B4) - 1)) == 0) {
-        random = fn_800FBFB0();
+        random = rand();
         bits = lbl_8064D7B0;
         mask = (1 << bits) - 1;
         bits--;

@@ -2,7 +2,7 @@ typedef void (*DBCommCallback)(void);
 
 extern DBCommCallback gDBCommTable[];
 
-void fn_800F5754(void)
+void EnableEXI2Interrupts(void)
 {
     gDBCommTable[1]();
 }

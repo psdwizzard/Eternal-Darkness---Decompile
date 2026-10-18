@@ -14,7 +14,7 @@ typedef struct SoundState {
 
 extern SoundState lbl_80627D60;
 
-void fn_801C3460(u32 handle)
+void vsSampleEndNotify(u32 handle)
 {
     u8* state = (u8*)&lbl_80627D60;
     u32 offset = handle;

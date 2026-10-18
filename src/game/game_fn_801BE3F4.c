@@ -3,9 +3,9 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 typedef unsigned long long u64;
 
-extern u8* fn_801BD08C(u32);
+extern u8* dataGetCurve(u32);
 
-u32 fn_801BE3F4(u32 value, u32 resource)
+u32 TranslateVolume(u32 value, u32 resource)
 {
     u8* table;
     u32 index;
@@ -15,7 +15,7 @@ u32 fn_801BE3F4(u32 value, u32 resource)
     volatile u64 stack_align;
 
     if ((u16)resource != 0xFFFF) {
-        table = fn_801BD08C(resource);
+        table = dataGetCurve(resource);
         if (table != 0) {
             index = value >> 16;
             fraction = (u16)value;

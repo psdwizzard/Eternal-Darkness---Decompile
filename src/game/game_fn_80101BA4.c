@@ -8,7 +8,7 @@ typedef union DoubleBits {
 
 extern const double lbl_8064FE18;
 
-double fn_80101BA4(double value, int *exponent)
+double frexp(double value, int *exponent)
 {
     DoubleBits bits;
     int high;

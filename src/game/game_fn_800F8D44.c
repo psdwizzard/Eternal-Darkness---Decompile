@@ -1,6 +1,6 @@
-extern unsigned char lbl_8024AB90[];
+extern unsigned char __ctype_map[];
 
-int fn_800F8D44(int c)
+int iscntrl(int c)
 {
-    return lbl_8024AB90[(unsigned char)c] & 3;
+    return __ctype_map[(unsigned char)c] & 3;
 }

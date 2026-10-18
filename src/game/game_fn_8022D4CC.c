@@ -25,98 +25,98 @@ typedef struct Bank {
     u32 unk[3];
 } Bank;
 
-/* Interrupt-visible profiler state: fn_8022DA54 installs this function as
- * an OS alarm callback. fn_8022CE20 also installs fn_8022CBA0 via fn_80226814
- * as the PE token callback, dispatched by fn_80226858. That callback checks
+/* Interrupt-visible profiler state: PERFStartAutoSampling installs this function as
+ * an OS alarm callback. PERFStartFrame also installs PERFTokenCallback via GXSetDrawSyncCallback
+ * as the PE token callback, dispatched by GXTokenInterruptHandler. That callback checks
  * the bank discriminator (DBD8), changes the token (C4B4), and calls the
  * entry start/finish routines, which update C4B0 and DBE0. The allocation
  * parameters below are not changed by the token callback. */
-extern volatile s32 lbl_8064C4B0;
-extern volatile u32 lbl_8064C4B4;
-extern volatile u8 lbl_8064DBD8;
-extern volatile s32 lbl_8064DBE0;
-extern s32 lbl_8064DBE4;
-extern Bank *lbl_8064DBEC;
-extern s32 lbl_8064DBF0;
+extern volatile s32 CurrAutoSample;
+extern volatile u32 CurrToken;
+extern volatile u8 magic;
+extern volatile s32 PERFCurrSample;
+extern s32 PERFCurrFrame;
+extern Bank *PERFFrames;
+extern s32 PERFNumSamples;
 extern const char lbl_802FF7EC[];
-extern u32 fn_80209B00(void);
-extern u32 fn_80209B18(void);
-extern u32 fn_80209B28(void);
-extern void fn_8022CA98(Entry *, s32);
+extern u32 PPCMfpmc1(void);
+extern u32 PPCMfpmc3(void);
+extern u32 PPCMfpmc4(void);
+extern void PERFGetAllMemMetrics(Entry *, s32);
 extern void OSReport(const char *, ...);
 extern void *memcpy(void *, const void *, u32);
 
-#define ENTRY_AT(n) (lbl_8064DBEC[lbl_8064DBE4].base[(n)])
+#define ENTRY_AT(n) (PERFFrames[PERFCurrFrame].base[(n)])
 
 static inline s32 AllocateEntry(void)
 {
-    if ((u32)lbl_8064DBE0 >= (u32)(lbl_8064DBF0 - 1)) {
-        lbl_8064DBE0 = lbl_8064DBF0 - 1;
-        return lbl_8064DBE0;
+    if ((u32)PERFCurrSample >= (u32)(PERFNumSamples - 1)) {
+        PERFCurrSample = PERFNumSamples - 1;
+        return PERFCurrSample;
     }
-    return lbl_8064DBE0++;
+    return PERFCurrSample++;
 }
 
 static inline void FinishEntry(void)
 {
-    if (lbl_8064C4B0 >= 0) {
-        ENTRY_AT(lbl_8064C4B0).resource0 = fn_80209B28();
-        fn_8022CA98(&ENTRY_AT(lbl_8064C4B0), 1);
-        ENTRY_AT(lbl_8064C4B0).resource3 = fn_80209B18();
-        ENTRY_AT(lbl_8064C4B0).flags = fn_80209B00();
+    if (CurrAutoSample >= 0) {
+        ENTRY_AT(CurrAutoSample).resource0 = PPCMfpmc4();
+        PERFGetAllMemMetrics(&ENTRY_AT(CurrAutoSample), 1);
+        ENTRY_AT(CurrAutoSample).resource3 = PPCMfpmc3();
+        ENTRY_AT(CurrAutoSample).flags = PPCMfpmc1();
     }
-    lbl_8064C4B0 = -1;
+    CurrAutoSample = -1;
 }
 
 static inline void StartEntry(void)
 {
-    lbl_8064C4B0 = AllocateEntry();
-    ENTRY_AT(lbl_8064C4B0).state = 0xFF;
-    ENTRY_AT(lbl_8064C4B0).status = 0;
-    fn_8022CA98(&ENTRY_AT(lbl_8064C4B0), 0);
-    ENTRY_AT(lbl_8064C4B0).resource2 = fn_80209B28();
-    ENTRY_AT(lbl_8064C4B0).resource0 = 0;
-    ENTRY_AT(lbl_8064C4B0).resource3b = fn_80209B18();
-    ENTRY_AT(lbl_8064C4B0).flagsb = fn_80209B00();
+    CurrAutoSample = AllocateEntry();
+    ENTRY_AT(CurrAutoSample).state = 0xFF;
+    ENTRY_AT(CurrAutoSample).status = 0;
+    PERFGetAllMemMetrics(&ENTRY_AT(CurrAutoSample), 0);
+    ENTRY_AT(CurrAutoSample).resource2 = PPCMfpmc4();
+    ENTRY_AT(CurrAutoSample).resource0 = 0;
+    ENTRY_AT(CurrAutoSample).resource3b = PPCMfpmc3();
+    ENTRY_AT(CurrAutoSample).flagsb = PPCMfpmc1();
 }
 
 /* Decode the entry index and return the bank encoded in the token. */
 static inline s32 DecodeToken(s32 *source)
 {
-    *source = lbl_8064C4B4 & 0xFF;
-    return (lbl_8064C4B4 >> 8) & 0xF;
+    *source = CurrToken & 0xFF;
+    return (CurrToken >> 8) & 0xF;
 }
 
-void fn_8022D4CC(void)
+void PERFTimerCallback(void)
 {
     s32 source;
     s32 slot;
     s32 bank;
-    if (lbl_8064DBE0 == 0)
+    if (PERFCurrSample == 0)
         return;
-    if (lbl_8064C4B4 < 0xFFFF) {
+    if (CurrToken < 0xFFFF) {
         bank = DecodeToken(&source);
-        if (bank != lbl_8064DBD8) {
+        if (bank != magic) {
             FinishEntry();
             StartEntry();
             return;
         }
         slot = AllocateEntry();
         memcpy(&ENTRY_AT(slot), &ENTRY_AT(source), sizeof(Entry));
-        ENTRY_AT(slot).resource0 = fn_80209B28();
-        ENTRY_AT(slot).resource3 = fn_80209B18();
-        ENTRY_AT(slot).flags = fn_80209B00();
-        fn_8022CA98(&ENTRY_AT(slot), 1);
+        ENTRY_AT(slot).resource0 = PPCMfpmc4();
+        ENTRY_AT(slot).resource3 = PPCMfpmc3();
+        ENTRY_AT(slot).flags = PPCMfpmc1();
+        PERFGetAllMemMetrics(&ENTRY_AT(slot), 1);
         ENTRY_AT(slot).state = 0xFF;
-        ENTRY_AT(source).resource2 = fn_80209B28();
-        ENTRY_AT(source).resource3b = fn_80209B18();
-        ENTRY_AT(source).flagsb = fn_80209B00();
-        fn_8022CA98(&ENTRY_AT(source), 0);
+        ENTRY_AT(source).resource2 = PPCMfpmc4();
+        ENTRY_AT(source).resource3b = PPCMfpmc3();
+        ENTRY_AT(source).flagsb = PPCMfpmc1();
+        PERFGetAllMemMetrics(&ENTRY_AT(source), 0);
         ENTRY_AT(source).status = 1;
-        lbl_8064C4B0 = -1;
+        CurrAutoSample = -1;
         return;
     }
-    if (lbl_8064C4B0 < 0) {
+    if (CurrAutoSample < 0) {
         OSReport(lbl_802FF7EC);
         return;
     }

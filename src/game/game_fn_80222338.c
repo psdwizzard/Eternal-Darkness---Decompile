@@ -13,13 +13,13 @@ typedef struct CARDControl {
     u8 reservedD4[0x3C];
 } CARDControl;
 
-extern CARDControl lbl_80641C60[];
-extern s32 fn_8021D374(CARDControl *card, s32 result);
-extern s32 fn_8021EDF4(s32 channel, u16 block, CARDCallback callback);
+extern CARDControl __CARDBlock[];
+extern s32 __CARDPutControlBlock(CARDControl *card, s32 result);
+extern s32 __CARDFreeBlock(s32 channel, u16 block, CARDCallback callback);
 
-void fn_80222338(s32 channel, s32 result)
+void DeleteCallback(s32 channel, s32 result)
 {
-    CARDControl *card = &lbl_80641C60[channel];
+    CARDControl *card = &__CARDBlock[channel];
     CARDCallback callback;
 
     callback = card->callback;
@@ -27,14 +27,14 @@ void fn_80222338(s32 channel, s32 result)
     if (result < 0) {
         goto error;
     }
-    result = fn_8021EDF4(channel, card->startBlock, callback);
+    result = __CARDFreeBlock(channel, card->startBlock, callback);
     if (result < 0) {
         goto error;
     }
     return;
 
 error:
-    fn_8021D374(card, result);
+    __CARDPutControlBlock(card, result);
     if (callback) {
         callback(channel, result);
     }

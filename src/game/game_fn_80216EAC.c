@@ -63,19 +63,19 @@ typedef void (*VIRetraceCallback)(u32);
 
 extern VIData lbl_802FE710;
 extern VIState lbl_80641AC8;
-extern s32 lbl_8064DA60, lbl_8064DA64;
-extern OSThreadQueue lbl_8064DA68;
-extern VIRetraceCallback lbl_8064DA70, lbl_8064DA74;
-extern s32 lbl_8064DA78;
-extern s16 lbl_8064DA7C, lbl_8064DA7E;
-extern s32 lbl_8064DA80;
-extern u32 lbl_8064DA88, lbl_8064DA8C, lbl_8064DA90;
-extern u32 lbl_8064DA98, lbl_8064DA9C;
-extern VITiming *lbl_8064DAA0;
+extern s32 lbl_8064DA60, flushFlag;
+extern OSThreadQueue retraceQueue;
+extern VIRetraceCallback PreCB, PostCB;
+extern s32 encoderType;
+extern s16 lbl_8064DA7C, displayOffsetV;
+extern s32 changeMode;
+extern u32 changed, lbl_8064DA8C, shdwChangeMode;
+extern u32 shdwChanged, lbl_8064DA9C;
+extern VITiming *CurrTiming;
 extern u32 CurrTvMode_8064DAA4;
-extern void fn_80216CB4(s32 mode);
-extern VITiming *fn_80216C24(s32 mode);
-extern void fn_802169B8(s16 interrupt, void *context);
+extern void __VIInit(s32 mode);
+extern VITiming *getTiming(s32 mode);
+extern void __VIRetraceHandler(s16 interrupt, void *context);
 extern Sram *__OSLockSram(void);
 extern s32 __OSUnlockSram(s32 write);
 extern void OSInitThreadQueue(OSThreadQueue *queue);
@@ -88,7 +88,7 @@ volatile u16 VI_REGS[] : 0xCC002000;
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 
-void fn_80216EAC(void)
+void VIInit(void)
 {
     VIData *data = &lbl_802FE710;
     VIState *state = &lbl_80641AC8;
@@ -110,18 +110,18 @@ void fn_80216EAC(void)
     u16 *activeLines;
 
     /* Initialize the VI encoder and its pending register state. */
-    lbl_8064DA78 = 1;
+    encoderType = 1;
     if (!(VI_REGS[1] & 1)) {
-        fn_80216CB4(0);
+        __VIInit(0);
     }
     lbl_8064DA60 = 0;
     lbl_8064DA8C = 0;
-    lbl_8064DA88 = 0;
+    changed = 0;
     lbl_8064DA9C = 0;
-    lbl_8064DA98 = 0;
-    lbl_8064DA80 = 0;
-    lbl_8064DA90 = 0;
-    lbl_8064DA64 = 0;
+    shdwChanged = 0;
+    changeMode = 0;
+    shdwChangeMode = 0;
+    flushFlag = 0;
 
     /* Pack the horizontal filter taps into the hardware registers. */
     VI_REGS[39] = TAP(0) | ((TAP(1) << 10) & 0xFC00);
@@ -143,7 +143,7 @@ void fn_80216EAC(void)
     /* Import the console's horizontal display calibration. */
     sram = __OSLockSram();
     lbl_8064DA7C = sram->displayOffsetH;
-    lbl_8064DA7E = 0;
+    displayOffsetV = 0;
     __OSUnlockSram(0);
 
     displayConfig = VI_REGS[1];
@@ -153,14 +153,14 @@ void fn_80216EAC(void)
     tvMode = &POS(u32, tv);
     tv = POS(u32, tv);
     tv = tv == 3 ? 0 : tv;
-    selectedTiming = fn_80216C24((tv << 2) + *nonInter);
+    selectedTiming = getTiming((tv << 2) + *nonInter);
     timing = &POS(VITiming *, timing);
     *timing = selectedTiming;
     state->regs[1] = displayConfig;
-    lbl_8064DAA0 = (*timing);
+    CurrTiming = (*timing);
     CurrTvMode_8064DAA4 = (*tvMode);
     POS(u16, dispSizeX) = 640;
-    currentTiming = lbl_8064DAA0;
+    currentTiming = CurrTiming;
     activeLines = &currentTiming->acv;
     POS(u16, dispSizeY) = (u16)(currentTiming->acv * 2);
     POS(u16, dispPosX) = (720 - POS(u16, dispSizeX)) / 2;
@@ -174,7 +174,7 @@ void fn_80216EAC(void)
     xfbMode = &POS(s32, xfbMode);
     factor = POS(s32, xfbMode) == 0 ? 2 : 1;
     top = (*dispY) & 1;
-    offsetV = lbl_8064DA7E;
+    offsetV = displayOffsetV;
     POS(u16, adjustedDispPosY) = MAX((s16)(*dispY) + offsetV, top);
     shiftedBottom = (s16)acv;
     shiftedBottom *= 2;
@@ -220,11 +220,11 @@ void fn_80216EAC(void)
     POS(u8, xof) = 0;
     POS(s32, black) = 1;
     POS(s32, threeD) = 0;
-    OSInitThreadQueue(&lbl_8064DA68);
+    OSInitThreadQueue(&retraceQueue);
     VI_REGS[24] = VI_REGS[24] & 0x7FFF;
     VI_REGS[26] = VI_REGS[26] & 0x7FFF;
-    lbl_8064DA70 = 0;
-    lbl_8064DA74 = 0;
-    __OSSetInterruptHandler(24, fn_802169B8);
+    PreCB = 0;
+    PostCB = 0;
+    __OSSetInterruptHandler(24, __VIRetraceHandler);
     __OSUnmaskInterrupts(0x80);
 }

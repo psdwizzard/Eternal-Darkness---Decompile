@@ -47,10 +47,10 @@ extern float lbl_80650434;
 extern int fn_801429A8(void);
 extern float fn_800ED720(float);
 extern void fn_8017960C(Point3s*, Point3s*, Vec3*);
-extern void fn_80211B64(Vec3*, Vec3*, Vec3*);
-extern float fn_80211B08(Vec3*);
-extern void fn_80211A90(Vec3*, Vec3*, float);
-extern float fn_80211B44(Vec3*, Vec3*);
+extern void PSVECCrossProduct(Vec3*, Vec3*, Vec3*);
+extern float PSVECMag(Vec3*);
+extern void PSVECScale(Vec3*, Vec3*, float);
+extern float PSVECDotProduct(Vec3*, Vec3*);
 extern int fn_80179EB8(float*);
 
 PoolSlot* fn_80142A70(u8 count, Point3s* ring, s16 z_offset, u16 value,
@@ -124,15 +124,15 @@ PoolSlot* fn_80142A70(u8 count, Point3s* ring, s16 z_offset, u16 value,
 
         fn_8017960C(&quad->point[1], &quad->point[0], &edge0);
         fn_8017960C(&quad->point[2], &quad->point[0], &edge1);
-        fn_80211B64(&edge0, &edge1, &plane->normal);
-        fn_80211A90(&plane->normal, &plane->normal,
-                    normalizer / fn_80211B08(&plane->normal));
-        fn_80211A90(&plane->normal, &back->normal, lbl_80650434);
+        PSVECCrossProduct(&edge0, &edge1, &plane->normal);
+        PSVECScale(&plane->normal, &plane->normal,
+                    normalizer / PSVECMag(&plane->normal));
+        PSVECScale(&plane->normal, &back->normal, lbl_80650434);
         point.x = quad->point[0].x;
         point.y = quad->point[0].y;
         point.z = quad->point[0].z;
-        plane->distance = -fn_80211B44(&plane->normal, &point);
-        back->distance = -fn_80211B44(&back->normal, &point);
+        plane->distance = -PSVECDotProduct(&plane->normal, &point);
+        back->distance = -PSVECDotProduct(&back->normal, &point);
         plane->axis = fn_80179EB8((float*)&plane->normal);
         back->axis = plane->axis;
     }

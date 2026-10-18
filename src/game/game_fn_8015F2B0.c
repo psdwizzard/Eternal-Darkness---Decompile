@@ -1,7 +1,7 @@
-extern int fn_8015EBDC(void*, int);
-extern void fn_8015EB30(void*, int, int);
+extern int luaK_getjump(void*, int);
+extern void luaK_fixjump(void*, int, int);
 
-void fn_8015F2B0(void* object, int* head, int value)
+void luaK_concat(void* object, int* head, int value)
 {
     int index;
 
@@ -10,9 +10,9 @@ void fn_8015F2B0(void* object, int* head, int value)
     } else {
         index = *head;
         while (1) {
-            int next = fn_8015EBDC(object, index);
+            int next = luaK_getjump(object, index);
             if (next == -1) {
-                fn_8015EB30(object, index, value);
+                luaK_fixjump(object, index, value);
                 break;
             }
             index = next;

@@ -1,4 +1,4 @@
-int fn_800F44C4(unsigned char *state)
+int TRKTargetVersions(unsigned char *state)
 {
     state[0] = 0;
     state[1] = 10;

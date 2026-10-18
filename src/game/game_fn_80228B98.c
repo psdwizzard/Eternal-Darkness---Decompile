@@ -27,7 +27,7 @@ typedef union GXWGPipe {
 } GXWGPipe;
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
-void fn_80228B98(GXTlutObj *object, u32 name)
+void GXLoadTlut(GXTlutObj *object, u32 name)
 {
     u32 pad[2]; /* Unused space retained in the original stack frame. */
     GXTlutRegion *region = gx->tlutRegionCallback(name);

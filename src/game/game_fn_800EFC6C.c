@@ -9,7 +9,7 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-int fn_800EFC6C(TRKBuffer *buffer, u32 position)
+int TRKSetBufferPosition(TRKBuffer *buffer, u32 position)
 {
     int err = 0;
 

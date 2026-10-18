@@ -11,7 +11,7 @@ typedef struct {
 
 extern GXData *gx;
 
-void fn_8022B58C(f32 *projection) {
+void GXGetProjectionv(f32 *projection) {
     projection[0] = (f32)gx->projType;
     projection[1] = gx->projMtx[0];
     projection[2] = gx->projMtx[1];

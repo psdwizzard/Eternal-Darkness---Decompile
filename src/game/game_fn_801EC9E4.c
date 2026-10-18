@@ -5,7 +5,7 @@ typedef struct TransformData {
 } TransformData;
 
 extern void fn_801ED118(void);
-extern void fn_80228D9C(void);
+extern void GXInvalidateTexAll(void);
 extern void fn_801F02C4(void);
 extern void fn_801F683C(TransformData* value);
 extern void fn_801F03F0(TransformData* value, int index);
@@ -17,7 +17,7 @@ void fn_801EC9E4(void)
     TransformData source;
 
     fn_801ED118();
-    fn_80228D9C();
+    GXInvalidateTexAll();
     fn_801F02C4();
     fn_801F683C(&source);
     target = source;

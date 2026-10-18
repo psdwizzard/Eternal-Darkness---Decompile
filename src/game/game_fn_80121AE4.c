@@ -23,8 +23,8 @@ extern u32* lbl_8064CECC;
 extern Entry* lbl_8064CED4;
 extern int lbl_8064CED8;
 
-extern volatile u32* fn_80224650(volatile u32*);
-extern void fn_80224754(void);
+extern volatile u32* GXRedirectWriteGatherPipe(volatile u32*);
+extern void GXRestoreWriteGatherPipe(void);
 extern void DCInvalidateRange(void*, u32);
 
 void fn_80121AE4(DisplayList* src, DisplayList* dst)
@@ -44,7 +44,7 @@ void fn_80121AE4(DisplayList* src, DisplayList* dst)
 
     data = src->data;
     blocks = src->size >> 5;
-    fifo = fn_80224650(dst->data);
+    fifo = GXRedirectWriteGatherPipe(dst->data);
     for (j = 0; j < blocks; j++) {
         *fifo = *data++;
         *fifo = *data++;
@@ -55,7 +55,7 @@ void fn_80121AE4(DisplayList* src, DisplayList* dst)
         *fifo = *data++;
         *fifo = *data++;
     }
-    fn_80224754();
+    GXRestoreWriteGatherPipe();
 
     lbl_8064CEC8 -= src->size;
     lbl_8064CED8 -= dst->count;

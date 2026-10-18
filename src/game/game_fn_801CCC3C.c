@@ -10,12 +10,12 @@ typedef struct Entry {
     u8 padD0[0x24];
 } Entry;
 
-extern Entry* lbl_8064D4AC;
+extern Entry* dspVoice;
 extern u16 lbl_8064C2F0[4];
 
-void fn_801CCC3C(u32 index, u8 value)
+void hwSetPolyPhaseFilter(u32 index, u8 value)
 {
-    Entry* entry = &lbl_8064D4AC[index];
+    Entry* entry = &dspVoice[index];
     entry->fieldCE = lbl_8064C2F0[value];
     entry->flags |= 0x80;
 }

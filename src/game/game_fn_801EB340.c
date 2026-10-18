@@ -4,7 +4,7 @@ typedef unsigned int u32;
 
 #pragma use_lmw_stmw on
 
-extern void fn_802288C4(void*, void**, u16*, u16*, u32*, u32*, u32*, u8*);
+extern void GXGetTexObjAll(void*, void**, u16*, u16*, u32*, u32*, u32*, u8*);
 extern void DCInvalidateRange(void*, u32);
 extern void DCFlushRange(void*, u32);
 
@@ -28,7 +28,7 @@ void fn_801EB340(u8* dl, void* tex_obj)
     int amount;
     int done = 0;
 
-    fn_802288C4(tex_obj, &image, &width, &height, &format, &wrap_s, &wrap_t, &mipmap);
+    GXGetTexObjAll(tex_obj, &image, &width, &height, &format, &wrap_s, &wrap_t, &mipmap);
     width = width - 1;
     height = height - 1;
     width = width & 0x3FF;

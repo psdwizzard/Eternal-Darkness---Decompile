@@ -41,7 +41,7 @@ struct OSMutex {
 extern volatile u32 RunQueueBits_8064D988;
 
 /* Remove a thread from its run queue and clear the bit if it becomes empty. */
-void fn_8020F368(OSThread *thread) {
+void UnsetRun(OSThread *thread) {
     OSThreadQueue *queue = thread->queue;
     OSThread *next = thread->link.next;
     OSThread *prev = thread->link.prev;

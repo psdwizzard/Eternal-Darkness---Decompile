@@ -28,7 +28,7 @@ extern void* fn_80201BC0(void*);
 extern int fn_80137658(void*, Contact*, void*, Result*, float);
 extern int fn_801377A4(void*, Contact*, void*, Result*);
 extern int fn_80137FF4(void*, Contact*, Result*);
-extern float fn_80211D4C(Result*, Contact*);
+extern float PSVECSquareDistance(Result*, Contact*);
 extern void fn_8013F600(Result*, Vec3*, float*);
 extern void fn_8013C518(Vec3*, Vec3*, float, float);
 extern void fn_8013C460(Vec3*, Vec3*, float, float);
@@ -83,7 +83,7 @@ int fn_8013AD48(void* object, Contact* contact, Result* output)
                     float amount;
 
                     fn_8011F130(other);
-                    distance = fn_80211D4C(&candidate, contact);
+                    distance = PSVECSquareDistance(&candidate, contact);
                     if (distance < best) {
                         best = distance;
                         *output = candidate;
@@ -128,7 +128,7 @@ int fn_8013AD48(void* object, Contact* contact, Result* output)
         if (fn_80137FF4(object, contact, &candidate) != 0) {
             Vec3 normal;
             float amount;
-            float distance = fn_80211D4C(&candidate, contact);
+            float distance = PSVECSquareDistance(&candidate, contact);
             if (distance < best)
                 *output = candidate;
             fn_8013F600(&candidate, &normal, &amount);

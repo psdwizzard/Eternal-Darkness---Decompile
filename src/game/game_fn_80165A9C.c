@@ -11,31 +11,31 @@ typedef struct Entry {
     int extra;
 } Entry;
 
-extern int fn_8015EC10(State*);
-extern void fn_80164898(State*, Entry*);
+extern int luaK_getlabel(State*);
+extern void enterbreak(State*, Entry*);
 extern void fn_80163DA4(Parser*);
-extern void fn_80165A54(Parser*, Entry*);
-extern void fn_80163E94(Parser*, int);
-extern void fn_801658D0(Parser*);
-extern int fn_8015EAD0(State*);
-extern void fn_8015F1F8(State*, int, int);
-extern void fn_80163F38(Parser*, int, int, Entry*);
-extern void fn_801648B8(State*, Entry*);
+extern void cond(Parser*, Entry*);
+extern void check(Parser*, int);
+extern void block(Parser*);
+extern int luaK_jump(State*);
+extern void luaK_patchlist(State*, int, int);
+extern void check_match(Parser*, int, int, Entry*);
+extern void leavebreak(State*, Entry*);
 
-void fn_80165A9C(Parser* parser, Entry* output)
+void whilestat(Parser* parser, Entry* output)
 {
     State* state = parser->state;
-    int start = fn_8015EC10(state);
+    int start = luaK_getlabel(state);
     Entry value;
     Entry saved;
 
-    fn_80164898(state, &saved);
+    enterbreak(state, &saved);
     fn_80163DA4(parser);
-    fn_80165A54(parser, &value);
-    fn_80163E94(parser, 0x103);
-    fn_801658D0(parser);
-    fn_8015F1F8(state, fn_8015EAD0(state), start);
-    fn_8015F1F8(state, value.extra, fn_8015EC10(state));
-    fn_80163F38(parser, 0x106, 0x112, output);
-    fn_801648B8(state, &saved);
+    cond(parser, &value);
+    check(parser, 0x103);
+    block(parser);
+    luaK_patchlist(state, luaK_jump(state), start);
+    luaK_patchlist(state, value.extra, luaK_getlabel(state));
+    check_match(parser, 0x106, 0x112, output);
+    leavebreak(state, &saved);
 }

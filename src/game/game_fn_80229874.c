@@ -21,7 +21,7 @@ extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 #define SET_REG_FIELD(reg, size, shift, val) \
     ((reg) = ((reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
 
-void fn_80229874(void)
+void __GXUpdateBPMask(void)
 {
     u32 nBmp;
     u32 i;

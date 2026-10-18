@@ -11,7 +11,7 @@ typedef struct GXData {
 } GXData;
 extern GXData *gx;
 
-void fn_8022979C(u8 count)
+void GXSetNumIndStages(u8 count)
 {
     gx->genMode = (gx->genMode & ~(7UL << 16)) | ((u32)count << 16);
     gx->dirtyState |= 6;

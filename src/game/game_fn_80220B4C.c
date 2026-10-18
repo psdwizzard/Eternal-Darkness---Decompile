@@ -29,13 +29,13 @@ typedef struct CARDControl {
     u8 reserved108[8];
 } CARDControl;
 
-extern CARDControl lbl_80641C60[];
-extern s32 fn_8021D2BC(s32 channel, CARDControl **outCard);
+extern CARDControl __CARDBlock[];
+extern s32 __CARDGetControlBlock(s32 channel, CARDControl **outCard);
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL enabled);
-extern EXICallback fn_80206ED4(s32 channel, EXICallback callback);
-extern BOOL fn_80207304(s32 channel);
-extern void fn_8020A93C(OSAlarm *alarm);
+extern EXICallback EXISetExiCallback(s32 channel, EXICallback callback);
+extern BOOL EXIDetach(s32 channel);
+extern void OSCancelAlarm(OSAlarm *alarm);
 
 /* Release the card's EXI connection while interrupts are disabled. */
 static s32 Unmount(s32 channel)
@@ -43,12 +43,12 @@ static s32 Unmount(s32 channel)
     BOOL enabled;
     CARDControl *card;
 
-    card = &lbl_80641C60[channel];
+    card = &__CARDBlock[channel];
     enabled = OSDisableInterrupts();
     if (card->attached) {
-        fn_80206ED4(channel, 0);
-        fn_80207304(channel);
-        fn_8020A93C(&card->alarm);
+        EXISetExiCallback(channel, 0);
+        EXIDetach(channel);
+        OSCancelAlarm(&card->alarm);
         card->attached = 0;
         card->result = -3;
         card->mountStep = 0;
@@ -57,12 +57,12 @@ static s32 Unmount(s32 channel)
     return 0;
 }
 
-s32 fn_80220B4C(s32 channel)
+s32 CARDUnmount(s32 channel)
 {
     CARDControl *control;
     s32 result;
 
-    result = fn_8021D2BC(channel, &control);
+    result = __CARDGetControlBlock(channel, &control);
     if (result < 0) {
         return result;
     }

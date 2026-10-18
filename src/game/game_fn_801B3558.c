@@ -5,25 +5,25 @@ struct Node {
     unsigned char state;
 };
 
-extern Node* lbl_8064D398;
-extern Node* lbl_8064D39C;
+extern Node* seqPausedRoot;
+extern Node* seqActiveRoot;
 
-void fn_801B3558(Node* node)
+void StartPause(Node* node)
 {
     if (node->prev != 0) {
         node->prev->next = node->next;
     } else {
-        lbl_8064D39C = node->next;
+        seqActiveRoot = node->next;
     }
 
     if (node->next != 0) {
         node->next->prev = node->prev;
     }
 
-    if ((node->next = lbl_8064D398) != 0) {
-        lbl_8064D398->prev = node;
+    if ((node->next = seqPausedRoot) != 0) {
+        seqPausedRoot->prev = node;
     }
     node->prev = 0;
-    lbl_8064D398 = node;
+    seqPausedRoot = node;
     node->state = 2;
 }

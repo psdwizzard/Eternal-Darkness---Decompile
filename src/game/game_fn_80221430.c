@@ -14,7 +14,7 @@ typedef struct CARDDir {
     u8 reserved3A[6];
 } CARDDir;
 
-BOOL fn_80221430(CARDDir *ent, const char *fileName)
+BOOL __CARDCompareFileName(CARDDir *ent, const char *fileName)
 {
     char *entName;
     char c1;

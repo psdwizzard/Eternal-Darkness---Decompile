@@ -1,4 +1,4 @@
-/* fn_80233658: inverse MDCT (libvorbis mdct_backward). */
+/* mdct_backward: inverse MDCT (libvorbis mdct_backward). */
 
 typedef struct mdct_lookup {
     int n;
@@ -8,10 +8,10 @@ typedef struct mdct_lookup {
     float scale;
 } mdct_lookup;
 
-void fn_80233AB0(mdct_lookup *init, float *x);  /* mdct_butterflies */
-void fn_80233978(mdct_lookup *init, float *x);  /* mdct_bitreverse */
+void mdct_butterflies(mdct_lookup *init, float *x);  /* mdct_butterflies */
+void mdct_bitreverse(mdct_lookup *init, float *x);  /* mdct_bitreverse */
 
-void fn_80233658(mdct_lookup *init, float *in, float *out) {
+void mdct_backward(mdct_lookup *init, float *in, float *out) {
     int n = init->n;
     int n2 = n >> 1;
     int n4 = n >> 2;
@@ -45,8 +45,8 @@ void fn_80233658(mdct_lookup *init, float *in, float *out) {
         oX += 4;
     } while (iX >= in);
 
-    fn_80233AB0(init, out + n2);
-    fn_80233978(init, out);
+    mdct_butterflies(init, out + n2);
+    mdct_bitreverse(init, out);
 
     /* rotate + window */
     {

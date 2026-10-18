@@ -43,7 +43,7 @@ extern volatile s32 RunQueueHint_8064D98C;
 #define OSGetCurrentThread() (*(OSThread **)0x800000E4)
 
 /* OSSleepThread: put the current thread to sleep on queue, priority-ordered. */
-void fn_80210004(OSThreadQueue *queue)
+void OSSleepThread(OSThreadQueue *queue)
 {
     s32 enabled;
     OSThread *currentThread;

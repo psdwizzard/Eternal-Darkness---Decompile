@@ -10,7 +10,7 @@ typedef struct StreamSlot {
 
 extern StreamSlot lbl_8061AE48[];
 
-int fn_801B9D1C(u32 id)
+int GetPrivateIndex(u32 id)
 {
     int i;
 

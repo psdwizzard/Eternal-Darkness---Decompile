@@ -35,14 +35,14 @@ extern void* lbl_8064CF50;
 extern const float lbl_80650228;
 extern const float lbl_80650268;
 
-extern void fn_802114E0(Matrix output, void* angles);
-extern void fn_80211710(Matrix m, Vec3* in, Vec3* out);
-extern void fn_80211AAC(Vec3* in, Vec3* out);
+extern void PSMTXQuat(Matrix output, void* angles);
+extern void PSMTXMultVec(Matrix m, Vec3* in, Vec3* out);
+extern void PSVECNormalize(Vec3* in, Vec3* out);
 extern void fn_80179E60(short* destination, float* source);
 extern void fn_80179BC0(Vec3* source, ShortCoord3* destination);
 extern void fn_801A19BC(void* descriptor);
 extern void* fn_80154158(Vec3* position, void* rotation, void* descriptor);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void* fn_80156938(void* object);
 extern ShortCoord3* fn_8017FDE4(void* object);
 extern ShortCoord3* fn_8017FDEC(void* object);
@@ -71,13 +71,13 @@ void fn_8013454C(Emitter* emitter, EmitterSlot* slot)
             0.0f == emitter->rotation[3]) {
             emitter->rotation[3] = lbl_80650228;
         }
-        fn_802114E0(matrix, emitter->rotation);
-        fn_80211710(matrix, &up, &dir);
-        fn_80211AAC(&dir, &dir);
+        PSMTXQuat(matrix, emitter->rotation);
+        PSMTXMultVec(matrix, &up, &dir);
+        PSVECNormalize(&dir, &dir);
         fn_80179E60(rotation, &dir.x);
         fn_801A19BC(&desc);
         desc.scale = emitter->scale / lbl_80650268;
-        desc.phase = (fn_800FBFB0() + 30) & 31;
+        desc.phase = (rand() + 30) & 31;
         slot->effect = fn_80154158(&position, rotation, &desc);
         if (slot->effect != 0) {
             if ((lbl_8064CF50 = fn_80156938(slot->effect)) != 0) {
@@ -92,9 +92,9 @@ void fn_8013454C(Emitter* emitter, EmitterSlot* slot)
         dest->x = emitter->position.x;
         dest->y = emitter->position.y;
         dest->z = emitter->position.z;
-        fn_802114E0(matrix, emitter->rotation);
-        fn_80211710(matrix, &up, &dir);
-        fn_80211AAC(&dir, &dir);
+        PSMTXQuat(matrix, emitter->rotation);
+        PSMTXMultVec(matrix, &up, &dir);
+        PSVECNormalize(&dir, &dir);
         fn_80179BC0(&dir, angles);
     }
 }

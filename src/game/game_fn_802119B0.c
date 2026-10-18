@@ -6,7 +6,7 @@ extern const float lbl_80651618;
 extern const float lbl_8065161C;
 
 /* Build an orthographic projection matrix from the viewing volume. */
-void fn_802119B0(Mtx44 m, float top, float bottom, float left,
+void C_MTXOrtho(Mtx44 m, float top, float bottom, float left,
                  float right, float near, float far)
 {
     float reciprocal = lbl_80651610 / (right - left);

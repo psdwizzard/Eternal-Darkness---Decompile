@@ -30,22 +30,22 @@ struct DSPTask {
 
 extern void OSClearContext(OSContext *context);
 extern void OSSetCurrentContext(OSContext *context);
-extern u32 fn_8021B894(void);
-extern u32 fn_8021B8A4(void);
-extern u32 fn_8021B8B4(void);
-extern void fn_8021B8CC(u32 mail);
-extern void fn_8021BF14(DSPTask *outgoing, DSPTask *incoming);
-extern void fn_8021C2E0(DSPTask *task);
+extern u32 DSPCheckMailToDSP(void);
+extern u32 DSPCheckMailFromDSP(void);
+extern u32 DSPReadMailFromDSP(void);
+extern void DSPSendMailToDSP(u32 mail);
+extern void __DSP_exec_task(DSPTask *outgoing, DSPTask *incoming);
+extern void __DSP_remove_task(DSPTask *task);
 
-extern s32 lbl_8064DB68;
-extern DSPTask *lbl_8064DB6C;
-extern DSPTask *lbl_8064DB74;
-extern DSPTask *lbl_8064DB78;
-extern DSPTask *lbl_8064DB7C;
+extern s32 __DSP_rude_task_pending;
+extern DSPTask *__DSP_rude_task;
+extern DSPTask *__DSP_last_task;
+extern DSPTask *__DSP_first_task;
+extern DSPTask *__DSP_curr_task;
 
 volatile u16 DSPRegisters[] : 0xCC005000;
 
-void fn_8021BAF0(s16 interrupt, OSContext *context)
+void __DSPHandler(s16 interrupt, OSContext *context)
 {
     /* Preserve the interrupt handler's eight-byte stack scratch slot. */
     double contextPadding;
@@ -58,123 +58,123 @@ void fn_8021BAF0(s16 interrupt, OSContext *context)
     OSClearContext(&exceptionContext);
     OSSetCurrentContext(&exceptionContext);
 
-    while (fn_8021B8A4() == 0) {
+    while (DSPCheckMailFromDSP() == 0) {
     }
-    mail = fn_8021B8B4();
-    if ((lbl_8064DB7C->flags & 2) && (mail == 0xDCD10002)) {
+    mail = DSPReadMailFromDSP();
+    if ((__DSP_curr_task->flags & 2) && (mail == 0xDCD10002)) {
         mail = 0xDCD10003;
     }
 
     switch (mail) {
     case (s32)0xDCD10000:
-        lbl_8064DB7C->state = 1;
-        if (lbl_8064DB7C->initCallback != 0) {
-            lbl_8064DB7C->initCallback(lbl_8064DB7C);
+        __DSP_curr_task->state = 1;
+        if (__DSP_curr_task->initCallback != 0) {
+            __DSP_curr_task->initCallback(__DSP_curr_task);
         }
         break;
     case (s32)0xDCD10001:
-        lbl_8064DB7C->state = 1;
-        if (lbl_8064DB7C->resumeCallback != 0) {
-            lbl_8064DB7C->resumeCallback(lbl_8064DB7C);
+        __DSP_curr_task->state = 1;
+        if (__DSP_curr_task->resumeCallback != 0) {
+            __DSP_curr_task->resumeCallback(__DSP_curr_task);
         }
         break;
     case (s32)0xDCD10002:
-        if (lbl_8064DB68 != 0) {
-            if (lbl_8064DB7C == lbl_8064DB6C) {
-                fn_8021B8CC(0xCDD10003);
-                while (fn_8021B894() != 0) {
+        if (__DSP_rude_task_pending != 0) {
+            if (__DSP_curr_task == __DSP_rude_task) {
+                DSPSendMailToDSP(0xCDD10003);
+                while (DSPCheckMailToDSP() != 0) {
                 }
-                lbl_8064DB6C = 0;
-                lbl_8064DB68 = 0;
-                if (lbl_8064DB7C->resumeCallback != 0) {
-                    lbl_8064DB7C->resumeCallback(lbl_8064DB7C);
+                __DSP_rude_task = 0;
+                __DSP_rude_task_pending = 0;
+                if (__DSP_curr_task->resumeCallback != 0) {
+                    __DSP_curr_task->resumeCallback(__DSP_curr_task);
                 }
             } else {
-                fn_8021B8CC(0xCDD10001);
-                while (fn_8021B894() != 0) {
+                DSPSendMailToDSP(0xCDD10001);
+                while (DSPCheckMailToDSP() != 0) {
                 }
-                fn_8021BF14(lbl_8064DB7C, lbl_8064DB6C);
-                lbl_8064DB7C->state = 2;
-                lbl_8064DB7C = lbl_8064DB6C;
-                lbl_8064DB68 = 0;
-                lbl_8064DB6C = 0;
+                __DSP_exec_task(__DSP_curr_task, __DSP_rude_task);
+                __DSP_curr_task->state = 2;
+                __DSP_curr_task = __DSP_rude_task;
+                __DSP_rude_task_pending = 0;
+                __DSP_rude_task = 0;
             }
-        } else if (lbl_8064DB7C->next == 0) {
-            if (lbl_8064DB7C == lbl_8064DB78) {
-                fn_8021B8CC(0xCDD10003);
-                while (fn_8021B894() != 0) {
+        } else if (__DSP_curr_task->next == 0) {
+            if (__DSP_curr_task == __DSP_first_task) {
+                DSPSendMailToDSP(0xCDD10003);
+                while (DSPCheckMailToDSP() != 0) {
                 }
-                if (lbl_8064DB7C->resumeCallback != 0) {
-                    lbl_8064DB7C->resumeCallback(lbl_8064DB7C);
+                if (__DSP_curr_task->resumeCallback != 0) {
+                    __DSP_curr_task->resumeCallback(__DSP_curr_task);
                 }
             } else {
-                fn_8021B8CC(0xCDD10001);
-                while (fn_8021B894() != 0) {
+                DSPSendMailToDSP(0xCDD10001);
+                while (DSPCheckMailToDSP() != 0) {
                 }
-                fn_8021BF14(lbl_8064DB7C, lbl_8064DB78);
-                lbl_8064DB7C->state = 2;
-                lbl_8064DB7C = lbl_8064DB78;
+                __DSP_exec_task(__DSP_curr_task, __DSP_first_task);
+                __DSP_curr_task->state = 2;
+                __DSP_curr_task = __DSP_first_task;
             }
         } else {
-            fn_8021B8CC(0xCDD10001);
-            while (fn_8021B894() != 0) {
+            DSPSendMailToDSP(0xCDD10001);
+            while (DSPCheckMailToDSP() != 0) {
             }
-            fn_8021BF14(lbl_8064DB7C, lbl_8064DB7C->next);
-            lbl_8064DB7C->state = 2;
-            lbl_8064DB7C = lbl_8064DB7C->next;
+            __DSP_exec_task(__DSP_curr_task, __DSP_curr_task->next);
+            __DSP_curr_task->state = 2;
+            __DSP_curr_task = __DSP_curr_task->next;
         }
         break;
     case (s32)0xDCD10003:
-        if (lbl_8064DB68 != 0) {
-            if (lbl_8064DB7C->doneCallback != 0) {
-                lbl_8064DB7C->doneCallback(lbl_8064DB7C);
+        if (__DSP_rude_task_pending != 0) {
+            if (__DSP_curr_task->doneCallback != 0) {
+                __DSP_curr_task->doneCallback(__DSP_curr_task);
             }
-            fn_8021B8CC(0xCDD10001);
-            while (fn_8021B894() != 0) {
+            DSPSendMailToDSP(0xCDD10001);
+            while (DSPCheckMailToDSP() != 0) {
             }
-            fn_8021BF14(0, lbl_8064DB6C);
-            fn_8021C2E0(lbl_8064DB7C);
-            lbl_8064DB7C = lbl_8064DB6C;
-            lbl_8064DB68 = 0;
-            lbl_8064DB6C = 0;
-        } else if (lbl_8064DB7C->next == 0) {
-            if (lbl_8064DB7C == lbl_8064DB78) {
-                if (lbl_8064DB7C->doneCallback != 0) {
-                    lbl_8064DB7C->doneCallback(lbl_8064DB7C);
+            __DSP_exec_task(0, __DSP_rude_task);
+            __DSP_remove_task(__DSP_curr_task);
+            __DSP_curr_task = __DSP_rude_task;
+            __DSP_rude_task_pending = 0;
+            __DSP_rude_task = 0;
+        } else if (__DSP_curr_task->next == 0) {
+            if (__DSP_curr_task == __DSP_first_task) {
+                if (__DSP_curr_task->doneCallback != 0) {
+                    __DSP_curr_task->doneCallback(__DSP_curr_task);
                 }
-                fn_8021B8CC(0xCDD10002);
-                while (fn_8021B894() != 0) {
+                DSPSendMailToDSP(0xCDD10002);
+                while (DSPCheckMailToDSP() != 0) {
                 }
-                lbl_8064DB7C->state = 3;
-                fn_8021C2E0(lbl_8064DB7C);
+                __DSP_curr_task->state = 3;
+                __DSP_remove_task(__DSP_curr_task);
             } else {
-                if (lbl_8064DB7C->doneCallback != 0) {
-                    lbl_8064DB7C->doneCallback(lbl_8064DB7C);
+                if (__DSP_curr_task->doneCallback != 0) {
+                    __DSP_curr_task->doneCallback(__DSP_curr_task);
                 }
-                fn_8021B8CC(0xCDD10001);
-                while (fn_8021B894() != 0) {
+                DSPSendMailToDSP(0xCDD10001);
+                while (DSPCheckMailToDSP() != 0) {
                 }
-                lbl_8064DB7C->state = 3;
-                fn_8021BF14(0, lbl_8064DB78);
-                lbl_8064DB7C = lbl_8064DB78;
-                fn_8021C2E0(lbl_8064DB74);
+                __DSP_curr_task->state = 3;
+                __DSP_exec_task(0, __DSP_first_task);
+                __DSP_curr_task = __DSP_first_task;
+                __DSP_remove_task(__DSP_last_task);
             }
         } else {
-            if (lbl_8064DB7C->doneCallback != 0) {
-                lbl_8064DB7C->doneCallback(lbl_8064DB7C);
+            if (__DSP_curr_task->doneCallback != 0) {
+                __DSP_curr_task->doneCallback(__DSP_curr_task);
             }
-            fn_8021B8CC(0xCDD10001);
-            while (fn_8021B894() != 0) {
+            DSPSendMailToDSP(0xCDD10001);
+            while (DSPCheckMailToDSP() != 0) {
             }
-            lbl_8064DB7C->state = 3;
-            fn_8021BF14(0, lbl_8064DB7C->next);
-            lbl_8064DB7C = lbl_8064DB7C->next;
-            fn_8021C2E0(lbl_8064DB7C->prev);
+            __DSP_curr_task->state = 3;
+            __DSP_exec_task(0, __DSP_curr_task->next);
+            __DSP_curr_task = __DSP_curr_task->next;
+            __DSP_remove_task(__DSP_curr_task->prev);
         }
         break;
     case (s32)0xDCD10004:
-        if (lbl_8064DB7C->requestCallback != 0) {
-            lbl_8064DB7C->requestCallback(lbl_8064DB7C);
+        if (__DSP_curr_task->requestCallback != 0) {
+            __DSP_curr_task->requestCallback(__DSP_curr_task);
         }
         break;
     }

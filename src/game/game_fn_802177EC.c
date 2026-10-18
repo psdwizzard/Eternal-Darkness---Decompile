@@ -28,19 +28,19 @@ typedef struct {
 extern s32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(s32);
 extern void OSReport(const char *, ...);
-extern void *fn_80216C24(s32);
-extern void fn_80217378(void *, void *, void *, void *, void *);
-extern void fn_8021764C(u16, u16, u8, u16, u16, u16, u16, u16, u32);
+extern void *getTiming(s32);
+extern void setFbbRegs(void *, void *, void *, void *, void *);
+extern void setVerticalRegs(u16, u16, u8, u16, u16, u16, u16, u16, u32);
 extern char lbl_802FE710[];
 extern volatile DisplayState lbl_80641AC8;
-extern volatile u32 lbl_8064DA78, lbl_8064DA80, lbl_8064DA88, lbl_8064DA8C;
-extern volatile u32 lbl_8064DAA8, lbl_8064DAAC;
-extern volatile s16 lbl_8064DA7C, lbl_8064DA7E;
+extern volatile u32 encoderType, changeMode, changed, lbl_8064DA8C;
+extern volatile u32 FBSet, lbl_8064DAAC;
+extern volatile s16 lbl_8064DA7C, displayOffsetV;
 
-#define GX_SET_A(mask) do { u32 gxA = lbl_8064DA88; u32 gxB = lbl_8064DA8C; lbl_8064DA8C = gxB; lbl_8064DA88 = gxA | (mask); } while (0)
-#define GX_SET_B(mask) do { u32 gxA = lbl_8064DA88; u32 gxB = lbl_8064DA8C; lbl_8064DA8C = gxB | (mask); lbl_8064DA88 = gxA; } while (0)
+#define GX_SET_A(mask) do { u32 gxA = changed; u32 gxB = lbl_8064DA8C; lbl_8064DA8C = gxB; changed = gxA | (mask); } while (0)
+#define GX_SET_B(mask) do { u32 gxA = changed; u32 gxB = lbl_8064DA8C; lbl_8064DA8C = gxB | (mask); changed = gxA; } while (0)
 
-void fn_802177EC(DisplayInput *in) {
+void VIConfigure(DisplayInput *in) {
     char *strings = lbl_802FE710;
     volatile DisplayState *s = &lbl_80641AC8;
     register s32 interruptState;
@@ -61,7 +61,7 @@ void fn_802177EC(DisplayInput *in) {
     mode = in->mode & 3;
     pMode = (volatile u32 *)(out + 0x114);
     if (*pMode != mode) {
-        lbl_8064DA80 = 1;
+        changeMode = 1;
         *pMode = mode;
     }
     scan = in->mode >> 2;
@@ -108,7 +108,7 @@ void fn_802177EC(DisplayInput *in) {
     p118 = (volatile u32 *)(out + 0x118);
     p134 = (volatile u32 *)(out + 0x134);
     *p134 = *pMode == 3;
-    info = fn_80216C24(*p118 * 4 + *pMode);
+    info = getTiming(*p118 * 4 + *pMode);
     *(volatile DisplayInfo **)(out + 0x144) = info;
 
     top = (s16)*(volatile u16 *)(out + 0xF0) + lbl_8064DA7C;
@@ -120,17 +120,17 @@ void fn_802177EC(DisplayInput *in) {
     else if (top < 0) top = 0;
     *(volatile u16 *)(out + 0xF8) = top;
     scale = *p110 == 0 ? 2 : 1;
-    delta = (s16)left + lbl_8064DA7E;
+    delta = (s16)left + displayOffsetV;
     bottom = delta > (left & 1) ? delta : (left & 1);
     *pFA = bottom;
     delta = (s16)*(u16 *)(info->bytes + 2) * 2 - (left & 1);
-    right = (s16)left + (s16)width + lbl_8064DA7E;
-    *pFC = (u16)(width + ((s16)left + lbl_8064DA7E < (left & 1) ? (s16)left + lbl_8064DA7E - (left & 1) : 0) - (right - delta > 0 ? right - delta : 0));
-    delta = (s16)left + lbl_8064DA7E - (left & 1);
+    right = (s16)left + (s16)width + displayOffsetV;
+    *pFC = (u16)(width + ((s16)left + displayOffsetV < (left & 1) ? (s16)left + displayOffsetV - (left & 1) : 0) - (right - delta > 0 ? right - delta : 0));
+    delta = (s16)left + displayOffsetV - (left & 1);
     *(volatile u16 *)(out + 0xFE) = (s16)*p108 - (delta < 0 ? delta / scale : 0);
     *(volatile u16 *)(out + 0x100) = (u16)((s16)*p10C + ((delta < 0 ? delta : 0) / scale) - ((right - ((s16)*(u16 *)(info->bytes + 2) * 2 - (left & 1)) > 0 ? right - ((s16)*(u16 *)(info->bytes + 2) * 2 - (left & 1)) : 0) / scale));
 
-    if (lbl_8064DA78 == 0) *p118 = 3;
+    if (encoderType == 0) *p118 = 3;
     infoLines = *(u16 *)(info->bytes + 0x18);
     *(volatile u16 *)(out + 0x32) = ((infoLines % 2 != 0) ? *(u16 *)(info->bytes + 0x1A) : 0) + 1;
     tmp = (infoLines / 2) + 1;
@@ -183,12 +183,12 @@ void fn_802177EC(DisplayInput *in) {
     out[0x12C] = *p106 & 15;
     out[0x11E] = (out[0x12C] + *p10A + 15) / 16;
     *(volatile u16 *)(out + 0x48) = out[0x11D] | (out[0x11E] << 8);
-    flagsA = lbl_8064DA88;
-    shouldAdjust = lbl_8064DAA8;
+    flagsA = changed;
+    shouldAdjust = FBSet;
     flagsB = lbl_8064DA8C;
     lbl_8064DA8C = flagsB | 0x08000000;
-    lbl_8064DA88 = flagsA;
-    if (shouldAdjust) fn_80217378((void *)(out + 0xF0), (void *)(out + 0x124), (void *)(out + 0x128), (void *)(out + 0x13C), (void *)(out + 0x140));
-    fn_8021764C(*pFA, *pFC, info->bytes[0], *(u16 *)(info->bytes + 2), *(u16 *)(info->bytes + 4), *(u16 *)(info->bytes + 6), *(u16 *)(info->bytes + 8), *(u16 *)(info->bytes + 0xA), *(volatile u32 *)(out + 0x130));
+    changed = flagsA;
+    if (shouldAdjust) setFbbRegs((void *)(out + 0xF0), (void *)(out + 0x124), (void *)(out + 0x128), (void *)(out + 0x13C), (void *)(out + 0x140));
+    setVerticalRegs(*pFA, *pFC, info->bytes[0], *(u16 *)(info->bytes + 2), *(u16 *)(info->bytes + 4), *(u16 *)(info->bytes + 6), *(u16 *)(info->bytes + 8), *(u16 *)(info->bytes + 0xA), *(volatile u32 *)(out + 0x130));
     OSRestoreInterrupts(interruptState);
 }

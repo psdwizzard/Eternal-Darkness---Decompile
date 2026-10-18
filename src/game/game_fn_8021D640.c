@@ -1,6 +1,6 @@
 typedef unsigned int u32;
 
-u32 fn_8021D640(u32 value) {
+u32 bitrev(u32 value) {
     u32 sign = value >> 31;
     u32 result;
     u32 i;

@@ -5,37 +5,49 @@ typedef float Mtx[3][4];
  * translation column is cleared. Returns 0 if the matrix is singular.
  * Rows zero and one of the cofactors are built as paired singles; row
  * two and the third column use scalar arithmetic. */
-unsigned int fn_802111A0(register const Mtx src, register Mtx invX)
+unsigned int PSMTXInvXpose(register const Mtx src, register Mtx invX)
 {
-    register float a;
-    register float bc;
-    register float d;
-    register float ef;
-    register float g;
-    register float hi;
-    register float ca;
-    register float fd;
     register float ig;
-    register float row0;
-    register float row1;
+    register float ca;
+    register float c12;
+    register float ef;
     register float reciprocal;
-    float c, f, row20, row21, c02, c12, c22, det, zero;
+    register float row1;
+    float row21;
+    register float hi;
+    register float fd;
+    register float g;
+    register float c02;
+    register float bc;
+    register float f;
+    register float row0;
+    register float d;
+    register float det;
+    float zero;
+    float c;
+    register float c22;
+    register float a;
+    float row20;
 
-    /* ASM: psq_l with W=1 loads a column-zero element as (x, 1.0); MWCC
-     * emits lfs for a scalar load. */
+    /* ASM: psq_l loads (a, 1.0) and the (b, c) row fragment;
+     * scalar C loads cannot express these paired lanes. */
     asm {
         psq_l a, 0(src), 1, 0
-        psq_l d, 16(src), 1, 0
+        psq_l bc, 4(src), 0, 0
     }
-    g = src[2][0];
+    d = src[1][0];
     /* ASM: psq_l loads both lanes of a row fragment and ps_merge10 swaps
      * lanes; the paired-single products need both lanes, which scalar C
      * cannot represent. */
     asm {
-        psq_l bc, 4(src), 0, 0
         ps_merge10 ca, bc, a
         psq_l ef, 20(src), 0, 0
+        psq_l g, 32(src), 1, 0
         ps_merge10 fd, ef, d
+    }
+    /* ASM: psq_l, ps_mul, ps_merge10 load and combine paired lanes,
+     * which scalar C cannot represent. */
+    asm {
         psq_l hi, 36(src), 0, 0
         ps_mul row0, hi, fd
         ps_merge10 ig, hi, g
@@ -61,6 +73,9 @@ unsigned int fn_802111A0(register const Mtx src, register Mtx invX)
     invX[0][3] = zero;
     invX[1][3] = zero;
     invX[2][3] = zero;
+    c02 = d * hi - ef * g;
+    c12 = bc * g - a * hi;
+    c22 = a * ef - bc * d;
     /* ASM: ps_muls0 scales both cofactor lanes and psq_st stores the
      * pair; C cannot address the second lane. */
     asm {
@@ -69,9 +84,6 @@ unsigned int fn_802111A0(register const Mtx src, register Mtx invX)
         psq_st row0, 0(invX), 0, 0
         psq_st row1, 16(invX), 0, 0
     }
-    c02 = d * src[2][1] - ef * g;
-    c12 = bc * g - a * src[2][1];
-    c22 = a * ef - bc * d;
     invX[2][0] = row20 * reciprocal;
     invX[2][1] = row21 * reciprocal;
     invX[0][2] = c02 * reciprocal;

@@ -12,12 +12,12 @@ typedef struct Entry {
     u8 padE5[0xF];
 } Entry;
 
-extern Entry* lbl_8064D4AC;
-extern u8 lbl_8064D4D8;
+extern Entry* dspVoice;
+extern u8 salTimeOffset;
 
-void fn_801CCB98(u32 index, u32 value)
+void hwSetPitch(u32 index, u32 value)
 {
-    Entry* entry = &lbl_8064D4AC[index];
+    Entry* entry = &dspVoice[index];
     u8 slot;
 
     if ((u16)value >= 0x4000) {
@@ -27,8 +27,8 @@ void fn_801CCB98(u32 index, u32 value)
         entry->values[entry->fieldE4] == ((value << 4) & 0xFFFF0)) {
         return;
     }
-    slot = lbl_8064D4D8;
+    slot = salTimeOffset;
     entry->values[slot] = (value << 4) & 0xFFFF0;
-    entry->flags[lbl_8064D4D8] |= 8;
-    entry->fieldE4 = lbl_8064D4D8;
+    entry->flags[salTimeOffset] |= 8;
+    entry->fieldE4 = salTimeOffset;
 }

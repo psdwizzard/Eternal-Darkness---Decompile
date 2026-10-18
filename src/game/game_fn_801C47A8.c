@@ -32,7 +32,7 @@ typedef struct Accumulator {
 #define CLAMP(value, low, high) \
     ((value) > (high) ? (high) : ((value) < (low) ? (low) : (value)))
 
-void fn_801C47A8(Accumulator* accumulator, InputOwner* owner)
+void HandleDepopVoice(Accumulator* accumulator, InputOwner* owner)
 {
     InputState* state;
 

@@ -35,7 +35,7 @@ typedef struct CollisionWorld {
 extern int fn_801374D8(void* object, const Shape* shape,
                        const CollisionEntry* entry,
                        const CollisionWorld* world, Result* result);
-extern float fn_80211D4C(const Vec3* a, const Vec3* b);
+extern float PSVECSquareDistance(const Vec3* a, const Vec3* b);
 extern float lbl_80650278;
 
 const CollisionEntry* fn_80137578(void* object, const Shape* shape,
@@ -53,7 +53,7 @@ const CollisionEntry* fn_80137578(void* object, const Shape* shape,
 
     for (i = 0; i < world->entry_count; i++, entry++) {
         if (fn_801374D8(object, shape, entry, world, &candidate)) {
-            float distance = fn_80211D4C(&candidate.normal, &shape->first);
+            float distance = PSVECSquareDistance(&candidate.normal, &shape->first);
             if (distance < best) {
                 best = distance;
                 closest = entry;

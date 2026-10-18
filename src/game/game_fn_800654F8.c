@@ -46,7 +46,7 @@ typedef struct ActorInfo {
 
 /* Damage and hit-reaction dispatcher. The contact query fills all of
  * HitResult, and the motion query copies both vectors of VecPair. */
-u32 fn_800FBFB0(void);
+u32 rand(void);
 int fn_8011EB04(void *);
 void fn_8011F114(Vec3 *, Vec3 *);
 s32 fn_8011F6A4(void *, s32, s32, s32, void *, s32);
@@ -97,9 +97,9 @@ s32 fn_80201EB8(void *);
 u8 fn_80204578(void *, const Vec3 *);
 void *fn_80204844(void *, s32);
 void *fn_80205868(void *, s32, void *, u32);
-void fn_80211A90(void *, const void *, f32);
-void fn_80211AAC(void *, const void *);
-f32 fn_80211B08(const Vec3 *);
+void PSVECScale(void *, const void *, f32);
+void PSVECNormalize(void *, const void *);
+f32 PSVECMag(const Vec3 *);
 void fn_800337C8(Vec3 *, const Vec3 *, s32, void *, s32, s32);
 s32 fn_80035628(void *);
 s32 fn_800359A0(void *, void *);
@@ -423,13 +423,13 @@ skipLinkedHandler:
                 impactFlags = fn_80066E78(workingFlags, damage, 2, target, &effectAmount, &effectLevel, &effectResource, &effectVariant);
             }
             fn_801A76F4(&motion, event);
-            if (fn_80211B08(&motion.second) > lbl_8064E6C0) {
+            if (PSVECMag(&motion.second) > lbl_8064E6C0) {
                 impactDirection = motion.second;
-                fn_80211A90(&impactDirection, &impactDirection, lbl_8064E6C4);
+                PSVECScale(&impactDirection, &impactDirection, lbl_8064E6C4);
             } else {
-                randomX = 8 - (fn_800FBFB0() & 0xF);
+                randomX = 8 - (rand() & 0xF);
                 impactDirection.x = (f32) randomX;
-                randomY = 8 - (fn_800FBFB0() & 0xF);
+                randomY = 8 - (rand() & 0xF);
                 impactDirection.y = (f32) randomY;
                 impactDirection.z = lbl_8064E6C8;
             }
@@ -514,8 +514,8 @@ skipLinkedHandler:
                             detachDirection.x = directionX;
                             detachDirection.y = directionY;
                             detachDirection.z = lbl_8064E698;
-                            fn_80211AAC(&detachDirection, &detachDirection);
-                            fn_80211A90(&detachDirection, &detachDirection, lbl_8064E6C8);
+                            PSVECNormalize(&detachDirection, &detachDirection);
+                            PSVECScale(&detachDirection, &detachDirection, lbl_8064E6C8);
                             fn_80205868((void *)model, limbIndex, &detachDirection.x, 0x2000);
                             fn_8014CBE8((void *)target, 0x14, limbIndex, defaultEffectResource);
                             fn_800EA428((void *)target, targetStatus, limbIndex);

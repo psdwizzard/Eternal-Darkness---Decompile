@@ -15,37 +15,57 @@ typedef struct OSContext {
     u16 mode;
     u16 state;
     u32 gqr[8];
+    u32 psf_pad;
+    double psf[32];
 } OSContext;
 
 void OSSetCurrentContext(register OSContext *context) {
     register volatile u32 *lowMemory = (volatile u32 *)0x80000000;
-    register u32 physicalContext;
-    register u32 msr;
+    u32 fpuContext;
 
     /* Publish both cached and physical addresses of the current context. */
     lowMemory[0xD4 / 4] = (u32)context;
-    physicalContext = (u32)context & 0x3FFFFFFF;
-    lowMemory[0xC0 / 4] = physicalContext;
-    physicalContext = lowMemory[0xD8 / 4];
+    /* ASM: clrlwi, stw retain the physical address in r5; MWCC assigns
+     * the equivalent C mask/store temporary to r0. */
+    asm {
+        clrlwi r5, context, 2
+        stw r5, 0xC0(lowMemory)
+    }
+    fpuContext = lowMemory[0xD8 / 4];
     /* Only the context that owns the FPU may restore it as enabled. */
-    if ((long)physicalContext == (long)context) {
-        context->srr1 |= 0x2000;
-        /* ASM: mfmsr reads the machine state register, which C cannot access. */
-        asm { mfmsr msr }
-        msr |= 2;
-        /* ASM: mtmsr writes the machine state register, which C cannot access. */
-        asm { mtmsr msr }
+    if ((long)fpuContext == (long)context) {
+        /* ASM: lwz, ori, stw update SRR1's FP bit through r6; C assigns
+         * this temporary to r0 and cannot bind it to the SDK scratch register. */
+        asm {
+            lwz r6, OSContext.srr1(context)
+            ori r6, r6, 0x2000
+            stw r6, OSContext.srr1(context)
+        }
+        /* ASM: mfmsr, ori, mtmsr enable recoverable interrupts through r6.
+         * C cannot access MSR or bind its update temporary to r6. */
+        asm {
+            mfmsr r6
+            ori r6, r6, 2
+            mtmsr r6
+        }
         return;
     }
 
-    context->srr1 &= ~0x2000;
-    /* ASM: mfmsr reads the machine state register, which C cannot access. */
-    asm { mfmsr msr }
-    msr &= ~0x2000;
-    msr |= 2;
-    /* ASM: mtmsr writes the machine state register, which C cannot access. */
-    asm { mtmsr msr }
-    /* ASM: isync synchronizes instruction execution after disabling the FPU;
-     * C has no instruction synchronization operation. */
-    asm { isync }
+    /* ASM: lwz, rlwinm, stw clear SRR1's FP bit through r6; C assigns
+     * this temporary to r0 and cannot bind it to the SDK scratch register. */
+    asm {
+        lwz r6, OSContext.srr1(context)
+        rlwinm r6, r6, 0, 19, 17
+        stw r6, OSContext.srr1(context)
+    }
+    /* ASM: mfmsr, rlwinm, ori, mtmsr disable FP and enable recoverable
+     * interrupts through r6. C cannot access MSR or bind its temporary to r6. */
+    asm {
+        mfmsr r6
+        rlwinm r6, r6, 0, 19, 17
+        ori r6, r6, 2
+        mtmsr r6
+    }
+    /* Synchronize instruction execution after disabling the FPU. */
+    __isync();
 }

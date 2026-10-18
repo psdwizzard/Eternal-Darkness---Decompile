@@ -36,16 +36,16 @@ typedef struct BitReader {
     s32 storage;
 } BitReader;
 
-extern void fn_8022EA4C(void *, u8 *, s32);
-extern s32 fn_8022E868(void *, s32);
+extern void oggpack_readinit(void *, u8 *, s32);
+extern s32 oggpack_read(void *, s32);
 extern void *memset(void *, int, unsigned long);
 extern int fn_800F98EC(const void *, const void *, unsigned long);
-extern s32 fn_8023258C(AudioInfo *, void *);
-extern s32 fn_80232430(AudioComment *, void *);
-extern s32 fn_80232078(AudioInfo *, void *);
+extern s32 _vorbis_unpack_info(AudioInfo *, void *);
+extern s32 _vorbis_unpack_comment(AudioComment *, void *);
+extern s32 _vorbis_unpack_books(AudioInfo *, void *);
 extern const char lbl_806517E8[3];
 
-s32 fn_80231F10(AudioInfo *info, AudioComment *comment, AudioPacket *packet)
+s32 vorbis_synthesis_headerin(AudioInfo *info, AudioComment *comment, AudioPacket *packet)
 {
     BitReader reader;
     u8 signature[2];
@@ -54,13 +54,13 @@ s32 fn_80231F10(AudioInfo *info, AudioComment *comment, AudioPacket *packet)
         u8 *cursor;
         s32 type;
         s32 i;
-        fn_8022EA4C(&reader, packet->data, packet->size);
-        type = fn_8022E868(&reader, 8);
+        oggpack_readinit(&reader, packet->data, packet->size);
+        type = oggpack_read(&reader, 8);
         memset(signature, 0, sizeof(signature));
         cursor = signature;
         i = 1;
         do {
-            *cursor++ = fn_8022E868(&reader, 8);
+            *cursor++ = oggpack_read(&reader, 8);
         } while (i-- != 0);
         if (fn_800F98EC(signature, lbl_806517E8, 2) != 0) {
             return -0x84;
@@ -69,13 +69,13 @@ s32 fn_80231F10(AudioInfo *info, AudioComment *comment, AudioPacket *packet)
         case 1:
             if (!packet->beginning) return -0x85;
             if (info->rate) return -0x85;
-            return fn_8023258C(info, &reader);
+            return _vorbis_unpack_info(info, &reader);
         case 3:
             if (!info->rate) return -0x85;
-            return fn_80232430(comment, &reader);
+            return _vorbis_unpack_comment(comment, &reader);
         case 5:
             if (!info->rate || !comment->vendor) return -0x85;
-            return fn_80232078(info, &reader);
+            return _vorbis_unpack_books(info, &reader);
         default:
             return -0x85;
         }

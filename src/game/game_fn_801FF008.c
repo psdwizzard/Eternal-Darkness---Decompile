@@ -35,7 +35,7 @@ extern void fn_801FF5EC(Context*, Context*);
 extern void fn_801FF838(Context*, int);
 extern void fn_801FF23C(int, Record*, Record*);
 extern void fn_80133300(void);
-extern void fn_800F8BAC(const char*, const char*, int);
+extern void __assertion_failed(const char*, const char*, int);
 
 void fn_801FF008(Header* header, int arg)
 {
@@ -74,7 +74,7 @@ void fn_801FF008(Header* header, int arg)
                                     (u32)header->records[i].objects[j]) != 0) {
                         object = (void*)object_value;
                         if (object == 0) {
-                            fn_800F8BAC(lbl_8064C3B8, lbl_802FC8AC, 371);
+                            __assertion_failed(lbl_8064C3B8, lbl_802FC8AC, 371);
                         }
                         fn_8015DAB0(object);
                         output->objects[j] = object;

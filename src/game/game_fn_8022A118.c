@@ -42,7 +42,7 @@ volatile PPCWGPipe GXWGFifo : 0xCC008000;
 #define SET_REG_FIELD(reg, size, shift, val) \
     ((reg) = ((reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
 
-void fn_8022A118(GXTevStageID stage, GXTexCoordID coord, GXTexMapID map, GXChannelID color)
+void GXSetTevOrder(GXTevStageID stage, GXTexCoordID coord, GXTexMapID map, GXChannelID color)
 {
     u32 *ptref;
     u32 tmap;

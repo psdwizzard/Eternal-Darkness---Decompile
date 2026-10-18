@@ -18,8 +18,8 @@ extern float lbl_80650D54;
 
 extern void fn_801804AC(void*, void*, void*, void*);
 extern void* memset(void*, int, unsigned long);
-extern float fn_80048C2C(float);
-extern float fn_80048C50(float);
+extern float sinf(float);
+extern float cosf(float);
 extern void fn_80180554(void*, void*, void*, void*, int, int);
 extern void fn_80180518(void*, int, int);
 extern void fn_801805E0(void*, int, u8, int, float, void*);
@@ -63,9 +63,9 @@ void fn_801A3A78(u8* object, void* coordinate, void* descriptor, u8* owner)
     memset(object + 0x24, 0, 0x10);
     for (i = 0; (u8)i < count; i++) {
         float fraction = lbl_80650D50 * (float)(u8)i / (float)count;
-        float x = fn_80048C2C(fraction);
+        float x = sinf(fraction);
         position[0] = (s16)((float)*(s16*)(owner + 0x34) * x + *(float*)(owner + 0x24));
-        x = fn_80048C50(fraction);
+        x = cosf(fraction);
         position[1] = (s16)((float)*(s16*)(owner + 0x34) * x + *(float*)(owner + 0x28));
         position[2] = (s16)*(float*)(owner + 0x2C);
         fn_80180554(entry, position, descriptor, color, 0, 0);

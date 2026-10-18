@@ -11,8 +11,8 @@ typedef struct {
 extern unsigned char __files[];
 extern char lbl_8024F008[];
 extern char lbl_8064BA18[8];
-extern int fn_800F9E2C(char*, const char*, void*);
-extern int fn_800F9F20(void*, const char*, ...);
+extern int vsprintf(char*, const char*, void*);
+extern int fprintf(void*, const char*, ...);
 extern void exit(int);
 
 void fn_80155BB0(const char* file, const char* format, ...)
@@ -21,9 +21,9 @@ void fn_80155BB0(const char* file, const char* format, ...)
     char buffer[512];
 
     va_start(args, format);
-    fn_800F9E2C(buffer, format, args);
+    vsprintf(buffer, format, args);
     if (file == 0)
         file = lbl_8024F008;
-    fn_800F9F20(__files + 0xA0, lbl_8064BA18, file, buffer);
+    fprintf(__files + 0xA0, lbl_8064BA18, file, buffer);
     exit(1);
 }

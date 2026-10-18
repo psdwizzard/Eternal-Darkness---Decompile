@@ -7,9 +7,9 @@ typedef struct Entry {
 } Entry;
 
 extern const char lbl_8023BEF8[];
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201B8C();
 extern void *fn_80201BC8();
@@ -23,11 +23,11 @@ s32 fn_8000AB88(void* script)
     s32 id;
     void* info;
 
-    if (fn_8016A598(script) != 1) {
-        fn_80163BB4(script, lbl_8023BEF8, 1, fn_8016A598(script));
+    if (lua_gettop(script) != 1) {
+        luaO_verror(script, lbl_8023BEF8, 1, lua_gettop(script));
         return 0;
     }
-    id = (s32)fn_8016A694(script, 1);
+    id = (s32)lua_tonumber(script, 1);
     entry = fn_80201814(id);
     if (entry != 0) {
         target = fn_80201B8C(entry);

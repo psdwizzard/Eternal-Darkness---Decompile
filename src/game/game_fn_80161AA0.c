@@ -9,9 +9,9 @@ typedef struct Collection {
     Node* nodes;
 } Collection;
 
-extern void fn_8016783C(Collection*, Node*);
+extern void luaH_free(Collection*, Node*);
 
-void fn_80161AA0(Collection* collection)
+void collecttable(Collection* collection)
 {
     Node** link = &collection->nodes;
 
@@ -22,7 +22,7 @@ void fn_80161AA0(Collection* collection)
             link = &node->next;
         } else {
             *link = node->next;
-            fn_8016783C(collection, node);
+            luaH_free(collection, node);
         }
     }
 }

@@ -16,7 +16,7 @@ extern float lbl_80650B20;
 extern float lbl_80650B4C;
 extern void fn_801931C4(void);
 extern void* fn_80201814(void*);
-extern s32 fn_800FBFB0(void);
+extern s32 rand(void);
 extern void fn_8014D478(void*, Vec3*, Vec3*, s32, s32, void*, s32);
 extern void fn_8018EA58(void*);
 
@@ -78,13 +78,13 @@ s32 fn_80192F54(u8* object)
             offset.z = lbl_80650B4C;
             switch (object[0xB6]) {
             case 1:
-                colour.channels.red -= fn_800FBFB0() & 0x1F;
+                colour.channels.red -= rand() & 0x1F;
                 break;
             case 2:
-                colour.channels.green -= fn_800FBFB0() & 0x1F;
+                colour.channels.green -= rand() & 0x1F;
                 break;
             case 3:
-                colour.channels.blue -= fn_800FBFB0() & 0x1F;
+                colour.channels.blue -= rand() & 0x1F;
                 break;
             }
             fn_8014D478((void*)0, &position, &offset, 0, 1, &colour.channels, 5);

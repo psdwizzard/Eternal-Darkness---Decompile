@@ -14,28 +14,28 @@ typedef struct TRKEventQueue {
     u32 next_id;
 } TRKEventQueue;
 
-extern TRKEventQueue lbl_803285E0;
-extern void fn_800F34C4(void *);
-extern void fn_800F34BC(void *);
-extern void fn_80003130(void *, const void *, u32);
+extern TRKEventQueue gTRKEventQueue;
+extern void TRKAcquireMutex(void *);
+extern void TRKReleaseMutex(void *);
+extern void TRK_memcpy(void *, const void *, u32);
 
-int fn_800EEF34(const TRKEvent *event)
+int TRKPostEvent(const TRKEvent *event)
 {
     int result = 0;
     int offset;
 
-    fn_800F34C4(&lbl_803285E0);
-    if (lbl_803285E0.count == 2) {
+    TRKAcquireMutex(&gTRKEventQueue);
+    if (gTRKEventQueue.count == 2) {
         result = 0x100;
     } else {
-        offset = (lbl_803285E0.next + lbl_803285E0.count) % 2;
-        fn_80003130(&lbl_803285E0.events[offset], event, 12);
-        lbl_803285E0.events[offset].id = lbl_803285E0.next_id;
-        lbl_803285E0.next_id++;
-        if (lbl_803285E0.next_id < 0x100)
-            lbl_803285E0.next_id = 0x100;
-        lbl_803285E0.count++;
+        offset = (gTRKEventQueue.next + gTRKEventQueue.count) % 2;
+        TRK_memcpy(&gTRKEventQueue.events[offset], event, 12);
+        gTRKEventQueue.events[offset].id = gTRKEventQueue.next_id;
+        gTRKEventQueue.next_id++;
+        if (gTRKEventQueue.next_id < 0x100)
+            gTRKEventQueue.next_id = 0x100;
+        gTRKEventQueue.count++;
     }
-    fn_800F34BC(&lbl_803285E0);
+    TRKReleaseMutex(&gTRKEventQueue);
     return result;
 }

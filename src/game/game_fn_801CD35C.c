@@ -1,8 +1,8 @@
 typedef unsigned int u32;
 
-extern void fn_801CDB14(void* value, u32 size);
+extern void aramRemoveData(void* value, u32 size);
 
-void fn_801CD35C(u32* link, void* value)
+void hwRemoveSample(u32* link, void* value)
 {
     u32 packed = link[1];
     u32 kind = packed >> 24;
@@ -20,5 +20,5 @@ void fn_801CD35C(u32* link, void* value)
         break;
     }
 
-    fn_801CDB14(value, size);
+    aramRemoveData(value, size);
 }

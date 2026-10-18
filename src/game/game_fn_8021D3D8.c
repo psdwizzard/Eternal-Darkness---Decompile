@@ -1,4 +1,4 @@
-/* fn_8021D3D8: CARDGetResultCode. */
+/* CARDGetResultCode: CARDGetResultCode. */
 typedef unsigned char u8;
 typedef signed int s32;
 
@@ -8,15 +8,15 @@ typedef struct CARDControl {
     u8 reserved08[0x110 - 0x08];
 } CARDControl;
 
-extern CARDControl lbl_80641C60[];
+extern CARDControl __CARDBlock[];
 
-s32 fn_8021D3D8(s32 channel)
+s32 CARDGetResultCode(s32 channel)
 {
     CARDControl *card;
 
     if (channel < 0 || channel >= 2) {
         return -128;
     }
-    card = &lbl_80641C60[channel];
+    card = &__CARDBlock[channel];
     return card->result;
 }

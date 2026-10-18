@@ -15,13 +15,13 @@ typedef union {
 
 volatile PPCWGPipe GXWGFifo : 0xCC008000;
 
-extern u8 lbl_8064DBB8; /* DrawDone */
-extern OSThreadQueue lbl_8064DBBC;
+extern u8 DrawDone; /* DrawDone */
+extern OSThreadQueue FinishQueue;
 
 BOOL OSDisableInterrupts(void);
 BOOL OSRestoreInterrupts(BOOL enabled);
-void fn_80226378(void); /* GXFlush */
-void fn_80210004(OSThreadQueue *queue); /* OSSleepThread */
+void GXFlush(void); /* GXFlush */
+void OSSleepThread(OSThreadQueue *queue); /* OSSleepThread */
 
 static inline void GXSetDrawDone(void)
 {
@@ -38,20 +38,20 @@ static inline void GXSetDrawDone(void)
     command.word = 0x45000002;
     GXWGFifo.byte = 0x61;
     GXWGFifo.word = command.word;
-    fn_80226378();
-    lbl_8064DBB8 = 0;
+    GXFlush();
+    DrawDone = 0;
     OSRestoreInterrupts(enabled);
 }
 
 /* GXDrawDone: flush a finish command and sleep until the PE acknowledges it. */
-void fn_80226630(void)
+void GXDrawDone(void)
 {
     BOOL enabled;
 
     GXSetDrawDone();
     enabled = OSDisableInterrupts();
-    while (lbl_8064DBB8 == 0) {
-        fn_80210004(&lbl_8064DBBC);
+    while (DrawDone == 0) {
+        OSSleepThread(&FinishQueue);
     }
     OSRestoreInterrupts(enabled);
 }

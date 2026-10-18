@@ -1,4 +1,4 @@
-/* fn_8022B4B8: GXSetProjection (Dolphin SDK GXTransform.c).
+/* GXSetProjection: GXSetProjection (Dolphin SDK GXTransform.c).
  * Caches the projection type and the six relevant matrix terms in the GX
  * state, then sends them to XF register 0x1020 through the FIFO. */
 
@@ -44,7 +44,7 @@ static inline void __GXSetProjection(void) {
     GXWGFifo.u32 = gx->projType;
 }
 
-void fn_8022B4B8(Mtx44 mtx, GXProjectionType type) {
+void GXSetProjection(Mtx44 mtx, GXProjectionType type) {
     gx->projType = type;
     gx->projMtx[0] = mtx[0][0];
     gx->projMtx[2] = mtx[1][1];

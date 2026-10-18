@@ -67,8 +67,8 @@ extern void fn_801252D8(s32 value);
 extern void fn_8012214C(Table* table, s32 count, s32 mode, TransferState* state);
 extern int fn_80121EC0(TransferState* state, void* buffer);
 extern void fn_80125104(Mtx mtx, Vertex* src, Vertex* dst, u32 flags, u16* normal);
-extern void fn_80212154(void* src, void* dst);
-extern void fn_802111A0(Mtx a, Mtx b);
+extern void PSMTXReorder(void* src, void* dst);
+extern void PSMTXInvXpose(Mtx a, Mtx b);
 
 void fn_80125300(Owner* owner, Table* table, Vertex* first, Vertex* second,
                  Vertex* first_buffer, Vertex* second_buffer, Mtx* matrices,
@@ -143,10 +143,10 @@ void fn_80125300(Owner* owner, Table* table, Vertex* first, Vertex* second,
                 vflags = delta->flags;
                 index = delta->index + base;
 
-                fn_80212154(*m, matrix);
+                PSMTXReorder(*m, matrix);
                 fn_80125104(matrix, source + index, first_buffer, vflags | shift, normals + index);
-                fn_802111A0(*m, matrix);
-                fn_80212154(matrix, transformed);
+                PSMTXInvXpose(*m, matrix);
+                PSMTXReorder(matrix, transformed);
                 fn_80125104(transformed, second + index, second_buffer, vflags | shift, normals + index);
                 if (first_state.count != 0) {
                     fn_80121EC0(&first_state, first_work);

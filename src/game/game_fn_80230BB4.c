@@ -1,4 +1,4 @@
-/* fn_80230BB4: Vorbis floor0 inverse1 (floor0_inverse1). */
+/* floor0_inverse1: Vorbis floor0 inverse1 (floor0_inverse1). */
 
 #include "src/game/types.h"
 
@@ -38,13 +38,13 @@ typedef struct VorbisBlock {
     VorbisDsp *vd;       /* 0x38 */
 } VorbisBlock;
 
-extern s32 fn_8022E868(void *, s32);
+extern s32 oggpack_read(void *, s32);
 extern void *fn_8022F8C4(s32 size);
-extern s32 fn_80230204(Codebook *book, float *vec, void *opb, s32 n);
-extern s32 fn_80236144(u32);
+extern s32 vorbis_book_decodev_set(Codebook *book, float *vec, void *opb, s32 n);
+extern s32 _ilog(u32);
 extern const float lbl_806517B8; /* 0.0f */
 
-float *fn_80230BB4(register VorbisBlock *input, register Floor0Look *lookInput) {
+float *floor0_inverse1(register VorbisBlock *input, register Floor0Look *lookInput) {
     register Floor0Look *look;
     register VorbisBlock *vb;
     Floor0Info *info;
@@ -56,17 +56,17 @@ float *fn_80230BB4(register VorbisBlock *input, register Floor0Look *lookInput) 
         or vb, input, input
     }
     info = lookInput->vi;
-    ampraw = fn_8022E868(vb->opb, info->ampbits);
+    ampraw = oggpack_read(vb->opb, info->ampbits);
     if (ampraw > 0) {
         float raw = (float)ampraw;
         float db = (float)info->ampdB;
         float maxval = (float)((1 << info->ampbits) - 1);
         float amp = raw / maxval * db;
-        register s32 bits = fn_80236144(info->numbooks);
+        register s32 bits = _ilog(info->numbooks);
         s32 booknum;
         /* ASM: or (mr) keeps the argument copy, which C changes to addi. */
         asm { or bits, bits, bits }
-        booknum = fn_8022E868(vb->opb, bits);
+        booknum = oggpack_read(vb->opb, bits);
 
         if (booknum != -1 && booknum < info->numbooks) {
             CodecSetup *ci = vb->vd->codec_setup;
@@ -84,7 +84,7 @@ float *fn_80230BB4(register VorbisBlock *input, register Floor0Look *lookInput) 
                 float *vec = lsp + j;
                 /* ASM: or (mr) preserves the argument copy that C changes to addi. */
                 asm { or callBook, b, b }
-                if (fn_80230204(callBook, vec, vb->opb, dim) == -1)
+                if (vorbis_book_decodev_set(callBook, vec, vb->opb, dim) == -1)
                     goto eop;
             }
 

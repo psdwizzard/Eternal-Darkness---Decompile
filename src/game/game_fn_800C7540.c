@@ -7,7 +7,7 @@ typedef struct Vec3 {
 extern void *fn_80201B94(void *object);
 extern void *fn_80201C48(void *relation);
 extern int fn_80201EB8(void *object);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void *fn_80201814(int identifier);
 extern void fn_80201E78(void *destination, void *object);
 extern void *fn_80201BC8(void *object);
@@ -44,7 +44,7 @@ void fn_800C7540(void *object)
 
     target_id = (int)fn_80201C48(fn_80201B94(object));
     if (lbl_8064D18C == fn_80201EB8(object) &&
-        (lbl_8064D5A8 & 0x7F) == 0 && (fn_800FBFB0() & 1) == 0) {
+        (lbl_8064D5A8 & 0x7F) == 0 && (rand() & 1) == 0) {
         distance_limit = lbl_8064F214;
         target = fn_80201814(target_id);
         if (target != 0) {

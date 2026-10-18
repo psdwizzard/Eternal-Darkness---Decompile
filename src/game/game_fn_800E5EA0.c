@@ -33,8 +33,8 @@ extern int fn_80201B44(void);
 extern int fn_801D9924(int);
 extern int fn_801E79FC(u32 *, u32);
 extern void fn_8016B400(int, void *, void *);
-extern void fn_80211A6C(Vec3 *, Vec3 *, Vec3 *);
-extern void fn_80211AAC(Vec3 *, Vec3 *);
+extern void PSVECSubtract(Vec3 *, Vec3 *, Vec3 *);
+extern void PSVECNormalize(Vec3 *, Vec3 *);
 extern void fn_800337C8(Vec3 *, const Vec3 *, int, void *, int, int);
 extern void fn_80120AD0(void *, const void *, u16, u32, float, float);
 extern void fn_800E50AC(Vec3i *, int *);
@@ -121,8 +121,8 @@ void fn_800E5EA0(int owner, void *object, int skip, int unused, void **event)
 
     if (runEffect) {
         direction.z = position.z;
-        fn_80211A6C(&direction, &position, &direction);
-        fn_80211AAC(&direction, &direction);
+        PSVECSubtract(&direction, &position, &direction);
+        PSVECNormalize(&direction, &direction);
         fn_800337C8(&position, &direction, actor->state, 0, 300, 1);
         switch (actor->state) {
         case 2:

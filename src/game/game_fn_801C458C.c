@@ -33,7 +33,7 @@ extern DSPstudioinfo lbl_80628CB0[];
 extern void* memset(void*, int, u32);
 extern void DCFlushRangeNoSync(void*, u32);
 
-void fn_801C458C(u8 studio, u32 isMaster, u32 type)
+void salActivateStudio(u8 studio, u32 isMaster, u32 type)
 {
     DSPstudioinfo* base = dspStudio;
 

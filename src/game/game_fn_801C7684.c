@@ -21,7 +21,7 @@ typedef struct Group {
 
 extern Group lbl_80628CB0[];
 
-void fn_801C7684(Entry* entry, u8 group)
+void salReconnectVoice(Entry* entry, u8 group)
 {
     Group* groups = lbl_80628CB0;
     Entry* next;

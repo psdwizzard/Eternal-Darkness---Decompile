@@ -27,9 +27,9 @@ extern const double lbl_8064DCE8;
 extern const f32 lbl_8064DCF0;
 extern const f32 lbl_8064DE7C;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern unsigned int fn_800F5C54(double);
 extern int fn_8015C4A4(int, int);
 extern Vec3s* fn_80158ABC(int, int, void*);
@@ -50,19 +50,19 @@ s32 fn_80019054(void* script)
     Vec3f position;
     Color color;
 
-    if (fn_8016A598(script) != 8) {
-        fn_80163BB4(script, lbl_8023BEF8, 8, fn_8016A598(script));
+    if (lua_gettop(script) != 8) {
+        luaO_verror(script, lbl_8023BEF8, 8, lua_gettop(script));
         return 0;
     }
 
-    object_id = fn_800F5C54(fn_8016A694(script, 1));
-    value = (s32)fn_8016A694(script, 2);
-    red = (s32)fn_8016A694(script, 3);
-    green = (s32)fn_8016A694(script, 4);
-    blue = (s32)fn_8016A694(script, 5);
-    alpha = (s32)fn_8016A694(script, 6);
-    scale = (f32)fn_8016A694(script, 7);
-    third = (f32)fn_8016A694(script, 8);
+    object_id = fn_800F5C54(lua_tonumber(script, 1));
+    value = (s32)lua_tonumber(script, 2);
+    red = (s32)lua_tonumber(script, 3);
+    green = (s32)lua_tonumber(script, 4);
+    blue = (s32)lua_tonumber(script, 5);
+    alpha = (s32)lua_tonumber(script, 6);
+    scale = (f32)lua_tonumber(script, 7);
+    third = (f32)lua_tonumber(script, 8);
 
     packed = fn_80158ABC(fn_8015C4A4(object_id, 2), 2, 0);
     if (packed != 0) {

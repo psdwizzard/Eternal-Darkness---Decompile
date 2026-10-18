@@ -40,14 +40,11 @@ typedef struct STREAM_INFO {
 
 static STREAM_INFO streamInfo[64];
 
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
-#define hwDisableIrq fn_801CE2B8
-#define hwEnableIrq fn_801CE280
 
-extern u32 fn_801C1FE0(u8);
-#define voiceBlock fn_801C1FE0
+extern u32 voiceBlock(u8);
 
 
 static inline u32 GetPrivateIndex(u32 publicID)
@@ -61,7 +58,7 @@ static inline u32 GetPrivateIndex(u32 publicID)
     return -1;
 }
 
-u32 fn_801BB1A0(u32 stid)
+u32 sndStreamActivate(u32 stid)
 {
     u32 i;
     u32 ret = 0;
@@ -78,7 +75,7 @@ u32 fn_801BB1A0(u32 stid)
             streamInfo[i].state = 1;
         }
         if (streamInfo[i].nextStreamHandle != 0xffffffff) {
-            ret = fn_801BB1A0(streamInfo[i].nextStreamHandle);
+            ret = sndStreamActivate(streamInfo[i].nextStreamHandle);
         } else {
             ret = 1;
         }

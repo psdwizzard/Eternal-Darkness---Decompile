@@ -4,15 +4,15 @@ typedef void (*AIStreamCallback)(u32 sampleCount);
 
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
-extern AIStreamCallback lbl_8064DAD8;
+extern AIStreamCallback __AIS_Callback;
 
 /* AIRegisterStreamCallback: replace the stream callback and return the old one. */
-AIStreamCallback fn_8021A140(AIStreamCallback callback)
+AIStreamCallback AIRegisterStreamCallback(AIStreamCallback callback)
 {
-    AIStreamCallback previous = lbl_8064DAD8;
+    AIStreamCallback previous = __AIS_Callback;
     BOOL level = OSDisableInterrupts();
 
-    lbl_8064DAD8 = callback;
+    __AIS_Callback = callback;
     OSRestoreInterrupts(level);
     return previous;
 }

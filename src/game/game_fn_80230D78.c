@@ -16,9 +16,9 @@ typedef struct ToneSource {
 } ToneSource;
 
 extern void *fn_8022F780(s32 size);
-extern double fn_8010161C(double x);
-extern double fn_80101988(double x);
-extern double fn_80101A5C(double x);
+extern double atan(double x);
+extern double cos(double x);
+extern double floor(double x);
 
 extern float lbl_806517BC;
 extern float lbl_806517C0;
@@ -29,7 +29,7 @@ extern float lbl_806517D0;
 extern float lbl_806517D4;
 extern float lbl_806517D8;
 
-ToneTable *fn_80230D78(ToneSource **src, s32 *index, s32 *params) {
+ToneTable *floor0_look(ToneSource **src, s32 *index, s32 *params) {
     s32 *sizes = (*src)->sizes;
     ToneTable *table = fn_8022F780(sizeof(ToneTable));
     float a;
@@ -51,8 +51,8 @@ ToneTable *fn_80230D78(ToneSource **src, s32 *index, s32 *params) {
     table->params = params;
 
     x = params[1] * lbl_806517C0;
-    a = fn_8010161C(lbl_806517BC * (x * x));
-    b = fn_8010161C(lbl_806517C4 * (params[1] * lbl_806517C0));
+    a = atan(lbl_806517BC * (x * x));
+    b = atan(lbl_806517C4 * (params[1] * lbl_806517C0));
     scale = (float)table->length /
             (lbl_806517C8 * (params[1] * lbl_806517C0) + (lbl_806517CC * b + lbl_806517D0 * a));
 
@@ -65,9 +65,9 @@ ToneTable *fn_80230D78(ToneSource **src, s32 *index, s32 *params) {
     kSqW = lbl_806517D0;
     for (i = 0; i < table->count; i++) {
         x = i * ((params[1] * kRate) / table->count);
-        a = fn_8010161C(kSq * (x * x));
-        b = fn_8010161C(kLin * (i * ((params[1] * kRate) / table->count)));
-        v = fn_80101A5C(scale * (kRamp * (i * ((params[1] * kRate) / table->count)) +
+        a = atan(kSq * (x * x));
+        b = atan(kLin * (i * ((params[1] * kRate) / table->count)));
+        v = floor(scale * (kRamp * (i * ((params[1] * kRate) / table->count)) +
                                  (kLinW * b + kSqW * a)));
         if (v >= table->length) {
             v = table->length;
@@ -78,7 +78,7 @@ ToneTable *fn_80230D78(ToneSource **src, s32 *index, s32 *params) {
 
     table->samples = fn_8022F780(table->length * 4);
     for (i = 0; i < table->length; i++) {
-        table->samples[i] = lbl_806517D8 * (float)fn_80101988(lbl_806517D4 / table->length * i);
+        table->samples[i] = lbl_806517D8 * (float)cos(lbl_806517D4 / table->length * i);
     }
     return table;
 }

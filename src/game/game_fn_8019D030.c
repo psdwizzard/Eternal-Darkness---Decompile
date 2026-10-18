@@ -22,7 +22,7 @@ extern u8 lbl_80606318[];
 extern u8 lbl_80606328[];
 
 extern void* memset(void*, int, u32);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void fn_801804AC(void*, void*, void*, void*);
 extern void fn_80180518(void*, u8, int);
 extern void fn_801805E0(void*, int, u8, u8, float, void*);
@@ -81,7 +81,7 @@ void fn_8019D030(u8* object, void* first, void* second, u8* config)
                 config[0x15]);
 
     entry += 0x70;
-    bits = fn_800FBFB0();
+    bits = rand();
     x_negative = bits & 1;
     y_negative = bits & 2;
     z_negative = bits & 4;
@@ -90,24 +90,24 @@ void fn_8019D030(u8* object, void* first, void* second, u8* config)
         int random;
         int sign;
 
-        random = (fn_800FBFB0() & 7) + 1;
+        random = (rand() & 7) + 1;
         sign = x_negative ? -1 : 1;
         *(s16*)(entry + 0x10) = sign * random;
 
-        random = (fn_800FBFB0() & 7) + 1;
+        random = (rand() & 7) + 1;
         sign = y_negative ? -1 : 1;
         *(s16*)(entry + 0x12) = sign * random;
 
-        random = (fn_800FBFB0() & 7) + 1;
+        random = (rand() & 7) + 1;
         sign = z_negative ? -1 : 1;
         *(s16*)(entry + 0x14) = sign * random;
 
         magnitude = *(s16*)(config + 0x18);
-        *(s16*)(entry + 0x16) = fn_800FBFB0() % (magnitude * 2) - magnitude;
+        *(s16*)(entry + 0x16) = rand() % (magnitude * 2) - magnitude;
         magnitude = *(s16*)(config + 0x1A);
-        *(s16*)(entry + 0x18) = fn_800FBFB0() % (magnitude * 2) - magnitude;
+        *(s16*)(entry + 0x18) = rand() % (magnitude * 2) - magnitude;
         magnitude = *(s16*)(config + 0x1C);
-        *(s16*)(entry + 0x1A) = fn_800FBFB0() % (magnitude * 2) - magnitude;
+        *(s16*)(entry + 0x1A) = rand() % (magnitude * 2) - magnitude;
 
         fn_8017E734(entry + 0xA, first, entry + 0x10, config + 0x18,
                     entry + 0x16);

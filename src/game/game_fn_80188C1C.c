@@ -11,7 +11,7 @@ extern u8 lbl_8063C068[];
 extern void fn_801F02A0(Vec3*);
 extern void fn_80179B08(void*, Vec3*);
 extern int fn_8018F0A0(void);
-extern void fn_80211710(void*, Vec3*, Vec3*);
+extern void PSMTXMultVec(void*, Vec3*, Vec3*);
 
 void fn_80188C1C(u8* entry, void* context,
                  void (*callback)(void*, float, float, float, float, float))
@@ -39,8 +39,8 @@ void fn_80188C1C(u8* entry, void* context,
     } else {
         adjusted.z += (double)entry[0x21] * 2.25;
     }
-    fn_80211710(lbl_8063C068, &original, &transformed_original);
-    fn_80211710(lbl_8063C068, &adjusted, &transformed_offset);
+    PSMTXMultVec(lbl_8063C068, &original, &transformed_original);
+    PSMTXMultVec(lbl_8063C068, &adjusted, &transformed_offset);
     radius = (float)entry[0x21];
     left = transformed_original.x - radius;
     right = transformed_original.x + radius;

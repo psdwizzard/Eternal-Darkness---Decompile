@@ -17,11 +17,11 @@ typedef struct ogg_sync_state {
     int bodybytes;
 } ogg_sync_state;
 
-extern long fn_8022EFA4(ogg_sync_state *oy, ogg_page *og);
+extern long ogg_sync_pageseek(ogg_sync_state *oy, ogg_page *og);
 
-int fn_8022EF30(ogg_sync_state *oy, ogg_page *og) {
+int ogg_sync_pageout(ogg_sync_state *oy, ogg_page *og) {
     for (;;) {
-        long result = fn_8022EFA4(oy, og);
+        long result = ogg_sync_pageseek(oy, og);
 
         if (result > 0)
             return 1;

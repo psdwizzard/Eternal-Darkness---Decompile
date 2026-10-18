@@ -55,8 +55,8 @@ typedef struct Movie {
     u16 height;
 } Movie;
 
-extern s16 fn_80102C6C(BitReader *reader);
-extern void fn_80105350(Decoder *decoder, FrameContext *context, s32 mode, s32 flags);
+extern s16 decodeHuff(BitReader *reader);
+extern void decode_PB_cc(Decoder *decoder, FrameContext *context, s32 mode, s32 flags);
 extern s32 lbl_8023A208[2][3];
 
 static inline s32 read_bit(register BitReader *reader)
@@ -87,7 +87,7 @@ bit_set:
 }
 
 /* Decode run-length block types and modes, and each intra block's DC value. */
-void fn_801061E0(Movie *volatile movie, register FrameContext *input_context)
+void spread_PB_descMap(Movie *volatile movie, register FrameContext *input_context)
 {
     register PlaneCursor *cursor;
     register s32 total;
@@ -135,7 +135,7 @@ void fn_801061E0(Movie *volatile movie, register FrameContext *input_context)
         }
         mode_run = 0;
         do {
-            value = fn_80102C6C(&decoder->modes);
+            value = decodeHuff(&decoder->modes);
             mode_run += value;
         } while (value >= 255);
     }
@@ -165,7 +165,7 @@ void fn_801061E0(Movie *volatile movie, register FrameContext *input_context)
         type = high | read_bit(&decoder->types);
         type_run = 0;
         do {
-            value = fn_80102C6C(&decoder->types);
+            value = decodeHuff(&decoder->types);
             type_run += value;
         } while (value >= 255);
     }
@@ -202,7 +202,7 @@ void fn_801061E0(Movie *volatile movie, register FrameContext *input_context)
                 asm { add entry, entry, column }
                 type = *entry;
                 do {
-                    value = fn_80102C6C(&decoder->types);
+                    value = decodeHuff(&decoder->types);
                     type_run += value;
                 } while (value >= 255);
             }
@@ -223,7 +223,7 @@ void fn_801061E0(Movie *volatile movie, register FrameContext *input_context)
                         lower = decoder->lower;
                         /* Symbols at either endpoint extend the DC delta. */
                         do {
-                            value = fn_80102C6C(reader);
+                            value = decodeHuff(reader);
                             total += value;
                         } while (lower >= value || value >= upper);
                         cursor->modes[index * 2] = cursor->dc += total;
@@ -245,7 +245,7 @@ void fn_801061E0(Movie *volatile movie, register FrameContext *input_context)
                         addi call_decoder, decoder, 0
                         addi call_context, context, 0
                     }
-                    fn_80105350(call_decoder, call_context, 0, call_type);
+                    decode_PB_cc(call_decoder, call_context, 0, call_type);
                 }
             } else {
                 context->planes[0].dc = 127;
@@ -255,7 +255,7 @@ void fn_801061E0(Movie *volatile movie, register FrameContext *input_context)
                     mode ^= 1;
                     mode_run = 0;
                     do {
-                        value = fn_80102C6C(&decoder->modes);
+                        value = decodeHuff(&decoder->modes);
                         mode_run += value;
                     } while (value >= 255);
                 }
@@ -272,7 +272,7 @@ void fn_801061E0(Movie *volatile movie, register FrameContext *input_context)
                     /* ASM: addi preserves the retail context argument copy;
                      * C assignments emit mr. */
                     asm { addi call_context, context, 0 }
-                    fn_80105350(call_decoder, call_context, call_mode, call_type);
+                    decode_PB_cc(call_decoder, call_context, call_mode, call_type);
                 }
             }
             context->planes[0].destination += context->planes[0].block_step;

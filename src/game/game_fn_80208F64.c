@@ -13,7 +13,7 @@ extern volatile u32 __SIRegs[] : 0xCC006400;
 extern u32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(u32 enabled);
 
-u32 fn_80208F64(u32 poll)
+u32 SIEnablePolling(u32 poll)
 {
     u32 enabled;
 

@@ -1,4 +1,4 @@
-/* fn_80227A10: GXInitLightDistAttn - computes the distance attenuation
+/* GXInitLightDistAttn: GXInitLightDistAttn - computes the distance attenuation
  * coefficients k0..k2 of a light object from a reference distance and
  * brightness. */
 
@@ -17,7 +17,7 @@ typedef struct {
     f32 k[3];
 } GXLightObjInt;
 
-void fn_80227A10(GXLightObjInt *lt_obj, f32 ref_dist, f32 ref_br, GXDistAttnFn dist_func) {
+void GXInitLightDistAttn(GXLightObjInt *lt_obj, f32 ref_dist, f32 ref_br, GXDistAttnFn dist_func) {
     f32 k0, k1, k2;
 
     if (ref_dist < 0.0f) {

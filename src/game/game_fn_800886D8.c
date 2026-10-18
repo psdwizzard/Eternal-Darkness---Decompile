@@ -7,8 +7,8 @@ typedef struct Work { u8 pad[0x3C]; float value; } Work;
 extern void *fn_8006ED3C();
 extern int fn_800891FC(void);
 extern void fn_800891F4(int);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern int fn_80088818(void);
 extern void fn_801FA66C(int, int, float);
 extern float lbl_8064EB7C;
@@ -34,7 +34,7 @@ int fn_800886D8(Work* work)
     } else {
         lbl_8064C910 = lbl_8064EB80;
         if (lbl_8064C914 != 0) {
-            if ((fn_800FBFB0() & 0x7F) > 0x40)
+            if ((rand() & 0x7F) > 0x40)
                 fn_800891F4(15);
             else
                 fn_800891F4(-15);

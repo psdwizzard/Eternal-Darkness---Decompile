@@ -26,23 +26,23 @@ typedef struct Bank {
     u32 unk[3];
 } Bank;
 
-extern s32 lbl_8064C4B0;
-extern s32 lbl_8064DBE4;
-extern Bank *lbl_8064DBEC;
-extern u32 fn_80209B00(void);
-extern u32 fn_80209B18(void);
-extern u32 fn_80209B28(void);
-extern void fn_8022CA98(Entry *entry, s32 sample);
+extern s32 CurrAutoSample;
+extern s32 PERFCurrFrame;
+extern Bank *PERFFrames;
+extern u32 PPCMfpmc1(void);
+extern u32 PPCMfpmc3(void);
+extern u32 PPCMfpmc4(void);
+extern void PERFGetAllMemMetrics(Entry *entry, s32 sample);
 
-#define CURRENT_ENTRY (lbl_8064DBEC[lbl_8064DBE4].base[lbl_8064C4B0])
+#define CURRENT_ENTRY (PERFFrames[PERFCurrFrame].base[CurrAutoSample])
 
-void fn_8022D40C(void)
+void PERFEndAutoSample(void)
 {
-    if (lbl_8064C4B0 >= 0) {
-        CURRENT_ENTRY.resource0 = fn_80209B28();
-        fn_8022CA98(&CURRENT_ENTRY, 1);
-        CURRENT_ENTRY.resource3 = fn_80209B18();
-        CURRENT_ENTRY.flags = fn_80209B00();
+    if (CurrAutoSample >= 0) {
+        CURRENT_ENTRY.resource0 = PPCMfpmc4();
+        PERFGetAllMemMetrics(&CURRENT_ENTRY, 1);
+        CURRENT_ENTRY.resource3 = PPCMfpmc3();
+        CURRENT_ENTRY.flags = PPCMfpmc1();
     }
-    lbl_8064C4B0 = -1;
+    CurrAutoSample = -1;
 }

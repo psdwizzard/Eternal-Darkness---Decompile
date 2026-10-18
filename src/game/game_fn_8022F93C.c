@@ -33,7 +33,7 @@ typedef struct AudioState {
     int residue_bits;
 } AudioState;
 
-int fn_8022F93C(AudioState *state, int samples)
+int vorbis_synthesis_read(AudioState *state, int samples)
 {
     if (samples != 0 && state->pcm_read + samples > state->center) {
         return -131;

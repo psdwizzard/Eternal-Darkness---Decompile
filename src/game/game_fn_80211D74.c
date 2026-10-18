@@ -6,7 +6,7 @@ extern const float lbl_8065162C;
 extern const float lbl_80651630;
 
 /* Distance between two points, using one reciprocal-square-root refinement. */
-float fn_80211D74(register const Vec3 *a, register const Vec3 *b)
+float PSVECDistance(register const Vec3 *a, register const Vec3 *b)
 {
     /* Reuse the paired temporaries for the scalar refinement. */
     register float squaredDistance, reciprocal, correction;

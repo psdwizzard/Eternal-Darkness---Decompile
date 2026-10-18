@@ -13,7 +13,7 @@ typedef struct List {
 } List;
 
 extern List* fn_801560CC(int);
-extern void fn_80226D28(int);
+extern void GXSetCullMode(int);
 extern int lbl_8064D0CC;
 
 void fn_80156CBC(void)
@@ -25,7 +25,7 @@ void fn_80156CBC(void)
     lbl_8064D0CC++;
     if (list != 0) {
         object = list->first;
-        fn_80226D28(0);
+        GXSetCullMode(0);
         while (object != 0) {
             if (object->callback != 0) {
                 object->callback(object, object->callback_arg);
@@ -38,7 +38,7 @@ void fn_80156CBC(void)
         list = fn_801560CC(i);
         if (list != 0) {
             Object* current = list->first;
-            fn_80226D28(0);
+            GXSetCullMode(0);
             while (current != 0) {
                 if (current->callback != 0) {
                     current->callback(current, current->callback_arg);

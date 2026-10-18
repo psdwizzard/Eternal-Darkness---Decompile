@@ -36,7 +36,7 @@ extern void fn_8006B40C(void);
 extern void fn_800AE2D4(s32 mode);
 extern void fn_80088F08(s32 first, s32 second);
 extern void fn_800891F4(s32 value);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 
 static u8 table_data[0x630];
 static u8 table_extra[0x24];
@@ -84,7 +84,7 @@ void fn_8006B21C(s32 mode)
     fn_80088F08(0, -1);
     fn_800891F4(-15);
     lbl_8064C914 = 0;
-    if ((fn_800FBFB0() & 0x7F) > 0x40) {
+    if ((rand() & 0x7F) > 0x40) {
         fn_800891F4(15);
     }
     lbl_8064C8C0 = 0;

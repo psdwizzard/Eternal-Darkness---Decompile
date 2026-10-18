@@ -4,14 +4,14 @@ typedef struct Parser {
 } Parser;
 
 extern void fn_80163DA4(Parser*);
-extern int fn_801640C4(Parser*);
-extern void fn_801641D4(Parser*, int, int);
-extern void fn_8015EA7C(Parser*, const char*);
-extern int fn_80163F00(Parser*, int);
-extern void fn_801647F8(Parser*, int, int);
+extern int str_checkname(Parser*);
+extern void new_localvar(Parser*, int, int);
+extern void luaK_error(Parser*, const char*);
+extern int optional(Parser*, int);
+extern void code_params(Parser*, int, int);
 extern const char lbl_8024F9FC[];
 
-void fn_801665B0(Parser* parser)
+void parlist(Parser* parser)
 {
     int count = 0;
     int terminal = 0;
@@ -24,13 +24,13 @@ void fn_801665B0(Parser* parser)
                 terminal = 1;
                 break;
             case 0x113:
-                fn_801641D4(parser, fn_801640C4(parser), count++);
+                new_localvar(parser, str_checkname(parser), count++);
                 break;
             default:
-                fn_8015EA7C(parser, lbl_8024F9FC);
+                luaK_error(parser, lbl_8024F9FC);
                 break;
             }
-        } while (!terminal && fn_80163F00(parser, 0x2C));
+        } while (!terminal && optional(parser, 0x2C));
     }
-    fn_801647F8(parser, count, terminal);
+    code_params(parser, count, terminal);
 }

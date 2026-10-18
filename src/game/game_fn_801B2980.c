@@ -135,37 +135,22 @@ struct SEQ_INSTANCE {
     SEQ_SECTION section[16];
 };
 
-extern SEQ_INSTANCE* lbl_8064D394;
-extern SEQ_INSTANCE* lbl_8064D39C;
-extern SEQ_INSTANCE* lbl_8064D380;
-extern u32 lbl_8064D388;
-extern u16 lbl_80619760[8][16];
-extern u8 lbl_8061A434[64];
-extern void fn_801B8164(u8, u16, u8, u8, u32);
-extern void fn_801B85C8(u8, u8);
-extern void fn_801B5B20(u32, u32, u8);
-extern void fn_801CAEB8(u8, u32, u8);
-extern void fn_801CB274(u8, u32);
-extern void fn_801CA7C0(u8, u8, u32, u8);
-extern void fn_801B3558(SEQ_INSTANCE*);
-extern void fn_801B4E48(void);
-extern u32 fn_801B2878(u32);
+extern SEQ_INSTANCE* seqFreeRoot;
+extern SEQ_INSTANCE* seqActiveRoot;
+extern SEQ_INSTANCE* cseq;
+extern u32 curSeqId;
+extern u16 seqMIDIPriority[8][16];
+extern u8 synthTrackVolume[64];
+extern void synthVolume(u8, u16, u8, u8, u32);
+extern void synthSetMusicVolumeType(u8, u8);
+extern void synthSetBpm(u32, u32, u8);
+extern void inpResetMidiCtrl(u8, u32, u8);
+extern void inpResetChannelDefaults(u8, u32);
+extern void inpSetMidiCtrl(u8, u8, u32, u8);
+extern void StartPause(SEQ_INSTANCE*);
+extern void InitTrackEvents(void);
+extern u32 GetPublicId(u32);
 
-#define seqFreeRoot lbl_8064D394
-#define seqActiveRoot lbl_8064D39C
-#define cseq lbl_8064D380
-#define curSeqId lbl_8064D388
-#define seqMIDIPriority lbl_80619760
-#define synthTrackVolume lbl_8061A434
-#define synthVolume fn_801B8164
-#define synthSetMusicVolumeType fn_801B85C8
-#define synthSetBpm fn_801B5B20
-#define inpResetMidiCtrl fn_801CAEB8
-#define inpResetChannelDefaults fn_801CB274
-#define inpSetMidiCtrl fn_801CA7C0
-#define StartPause fn_801B3558
-#define InitTrackEvents fn_801B4E48
-#define GetPublicId fn_801B2878
 #define ARR_GET(arr, offset) ((void*)((offset) + (u32)(arr)))
 
 static inline void BuildTransTab(u8* tab, PAGE* page)
@@ -206,7 +191,7 @@ static inline void DoPrgChange(SEQ_INSTANCE* seq, u8 prg, u8 midi)
     seq->prgState[midi].maxVoices = seq->drumtab[prg].maxVoices;
 }
 
-u32 fn_801B2980(PAGE* norm, PAGE* drum, MIDISETUP* midiSetup, u32* song, SND_PLAYPARA* para,
+u32 seqStartPlay(PAGE* norm, PAGE* drum, MIDISETUP* midiSetup, u32* song, SND_PLAYPARA* para,
                 u8 studio, u16 sgid)
 {
     ARR* arr;

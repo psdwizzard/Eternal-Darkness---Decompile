@@ -1,4 +1,4 @@
-unsigned int fn_8021AB5C(void)
+unsigned int ARGetBaseAddress(void)
 {
     return 0x4000;
 }

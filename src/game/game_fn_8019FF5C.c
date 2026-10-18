@@ -28,7 +28,7 @@ typedef struct GlobalData {
 } GlobalData;
 
 extern void* memset(void* dst, int value, u32 size);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern GlobalData lbl_802FC5BC;
 extern const float lbl_80650C98;
 extern const float lbl_80650C9C;
@@ -46,7 +46,7 @@ void fn_8019FF5C(EffectParams* params)
     params->field_02 = 0xFF;
     params->field_03 = -5;
     params->field_04 = 0x55;
-    params->field_06 = (fn_800FBFB0() & 3) + 2;
+    params->field_06 = (rand() & 3) + 2;
     value_14 = lbl_80650C98;
     value_1C = lbl_80650C9C;
     params->field_08 = params->field_06;

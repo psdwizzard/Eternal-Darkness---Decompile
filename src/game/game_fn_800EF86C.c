@@ -9,9 +9,9 @@ typedef struct TRKBuffer {
     u8 data[1];
 } TRKBuffer;
 
-extern void *fn_80003130(void *, const void *, u32);
+extern void *TRK_memcpy(void *, const void *, u32);
 
-int fn_800EF86C(register TRKBuffer *buffer, register u8 *out)
+int TRKReadBuffer1_ui8(register TRKBuffer *buffer, register u8 *out)
 {
     register int error;
     register u32 amount;
@@ -37,7 +37,7 @@ read_ready:
         addi r4, r5, 0x10
         mr r5, amount
         add r4, buffer, r4
-        bl fn_80003130
+        bl TRK_memcpy
     }
     buffer->position += amount;
     return error;

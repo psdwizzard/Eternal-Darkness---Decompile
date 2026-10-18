@@ -4,13 +4,13 @@ typedef struct Command {
     int field8;
 } Command;
 
-extern int fn_8015EF4C(void*, Command*);
-extern void fn_8015EED8(void*, int);
+extern int discharge(void*, Command*);
+extern void luaK_setcallreturns(void*, int);
 
-void fn_8015EFEC(void* object, Command* command)
+void discharge1(void* object, Command* command)
 {
-    fn_8015EF4C(object, command);
+    discharge(object, command);
     if (command->value == -1 && command->field8 == -1) {
-        fn_8015EED8(object, 1);
+        luaK_setcallreturns(object, 1);
     }
 }

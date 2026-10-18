@@ -64,8 +64,8 @@ extern void fn_80128C28();
 extern void fn_80128C44(void *, void *, void *);
 extern void fn_80201D2C(void *, int);
 extern void fn_80201D14(void *, int);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 
 extern s32 fn_8006016C(s32, void *);
 extern s32 fn_8006012C(void);
@@ -161,7 +161,7 @@ s32 fn_800601FC(void *source, void *target)
     fn_80201D14(source, 1);
 
     if (relaxed != 0) {
-        cooldown = (fn_800FBFB0() & 0x7F) + 300;
+        cooldown = (rand() & 0x7F) + 300;
     } else {
         cooldown = 400;
     }

@@ -20,15 +20,15 @@ typedef struct __GXTexObjInt {
     u8 flags;
 } __GXTexObjInt;
 
-extern void fn_80228474(GXTexObj *obj, void *image_ptr, u16 width, u16 height,
+extern void GXInitTexObj(GXTexObj *obj, void *image_ptr, u16 width, u16 height,
                         u32 format, u32 wrap_s, u32 wrap_t, u8 mipmap);
 
-void fn_802286E8(GXTexObj *obj, void *image_ptr, u16 width, u16 height,
+void GXInitTexObjCI(GXTexObj *obj, void *image_ptr, u16 width, u16 height,
                  u32 format, u32 wrap_s, u32 wrap_t, u8 mipmap, u32 tlut_name)
 {
     __GXTexObjInt *t = (__GXTexObjInt *)obj;
 
-    fn_80228474(obj, image_ptr, width, height, format, wrap_s, wrap_t, mipmap);
+    GXInitTexObj(obj, image_ptr, width, height, format, wrap_s, wrap_t, mipmap);
     t->flags &= ~2;
     t->tlutName = tlut_name;
 }

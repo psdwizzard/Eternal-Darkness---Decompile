@@ -12,7 +12,7 @@ struct Input {
 
 extern void* memcpy(void*, const void*, size_t);
 
-int fn_8016A480(Input* input, unsigned char* output, unsigned int size)
+int luaZ_read(Input* input, unsigned char* output, unsigned int size)
 {
     while (size != 0) {
         unsigned int count;

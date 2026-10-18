@@ -43,7 +43,7 @@ extern volatile u32 RunQueueBits_8064D988;
 extern volatile s32 RunQueueHint_8064D98C;
 
 /* OSWakeupThread: move each waiter to its priority's ready queue. */
-void fn_802100F0(OSThreadQueue *queue)
+void OSWakeupThread(OSThreadQueue *queue)
 {
     s32 enabled;
     OSThread *thread;

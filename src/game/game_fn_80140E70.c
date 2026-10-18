@@ -31,7 +31,7 @@ typedef struct DebugMesh {
 
 extern u32 lbl_802FC5BC[];
 extern void fn_801ECD74(Color*);
-extern void fn_80226AB4(int, int, u16);
+extern void GXBegin(int, int, u16);
 extern void fn_801409AC(float, float, float);
 extern void fn_801409A8(void);
 
@@ -83,7 +83,7 @@ void fn_80140E70(const s16* points, DebugMesh* mesh, u8 color, int part_color, u
     ((u8*)&rgba)[3] = alpha;
     set_color(rgba);
 
-    fn_80226AB4(0xB0, 3, mesh->count + 1);
+    GXBegin(0xB0, 3, mesh->count + 1);
     fn_801409AC(start_x, start_y, start_z);
     for (i = 0; i < mesh->count; i++)
         emit_point(points, indices[i], mesh);
@@ -92,7 +92,7 @@ void fn_80140E70(const s16* points, DebugMesh* mesh, u8 color, int part_color, u
     rgba = lbl_802FC5BC[3];
     ((u8*)&rgba)[3] = 0xFF;
     set_color(rgba);
-    fn_80226AB4(0xA8, 3, (u16)(mesh->count * 2));
+    GXBegin(0xA8, 3, (u16)(mesh->count * 2));
     for (i = 0; i < mesh->count; i++) {
         const s16* point = points + indices[i] * 3;
         x = point[0];
@@ -118,7 +118,7 @@ void fn_80140E70(const s16* points, DebugMesh* mesh, u8 color, int part_color, u
         x = mesh->offset[0] + first_point[0];
         y = mesh->offset[1] + first_point[1];
         z = mesh->offset[2] + first_point[2];
-        fn_80226AB4(0xB0, 3, p->count + 1);
+        GXBegin(0xB0, 3, p->count + 1);
         fn_801409AC(x, y, z);
         for (i = 0; i < p->count; i++)
             emit_point(points, indices[i], mesh);
@@ -132,7 +132,7 @@ void fn_80140E70(const s16* points, DebugMesh* mesh, u8 color, int part_color, u
         u16 total = 0;
         for (part = 0; part < mesh->part_count; part++)
             total += p->count;
-        fn_80226AB4(0xA8, 3, (u16)(total * 2));
+        GXBegin(0xA8, 3, (u16)(total * 2));
     }
     for (part = 0; part < mesh->part_count; part++) {
         p = &mesh->parts[part];

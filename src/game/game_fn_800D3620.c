@@ -9,7 +9,7 @@ extern int fn_80201B54(int);
 extern void fn_80201DD8(void*, int);
 extern void fn_8011F114(Vec3*, State*);
 extern void fn_8012B690(State*, const Vec3*, Vec3*);
-extern void fn_80211A48(Vec3*, Vec3*, Vec3*);
+extern void PSVECAdd(Vec3*, Vec3*, Vec3*);
 extern void fn_8020123C(int, int, int, void*);
 
 int fn_800D3620(void* arg0, void* arg1)
@@ -30,7 +30,7 @@ int fn_800D3620(void* arg0, void* arg1)
     fn_80201DD8(resource, 0);
     fn_8011F114(&first, state);
     fn_8012B690(state, &lbl_80248AE4, &second);
-    fn_80211A48(&first, &second, &second);
+    PSVECAdd(&first, &second, &second);
     fn_8020123C(157, id, value, &second);
     fn_8020123C(160, id, value, 0);
     return 1;

@@ -50,7 +50,7 @@ typedef struct DebugBatch {
 
 extern void* fn_8015C390(int);
 extern void fn_801ED468(int);
-extern void fn_80226D28(int);
+extern void GXSetCullMode(int);
 extern void fn_801ED118(void);
 extern int fn_801EDA7C(s16*, int, int, void*);
 extern void fn_801ECF50(int);
@@ -74,7 +74,7 @@ void fn_800EC234(int selector)
     meshes = batch->meshes;
     points = batch->points;
     fn_801ED468(0x1B);
-    fn_80226D28(0);
+    GXSetCullMode(0);
     fn_801ED118();
     fn_801EDA7C(lbl_802FC53C, 0, 0x2BF, 0);
     fn_801ECF50(4);

@@ -18,7 +18,7 @@ extern u8 lbl_80606318[];
 extern void fn_801804AC(void*, void*, void*, void*);
 extern void* memset(void*, int, unsigned long);
 extern void fn_80180554(void*, void*, void*, void*, int, s16);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void fn_801805E0(void*, int, u8, u8, float, void*);
 extern void fn_8018CEC0(void*, u8);
 extern void fn_8018C540(void*, void*, u8, int, u16);
@@ -58,7 +58,7 @@ void fn_80199428(u8* object, void* first, void* second, u8* config)
     for (; (u8)i < count; entry += 0x38, i++) {
         fn_80180554(entry, first, second, &setup, 0, *(s16*)(config + 0x20));
         fn_801805E0(entry + 0x20, 4,
-                    (u8)(config[1] + (fn_800FBFB0() & 3)),
+                    (u8)(config[1] + (rand() & 3)),
                     (u32)((u8)i << 2), lbl_80650BCC, &value);
     }
 

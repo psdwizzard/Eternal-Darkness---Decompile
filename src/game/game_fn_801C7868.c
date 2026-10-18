@@ -20,11 +20,11 @@ typedef struct ArenaEntry {
 } ArenaEntry;
 
 extern ArenaEntry lbl_80628CB0[];
-extern u8 lbl_8064D4E4;
-extern u8 lbl_8064D4E6;
+extern u8 salMaxStudioNum;
+extern u8 salAuxFrame;
 extern void DCFlushRangeNoSync(void*, u32);
 
-void fn_801C7868(void)
+void salHandleAuxProcessing(void)
 {
     u8 i;
     ArenaEntry* entry;
@@ -32,10 +32,10 @@ void fn_801C7868(void)
     void* ranges[3];
 
     entry = lbl_80628CB0;
-    for (i = 0; i < lbl_8064D4E4; i++, entry++) {
+    for (i = 0; i < salMaxStudioNum; i++, entry++) {
         if (entry->flag == 1) {
             if (entry->first_callback != 0) {
-                buffer = entry->first[(lbl_8064D4E6 + 2) % 3];
+                buffer = entry->first[(salAuxFrame + 2) % 3];
                 ranges[0] = buffer;
                 ranges[1] = (u8*)buffer + 0x280;
                 ranges[2] = (u8*)buffer + 0x500;
@@ -43,7 +43,7 @@ void fn_801C7868(void)
                 DCFlushRangeNoSync(buffer, 0x780);
             }
             if (entry->value54 == 0 && entry->second_callback != 0) {
-                buffer = entry->second[(lbl_8064D4E6 + 2) % 3];
+                buffer = entry->second[(salAuxFrame + 2) % 3];
                 ranges[0] = buffer;
                 ranges[1] = (u8*)buffer + 0x280;
                 ranges[2] = (u8*)buffer + 0x500;

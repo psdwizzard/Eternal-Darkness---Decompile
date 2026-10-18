@@ -10,18 +10,18 @@ typedef struct Value {
     } data;
 } Value;
 
-extern Value* fn_801671D0(LuaState*, HashTable*, Value*);
-extern Value* fn_80167264(HashTable*, double);
-extern Value* fn_801672C8(HashTable*, void*);
+extern Value* luaH_getany(LuaState*, HashTable*, Value*);
+extern Value* luaH_getnum(HashTable*, double);
+extern Value* luaH_getstr(HashTable*, void*);
 
-Value* fn_8016731C(LuaState* state, HashTable* table, Value* value)
+Value* luaH_get(LuaState* state, HashTable* table, Value* value)
 {
     switch (value->type) {
     case 2:
-        return fn_80167264(table, value->data.number);
+        return luaH_getnum(table, value->data.number);
     case 3:
-        return fn_801672C8(table, value->data.pointer);
+        return luaH_getstr(table, value->data.pointer);
     default:
-        return fn_801671D0(state, table, value);
+        return luaH_getany(state, table, value);
     }
 }

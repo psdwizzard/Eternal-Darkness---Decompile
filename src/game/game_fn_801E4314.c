@@ -17,7 +17,7 @@ extern int lbl_8064C320;
 extern void fn_801ECF50(int);
 extern void fn_801ED3F4(int);
 extern void fn_801A852C(Color, int, int, u32);
-extern void fn_80226AB4(int, int, int);
+extern void GXBegin(int, int, int);
 extern void fn_801E4198(s16, s16, s16);
 extern void fn_801E4188(void);
 extern void fn_801E46E8(s16, s16);
@@ -82,7 +82,7 @@ void fn_801E4314(int x, int y, int width, int height, float scale, int dark)
     fn_801A852C(color, 0, 0, 0x80000000);
     lbl_8064C31C = -1;
     lbl_8064C320 = -1;
-    fn_80226AB4(0x80, 5, 0x10);
+    GXBegin(0x80, 5, 0x10);
 
     /* the offsets are kept as ints across the setup calls and narrowed in place */
     left_x = (s16)left_x;

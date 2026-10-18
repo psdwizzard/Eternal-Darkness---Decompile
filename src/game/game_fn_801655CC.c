@@ -6,12 +6,12 @@ typedef struct Entry {
     int value_08;
 } Entry;
 
-extern void fn_8015F4D0(Parser*, Entry*, int);
-extern void fn_80165870(Parser*, Entry*);
+extern void luaK_tostack(Parser*, Entry*, int);
+extern void expr(Parser*, Entry*);
 
-void fn_801655CC(Parser* parser)
+void exp1(Parser* parser)
 {
     Entry entry;
-    fn_80165870(parser, &entry);
-    fn_8015F4D0(parser, &entry, 1);
+    expr(parser, &entry);
+    luaK_tostack(parser, &entry, 1);
 }

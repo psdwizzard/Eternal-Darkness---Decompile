@@ -4,15 +4,15 @@ typedef struct Parser {
 } Parser;
 
 extern char lbl_8024F5EC[];
-extern int fn_800F9D4C(char*, const char*, ...);
-extern void fn_80162114(Parser*, char*, int);
+extern int sprintf(char*, const char*, ...);
+extern void luaX_error(Parser*, char*, int);
 
-void fn_8016203C(Parser* parser, int current, int limit, int token)
+void luaX_checklimit(Parser* parser, int current, int limit, int token)
 {
     char buffer[100];
 
     if (current > limit) {
-        fn_800F9D4C(buffer, lbl_8024F5EC, token, limit);
-        fn_80162114(parser, buffer, parser->position);
+        sprintf(buffer, lbl_8024F5EC, token, limit);
+        luaX_error(parser, buffer, parser->position);
     }
 }

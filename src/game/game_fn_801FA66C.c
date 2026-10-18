@@ -27,8 +27,8 @@ extern const u32 lbl_8023B814[3];
 extern const float lbl_806514C4;
 
 extern void fn_801795A4(Vec3*, Vec3*, Vec3*);
-extern void fn_80211380(Matrix34, Vec3*, float);
-extern void fn_80211710(Matrix34, Vec3*, Vec3*);
+extern void PSMTXRotAxisRad(Matrix34, Vec3*, float);
+extern void PSMTXMultVec(Matrix34, Vec3*, Vec3*);
 
 void fn_801FA66C(int index, int save, float amount)
 {
@@ -45,8 +45,8 @@ void fn_801FA66C(int index, int save, float amount)
     *(u32*)&axis.z = lbl_8023B814[2];
 
     fn_801795A4((Vec3*)((u8*)data->first + offset), &target->origin, &difference);
-    fn_80211380(transform, &difference, lbl_806514C4 * amount);
-    fn_80211710(transform, &axis, &target->position);
+    PSMTXRotAxisRad(transform, &difference, lbl_806514C4 * amount);
+    PSMTXMultVec(transform, &axis, &target->position);
 
     if (save != 0) {
         ObjectState* saved = &data->third;

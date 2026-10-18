@@ -18,17 +18,17 @@ typedef struct CardControl {
     u8 padDC[0x110 - 0xDC];
 } CardControl;
 
-extern CardControl lbl_80641C60[];
+extern CardControl __CARDBlock[];
 
 extern void *memcpy(void *dst, const void *src, unsigned long n);
-extern s32 fn_8021D374(CardControl *card, s32 result);
+extern s32 __CARDPutControlBlock(CardControl *card, s32 result);
 
 void fn_8021EF44(s32 chan, s32 result)
 {
     CardControl *card;
     CardCallback callback;
 
-    card = &lbl_80641C60[chan];
+    card = &__CARDBlock[chan];
     if (0 <= result) {
         void *dir0 = (u8 *)card->workArea + 0x2000;
         void *dir1 = (u8 *)card->workArea + 0x4000;
@@ -43,7 +43,7 @@ void fn_8021EF44(s32 chan, s32 result)
     }
 
     if (card->apiCallback == 0) {
-        fn_8021D374(card, result);
+        __CARDPutControlBlock(card, result);
     }
 
     callback = card->eraseCallback;

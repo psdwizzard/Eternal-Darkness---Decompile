@@ -14,10 +14,10 @@ typedef struct Object800A3894 {
 } Object800A3894;
 
 extern u16 fn_801869DC(void*);
-extern void fn_80211A6C();
-extern void fn_80211AAC(Vec800A3894*, Vec800A3894*);
-extern void fn_80211A90(Vec800A3894*, Vec800A3894*, float);
-extern void fn_80211A48(void*, Vec800A3894*, Vec800A3894*);
+extern void PSVECSubtract();
+extern void PSVECNormalize(Vec800A3894*, Vec800A3894*);
+extern void PSVECScale(Vec800A3894*, Vec800A3894*, float);
+extern void PSVECAdd(void*, Vec800A3894*, Vec800A3894*);
 extern void* fn_801AC8AC(u16, int, int, Vec800A3894*);
 extern int fn_801AC908(void*, Vec800A3894*, int);
 
@@ -33,10 +33,10 @@ void fn_800A3894(Object800A3894* object, void* arg1, void* arg2)
 
     if (object->active != 0) {
         distance = fn_801869DC(object->active);
-        fn_80211A6C(arg2, arg1, &direction);
-        fn_80211AAC(&direction, &direction);
-        fn_80211A90(&direction, &direction, distance);
-        fn_80211A48(arg1, &direction, &object->position);
+        PSVECSubtract(arg2, arg1, &direction);
+        PSVECNormalize(&direction, &direction);
+        PSVECScale(&direction, &direction, distance);
+        PSVECAdd(arg1, &direction, &object->position);
         if (object->sound == 0) {
             object->sound = fn_801AC8AC(object->data->owner, 127, 1200,
                                         &object->position);

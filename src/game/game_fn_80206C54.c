@@ -18,7 +18,7 @@ extern EXIControl Ecb_80640AA8[3];
 
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL);
-extern u32 fn_8020A59C(void);
+extern u32 __OSGetDIConfig(void);
 
 volatile u32 __EXIRegs[15] : 0xCC006800;
 #define REG(chan, index) (__EXIRegs[(chan) * 5 + (index)])
@@ -63,7 +63,7 @@ BOOL EXISync(s32 chan)
             enabled = OSDisableInterrupts();
             if (exi->state & STATE_SELECTED) {
                 CompleteTransfer(chan);
-                if (fn_8020A59C() != 0xFF || exi->immLen != 4 ||
+                if (__OSGetDIConfig() != 0xFF || exi->immLen != 4 ||
                     (REG(chan, 0) & 0x70) ||
                     (REG(chan, 4) != 0x01010000 &&
                      REG(chan, 4) != 0x05070000 &&

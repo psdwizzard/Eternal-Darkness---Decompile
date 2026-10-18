@@ -9,8 +9,8 @@ extern int fn_80180454(void*);
 extern int fn_8018E26C(void*, void*);
 extern int fn_8017DD28(void*, void*, void*);
 extern void fn_8018E230(void*, void*, int, int, int, int);
-extern float fn_80048C2C(float);
-extern float fn_80048C50(float);
+extern float sinf(float);
+extern float cosf(float);
 extern void fn_80180554(void*, void*, void*, void*, int, int);
 extern void* fn_80185108(void*);
 extern void fn_801851A0(void*, void*);
@@ -41,10 +41,10 @@ int fn_801A4CE0(u8* object)
                     s16 coord[3];
                     void* value;
                     coord[0] = (s16)((float)*(u16*)(state + 0xe) *
-                                     fn_80048C2C(angle) +
+                                     sinf(angle) +
                                      (float)*(s16*)(state + 0x10));
                     coord[1] = (s16)((float)*(u16*)(state + 0xe) *
-                                     fn_80048C50(angle) +
+                                     cosf(angle) +
                                      (float)*(s16*)(state + 0x12));
                     coord[2] = *(s16*)(state + 0x14);
                     fn_80180554(channel, coord, object + 0x16,

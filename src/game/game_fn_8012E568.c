@@ -56,7 +56,7 @@ extern void* fn_8012E504(void*, float, float, float);
 extern int fn_801261F4(void*);
 extern void fn_8011FB44(void*, void*);
 extern void fn_80127F90(void*, int, float*);
-extern void fn_80211A6C(const Vec3*, const Vec3*, Vec3*);
+extern void PSVECSubtract(const Vec3*, const Vec3*, Vec3*);
 extern float fn_8011F788(void*, float);
 extern void fn_8011F7A0(void*, const Vec3*);
 
@@ -101,7 +101,7 @@ void* fn_8012E568(void* object, int resource_index, void* data)
     relative.x = joint_position[0];
     relative.y = joint_position[1];
     relative.z = joint_position[2];
-    fn_80211A6C(&relative, &source->position, &relative);
+    PSVECSubtract(&relative, &source->position, &relative);
 
     radius = lbl_806501F8;
     switch (resource_index) {

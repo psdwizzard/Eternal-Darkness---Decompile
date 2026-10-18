@@ -1,4 +1,4 @@
-/* fn_802224EC (0x802224EC, 504 bytes): lays out sub-buffer offsets for a
+/* UpdateIconOffsets (0x802224EC, 504 bytes): lays out sub-buffer offsets for a
  * resource descriptor based on its format bits. */
 
 typedef unsigned char u8;
@@ -28,7 +28,7 @@ typedef struct Layout {
     s32 unk68;          /* 0x68 */
 } Layout;
 
-void fn_802224EC(Desc* desc, Layout* out) {
+void UpdateIconOffsets(Desc* desc, Layout* out) {
     s32 offset;
     s32 found;
     s32 i;

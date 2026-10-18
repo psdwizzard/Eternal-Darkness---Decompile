@@ -12,9 +12,9 @@ extern void fn_801F68B0(Vec3*);
 extern void fn_801F68D4(Vec3*);
 extern float fn_801F691C(void);
 extern float fn_8003315C(float);
-extern void fn_80211A6C(Vec3*, Vec3*, Vec3*);
-extern void fn_80211AAC(Vec3*, Vec3*);
-extern float fn_80211B44(Vec3*, Vec3*);
+extern void PSVECSubtract(Vec3*, Vec3*, Vec3*);
+extern void PSVECNormalize(Vec3*, Vec3*);
+extern float PSVECDotProduct(Vec3*, Vec3*);
 
 int fn_801FBC18(Vec3* vector, float threshold)
 {
@@ -30,9 +30,9 @@ int fn_801FBC18(Vec3* vector, float threshold)
     first_copy = first;
     fn_801F68B0(&second);
     second_copy = second;
-    fn_80211A6C(vector, &second_copy, vector);
-    fn_80211AAC(vector, vector);
-    dot = fn_80211B44(vector, &first_copy);
+    PSVECSubtract(vector, &second_copy, vector);
+    PSVECNormalize(vector, vector);
+    dot = PSVECDotProduct(vector, &first_copy);
     if (dot > lbl_80651464) {
         random = fn_801F691C();
         dot = lbl_806514D4 * fn_8003315C(dot);

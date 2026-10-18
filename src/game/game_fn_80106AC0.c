@@ -9,7 +9,7 @@ typedef struct ImageHeader {
     u8 vertical_sampling;
 } ImageHeader;
 
-int fn_80106AC0(ImageHeader* header)
+int HVQM4BuffSize(ImageHeader* header)
 {
     int raw_width = header->width;
     int width = raw_width / 4;

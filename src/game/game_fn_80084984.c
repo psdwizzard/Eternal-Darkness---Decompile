@@ -67,16 +67,16 @@ extern const f32 lbl_8064EAFC, lbl_8064EB00;
 extern const u32 lbl_8064EAF4, lbl_8064EAF8;
 
 extern void fn_801F68D4(Vec3 *);
-extern void fn_80211584(Mtx, Vec3 *, Vec3 *, Vec3 *);
-extern u32 fn_802110A8(const Mtx, Mtx);
-extern void fn_80211710(Mtx, const Vec3 *, Vec3 *);
-extern void fn_80211A90(const Vec3 *, Vec3 *, f32);
-extern void fn_80211A48(const Vec3 *, const Vec3 *, Vec3 *);
-extern void fn_80211A6C(const Vec3 *, const Vec3 *, Vec3 *);
-extern void fn_80211AAC(const Vec3 *, Vec3 *);
-extern f32 fn_80211B44(const Vec3 *, const Vec3 *);
-extern void fn_80211B64(const Vec3 *, const Vec3 *, Vec3 *);
-extern void fn_80211BA0(const Vec3 *, const Vec3 *, Vec3 *);
+extern void C_MTXLookAt(Mtx, Vec3 *, Vec3 *, Vec3 *);
+extern u32 PSMTXInverse(const Mtx, Mtx);
+extern void PSMTXMultVec(Mtx, const Vec3 *, Vec3 *);
+extern void PSVECScale(const Vec3 *, Vec3 *, f32);
+extern void PSVECAdd(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECSubtract(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECNormalize(const Vec3 *, Vec3 *);
+extern f32 PSVECDotProduct(const Vec3 *, const Vec3 *);
+extern void PSVECCrossProduct(const Vec3 *, const Vec3 *, Vec3 *);
+extern void C_VECHalfAngle(const Vec3 *, const Vec3 *, Vec3 *);
 extern u32 fn_80178F14(int, int, int, int, int, int);
 extern void fn_8017960C(ShortCoord3 *, ShortCoord3 *, Vec3 *);
 extern void fn_80179DB0(f32 *, s16 *);
@@ -119,17 +119,17 @@ Vec3 fn_80084984(int side, ChainLink *link, ChainLink *previous, f32 amount)
         up.z = lbl_8064EA14;
         up.y = lbl_8064EA18;
     }
-    fn_80211584(view, &eye, &up, &link->axes[side]);
-    fn_802110A8(view, inverse);
+    C_MTXLookAt(view, &eye, &up, &link->axes[side]);
+    PSMTXInverse(view, inverse);
     if (side == 0) {
         direction.x = lbl_8064EA08;
     } else {
         direction.y = lbl_8064EA08;
     }
-    fn_80211710(view, &direction, &direction);
-    fn_80211A90(&direction, &direction, amount);
-    fn_80211A48(&direction, &pivot, &movement);
-    fn_80211AAC(&movement, &movement);
+    PSMTXMultVec(view, &direction, &direction);
+    PSVECScale(&direction, &direction, amount);
+    PSVECAdd(&direction, &pivot, &movement);
+    PSVECNormalize(&movement, &movement);
 
     /* Construct the four-vertex boundary, including its sphere and plane. */
     indices.words[0] = lbl_8064EAF4;
@@ -157,13 +157,13 @@ Vec3 fn_80084984(int side, ChainLink *link, ChainLink *previous, f32 amount)
         link->vertices[indices.indices[0]].z);
 
     fn_8017960C(&link->vertices[1], &link->vertices[0], &edge1);
-    fn_80211AAC(&edge1, &edge1);
+    PSVECNormalize(&edge1, &edge1);
     fn_8017960C(&link->vertices[2], &link->vertices[0], &edge2);
-    fn_80211AAC(&edge2, &edge2);
-    fn_80211B64(&edge1, &edge2, &boundary.normal);
-    fn_80211AAC(&boundary.normal, &boundary.normal);
+    PSVECNormalize(&edge2, &edge2);
+    PSVECCrossProduct(&edge1, &edge2, &boundary.normal);
+    PSVECNormalize(&boundary.normal, &boundary.normal);
     fn_80179DB0(&vertex.x, &link->vertices[0].x);
-    boundary.distance = -fn_80211B44(&boundary.normal, &vertex);
+    boundary.distance = -PSVECDotProduct(&boundary.normal, &vertex);
     boundary.axis = fn_80179EB8(&boundary.normal.x);
     boundary.count = 4;
     boundary.inner = 0;
@@ -177,13 +177,13 @@ Vec3 fn_80084984(int side, ChainLink *link, ChainLink *previous, f32 amount)
             movement = pivot;
         } else {
             fn_8013C068(&intersection, &boundary, &link->vertices[0].x, &closest);
-            fn_80211A6C(&closest, &link->origin, &movement);
-            fn_80211AAC(&movement, &movement);
+            PSVECSubtract(&closest, &link->origin, &movement);
+            PSVECNormalize(&movement, &movement);
         }
     }
     movement.x = -movement.x;
     movement.y = -movement.y;
     movement.z = -movement.z;
-    fn_80211BA0(&previous->object->pivot, &movement, &result);
+    C_VECHalfAngle(&previous->object->pivot, &movement, &result);
     return result;
 }

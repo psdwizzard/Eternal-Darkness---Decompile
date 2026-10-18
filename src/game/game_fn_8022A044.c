@@ -15,7 +15,7 @@ extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 #define SET_FIELD(reg, width, shift, value) \
     ((reg) = ((reg) & ~(((1UL << (width)) - 1) << (shift))) | ((u32)(value) << (shift)))
 
-void fn_8022A044(int compare0, int reference0, int operation, int compare1, int reference1)
+void GXSetAlphaCompare(int compare0, int reference0, int operation, int compare1, int reference1)
 {
     u32 reg = 0;
 

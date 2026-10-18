@@ -1,6 +1,6 @@
-extern double fn_801023A0(double value);
+extern double pow(double value);
 
-float fn_80102408(float value)
+float powf(float value)
 {
-    return (float)fn_801023A0(value);
+    return (float)pow(value);
 }

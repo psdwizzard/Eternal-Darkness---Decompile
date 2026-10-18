@@ -1,11 +1,11 @@
-extern int fn_800F8CF0(int);
-extern int fn_800F8D14(int);
-extern int fn_800F8D2C(int);
+extern int tolower(int);
+extern int isspace(int);
+extern int isdigit(int);
 extern const double lbl_8023A900[17];
 
 #pragma use_lmw_stmw on
 #pragma opt_lifetimes off
-double fn_8016BA4C(signed char* text, signed char** end)
+double strtod(signed char* text, signed char** end)
 {
     int sign;
     double value;
@@ -17,7 +17,7 @@ double fn_8016BA4C(signed char* text, signed char** end)
     const double* scale;
     double factor;
 
-    while (fn_800F8D14(*text)) {
+    while (isspace(*text)) {
         text++;
     }
 
@@ -31,7 +31,7 @@ double fn_8016BA4C(signed char* text, signed char** end)
 
     value = 0.0;
 
-    while (fn_800F8D2C(digit = *text)) {
+    while (isdigit(digit = *text)) {
         value = 10.0 * value + (digit - '0');
         text++;
     }
@@ -42,22 +42,22 @@ double fn_8016BA4C(signed char* text, signed char** end)
         factor = *scale;
 
         text++;
-        while (fn_800F8D2C(digit = *text) && scale < limit) {
+        while (isdigit(digit = *text) && scale < limit) {
             value = factor * (digit - '0') + value;
             factor = *++scale;
             text++;
         }
     }
 
-    while (fn_800F8D2C(*text)) {
+    while (isdigit(*text)) {
         text++;
     }
 
-    if (fn_800F8CF0(*text) == 'e') {
+    if (tolower(*text) == 'e') {
         text++;
         exponent_char = *text;
         exponent_sign = 1;
-        if (!fn_800F8D2C(exponent_char)) {
+        if (!isdigit(exponent_char)) {
             if (exponent_char == '-') {
                 exponent_sign = -1;
             }
@@ -65,7 +65,7 @@ double fn_8016BA4C(signed char* text, signed char** end)
         }
 
         exponent = 0;
-        while (fn_800F8D2C(exponent_char = *text)) {
+        while (isdigit(exponent_char = *text)) {
             exponent = exponent_char + exponent * 10;
             exponent -= '0';
             text++;

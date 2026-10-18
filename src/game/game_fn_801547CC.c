@@ -32,8 +32,8 @@ extern void fn_8011F114(Vec3f*, void*);
 extern unsigned short fn_8012DBE8(void*, int, Color*);
 extern void* fn_8012C62C(void*, int, Color*, Color*, Color*, int);
 extern void fn_801A19BC(EffectDesc*);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern int fn_8011F598(void*, int, int, int, QueryResult*, int);
 extern void* fn_80148008(Vec3f*, void*, EffectDesc*, void*);
 extern void fn_801A1BD0(void);
@@ -83,7 +83,7 @@ void fn_801547CC(void* work)
         fn_801A19BC(&desc);
         *(u16*)(desc.bytes + 6) = 80;
         *(float*)(desc.bytes + 20) = lbl_806505FC;
-        desc.bytes[25] = (fn_800FBFB0() + 45) & 31;
+        desc.bytes[25] = (rand() + 45) & 31;
         fn_8011F598(object, state->count, index, -1,
                      &result, 1);
         position = result.position;
@@ -93,7 +93,7 @@ void fn_801547CC(void* work)
             fn_80180384(effect, 20);
         }
         state->count += 1;
-        state->timer = (fn_800FBFB0() + 1) & 7;
+        state->timer = (rand() + 1) & 7;
     } else {
         state->timer -= 1;
     }

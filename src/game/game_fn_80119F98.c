@@ -46,8 +46,8 @@ extern unsigned int fn_801ED3F4(unsigned int);
 extern void fn_801A8EDC(void *);
 extern void fn_801A852C(u32 *, int, u16, u32);
 extern void fn_801A8F08(s32, s32, s32, s32, s32, s32, void *);
-extern void fn_8022A044(int, int, int, int, int);
-extern void fn_8022A7D4(int);
+extern void GXSetAlphaCompare(int, int, int, int, int);
+extern void GXSetZCompLoc(int);
 extern void fn_801A90BC(void *, void *);
 extern int fn_801E79FC(unsigned int *, unsigned int);
 extern int fn_801199A0(int);
@@ -109,8 +109,8 @@ void fn_80119F98(u8 alpha)
         fn_801A852C(&copy, 0, 0, 0x80000000);
     }
     fn_801A8F08(144, 0, 575, 479, -30360, 0, (void *)5);
-    fn_8022A044(7, 0, 0, 5, 0);
-    fn_8022A7D4(0);
+    GXSetAlphaCompare(7, 0, 0, 5, 0);
+    GXSetZCompLoc(0);
     fn_801A90BC(lbl_802515D0, lbl_8024E818);
 
     if (lbl_8064CDE0 != 0 && lbl_8064CDAC != 0) {

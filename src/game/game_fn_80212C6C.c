@@ -23,7 +23,7 @@ static inline void SetTimeoutAlarm(OSTime timeout) {
 }
 
 /* Read the 32-byte drive inquiry response into the DMA destination. */
-s32 fn_80212C6C(void *addr, DVDLowCallback callback) {
+s32 DVDLowInquiry(void *addr, DVDLowCallback callback) {
     Callback_8064D9A0 = callback;
     StopAtNextInt_8064D998 = 0;
     __DIRegs[2] = 0x12000000;

@@ -1,4 +1,4 @@
-/* fn_80227B0C: GXInitSpecularDir - sets a light's position to a point far
+/* GXInitSpecularDir: GXInitSpecularDir - sets a light's position to a point far
  * along the negated direction and its direction to the normalized half-angle
  * vector between the light direction and the viewer (0,0,1). */
 
@@ -35,7 +35,7 @@ static inline f32 sqrtf(f32 x)
     return x;
 }
 
-void fn_80227B0C(GXLightObjInt *lt_obj, f32 nx, f32 ny, f32 nz)
+void GXInitSpecularDir(GXLightObjInt *lt_obj, f32 nx, f32 ny, f32 nz)
 {
     f32 vx;
     f32 vy;

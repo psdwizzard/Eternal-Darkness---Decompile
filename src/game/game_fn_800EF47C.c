@@ -9,10 +9,10 @@ typedef struct TRKBuffer {
     u8 data[1];
 } TRKBuffer;
 
-extern void fn_80003130(void *, const void *, u32);
+extern void TRK_memcpy(void *, const void *, u32);
 extern int gTRKBigEndian[];
 
-int fn_800EF47C(TRKBuffer *buffer, u32 *out, int count)
+int TRKReadBuffer_ui32(TRKBuffer *buffer, u32 *out, int count)
 {
     int read_err;
     u32 *destination;
@@ -38,7 +38,7 @@ int fn_800EF47C(TRKBuffer *buffer, u32 *out, int count)
             read_err = 0x302;
             amount = remaining;
         }
-        fn_80003130(destination, buffer->data + buffer->position, amount);
+        TRK_memcpy(destination, buffer->data + buffer->position, amount);
         buffer->position += amount;
         if (*endian == 0 && read_err == 0) {
             u8 *source = (u8 *)destination;

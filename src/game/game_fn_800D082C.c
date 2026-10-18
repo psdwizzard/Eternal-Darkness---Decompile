@@ -27,8 +27,8 @@ extern void fn_800A37CC(int, void *, void *);
 extern int fn_801A7468(void *);
 extern void fn_8011F114(Vec3 *, void *);
 extern int fn_8011F6A4(void *, int, int, int, Transform *, int);
-extern void fn_80211A6C(Vec3 *, Vec3 *, Vec3 *);
-extern float fn_80211B08(Vec3 *);
+extern void PSVECSubtract(Vec3 *, Vec3 *, Vec3 *);
+extern float PSVECMag(Vec3 *);
 
 /* Independent reconstruction of the object/context action callback. */
 int fn_800D082C(void *object, void *context)
@@ -67,17 +67,17 @@ int fn_800D082C(void *object, void *context)
         }
 
         fn_8011F6A4((void *)object_saved, 2, variant, -1, &transformed, 1);
-        fn_80211A6C(&position, &transformed.vector, &output);
-        fn_80211B08(&output);
+        PSVECSubtract(&position, &transformed.vector, &output);
+        PSVECMag(&output);
         fn_8011F6A4((void *)object_saved, 3, variant, -1, &transformed, 1);
-        fn_80211A6C(&position, &transformed.vector, &output);
-        fn_80211B08(&output);
+        PSVECSubtract(&position, &transformed.vector, &output);
+        PSVECMag(&output);
         fn_8011F6A4((void *)object_saved, 28, variant, -1, &transformed, 1);
-        fn_80211A6C(&position, &transformed.vector, &output);
-        fn_80211B08(&output);
+        PSVECSubtract(&position, &transformed.vector, &output);
+        PSVECMag(&output);
         fn_8011F6A4((void *)object_saved, 29, variant, -1, &transformed, 1);
-        fn_80211A6C(&position, &transformed.vector, &output);
-        fn_80211B08(&output);
+        PSVECSubtract(&position, &transformed.vector, &output);
+        PSVECMag(&output);
     }
     return 1;
 }

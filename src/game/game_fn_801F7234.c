@@ -29,7 +29,7 @@ extern void fn_801F6998(Vec3);
 extern void fn_801F69E0(float);
 extern void fn_801F6950(Vec3);
 extern void fn_801F69BC(Vec3);
-extern void fn_80211AAC(Vec3*, Vec3*);
+extern void PSVECNormalize(Vec3*, Vec3*);
 
 /* Form the special-state addresses in the 32-bit address domain. */
 #define SPECIAL_STATE(base, index) \
@@ -108,7 +108,7 @@ void fn_801F7234(int flags)
         delta.x = SPECIAL_STATE(base, 25)->position.x - SPECIAL_STATE(base, 24)->position.x;
         delta.y = SPECIAL_STATE(base, 25)->position.y - SPECIAL_STATE(base, 24)->position.y;
         delta.z = SPECIAL_STATE(base, 25)->position.z - SPECIAL_STATE(base, 24)->position.z;
-        fn_80211AAC(&delta, &delta);
+        PSVECNormalize(&delta, &delta);
         fn_801F69BC(delta);
     }
 }

@@ -55,17 +55,17 @@ extern double lbl_8064DE68;
 extern s32 lbl_8064D1BC;
 extern s32 lbl_8064D18C;
 
-extern double fn_8016A694(void*, int);
-extern int fn_8016A598(void*);
-extern void fn_80163BB4(void*, const char*, ...);
-extern void fn_8016A830(void*, double);
+extern double lua_tonumber(void*, int);
+extern int lua_gettop(void*);
+extern void luaO_verror(void*, const char*, ...);
+extern void lua_pushnumber(void*, double);
 extern unsigned int fn_800F5C54(double);
 extern void fn_80196578(void*);
 extern void fn_8018F81C(void*, u8);
 extern int fn_801D3974(s32);
 extern int fn_8015C4A4(int, int);
 extern Vec3s* fn_80158ABC(int, int, void*);
-extern void fn_80211AAC(f32*, f32*);
+extern void PSVECNormalize(f32*, f32*);
 extern void* fn_80147EC4(void*);
 extern void fn_801964E8(void*, s32, s32);
 extern void fn_801978F8(void*, u16);
@@ -99,19 +99,19 @@ s32 fn_80017FF8(void* script)
     f32 best_high;
 
     handle = -1;
-    count = (s32)fn_8016A694(script, 1);
-    if (fn_8016A598(script) != count + 4) {
-        fn_80163BB4(script, lbl_8023CBC8.invalid_count, count + 4,
-                    fn_8016A598(script));
-        fn_8016A830(script, lbl_8064DE68);
+    count = (s32)lua_tonumber(script, 1);
+    if (lua_gettop(script) != count + 4) {
+        luaO_verror(script, lbl_8023CBC8.invalid_count, count + 4,
+                    lua_gettop(script));
+        lua_pushnumber(script, lbl_8064DE68);
         return 1;
     }
 
     flags = 0;
     body = header.layout.body;
-    kind = (s32)fn_8016A694(script, 2);
-    mode = (s32)fn_8016A694(script, 3);
-    user_value = (s32)fn_8016A694(script, 4);
+    kind = (s32)lua_tonumber(script, 2);
+    mode = (s32)lua_tonumber(script, 3);
+    user_value = (s32)lua_tonumber(script, 4);
 
     fn_80196578(&header);
     *(s16*)&header.bytes[4] = -1;
@@ -156,12 +156,12 @@ s32 fn_80017FF8(void* script)
     header.bytes[44] |= 0x81;
     header.bytes[43] = 0;
 
-    endpoints[0] = *fn_80158ABC(fn_8015C4A4(fn_800F5C54(fn_8016A694(script, 5)), 2), 2, 0);
-    endpoints[1] = *fn_80158ABC(fn_8015C4A4(fn_800F5C54(fn_8016A694(script, 7)), 2), 2, 0);
+    endpoints[0] = *fn_80158ABC(fn_8015C4A4(fn_800F5C54(lua_tonumber(script, 5)), 2), 2, 0);
+    endpoints[1] = *fn_80158ABC(fn_8015C4A4(fn_800F5C54(lua_tonumber(script, 7)), 2), 2, 0);
     direction[0] = (f32)(endpoints[1].x - endpoints[0].x);
     direction[1] = (f32)(endpoints[1].y - endpoints[0].y);
     direction[2] = lbl_8064DCF4;
-    fn_80211AAC(direction, direction);
+    PSVECNormalize(direction, direction);
 
     min_z = (f32)endpoints[0].z;
     max_z = (f32)endpoints[0].z;
@@ -172,7 +172,7 @@ s32 fn_80017FF8(void* script)
         f32 distance;
 
         point = fn_80158ABC(
-            fn_8015C4A4(fn_800F5C54(fn_8016A694(script, i + 5)), 2),
+            fn_8015C4A4(fn_800F5C54(lua_tonumber(script, i + 5)), 2),
             2, 0);
         distance = direction[0] * point->x +
                    direction[1] * point->y +
@@ -216,6 +216,6 @@ s32 fn_80017FF8(void* script)
         handle = fn_8014B8D0(object, handle);
     }
 
-    fn_8016A830(script, (double)handle);
+    lua_pushnumber(script, (double)handle);
     return 1;
 }

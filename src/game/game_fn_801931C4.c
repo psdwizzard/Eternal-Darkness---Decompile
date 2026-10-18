@@ -5,7 +5,7 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 
 extern s32 lbl_8064D18C;
-extern s32 fn_800FBFB0(void);
+extern s32 rand(void);
 extern s32 fn_80180430(void*, u8);
 extern s32 fn_80180454(void*);
 extern void fn_80180518(void*, u8, s32);
@@ -103,11 +103,11 @@ s32 fn_801931C4(void* argument)
                     memcpy(entry + 0xA, object + 0x10, 6);
                     fn_801795D8(object + 0xC0, object + 0x10, entry + 0x10);
                     fn_80179904(entry + 0x10, 16);
-                    *(s16*)(entry + 0x10) += 16 - (fn_800FBFB0() & 0x1F);
-                    *(s16*)(entry + 0x12) += 16 - (fn_800FBFB0() & 0x1F);
-                    *(s16*)(entry + 0x14) += 18 - (fn_800FBFB0() & 7);
+                    *(s16*)(entry + 0x10) += 16 - (rand() & 0x1F);
+                    *(s16*)(entry + 0x12) += 16 - (rand() & 0x1F);
+                    *(s16*)(entry + 0x14) += 18 - (rand() & 7);
                     fn_80179904(entry + 0x10,
-                                (s16)(object[0xB1] + (fn_800FBFB0() & 7)));
+                                (s16)(object[0xB1] + (rand() & 7)));
                     entry[0x2B] = object[2];
                     fn_80180518(object + 0x24, (u8)i, 1);
                 }
@@ -121,13 +121,13 @@ s32 fn_801931C4(void* argument)
                 position[0] = *(s16*)(object + 0x10);
                 position[1] = *(s16*)(object + 0x12);
                 position[2] = *(s16*)(object + 0x14);
-                offset[0] = 16 - (fn_800FBFB0() & 0x1F);
-                offset[1] = 16 - (fn_800FBFB0() & 0x1F);
-                offset[2] = 18 - (fn_800FBFB0() & 7);
+                offset[0] = 16 - (rand() & 0x1F);
+                offset[1] = 16 - (rand() & 0x1F);
+                offset[2] = 18 - (rand() & 7);
                 switch (object[0xB6]) {
-                case 1: colour[0] -= fn_800FBFB0() & 0x1F; break;
-                case 2: colour[1] -= fn_800FBFB0() & 0x1F; break;
-                case 3: colour[2] -= fn_800FBFB0() & 0x1F; break;
+                case 1: colour[0] -= rand() & 0x1F; break;
+                case 2: colour[1] -= rand() & 0x1F; break;
+                case 3: colour[2] -= rand() & 0x1F; break;
                 }
                 fn_8014D478(0, position, offset, 0, 1, colour, 8);
             }

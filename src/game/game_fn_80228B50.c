@@ -12,7 +12,7 @@ typedef struct GXTlutObjInt {
 #define SET_REG_FIELD(reg, size, shift, val) \
     ((reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
 
-void fn_80228B50(void *obj, void *table, u32 format, u16 entries)
+void GXInitTlutObj(void *obj, void *table, u32 format, u16 entries)
 {
     u32 tableBase;
     GXTlutObjInt *t = (GXTlutObjInt *)obj;

@@ -20,22 +20,22 @@ typedef struct {
 
 extern volatile u16 *__cpReg;
 extern volatile u32 *__piReg;
-extern u8 lbl_8064DB9C; /* CPGPLinked */
+extern u8 CPGPLinked; /* CPGPLinked */
 
 BOOL OSDisableInterrupts(void);
 BOOL OSRestoreInterrupts(BOOL level);
-void fn_80226378(void);
+void GXFlush(void);
 
 /* __GXSaveCPUFifoAux */
-void fn_80224048(GXFifoObj *realFifo)
+void __GXSaveCPUFifoAux(GXFifoObj *realFifo)
 {
     BOOL enabled = OSDisableInterrupts();
 
-    fn_80226378();
+    GXFlush();
     realFifo->base = (void *)(__piReg[3] + 0x80000000);
     realFifo->top = (void *)(__piReg[4] + 0x80000000);
     realFifo->wrPtr = (void *)((__piReg[5] & ~0x04000000) + 0x80000000);
-    if (lbl_8064DB9C) {
+    if (CPGPLinked) {
         u32 temp = __cpReg[29] << 16;
         temp |= __cpReg[28];
         realFifo->rdPtr = (void *)(temp + 0x80000000);

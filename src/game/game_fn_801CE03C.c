@@ -1,14 +1,14 @@
 typedef unsigned int u32;
 
-extern void* lbl_8064D514;
-extern void* fn_8021A044(void*);
-extern void fn_8021A128(void);
-extern void fn_801CE358(void*);
+extern void* salAIBufferBase;
+extern void* AIRegisterDMACallback(void*);
+extern void AIStopDMA(void);
+extern void salFree(void*);
 
-u32 fn_801CE03C(void)
+u32 salExitAi(void)
 {
-    fn_8021A044(0);
-    fn_8021A128();
-    fn_801CE358(lbl_8064D514);
+    AIRegisterDMACallback(0);
+    AIStopDMA();
+    salFree(salAIBufferBase);
     return 1;
 }

@@ -75,8 +75,8 @@ extern const float lbl_80651154;
 extern const float lbl_80651158;
 extern const u32 lbl_802FC5BC[];
 extern void fn_80182380(ParticleParams*);
-extern float fn_80048C2C(float);
-extern float fn_80048C50(float);
+extern float sinf(float);
+extern float cosf(float);
 extern void fn_80182448(void);
 extern void* fn_80148008(Vec3*, Direction*, ParticleParams*, void (*)(void));
 extern void* fn_80156938(void*);
@@ -189,8 +189,8 @@ void fn_801D8E40(Object* object)
             for (i = 0; i < count; i++) {
                 float angle = lbl_80651154 * i / count;
                 void* spawned;
-                position.x = *(float*)(object->bytes + 0x38) + lbl_80651158 * fn_80048C2C(angle);
-                position.y = *(float*)(object->bytes + 0x3C) + lbl_80651158 * fn_80048C50(angle);
+                position.x = *(float*)(object->bytes + 0x38) + lbl_80651158 * sinf(angle);
+                position.y = *(float*)(object->bytes + 0x3C) + lbl_80651158 * cosf(angle);
                 position.z = *(float*)(object->bytes + 0x40);
                 submit_position = position;
                 spawned = fn_80148008(&submit_position, &direction, &params, fn_80182448);

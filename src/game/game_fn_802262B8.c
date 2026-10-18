@@ -18,7 +18,7 @@ typedef union {
 volatile GXFifo GXWGFifo : 0xCC008000;
 
 /* GXSetNumTexGens: set the number of generated texture coordinates. */
-void fn_802262B8(u8 count)
+void GXSetNumTexGens(u8 count)
 {
     gx->genMode = (gx->genMode & ~0xF) | (u32)count;
     GXWGFifo.byte = 0x10;

@@ -11,7 +11,7 @@ typedef struct OSStopwatch {
     int running;
 } OSStopwatch;
 
-void fn_8020F0F8(OSStopwatch* sw) {
+void OSResetStopwatch(OSStopwatch* sw) {
     sw->total = 0;
     sw->hits = 0;
     sw->min = 0xFFFFFFFFLL;

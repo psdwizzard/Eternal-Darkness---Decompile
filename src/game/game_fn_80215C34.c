@@ -12,7 +12,7 @@ typedef struct DVDCommandBlock {
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
 
-s32 fn_80215C34(const DVDCommandBlock *block) {
+s32 DVDGetCommandBlockStatus(const DVDCommandBlock *block) {
     BOOL level;
     s32 state;
     s32 result;

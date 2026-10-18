@@ -13,17 +13,12 @@ typedef struct KeymapEntry {
     u16 pad;
 } KeymapEntry;
 
-extern KeymapEntry* fn_801BD0EC(u16);
-extern u16 fn_801CAFAC(u8, u8, u8);
-extern u32 fn_801B5C14(u8, u8, u8, u32, u32*);
-extern u32 fn_801C0BC8(u16, u8, u8, u16, u8, u8, u8, u8, u8, u8, u16, u16, u8, u8, u8, u32);
-extern u32 fn_801B5E9C(u16, s16, u8, u16, u8, u8, u8, u8, u8, u8, u16, u16, u32, u8, u8, u32);
+extern KeymapEntry* dataGetKeymap(u16);
+extern u16 inpGetMidiCtrl(u8, u8, u8);
+extern u32 do_voice_portamento(u8, u8, u8, u32, u32*);
+extern u32 macStart(u16, u8, u8, u16, u8, u8, u8, u8, u8, u8, u16, u16, u8, u8, u8, u32);
+extern u32 StartLayer(u16, s16, u8, u16, u8, u8, u8, u8, u8, u8, u16, u16, u32, u8, u8, u32);
 
-#define dataGetKeymap fn_801BD0EC
-#define inpGetMidiCtrl fn_801CAFAC
-#define do_voice_portamento fn_801B5C14
-#define macStart fn_801C0BC8
-#define StartLayer fn_801B5E9C
 
 static inline u32 check_portamento(u8 key, u8 midi, u8 midiSet, u32 newVID, u32* vid)
 {
@@ -37,7 +32,7 @@ static inline u32 check_portamento(u8 key, u8 midi, u8 midiSet, u32 newVID, u32*
     return 1;
 }
 
-u32 fn_801B6270(u16 id, s16 prio, u8 maxVoices, u16 allocId, u8 key, u8 vol, u8 pan, u8 midi, u8 midiSet,
+u32 StartKeymap(u16 id, s16 prio, u8 maxVoices, u16 allocId, u8 key, u8 vol, u8 pan, u8 midi, u8 midiSet,
                 u8 section, u16 step, u16 trackid, u32 vidFlag, u8 vGroup, u8 studio, u32 itd)
 {
     u8 o;

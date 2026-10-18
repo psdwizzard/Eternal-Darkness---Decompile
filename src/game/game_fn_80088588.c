@@ -7,8 +7,8 @@ typedef struct Work { u8 bytes[0xC4]; Owner* owner; } Work;
 
 extern Context* fn_8006D1DC(int);
 extern void fn_8006D198(Work*, Context*, int);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_8006BEE4(Context*, void (*)(void));
 extern void fn_8006DEF8(Work*, int, void*, void*, int);
 extern void fn_8006C9E4(Context*, int);
@@ -25,7 +25,7 @@ void fn_80088588(Work* work)
     fn_8006D198(work, context, 2);
     data = work->owner->data;
     data[0x1780 / 4] = 15;
-    if ((fn_800FBFB0() & 0x1F) > 0x10)
+    if ((rand() & 0x1F) > 0x10)
         data[0x1780 / 4] = -15;
     fn_8006BEE4(context, fn_80088E44);
     context->counter = 0;

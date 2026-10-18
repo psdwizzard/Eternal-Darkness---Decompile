@@ -18,7 +18,7 @@ typedef struct State {
 extern State lbl_8060B430;
 extern int lbl_8064D308;
 extern void fn_801AE530(void);
-extern unsigned int fn_801BA2A4(unsigned int, unsigned int, unsigned int,
+extern unsigned int sndStreamAllocEx(unsigned int, unsigned int, unsigned int,
                                unsigned int, unsigned int, unsigned int,
                                unsigned int, unsigned int, unsigned int,
                                unsigned int, unsigned int,
@@ -33,7 +33,7 @@ void fn_801ADC50(void)
         index = 0;
         zero = 0;
         do {
-            lbl_8060B430.entries[index].handle = fn_801BA2A4(
+            lbl_8060B430.entries[index].handle = sndStreamAllocEx(
                 0xFF, lbl_8060B430.entries[index].first,
                 lbl_8060B430.entries[index].second, 0x7D00, 0, 0x40, 0, 0,
                 zero, zero, 0x30001, fn_801AE530,

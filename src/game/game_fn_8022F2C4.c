@@ -11,7 +11,7 @@ typedef struct AudioSync {
 
 extern void *memset(void *dest, int value, unsigned long size);
 
-int fn_8022F2C4(AudioSync *sync) {
+int ogg_sync_init(AudioSync *sync) {
     if (sync != 0) {
         memset(sync, 0, sizeof(*sync));
     }

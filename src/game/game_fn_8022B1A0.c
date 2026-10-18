@@ -17,10 +17,10 @@ typedef struct Vec {
 } Vec;
 
 /* GX descriptor and format save areas share the original BSS pool. */
-static GXVtxDescList lbl_80642418[27];
+static GXVtxDescList vcd[27];
 static GXVtxAttrFmtList lbl_806424F0[27];
 /* These preceding dodecahedron tables preserve the shared data-pool offsets. */
-static int lbl_802FF318[12][5] = {
+static int polygons[12][5] = {
     {0, 12, 10, 11, 16},
     {1, 17, 8, 9, 13},
     {2, 14, 9, 8, 18},
@@ -75,33 +75,33 @@ static u8 lbl_802FF540[8][3] = {
     {0, 5, 3},
     {1, 3, 5},
 };
-extern void fn_80225460(GXVtxDescList *list);
-extern void fn_80225ED8(int format, GXVtxAttrFmtList *list);
-extern void fn_802254D0(void);
-extern void fn_80224A60(int attribute, int type);
-extern void fn_8022551C(int format, int attribute, int count, int type, u8 fraction);
-extern void fn_8022AA70(u8 depth, const Vec *a, const Vec *b, const Vec *c);
-extern void fn_80224DC0(const GXVtxDescList *list);
-extern void fn_80225878(int format, const volatile GXVtxAttrFmtList *list);
+extern void GXGetVtxDescv(GXVtxDescList *list);
+extern void GXGetVtxAttrFmtv(int format, GXVtxAttrFmtList *list);
+extern void GXClearVtxDesc(void);
+extern void GXSetVtxDesc(int attribute, int type);
+extern void GXSetVtxAttrFmt(int format, int attribute, int count, int type, u8 fraction);
+extern void Subdivide(u8 depth, const Vec *a, const Vec *b, const Vec *c);
+extern void GXSetVtxDescv(const GXVtxDescList *list);
+extern void GXSetVtxAttrFmtv(int format, const volatile GXVtxAttrFmtList *list);
 
 /* Draw an octahedron, preserving the caller's vertex descriptors and format. */
-void fn_8022B1A0(void)
+void GXDrawOctahedron(void)
 {
     int face;
 
-    fn_80225460(lbl_80642418);
-    fn_80225ED8(3, lbl_806424F0);
-    fn_802254D0();
-    fn_80224A60(9, 1);
-    fn_80224A60(10, 1);
-    fn_8022551C(3, 9, 1, 4, 0);
-    fn_8022551C(3, 10, 0, 4, 0);
+    GXGetVtxDescv(vcd);
+    GXGetVtxAttrFmtv(3, lbl_806424F0);
+    GXClearVtxDesc();
+    GXSetVtxDesc(9, 1);
+    GXSetVtxDesc(10, 1);
+    GXSetVtxAttrFmt(3, 9, 1, 4, 0);
+    GXSetVtxAttrFmt(3, 10, 0, 4, 0);
     for (face = 7; face >= 0; face--) {
-        fn_8022AA70(0,
+        Subdivide(0,
             &lbl_802FF4F8[lbl_802FF540[(u8)face][0]],
             &lbl_802FF4F8[lbl_802FF540[(u8)face][1]],
             &lbl_802FF4F8[lbl_802FF540[(u8)face][2]]);
     }
-    fn_80224DC0(lbl_80642418);
-    fn_80225878(3, lbl_806424F0);
+    GXSetVtxDescv(vcd);
+    GXSetVtxAttrFmtv(3, lbl_806424F0);
 }

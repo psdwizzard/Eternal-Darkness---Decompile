@@ -4,7 +4,7 @@ typedef unsigned int u32;
 
 extern u8 lbl_80627D60[];
 
-void fn_801C3158(void)
+void vsInit(void)
 {
     u8* state = (u8*)lbl_80627D60;
     state[0] = 0;

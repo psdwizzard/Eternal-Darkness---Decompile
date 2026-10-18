@@ -6,7 +6,7 @@ typedef struct IdEntry {
     u16 id;
 } IdEntry;
 
-int fn_801BD14C(IdEntry* left, IdEntry* right)
+int layercmp(IdEntry* left, IdEntry* right)
 {
     return left->id - right->id;
 }

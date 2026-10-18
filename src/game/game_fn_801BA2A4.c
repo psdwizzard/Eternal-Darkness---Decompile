@@ -34,13 +34,13 @@ typedef struct StreamSlot {
 } StreamSlot;
 
 extern StreamSlot lbl_8061AE48[];
-extern u32 lbl_8064D3CC;
-extern u32 lbl_8064D3EC;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
-extern u32 fn_801BA6C4(u32, u32);
-extern u8 fn_801CD1C0(u32, u32, u32, u32);
-extern u32 fn_801BB1A0(u32);
+extern u32 synthFlags;
+extern u32 nextPublicID;
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
+extern u32 sndStreamAllocLength(u32, u32);
+extern u8 hwInitStream(u32, u32, u32, u32);
+extern u32 sndStreamActivate(u32);
 
 /* Skip the reserved ID and reject IDs held by active slots. */
 static inline u32 NextStreamId(StreamSlot* slots)
@@ -48,9 +48,9 @@ static inline u32 NextStreamId(StreamSlot* slots)
     u32 id;
     u32 found;
     do {
-        id = lbl_8064D3EC++;
+        id = nextPublicID++;
         if (id == (u32)-1) {
-            id = lbl_8064D3EC++;
+            id = nextPublicID++;
         }
         for (found = 0; found < 64; found++) {
             if (slots[found].state != 0 && slots[found].id == id) {
@@ -62,7 +62,7 @@ static inline u32 NextStreamId(StreamSlot* slots)
     return id;
 }
 
-u32 fn_801BA2A4(u8 format, u32 source, u32 samples, u32 voice_flags,
+u32 sndStreamAllocEx(u8 format, u32 source, u32 samples, u32 voice_flags,
                 u8 volume, u8 left, u8 right, u8 aux_left,
                 u8 aux_right, u8 priority, u32 flags,
                 void (*callback)(void), u32 callback_arg, s16* position)
@@ -75,7 +75,7 @@ u32 fn_801BA2A4(u8 format, u32 source, u32 samples, u32 voice_flags,
     u32 effective_left;
     u32 effective_right;
 
-    fn_801CE2B8();
+    hwDisableIrq();
 
     {
         StreamSlot* scan = slots;
@@ -91,7 +91,7 @@ u32 fn_801BA2A4(u8 format, u32 source, u32 samples, u32 voice_flags,
 
         slots[slot_index].id = id;
         slots[slot_index].flags = flags;
-        bytes = fn_801BA6C4(samples, flags);
+        bytes = sndStreamAllocLength(samples, flags);
         slots[slot_index].source = source;
         slots[slot_index].samples = samples;
         slots[slot_index].buffer_bytes = bytes;
@@ -122,10 +122,10 @@ u32 fn_801BA2A4(u8 format, u32 source, u32 samples, u32 voice_flags,
         effective_right = right;
         effective_left = left;
 
-        if (lbl_8064D3CC & 1) {
+        if (synthFlags & 1) {
             effective_left = 0x40;
             effective_right = 0;
-        } else if (!(lbl_8064D3CC & 2)) {
+        } else if (!(synthFlags & 2)) {
             effective_right = 0;
         }
 
@@ -137,11 +137,11 @@ u32 fn_801BA2A4(u8 format, u32 source, u32 samples, u32 voice_flags,
         slots[slot_index].callback_arg = callback_arg;
         slots[slot_index].cache = (u32)-1;
         slots[slot_index].state = 3;
-        cache_id = fn_801CD1C0(bytes, slots[slot_index].cache, effective_left, effective_right);
+        cache_id = hwInitStream(bytes, slots[slot_index].cache, effective_left, effective_right);
         slots[slot_index].cache_id = cache_id;
 
         if (cache_id != 0xFF) {
-            if (!(flags & 0x10000) && fn_801BB1A0(id) == 0) {
+            if (!(flags & 0x10000) && sndStreamActivate(id) == 0) {
                 id = (u32)-1;
             }
         } else {
@@ -153,6 +153,6 @@ u32 fn_801BA2A4(u8 format, u32 source, u32 samples, u32 voice_flags,
     } else {
         id = (u32)-1;
     }
-    fn_801CE280();
+    hwEnableIrq();
     return id;
 }

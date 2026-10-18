@@ -5,7 +5,7 @@ typedef unsigned long u32;
 
 #define TILE_COUNT(size, shift) (((size) + (1 << (shift)) - 1) >> (shift))
 
-u32 fn_80228250(u16 width, u16 height, u32 format, u8 mipmap, u8 max_lod)
+u32 GXGetTexBufferSize(u16 width, u16 height, u32 format, u8 mipmap, u8 max_lod)
 {
     u32 size;
     u32 level;

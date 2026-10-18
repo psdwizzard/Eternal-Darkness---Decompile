@@ -24,38 +24,38 @@ typedef struct PadClampRegion {
     s8 xySubstick;
 } PadClampRegion;
 
-extern PadClampRegion lbl_8064C420;
-extern void fn_80218344(s8* px, s8* py, s8 max, s8 xy, s8 min);
+extern PadClampRegion ClampRegion;
+extern void ClampStick(s8* px, s8* py, s8 max, s8 xy, s8 min);
 
 /* Clamp all four controllers' sticks and triggers, applying their dead zones. */
-void fn_80218474(PadStatus* status)
+void PADClamp(PadStatus* status)
 {
     s32 i;
 
     for (i = 0; i < 4; i++, status++) {
         if (status->err == 0) {
-            fn_80218344(&status->stickX, &status->stickY,
-                         lbl_8064C420.maxStick, lbl_8064C420.xyStick,
-                         lbl_8064C420.minStick);
-            fn_80218344(&status->substickX, &status->substickY,
-                         lbl_8064C420.maxSubstick, lbl_8064C420.xySubstick,
-                         lbl_8064C420.minSubstick);
+            ClampStick(&status->stickX, &status->stickY,
+                         ClampRegion.maxStick, ClampRegion.xyStick,
+                         ClampRegion.minStick);
+            ClampStick(&status->substickX, &status->substickY,
+                         ClampRegion.maxSubstick, ClampRegion.xySubstick,
+                         ClampRegion.minSubstick);
 
-            if (status->triggerL <= lbl_8064C420.minTrigger) {
+            if (status->triggerL <= ClampRegion.minTrigger) {
                 status->triggerL = 0;
             } else {
-                if (lbl_8064C420.maxTrigger < status->triggerL) {
-                    status->triggerL = lbl_8064C420.maxTrigger;
+                if (ClampRegion.maxTrigger < status->triggerL) {
+                    status->triggerL = ClampRegion.maxTrigger;
                 }
-                status->triggerL -= lbl_8064C420.minTrigger;
+                status->triggerL -= ClampRegion.minTrigger;
             }
-            if (status->triggerR <= lbl_8064C420.minTrigger) {
+            if (status->triggerR <= ClampRegion.minTrigger) {
                 status->triggerR = 0;
             } else {
-                if (lbl_8064C420.maxTrigger < status->triggerR) {
-                    status->triggerR = lbl_8064C420.maxTrigger;
+                if (ClampRegion.maxTrigger < status->triggerR) {
+                    status->triggerR = ClampRegion.maxTrigger;
                 }
-                status->triggerR -= lbl_8064C420.minTrigger;
+                status->triggerR -= ClampRegion.minTrigger;
             }
         }
     }

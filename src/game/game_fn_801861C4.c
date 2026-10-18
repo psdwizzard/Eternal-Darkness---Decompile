@@ -44,19 +44,19 @@ extern void fn_801869F8(void*, int, u16);
 extern void fn_8018E26C(void*, void*);
 extern void fn_8018680C(void*, void*, Vec3*, int, SixBytes*, u8);
 extern void fn_8018E230(void*, void*, int, u8, u8, int);
-extern void fn_80210FB0(Matrix34);
-extern void fn_80211A48(Vec3*, Vec3*, Vec3*);
-extern void fn_80211268(Matrix34, int, float);
-extern void fn_80210FDC(Matrix34, Matrix34, Matrix34);
-extern void fn_80211B64(Vec3*, Vec3*, Vec3*);
-extern float fn_80211B08(Vec3*);
-extern void fn_80211AAC(Vec3*, Vec3*);
-extern float fn_80211B44(Vec3*, Vec3*);
-extern double fn_80102340(float, float);
+extern void PSMTXIdentity(Matrix34);
+extern void PSVECAdd(Vec3*, Vec3*, Vec3*);
+extern void PSMTXRotRad(Matrix34, int, float);
+extern void PSMTXConcat(Matrix34, Matrix34, Matrix34);
+extern void PSVECCrossProduct(Vec3*, Vec3*, Vec3*);
+extern float PSVECMag(Vec3*);
+extern void PSVECNormalize(Vec3*, Vec3*);
+extern float PSVECDotProduct(Vec3*, Vec3*);
+extern double atan2(float, float);
 extern void fn_8017A244(Vec3*, Quaternion*, float);
-extern void fn_802114E0(Matrix34, Quaternion*);
-extern void fn_80211484(Matrix34, float, float, float);
-extern void fn_80211710(Matrix34, Vec3*, Vec3*);
+extern void PSMTXQuat(Matrix34, Quaternion*);
+extern void PSMTXTrans(Matrix34, float, float, float);
+extern void PSMTXMultVec(Matrix34, Vec3*, Vec3*);
 
 int fn_801861C4(u8* self)
 {
@@ -128,8 +128,8 @@ int fn_801861C4(u8* self)
     origin = lbl_8023B068;
     vertex = buffers.vertices;
     vertex_count = (self_local[1] & 0x7F) << 1;
-    fn_80210FB0(transform);
-    fn_80211A48((Vec3*)(state + 0x60), (Vec3*)(state + 0x6C),
+    PSMTXIdentity(transform);
+    PSVECAdd((Vec3*)(state + 0x60), (Vec3*)(state + 0x6C),
                 (Vec3*)(state + 0x60));
     {
         float angle = *(float*)(state + 0x60);
@@ -150,36 +150,36 @@ int fn_801861C4(u8* self)
         *(float*)(state + 0x68) = angle;
     }
 
-    fn_80211268(x_rotation, 0x78,
+    PSMTXRotRad(x_rotation, 0x78,
                 lbl_80650A24 * *(float*)(state + 0x60));
-    fn_80211268(y_rotation, 0x79,
+    PSMTXRotRad(y_rotation, 0x79,
                 lbl_80650A24 * *(float*)(state + 0x64));
-    fn_80211268(z_rotation, 0x7A,
+    PSMTXRotRad(z_rotation, 0x7A,
                 lbl_80650A24 * *(float*)(state + 0x68));
-    fn_80210FDC(z_rotation, y_rotation, combined);
-    fn_80210FDC(combined, x_rotation, result);
+    PSMTXConcat(z_rotation, y_rotation, combined);
+    PSMTXConcat(combined, x_rotation, result);
 
-    fn_80211B64(&origin, (Vec3*)(state + 0x54), &direction);
-    length = fn_80211B08(&direction);
+    PSVECCrossProduct(&origin, (Vec3*)(state + 0x54), &direction);
+    length = PSVECMag(&direction);
     if (length > lbl_80650A28) {
-        fn_80211AAC(&direction, &direction);
-        dot = fn_80211B44(&origin, (Vec3*)(state + 0x54));
+        PSVECNormalize(&direction, &direction);
+        dot = PSVECDotProduct(&origin, (Vec3*)(state + 0x54));
         fn_8017A244(&direction, &rotation,
-                    (float)fn_80102340(length, dot));
-        fn_802114E0(transform, &rotation);
+                    (float)atan2(length, dot));
+        PSMTXQuat(transform, &rotation);
     }
-    fn_80210FDC(transform, result, transform);
-    fn_80211484(translation, (float)*(s16*)(self_local + 0x10),
+    PSMTXConcat(transform, result, transform);
+    PSMTXTrans(translation, (float)*(s16*)(self_local + 0x10),
                  (float)*(s16*)(self_local + 0x12),
                  (float)*(s16*)(self_local + 0x14));
-    fn_80210FDC(translation, transform, transform);
+    PSMTXConcat(translation, transform, transform);
 
     vertex_index = 0;
     while (vertex_index < vertex_count) {
         transformed.x = (float)*(s16*)(vertex + 0);
         transformed.y = (float)*(s16*)(vertex + 2);
         transformed.z = (float)*(s16*)(vertex + 4);
-        fn_80211710(transform, &transformed, &transformed);
+        PSMTXMultVec(transform, &transformed, &transformed);
         *(s16*)(vertex + 0) = (s16)transformed.x;
         *(s16*)(vertex + 2) = (s16)transformed.y;
         *(s16*)(vertex + 4) = (s16)transformed.z;

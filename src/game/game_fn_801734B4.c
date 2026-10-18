@@ -21,9 +21,9 @@ typedef struct Color {
     u8 a;
 } Color;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_80179904(void*, short);
 extern void fn_80153F00(u8, u8, u8, u8, Color*, int, Vec3f*, void*, u8, u8,
                        int);
@@ -47,28 +47,28 @@ int fn_801734B4(void* state)
     Vec3s resource;
     Vec3f position;
 
-    if (fn_8016A598(state) != 17) {
-        fn_80163BB4(state, lbl_8024FF00, 17, fn_8016A598(state));
+    if (lua_gettop(state) != 17) {
+        luaO_verror(state, lbl_8024FF00, 17, lua_gettop(state));
         return 0;
     }
 
-    arg1 = fn_8016A694(state, 1);
-    arg2 = fn_8016A694(state, 2);
-    arg3 = fn_8016A694(state, 3);
-    resource.x = fn_8016A694(state, 4);
-    resource.y = fn_8016A694(state, 5);
-    resource.z = fn_8016A694(state, 6);
-    arg7 = fn_8016A694(state, 7);
-    arg8 = fn_8016A694(state, 8);
-    arg9 = fn_8016A694(state, 9);
-    arg10 = fn_8016A694(state, 10);
-    arg11 = fn_8016A694(state, 11);
-    arg12 = fn_8016A694(state, 12);
-    arg13 = fn_8016A694(state, 13);
-    arg14 = fn_8016A694(state, 14);
-    arg15 = fn_8016A694(state, 15);
-    arg16 = fn_8016A694(state, 16);
-    arg17 = fn_8016A694(state, 17);
+    arg1 = lua_tonumber(state, 1);
+    arg2 = lua_tonumber(state, 2);
+    arg3 = lua_tonumber(state, 3);
+    resource.x = lua_tonumber(state, 4);
+    resource.y = lua_tonumber(state, 5);
+    resource.z = lua_tonumber(state, 6);
+    arg7 = lua_tonumber(state, 7);
+    arg8 = lua_tonumber(state, 8);
+    arg9 = lua_tonumber(state, 9);
+    arg10 = lua_tonumber(state, 10);
+    arg11 = lua_tonumber(state, 11);
+    arg12 = lua_tonumber(state, 12);
+    arg13 = lua_tonumber(state, 13);
+    arg14 = lua_tonumber(state, 14);
+    arg15 = lua_tonumber(state, 15);
+    arg16 = lua_tonumber(state, 16);
+    arg17 = lua_tonumber(state, 17);
 
     arg15 += (u16)arg17;
     color.r = arg7;

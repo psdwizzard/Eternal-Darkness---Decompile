@@ -1,3 +1,3 @@
-void fn_801CDA00(void)
+void aramExit(void)
 {
 }

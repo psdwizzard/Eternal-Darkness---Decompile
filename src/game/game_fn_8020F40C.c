@@ -42,7 +42,7 @@ struct OSMutex {
 #define OS_THREAD_STATE_RUNNING 2
 #define OS_THREAD_STATE_WAITING 4
 
-extern void fn_8020F368(OSThread *thread);
+extern void UnsetRun(OSThread *thread);
 extern volatile u32 RunQueueBits_8064D988;
 extern volatile s32 RunQueueHint_8064D98C;
 extern OSThreadQueue RunQueue_80640E98[32];
@@ -98,10 +98,10 @@ extern OSThreadQueue RunQueue_80640E98[32];
     } while (0)
 
 /* SetEffectivePriority (OSThread.c) */
-OSThread *fn_8020F40C(OSThread *thread, s32 priority) {
+OSThread *SetEffectivePriority(OSThread *thread, s32 priority) {
     switch (thread->state) {
     case OS_THREAD_STATE_READY:
-        fn_8020F368(thread);
+        UnsetRun(thread);
         thread->priority = priority;
         thread->queue = &RunQueue_80640E98[thread->priority];
         AddTail(thread->queue, thread, link);

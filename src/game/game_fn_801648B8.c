@@ -9,11 +9,11 @@ typedef struct Parser {
     void* state;
 } Parser;
 
-extern int fn_8015EC10(Parser*);
-extern void fn_8015F1F8(Parser*, int, int);
+extern int luaK_getlabel(Parser*);
+extern void luaK_patchlist(Parser*, int, int);
 
-void fn_801648B8(Parser* parser, Frame* frame)
+void leavebreak(Parser* parser, Frame* frame)
 {
     parser->state = frame->parent;
-    fn_8015F1F8(parser, frame->value, fn_8015EC10(parser));
+    luaK_patchlist(parser, frame->value, luaK_getlabel(parser));
 }

@@ -36,7 +36,7 @@ extern GXData *gx;
 #define SET_REG_FIELD(reg, size, shift, val) \
     ((reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)))
 
-void fn_80224DC0(const GXVtxDescList *list)
+void GXSetVtxDescv(const GXVtxDescList *list)
 {
     GXAttr attr;
     GXAttrType type;

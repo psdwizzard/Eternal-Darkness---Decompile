@@ -9,25 +9,25 @@ typedef struct HashNode {
     struct HashNode* next;
 } HashNode;
 
-extern HashNode* fn_80167128(HashTable*, Value*);
-extern int fn_801639E8(Value*, HashNode*);
-extern void fn_80160FAC(LuaState*, const char*);
+extern HashNode* luaH_mainposition(HashTable*, Value*);
+extern int luaO_equalObj(Value*, HashNode*);
+extern void lua_error(LuaState*, const char*);
 extern const char lbl_8024FA48[];
-extern Value lbl_8023A868;
+extern Value luaO_nilobject;
 
-Value* fn_801671D0(LuaState* state, HashTable* table, Value* value)
+Value* luaH_getany(LuaState* state, HashTable* table, Value* value)
 {
-    HashNode* node = fn_80167128(table, value);
+    HashNode* node = luaH_mainposition(table, value);
 
     if (node == 0) {
-        fn_80160FAC(state, lbl_8024FA48);
+        lua_error(state, lbl_8024FA48);
     } else {
         do {
-            if (fn_801639E8(value, node)) {
+            if (luaO_equalObj(value, node)) {
                 return (Value*)((char*)node + 0x10);
             }
             node = node->next;
         } while (node != 0);
     }
-    return &lbl_8023A868;
+    return &luaO_nilobject;
 }

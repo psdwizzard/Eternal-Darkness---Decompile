@@ -12,13 +12,13 @@ typedef struct LuaState {
     int nblocks;
 } LuaState;
 
-extern void* fn_8016B5CC(LuaState*, void*, int, const char*, int);
+extern void* luaM_realloc(LuaState*, void*, int, const char*, int);
 extern const char lbl_8024FA38[];
 
-void fn_80166AC4(LuaState* state)
+void luaS_init(LuaState* state)
 {
-    state->strt.hash = fn_8016B5CC(state, 0, sizeof(void*), lbl_8024FA38, 29);
-    state->udt.hash = fn_8016B5CC(state, 0, sizeof(void*), lbl_8024FA38, 30);
+    state->strt.hash = luaM_realloc(state, 0, sizeof(void*), lbl_8024FA38, 29);
+    state->udt.hash = luaM_realloc(state, 0, sizeof(void*), lbl_8024FA38, 30);
     state->nblocks += 2 * sizeof(void*);
     state->strt.size = state->udt.size = 1;
     state->strt.nuse = state->udt.nuse = 0;

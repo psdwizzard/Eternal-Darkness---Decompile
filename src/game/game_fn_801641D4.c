@@ -11,13 +11,13 @@ typedef struct Parser {
 } Parser;
 
 extern char lbl_8024F804[];
-extern void fn_8016203C(Parser*, int, int, char*);
-extern int fn_80164158(Parser*, void*);
+extern void luaX_checklimit(Parser*, int, int, char*);
+extern int luaI_registerlocalvar(Parser*, void*);
 
-void fn_801641D4(Parser* parser, void* value, int count)
+void new_localvar(Parser* parser, void* value, int count)
 {
     ParserState* state = parser->state;
 
-    fn_8016203C(parser, state->depth + count + 1, 200, lbl_8024F804);
-    state->slots[state->depth + count] = fn_80164158(parser, value);
+    luaX_checklimit(parser, state->depth + count + 1, 200, lbl_8024F804);
+    state->slots[state->depth + count] = luaI_registerlocalvar(parser, value);
 }

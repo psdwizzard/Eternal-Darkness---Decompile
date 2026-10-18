@@ -8,7 +8,7 @@ typedef struct {
 
 #define va_start(ap, last) __builtin_va_info(&(ap))
 
-extern int fn_800F9E2C(char*, const char*, void*);
+extern int vsprintf(char*, const char*, void*);
 
 void fn_801E7FDC(const char* format, ...)
 {
@@ -16,5 +16,5 @@ void fn_801E7FDC(const char* format, ...)
     char buffer[256];
 
     va_start(args, format);
-    fn_800F9E2C(buffer, format, args);
+    vsprintf(buffer, format, args);
 }

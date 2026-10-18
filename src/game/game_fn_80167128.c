@@ -18,7 +18,7 @@ typedef struct HashTable {
     int size;
 } HashTable;
 
-HashNode* fn_80167128(HashTable* table, Value* value)
+HashNode* luaH_mainposition(HashTable* table, Value* value)
 {
     unsigned int key;
 

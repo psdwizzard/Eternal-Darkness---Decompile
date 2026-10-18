@@ -15,7 +15,7 @@ typedef struct Obstacle { unsigned short id; } Obstacle;
 extern Shape* fn_8013F980(Collection*, const Input*, Result*);
 extern const CollisionEntry* fn_80137578(void*, const Shape*, const CollisionWorld*, Result*);
 extern int fn_801439E0(void*, Segment*, void*, unsigned int);
-extern float fn_80211D4C(const Vec3*, const Vec3*);
+extern float PSVECSquareDistance(const Vec3*, const Vec3*);
 extern float lbl_806502A0;
 
 Obstacle* fn_80137178(void* object, const CollisionWorld* world,
@@ -43,18 +43,18 @@ Obstacle* fn_80137178(void* object, const CollisionWorld* world,
         portal = (Obstacle*)fn_801439E0((void*)shape, &portalResult.segment, object, flags);
     }
     if (surface != 0) {
-        best = fn_80211D4C((const Vec3*)shape, &surfaceResult.normal);
+        best = PSVECSquareDistance((const Vec3*)shape, &surfaceResult.normal);
         selected = 1;
     }
     if (entry != 0) {
-        distance = fn_80211D4C((const Vec3*)shape, &entryResult.normal);
+        distance = PSVECSquareDistance((const Vec3*)shape, &entryResult.normal);
         if (distance < best) {
             best = distance;
             selected = 2;
         }
     }
     if (portal != 0) {
-        if (fn_80211D4C((const Vec3*)shape, &portalResult.result.normal) < best) {
+        if (PSVECSquareDistance((const Vec3*)shape, &portalResult.result.normal) < best) {
             selected = 3;
         }
     }

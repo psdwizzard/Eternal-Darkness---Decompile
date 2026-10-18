@@ -14,10 +14,10 @@ blr
 mfspr r3, HID0
 blr
 .endfn PPCMfhid0
-.fn fn_80209AB4, global
+.fn PPCMthid0, global
 mtspr HID0, r3
 blr
-.endfn fn_80209AB4
+.endfn PPCMthid0
 .fn PPCMfl2cr, global
 mfspr r3, L2CR
 blr
@@ -30,10 +30,10 @@ blr
 mtdec r3
 blr
 .endfn PPCMtdec
-.fn fn_80209AD4, global
+.fn PPCSync, global
 sc
 blr
-.endfn fn_80209AD4
+.endfn PPCSync
 .fn PPCHalt, weak
 sync
 1:
@@ -42,42 +42,42 @@ li r3, 0
 nop
 b 1b
 .endfn PPCHalt
-.fn fn_80209AF0, global
+.fn PPCMtmmcr0, global
 mtspr MMCR0, r3
 blr
-.endfn fn_80209AF0
-.fn fn_80209AF8, global
+.endfn PPCMtmmcr0
+.fn PPCMtmmcr1, global
 mtspr MMCR1, r3
 blr
-.endfn fn_80209AF8
-.fn fn_80209B00, global
+.endfn PPCMtmmcr1
+.fn PPCMfpmc1, global
 mfspr r3, PMC1
 blr
-.endfn fn_80209B00
-.fn fn_80209B08, global
+.endfn PPCMfpmc1
+.fn PPCMtpmc1, global
 mtspr PMC1, r3
 blr
-.endfn fn_80209B08
-.fn fn_80209B10, global
+.endfn PPCMtpmc1
+.fn PPCMtpmc2, global
 mtspr PMC2, r3
 blr
-.endfn fn_80209B10
-.fn fn_80209B18, global
+.endfn PPCMtpmc2
+.fn PPCMfpmc3, global
 mfspr r3, PMC3
 blr
-.endfn fn_80209B18
-.fn fn_80209B20, global
+.endfn PPCMfpmc3
+.fn PPCMtpmc3, global
 mtspr PMC3, r3
 blr
-.endfn fn_80209B20
-.fn fn_80209B28, global
+.endfn PPCMtpmc3
+.fn PPCMfpmc4, global
 mfspr r3, PMC4
 blr
-.endfn fn_80209B28
-.fn fn_80209B30, global
+.endfn PPCMfpmc4
+.fn PPCMtpmc4, global
 mtspr PMC4, r3
 blr
-.endfn fn_80209B30
+.endfn PPCMtpmc4
 .fn PPCMfhid2, global
 mfspr r3, HID2
 blr
@@ -86,11 +86,11 @@ blr
 mtspr HID2, r3
 blr
 .endfn PPCMthid2
-.fn fn_80209B48, global
+.fn PPCMfwpar, global
 sync
 mfspr r3, WPAR
 blr
-.endfn fn_80209B48
+.endfn PPCMfwpar
 .fn PPCMtwpar, global
 mtspr WPAR, r3
 blr
@@ -101,7 +101,7 @@ stw r0, 4(r1)
 stwu r1, -8(r1)
 bl PPCMfhid0
 ori r3, r3, 0x200
-bl fn_80209AB4
+bl PPCMthid0
 lwz r0, 0xc(r1)
 addi r1, r1, 8
 mtlr r0

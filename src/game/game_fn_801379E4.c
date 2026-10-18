@@ -23,8 +23,8 @@ extern void* fn_8015C2FC(int);
 extern void* fn_8011F8FC(void*);
 extern float fn_8011F6F8(void*);
 extern void fn_8011F104(Vec3*, float, float, float);
-extern void fn_80211A90(Vec3*, const Vec3*, float);
-extern void fn_80211A48(const Vec3*, const Vec3*, Vec3*);
+extern void PSVECScale(Vec3*, const Vec3*, float);
+extern void PSVECAdd(const Vec3*, const Vec3*, Vec3*);
 extern void fn_8013F3C0(Shape*, const Vec3*, const Vec3*, float);
 extern void* fn_8013FBE4(Owner*, const void*, Result*, void*, unsigned int);
 extern void* lbl_8064C4E4;
@@ -39,8 +39,8 @@ int fn_801379E4(Vec3* object, const Vec3* position, float distance)
 
     owner = fn_8015C2FC(2);
     direction = *(Vec3*)fn_8011F8FC(object);
-    fn_80211A90(&direction, &direction, distance);
-    fn_80211A48(position, &direction, &end);
+    PSVECScale(&direction, &direction, distance);
+    PSVECAdd(position, &direction, &end);
     fn_8013F3C0(&shape, position, &end, fn_8011F6F8(lbl_8064C4E4));
     if (fn_8013FBE4(owner, &shape, &result, object, 0) != 0) {
         fn_8011F104(object, result.point.x, result.point.y, result.normal.z);

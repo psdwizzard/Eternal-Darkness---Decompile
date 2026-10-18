@@ -2,8 +2,8 @@ extern void *fn_80201BC8();
 extern int fn_80128EAC(void *);
 extern int fn_8012A1FC(void *, int);
 extern int fn_8012A1BC(void *, int);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_801291F0(void *, int, unsigned char);
 extern void *fn_801294DC(void *, int, int, int);
 extern void fn_80129FD0(void *, int, int);
@@ -21,7 +21,7 @@ void fn_800E8524(void *object, int enabled)
 
         low = fn_8012A1FC(state, 4);
         high = fn_8012A1BC(state, 4);
-        random = low + fn_800FBFB0() % (high - low);
+        random = low + rand() % (high - low);
 
         if (enabled != 0) {
             int delta = random - low;

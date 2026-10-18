@@ -1,6 +1,6 @@
-extern void fn_801CDA00(void);
+extern void aramExit(void);
 
-void fn_801CD2A8(void)
+void hwExitSampleMem(void)
 {
-    fn_801CDA00();
+    aramExit();
 }

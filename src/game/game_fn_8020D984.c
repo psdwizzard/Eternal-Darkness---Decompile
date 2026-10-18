@@ -28,10 +28,10 @@ struct OSThread {
     OSMutexQueue queueMutex;
 };
 
-extern void fn_802100F0(OSThreadQueue* queue);
+extern void OSWakeupThread(OSThreadQueue* queue);
 
 /* Release every mutex owned by the thread and wake its waiters. */
-void fn_8020D984(OSThread* thread)
+void __OSUnlockAllMutex(OSThread* thread)
 {
     OSMutex* mutex;
     OSMutex* next;
@@ -47,6 +47,6 @@ void fn_8020D984(OSThread* thread)
         thread->queueMutex.head = next;
         mutex->count = 0;
         mutex->thread = 0;
-        fn_802100F0(&mutex->queue);
+        OSWakeupThread(&mutex->queue);
     }
 }

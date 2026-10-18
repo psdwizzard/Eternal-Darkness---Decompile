@@ -9,7 +9,7 @@ typedef struct CARDControl {
     u8 pad8C[0x110 - 0x8C];
 } CARDControl;
 
-u16 *fn_8021EB38(CARDControl *card)
+u16 *__CARDGetFatBlock(CARDControl *card)
 {
     return card->currentFat;
 }

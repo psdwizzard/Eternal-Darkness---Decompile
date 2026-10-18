@@ -5,7 +5,7 @@ extern int fn_80108510(void);
 extern void fn_801084E0(void);
 extern void fn_801084B0(void);
 extern int fn_80108470(void);
-extern void fn_80217324(void);
+extern void VIWaitForRetrace(void);
 
 #define U8(p, o) (*(u8*)((u8*)(p) + (o)))
 #define U32(p, o) (*(u32*)((u8*)(p) + (o)))
@@ -28,7 +28,7 @@ int fn_801096C4(void* state)
 
     while (U8(state, 0x1AE) != 0) {
         U32(state, 0x174) = U32(state, 0x1C);
-        fn_80217324();
+        VIWaitForRetrace();
     }
 
     U8(state, 0xF8) = 0;

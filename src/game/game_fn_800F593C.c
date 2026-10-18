@@ -1,6 +1,6 @@
-extern unsigned char lbl_8032C7A0;
+extern unsigned char bUseSerialIO;
 
-void fn_800F593C(unsigned char value)
+void SetUseSerialIO(unsigned char value)
 {
-    lbl_8032C7A0 = value;
+    bUseSerialIO = value;
 }

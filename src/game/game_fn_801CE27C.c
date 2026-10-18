@@ -1,3 +1,3 @@
-void fn_801CE27C(void)
+void hwExitIrq(void)
 {
 }

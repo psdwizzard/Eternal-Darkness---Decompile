@@ -4,7 +4,7 @@ typedef signed int s32;
 extern u8 lbl_8032CC08[];
 
 /* Expand a DC value and four coefficients into a clamped 4x4 block. */
-void fn_80103510(u8 *dst, s32 stride, u8 dc, u8 a, u8 b, u8 c, u8 d)
+void WeightImBlock(u8 *dst, s32 stride, u8 dc, u8 a, u8 b, u8 c, u8 d)
 {
     s32 bias, twiceDc, ab, cd, sum, difference;
     s32 topLeft, topRight, bottomRight, bottomLeft;

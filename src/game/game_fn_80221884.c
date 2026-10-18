@@ -1,4 +1,4 @@
-/* fn_80221884: CARD create callback once the FAT has been written; fills in
+/* CreateCallbackFat: CARD create callback once the FAT has been written; fills in
  * the new directory entry and starts the directory update. */
 typedef unsigned char u8;
 typedef unsigned short u16;
@@ -52,17 +52,17 @@ typedef struct CARDControl {
     DVDDiskID *diskID;
 } CARDControl;
 
-extern CARDControl lbl_80641C60[];
+extern CARDControl __CARDBlock[];
 extern void *memcpy(void *dst, const void *src, u32 n);
-extern CARDDir *fn_8021EF3C(CARDControl *card);
-extern s32 fn_8021F0DC(s32 channel, CARDCallback callback);
-extern s32 fn_8021D374(CARDControl *card, s32 result);
+extern CARDDir *__CARDGetDirBlock(CARDControl *card);
+extern s32 __CARDUpdateDir(s32 channel, CARDCallback callback);
+extern s32 __CARDPutControlBlock(CARDControl *card, s32 result);
 extern OSTime OSGetTime(void);
 extern s64 fn_800F5ECC(s64 dividend, s64 divisor);
 
-void fn_80221884(s32 channel, s32 result)
+void CreateCallbackFat(s32 channel, s32 result)
 {
-    CARDControl *card = &lbl_80641C60[channel];
+    CARDControl *card = &__CARDBlock[channel];
     CARDDir *ent;
     CARDCallback callback;
     u32 ticksPerSecond;
@@ -73,7 +73,7 @@ void fn_80221884(s32 channel, s32 result)
         goto error;
     }
 
-    ent = &fn_8021EF3C(card)[card->freeNo];
+    ent = &__CARDGetDirBlock(card)[card->freeNo];
     memcpy(ent->gameName, card->diskID->gameName, sizeof(ent->gameName));
     memcpy(ent->company, card->diskID->company, sizeof(ent->company));
     ent->permission = 4;
@@ -89,13 +89,13 @@ void fn_80221884(s32 channel, s32 result)
     card->fileInfo->iBlock = ent->startBlock;
     ticksPerSecond = *(u32 *)0x800000F8 >> 2;
     ent->time = (u32)fn_800F5ECC((s64)OSGetTime(), (s64)ticksPerSecond);
-    result = fn_8021F0DC(channel, callback);
+    result = __CARDUpdateDir(channel, callback);
     if (result >= 0) {
         return;
     }
 
 error:
-    fn_8021D374(card, result);
+    __CARDPutControlBlock(card, result);
     if (callback) {
         callback(channel, result);
     }

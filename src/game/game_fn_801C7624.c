@@ -19,7 +19,7 @@ typedef struct Group {
 
 extern Group lbl_80628CB0[];
 
-void fn_801C7624(Entry* entry)
+void salDeactivateVoice(Entry* entry)
 {
     if (entry->active == 0) {
         return;

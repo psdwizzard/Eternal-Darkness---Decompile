@@ -16,7 +16,7 @@ typedef union GXWGPipe {
 } GXWGPipe;
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
-void fn_80228020(u8 numChans)
+void GXSetNumChans(u8 numChans)
 {
     gx->genMode = (gx->genMode & ~0x70UL) | ((u32)numChans << 4);
     GXWGFifo.u8_data = 0x10;

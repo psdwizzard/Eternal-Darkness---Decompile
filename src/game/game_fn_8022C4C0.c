@@ -27,21 +27,21 @@ typedef struct DVDFileInfo {
     void *callback;
 } DVDFileInfo;
 
-extern int lbl_8064C3C8;
-extern int fn_80213394(char *path, DVDFileInfo *file);
-extern void *fn_8020AD80(int heap, unsigned long size);
-extern s32 fn_802137F4(DVDFileInfo *file, void *addr, s32 length,
+extern int __OSCurrHeap;
+extern int DVDOpen(char *path, DVDFileInfo *file);
+extern void *OSAllocFromHeap(int heap, unsigned long size);
+extern s32 DVDReadPrio(DVDFileInfo *file, void *addr, s32 length,
                       s32 offset, s32 priority);
-extern int fn_8021345C(DVDFileInfo *file);
-extern void fn_8022C53C(TPLPalette *palette);
+extern int DVDClose(DVDFileInfo *file);
+extern void UnpackTexPalette(TPLPalette *palette);
 
-void fn_8022C4C0(TPLPalette **palette, const char *path)
+void LoadTexPalette(TPLPalette **palette, const char *path)
 {
     DVDFileInfo file;
 
-    fn_80213394((char *)path, &file);
-    *palette = fn_8020AD80(lbl_8064C3C8, (file.length + 31) & ~31);
-    fn_802137F4(&file, *palette, (file.length + 31) & ~31, 0, 2);
-    fn_8021345C(&file);
-    fn_8022C53C(*palette);
+    DVDOpen((char *)path, &file);
+    *palette = OSAllocFromHeap(__OSCurrHeap, (file.length + 31) & ~31);
+    DVDReadPrio(&file, *palette, (file.length + 31) & ~31, 0, 2);
+    DVDClose(&file);
+    UnpackTexPalette(*palette);
 }

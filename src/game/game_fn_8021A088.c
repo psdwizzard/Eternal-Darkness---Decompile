@@ -8,7 +8,7 @@ extern BOOL OSRestoreInterrupts(BOOL level);
 
 volatile u16 __DSPRegs[] : 0xCC005000;
 
-void fn_8021A088(void* buffer, u32 length)
+void AIInitDMA(void* buffer, u32 length)
 {
     BOOL level = OSDisableInterrupts();
 

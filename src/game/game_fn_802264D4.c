@@ -14,8 +14,8 @@ extern GXData *gx;
 
 BOOL OSDisableInterrupts(void);
 BOOL OSRestoreInterrupts(BOOL level);
-void fn_80226A28(void); /* __GXSetDirtyState */
-void fn_80209AD4(void); /* PPCSync */
+void __GXSetDirtyState(void); /* __GXSetDirtyState */
+void PPCSync(void); /* PPCSync */
 
 typedef union {
     u8 byte;
@@ -25,7 +25,7 @@ typedef union {
 volatile PPCWGPipe GXWGFifo : 0xCC008000;
 
 /* Queue a draw-sync token, then flush the write-gather pipe. */
-void fn_802264D4(u16 token)
+void GXSetDrawSync(u16 token)
 {
     u32 command;
     BOOL enabled = OSDisableInterrupts();
@@ -39,7 +39,7 @@ void fn_802264D4(u16 token)
     GXWGFifo.word = command;
 
     if (gx->dirtyState != 0) {
-        fn_80226A28();
+        __GXSetDirtyState();
     }
     GXWGFifo.word = 0;
     GXWGFifo.word = 0;
@@ -49,7 +49,7 @@ void fn_802264D4(u16 token)
     GXWGFifo.word = 0;
     GXWGFifo.word = 0;
     GXWGFifo.word = 0;
-    fn_80209AD4();
+    PPCSync();
     OSRestoreInterrupts(enabled);
     gx->bpSentNot = 0;
 }

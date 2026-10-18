@@ -1,4 +1,4 @@
-/* fn_80233AB0: libvorbis-style mdct_butterflies. */
+/* mdct_butterflies: libvorbis-style mdct_butterflies. */
 
 typedef struct MDCTLookup {
     int n;
@@ -6,11 +6,11 @@ typedef struct MDCTLookup {
     float *trig;
 } MDCTLookup;
 
-extern void fn_80233D1C(float *T, float *x, int points);
-extern void fn_80233B78(float *T, float *x, int points, int trigint);
-extern void fn_80233EB0(float *x);
+extern void mdct_butterfly_first(float *T, float *x, int points);
+extern void mdct_butterfly_generic(float *T, float *x, int points, int trigint);
+extern void mdct_butterfly_32(float *x);
 
-void fn_80233AB0(MDCTLookup *init, register float *data, register int count) {
+void mdct_butterflies(MDCTLookup *init, register float *data, register int count) {
     register int offset, trigint, bound;
     register float *p;
     register int stride, k;
@@ -29,7 +29,7 @@ void fn_80233AB0(MDCTLookup *init, register float *data, register int count) {
     stages = init->log2n - 5;
 
     if (--stages > 0) {
-        fn_80233D1C(T, data, count);
+        mdct_butterfly_first(T, data, count);
     }
 
     for (i = 1; --stages > 0; i++) {
@@ -46,7 +46,7 @@ void fn_80233AB0(MDCTLookup *init, register float *data, register int count) {
                 mr callStride, stride
                 or callTrigint, trigint, trigint
             }
-            fn_80233B78(callT, (float *)((char *)x + byteOffset), callStride, callTrigint);
+            mdct_butterfly_generic(callT, (float *)((char *)x + byteOffset), callStride, callTrigint);
         }
     }
 
@@ -56,7 +56,7 @@ void fn_80233AB0(MDCTLookup *init, register float *data, register int count) {
         li k, 0
     }
     for (; k < points; k += 32) {
-        fn_80233EB0(p);
+        mdct_butterfly_32(p);
         p += 32;
     }
 }

@@ -28,8 +28,8 @@ typedef struct Entry {
 extern void* memset(void*, int, unsigned int);
 extern void fn_801AE368(Entry*);
 extern void fn_801AE6B0(void);
-extern void fn_801B9E7C(void*, u32, u32, int, int);
-extern int fn_80213704(void*, void*, u32, u32, void (*)(void), int);
+extern void sndStreamARAMUpdate(void*, u32, u32, int, int);
+extern int DVDReadAsyncPrio(void*, void*, u32, u32, void (*)(void), int);
 
 int fn_801AE3C8(Entry* entry)
 {
@@ -53,7 +53,7 @@ int fn_801AE3C8(Entry* entry)
                    half_size - amount);
         } else {
             memset(destination, 0, half_size);
-            fn_801B9E7C(entry->handle,
+            sndStreamARAMUpdate(entry->handle,
                         entry->half != 0 ? entry->buffer_size >> 1 : 0,
                         entry->buffer_size >> 1, 0, 0);
             amount = 0;
@@ -66,7 +66,7 @@ int fn_801AE3C8(Entry* entry)
             return 0;
         }
 
-        while (fn_80213704(entry->work, destination, amount,
+        while (DVDReadAsyncPrio(entry->work, destination, amount,
                           entry->source->value08 + position, fn_801AE6B0, 2) == 0) {
         }
         entry->pending = 1;

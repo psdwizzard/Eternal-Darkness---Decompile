@@ -3,32 +3,32 @@ typedef struct ResourceCache ResourceCache;
 typedef struct ResourceEntry ResourceEntry;
 typedef void (*ResourceDestructor)(void *);
 
-extern unsigned char lbl_8064DBD0;
-extern ResourceCache lbl_80642BC0;
-extern void fn_8022C668(void *resource);
-extern void fn_8022C4C0(TPLPalette **palette, const char *path);
-extern ResourceEntry *fn_8022C690(ResourceCache *cache, const char *path,
+extern unsigned char DOCacheInitialized;
+extern ResourceCache DODisplayCache;
+extern void TexFreeFunc(void *resource);
+extern void LoadTexPalette(TPLPalette **palette, const char *path);
+extern ResourceEntry *DSAddCacheNode(ResourceCache *cache, const char *path,
                                void *resource, ResourceDestructor destroy);
-extern void *fn_8022C7C8(ResourceCache *cache, const char *path);
+extern void *DSGetCacheObj(ResourceCache *cache, const char *path);
 
 static inline void loadPalette(TPLPalette **palette, const char *path,
                                ResourceDestructor destroy)
 {
-    if (lbl_8064DBD0) {
-        *palette = fn_8022C7C8(&lbl_80642BC0, path);
+    if (DOCacheInitialized) {
+        *palette = DSGetCacheObj(&DODisplayCache, path);
     }
     if (*palette == 0) {
-        fn_8022C4C0(palette, path);
-        if (lbl_8064DBD0) {
-            ResourceCache *cache = &lbl_80642BC0;
-            fn_8022C690(cache, path, *palette, destroy);
-            fn_8022C7C8(cache, path);
+        LoadTexPalette(palette, path);
+        if (DOCacheInitialized) {
+            ResourceCache *cache = &DODisplayCache;
+            DSAddCacheNode(cache, path, *palette, destroy);
+            DSGetCacheObj(cache, path);
         }
     }
 }
 
-void fn_8022C40C(TPLPalette **palette, const char *path)
+void TEXGetPalette(TPLPalette **palette, const char *path)
 {
-    ResourceDestructor destroy = fn_8022C668;
+    ResourceDestructor destroy = TexFreeFunc;
     loadPalette(palette, path, destroy);
 }

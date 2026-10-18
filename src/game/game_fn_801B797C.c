@@ -13,15 +13,15 @@ typedef struct VoiceList {
     VoiceNode* head;
 } VoiceList;
 
-extern u8* lbl_8064D3D0;
+extern u8* synthVoice;
 
-void fn_801B797C(VoiceList* list, void (*callback)(u32))
+void HandleJobQueue(VoiceList* list, void (*callback)(u32))
 {
     VoiceNode* node = list->head;
     while (node != 0) {
         VoiceNode* next = node->next;
         node->state = 0xFF;
-        if (lbl_8064D3D0[node->index * 0x404 + 0x11C] == 0) {
+        if (synthVoice[node->index * 0x404 + 0x11C] == 0) {
             callback(node->index);
         }
         node = next;

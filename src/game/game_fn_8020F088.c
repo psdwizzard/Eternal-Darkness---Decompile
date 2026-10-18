@@ -1,4 +1,4 @@
-/* fn_8020F088 (0x8020F088, 112 bytes): OSCheckStopwatch. */
+/* OSCheckStopwatch (0x8020F088, 112 bytes): OSCheckStopwatch. */
 
 typedef long long s64;
 typedef unsigned long long OSTime;
@@ -15,7 +15,7 @@ typedef struct OSStopwatch {
     int running;
 } OSStopwatch;
 
-s64 fn_8020F088(OSStopwatch* sw) {
+s64 OSCheckStopwatch(OSStopwatch* sw) {
     s64 total = sw->total;
 
     if (sw->running) {

@@ -2,9 +2,9 @@
 
 extern const float lbl_80651844;
 
-void fn_80234248(float *data);
+void mdct_butterfly_8(float *data);
 
-void fn_80234110(register float *p) {
+void mdct_butterfly_16(register float *p) {
     register float *saved;
     float r = lbl_80651844;
 
@@ -56,6 +56,6 @@ void fn_80234110(register float *p) {
         p[7] = im;
     }
 
-    fn_80234248(p);
-    fn_80234248(saved + 8);
+    mdct_butterfly_8(p);
+    mdct_butterfly_8(saved + 8);
 }

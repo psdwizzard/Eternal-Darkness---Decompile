@@ -5,10 +5,10 @@ typedef struct Envelope {
     u8 state;
 } Envelope;
 
-extern int fn_801C2B00(Envelope* envelope);
+extern int salChangeADSRState(Envelope* envelope);
 
-int fn_801C2D74(Envelope* envelope)
+int adsrSetup(Envelope* envelope)
 {
     envelope->state = 0;
-    return fn_801C2B00(envelope);
+    return salChangeADSRState(envelope);
 }

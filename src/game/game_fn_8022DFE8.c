@@ -20,7 +20,7 @@ volatile u32 __EXIRegs[15] : 0xCC006800;
 #define REG(chan, index) (__EXIRegs[(chan) * 5 + (index)])
 
 /* Deselect the device on EXI channel 2. */
-s32 fn_8022DFE8(void)
+s32 AmcEXIDeselect(void)
 {
     volatile u32 *state;
     int enabled;

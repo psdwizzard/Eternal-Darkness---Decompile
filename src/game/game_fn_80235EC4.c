@@ -1,7 +1,7 @@
 extern void *memset(void *, int, unsigned long);
 extern int lbl_80642C10[];
 
-int *fn_80235EC4(int *lengths, int count) {
+int *_make_words(int *lengths, int count) {
     int next_code[33];
     int *table = lbl_80642C10;
     int i;

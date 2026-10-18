@@ -47,7 +47,7 @@ extern void *fn_80201BC8();
 extern Vec800A1278* fn_8011F770(void*);
 extern void fn_8011F114();
 extern u8 fn_80128EE4(void*);
-extern void fn_80211A48(const Vec800A1278*, const Vec800A1278*, Vec800A1278*);
+extern void PSVECAdd(const Vec800A1278*, const Vec800A1278*, Vec800A1278*);
 extern Vec800A1278* fn_8011F130(void*);
 extern void fn_8012AC74(void*, Vec800A1278*, int);
 extern void *fn_80201B8C();
@@ -90,8 +90,8 @@ int fn_800A1278(void* arg)
 
     if (position->f.z < lbl_8064EE68) {
         offset = lbl_802396E0;
-        fn_80211A48(position, &offset, position);
-        fn_80211A48(fn_8011F130(transform), &offset, &offset);
+        PSVECAdd(position, &offset, position);
+        PSVECAdd(fn_8011F130(transform), &offset, &offset);
         fn_8012AC74(transform, fn_8011F130(transform), 3);
     } else if (position->f.z >= lbl_8064EE68) {
         info = ((Info800A1278*)fn_80201B8C(object));

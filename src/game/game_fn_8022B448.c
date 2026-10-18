@@ -23,16 +23,16 @@ typedef union {
 extern GXData *gx;
 volatile PPCWGPipe GXWGFifo : 0xCC008000;
 
-void fn_80226A28(void); /* __GXSetDirtyState */
-void fn_80226B90(void); /* __GXSendFlushPrim */
+void __GXSetDirtyState(void); /* __GXSetDirtyState */
+void __GXSendFlushPrim(void); /* __GXSendFlushPrim */
 
-void fn_8022B448(void *list, u32 size)
+void GXCallDisplayList(void *list, u32 size)
 {
     if (gx->dirtyState != 0) {
-        fn_80226A28();
+        __GXSetDirtyState();
     }
     if (gx->sent.notSent == 0) {
-        fn_80226B90();
+        __GXSendFlushPrim();
     }
     GXWGFifo.u8 = 0x40;
     GXWGFifo.u32 = (u32)list;

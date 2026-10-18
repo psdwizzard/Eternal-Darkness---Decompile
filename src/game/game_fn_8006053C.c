@@ -25,7 +25,7 @@ typedef struct RangeData {
     u8 high;
 } RangeData;
 
-extern int fn_800FBFB0(void);
+extern int rand(void);
 extern void *fn_80201B8C();
 extern void *fn_80201BC8();
 extern void fn_800360B0(void *, u16 *);
@@ -35,7 +35,7 @@ extern s32 fn_80066D04(void *, s32);
 
 s32 fn_8006053C(void *owner, s32 enabled)
 {
-    s32 value = fn_800FBFB0() % 100;
+    s32 value = rand() % 100;
     OwnerData *owner_data = fn_80201B8C(owner);
     void *resource = fn_80201BC8(owner);
     u16 flags;

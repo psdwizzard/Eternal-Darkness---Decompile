@@ -6,7 +6,7 @@ typedef struct Result { Vec3 normal; Vec3 point; } Result;
 extern const float lbl_806503D8;
 extern int lbl_8064D18C;
 extern void* fn_8013FBE4(void*, const void*, Result*, void*, unsigned int);
-extern float fn_80211D4C(const void*, const Vec3*);
+extern float PSVECSquareDistance(const void*, const Vec3*);
 extern void *fn_80201B9C();
 extern void *fn_80201BC8();
 extern int fn_80201EB8();
@@ -33,7 +33,7 @@ int fn_8013FDB4(void* owner, const void* value, Result* out, void* skip,
     if (hit != 0) {
         *kind = *(unsigned short*)hit;
         found = 1;
-        best = fn_80211D4C(value, &out->point);
+        best = PSVECSquareDistance(value, &out->point);
     }
     if (flags & 2) {
         void* node = fn_80201B9C();
@@ -47,7 +47,7 @@ int fn_8013FDB4(void* owner, const void* value, Result* out, void* skip,
                 (fn_80201CDC(node) & 4) != 0 &&
                 fn_80047C70(object) == 0 &&
                 fn_80136FF8(value, object, &candidate)) {
-                float distance = fn_80211D4C(value, candidate_point);
+                float distance = PSVECSquareDistance(value, candidate_point);
                 found = 1;
                 if (distance < best) {
                     best = distance;

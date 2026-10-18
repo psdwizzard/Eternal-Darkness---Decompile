@@ -15,7 +15,7 @@ extern void fn_801ECF50(unsigned int);
 extern void fn_8018D0D0(u8*, unsigned int*, int);
 extern int fn_801EF384(void);
 extern void fn_801ED494(int, int, int, int, int);
-extern void fn_80229C0C(int, int, int, int, int, int);
+extern void GXSetTevColorOp(int, int, int, int, int, int);
 extern void fn_801ED510(int, int, int);
 extern void fn_8018865C(void*, void*, void*);
 
@@ -73,14 +73,14 @@ void fn_801A36C0(u8* object)
     fn_8018D0D0(self, (unsigned int*)(self + 0x5C), *(s16*)(self + 0xE));
     if (fn_801EF384() != 0) {
         fn_801ED494(3, 0, 0, 0, 3);
-        fn_80229C0C(0, 0, 1, 2, 1, 0);
+        GXSetTevColorOp(0, 0, 1, 2, 1, 0);
         fn_801ED510(0, 3, 3);
     }
     fn_8018865C(vertex_data, index_data, color_data);
     if (fn_801EF384() != 0) {
-        fn_80229C0C(0, 0, 0, 0, 1, 0);
+        GXSetTevColorOp(0, 0, 0, 0, 1, 0);
         fn_801ED510(0, 0, 0);
-        fn_80229C0C(0, 0, 1, 2, 1, 0);
+        GXSetTevColorOp(0, 0, 1, 2, 1, 0);
     }
     fn_801ED57C(saved);
 }

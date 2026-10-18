@@ -13,35 +13,35 @@ typedef struct Context {
     Value* end;
 } Context;
 
-extern void* fn_80167798(Context*, int);
-extern Value* fn_80167B5C(Context*, void*, int);
-extern void* fn_801670A8(Context*, void*);
-extern void fn_80167BA8(Context*, void*, double, void*);
-extern void fn_8016057C(Context*, int);
+extern void* luaH_new(Context*, int);
+extern Value* luaH_setint(Context*, void*, int);
+extern void* luaS_new(Context*, void*);
+extern void luaH_setstrnum(Context*, void*, double, void*);
+extern void luaD_checkstack(Context*, int);
 extern int lbl_8064BBF8;
 
-void fn_80169650(Context* context, Value* source)
+void luaV_pack(Context* context, Value* source)
 {
     Value* current;
     int count;
     void* array;
 
-    array = fn_80167798(context, 0);
+    array = luaH_new(context, 0);
     current = source;
     count = 0;
     while (current < context->stack) {
-        Value* destination = fn_80167B5C(context, array, count + 1);
+        Value* destination = luaH_setint(context, array, count + 1);
         *destination = *current;
         ++current;
         ++count;
     }
-    fn_80167BA8(context, array, (double)count,
-                fn_801670A8(context, &lbl_8064BBF8));
+    luaH_setstrnum(context, array, (double)count,
+                luaS_new(context, &lbl_8064BBF8));
     context->stack = source;
     context->stack->type = 4;
     context->stack->value.pointer = array;
     if (context->stack == context->end) {
-        fn_8016057C(context, 1);
+        luaD_checkstack(context, 1);
     }
     ++context->stack;
 }

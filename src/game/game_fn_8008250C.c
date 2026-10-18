@@ -29,7 +29,7 @@ typedef union Color {
 
 extern u8 lbl_8064B588[4];
 extern u8 lbl_8064B58C[4];
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern Entry *fn_801FD6F4(u32);
 extern void fn_801FD880(u32, u32 *);
 extern u32 fn_801FD8BC(u32);
@@ -56,7 +56,7 @@ s32 fn_8008250C(u32 id)
             if (color.channel[0] == lbl_8064B58C[0] &&
                 color.channel[1] == lbl_8064B58C[1] &&
                 color.channel[2] == lbl_8064B58C[2]) {
-                random = fn_800FBFB0() & 63;
+                random = rand() & 63;
                 color.channel[0] = lbl_8064B58C[0] +
                     ((random * (lbl_8064B588[0] - lbl_8064B58C[0])) >> 6);
                 color.channel[1] = lbl_8064B58C[1] +
@@ -67,9 +67,9 @@ s32 fn_8008250C(u32 id)
                 color.channel[1] = color.channel[1] < 255U ? color.channel[1] : 255;
                 color.channel[2] = color.channel[2] < 255U ? color.channel[2] : 255;
                 lifetime = ((random * 100) >> 6) + 200;
-                velocity[0] = (s8)((fn_800FBFB0() & 31) - 16);
-                velocity[1] = (s8)((fn_800FBFB0() & 31) - 16);
-                velocity[2] = (s8)((fn_800FBFB0() & 31) - 16);
+                velocity[0] = (s8)((rand() & 31) - 16);
+                velocity[1] = (s8)((rand() & 31) - 16);
+                velocity[2] = (s8)((rand() & 31) - 16);
             } else {
                 color.channel[0] = color.channel[0] - 2 > lbl_8064B58C[0] ?
                     color.channel[0] - 2 : lbl_8064B58C[0];

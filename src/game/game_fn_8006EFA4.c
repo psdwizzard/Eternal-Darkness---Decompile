@@ -63,7 +63,7 @@ extern int fn_80071620(int mode, int id, int event, int *outX, int *outType,
 extern void fn_800720C8(void *object);
 extern int fn_80072618(Vec3 *base, Vec3 *out, int range, int mode);
 extern void fn_800C1B50(int id, int a, int b, float c, float d);
-extern u8 fn_800FBFB0(void);
+extern u8 rand(void);
 extern int fn_8011EB1C(void);
 extern void fn_8011F114(Vec3 *pos, void *object);
 extern void fn_8011FA8C(void *object, int a, int b);
@@ -245,7 +245,7 @@ void fn_8006EFA4(Owner *owner, int id, int arg2, int arg3)
             mode = fn_80071620(i, lbl_8064D18C, event, &x, &type, &y, &state->flags[0]);
             if (ok != 0 && fn_80072618(&pos, &spawnPos, range, 1) != 0) {
                 if (random != 0) {
-                    scale = lbl_8064E824 * (fn_800FBFB0() + 1);
+                    scale = lbl_8064E824 * (rand() + 1);
                 }
                 config->slots[i] = fn_8007091C(x, y, type, id, &spawnPos, scale);
                 if (config->slots[i] != 0) {

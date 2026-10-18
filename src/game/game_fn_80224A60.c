@@ -1,4 +1,4 @@
-/* fn_80224A60: GXSetVtxDesc (Dolphin SDK GXAttr.c).
+/* GXSetVtxDesc: GXSetVtxDesc (Dolphin SDK GXAttr.c).
  * Updates the vertex component descriptor (vcdLo/vcdHi) for one attribute,
  * folds the normal/NBT state into the NRM field and marks the VCD dirty. */
 
@@ -58,7 +58,7 @@ typedef struct GXData {
 
 extern GXData *gx;
 
-void fn_80224A60(GXAttr attr, GXAttrType type) {
+void GXSetVtxDesc(GXAttr attr, GXAttrType type) {
     switch (attr) {
     case GX_VA_PNMTXIDX:   SET_REG_FIELD(gx->vcdLo, 1, 0, type); break;
     case GX_VA_TEX0MTXIDX: SET_REG_FIELD(gx->vcdLo, 1, 1, type); break;

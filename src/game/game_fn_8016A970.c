@@ -13,21 +13,21 @@ typedef struct Value {
 } Value;
 
 extern char lbl_8024FE6C[];
-extern void fn_80163BB4(void*, const char*, ...);
-extern void* fn_80167014(Context*, void*, int);
-extern void fn_8016057C(Context*, int);
+extern void luaO_verror(void*, const char*, ...);
+extern void* luaS_createudata(Context*, void*, int);
+extern void luaD_checkstack(Context*, int);
 
-void fn_8016A970(Context* context, void* value, int index)
+void lua_pushusertag(Context* context, void* value, int index)
 {
     if ((unsigned)(index + 1) > 1) {
         if (index < 6 || index > context->limit) {
-            fn_80163BB4(context, lbl_8024FE6C, index);
+            luaO_verror(context, lbl_8024FE6C, index);
         }
     }
-    ((Value*)context->current)->value = fn_80167014(context, value, index);
+    ((Value*)context->current)->value = luaS_createudata(context, value, index);
     ((Value*)context->current)->type = 0;
     if (context->current == context->end) {
-        fn_8016057C(context, 1);
+        luaD_checkstack(context, 1);
     }
     context->current = (char*)context->current + 16;
 }

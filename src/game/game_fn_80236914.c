@@ -23,9 +23,9 @@ typedef struct StreamPair {
 extern StreamPair lbl_8064A548;
 extern s32 lbl_8064DC38;
 
-extern void fn_801BB3A0(u32 id);
+extern void sndStreamDeactivate(u32 id);
 extern u8 fn_801A9B94(u8 value, int mode);
-extern void fn_801BA94C(u32 id, u8 volume, u8 left, u8 right, u8 aux_left, u8 aux_right);
+extern void sndStreamMixParameterEx(u32 id, u8 volume, u8 left, u8 right, u8 aux_left, u8 aux_right);
 
 static inline StreamPair *streamPair(void)
 {
@@ -46,9 +46,9 @@ void fn_80236914(void)
 
     if (lbl_8064DC38 != 0) {
         streams = streamPair();
-        fn_801BB3A0(streams->first.handle);
+        sndStreamDeactivate(streams->first.handle);
         streams = streamPair();
-        fn_801BB3A0(streams->second.handle);
+        sndStreamDeactivate(streams->second.handle);
         streams = streamPair();
         streams->first.volume = 0;
         streams->second.volume = 0;
@@ -56,7 +56,7 @@ void fn_80236914(void)
         if (streams->first.curVolume != streams->first.newVolume) {
             volume = fn_801A9B94(streams->first.newVolume, 2);
             streams = streamPair();
-            fn_801BA94C(streams->first.handle, volume, streams->first.pan, 0, 0, 0);
+            sndStreamMixParameterEx(streams->first.handle, volume, streams->first.pan, 0, 0, 0);
         }
         streams = streamPair();
         streams->first.curVolume = streams->first.newVolume;
@@ -64,7 +64,7 @@ void fn_80236914(void)
         if (streams->second.curVolume != streams->second.newVolume) {
             volume = fn_801A9B94(streams->second.newVolume, 2);
             streams = streamPair();
-            fn_801BA94C(streams->second.handle, volume, streams->second.pan, 0, 0, 0);
+            sndStreamMixParameterEx(streams->second.handle, volume, streams->second.pan, 0, 0, 0);
         }
         streams = streamPair();
         streams->second.curVolume = streams->second.newVolume;

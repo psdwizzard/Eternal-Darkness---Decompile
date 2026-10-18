@@ -3,7 +3,7 @@ typedef unsigned int u32;
 
 extern u32 lbl_80619860[][16];
 
-u32 fn_801B5B68(u8* source)
+u32 synthGetTicksPerSecond(u8* source)
 {
     u32 owner;
 

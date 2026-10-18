@@ -7,10 +7,10 @@ typedef struct Name {
 
 extern const char lbl_8023BEF8[];
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void* fn_8016A784(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void* lua_touserdata(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void fn_80179DB0(Name*, void*);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
@@ -33,17 +33,17 @@ s32 fn_80008D24(void* script)
     s32 stage;
     void* name_arg;
 
-    if (fn_8016A598(script) != 5) {
-        fn_80163BB4(script, lbl_8023BEF8, 5, fn_8016A598(script));
+    if (lua_gettop(script) != 5) {
+        luaO_verror(script, lbl_8023BEF8, 5, lua_gettop(script));
         return 0;
     }
 
-    actor = (s32)fn_8016A694(script, 1);
-    name_arg = fn_8016A784(script, 2);
+    actor = (s32)lua_tonumber(script, 1);
+    name_arg = lua_touserdata(script, 2);
     fn_80179DB0(&name, name_arg);
-    value = (s32)fn_8016A694(script, 3);
-    scale = (float)fn_8016A694(script, 4);
-    flags = (s32)fn_8016A694(script, 5);
+    value = (s32)lua_tonumber(script, 3);
+    scale = (float)lua_tonumber(script, 4);
+    flags = (s32)lua_tonumber(script, 5);
 
     fn_80201814(actor);
     object = fn_80201BC8();

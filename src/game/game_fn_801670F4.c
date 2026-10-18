@@ -8,11 +8,11 @@ typedef struct StringNode {
     int type;
 } StringNode;
 
-extern StringNode* fn_801670A8(LuaState*, const char*);
+extern StringNode* luaS_new(LuaState*, const char*);
 
-StringNode* fn_801670F4(LuaState* state, const char* string)
+StringNode* luaS_newfixed(LuaState* state, const char* string)
 {
-    StringNode* node = fn_801670A8(state, string);
+    StringNode* node = luaS_new(state, string);
 
     if (node->type == 0) {
         node->type = 2;

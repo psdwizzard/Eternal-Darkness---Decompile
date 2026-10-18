@@ -36,14 +36,14 @@ extern u32 fn_8011FAEC(void *);
 extern short fn_80157858(void *);
 extern void fn_801F69F0(const Int3 *, Vec3 *, int);
 extern float fn_80179A74(Vec3 *);
-extern float fn_800DAFA8();
-extern void fn_80211A48(const Vec3 *, const Vec3 *, Vec3 *);
-extern void fn_80211A6C(const Vec3 *, const Vec3 *, Vec3 *);
-extern void fn_80211A90(const Vec3 *, Vec3 *, float);
-extern void fn_80211AAC(const Vec3 *, Vec3 *);
-extern void fn_80211B64(const Vec3 *, const Vec3 *, Vec3 *);
-extern float fn_80211B08(const Vec3 *);
-extern float fn_80211B44(const Vec3 *, const Vec3 *);
+extern float tanf();
+extern void PSVECAdd(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECSubtract(const Vec3 *, const Vec3 *, Vec3 *);
+extern void PSVECScale(const Vec3 *, Vec3 *, float);
+extern void PSVECNormalize(const Vec3 *, Vec3 *);
+extern void PSVECCrossProduct(const Vec3 *, const Vec3 *, Vec3 *);
+extern float PSVECMag(const Vec3 *);
+extern float PSVECDotProduct(const Vec3 *, const Vec3 *);
 extern int fn_8012DCBC(void *, int, int, int *, int, int);
 extern void *fn_8011FE34(void *);
 extern void fn_8012B7A0();
@@ -53,10 +53,10 @@ extern int fn_8011EB04(void *);
 extern int fn_8011F598(void *, int, int, int, SearchResult *, u8);
 extern float fn_800490E8(float, float);
 extern void fn_8017A244(const Vec3 *, Quaternion *, float);
-extern void fn_80211DC0(const Quaternion *, const Quaternion *, Quaternion *);
-extern void fn_802114E0(Matrix34, const Quaternion *);
-extern void fn_80211710(const Matrix34, const Vec3 *, Vec3 *);
-extern void fn_80211E70(Quaternion *, const Vec3 *, float);
+extern void PSQUATMultiply(const Quaternion *, const Quaternion *, Quaternion *);
+extern void PSMTXQuat(Matrix34, const Quaternion *);
+extern void PSMTXMultVec(const Matrix34, const Vec3 *, Vec3 *);
+extern void C_QUATRotAxisRad(Quaternion *, const Vec3 *, float);
 extern void fn_8012CF08(void *, int, Quaternion, Quaternion, int, int, float);
 extern u32 fn_80157C98(void *, u32, u32);
 extern u32 fn_80178E94(const float *, const float *);
@@ -148,24 +148,24 @@ int fn_800DA8D4(void *context)
         projected.x = worldPoint.x;
         projected.y = worldPoint.y;
         projected.z = worldPoint.z;
-        fn_80211A6C(&projected, &camera, &ray);
+        PSVECSubtract(&projected, &camera, &ray);
         distance = fn_80179A74(&ray);
         scale = (lbl_8064F468 * distance) /
-            fn_800DAFA8(lbl_8064F46C * (fov * lbl_8064F470));
-        fn_80211AAC(&ray, &ray);
-        fn_80211A90(&ray, &ray, scale);
-        fn_80211A48(&camera, &ray, &projected);
-        fn_80211A6C(&projected, position, &step);
-        fn_80211A90(&step, &step, lbl_8064F474);
+            tanf(lbl_8064F46C * (fov * lbl_8064F470));
+        PSVECNormalize(&ray, &ray);
+        PSVECScale(&ray, &ray, scale);
+        PSVECAdd(&camera, &ray, &projected);
+        PSVECSubtract(&projected, position, &step);
+        PSVECScale(&step, &step, lbl_8064F474);
         destination = projected;
         if ((flags & 0x100) == 0 && fn_8012DCBC(object, 15, 2, &animation, 0, 0) == 0) {
             int kind = 1;
 
             /* Align the object's reference directions with the camera. */
-            fn_80211A6C(&lookAt, &camera, &viewDirection);
-            fn_80211B64(&viewDirection, &lbl_80248C18, &side);
-            fn_80211B64(&side, &viewDirection, &lbl_80248C18);
-            fn_80211AAC(&lbl_80248C18, &lbl_80248C18);
+            PSVECSubtract(&lookAt, &camera, &viewDirection);
+            PSVECCrossProduct(&viewDirection, &lbl_80248C18, &side);
+            PSVECCrossProduct(&side, &viewDirection, &lbl_80248C18);
+            PSVECNormalize(&lbl_80248C18, &lbl_80248C18);
             lbl_8064CAC0 = lbl_8064F464;
             original = *(Quaternion *)fn_8011FE34(object);
             fn_8012B7A0(object, lbl_8064F464);
@@ -179,8 +179,8 @@ int fn_800DA8D4(void *context)
                 if (fn_8011F598(object, 19, 15, -1, &secondary, 1) != -1) {
                     float length;
                     float magnitude;
-                    fn_80211B64(&primary.direction, &lbl_80248C18, &axis);
-                    length = fn_80211B08(&axis);
+                    PSVECCrossProduct(&primary.direction, &lbl_80248C18, &axis);
+                    length = PSVECMag(&axis);
                     magnitude = length;
                     if (length < lbl_8064F464) {
                         magnitude = -length;
@@ -188,24 +188,24 @@ int fn_800DA8D4(void *context)
                     if (magnitude > lbl_8064F46C) {
                         float angle;
                         float dot;
-                        fn_80211AAC(&axis, &axis);
-                        dot = fn_80211B44(&primary.direction, &lbl_80248C18);
+                        PSVECNormalize(&axis, &axis);
+                        dot = PSVECDotProduct(&primary.direction, &lbl_80248C18);
                         angle = fn_800490E8(length, dot);
                         fn_8017A244(&axis, &alignment, angle);
-                        fn_80211DC0(&alignment, &original, &result);
-                        fn_802114E0(matrix, &alignment);
-                        fn_80211AAC(&secondary.direction, &secondary.direction);
-                        fn_80211710(matrix, &secondary.direction, &transformed);
-                        fn_80211AAC(&transformed, &transformed);
-                        fn_80211A90(&viewDirection, &viewDirection, lbl_8064F478);
-                        fn_80211AAC(&viewDirection, &viewDirection);
-                        fn_80211B64(&transformed, &viewDirection, &turnAxis);
-                        length = fn_80211B08(&turnAxis);
-                        fn_80211AAC(&turnAxis, &turnAxis);
-                        angle = fn_800490E8(length, fn_80211B44(&transformed, &viewDirection));
-                        fn_80211E70(&turn, &turnAxis, angle);
-                        fn_80211DC0(&turn, &alignment, &combined);
-                        fn_80211DC0(&combined, &original, &finalRotation);
+                        PSQUATMultiply(&alignment, &original, &result);
+                        PSMTXQuat(matrix, &alignment);
+                        PSVECNormalize(&secondary.direction, &secondary.direction);
+                        PSMTXMultVec(matrix, &secondary.direction, &transformed);
+                        PSVECNormalize(&transformed, &transformed);
+                        PSVECScale(&viewDirection, &viewDirection, lbl_8064F478);
+                        PSVECNormalize(&viewDirection, &viewDirection);
+                        PSVECCrossProduct(&transformed, &viewDirection, &turnAxis);
+                        length = PSVECMag(&turnAxis);
+                        PSVECNormalize(&turnAxis, &turnAxis);
+                        angle = fn_800490E8(length, PSVECDotProduct(&transformed, &viewDirection));
+                        C_QUATRotAxisRad(&turn, &turnAxis, angle);
+                        PSQUATMultiply(&turn, &alignment, &combined);
+                        PSQUATMultiply(&combined, &original, &finalRotation);
                         fn_8012CF08(object, 15, original, finalRotation, 1, 0, lbl_8064F47C);
                     }
                 }
@@ -213,7 +213,7 @@ int fn_800DA8D4(void *context)
             fn_80157C98(state, 0, 0x100);
         }
         if (fn_80178E94(&position->x, &destination.x) > 2) {
-            fn_80211A48(position, &step, position);
+            PSVECAdd(position, &step, position);
             if (fn_801579EC(state) != 0 && !(flags & 0x200) && (flags & 0x100) != 0 &&
                 fn_8012DCBC(object, 15, 3, &animation, 0, 0) == 0) {
                 fn_80157C98(state, 0, 0x200);

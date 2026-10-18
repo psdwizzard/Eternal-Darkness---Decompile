@@ -47,8 +47,8 @@ extern s32 fn_80072354(void *);
 extern s32 fn_80060840(void *, s32 *);
 extern s32 fn_8006053C(void *, s32);
 extern s32 fn_800601FC();
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void *fn_801294DC(void *, int, int, int);
 #define fn_801294DC(a, b, c, d) fn_801294DC((void *)(a), (b), (c), (d))
 extern void *fn_801A717C(void);
@@ -118,8 +118,8 @@ s32 fn_80060904(void *owner, void *resource, void *target)
             result = -1;
             created_status = fn_800601FC(owner, fn_80201814(target_value), target);
             if (created_status == 0) {
-                result = (fn_800FBFB0() & 1) ? ResultFour :
-                         ((fn_800FBFB0() & 1) ? ResultFive : ResultSix);
+                result = (rand() & 1) ? ResultFour :
+                         ((rand() & 1) ? ResultFive : ResultSix);
             }
         }
 

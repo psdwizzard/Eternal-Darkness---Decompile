@@ -9,10 +9,10 @@ typedef struct TRKBuffer {
     u8 data[1];
 } TRKBuffer;
 
-extern void fn_80003130(void *, const void *, u32);
+extern void TRK_memcpy(void *, const void *, u32);
 
 #pragma opt_propagation off
-int fn_800EF56C(TRKBuffer *buffer, u8 *out, int count)
+int TRKReadBuffer_ui8(TRKBuffer *buffer, u8 *out, int count)
 {
     int read_err;
     u32 amount;
@@ -29,7 +29,7 @@ int fn_800EF56C(TRKBuffer *buffer, u8 *out, int count)
             read_err = 0x302;
             amount = remaining;
         }
-        fn_80003130(out + i, buffer->data + buffer->position, amount);
+        TRK_memcpy(out + i, buffer->data + buffer->position, amount);
         buffer->position += amount;
         err = read_err;
         i++;

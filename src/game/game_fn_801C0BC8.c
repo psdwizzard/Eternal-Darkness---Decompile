@@ -58,25 +58,24 @@ typedef struct SYNTH_VOICE {
 } SYNTH_VOICE;
 #pragma pack()
 
-extern SYNTH_VOICE* lbl_8064D3D0;
-extern SYNTH_VOICE* lbl_8064D43C;
-extern u8* fn_801BCEB0(u16);
-extern u16 fn_801B8D68(u8, u8);
-extern u32 fn_801C1790(u8, u8, u16, u8);
-extern void fn_801C106C(SYNTH_VOICE*);
-extern void fn_801C08E8(SYNTH_VOICE*, u32);
-extern u32 fn_801CC6DC(u32);
-extern void fn_801CAEB8(u8, u8, u8);
-extern void fn_801CB274(u8, u8);
-extern void fn_801C1600(SYNTH_VOICE*, u8);
-extern u32 fn_801C13D4(SYNTH_VOICE*, u32);
-extern void fn_801CC8C4(u32);
-extern void fn_801C1BCC(SYNTH_VOICE*);
+extern SYNTH_VOICE* synthVoice;
+extern SYNTH_VOICE* macActiveMacroRoot;
+extern u8* dataGetMacro(u16);
+extern u16 seqGetMIDIPriority(u8, u8);
+extern u32 voiceAllocate(u8, u8, u16, u8);
+extern void vidRemoveVoiceReferences(SYNTH_VOICE*);
+extern void UnYieldMacro(SYNTH_VOICE*, u32);
+extern u32 hwIsActive(u32);
+extern void inpResetMidiCtrl(u8, u8, u8);
+extern void inpResetChannelDefaults(u8, u8);
+extern void voiceSetPriority(SYNTH_VOICE*, u8);
+extern u32 vidMakeNew(SYNTH_VOICE*, u32);
+extern void hwBreak(u32);
+extern void voiceFree(SYNTH_VOICE*);
 
-#define synthVoice lbl_8064D3D0
-#define macActiveRoot lbl_8064D43C
+#define macActiveRoot macActiveMacroRoot
 
-u32 fn_801C0BC8(u16 macid, u8 priority, u8 maxVoices, u16 allocId, u8 key, u8 vol, u8 panning, u8 midi, u8 midiSet,
+u32 macStart(u16 macid, u8 priority, u8 maxVoices, u16 allocId, u8 key, u8 vol, u8 panning, u8 midi, u8 midiSet,
                 u8 section, u16 step, u16 trackid, u8 new_vid, u8 vGroup, u8 studio, u32 itd)
 {
     u32 voice;
@@ -86,15 +85,15 @@ u32 fn_801C0BC8(u16 macid, u8 priority, u8 maxVoices, u16 allocId, u8 key, u8 vo
     SYNTH_VOICE* sv;
     u16 seqPrio;
 
-    if ((addr = fn_801BCEB0(macid)) != 0) {
+    if ((addr = dataGetMacro(macid)) != 0) {
         fxFlag = key & 0x80;
-        if (!fxFlag && (seqPrio = fn_801B8D68(midiSet, midi)) != 0xffff) {
+        if (!fxFlag && (seqPrio = seqGetMIDIPriority(midiSet, midi)) != 0xffff) {
             priority = seqPrio;
         }
 
-        if ((voice = fn_801C1790(priority, maxVoices, allocId, fxFlag != 0 ? 1 : 0)) != 0xffffffff) {
+        if ((voice = voiceAllocate(priority, maxVoices, allocId, fxFlag != 0 ? 1 : 0)) != 0xffffffff) {
             sv = &synthVoice[voice];
-            fn_801C106C(sv);
+            vidRemoveVoiceReferences(sv);
             if (sv->macState != 2) {
                 if (sv->macState == 0) {
                     if (sv->prevMacActive == 0) {
@@ -106,12 +105,12 @@ u32 fn_801C0BC8(u16 macid, u8 priority, u8 maxVoices, u16 allocId, u8 key, u8 vo
                         sv->nextMacActive->prevMacActive = sv->prevMacActive;
                     }
                 }
-                fn_801C08E8(sv, 1);
+                UnYieldMacro(sv, 1);
                 sv->macState = 2;
             }
             *(u64*)&sv->cFlagsHi = (*(u64*)&sv->cFlagsHi & 0x10) | 2;
 
-            if (fn_801CC6DC(voice)) {
+            if (hwIsActive(voice)) {
                 sv->cFlagsLo |= 1;
             }
 
@@ -120,8 +119,8 @@ u32 fn_801C0BC8(u16 macid, u8 priority, u8 maxVoices, u16 allocId, u8 key, u8 vo
             if (fxFlag != 0) {
                 sv->fxFlag = 1;
                 key &= 0x7f;
-                fn_801CAEB8((u8)voice, 0xff, 1);
-                fn_801CB274((u8)voice, 0xff);
+                inpResetMidiCtrl((u8)voice, 0xff, 1);
+                inpResetChannelDefaults((u8)voice, 0xff);
                 sv->midi = voice;
                 sv->midiSet = 0xff;
                 sv->section = 0;
@@ -156,11 +155,11 @@ u32 fn_801C0BC8(u16 macid, u8 priority, u8 maxVoices, u16 allocId, u8 key, u8 vo
             sv->mesgRead = 0;
             sv->mesgNum = 0;
             sv->id = voice | ((macid << 0x10) | ((key & 0xff) << 8));
-            fn_801C1600(sv, priority);
+            voiceSetPriority(sv, priority);
 
-            if ((vid = fn_801C13D4(sv, new_vid)) != 0xffffffff) {
+            if ((vid = vidMakeNew(sv, new_vid)) != 0xffffffff) {
                 if (sv->macState != 0) {
-                    fn_801C08E8(sv, 0);
+                    UnYieldMacro(sv, 0);
                     if ((sv->nextMacActive = macActiveRoot) != 0) {
                         macActiveRoot->prevMacActive = sv;
                     }
@@ -171,10 +170,10 @@ u32 fn_801C0BC8(u16 macid, u8 priority, u8 maxVoices, u16 allocId, u8 key, u8 vo
                 return vid;
             }
 
-            if (fn_801CC6DC(voice)) {
-                fn_801CC8C4(voice);
+            if (hwIsActive(voice)) {
+                hwBreak(voice);
             }
-            fn_801C1BCC(sv);
+            voiceFree(sv);
         }
     }
 

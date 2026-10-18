@@ -16,18 +16,18 @@ typedef struct Entry {
 } Entry;
 
 extern char lbl_8024F960[];
-extern void fn_8015EA7C(Parser*, char*);
-extern void fn_8015EDC0(void*, double);
-extern void fn_8015EE54(void*, int);
+extern void luaK_error(Parser*, char*);
+extern void luaK_number(void*, double);
+extern void luaK_adjuststack(void*, int);
 extern void fn_80163DA4(Parser*);
-extern void fn_80163E94(Parser*, int);
-extern void fn_80164088(Parser*, int);
-extern void fn_8016536C(Parser*);
-extern void fn_80164F7C(Parser*, Entry*);
-extern void fn_80165870(Parser*, Entry*);
-extern void fn_8016668C(Parser*, int, void*);
+extern void check(Parser*, int);
+extern void code_string(Parser*, int);
+extern void constructor(Parser*);
+extern void var_or_func(Parser*, Entry*);
+extern void expr(Parser*, Entry*);
+extern void body(Parser*, int, void*);
 
-void fn_80165464(Parser* parser, Entry* entry)
+void simpleexp(Parser* parser, Entry* entry)
 {
     void* output = parser->output;
 
@@ -36,35 +36,35 @@ void fn_80165464(Parser* parser, Entry* entry)
         {
             double number = parser->number;
             fn_80163DA4(parser);
-            fn_8015EDC0(output, number);
+            luaK_number(output, number);
         }
         break;
     case 0x11B:
-        fn_80164088(parser, *(int*)&parser->number);
+        code_string(parser, *(int*)&parser->number);
         fn_80163DA4(parser);
         break;
     case 0x10B:
-        fn_8015EE54(output, -1);
+        luaK_adjuststack(output, -1);
         fn_80163DA4(parser);
         break;
     case 0x7B:
-        fn_8016536C(parser);
+        constructor(parser);
         break;
     case 0x108:
         fn_80163DA4(parser);
-        fn_8016668C(parser, 0, parser->context);
+        body(parser, 0, parser->context);
         break;
     case 0x28:
         fn_80163DA4(parser);
-        fn_80165870(parser, entry);
-        fn_80163E94(parser, 0x29);
+        expr(parser, entry);
+        check(parser, 0x29);
         return;
     case 0x25:
     case 0x113:
-        fn_80164F7C(parser, entry);
+        var_or_func(parser, entry);
         return;
     default:
-        fn_8015EA7C(parser, lbl_8024F960);
+        luaK_error(parser, lbl_8024F960);
         return;
     }
 

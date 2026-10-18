@@ -12,8 +12,8 @@ typedef struct EffectDescriptor {
 
 extern void fn_80182380(EffectDescriptor*);
 extern void fn_80182448(void);
-extern float fn_80048C2C(float);
-extern float fn_80048C50(float);
+extern float sinf(float);
+extern float cosf(float);
 extern int fn_801E8328();
 
 extern const float lbl_806505B8;
@@ -79,8 +79,8 @@ void fn_80153A24(Vec3* origin, int count, u16 radius, u16 first_kind,
     targets[1] = second;
     for (i = 0; i < count; i++) {
         angle = lbl_806505C0 * (float)i / (float)count;
-        position.x = origin->x + (float)radius * fn_80048C2C(angle);
-        position.y = origin->y + (float)radius * fn_80048C50(angle);
+        position.x = origin->x + (float)radius * sinf(angle);
+        position.y = origin->y + (float)radius * cosf(angle);
         position.z = origin->z;
         *targets[0] = first_template;
         *(Vec3*)(targets[0]->data + 0x98) = position;

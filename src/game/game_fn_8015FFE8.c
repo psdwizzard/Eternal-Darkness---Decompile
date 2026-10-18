@@ -3,7 +3,7 @@ typedef struct Chain { Root* root; } Chain;
 typedef struct Inner { Chain* chain; int** current; } Inner;
 typedef struct Object { char pad0[8]; Inner* inner; } Object;
 
-int fn_8015FFE8(Object* object)
+int currentpc(Object* object)
 {
     Inner* inner = object->inner;
     if (inner->current != 0)

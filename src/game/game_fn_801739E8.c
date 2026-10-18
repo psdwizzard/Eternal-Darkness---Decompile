@@ -13,9 +13,9 @@ typedef struct Vec3 {
     float z;
 } Vec3;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern unsigned int fn_800F5C54(double);
 extern int fn_8015C4A4(int, int);
 extern Vec3s* fn_80158ABC(int, int, void*);
@@ -38,16 +38,16 @@ int fn_801739E8(void* state)
 
     rotation = lbl_806506E4;
 
-    if (fn_8016A598(state) != 5) {
-        fn_80163BB4(state, lbl_8024FF00, 5, fn_8016A598(state));
+    if (lua_gettop(state) != 5) {
+        luaO_verror(state, lbl_8024FF00, 5, lua_gettop(state));
         return 0;
     }
 
-    resource = fn_800F5C54(fn_8016A694(state, 1));
-    scale = fn_8016A694(state, 2);
-    limits[0] = fn_8016A694(state, 3);
-    limits[1] = fn_8016A694(state, 4);
-    kind = fn_8016A694(state, 5);
+    resource = fn_800F5C54(lua_tonumber(state, 1));
+    scale = lua_tonumber(state, 2);
+    limits[0] = lua_tonumber(state, 3);
+    limits[1] = lua_tonumber(state, 4);
+    kind = lua_tonumber(state, 5);
 
     index = fn_8015C4A4(resource, 2);
     if (index != -1) {
@@ -56,7 +56,7 @@ int fn_801739E8(void* state)
         fn_80173B6C(&source->y, &position.y);
         fn_80173B6C(&source->z, &position.z);
     } else {
-        fn_80163BB4(state, lbl_8025009C, resource);
+        luaO_verror(state, lbl_8025009C, resource);
     }
 
     fn_80154A98(&position, &rotation, kind, limits, scale);

@@ -14,7 +14,7 @@ typedef struct SIControl {
 
 extern SIControl Si_802FCA20;
 extern u64 TypeTime_80640C88[4];
-extern u64 lbl_80640CA8[4];
+extern u64 XferTime[4];
 extern u64 __OSGetSystemTime(void);
 
 typedef struct SIRegisters {
@@ -27,7 +27,7 @@ typedef struct SIRegisters {
 
 volatile SIRegisters __SIRegs : 0xCC006400;
 
-u32 fn_80208310(void)
+u32 CompleteTransfer(void)
 {
     u32 i;
     u32* input;
@@ -42,7 +42,7 @@ u32 fn_80208310(void)
     __SIRegs.status = (__SIRegs.status | 0x80000000) & ~1;
 
     if (si->chan != -1) {
-        lbl_80640CA8[si->chan] = __OSGetSystemTime();
+        XferTime[si->chan] = __OSGetSystemTime();
         input = si->input;
         inputBytes = &si->inputBytes;
         count = *inputBytes >> 2;

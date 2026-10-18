@@ -43,13 +43,13 @@ extern u32 lbl_8064D8D0;
 extern volatile u32 __SIRegs[64] : 0xCC006400;
 extern u32 __OSBusClock : 0x800000F8;
 
-extern u32 fn_80208310(void);
+extern u32 CompleteTransfer(void);
 extern s64 __OSGetSystemTime(void);
-extern s32 fn_80208C4C(s32 chan, void *output, u32 outputBytes, void *input,
+extern s32 __SITransfer(s32 chan, void *output, u32 outputBytes, void *input,
                       u32 inputBytes, SICallback callback);
-extern void fn_8020A93C(void *alarm);
-extern s32 fn_8020906C(s32 chan);
-extern u32 fn_802181F4(void);
+extern void OSCancelAlarm(void *alarm);
+extern s32 SIGetResponseRaw(s32 chan);
+extern u32 VIGetCurrentLine(void);
 extern s32 SITransfer(s32 chan, void *output, u32 outputBytes, void *input,
                       u32 inputBytes, SICallback callback, u64 time);
 extern void GetTypeCallback_802093FC(s32 chan, u32 error, OSContext *context);
@@ -76,7 +76,7 @@ void SIInterruptHandler_8020860C(s32 interrupt, OSContext *context)
 
     if ((status & 0xC0000000) == 0xC0000000) {
         chan = si->chan;
-        error = fn_80208310();
+        error = CompleteTransfer();
         callback = si->callback;
         si->callback = 0;
 
@@ -86,10 +86,10 @@ void SIInterruptHandler_8020860C(s32 interrupt, OSContext *context)
             next %= 4;
             packet = &work->packet[next];
             if (packet->chan != -1 && __OSGetSystemTime() >= packet->fire) {
-                if (fn_80208C4C(packet->chan, packet->output,
+                if (__SITransfer(packet->chan, packet->output,
                                 packet->outputBytes, packet->input,
                                 packet->inputBytes, packet->callback)) {
-                    fn_8020A93C(&work->alarm[next * 10]);
+                    OSCancelAlarm(&work->alarm[next * 10]);
                     packet->chan = -1;
                 }
                 break;
@@ -115,13 +115,13 @@ void SIInterruptHandler_8020860C(s32 interrupt, OSContext *context)
     }
 
     if ((status & 0x18000000) == 0x18000000) {
-        vcount = fn_802181F4() + 1;
+        vcount = VIGetCurrentLine() + 1;
         response = work->responseTime;
         pollAddress = &si->poll;
         interval = (*pollAddress >> 16) & 0x3FF;
 
         for (i = 0; i < 4; i++) {
-            if (fn_8020906C(i)) {
+            if (SIGetResponseRaw(i)) {
                 response[i] = vcount;
             }
         }

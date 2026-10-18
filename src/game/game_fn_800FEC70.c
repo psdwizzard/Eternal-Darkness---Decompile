@@ -1,11 +1,11 @@
 extern int InitializeUART(unsigned long baud_rate);
 extern int WriteUARTN(const void* data, unsigned long length);
-extern void fn_800F59CC(void* context, const void* data, unsigned long* length,
+extern void __TRK_write_console(void* context, const void* data, unsigned long* length,
                        void* callback);
 
 extern int lbl_8064CC58;
 
-int fn_800FEC70(void* context, const void* data, unsigned long* length,
+int __write_console(void* context, const void* data, unsigned long* length,
                 void* callback)
 {
     int result = 0;
@@ -26,6 +26,6 @@ int fn_800FEC70(void* context, const void* data, unsigned long* length,
         return 1;
     }
 
-    fn_800F59CC(context, data, length, callback);
+    __TRK_write_console(context, data, length, callback);
     return 0;
 }

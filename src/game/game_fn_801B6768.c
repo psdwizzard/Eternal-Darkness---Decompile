@@ -73,35 +73,24 @@ typedef struct McmdVoiceState {
     u8 pad218[0x404 - 0x218];
 } McmdVoiceState;
 
-extern McmdVoiceState* lbl_8064D3D0;
-extern u64 lbl_8064D3E0;
-extern u32 fn_801CC6DC(u32);
-extern s16 fn_801CC304(u16);
-extern u32 fn_801C30D4(void*, u16*, u16*);
-extern u16 fn_801CBA58(McmdVoiceState*);
-extern u16 fn_801CBAE8(McmdVoiceState*);
-extern u16 fn_801CAFAC(u8, u8, u8);
-extern u16 fn_801C29BC(u8, u32);
-extern u16 fn_801C2980(u16);
-extern u16 fn_801CBAA0(McmdVoiceState*);
-extern void fn_801CCB98(u32, u16);
-extern void fn_801B775C(void*, int, u32);
+extern McmdVoiceState* synthVoice;
+extern u64 synthRealTime;
+extern u32 hwIsActive(u32);
+extern s16 sndSin(u16);
+extern u32 adsrHandleLowPrecision(void*, u16*, u16*);
+extern u16 inpGetPitchBend(McmdVoiceState*);
+extern u16 inpGetModulation(McmdVoiceState*);
+extern u16 inpGetMidiCtrl(u8, u8, u8);
+extern u16 sndGetPitch(u8, u32);
+extern u16 sndPitchUpOne(u16);
+extern u16 inpGetDoppler(McmdVoiceState*);
+extern void hwSetPitch(u32, u16);
+extern void synthAddJob(void*, int, u32);
 
-#define synthVoice lbl_8064D3D0
-#define synthRealTime lbl_8064D3E0
 #define HWVOICE(i) (&synthVoice[i])
 #define HWVOICE_FLAGS(sv) (*(u64*)&(sv)->cFlagsHi)
-#define hwIsActive fn_801CC6DC
-#define sndSin fn_801CC304
-#define adsrHandleLowPrecision fn_801C30D4
-#define inpGetPitchBend fn_801CBA58
-#define inpGetModulation fn_801CBAE8
-#define inpGetMidiCtrl fn_801CAFAC
-#define voiceGetPitchRatio fn_801C29BC
-#define voiceScaleSampleRate fn_801C2980
-#define inpGetDoppler fn_801CBAA0
-#define hwSetPitch fn_801CCB98
-#define synthAddJob fn_801B775C
+#define voiceGetPitchRatio sndGetPitch
+#define voiceScaleSampleRate sndPitchUpOne
 
 static inline u32 apply_portamento(McmdVoiceState* svoice, u32 ccents, u32 deltaTime)
 {
@@ -140,7 +129,7 @@ static inline void UpdateTimeMIDICtrl(McmdVoiceState* sv)
     }
 }
 
-void fn_801B6768(int voice)
+void LowPrecisionHandler(int voice)
 {
     u32 j;
     s32 pbend;

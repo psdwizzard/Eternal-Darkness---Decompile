@@ -43,13 +43,13 @@ extern s32 lbl_8064DC58;
 extern s32 lbl_8064DC5C;
 extern s32 lbl_8064DC6C;
 
-extern void fn_801BB3A0(s32);
-extern void fn_801BAF90(s32);
+extern void sndStreamDeactivate(s32);
+extern void sndStreamFree(s32);
 extern s32 fn_801A9B94(u8, s32);
-extern void fn_801BA94C(s32, s32, u8, s32, s32, s32);
-extern void fn_801B9E7C(s32, s32, s32, s32, s32);
-extern void fn_8020D250(void*, void*, s32);
-extern void fn_802101F4(void*, s32);
+extern void sndStreamMixParameterEx(s32, s32, u8, s32, s32, s32);
+extern void sndStreamARAMUpdate(s32, s32, s32, s32, s32);
+extern void OSSendMessage(void*, void*, s32);
+extern void OSSetThreadPriority(void*, s32);
 extern void* memset(void*, int, u32);
 extern void DCFlushRange(void*, u32);
 extern void fn_80237EAC();
@@ -71,8 +71,8 @@ s32 fn_80236DC4(s32 arg0, u32 pos, s32 arg2, s32 arg3, u32 index) {
     prevHalf = stream->half;
 
     if (stream->flags & 2) {
-        fn_801BB3A0(stream->handle);
-        fn_801BAF90(stream->handle);
+        sndStreamDeactivate(stream->handle);
+        sndStreamFree(stream->handle);
         stream->flags = 0;
         return 0;
     }
@@ -106,7 +106,7 @@ s32 fn_80236DC4(s32 arg0, u32 pos, s32 arg2, s32 arg3, u32 index) {
             req->type = 2;
             req->size = 0;
             req->buffer = 0;
-            fn_8020D250(&pool->queue, req, 1);
+            OSSendMessage(&pool->queue, req, 1);
             stream->flags |= 2;
         }
     }
@@ -117,7 +117,7 @@ s32 fn_80236DC4(s32 arg0, u32 pos, s32 arg2, s32 arg3, u32 index) {
     }
     stream->newVolume = stream->volume;
     if (stream->curVolume != stream->newVolume) {
-        fn_801BA94C(stream->handle, fn_801A9B94(stream->newVolume, 2), stream->pan, 0, 0, 0);
+        sndStreamMixParameterEx(stream->handle, fn_801A9B94(stream->newVolume, 2), stream->pan, 0, 0, 0);
     }
     stream->curVolume = stream->newVolume;
 
@@ -146,15 +146,15 @@ s32 fn_80236DC4(s32 arg0, u32 pos, s32 arg2, s32 arg3, u32 index) {
                 lbl_8064DC5C -= 0x1000;
                 memset(req->buffer, 0, 0x4000);
                 DCFlushRange(req->buffer, 0x4000);
-                fn_801B9E7C(stream->handle, stream->half << 13, 0x2000, 0, 0);
-                fn_802101F4(pool->thread, 8);
+                sndStreamARAMUpdate(stream->handle, stream->half << 13, 0x2000, 0, 0);
+                OSSetThreadPriority(pool->thread, 8);
             } else if (stream->flags == 0 || (stream->flags & 0x10)) {
                 if (!(stream->flags & 0x10)) {
                     stream->flags |= 2;
                 }
                 memset(req->buffer, 0, 0x4000);
                 DCFlushRange(req->buffer, 0x4000);
-                fn_801B9E7C(stream->handle, stream->half << 13, 0x2000, 0, 0);
+                sndStreamARAMUpdate(stream->handle, stream->half << 13, 0x2000, 0, 0);
             } else {
                 req->type = index;
                 req->size = 0x2000;
@@ -165,11 +165,11 @@ s32 fn_80236DC4(s32 arg0, u32 pos, s32 arg2, s32 arg3, u32 index) {
                 memset(req->buffer, 0, 0x4000);
                 DCFlushRange(req->buffer, 0x4000);
                 if (queue->usedCount > 1) {
-                    fn_802101F4(pool->thread, 8);
+                    OSSetThreadPriority(pool->thread, 8);
                 } else {
-                    fn_802101F4(pool->thread, lbl_8064DC6C);
+                    OSSetThreadPriority(pool->thread, lbl_8064DC6C);
                 }
-                fn_8020D250(&pool->queue, req, 1);
+                OSSendMessage(&pool->queue, req, 1);
             }
             stream->half ^= 1;
         }

@@ -12,7 +12,7 @@ typedef struct {
 
 extern int lbl_8064CB70;
 
-extern int fn_800F9E2C(char*, const char*, void*);
+extern int vsprintf(char*, const char*, void*);
 extern void fn_801E7DC8(int);
 extern u32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(u32);
@@ -24,7 +24,7 @@ void fn_800EB458(const char* format, ...)
 
     if (lbl_8064CB70 != 0) {
         va_start(args, format);
-        fn_800F9E2C(buffer, format, args);
+        vsprintf(buffer, format, args);
         fn_801E7DC8(5);
         OSRestoreInterrupts(OSDisableInterrupts());
         fn_801E7DC8(0x100);

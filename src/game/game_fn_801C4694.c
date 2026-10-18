@@ -8,7 +8,7 @@ typedef struct ArenaEntry {
 
 extern ArenaEntry lbl_80628CB0[];
 
-void fn_801C4694(u8 index)
+void salDeactivateStudio(u8 index)
 {
     lbl_80628CB0[index].flag = 0;
 }

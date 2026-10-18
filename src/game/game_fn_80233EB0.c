@@ -1,14 +1,14 @@
-/* fn_80233EB0: one radix-2 decimation-in-frequency butterfly stage over
+/* mdct_butterfly_32: one radix-2 decimation-in-frequency butterfly stage over
  * 16 complex values (interleaved re/im), followed by the two half-size
- * transforms done by fn_80234110. */
+ * transforms done by mdct_butterfly_16. */
 
 extern float lbl_8065183C;
 extern float lbl_80651840;
 extern float lbl_80651844;
 
-void fn_80234110(float* data);
+void mdct_butterfly_16(float* data);
 
-void fn_80233EB0(float* p) {
+void mdct_butterfly_32(float* p) {
     float re;
     float im;
     float a;
@@ -89,6 +89,6 @@ void fn_80233EB0(float* p) {
     p[0] = s * im + c * re;
     p[1] = c * im - s * re;
 
-    fn_80234110(p);
-    fn_80234110(p + 16);
+    mdct_butterfly_16(p);
+    mdct_butterfly_16(p + 16);
 }

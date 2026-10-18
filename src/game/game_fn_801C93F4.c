@@ -8,23 +8,23 @@ struct Voice {
     u32 flags;
 };
 
-extern unsigned char lbl_8064D3A0;
-extern Voice* lbl_8064D4BC;
-extern void fn_801C8EE0(Voice*);
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern unsigned char sndActive;
+extern Voice* s3dEmitterRoot;
+extern void EmitterShutdown(Voice*);
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
-void fn_801C93F4(void)
+void s3dKillAllEmitter(void)
 {
-    Voice* voice = lbl_8064D4BC;
+    Voice* voice = s3dEmitterRoot;
     while (voice != 0) {
         Voice* previous = voice->previous;
-        if (lbl_8064D3A0 != 0) {
-            fn_801CE2B8();
+        if (sndActive != 0) {
+            hwDisableIrq();
             if ((voice->flags & 0x10000) != 0) {
-                fn_801C8EE0(voice);
+                EmitterShutdown(voice);
             }
-            fn_801CE280();
+            hwEnableIrq();
         }
         voice = previous;
     }

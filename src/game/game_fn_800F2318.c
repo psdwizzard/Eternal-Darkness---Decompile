@@ -6,10 +6,10 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-extern void fn_800EFC9C(TRKBuffer *, u8);
-extern int fn_800EF2A0(TRKBuffer *);
-extern int fn_800EFBC8(TRKBuffer *, const u8 *, u32);
-extern int fn_800F4420(unsigned char *);
+extern void TRKResetBuffer(TRKBuffer *, u8);
+extern int TRKMessageSend(TRKBuffer *);
+extern int TRKAppendBuffer(TRKBuffer *, const u8 *, u32);
+extern int TRKTargetSupportMask(unsigned char *);
 
 static inline void append(TRKBuffer *buffer, u8 value)
 {
@@ -28,49 +28,49 @@ static inline int appendChecked(TRKBuffer *buffer, u8 value)
     return 0;
 }
 
-void fn_800F2318(TRKBuffer *buffer)
+void TRKDoSupportMask(TRKBuffer *buffer)
 {
     unsigned char state[32];
     int result;
     int retry;
 
     if (buffer->length != 1) {
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, 2);
         retry = 3;
         do {
-            result = fn_800EF2A0(buffer);
+            result = TRKMessageSend(buffer);
             retry--;
             if (result == 0) break;
         } while (retry > 0);
         return;
     }
 
-    fn_800EFC9C(buffer, 1);
+    TRKResetBuffer(buffer, 1);
     append(buffer, 0x80);
     append(buffer, 0);
 
-    result = fn_800F4420(state);
+    result = TRKTargetSupportMask(state);
     if (result == 0)
-        result = fn_800EFBC8(buffer, state, sizeof(state));
+        result = TRKAppendBuffer(buffer, state, sizeof(state));
     if (result == 0)
         result = appendChecked(buffer, 2);
 
     if (result != 0) {
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, 3);
         retry = 3;
         do {
-            result = fn_800EF2A0(buffer);
+            result = TRKMessageSend(buffer);
             retry--;
             if (result == 0) break;
         } while (retry > 0);
     } else {
         retry = 3;
         do {
-            result = fn_800EF2A0(buffer);
+            result = TRKMessageSend(buffer);
             retry--;
             if (result == 0) break;
         } while (retry > 0);

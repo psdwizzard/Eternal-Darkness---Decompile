@@ -25,8 +25,8 @@ typedef struct EXIControl {
 
 extern EXIControl Ecb_80640AA8[3];
 extern BOOL __EXIProbe_80206F50(s32 chan);
-extern u32 fn_80206E8C(s32 chan, s32 exi, s32 tc, s32 ext);
-extern void fn_80206778(s32 chan, EXIControl *exi);
+extern u32 EXIClearInterrupts(s32 chan, s32 exi, s32 tc, s32 ext);
+extern void SetExiInterruptMask(s32 chan, EXIControl *exi);
 extern BOOL OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(BOOL enabled);
 extern void __OSMaskInterrupts(u32 interrupts);
@@ -36,8 +36,8 @@ extern BOOL EXISelect(s32 chan, u32 dev, u32 freq);
 extern BOOL EXIImm(s32 chan, void *buf, s32 len, u32 type, void *callback);
 extern BOOL EXISync(s32 chan);
 extern BOOL EXIDeselect(s32 chan);
-extern void *fn_800F9990(void *dest, const void *src, u32 size);
-extern void fn_80207CA0(s32 chan, void *context);
+extern void *memmove(void *dest, const void *src, u32 size);
+extern void UnlockedHandler(s32 chan, void *context);
 
 s32 __gUnknown800030C0[2] : 0x800030C0;
 
@@ -52,7 +52,7 @@ static inline BOOL AttachForID(s32 chan, EXICallback extCallback)
         OSRestoreInterrupts(enabled);
         return 0;
     }
-    fn_80206E8C(chan, 1, 0, 0);
+    EXIClearInterrupts(chan, 1, 0, 0);
     exi->extCallback = extCallback;
     __OSUnmaskInterrupts(0x100000U >> (chan * 3));
     exi->state |= 8;
@@ -73,11 +73,11 @@ static inline BOOL UnlockForID(s32 chan)
         return 0;
     }
     exi->state &= ~0x10;
-    fn_80206778(chan, exi);
+    SetExiInterruptMask(chan, exi);
     if (exi->queueLength > 0) {
         unlockedCallback = exi->queue[0].callback;
         if (--exi->queueLength > 0) {
-            fn_800F9990(&exi->queue[0], &exi->queue[1],
+            memmove(&exi->queue[0], &exi->queue[1],
                         exi->queueLength * sizeof(EXIQueueEntry));
         }
         unlockedCallback(chan, 0);
@@ -107,7 +107,7 @@ static inline BOOL DetachForID(s32 chan)
     return 1;
 }
 
-BOOL fn_80207CC8(s32 chan, u32 dev, u32 *id)
+BOOL EXIGetID(s32 chan, u32 dev, u32 *id)
 {
     EXIControl *exi = &Ecb_80640AA8[chan];
     s32 err;
@@ -132,7 +132,7 @@ BOOL fn_80207CC8(s32 chan, u32 dev, u32 *id)
         startTime = __gUnknown800030C0[chan];
     }
 
-    err = !EXILock(chan, dev, (chan < 2 && dev == 0) ? fn_80207CA0 : 0);
+    err = !EXILock(chan, dev, (chan < 2 && dev == 0) ? UnlockedHandler : 0);
     if (err == 0) {
         err = !EXISelect(chan, dev, 0);
         if (err == 0) {

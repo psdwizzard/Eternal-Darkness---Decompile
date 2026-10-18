@@ -16,7 +16,7 @@ extern u32 lbl_8064EDE0;
 extern void fn_801A8D38(int);
 extern void fn_801A8660(int, int, int, int, int, const u32*);
 extern void fn_801ED3F4(void*);
-extern void fn_80225F4C(int, void*, int);
+extern void GXSetArray(int, void*, int);
 extern void fn_801EDA7C(void*, int, int, int);
 extern void fn_801A8F08(s16, s16, s16, s16, int, int, int);
 
@@ -30,7 +30,7 @@ void fn_8009F360(void)
     color = lbl_8064EDDC;
     fn_801A8660(0, 215, 640, 50, -1, &color);
     fn_801ED3F4(lbl_8064D224);
-    fn_80225F4C(13, lbl_802515D0, 4);
+    GXSetArray(13, lbl_802515D0, 4);
     *(u32*)(lbl_80606328.owner + 0x58) = 0x80000000;
     owner = *(u8* volatile*)((u8*)&lbl_80606328 + 8);
     config = lbl_8064EDE0;

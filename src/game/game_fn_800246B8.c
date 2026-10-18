@@ -10,7 +10,7 @@ extern void fn_80155C88(void*, char*, const char*);
 extern void* fn_80024594(char*, u32*);
 extern void fn_801E971C(void*, u32);
 extern void fn_801E9564(void*, u32);
-extern void fn_8022C40C(void*, char*);
+extern void TEXGetPalette(void*, char*);
 
 void fn_800246B8(void* base, u32 first_value, void** second,
                  u32 second_value, void** first, void* path)
@@ -27,5 +27,5 @@ void fn_800246B8(void* base, u32 first_value, void** second,
     fn_801E9564(*second, first_value);
 
     fn_80155C88(base, buffer, &lbl_8064B2D8);
-    fn_8022C40C(path, buffer);
+    TEXGetPalette(path, buffer);
 }

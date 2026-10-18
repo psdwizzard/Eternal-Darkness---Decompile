@@ -26,7 +26,7 @@ typedef struct Entry Entry;
 
 extern Entry *fn_8006C75C(u8 count, u8 level);
 extern s32 fn_8006D12C(Owner *owner, void *entry);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_801E7974(u8 *bits, u32 index);
 extern s32 fn_801E79FC(u32 *bits, u32 index);
 extern GlobalState lbl_803003C8;
@@ -46,17 +46,17 @@ s32 fn_8006CF74(Owner *owner)
 
         if (state->level >= 4) {
             if (fn_801E79FC((u32 *)lbl_8064C4E0, 0x34D) == 0 &&
-                (s32)(fn_800FBFB0() & 0x3F) > 0x20) {
+                (s32)(rand() & 0x3F) > 0x20) {
                 fn_801E7974(lbl_8064C4E0, 0x34D);
             }
             if (!(config->flags & 0x10) &&
-                (s32)(fn_800FBFB0() & 0x3F) > 0x20) {
+                (s32)(rand() & 0x3F) > 0x20) {
                 fn_801E7974(lbl_8064C4E0, 0x3AA);
             }
         }
         if (state->level == 5) {
             if (!(config->flags & 4) &&
-                (s32)(fn_800FBFB0() & 0x3F) > 0x20) {
+                (s32)(rand() & 0x3F) > 0x20) {
                 fn_801E7974(lbl_8064C4E0, 0x466);
             }
         } else if (state->level > 5) {

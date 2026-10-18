@@ -3,20 +3,20 @@ typedef int s32;
 extern const char lbl_8023BEF8[];
 extern void* lbl_8064C504;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void* fn_801E6CA0(void*, int, int, int, int);
 extern void fn_80027730(void*, s32, s32);
 
 s32 fn_80017260(void* script)
 {
-    if (fn_8016A598(script) != 1) {
-        fn_80163BB4(script, lbl_8023BEF8, 1, fn_8016A598(script));
+    if (lua_gettop(script) != 1) {
+        luaO_verror(script, lbl_8023BEF8, 1, lua_gettop(script));
         return 0;
     }
 
-    switch ((s32)fn_8016A694(script, 1)) {
+    switch ((s32)lua_tonumber(script, 1)) {
     case 2:
         fn_80027730(fn_801E6CA0(lbl_8064C504, 0, 0x2E, 0, 1), 0, 0);
         break;

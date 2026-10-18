@@ -15,23 +15,23 @@ typedef struct Input {
 } Input;
 
 extern char lbl_8024F8BC[];
-extern void* fn_801670A8(Parser*, void*);
-extern void fn_801622BC(Parser*, Parser*, Input*, void*);
-extern void fn_801649CC(Parser*, ParserState*);
+extern void* luaS_new(Parser*, void*);
+extern void luaX_setinput(Parser*, Parser*, Input*, void*);
+extern void open_func(Parser*, ParserState*);
 extern void fn_80163DA4(Parser*);
-extern void fn_80166750(Parser*);
-extern void fn_80163ED4(Parser*, int, char*);
-extern void fn_80164A64(Parser*);
+extern void chunk(Parser*);
+extern void check_condition(Parser*, int, char*);
+extern void close_func(Parser*);
 
-void* fn_80164BE4(Parser* parser, Input* input)
+void* luaY_parser(Parser* parser, Input* input)
 {
     Parser local;
     ParserState state;
-    fn_801622BC(parser, &local, input, fn_801670A8(parser, input->source));
-    fn_801649CC(&local, &state);
+    luaX_setinput(parser, &local, input, luaS_new(parser, input->source));
+    open_func(&local, &state);
     fn_80163DA4(&local);
-    fn_80166750(&local);
-    fn_80163ED4(&local, local.token == 0x11C, lbl_8024F8BC);
-    fn_80164A64(&local);
+    chunk(&local);
+    check_condition(&local, local.token == 0x11C, lbl_8024F8BC);
+    close_func(&local);
     return state.object;
 }

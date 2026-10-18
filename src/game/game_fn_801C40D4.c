@@ -58,37 +58,30 @@ typedef struct DSPstudioinfo {
     u8 pad51[0x6B];
 } DSPstudioinfo;
 
-extern u8 lbl_8064D4E5;
-extern u8 lbl_8064D4E4;
-extern u32 lbl_8064D478;
-extern void* lbl_8064D498;
-extern void* lbl_8064D4A4;
-extern DSPvoice* lbl_8064D4AC;
-extern void* lbl_8064D4A8;
-extern void* lbl_8064D4A0;
+extern u8 salNumVoices;
+extern u8 salMaxStudioNum;
+extern u32 dspARAMZeroBuffer;
+extern void* dspCmdList;
+extern void* dspSurround;
+extern DSPvoice* dspVoice;
+extern void* dspITDBuffer;
+extern void* dspHrtfHistoryBuffer;
 extern DSPstudioinfo lbl_80628CB0[];
 
-extern u32 fn_801CDA04(void);
-extern void* fn_801CE330(u32);
+extern u32 aramGetZeroBuffer(void);
+extern void* salMalloc(u32);
 extern void* memset(void*, int, u32);
 extern void DCFlushRange(void*, u32);
 extern void DCFlushRangeNoSync(void*, u32);
 extern void DCInvalidateRange(void*, u32);
-extern void fn_8020B7D8(void*, u32);
-extern void fn_801C458C(u8, u32, u32);
-extern void fn_801C4478(void);
+extern void DCStoreRangeNoSync(void*, u32);
+extern void salActivateStudio(u8, u32, u32);
+extern void salInitHRTFBuffer(void);
 
-#define salNumVoices lbl_8064D4E5
-#define salMaxStudioNum lbl_8064D4E4
-#define dspARAMZeroBuffer lbl_8064D478
-#define dspCmdList lbl_8064D498
-#define dspSurround lbl_8064D4A4
-#define dspVoice lbl_8064D4AC
-#define dspITDBuffer lbl_8064D4A8
-#define dspCmdBuffer lbl_8064D4A0
+#define dspCmdBuffer dspHrtfHistoryBuffer
 #define dspStudio lbl_80628CB0
 
-u32 fn_801C40D4(u8 numVoices, u8 numStudios, u32 defaultStudioDPL2)
+u32 salInitDspCtrl(u8 numVoices, u8 numStudios, u32 defaultStudioDPL2)
 {
     u32 i;
     u32 j;
@@ -97,13 +90,13 @@ u32 fn_801C40D4(u8 numVoices, u8 numStudios, u32 defaultStudioDPL2)
     salNumVoices = numVoices;
     salMaxStudioNum = numStudios;
 
-    dspARAMZeroBuffer = fn_801CDA04();
-    if ((dspCmdList = fn_801CE330(1024 * sizeof(u16)))) {
-        if ((dspSurround = fn_801CE330(160 * sizeof(s32)))) {
+    dspARAMZeroBuffer = aramGetZeroBuffer();
+    if ((dspCmdList = salMalloc(1024 * sizeof(u16)))) {
+        if ((dspSurround = salMalloc(160 * sizeof(s32)))) {
             memset(dspSurround, 0, 160 * sizeof(s32));
             DCFlushRange(dspSurround, 160 * sizeof(s32));
-            if ((dspVoice = fn_801CE330(salNumVoices * sizeof(DSPvoice)))) {
-                if ((dspITDBuffer = fn_801CE330(salNumVoices * 64))) {
+            if ((dspVoice = salMalloc(salNumVoices * sizeof(DSPvoice)))) {
+                if ((dspITDBuffer = salMalloc(salNumVoices * 64))) {
                     DCInvalidateRange(dspITDBuffer, salNumVoices * 64);
                     itdPtr = (u32)dspITDBuffer;
                     for (i = 0; i < salNumVoices; ++i) {
@@ -114,9 +107,9 @@ u32 fn_801C40D4(u8 numVoices, u8 numStudios, u32 defaultStudioDPL2)
                         dspVoice[i].lastUpdateVol = 0xff;
                         dspVoice[i].lastUpdateVolA = 0xff;
                         dspVoice[i].lastUpdateVolB = 0xff;
-                        dspVoice[i].pb = fn_801CE330(sizeof(_PB));
+                        dspVoice[i].pb = salMalloc(sizeof(_PB));
                         memset(dspVoice[i].pb, 0, sizeof(_PB));
-                        dspVoice[i].patchData = fn_801CE330(0x80);
+                        dspVoice[i].patchData = salMalloc(0x80);
                         dspVoice[i].pb->currHi = ((u32)dspVoice[i].pb >> 16);
                         dspVoice[i].pb->currLo = (u16)(u32)dspVoice[i].pb;
                         dspVoice[i].pb->updateDataHi = ((u32)dspVoice[i].patchData >> 16);
@@ -126,7 +119,7 @@ u32 fn_801C40D4(u8 numVoices, u8 numStudios, u32 defaultStudioDPL2)
                         dspVoice[i].itdBuffer = (void*)itdPtr;
                         itdPtr += 0x40;
                         dspVoice[i].virtualSampleID = 0xFFFFFFFF;
-                        fn_8020B7D8(dspVoice[i].pb, sizeof(_PB));
+                        DCStoreRangeNoSync(dspVoice[i].pb, sizeof(_PB));
                         for (j = 0; j < 5; ++j) {
                             dspVoice[i].changed[j] = 0;
                         }
@@ -134,10 +127,10 @@ u32 fn_801C40D4(u8 numVoices, u8 numStudios, u32 defaultStudioDPL2)
 
                     for (i = 0; i < salMaxStudioNum; ++i) {
                         dspStudio[i].state = 0;
-                        if (!(dspStudio[i].spb = fn_801CE330(0x36))) {
+                        if (!(dspStudio[i].spb = salMalloc(0x36))) {
                             return 0;
                         }
-                        if (!(dspStudio[i].main[0] = fn_801CE330(0x3c00))) {
+                        if (!(dspStudio[i].main[0] = salMalloc(0x3c00))) {
                             return 0;
                         }
                         memset(dspStudio[i].main[0], 0, 0x3c00);
@@ -156,11 +149,11 @@ u32 fn_801C40D4(u8 numVoices, u8 numStudios, u32 defaultStudioDPL2)
                         DCFlushRangeNoSync(dspStudio[i].spb, 0x36);
                     }
 
-                    fn_801C458C(0, 1, defaultStudioDPL2 != 0 ? 1 : 0);
-                    if (!(dspCmdBuffer = fn_801CE330(0x100))) {
+                    salActivateStudio(0, 1, defaultStudioDPL2 != 0 ? 1 : 0);
+                    if (!(dspCmdBuffer = salMalloc(0x100))) {
                         return 0;
                     }
-                    fn_801C4478();
+                    salInitHRTFBuffer();
                     return 1;
                 }
             }

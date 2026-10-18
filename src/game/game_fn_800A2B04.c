@@ -15,8 +15,8 @@ typedef struct Context800A2B04 {
 } Context800A2B04;
 
 extern void *fn_80201B8C();
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 
 int fn_800A2B04(void* object, int value)
 {
@@ -24,7 +24,7 @@ int fn_800A2B04(void* object, int value)
     int result = context->state->vtable->select(object, value);
 
     if (result == -1) {
-        int random = (u8)fn_800FBFB0();
+        int random = (u8)rand();
         if (random <= 0x7F) {
             result = 4;
         } else {

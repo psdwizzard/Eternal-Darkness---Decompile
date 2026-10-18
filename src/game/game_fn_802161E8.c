@@ -1,4 +1,4 @@
-/* fn_802161E8: DVDCheckDisk (Dolphin SDK dvd.c), with DVDGetDriveStatus
+/* DVDCheckDisk: DVDCheckDisk (Dolphin SDK dvd.c), with DVDGetDriveStatus
  * inlined. */
 typedef unsigned int u32;
 typedef int s32;
@@ -20,7 +20,7 @@ extern DVDCommandBlock DummyCommandBlock_806419E0;
 extern volatile s32 PausingFlag_8064DA10;
 extern s32 FatalErrorFlag_8064DA18;
 
-BOOL fn_802161E8(void) {
+BOOL DVDCheckDisk(void) {
     BOOL enabled;
     BOOL retVal;
     s32 state;

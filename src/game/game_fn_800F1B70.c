@@ -7,15 +7,15 @@ typedef struct TRKBuffer {
     u8 data[0x880];
 } TRKBuffer;
 
-extern int fn_800EFC6C(TRKBuffer *, u32);
-extern void fn_800EFC9C(TRKBuffer *, u8);
-extern int fn_800EF86C(TRKBuffer *, u8 *);
-extern int fn_800EF7B4(TRKBuffer *, u16 *);
-extern int fn_800EF6EC(TRKBuffer *, u32 *);
-extern int fn_800EFBC8(TRKBuffer *, const void *, u32);
-extern int fn_800F4CC0(void *, u32, u32 *, int, int);
-extern int fn_800EFAE8(TRKBuffer *, u16);
-extern int fn_800EF2A0(TRKBuffer *);
+extern int TRKSetBufferPosition(TRKBuffer *, u32);
+extern void TRKResetBuffer(TRKBuffer *, u8);
+extern int TRKReadBuffer1_ui8(TRKBuffer *, u8 *);
+extern int TRKReadBuffer1_ui16(TRKBuffer *, u16 *);
+extern int TRKReadBuffer1_ui32(TRKBuffer *, u32 *);
+extern int TRKAppendBuffer(TRKBuffer *, const void *, u32);
+extern int TRKTargetAccessMemory(void *, u32, u32 *, int, int);
+extern int TRKAppendBuffer1_ui16(TRKBuffer *, u16);
+extern int TRKMessageSend(TRKBuffer *);
 
 static inline void append(TRKBuffer *buffer, u8 value)
 {
@@ -31,7 +31,7 @@ static inline int sendReply(TRKBuffer *buffer)
     int retry = 3;
 
     do {
-        result = fn_800EF2A0(buffer);
+        result = TRKMessageSend(buffer);
         retry--;
         if (result == 0) break;
     } while (retry > 0);
@@ -39,7 +39,7 @@ static inline int sendReply(TRKBuffer *buffer)
 }
 
 /* MetroTRK: read target memory and send it back in the reply. */
-int fn_800F1B70(TRKBuffer *buffer)
+int TRKDoReadMemory(TRKBuffer *buffer)
 {
     u8 data[0x800];
     u32 address;
@@ -51,43 +51,43 @@ int fn_800F1B70(TRKBuffer *buffer)
     u8 status;
 
     if (buffer->length != 8) {
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, 2);
         return sendReply(buffer);
     }
 
-    fn_800EFC6C(buffer, 0);
-    result = fn_800EF86C(buffer, &message_command);
-    if (result == 0) result = fn_800EF86C(buffer, &options);
-    if (result == 0) result = fn_800EF7B4(buffer, &length);
-    if (result == 0) result = fn_800EF6EC(buffer, &address);
+    TRKSetBufferPosition(buffer, 0);
+    result = TRKReadBuffer1_ui8(buffer, &message_command);
+    if (result == 0) result = TRKReadBuffer1_ui8(buffer, &options);
+    if (result == 0) result = TRKReadBuffer1_ui16(buffer, &length);
+    if (result == 0) result = TRKReadBuffer1_ui32(buffer, &address);
 
     if (options & 2) {
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, 0x12);
         return sendReply(buffer);
     }
 
     if (length > 0x800) {
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, 0x11);
         return sendReply(buffer);
     }
 
-    fn_800EFC9C(buffer, 1);
+    TRKResetBuffer(buffer, 1);
     append(buffer, 0x80);
     append(buffer, 0);
 
     if (result == 0) {
         size = length;
-        result = fn_800F4CC0(data, address, &size,
+        result = TRKTargetAccessMemory(data, address, &size,
                              (options & 8) ? 0 : 1, 1);
         length = size;
-        if (result == 0) result = fn_800EFAE8(buffer, length);
-        if (result == 0) result = fn_800EFBC8(buffer, data, size);
+        if (result == 0) result = TRKAppendBuffer1_ui16(buffer, length);
+        if (result == 0) result = TRKAppendBuffer(buffer, data, size);
     }
 
     if (result != 0) {
@@ -99,7 +99,7 @@ int fn_800F1B70(TRKBuffer *buffer)
         case 0x706: status = 0x20; break;
         default: status = 3; break;
         }
-        fn_800EFC9C(buffer, 1);
+        TRKResetBuffer(buffer, 1);
         append(buffer, 0x80);
         append(buffer, status);
         result = sendReply(buffer);

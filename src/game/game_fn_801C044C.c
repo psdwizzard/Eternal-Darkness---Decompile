@@ -30,14 +30,14 @@ struct Voice {
 };
 #pragma pack()
 
-extern Voice* lbl_8064D43C;
-extern Voice* lbl_8064D440;
-extern u64 lbl_8064D448;
-extern void fn_801C09C4(Voice*);
-extern u32 fn_801CC6DC(u8);
+extern Voice* macActiveMacroRoot;
+extern Voice* macTimeQueueRoot;
+extern u64 macRealTime;
+extern void macMakeActive(Voice*);
+extern u32 hwIsActive(u8);
 extern void fn_801BEF40(Voice*);
 
-void fn_801C044C(u32 elapsed)
+void macHandle(u32 elapsed)
 {
     u64 scheduled;
     Voice* voice;
@@ -46,16 +46,16 @@ void fn_801C044C(u32 elapsed)
     volatile u32 stack_align;
     volatile u32 stack_align_2;
 
-    voice = lbl_8064D440;
+    voice = macTimeQueueRoot;
     while (voice != 0 &&
-           (scheduled = *(u64*)&voice->time_hi_098) <= lbl_8064D448) {
+           (scheduled = *(u64*)&voice->time_hi_098) <= macRealTime) {
         next = voice->scheduled_next_044;
-        fn_801C09C4(voice);
+        macMakeActive(voice);
         *(u64*)&voice->saved_hi_0A0 = scheduled;
         voice = next;
     }
 
-    voice = lbl_8064D43C;
+    voice = macActiveMacroRoot;
     while (voice != 0) {
         if (voice->active_068 != 0) {
             active = voice->value_054 != 0;
@@ -64,16 +64,16 @@ void fn_801C044C(u32 elapsed)
         }
         if (active != 0 &&
             (voice->flags_114 & 0x20) == 0 &&
-            fn_801CC6DC((u8)voice->id_F4) == 0 &&
+            hwIsActive((u8)voice->id_F4) == 0 &&
             voice->active_068 != 0 && voice->value_054 != 0) {
             voice->value_038 = voice->value_060;
             voice->value_034 = voice->value_054;
             voice->value_054 = 0;
-            fn_801C09C4(voice);
+            macMakeActive(voice);
         }
         fn_801BEF40(voice);
         voice = voice->next_03C;
     }
 
-    lbl_8064D448 += elapsed;
+    macRealTime += elapsed;
 }

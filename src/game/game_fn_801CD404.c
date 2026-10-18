@@ -5,9 +5,9 @@ typedef struct Pair {
     u32 second;
 } Pair;
 
-extern Pair lbl_8064D4DC;
+extern Pair salHooks;
 
-void fn_801CD404(Pair* value)
+void sndSetHooks(Pair* value)
 {
-    lbl_8064D4DC = *value;
+    salHooks = *value;
 }

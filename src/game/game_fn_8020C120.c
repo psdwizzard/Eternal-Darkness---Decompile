@@ -22,7 +22,7 @@ typedef struct OSContext {
 extern void OSClearContext(OSContext *context);
 
 /* OSInitContext: prepare the register state for a new execution context. */
-void fn_8020C120(register OSContext *context, u32 pc, u32 stackPointer)
+void OSInitContext(register OSContext *context, u32 pc, u32 stackPointer)
 {
     context->srr0 = pc;
     context->gpr[1] = stackPointer;

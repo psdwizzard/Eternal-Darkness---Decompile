@@ -26,7 +26,7 @@ typedef struct Effect {
 } Effect;
 
 extern u8 fn_801ABF34(Vec3*, float, u8, u8, int);
-extern void fn_801C8F50(Effect*, Vec3*, Vec3*, u8, int);
+extern void sndUpdateEmitter(Effect*, Vec3*, Vec3*, u8, int);
 
 void fn_801AC030(Effect* effect)
 {
@@ -38,7 +38,7 @@ void fn_801AC030(Effect* effect)
         effect->delta.y = effect->position.y - effect->previous_position.y;
         effect->delta.z = effect->position.z - effect->previous_position.z;
         if (effect->stationary == 0) {
-            fn_801C8F50(effect, &effect->position, &effect->delta,
+            sndUpdateEmitter(effect, &effect->position, &effect->delta,
                         effect->amount, 0);
         }
     }

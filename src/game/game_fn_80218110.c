@@ -50,19 +50,19 @@ typedef struct VIState {
 extern VIState lbl_80641AC8;
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
-extern void fn_8021764C(u16 dispPosY, u16 dispSizeY, u8 equ, u16 acv,
+extern void setVerticalRegs(u16 dispPosY, u16 dispSizeY, u8 equ, u16 acv,
                         u16 prbOdd, u16 prbEven, u16 psbOdd, u16 psbEven,
                         BOOL black);
 
 /* VISetBlack */
-void fn_80218110(BOOL black) {
+void VISetBlack(BOOL black) {
     VIState *state = &lbl_80641AC8;
     BOOL enabled = OSDisableInterrupts();
     VITiming *timing;
 
     state->position.black = black;
     timing = state->position.timing;
-    fn_8021764C(state->position.adjustedDispPosY, state->position.dispSizeY,
+    setVerticalRegs(state->position.adjustedDispPosY, state->position.dispSizeY,
                 timing->equ, timing->acv, timing->prbOdd, timing->prbEven,
                 timing->psbOdd, timing->psbEven, state->position.black);
     OSRestoreInterrupts(enabled);

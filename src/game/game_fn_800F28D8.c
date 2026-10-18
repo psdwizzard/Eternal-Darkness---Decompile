@@ -13,21 +13,21 @@ typedef struct TRKEvent {
     int buffer;
 } TRKEvent;
 
-extern int lbl_80329FE0;
-extern int fn_800EFC9C(TRKBuffer *, int);
-extern int fn_800EF2A0(TRKBuffer *);
-extern void fn_800EEF1C(TRKEvent *, u8);
-extern int fn_800EEF34(const TRKEvent *);
+extern int IsTRKConnected;
+extern int TRKResetBuffer(TRKBuffer *, int);
+extern int TRKMessageSend(TRKBuffer *);
+extern void TRKConstructEvent(TRKEvent *, u8);
+extern int TRKPostEvent(const TRKEvent *);
 
-int fn_800F28D8(TRKBuffer *arg)
+int TRKDoDisconnect(TRKBuffer *arg)
 {
     TRKEvent event;
     TRKBuffer *buffer = arg;
     int retry;
     int result;
 
-    lbl_80329FE0 = 0;
-    fn_800EFC9C(buffer, 1);
+    IsTRKConnected = 0;
+    TRKResetBuffer(buffer, 1);
     if (buffer->position < 0x880) {
         buffer->data[buffer->position++] = 0x80;
         buffer->length++;
@@ -38,14 +38,14 @@ int fn_800F28D8(TRKBuffer *arg)
     }
     retry = 3;
     do {
-        result = fn_800EF2A0(buffer);
+        result = TRKMessageSend(buffer);
         retry--;
         if (result == 0)
             break;
     } while (retry > 0);
     if (result == 0) {
-        fn_800EEF1C(&event, 1);
-        fn_800EEF34(&event);
+        TRKConstructEvent(&event, 1);
+        TRKPostEvent(&event);
     }
     return result;
 }

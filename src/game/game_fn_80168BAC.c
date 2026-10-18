@@ -13,12 +13,12 @@ typedef struct State {
     Value* limit;
 } State;
 
-extern Value* fn_801610E8(State*);
-extern void fn_8016057C(State*, int);
+extern Value* luaF_newclosure(State*);
+extern void luaD_checkstack(State*, int);
 
-Value* fn_80168BAC(State* state, int count)
+Value* luaV_closure(State* state, int count)
 {
-    Value* result = fn_801610E8(state);
+    Value* result = luaF_newclosure(state);
     int offset = count * sizeof(Value);
     Value* destination;
 
@@ -40,7 +40,7 @@ test:
     state->top->data.pointer = result;
     state->top->type = 5;
     if (state->top == state->limit)
-        fn_8016057C(state, 1);
+        luaD_checkstack(state, 1);
     state->top++;
     return result;
 }

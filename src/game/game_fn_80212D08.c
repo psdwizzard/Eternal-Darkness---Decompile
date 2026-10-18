@@ -23,7 +23,7 @@ static inline void SetTimeoutAlarm(OSTime timeout) {
 }
 
 /* Issue a DVD audio-stream command (0xE1) for the given subcommand. */
-s32 fn_80212D08(u32 subcmd, u32 length, u32 offset, DVDLowCallback callback) {
+s32 DVDLowAudioStream(u32 subcmd, u32 length, u32 offset, DVDLowCallback callback) {
     Callback_8064D9A0 = callback;
     StopAtNextInt_8064D998 = 0;
     __DIRegs[2] = subcmd | 0xE1000000;

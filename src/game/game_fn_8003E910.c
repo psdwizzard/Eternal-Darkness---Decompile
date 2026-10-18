@@ -126,7 +126,7 @@ void fn_800CF598(s32);
 void fn_800E0708(s32, s32, s32);
 void fn_800EA0FC(s32, ActorState *, s32, s32, s32 *);
 void fn_800EA3A0(s32, ActorState *);
-u8 fn_800FBFB0(void);
+u8 rand(void);
 s32 fn_8011EB04(u32);
 void fn_8011F114(Vec3 *, u32);
 s32 fn_8011F598(u32, s32, s32, s32, void *, s32);
@@ -722,8 +722,8 @@ s32 fn_8003E910(s32 context, s32 state, s32 event, s32 *result) {
         }
     } else if (state == 6) {
         if (eventType == 12) {
-            if ((fn_800FBFB0() & 3) && fn_800CAF7C(context) == 0 && moveMode == 1) {
-                if ((fn_800FBFB0() & 1) && fn_80072618(&pos, &found, 0x190, 4) != 0) {
+            if ((rand() & 3) && fn_800CAF7C(context) == 0 && moveMode == 1) {
+                if ((rand() & 1) && fn_80072618(&pos, &found, 0x190, 4) != 0) {
                     actor->approach = found;
                     fn_80201D2C(context, 0x2C);
                     fn_80201D14(context, 1);
@@ -940,7 +940,7 @@ s32 fn_8003E910(s32 context, s32 state, s32 event, s32 *result) {
                 void *wait = fn_801294DC(runtime, 0x2A, 0x20, 8);
                 if (wait != NULL) {
                     s32 length;
-                    start = fn_800FBFB0() + 1;
+                    start = rand() + 1;
                     length = fn_8012A1FC(runtime, 0x2A) + 1;
                     fn_80128A84(wait, start, length);
                     fn_80128C44(wait, fn_80204810, (owner << 8) | 7);

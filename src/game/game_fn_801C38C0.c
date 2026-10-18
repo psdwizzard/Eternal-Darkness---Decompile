@@ -1,7 +1,7 @@
 typedef unsigned short u16;
-extern u16 lbl_8064D470;
+extern u16 sp;
 
-void fn_801C38C0(void)
+void dataInitStack(void)
 {
-    lbl_8064D470 = 0;
+    sp = 0;
 }

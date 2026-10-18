@@ -1,7 +1,7 @@
 typedef unsigned int u32;
 
 /* Start a locked-cache DMA load, encoding the block count in both registers. */
-void fn_8020B990(void *destination, void *source, u32 blocks)
+void LCLoadBlocks(void *destination, void *source, u32 blocks)
 {
     register u32 control;
 

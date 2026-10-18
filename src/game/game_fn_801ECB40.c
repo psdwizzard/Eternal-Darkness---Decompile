@@ -8,7 +8,7 @@ typedef struct Color {
 } Color;
 
 extern Color lbl_8064C370;
-extern void fn_80229E00(int channel, Color* color);
+extern void GXSetTevKColor(int channel, Color* color);
 
 void fn_801ECB40(u8 value)
 {
@@ -25,8 +25,8 @@ void fn_801ECB40(u8 value)
         color = lbl_8064C370;
         first = color;
         second = first;
-        fn_80229E00(0, &second);
+        GXSetTevKColor(0, &second);
         third = first;
-        fn_80229E00(1, &third);
+        GXSetTevKColor(1, &third);
     }
 }

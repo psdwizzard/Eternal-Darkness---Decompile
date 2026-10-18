@@ -5,7 +5,7 @@ typedef unsigned int u32;
 
 extern u32 lbl_80650C14;
 extern u16 lbl_80650C18;
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_8019C26C(void*, void*, void*, void*, void*);
 
 void fn_8019BFA0(u8* object)
@@ -34,13 +34,13 @@ void fn_8019BFA0(u8* object)
     i = 0;
     offset = 0;
     for (; i < count; i++) {
-        u32 random = fn_800FBFB0();
+        u32 random = rand();
         element = base + i;
         *(u16*)(cursor + 0x28) = offset + (random & 0x1f);
         element[0] = *(s16*)(source + 0x14);
         element[8] = element[0] + 1;
         element[0x10] = 0;
-        element[0x18] = (fn_800FBFB0() & 7) + 25;
+        element[0x18] = (rand() & 7) + 25;
         element[0x20] = 0;
         source += 0x38;
         offset += 0x80;

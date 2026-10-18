@@ -7,9 +7,9 @@ typedef struct Entry {
     u8 rest[7];
 } Entry;
 
-extern Entry* lbl_8064D4AC;
+extern Entry* dspVoice;
 
-u32 fn_801CC6DC(u32 index)
+u32 hwIsActive(u32 index)
 {
-    return lbl_8064D4AC[index].active != 0;
+    return dspVoice[index].active != 0;
 }

@@ -21,7 +21,7 @@ extern void* fn_8011FB4C(void*);
 extern unsigned int fn_8011FAEC(void*);
 extern int fn_80137658(void*, Contact*, void*, void*, float);
 extern int fn_801377A4(void*, Contact*, void*, void*);
-extern float fn_80211D4C(Contact*, void*);
+extern float PSVECSquareDistance(Contact*, void*);
 
 int fn_8013A3C8(void* object, Contact* contact, Result* result, void** hit)
 {
@@ -45,7 +45,7 @@ int fn_8013A3C8(void* object, Contact* contact, Result* result, void** hit)
                 ok = fn_801377A4(object, contact, other, local);
             }
             if (ok != 0) {
-                float distance = fn_80211D4C(contact, local);
+                float distance = PSVECSquareDistance(contact, local);
                 found = 1;
                 if (distance < best) {
                     best = distance;

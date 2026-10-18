@@ -30,7 +30,7 @@ extern void fn_801A7588(void *, u32);
 extern u32 fn_801A74C0(void *);
 extern u32 fn_801A74C8(void *, u32);
 extern void fn_8020104C(int, int, int, int, float);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern int fn_8011F6A4(void *, int, int, int, void *, int);
 extern void fn_8014D478(void *, Vec3 *, float *, int, int, int *, int);
 extern int lbl_802FC5BC[];
@@ -64,14 +64,14 @@ int fn_8003DED0(int *object, void *owner, EffectState *state)
             fn_801A7588(effect, 0x8000);
             fn_801A74C8(effect, fn_801A74C0(effect) | 0x1000);
             fn_8020104C(0xED, handle, handle, (int)effect, lbl_8064E26C);
-            state->countdown = (fn_800FBFB0() & 0x7F) + 0xEC;
+            state->countdown = (rand() & 0x7F) + 0xEC;
             if (fn_8011F6A4(owner, 0, 1, -1, &query, 1) != -1) {
                 position = query.position;
             } else {
                 position.z += lbl_8064E2D0;
             }
-            rotation.x = (float)(8 - (int)(fn_800FBFB0() & 0xF));
-            rotation.y = (float)(8 - (int)(fn_800FBFB0() & 0xF));
+            rotation.x = (float)(8 - (int)(rand() & 0xF));
+            rotation.y = (float)(8 - (int)(rand() & 0xF));
             rotation.z = lbl_8064E2D4;
             fn_8014D478(owner, &position, &rotation.x, 3, 2, lbl_802FC5BC + 6, 3);
             result = 1;

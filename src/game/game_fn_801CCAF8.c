@@ -7,9 +7,9 @@ typedef struct Entry {
     u8 pad91[0x63];
 } Entry;
 
-extern Entry* lbl_8064D4AC;
+extern Entry* dspVoice;
 
-u8 fn_801CCAF8(u32 index)
+u8 hwGetSampleType(u32 index)
 {
-    return lbl_8064D4AC[index].field90;
+    return dspVoice[index].field90;
 }

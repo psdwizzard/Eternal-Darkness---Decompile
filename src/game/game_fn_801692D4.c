@@ -7,10 +7,10 @@ typedef struct Text {
     char text[1];
 } Text;
 
-extern int fn_800FD198(const char*, const char*);
+extern int strcoll(const char*, const char*);
 extern size_t strlen(const char*);
 
-int fn_801692D4(Text* left, Text* right)
+int luaV_strcomp(Text* left, Text* right)
 {
     char* left_text = left->text;
     unsigned int left_length = left->length;
@@ -18,7 +18,7 @@ int fn_801692D4(Text* left, Text* right)
     unsigned int right_length = right->length;
 
     for (;;) {
-        int result = fn_800FD198(left_text, right_text);
+        int result = strcoll(left_text, right_text);
         unsigned int length;
 
         if (result != 0) {

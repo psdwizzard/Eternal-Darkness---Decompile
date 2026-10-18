@@ -46,7 +46,7 @@ static inline void SetTimer(OSAlarm* alarm)
 }
 
 /* OSCancelAlarm */
-void fn_8020A93C(OSAlarm* alarm)
+void OSCancelAlarm(OSAlarm* alarm)
 {
     OSAlarm* next;
     BOOL enabled;

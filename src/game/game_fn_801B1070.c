@@ -1,10 +1,10 @@
-extern void fn_8021A468(int);
-extern void fn_8021A494(int);
-extern void fn_8021A1A8(int);
+extern void AISetStreamVolLeft(int);
+extern void AISetStreamVolRight(int);
+extern void AISetStreamPlayState(int);
 
-void fn_801B1070(void)
+void __DTKStopAi(void)
 {
-    fn_8021A468(0);
-    fn_8021A494(0);
-    fn_8021A1A8(0);
+    AISetStreamVolLeft(0);
+    AISetStreamVolRight(0);
+    AISetStreamPlayState(0);
 }

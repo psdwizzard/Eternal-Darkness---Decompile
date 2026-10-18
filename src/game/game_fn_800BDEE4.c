@@ -18,7 +18,7 @@ extern void *fn_8015C28C(int);
 extern int fn_800BD944(void);
 extern int fn_80201B54(int);
 extern int fn_800BD194(int, RuntimeState *);
-extern int fn_8020D250(unsigned char *, int, int);
+extern int OSSendMessage(unsigned char *, int, int);
 extern Slot lbl_80320DF0[];
 extern unsigned char lbl_805E2B1C[];
 extern int lbl_8064D5A8;
@@ -41,7 +41,7 @@ int fn_800BDEE4(int object, RuntimeState *runtime)
 
         slot_index = runtime->slot_index;
         if ((lbl_80320DF0[slot_index].flags & 2) == 0) {
-            result = fn_8020D250(lbl_805E2B1C, object_id, 0);
+            result = OSSendMessage(lbl_805E2B1C, object_id, 0);
             if (result != 0) {
                 if (lbl_80320DF0[slot_index].index == -1)
                     lbl_80320DF0[slot_index].index = -2;

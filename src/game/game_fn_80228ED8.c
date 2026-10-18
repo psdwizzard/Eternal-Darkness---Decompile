@@ -17,11 +17,11 @@ typedef struct GXData {
 
 extern GXData *gx;
 
-void fn_80228E0C(u32 tmap, u32 tcoord);
+void __SetSURegs(u32 tmap, u32 tcoord);
 
 #define GET_REG_FIELD(reg, width, shift) (((reg) >> (shift)) & ((1 << (width)) - 1))
 
-void fn_80228ED8(void)
+void __GXSetSUTexRegs(void)
 {
     u32 nStages;
     u32 nIndStages;
@@ -54,7 +54,7 @@ void fn_80228ED8(void)
                 break;
             }
             if (!(gx->tcsManEnab & (1 << coord))) {
-                fn_80228E0C(tmap, coord);
+                __SetSURegs(tmap, coord);
             }
         }
         for (i = 0; i < nStages; i++) {
@@ -67,7 +67,7 @@ void fn_80228ED8(void)
                 coord = GET_REG_FIELD(*ptref, 3, 3);
             }
             if (tmap != 0xFF && !(gx->tcsManEnab & (1 << coord)) && (gx->tevTcEnab & (1 << i))) {
-                fn_80228E0C(tmap, coord);
+                __SetSURegs(tmap, coord);
             }
         }
     }

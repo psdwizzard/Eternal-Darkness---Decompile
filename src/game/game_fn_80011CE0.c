@@ -23,9 +23,9 @@ typedef struct ObjectInfo {
 } ObjectInfo;
 
 extern const char lbl_8023BEF8[];
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201B8C();
 
@@ -42,16 +42,16 @@ s32 fn_80011CE0(void* script)
     Type13Entry* target;
 
     parser = script;
-    if (fn_8016A598(parser) != 5) {
-        fn_80163BB4(parser, lbl_8023BEF8, 5, fn_8016A598(parser));
+    if (lua_gettop(parser) != 5) {
+        luaO_verror(parser, lbl_8023BEF8, 5, lua_gettop(parser));
         return 0;
     }
 
-    handle = (s32)fn_8016A694(parser, 1);
-    index = (s32)fn_8016A694(parser, 2);
-    first = (s32)fn_8016A694(parser, 3);
-    second = (s32)fn_8016A694(parser, 4);
-    third = (s32)fn_8016A694(parser, 5);
+    handle = (s32)lua_tonumber(parser, 1);
+    index = (s32)lua_tonumber(parser, 2);
+    first = (s32)lua_tonumber(parser, 3);
+    second = (s32)lua_tonumber(parser, 4);
+    third = (s32)lua_tonumber(parser, 5);
     entry = fn_80201814(handle);
     if (entry != 0) {
         object = fn_80201B8C(entry);

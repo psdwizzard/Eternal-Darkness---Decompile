@@ -13,7 +13,7 @@ typedef struct Entry {
 
 extern Entry lbl_805B40A0[5];
 extern u32 lbl_8064D044;
-extern void fn_8021959C(int, int);
+extern void PADControlMotor(int, int);
 
 void fn_8014426C(void)
 {
@@ -35,11 +35,11 @@ void fn_8014426C(void)
     lbl_8064D044++;
     if (highest != &sentinel) {
         if (lbl_8064D044 % (highest->key.kind + highest->key.priority) < highest->key.kind) {
-            fn_8021959C(0, 1);
+            PADControlMotor(0, 1);
         } else {
-            fn_8021959C(0, 0);
+            PADControlMotor(0, 0);
         }
     } else {
-        fn_8021959C(0, 0);
+        PADControlMotor(0, 0);
     }
 }

@@ -23,7 +23,7 @@ static inline void SetTimeoutAlarm(OSTime timeout) {
 }
 
 /* Request drive audio status and start the command timeout. */
-s32 fn_80212DA0(u32 subcmd, DVDLowCallback callback) {
+s32 DVDLowRequestAudioStatus(u32 subcmd, DVDLowCallback callback) {
     Callback_8064D9A0 = callback;
     StopAtNextInt_8064D998 = 0;
     __DIRegs[2] = subcmd | 0xE2000000;

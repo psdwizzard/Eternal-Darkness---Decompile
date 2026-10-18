@@ -4,7 +4,7 @@ extern const float lbl_80651608;
 extern const float lbl_8065160C;
 
 /* Construct a translation matrix. */
-void fn_80211484(register Mtx m, float x, float y, float z)
+void PSMTXTrans(register Mtx m, float x, float y, float z)
 {
     register float zero = lbl_8065160C;
     float one = lbl_80651608;

@@ -13,7 +13,7 @@ typedef struct GXData {
 extern GXData *gx;
 
 /* Install the texture region callback and return the previous callback. */
-GXTexRegionCallback fn_80228DE4(GXTexRegionCallback callback)
+GXTexRegionCallback GXSetTexRegionCallback(GXTexRegionCallback callback)
 {
     GXTexRegionCallback previous = gx->texRegionCallback;
     gx->texRegionCallback = callback;

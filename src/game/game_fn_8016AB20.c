@@ -2,12 +2,12 @@ typedef struct Context {
     void* current;
 } Context;
 
-extern void* fn_801670A8(Context*, const char*);
-extern void fn_80169068(Context*, void*);
+extern void* luaS_new(Context*, const char*);
+extern void luaV_setglobal(Context*, void*);
 
-void fn_8016AB20(Context* context, const char* name)
+void lua_setglobal(Context* context, const char* name)
 {
     void* current = context->current;
-    fn_80169068(context, fn_801670A8(context, name));
+    luaV_setglobal(context, luaS_new(context, name));
     context->current = (char*)current - 16;
 }

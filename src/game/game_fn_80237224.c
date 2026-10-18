@@ -28,39 +28,39 @@ typedef struct AudioTimer {
 } AudioTimer;
 typedef struct AudioVoice { s32 state[2]; s32 flags; s32 rest[4]; } AudioVoice;
 
-extern s32 fn_8020AFE4(s32);
-extern void fn_8020EF54(AudioTimer *, const char *);
-extern void fn_8020EF80(AudioTimer *);
-extern long long fn_8020F088(AudioTimer *);
-extern void fn_8020F0F8(AudioTimer *);
-extern s32 fn_8022EAA4(AudioStream *, AudioPacket *);
-extern s32 fn_8022EBD4(AudioStream *, AudioPage *);
-extern s32 fn_8022EF30(AudioSync *, AudioPage *);
-extern s32 fn_8022F1A8(AudioSync *, s32);
-extern void *fn_8022F1D0(AudioSync *, s32);
-extern s32 fn_8022F28C(AudioSync *);
-extern s32 fn_8022F2C4(AudioSync *);
-extern s32 fn_8022F63C(AudioStream *, s32);
-extern s32 fn_8022F6CC(AudioPage *);
-extern s32 fn_8022F6F0(AudioPage *);
+extern s32 OSCheckHeap(s32);
+extern void OSInitStopwatch(AudioTimer *, const char *);
+extern void OSStartStopwatch(AudioTimer *);
+extern long long OSCheckStopwatch(AudioTimer *);
+extern void OSResetStopwatch(AudioTimer *);
+extern s32 ogg_stream_packetout(AudioStream *, AudioPacket *);
+extern s32 ogg_stream_pagein(AudioStream *, AudioPage *);
+extern s32 ogg_sync_pageout(AudioSync *, AudioPage *);
+extern s32 ogg_sync_wrote(AudioSync *, s32);
+extern void *ogg_sync_buffer(AudioSync *, s32);
+extern s32 ogg_sync_clear(AudioSync *);
+extern s32 ogg_sync_init(AudioSync *);
+extern s32 ogg_stream_init(AudioStream *, s32);
+extern s32 ogg_page_serialno(AudioPage *);
+extern s32 ogg_page_eos(AudioPage *);
 extern void fn_8022F8F8(void);
 extern void fn_8022F8FC(void);
-extern s32 fn_8022F93C(AudioDecoder *, s32);
-extern s32 fn_8022F974(AudioDecoder *, s16 ***);
-extern s32 fn_8022FA30(AudioDecoder *, AudioBlock *);
-extern s32 fn_8022FE1C(AudioDecoder *, AudioInfo *);
-extern s32 fn_802300D0(AudioDecoder *, AudioBlock *);
-extern s32 fn_80231F10(AudioInfo *, AudioComment *, AudioPacket *);
-extern void fn_8023283C(AudioInfo *);
-extern void fn_8023287C(AudioComment *);
-extern s32 fn_80236164(AudioBlock *, AudioPacket *);
+extern s32 vorbis_synthesis_read(AudioDecoder *, s32);
+extern s32 vorbis_synthesis_pcmout(AudioDecoder *, s16 ***);
+extern s32 vorbis_synthesis_blockin(AudioDecoder *, AudioBlock *);
+extern s32 vorbis_synthesis_init(AudioDecoder *, AudioInfo *);
+extern s32 vorbis_block_init(AudioDecoder *, AudioBlock *);
+extern s32 vorbis_synthesis_headerin(AudioInfo *, AudioComment *, AudioPacket *);
+extern void vorbis_info_init(AudioInfo *);
+extern void vorbis_comment_init(AudioComment *);
+extern s32 vorbis_synthesis(AudioBlock *, AudioPacket *);
 extern s32 fn_80237704(s16 *, s32, s32);
 extern s32 fn_80237A04(void *, s32);
 extern void fn_80237DB4(const char *);
 extern char lbl_8023B8E0[];
 extern s16 lbl_80647C5C[654];
 extern volatile AudioVoice lbl_8064A548[2];
-extern s32 lbl_8064C3C8;
+extern s32 __OSCurrHeap;
 extern s32 lbl_8064C4D8;
 extern s32 lbl_8064DC34;
 extern s32 lbl_8064DC38;
@@ -96,74 +96,74 @@ void fn_80237224(s32 source)
     s32 stride;
     s16 sample;
 
-    fn_8020AFE4(lbl_8064C3C8);
-    fn_8020EF54(&timer, lbl_8023B8E0);
-    fn_8020F0F8(&timer);
-    fn_8020EF80(&timer);
-    fn_8022F2C4(&sync);
+    OSCheckHeap(__OSCurrHeap);
+    OSInitStopwatch(&timer, lbl_8023B8E0);
+    OSResetStopwatch(&timer);
+    OSStartStopwatch(&timer);
+    ogg_sync_init(&sync);
     fn_80237DB4((const char *)source);
     done = 0;
-    source = fn_80237A04(fn_8022F1D0(&sync, 0x1000), 0x1000);
-    fn_8022F1A8(&sync, source);
-    switch (fn_8022EF30(&sync, &page)) {
+    source = fn_80237A04(ogg_sync_buffer(&sync, 0x1000), 0x1000);
+    ogg_sync_wrote(&sync, source);
+    switch (ogg_sync_pageout(&sync, &page)) {
     case 1: break;
     default: goto cleanup;
     }
-    fn_8022F63C(&stream, fn_8022F6CC(&page));
-    fn_8023283C(&info);
-    fn_8023287C(&comment);
-    if (fn_8022EBD4(&stream, &page) < 0) goto cleanup;
-    if (fn_8022EAA4(&stream, &packet) != 1) goto cleanup;
+    ogg_stream_init(&stream, ogg_page_serialno(&page));
+    vorbis_info_init(&info);
+    vorbis_comment_init(&comment);
+    if (ogg_stream_pagein(&stream, &page) < 0) goto cleanup;
+    if (ogg_stream_packetout(&stream, &packet) != 1) goto cleanup;
     fn_8022F8FC();
-    if (fn_80231F10(&info, &comment, &packet) < 0) goto cleanup;
+    if (vorbis_synthesis_headerin(&info, &comment, &packet) < 0) goto cleanup;
     fn_8022F8FC();
     /* Finish the two remaining codec header packets before decoding. */
     headers = 0;
     while (headers < 2) {
         while (headers < 2) {
-            result = fn_8022EF30(&sync, &page);
+            result = ogg_sync_pageout(&sync, &page);
             if (result == 0) break;
             if (result == 1) {
-                fn_8022EBD4(&stream, &page);
+                ogg_stream_pagein(&stream, &page);
                 while (headers < 2) {
-                    result = fn_8022EAA4(&stream, &packet);
+                    result = ogg_stream_packetout(&stream, &packet);
                     if (result == 0) break;
                     if (result < 0) break;
-                    fn_80231F10(&info, &comment, &packet);
+                    vorbis_synthesis_headerin(&info, &comment, &packet);
                     headers++;
                 }
             }
         }
-        bytes = fn_80237A04(fn_8022F1D0(&sync, 0x1000), 0x1000);
+        bytes = fn_80237A04(ogg_sync_buffer(&sync, 0x1000), 0x1000);
         if (bytes == 0 && headers < 2) break;
-        fn_8022F1A8(&sync, bytes);
+        ogg_sync_wrote(&sync, bytes);
     }
     comments = comment.comments;
     while (*comments) comments++;
     channels = &info.channels;
     lbl_8064C4D8 = 512 / *channels;
     fn_8022F8FC();
-    fn_8022FE1C(&decoder, &info);
+    vorbis_synthesis_init(&decoder, &info);
     fn_8022F8FC();
-    fn_802300D0(&decoder, &block);
+    vorbis_block_init(&decoder, &block);
     fn_8022F8FC();
     while (!done) {
         while (!done) {
-            result = fn_8022EF30(&sync, &page);
+            result = ogg_sync_pageout(&sync, &page);
             if (result == 0) break;
             if (result < 0) {
                 done = 1;
                 break;
             }
-            fn_8022EBD4(&stream, &page);
+            ogg_stream_pagein(&stream, &page);
             do {
-                result = fn_8022EAA4(&stream, &packet);
+                result = ogg_stream_packetout(&stream, &packet);
                 if (result == 0 || lbl_8064DC4C) break;
                 if (result >= 0) {
-                    if (fn_80236164(&block, &packet) == 0) {
-                        fn_8022FA30(&decoder, &block);
+                    if (vorbis_synthesis(&block, &packet) == 0) {
+                        vorbis_synthesis_blockin(&decoder, &block);
                     }
-                    while ((result = fn_8022F974(&decoder, &pcm)) > 0) {
+                    while ((result = vorbis_synthesis_pcmout(&decoder, &pcm)) > 0) {
                         samples = lbl_8064C4D8;
                         if (result < samples) samples = result;
                         /* Convert the separate channels into interleaved PCM. */
@@ -184,22 +184,22 @@ void fn_80237224(s32 source)
                             break;
                         }
                         fn_8022F8FC();
-                        fn_8022F93C(&decoder, samples);
+                        vorbis_synthesis_read(&decoder, samples);
                     }
                 }
             } while (!lbl_8064DC4C);
-            if (fn_8022F6F0(&page) || lbl_8064DC4C) done = 1;
+            if (ogg_page_eos(&page) || lbl_8064DC4C) done = 1;
         }
         if (!done) {
-            bytes = fn_80237A04(fn_8022F1D0(&sync, 0x1000), 0x1000);
-            fn_8022F1A8(&sync, bytes);
+            bytes = fn_80237A04(ogg_sync_buffer(&sync, 0x1000), 0x1000);
+            ogg_sync_wrote(&sync, bytes);
             if (bytes == 0) done = 1;
         }
     }
     fn_8022F8F8();
 cleanup:
-    fn_8020F088(&timer);
-    fn_8022F28C(&sync);
+    OSCheckStopwatch(&timer);
+    ogg_sync_clear(&sync);
     lbl_8064DC34 = 0;
     lbl_8064DC38 = 0;
     voice = lbl_8064A548;

@@ -42,7 +42,7 @@ extern void *fn_801A7778(void *);
 extern void fn_8003B0BC(void *, Vec3 *, Vec3 *, void *, void *, int);
 extern void fn_8003B630(void *, Vec3 *, Vec3 *, HitInfo *, void *);
 extern int fn_8003B2A8(void *, void *, void *, HitInfo *, Candidate *);
-extern void fn_800FBE38(void *, unsigned long, unsigned long, int (*)(const void *, const void *));
+extern void qsort(void *, unsigned long, unsigned long, int (*)(const void *, const void *));
 extern int fn_8003B878(const void *, const void *);
 extern int fn_8011F6A4(void *, int, int, int, QueryResult *, int);
 extern void fn_8011F114(Vec3 *, void *);
@@ -112,7 +112,7 @@ u32 fn_8003A6DC(void *object, void *target, void *area)
     count = fn_8003B2A8(object, target, area, &hit, list);
     if (count > 0) {
         if (count > 1) {
-            fn_800FBE38(list, count, 0x10, fn_8003B878);
+            qsort(list, count, 0x10, fn_8003B878);
         }
         owner = fn_80201BC8(fn_80201814(list[0].id));
         for (i = 0; i < 16; i++) {

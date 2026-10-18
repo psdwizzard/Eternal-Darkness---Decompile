@@ -8,9 +8,9 @@ typedef struct CacheEntry {
     u8 tail;
 } CacheEntry;
 
-extern CacheEntry lbl_8061A9C4[8][4];
-extern CacheEntry lbl_8061A544[8][4];
-extern u32 lbl_80630770[8][16];
+extern CacheEntry inpAuxA[8][4];
+extern CacheEntry inpAuxB[8][4];
+extern u32 inpGlobalMIDIDirtyFlags[8][16];
 
 static inline void inpResetGlobalMIDIDirtyFlags(void)
 {
@@ -19,12 +19,12 @@ static inline void inpResetGlobalMIDIDirtyFlags(void)
 
     for (i = 0; i < 8; ++i) {
         for (j = 0; j < 16; ++j) {
-            lbl_80630770[i][j] = 0xff;
+            inpGlobalMIDIDirtyFlags[i][j] = 0xff;
         }
     }
 }
 
-void fn_801CBE58(u8* voice)
+void inpInit(u8* voice)
 {
     if (voice != 0) {
         voice[0x218] = 7;
@@ -83,8 +83,8 @@ void fn_801CBE58(u8* voice)
 
         for (i = 0; i < 8; i++) {
             for (j = 0; j < 4; j++) {
-                lbl_8061A9C4[i][j].state = 0;
-                lbl_8061A544[i][j].state = 0;
+                inpAuxA[i][j].state = 0;
+                inpAuxB[i][j].state = 0;
             }
         }
 

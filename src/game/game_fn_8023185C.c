@@ -26,11 +26,11 @@ typedef struct FloorLook {
 } FloorLook;
 
 extern void *fn_8022F780(s32 size);
-extern void fn_800FBE38(void *base, unsigned long count, unsigned long size,
+extern void qsort(void *base, unsigned long count, unsigned long size,
                        int (*compare)(const void *, const void *));
-extern int fn_80231C9C(const void *, const void *);
+extern int icomp(const void *, const void *);
 
-FloorLook *fn_8023185C(void *dsp, void *mode, void *floor_info)
+FloorLook *floor1_look(void *dsp, void *mode, void *floor_info)
 {
     FloorInfo *source = (FloorInfo *)floor_info;
     FloorLook *look = fn_8022F780(sizeof(FloorLook));
@@ -71,7 +71,7 @@ FloorLook *fn_8023185C(void *dsp, void *mode, void *floor_info)
             } while (++i < count + 2);
         }
     }
-    fn_800FBE38(sort, count + 2, sizeof(*sort), fn_80231C9C);
+    qsort(sort, count + 2, sizeof(*sort), icomp);
     for (i = 0; i < count + 2; i++) {
         look->forward_index[i] = sort[i] - source->postlist;
     }

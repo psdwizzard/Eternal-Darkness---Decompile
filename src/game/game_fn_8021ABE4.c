@@ -2,13 +2,13 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-extern u32 lbl_8064DB1C;
-extern u32 lbl_8064DB20;
-extern u32 lbl_8064DB24;
+extern u32 __AR_Size;
+extern u32 __AR_InternalSize;
+extern u32 __AR_ExpansionSize;
 extern void DCFlushRange(void*, u32);
 extern void DCInvalidateRange(void*, u32);
 extern void* memset(void*, int, unsigned long);
-extern void fn_80209AD4(void);
+extern void PPCSync(void);
 
 volatile u16 DSP[] : 0xCC005000;
 
@@ -42,7 +42,7 @@ static inline void WaitDMA(void)
 }
 
 /* Probe the expansion ARAM address lines by checking which test writes alias. */
-void fn_8021ABE4(void)
+void __ARChecksize(void)
 {
     u8 testStorage[63];
     u8 clearStorage[63];
@@ -56,7 +56,7 @@ void fn_8021ABE4(void)
 
     while (!(DSP[0xB] & 1)) {
     }
-    size = lbl_8064DB20 = 0x01000000;
+    size = __AR_InternalSize = 0x01000000;
     DSP[9] = (DSP[9] & ~0x3F) | 0x23;
     mode = 3;
     test = (u32*)(((u32)testStorage + 31) & ~31);
@@ -68,7 +68,7 @@ void fn_8021ABE4(void)
     }
     DCFlushRange(test, 32);
     DCFlushRange(clear, 32);
-    lbl_8064DB24 = 0;
+    __AR_ExpansionSize = 0;
 
     WriteDMA((u32)clear, size, 32);
     WaitDMA();
@@ -88,24 +88,24 @@ void fn_8021ABE4(void)
     DCInvalidateRange(read, 32);
     ReadDMA((u32)read, size, 32);
     WaitDMA();
-    fn_80209AD4();
+    PPCSync();
     if (read[0] == test[0]) {
         memset(read, 0, 32);
         DCFlushRange(read, 32);
         ReadDMA((u32)read, size + 0x200000, 32);
         WaitDMA();
-        fn_80209AD4();
+        PPCSync();
         if (read[0] == test[0]) {
-            lbl_8064DB24 = 0x200000;
+            __AR_ExpansionSize = 0x200000;
             size += 0x200000;
         } else {
             memset(read, 0, 32);
             DCFlushRange(read, 32);
             ReadDMA((u32)read, size + 0x1000000, 32);
             WaitDMA();
-            fn_80209AD4();
+            PPCSync();
             if (read[0] == test[0]) {
-                lbl_8064DB24 = 0x400000;
+                __AR_ExpansionSize = 0x400000;
                 mode |= 8;
                 size += 0x400000;
             } else {
@@ -113,9 +113,9 @@ void fn_8021ABE4(void)
                 DCFlushRange(read, 32);
                 ReadDMA((u32)read, size + 0x200, 32);
                 WaitDMA();
-                fn_80209AD4();
+                PPCSync();
                 if (read[0] == test[0]) {
-                    lbl_8064DB24 = 0x800000;
+                    __AR_ExpansionSize = 0x800000;
                     mode |= 0x10;
                     size += 0x800000;
                 } else {
@@ -123,13 +123,13 @@ void fn_8021ABE4(void)
                     DCFlushRange(read, 32);
                     ReadDMA((u32)read, size + 0x400000, 32);
                     WaitDMA();
-                    fn_80209AD4();
+                    PPCSync();
                     if (read[0] == test[0]) {
-                        lbl_8064DB24 = 0x1000000;
+                        __AR_ExpansionSize = 0x1000000;
                         mode |= 0x18;
                         size += 0x1000000;
                     } else {
-                        lbl_8064DB24 = 0x2000000;
+                        __AR_ExpansionSize = 0x2000000;
                         mode |= 0x20;
                         size += 0x2000000;
                     }
@@ -139,5 +139,5 @@ void fn_8021ABE4(void)
         DSP[9] = (DSP[9] & ~0x3F) | mode;
     }
     *(volatile u32*)0xC00000D0 = size;
-    lbl_8064DB1C = size;
+    __AR_Size = size;
 }

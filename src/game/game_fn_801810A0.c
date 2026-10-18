@@ -67,9 +67,9 @@ extern u32 lbl_80650968;
 
 extern void* memcpy(void*, const void*, unsigned int);
 extern void fn_8018163C(Entry801810A0*, const ShortCoord3*, s16, int);
-extern void fn_80211380(Matrix34, const FloatCoord3*, float);
-extern void fn_80211710(Matrix34, const FloatCoord3*, FloatCoord3*);
-extern u32 fn_800FBFB0(void);
+extern void PSMTXRotAxisRad(Matrix34, const FloatCoord3*, float);
+extern void PSMTXMultVec(Matrix34, const FloatCoord3*, FloatCoord3*);
+extern u32 rand(void);
 extern void fn_8018E230(u8*, u8*, u8, u8, u8, u8);
 extern void fn_8018E260(u8*, u8, u8);
 extern void fn_801806D4(u8*, u32*, int);
@@ -123,11 +123,11 @@ void fn_801810A0(Object801810A0* object, u8* config)
         position.x = entry->x;
         position.y = entry->y;
         position.z = entry->z;
-        fn_80211380(state->transform, &state->transform_source,
+        PSMTXRotAxisRad(state->transform, &state->transform_source,
                     lbl_8065096C * (state->transform_source.z < lbl_8065095C
                                      ? -state->transform_source.z
                                      : state->transform_source.z));
-        fn_80211710(state->transform, &position, &position);
+        PSMTXMultVec(state->transform, &position, &position);
         entry->x = (s16)(position.x + object->base.x);
         entry->y = (s16)(position.y + object->base.y);
         entry->z = (s16)position.z;
@@ -147,7 +147,7 @@ void fn_801810A0(Object801810A0* object, u8* config)
     while (outer < inner_count) {
         if (state->mode == 4) {
             fn_8018E230((u8*)entry, &entry->render[3], 4,
-                        (u8)((fn_800FBFB0() & 7) * 0x14), 0xA, 0xF0);
+                        (u8)((rand() & 7) * 0x14), 0xA, 0xF0);
             fn_8018E260((u8*)entry, 0xF0, 0x78);
         } else {
             u32 render = lbl_80650968;

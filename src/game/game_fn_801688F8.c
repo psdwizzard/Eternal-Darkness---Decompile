@@ -8,12 +8,12 @@ struct InputStream {
 
 #pragma use_lmw_stmw on
 
-extern void* fn_801688B0(void*, InputStream*);
-extern int fn_80167D68(InputStream*);
-extern void fn_80163BB4(void*, const char*, ...);
+extern void* LoadChunk(void*, InputStream*);
+extern int ZNAME(InputStream*);
+extern void luaO_verror(void*, const char*, ...);
 extern const char lbl_8024FC84[];
 
-void* fn_801688F8(void* object, InputStream* input)
+void* luaU_undump(void* object, InputStream* input)
 {
     void* result = 0;
     int byte;
@@ -24,7 +24,7 @@ void* fn_801688F8(void* object, InputStream* input)
         byte = input->refill(input);
 
     if (byte == 0x1B)
-        result = fn_801688B0(object, input);
+        result = LoadChunk(object, input);
 
     if (input->remaining-- != 0)
         byte = *input->cursor++;
@@ -32,7 +32,7 @@ void* fn_801688F8(void* object, InputStream* input)
         byte = input->refill(input);
 
     if (byte != -1)
-        fn_80163BB4(object, lbl_8024FC84, fn_80167D68(input));
+        luaO_verror(object, lbl_8024FC84, ZNAME(input));
 
     return result;
 }

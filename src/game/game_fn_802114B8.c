@@ -3,7 +3,7 @@ typedef float Mtx[3][4];
 extern const float lbl_8065160C;
 
 /* Construct a scale matrix. */
-void fn_802114B8(register Mtx m, float x, float y, float z)
+void PSMTXScale(register Mtx m, float x, float y, float z)
 {
     register float zero = lbl_8065160C;
 

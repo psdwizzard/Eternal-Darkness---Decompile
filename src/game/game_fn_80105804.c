@@ -20,10 +20,10 @@ typedef struct Decoder {
     u8 value_shift;
 } Decoder;
 
-extern s16 fn_80102C6C(BitReader *reader);
-extern s32 fn_801042B4(s32 decoder, s32 *sums, u8 count, s32 base,
+extern s16 decodeHuff(BitReader *reader);
+extern s32 GetMCAotSum(s32 decoder, s32 *sums, u8 count, s32 base,
                      s32 baseStride, s32 plane);
-extern void fn_80104BBC(u8 *dst, s32 dstStride, u8 *src, s32 srcStride,
+extern void _MotionComp(u8 *dst, s32 dstStride, u8 *src, s32 srcStride,
                        s32 halfX, s32 halfY);
 extern u8 lbl_8032CC08[];
 
@@ -40,7 +40,7 @@ extern u8 lbl_8032CC08[];
     } while (0)
 
 /* Reconstruct a 4x4 motion block from the reference and coded residuals. */
-void fn_80105804(register Decoder *decoder, register u8 *inputDst,
+void PrediAotBlock(register Decoder *decoder, register u8 *inputDst,
                  register u8 *inputReference, register u16 inputStride,
                  register u32 mode, register u8 *inputBase,
                  register u16 inputBaseStride, register s32 inputPlane,
@@ -82,7 +82,7 @@ void fn_80105804(register Decoder *decoder, register u8 *inputDst,
         addi baseStride, inputBaseStride, 0
         addi planeArg, plane, 0
     }
-    returnedMean = fn_801042B4((s32)decoder, sums, count, (s32)base,
+    returnedMean = GetMCAotSum((s32)decoder, sums, count, (s32)base,
                               baseStride, planeArg);
     /* ASM: addi retains retail's return-value and interpolation-argument
      * copies, which this compiler emits as mr in equivalent C. */
@@ -93,7 +93,7 @@ void fn_80105804(register Decoder *decoder, register u8 *inputDst,
         addi copyHalfX, halfX, 0
         addi copyHalfY, halfY, 0
     }
-    fn_80104BBC(pixels, 4, copyReference, copyStride, copyHalfX, copyHalfY);
+    _MotionComp(pixels, 4, copyReference, copyStride, copyHalfX, copyHalfY);
     /* Round the reference mean to the nearest whole sample. */
     mean = (pixels[1] + pixels[2] + pixels[3] + pixels[4] + pixels[5] +
             pixels[6] + pixels[7] + pixels[8] + pixels[9] + pixels[10] +
@@ -128,7 +128,7 @@ void fn_80105804(register Decoder *decoder, register u8 *inputDst,
     /* Escape symbols contribute to the value until an interior symbol ends it. */
     totalFirst = 0;
     do {
-        value = fn_80102C6C(reader);
+        value = decodeHuff(reader);
         totalFirst += value;
     } while (lower >= value || value >= upperFirst);
     bias = (s32)((u32)(totalFirst >> decoder->value_shift) << shift) - codedMean;
@@ -138,7 +138,7 @@ void fn_80105804(register Decoder *decoder, register u8 *inputDst,
     upper = decoder->upper;
     lower = decoder->lower;
     do {
-        value = fn_80102C6C(reader);
+        value = decodeHuff(reader);
         total += value;
     } while (lower >= value || value >= upper);
     value32 = ((s32 *)(clamp + 0x240))[maximum - minimum];

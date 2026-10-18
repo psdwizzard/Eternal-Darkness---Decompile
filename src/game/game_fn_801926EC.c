@@ -18,7 +18,7 @@ typedef struct Vec3 {
 extern s32 lbl_8064D18C;
 extern void fn_801929A4(void);
 extern void* fn_80201814(void*);
-extern s32 fn_800FBFB0(void);
+extern s32 rand(void);
 extern void fn_8014D478(void*, Vec3*, Vec3*, s32, s32, void*, s32);
 
 s32 fn_801926EC(u8* object)
@@ -60,13 +60,13 @@ s32 fn_801926EC(u8* object)
             offset.z = *(s16*)(object + 0xC4) - *(s16*)(object + 0x14) + 100;
             switch (object[0xB6]) {
             case 1:
-                colour.channels[0] -= fn_800FBFB0() & 0x1F;
+                colour.channels[0] -= rand() & 0x1F;
                 break;
             case 2:
-                colour.channels[1] -= fn_800FBFB0() & 0x1F;
+                colour.channels[1] -= rand() & 0x1F;
                 break;
             case 3:
-                colour.channels[2] -= fn_800FBFB0() & 0x1F;
+                colour.channels[2] -= rand() & 0x1F;
                 break;
             }
             fn_8014D478((void*)0, &position, &offset, 0, 1, colour.channels, 5);

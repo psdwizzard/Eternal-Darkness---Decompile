@@ -8,19 +8,19 @@ typedef void (*OSInterruptHandler)(s16 interrupt, OSContext *context);
 
 extern OSInterruptHandler __OSSetInterruptHandler(s16 interrupt, OSInterruptHandler handler);
 extern u32 __OSUnmaskInterrupts(u32 mask);
-extern OSThread *fn_8020F2DC(void);
-extern void fn_80223B7C(s16 interrupt, OSContext *context);
+extern OSThread *OSGetCurrentThread(void);
+extern void GXCPInterruptHandler(s16 interrupt, OSContext *context);
 
-extern OSThread *lbl_8064DB98;   /* __GXCurrentThread */
-extern u32 lbl_8064DBA0;        /* GXOverflowSuspendInProgress */
-extern __GXFifoObj *lbl_8064DB90; /* CPUFifo */
-extern __GXFifoObj *lbl_8064DB94; /* GPFifo */
+extern OSThread *__GXCurrentThread;   /* __GXCurrentThread */
+extern u32 GXOverflowSuspendInProgress;        /* GXOverflowSuspendInProgress */
+extern __GXFifoObj *CPUFifo; /* CPUFifo */
+extern __GXFifoObj *GPFifo; /* GPFifo */
 
 void __GXFifoInit(void) {
-    __OSSetInterruptHandler(17, fn_80223B7C);
+    __OSSetInterruptHandler(17, GXCPInterruptHandler);
     __OSUnmaskInterrupts(0x4000);
-    lbl_8064DB98 = fn_8020F2DC();
-    lbl_8064DBA0 = 0;
-    lbl_8064DB90 = 0;
-    lbl_8064DB94 = 0;
+    __GXCurrentThread = OSGetCurrentThread();
+    GXOverflowSuspendInProgress = 0;
+    CPUFifo = 0;
+    GPFifo = 0;
 }

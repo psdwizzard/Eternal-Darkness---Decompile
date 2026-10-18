@@ -24,8 +24,8 @@ extern s32 fn_8011EB1C();
 extern s32 fn_80066D80();
 extern s32 fn_8011F598();
 extern void fn_8012B690();
-extern void fn_80211AAC();
-extern void fn_80211A90();
+extern void PSVECNormalize();
+extern void PSVECScale();
 extern void fn_8014D478();
 extern void fn_801A977C();
 extern s32 fn_80158598();
@@ -81,8 +81,8 @@ void fn_80067180(s32 context)
         direction.x = position->x - origin.x;
         direction.y = position->y - origin.y;
         direction.z = lbl_8064E698;
-        fn_80211AAC(&direction, &direction);
-        fn_80211A90(&direction, &direction, lbl_8064E6C8);
+        PSVECNormalize(&direction, &direction);
+        PSVECScale(&direction, &direction, lbl_8064E6C8);
         fn_8014D478(object, position, &direction, 0x10, 1, &fallback_resource, 7);
 
         if (actor != 0 && (*(u32 *)(actor + 0xB8) & (1U << index))) {

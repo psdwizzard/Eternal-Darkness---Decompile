@@ -10,8 +10,8 @@ extern float lbl_80650E9C;
 extern void fn_801F68B0(Vec3*);
 extern void fn_801F68F8(Vec3*);
 extern float fn_800490E8(float, float);
-extern float fn_80048C50(float);
-extern float fn_80048C2C(float);
+extern float cosf(float);
+extern float sinf(float);
 extern double fn_800B811C(double);
 extern int fn_801AF9B0(int, int, int);
 
@@ -45,10 +45,10 @@ void fn_801AFA74(Vec3* position, int* out_x, int* out_y)
     angle = fn_800490E8(delta_x, delta_y);
     difference = angle - fn_800490E8(second.x - first.x,
                                      second.y - first.y);
-    cosine = fn_80048C50(difference);
-    sine = fn_80048C2C(difference);
+    cosine = cosf(difference);
+    sine = sinf(difference);
     desired_x = (int)(lbl_80650E98 * sine) + 64;
-    desired_y = (int)(lbl_80650E98 * fn_80048C50(lbl_80650E9C + difference)) + 64;
+    desired_y = (int)(lbl_80650E98 * cosf(lbl_80650E9C + difference)) + 64;
 
     distance = (int)fn_800B811C((int)delta_x * (int)delta_x +
                                  (int)delta_y * (int)delta_y);

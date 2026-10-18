@@ -11,10 +11,10 @@ typedef struct Vec4 {
     float w;
 } Vec4;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
 extern unsigned int fn_800F5C54(double);
-extern void fn_80163BB4(void*, const char*, ...);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void *fn_80201BC8();
 extern int fn_8015C524(unsigned int, int);
@@ -40,16 +40,16 @@ int fn_8016FA08(void* state)
     Vec4 base_rotation;
     Vec4 rotation;
 
-    if (fn_8016A598(state) != 2) {
-        fn_80163BB4(state, string_pool, 2, fn_8016A598(state));
+    if (lua_gettop(state) != 2) {
+        luaO_verror(state, string_pool, 2, lua_gettop(state));
         return 0;
     }
 
-    object_id = (int)fn_8016A694(state, 1);
+    object_id = (int)lua_tonumber(state, 1);
     object = fn_80201814(object_id);
     if (object != 0) {
         runtime = fn_80201BC8(object);
-        resource_id = fn_800F5C54(fn_8016A694(state, 2));
+        resource_id = fn_800F5C54(lua_tonumber(state, 2));
         resource_index = fn_8015C524(resource_id, 2);
         if (resource_index != -1 &&
             fn_801589AC(resource_index, 2, &position, &direction, &scale)) {
@@ -62,10 +62,10 @@ int fn_8016FA08(void* state)
             fn_8017A34C(&rotation, &base_rotation, fn_8011FE34(runtime));
             fn_8011F0E8(runtime, &position);
         } else {
-            fn_80163BB4(state, string_pool + 0x1FC, resource_id);
+            luaO_verror(state, string_pool + 0x1FC, resource_id);
         }
     } else {
-        fn_80163BB4(state, string_pool + 0x218, object_id);
+        luaO_verror(state, string_pool + 0x218, object_id);
     }
     return 0;
 }

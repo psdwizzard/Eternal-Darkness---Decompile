@@ -19,8 +19,8 @@ extern float lbl_8064EA50;
 extern float lbl_8064EA54;
 extern float lbl_8064EA58;
 
-extern int fn_8016A598(void *);
-extern void fn_80163BB4(void *, const char *, ...);
+extern int lua_gettop(void *);
+extern void luaO_verror(void *, const char *, ...);
 extern void *fn_8015C4A4(u32, int);
 extern s16 *fn_80158CC8(void *, int, int);
 extern void fn_8011F0E8(s32, Vec3 *);
@@ -47,8 +47,8 @@ s32 fn_8007F80C(void *script)
     u16 sound;
     s16 *pos;
 
-    if (fn_8016A598(script) != 0) {
-        fn_80163BB4(script, lbl_80244EDC, 0, fn_8016A598(script));
+    if (lua_gettop(script) != 0) {
+        luaO_verror(script, lbl_80244EDC, 0, lua_gettop(script));
         return 0;
     }
 

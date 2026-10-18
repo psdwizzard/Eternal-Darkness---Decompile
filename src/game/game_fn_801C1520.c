@@ -33,13 +33,13 @@ typedef struct SYNTH_VOICE {
 } SYNTH_VOICE;
 
 extern VidListTables lbl_80626DA0;
-extern u16 lbl_8064D464;
+extern u16 voicePrioSortRootListRoot;
 
 #define vidList (&lbl_80626DA0)
-#define voicePrioSortedRoot lbl_8064D464
+#define voicePrioSortedRoot voicePrioSortRootListRoot
 #define offsetof(type, member) ((u32)&((type*)0)->member)
 
-void fn_801C1520(SYNTH_VOICE* s)
+void voiceRemovePriority(SYNTH_VOICE* s)
 {
     VidListTables* vb;
     SynthVoiceListNode* vps;

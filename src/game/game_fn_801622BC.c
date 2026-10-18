@@ -21,7 +21,7 @@ typedef struct Parser {
     int field3C;
 } Parser;
 
-void fn_801622BC(void* context, Parser* parser, Input* input, int field3C)
+void luaX_setinput(void* context, Parser* parser, Input* input, int field3C)
 {
     int token;
 

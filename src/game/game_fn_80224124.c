@@ -12,7 +12,7 @@ extern GXData *gx;
 extern volatile u16 *__cpReg;
 
 /* GXGetGPStatus: sample the command processor status flags. */
-void fn_80224124(u8 *overhi, u8 *underlow, u8 *readIdle,
+void GXGetGPStatus(u8 *overhi, u8 *underlow, u8 *readIdle,
                  u8 *cmdIdle, u8 *breakpt)
 {
     gx->cpStatus = __cpReg[0];

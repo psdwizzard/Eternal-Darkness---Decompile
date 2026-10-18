@@ -1,4 +1,4 @@
-/* fn_80102D04: run-length/Huffman decode the three image planes. Plane 0 is
+/* Ipic_BasisNumDec: run-length/Huffman decode the three image planes. Plane 0 is
  * written to its own buffer; planes 1 and 2 share one stream whose symbols
  * carry both 4-bit values. A zero symbol is followed by a run of zeros. */
 
@@ -41,7 +41,7 @@ typedef struct Decoder {
 
 /* NonMatching under GC/1.3: retail's `li rN,1; sraw` mask shift, the
  * unfolded reader pointers (r9/r10) and the r31/0x48 frame are GC/1.2.5n
- * codegen, the version the sibling fn_80102C6C (same decoder, Matching)
+ * codegen, the version the sibling decodeHuff (same decoder, Matching)
  * is built with. The control flow and data layout already line up. */
 static inline u8 read_bit(BitReader* reader)
 {
@@ -71,7 +71,7 @@ static inline s16 decode_symbol(BitReader* reader)
     return tree->left[node];
 }
 
-void fn_80102D04(Decoder* dec)
+void Ipic_BasisNumDec(Decoder* dec)
 {
     BitReader* valueReader;
     BitReader* runReader;

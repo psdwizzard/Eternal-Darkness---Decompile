@@ -40,11 +40,11 @@ typedef struct TRKRestoreFlags {
 extern TRKCPUState gTRKCPUState;
 extern TRKExceptionStatus gTRKExceptionStatus_8024A864;
 extern TRKRestoreFlags gTRKRestoreFlags;
-extern DSError fn_800EF47C(TRKBuffer *buffer, u32 *values, int count);
+extern DSError TRKReadBuffer_ui32(TRKBuffer *buffer, u32 *values, int count);
 /* The retail append routine returns its buffer error in r3. */
-extern DSError fn_800EF8EC(TRKBuffer *buffer, u32 *values, int count);
+extern DSError TRKAppendBuffer_ui32(TRKBuffer *buffer, u32 *values, int count);
 
-DSError fn_800F4920(u32 firstRegister, u32 lastRegister, TRKBuffer *buffer,
+DSError TRKTargetAccessExtended1(u32 firstRegister, u32 lastRegister, TRKBuffer *buffer,
                     u32 *registerStorageSize, BOOL read)
 {
     TRKExceptionStatus savedException;
@@ -66,7 +66,7 @@ DSError fn_800F4920(u32 firstRegister, u32 lastRegister, TRKBuffer *buffer,
         registers = &(*extendedRegisters)[firstRegister];
         *registerStorageSize += count * sizeof(u32);
         if (read) {
-            error = fn_800EF8EC(buffer, registers, count);
+            error = TRKAppendBuffer_ui32(buffer, registers, count);
         } else {
             if (registers <= &gTRKCPUState.extended[17] &&
                 registers + count - 1 >= &gTRKCPUState.extended[16]) {
@@ -76,7 +76,7 @@ DSError fn_800F4920(u32 firstRegister, u32 lastRegister, TRKBuffer *buffer,
                 registers + count - 1 >= &gTRKCPUState.extended[52]) {
                 gTRKRestoreFlags.decrementer = 1;
             }
-            error = fn_800EF47C(buffer, registers, count);
+            error = TRKReadBuffer_ui32(buffer, registers, count);
         }
     }
 

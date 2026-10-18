@@ -20,67 +20,67 @@ typedef struct Entry {
 } Entry;
 typedef struct Bank { Entry *base; u32 unk[3]; } Bank;
 
-extern s32 lbl_8064C4B0;
-extern volatile u32 lbl_8064C4B4;
-extern u8 lbl_8064DBD8;
-extern void (*lbl_8064DBDC)(u32);
-extern s32 lbl_8064DBE0;
-extern s32 lbl_8064DBE4;
-extern Bank *lbl_8064DBEC;
-extern u32 fn_80209B00(void);
-extern u32 fn_80209B18(void);
-extern u32 fn_80209B28(void);
-extern void fn_8022CA98(Entry *, s32);
-extern void fn_8022D2C4(void);
-extern void fn_8022D40C(void);
+extern s32 CurrAutoSample;
+extern volatile u32 CurrToken;
+extern u8 magic;
+extern void (*DSCB)(u32);
+extern s32 PERFCurrSample;
+extern s32 PERFCurrFrame;
+extern Bank *PERFFrames;
+extern u32 PPCMfpmc1(void);
+extern u32 PPCMfpmc3(void);
+extern u32 PPCMfpmc4(void);
+extern void PERFGetAllMemMetrics(Entry *, s32);
+extern void PERFStartAutoSample(void);
+extern void PERFEndAutoSample(void);
 
-#define ENTRIES (lbl_8064DBEC[lbl_8064DBE4].base)
+#define ENTRIES (PERFFrames[PERFCurrFrame].base)
 
-void fn_8022CBA0(u32 arg)
+void PERFTokenCallback(u32 arg)
 {
     u16 code = arg;
     s32 slot;
     u32 res;
 
-    if (code < 0xE000 || ((code >> 8) & 0xF) != lbl_8064DBD8 || lbl_8064DBE0 == 0) {
-        if (lbl_8064DBDC != 0)
-            lbl_8064DBDC(arg);
+    if (code < 0xE000 || ((code >> 8) & 0xF) != magic || PERFCurrSample == 0) {
+        if (DSCB != 0)
+            DSCB(arg);
     } else {
         if (code >= 0xF000) {
-            if (lbl_8064C4B4 == 0xFFFF) {
-                fn_8022D40C();
-                fn_8022D2C4();
+            if (CurrToken == 0xFFFF) {
+                PERFEndAutoSample();
+                PERFStartAutoSample();
             } else {
                 slot = (u8)code;
-                if ((u8)lbl_8064C4B4 != slot)
-                    slot = (u8)lbl_8064C4B4;
-                ENTRIES[slot].resource0 = fn_80209B28();
-                ENTRIES[slot].resource3 = fn_80209B18();
-                ENTRIES[slot].flags = fn_80209B00();
-                fn_8022CA98(&ENTRIES[slot], 1);
-                if (lbl_8064C4B0 >= 0)
-                    fn_8022D40C();
-                lbl_8064C4B4 = 0xFFFF;
-                fn_8022D2C4();
+                if ((u8)CurrToken != slot)
+                    slot = (u8)CurrToken;
+                ENTRIES[slot].resource0 = PPCMfpmc4();
+                ENTRIES[slot].resource3 = PPCMfpmc3();
+                ENTRIES[slot].flags = PPCMfpmc1();
+                PERFGetAllMemMetrics(&ENTRIES[slot], 1);
+                if (CurrAutoSample >= 0)
+                    PERFEndAutoSample();
+                CurrToken = 0xFFFF;
+                PERFStartAutoSample();
             }
         } else {
-            if (lbl_8064C4B4 < 0xFFFF) {
-                slot = (u8)lbl_8064C4B4;
-                ENTRIES[slot].resource0 = fn_80209B28();
-                ENTRIES[slot].resource3 = fn_80209B18();
-                ENTRIES[slot].flags = fn_80209B00();
-                fn_8022CA98(&ENTRIES[slot], 1);
+            if (CurrToken < 0xFFFF) {
+                slot = (u8)CurrToken;
+                ENTRIES[slot].resource0 = PPCMfpmc4();
+                ENTRIES[slot].resource3 = PPCMfpmc3();
+                ENTRIES[slot].flags = PPCMfpmc1();
+                PERFGetAllMemMetrics(&ENTRIES[slot], 1);
             } else {
-                fn_8022D40C();
+                PERFEndAutoSample();
             }
             slot = (u8)code;
-            ENTRIES[slot].resource3b = fn_80209B18();
-            ENTRIES[slot].flagsb = fn_80209B00();
-            res = fn_80209B28();
+            ENTRIES[slot].resource3b = PPCMfpmc3();
+            ENTRIES[slot].flagsb = PPCMfpmc1();
+            res = PPCMfpmc4();
             ENTRIES[slot].resource2b = res;
             ENTRIES[slot].resource2 = res;
-            fn_8022CA98(&ENTRIES[slot], 0);
-            lbl_8064C4B4 = (u16)arg;
+            PERFGetAllMemMetrics(&ENTRIES[slot], 0);
+            CurrToken = (u16)arg;
         }
     }
 }

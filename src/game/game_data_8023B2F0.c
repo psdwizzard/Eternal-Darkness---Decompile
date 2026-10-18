@@ -1,7 +1,7 @@
 typedef unsigned int u32;
 
 /* Packed runtime descriptor constants. */
-const volatile u32 lbl_8023B2F0[16] = {
+const volatile u32 dspMixerCycles[16] = {
     0x05BE0B7C, 0x0B7C113A, 0x08B6116C, 0x116C1A22, 0x09A6134C, 0x134C1CF2,
     0x0E971D2E, 0x1D2E2BC5, 0x0B7C0D3A, 0x0B7C0D3A, 0x0B7C0D3A, 0x0B7C0D3A,
     0x134C1637, 0x134C1637, 0x134C1637, 0x134C1637,

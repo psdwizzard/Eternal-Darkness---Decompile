@@ -1,4 +1,4 @@
-/* fn_800F3A44: MetroTRK TRKPPCAccessFPRegister. Reads/writes an FPR (or the
+/* TRKPPCAccessFPRegister: MetroTRK TRKPPCAccessFPRegister. Reads/writes an FPR (or the
  * FPSCR) through a self-modifying ten-instruction stub copied from a
  * nop-filled template. */
 
@@ -15,9 +15,9 @@ typedef struct AccessFunc {
 
 extern const volatile unsigned int lbl_80239C10[10];
 extern const volatile unsigned int lbl_80239C60[10];
-extern unsigned char lbl_8032A554[];
+extern unsigned char TRKvalue128_temp[];
 
-extern void fn_800F35AC(void *, unsigned int);
+extern void TRK_flush_cache(void *, unsigned int);
 
 #define INSTR_BLR 0x4E800020
 #define INSTR_LFD(fd, off, ra) (0xC8000000 | ((fd) << 21) | ((ra) << 16) | (off))
@@ -35,8 +35,8 @@ static DSError TRKPPCAccessSpecialReg(void *value, u32 *access_func, BOOL read)
 
     asm_access = (asm_access_type)access_func;
     access_func[9] = INSTR_BLR;
-    fn_800F35AC((void *)(u32)access_func, sizeof(u32) * 10);
-    asm_access(value, lbl_8032A554);
+    TRK_flush_cache((void *)(u32)access_func, sizeof(u32) * 10);
+    asm_access(value, TRKvalue128_temp);
     return 0;
 }
 
@@ -54,7 +54,7 @@ static DSError TRKPPCAccessFPSCR(void *value, BOOL read)
     return TRKPPCAccessSpecialReg(value, access_func.instr, read);
 }
 
-DSError fn_800F3A44(void *value, u32 fpr, BOOL read)
+DSError TRKPPCAccessFPRegister(void *value, u32 fpr, BOOL read)
 {
     DSError error = 0;
     AccessFunc access_func = *(const AccessFunc *)lbl_80239C60;

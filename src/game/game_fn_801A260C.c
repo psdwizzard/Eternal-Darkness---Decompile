@@ -34,7 +34,7 @@ extern float lbl_80650D10;
 extern u32 lbl_80607440[];
 extern int lbl_8064D18C;
 extern void fn_801EF384(void*);
-extern int fn_800FBFB0(void);
+extern int rand(void);
 
 int fn_801A260C(u8* object)
 {
@@ -75,7 +75,7 @@ int fn_801A260C(u8* object)
             }
         }
 
-        value = state->values[i] + (fn_800FBFB0() % 3);
+        value = state->values[i] + (rand() % 3);
         value += 1;
         clamped = value <= 255 ? value : 255;
         state->values[i] = clamped;

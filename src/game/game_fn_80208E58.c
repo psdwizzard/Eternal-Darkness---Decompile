@@ -7,7 +7,7 @@ extern volatile u32 __SIStatus : 0xCC006438;
 extern u32 OSDisableInterrupts(void);
 extern void OSRestoreInterrupts(u32 enabled);
 
-u32 fn_80208E58(s32 chan)
+u32 SIGetStatus(s32 chan)
 {
     register u32 status;
     u32 enabled = OSDisableInterrupts();

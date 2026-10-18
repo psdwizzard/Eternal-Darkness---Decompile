@@ -2,7 +2,7 @@ typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
 
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_8018E230(void*, void*, int, u8, u8, int);
 extern void fn_8018E260(void*, u8, int);
 extern void fn_801806D4(void*, u32*, int);
@@ -22,7 +22,7 @@ void fn_80181530(u8* objectArg, u8* stateArg, int tick)
 
             for (i = 0; i < count; entry += 0x38, i++) {
                 if (state[4] == 4) {
-                    u8 value = (fn_800FBFB0() & 7) * 20;
+                    u8 value = (rand() & 7) * 20;
                     fn_8018E230(entry, entry + 0x2B, 4, value, 10, 0xF0);
                     fn_8018E260(entry, 0xF0, 0x78);
                 } else {

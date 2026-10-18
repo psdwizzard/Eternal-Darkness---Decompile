@@ -10,11 +10,11 @@ typedef struct StreamResource12 {
 } StreamResource12;
 
 extern unsigned char lbl_8061C748[];
-extern u16 lbl_8064D3F6;
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
+extern u16 dataLayerNum;
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
 
-int fn_801BB944(u16 id, void* value, u16 parameter)
+int dataInsertLayer(u16 id, void* value, u16 parameter)
 {
     unsigned char* base = lbl_8061C748;
     int count;
@@ -22,8 +22,8 @@ int fn_801BB944(u16 id, void* value, u16 parameter)
     int cursor;
     unsigned char* selected;
 
-    fn_801CE2B8();
-    count = lbl_8064D3F6;
+    hwDisableIrq();
+    count = dataLayerNum;
     index = 0;
     while (index < count && ((StreamResource12*)(base + 0x4E00))[index].id < id) {
         index++;
@@ -45,24 +45,24 @@ int fn_801BB944(u16 id, void* value, u16 parameter)
         ((StreamResource12*)(base + 0x4E00))[cursor + 1] =
             ((StreamResource12*)(base + 0x4E00))[cursor];
     }
-    lbl_8064D3F6++;
+    dataLayerNum++;
     goto write;
 
 insert_full:
-    fn_801CE280();
+    hwEnableIrq();
     return 0;
 
 existing:
     ((StreamResource12*)(selected + 0x4E00))->references++;
-    fn_801CE280();
+    hwEnableIrq();
     return 0;
 
 append:
     if ((u32)count < 0x100) {
-        lbl_8064D3F6++;
+        dataLayerNum++;
         goto write;
     }
-    fn_801CE280();
+    hwEnableIrq();
     return 0;
 
 write:
@@ -70,6 +70,6 @@ write:
     ((StreamResource12*)(base + 0x4E00))[index].value = value;
     ((StreamResource12*)(base + 0x4E00))[index].parameter = parameter;
     ((StreamResource12*)(base + 0x4E00))[index].references = 1;
-    fn_801CE280();
+    hwEnableIrq();
     return 1;
 }

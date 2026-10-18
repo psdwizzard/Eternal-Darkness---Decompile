@@ -14,7 +14,7 @@ typedef struct BlockStorage {
     AllocationChain *chain;
 } BlockStorage;
 
-void fn_80230070(BlockStorage *block)
+void _vorbis_block_ripcord(BlockStorage *block)
 {
     AllocationChain *node = block->chain;
 

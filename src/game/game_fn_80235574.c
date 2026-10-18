@@ -1,4 +1,4 @@
-/* fn_80235574: Vorbis residue 0/1/2 header unpack (res0_unpack). */
+/* res0_unpack: Vorbis residue 0/1/2 header unpack (res0_unpack). */
 
 typedef int s32;
 typedef unsigned int u32;
@@ -24,7 +24,7 @@ typedef struct VorbisInfo {
     CodecSetup *codec_setup;
 } VorbisInfo;
 
-extern s32 fn_8022E868(void *opb, s32 bits);
+extern s32 oggpack_read(void *opb, s32 bits);
 extern void *fn_8022F780(s32 size);
 
 static int icount(u32 v) {
@@ -36,28 +36,28 @@ static int icount(u32 v) {
     return ret;
 }
 
-ResidueInfo *fn_80235574(VorbisInfo *vi, void *opb) {
+ResidueInfo *res0_unpack(VorbisInfo *vi, void *opb) {
     int j;
     int acc = 0;
     ResidueInfo *info = fn_8022F780(sizeof(ResidueInfo));
     CodecSetup *ci = vi->codec_setup;
 
-    info->begin = fn_8022E868(opb, 24);
-    info->end = fn_8022E868(opb, 24);
-    info->grouping = fn_8022E868(opb, 24) + 1;
-    info->partitions = fn_8022E868(opb, 6) + 1;
-    info->groupbook = fn_8022E868(opb, 8);
+    info->begin = oggpack_read(opb, 24);
+    info->end = oggpack_read(opb, 24);
+    info->grouping = oggpack_read(opb, 24) + 1;
+    info->partitions = oggpack_read(opb, 6) + 1;
+    info->groupbook = oggpack_read(opb, 8);
 
     for (j = 0; j < info->partitions; j++) {
-        int cascade = fn_8022E868(opb, 3);
-        if (fn_8022E868(opb, 1)) {
-            cascade |= fn_8022E868(opb, 5) << 3;
+        int cascade = oggpack_read(opb, 3);
+        if (oggpack_read(opb, 1)) {
+            cascade |= oggpack_read(opb, 5) << 3;
         }
         info->secondstages[j] = cascade;
         acc += icount(cascade);
     }
     for (j = 0; j < acc; j++) {
-        info->booklist[j] = fn_8022E868(opb, 8);
+        info->booklist[j] = oggpack_read(opb, 8);
     }
 
     if (info->groupbook >= ci->books) goto errout;

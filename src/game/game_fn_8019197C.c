@@ -24,7 +24,7 @@ extern u8 lbl_80606318[];
 extern u8 lbl_80606328[];
 
 extern void* memset(void*, int, u32);
-extern s32 fn_800FBFB0(void);
+extern s32 rand(void);
 extern void fn_801804AC(void*, ShortCoord3*, ShortCoord3*, ShortCoord3*);
 extern void fn_80180554(void*, ShortCoord3*, ShortCoord3*, ShortCoord3*, int,
                         int);
@@ -66,7 +66,7 @@ void fn_8019197C(u8* object, ShortCoord3* first, ShortCoord3* second,
     *(u16*)(object + 0xA) = 0;
     *(u32*)(object + 0x44) = 0;
     *(float*)(object + 0x3C) = initial;
-    *(float*)(object + 0x40) = lbl_80650B48 * (float)((fn_800FBFB0() & 3) + 1);
+    *(float*)(object + 0x40) = lbl_80650B48 * (float)((rand() & 3) + 1);
     memset(object + 0x24, 0, 0x10);
 
     for (i = 0; (u8)i < count; i++) {

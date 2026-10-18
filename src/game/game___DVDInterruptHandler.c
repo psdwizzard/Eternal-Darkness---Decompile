@@ -35,24 +35,24 @@ typedef struct DVDLowWork {
 
 extern DVDLowWork CommandList_80641880;
 extern volatile s32 NextCommandNumber_8064D9DC;
-extern volatile s32 lbl_8064D9D8;
+extern volatile s32 LastCommandWasRead;
 /* LastReadFinished; symbols.txt splits it into two 4-byte labels (C8/CC) */
-extern OSTime lbl_8064D9C8;
-extern s32 lbl_8064C3F8;
+extern OSTime LastReadFinished;
+extern s32 FirstRead;
 extern volatile s32 StopAtNextInt_8064D998;
 extern volatile u32 ResetOccurred_8064D9B0;
 extern volatile OSTime LastResetEnd_8064D9A8;
 extern s32 WaitingCoverClose_8064D9B4;
-extern s32 lbl_8064D9B8;
+extern s32 Breaking;
 extern DVDLowCallback Callback_8064D9A0;
-extern DVDLowCallback lbl_8064D9A4;
+extern DVDLowCallback ResetCoverCallback;
 
-extern void fn_8020A93C(void *alarm);
+extern void OSCancelAlarm(void *alarm);
 extern OSTime __OSGetSystemTime(void);
 extern void OSClearContext(OSContext *context);
 extern void OSSetCurrentContext(OSContext *context);
-extern s32 fn_802125C8(void *addr, u32 length, u32 offset, DVDLowCallback callback);
-extern s32 fn_802129F0(u32 offset, DVDLowCallback callback);
+extern s32 Read(void *addr, u32 length, u32 offset, DVDLowCallback callback);
+extern s32 DVDLowSeek(u32 offset, DVDLowCallback callback);
 
 volatile u32 __DIRegs[16] : 0xCC006000;
 
@@ -61,11 +61,11 @@ static inline s32 ProcessNextCommand(DVDLowWork *w) {
 
     if (w->cmdList[n].cmd == 1) {
         NextCommandNumber_8064D9DC++;
-        fn_802125C8(w->cmdList[n].addr, w->cmdList[n].length, w->cmdList[n].offset, w->cmdList[n].callback);
+        Read(w->cmdList[n].addr, w->cmdList[n].length, w->cmdList[n].offset, w->cmdList[n].callback);
         return 1;
     } else if (w->cmdList[n].cmd == 2) {
         NextCommandNumber_8064D9DC++;
-        fn_802129F0(w->cmdList[n].offset, w->cmdList[n].callback);
+        DVDLowSeek(w->cmdList[n].offset, w->cmdList[n].callback);
         return 1;
     }
     return 0;
@@ -80,11 +80,11 @@ void __DVDInterruptHandler(s32 interrupt, OSContext *context) {
     u32 mask;
     DVDLowWork *w = &CommandList_80641880;
 
-    fn_8020A93C(w->alarm);
+    OSCancelAlarm(w->alarm);
 
-    if (lbl_8064D9D8) {
-        lbl_8064D9C8 = __OSGetSystemTime();
-        lbl_8064C3F8 = 0;
+    if (LastCommandWasRead) {
+        LastReadFinished = __OSGetSystemTime();
+        FirstRead = 0;
         w->prev.addr = w->curr.addr;
         w->prev.length = w->curr.length;
         w->prev.offset = w->curr.offset;
@@ -93,7 +93,7 @@ void __DVDInterruptHandler(s32 interrupt, OSContext *context) {
         }
     }
 
-    lbl_8064D9D8 = 0;
+    LastCommandWasRead = 0;
     StopAtNextInt_8064D998 = 0;
 
     reg = __DIRegs[0];
@@ -122,10 +122,10 @@ void __DVDInterruptHandler(s32 interrupt, OSContext *context) {
         mask = reg & 2;
         intr = (reg & 4) & (mask << 1);
         if (intr & 4) {
-            if (lbl_8064D9A4) {
-                lbl_8064D9A4(4);
+            if (ResetCoverCallback) {
+                ResetCoverCallback(4);
             }
-            lbl_8064D9A4 = 0;
+            ResetCoverCallback = 0;
         }
         __DIRegs[1] = __DIRegs[1];
     } else if (WaitingCoverClose_8064D9B4) {
@@ -141,7 +141,7 @@ void __DVDInterruptHandler(s32 interrupt, OSContext *context) {
         __DIRegs[1] = 0;
     }
 
-    if ((cause & 8) && !lbl_8064D9B8) {
+    if ((cause & 8) && !Breaking) {
         cause &= ~8;
     }
 
@@ -163,7 +163,7 @@ void __DVDInterruptHandler(s32 interrupt, OSContext *context) {
         if (cb) {
             cb(cause);
         }
-        lbl_8064D9B8 = 0;
+        Breaking = 0;
     }
 
     OSClearContext(&exceptionContext);

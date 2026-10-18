@@ -5,10 +5,10 @@ typedef u64 OSTime;
 
 extern volatile u32 *__piReg;
 OSTime OSGetTime(void);
-void fn_80224544(void);
+void __GXCleanGPFifo(void);
 
 /* Pulse PI register 0x18 (GX abort-style): set, wait 50 ticks, clear, wait 5 ticks. */
-void fn_80226408(void) {
+void __GXAbortWaitPECopyDone(void) {
     OSTime start;
 
     __piReg[6] = 1;
@@ -21,5 +21,5 @@ void fn_80226408(void) {
     while ((s64)(OSGetTime() - start) <= 5) {
     }
 
-    fn_80224544();
+    __GXCleanGPFifo();
 }

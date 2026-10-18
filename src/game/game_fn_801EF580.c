@@ -8,12 +8,12 @@ typedef struct DisplaySize {
 
 extern unsigned int lbl_8064D75C;
 
-extern void fn_8022B94C(float, float, float, float, float, float);
-extern void fn_80225FD8(void);
+extern void GXSetViewport(float, float, float, float, float, float);
+extern void GXInvalidateVtxCache(void);
 
 void fn_801EF580(DisplaySize* size)
 {
-    fn_8022B94C(0.0f, 0.0f, (float)size->width, (float)size->height, 0.0f, 1.0f);
-    fn_80225FD8();
+    GXSetViewport(0.0f, 0.0f, (float)size->width, (float)size->height, 0.0f, 1.0f);
+    GXInvalidateVtxCache();
     lbl_8064D75C = 0;
 }

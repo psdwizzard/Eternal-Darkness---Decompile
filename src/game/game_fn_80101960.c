@@ -6,7 +6,7 @@ typedef union DoubleBits {
     } words;
 } DoubleBits;
 
-double fn_80101960(double magnitude, double sign)
+double copysign(double magnitude, double sign)
 {
     DoubleBits y;
     DoubleBits x;

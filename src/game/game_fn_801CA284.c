@@ -1,3 +1,3 @@
-void fn_801CA284(void)
+void s3dExit(void)
 {
 }

@@ -4,8 +4,8 @@ extern void* fn_80158598(int object_id, int index);
 extern s32 fn_80157E1C(void* object);
 extern s32 fn_80157FE0(void* object, s32 index, s32 value);
 extern void* fn_80158514(void* object, s32 value);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 
 s32 fn_80049220(void* object, s32 mode)
 {
@@ -31,7 +31,7 @@ s32 fn_80049220(void* object, s32 mode)
                 break;
             case 2:
             {
-                s32 random = fn_800FBFB0();
+                s32 random = rand();
                 result = count - 1;
                 random &= 1;
                 if (random < result) {

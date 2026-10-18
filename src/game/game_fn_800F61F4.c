@@ -1,4 +1,4 @@
-unsigned long long fn_800F61F4(unsigned int hi, unsigned int lo, unsigned int shift)
+unsigned long long __shl2i(unsigned int hi, unsigned int lo, unsigned int shift)
 {
     /* ASM: subfic/subic/slw/srw/or/slw/or/slw implement the branchless 64-bit
        shift in the ABI return registers; C forces temporaries into other registers. */

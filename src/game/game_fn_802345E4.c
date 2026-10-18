@@ -1,4 +1,4 @@
-/* fn_802345E4: residue 2 inverse (Vorbis res2_inverse). */
+/* res2_inverse: residue 2 inverse (Vorbis res2_inverse). */
 
 typedef int s32;
 
@@ -47,10 +47,10 @@ typedef struct VorbisBlock {
 } VorbisBlock;
 
 void *fn_8022F8C4(s32 size);
-s32 fn_80230718(Codebook *book, OggPackBuffer *b);
-s32 fn_80230128(Codebook *book, float **a, s32 offset, s32 ch, OggPackBuffer *b, s32 n);
+s32 vorbis_book_decode(Codebook *book, OggPackBuffer *b);
+s32 vorbis_book_decodevv_add(Codebook *book, float **a, s32 offset, s32 ch, OggPackBuffer *b, s32 n);
 
-s32 fn_802345E4(register VorbisBlock *arg_vb, register ResidueLook *arg_look,
+s32 res2_inverse(register VorbisBlock *arg_vb, register ResidueLook *arg_look,
                 register float **arg_in, register s32 *arg_nonzero, register s32 arg_ch)
 {
     register ResidueInfo *info;
@@ -107,7 +107,7 @@ s32 fn_802345E4(register VorbisBlock *arg_vb, register ResidueLook *arg_look,
         }
         while (i < partvals) {
             if (s == 0) {
-                s32 temp = fn_80230718(look->phrasebook, &vb->opb);
+                s32 temp = vorbis_book_decode(look->phrasebook, &vb->opb);
                 if (temp == -1) goto done;
                 *word = look->decodemap[temp];
                 if (*word == 0) goto done;
@@ -128,7 +128,7 @@ s32 fn_802345E4(register VorbisBlock *arg_vb, register ResidueLook *arg_look,
                         s32 begin = info->begin;
                         /* ASM: mr keeps the channel pointer copy from folding to addi. */
                         asm { or channels, in, in }
-                        if (fn_80230128(stagebook, channels, begin + position,
+                        if (vorbis_book_decodevv_add(stagebook, channels, begin + position,
                             ch, &vb->opb, samples_per_partition) == -1)
                             goto done;
                     }

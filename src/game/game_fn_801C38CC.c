@@ -24,16 +24,16 @@ typedef struct POOL_DATA {
     u32 layerOff;
 } POOL_DATA;
 
-extern void fn_801BC8F4(u16, void*);
-extern void fn_801BCC04(u16);
-extern void fn_801BB5D0(u16, void*);
-extern void fn_801BB7C0(u16);
-extern void fn_801BB944(u16, void*, u16);
-extern void fn_801BBB8C(u16);
-extern void fn_801BBD58(u16, void*);
-extern void fn_801BBF50(u16);
-extern void fn_801BC500(u16);
-extern void fn_801BC5D8(u16);
+extern void dataInsertMacro(u16, void*);
+extern void dataRemoveMacro(u16);
+extern void dataInsertKeymap(u16, void*);
+extern void dataRemoveKeymap(u16);
+extern void dataInsertLayer(u16, void*, u16);
+extern void dataRemoveLayer(u16);
+extern void dataInsertCurve(u16, void*);
+extern void dataRemoveCurve(u16);
+extern void dataAddSampleReference(u16);
+extern void dataRemoveSampleReference(u16);
 
 static inline MEM_DATA* GetMacroAddr(u16 id, POOL_DATA* pool)
 {
@@ -91,7 +91,7 @@ static inline MEM_DATA* GetLayerAddr(u16 id, POOL_DATA* pool)
     return 0;
 }
 
-void fn_801C38CC(u16 id, void* data, u8 dataType, u32 remove)
+void InsertData(u16 id, void* data, u8 dataType, u32 remove)
 {
     MEM_DATA* m;
 
@@ -99,24 +99,24 @@ void fn_801C38CC(u16 id, void* data, u8 dataType, u32 remove)
     case 0:
         if (!remove) {
             if ((m = GetMacroAddr(id, data)) != 0) {
-                fn_801BC8F4(id, &m->data.cmd);
+                dataInsertMacro(id, &m->data.cmd);
             } else {
-                fn_801BC8F4(id, 0);
+                dataInsertMacro(id, 0);
             }
         } else {
-            fn_801BCC04(id);
+            dataRemoveMacro(id);
         }
         break;
     case 2: {
         id |= 0x4000;
         if (!remove) {
             if ((m = GetKeymapAddr(id, data)) != 0) {
-                fn_801BB5D0(id, &m->data.map);
+                dataInsertKeymap(id, &m->data.map);
             } else {
-                fn_801BB5D0(id, 0);
+                dataInsertKeymap(id, 0);
             }
         } else {
-            fn_801BB7C0(id);
+            dataRemoveKeymap(id);
         }
         break;
     }
@@ -124,31 +124,31 @@ void fn_801C38CC(u16 id, void* data, u8 dataType, u32 remove)
         id |= 0x8000;
         if (!remove) {
             if ((m = GetLayerAddr(id, data)) != 0) {
-                fn_801BB944(id, &m->data.layer.entry, m->data.layer.num);
+                dataInsertLayer(id, &m->data.layer.entry, m->data.layer.num);
             } else {
-                fn_801BB944(id, 0, 0);
+                dataInsertLayer(id, 0, 0);
             }
         } else {
-            fn_801BBB8C(id);
+            dataRemoveLayer(id);
         }
         break;
     }
     case 4:
         if (!remove) {
             if ((m = GetCurveAddr(id, data)) != 0) {
-                fn_801BBD58(id, &m->data.tab);
+                dataInsertCurve(id, &m->data.tab);
             } else {
-                fn_801BBD58(id, 0);
+                dataInsertCurve(id, 0);
             }
         } else {
-            fn_801BBF50(id);
+            dataRemoveCurve(id);
         }
         break;
     case 1:
         if (!remove) {
-            fn_801BC500(id);
+            dataAddSampleReference(id);
         } else {
-            fn_801BC5D8(id);
+            dataRemoveSampleReference(id);
         }
         break;
     }

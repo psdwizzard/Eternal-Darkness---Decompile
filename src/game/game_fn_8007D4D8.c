@@ -26,7 +26,7 @@ extern void *fn_80204844(void *, s32);
 extern s32 fn_8011F6A4(void *, s32, s32, s32, void *, s32);
 extern void *fn_8006D444(void *);
 extern int fn_801AC9F4(s32, s32, Vec3 *, s32);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void fn_8014D478(void *, Vec3 *, Vec3 *, s32, s32, void *, s32);
 extern s32 fn_801A9EF4(s32, s32);
 extern void *fn_80201814(void *);
@@ -60,8 +60,8 @@ s32 fn_8007D4D8(void *unused, void *handle)
             slot = *(u8 **)(state + 0xC4);
             if (result != -1) {
                 fn_801AC9F4(0x176, 0x64, &hit.position, 2);
-                velocity.x = (float)(8 - (int)(fn_800FBFB0() & 0xF));
-                velocity.y = (float)(8 - (int)(fn_800FBFB0() & 0xF));
+                velocity.x = (float)(8 - (int)(rand() & 0xF));
+                velocity.y = (float)(8 - (int)(rand() & 0xF));
                 velocity.z = lbl_8064E9FC;
                 fn_8014D478((void *)0, &hit.position, &velocity, 0x10, 4,
                             lbl_802FC5BC + 0x18, 3);

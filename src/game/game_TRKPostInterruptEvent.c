@@ -12,9 +12,9 @@ typedef struct TRKEvent {
 extern u8 gTRKState[];
 extern u8 gTRKCPUState[];
 
-extern void fn_800EEF1C(TRKEvent *event, u8 type);
-extern int fn_800EEF34(const TRKEvent *event);
-extern int fn_800F4CC0(void *data, u32 start, u32 *length,
+extern void TRKConstructEvent(TRKEvent *event, u8 type);
+extern int TRKPostEvent(const TRKEvent *event);
+extern int TRKTargetAccessMemory(void *data, u32 start, u32 *length,
                        int accessOptions, int read);
 
 void TRKPostInterruptEvent(void)
@@ -33,7 +33,7 @@ void TRKPostInterruptEvent(void)
     case 0x700:
     case 0xD00:
         length = sizeof(instruction);
-        fn_800F4CC0(&instruction, *(u32 *)(gTRKCPUState + 0x80),
+        TRKTargetAccessMemory(&instruction, *(u32 *)(gTRKCPUState + 0x80),
                     &length, 0, 1);
         if (instruction == 0x0FE00000) {
             type = 5;
@@ -46,6 +46,6 @@ void TRKPostInterruptEvent(void)
         break;
     }
 
-    fn_800EEF1C(&event, type);
-    fn_800EEF34(&event);
+    TRKConstructEvent(&event, type);
+    TRKPostEvent(&event);
 }

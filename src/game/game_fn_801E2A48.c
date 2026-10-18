@@ -34,7 +34,7 @@ struct Object {
 };
 
 extern void fn_8014CBC0(Object*);
-extern u32 fn_800FBFB0(void);
+extern u32 rand(void);
 extern void fn_801FE8DC(s32*, f32, f32, f32);
 extern int fn_801E8328(s32, Object*);
 extern s32 fn_801E2BF8(Object*);
@@ -44,7 +44,7 @@ void fn_801E2A48(Object* object, Vec3* position, s32* value, s32 kind)
     fn_8014CBC0(object);
     object->timer = 30000;
     object->timer_copy = object->timer;
-    object->random_value = (fn_800FBFB0() & 0xF) + 1;
+    object->random_value = (rand() & 0xF) + 1;
     object->position = *position;
     object->value = *value;
     object->callback = fn_801E2BF8;

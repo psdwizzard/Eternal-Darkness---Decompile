@@ -34,14 +34,14 @@ typedef struct StreamWork {
 } StreamWork;
 
 extern void fn_801ADCF8(void);
-extern void fn_80217324(void);
-extern int fn_8020D318(void*, void**, int);
-extern int fn_8020D250(void*, void*, int);
+extern void VIWaitForRetrace(void);
+extern int OSReceiveMessage(void*, void**, int);
+extern int OSSendMessage(void*, void*, int);
 extern void* memset(void*, int, unsigned long);
 extern void DCFlushRange(void*, u32);
 extern int OSDisableInterrupts(void);
 extern int OSRestoreInterrupts(int);
-extern u32 fn_801BA2A4(u8, u32, u32, u32, u8, u8, u8, u8, u8, u8, u32, void (*)(void), u32, short*);
+extern u32 sndStreamAllocEx(u8, u32, u32, u32, u8, u8, u8, u8, u8, u8, u32, void (*)(void), u32, short*);
 extern s32 fn_80236DC4(s32, u32, s32, s32, u32);
 extern void fn_80237EAC(u32, u32);
 
@@ -63,8 +63,8 @@ u8* fn_80236AF8(register u8* buffer, register s32 arg) {
         or arg, arg, arg
     }
     fn_801ADCF8();
-    fn_80217324();
-    while (fn_8020D318(work->queue, 0, 0) != 0) {
+    VIWaitForRetrace();
+    while (OSReceiveMessage(work->queue, 0, 0) != 0) {
     }
 
     buf = work->buffers;
@@ -101,7 +101,7 @@ u8* fn_80236AF8(register u8* buffer, register s32 arg) {
             lis flags, 3
             addi callback, callbackAddress, fn_80236DC4@l
         }
-        work->buffers[0].handle = fn_801BA2A4(0xFF, (u32)work->buffers[0].data, 0x4000, rate, 0,
+        work->buffers[0].handle = sndStreamAllocEx(0xFF, (u32)work->buffers[0].data, 0x4000, rate, 0,
                                           work->buffers[0].pan, 0, 0, zero, zero, flags,
                                           callback, zero, (short*)zero);
     }
@@ -117,7 +117,7 @@ u8* fn_80236AF8(register u8* buffer, register s32 arg) {
             lis flags, 3
             addi callback, callbackAddress, fn_80236DC4@l
         }
-        work->buffers[1].handle = fn_801BA2A4(0xFF, (u32)work->buffers[1].data, 0x4000, rate, 0,
+        work->buffers[1].handle = sndStreamAllocEx(0xFF, (u32)work->buffers[1].data, 0x4000, rate, 0,
                                           work->buffers[1].pan, 0, 0, zero, zero, flags,
                                           callback, 1, (short*)zero);
     }
@@ -134,7 +134,7 @@ u8* fn_80236AF8(register u8* buffer, register s32 arg) {
         req->side = stream->side;
         req->handle = stream->handle;
         req->callback = fn_80237EAC;
-        fn_8020D250(work->queue, req, 1);
+        OSSendMessage(work->queue, req, 1);
         req++;
         stream->side ^= 1;
         stream->flag19 = 0;

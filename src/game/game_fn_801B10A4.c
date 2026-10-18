@@ -9,7 +9,7 @@ typedef struct CallbackEntry {
     Callback callback;
 } CallbackEntry;
 
-void fn_801B10A4(CallbackEntry* entry, u32 mask)
+void __DTKCheckUserCallback(CallbackEntry* entry, u32 mask)
 {
     u32 active;
 

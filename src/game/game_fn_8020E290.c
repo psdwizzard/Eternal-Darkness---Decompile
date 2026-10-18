@@ -1,4 +1,4 @@
-/* fn_8020E290: OSGetResetButtonState (Dolphin SDK OSResetSW.c). */
+/* OSGetResetButtonState: OSGetResetButtonState (Dolphin SDK OSResetSW.c). */
 
 typedef int s32;
 typedef unsigned int u32;
@@ -17,15 +17,12 @@ extern OSTime __OSStartTime;
 extern u8 __gUnknown800030E3 : 0x800030E3;
 extern s64 fn_800F5ECC(s64, s64); /* __div2i */
 
-extern BOOL lbl_8064D96C;
+extern BOOL Down;
 extern BOOL lbl_8064D970;
-extern OSTime lbl_8064D978;
-extern OSTime lbl_8064D980;
+extern OSTime HoldUp;
+extern OSTime HoldDown;
 
-#define Down lbl_8064D96C
 #define LastState lbl_8064D970
-#define HoldUp lbl_8064D978
-#define HoldDown lbl_8064D980
 
 #define OS_BUS_CLOCK (*(u32 *)0x800000F8)
 #define OS_TIMER_CLOCK (OS_BUS_CLOCK / 4)
@@ -36,7 +33,7 @@ extern OSTime lbl_8064D980;
 
 #define __PIRegs ((volatile u32 *)0xCC003000)
 
-BOOL fn_8020E290(void) {
+BOOL OSGetResetButtonState(void) {
     BOOL enabled;
     BOOL state;
     u32 reg;

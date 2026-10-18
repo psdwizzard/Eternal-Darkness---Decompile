@@ -18,7 +18,7 @@ extern void fn_801F68B0(Vec3*);
 extern void fn_801F68F8(Vec3*);
 extern void fn_801F6974(Vec3*);
 extern void fn_801F68D4(Vec3*);
-extern void fn_801C9510(volatile State*, volatile Vec3*, volatile Vec3*,
+extern void sndUpdateListener(volatile State*, volatile Vec3*, volatile Vec3*,
                         volatile Vec3*, volatile Vec3*, int, int);
 
 void fn_801AAB38(void)
@@ -49,6 +49,6 @@ void fn_801AAB38(void)
     (fourth_ptr = &lbl_80608020.fourth)->x = fourth.x;
     lbl_80608020.fourth.y = fourth.y;
     lbl_80608020.fourth.z = fourth.z;
-    fn_801C9510(&lbl_80608020, first_ptr, &lbl_80608020.second,
+    sndUpdateListener(&lbl_80608020, first_ptr, &lbl_80608020.second,
                 third_ptr, fourth_ptr, 127, 0);
 }

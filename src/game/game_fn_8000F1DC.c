@@ -21,8 +21,8 @@ typedef struct Script Script;
 typedef struct Context Context;
 typedef struct Entry80201814 Entry80201814;
 
-extern int fn_8016A598(Context*);
-extern double fn_8016A694(void*, int);
+extern int lua_gettop(Context*);
+extern double lua_tonumber(void*, int);
 extern Entry80201814* fn_80201814(int);
 extern void* fn_80201B8C(u8*);
 extern int fn_80201ADC(void);
@@ -47,23 +47,23 @@ s32 fn_8000F1DC(Script* script)
     s32 y;
 
     arg4 = 0;
-    arg_count = fn_8016A598((Context*)script);
+    arg_count = lua_gettop((Context*)script);
     arg3 = 0;
     switch (arg_count) {
     case 2:
-        arg1 = (s32)fn_8016A694(script, 1);
-        arg2 = (s32)fn_8016A694(script, 2);
+        arg1 = (s32)lua_tonumber(script, 1);
+        arg2 = (s32)lua_tonumber(script, 2);
         break;
     case 3:
-        arg1 = (s32)fn_8016A694(script, 1);
-        arg2 = (s32)fn_8016A694(script, 2);
-        arg3 = (s32)fn_8016A694(script, 3);
+        arg1 = (s32)lua_tonumber(script, 1);
+        arg2 = (s32)lua_tonumber(script, 2);
+        arg3 = (s32)lua_tonumber(script, 3);
         break;
     case 4:
-        arg1 = (s32)fn_8016A694(script, 1);
-        arg2 = (s32)fn_8016A694(script, 2);
-        arg3 = (s32)fn_8016A694(script, 3);
-        arg4 = (s32)fn_8016A694(script, 4);
+        arg1 = (s32)lua_tonumber(script, 1);
+        arg2 = (s32)lua_tonumber(script, 2);
+        arg3 = (s32)lua_tonumber(script, 3);
+        arg4 = (s32)lua_tonumber(script, 4);
         break;
     }
 

@@ -32,19 +32,19 @@ typedef struct Voice {
 } Voice;
 
 extern Voice lbl_80629390;
-extern Voice* lbl_8064D4BC;
+extern Voice* s3dEmitterRoot;
 extern double lbl_80650FB8;
 extern float lbl_80650FEC;
 extern float lbl_80650FB0;
 
-extern void fn_801CE2B8(void);
-extern void fn_801CE280(void);
-extern void fn_801C87DC(Voice*, float*, float*, float*, float*, float*);
-extern u32 fn_801B7DC8(u16, u32, u32, u8, u32);
-extern u8 fn_801B7D94(u16);
-extern void fn_801C8CC0(Voice*, float, float, float, float, float);
+extern void hwDisableIrq(void);
+extern void hwEnableIrq(void);
+extern void CalcEmitter(Voice*, float*, float*, float*, float*, float*);
+extern u32 synthFXStart(u16, u32, u32, u8, u32);
+extern u8 synthFXGetMaxVoices(u16);
+extern void SetFXParameters(Voice*, float, float, float, float, float);
 
-int fn_801C90A4(float gain, float pitch, Voice* voice, Vec3* position,
+int AddEmitter(float gain, float pitch, Voice* voice, Vec3* position,
                 Vec3* velocity, u32 flags,
                 u16 sound_id, void* user_data, u8 input_channel,
                 u8 output_channel, Owner* owner, void* commands, u8 extra)
@@ -57,7 +57,7 @@ int fn_801C90A4(float gain, float pitch, Voice* voice, Vec3* position,
     float unused;
     float input_scale;
 
-    fn_801CE2B8();
+    hwDisableIrq();
     result = voice == 0 ? &lbl_80629390 : voice;
     result->flags = flags;
     result->position = *position;
@@ -74,40 +74,40 @@ int fn_801C90A4(float gain, float pitch, Voice* voice, Vec3* position,
 
     if (voice == 0) {
         if (result->owner != 0 && result->owner->channel == 0xFF) {
-            fn_801CE280();
+            hwEnableIrq();
             return -1;
         }
-        fn_801C87DC(result, &calculated_gain, &unused, &pitch_scale, &surround,
+        CalcEmitter(result, &calculated_gain, &unused, &pitch_scale, &surround,
                     &pan);
         if (lbl_80650FB0 == calculated_gain) {
-            fn_801CE280();
+            hwEnableIrq();
             return -1;
         }
-        result->handle = fn_801B7DC8(result->sound_id, 0x7F, 0x40,
+        result->handle = synthFXStart(result->sound_id, 0x7F, 0x40,
                                      result->owner != 0
                                          ? result->owner->channel
                                          : result->input_channel,
                                      (result->flags & 0x10) != 0);
         if (result->handle == 0xFFFFFFFF) {
-            fn_801CE280();
+            hwEnableIrq();
             return -1;
         }
-        fn_801C8CC0(result, calculated_gain, pitch_scale, surround, pan,
+        SetFXParameters(result, calculated_gain, pitch_scale, surround, pan,
                     unused);
-        fn_801CE280();
+        hwEnableIrq();
         return result->handle;
     }
 
-    if ((result->previous = lbl_8064D4BC) != 0) {
-        lbl_8064D4BC->next = result;
+    if ((result->previous = s3dEmitterRoot) != 0) {
+        s3dEmitterRoot->next = result;
     }
     result->next = 0;
-    lbl_8064D4BC = result;
+    s3dEmitterRoot = result;
     result->commands = commands;
     result->handle = 0xFFFFFFFF;
     result->state = 0;
     result->flags |= 0x30000;
-    result->output_channel = fn_801B7D94(result->sound_id);
-    fn_801CE280();
+    result->output_channel = synthFXGetMaxVoices(result->sound_id);
+    hwEnableIrq();
     return -1;
 }

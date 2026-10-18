@@ -7,21 +7,21 @@ typedef struct StreamState {
     u32 values_AC[16];
 } StreamState;
 
-extern u32 lbl_8061A504[];
-extern u32 fn_801CC1AC(StreamState*, u32);
+extern u32 synthGlobalVariable[];
+extern u32 inpGetExCtrl(StreamState*, u32);
 
-s16 fn_801BEA3C(StreamState* state, void* indirect, u32 index)
+s16 varGet(StreamState* state, void* indirect, u32 index)
 {
     u32 value;
 
     if (indirect != 0) {
-        value = (u16)fn_801CC1AC(state, index);
+        value = (u16)inpGetExCtrl(state, index);
     } else {
         index &= 0x1F;
         if (index < 16) {
             value = state->values_AC[index];
         } else {
-            value = lbl_8061A504[index - 16];
+            value = synthGlobalVariable[index - 16];
         }
     }
     return (s16)value;

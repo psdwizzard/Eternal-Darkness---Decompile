@@ -9,10 +9,10 @@ typedef struct Voice {
     u8 field_122;
 } Voice;
 
-extern u8 lbl_806275A0[][16];
-extern u8 lbl_80627620[];
+extern u8 synth_last_started[][16];
+extern u8 synth_last_fxstarted[];
 
-void fn_801C2754(Voice* voice)
+void voiceResetLastStarted(Voice* voice)
 {
     u32 index = voice->index;
     u8 slot;
@@ -25,14 +25,14 @@ void fn_801C2754(Voice* voice)
     }
     slot = (u8)index;
     if (voice->field_122 == 0xFF) {
-        if (lbl_80627620[slot] != slot) {
+        if (synth_last_fxstarted[slot] != slot) {
             return;
         }
-        lbl_80627620[slot] = 0xFF;
+        synth_last_fxstarted[slot] = 0xFF;
     } else {
-        if (lbl_806275A0[voice->field_122][voice->field_121] != slot) {
+        if (synth_last_started[voice->field_122][voice->field_121] != slot) {
             return;
         }
-        lbl_806275A0[voice->field_122][voice->field_121] = 0xFF;
+        synth_last_started[voice->field_122][voice->field_121] = 0xFF;
     }
 }

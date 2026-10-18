@@ -14,12 +14,12 @@ typedef struct Object {
 } Object;
 
 extern char lbl_8064BA80;
-extern void* fn_8016B5CC(Object*, int, unsigned int, char*, int);
+extern void* luaM_realloc(Object*, int, unsigned int, char*, int);
 
-void fn_801610E8(Object* object, int count)
+void luaF_newclosure(Object* object, int count)
 {
     int size = ((count - 1) << 4) + 0x20;
-    Entry* entry = fn_8016B5CC(object, 0, size, &lbl_8064BA80, 22);
+    Entry* entry = luaM_realloc(object, 0, size, &lbl_8064BA80, 22);
 
     entry->next = object->entries;
     object->entries = entry;

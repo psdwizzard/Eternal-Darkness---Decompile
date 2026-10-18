@@ -26,15 +26,15 @@ extern const u32 lbl_8064DE80;
 extern const u16 lbl_8064DE84;
 extern const double lbl_8064DCE8;
 
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern unsigned int fn_800F5C54(double);
 extern int fn_8015C4A4(int, int);
 extern Vec3s* fn_80158ABC(int, int, void*);
 extern void fn_8019FF5C(void*);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_801A0008(void);
 extern void* fn_80148008(Vec3f*, const Vec3s*, void*, void (*)(void));
 extern void* memset(void*, s32, unsigned long);
@@ -58,22 +58,22 @@ s32 fn_80019244(void* script)
     *(u32*)&direction = lbl_8064DE80;
     *(u16*)((u8*)&direction + 4) = lbl_8064DE84;
 
-    if (fn_8016A598(script) != 11) {
-        fn_80163BB4(script, lbl_8023BEF8, 11, fn_8016A598(script));
+    if (lua_gettop(script) != 11) {
+        luaO_verror(script, lbl_8023BEF8, 11, lua_gettop(script));
         return 0;
     }
 
-    object_id = fn_800F5C54(fn_8016A694(script, 1));
-    first = (s32)fn_8016A694(script, 2);
-    second = (s32)fn_8016A694(script, 3);
-    third = (s32)fn_8016A694(script, 4);
-    color[0] = (s32)fn_8016A694(script, 5);
-    color[1] = (s32)fn_8016A694(script, 6);
-    color[2] = (s32)fn_8016A694(script, 7);
-    color[3] = (s32)fn_8016A694(script, 8);
-    scale = (f32)fn_8016A694(script, 9);
-    lifetime = (f32)fn_8016A694(script, 10);
-    last = (s32)fn_8016A694(script, 11);
+    object_id = fn_800F5C54(lua_tonumber(script, 1));
+    first = (s32)lua_tonumber(script, 2);
+    second = (s32)lua_tonumber(script, 3);
+    third = (s32)lua_tonumber(script, 4);
+    color[0] = (s32)lua_tonumber(script, 5);
+    color[1] = (s32)lua_tonumber(script, 6);
+    color[2] = (s32)lua_tonumber(script, 7);
+    color[3] = (s32)lua_tonumber(script, 8);
+    scale = (f32)lua_tonumber(script, 9);
+    lifetime = (f32)lua_tonumber(script, 10);
+    last = (s32)lua_tonumber(script, 11);
 
     packed = fn_80158ABC(fn_8015C4A4(object_id, 2), 2, 0);
     position.x = packed->x;
@@ -84,7 +84,7 @@ s32 fn_80019244(void* script)
     fn_8019FF5C(&descriptor);
     descriptor.bytes[0] = first;
     descriptor.bytes[1] = second;
-    *(u16*)&descriptor.bytes[6] = third + (fn_800FBFB0() & 3);
+    *(u16*)&descriptor.bytes[6] = third + (rand() & 3);
     *(s32*)&descriptor.bytes[16] = *(s32*)color;
     descriptor.bytes[32] = last;
     descriptor.bytes[33] = 0;

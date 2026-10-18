@@ -17,7 +17,7 @@ typedef struct VITiming {
     u16 hbsCCIR656;
 } VITiming;
 
-extern VITiming *lbl_8064DAA0;
+extern VITiming *CurrTiming;
 volatile u16 __VIRegs[59] : 0xCC002000;
 
 static inline u32 getCurrentHalfLine(void) {
@@ -32,14 +32,14 @@ static inline u32 getCurrentHalfLine(void) {
         vcount = __VIRegs[22] & 0x7FF;
     } while (vcount0 != vcount);
 
-    return ((vcount - 1) << 1) + ((hcount - 1) / lbl_8064DAA0->hlw);
+    return ((vcount - 1) << 1) + ((hcount - 1) / CurrTiming->hlw);
 }
 
 /* Return whether the beam is in the first field. */
-BOOL fn_8021818C(void) {
+BOOL getCurrentFieldEvenOdd(void) {
     u32 halfLine = getCurrentHalfLine();
 
-    if (halfLine < lbl_8064DAA0->nhlines) {
+    if (halfLine < CurrTiming->nhlines) {
         return 1;
     }
     return 0;

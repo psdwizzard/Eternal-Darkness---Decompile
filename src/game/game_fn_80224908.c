@@ -19,7 +19,7 @@ extern GXData *gx;
 typedef union { u8 byte; u32 word; } GXFifo;
 volatile GXFifo GXWGFifo : 0xCC008000;
 
-void fn_80224908(void)
+void __GXXfVtxSpecs(void)
 {
     GXData *g = gx;
     u32 lo = g->vcdLo;

@@ -14,9 +14,9 @@ extern s32 lbl_8064D18C;
 char lbl_8023CC30[] =
     "\nInvalid Num of Args Expecting 1 or 0, and got %i\n";
 
-extern double fn_8016A694(void*, int);
-extern int fn_8016A598(void*);
-extern void fn_8016A830(void*, double);
+extern double lua_tonumber(void*, int);
+extern int lua_gettop(void*);
+extern void lua_pushnumber(void*, double);
 extern void fn_800AFBA8(void*);
 extern int fn_800AFDA4(void);
 extern void fn_80025A78(int);
@@ -27,12 +27,12 @@ s32 fn_8001A6C4(void* script)
     s32 mode;
     s32 reset;
 
-    value = (s32)fn_8016A694(script, 1);
-    mode = (s32)fn_8016A694(script, 2);
-    if (fn_8016A598(script) == 2) {
+    value = (s32)lua_tonumber(script, 1);
+    mode = (s32)lua_tonumber(script, 2);
+    if (lua_gettop(script) == 2) {
         reset = 0;
     } else {
-        reset = (s32)fn_8016A694(script, 3);
+        reset = (s32)lua_tonumber(script, 3);
     }
 
     fn_800AFBA8(lbl_803003AC);
@@ -197,6 +197,6 @@ s32 fn_8001A9D0(void* script)
         break;
     }
 
-    fn_8016A830(script, (double)mode);
+    lua_pushnumber(script, (double)mode);
     return 1;
 }

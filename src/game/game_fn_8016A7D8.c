@@ -10,13 +10,13 @@ typedef struct Value {
     void* value;
 } Value;
 
-extern void fn_8016057C(Context*, int);
+extern void luaD_checkstack(Context*, int);
 
-void fn_8016A7D8(Context* context)
+void lua_pushnil(Context* context)
 {
     ((Value*)context->current)->type = 1;
     if (context->current == context->end) {
-        fn_8016057C(context, 1);
+        luaD_checkstack(context, 1);
     }
     context->current = (char*)context->current + 16;
 }

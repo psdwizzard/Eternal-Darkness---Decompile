@@ -1,6 +1,6 @@
-extern unsigned int lbl_8064D338;
+extern unsigned int __DTKRepeatMode;
 
-void fn_801B17A8(unsigned int value)
+void DTKSetRepeatMode(unsigned int value)
 {
-    lbl_8064D338 = value;
+    __DTKRepeatMode = value;
 }

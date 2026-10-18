@@ -13,12 +13,12 @@ typedef struct Color {
 } Color;
 
 extern void fn_801ED468(int);
-extern void fn_80226D28(int);
+extern void GXSetCullMode(int);
 extern void fn_801ED118(void);
 extern void fn_801EDA7C(void *, int, int, int);
 extern void fn_801ECF50(int);
 extern void fn_801ECD74(Color *);
-extern void fn_80226AB4(int, int, int);
+extern void GXBegin(int, int, int);
 extern void fn_800ED6F8(float, float, float);
 extern void fn_800ED6F4(void);
 extern char lbl_802FC53C[];
@@ -36,14 +36,14 @@ void fn_800EB750(Vec3 *quad, Vec3 *normal, Color *color, int alpha)
     float scale;
 
     fn_801ED468(0x1B);
-    fn_80226D28(0);
+    GXSetCullMode(0);
     fn_801ED118();
     fn_801EDA7C(lbl_802FC53C, 0, 0x2BF, 0);
     fn_801ECF50(4);
     color->a = alpha;
     localColor = *color;
     fn_801ECD74(&localColor);
-    fn_80226AB4(0x80, 3, 4);
+    GXBegin(0x80, 3, 4);
     i = 0;
     vertex = quad;
     do {
@@ -56,7 +56,7 @@ void fn_800EB750(Vec3 *quad, Vec3 *normal, Color *color, int alpha)
     tip = quad;
     j = 0;
     do {
-        fn_80226AB4(0xA8, 3, 2);
+        GXBegin(0xA8, 3, 2);
         fn_800ED6F8(tip->x, tip->y, tip->z);
         fn_800ED6F8(scale * normal->x + tip->x,
                       scale * normal->y + tip->y,
@@ -65,7 +65,7 @@ void fn_800EB750(Vec3 *quad, Vec3 *normal, Color *color, int alpha)
         j++;
         tip++;
     } while (j < 4);
-    fn_80226D28(1);
+    GXSetCullMode(1);
     defaultColor = lbl_802FC5BC[3];
     fn_801ECD74(&defaultColor);
 }

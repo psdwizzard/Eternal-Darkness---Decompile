@@ -3,10 +3,10 @@ typedef struct Parser {
     void* table;
 } Parser;
 
-extern void* fn_801640C4(Parser*);
-extern int fn_80163FE4(void*, void*);
+extern void* str_checkname(Parser*);
+extern int string_constant(void*, void*);
 
-void fn_80164120(Parser* parser)
+void checkname(Parser* parser)
 {
-    fn_80163FE4(parser->table, fn_801640C4(parser));
+    string_constant(parser->table, str_checkname(parser));
 }

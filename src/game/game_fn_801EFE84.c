@@ -1,12 +1,12 @@
 extern void* lbl_8064D700;
 
-extern void fn_80218110(void);
+extern void VISetBlack(void);
 
 void* fn_801EFE84(void* value)
 {
     void* previous = lbl_8064D700;
 
-    fn_80218110();
+    VISetBlack();
     lbl_8064D700 = value;
     return previous;
 }

@@ -36,7 +36,7 @@ extern void fn_801A7588(void*, int);
 extern void fn_801A7470(void*, int);
 extern void fn_801A764C(void*, void*);
 extern void fn_801A7228(void*);
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern void* memcpy(void*, const void*, u32);
 extern u8 fn_8018E26C(void*, void*);
 extern void fn_8018E230(void*, void*, int, u8, u8, int);
@@ -119,9 +119,9 @@ int fn_8018437C(u8* self)
                     setup.word = lbl_80651D28;
                     setup.half = lbl_80651D2C;
                     if (timers[2])
-                        setup.half = (fn_800FBFB0() & 1) + 1;
+                        setup.half = (rand() & 1) + 1;
                     else
-                        setup.half = -1 - (fn_800FBFB0() & 1);
+                        setup.half = -1 - (rand() & 1);
                     memcpy(entry + 0x10, &setup, 6);
                     fn_8018E230(entry, entry + 0x2B, 1, self[2], self[4], 0);
                 }

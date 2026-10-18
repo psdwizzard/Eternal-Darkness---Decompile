@@ -10,7 +10,7 @@ typedef struct Context {
     Value* stack;
 } Context;
 
-Value* fn_8016A55C(Context* context, int index)
+Value* luaA_indexAcceptable(Context* context, int index)
 {
     Value* value;
     if (index >= 0) {

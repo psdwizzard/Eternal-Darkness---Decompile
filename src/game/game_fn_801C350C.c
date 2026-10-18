@@ -33,7 +33,7 @@ typedef struct SoundState {
 
 extern SoundState lbl_80627D60;
 
-void fn_801C350C(StreamRequest* request, u32 target)
+void vsUpdateBuffer(StreamRequest* request, u32 target)
 {
     SoundState* state = &lbl_80627D60;
     StreamRequest* req = request;

@@ -4,7 +4,7 @@ extern const float lbl_80651608;
 extern const float lbl_8065160C;
 
 /* Initialize an affine transformation to the identity matrix. */
-void fn_80210FB0(register Mtx matrix)
+void PSMTXIdentity(register Mtx matrix)
 {
     register float zero = lbl_8065160C;
     register float one = lbl_80651608;

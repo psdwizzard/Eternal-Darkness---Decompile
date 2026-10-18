@@ -3,7 +3,7 @@ typedef unsigned int u32;
 
 #pragma opt_propagation off
 
-void fn_800F35E4(void *destination, int value, u32 length)
+void TRK_fill_mem(void *destination, int value, u32 length)
 {
     register void *destination_r = destination;
     u8 *cursor = (u8 *)destination_r - 1;

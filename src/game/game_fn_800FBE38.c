@@ -2,7 +2,7 @@
 typedef unsigned long size_t;
 typedef int (*CompareProc)(const void*, const void*);
 
-void fn_800FBE38(void* base, size_t count, size_t size, CompareProc compare)
+void qsort(void* base, size_t count, size_t size, CompareProc compare)
 {
     if (count >= 2) {
         size_t root, end, child;

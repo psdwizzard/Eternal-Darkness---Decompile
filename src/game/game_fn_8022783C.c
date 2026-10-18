@@ -16,7 +16,7 @@ typedef union GXWGPipe {
 } GXWGPipe;
 extern volatile GXWGPipe GXWGFifo : 0xCC008000;
 
-void fn_8022783C(void)
+void GXClearBoundingBox(void)
 {
     GXWGFifo.byte = 0x61;
     GXWGFifo.word = 0x550003FF;

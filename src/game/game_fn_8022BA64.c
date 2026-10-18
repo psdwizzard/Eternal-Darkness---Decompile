@@ -17,7 +17,7 @@ typedef union {
 
 volatile PPCWGPipe GXWGFifo : 0xCC008000;
 
-void fn_8022BA64(int mode)
+void GXSetClipMode(int mode)
 {
     GXWGFifo.u8 = 0x10;
     GXWGFifo.u32 = 0x1005;

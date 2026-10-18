@@ -22,21 +22,21 @@ typedef struct LuaState {
     int nblocks;
 } LuaState;
 
-extern unsigned int fn_80166BD4(const char*, int);
+extern unsigned int hash_s(const char*, int);
 extern int fn_800F98EC(const void*, const void*, unsigned int);
 extern void* memcpy(void*, const void*, unsigned int);
-extern void* fn_8016B5CC(LuaState*, void*, int, const char*, int);
-extern void fn_80166DD4(LuaState*, TableState*, StringNode*, unsigned int);
+extern void* luaM_realloc(LuaState*, void*, int, const char*, int);
+extern void newentry(LuaState*, TableState*, StringNode*, unsigned int);
 extern const char lbl_8024FA38[];
 
 #pragma opt_propagation off
 #pragma opt_lifetimes off
-StringNode* fn_80166E3C(LuaState* state, const char* string, unsigned int length)
+StringNode* luaS_newlstr(LuaState* state, const char* string, unsigned int length)
 {
     int allocsize;
     StringNode* node;
     unsigned int bucket;
-    unsigned int hash = fn_80166BD4(string, length);
+    unsigned int hash = hash_s(string, length);
     unsigned int len = length;
     bucket = hash & (state->strt.size - 1);
     node = state->strt.hash[bucket];
@@ -50,7 +50,7 @@ StringNode* fn_80166E3C(LuaState* state, const char* string, unsigned int length
 
     {
     allocsize = len + 21;
-    node = fn_8016B5CC(state, 0, allocsize, lbl_8024FA38, 101);
+    node = luaM_realloc(state, 0, allocsize, lbl_8024FA38, 101);
     node->value = 0;
     node->next = 0;
     node->length = len;
@@ -60,7 +60,7 @@ StringNode* fn_80166E3C(LuaState* state, const char* string, unsigned int length
     node->chars[len] = 0;
     state->nblocks += allocsize;
     }
-    fn_80166DD4(state, &state->strt, node, bucket);
+    newentry(state, &state->strt, node, bucket);
     return node;
 }
 #pragma opt_propagation reset

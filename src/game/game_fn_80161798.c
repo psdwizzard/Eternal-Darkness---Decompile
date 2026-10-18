@@ -35,13 +35,13 @@ typedef struct Collection {
     Item* first;
 } Collection;
 
-extern void fn_8016166C(Collection*, List*);
-extern void fn_8016152C(Collection*, List*);
-extern void fn_8016158C(Collection*, List*);
-extern void fn_801616EC(List*, Entry*);
-extern void fn_80167454(Item*, Entry*);
+extern void marktagmethods(Collection*, List*);
+extern void markstack(Collection*, List*);
+extern void marklock(Collection*, List*);
+extern void markobject(List*, Entry*);
+extern void luaH_remove(Item*, Entry*);
 
-void fn_80161798(Collection* collection)
+void markall(Collection* collection)
 {
     List list;
     Entry* entry;
@@ -55,9 +55,9 @@ void fn_80161798(Collection* collection)
     list.nodes = 0;
     list.items = collection->first;
     list.items->next = 0;
-    fn_8016166C(collection, &list);
-    fn_8016152C(collection, &list);
-    fn_8016158C(collection, &list);
+    marktagmethods(collection, &list);
+    markstack(collection, &list);
+    marklock(collection, &list);
 
     for (;;) {
         for (;;) {
@@ -69,7 +69,7 @@ void fn_80161798(Collection* collection)
             entry = (Entry*)node;
             i = 0;
             while (i < node->count) {
-                fn_801616EC(&list, entry + 1);
+                markobject(&list, entry + 1);
                 entry++;
                 i++;
             }
@@ -86,9 +86,9 @@ void fn_80161798(Collection* collection)
             record = (Record*)((char*)item->entries + offset);
             if (record->entries[0].kind != 1) {
                 if (record->entries[1].kind == 1)
-                    fn_80167454(item, (Entry*)record);
-                fn_801616EC(&list, &record->entries[0]);
-                fn_801616EC(&list, &record->entries[1]);
+                    luaH_remove(item, (Entry*)record);
+                markobject(&list, &record->entries[0]);
+                markobject(&list, &record->entries[1]);
             }
             offset += sizeof(Record);
             j++;

@@ -149,37 +149,23 @@ typedef struct SYNTH_ITD_DEFAULT {
 
 static SEQ_MEMORY seqMem;
 
-extern SEQ_INSTANCE* lbl_8064D380;
-extern NOTE* lbl_8064D384;
-extern u32 lbl_8064D388;
-extern u8 lbl_8064D38C;
-extern SYNTH_ITD_DEFAULT lbl_8061A4F4[8];
-extern u8* fn_801B4398(u8*, u16*, s16*);
-extern NOTE* fn_801B2528(u32, u8);
-extern void fn_801B2748(void);
-extern SEQ_EVENT* fn_801B443C(u8);
-extern void fn_801CA7C0(u8, u8, u8, u8);
-extern void fn_801CAD90(u8, u8, u8, u16);
-extern void fn_801CAEB8(u8, u8, u8);
-extern void fn_801B3E64(SND_CROSSFADE*, u32*, u8);
-extern u32 fn_801B64D0(u16 id, u8 prio, u8 maxVoices, u8 key, u8 vol, u8 pan, u8 midi, u8 midiSet, u8 section,
+extern SEQ_INSTANCE* cseq;
+extern NOTE* noteFree;
+extern u32 curSeqId;
+extern u8 curFadeOutState;
+extern SYNTH_ITD_DEFAULT synthITDDefault[8];
+extern u8* GetStreamValue(u8*, u16*, s16*);
+extern NOTE* AllocateNote(u32, u8);
+extern void KeyOffNotes(void);
+extern SEQ_EVENT* GenerateNextTrackEvent(u8);
+extern void inpSetMidiCtrl(u8, u8, u8, u8);
+extern void inpSetMidiCtrl14(u8, u8, u8, u16);
+extern void inpResetMidiCtrl(u8, u8, u8);
+extern void seqCrossFade(SND_CROSSFADE*, u32*, u8);
+extern u32 synthStartSound(u16 id, u8 prio, u8 maxVoices, u8 key, u8 vol, u8 pan, u8 midi, u8 midiSet, u8 section,
                        u16 step, u16 trackid, u8 vGroup, s16 prioOffset, u8 studio, u32 itd);
 
-#define cseq lbl_8064D380
-#define noteFree lbl_8064D384
-#define curSeqId lbl_8064D388
-#define curFadeOutState lbl_8064D38C
-#define synthITDDefault lbl_8061A4F4
 #define seqMIDIPriority seqMem.midiPriority
-#define GetStreamValue fn_801B4398
-#define AllocateNote fn_801B2528
-#define KeyOffNotes fn_801B2748
-#define GenerateNextTrackEvent fn_801B443C
-#define inpSetMidiCtrl fn_801CA7C0
-#define inpSetMidiCtrl14 fn_801CAD90
-#define inpResetMidiCtrl fn_801CAEB8
-#define seqCrossFade fn_801B3E64
-#define synthStartSound fn_801B64D0
 #define ARR_GET(arr, offset) ((void*)((offset) + (u32)(arr)))
 #define ARR_GET_TYPE(arr, offset, ty) ((ty)ARR_GET(arr, offset))
 #define CLAMP(v, lo, hi) ((v) > (hi) ? (hi) : ((v) < (lo) ? (lo) : (v)))

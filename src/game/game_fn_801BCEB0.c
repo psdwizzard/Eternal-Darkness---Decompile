@@ -17,11 +17,11 @@ extern unsigned int lbl_8064D400;
 extern ResourceEntry8 lbl_8064D404;
 extern ResourceEntry8* lbl_8064D40C;
 
-extern int fn_801BCEA0(ResourceEntry8*, ResourceEntry8*);
-extern void* fn_801CC370(void*, void*, unsigned int, unsigned int,
+extern int maccmp(ResourceEntry8*, ResourceEntry8*);
+extern void* sndBSearch(void*, void*, unsigned int, unsigned int,
                         int (*)(ResourceEntry8*, ResourceEntry8*));
 
-void* fn_801BCEB0(u16 id)
+void* dataGetMacro(u16 id)
 {
     unsigned char* base = lbl_8061C748;
     u16 count;
@@ -30,11 +30,11 @@ void* fn_801BCEB0(u16 id)
     if (count != 0) {
         lbl_8064D3FC = ((Bucket*)(base + 0x5A00))[lbl_8064D400].start;
         lbl_8064D404.id = id;
-        if ((lbl_8064D40C = fn_801CC370(
+        if ((lbl_8064D40C = sndBSearch(
                  &lbl_8064D404,
                  &((ResourceEntry8*)(base + 0x6200))[lbl_8064D3FC],
                  count,
-                 sizeof(ResourceEntry8), fn_801BCEA0)) != 0) {
+                 sizeof(ResourceEntry8), maccmp)) != 0) {
             return lbl_8064D40C->value;
         }
     }

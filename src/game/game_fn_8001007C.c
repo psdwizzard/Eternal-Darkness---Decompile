@@ -41,20 +41,20 @@ extern const double lbl_8064DE40;
 extern const double lbl_8064DE48;
 extern const double lbl_8064DE50;
 
-extern double fn_8016A694(void*, int);
-extern void fn_8016A5B0(void*, s32);
-extern void fn_8016A830(void*, double);
-extern void fn_8016AA34(void*, const char*);
-extern void fn_8016AB20(void*, const char*);
+extern double lua_tonumber(void*, int);
+extern void lua_settop(void*, s32);
+extern void lua_pushnumber(void*, double);
+extern void lua_getglobal(void*, const char*);
+extern void lua_setglobal(void*, const char*);
 
 #define REGISTER(value, offset)             \
     if (enabled_reg == 0) {                  \
-        fn_8016A830(script_reg, value);       \
-        fn_8016AB20(script_reg, names + offset); \
+        lua_pushnumber(script_reg, value);       \
+        lua_setglobal(script_reg, names + offset); \
     } else {                                 \
-        fn_8016AA34(script_reg, names + offset); \
-        fn_8016A694(script_reg, 1);           \
-        fn_8016A5B0(script_reg, -2);          \
+        lua_getglobal(script_reg, names + offset); \
+        lua_tonumber(script_reg, 1);           \
+        lua_settop(script_reg, -2);          \
     }
 
 void fn_8001007C(void* script, s32 enabled)

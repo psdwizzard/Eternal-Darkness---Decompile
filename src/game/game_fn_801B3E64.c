@@ -75,28 +75,28 @@ typedef struct SynthVoiceRuntime {
 } SynthVoiceRuntime;
 
 extern SynthVoiceRuntime lbl_8060C020;
-extern Node* lbl_8064D398;
-extern Node* lbl_8064D39C;
-extern void fn_801B3CC8(u8, u16, u32, u8);
-extern void fn_801B3B08(u32);
-extern u32 fn_801B2914(u32);
-extern void fn_801B8D00(u8, u16, u32, u8);
-extern void fn_801B8C70(u32);
-extern void fn_801B8CA8(u32, u32, u32);
-extern void fn_801B8C28(u32, u16);
-extern u32 fn_801C3F6C(u16, u16, void*, SynthPlayParams*, u8, u8);
-extern u32 fn_801C40AC(u16, u16, void*, SynthPlayParams*, u8);
+extern Node* seqPausedRoot;
+extern Node* seqActiveRoot;
+extern void seqVolume(u8, u16, u32, u8);
+extern void seqContinue(u32);
+extern u32 seqGetPrivateId(u32);
+extern void sndSeqVolume(u8, u16, u32, u8);
+extern void sndSeqContinue(u32);
+extern void sndSeqMute(u32, u32, u32);
+extern void sndSeqSpeed(u32, u16);
+extern u32 seqPlaySong(u16, u16, void*, SynthPlayParams*, u8, u8);
+extern u32 sndSeqPlayEx(u16, u16, void*, SynthPlayParams*, u8);
 
 static inline int resolve_handle(u32 value)
 {
     u32 key = value & 0x7FFFFFFF;
-    Node* node = lbl_8064D39C;
+    Node* node = seqActiveRoot;
     while (node != 0) {
         if (node->key == key)
             return node->type | (value & 0x80000000U);
         node = node->next;
     }
-    node = lbl_8064D398;
+    node = seqPausedRoot;
     while (node != 0) {
         if (node->key == key)
             return node->type | (value & 0x80000000U);
@@ -105,17 +105,8 @@ static inline int resolve_handle(u32 value)
     return -1;
 }
 
-#define seqVolume fn_801B3CC8
-#define sndSeqVolume fn_801B8D00
-#define seqContinue fn_801B3B08
-#define sndSeqContinue fn_801B8C70
-#define sndSeqMute fn_801B8CA8
-#define sndSeqSpeed fn_801B8C28
-#define seqPlaySong fn_801C3F6C
-#define sndSeqPlayEx fn_801C40AC
-#define seqGetPrivateId fn_801B2914
 
-void fn_801B3E64(SynthStartRequest* ci, u32* new_seqId, u8 irq_call)
+void seqCrossFade(SynthStartRequest* ci, u32* new_seqId, u8 irq_call)
 {
     SynthVoiceRuntime* runtime;
     SynthPlayParams params;

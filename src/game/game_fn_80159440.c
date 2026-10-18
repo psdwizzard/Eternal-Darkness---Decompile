@@ -44,10 +44,10 @@ extern void fn_801ACC10(void);
 extern void fn_801AC350(int, int, int);
 extern void fn_800459C0(void);
 extern int fn_801358B4(int);
-extern u32 fn_8022658C(void);
+extern u32 GXReadDrawSync(void);
 extern void fn_8015BDF0(int, void*);
-extern int fn_8020D318(void*, void*, int);
-extern void fn_80228D9C(void);
+extern int OSReceiveMessage(void*, void*, int);
+extern void GXInvalidateTexAll(void);
 extern void fn_80159184(u32);
 extern void fn_801F7034(void*, int);
 extern void fn_8015AC94(int, int);
@@ -88,11 +88,11 @@ void fn_80159440(int value, u32 flags)
     }
 
     saved = fn_801358B4(0);
-    while ((u16)fn_8022658C() != 0xBEEF) {
+    while ((u16)GXReadDrawSync() != 0xBEEF) {
     }
     fn_8015BDF0(value, &globals->message_queue);
-    fn_8020D318(&globals->message_queue, &message, 1);
-    fn_80228D9C();
+    OSReceiveMessage(&globals->message_queue, &message, 1);
+    GXInvalidateTexAll();
     fn_80159184(flags);
 
     {

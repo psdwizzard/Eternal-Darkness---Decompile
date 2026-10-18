@@ -11,7 +11,7 @@ typedef struct GXData {
 extern GXData *gx;
 
 /* GXSetCopyClamp: select which EFB edges clamp during display and texture copies. */
-void fn_80227140(int mode)
+void GXSetCopyClamp(int mode)
 {
     u8 top = (mode & 1) == 1;
     u8 bottom = (mode & 2) == 2;

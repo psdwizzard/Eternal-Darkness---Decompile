@@ -4317,7 +4317,7 @@ config.custom_build_rules.append(
             "build/binutils/powerpc-eabi-objcopy "
             "--add-symbol=lbl_8064D4E0=.text:0,global,object $in) && "
             "python3 tools/retarget_undefined_elf_relocation.py $in "
-            "lbl_8064D4DC 4 lbl_8064D4E0 0x8064D4E0 0 R_PPC_EMB_SDA21 "
+            "salHooks 4 lbl_8064D4E0 0x8064D4E0 0 R_PPC_EMB_SDA21 "
             f"config/{VERSION}/symbols.txt && touch -r $out $in && touch $out"
         ),
         "description": "SPLIT SBSS SYMBOL $in",
@@ -4919,7 +4919,7 @@ config.custom_build_steps = {
             "outputs": [f"build/{VERSION}/src/game/game_fn_801CE09C.externalized"],
             "rule": "externalize_game_static_pool",
             "inputs": [f"build/{VERSION}/src/game/game_fn_801CE09C.o"],
-            "variables": {"symbol": "lbl_80631340"},
+            "variables": {"symbol": "dsp_task"},
         },
         {
             "outputs": [f"build/{VERSION}/src/game/game_InitMetroTRKCommTable.renamed"],

@@ -30,8 +30,8 @@ typedef struct ResourceTable {
 } ResourceTable;
 
 extern EntryPair* fn_8015DB74(ResourceTable*, u32);
-extern void fn_80228474(void*, void*, u16, u16, u32, u32, u32, int);
-extern void fn_80228730(void*, u32, u32, float, float, float, int, u8, int);
+extern void GXInitTexObj(void*, void*, u16, u16, u32, u32, u32, int);
+extern void GXInitTexObjLOD(void*, u32, u32, float, float, float, int, u8, int);
 
 void fn_8015DB84(ResourceTable* table, void* context, u32 index)
 {
@@ -44,10 +44,10 @@ void fn_8015DB84(ResourceTable* table, void* context, u32 index)
     } else {
         different = 1;
     }
-    fn_80228474(context, entry->data, entry->field2, entry->field0,
+    GXInitTexObj(context, entry->data, entry->field2, entry->field0,
                 entry->field4, entry->fieldC, entry->field10, different);
     entry = pair->first;
-    fn_80228730(context, entry->field14, entry->field18,
+    GXInitTexObjLOD(context, entry->field14, entry->field18,
                 (float)entry->field21, (float)entry->field22, entry->field1C,
                 0, entry->field20, 0);
 }

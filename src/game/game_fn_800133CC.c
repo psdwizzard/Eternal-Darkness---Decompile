@@ -4,9 +4,9 @@ typedef unsigned char u8;
 extern const char lbl_8023BEF8[];
 extern char lbl_8030206C[];
 extern void fn_8014CBC0(char*);
-extern int fn_8016A598(void*);
-extern double fn_8016A694(void*, int);
-extern void fn_80163BB4(void*, const char*, ...);
+extern int lua_gettop(void*);
+extern double lua_tonumber(void*, int);
+extern void luaO_verror(void*, const char*, ...);
 extern void *fn_80201814();
 extern void* fn_80201C24();
 extern void fn_80157B60(void*, u8);
@@ -29,16 +29,16 @@ s32 fn_800133CC(void* script)
     char* name;
 
     fn_8014CBC0(lbl_8030206C);
-    if (fn_8016A598(parser) != 5) {
-        fn_80163BB4(parser, lbl_8023BEF8, 5, fn_8016A598(parser));
+    if (lua_gettop(parser) != 5) {
+        luaO_verror(parser, lbl_8023BEF8, 5, lua_gettop(parser));
         return 0;
     }
 
-    first = (s32)fn_8016A694(parser, 1);
-    second = (s32)fn_8016A694(parser, 2);
-    kind = (s32)fn_8016A694(parser, 3);
-    amount = (float)fn_8016A694(parser, 4);
-    use_name = (s32)fn_8016A694(parser, 5);
+    first = (s32)lua_tonumber(parser, 1);
+    second = (s32)lua_tonumber(parser, 2);
+    kind = (s32)lua_tonumber(parser, 3);
+    amount = (float)lua_tonumber(parser, 4);
+    use_name = (s32)lua_tonumber(parser, 5);
 
     object = fn_80201814(first);
     if (object != 0) {

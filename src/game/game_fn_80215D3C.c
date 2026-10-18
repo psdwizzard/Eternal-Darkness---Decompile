@@ -1,4 +1,4 @@
-/* fn_80215D3C: DVDCancelAsync (Dolphin SDK dvd.c) */
+/* DVDCancelAsync: DVDCancelAsync (Dolphin SDK dvd.c) */
 typedef unsigned int u32;
 typedef int s32;
 typedef int BOOL;
@@ -18,17 +18,17 @@ struct DVDCommandBlock {
 
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
-extern BOOL fn_80212F84(void);
-extern DVDLowCallback fn_80212F98(void);
-extern BOOL fn_80216580(DVDCommandBlock *block);
+extern BOOL DVDLowBreak(void);
+extern DVDLowCallback DVDLowClearCallback(void);
+extern BOOL __DVDDequeueWaitingQueue(DVDCommandBlock *block);
 extern void cbForStateMotorStopped_8021492C(u32 intType);
 extern void stateReady_80214A10(void);
 
-extern u32 lbl_8064DA20;
-extern DVDCBCallback lbl_8064DA24;
+extern u32 Canceling;
+extern DVDCBCallback CancelCallback;
 extern s32 ResumeFromHere_8064DA28;
 
-BOOL fn_80215D3C(DVDCommandBlock *block, DVDCBCallback callback) {
+BOOL DVDCancelAsync(DVDCommandBlock *block, DVDCBCallback callback) {
     BOOL enabled;
     DVDLowCallback old;
 
@@ -43,18 +43,18 @@ BOOL fn_80215D3C(DVDCommandBlock *block, DVDCBCallback callback) {
         break;
 
     case 1:
-        if (lbl_8064DA20) {
+        if (Canceling) {
             OSRestoreInterrupts(enabled);
             return 0;
         }
-        lbl_8064DA20 = 1;
-        lbl_8064DA24 = callback;
+        Canceling = 1;
+        CancelCallback = callback;
         if ((u32)block->command == 4 || (u32)block->command == 1)
-            fn_80212F84();
+            DVDLowBreak();
         break;
 
     case 2:
-        fn_80216580(block);
+        __DVDDequeueWaitingQueue(block);
         block->state = 10;
         if (block->callback)
             (block->callback)(-3, block);
@@ -72,12 +72,12 @@ BOOL fn_80215D3C(DVDCommandBlock *block, DVDCBCallback callback) {
                 (*callback)(0, block);
             break;
         default:
-            if (lbl_8064DA20) {
+            if (Canceling) {
                 OSRestoreInterrupts(enabled);
                 return 0;
             }
-            lbl_8064DA20 = 1;
-            lbl_8064DA24 = callback;
+            Canceling = 1;
+            CancelCallback = callback;
             break;
         }
         break;
@@ -87,7 +87,7 @@ BOOL fn_80215D3C(DVDCommandBlock *block, DVDCBCallback callback) {
     case 6:
     case 7:
     case 11:
-        old = fn_80212F98();
+        old = DVDLowClearCallback();
         if (old != cbForStateMotorStopped_8021492C) {
             OSRestoreInterrupts(enabled);
             return 0;

@@ -123,22 +123,22 @@ extern void fn_801F1528(s32);
 extern s32 fn_801F1A38(Vec3*, Vec3*, InputStorage*, s32, s32, s32, float);
 extern void fn_801F3FD8(Vec3*, s32);
 extern void fn_801F4380(Vec3*);
-extern void fn_80210FB0(Mtx);
-extern void fn_80210FDC(const Mtx, const Mtx, Mtx);
-extern u32 fn_802110A8(const Mtx, Mtx);
-extern u32 fn_802111A0(const Mtx, Mtx);
-extern void fn_80211484(Mtx, float, float, float);
-extern void fn_802114B8(Mtx, float, float, float);
-extern void fn_802114E0(Mtx, float*);
-extern void fn_80211710(const Mtx, const Vec3*, Vec3*);
-extern void fn_80225F4C(s32, const void*, u8);
-extern void fn_80226378(void);
-extern void fn_8022A5D8(s32, s32, s32, s32);
-extern void fn_8022A6DC(u8);
-extern void fn_8022A71C(u8);
-extern void fn_8022B690(Mtx, s32);
-extern void fn_8022B6CC(Mtx, s32);
-extern void fn_8022B748(Mtx, s32, s32);
+extern void PSMTXIdentity(Mtx);
+extern void PSMTXConcat(const Mtx, const Mtx, Mtx);
+extern u32 PSMTXInverse(const Mtx, Mtx);
+extern u32 PSMTXInvXpose(const Mtx, Mtx);
+extern void PSMTXTrans(Mtx, float, float, float);
+extern void PSMTXScale(Mtx, float, float, float);
+extern void PSMTXQuat(Mtx, float*);
+extern void PSMTXMultVec(const Mtx, const Vec3*, Vec3*);
+extern void GXSetArray(s32, const void*, u8);
+extern void GXFlush(void);
+extern void GXSetBlendMode(s32, s32, s32, s32);
+extern void GXSetColorUpdate(u8);
+extern void GXSetAlphaUpdate(u8);
+extern void GXLoadPosMtxImm(Mtx, s32);
+extern void GXLoadNrmMtxImm(Mtx, s32);
+extern void GXLoadTexMtxImm(Mtx, s32, s32);
 extern void* memcpy(void*, const void*, u32);
 
 void fn_80121114(Owner* owner, InputStorage* input, s32 mode, s32 draw, s32 outline, s32 fog)
@@ -234,9 +234,9 @@ void fn_80121114(Owner* owner, InputStorage* input, s32 mode, s32 draw, s32 outl
     }
     fn_801ED3F4((u32)fn_8011FB6C(owner));
     scale = fn_8017968C(&owner->position, camera);
-    fn_80225F4C(9, color0, 6);
-    fn_80225F4C(10, color1, 6);
-    fn_80225F4C(13, model->palette, 4);
+    GXSetArray(9, color0, 6);
+    GXSetArray(10, color1, 6);
+    GXSetArray(13, model->palette, 4);
     fn_801231C0(model);
     /* ASM: mr consumes the callee's zero-extended result without C's
      * redundant u16-to-int mask. */
@@ -293,13 +293,13 @@ void fn_80121114(Owner* owner, InputStorage* input, s32 mode, s32 draw, s32 outl
     if (!(owner->draw_flags & 0x100)) {
         fn_801F1528(0);
     }
-    fn_80226378();
-    fn_80210FB0(matrix);
-    fn_80211484(matrix, owner->position.x, owner->position.y, owner->position.z);
-    fn_802114E0(rot, owner->rotation);
-    fn_80210FDC(matrix, rot, matrix);
-    fn_802110A8(matrix, inverse);
-    fn_80211710(inverse, &lbl_8063D378, &lbl_804ED5C0);
+    GXFlush();
+    PSMTXIdentity(matrix);
+    PSMTXTrans(matrix, owner->position.x, owner->position.y, owner->position.z);
+    PSMTXQuat(rot, owner->rotation);
+    PSMTXConcat(matrix, rot, matrix);
+    PSMTXInverse(matrix, inverse);
+    PSMTXMultVec(inverse, &lbl_8063D378, &lbl_804ED5C0);
     if (owner->light_flags & 0x4000) {
         memcpy(copy, matrix, sizeof(Mtx));
         lit = copy[0];
@@ -310,20 +310,20 @@ void fn_80121114(Owner* owner, InputStorage* input, s32 mode, s32 draw, s32 outl
     lbl_804ED5C0.y *= lbl_806500D8;
     lbl_804ED5C0.z *= lbl_806500D8;
 
-    fn_80210FDC(matrix, lbl_8063C068, tex);
-    fn_802111A0(tex, tex);
-    fn_802114B8(temp, lbl_806500DC, lbl_806500E0, lbl_806500A0);
-    fn_80210FDC(temp, tex, tex);
-    fn_80211484(temp, lbl_806500E4, lbl_806500E4, lbl_806500A4);
-    fn_80210FDC(temp, tex, tex);
-    fn_8022B748(tex, 0x30, 1);
-    fn_80210FDC(lbl_8063BF68[lbl_8064D738][0], matrix, shadow0);
-    fn_80210FDC(lbl_8063BF68[lbl_8064D738][1], matrix, shadow1);
-    fn_80210FDC(lbl_8063C068, matrix, matrix);
-    fn_8022B748(shadow0, 0x36, 0);
-    fn_8022B748(shadow1, 0x39, 0);
-    fn_8022B690(matrix, 0);
-    fn_8022B6CC(matrix, 0);
+    PSMTXConcat(matrix, lbl_8063C068, tex);
+    PSMTXInvXpose(tex, tex);
+    PSMTXScale(temp, lbl_806500DC, lbl_806500E0, lbl_806500A0);
+    PSMTXConcat(temp, tex, tex);
+    PSMTXTrans(temp, lbl_806500E4, lbl_806500E4, lbl_806500A4);
+    PSMTXConcat(temp, tex, tex);
+    GXLoadTexMtxImm(tex, 0x30, 1);
+    PSMTXConcat(lbl_8063BF68[lbl_8064D738][0], matrix, shadow0);
+    PSMTXConcat(lbl_8063BF68[lbl_8064D738][1], matrix, shadow1);
+    PSMTXConcat(lbl_8063C068, matrix, matrix);
+    GXLoadTexMtxImm(shadow0, 0x36, 0);
+    GXLoadTexMtxImm(shadow1, 0x39, 0);
+    GXLoadPosMtxImm(matrix, 0);
+    GXLoadNrmMtxImm(matrix, 0);
     fn_801ED468(0);
 
     level = drawn / lbl_806500E8;
@@ -335,12 +335,12 @@ void fn_80121114(Owner* owner, InputStorage* input, s32 mode, s32 draw, s32 outl
         }
     }
     if (fog) {
-        fn_8022A5D8(1, 4, 5, 0xF);
-        fn_8022A71C(1);
+        GXSetBlendMode(1, 4, 5, 0xF);
+        GXSetAlphaUpdate(1);
     }
     fn_80122638(owner, kind, layer, draw, 0, (s32)lit, scale, level);
     if (fog) {
-        fn_8022A71C(0);
+        GXSetAlphaUpdate(0);
     }
     if (draw) {
         if (outline) {
@@ -351,9 +351,9 @@ void fn_80121114(Owner* owner, InputStorage* input, s32 mode, s32 draw, s32 outl
     }
     if (draw && (owner->flags & 0x20000000) && fn_8011FF38()) {
         fn_80120098(owner);
-        fn_80225F4C(9, color0, 6);
-        fn_80225F4C(10, color1, 6);
-        fn_80225F4C(13, model->palette, 4);
+        GXSetArray(9, color0, 6);
+        GXSetArray(10, color1, 6);
+        GXSetArray(13, model->palette, 4);
     }
 
     if ((owner->flags & 0x100) && draw && !outline) {
@@ -370,10 +370,10 @@ void fn_80121114(Owner* owner, InputStorage* input, s32 mode, s32 draw, s32 outl
             visible = 1;
         }
         if (visible) {
-            fn_80210FB0(matrix);
-            fn_80211484(matrix, owner->position.x, owner->position.y, owner->position.z);
-            fn_802114E0(rot, owner->rotation);
-            fn_80210FDC(matrix, rot, matrix);
+            PSMTXIdentity(matrix);
+            PSMTXTrans(matrix, owner->position.x, owner->position.y, owner->position.z);
+            PSMTXQuat(rot, owner->rotation);
+            PSMTXConcat(matrix, rot, matrix);
             axis1[0] = 0.0f;
             axis1[1] = 0.0f;
             axis1[2] = 1.0f;
@@ -385,33 +385,33 @@ void fn_80121114(Owner* owner, InputStorage* input, s32 mode, s32 draw, s32 outl
             fn_801208CC(outline_mtx, axis1, axis2);
             outline_mtx[2][3] += lbl_806500C4;
             if (owner->draw_flags & 0x2000) {
-                fn_80210FDC(outline_mtx, matrix, matrix);
-                fn_80211484(offset, lbl_806500A0, lbl_806500A0, owner->height);
-                fn_80210FDC(offset, matrix, matrix);
+                PSMTXConcat(outline_mtx, matrix, matrix);
+                PSMTXTrans(offset, lbl_806500A0, lbl_806500A0, owner->height);
+                PSMTXConcat(offset, matrix, matrix);
             } else {
-                fn_80210FDC(matrix, outline_mtx, matrix);
+                PSMTXConcat(matrix, outline_mtx, matrix);
             }
-            fn_80210FDC(lbl_8063C068, matrix, matrix);
-            fn_8022B690(matrix, 3);
+            PSMTXConcat(lbl_8063C068, matrix, matrix);
+            GXLoadPosMtxImm(matrix, 3);
             fn_801ED468(3);
             fn_801ED118();
             fn_8012DBE8(owner, 0xF, &color);
             lbl_8024EDE8.alpha = 0xFF - ((0 > color.a - fade) ? 0 : color.a - fade);
             fn_801EDA7C((s16*)&lbl_8024EDE8, 0, 0, 0);
             if (fog) {
-                fn_8022A71C(1);
-                fn_8022A6DC(0);
+                GXSetAlphaUpdate(1);
+                GXSetColorUpdate(0);
             }
-            fn_8022A5D8(2, 1, 0, 3);
+            GXSetBlendMode(2, 1, 0, 3);
             fn_801F10BC(0, 0, 0);
             fn_80122AD4(owner, 7, 0, scale);
             if (!(owner->draw_flags & 0x4000)) {
                 fn_80122AD4(owner, 7, 1, scale);
             }
-            fn_8022A5D8(1, 4, 5, 0);
+            GXSetBlendMode(1, 4, 5, 0);
             if (fog) {
-                fn_8022A6DC(1);
-                fn_8022A71C(0);
+                GXSetColorUpdate(1);
+                GXSetAlphaUpdate(0);
             }
         }
     }

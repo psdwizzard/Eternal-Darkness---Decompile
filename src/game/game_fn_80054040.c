@@ -75,8 +75,8 @@ extern void fn_80201DE0(void*, s32);
 extern void fn_80201E60(void*, s32);
 extern void fn_80035534(ChildObject*, SetupInfo*);
 extern s32 fn_80072368(s32);
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern void fn_80201D3C(void*, s32);
 extern void fn_80201D44(void*, s32);
 extern void fn_80138614(s32);
@@ -120,7 +120,7 @@ void* fn_80054040(register void* callback, register SetupInfo* setup,
     parent->type9E = setup->type40;
     parent->type9F = setup->type42;
     parent->value94 = setup->valueC9;
-    parent->angle9C = (fn_800FBFB0() & 0x3FF) + 0x400;
+    parent->angle9C = (rand() & 0x3FF) + 0x400;
 
     fn_80201D3C(result, 2);
     fn_80201D44(result, create->value28);

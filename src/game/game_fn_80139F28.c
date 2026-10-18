@@ -18,7 +18,7 @@ extern void fn_80139E20(void*, Vec3*, void*);
 extern unsigned int fn_8011FAF4(void*);
 extern void fn_8011F114();
 extern Vec3* fn_8011F130(void*);
-extern void fn_80211A6C();
+extern void PSVECSubtract();
 extern void fn_8013F4D0(void*, void*, void*);
 extern int fn_8011EB1C(void*);
 extern int fn_80201B5C(void*);
@@ -60,8 +60,8 @@ void fn_80139F28(void* object, const Vec3* start, const Vec3* target,
         up.x = lbl_806502B8;
         up.y = lbl_806502B8;
         up.z = fn_8011F6F8(object);
-        fn_80211A6C(&original, &up, &a);
-        fn_80211A6C((Vec3*)((unsigned char*)&matrix + 12), &up, &b);
+        PSVECSubtract(&original, &up, &a);
+        PSVECSubtract((Vec3*)((unsigned char*)&matrix + 12), &up, &b);
         fn_8013F4D0(plane, &a, &b);
         if ((fn_8011EB1C(object) <= 2 && fn_80201B5C(context) != 29) ||
             object == lbl_8064C4E4)

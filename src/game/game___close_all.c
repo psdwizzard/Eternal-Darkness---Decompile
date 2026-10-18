@@ -25,8 +25,8 @@ typedef struct FileRecord {
 } FileRecord;
 
 extern FileRecord __files[];
-extern void fn_800F91F0(FileRecord *);
-extern void fn_800F68D0(FileRecord *);
+extern void fclose(FileRecord *);
+extern void free(FileRecord *);
 
 void __close_all(void)
 {
@@ -35,13 +35,13 @@ void __close_all(void)
 
     while (file != 0) {
         if (file->mode.file_kind != FILE_KIND_CLOSED) {
-            fn_800F91F0(file);
+            fclose(file);
         }
 
         last = file;
         file = file->next;
         if (last->allocated != 0) {
-            fn_800F68D0(last);
+            free(last);
         } else {
             last->mode.file_kind = FILE_KIND_UNAVAILABLE;
             if (file != 0 && file->allocated != 0) {

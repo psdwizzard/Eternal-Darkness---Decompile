@@ -64,7 +64,7 @@ extern u32 lbl_8064E48C;
 extern u32 lbl_8064E490;
 extern u32 lbl_8064E4A0;
 extern u32 lbl_8064E4A4;
-extern u8 fn_800FBFB0(void);
+extern u8 rand(void);
 
 extern int fn_8011EB04(void *);
 extern int fn_8011EB14(void *);
@@ -79,7 +79,7 @@ extern u16 fn_80050B08(s32 arg0, s32 arg1, s32 arg2, u8 *arg3, s8 *arg4,
                        u16 *arg5, s32 *arg6);
 extern int fn_801A9EF4(int low, int high);
 extern int fn_801A9F44(s32 count, s32 *ids);
-extern u8 fn_800FBFB0(void);
+extern u8 rand(void);
 extern void *fn_80201B9C(void);
 extern void *fn_80204844(void *, int);
 extern void *fn_8006D444(void *);
@@ -443,7 +443,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 time = 1500;
                 break;
             case 0x57:
-                if ((int)fn_800FBFB0() < 128) {
+                if ((int)rand() < 128) {
                     result = fn_801A9EF4(0xCE, 0xD0);
                     intensity = 60;
                     kind = 4;
@@ -605,7 +605,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 time = 1500;
                 break;
             case 0x57:
-                if ((int)fn_800FBFB0() < 128) {
+                if ((int)rand() < 128) {
                     result = fn_801A9EF4(0x4C, 0x4E);
                     intensity = 60;
                     kind = 4;
@@ -778,7 +778,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 time = 1500;
                 break;
             case 0x57:
-                if ((int)fn_800FBFB0() < 128) {
+                if ((int)rand() < 128) {
                     result = fn_801A9EF4(0x115, 0x117);
                     intensity = 60;
                     kind = 4;
@@ -931,7 +931,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 time = 1500;
                 break;
             case 0x57:
-                if ((int)fn_800FBFB0() < 128) {
+                if ((int)rand() < 128) {
                     result = fn_801A9EF4(0x11C, 0x11E);
                     intensity = 60;
                     kind = 4;
@@ -1258,7 +1258,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 time = 1500;
                 break;
             case 0x57:
-                if ((int)fn_800FBFB0() < 128) {
+                if ((int)rand() < 128) {
                     result = fn_801A9EF4(0x123, 0x126);
                     intensity = 60;
                     kind = 4;
@@ -1433,7 +1433,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 time = 1500;
                 break;
             case 0x57:
-                if ((int)fn_800FBFB0() < 128) {
+                if ((int)rand() < 128) {
                     result = fn_801A9EF4(0x127, 0x12A);
                     intensity = 60;
                     kind = 4;
@@ -1603,7 +1603,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 time = 1500;
                 break;
             case 0x57:
-                if ((int)fn_800FBFB0() < 128) {
+                if ((int)rand() < 128) {
                     result = fn_801A9EF4(0x135, 0x137);
                     intensity = 60;
                     kind = 4;
@@ -1773,7 +1773,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 time = 1500;
                 break;
             case 0x57:
-                if ((int)fn_800FBFB0() < 128) {
+                if ((int)rand() < 128) {
                     result = fn_801A9EF4(0x115, 0x117);
                     intensity = 60;
                     kind = 4;
@@ -1942,7 +1942,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 time = 1500;
                 break;
             case 0x57:
-                if ((int)fn_800FBFB0() < 128) {
+                if ((int)rand() < 128) {
                     result = fn_801A9EF4(0x12F, 0x134);
                     intensity = 60;
                     kind = 4;
@@ -2316,7 +2316,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 break;
             case 0x4E:
             case 0x4F:
-                if ((int)fn_800FBFB0() < 51) {
+                if ((int)rand() < 51) {
                     result = fn_801A9EF4(0x17, 0x18);
                     intensity = 90;
                     kind = 2;
@@ -2436,7 +2436,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 break;
             case 0x4E:
             case 0x4F:
-                if ((int)fn_800FBFB0() < 25) {
+                if ((int)rand() < 25) {
                     result = fn_801A9EF4(0x1FA, 0x1FC);
                     intensity = 70;
                     kind = 2;
@@ -2529,12 +2529,12 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 break;
             case 0x4E:
             case 0x4F:
-                if ((int)fn_800FBFB0() < 25) {
+                if ((int)rand() < 25) {
                     intensity = 50;
                     result = 0x264;
                     kind = 2;
                     time = 1500;
-                } else if ((int)fn_800FBFB0() < 25) {
+                } else if ((int)rand() < 25) {
                     intensity = 50;
                     result = 0x265;
                     kind = 2;
@@ -2610,7 +2610,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 break;
             case 0x4E:
             case 0x4F:
-                if ((int)fn_800FBFB0() < 25) {
+                if ((int)rand() < 25) {
                     intensity = 70;
                     result = 0x20F;
                     kind = 2;
@@ -2687,7 +2687,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 break;
             case 0x4E:
             case 0x4F:
-                if ((int)fn_800FBFB0() < 25) {
+                if ((int)rand() < 25) {
                     intensity = 70;
                     result = 0x153;
                     kind = 2;
@@ -2764,7 +2764,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 time = 1500;
                 break;
             case 0x4E:
-                if ((int)fn_800FBFB0() < 12) {
+                if ((int)rand() < 12) {
                     result = fn_801A9EF4(0x12B, 0x12D);
                     intensity = 70;
                     kind = 2;
@@ -2774,7 +2774,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 }
                 break;
             case 0x4F:
-                if ((int)fn_800FBFB0() < 25) {
+                if ((int)rand() < 25) {
                     result = fn_801A9EF4(0x12B, 0x12D);
                     intensity = 70;
                     kind = 2;
@@ -2839,7 +2839,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 break;
             case 0x4E:
             case 0x4F:
-                if ((int)fn_800FBFB0() < 51) {
+                if ((int)rand() < 51) {
                     intensity = 100;
                     result = 0x16A;
                     kind = 2;
@@ -2905,7 +2905,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 break;
             case 0x4E:
             case 0x4F:
-                if ((int)fn_800FBFB0() < 51) {
+                if ((int)rand() < 51) {
                     intensity = 100;
                     result = 0x234;
                     kind = 2;
@@ -2977,7 +2977,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 break;
             case 0x4E:
             case 0x4F:
-                if ((int)fn_800FBFB0() < 51) {
+                if ((int)rand() < 51) {
                     intensity = 100;
                     result = 0x237;
                     kind = 2;
@@ -3050,7 +3050,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 break;
             case 0x4E:
             case 0x4F:
-                if ((int)fn_800FBFB0() < 25) {
+                if ((int)rand() < 25) {
                     intensity = 80;
                     result = 0x246;
                     kind = 5;
@@ -3107,7 +3107,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 break;
             case 0x4E:
             case 0x4F:
-                if ((int)fn_800FBFB0() < 25) {
+                if ((int)rand() < 25) {
                     intensity = 80;
                     result = 0x261;
                     kind = 2;
@@ -3176,7 +3176,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 break;
             case 0x4E:
             case 0x4F:
-                if ((int)fn_800FBFB0() < 25) {
+                if ((int)rand() < 25) {
                     intensity = 80;
                     result = 0x254;
                     kind = 2;
@@ -3317,7 +3317,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 break;
             case 0x4E:
             case 0x4F:
-                if ((int)fn_800FBFB0() < 51) {
+                if ((int)rand() < 51) {
                     result = fn_801A9EF4(0x17, 0x18);
                     intensity = 90;
                     kind = 2;
@@ -3745,7 +3745,7 @@ u16 fn_8004A608(u32 object, int level, u8 *out_intensity, u8 *out_kind,
                 time = 5000;
                 break;
             case 0x4F:
-                if ((int)fn_800FBFB0() < 51) {
+                if ((int)rand() < 51) {
                     result = fn_80049E74(object, 0x1E, &intensity, &kind, &time);
                     intensity = 90;
                 } else {

@@ -19,37 +19,37 @@ typedef struct {
 } __GXFifoObj;
 
 extern volatile u32 *__piReg;
-extern __GXFifoObj *lbl_8064DB90; /* CPUFifo */
-extern __GXFifoObj *lbl_8064DB94; /* GPFifo */
-extern u8 lbl_8064DB9C; /* CPGPLinked */
+extern __GXFifoObj *CPUFifo; /* CPUFifo */
+extern __GXFifoObj *GPFifo; /* GPFifo */
+extern u8 CPGPLinked; /* CPGPLinked */
 
 BOOL OSDisableInterrupts(void);
 BOOL OSRestoreInterrupts(BOOL level);
-void fn_80224468(u8 enable); /* __GXFifoLink */
-void fn_802244AC(u8 hiWatermarkEn, u8 loWatermarkEn);
-void fn_802244F8(u8 underflowEn, u8 overflowEn);
+void __GXFifoLink(u8 enable); /* __GXFifoLink */
+void __GXWriteFifoIntEnable(u8 hiWatermarkEn, u8 loWatermarkEn);
+void __GXWriteFifoIntReset(u8 underflowEn, u8 overflowEn);
 
 void GXSetCPUFifo(__GXFifoObj *fifo) {
     u32 reg;
     BOOL enabled = OSDisableInterrupts();
 
-    lbl_8064DB90 = fifo;
-    if (fifo == lbl_8064DB94) {
+    CPUFifo = fifo;
+    if (fifo == GPFifo) {
         __piReg[3] = (u32)fifo->base & 0x3FFFFFFF;
         __piReg[4] = (u32)fifo->top & 0x3FFFFFFF;
         reg = (u32)fifo->wrPtr & 0x3FFFFFE0;
         reg &= ~(1 << 26);
         __piReg[5] = reg;
-        lbl_8064DB9C = 1;
-        fn_802244F8(1, 1);
-        fn_802244AC(1, 0);
-        fn_80224468(1);
+        CPGPLinked = 1;
+        __GXWriteFifoIntReset(1, 1);
+        __GXWriteFifoIntEnable(1, 0);
+        __GXFifoLink(1);
     } else {
-        if (lbl_8064DB9C) {
-            fn_80224468(0);
-            lbl_8064DB9C = 0;
+        if (CPGPLinked) {
+            __GXFifoLink(0);
+            CPGPLinked = 0;
         }
-        fn_802244AC(0, 0);
+        __GXWriteFifoIntEnable(0, 0);
         __piReg[3] = (u32)fifo->base & 0x3FFFFFFF;
         __piReg[4] = (u32)fifo->top & 0x3FFFFFFF;
         reg = (u32)fifo->wrPtr & 0x3FFFFFE0;

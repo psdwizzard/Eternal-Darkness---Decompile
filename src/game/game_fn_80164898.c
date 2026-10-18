@@ -11,7 +11,7 @@ typedef struct Parser {
     void* state;
 } Parser;
 
-void fn_80164898(Parser* parser, Frame* frame)
+void enterbreak(Parser* parser, Frame* frame)
 {
     frame->index = parser->index;
     frame->value = -1;

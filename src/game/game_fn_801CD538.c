@@ -12,8 +12,8 @@ typedef struct Entry {
     u32 argument;
 } Entry;
 
-extern Entry lbl_80630A30;
-extern Entry lbl_80630CB4;
+extern Entry aramQueueLo;
+extern Entry aramQueueHi;
 static inline void complete_request(Entry* entries, Request* request)
 {
     u32 i;
@@ -27,6 +27,6 @@ static inline void complete_request(Entry* entries, Request* request)
 
 void fn_801CD538(Request* request)
 {
-    complete_request(request->type == 1 ? &lbl_80630CB4 : &lbl_80630A30,
+    complete_request(request->type == 1 ? &aramQueueHi : &aramQueueLo,
                      request);
 }

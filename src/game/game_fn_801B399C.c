@@ -10,26 +10,26 @@ struct Node {
     u32 value;
 };
 
-extern Node* lbl_8064D398;
-extern Node* lbl_8064D39C;
-extern void fn_801B3770(u32);
+extern Node* seqPausedRoot;
+extern Node* seqActiveRoot;
+extern void seqStop(u32);
 
-void fn_801B399C(u32 key)
+void seqKillInstancesByGroupID(u32 key)
 {
     Node* node;
 
-    node = lbl_8064D39C;
+    node = seqActiveRoot;
     while (node != 0) {
         if (node->key == (u16)key) {
-            fn_801B3770(node->value);
+            seqStop(node->value);
         }
         node = node->next;
     }
 
-    node = lbl_8064D398;
+    node = seqPausedRoot;
     while (node != 0) {
         if (node->key == (u16)key) {
-            fn_801B3770(node->value);
+            seqStop(node->value);
         }
         node = node->next;
     }

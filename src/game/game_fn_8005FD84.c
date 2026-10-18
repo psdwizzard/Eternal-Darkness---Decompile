@@ -31,8 +31,8 @@ extern const double lbl_8064E5C0;
 extern const float lbl_8064E5DC;
 extern const float lbl_8064E5E0;
 
-extern unsigned int fn_800FBFB0(void);
-#define fn_800FBFB0() ((int)fn_800FBFB0())
+extern unsigned int rand(void);
+#define rand() ((int)rand())
 extern s32 fn_8005EF94(void *, s32, s32 *, s32, s32);
 extern void fn_8005F8D0(s32, void *, void *, void *, EffectState *, u8,
                        s32, s32, s32);
@@ -55,10 +55,10 @@ void fn_8005FD84(s32 owner, void *entry, void *manager, void *source,
 
         state->cooldown = lbl_80243C30[state->kind].reset_time;
         if (state->kind == 0) {
-            state->cooldown += (fn_800FBFB0() & 0x1F) +
-                               (fn_800FBFB0() & 0x1F) +
-                               (fn_800FBFB0() & 0x1F) +
-                               (fn_800FBFB0() & 0x3F);
+            state->cooldown += (rand() & 0x1F) +
+                               (rand() & 0x1F) +
+                               (rand() & 0x1F) +
+                               (rand() & 0x3F);
         }
 
         for (i = 0; i < lbl_80243C30[state->kind].count; i++) {

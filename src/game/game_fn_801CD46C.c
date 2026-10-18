@@ -12,14 +12,14 @@ typedef struct Entry {
     u32 argument;
 } Entry;
 
-extern Entry lbl_80630A30;
-extern Entry lbl_80630CB4;
+extern Entry aramQueueLo;
+extern Entry aramQueueHi;
 
-void fn_801CD46C(Request* request)
+void aramQueueCallback(Request* request)
 {
     Entry* entries;
     u32 i;
-    entries = request->type == 1 ? &lbl_80630CB4 : &lbl_80630A30;
+    entries = request->type == 1 ? &aramQueueHi : &aramQueueLo;
 
     for (i = 0; i < 16; i++) {
         if ((Entry*)request == &entries[i] && entries[i].callback != 0) {

@@ -12,8 +12,8 @@ extern void* lbl_8064C4E4;
 
 extern void fn_8011F114(Vec3*, void*);
 extern void* fn_8011FE34(void*);
-extern void fn_802114E0(Matrix34, void*);
-extern void fn_80211710(Matrix34, Vec3*, Vec3*);
+extern void PSMTXQuat(Matrix34, void*);
+extern void PSMTXMultVec(Matrix34, Vec3*, Vec3*);
 
 #pragma opt_lifetimes off
 void fn_801F800C(Vec3* output, void* state)
@@ -48,8 +48,8 @@ void fn_801F800C(Vec3* output, void* state)
                        *(float*)((unsigned char*)state + 0x28);
             offset.z += *(float*)((unsigned char*)state + 0x2C);
         } else {
-            fn_802114E0(matrix, parent);
-            fn_80211710(matrix, &offset, &offset);
+            PSMTXQuat(matrix, parent);
+            PSMTXMultVec(matrix, &offset, &offset);
         }
 
         output->x = offset.x + position.x;

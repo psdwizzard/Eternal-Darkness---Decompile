@@ -27,8 +27,8 @@ extern u8 lbl_80606318[];
 extern u8 lbl_80606328[];
 
 extern void* memset(void*, int, u32);
-extern float fn_80048C2C(float);
-extern float fn_80048C50(float);
+extern float sinf(float);
+extern float cosf(float);
 extern void fn_801804AC(void*, void*, void*, void*);
 extern void fn_80180554(void*, void*, void*, void*, int, int);
 extern void fn_801805E0(void*, int, u8, int, void*, float);
@@ -70,8 +70,8 @@ void fn_8019B1BC(u8* object, ShortCoord3* first, void* second, u8* config)
 
     for (i = 0; (u8)i < count; i++) {
         angle = lbl_80650BF0 * (float)(u8)i / (float)count;
-        position.x = first->x + lbl_80650BF4 * fn_80048C2C(angle);
-        position.y = first->y + lbl_80650BF4 * fn_80048C50(angle);
+        position.x = first->x + lbl_80650BF4 * sinf(angle);
+        position.y = first->y + lbl_80650BF4 * cosf(angle);
         position.z = first->z;
         fn_80180554(entry, &position, second, &setup, 0, 0);
         fn_801805E0(entry + 0x20, 4, config[1], 0,

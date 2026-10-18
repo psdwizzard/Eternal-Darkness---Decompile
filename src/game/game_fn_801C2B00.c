@@ -17,9 +17,9 @@ typedef struct Envelope {
     u8 alternate;
 } Envelope;
 
-extern u16 lbl_802529A8[];
+extern u16 dspAttenuationTab[];
 
-int fn_801C2B00(Envelope* envelope)
+int salChangeADSRState(Envelope* envelope)
 {
     u32 duration;
     u32 index;
@@ -97,7 +97,7 @@ int fn_801C2B00(Envelope* envelope)
                 if ((int)index < 0) {
                     index = 0;
                 }
-                envelope->value = (u32)lbl_802529A8[index] << 16;
+                envelope->value = (u32)dspAttenuationTab[index] << 16;
                 envelope->step = 0;
                 break;
             }

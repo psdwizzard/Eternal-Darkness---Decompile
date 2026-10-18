@@ -14,7 +14,7 @@ extern void fn_801ADBC0(void);
 extern void fn_801AE1D0(u32, int);
 extern void fn_801AEF18(int);
 extern void fn_801E81C8(void);
-extern void fn_80217324(void);
+extern void VIWaitForRetrace(void);
 extern void fn_801B0E68(int);
 
 void fn_801AEE64(void)
@@ -41,7 +41,7 @@ void fn_801AEE64(void)
         }
         fn_801ADBC0();
         if (active != 0) {
-            fn_80217324();
+            VIWaitForRetrace();
             fn_801E81C8();
             retries++;
             if (retries > 3) {

@@ -54,8 +54,8 @@ extern void fn_8020104C(int, int, int, int, float);
 extern void fn_8020123C(int, int, int, int);
 extern void fn_802045AC(void *, Vec3 *);
 extern void fn_80204FDC(void *);
-extern void fn_80211A6C(Vec3 *, Vec3 *, Vec3 *);
-extern float fn_80211B08(Vec3 *);
+extern void PSVECSubtract(Vec3 *, Vec3 *, Vec3 *);
+extern float PSVECMag(Vec3 *);
 extern void fn_8011F114(Vec3 *, void *);
 extern void fn_8011F778(void *, float);
 extern void fn_8011FA8C(void *, int, int);
@@ -306,8 +306,8 @@ int fn_800C875C(void *context, int phase, void *message, int *result)
                         asm { nop }
                     }
                 }
-                fn_80211A6C(&position, &targetPosition, &delta);
-                distance = fn_80211B08(&delta);
+                PSVECSubtract(&position, &targetPosition, &delta);
+                distance = PSVECMag(&delta);
                 if (distance <= lbl_8064F274) {
                     if (fn_800C9450(context, 0xD2) != 0) {
                         fn_8020123C(0x39, id, id, 0);

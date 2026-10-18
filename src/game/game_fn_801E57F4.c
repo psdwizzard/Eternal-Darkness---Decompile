@@ -35,7 +35,7 @@ extern s16 lbl_8064D578;
 extern u32 lbl_8064D594;
 
 extern void* memset(void*, int, unsigned long);
-extern int fn_800F9E2C(char*, const char*, void*);
+extern int vsprintf(char*, const char*, void*);
 extern void fn_801E5920(char*);
 extern void fn_801E6A8C(TextDescriptor*);
 extern void fn_801E504C(TextDescriptor*);
@@ -57,7 +57,7 @@ void fn_801E57F4(float scale, const char* format, ...)
     text_ptr->flags = (u16)(align == 'c' ? 2 : 0);
     text_ptr->color = lbl_8064D594;
     va_start(args, format);
-    fn_800F9E2C(text_ptr->text, format, args);
+    vsprintf(text_ptr->text, format, args);
     fn_801E5920(text_ptr->text);
     fn_801E6A8C(text_ptr);
     fn_801E504C(text_ptr);

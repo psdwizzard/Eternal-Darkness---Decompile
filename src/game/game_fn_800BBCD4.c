@@ -11,8 +11,8 @@ typedef struct SaveCard SaveCard;
 extern int fn_800B6908(void);
 extern int fn_8017B1AC(int, void *);
 extern void *fn_8017B9C4(int);
-extern const char *fn_802161E0(void);
-extern int fn_800FD1E8(const char *, const char *, unsigned long);
+extern const char *DVDGetCurrentDiskID(void);
+extern int strncmp(const char *, const char *, unsigned long);
 extern void fn_800B2548(int, int);
 extern void fn_8017B8BC(int);
 extern void fn_8017B96C(int);
@@ -37,9 +37,9 @@ void fn_800BBCD4(int slot)
     lbl_8064CA6C = 0;
     if (status == 0) {
         info = fn_8017B9C4(slot);
-        discId = fn_802161E0();
-        if (fn_800FD1E8(info->gameCode, discId, 4) != 0 ||
-            fn_800FD1E8(info->companyCode, discId + 4, 2) != 0) {
+        discId = DVDGetCurrentDiskID();
+        if (strncmp(info->gameCode, discId, 4) != 0 ||
+            strncmp(info->companyCode, discId + 4, 2) != 0) {
             fn_800B2548(0x42, slot);
             return;
         }

@@ -1,4 +1,4 @@
-/* fn_8022EFA4: libogg ogg_sync_pageseek. Finds the next complete, checksum-
+/* ogg_sync_pageseek: libogg ogg_sync_pageseek. Finds the next complete, checksum-
  * verified Ogg page in the sync buffer. */
 
 extern int fn_800F98EC(const void *a, const void *b, unsigned long n); /* memcmp */
@@ -25,9 +25,9 @@ typedef struct ogg_sync_state {
     int bodybytes;
 } ogg_sync_state;
 
-extern void fn_8022F2F8(ogg_page *og); /* ogg_page_checksum_set */
+extern void ogg_page_checksum_set(ogg_page *og); /* ogg_page_checksum_set */
 
-int fn_8022EFA4(register ogg_sync_state *oy, ogg_page *og) {
+int ogg_sync_pageseek(register ogg_sync_state *oy, ogg_page *og) {
     register unsigned char *page = oy->data + oy->returned;
     unsigned char *next;
     register int bytes = oy->fill - oy->returned;
@@ -67,7 +67,7 @@ int fn_8022EFA4(register ogg_sync_state *oy, ogg_page *og) {
         log.body = page + headerbytes;
         log.header_len = headerbytes;
         log.body_len = oy->bodybytes;
-        fn_8022F2F8(&log);
+        ogg_page_checksum_set(&log);
 
         if (fn_800F98EC(chksum, page + 22, 4)) {
             memcpy(page + 22, chksum, 4);

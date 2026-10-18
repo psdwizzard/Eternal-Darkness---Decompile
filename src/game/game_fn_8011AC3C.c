@@ -55,9 +55,9 @@ extern u64 fn_8020123C(int, int, int, int);
 extern int fn_80201B54(int *object);
 extern void *fn_80201B9C(void);
 extern Object *fn_80204844(Object *object, int type);
-extern void fn_8020EFBC(OSStopwatch *);
-extern s64 fn_8020F088(OSStopwatch *);
-extern void fn_8020F0F8(OSStopwatch *);
+extern void OSStopStopwatch(OSStopwatch *);
+extern s64 OSCheckStopwatch(OSStopwatch *);
+extern void OSResetStopwatch(OSStopwatch *);
 
 extern const volatile u32 lbl_8023A650[4];
 extern OSStopwatch lbl_806391F0;
@@ -151,7 +151,7 @@ void fn_8011AC3C(void)
     if (!transitioned) {
         fn_80155D9C(1);
     }
-    fn_8020F088(&lbl_806391F0);
-    fn_8020EFBC(&lbl_806391F0);
-    fn_8020F0F8(&lbl_806391F0);
+    OSCheckStopwatch(&lbl_806391F0);
+    OSStopStopwatch(&lbl_806391F0);
+    OSResetStopwatch(&lbl_806391F0);
 }

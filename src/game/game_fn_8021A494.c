@@ -4,7 +4,7 @@ typedef unsigned int u32;
 
 volatile u32 __AIRegs[8] : 0xCC006C00;
 
-void fn_8021A494(u8 volume)
+void AISetStreamVolRight(u8 volume)
 {
     __AIRegs[1] = (__AIRegs[1] & ~0xFF00) | (volume << 8);
 }

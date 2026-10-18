@@ -8,10 +8,10 @@ typedef struct Entry {
     u8 pad9C[0x58];
 } Entry;
 
-extern Entry* lbl_8064D4AC;
+extern Entry* dspVoice;
 
-void fn_801CCAC4(u32 index, u32 value94, u32 value98)
+void hwSetVirtualSampleLoopBuffer(u32 index, u32 value94, u32 value98)
 {
-    lbl_8064D4AC[index].field94 = value94;
-    lbl_8064D4AC[index].field98 = value98;
+    dspVoice[index].field94 = value94;
+    dspVoice[index].field98 = value98;
 }

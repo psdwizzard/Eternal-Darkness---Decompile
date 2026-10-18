@@ -2,7 +2,7 @@ typedef signed short s16;
 
 #pragma use_lmw_stmw on
 
-extern int fn_800FBFB0(void);
+extern int rand(void);
 
 void fn_80186F70(s16* output, int count, float step, float base, int range)
 {
@@ -17,7 +17,7 @@ void fn_80186F70(s16* output, int count, float step, float base, int range)
         destination = output;
         random_index = 0;
         while (random_index < count) {
-            int value = fn_800FBFB0() % step_integer;
+            int value = rand() % step_integer;
             if (step_integer < 0) {
                 value = -value;
             }
@@ -30,7 +30,7 @@ void fn_80186F70(s16* output, int count, float step, float base, int range)
         destination = output;
         index = 0;
         while (index < count) {
-            int value = fn_800FBFB0() % range;
+            int value = rand() % range;
             if ((value & 1) != 0) {
                 value = -value;
             }

@@ -23,7 +23,7 @@ extern float lbl_8064F2AC;
 extern float lbl_8064F2B0;
 
 extern void *fn_80201BC8();
-extern unsigned int fn_800FBFB0(void);
+extern unsigned int rand(void);
 extern int fn_8011F6A4(void *, int, int, int, QueryResult *, int);
 extern void fn_8014D478(void *, Vec3 *, Vec3 *, int, int, void *, int);
 
@@ -41,7 +41,7 @@ void fn_800C9D68(void *object, float value)
 
         resource = lbl_8064F2A8;
         identifiers = lbl_802398B8;
-        random = fn_800FBFB0();
+        random = rand();
         direction.x = lbl_8064F2B0;
         direction.y = lbl_8064F2B0;
         direction.z = lbl_8064F2B0;

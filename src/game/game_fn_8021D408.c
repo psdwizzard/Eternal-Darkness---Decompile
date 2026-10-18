@@ -1,4 +1,4 @@
-/* fn_8021D408: CARDFreeBlocks (SDK CARDStat.c / CARDBios.c). */
+/* CARDFreeBlocks: CARDFreeBlocks (SDK CARDStat.c / CARDBios.c). */
 typedef unsigned char u8;
 typedef unsigned short u16;
 typedef unsigned int u32;
@@ -31,9 +31,9 @@ typedef struct CARDControl {
 
 extern BOOL OSDisableInterrupts(void);
 extern BOOL OSRestoreInterrupts(BOOL level);
-extern s32 fn_8021D2BC(s32 chan, CARDControl **card);
-extern CARDDir *fn_8021EF3C(CARDControl *card);
-extern u16 *fn_8021EB38(CARDControl *card);
+extern s32 __CARDGetControlBlock(s32 chan, CARDControl **card);
+extern CARDDir *__CARDGetDirBlock(CARDControl *card);
+extern u16 *__CARDGetFatBlock(CARDControl *card);
 
 static inline s32 __CARDPutControlBlock(CARDControl *card, s32 result)
 {
@@ -49,7 +49,7 @@ static inline s32 __CARDPutControlBlock(CARDControl *card, s32 result)
     return result;
 }
 
-s32 fn_8021D408(s32 chan, s32 *byteNotUsed, s32 *filesNotUsed)
+s32 CARDFreeBlocks(s32 chan, s32 *byteNotUsed, s32 *filesNotUsed)
 {
     CARDControl *card;
     s32 result;
@@ -58,13 +58,13 @@ s32 fn_8021D408(s32 chan, s32 *byteNotUsed, s32 *filesNotUsed)
     CARDDir *ent;
     u16 fileNo;
 
-    result = fn_8021D2BC(chan, &card);
+    result = __CARDGetControlBlock(chan, &card);
     if (result < 0) {
         return result;
     }
 
-    fat = fn_8021EB38(card);
-    dir = fn_8021EF3C(card);
+    fat = __CARDGetFatBlock(card);
+    dir = __CARDGetDirBlock(card);
     if (fat == 0 || dir == 0) {
         return __CARDPutControlBlock(card, CARD_RESULT_BROKEN);
     }

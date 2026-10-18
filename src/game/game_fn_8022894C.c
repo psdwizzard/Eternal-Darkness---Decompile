@@ -16,7 +16,7 @@ typedef struct GXTexObjInt {
     u8 flags;
 } GXTexObjInt;
 
-u32 fn_8022894C(const GXTexObjInt *obj)
+u32 GXGetTexObjFmt(const GXTexObjInt *obj)
 {
     return obj->fmt;
 }

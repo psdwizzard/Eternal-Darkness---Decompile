@@ -7,8 +7,8 @@ typedef struct Vec8012AC74 {
 extern int fn_8011EB1C(void*);
 extern int fn_8011EB04(void*);
 extern void* fn_8011F770(void*);
-extern void fn_80211A48(const Vec8012AC74*, const void*, Vec8012AC74*);
-extern void fn_80211A6C();
+extern void PSVECAdd(const Vec8012AC74*, const void*, Vec8012AC74*);
+extern void PSVECSubtract();
 extern void fn_80139F28(void*, const Vec8012AC74*, const Vec8012AC74*,
                        Vec8012AC74*, int);
 extern void fn_8013A140(void*);
@@ -32,9 +32,9 @@ void fn_8012AC74(Vec8012AC74* object, const Vec8012AC74* input, int flags)
         fn_8013A140(object);
     } else {
         transform = fn_8011F770(object);
-        fn_80211A48(object, transform, &current);
-        fn_80211A48(input, transform, &target);
+        PSVECAdd(object, transform, &current);
+        PSVECAdd(input, transform, &target);
         fn_80139F28(object, &current, &target, &result, flags);
-        fn_80211A6C(&result, transform, object);
+        PSVECSubtract(&result, transform, object);
     }
 }

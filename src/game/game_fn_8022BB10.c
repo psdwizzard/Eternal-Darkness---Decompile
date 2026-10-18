@@ -1,4 +1,4 @@
-/* fn_8022BB10: GXSetGPMetric (Dolphin SDK GXPerf.c).
+/* GXSetGPMetric: GXSetGPMetric (Dolphin SDK GXPerf.c).
  * Disables the currently selected GP performance counters, then selects
  * and enables the new pair (perf0 = XF/SU/RAS counters, perf1 = TX/TC/CP). */
 
@@ -117,7 +117,7 @@ typedef struct GXData {
 extern GXData *gx;
 extern volatile u16 *__cpReg;
 
-void fn_8022BB10(GXPerf0 perf0, GXPerf1 perf1) {
+void GXSetGPMetric(GXPerf0 perf0, GXPerf1 perf1) {
     switch (gx->perf0) {
     case GX_PERF0_VERTICES:
     case GX_PERF0_CLIPPED:

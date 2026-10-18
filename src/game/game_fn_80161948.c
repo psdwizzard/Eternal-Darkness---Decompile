@@ -12,9 +12,9 @@ typedef struct Collection {
 
 #pragma use_lmw_stmw on
 
-extern int fn_801618D0(Entry*);
+extern int hasmark(Entry*);
 
-void fn_80161948(Collection* collection)
+void invalidaterefs(Collection* collection)
 {
     int unused = -3;
     int offset;
@@ -23,7 +23,7 @@ void fn_80161948(Collection* collection)
 
     for (index = 0, offset = 0; index < count; offset += sizeof(Entry), index++) {
         Entry* entry = (Entry*)((char*)collection->entries + offset);
-        if (entry->state == -2 && !fn_801618D0(entry))
+        if (entry->state == -2 && !hasmark(entry))
             entry->state = unused;
     }
 }

@@ -17,29 +17,29 @@ typedef union double_bits {
     struct { u32 high; int low; } words;
 } double_bits;
 
-extern u8 lbl_8024AB90[];
-extern u8 lbl_8024AC90[];
+extern u8 __ctype_map[];
+extern u8 __lower_map[];
 static inline int decimal_toupper(int c) {
-    return c == -1 ? -1 : lbl_8024AC90[(u8)c];
+    return c == -1 ? -1 : __lower_map[(u8)c];
 }
 extern double lbl_8024AA28[];
 extern decimal lbl_80239D00;
-extern u32 lbl_8064B854[];
-#define INFINITY_VALUE (*(float *)lbl_8064B854)
-extern u32 lbl_8064B858[];
-#define MINIMUM_VALUE (*(double *)lbl_8064B858)
+extern u32 __float_huge[];
+#define INFINITY_VALUE (*(float *)__float_huge)
+extern u32 __double_max[];
+#define MINIMUM_VALUE (*(double *)__double_max)
 extern double lbl_8064F930, lbl_8064F938, lbl_8064F940;
 extern double lbl_8064F948;
 extern double lbl_8064F950;
-extern double fn_80101960(double, double);
-extern double fn_801023A0(double, double);
-extern double fn_80101C30(double, int);
-extern double fn_80101EF0(double, double);
-extern void fn_800F7A38(decimal *, double);
-extern void fn_800F7C74(decimal *, const decimal *, const decimal *);
-extern int fn_800F8170(const decimal *, const decimal *);
-extern int fn_800F8268(const decimal *, const decimal *);
-extern void *fn_800F86B4(void *, const void *, unsigned int);
+extern double copysign(double, double);
+extern double pow(double, double);
+extern double ldexp(double, int);
+extern double nextafter(double, double);
+extern void __num2dec_internal(decimal *, double);
+extern void __minus_dec(decimal *, const decimal *, const decimal *);
+extern int __less_dec(const decimal *, const decimal *);
+extern int __equals_dec(const decimal *, const decimal *);
+extern void *__str2dec(void *, const void *, unsigned int);
 
 #define CLASSIFY_DOUBLE(out, number) \
     switch ((int)((number).words.high & 0x7FF00000)) { \
@@ -60,7 +60,7 @@ extern void *fn_800F86B4(void *, const void *, unsigned int);
     }
 
 /* Convert the scanner's decimal significand to an IEEE double. */
-double fn_800F6F40(const decimal *input)
+double __dec2num(const decimal *input)
 {
     double_bits nan_bits, result, initial_class, upper_class, loop_class;
     double next, sign, sum;
@@ -74,18 +74,18 @@ double fn_800F6F40(const decimal *input)
     if (input->sig.length == 0) {
         if ((signed char)input->sign == 0) sign = lbl_8064F938;
         else sign = lbl_8064F940;
-        return fn_80101960(lbl_8064F930, sign);
+        return copysign(lbl_8064F930, sign);
     }
 
     switch (input->sig.text[0]) {
     case '0':
         if ((signed char)input->sign == 0) sign = lbl_8064F938;
         else sign = lbl_8064F940;
-        return fn_80101960(lbl_8064F930, sign);
+        return copysign(lbl_8064F930, sign);
     case 'I':
         if ((signed char)input->sign == 0) sign = lbl_8064F938;
         else sign = lbl_8064F940;
-        return fn_80101960(INFINITY_VALUE, sign);
+        return copysign(INFINITY_VALUE, sign);
     case 'N':
         nan_bits.raw = 0x7FF0000000000000ULL;
         if ((signed char)input->sign != 0)
@@ -101,7 +101,7 @@ double fn_800F6F40(const decimal *input)
                 count = 14;
             for (i = 1; i < count; i++) {
                 code = input->sig.text[i + 0];
-                if (lbl_8024AB90[code] & 0x10)
+                if (__ctype_map[code] & 0x10)
                     digit = code - '0';
                 else
                     digit = decimal_toupper(code) - 'W';
@@ -153,65 +153,65 @@ double fn_800F6F40(const decimal *input)
         }
     }
     if (exponent < 0)
-        result.d /= fn_801023A0(lbl_8064F948, (double)-exponent);
+        result.d /= pow(lbl_8064F948, (double)-exponent);
     else
-        result.d *= fn_801023A0(lbl_8064F948, (double)exponent);
-    result.d = fn_80101C30(result.d, exponent);
+        result.d *= pow(lbl_8064F948, (double)exponent);
+    result.d = ldexp(result.d, exponent);
     initial_class.d = result.d;
     CLASSIFY_DOUBLE(classification, initial_class);
     if (classification == 2) {
-        fn_800F86B4(&minimum, &lbl_80239D00, 0x134);
-        if (fn_800F8170(&minimum, &dec) != 0)
+        __str2dec(&minimum, &lbl_80239D00, 0x134);
+        if (__less_dec(&minimum, &dec) != 0)
             goto finish;
         result.d = MINIMUM_VALUE;
     }
-    fn_800F7A38(&below, result.d);
-    if (fn_800F8268(&below, &dec) != 0)
+    __num2dec_internal(&below, result.d);
+    if (__equals_dec(&below, &dec) != 0)
         goto finish;
-    if (fn_800F8170(&below, &dec) != 0) {
-        next = fn_80101EF0(result.d, INFINITY_VALUE);
+    if (__less_dec(&below, &dec) != 0) {
+        next = nextafter(result.d, INFINITY_VALUE);
         upper_class.d = next;
         CLASSIFY_DOUBLE(classification, upper_class);
         if (classification == 2) {
             result.d = next;
             goto finish;
         }
-        fn_800F7A38(&above, next);
-        while (fn_800F8170(&above, &dec) != 0) {
+        __num2dec_internal(&above, next);
+        while (__less_dec(&above, &dec) != 0) {
             below = above;
             result.d = next;
-            next = fn_80101EF0(next, INFINITY_VALUE);
+            next = nextafter(next, INFINITY_VALUE);
             loop_class.d = next;
             CLASSIFY_DOUBLE(classification, loop_class);
             if (classification == 2) {
                 result.d = next;
                 goto finish;
             }
-            fn_800F7A38(&above, next);
+            __num2dec_internal(&above, next);
         }
-        fn_800F7C74(&difference_a, &dec, &below);
-        fn_800F7C74(&difference_b, &above, &dec);
-        if (fn_800F8268(&difference_a, &difference_b)) {
+        __minus_dec(&difference_a, &dec, &below);
+        __minus_dec(&difference_b, &above, &dec);
+        if (__equals_dec(&difference_a, &difference_b)) {
             if ((*(u64 *)&result.d & 1ULL) != 0)
                 result.d = next;
-        } else if (fn_800F8170(&difference_a, &difference_b) == 0) {
+        } else if (__less_dec(&difference_a, &difference_b) == 0) {
             result.d = next;
         }
     } else {
-        next = fn_80101EF0(result.d, -INFINITY_VALUE);
-        fn_800F7A38(&above_negative, next);
-        while (fn_800F8170(&dec, &above_negative) != 0) {
+        next = nextafter(result.d, -INFINITY_VALUE);
+        __num2dec_internal(&above_negative, next);
+        while (__less_dec(&dec, &above_negative) != 0) {
             below = above_negative;
             result.d = next;
-            next = fn_80101EF0(next, -INFINITY_VALUE);
-            fn_800F7A38(&above_negative, next);
+            next = nextafter(next, -INFINITY_VALUE);
+            __num2dec_internal(&above_negative, next);
         }
-        fn_800F7C74(&difference_c, &dec, &above_negative);
-        fn_800F7C74(&difference_d, &below, &dec);
-        if (fn_800F8268(&difference_c, &difference_d)) {
+        __minus_dec(&difference_c, &dec, &above_negative);
+        __minus_dec(&difference_d, &below, &dec);
+        if (__equals_dec(&difference_c, &difference_d)) {
             if ((*(u64 *)&result.d & 1ULL) != 0)
                 result.d = next;
-        } else if (fn_800F8170(&difference_c, &difference_d) != 0) {
+        } else if (__less_dec(&difference_c, &difference_d) != 0) {
             result.d = next;
         }
     }
