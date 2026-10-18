@@ -83,7 +83,7 @@ extern TextDescriptor *fn_801E6CA0(void *, u32, u32, u32, int);
 extern u32 fn_801E7998(u32 *);
 extern int fn_801E79FC(u32 *, u32);
 extern void fn_801E7F3C(const char *, ...);
-extern void fn_80119A5C(void);
+extern void fn_80119A5C(int, int);
 extern void fn_80119E90(void);
 extern void fn_80119F98(u8);
 
@@ -105,8 +105,8 @@ static inline int RevealMap(void)
 void fn_80119568(void)
 {
     u32 offset;
-    register MapBounds *bounds;
-    register MapBounds *combined;
+    MapBounds *bounds;
+    MapBounds *combined;
     int reveal;
     u32 roomIndex;
     int layer;
@@ -138,31 +138,21 @@ void fn_80119568(void)
         }
     }
     {
-        register int high;
-        register int zero;
-        register int width;
-        register int height;
-        /* ASM: lis, li, addi, sth, and la (addi) preserve initialization
-         * order. C separates the bounds bases and moves the first store. */
-        asm {
-            lis high, lbl_803323F0@ha
-            li width, 640
-            addi bounds, high, lbl_803323F0@l
-            li zero, 0
-            li height, 480
-            sth width, 0(bounds)
-            la combined, lbl_8064CDF0
-        }
-        bounds[0].y0 = height;
-        bounds[0].x1 = zero;
-        bounds[0].y1 = zero;
-        for (layer = 1; layer < 7; layer++) {
+        int width = 640;
+        int height = 480;
+        int zero = 0;
+        bounds = lbl_803323F0;
+        combined = &lbl_8064CDF0;
+        for (layer = 0; layer < 7; layer++) {
             bounds[layer].x0 = width;
             bounds[layer].y0 = height;
             bounds[layer].x1 = zero;
             bounds[layer].y1 = zero;
         }
-        lbl_8064CDF0.x0 = width;
+        /* Retain the base for the reduction below. This explicit assignment
+         * lets MWCC reuse its initialization register across the intervening calls. */
+        bounds = lbl_803323F0;
+        combined->x0 = width;
         combined->y0 = height;
         combined->x1 = zero;
         combined->y1 = zero;
@@ -214,6 +204,8 @@ void fn_80119568(void)
     fn_801E7F3C(lbl_8024E9D8, lbl_8064CDE8, lbl_8064D184);
     lbl_8064CE00 = lbl_8064CE08;
     lbl_8064CDFC = lbl_8064CE04;
+    /* The first field uses direct small-data addressing in the original;
+     * the other fields use the retained combined-bounds pointer. */
     for (layer = 7; layer != 0; layer--, bounds++) {
         lbl_8064CDF0.x0 = MIN(lbl_8064CDF0.x0, bounds->x0);
         combined->y0 = MIN(combined->y0, bounds->y0);

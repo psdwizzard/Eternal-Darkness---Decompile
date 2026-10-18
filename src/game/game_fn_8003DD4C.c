@@ -1,5 +1,3 @@
-/* The C body matches retail. MWCC currently uses register-save helpers
- * in place of the retail stmw/lmw prologue and epilogue. */
 typedef unsigned char u8;
 typedef signed char s8;
 typedef signed short s16;
@@ -17,6 +15,27 @@ typedef struct ObjectInfo {
     u8 type;
 } ObjectInfo;
 
+/* These views match the anonymous Data structs in the setter definitions. */
+typedef struct {
+    u8 pad[0x9C];
+    u32 value;
+} EffectSourceData;
+
+typedef struct {
+    u8 pad[0x98];
+    u32 value;
+} EffectTargetData;
+
+typedef struct {
+    u8 pad[0xB6];
+    u16 value;
+} EffectTypeData;
+
+typedef struct {
+    u8 pad[0xB4];
+    s16 value;
+} EffectStrengthData;
+
 extern void *fn_80200C38(void **);
 extern int fn_80201B54(int *);
 extern void *fn_80036D5C(void *);
@@ -26,10 +45,10 @@ extern void *fn_8012C62C(u8 *, int, void *, s8 *, void *, int);
 extern void fn_8012F58C(void *, u32, u32, u16, u16, u16);
 extern void *fn_801A717C(void);
 extern int fn_80201B44(void);
-extern void fn_801A74A0(void *, u32);
-extern void fn_801A74A8(void *, u32);
-extern void fn_801A7538(void *, u16);
-extern void fn_801A7518(void *, s16);
+extern void fn_801A74A0(EffectSourceData *, u32);
+extern void fn_801A74A8(EffectTargetData *, u32);
+extern void fn_801A7538(EffectTypeData *, u16);
+extern void fn_801A7518(EffectStrengthData *, s16);
 extern u64 fn_8020123C(int, int, int, int);
 extern void fn_801A7228(void *);
 extern u32 lbl_8064E2C4;
