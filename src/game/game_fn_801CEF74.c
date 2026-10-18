@@ -101,7 +101,7 @@ extern void fn_801261F4(void*);
 extern void fn_80201D54(void*, int);
 extern void fn_80201D24(void*, int);
 extern void fn_802015A4(void*);
-extern int fn_80072A2C(void*, void*, int, int);
+extern int fn_80072A2C(Vec3*, Vec3*, u32, u32);
 extern int fn_8015ABD4(int, int);
 extern int fn_80054BCC(int);
 extern int fn_80073204(void*, void*, int, void*, void*);
@@ -408,13 +408,14 @@ void fn_801CEF74(Object* object)
 
                         if (*(int*)(owner->bytes + 0xC4) == 0) {
                             if (*(int*)(owner->bytes + 0xBC) != 0) {
-                                ok = fn_80072A2C(owner->bytes + 0x38,
-                                                 owner->bytes + 0x108, 800, 1);
+                                ok = fn_80072A2C((Vec3*)(owner->bytes + 0x38),
+                                                 (Vec3*)(owner->bytes + 0x108), 800, 1);
                                 if (ok) {
                                     fn_8011F0E8(model, owner->bytes + 0x108);
                                 }
                             } else {
-                                int range;
+                                int search;
+                                int fallback_range;
                                 int near;
                                 int id = *(int*)(object->bytes + 8);
                                 near = 0;
@@ -422,59 +423,62 @@ void fn_801CEF74(Object* object)
                                     near = 1;
                                 }
                                 if (near) {
-                                    range = 120;
+                                    search = 120;
                                 } else {
-                                    range = *(s16*)(owner->bytes + 0xDC);
+                                    search = *(s16*)(owner->bytes + 0xDC);
                                 }
 
+                                /* Preserve the radius before search becomes the result. */
+                                fallback_range = search;
                                 if (*(int*)(owner->bytes + 0xC8) != 0) {
                                     if (!fn_8015ABD4(2, 2) &&
                                         fn_80054BCC(*(int*)(object->bytes + 8))) {
                                         *(int*)(owner->bytes + 0xCC) = 1;
-                                        ok = fn_80073204(owner->bytes + 0x38,
+                                        search = fn_80073204(owner->bytes + 0x38,
                                                          owner->bytes + 0x108,
-                                                         range, self, model);
-                                        if (!ok &&
+                                                         search, self, model);
+                                        if (!search &&
                                             *(int*)(object->bytes + 8) != 2 &&
                                             *(int*)(object->bytes + 8) != 8) {
-                                            ok = fn_80073204(owner->bytes + 0x38,
+                                            search = fn_80073204(owner->bytes + 0x38,
                                                              owner->bytes + 0x108,
                                                              150, self, model);
                                         }
                                     } else {
-                                        ok = 0;
+                                        search = 0;
                                     }
-                                    if (!ok) {
+                                    if (!search) {
                                         *(int*)(owner->bytes + 0xCC) = 0;
-                                        ok = fn_80072E48(owner->bytes + 0x38,
+                                        search = fn_80072E48(owner->bytes + 0x38,
                                                          owner->bytes + 0x108,
-                                                         range, self, model);
-                                        if (!ok &&
+                                                         fallback_range, self, model);
+                                        if (!search &&
                                             *(int*)(object->bytes + 8) != 2 &&
                                             *(int*)(object->bytes + 8) != 8) {
-                                            ok = fn_80072E48(owner->bytes + 0x38,
+                                            search = fn_80072E48(owner->bytes + 0x38,
                                                              owner->bytes + 0x108,
                                                              150, self, model);
                                         }
-                                        if (ok) {
+                                        if (search) {
                                             fn_8011F0E8(model, owner->bytes + 0x108);
                                         }
                                     }
                                 } else {
-                                    ok = fn_80072A2C(owner->bytes + 0x38,
-                                                     owner->bytes + 0x108,
-                                                     range, 1);
-                                    if (!ok &&
+                                    search = fn_80072A2C((Vec3*)(owner->bytes + 0x38),
+                                                     (Vec3*)(owner->bytes + 0x108),
+                                                     search, 1);
+                                    if (!search &&
                                         *(int*)(object->bytes + 8) != 2 &&
                                         *(int*)(object->bytes + 8) != 8) {
-                                        ok = fn_80072A2C(owner->bytes + 0x38,
-                                                         owner->bytes + 0x108,
+                                        search = fn_80072A2C((Vec3*)(owner->bytes + 0x38),
+                                                         (Vec3*)(owner->bytes + 0x108),
                                                          150, 1);
                                     }
-                                    if (ok) {
+                                    if (search) {
                                         fn_8011F0E8(model, owner->bytes + 0x108);
                                     }
                                 }
+                                ok = search;
                             }
                         }
 

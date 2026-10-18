@@ -4,26 +4,84 @@ typedef struct GlobalState {
 } GlobalState;
 
 extern GlobalState lbl_803003C8;
-extern int *lbl_8064C5A8;
-extern void fn_800CAC5C(int kind, int arg, int *outX, int *outY);
+extern volatile int *lbl_8064C5A8;
+extern int fn_800CAC5C(int kind, int arg, int *outX, int *outY, int *outType);
 
-int fn_80071620(int mode, int id, int event, int *outX, int *outType, int *outY,
+typedef struct IntTriple {
+    int values[3];
+} IntTriple;
+
+typedef struct IdList {
+    int values[17];
+} IdList;
+
+typedef struct Tables {
+    char pad[0x7C];
+    IntTriple typesA;
+    IntTriple xs;
+    IntTriple ys;
+    IdList ids;
+} Tables;
+
+extern const Tables lbl_802390A0;
+
+int fn_80071620(int mode, int id, int event, int *outX, register int *outType, int *outY,
                 unsigned char *flags)
 {
-    int typesA[3] = {0x41, 0x42, 0x40};
-    int xs[3] = {0x16, 0x14, 0x0D};
-    int ys[3] = {0x06, 0x07, 0x01};
-    int *xTable;
-    int *yTable;
+    register const Tables *tables = &lbl_802390A0;
+    IntTriple typesA;
+    IntTriple xs;
+    IntTriple ys;
+    register int x2;
+    register int y0;
+    register int defaultType = 4;
+    register int y2;
+    register int y1;
+    register int x1;
+    register int x0;
+    register int a2;
+    register int a1;
+    register int a0;
     int useDefault;
     int index;
+    int *xTable;
+    int *yTable;
     int result;
 
     result = 0;
     useDefault = 1;
-    xTable = xs;
-    yTable = ys;
-    *outType = 4;
+    xTable = xs.values;
+    yTable = ys.values;
+    /* ASM: lwz captures the table values together; MWCC interleaves C copies
+     * with their stores and reuses registers instead of retaining the snapshot. */
+    asm {
+        lwz a0, 0x7c(tables)
+        lwz a1, 0x80(tables)
+        lwz a2, 0x84(tables)
+        lwz x0, 0x88(tables)
+        lwz x1, 0x8c(tables)
+    }
+    /* ASM: lwz completes the same table snapshot before any local stores. */
+    asm {
+        lwz x2, 0x90(tables)
+        lwz y0, 0x94(tables)
+        lwz y1, 0x98(tables)
+        lwz y2, 0x9c(tables)
+    }
+    typesA.values[0] = a0;
+    typesA.values[1] = a1;
+    typesA.values[2] = a2;
+    xs.values[0] = x0;
+    xs.values[1] = x1;
+    xs.values[2] = x2;
+    /* ASM: stw retains the early default-type value across the table loads;
+     * a C store allows MWCC to rematerialize the constant after the loads. */
+    asm {
+        stw defaultType, 0(outType)
+    }
+    ys.values[0] = y0;
+    ys.values[1] = y1;
+    ys.values[2] = y2;
 
     switch (lbl_8064C5A8[0]) {
     case 2:
@@ -40,34 +98,31 @@ int fn_80071620(int mode, int id, int event, int *outX, int *outType, int *outY,
     switch (event) {
     case 0x15:
         *outType = 0x29;
-        xTable = typesA;
+        xTable = typesA.values;
         break;
     case 0x13:
         useDefault = 0;
         if (mode == 0) {
             if (*flags & 2) {
-                fn_800CAC5C(7, *lbl_8064C5A8, outX, outY);
+                fn_800CAC5C(7, *lbl_8064C5A8, outX, outY, outType);
             } else if (*flags & 4) {
-                fn_800CAC5C(5, 1, outX, outY);
+                fn_800CAC5C(5, 1, outX, outY, outType);
             } else {
                 useDefault = 1;
             }
         } else if (mode == 1) {
-            int ids[17] = {
-                0x0E, 0x29, 0x66, 0x69, 0x70, 0x86, 0xBB, 0xBF, 0xC4,
-                0xDE, 0xE9, 0xF3, 0xF7, 0xFA, 0x12D, 0x12E, 0x139,
-            };
+            IdList ids = tables->ids;
             int notFound = 1;
             int i;
 
             for (i = 0; i < 17; i++) {
-                if (id == ids[i]) {
+                if (id == ids.values[i]) {
                     notFound = 0;
                     break;
                 }
             }
             if ((*flags & 1) && notFound) {
-                fn_800CAC5C(4, *lbl_8064C5A8, outX, outY);
+                fn_800CAC5C(4, *lbl_8064C5A8, outX, outY, outType);
             } else {
                 useDefault = 1;
             }
