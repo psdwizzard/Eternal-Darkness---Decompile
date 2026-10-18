@@ -10,11 +10,28 @@ typedef struct Decimal {
     } sig;
 } Decimal;
 
+static void round_decimal_up(Decimal *d, int length) {
+    unsigned char *first;
+    unsigned char *digit;
+    first = d->sig.text;
+    digit = first + length - 1;
+    for (;;) {
+        if (*digit < 9) {
+            (*digit)++;
+            return;
+        }
+        if (digit == first) {
+            *digit = 1;
+            d->exp++;
+            return;
+        }
+        *digit-- = 0;
+    }
+}
+
 void fn_800F86B4(Decimal *d, const signed char *s, short exp) {
     int i;
     const signed char *p;
-    unsigned char *digit;
-    unsigned char *first;
 
     d->exp = exp;
     d->sign = 0;
@@ -41,18 +58,5 @@ void fn_800F86B4(Decimal *d, const signed char *s, short exp) {
     }
 
 round_up:
-    first = d->sig.text;
-    digit = first + (short)(d->sig.length - 1);
-    for (;;) {
-        if (*digit < 9) {
-            (*digit)++;
-            return;
-        }
-        if (digit == first) {
-            *digit = 1;
-            d->exp++;
-            return;
-        }
-        *digit-- = 0;
-    }
+    round_decimal_up(d, d->sig.length);
 }

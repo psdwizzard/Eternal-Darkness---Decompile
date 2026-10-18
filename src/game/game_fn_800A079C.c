@@ -1,6 +1,7 @@
 typedef unsigned char u8;
 typedef short s16;
 typedef int s32;
+typedef unsigned int u32;
 typedef float f32;
 
 typedef struct {
@@ -46,16 +47,16 @@ extern const f32 lbl_8064EE5C;
 
 extern void *fn_80201B9C(void);
 extern int fn_80201EB8(void *);
-extern ActorData *fn_80201B8C(void *);
+extern void *fn_80201B8C(u8 *);
 extern int fn_80201B64(void *);
 extern int fn_80201B54(void *);
 extern void *fn_80201BC0(void *);
 extern unsigned long long fn_8020123C(int, int, int, int);
 extern void fn_8020104C(int, int, int, int, float);
-extern void *fn_801E741C(char *);
+extern u32 fn_801E741C(const char *);
 extern int fn_8015C4A4(void *, int);
-extern Vec3s *fn_80158ABC(int, int, void *);
-extern void *fn_8007091C(int, int, int, s32, Vec3 *, f32);
+extern void *fn_80158ABC(int, int, f32 *);
+extern void *fn_8007091C(u32, u32, u32, void *, const Vec3 *, f32);
 
 static void fn_800A079C_start(s32 handle)
 {
@@ -96,13 +97,13 @@ s32 fn_800A079C(Owner *owner)
         }
         if (owner->level >= 2) {
             if (event->timer == 0 && found == 0) {
-                index = fn_8015C4A4(fn_801E741C(lbl_80245628), 2);
+                index = fn_8015C4A4((void *)fn_801E741C(lbl_80245628), 2);
                 if (index != -1) {
                     point = fn_80158ABC(index, 2, 0);
                     pos.x = point->x;
                     pos.y = point->y;
                     pos.z = point->z;
-                    object = fn_8007091C(0x88, 0x97, 0x4B, lbl_8064D18C, &pos, lbl_8064EE5C);
+                    object = fn_8007091C(0x88, 0x97, 0x4B, (void *)lbl_8064D18C, &pos, lbl_8064EE5C);
                     if (object != 0) {
                         handle = fn_80201B54(object);
                         fn_8020123C(0x10, 0, handle, 0);

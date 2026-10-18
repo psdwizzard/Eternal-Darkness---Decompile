@@ -3,7 +3,7 @@ typedef struct Entry {
     int value;
     void* object;
     int resource;
-    void* callback;
+    int callbackValue;
     int state;
     int index;
     unsigned short flags;
@@ -30,7 +30,7 @@ typedef struct RegionSet {
 extern Entry lbl_80332428[];
 extern const int lbl_80650058;
 extern const int lbl_8065005C;
-extern int (*lbl_8064CE9C)(void*, int);
+extern int (*lbl_8064CE9C)(int, int);
 extern void* fn_8015C28C(int);
 extern void fn_8011DD8C(int, int);
 
@@ -53,7 +53,7 @@ void fn_8011DE18(void)
     for (i = 0; i < 2; i++, index++) {
         found = 0;
         if (lbl_80332428[*index].resource != -1) {
-            id = lbl_8064CE9C(lbl_80332428[*index].callback, *index);
+            id = lbl_8064CE9C(lbl_80332428[*index].callbackValue, *index);
             region = set->regions;
             for (j = 0, count = set->count; j < count; j++, region++) {
                 if (region->flags & 1) {
