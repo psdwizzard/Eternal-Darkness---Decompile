@@ -30,10 +30,10 @@ typedef struct Color { u8 r, g, b, a; } Color;
 
 extern GameState lbl_8031CBA0;
 extern RuntimeState lbl_8031CD84;
-extern volatile s8 lbl_8064B598[3];
+extern s8 lbl_8064B598[3];
 extern Color lbl_8064EA8C;
-extern volatile float lbl_8064EA90;
-extern volatile int lbl_8064D18C;
+extern const float lbl_8064EA90;
+extern int lbl_8064D18C;
 extern void *lbl_8064C8EC;
 extern char lbl_80244F44[];
 
@@ -55,7 +55,7 @@ extern int fn_8011E310(int, int, int, int, int, int, int);
 void fn_800813D0(int unused, int event)
 {
     int i;
-    int selected;
+    s8 selected;
 
     if (event == 1) {
         lbl_8031CBA0.selected = -1;
@@ -66,17 +66,19 @@ void fn_800813D0(int unused, int event)
                 break;
             }
         }
-        selected = (s8)(u8)lbl_8031CBA0.selected;
+        selected = lbl_8031CBA0.selected;
         if (selected > -1) {
             lbl_8031CBA0.progress++;
             if (lbl_8031CBA0.progress <= lbl_8064B598[selected] &&
                 lbl_8031CBA0.actions[selected] != 0) {
+                /* The validated selection also indexes the target effect data. */
+                int targetIndex = selected;
                 Color color = lbl_8064EA8C;
                 /* The third target becomes available after the first two actions. */
-                if (selected != 2 ||
+                if (targetIndex != 2 ||
                     (lbl_8031CBA0.actions[0] == 0 && lbl_8031CBA0.actions[1] == 0)) {
-                    if (lbl_8031CBA0.progress == lbl_8064B598[selected]) {
-                        if (selected != 2) {
+                    if (lbl_8031CBA0.progress == lbl_8064B598[targetIndex]) {
+                        if (targetIndex != 2) {
                             color.r = 230;
                             color.g = 230;
                             color.b = 230;
@@ -88,18 +90,18 @@ void fn_800813D0(int unused, int event)
                                 fn_80153104(lbl_8031CD84.effect);
                                 lbl_8031CD84.effect = 0;
                             }
-                            fn_80153050(&lbl_8031CD84.targets[selected].effectPosition,
-                                        lbl_8031CD84.targets[selected].direction,
+                            fn_80153050(&lbl_8031CD84.targets[targetIndex].effectPosition,
+                                        lbl_8031CD84.targets[targetIndex].direction,
                                         32, 64, 30, 24, &color.r, 3, 100, -1, 1, 250);
                             fn_801B05E8(38, 100, 3, 1, 0, 5, 0, 0);
                         }
                         fn_8016B400(lbl_8031CBA0.actions[selected], 0, 0);
                         lbl_8031CBA0.actions[selected] = 0;
-                    } else if (selected != 2) {
+                    } else if (targetIndex != 2) {
                         if (lbl_8031CD84.effect == 0) {
                             register RuntimeState *runtime = &lbl_8031CD84;
-                            fn_80153050(&lbl_8031CD84.targets[selected].effectPosition,
-                                        lbl_8031CD84.targets[selected].direction,
+                            fn_80153050(&lbl_8031CD84.targets[targetIndex].effectPosition,
+                                        lbl_8031CD84.targets[targetIndex].direction,
                                         32, 16, 0xFFFF, 0xFFFF, &color.r, 3, 100, -1, 1, 250);
                             /* ASM: stw saves the effect pointer returned in r3. The callee
                              * is defined as void, so C cannot access its return register. */
@@ -108,7 +110,7 @@ void fn_800813D0(int unused, int event)
                         if (lbl_8031CBA0.sound == 0xFFFF) {
                             fn_801E7FDC(lbl_80244F44);
                             lbl_8031CBA0.sound = fn_801AAE68(246, 100, 0, lbl_8064EA90,
-                                &lbl_8031CD84.targets[selected].effectPosition,
+                                &lbl_8031CD84.targets[targetIndex].effectPosition,
                                 1, 1, 0, (u16)lbl_8064D18C, 0);
                         }
                         if (lbl_8031CBA0.sound != 0xFFFF) {
@@ -123,13 +125,13 @@ void fn_800813D0(int unused, int event)
                     }
                 }
             }
-            if ((s8)lbl_8031CBA0.selected == -1 && lbl_8031CBA0.sound != 0xFFFF) {
+            if (lbl_8031CBA0.selected == -1 && lbl_8031CBA0.sound != 0xFFFF) {
                 fn_801AC5E4(246, 0, 0, 1, 30, 1, 0);
                 lbl_8031CBA0.sound = 0xFFFF;
             }
         }
         fn_8007D744(0);
-        if ((s8)lbl_8031CBA0.selected == -1) {
+        if (lbl_8031CBA0.selected == -1) {
             if (lbl_8031CD84.effect != 0) {
                 fn_80153104(lbl_8031CD84.effect);
                 lbl_8031CD84.effect = 0;
