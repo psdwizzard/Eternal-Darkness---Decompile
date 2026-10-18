@@ -17,6 +17,8 @@ extern u32 fn_800F5C54(double);
 typedef struct PanInfo {
     u32 pan_i, pan_im, span_i, span_im, rpan_i, rpan_im;
     float pan_f, pan_fm, span_f, span_fm, rpan_f, rpan_fm;
+    /* Upper interpolation tap reused by the ordinary output buses. */
+    float* pan_im_hi;
 } PanInfo;
 
 static inline float wrap_unit(float value, float one)
@@ -38,7 +40,7 @@ static inline float wrap_unit(float value, float one)
  * multiply/add sequence instead of forming fused multiply-adds. */
 static inline void calc_bus(float* fixed_table, float* volume_table,
                             float** upper_band, int initialize, float* output,
-                            float vol, PanInfo* pi)
+                            float vol, PanInfo* pi, int cache_pan)
 {
     float fraction, sample;
     u32 index;
@@ -47,6 +49,7 @@ static inline void calc_bus(float* fixed_table, float* volume_table,
     index = fn_800F5C54(scale * vol);
     if (initialize) {
         *upper_band = fixed_table + 130;
+        pi->pan_im_hi = *upper_band + pi->pan_im;
     }
     fraction = (float)(scale * vol) - index;
     {
@@ -67,7 +70,7 @@ static inline void calc_bus(float* fixed_table, float* volume_table,
          (float)(pi->pan_f * (*upper_band)[pi->pan_i]));
     output[0] = sample *
         ((float)((1.0f - pi->pan_fm) * fixed_table[pi->pan_im + 129]) +
-         (float)(pi->pan_fm * (*upper_band)[pi->pan_im]));
+         (float)(pi->pan_fm * (cache_pan ? *pi->pan_im_hi : (*upper_band)[pi->pan_im])));
 }
 
 void salCalcVolume(u8 curve, float* output, u32 packed_pan, u32 packed_span,
@@ -119,15 +122,16 @@ void salCalcVolume(u8 curve, float* output, u32 packed_pan, u32 packed_span,
     if (surround_layout == 0) {
         float* next_band;
 
-        calc_bus(fixed_table, volume_table, &next_band, 1, output + 0, volume, &pi);
-        calc_bus(fixed_table, volume_table, &next_band, 0, output + 3, aux_a, &pi);
-        calc_bus(fixed_table, volume_table, &next_band, 0, output + 6, aux_b, &pi);
+        calc_bus(fixed_table, volume_table, &next_band, 1, output + 0, volume, &pi, 1);
+        calc_bus(fixed_table, volume_table, &next_band, 0, output + 3, aux_a, &pi, 1);
+        calc_bus(fixed_table, volume_table, &next_band, 0, output + 6, aux_b, &pi, 1);
     } else {
         float* next_band;
 
         scaled_volume = lbl_80650F88 * volume;
         index_volume = fn_800F5C54(scaled_volume);
         next_band = fixed_table + 130;
+
         fraction_volume = scaled_volume - index_volume;
         sample_volume =
             (float)((1.0f - fraction_volume) * volume_table[index_volume]) +
@@ -153,7 +157,7 @@ void salCalcVolume(u8 curve, float* output, u32 packed_pan, u32 packed_span,
         second = pi.rpan_fm * next_band[pi.rpan_im];
         output[6] = rear_level * (first + second);
 
-        calc_bus(fixed_table, volume_table, &next_band, 0, output + 3, aux_a, &pi);
+        calc_bus(fixed_table, volume_table, &next_band, 0, output + 3, aux_a, &pi, 0);
         output[2] = lbl_80650FAC;
         output[8] = lbl_80650FAC;
     }

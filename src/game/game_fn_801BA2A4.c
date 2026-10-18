@@ -39,7 +39,7 @@ extern u32 nextPublicID;
 extern void hwDisableIrq(void);
 extern void hwEnableIrq(void);
 extern u32 sndStreamAllocLength(u32, u32);
-extern u8 hwInitStream(u32, u32, u32, u32);
+extern u8 hwInitStream(u32);
 extern u32 sndStreamActivate(u32);
 
 /* Skip the reserved ID and reject IDs held by active slots. */
@@ -72,8 +72,8 @@ u32 sndStreamAllocEx(u8 format, u32 source, u32 samples, u32 voice_flags,
     u32 id;
     u32 bytes;
     u8 cache_id;
-    u32 effective_left;
-    u32 effective_right;
+    u8 effective_left;
+    u8 effective_right;
 
     hwDisableIrq();
 
@@ -137,7 +137,7 @@ u32 sndStreamAllocEx(u8 format, u32 source, u32 samples, u32 voice_flags,
         slots[slot_index].callback_arg = callback_arg;
         slots[slot_index].cache = (u32)-1;
         slots[slot_index].state = 3;
-        cache_id = hwInitStream(bytes, slots[slot_index].cache, effective_left, effective_right);
+        cache_id = hwInitStream(bytes);
         slots[slot_index].cache_id = cache_id;
 
         if (cache_id != 0xFF) {
