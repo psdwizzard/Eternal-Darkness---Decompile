@@ -20,7 +20,6 @@ void fn_80039FF0(u8* owner, Vec3f* position)
         case 1:
         case 2:
         case 3:
-        case 5:
         case 6:
         case 7:
         case 8:
