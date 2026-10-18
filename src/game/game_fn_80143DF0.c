@@ -90,8 +90,8 @@ void fn_80143DF0(void)
         arrays.boxes = pool->boxes;
         arrays.parts = pool->parts;
         for (j = 0; j < slot->count; j++) {
-            box = &arrays.boxes[slot->index][j];
-            part = &arrays.parts[slot->index][j];
+            box = &arrays.boxes[((volatile PoolSlot*)slot)->index][j];
+            part = &arrays.parts[((volatile PoolSlot*)slot)->index][j];
             c1 = base;
             fn_801ECD74(&c1);
             fn_80226AB4(0x80, 3, 4);

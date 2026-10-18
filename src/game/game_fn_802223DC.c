@@ -19,8 +19,8 @@ typedef struct CARDControl {
 
 extern s32 fn_8021D2BC(s32 channel, CARDControl **card);
 extern s32 fn_8021D374(CARDControl *card, s32 result);
-extern s32 fn_8021EF3C(CARDControl *card);
-extern s32 fn_8021F0DC(s32 channel, CARDCallback callback, CARDControl *card);
+extern CARDDir *fn_8021EF3C(CARDControl *card);
+extern s32 fn_8021F0DC(s32 channel, CARDCallback callback);
 extern s32 fn_80221560(CARDControl *card, const char *fileName, s32 *fileNo);
 extern s32 fn_8022187C(CARDControl *card, s32 fileNo);
 extern void *memset(void *dst, s32 value, u32 size);
@@ -47,11 +47,11 @@ s32 fn_802223DC(s32 channel, const char *fileName, CARDCallback callback)
         return fn_8021D374(card, -1);
     }
 
-    dir = (CARDDir *)fn_8021EF3C(card) + fileNo;
+    dir = fn_8021EF3C(card) + fileNo;
     card->freeNo = dir->startBlock;
     memset(dir, 0xFF, 0x40);
     card->apiCallback = callback ? callback : fn_8021C374;
-    result = fn_8021F0DC(channel, fn_80222338, card);
+    result = fn_8021F0DC(channel, fn_80222338);
     if (result < 0) {
         fn_8021D374(card, result);
     }
