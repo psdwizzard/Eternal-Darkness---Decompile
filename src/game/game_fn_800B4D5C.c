@@ -45,8 +45,8 @@ extern void fn_800B2548(int, int);
 extern void fn_800B261C(int);
 extern void fn_800B2624(int, int, void *, int, void (*)(void));
 extern void fn_800B5D94(int);
-extern void fn_800B5F78(int);
-extern void fn_800B63C0(int);
+extern void fn_800B5F78(int, int);
+extern void fn_800B63C0(int, int);
 extern void fn_800B669C(int, int);
 extern void fn_800B6960(int, int);
 extern void fn_800B6A48(int);
@@ -77,16 +77,10 @@ extern int lbl_8064CA60;
 extern int lbl_8064CA64;
 extern int lbl_8064CA6C;
 
-static inline void copySave(void *dst, void *src)
-{
-    memcpy(dst, src, 0x1B8);
-}
-
 void fn_800B4D5C(SaveCard *card)
 {
     u64 id;
     int busy;
-    void *src;
     int mode = fn_800B6908();
 
     fn_800B25AC();
@@ -98,6 +92,7 @@ void fn_800B4D5C(SaveCard *card)
         if (busy == 0) {
             if (fn_8017B7B8() != 0) {
                 SaveSlot slot;
+                void *src;
                 src = fn_8017BA44();
                 memcpy(&slot, src, 0x1B8);
                 if (fn_800BBE04(&slot) != 0) {
@@ -115,7 +110,7 @@ void fn_800B4D5C(SaveCard *card)
                 fn_800B2548(0x18, card->slot);
             }
         } else {
-            fn_800B63C0(card->slot);
+            fn_800B63C0(card->slot, card->busy);
         }
         break;
     case 1: {
@@ -129,7 +124,9 @@ void fn_800B4D5C(SaveCard *card)
         if (busy == 0) {
             if (fn_8017B7B8() != 0) {
                 SaveData data;
-                copySave(&data, fn_8017BA44());
+                void *src;
+                src = fn_8017BA44();
+                memcpy(&data, src, 0x1B8);
                 if (fn_800BBE04(&data) != 0) {
                     if (mode == 1) {
                         lbl_80302400 = data.rect;
@@ -171,7 +168,7 @@ void fn_800B4D5C(SaveCard *card)
         } else if (mode == 1) {
             fn_800B5D94(busy);
         } else {
-            fn_800B5F78(card->slot);
+            fn_800B5F78(card->slot, busy);
         }
         break;
     }
@@ -179,6 +176,7 @@ void fn_800B4D5C(SaveCard *card)
         if (card->busy == 0) {
             if (fn_8017B7B8() != 0) {
                 SaveBuffer buffer;
+                void *src;
                 src = fn_8017BA44();
                 memcpy(&buffer, src, 0x1B8);
                 if (fn_800BBE04(&buffer) != 0) {
@@ -191,7 +189,7 @@ void fn_800B4D5C(SaveCard *card)
                 fn_800B2548(0x18, card->slot);
             }
         } else {
-            fn_800B63C0(card->slot);
+            fn_800B63C0(card->slot, card->busy);
         }
         break;
     }

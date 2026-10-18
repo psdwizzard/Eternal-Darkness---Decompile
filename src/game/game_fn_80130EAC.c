@@ -38,14 +38,14 @@ u32 fn_80130EAC(StripMesh* mesh, StripGroup* groups, int groupCount, s8* enabled
     StripGroup* end;
     int prevKey;
     int count;
-    StripVertex* src;
     volatile u32* fifo;
     int n;
+    StripVertex* src;
     u8 key;
-    u32 a;
-    u32 b;
-    u16 ua;
-    u16 ub;
+    u32 positionA;
+    u32 positionB;
+    u16 texcoordA;
+    u16 texcoordB;
 
     table = lbl_805AAE40;
     end = groups + groupCount;
@@ -65,12 +65,14 @@ u32 fn_80130EAC(StripMesh* mesh, StripGroup* groups, int groupCount, s8* enabled
             entries[count].key = key;
             if (count != 0) {
                 u32 pad;
+                u32 padBytes;
                 u32 i;
 
                 pad = 32 - (size & 31);
                 if (pad != 32) {
+                    padBytes = pad & 3;
                     size += pad;
-                    for (i = 0; i < (pad & 3); i++) {
+                    for (i = 0; i < padBytes; i++) {
                         *(volatile u8*)fifo = 0;
                     }
                     for (i = 0; i < (pad >> 2); i++) {
@@ -88,50 +90,56 @@ u32 fn_80130EAC(StripMesh* mesh, StripGroup* groups, int groupCount, s8* enabled
         size += 3;
         size += n * 6;
         if (n & 1) {
-            a = table[src[0].position];
-            ua = src[0].texcoord;
+            positionA = table[src[0].position];
+            texcoordA = src[0].texcoord;
             src++;
-            *fifo = (a << 16) | (a & 0xFFFF);
-            *(volatile u16*)fifo = ua;
+            *fifo = (positionA << 16) | (positionA & 0xFFFF);
+            *(volatile u16*)fifo = texcoordA;
         }
         if (n & 2) {
-            a = table[src[0].position];
-            ua = src[0].texcoord;
-            b = table[src[1].position];
-            ub = src[1].texcoord;
+            positionA = table[src[0].position];
+            texcoordA = src[0].texcoord;
+            positionB = table[src[1].position];
+            texcoordB = src[1].texcoord;
             src += 2;
-            *fifo = (a << 16) | (a & 0xFFFF);
-            *fifo = (ua << 16) | b;
-            *fifo = (b << 16) | ub;
+            *fifo = (positionA << 16) | (positionA & 0xFFFF);
+            *fifo = ((u32)texcoordA << 16) | positionB;
+            *fifo = (positionB << 16) | texcoordB;
         }
         n >>= 2;
         if (n != 0) do {
-            a = table[src[0].position];
-            ua = src[0].texcoord;
-            b = table[src[1].position];
-            ub = src[1].texcoord;
-            *fifo = (a << 16) | (a & 0xFFFF);
-            *fifo = (ua << 16) | b;
-            *fifo = (b << 16) | ub;
-            a = table[src[2].position];
-            ua = src[2].texcoord;
-            b = table[src[3].position];
-            ub = src[3].texcoord;
+            {
+                u32 firstPosition;
+                u32 secondPosition;
+                firstPosition = table[src[0].position];
+                texcoordA = src[0].texcoord;
+                secondPosition = table[src[1].position];
+                texcoordB = src[1].texcoord;
+                *fifo = (firstPosition << 16) | (firstPosition & 0xFFFF);
+                *fifo = ((u32)texcoordA << 16) | secondPosition;
+                *fifo = (secondPosition << 16) | texcoordB;
+            }
+            positionA = table[src[2].position];
+            texcoordA = src[2].texcoord;
+            positionB = table[src[3].position];
+            texcoordB = src[3].texcoord;
             src += 4;
-            *fifo = (a << 16) | (a & 0xFFFF);
-            *fifo = (ua << 16) | b;
-            *fifo = (b << 16) | ub;
+            *fifo = (positionA << 16) | (positionA & 0xFFFF);
+            *fifo = ((u32)texcoordA << 16) | positionB;
+            *fifo = (positionB << 16) | texcoordB;
         } while (--n != 0);
     }
 
     if (size != 0) {
         u32 rest;
+        u32 restBytes;
         u32 j;
 
         rest = 32 - (size & 31);
         if (rest != 32) {
+            restBytes = rest & 3;
             size += rest;
-            for (j = 0; j < (rest & 3); j++) {
+            for (j = 0; j < restBytes; j++) {
                 *(volatile u8*)fifo = 0;
             }
             rest >>= 2;
