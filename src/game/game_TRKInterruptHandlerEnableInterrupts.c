@@ -12,8 +12,8 @@ typedef struct TRKState {
 extern TRKState gTRKState;
 extern void TRKPostInterruptEvent(void);
 
-/* Partial context restore. The retail lwz r1,4(r2) remains unresolved:
- * placing it in inline assembly makes MWCC emit a stack frame at entry. */
+/* Partial context restore. The XER/DSISR/DAR loads stay in C to fit the
+ * inline-asm budget, which costs an extra mr and non-r0 temporaries. */
 void TRKInterruptHandlerEnableInterrupts(void)
 {
     register TRKState *state;
@@ -49,11 +49,13 @@ void TRKInterruptHandlerEnableInterrupts(void)
     value = state->dar;
     /* ASM: mtdar restores DAR, which C cannot assign. */
     asm { mtdar value }
-    /* ASM: lmw/lwz restores r3-r31, r0 and the small-data base r2;
-     * these fixed architectural registers cannot be assigned in C. */
+    /* ASM: lmw/lwz restores r3-r31, r0, r1 and r2; these fixed architectural
+     * registers cannot be assigned in C. The r1 load (lwz r1,4(r2)) is an
+     * opword because naming r1 makes MWCC emit a stack frame. */
     asm {
         lmw r3, 0xc(r2)
         lwz r0, 0(r2)
+        opword 0x80220004
         lwz r2, 8(r2)
     }
     /* ASM: b transfers control while preserving the restored link register;
